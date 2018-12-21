@@ -323,6 +323,7 @@ export default {
               }
 
               &.buy-and-sell-index {
+                font-size: 0;
                 color: transparent;
               }
             }

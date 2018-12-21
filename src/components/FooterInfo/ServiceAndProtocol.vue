@@ -75,9 +75,7 @@
               name="Rate"
             >
               <div class="tab-content">
-                <Content
-                  :content="rateData.content"
-                />
+                <SymbolRate/>
               </div>
             </el-tab-pane>
             <!--交易须知-->
@@ -104,13 +102,15 @@ import {
   getNestedData
 } from '../../utils/commonFunc'
 import Content from './ServiceAndProtocolContent'
+import SymbolRate from './SymbolRate'
 import CurrencyInformation from './CurrencyInformation'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('footerInfo')
 export default {
   components: {
     CurrencyInformation,
-    Content
+    Content,
+    SymbolRate
   },
   // props,
   data () {
@@ -119,9 +119,11 @@ export default {
       termsTypeIds: 1 // 参数id
     }
   },
-  created () {
+  async created () {
     // require('../../../static/css/list/FooterInfo/ServiceAndProtocol.css')
     this.changeTab({name: this.serviceActiveName})
+    // const data = await getSymbolRate()
+    // console.log(data)
   },
   mounted () {
     this.getServiceProtocolData()
@@ -162,66 +164,65 @@ export default {
       }
       this.getServiceProtocolData()
     },
-    getServiceProtocolData () {
+    async getServiceProtocolData () {
       const params = {
         termsTypeIds: this.termsTypeIds, // 用户协议代号
         language: this.language
       }
-      getServiceProtocolData(this, params, (data) => {
-        if (data) {
-          const targetData = getNestedData(data, 'data.data[0]')
-          console.log(targetData)
-          // avatar: "",
-          // content: "",
-          // createTime: "2018-09-18 15:36:49",
-          // id: "491633701420007424",
-          // keyword: "条款说明",
-          // language: "zh_CN",
-          // modifier: "申",
-          // termsTypeId: "8",
-          // termsTypeName: "条款说明",
-          // updateTime: "2018-09-18 15:36:49",
-          // version: 1,
-          console.log(this.termsTypeIds)
-          switch (this.termsTypeIds) {
-            case 1:
-              this.CHANGE_PROTOCOL_DATA({
-                userProtocolData: targetData
-              })
-              break
-            case 2:
-              this.CHANGE_PROTOCOL_DATA({
-                privacyClauseData: targetData
-              })
-              break
-            case 3:
-              this.CHANGE_PROTOCOL_DATA({
-                legislationExplainData: targetData
-              })
-              break
-            case 5:
-              this.CHANGE_PROTOCOL_DATA({
-                rateData: targetData
-              })
-              break
-            case 7:
-              this.CHANGE_PROTOCOL_DATA({
-                APIDocumentData: targetData
-              })
-              break
-            case 8:
-              this.CHANGE_PROTOCOL_DATA({
-                clauseExplainData: targetData
-              })
-              break
-            case 14:
-              this.CHANGE_PROTOCOL_DATA({
-                tradingWarningData: targetData
-              })
-              break
+      if (this.termsTypeIds !== 5) {
+        getServiceProtocolData(this, params, (data) => {
+          if (data) {
+            const targetData = getNestedData(data, 'data.data[0]')
+            console.log(targetData)
+            // avatar: "",
+            // content: "",
+            // createTime: "2018-09-18 15:36:49",
+            // id: "491633701420007424",
+            // keyword: "条款说明",
+            // language: "zh_CN",
+            // modifier: "申",
+            // termsTypeId: "8",
+            // termsTypeName: "条款说明",
+            // updateTime: "2018-09-18 15:36:49",
+            // version: 1,
+            console.log(this.termsTypeIds)
+            switch (this.termsTypeIds) {
+              case 1:
+                this.CHANGE_PROTOCOL_DATA({
+                  userProtocolData: targetData
+                })
+                break
+              case 2:
+                this.CHANGE_PROTOCOL_DATA({
+                  privacyClauseData: targetData
+                })
+                break
+              case 3:
+                this.CHANGE_PROTOCOL_DATA({
+                  legislationExplainData: targetData
+                })
+                break
+              case 7:
+                this.CHANGE_PROTOCOL_DATA({
+                  APIDocumentData: targetData
+                })
+                break
+              case 8:
+                this.CHANGE_PROTOCOL_DATA({
+                  clauseExplainData: targetData
+                })
+                break
+              case 14:
+                this.CHANGE_PROTOCOL_DATA({
+                  tradingWarningData: targetData
+                })
+                break
+            }
           }
-        }
-      })
+        })
+      } else {
+
+      }
     }
   },
   filter: {},

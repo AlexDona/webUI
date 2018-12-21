@@ -35,16 +35,18 @@ class datafeeds {
   resolveSymbol (symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
     return new Promise((resolve, reject) => {
       let symbolInfo = this.defaultSymbol()
-      // 设置价格精度
-      let pricescale = this.self.$store.state.trade.middleTopData.priceExchange
-      // let pricescale = this.self.$store.state.common.activeSymbol.priceExchange
-      pricescale = Math.pow(10, pricescale)
-      if (this.self.getSymbol) {
-        symbolInfo = Object.assign(this.defaultSymbol(), this.self.getSymbol())
-      }
-      symbolInfo.pricescale = pricescale
-      console.log(pricescale)
-      resolve(symbolInfo)
+      setTimeout(() => {
+        // 设置价格精度
+        let pricescale = this.self.$store.state.trade.middleTopData.priceExchange
+        // let pricescale = this.self.$store.state.common.activeSymbol.priceExchange
+        pricescale = Math.pow(10, pricescale)
+        if (this.self.getSymbol) {
+          symbolInfo = Object.assign(this.defaultSymbol(), this.self.getSymbol())
+        }
+        symbolInfo.pricescale = pricescale
+        console.log(pricescale)
+        resolve(symbolInfo)
+      }, 1000)
     }).then(data => onSymbolResolvedCallback(data)).catch(err => onResolveErrorCallback(err))
   }
 

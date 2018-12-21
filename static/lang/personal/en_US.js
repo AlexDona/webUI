@@ -202,7 +202,7 @@ export const personal = {
   'user_security_login_new': 'New',
   'user_security_former': 'old',
   'user_security_info1': 'Please enter a combination of 8-20 letters and numbers',
-  'user_security_info2': 'The passwords are inconsistent, please reconfirm',
+  'user_security_info2': 'passwords are inconsistent, reconfirm',
   // 最近登录记录 安全设置记录Recent login record security settings record
   'user_security_recently': 'recent',
   'user_security_home_location': 'Attribution',

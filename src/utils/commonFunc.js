@@ -323,15 +323,18 @@ String.prototype.format = function (args) {
   var result = this
   const arr = result.split('')
   let newArr = ''
+  let count = 0
   if (args.length) {
     _.forEach(arr, item => {
       newArr += item
       if (item === '{') {
-        newArr += '0'
+        newArr += `${count}`
+        count++
       }
     })
   }
   result = newArr
+  console.log(result)
   if (arguments.length > 0) {
     if (arguments.length == 1 && !Array.isArray(args)) {
       for (var key in args) {
@@ -342,10 +345,12 @@ String.prototype.format = function (args) {
         }
       }
     } else {
-      for (var i = 0; i < arguments.length; i++) {
-        if (arguments[i] != undefined) {
+      for (var i = 0; i < arguments[0].length; i++) {
+        if (arguments[0][i] != undefined) {
           let reg = new RegExp('({)' + i + '(})', 'g')
-          result = result.replace(reg, arguments[i])
+          console.log(reg)
+          console.log(arguments[0][i])
+          result = result.replace(reg, arguments[0][i])
         }
       }
     }

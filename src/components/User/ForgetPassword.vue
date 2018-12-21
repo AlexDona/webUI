@@ -281,7 +281,7 @@
                   @click="findPasswordStep3"
                 >
                   <!--下一步-->
-                  {{ $t('M.forgetPassword_next_step') }}
+                  {{ $t('M.forgetPassword_achieve') }}
                 </button>
               </span>
             </div>
