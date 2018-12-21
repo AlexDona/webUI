@@ -54,7 +54,7 @@ export default {
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        this.aboutData = getNestedData(data, 'data.data[0]')
+        this.aboutData = getNestedData(data, 'data.data[0]') || {content: ''}
       }
     }
   },
@@ -65,7 +65,11 @@ export default {
       language: state => state.common.language
     })
   },
-  watch: {}
+  watch: {
+    language () {
+      this.getAboutUsData()
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

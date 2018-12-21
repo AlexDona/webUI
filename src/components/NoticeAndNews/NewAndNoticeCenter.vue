@@ -115,8 +115,7 @@ export default {
     }
   },
   async created () {
-    await this.getAllNewsTypeList()
-    this.newsTypeId = this.newsTypeList[0].id
+    await this.resetNewTypeList()
     await this.getNewsNoticeList()
     this.helpList.forEach(() => {
       this.helpShowStatusList.push(false)
@@ -133,6 +132,11 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    async resetNewTypeList () {
+      await this.getAllNewsTypeList()
+      this.newsTypeId = this.newsTypeList[0].id
+      this.activeName = this.newsTypeId
+    },
     changeTab (e) {
       console.log(e.name)
       this.newsTypeId = e.name
@@ -142,10 +146,6 @@ export default {
     changeCurrentPage (e) {
       this.pageNum = e
       this.getNewsNoticeList()
-    },
-    // 详情跳转
-    jumpToDetail (item) {
-      this.getDetailInfo(item.id)
     },
     // 获取所有新闻类型
     async getAllNewsTypeList () {
@@ -173,7 +173,8 @@ export default {
       } else {
         console.log(data)
         const targetData = getNestedData(data, 'data.data')
-        this.noticeList = getNestedData(targetData, 'list')
+        console.log(targetData)
+        this.noticeList = getNestedData(targetData, 'list') || []
         this.pageNum = getNestedData(targetData, 'pageNum')
         this.totalPages = getNestedData(targetData, 'pages')
       }
@@ -193,26 +194,11 @@ export default {
           item['keyword'].indexOf(this.searchKeyWord) != -1)
         // item['type'] == 0
       })
-    },
-    newsFilterList () {
-      return this.noticeList.filter((item) => {
-        return (item['title'].indexOf(this.searchKeyWord) != -1 ||
-          item['keyword'].indexOf(this.searchKeyWord) != -1)
-        // item['type'] == 1
-      })
-    },
-    helpFilterList () {
-      return this.helpList.filter((item) => {
-        return (item['title'].indexOf(this.searchKeyWord) != -1 ||
-          item['content'].indexOf(this.searchKeyWord) != -1)
-      })
     }
   },
   watch: {
-    newsDetailJumpId (newVal) {
-      console.log(newVal)
-    },
-    language () {
+    async language () {
+      await this.resetNewTypeList()
       this.getNewsNoticeList()
     }
   }

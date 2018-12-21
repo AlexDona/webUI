@@ -522,6 +522,12 @@ export default{
         height: 31px;
         border: 1px solid $mainColor;
         overflow: hidden;
+
+        /deep/ {
+          .el-input__inner {
+            width: 195px;
+          }
+        }
       }
 
       &::before {

@@ -195,6 +195,11 @@ export default {
         text-align: center;
         color: rgba(255, 255, 255, 1);
 
+        > img {
+          width: 100%;
+          height: 100%;
+        }
+
         > .title {
           position: absolute;
           top: 0;

@@ -112,14 +112,6 @@ export default {
       'CHANGE_ACTIVE_SYMBOL',
       'CHANGE_SOCKET_AND_AJAX_DATA'
     ]),
-    changeLoadingStatus () {
-      if (!this.loadingCount) {
-        setTimeout(() => {
-          this.fullscreenLoading = false
-          this.loadingCount++
-        }, 1200)
-      }
-    },
     changeIsKlineDataReady (status) {
       this.$store.commit('trade/SET_IS_KLINE_DATA_READY', status)
     },
@@ -178,6 +170,7 @@ export default {
               break
           }
         }
+        this.fullscreenLoading = false
         setTimeout(() => {
           this.changeIsKlineDataReady(true)
         }, 500)
@@ -236,7 +229,6 @@ export default {
       this.options.language = this.language
       this.init(this.options)
       this.getBars()
-      this.changeLoadingStatus()
     },
     // 获取初始交易对
     async getDefaultSymbol () {
@@ -270,7 +262,7 @@ export default {
           library_path: '/static/tradeview/charting_library/',
           disabled_features: disabledFeatures,
           enabled_features: [
-            // 'hide_left_toolbar_by_default' // 隐藏左侧边栏
+            'hide_left_toolbar_by_default' // 隐藏左侧边栏
           ],
           timezone: 'Asia/Shanghai',
           locale: options.language,
@@ -410,7 +402,7 @@ export default {
             volume: klineData.volume
           }
           let targetData = this.cacheData[ticker]
-          console.log(targetData)
+          // console.log(targetData)
           let timeDiff = getNestedData(targetData[targetData.length - 1], 'time') - getNestedData(klineData, 'time')
 
           if (!timeDiff) {
@@ -460,7 +452,7 @@ export default {
       }
       const ticker = `${this.symbol}-${this.interval}`
       if (this.cacheData[ticker] && this.cacheData[ticker].length) {
-        console.log(this.cacheData[ticker])
+        // console.log(this.cacheData[ticker])
         this.isLoading = false
         const newBars = []
         this.cacheData[ticker].forEach(item => {
@@ -589,7 +581,6 @@ export default {
       }
       this.getActiveSymbolData(newVal)
       this.subscribeSocketData(newVal)
-      this.changeLoadingStatus()
     },
     interval () {
       this.KlineNum = 0

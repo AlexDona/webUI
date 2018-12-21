@@ -40,3 +40,5 @@ export const getAboutUsDataAjax = (params) => get('cms/aboutUs/selectAll', param
 export const getConfigAjax = () => get('config', {
   'not-loading': true
 })
+// 获取交易对费率
+export const getSymbolRate = () => get('/trade/rate')

@@ -684,7 +684,7 @@ export default {
       }
     },
     activeConvertCurrencyObj () {
-      this.setBuyAndSellPrice(this.middleTopData.buy, this.middleTopData.sell)
+      this.setBuyAndSellPrice(this.getRefValue(this.limitBuyPriceInputRef), this.getRefValue(this.limitSellPriceInputRef))
     },
     activeSymbol () {
       this.reflashCount = 0
@@ -705,9 +705,9 @@ export default {
           this.reflashCount++
         }
         if (this.isLogin) {
-          await this.getUserAssetOfActiveSymbol(targetPriceOfBuy, targetPriceOfSell)
+          await this.getUserAssetOfActiveSymbol(targetPriceOfSell, targetPriceOfBuy)
         } else {
-          this.setBuyAndSellPrice(targetPriceOfBuy, targetPriceOfSell)
+          this.setBuyAndSellPrice(targetPriceOfSell, targetPriceOfBuy)
         }
       }
     }

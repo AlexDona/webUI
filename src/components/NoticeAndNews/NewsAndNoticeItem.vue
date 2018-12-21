@@ -105,7 +105,7 @@ export default {
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        this.newsTypeList = getNestedData(data, 'data.data')
+        this.newsTypeList = getNestedData(data, 'data.data') || []
       }
     },
     // 获取详情信息
@@ -143,7 +143,12 @@ export default {
       language: state => state.common.language
     })
   },
-  watch: {}
+  watch: {
+    async language () {
+      await this.getAllNewsTypeList()
+      await this.getAllTypeListNewsList()
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

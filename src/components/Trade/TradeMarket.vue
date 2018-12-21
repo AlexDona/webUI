@@ -149,7 +149,7 @@ export default {
     // 获取用户收藏列表
     async getCollectionList (collectSymbol) {
       await getCollectionList(this, data => {
-        _.forEach(data.data.data, (item) => {
+        _.forEach(data.data.data, item => {
           collectSymbol[item.content] = item.content
         })
       })
@@ -161,11 +161,17 @@ export default {
         collectSymbol
       })
       let [...newPlateList] = this.collectPlateList
-      _.forEach(plateList, (plateItem, plateIndex) => {
-        _.forEach(plateItem.content, contentItem => {
-          _.forEach(collectSymbol, collectSymbolItem => {
-            if (collectSymbolItem === contentItem.id) {
-              newPlateList[plateIndex].content.push(contentItem)
+      _.forEach(collectSymbol, collectSymbolItem => {
+        _.forEach(newPlateList, (newItem, newIndex) => {
+          _.forEach(plateList, plateItem => {
+            if (newItem.plateId === plateItem.plateId) {
+              _.forEach(plateItem.content, contentItem => {
+                if (contentItem.id === collectSymbolItem) {
+                  newPlateList[newIndex].content.push(contentItem)
+                  return false
+                }
+              })
+              return false
             }
           })
         })
@@ -186,38 +192,41 @@ export default {
         i18n: this.language
       }
       const data = await getTradeMarketDataAjax(params)
-      console.log(data)
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         const objData = JSON.parse(unzip(data.data.data.obj))
-        console.log(objData)
         let [...tickerList] = objData.tickerList
-        // let plateItemMap = new Map()
-        console.log(tickerList)
         let plateList = []
         // 板块筛选
         _.forEach(tickerList, (tickerItem) => {
-          _.forEach(tickerItem.plateList, (plateItem, plateIndex) => {
-            let targetString = JSON.stringify({
+          _.forEach(tickerItem.plateList, plateItem => {
+            let initPlateItem = {
               content: [],
               plateId: plateItem.plateId,
               plateName: plateItem.plateName.replace('+', ' ')
-            })
-            plateList[plateIndex] = JSON.parse(targetString)
-            this.collectPlateList[plateIndex] = JSON.parse(targetString)
-            this.collectPlateFilterList[plateIndex] = JSON.parse(targetString)
+            }
+            let isExist = plateList.some(item => item.plateId == plateItem.plateId)
+            if (!isExist) {
+              plateList.push(_.cloneDeep(initPlateItem))
+              this.collectPlateList.push(_.cloneDeep(initPlateItem))
+              this.collectPlateFilterList.push(_.cloneDeep(initPlateItem))
+            }
           })
         })
         // 生成symbolMap
-        _.forEach(tickerList, (tickerItem) => {
-          _.forEach(tickerItem.plateList, (plateItem, plateIndex) => {
-            _.forEach(plateItem.content, (contentItem) => {
+        _.forEach(tickerList, tickerItem => {
+          _.forEach(tickerItem.plateList, plateItem => {
+            _.forEach(plateItem.content, contentItem => {
               this.$store.commit('home/CHANGE_SYMBOL_MAP', {
                 key: contentItem.id,
                 val: contentItem
               })
-              plateList[plateIndex].content.push(contentItem)
+              _.forEach(plateList, (plateListItem, plateListIndex) => {
+                if (plateListItem.plateId == plateItem.plateId) {
+                  plateList[plateListIndex].content.push(contentItem)
+                }
+              })
             })
           })
         })
@@ -339,18 +348,29 @@ export default {
         id,
         status,
         row,
-        plateIndex
+        plateId
       } = data
       console.log(data)
       status = Boolean(status)
       // this.$set(this.collectStatusList, id, status)
+      console.log(plateId, this.collectArea)
       if (status) {
         //  添加收藏
         this.CHANGE_COLLECT_SYMBOL({
           type: 'add',
           collectSymbol: id
         })
-        this.collectArea.plateList[plateIndex].content.push(row)
+        // this.collectArea.plateList[plateIndex].content.push(row)
+        _.forEach(this.collectArea.plateList, (plateItem, plateIndex) => {
+          console.log(plateItem)
+          if (plateItem.plateId == plateId) {
+            let isExist = plateItem.content.some(item => item.id == id)
+            if (!isExist) {
+              plateItem.content.push(row)
+              return false
+            }
+          }
+        })
         if (this.isLogin) {
           await toggleUserCollection('add', id, this)
         }
@@ -359,8 +379,14 @@ export default {
           type: 'cancel',
           collectSymbol: id
         })
-        let newList = this.collectArea.plateList[plateIndex].content.filter(item => item.id !== id)
-        this.$set(this.collectArea.plateList[plateIndex], 'content', newList)
+        _.forEach(this.collectArea.plateList, (plateItem, plateIndex) => {
+          console.log(plateItem)
+          if (plateItem.plateId == plateId) {
+            let newList = plateItem.content.filter(item => item.id !== id)
+            this.$set(this.collectArea.plateList[plateIndex], 'content', newList)
+            return false
+          }
+        })
         this.collectPlateList = this.collectArea.plateList
         // 取消收藏
         if (this.isLogin) {
@@ -467,7 +493,7 @@ export default {
     },
     // 搜索关键字过滤列表过滤
     searchFilterMarketList () {
-      let newArr = JSON.parse(JSON.stringify(this.filterMarketList))
+      let newArr = _.cloneDeep(this.filterMarketList)
       this.resetList(newArr)
       _.forEach(this.filterMarketList, (item, index) => {
         this.setSearchFilterList(1, item.plateList, {newArr, index}, [])
@@ -476,8 +502,10 @@ export default {
     },
     // 自选区搜索
     searchFilterCollectArea () {
-      let newCollectArea = JSON.parse(JSON.stringify(this.collectArea))
+      let newCollectArea = _.cloneDeep(this.collectArea)
+      console.log(newCollectArea)
       _.forEach(newCollectArea.plateList, plateItem => {
+        console.log(plateItem)
         plateItem.content = []
       })
       this.setSearchFilterList(0, this.collectArea.plateList, [], newCollectArea)

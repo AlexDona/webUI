@@ -690,6 +690,9 @@ export default{
     }
   },
   watch: {
+    width (newVal) {
+      console.log(newVal)
+    },
     showApplyMerchantStatus (newVal) {
       // console.log(newVal)
     },
@@ -785,16 +788,6 @@ export default{
                 content: '';
               }
 
-              /* otc子导航 */
-              &.otc {
-                left: 236px;
-              }
-
-              /* 活动中心子导航 */
-              &.activity-center {
-                left: 458px;
-              }
-
               > .sub-nav-item {
                 display: inline-block;
                 height: 100%;
@@ -806,6 +799,78 @@ export default{
 
                 > a {
                   color: #8494a6;
+                }
+              }
+
+              @media screen and (min-width: 1920px) {
+                /* 活动中心子导航 */
+                &.activity-center {
+                  left: 31.5%;
+                }
+
+                /* otc子导航 */
+                &.otc {
+                  left: 16%;
+                }
+              }
+
+              @media screen and (max-width: 1920px) and (min-width: 1337px) {
+                /* 活动中心子导航 */
+                &.activity-center {
+                  left: 40%;
+                }
+
+                /* otc子导航 */
+                &.otc {
+                  left: 24%;
+                }
+              }
+
+              @media screen and (max-width: 1900px) {
+                /* 活动中心子导航 */
+                &.activity-center {
+                  left: 45%;
+                }
+
+                /* otc子导航 */
+                &.otc {
+                  left: 22%;
+                }
+              }
+
+              @media screen and (max-width: 1500px) {
+                /* 活动中心子导航 */
+                &.activity-center {
+                  left: 45%;
+                }
+
+                /* otc子导航 */
+                &.otc {
+                  left: 22%;
+                }
+              }
+
+              @media screen and (max-width: 1337px) {
+                /* 活动中心子导航 */
+                &.activity-center {
+                  left: 47%;
+                }
+
+                /* otc子导航 */
+                &.otc {
+                  left: 25%;
+                }
+              }
+
+              @media screen and (max-width: 1200px) {
+                /* 活动中心子导航 */
+                &.activity-center {
+                  left: 53%;
+                }
+
+                /* otc子导航 */
+                &.otc {
+                  left: 28%;
                 }
               }
             }

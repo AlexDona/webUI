@@ -17,10 +17,6 @@
   background-color: transparent;
 }
 
-#loading-indicator {
- background: 0 0;
-}
-
 .chart-page .chart-container {
   border: none;
 }
@@ -38,9 +34,8 @@
 .header-chart-panel .button:hover,
 .header-chart-panel .button.selected {
   color: #338ff5 !important;
-
-  /* background-color: pink; */
-  background-color: #eaeaea;
+  background-color: #3d4e58;
+  cursor: pointer;
 }
 
 .header-chart-panel .button:hover svg {
@@ -79,4 +74,12 @@
 .feature-no-touch .widgetbar-widgetheader .favored-list-container span:not(.disabled):not(.selected):hover::before,
 .feature-no-touch .widgetbar-widgetheader .submenu:not(.disabled):not(.selected):hover::before {
   border: none;
+}
+
+.context-menu-wrapper {
+  max-height: 1000px !important;
+}
+
+.context-menu .action-separator {
+  display: none;
 }
