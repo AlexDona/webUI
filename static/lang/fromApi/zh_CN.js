@@ -219,7 +219,7 @@ export const fromApi = {
   'otc_failure_0035': '该用户已认证商家或者正在审核',
   'otc_failure_0036': '申请人OTC成功交易次数不足',
   'otc_failure_0037': '解冻失败,撤销失败',
-  'otc_failure_0038': '申请人当前账户{}可用余额不足｛｝',
+  'otc_failure_0038': '申请人当前账户{}可用余额不足{}',
   'otc_failure_0039': '无当前币种',
   'otc_failure_0040': '当前币种不可用',
   'otc_failure_0041': '提交成功，请等待审核',
