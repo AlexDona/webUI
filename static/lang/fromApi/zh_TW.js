@@ -219,7 +219,7 @@ export const fromApi = {
   'otc_failure_0035': '該用戶已認證商家或者正在審核',
   'otc_failure_0036': '申請人OTC成功交易次數不足',
   'otc_failure_0037': '解凍失敗,撤銷失敗',
-  'otc_failure_0038': '申請人當前帳戶{}可用餘額不足｛｝',
+  'otc_failure_0038': '申請人當前帳戶{}可用餘額不足{}',
   'otc_failure_0039': '無當前幣種',
   'otc_failure_0040': '當前幣種不可用',
   'otc_failure_0041': '提交成功，請等待審核',
