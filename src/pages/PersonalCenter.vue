@@ -41,6 +41,7 @@
           >
             <WithdrawalAddress v-if="userCenterActiveName ==='mention-address'"/>
           </el-tab-pane>
+
           <!--个人中心-->
           <div class="user-title asset-info">
             <!--个人中心-->
@@ -59,7 +60,6 @@
           >
             <IdentityAuthentication/>
           </el-tab-pane>
-
           <!--收款账户-->
           <el-tab-pane
             :label = "$t('M.user_asset_title5')"
@@ -67,7 +67,6 @@
           >
             <AccountCredited v-if="userCenterActiveName==='account-credited'"/>
           </el-tab-pane>
-
           <!--邀请推广-->
           <el-tab-pane
             :label = "$t('M.user_asset_title6')"
@@ -75,7 +74,6 @@
           >
             <InvitingPromotion/>
           </el-tab-pane>
-
           <!--安全中心-->
           <el-tab-pane
             :label = "$t('M.user_asset_title7')"
@@ -97,6 +95,7 @@
           >
             <PushAsset/>
           </el-tab-pane>
+
           <!--我的交易-->
           <div class="user-order asset-info">
             <!--我的交易-->
@@ -106,7 +105,7 @@
             :label = "$t('M.user_asset_title9')"
             disabled
           >
-            <APIManagement/>
+            <!--<APIManagement/>-->
           </el-tab-pane>
           <!--币币订单-->
           <el-tab-pane
@@ -121,6 +120,24 @@
             name = "fiat-orders"
           >
             <FiatOrders/>
+          </el-tab-pane>
+
+          <!--设置-->
+          <div class="setting-title asset-info">
+            <!--设置-->
+            设置
+          </div>
+          <el-tab-pane
+            label = "设置"
+            disabled
+            class="title"
+          >
+          </el-tab-pane>
+          <el-tab-pane
+            label = "个人设置"
+            name = "personal-setting"
+          >
+            <PersonalSettings/>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -233,6 +250,9 @@ import PushAsset from '../components/Personal/UserAssets/PushAsset'
 import CoinOrders from '../components/Personal/TransactionType/CoinOrders'
 // 法币订单
 import FiatOrders from '../components/Personal/TransactionType/FiatOrders'
+// 个人设置
+import PersonalSettings from '../components/Personal/Settings/PersonalSettings'
+
 import {
   userRefreshUser
 } from '../utils/api/personal'
@@ -256,7 +276,9 @@ export default {
     PushAsset, // push资产
     // 我的交易
     CoinOrders, // 币币订单
-    FiatOrders // 法币订单
+    FiatOrders, // 法币订单
+    // 个人设置
+    PersonalSettings
   },
   // props,
   data () {
@@ -417,6 +439,10 @@ export default {
       .user-order {
         top: 490px;
       }
+
+      .setting-title {
+        top: 616px;
+      }
     }
 
     /deep/ {
@@ -433,7 +459,7 @@ export default {
 
       /* 做二级导航宽度 */
       .el-tabs--left {
-        height: 625px;
+        /* height: 625px; */
         overflow: unset;
 
         .el-tabs__nav-wrap {

@@ -252,7 +252,7 @@
                       <button
                         class="trader-submit-button trader-submit-sell"
                         v-if="onlineTraderStatus === 'onlineSell'"
-                        @click.prevent="showDialog(onlineTraderStatus)"
+                        @click.prevent="showPayPasswordDialog(onlineTraderStatus)"
                       >
                         <!-- 确定出售 -->
                         {{$t('M.otc_index_ensureSell')}}
@@ -260,7 +260,7 @@
                       <button
                         class="trader-submit-button trader-submit-buy"
                         v-if="onlineTraderStatus === 'onlineBuy'"
-                        @click.prevent="showDialog(onlineTraderStatus)"
+                        @click.prevent="showPayPasswordDialog(onlineTraderStatus)"
                       >
                         <!-- 确定购买 -->
                         {{$t('M.otc_index_ensureBuy')}}
@@ -403,7 +403,11 @@ import {
   queryUserTradeFeeAndCoinInfo
 } from '../../utils/api/OTC'
 import IconFontCommon from '../Common/IconFontCommon'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData,
+  isNeedPayPasswordAjax
+} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
@@ -453,22 +457,30 @@ export default {
       sellPrice: '', // 出售金额
       buyPrice: '', // 购买金额
       tradePassword: '', // 交易密码
-      id: '', // 往后台传送的参数 挂单id（otc首页挂单列表中每行的币种id）
-      partnerCoinId: '', // 商户币种id
-      userType: '', // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
+      // 往后台传送的参数 挂单id（otc首页挂单列表中每行的币种id）
+      id: '',
+      // 商户币种id
+      partnerCoinId: '',
+      // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
+      userType: '',
       // 数量错误提示
       numberTips: '',
       // 金额错误提示
       moneyTips: '',
       // 密码错误提示
       tradePasswordTips: '',
-      pointLength: 4, // 当前币种返回的保留小数点位数限制
-      moneyPointLength: 2 // 当前金额小数点限制位数
+      // 当前币种返回的保留小数点位数限制
+      pointLength: 4,
+      // 当前金额小数点限制位数
+      moneyPointLength: 2,
+      // 是否需要交易密码
+      isNeedPayPassowrd: true
     }
   },
-  created () {
+  async created () {
+    this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+    console.log(this.isNeedPayPassowrd)
     // 1.0 从OTCCenter传过来的URL中获取的
-    // console.log(this.$route.params)
     this.onlineTraderStatus = this.$route.params.styleId
     this.id = this.$route.params.id
     this.partnerCoinId = this.$route.params.partnerCoinId
@@ -501,34 +513,43 @@ export default {
       return timeFilter(date, 'date')
     },
     // 2.0 显示输入密码框
-    showDialog (val) {
-      // 在线买
-      if (val === 'onlineBuy') {
-        if (!this.$refs.buyCount.value) {
-          this.numberTips = this.$t('M.otc_index_inputBuyMount')
-          return false
-        } else if (!this.$refs.buyPrice.value) {
-          this.moneyTips = this.$t('M.otc_index_inputBuyMoney')
-          return false
-        } else if (this.numberTips || this.moneyTips) {
-          return false
-        } else {
-          this.pickOrderTradePwdDialogStatus = true
-        }
-      }
-      // 在线卖
-      if (val === 'onlineSell') {
-        if (!this.$refs.sellCount.value) {
-          this.numberTips = this.$t('M.otc_index_inputSellMount')
-          return false
-        } else if (!this.$refs.sellPrice.value) {
-          this.moneyTips = this.$t('M.otc_index_inputBuyMoney')
-          return false
-        } else if (this.numberTips || this.moneyTips) {
-          return false
-        } else {
-          this.pickOrderTradePwdDialogStatus = true
-        }
+    async showPayPasswordDialog (tradeType) {
+      this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+      switch (tradeType) {
+        // 在线买
+        case 'onlineBuy':
+          if (!this.$refs.buyCount.value) {
+            this.numberTips = this.$t('M.otc_index_inputBuyMount')
+            return false
+          } else if (!this.$refs.buyPrice.value) {
+            this.moneyTips = this.$t('M.otc_index_inputBuyMoney')
+            return false
+          } else if (this.numberTips || this.moneyTips) {
+            return false
+          }
+          if (this.isNeedPayPassowrd) {
+            this.dialogVisible = true
+          } else {
+            this.submitPickOrdersToBuy()
+          }
+          break
+        // 在线卖
+        case 'onlineSell':
+          if (!this.$refs.sellCount.value) {
+            this.numberTips = this.$t('M.otc_index_inputSellMount')
+            return false
+          } else if (!this.$refs.sellPrice.value) {
+            this.moneyTips = this.$t('M.otc_index_inputBuyMoney')
+            return false
+          } else if (this.numberTips || this.moneyTips) {
+            return false
+          }
+          if (this.isNeedPayPassowrd) {
+            this.dialogVisible = true
+          } else {
+            this.submitPickOrdersToSell()
+          }
+          break
       }
     },
     // 3.0 卖出量/买入量input框键盘弹起事件:计算金额
@@ -701,33 +722,19 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
-        // let detailsData = data.data.data
         let detailsData = getNestedData(data, 'data.data')
-        // this.userName = detailsData.userName // 挂单人姓名
         this.userName = getNestedData(detailsData, 'userName') // 挂单人姓名
-        // this.successTimes = detailsData.successTimes // 成交次数
         this.successTimes = getNestedData(detailsData, 'successTimes') // 成交次数
-        // this.failTimes = detailsData.failTimes // 失败次数
         this.failTimes = getNestedData(detailsData, 'failTimes') // 失败次数
-        // this.freezeTimes = detailsData.freezeTimes // 冻结次数
         this.freezeTimes = getNestedData(detailsData, 'freezeTimes') // 冻结次数
-        // this.remark = detailsData.remark // 备注
         this.remark = getNestedData(detailsData, 'remark') // 备注
-        // this.price = detailsData.price // 报价
         this.price = getNestedData(detailsData, 'price') // 报价
-        // this.payTypes = detailsData.payTypes // 付款方式
         this.payTypes = getNestedData(detailsData, 'payTypes') // 付款方式
-        // this.payTerm = detailsData.payTerm // 付款期限
         this.payTerm = getNestedData(detailsData, 'payTerm') // 付款期限
-        // this.remainingNum = detailsData.remainCount // 剩余数量：后台增加了剩余数量字段
         this.remainingNum = amendPrecision(detailsData.entrustCount, detailsData.matchCount, '-') // 剩余数量：修复精度丢失
-        // this.maxCount = detailsData.maxCount // 单笔最大限额
         this.maxCount = getNestedData(detailsData, 'maxCount') // 单笔最大限额
-        // this.minCount = detailsData.minCount // 单笔最小限额
         this.minCount = getNestedData(detailsData, 'minCount') // 单笔最小限额
-        // this.userType = detailsData.userType // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
         this.userType = getNestedData(detailsData, 'userType') // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
-        // this.currencyName = detailsData.currencyName // 当前摘单的法币币种
         this.currencyName = getNestedData(detailsData, 'currencyName') // 当前摘单的法币币种
         this.queryUserTradeFeeAndCoinInfo()
       }
@@ -744,26 +751,20 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
-        // let detailData = data.data.data
         let detailData = getNestedData(data, 'data.data')
-        // this.name = detailData.name // 最小交易量币种名字（单位）
         this.name = getNestedData(detailData, 'name') // 最小交易量币种名字（单位）
-        // this.pointLength = detailData.unit // 每个币种返回的保留小数点位数限制
         this.pointLength = getNestedData(detailData, 'unit') // 每个币种返回的保留小数点位数限制
-        // console.log(this.pointLength)
         if (this.onlineTraderStatus === 'onlineBuy') {
-          // this.rate = detailData.buyRate // 费率
           this.rate = getNestedData(detailData, 'buyRate') // 费率
         }
         if (this.onlineTraderStatus === 'onlineSell') {
-          // this.rate = detailData.sellRate // 费率
           this.rate = getNestedData(detailData, 'sellRate') // 费率
         }
       }
     },
     // 7.0 点击 确认购买 按钮提交数据
     async submitPickOrdersToBuy () {
-      if (!this.tradePassword) {
+      if (this.isNeedPayPassowrd && !this.tradePassword) {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
@@ -807,7 +808,7 @@ export default {
     },
     // 10.0 点击 确认出售 按钮提交数据
     async submitPickOrdersToSell () {
-      if (!this.tradePassword) {
+      if (this.isNeedPayPassowrd && !this.tradePassword) {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }

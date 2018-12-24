@@ -450,7 +450,11 @@ import {
 // 引入组件
 import IconFontCommon from '../../components/Common/IconFontCommon'
 // 引入提示信息
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData,
+  isNeedPayPasswordAjax
+} from '../../utils/commonFunc'
 // 引入全局变量和方法
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
@@ -462,7 +466,6 @@ export default {
     return {
       publishADTradePwdDialogStatus: false, // 弹窗状态
       ADManageJumpOrderStatus: 1, // 从广告管理点击修改订单跳转过来状态标识 1为不是跳转来的，2为跳转来的
-      dialogVisible: false, // 弹窗状态
       // 选择模块下拉列表循环数组
       activitedBuySellStyle: 'SELL', // 选中的发布广告 买卖 类型
       // 1.0 发布广告 买卖 类型数组
@@ -544,7 +547,8 @@ export default {
       priceErrorTipsBorder: false, // 价格错误提示框
       entrustCountErrorTipsBorder: false, // 交易数量错误提示框
       minCountErrorTipsBorder: false, // 单笔最小限额错误提示框
-      maxCountErrorTipsBorder: false // 单笔最大限额错误提示框
+      maxCountErrorTipsBorder: false, // 单笔最大限额错误提示框
+      isNeedPayPassowrd: true
     }
   },
   created () {
@@ -691,7 +695,7 @@ export default {
       this.getOTCCoinInfo()
     },
     // 5.0 点击发布广告弹出输入交易密码框
-    showPasswordDialog () {
+    async showPasswordDialog () {
       // 非空及数据范围准确性验证
       // 单价
       if (!this.$refs.price.value) {
@@ -742,7 +746,13 @@ export default {
         this.errorInfoSuccessOrderCount = this.$t('M.otc_publish_ad_err2')
         return false
       }
-      this.publishADTradePwdDialogStatus = true
+      this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+      if (this.isNeedPayPassowrd) {
+        // 限制设置--非必输选项
+        this.publishADTradePwdDialogStatus = true
+      } else {
+        this.publishADSubmitButton()
+      }
     },
     // 同时处理最大订单数获得焦点清空错误信息
     clearLimitOrderCountErrData () {
@@ -754,7 +764,7 @@ export default {
     },
     // 6.0 点击密码框中的提交按提交钮发布广告
     async publishADSubmitButton () {
-      if (!this.tradePassword) {
+      if (this.isNeedPayPassowrd && !this.tradePassword) {
         // 请输入交易密码
         this.errorInfoPassword = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
@@ -770,9 +780,11 @@ export default {
         limitOrderCount: this.limitOrderCount, // 同时处理最大订单数(0=不限制)
         successOrderCount: this.successOrderCount, // 买家必须成交过几次(0=不限制)
         remark: this.remarkText, // 备注
-        payTypes: this.parameterPayTypes, // 支付方式（用，隔开的名字）
-        tradePassword: this.tradePassword // 交易密码
+        payTypes: this.parameterPayTypes // 支付方式（用，隔开的名字）
       }
+      // 交易密码
+      param = this.isNeedPayPassowrd ? { ...param, tradePassword: this.tradePassword } : param
+
       let data
       if (this.ADManageJumpOrderStatus == 1) {
         data = await addOTCPutUpOrdersMerchantdedicated(param)
@@ -781,6 +793,7 @@ export default {
         param.entrustId = this.messageId
         data = await addModifyPublishADOrder(param)
       }
+
       // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 1))) {
@@ -1043,7 +1056,7 @@ export default {
         width: 720px;
 
         .must-fill-star {
-          color: red;
+          color: #d45858;
         }
 
         > .common {
