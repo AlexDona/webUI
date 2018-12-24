@@ -73,8 +73,17 @@
         <el-input
           type="password"
           v-model="payPassword"
+          @input="clearErrorMsg"
         >
         </el-input>
+        <div
+          class="error-box"
+        >
+          <span v-show="isPayPasswordEmpty"
+          >
+            {{$t('M.otc_publishAD_pleaseInput')}}{{$t('M.otc_publishAD_sellpassword')}}
+          </span>
+        </div>
         <span
           slot="footer"
           class="dialog-footer footer"
@@ -138,7 +147,8 @@ export default {
       payPassword: '',
       params: {},
       oldFrequency: '',
-      isNeedPayPassword: true
+      isNeedPayPassword: true,
+      isPayPasswordEmpty: false
     }
   },
   async created () {
@@ -181,8 +191,15 @@ export default {
         this.isCheckPayPassword = true
       }
     },
+    clearErrorMsg () {
+      this.isPayPasswordEmpty = false
+    },
     async setFrequencyWithPayPassword () {
       this.params.payPassword = this.payPassword
+      if (!this.payPassword) {
+        this.isPayPasswordEmpty = true
+        return false
+      }
       await this.setUserInputPasswordFrequency(this.params)
       this.isCheckPayPassword = false
       this.payPassword = ''
@@ -328,6 +345,12 @@ export default {
     /deep/ {
       .el-dialog {
         width: 325px;
+
+        .error-box {
+          margin: 10px 0 0;
+          font-size: 12px;
+          color: #d45858;
+        }
       }
 
       .el-dialog__header {
@@ -338,7 +361,7 @@ export default {
       }
 
       .el-dialog__body {
-        padding: 25px 27px;
+        padding: 25px 27px 10px;
         line-height: 25px;
       }
 
