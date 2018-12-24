@@ -78,3 +78,5 @@ export const getFinancialRecord = (params) => get('financialManagement/recordInf
 export const cancelUserOtcOrder = (params) => post('otcOrder/cancelUserOtcOrder', params)
 // 成交otc用户定单（过期卖家未收款）
 export const completeUserOtcOrder = (params) => post('otcOrder/completeUserOtcOrder', params)
+// 广告管理中订单点击修改跳转到商家专用发布广告页面，修改数据后再发布广告调取的接口
+export const addModifyPublishADOrder = (params) => postWithURLencoded('otcEntrust/upShelfOtcEntrust', params)
