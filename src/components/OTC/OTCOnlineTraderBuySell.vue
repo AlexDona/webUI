@@ -917,8 +917,8 @@ export default {
         > .shoper-remark {
           box-sizing: border-box;
           width: 320px;
-          height: 130px;
-          padding: 30px 49px 0 39px;
+          min-height: 130px;
+          padding: 30px 49px 5px 39px;
           margin-top: 20px;
           border-radius: 5px;
 

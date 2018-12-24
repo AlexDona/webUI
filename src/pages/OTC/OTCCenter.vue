@@ -238,7 +238,6 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    <!-- {{s.row.minCount}}~{{s.row.maxCount}}{{activitedCurrencyName}} -->
                     {{ filterNumber(s.row.minCount) }}~{{ filterNumber(s.row.maxCount) }}{{activitedCurrencyName}}
                   </div>
                 </template>
@@ -769,6 +768,8 @@ export default {
     },
     //  4.0 选中我想购买和出售币种名称
     selectCurrencyName (index) {
+      this.currentPage = 1
+      console.log(this.currentPage)
       // console.log(index)
       this.selectCurrencyNameStatus = index
       this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name) // 币种名称
@@ -780,6 +781,8 @@ export default {
     },
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
     async toggleBuyOrSellStyle (e) {
+      this.currentPage = 1
+      console.log(this.currentPage)
       // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
       // this.isDisabledRadio = true
       // setTimeout(() => {
@@ -791,6 +794,8 @@ export default {
     },
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
+      this.currentPage = 1
+      console.log(this.currentPage)
       this.activitedCurrencyId = e
       // console.log(this.activitedCurrencyId)
       this.availableCurrencyId.forEach(item => {
@@ -804,6 +809,8 @@ export default {
     },
     // 9.0 改变支付方式下拉框的选中值
     payWayChangeValue (e) {
+      this.currentPage = 1
+      console.log(this.currentPage)
       this.checkedPayType = e
       // console.log(this.checkedPayType) //  选中的支付方式的id
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
