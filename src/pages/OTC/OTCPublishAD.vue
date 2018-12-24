@@ -1048,7 +1048,7 @@ export default {
         width: 720px;
 
         .must-fill-star {
-          color: red;
+          color: #d45858;
         }
 
         > .common {

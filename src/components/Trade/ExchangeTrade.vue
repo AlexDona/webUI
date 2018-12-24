@@ -355,7 +355,7 @@
           </div>
         </el-tab-pane>
       </el-tabs>
-
+      <!-- 交易密码 -->
       <el-dialog
         :title="$t('M.comm_set') + $t('M.comm_password')"
         :visible.sync="isShowPayPassword"
@@ -364,12 +364,12 @@
         <el-input
           type="password"
           v-model="payPassword"
-          @keyup="isInputPayPossword = false"
+          @input="clearErrorMsg"
         >
         </el-input>
         <div
           class="error-box"
-          v-show="isInputPayPossword"
+          v-show="isPayPasswordEmpty"
         >
           {{$t('M.otc_publishAD_pleaseInput')}}{{$t('M.otc_publishAD_sellpassword')}}
         </div>
@@ -436,10 +436,6 @@ export default {
       limitSellCountInputRef: 'limitSellCountInput',
       // 市价交易 卖出量input ref name
       marketSellCountInputRef: 'marketSellCountInput',
-      // 卖出价input ref name
-      sellPriceInputRef: 'sellPriceInput',
-      // 卖出量input ref name
-      sellCountInputRef: 'sellCountInput',
       // 当前币种小数点限制位数
       pointLength: 4,
       // 撮合类型： LIMIT:限价单 MARKET:市价单
@@ -502,7 +498,9 @@ export default {
       // 委单类型 1： 市价单、0：限价单
       entrustType: 0,
       payPassword: '', // 交易密码
-      isNeedPayPassowrd: true // 是否需要交易密码
+      isNeedPayPassowrd: true, // 是否需要交易密码
+      // 交易密码是否为空
+      isPayPasswordEmpty: false
     }
   },
   created () {
@@ -543,7 +541,9 @@ export default {
       this.$refs[this.limitSellPriceInputRef].value = ''
       this.$refs[this.limitSellCountInputRef].value = ''
       this.$refs[this.marketSellCountInputRef].value = ''
-      this.$refs[this.sellPriceInputRef].value = ''
+    },
+    clearErrorMsg () {
+      this.isPayPasswordEmpty = false
     },
     // 取消添加委单
     cancelAddEntrust () {
@@ -728,6 +728,7 @@ export default {
       }
       if (this.isNeedPayPassowrd) {
         this.isShowPayPassword = true
+        this.clearErrorMsg()
       } else {
         this.addEntrust()
       }
@@ -764,7 +765,7 @@ export default {
         params.payPwd = this.payPassword
         this.payPassword = ''
         if (!params.payPwd) {
-          this.isInputPayPossword = true
+          this.isPayPasswordEmpty = true
           return false
         }
       }
@@ -842,6 +843,12 @@ export default {
     }
   },
   watch: {
+    isShowPayPassword (newVal) {
+      if (newVal) {
+        this.payPassword = ''
+        this.clearErrorMsg()
+      }
+    },
     async refreshEntrustStatus (newVal) {
       if (newVal) {
         await this.getUserAssetOfActiveSymbol()

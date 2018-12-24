@@ -719,7 +719,6 @@ export default {
     require('../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
-    this.reflashErCode()
     this.clearInputValue()
   },
   mounted () {

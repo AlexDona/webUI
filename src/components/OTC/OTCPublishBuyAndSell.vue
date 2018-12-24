@@ -1393,7 +1393,7 @@ export default {
 
             .password-dialog {
               .tips {
-                color: red;
+                color: #d45858;
               }
             }
           }
@@ -1604,7 +1604,7 @@ export default {
 
             .password-dialog {
               .tips {
-                color: red;
+                color: #d45858;
               }
             }
           }

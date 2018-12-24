@@ -99,7 +99,7 @@
             <!--交易密码-->
             <el-form-item
               :label="$t('M.comm_password')"
-              v-if="isNeedPayPassowrd"
+              v-if="isNeedPayPassword"
             >
               <input
                 type="password"
@@ -464,11 +464,11 @@ export default {
       pointLength: 4, // 保留小数位后四位
       errorMsg: '', // 错误提示
       partLoading: true, // 局部列表loading
-      isNeedPayPassowrd: false
+      isNeedPayPassword: false
     }
   },
   async created () {
-    this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+    this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
   },
   mounted () {
   },
@@ -605,7 +605,7 @@ export default {
       let goOnStatus = 0
       console.log(this.price)
       goOnStatus = (this.checkoutInputFormat(0, this.buyUID) && this.checkoutInputFormat(1, this.count) && this.checkoutInputFormat(2, this.price)) ? 1 : 0
-      if (this.isNeedPayPassowrd && goOnStatus) {
+      if (this.isNeedPayPassword && goOnStatus) {
         goOnStatus = this.checkoutInputFormat(3, this.payPassword) ? 1 : 0
       }
       if (goOnStatus) {
@@ -616,7 +616,7 @@ export default {
           price: this.price // push价格
         }
 
-        params = this.isNeedPayPassowrd ? {...params, ...{password: this.payPassword}} : params
+        params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
         let data = await pushAssetsSubmit(params)
         if (!(returnAjaxMsg(data, this, 1))) {
           return false
@@ -689,7 +689,7 @@ export default {
     // 点击确认用户信息并弹出交易密码框
     confirmToPay () {
       this.isShowPaymentDialog = false
-      if (this.isNeedPayPassowrd) {
+      if (this.isNeedPayPassword) {
         this.isShowPayPasswordDialog = true
       } else {
         this.payWithPassword()
@@ -698,13 +698,13 @@ export default {
     // 确定付款（含交易密码）
     async payWithPassword () {
       let goOnStatus = 0
-      goOnStatus = this.isNeedPayPassowrd ? (this.checkoutInputFormat(3, this.payPassword, 1) && this.payPassword ? 1 : 0) : 1
+      goOnStatus = this.isNeedPayPassword ? (this.checkoutInputFormat(3, this.payPassword, 1) && this.payPassword ? 1 : 0) : 1
       if (goOnStatus) {
         let data
         let params = {
           id: this.pushUID // 列表id
         }
-        params = this.isNeedPayPassowrd ? {...params, ...{passowrd: this.payPassword}} : params
+        params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
         data = await pushPropertyTransaction(params)
         if (!(returnAjaxMsg(data, this, 1))) {
           return false
@@ -728,7 +728,7 @@ export default {
   watch: {
     async userCenterActiveName (newVal) {
       if (newVal === 'push-asset') {
-        this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+        this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
         this.getPushRecordList()
         // 清空数据
         this.emptyInputData()

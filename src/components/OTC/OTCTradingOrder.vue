@@ -1002,7 +1002,7 @@ export default {
           orderId: this.activedTradingOrderId, // 订单id
           payId: this.activitedPayStyleId // 支付账户id
         }
-        params = this.isNeedPayPassowrd ? {...params, ...{tradePassword: this.tradePassword}} : params
+        params = this.isNeedPayPassowrd ? {...params, tradePassword: this.tradePassword} : params
         const data = await buyerPayForOrder(params)
         // console.log(data)
         // 提示信息
@@ -1041,7 +1041,7 @@ export default {
         orderId: this.activedTradingOrderId // 订单id
       }
       // 订单id
-      params = this.isNeedPayPassowrd ? {...params, ...{orderId: this.activedTradingOrderId}} : params
+      params = this.isNeedPayPassowrd ? {...params, tradePassword: this.tradePassword} : params
       const data = await sellerConfirmGetMoney(params)
 
       // 提示信息
@@ -1071,7 +1071,6 @@ export default {
     },
     // 12.0 卖家提交申诉按钮弹出交易密码框
     async sellerAppeal () {
-      this.isNeedPayPassowrd = await this.isNeedPayPasswordAjax(this)
       if (!this.appealTextareaValue) {
         this.$message({
           // 请输入申诉原因
@@ -1080,6 +1079,7 @@ export default {
         })
         return false
       }
+      this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
       if (this.isNeedPayPassowrd) {
         this.dialogVisibleSubmitComplaint = true
       } else {
@@ -1098,7 +1098,7 @@ export default {
         orderId: this.activedTradingOrderId, // 订单id
         reason: this.appealTextareaValue // 申诉原因
       }
-      params = this.isNeedPayPassowrd ? {...params, ...{tradePassword: this.tradePassword}} : params
+      params = this.isNeedPayPassowrd ? {...params, tradePassword: this.tradePassword} : params
       const data = await sellerSendAppeal(params)
       // console.log(data)
       // 提示信息
@@ -1598,7 +1598,7 @@ export default {
 
       > .password-dialog {
         .tips {
-          color: red;
+          color: #d45858;
         }
       }
     }
@@ -1888,7 +1888,7 @@ export default {
 
       > .password-dialog {
         .tips {
-          color: red;
+          color: #d45858;
         }
       }
     }
