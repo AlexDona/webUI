@@ -33,10 +33,11 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      bannerBackgroundImage: state => state.home.bannerBackgroundImage
+      bannerBackgroundImage: state => state.home.bannerBackgroundImage,
+      innerWidth: state => state.common.innerWidth
     }),
     screenWidth () {
-      return window.innerWidth / 3
+      return this.innerWidth / 3
     }
   },
   watch: {

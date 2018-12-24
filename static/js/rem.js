@@ -1,4 +1,5 @@
-import store from '../../src/vuex'
+import storeCreater from '../../src/vuex'
+const store = storeCreater()
 getSize()
 
 function getSize () {
@@ -8,6 +9,7 @@ function getSize () {
   let width = window.innerWidth
   let height = window.innerHeight
   console.log(width)
+  store.commit('common/SET_WINDOW_WIDTH', width)
   let isPC = IsPC()
   if (width < 1050 || !isPC) {
     store.commit('user/TOGGLE_PC_MOBILE', true)

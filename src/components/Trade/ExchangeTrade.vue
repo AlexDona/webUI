@@ -58,6 +58,7 @@
                     type="text"
                     :placeholder="$t('M.comm_buy') + $t('M.comm_price')"
                     :ref="limitBuyPriceInputRef"
+                    onpaste="return false"
                     @keyup="autoChangeData('limit-buy',limitBuyPriceInputRef,middleTopData.priceExchange)"
                     @input="formatInput(limitBuyPriceInputRef,middleTopData.priceExchange)"
                   >
@@ -73,6 +74,7 @@
                 <div class="input">
                   <input
                     type="text"
+                    onpaste="return false"
                     :placeholder="$t('M.comm_buy') + $t('M.comm_quantity')"
                     :ref="limitBuyCountInputRef"
                     @keyup="autoChangeData('limit-buy',limitBuyCountInputRef,middleTopData.countExchange)"
@@ -142,6 +144,7 @@
                 <div class="input">
                   <input
                     type="text"
+                    onpaste="return false"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_price')"
                     :ref="limitSellPriceInputRef"
                     @keyup="autoChangeData('limit-sell',limitSellPriceInputRef,middleTopData.priceExchange)"
@@ -159,6 +162,7 @@
                 <div class="input">
                   <input
                     type="text"
+                    onpaste="return false"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="limitSellCountInputRef"
                     @keyup="autoChangeData('limit-sell',limitSellCountInputRef,middleTopData.countExchange)"
@@ -246,6 +250,7 @@
                 <div class="input">
                   <input
                     type="text"
+                    onpaste="return false"
                     :placeholder="$t('M.comm_buy') + $t('M.comm_quantity')"
                     :ref="marketBuyCountInputRef"
                     @keyup="autoChangeData('market-buy',marketBuyCountInputRef,middleTopData.countExchange)"
@@ -323,6 +328,7 @@
                 <div class="input">
                   <input
                     type="text"
+                    onpaste="return false"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="marketSellCountInputRef"
                     @keyup="autoChangeData('market-sell',marketSellCountInputRef,middleTopData.countExchange)"

@@ -1,22 +1,17 @@
-// import Vue from 'vue'
 import App from './App'
-import router from './router'
+import routerCreator from './router'
 import {getStore} from './utils'
-// import '../static/js/rem'
-// css
-// import '../static/css/reset.css'
 import 'babel-polyfill'
-import store from './vuex'
+import storeCreater from './vuex'
 import '../static/js/rem'
-// 图片懒加载
 import VueLazyLoad from 'vue-lazyload'
 
 Vue.use(VueLazyLoad, {
   loading: require('./assets/develop/loading.svg')
 })
 
-// import '../static/css/scss/index.scss'
-console.log(ELEMENT.lang)
+const store = storeCreater()
+const router = routerCreator()
 // 多语言
 const i18n = new VueI18n({
   locale: getStore('language') || store.state.common.defaultLanguage, // 语言标识
@@ -43,6 +38,7 @@ let vm = new Vue({
   i18n,
   render: h => h(App)
 }).$mount('#app', true)
+
 Vue.use({
   vm
 })
