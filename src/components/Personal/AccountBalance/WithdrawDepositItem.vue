@@ -61,7 +61,6 @@
             type="text"
             class="flex-input border-radius2 padding-l15 box-sizing"
             ref="feeInputRef"
-            onpaste="return false"
             @keyup="changeInputValue('feeInputRef', index, pointLengthAccountCount, 'serviceType')"
             @input="changeInputValue('feeInputRef', index, pointLengthAccountCount, 'serviceType')"
           >
@@ -82,7 +81,6 @@
             type="text"
             class="count-flex-input border-radius2 paddinglr15 box-sizing text-align-r"
             ref="countInputRef"
-            onpaste="return false"
             @blur="checkUserInputAvailable
 ('withdrawCount', index)"
             @keyup="changeInputValue('countInputRef', index, pointLengthAccountCount, 'rechargeType')"

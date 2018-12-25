@@ -6,8 +6,5 @@ export default {
   },
   isNeedApp () {
     return xDomain !== ''
-  },
-  isNeedIOS () {
-    return xDomain !== 'kbbt.com'
   }
 }

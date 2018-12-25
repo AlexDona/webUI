@@ -14,8 +14,7 @@ export const footerInfo = {
   // ##########################任付伟20181117-1145新增国际化################################
   'about_footer_info_down1': '全プラット端末がアクセスする',
   'about_footer_info_down2': 'iOS、Android、Windows多プラット全業務機能をサポートする',
-  'about_footer_info_down3': 'IOSとAndroid ダウンロード',
-  'about_footer_info_down3_withoutIOS': 'Android ダウンロード',
+  'about_footer_info_down3': 'iosとAndroid ダウンロード',
   'about_footer_info_down4': 'いつでも注目し、素早い取引',
   'about_footer_info_down5': 'Mac ダウンロード',
   'about_footer_info_down6': 'WIN ダウンロード',

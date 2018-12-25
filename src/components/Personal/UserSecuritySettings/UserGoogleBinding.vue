@@ -597,7 +597,7 @@ export default {
               }
 
               .prompt-message {
-                color: #d45858;
+                color: red;
               }
             }
           }
@@ -685,7 +685,7 @@ export default {
               }
 
               .prompt-message {
-                color: #d45858;
+                color: red;
               }
             }
           }

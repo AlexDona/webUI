@@ -198,7 +198,6 @@
                         :currencyName="currencyName"
                         :chargeMoneyAddress="chargeMoneyAddress"
                         :isNeedTag="isNeedTag"
-                        :minRechargeAmount="minRechargeAmount"
                         :rechargeNoteInfo="rechargeNoteInfo"
                         @jumpToOtherTab="jumpToOtherTab"
                       />
@@ -477,8 +476,6 @@ export default {
       rechargeNoteInfo: '', // 充币地址备注信息
       localLoading: true, // 页面列表局部loading
       isLegalWithdrawAddress: true, // 是否为合法提币地址
-      // 最小充币金额
-      minRechargeAmount: 0,
       end: '' // 占位
     }
   },
@@ -883,8 +880,7 @@ export default {
         this.isNeedTag = getNestedData(data, 'data.data.userRechargeAddress.needTag')
         // 获取充值备注信息 rechargeNoteInfo
         this.rechargeNoteInfo = getNestedData(data, 'data.data.userRechargeAddress.tag')
-        this.minRechargeAmount = getNestedData(data, 'data.data.userRechargeAddress.minRechargeAmount')
-        console.log(this.minRechargeAmount)
+        console.log(data.data.data.userRechargeAddress.tag)
         console.log(this.chargeMoneyAddress)
       }
     },

@@ -204,29 +204,29 @@
                         <!--账户资产-->
                         {{$t('M.comm_user_account_balance')}}
                       </li>
+                      <li @click="stateReturnSuperior('order-management')">
+                        <!--订单管理-->
+                        {{$t('M.comm_user_order_management')}}
+                      </li>
                       <li @click="stateReturnSuperior('identity-authentication')">
                         <!--身份认证-->
                         {{$t('M.comm_user_identity_authentication')}}
-                      </li>
-                       <li @click="stateReturnSuperior('receiving-set')">
-                        <!--收款设置-->
-                        {{$t('M.comm_user_receiving_set')}}
-                      </li>
-                       <li @click="stateReturnSuperior('invite')">
-                        <!--邀请推广-->
-                        {{$t('M.comm_user_invite_generalize')}}
                       </li>
                       <li @click="stateReturnSuperior('security-center')">
                         <!--安全中心-->
                         {{$t('M.comm_user_security_center')}}
                       </li>
+                      <li @click="stateReturnSuperior('receiving-set')">
+                        <!--收款设置-->
+                        {{$t('M.comm_user_receiving_set')}}
+                      </li>
+                      <li @click="stateReturnSuperior('invite')">
+                        <!--邀请推广-->
+                        {{$t('M.comm_user_invite_generalize')}}
+                      </li>
                       <li @click="stateReturnSuperior('api')">
                         <!--API管理-->
                         {{$t('M.comm_user_api_management')}}
-                      </li>
-                       <li @click="stateReturnSuperior('order-management')">
-                        <!--订单管理-->
-                        {{$t('M.comm_user_order_management')}}
                       </li>
                       <li @click="userLoginOut">
                         <!--退出-->
@@ -675,6 +675,7 @@ export default{
       middleTopData: state => state.trade.middleTopData, // 当前交易对数据
       middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
       userInfo: state => state.user.loginStep1Info.userInfo,
+      paypasswordSet: state => state.user.loginStep1Info.userInfo.paypasswordSet, // 用户是否已进入交易密码
       activeLanguage: state => state.common.activeLanguage,
       userInfoRefreshStatus: state => state.common.userInfoRefreshStatus,
       logoSrc: state => state.common.logoSrc,
@@ -685,7 +686,7 @@ export default{
       otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus
     }),
     localPayPwdSet () {
-      return getNestedData(getCookieWithJSON('loginStep1Info'), 'userInfo.paypasswordSet') || getNestedData(this.userInfo, 'paypasswordSet')
+      return getNestedData(getCookieWithJSON('loginStep1Info'), 'userInfo.paypasswordSet') || this.paypasswordSet
     }
   },
   watch: {
@@ -755,7 +756,6 @@ export default{
           height: 100%;
 
           > .nav-item {
-            position: relative;
             display: inline-block;
             height: 100%;
             padding: 0 2%;
@@ -771,16 +771,11 @@ export default{
             > .sub-nav-list {
               position: absolute;
               box-sizing: border-box;
-              width: 700px;
+              width: 100%;
               height: 36px;
               line-height: 36px;
               text-align: left;
               background-color: $nightSubNavBgColor;
-
-              &.otc,
-              &.activity-center {
-                left: 6px;
-              }
 
               &::before {
                 position: absolute;
@@ -804,6 +799,78 @@ export default{
 
                 > a {
                   color: #8494a6;
+                }
+              }
+
+              @media screen and (min-width: 1920px) {
+                /* 活动中心子导航 */
+                &.activity-center {
+                  left: 31.5%;
+                }
+
+                /* otc子导航 */
+                &.otc {
+                  left: 16%;
+                }
+              }
+
+              @media screen and (max-width: 1920px) and (min-width: 1337px) {
+                /* 活动中心子导航 */
+                &.activity-center {
+                  left: 40%;
+                }
+
+                /* otc子导航 */
+                &.otc {
+                  left: 24%;
+                }
+              }
+
+              @media screen and (max-width: 1900px) {
+                /* 活动中心子导航 */
+                &.activity-center {
+                  left: 45%;
+                }
+
+                /* otc子导航 */
+                &.otc {
+                  left: 22%;
+                }
+              }
+
+              @media screen and (max-width: 1500px) {
+                /* 活动中心子导航 */
+                &.activity-center {
+                  left: 45%;
+                }
+
+                /* otc子导航 */
+                &.otc {
+                  left: 22%;
+                }
+              }
+
+              @media screen and (max-width: 1337px) {
+                /* 活动中心子导航 */
+                &.activity-center {
+                  left: 47%;
+                }
+
+                /* otc子导航 */
+                &.otc {
+                  left: 25%;
+                }
+              }
+
+              @media screen and (max-width: 1200px) {
+                /* 活动中心子导航 */
+                &.activity-center {
+                  left: 53%;
+                }
+
+                /* otc子导航 */
+                &.otc {
+                  left: 28%;
                 }
               }
             }

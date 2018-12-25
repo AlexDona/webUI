@@ -719,6 +719,7 @@ export default {
     require('../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
+    this.reflashErCode()
     this.clearInputValue()
   },
   mounted () {
@@ -783,9 +784,6 @@ export default {
     },
     // 刷新二维码
     async reflashErCode () {
-      if (this.socket) {
-        this.socket.doClose()
-      }
       const data = await getLoginErcode()
       if (!returnAjaxMsg(data, this)) {
         return false

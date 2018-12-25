@@ -197,12 +197,9 @@ export default {
     }
   },
   watch: {
-    newsDetailJumpId (newVal) {
-      console.log(newVal)
-    },
     async language () {
-      await this.getAllNewsTypeList()
-      await this.getNewsNoticeList()
+      await this.resetNewTypeList()
+      this.getNewsNoticeList()
     }
   }
 }

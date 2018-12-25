@@ -135,9 +135,7 @@ export const getOTCAvailableCurrency = params => get('otcCOin/getAvailOTCCoins',
   'not-loading': true
 }, params))
 // 查询用户所有挂单列表（分页）:也就是订单中的 委托中的订单
-export const getOTCEntrustingOrders = params => get('otcEntrust/selectEntrustsPage', Object.assign({
-  'not-loading': true
-}, params))
+export const getOTCEntrustingOrders = params => get('otcEntrust/selectEntrustsPage', params)
 // 分页查询所有用户otc各状态交易订单列表
 export const getQueryAllOrdersList = params => get('otcOrder/selectUserOrdersPage', Object.assign({
   'not-loading': true

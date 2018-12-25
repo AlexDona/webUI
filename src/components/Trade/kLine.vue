@@ -1,4 +1,4 @@
-`<template>
+<template>
   <div
     class="kline-container"
   >
@@ -89,12 +89,12 @@ export default {
   },
   beforeCreate () {
   },
-  async created () {
+  created () {
     // this.widget = null
     console.log(this.socket)
     this.socket.doOpen()
     // 获取默认交易对
-    await this.getDefaultSymbol()
+    this.getDefaultSymbol()
   },
   mounted () {
     this.initKLine(this.symbol)
@@ -295,7 +295,7 @@ export default {
                 align: 'left'
               })
               item.resolution === _self.widget._options.interval && _self.updateSelectedIntervalButton(button)
-              const selected = index == 3 ? ' selected' : ''
+              const selected = index == 1 ? ' selected' : ''
               button.attr('class', 'button ' + item.class + selected + ' add' + index)
                 .attr('data-chart-type', item.chartType === undefined ? 1 : item.chartType)
                 .on('click', function (e) {
@@ -311,10 +311,6 @@ export default {
                 .append(item.label)
             })
           }
-          let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
-          console.dir(iframe$('.add7'))
-          // iframe$('.add7').click()
-          // console.log()
           this.klineInitCount++
           this.widget.chart().createStudy('Moving Average', false, true, [5, 'close', 0], null, {'Plot.color': '#7b53a7'})
           this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})
@@ -345,7 +341,7 @@ export default {
     },
     // 切换时间间隔
     updateSelectedIntervalButton (button) {
-      console.dir(button)
+      console.log(button)
       this.widget.selectedIntervalButton && this.widget.selectedIntervalButton.removeClass('selected')
       button.addClass('selected')
       this.widget.selectedIntervalButton = button
@@ -522,7 +518,7 @@ export default {
       }
     },
     // 订阅消息
-    subscribeSocketData (symbol, interval = 'min15') {
+    subscribeSocketData (symbol, interval = 'min') {
       this.getKlineByAjax(symbol, interval, this.KlineNum)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
@@ -624,4 +620,3 @@ export default {
     }
   }
 </style>
-`

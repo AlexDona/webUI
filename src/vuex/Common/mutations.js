@@ -16,7 +16,6 @@ import {
   SET_COUNT_DOWN_RESET_STATUS,
   CHANGE_DEFAULT_LANGUAGE,
   CHANGE_AJAX_READY_STATUS,
-  SET_WINDOW_WIDTH,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
@@ -144,8 +143,5 @@ export default {
   },
   [CHANGE_AJAX_READY_STATUS] (state, data) {
     state.isAjaxReady = data
-  },
-  [SET_WINDOW_WIDTH] (state, data) {
-    state.innerWidth = data
   }
 }

@@ -244,23 +244,6 @@ export function phoneNumRegexpInput (event) {
 }
 
 /**
- * 只能输入正整数限制
- * @param event ： 当前input DOM 对象
- */
-export function positiveIntegerNumRegexpInput (event) {
-  let val = event.value
-  let finalVal = ''
-  let valArr = val.split('')
-  _.forEach(valArr, (item) => {
-    if (((item - 0) || item === '0')) {
-      finalVal += item
-    }
-  })
-  event.value = finalVal
-  return finalVal
-}
-
-/**
  * 邮箱账号输入限制
  * @param event：当前input DOM对象
  */

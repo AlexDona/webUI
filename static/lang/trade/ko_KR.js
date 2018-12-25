@@ -41,9 +41,5 @@ export const trade = {
   'trade_market_amount_increase': '증가 폭도',
   'trade_market_optional': '자체 선택',
   'trade_cancel_all_entrust': '모든 위탁을 취소하다',
-  'trade_determine_cancel_all_entrust': '모든 위탁 취소를 확정하다',
-  'trade_empty_buy_count': '구매 금액을 입력하십시오',
-  'trade_empty_sell_count': '판매 금액을 입력하십시오',
-  'trade_empty_buy_price': '입찰 가격을 입력하십시오',
-  'trade_empty_sell_price': '제안 가격을 입력하십시오'
+  'trade_determine_cancel_all_entrust': '모든 위탁 취소를 확정하다'
 }
