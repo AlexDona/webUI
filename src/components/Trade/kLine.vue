@@ -285,6 +285,7 @@ export default {
             resolution: '1',
             chartType: 3
           }].concat(kLineBtnList)
+          console.log(btnList)
           chart.onIntervalChanged().subscribe(null, function (interval, obj) {
             _self.widget.changingInterval = false
           })
@@ -295,7 +296,7 @@ export default {
                 align: 'left'
               })
               item.resolution === _self.widget._options.interval && _self.updateSelectedIntervalButton(button)
-              const selected = index == 3 ? ' selected' : ''
+              const selected = index == 1 ? ' selected' : ''
               button.attr('class', 'button ' + item.class + selected + ' add' + index)
                 .attr('data-chart-type', item.chartType === undefined ? 1 : item.chartType)
                 .on('click', function (e) {
@@ -341,7 +342,7 @@ export default {
     },
     // 切换时间间隔
     updateSelectedIntervalButton (button) {
-      console.log(button)
+      console.dir(this.widget.selectedIntervalButton)
       this.widget.selectedIntervalButton && this.widget.selectedIntervalButton.removeClass('selected')
       button.addClass('selected')
       this.widget.selectedIntervalButton = button
@@ -518,7 +519,7 @@ export default {
       }
     },
     // 订阅消息
-    subscribeSocketData (symbol, interval = 'min15') {
+    subscribeSocketData (symbol, interval = 'min') {
       this.getKlineByAjax(symbol, interval, this.KlineNum)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)

@@ -69,41 +69,49 @@ export const kLineBtnList = [
   {
     class: 'resolution_btn',
     label: '1min',
-    resolution: '1'
+    resolution: '1',
+    chartType: 1
   },
   {
     class: 'resolution_btn',
     label: '5min',
-    resolution: '5'
+    resolution: '5',
+    chartType: 1
   },
   {
     class: 'resolution_btn',
     label: '15min',
-    resolution: '15'
+    resolution: '15',
+    chartType: 1
   },
   {
     class: 'resolution_btn',
     label: '30min',
-    resolution: '30'
+    resolution: '30',
+    chartType: 1
   },
   {
     class: 'resolution_btn',
     label: '1hour',
-    resolution: '60'
+    resolution: '60',
+    chartType: 1
   },
   {
     class: 'resolution_btn',
     label: '4hour',
-    resolution: '240'
+    resolution: '240',
+    chartType: 1
   },
   {
     class: 'resolution_btn',
     label: '1day',
-    resolution: '1D'
+    resolution: '1D',
+    chartType: 1
   },
   {
     class: 'resolution_btn',
     label: '1week',
-    resolution: '1W'
+    resolution: '1W',
+    chartType: 1
   }
 ]
