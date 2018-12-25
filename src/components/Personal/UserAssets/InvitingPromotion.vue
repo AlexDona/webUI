@@ -882,7 +882,7 @@ export default {
 
                     > .code-copy {
                       border: 1px solid rgba(125, 144, 172, 1);
-                      color: red;
+                      color: #d45858;
                       background: rgb(255, 255, 255);
                     }
                   }

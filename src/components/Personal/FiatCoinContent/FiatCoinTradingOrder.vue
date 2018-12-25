@@ -1450,7 +1450,7 @@ export default {
 
       > .password-dialog {
         .tips {
-          color: red;
+          color: #d45858;
         }
       }
     }

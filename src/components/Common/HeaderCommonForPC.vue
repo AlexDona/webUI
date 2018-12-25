@@ -204,29 +204,29 @@
                         <!--账户资产-->
                         {{$t('M.comm_user_account_balance')}}
                       </li>
-                      <li @click="stateReturnSuperior('order-management')">
-                        <!--订单管理-->
-                        {{$t('M.comm_user_order_management')}}
-                      </li>
                       <li @click="stateReturnSuperior('identity-authentication')">
                         <!--身份认证-->
                         {{$t('M.comm_user_identity_authentication')}}
+                      </li>
+                       <li @click="stateReturnSuperior('receiving-set')">
+                        <!--收款设置-->
+                        {{$t('M.comm_user_receiving_set')}}
+                      </li>
+                       <li @click="stateReturnSuperior('invite')">
+                        <!--邀请推广-->
+                        {{$t('M.comm_user_invite_generalize')}}
                       </li>
                       <li @click="stateReturnSuperior('security-center')">
                         <!--安全中心-->
                         {{$t('M.comm_user_security_center')}}
                       </li>
-                      <li @click="stateReturnSuperior('receiving-set')">
-                        <!--收款设置-->
-                        {{$t('M.comm_user_receiving_set')}}
-                      </li>
-                      <li @click="stateReturnSuperior('invite')">
-                        <!--邀请推广-->
-                        {{$t('M.comm_user_invite_generalize')}}
-                      </li>
                       <li @click="stateReturnSuperior('api')">
                         <!--API管理-->
                         {{$t('M.comm_user_api_management')}}
+                      </li>
+                       <li @click="stateReturnSuperior('order-management')">
+                        <!--订单管理-->
+                        {{$t('M.comm_user_order_management')}}
                       </li>
                       <li @click="userLoginOut">
                         <!--退出-->
@@ -675,7 +675,6 @@ export default{
       middleTopData: state => state.trade.middleTopData, // 当前交易对数据
       middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
       userInfo: state => state.user.loginStep1Info.userInfo,
-      paypasswordSet: state => state.user.loginStep1Info.userInfo.paypasswordSet, // 用户是否已进入交易密码
       activeLanguage: state => state.common.activeLanguage,
       userInfoRefreshStatus: state => state.common.userInfoRefreshStatus,
       logoSrc: state => state.common.logoSrc,
@@ -686,7 +685,7 @@ export default{
       otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus
     }),
     localPayPwdSet () {
-      return getNestedData(getCookieWithJSON('loginStep1Info'), 'userInfo.paypasswordSet') || this.paypasswordSet
+      return getNestedData(getCookieWithJSON('loginStep1Info'), 'userInfo.paypasswordSet') || getNestedData(this.userInfo, 'paypasswordSet')
     }
   },
   watch: {
