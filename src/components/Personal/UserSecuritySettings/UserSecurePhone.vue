@@ -707,8 +707,8 @@ export default {
       console.log(this.amendDataPhone.newPhoneAccounts)
       let goOnStatus = 0
       if (
-        this.tieCheckoutInputFormat(1, this.amendDataPhone.newPhoneAccounts) &&
         this.tieCheckoutInputFormat(0, this.amendDataPhone.oldPhoneCode) &&
+        this.tieCheckoutInputFormat(1, this.amendDataPhone.newPhoneAccounts) &&
         this.tieCheckoutInputFormat(2, this.amendDataPhone.newPhoneCode) &&
         this.tieCheckoutInputFormat(3, this.amendDataPhone.transactionPassword)
       ) {
@@ -785,7 +785,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .set-phone {

@@ -112,14 +112,6 @@ export default {
       'CHANGE_ACTIVE_SYMBOL',
       'CHANGE_SOCKET_AND_AJAX_DATA'
     ]),
-    changeLoadingStatus () {
-      if (!this.loadingCount) {
-        setTimeout(() => {
-          this.fullscreenLoading = false
-          this.loadingCount++
-        }, 1200)
-      }
-    },
     changeIsKlineDataReady (status) {
       this.$store.commit('trade/SET_IS_KLINE_DATA_READY', status)
     },
@@ -178,6 +170,7 @@ export default {
               break
           }
         }
+        this.fullscreenLoading = false
         setTimeout(() => {
           this.changeIsKlineDataReady(true)
         }, 500)
@@ -236,7 +229,6 @@ export default {
       this.options.language = this.language
       this.init(this.options)
       this.getBars()
-      this.changeLoadingStatus()
     },
     // 获取初始交易对
     async getDefaultSymbol () {
@@ -270,7 +262,7 @@ export default {
           library_path: '/static/tradeview/charting_library/',
           disabled_features: disabledFeatures,
           enabled_features: [
-            // 'hide_left_toolbar_by_default' // 隐藏左侧边栏
+            'hide_left_toolbar_by_default' // 隐藏左侧边栏
           ],
           timezone: 'Asia/Shanghai',
           locale: options.language,
@@ -303,7 +295,7 @@ export default {
                 align: 'left'
               })
               item.resolution === _self.widget._options.interval && _self.updateSelectedIntervalButton(button)
-              const selected = index == 1 ? ' selected' : ''
+              const selected = index == 3 ? ' selected' : ''
               button.attr('class', 'button ' + item.class + selected + ' add' + index)
                 .attr('data-chart-type', item.chartType === undefined ? 1 : item.chartType)
                 .on('click', function (e) {
@@ -410,7 +402,7 @@ export default {
             volume: klineData.volume
           }
           let targetData = this.cacheData[ticker]
-          console.log(targetData)
+          // console.log(targetData)
           let timeDiff = getNestedData(targetData[targetData.length - 1], 'time') - getNestedData(klineData, 'time')
 
           if (!timeDiff) {
@@ -460,7 +452,7 @@ export default {
       }
       const ticker = `${this.symbol}-${this.interval}`
       if (this.cacheData[ticker] && this.cacheData[ticker].length) {
-        console.log(this.cacheData[ticker])
+        // console.log(this.cacheData[ticker])
         this.isLoading = false
         const newBars = []
         this.cacheData[ticker].forEach(item => {
@@ -526,7 +518,7 @@ export default {
       }
     },
     // 订阅消息
-    subscribeSocketData (symbol, interval = 'min') {
+    subscribeSocketData (symbol, interval = 'min15') {
       this.getKlineByAjax(symbol, interval, this.KlineNum)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
@@ -589,7 +581,6 @@ export default {
       }
       this.getActiveSymbolData(newVal)
       this.subscribeSocketData(newVal)
-      this.changeLoadingStatus()
     },
     interval () {
       this.KlineNum = 0
@@ -597,7 +588,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import '../../../static/css/scss/index';
 
   .kline-container {

@@ -169,7 +169,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   .slider-box {
     position: absolute;
     bottom: .2rem;

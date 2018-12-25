@@ -343,7 +343,6 @@ export default {
       ADManageStatusList: [
         {
           value: 'ENTRUSTED',
-          // label: this.$t('M.comm_already') + this.$t('M.otc_adMange_getting') // 已上架
           label: 'M.otc_adMange_already_getting' // 已上架
         },
         {
@@ -394,7 +393,7 @@ export default {
       this.activitedADManageTraderStyleList = ''
       // 清除选中币种id
       this.activitedADManageMarketList = ''
-      // 请吃法币币种id
+      // 清除法币币种id
       this.activitedADManageCurrencyId = ''
       // 选中状态清空
       this.activitedADManageStatusList = ''
@@ -425,9 +424,9 @@ export default {
         // 返回数据正确的逻辑 渲染列表
         this.loading = false
         let ADData = getNestedData(data, 'data.data')
-        this.ADList = ADData.list
+        this.ADList = getNestedData(ADData, 'list')
         // 分页
-        this.totalPages = ADData.pages - 0
+        this.totalPages = getNestedData(ADData, 'pages') - 0
       }
     },
     // 5.0

@@ -556,9 +556,11 @@ export default {
         this.loading = false
         // 返回数据正确的逻辑 重新渲染列表
         let merchantsOrdersListData = getNestedData(data, 'data.data')
-        this.merchantsOrdersList = merchantsOrdersListData.list
+        // this.merchantsOrdersList = merchantsOrdersListData.list
+        this.merchantsOrdersList = getNestedData(merchantsOrdersListData, 'list')
         // 分页
-        this.totalPages = merchantsOrdersListData.pages - 0
+        // this.totalPages = merchantsOrdersListData.pages - 0
+        this.totalPages = getNestedData(merchantsOrdersListData, 'pages') - 0
       }
     }
   },

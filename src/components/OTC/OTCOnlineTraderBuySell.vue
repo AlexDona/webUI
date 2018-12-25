@@ -188,6 +188,7 @@
                         ref="sellCount"
                         @keyup="calculatePriceValue('sellCount', pointLength)"
                         @input="calculatePriceValue('sellCount', pointLength)"
+                        onpaste="return false"
                       >
                       <!--购买-->
                       <input
@@ -199,6 +200,7 @@
                         ref="buyCount"
                         @keyup="calculatePriceValue('buyCount', pointLength)"
                         @input="calculatePriceValue('buyCount', pointLength)"
+                        onpaste="return false"
                       >
                       <span
                         class="unit"
@@ -217,6 +219,7 @@
                         ref="sellPrice"
                         @keyup="calculateCountValue('sellPrice', moneyPointLength)"
                         @input="calculateCountValue('sellPrice', moneyPointLength)"
+                        onpaste="return false"
                       >
                       <!--购买-->
                       <input
@@ -228,6 +231,7 @@
                         ref="buyPrice"
                         @keyup="calculateCountValue('buyPrice', moneyPointLength)"
                         @input="calculateCountValue('buyPrice', moneyPointLength)"
+                        onpaste="return false"
                       >
                       <span
                         class="unit"
@@ -325,7 +329,7 @@
         <div class="password-dialog">
           <el-dialog
             :title="$t('M.otc_publishAD_sellpassword')"
-            :visible.sync="dialogVisible"
+            :visible.sync="pickOrderTradePwdDialogStatus"
             top="25vh"
             width="470"
           >
@@ -348,6 +352,7 @@
                 v-model="tradePassword"
                 @focus="tradePasswordFocus"
                 @keyup.enter="submitPickOrdersToSell"
+                onpaste="return false"
               >
             </div>
             <div class="error-info">
@@ -356,7 +361,8 @@
             </div>
             <span
               slot="footer"
-              class="dialog-footer">
+              class="dialog-footer"
+            >
                 <!-- 在线购买提交 -->
                 <el-button
                   type="primary"
@@ -409,7 +415,7 @@ export default {
       // input框输入错误显示红色边框状态
       errorWarningBorder: false,
       // 弹窗显示状态
-      dialogVisible: false,
+      pickOrderTradePwdDialogStatus: false,
       // 挂单人姓名
       userName: '',
       // 成交次数
@@ -507,7 +513,7 @@ export default {
         } else if (this.numberTips || this.moneyTips) {
           return false
         } else {
-          this.dialogVisible = true
+          this.pickOrderTradePwdDialogStatus = true
         }
       }
       // 在线卖
@@ -521,7 +527,7 @@ export default {
         } else if (this.numberTips || this.moneyTips) {
           return false
         } else {
-          this.dialogVisible = true
+          this.pickOrderTradePwdDialogStatus = true
         }
       }
     },
@@ -771,7 +777,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.dialogVisible = false
+        this.pickOrderTradePwdDialogStatus = false
         this.clearInput(this.onlineTraderStatus)
         this.querySelectedOrdersDetails()
         this.queryUserTradeFeeAndCoinInfo()
@@ -814,7 +820,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.dialogVisible = false // 关闭弹窗框
+        this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
         this.clearInput(this.onlineTraderStatus) // 清空数据
         this.querySelectedOrdersDetails()
         this.queryUserTradeFeeAndCoinInfo()

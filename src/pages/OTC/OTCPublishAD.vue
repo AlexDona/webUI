@@ -124,6 +124,7 @@
                   ref="price"
                   @keyup="changePriceValue('price', moneyPointLength)"
                   @input="changePriceValue('price', moneyPointLength)"
+                  onpaste="return false"
                 >
                 <span
                   class="unit font-size12"
@@ -217,6 +218,7 @@
                   ref="entrustCount"
                   @keyup="changeEntrustCountValue('entrustCount', pointLength)"
                   @input="changeEntrustCountValue('entrustCount', pointLength)"
+                  onpaste="return false"
                 >
                 <span
                   class="unit font-size14"
@@ -251,6 +253,7 @@
                   @keyup="changeMinCountInputValue('minCountValue', moneyPointLength)"
                   @input="changeMinCountInputValue('minCountValue', moneyPointLength)"
                   @blur.prevent="minBulr"
+                  onpaste="return false"
                 >
                 <span
                   class="unit font-size14"
@@ -269,6 +272,7 @@
                   @keyup="changeMaxCountInputValue('maxCountValue', moneyPointLength)"
                   @input="changeMaxCountInputValue('maxCountValue', moneyPointLength)"
                   @blur.prevent="maxBulr"
+                  onpaste="return false"
                 >
                 <span
                   class="unit font-size14"
@@ -352,6 +356,7 @@
                   onkeyup="this.value=this.value.replace(/\D/g,'')"
                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
                   @focus="clearLimitOrderCountErrData"
+                  onpaste="return false"
                 >
                 <!-- 错误提示 -->
                 <div class="err">{{errorInfoLimitOrderCount}}</div>
@@ -367,6 +372,7 @@
                   onkeyup="this.value=this.value.replace(/\D/g,'')"
                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
                   @focus="clearSuccessOrderCountErrData"
+                  onpaste="return false"
                 >
                 <!-- 错误提示 -->
                 <div class="err">{{errorInfoSuccessOrderCount}}</div>
@@ -387,7 +393,7 @@
           <div class="password-dialog">
             <el-dialog
               :title="$t('M.otc_publishAD_sellpassword')"
-              :visible.sync="dialogVisible"
+              :visible.sync="publishADTradePwdDialogStatus"
               top="25vh"
               width="470"
             >
@@ -402,6 +408,8 @@
                   v-model="tradePassword"
                   @focus="tradePasswordFocus"
                   @keyup.enter="publishADSubmitButton"
+                  onpaste="return false"
+                  AUTOCOMPLETE="off"
                 >
               </div>
               <div class="error-info">
@@ -471,7 +479,7 @@ export default {
   },
   data () {
     return {
-      dialogVisible: false, // 弹窗状态
+      publishADTradePwdDialogStatus: false, // 弹窗状态
       // 选择模块下拉列表循环数组
       activitedBuySellStyle: 'SELL', // 选中的发布广告 买卖 类型
       buySellStyle: [ // 1.0 发布广告 买卖 类型数组
@@ -739,7 +747,7 @@ export default {
         this.errorInfoSuccessOrderCount = this.$t('M.otc_publish_ad_err2')
         return false
       }
-      this.dialogVisible = true
+      this.publishADTradePwdDialogStatus = true
     },
     // 同时处理最大订单数获得焦点清空错误信息
     clearLimitOrderCountErrData () {
@@ -777,7 +785,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.dialogVisible = false
+        this.publishADTradePwdDialogStatus = false
         // 清空数据
         this.clearMainData()
         // 重新渲染页面

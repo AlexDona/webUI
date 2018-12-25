@@ -281,7 +281,7 @@
                   @click="findPasswordStep3"
                 >
                   <!--下一步-->
-                  {{ $t('M.forgetPassword_next_step') }}
+                  {{ $t('M.forgetPassword_achieve') }}
                 </button>
               </span>
             </div>
@@ -567,7 +567,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
 @import '../../../static/css/scss/index';
 
 .froget-password-box {

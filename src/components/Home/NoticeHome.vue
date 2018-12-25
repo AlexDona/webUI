@@ -120,12 +120,13 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import '../../../static/css/scss/index';
 
   .notice-box {
     top: 0;
     width: 100%;
+    min-width: 1130px;
     height: 30px;
     overflow: hidden;
     line-height: 30px;

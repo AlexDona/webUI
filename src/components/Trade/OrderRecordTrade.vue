@@ -101,7 +101,7 @@ export default {
       activeSymbol: state => state.common.activeSymbol
     }),
     orderRecordList () {
-      return (this.reflashCount < 2) ? this.orderRecordListByAjax : this.orderRecordListBySocket
+      return (this.reflashCount < 1) ? this.orderRecordListByAjax : this.orderRecordListBySocket
     }
   },
   watch: {
@@ -118,7 +118,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import '../../../static/css/scss/index.scss';
 
   .order-record-box {

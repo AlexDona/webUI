@@ -334,5 +334,8 @@ export const OTC = {
   'otc_apply_tips3': '需OTC交易次數',
   'otc_apply_tips4': '資產可用',
   'otc_apply_tips5': '是否繼續',
-  'otc_apply_tips6': '申請提示'
+  'otc_apply_tips6': '申請提示',
+  // 发布订单错误提示
+  'otc_publish_order_err_tips1': '請選擇要發布的幣種',
+  'otc_publish_order_err_tips2': '請選擇法幣類型'
 }

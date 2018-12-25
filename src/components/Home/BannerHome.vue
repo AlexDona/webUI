@@ -33,17 +33,18 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      bannerBackgroundImage: state => state.home.bannerBackgroundImage
+      bannerBackgroundImage: state => state.home.bannerBackgroundImage,
+      innerWidth: state => state.common.innerWidth
     }),
     screenWidth () {
-      return window.innerWidth / 3
+      return this.innerWidth / 3
     }
   },
   watch: {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   .banner-box {
     position: relative;
     width: 100%;

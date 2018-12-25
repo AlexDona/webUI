@@ -16,7 +16,9 @@ const state = {
   // 委托定单撤单后，更新首页挂单列表状态：false为不刷新 true为刷新
   updateOTCHomeListStatus: false,
   // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-  publishOrderJumpTopStatus: false
+  publishOrderJumpTopStatus: false,
+  // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
+  otcApplyJumpBottomStatus: false
 }
 
 export default {

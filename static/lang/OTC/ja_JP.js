@@ -335,5 +335,8 @@ export const OTC = {
   'otc_apply_tips3': 'otc取引数量',
   'otc_apply_tips4': 'アセット利用可能',
   'otc_apply_tips5': '継続するか',
-  'otc_apply_tips6': 'ヒント'
+  'otc_apply_tips6': 'ヒント',
+  // 发布订单错误提示
+  'otc_publish_order_err_tips1': '発行する通貨を選択してください',
+  'otc_publish_order_err_tips2': '法的通貨タイプを選択してください'
 }

@@ -335,5 +335,8 @@ export const OTC = {
   'otc_apply_tips3': 'OTC 거래 차수',
   'otc_apply_tips4': '이용 가능한 자산',
   'otc_apply_tips5': '계속 여부',
-  'otc_apply_tips6': '따뜻한 힌트.'
+  'otc_apply_tips6': '따뜻한 힌트.',
+  // 发布订单错误提示
+  'otc_publish_order_err_tips1': '게시 할 통화를 선택하십시오.',
+  'otc_publish_order_err_tips2': '유효한 통화 유형을 선택하십시오.'
 }

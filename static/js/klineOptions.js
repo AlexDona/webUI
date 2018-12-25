@@ -1,4 +1,8 @@
 export const overrides = {
+  'loading_screen': {
+    'backgroundColor': '#000',
+    'foregroundColor': '#000'
+  },
   'symbolWatermarkProperties.transparency': 90,
   // "scalesProperties.textColor": "#AAA",
   // "scalesProperties.backgroundColor": "#ff00ff",
@@ -48,11 +52,11 @@ export const disabledFeatures = [
   'border_around_the_chart',
   'timezone_menu',
   'volume_force_overlay', // 成交量上移
-  // 'move_logo_to_main_pane', //
+  'move_logo_to_main_pane', //
   'timeframes_toolbar', // 底部栏时间
   'header_undo_redo',
   'header_chart_type',
-  'header_screenshot',
+  'header_screenshot'
   // 'header_settings'
   // 'widget_logo',
 ]

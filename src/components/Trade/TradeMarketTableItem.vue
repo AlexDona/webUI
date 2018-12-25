@@ -89,7 +89,7 @@
               <span v-show="activeName==collectArea.areaId">
                 <i
                   class="click-button cursor-pointer"
-                  @click.stop="toggleCollect(innerItem.id,0,innerItem,index,innerIndex)"
+                  @click.stop="toggleCollect(innerItem.id,0,innerItem,item.plateId)"
                 >
                   <i
                     class="el-icon-star-on  collected font-size16"
@@ -101,7 +101,7 @@
                 <i
                   class="click-button cursor-pointer"
                   v-show="!collectSymbol[innerItem.id]"
-                  @click.stop="toggleCollect(innerItem.id,1,innerItem,index)"
+                  @click.stop="toggleCollect(innerItem.id,1,innerItem,item.plateId)"
                 >
                   <i
                     class="el-icon-star-off  font-size16"
@@ -110,7 +110,7 @@
                 <i
                   class="click-button cursor-pointer"
                   v-show="collectSymbol[innerItem.id]"
-                  @click.stop="toggleCollect(innerItem.id,0,innerItem,index)"
+                  @click.stop="toggleCollect(innerItem.id,0,innerItem,item.plateId)"
                 >
                   <i
                     class="el-icon-star-on  collected font-size16"
@@ -198,13 +198,12 @@ export default {
         })
       }
     },
-    toggleCollect (id, status, row, plateIndex, contentIndex) {
+    toggleCollect (id, status, row, plateId) {
       this.$emit('toggleCollect', {
         id,
         status,
         row,
-        plateIndex,
-        contentIndex
+        plateId
       })
     }
   },

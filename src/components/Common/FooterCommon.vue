@@ -330,9 +330,10 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   .footer-box {
     width: 100%;
+    min-width: 1130px;
     color: #838dae;
     background-color: #1c2237;
 

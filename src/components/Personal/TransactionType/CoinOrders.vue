@@ -731,7 +731,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .coin-orders {

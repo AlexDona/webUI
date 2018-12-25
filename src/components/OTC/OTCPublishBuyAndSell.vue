@@ -68,7 +68,7 @@
                   :placeholder="$t('M.otc_index_chouseType')"
                   :no-data-text="$t('M.comm_no_data')"
                   v-model="hopePaymentCoinId"
-                  @change="changehopePaymentCoinId"
+                  @change="changeHopePaymentCoinId"
                 >
                   <el-option
                     v-for="(item,index) in hopePaymentCoinStyleList"
@@ -81,16 +81,6 @@
               </el-form-item>
               <!-- 3.0你想出售或者购买 -->
               <el-form-item>
-                <!--<div class="want-buy-sell-sum">-->
-                  <!--{{$t('M.otc_index_youWant')}}-->
-                  <!--<span v-show="publishStyle === 'sell'">-->
-                    <!--{{$t('M.comm_offering')}}-->
-                  <!--</span>-->
-                  <!--<span v-show="publishStyle === 'buy'">-->
-                    <!--{{$t('M.comm_buying')}}-->
-                  <!--</span>-->
-                  <!--{{$t('M.otc_index_how')}}-->
-                <!--</div>-->
                 <div
                   class="want-buy-sell-sum"
                   v-show="publishStyle === 'sell'"
@@ -152,6 +142,7 @@
                     @keyup="changeInputValue('entrustCountSell', pointLength)"
                     @input="changeInputValue('entrustCountSell', pointLength)"
                     @focus="countInputFocus"
+                    onpaste="return false"
                   >
                   <!-- 买入量 -->
                   <input
@@ -165,6 +156,7 @@
                     @keyup="changeInputValue('entrustCountBuy', pointLength)"
                     @input="changeInputValue('entrustCountBuy', pointLength)"
                     @focus="countInputFocus"
+                    onpaste="return false"
                   >
                   <span
                     class="unit"
@@ -182,6 +174,7 @@
                     ref="priceSell"
                     @keyup="changeInputValue('priceSell', moneyPointLength)"
                     @input="changeInputValue('priceSell', moneyPointLength)"
+                    onpaste="return false"
                   >
                   <!-- 买入单价 -->
                   <input
@@ -193,6 +186,7 @@
                     ref="priceBuy"
                     @keyup="changeInputValue('priceBuy', moneyPointLength)"
                     @input="changeInputValue('priceBuy', moneyPointLength)"
+                    onpaste="return false"
                   >
                   <span
                     class="unit"
@@ -224,6 +218,7 @@
                     ref="minCount"
                     @keyup="changeInputValue('minCount', moneyPointLength)"
                     @input="changeInputValue('minCount', moneyPointLength)"
+                    onpaste="return false"
                   >
                   <span
                     class="monad"
@@ -241,6 +236,7 @@
                     ref="maxCount"
                     @keyup="changeInputValue('maxCount', moneyPointLength)"
                     @input="changeInputValue('maxCount', moneyPointLength)"
+                    onpaste="return false"
                   >
                   <span
                     class="monad"
@@ -358,7 +354,7 @@
                 <!-- 交易密码 -->
                 <el-dialog
                   :title="$t('M.comm_password')"
-                  :visible.sync="dialogVisible"
+                  :visible.sync="publishOrderTradePwdDialogStatus"
                   top="25vh"
                   width="470"
                 >
@@ -370,6 +366,7 @@
                       v-model="tradePassword"
                       @focus="tradePasswordFocus"
                       @keyup.enter="addOTCPutUpOrdersSubmitButton"
+                      onpaste="return false"
                     >
                   </div>
                   <div class="error-info">
@@ -445,7 +442,7 @@ export default {
       traderSumSELL: 0, // 交易额：卖
       serviceChargeBUY: 0, // 手续费：买
       traderSumBUY: 0, // 交易额 :买
-      dialogVisible: false, // 交易密码弹窗状态
+      publishOrderTradePwdDialogStatus: false, // 交易密码弹窗状态
       publishStyle: '', // 1购买和出售选中类型：挂单类型
       labelPosition: 'top', // 表单label放置的位置
       coinStyleList: [], // 可用币种类型列表
@@ -505,7 +502,9 @@ export default {
       priceErrorTipsBorder: false, // 买入单价卖出单价错误提示框
       priceBuySellErrorTipsBorder: false, // 买入单价卖出单价单位错误提示框
       minCountErrorTipsBorder: false, // 单笔最小限额错误提示框
-      maxCountErrorTipsBorder: false // 单笔最大限额错误提示框
+      maxCountErrorTipsBorder: false, // 单笔最大限额错误提示框
+      parameterCurrencyId: '', // 参数法币id
+      parameterCoinId: '' // 参数币种id
     }
   },
   created () {
@@ -524,9 +523,11 @@ export default {
       this.publishStyle = 'sell'
     }
     // 可用币种id
-    this.coinId = this.$route.params.partnerCoinId
+    // this.coinId = this.$route.params.partnerCoinId
+    this.parameterCoinId = this.$route.params.partnerCoinId
     // 可用法币
-    this.hopePaymentCoinId = this.$route.params.currencyID
+    // this.hopePaymentCoinId = this.$route.params.currencyID
+    this.parameterCurrencyId = this.$route.params.currencyID
     // 刚进页面就调此方法请求币种详情来渲染页面
     this.getOTCCoinInfo()
   },
@@ -543,7 +544,7 @@ export default {
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS'
     ]),
-    // 判断卖出量和买入量是否为零
+    // 0.1 判断卖出量和买入量是否为零
     checkValue (name) {
       const value = this.$refs[name].value
       console.log(value)
@@ -558,10 +559,8 @@ export default {
     // 1.0 币种详情 : 商家和普通用户挂单页面请求币种详情渲染页面
     async getOTCCoinInfo () {
       const data = await getOTCCoinInfo({
-        // currencyId: this.$route.params.currencyID, // 法币id
-        // coinId: this.$route.params.partnerCoinId // 交易币种id
-        currencyId: this.hopePaymentCoinId, // 法币id
-        coinId: this.coinId // 交易币种id
+        currencyId: this.parameterCurrencyId, // 法币id
+        coinId: this.parameterCoinId // 交易币种id
 
       })
       console.log('币种详情')
@@ -570,14 +569,13 @@ export default {
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
-        // // 可用币种id
-        // this.coinId = this.$route.params.partnerCoinId
-        // // 可用法币
-        // this.hopePaymentCoinId = this.$route.params.currencyID
+        // 可用币种id
+        this.coinId = this.parameterCoinId
+        // 可用法币
+        this.hopePaymentCoinId = this.parameterCurrencyId
         // 返回数据正确的逻辑
         let detailsData = getNestedData(data, 'data.data')
         // 1.0 可用币种列表
-        // this.coinStyleList = detailsData.coinlist
         this.coinStyleList = getNestedData(detailsData, 'coinlist')
         this.coinStyleList.forEach(item => {
           if (this.coinId === item.coinId) {
@@ -585,7 +583,6 @@ export default {
           }
         })
         // 2.0 法币种列表
-        // this.hopePaymentCoinStyleList = detailsData.currencyList
         this.hopePaymentCoinStyleList = getNestedData(detailsData, 'currencyList')
         this.hopePaymentCoinStyleList.forEach(item => {
           if (this.hopePaymentCoinId === item.id) {
@@ -593,41 +590,28 @@ export default {
           }
         })
         // 当前可用total
-        // this.currentlyAvailable = detailsData.otcCoinQryResponse.total
         this.currentlyAvailable = getNestedData(detailsData, 'otcCoinQryResponse.total')
         // 市价marketPrice
-        // this.marketPrice = detailsData.otcCoinQryResponse.marketPrice
         this.marketPrice = getNestedData(detailsData, 'otcCoinQryResponse.marketPrice')
         // 币种 最大 交易限额maxCount
-        // this.$refs.maxCount.value = detailsData.otcCoinQryResponse.maxCount
-        // this.backReturnCurrentMaxCount = detailsData.otcCoinQryResponse.maxCount
         this.backReturnCurrentMaxCount = getNestedData(detailsData, 'otcCoinQryResponse.maxCount')
-        console.log(11111111111111111111111111111111)
         console.log(this.backReturnCurrentMaxCount)
         this.$refs.maxCount.value = this.backReturnCurrentMaxCount
-        console.log(222222222222222222222222222222222222222222)
         console.log(this.$refs.maxCount.value)
         // 币种 最小 交易限额minCount
-        // this.$refs.minCount.value = detailsData.otcCoinQryResponse.minCount
-        // this.backReturnCurrentMinCount = detailsData.otcCoinQryResponse.minCount
         this.backReturnCurrentMinCount = getNestedData(detailsData, 'otcCoinQryResponse.minCount')
         this.$refs.minCount.value = this.backReturnCurrentMinCount
         // 交易数量最小小数位
-        // this.pointLength = detailsData.otcCoinQryResponse.unit
         this.pointLength = getNestedData(detailsData, 'otcCoinQryResponse.unit')
         // 币种最高价格
-        // this.maxPrice = detailsData.otcCoinQryResponse.maxPrice
         this.maxPrice = getNestedData(detailsData, 'otcCoinQryResponse.maxPrice')
         // 币种最低价格
-        // this.minPrice = detailsData.otcCoinQryResponse.minPrice
         this.minPrice = getNestedData(detailsData, 'otcCoinQryResponse.minPrice')
         // 费率
         if (this.publishStyle === 'sell') {
-          // this.rate = detailsData.otcCoinQryResponse.sellRate
           this.rate = getNestedData(detailsData, 'otcCoinQryResponse.sellRate')
         }
         if (this.publishStyle === 'buy') {
-          // this.rate = detailsData.otcCoinQryResponse.buyRate
           this.rate = getNestedData(detailsData, 'otcCoinQryResponse.buyRate')
         }
       }
@@ -635,7 +619,9 @@ export default {
     // 2.0 改变可用币种类型
     changeCoinId (e) {
       // console.log(e)
-      this.coinId = e
+      // this.coinId = e
+      // 任增加
+      this.parameterCoinId = e
       // console.log(this.coinId)
       // this.clearErrInfo() // 清空错误信息
       this.clearInputData()
@@ -643,9 +629,11 @@ export default {
       this.getOTCCoinInfo()
     },
     // 3.0 改变你希望付款的货币类型：可用法币类型
-    changehopePaymentCoinId (e) {
+    changeHopePaymentCoinId (e) {
       // console.log(e)
-      this.hopePaymentCoinId = e
+      // this.hopePaymentCoinId = e
+      // 任增加
+      this.parameterCurrencyId = e
       // console.log(this.hopePaymentCoinId)
       this.clearInputData()
       // 币种详情
@@ -898,7 +886,7 @@ export default {
       if (this.errorTipsLimitMax) {
         return false
       }
-      this.dialogVisible = true
+      this.publishOrderTradePwdDialogStatus = true
     },
     // 交易密码框获得焦点清空错误提示信息
     tradePasswordFocus () {
@@ -912,7 +900,6 @@ export default {
         return false
       }
       let param = {
-        // partnerCoinId: this.coinId, // 商户币种id
         coinId: this.coinId, // 可用币种id
         currencyId: this.hopePaymentCoinId, // 法币id
         minCount: this.$refs.minCount.value, // 单笔最小限额（CNY）
@@ -937,11 +924,9 @@ export default {
       } else {
         // 返回数据正确的逻辑
         // 关闭交易密码框
-        this.dialogVisible = false
+        this.publishOrderTradePwdDialogStatus = false
         // 清空表单数据
         this.clearInputData()
-        // 重新渲染页面
-        // this.getOTCCoinInfo()
         // 下单成功跳转到首页挂单列表去
         // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
         this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
@@ -962,9 +947,6 @@ export default {
       // 当前选中语言
       language: state => state.common.language
     })
-    // windowHeight () {
-    //   return window.innerHeight
-    // }
   },
   watch: {}
 }

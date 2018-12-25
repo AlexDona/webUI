@@ -428,9 +428,7 @@ import {
   getOTCPutUpOrders,
   getMerchantAvailablelegalTender
 } from '../../utils/api/OTC'
-// import IconFontCommon from '../Common/IconFontCommon'
 import IconFontCommon from '../../components/Common/IconFontCommon'
-// import OTCTradingOrder from './OTCTradingOrder'
 import OTCTradingOrder from '../../components/OTC/OTCTradingOrder'
 import OTCCompletedOrder from '../../components/OTC/OTCCompletedOrder'
 import OTCCanceledOrder from '../../components/OTC/OTCCanceledOrder'
@@ -582,19 +580,18 @@ export default {
     // 0.2 点击发布订单按钮跳转到发布订单页面
     toPublishOrder () {
       // 增加没有币种和法币点击按钮不跳转的验证
-      // if (this.selectedOTCAvailableCurrencyCoinID == '' && this.activitedCurrencyId == '') {
-      //   return false
-      // }
       if (!this.selectedOTCAvailableCurrencyCoinID) {
+        // message: '请选择要发布的币种',
         this.$message({
-          message: '请选择要发布的币种',
+          message: this.$t('M.otc_publish_order_err_tips1'),
           type: 'error'
         })
         return false
       }
       if (!this.activitedCurrencyId) {
+        // message: '请选择法币类型',
         this.$message({
-          message: '请选择法币类型',
+          message: this.$t('M.otc_publish_order_err_tips2'),
           type: 'error'
         })
         return false
@@ -727,8 +724,10 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.availableCurrencyId = getNestedData(data, 'data.data')
-        this.activitedCurrencyId = this.availableCurrencyId[0].id
-        this.activitedCurrencyName = this.availableCurrencyId[0].shortName
+        // this.activitedCurrencyId = this.availableCurrencyId[0].id
+        this.activitedCurrencyId = getNestedData(this.availableCurrencyId[0], 'id')
+        // this.activitedCurrencyName = this.availableCurrencyId[0].shortName
+        this.activitedCurrencyName = getNestedData(this.availableCurrencyId[0], 'shortName')
         // 3.0 otc主页面查询挂单列表:
         this.getOTCPutUpOrdersList()
       }
@@ -759,9 +758,11 @@ export default {
         // 返回数据正确的逻辑
         this.loading = false
         let orderListData = getNestedData(data, 'data.data')
-        this.onlineBuySellTableList = orderListData.list
+        // this.onlineBuySellTableList = orderListData.list
+        this.onlineBuySellTableList = getNestedData(orderListData, 'list')
         // 分页
-        this.totalPages = orderListData.pages - 0
+        // this.totalPages = orderListData.pages - 0
+        this.totalPages = getNestedData(orderListData, 'pages') - 0
         // 改变全局 委托定单撤单后，更新首页挂单列表状态
         this.UPDATE_OTC_HOME_LIST_STATUS(false)
       }

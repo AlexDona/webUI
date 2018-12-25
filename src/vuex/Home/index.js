@@ -13,10 +13,11 @@ const state = {
   bannerDefaultBackground: '',
   // 首页banner激活
   bannerActive: false,
-  collectSymbol: {}, // 收藏交易对列表
-  symbolMap: new Map(), // 交易对map映射 key： 交易对名称 value： 交易对json
-  noticeCloseVisible: true,
-  end: ''// 占位
+  // 收藏交易对列表
+  collectSymbol: {},
+  // 交易对map映射 key： 交易对名称 value： 交易对json
+  symbolMap: new Map(),
+  noticeCloseVisible: true
 }
 
 export default {

@@ -71,6 +71,7 @@
                 class="form-input-common border-radius2 padding-l15"
                 ref="count"
                 @keydown="setErrorMsg(1, '')"
+                onpaste="return false"
                 @blur="checkoutInputFormat(1, count)"
                 @keyup="changeInputValue('count', pointLength)"
                 @input="changeInputValue('count', pointLength)"
@@ -88,6 +89,7 @@
               <input
                 class="form-input-common border-radius2 padding-l15"
                 ref="price"
+                onpaste="return false"
                 @keydown="setErrorMsg(2, '')"
                 @blur="checkoutInputFormat(2, price)"
                 @keyup="changeInputValue('price', pointLength)"
@@ -806,7 +808,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .push-assets {

@@ -1129,7 +1129,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import '../../static/css/scss/index';
 
   .register-box {
@@ -1262,8 +1262,9 @@ export default {
 
           > .error-msg {
             height: 30px;
-            margin-left: 30px;
-            line-height: 50px;
+            margin-top: 8px;
+            margin-left: 22px;
+            line-height: 15px;
             color: rgb(212, 88, 88);
           }
 
@@ -1286,7 +1287,7 @@ export default {
             display: block;
             width: 128px;
             height: 40px;
-            margin: 20px auto 0;
+            margin: 10px auto 0;
             border-radius: 20px;
             font-size: 14px;
             line-height: 40px;

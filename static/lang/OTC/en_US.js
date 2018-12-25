@@ -346,5 +346,8 @@ export const OTC = {
   'otc_apply_tips3': 'Number of OTC transaction times',
   'otc_apply_tips4': 'and the available asset',
   'otc_apply_tips5': 'Shall we continue',
-  'otc_apply_tips6': 'Tips'
+  'otc_apply_tips6': 'Tips',
+  // 发布订单错误提示
+  'otc_publish_order_err_tips1': 'Please select the currency to be published',
+  'otc_publish_order_err_tips2': 'Please select the legal currency type'
 }
