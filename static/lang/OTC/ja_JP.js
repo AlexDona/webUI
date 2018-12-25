@@ -338,5 +338,21 @@ export const OTC = {
   'otc_apply_tips6': 'ヒント',
   // 发布订单错误提示
   'otc_publish_order_err_tips1': '発行する通貨を選択してください',
-  'otc_publish_order_err_tips2': '法的通貨タイプを選択してください'
+  'otc_publish_order_err_tips2': '法的通貨タイプを選択してください',
+  // 20181225添加
+  'OTC_SELL': 'OTC販売',
+  'account_failure_0060': '理財不足、実行できません！',
+  'account_failure_0063': '操作に失敗して、データを操作することができません！',
+  'account_failure_0059': 'ユーザーは理論の記録に失敗を記録することができます！',
+  'account_failure_00128': '3ヶ月以内のデータを検索することしかできません！',
+  'account_failure_0062': 'ユーザーの管理は利用可能で、ログの記録は失敗します！',
+  'account_failure_0056': 'ユーザー表商戸、プラットフォームの収益移転の失敗！',
+  'account_failure_0064': 'この貨幣はしばらくは利用できない',
+  'account_failure_0065': 'この貨幣を調べる権限がないので、公式客服に連絡してください。',
+  'finish': '完成した',
+  'OTC_BUY': 'OTC購入',
+  'account_failure_0061': 'ユーザーは失敗することができます！',
+  'account_failure_00112': 'PUSH 資産支払いに失敗！',
+  'account_failure_0057': 'ユーザー表商戸、プラットフォームの収益転送ログの記録に失敗！',
+  'account_failure_0058': 'ユーザーは理財に失敗することができます！'
 }
