@@ -15,15 +15,25 @@ export const getOTCPutUpOrders = (params) => get('otcEntrust/selectByParams', Ob
   'not-loading': true
 }, params))
 // 查询用户所有otc挂单列表（分页）:也就是订单中的 委托中的订单
-export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrustsPage', params)
+export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrustsPage', Object.assign({
+  'not-loading': true
+}, params))
 // 查询3天内用户otc各状态交易---otc订单中 交易中 的订单
-export const getOTCTradingOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', params)
+export const getOTCTradingOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
+  'not-loading': true
+}, params))
 // 查询3天内用户otc各状态交易---otc订单中 已完成 的订单
-export const getOTCCompletedOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', params)
+export const getOTCCompletedOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
+  'not-loading': true
+}, params))
 // 查询3天内用户otc各状态交易---otc订单中 已取消 的订单
-export const getOTCCanceledOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', params)
+export const getOTCCanceledOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
+  'not-loading': true
+}, params))
 // 查询3天内用户otc各状态交易---otc订单中 冻结中 的订单
-export const getOTCFrezzingOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', params)
+export const getOTCFrezzingOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
+  'not-loading': true
+}, params))
 // 添加otc挂单(商家与普通用户都可用)
 export const addOTCPutUpOrders = (params) => postWithURLencoded('otcEntrust/addOtcEntrustForCommon', params)
 // 添加otc挂单(仅商家可用)
