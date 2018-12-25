@@ -24,7 +24,7 @@ import {
   // getCountryList,
   getServiceProtocoDataAjax
 } from '../utils/api/header'
-import store from '../vuex'
+import storeCreater from '../vuex'
 import {
   removeStore,
   // getStore,
@@ -33,6 +33,7 @@ import {
   keep2Num
 } from './index'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG, TPED_REG, URL_REG, WITHDRAWAL_REG, CHINESE_REG} from './regExp'
+const store = storeCreater()
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；

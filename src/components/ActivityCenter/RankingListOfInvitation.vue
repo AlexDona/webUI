@@ -176,10 +176,11 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language,
-      configInfo: state => state.common.footerInfo.configInfo
+      configInfo: state => state.common.footerInfo.configInfo,
+      innerWidth: state => state.common.innerWidth
     }),
     screenWidth () {
-      return window.innerWidth / 3
+      return this.innerWidth / 3
     },
     coinName () {
       return this.rankingList[0].coinName
