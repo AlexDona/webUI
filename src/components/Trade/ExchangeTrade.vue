@@ -93,6 +93,7 @@
                 <div class="volume-rate">
                   <div class="item">
                     <span>
+
                       <!--预计交易额-->
                       {{ $t('M.trade_exchange_estimated_turnover') }}：
                     </span>
@@ -642,14 +643,16 @@ export default {
               this.limitExchange.buyCount = params.count
               this.limitExchange.buyPrice = params.price
               if (!this.limitExchange.buyPrice) {
-                this.errorMsg.limit.buy.price = '请输入买入价'
+                // 请输入买入价
+                this.errorMsg.limit.buy.price = this.$t('M.trade_empty_buy_price')
                 return false
               } else {
                 this.errorMsg.limit.buy.price = ''
               }
 
               if (!this.limitExchange.buyCount) {
-                this.errorMsg.limit.buy.amount = '请输入买入量'
+                // 请输入买入量
+                this.errorMsg.limit.buy.amount = this.$t('M.trade_empty_buy_count')
                 return false
               } else {
                 this.errorMsg.limit.buy.amount = ''
@@ -663,7 +666,7 @@ export default {
               break
             case 'MARKET':
               if (!this.marketExchange.buyCount) {
-                this.errorMsg.market.buy.amount = '请输入买入量'
+                this.errorMsg.market.buy.amount = this.$t('M.trade_empty_buy_count')
                 return false
               } else {
                 this.errorMsg.market.buy.amount = ''
@@ -685,13 +688,13 @@ export default {
               this.limitExchange.sellCount = params.count
               this.limitExchange.sellPrice = params.price
               if (!this.limitExchange.sellPrice) {
-                this.errorMsg.limit.sell.price = '请输入卖出价'
+                this.errorMsg.limit.sell.price = this.$t('M.trade_empty_sell_price')
                 return false
               } else {
                 this.errorMsg.limit.sell.price = ''
               }
               if (!this.limitExchange.sellCount) {
-                this.errorMsg.limit.sell.amount = '请输入卖出量'
+                this.errorMsg.limit.sell.amount = this.$t('M.trade_empty_sell_count')
                 return false
               } else {
                 this.errorMsg.limit.sell.amount = ''
@@ -843,6 +846,14 @@ export default {
     }
   },
   watch: {
+    language () {
+      this.errorMsg.limit.buy.price = ''
+      this.errorMsg.limit.buy.amount = ''
+      this.errorMsg.limit.sell.price = ''
+      this.errorMsg.limit.sell.amount = ''
+      this.errorMsg.market.buy.amount = ''
+      this.errorMsg.market.sell.amount = ''
+    },
     isShowPayPassword (newVal) {
       if (newVal) {
         this.payPassword = ''

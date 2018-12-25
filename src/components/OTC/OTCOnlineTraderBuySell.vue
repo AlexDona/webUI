@@ -474,12 +474,12 @@ export default {
       // 当前金额小数点限制位数
       moneyPointLength: 2,
       // 是否需要交易密码
-      isNeedPayPassowrd: true
+      isNeedPayPassword: true
     }
   },
   async created () {
-    this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
-    console.log(this.isNeedPayPassowrd)
+    this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+    console.log(this.isNeedPayPassword)
     // 1.0 从OTCCenter传过来的URL中获取的
     this.onlineTraderStatus = this.$route.params.styleId
     this.id = this.$route.params.id
@@ -514,7 +514,7 @@ export default {
     },
     // 2.0 显示输入密码框
     async showPayPasswordDialog (tradeType) {
-      this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
       switch (tradeType) {
         // 在线买
         case 'onlineBuy':
@@ -527,8 +527,8 @@ export default {
           } else if (this.numberTips || this.moneyTips) {
             return false
           }
-          if (this.isNeedPayPassowrd) {
-            this.dialogVisible = true
+          if (this.isNeedPayPassword) {
+            this.pickOrderTradePwdDialogStatus = true
           } else {
             this.submitPickOrdersToBuy()
           }
@@ -544,8 +544,8 @@ export default {
           } else if (this.numberTips || this.moneyTips) {
             return false
           }
-          if (this.isNeedPayPassowrd) {
-            this.dialogVisible = true
+          if (this.isNeedPayPassword) {
+            this.pickOrderTradePwdDialogStatus = true
           } else {
             this.submitPickOrdersToSell()
           }
@@ -764,7 +764,7 @@ export default {
     },
     // 7.0 点击 确认购买 按钮提交数据
     async submitPickOrdersToBuy () {
-      if (this.isNeedPayPassowrd && !this.tradePassword) {
+      if (this.isNeedPayPassword && !this.tradePassword) {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
@@ -808,7 +808,7 @@ export default {
     },
     // 10.0 点击 确认出售 按钮提交数据
     async submitPickOrdersToSell () {
-      if (this.isNeedPayPassowrd && !this.tradePassword) {
+      if (this.isNeedPayPassword && !this.tradePassword) {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }

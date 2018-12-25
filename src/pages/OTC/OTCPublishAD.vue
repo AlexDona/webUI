@@ -803,8 +803,6 @@ export default {
         this.publishADTradePwdDialogStatus = false
         // 改变标识状态为不是跳转来的
         this.ADManageJumpOrderStatus = 1
-        // 关闭弹窗
-        this.dialogVisible = false
         // 清空数据
         this.clearMainData()
         // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态

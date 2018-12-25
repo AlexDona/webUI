@@ -41,5 +41,9 @@ export const trade = {
   'trade_market_amount_increase': 'ゲイン',
   'trade_market_optional': 'お気に入り',
   'trade_cancel_all_entrust': '全部委託注文を取り消す',
-  'trade_determine_cancel_all_entrust': '全部委託注文を取り消す確認'
+  'trade_determine_cancel_all_entrust': '全部委託注文を取り消す確認',
+  'trade_empty_buy_count': '購入金額を入力してください',
+  'trade_empty_sell_count': '販売金額を入力してください',
+  'trade_empty_buy_price': '入札価格を入力してください',
+  'trade_empty_sell_price': '提示価格を入力してください'
 }
