@@ -156,7 +156,7 @@ export default {
       fetch(this.downloadUrl).then(res => res.blob().then(blob => {
         let link = document.createElement('a')
         let url = window.URL.createObjectURL(blob)
-        let filename = this.coin_apply
+        let filename = 'Coin application form'
         link.href = url
         link.download = filename
         link.click()
@@ -273,7 +273,7 @@ export default {
           }
 
           > .return_content {
-            padding-left: 50px;
+            padding: 0 50px;
           }
 
           > .bottom {

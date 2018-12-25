@@ -337,5 +337,21 @@ export const OTC = {
   'otc_apply_tips6': '申請提示',
   // 发布订单错误提示
   'otc_publish_order_err_tips1': '請選擇要發布的幣種',
-  'otc_publish_order_err_tips2': '請選擇法幣類型'
+  'otc_publish_order_err_tips2': '請選擇法幣類型',
+  // 20181225添加
+  'OTC_SELL': 'OTC賣出',
+  'account_failure_0060': '理財不足，無法執行！',
+  'account_failure_0063': '回滾操作失敗,沒有可操作數據 ！',
+  'account_failure_0059': '用戶可用到理財日誌記錄失敗！',
+  'account_failure_00128': '只能查詢三個月內的數據！',
+  'account_failure_0062': '用戶理財到可用,日誌記錄失敗！',
+  'account_failure_0056': '用戶表商戶，平臺收益轉移失敗！',
+  'account_failure_0064': '該幣種暫不可用',
+  'account_failure_0065': '無權查看該幣種，請聯系官方客服。',
+  'finish': '已完成',
+  'OTC_BUY': 'OTC買入',
+  'account_failure_0061': '用戶理財到可用失敗！',
+  'account_failure_00112': 'PUSH資產支付失敗！',
+  'account_failure_0057': '用戶表商戶，平臺收益轉移日誌記錄失敗！',
+  'account_failure_0058': '用戶可用到理財失敗！'
 }
