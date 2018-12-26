@@ -88,7 +88,7 @@
             >
               <span class="demonstration font-size12">
                 <!--日期-->
-                {{ $t('M.comm_data') }}
+                {{ $t('M.user_coin_order4') }}
               </span>
               <!--开始日期-->
               <el-date-picker
@@ -98,8 +98,8 @@
                 unlink-panels
                 @change="changeTime"
                 :editable="false"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :start-placeholder="$t('M.otc_no1')"
+                :end-placeholder="$t('M.otc_no2')"
                 value-format = "yyyy-MM-dd HH:mm:ss"
                 :default-time="['00:00:00', '23:59:59']"
                 :picker-options="pickerOptionsTime"
@@ -112,7 +112,7 @@
             >
               <span class="demonstration font-size12">
                 <!--日期-->
-                {{ $t('M.comm_data') }}
+                {{ $t('M.user_coin_order4') }}
               </span>
               <!--开始日期-->
               <el-date-picker
@@ -123,8 +123,8 @@
                 @change="changeTime"
                 :editable="false"
                 :clearable="false"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                :start-placeholder="$t('M.otc_no1')"
+                :end-placeholder="$t('M.otc_no2')"
                 value-format = "yyyy-MM-dd HH:mm:ss"
                 :default-time="['00:00:00', '23:59:59']"
                 :picker-options="pickerOptionsTime"

@@ -323,7 +323,8 @@
   line-height: 36px;
 }
 
-.el-button--text {
+/* 账单明细日期时间组件清除按钮隐藏 */
+.el-picker-panel .el-picker-panel__footer .el-button--text.el-button--mini {
   display: none;
 }
 
