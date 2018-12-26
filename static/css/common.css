@@ -72,6 +72,7 @@
 /* 日期组件 */
 .night .el-picker-panel {
   border: none;
+  color: #c0c4cc;
   background-color: #2a3242;
 }
 
@@ -87,6 +88,7 @@
 
 .night .el-picker-panel .el-picker-panel__footer .el-button:nth-child(2) {
   border: 0;
+  color: #fff;
   background: linear-gradient(90deg, #2b396e 0%, #2a5082 100%);
 }
 
@@ -255,4 +257,72 @@
 .day .el-tooltip__popper .popper__arrow,
 .day .el-tooltip__popper .popper__arrow::after {
   border-bottom-color: black !important;
+}
+
+/* 添加日期时间组件全局样式 */
+
+.night .el-date-table td.disabled div {
+  color: #666;
+  background-color: transparent;
+}
+
+.night .el-date-table td.next-month,
+.night .el-date-table td.prev-month {
+  color: #666;
+}
+
+.night .el-date-table td.in-range div {
+  background: rgba(45, 54, 81, .6);
+}
+
+.night .el-picker-panel__icon-btn {
+  color: #c0c4cc;
+}
+
+.night .el-time-panel {
+  border: 1px solid #39424d;
+  background: #2a3242;
+}
+
+.el-time-panel {
+  width: 182px;
+}
+
+.night .el-time-spinner__item.active:not(.disabled) {
+  color: #c0c4cc;
+}
+
+.night .el-date-range-picker__time-header {
+  display: none;
+  border-bottom: 1px solid #39424d;
+}
+
+.night .el-date-range-picker__content.is-left {
+  border-right: 1px solid #39424d;
+}
+
+.night .el-time-panel__footer {
+  border-top: 1px solid #39424d;
+}
+
+.el-time-panel__content::after {
+  margin-top: -12px;
+  border-top: 1px solid #39424d;
+  border-bottom: 1px solid #39424d;
+}
+
+.el-time-panel__content.has-seconds::after {
+  left: calc(100% / 3 * 0);
+}
+
+.el-time-spinner__item {
+  line-height: 36px;
+}
+
+.el-button--text {
+  display: none;
+}
+
+.el-time-spinner__item:hover:not(.disabled):not(.active) {
+  background: rgba(28, 31, 50, .3);
 }

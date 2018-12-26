@@ -93,20 +93,16 @@
               <!--开始日期-->
               <el-date-picker
                 v-model="startTime"
-                type="date"
-                value-format="yyyy-MM-dd"
-                :placeholder="$t('M.comm_select') + $t('M.comm_data')"
-                @change="changeStartTime"
-              >
-              </el-date-picker>
-              &nbsp;&nbsp;-&nbsp;&nbsp;
-              <!-- 结束日期 -->
-              <el-date-picker
-                v-model="endTime"
-                type="date"
-                value-format="yyyy-MM-dd"
-                :placeholder="$t('M.comm_select') + $t('M.comm_data')"
-                @change="changeEndTime"
+                type="datetimerange"
+                align="right"
+                unlink-panels
+                @change="changeTime"
+                :editable="false"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format = "yyyy-MM-dd HH:mm:ss"
+                :default-time="['00:00:00', '23:59:59']"
+                :picker-options="pickerOptionsTime"
               >
               </el-date-picker>
             </div>
@@ -121,24 +117,17 @@
               <!--开始日期-->
               <el-date-picker
                 v-model="startTime"
-                type="date"
+                type="datetimerange"
+                align="right"
+                unlink-panels
+                @change="changeTime"
                 :editable="false"
                 :clearable="false"
-                value-format="yyyy-MM-dd"
-                :placeholder="$t('M.comm_select') + $t('M.comm_data')"
-                @change="changeStartTime"
-              >
-              </el-date-picker>
-              &nbsp;&nbsp;-&nbsp;&nbsp;
-              <!-- 结束日期 -->
-              <el-date-picker
-                v-model="endTime"
-                type="date"
-                :editable="false"
-                :clearable="false"
-                value-format="yyyy-MM-dd"
-                :placeholder="$t('M.comm_select') + $t('M.comm_data')"
-                @change="changeEndTime"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format = "yyyy-MM-dd HH:mm:ss"
+                :default-time="['00:00:00', '23:59:59']"
+                :picker-options="pickerOptionsTime"
               >
               </el-date-picker>
             </div>
@@ -348,20 +337,24 @@ import {
   returnAjaxMsg,
   getNestedData
 } from '../../../utils/commonFunc'
-import {
-  timeFilter,
-  scientificToNumber
-} from '../../../utils'
+import {timeFilter} from '../../../utils'
 export default {
   components: {},
   data () {
     return {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth(),
+      date: new Date().getDate(),
+      hours: new Date().getHours(),
+      minutes: new Date().getMinutes(),
+      seconds: new Date().getSeconds(),
       chargeRecordList: [], // 充提记录列表
       activeName: 'current-entrust', // 充提记录
       recordPageNumber: 1, // 充提记录页码
       recordTotalPageNumber: 1, // 充提记录总页数
-      startTime: '', // 开始起止时间
-      endTime: '', // 结束起止时间
+      // 开始时间
+      startTime: [],
+      endTime: '', // 结束时间
       // 币种名称
       defaultCurrencyId: '', // 默认币种id
       currencyList: [], // 币种列表
@@ -411,28 +404,27 @@ export default {
           label: 'M.invitation_reward'
         }
       ],
+      pickerOptionsStart: {},
+      pickerOptionsEnd: {},
       partLoading: true // 局部loading
     }
   },
   async created () {
     await this.inquireCurrencyList()
     await this.getChargeMentionList('current-entrust')
+    this.changeTime()
   },
   methods: {
-    // 科学计数法转换
-    filterNumber (num) {
-      return scientificToNumber(num)
-    },
     // tab 切换
     async coinMoneyOrders (e) {
-      if (e.name == 'current-entrust') {
-        this.startTime = ''
-        this.endTime = ''
-      } else {
-        this.startTime = timeFilter(new Date().setHours(0, 0, 0, 0), 'normal')
-        this.endTime = timeFilter(new Date().getTime(), 'normal')
-        console.log(this.startTime)
-      }
+      this.startTime = [
+        new Date(
+          this.year,
+          this.month,
+          this.date, 0, 0, 0
+        ),
+        new Date()
+      ]
       await this.inquireCurrencyList(e.name)
       this.getChargeMentionList(e.name)
     },
@@ -472,8 +464,8 @@ export default {
         userId: this.userInfo.userId, // 用户ID
         coinId: this.defaultCurrencyId, // 币种ID
         type: this.otherRecordsValue, // 类型（RECHARGE:充值 WITHDRAW:提现 / 其他记录类型
-        startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'), // 开始起止时间
-        endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal') // 结束起止时间
+        startTime: '', // 开始起止时间
+        endTime: '' // 结束起止时间
       }
       let data
       let data1
@@ -482,8 +474,10 @@ export default {
         case 'current-entrust':
           params.currentPage = this.recordPageNumber
           params.type = this.currencyTypeValue
+          params.startTime = this.startTime[0] == null ? '' : timeFilter(this.startTime[0], 'normal') // 开始起止时间
+          params.endTime = this.startTime[1] == null ? '' : timeFilter(this.startTime[1], 'normal') // 结束起止时间
           data = await statusRushedToRecordList(params)
-          console.log(data)
+          // console.log(data)
           if (!returnAjaxMsg(data, this, 0)) {
             // 接口失败清除局部loading
             this.partLoading = false
@@ -499,14 +493,12 @@ export default {
           }
           break
         case 'other-records':
-          console.log(2)
-          console.log(this.startTime)
           params.pageNum = this.otherRecordPageNumbers
-          params.startTime = this.startTime === '' ? '' : timeFilter(this.startTime, 'normal') // 开始起止时间
-          params.endTime = this.endTime === '' ? '' : timeFilter(this.endTime, 'normal') // 结束起止时间
+          params.startTime = this.startTime[0] == null ? '' : timeFilter(this.startTime[0], 'normal') // 开始起止时间
+          params.endTime = this.startTime[1] == null ? '' : timeFilter(this.startTime[1], 'normal') // 结束起止时间
           params.type = this.otherRecordsValue
-          console.log(params)
-          console.log(this.startTime)
+          // console.log(params)
+          // console.log(this.startTime)
           data1 = await getComprehensiveRecordsList(params)
           // console.log(data1)
           if (!returnAjaxMsg(data1, this, 0)) {
@@ -546,38 +538,16 @@ export default {
           break
       }
     },
-    // 时间日期插件日期选择change事件验证事件开始和结束时间
-    // 开始时间赋值
-    changeStartTime (e) {
-      this.startTime = e
-      console.log(this.startTime)
-      console.log(e)
-      if (this.endTime) {
-        if (this.startTime > this.endTime) {
-          this.$message({ // message: '开始时间不能大于结束时间',
-            message: this.$t('M.otc_time_limit'),
-            type: 'error'
-          })
-          return false
-        }
-      }
-    },
-    timeFormatting (data) {
-      return timeFilter(data, 'date')
-    },
     // 结束时间赋值
-    changeEndTime (e) {
-      this.endTime = e
-      // console.log(e)
-      if (this.startTime) {
-        if (this.startTime > this.endTime) {
-          this.$message({ // message: '开始时间不能大于结束时间',
-            message: this.$t('M.otc_time_limit'),
-            type: 'error'
-          })
-          return false
+    changeTime () {
+      this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
+        disabledDate: (time) => {
+          let curDate = (new Date()).getTime()
+          let three = 92 * 24 * 3600 * 1000
+          let threeMonths = curDate - three
+          return time.getTime() > Date.now() + (1 * 24 * 60 * 60 * 1000) || time.getTime() < threeMonths
         }
-      }
+      })
     }
   },
   filter: {},
@@ -601,6 +571,15 @@ export default {
       }
     },
     userCenterActiveName (newVal) {
+      this.startTime = [
+        new Date(
+          this.year,
+          this.month,
+          this.date, 0, 0, 0
+        ),
+        new Date()
+      ]
+      this.changeTime()
       if (newVal === 'billing-details') {
         this.getChargeMentionList()
         this.inquireCurrencyList()
@@ -670,6 +649,10 @@ export default {
       }
 
       /deep/ {
+        .el-date-range-picker__content.is-left {
+          border-right: 1px solid #6666;
+        }
+
         .el-table__body-wrapper {
           height: 470px;
           background-color: #1c1f32;
@@ -678,6 +661,17 @@ export default {
         .el-input--suffix {
           .el-input__inner {
             padding-right: 25px;
+          }
+        }
+
+        .el-date-editor {
+          .el-range-input,
+          .el-range-separator {
+            color: #fff;
+          }
+
+          .el-range-separator {
+            line-height: 23px;
           }
         }
 
@@ -705,6 +699,10 @@ export default {
             border-bottom: 0;
             color: #ccc;
             background-color: #1c1f32;
+
+            &.prev-month {
+              color: #666;
+            }
           }
         }
 
@@ -851,12 +849,17 @@ export default {
 
     /deep/ {
       .el-input__inner {
+        width: 110px;
         height: 30px;
         border: 0;
         font-size: 12px;
       }
 
       .el-date-editor {
+        &.el-input__inner {
+          width: 230px;
+        }
+
         &.el-input {
           width: 120px;
           height: 30px;
@@ -865,6 +868,14 @@ export default {
         .el-input__inner {
           width: 120px;
           height: 30px;
+        }
+
+        .el-range__icon {
+          line-height: 25px;
+        }
+
+        .el-range__close-icon {
+          line-height: 25px;
         }
       }
 

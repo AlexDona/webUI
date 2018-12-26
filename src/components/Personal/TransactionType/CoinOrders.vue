@@ -477,7 +477,6 @@ import {
   timeFilter,
   scientificToNumber
 } from '../../../utils'
-
 export default {
   components: {},
   // props,
@@ -516,11 +515,12 @@ export default {
     await this.commissionList('current-entrust')
   },
   mounted () {},
-  activated () {},
+  activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
     coinMoneyOrders (tab) {
+      this.emptyData()
       console.log(tab.name)
       this.partLoading = true
       this.commissionList(tab.name)
@@ -674,8 +674,8 @@ export default {
       }
     },
     /**
-    *时间选择器change事件
-    */
+     *时间选择器change事件
+     */
     startDate () {
       if (this.endTime) {
         if (this.startTime > this.endTime) {
@@ -697,6 +697,21 @@ export default {
           return false
         }
       }
+    },
+    // 数据清空
+    emptyData () {
+      // 用户币种名称
+      this.activeSymbol = ''
+      // 当前交易区
+      this.activeExchangeArea = ''
+      // 当前撮合类型
+      this.activeMatchType = ''
+      // 当前方向(类型)
+      this.activeType = ''
+      // 开始时间
+      this.startTime = ''
+      // 结束时间
+      this.endTime = ''
     }
   },
   filter: {},
@@ -723,6 +738,7 @@ export default {
       console.log(newVal)
     },
     userCenterActiveName (newVal) {
+      this.emptyData()
       if (newVal === 'coin-orders') {
         this.getEntrustSelectBox()
         this.commissionList()
