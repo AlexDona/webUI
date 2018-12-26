@@ -275,7 +275,7 @@ export default {
     await this.getMerchantAvailablelegalTenderList()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

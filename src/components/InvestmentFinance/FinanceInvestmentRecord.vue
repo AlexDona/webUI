@@ -323,7 +323,7 @@ export default {
     console.log(this.$route.query)
   },
   mounted () {},
-  activited () {},
+  activated () {},
   updated () {},
   beforeRouteUpdate () {},
   aftereRouteUpdate () {

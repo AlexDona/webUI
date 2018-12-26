@@ -573,7 +573,7 @@ export default {
     // console.log(this.limitOrderCount)
     // console.log(this.successOrderCount)
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

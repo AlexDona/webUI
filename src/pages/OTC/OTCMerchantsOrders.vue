@@ -420,7 +420,7 @@ export default {
     this.getOTCEntrustingOrdersRevocation()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

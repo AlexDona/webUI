@@ -231,7 +231,7 @@ export default {
     this.getGoogleVerificationCode()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

@@ -7,7 +7,8 @@ import {
 } from '../env'
 import {getNestedData} from '../commonFunc'
 import axios from 'axios'
-import store from '../../vuex'
+import storeCreater from '../../vuex'
+const store = storeCreater()
 let util = {}
 util.ajax = axios.create({
   baseURL: apiCommonUrl,

@@ -295,7 +295,7 @@ export default {
     this.showNoPosswdAndNoVerifyNotice()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

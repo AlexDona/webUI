@@ -679,7 +679,7 @@ export default {
     console.log(this.authenticationNotPass)
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -690,7 +690,9 @@ export default {
       'SET_USER_INFO_REFRESH_STATUS'
     ]),
     reflashUserInfo () {
-      this.$store.dispatch('user/REFLASH_USER_INFO', this)
+      this.$store.dispatch('user/REFLASH_USER_INFO', {
+        self: this
+      })
     },
     // 隐藏上传按钮
     uploadImg (ref) {

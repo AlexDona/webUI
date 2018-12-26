@@ -42,7 +42,7 @@ export default {
     this.getAboutUsData()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

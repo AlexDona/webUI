@@ -509,8 +509,7 @@ export default {
   mounted () {
     this.getRefValue(this.limitBuyPriceInputRef)
   },
-  activited () {
-  },
+  activated () {},
   update () {
   },
   beforeRouteUpdate () {

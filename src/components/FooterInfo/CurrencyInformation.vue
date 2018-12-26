@@ -63,7 +63,7 @@ export default {
     await this.initInfoList()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

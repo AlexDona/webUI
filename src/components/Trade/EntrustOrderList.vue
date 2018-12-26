@@ -318,7 +318,7 @@ export default {
     this.getEntrustData()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

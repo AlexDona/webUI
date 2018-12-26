@@ -365,7 +365,7 @@ export default {
     console.log(domain)
     this.getInverData()
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

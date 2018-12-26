@@ -690,7 +690,6 @@ export default {
   data () {
     return {
       emailNumRef: 'email-num-ref',
-      passwdRef: 'passwd-ref',
       phoneRef: 'phone-ref',
       mobilePhoneRef: 'mobile-phone-ref',
       activeMethod: 0, // 当前注册方式： 0： 手机注册 : 1 邮箱注册
@@ -747,7 +746,7 @@ export default {
   mounted () {
     this.pcDragEvent()
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -1042,6 +1041,8 @@ export default {
       this.repeatPassword = ''
       this.checkCode = ''
       this.setErrorMsg()
+      this.$refs[this.phoneRef].value = ''
+      this.$refs[this.emailNumRef].value = ''
     },
     /**
      * 滑块验证

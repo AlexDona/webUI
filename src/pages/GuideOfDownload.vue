@@ -42,7 +42,8 @@
               @mouseleave="toggleErCode(0)"
             >
               <!-- 扫码下载ios、Android版 -->
-              {{$t('M.about_footer_info_down3')}}
+              <span v-if="isNeedIOS">{{$t('M.about_footer_info_down3')}}</span>
+              <span v-else>{{$t('M.about_footer_info_down3_withoutIOS')}}</span>
             </p>
             <!-- <p>随时关注 快速交易</p> -->
             <p>{{$t('M.about_footer_info_down4')}}</p>
@@ -99,7 +100,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapGetters} from 'vuex'
 import {domain} from '../utils/env'
 import IconFont from '../components/Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
@@ -121,9 +122,11 @@ export default {
       isOpen: true
     }
   },
-  created () {},
+  created () {
+    console.log(this.isNeedIOS)
+  },
   mounted () {},
-  activited () {},
+  activated () {},
   updated () {},
   beforeRouteUpdate () {},
   methods: {
@@ -136,6 +139,9 @@ export default {
   },
   filter: {},
   computed: {
+    ...mapGetters('common', {
+      isNeedIOS: 'isNeedIOS'
+    }),
     ...mapState({
       language: state => state.common.language
     }),

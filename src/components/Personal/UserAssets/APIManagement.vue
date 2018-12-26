@@ -496,7 +496,7 @@ export default {
     this.getMultipleUserAPIInfo()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

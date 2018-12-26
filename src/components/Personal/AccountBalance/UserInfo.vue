@@ -215,7 +215,7 @@ export default {
     await this.getAssetCurrenciesList()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

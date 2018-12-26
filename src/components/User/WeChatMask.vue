@@ -50,7 +50,7 @@ export default {
     // this.isWXBrowser()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   updated () {},
   beforeRouteUpdate () {},
   methods: {

@@ -142,7 +142,7 @@ export default {
     this.getRankingList()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   destroyed () {

@@ -521,7 +521,7 @@ export default {
       this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(false)
     }
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

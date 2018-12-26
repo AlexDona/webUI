@@ -158,8 +158,7 @@ export default {
   },
   mounted () {
   },
-  activited () {
-  },
+  activated () {},
   update () {
   },
   beforeRouteUpdate () {
@@ -221,7 +220,9 @@ export default {
         return false
       } else {
         this.activeFrequency = params.status
-        await this.$store.dispatch('user/REFLASH_USER_INFO', this)
+        await this.$store.dispatch('user/REFLASH_USER_INFO', {
+          self: this
+        })
       }
     },
     showSettingBox () {

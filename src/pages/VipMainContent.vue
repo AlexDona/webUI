@@ -665,7 +665,7 @@ export default {
     await this.getCurrencyApplicationDownloadUrl()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {
   },

@@ -844,7 +844,7 @@ export default {
     // this.getOTCTradingOrdersList()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

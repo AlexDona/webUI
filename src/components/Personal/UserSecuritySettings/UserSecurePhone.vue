@@ -354,7 +354,7 @@ export default {
     this.refreshCode()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
