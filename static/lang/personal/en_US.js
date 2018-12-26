@@ -342,5 +342,6 @@ export const personal = {
   'user_exchange_validate': 'Transaction verification',
   'user_pay_pwd_every': 'Verify passwords per transaction',
   'user_pay_pwd_user_set': 'Free entry of transaction password within hours',
-  'user_pay_pwd_never': 'Never enter a transaction password'
+  'user_pay_pwd_never': 'Never enter a transaction password',
+  'user_re_input_ip': 'The IP format is not correct, please re-enter'
 }

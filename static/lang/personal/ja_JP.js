@@ -342,5 +342,6 @@ export const personal = {
   'user_exchange_validate': 'トランザクション検証',
   'user_pay_pwd_every': 'トランザクションごとのトランザクションパスワードを確認する',
   'user_pay_pwd_user_set': '数時間以内に取引パスワードを無料で入力',
-  'user_pay_pwd_never': 'トランザクションパスワードを入力しない'
+  'user_pay_pwd_never': 'トランザクションパスワードを入力しない',
+  'user_re_input_ip': 'ipフォーマットが正しくないので再入力してください'
 }

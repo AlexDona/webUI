@@ -22,7 +22,7 @@
             </div>
             <div class="middle">
               <!--交易验证-->
-              <span>{{$t(labelOfActiveFrequency)}}</span>
+              <span><i v-if="activeFrequency == 'userset'">{{usersetTimeInterval}}</i>{{$t(labelOfActiveFrequency)}}</span>
             </div>
             <div class="right">
               <button
@@ -70,6 +70,7 @@
       <el-dialog
         :title="$t('M.comm_set') + $t('M.comm_password')"
         :visible.sync="isCheckPayPassword"
+        :close-on-click-modal="false"
         center
       >
         <el-input
@@ -153,7 +154,9 @@ export default {
       params: {},
       oldFrequency: '',
       isNeedPayPassword: true,
-      isPayPasswordEmpty: false
+      isPayPasswordEmpty: false,
+      // 是否成功修改
+      isSuccessChanged: false
     }
   },
   async created () {
@@ -191,7 +194,8 @@ export default {
       if (!this.isNeedPayPassword) {
         this.setUserInputPasswordFrequency(this.params)
       } else {
-        // 安全等级： 高 => 低
+        // 安全等级： 高 => 低'
+        this.isSuccessChanged = false
         this.isCheckPayPassword = true
       }
     },
@@ -222,12 +226,16 @@ export default {
       const data = await setUserInputPasswordFrequency(params)
       if (!returnAjaxMsg(data, this, 1)) {
         this.activeFrequency = this.oldFrequency
+        this.isSuccessChanged = false
         return false
       } else {
+        this.isSuccessChanged = true
         this.activeFrequency = params.status
         await this.$store.dispatch('user/REFLASH_USER_INFO', {
           self: this
         })
+        this.isCheckPayPassword = false
+        this.payPassword = ''
       }
     },
     showSettingBox () {
@@ -241,13 +249,19 @@ export default {
       notInputPayPasswdTime: state => state.user.loginStep1Info.notInputPayPasswdTime
     }),
     labelOfActiveFrequency () {
-      let arr = _.filter(this.frequencyList, item => {
-        return item.value == this.activeFrequency
-      })
+      let arr = _.filter(this.frequencyList, item => item.value == this.activeFrequency)
+      console.log(getNestedData(arr, '[0].label'))
+      // if(){}
       return getNestedData(arr, '[0].label')
     }
   },
   watch: {
+    isCheckPayPassword (newVal) {
+      console.log(newVal)
+      if (!this.isSuccessChanged && !newVal) {
+        this.cancelSetting()
+      }
+    }
   }
 }
 </script>
