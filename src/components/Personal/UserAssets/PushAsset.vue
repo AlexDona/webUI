@@ -191,7 +191,7 @@
               :label="$t('M.comm_count')"
             >
               <template slot-scope="s">
-                <div>{{ s.row.count }}</div>
+                <div>{{ filterNumber(s.row.count) }}</div>
               </template>
             </el-table-column>
             <!--价格-->
@@ -199,15 +199,16 @@
               :label="$t('M.comm_price_metre') + pushPayCoinName"
             >
               <template slot-scope="s">
-                <div>{{ s.row.price }}</div>
+                <div>{{ filterNumber(s.row.price) }}</div>
               </template>
             </el-table-column>
             <!--金额-->
             <el-table-column
               :label="$t('M.comm_money')"
+              width="100"
             >
               <template slot-scope="s">
-                <div>{{ s.row.amount }}</div>
+                <div>{{ filterNumber(s.row.amount) }}</div>
               </template>
             </el-table-column>
             <!--时间-->
@@ -407,7 +408,11 @@ import {
 } from '../../../utils/api/personal'
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
-import {timeFilter, formatNumberInput} from '../../../utils/index'
+import {
+  timeFilter,
+  formatNumberInput,
+  scientificToNumber
+} from '../../../utils/index'
 import {createNamespacedHelpers, mapState} from 'vuex'
 import {
   returnAjaxMsg,
@@ -481,6 +486,10 @@ export default {
     ...mapMutations([
       'SET_PUSH_BUTTON_STATUS'
     ]),
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
+    },
     // 1.时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -680,7 +689,7 @@ export default {
           this.pushAsset = item.coinName
           this.pushPrice = item.price
           this.pushCount = item.count
-          this.pushPaymentAmount = item.amount
+          this.pushPaymentAmount = this.filterNumber(item.amount)
         }
         return false
       })
@@ -764,7 +773,7 @@ export default {
           }
 
           .form-button-common {
-            margin: 0 0 50px 120px;
+            margin: 0 0 50px 124px;
           }
         }
       }
@@ -891,6 +900,10 @@ export default {
 
       /* PUSH确认 */
       .push-affirm {
+        .el-form-item {
+          margin-bottom: 0 !important;
+        }
+
         .el-dialog {
           top: 10%;
           width: 350px;
@@ -1195,6 +1208,10 @@ export default {
         /* 个人中心（白色主题） */
         .el-form-item__label {
           color: #7d90ac;
+        }
+
+        .el-dialog__title {
+          color: #fff;
         }
 
         .el-select {
