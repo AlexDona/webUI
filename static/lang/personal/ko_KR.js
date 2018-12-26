@@ -341,5 +341,11 @@ export const personal = {
   'user_bind_Bank_set': '은행카드 설정',
   'user_bind_Bank_input_name': '은행 명칭 입력해주세요.',
   'user_bind_Bank_input_card_num': '은행 카드번호 입력해주세요.',
-  'user_bind_Bank_input_address': '은행 주소 입력해주세요.'
+  'user_bind_Bank_input_address': '은행 주소 입력해주세요.',
+  // 20181226添加
+  'user_personal_setting': '개인 설정',
+  'user_exchange_validate': '거래 확인',
+  'user_pay_pwd_every': '트랜잭션 당 트랜잭션 암호 확인',
+  'user_pay_pwd_user_set': '몇 시간 내에 거래 비밀번호 무료 입력',
+  'user_pay_pwd_never': '트랜잭션 암호를 입력하지 마십시오'
 }

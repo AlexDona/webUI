@@ -5,28 +5,30 @@
   >
     <header class="personal-setting-header personal-height40 line-height40 background-color">
       <span class="padding-left23 header-content font-size16">
-        <!--收款账户-->
-        {{ $t('M.user_account_credited') }}
+        <!--设置-->
+        {{$t('M.comm_set')}}
       </span>
     </header>
     <div class="personal-setting-main min-height500 margin-top9">
       <div class="inner-box">
         <h3 class="title">
-          个人设置
+          <!-- 个人设置 -->
+          {{$t('M.user_personal_setting')}}
         </h3>
         <div class="content">
           <div class="top">
             <div class="left">
-              <span>交易验证</span>
+              <span>{{$t('M.user_exchange_validate')}}</span>
             </div>
             <div class="middle">
-              <span>{{labelOfActiveFrequency}}</span>
+              <!--交易验证-->
+              <span>{{$t(labelOfActiveFrequency)}}</span>
             </div>
             <div class="right">
               <button
                 @click="showSettingBox"
                 class="setting-btn"
-              >设置
+              >{{$t('M.comm_set')}}
               </button>
             </div>
           </div>
@@ -51,7 +53,7 @@
                       :checked="item.value == activeFrequency"
                       :value="item.value"
                     />
-                    {{item.label}}
+                    <span v-if="item.value=='userset'">{{usersetTimeInterval}}</span> {{$t(item.label)}}
                     <span
                       class="button"
                       :class="{
@@ -128,15 +130,18 @@ export default {
     return {
       frequencyList: [
         {
-          'label': '永不输入交易密码',
+          // 永不输入交易密码
+          'label': 'M.user_pay_pwd_never',
           'value': 'never'
         },
         {
-          'label': `8小时内免输入交易密码`,
+          // 用户设置小时数 小时内免输入交易密码
+          'label': 'M.user_pay_pwd_user_set',
           'value': 'userset'
         },
         {
-          'label': '每次交易验证交易密码',
+          // 每次交易验证交易密码
+          'label': 'M.user_pay_pwd_every',
           'value': 'everytime'
         }
       ],
@@ -209,7 +214,7 @@ export default {
         return false
       } else {
         this.usersetTimeInterval = getNestedData(data, 'data.data.notInputPayPasswdTime')
-        this.frequencyList[1].label = `${this.usersetTimeInterval}小时内免输入交易密码`
+        // this.frequencyList[1].label = `小时内免输入交易密码`
       }
     },
     // 设置用户交易密码时长
@@ -275,6 +280,7 @@ export default {
 
             > .middle {
               flex: 1;
+              white-space: nowrap;
               color: $mainColor;
 
               > span {

@@ -341,5 +341,11 @@ export const personal = {
   'user_bind_Bank_set': '设置银行卡',
   'user_bind_Bank_input_name': '请输入银行名称',
   'user_bind_Bank_input_card_num': '请输入银行卡号',
-  'user_bind_Bank_input_address': '请输入支行地址'
+  'user_bind_Bank_input_address': '请输入支行地址',
+  // 20181226添加
+  'user_personal_setting': '个人设置',
+  'user_exchange_validate': '交易验证',
+  'user_pay_pwd_every': '每次交易验证交易密码',
+  'user_pay_pwd_user_set': '小时内免输入交易密码',
+  'user_pay_pwd_never': '永不输入交易密码'
 }
