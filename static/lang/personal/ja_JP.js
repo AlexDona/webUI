@@ -336,5 +336,11 @@ export const personal = {
   'user_bind_Bank_set': '変更銀行カード',
   'user_bind_Bank_input_name': '入力してください銀行名',
   'user_bind_Bank_input_card_num': '入力してください銀行カード番号',
-  'user_bind_Bank_input_address': '入力してください支店アドレス'
+  'user_bind_Bank_input_address': '入力してください支店アドレス',
+  // 20181226添加
+  'user_personal_setting': '個人設定',
+  'user_exchange_validate': 'トランザクション検証',
+  'user_pay_pwd_every': 'トランザクションごとのトランザクションパスワードを確認する',
+  'user_pay_pwd_user_set': '数時間以内に取引パスワードを無料で入力',
+  'user_pay_pwd_never': 'トランザクションパスワードを入力しない'
 }
