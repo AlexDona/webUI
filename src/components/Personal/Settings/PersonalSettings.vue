@@ -22,7 +22,7 @@
             </div>
             <div class="middle">
               <!--交易验证-->
-              <span>{{$t(labelOfActiveFrequency)}}</span>
+              <span><i v-if="activeFrequency == 'userset'">{{usersetTimeInterval}}</i>{{$t(labelOfActiveFrequency)}}</span>
             </div>
             <div class="right">
               <button
@@ -241,9 +241,9 @@ export default {
       notInputPayPasswdTime: state => state.user.loginStep1Info.notInputPayPasswdTime
     }),
     labelOfActiveFrequency () {
-      let arr = _.filter(this.frequencyList, item => {
-        return item.value == this.activeFrequency
-      })
+      let arr = _.filter(this.frequencyList, item => item.value == this.activeFrequency)
+      console.log(getNestedData(arr, '[0].label'))
+      // if(){}
       return getNestedData(arr, '[0].label')
     }
   },

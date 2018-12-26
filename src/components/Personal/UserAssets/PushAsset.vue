@@ -99,7 +99,7 @@
             <!--交易密码-->
             <el-form-item
               :label="$t('M.comm_password')"
-              v-if="isNeedPayPassword"
+              v-if="isNeedPayPasswordComputed"
             >
               <input
                 type="password"
@@ -473,7 +473,7 @@ export default {
     }
   },
   async created () {
-    this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+    this.reflashIsNeedPayPassword()
   },
   mounted () {
   },
@@ -608,6 +608,10 @@ export default {
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
+    async reflashIsNeedPayPassword () {
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+      console.log(this.isNeedPayPassword)
+    },
     // 提交push资产
     async submitPushAssets () {
       let goOnStatus = 0
@@ -629,6 +633,7 @@ export default {
         if (!(returnAjaxMsg(data, this, 1))) {
           return false
         } else {
+          await this.reflashIsNeedPayPassword()
           this.isShowPayPasswordDialog = false
           // push列表展示
           this.getPushRecordList()
@@ -717,6 +722,7 @@ export default {
         if (!(returnAjaxMsg(data, this, 1))) {
           return false
         } else {
+          await this.reflashIsNeedPayPassword()
           this.isShowPayPasswordDialog = false
           this.payPassword = ''
           // 付款成功刷新列表
@@ -731,12 +737,15 @@ export default {
       theme: state => state.common.theme,
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
-    })
+    }),
+    isNeedPayPasswordComputed () {
+      return this.isNeedPayPassword
+    }
   },
   watch: {
     async userCenterActiveName (newVal) {
       if (newVal === 'push-asset') {
-        this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+        await this.reflashIsNeedPayPassword()
         this.getPushRecordList()
         // 清空数据
         this.emptyInputData()

@@ -537,7 +537,7 @@ export default {
         this.createErrorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_binding') + 'IP' + this.$t('M.comm_site')
         return false
       } else if (!IP_REG.test(this.ipSite)) {
-        this.createErrorMsg = 'IP格式不正确请重新输入'
+        this.createErrorMsg = this.$t('M.user_re_input_ip')
         return false
       } else {
         // this.createErrorMsg = ''

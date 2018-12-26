@@ -347,5 +347,6 @@ export const personal = {
   'user_exchange_validate': '交易验证',
   'user_pay_pwd_every': '每次交易验证交易密码',
   'user_pay_pwd_user_set': '小时内免输入交易密码',
-  'user_pay_pwd_never': '永不输入交易密码'
+  'user_pay_pwd_never': '永不输入交易密码',
+  'user_re_input_ip': 'IP格式不正确请重新输入'
 }

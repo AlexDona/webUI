@@ -347,5 +347,6 @@ export const personal = {
   'user_exchange_validate': '거래 확인',
   'user_pay_pwd_every': '트랜잭션 당 트랜잭션 암호 확인',
   'user_pay_pwd_user_set': '몇 시간 내에 거래 비밀번호 무료 입력',
-  'user_pay_pwd_never': '트랜잭션 암호를 입력하지 마십시오'
+  'user_pay_pwd_never': '트랜잭션 암호를 입력하지 마십시오',
+  'user_re_input_ip': 'IP 형식이 잘못 되었습니다. 다시 입력하십시오'
 }
