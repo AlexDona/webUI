@@ -1,4 +1,4 @@
-<template>
+`<template>
   <div
     class="kline-container"
   >
@@ -89,12 +89,12 @@ export default {
   },
   beforeCreate () {
   },
-  created () {
+  async created () {
     // this.widget = null
     console.log(this.socket)
     this.socket.doOpen()
     // 获取默认交易对
-    this.getDefaultSymbol()
+    await this.getDefaultSymbol()
   },
   mounted () {
     this.initKLine(this.symbol)
@@ -285,7 +285,6 @@ export default {
             resolution: '1',
             chartType: 3
           }].concat(kLineBtnList)
-          console.log(btnList)
           chart.onIntervalChanged().subscribe(null, function (interval, obj) {
             _self.widget.changingInterval = false
           })
@@ -312,6 +311,10 @@ export default {
                 .append(item.label)
             })
           }
+          let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
+          console.dir(iframe$('.add7'))
+          // iframe$('.add7').click()
+          // console.log()
           this.klineInitCount++
           this.widget.chart().createStudy('Moving Average', false, true, [5, 'close', 0], null, {'Plot.color': '#7b53a7'})
           this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})
@@ -342,7 +345,7 @@ export default {
     },
     // 切换时间间隔
     updateSelectedIntervalButton (button) {
-      console.dir(this.widget.selectedIntervalButton)
+      console.dir(button)
       this.widget.selectedIntervalButton && this.widget.selectedIntervalButton.removeClass('selected')
       button.addClass('selected')
       this.widget.selectedIntervalButton = button
@@ -621,3 +624,4 @@ export default {
     }
   }
 </style>
+`

@@ -42,5 +42,9 @@ export const trade = {
   'trade_market_amount_increase': 'Gain',
   'trade_market_optional': 'Optional',
   'trade_cancel_all_entrust': 'Repeal all open order',
-  'trade_determine_cancel_all_entrust': 'Determine to repeal all open order'
+  'trade_determine_cancel_all_entrust': 'Determine to repeal all open order',
+  'trade_empty_buy_count': 'Please enter the purchase amount',
+  'trade_empty_sell_count': 'Please enter the amount sold',
+  'trade_empty_buy_price': 'Please enter the bid price',
+  'trade_empty_sell_price': 'Please enter the offer price'
 }

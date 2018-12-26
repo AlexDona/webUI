@@ -7,33 +7,21 @@ export const getMerchantAvailablelegalTender = (params) => get('otcCOin/getAvail
   'not-loading': true
 }, params))
 // otc可用币种查询：我要购买/我要出售的币种列表
-export const getOTCAvailableCurrency = (params) => get('otcCOin/getAvailOTCCoins', Object.assign({
-  'not-loading': true
-}, params))
+export const getOTCAvailableCurrency = (params) => get('otcCOin/getAvailOTCCoins', params)
 // otc主页面查询otc挂单列表
 export const getOTCPutUpOrders = (params) => get('otcEntrust/selectByParams', Object.assign({
   'not-loading': true
 }, params))
 // 查询用户所有otc挂单列表（分页）:也就是订单中的 委托中的订单
-export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrustsPage', Object.assign({
-  'not-loading': true
-}, params))
+export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrustsPage', params)
 // 查询3天内用户otc各状态交易---otc订单中 交易中 的订单
-export const getOTCTradingOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
-  'not-loading': true
-}, params))
+export const getOTCTradingOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', params)
 // 查询3天内用户otc各状态交易---otc订单中 已完成 的订单
-export const getOTCCompletedOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
-  'not-loading': true
-}, params))
+export const getOTCCompletedOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', params)
 // 查询3天内用户otc各状态交易---otc订单中 已取消 的订单
-export const getOTCCanceledOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
-  'not-loading': true
-}, params))
+export const getOTCCanceledOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', params)
 // 查询3天内用户otc各状态交易---otc订单中 冻结中 的订单
-export const getOTCFrezzingOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
-  'not-loading': true
-}, params))
+export const getOTCFrezzingOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', params)
 // 添加otc挂单(商家与普通用户都可用)
 export const addOTCPutUpOrders = (params) => postWithURLencoded('otcEntrust/addOtcEntrustForCommon', params)
 // 添加otc挂单(仅商家可用)
@@ -77,7 +65,9 @@ export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMe
 //  币种详情：商家和普通用户挂单页面请求币种详情渲染页面
 export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
 // 投资理财请求数据
-export const getFinancialManagement = (params) => get('financialManagement', params)
+export const getFinancialManagement = (params) => get('financialManagement', Object.assign({
+  'not-loading': true
+}, params))
 // 投资理财立投资请求接口
 export const imediateInvestment = (params) => post('financialManagement', params)
 // 投资理财取消投资接口
@@ -88,3 +78,5 @@ export const getFinancialRecord = (params) => get('financialManagement/recordInf
 export const cancelUserOtcOrder = (params) => post('otcOrder/cancelUserOtcOrder', params)
 // 成交otc用户定单（过期卖家未收款）
 export const completeUserOtcOrder = (params) => post('otcOrder/completeUserOtcOrder', params)
+// 广告管理中订单点击修改跳转到商家专用发布广告页面，修改数据后再发布广告调取的接口
+export const addModifyPublishADOrder = (params) => postWithURLencoded('otcEntrust/upShelfOtcEntrust', params)

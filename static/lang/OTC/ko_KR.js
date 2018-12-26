@@ -338,22 +338,5 @@ export const OTC = {
   'otc_apply_tips6': '따뜻한 힌트.',
   // 发布订单错误提示
   'otc_publish_order_err_tips1': '게시 할 통화를 선택하십시오.',
-  'otc_publish_order_err_tips2': '유효한 통화 유형을 선택하십시오.',
-  // 20181225日添加
-  'OTC_SELL': 'OTC 매각',
-  'account_failure_0060': '재테크 가 부족하여 집행 할 수 없다!',
-  'account_failure_0063': '스크래치 조작에 실패하였습니다. 조작할 데이터가 없습니다!',
-  'account_failure_0059': '사용자: 재테크 로그 기록에 실패할 수 있습니다!',
-  'account_failure_00128': '3 개월의 데이터를 조회할 수 있을 뿐이다!',
-  'account_failure_0062': '사용자가 사용할 수 있으며 로그 기록에 실패했습니다!',
-  'account_failure_0056': '사용자 표 상점, 플랫폼 수익의 이동 실패!',
-  'account_failure_0064': '이 화폐의 종은 잠시 사용할 수 없다',
-  'account_failure_0065': '이 화폐종류를 확인할 권리가 없고, 공식적인 고객에게 연락해 주십시오.',
-  'finish': '완료됨',
-  'OTC_BUY': 'OTC 매입',
-  'account_failure_0061': '가입자 재테크 사용 실패!',
-  'account_failure_00112': 'PUSH 자산 지불 실패!',
-  'account_failure_0057': '사용자 표 상자, 플랫폼 수익 이동 로그 기록 실패!',
-  'account_failure_0058': '사용자는 재테크에 실패할 수 있습니다!'
-
+  'otc_publish_order_err_tips2': '유효한 통화 유형을 선택하십시오.'
 }

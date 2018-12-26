@@ -26,7 +26,7 @@ if (process.env.NODE_ENV == 'development') {
 
   // eslint-disable-next-line
   /*apiCommonUrl = 'http://192.168.1.200:8888/' // 内部测试
-  xDomain = 'kbbt.com'
+  xDomain = 'new.test.com'
   socketUrl = 'ws://192.168.1.200:8087/market'
   loginSocketUrl = 'ws://192.168.1.200:8087/qrcodeLogin/'*/
 

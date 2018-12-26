@@ -43,8 +43,8 @@ export default {
   data () {
     return {
       searchKeyWord: '', // 搜索关键字
-      enSrc: 'https://doc.bzu.com/web/#/6?page_id=111',
-      chSrc: 'https://doc.bzu.com/web/#/8?page_id=142'
+      enSrc: 'https://doc.bzu.com/web/#/2?page_id=23',
+      chSrc: 'https://doc.bzu.com/web/#/4?page_id=67'
     }
   },
   created () {

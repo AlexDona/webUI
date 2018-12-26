@@ -41,5 +41,9 @@ export const trade = {
   'trade_market_amount_increase': '漲幅',
   'trade_market_optional': '自選',
   'trade_cancel_all_entrust': '撤銷所有委托',
-  'trade_determine_cancel_all_entrust': '確定撤銷所有委托'
+  'trade_determine_cancel_all_entrust': '確定撤銷所有委托',
+  'trade_empty_buy_count': '請輸入買入量',
+  'trade_empty_sell_count': '請輸入賣出量',
+  'trade_empty_buy_price': '請輸入買入價',
+  'trade_empty_sell_price': '請輸入賣出價'
 }

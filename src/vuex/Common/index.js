@@ -90,10 +90,7 @@ const state = {
     footerInfo2: {},
     configInfo: {}
   },
-  // 全局loading
-  isAjaxReady: false,
-  // 页面可用宽度
-  innerWidth: ''
+  isAjaxReady: false // 全局loading
 }
 
 export default {

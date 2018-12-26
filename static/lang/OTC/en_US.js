@@ -349,21 +349,5 @@ export const OTC = {
   'otc_apply_tips6': 'Tips',
   // 发布订单错误提示
   'otc_publish_order_err_tips1': 'Please select the currency to be published',
-  'otc_publish_order_err_tips2': 'Please select the legal currency type',
-  // 20181225添加
-  'OTC_SELL': 'OTC_SELL',
-  'account_failure_0060': 'Lack of financial management, can not be implemented!',
-  'account_failure_0063': 'The rollback operation failed and there was no operable data!',
-  'account_failure_0059': 'Users can use the financial log to record failures!',
-  'account_failure_00128': 'Only three months of data can be queried!',
-  'account_failure_0062': 'User finances available, log failure!',
-  'account_failure_0056': 'User list merchants, platform revenue transfer failure!',
-  'account_failure_0064': 'This currency is temporarily unavailable',
-  'account_failure_0065': 'No right to check the currency. Please contact the official customer service.',
-  'finish': 'finish',
-  'OTC_BUY': 'OTCbuying',
-  'account_failure_0061': 'User Financing Failed to Available!',
-  'account_failure_00112': 'PUSH Asset Payment Failed!',
-  'account_failure_0057': 'User table merchant, platform revenue transfer log record failed!',
-  'account_failure_0058': 'Users can fail to manage their finances!'
+  'otc_publish_order_err_tips2': 'Please select the legal currency type'
 }
