@@ -14,6 +14,7 @@ export const personal = {
   'user_asset_title11': '통화 거래 주문',
   'user_asset_title12': '먼저 거래 비밀번호를 설정 한 다음 OTC 수금 계정을 설정하십시오!',
   'user_asset_title13': '먼저 인증을 완료하고 OTC 수금 계정을 설정하십시오!',
+  'user_asset_title14': '먼저 신분 인증을 마 친 후, 다시 거래 검증을 설치하십시오!',
   'user_hidden_assets': '통화가 0 인 자산 숨기기',
   'user_asset_valuation': '자산 평가',
   'user_assets_suspended': '충전 일시 중지, 지갑 유지 관리',

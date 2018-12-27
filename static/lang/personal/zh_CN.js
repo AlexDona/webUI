@@ -14,6 +14,7 @@ export const personal = {
   'user_asset_title11': '法币订单',
   'user_asset_title12': '请先设置交易密码后，再设置OTC收款账户!',
   'user_asset_title13': '请先完成身份认证后，再设置OTC收款账户!',
+  'user_asset_title14': '请先完成身份认证后，再设置交易验证!',
   'user_hidden_assets': '隐藏资产为0的币种',
   'user_asset_valuation': '资产估值',
   'user_assets_suspended': '充值暂停，钱包维护中',

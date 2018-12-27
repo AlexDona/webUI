@@ -157,7 +157,9 @@
           </div>
           <p class="font-size12 warning-text margin-top35 text-align-c">
             <!--请先设置交易密码，再来设置OTC收款账户!-->
-            {{ $t('M.user_asset_title12') }}
+            <span v-if="userCenterActiveName !== 'personal-setting'">{{ $t('M.user_asset_title12') }}</span>
+            <!--请先设置交易密码，再来设置交易验证-->
+            <span v-else>{{$t('M.user_asset_title14')}}</span>
           </p>
           <span
             slot="footer"
@@ -302,6 +304,10 @@ export default {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
+    // 显示未设置交易密码弹窗
+    showNoPasswdNotice () {
+      this.setPwdDialogVisible = true
+    },
     showNoPosswdAndNoVerifyNotice () {
       if (this.userCenterActiveName === 'account-credited' && !this.payPassword) {
         this.setPwdDialogVisible = true

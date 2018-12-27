@@ -14,6 +14,7 @@ export const personal = {
   'user_asset_title11': 'Currency order',
   'user_asset_title12': 'Please set the transaction password first, then set up the OTC collection account!',
   'user_asset_title13': 'Please complete the identity authentication before setting up the OTC collection account!',
+  'user_asset_title14': 'Please complete the authentication before setting up the transaction authentication !',
   'user_hidden_assets': 'Hide zero asset',
   'user_asset_valuation': 'Asset valuation',
   'user_assets_suspended': 'Recharge pause, wallet maintenance',
