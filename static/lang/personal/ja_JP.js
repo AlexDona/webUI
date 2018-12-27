@@ -132,7 +132,7 @@ export const personal = {
   'user_invite_link': 'リンク',
   'user_invite_people': '人々',
   'user_invite_succeed': '成功',
-  'user_invite_have_obtained': '見積上前',
+  'user_invite_have_obtained': '口銭を取得した',
   'user_invite_statistics': '統計',
   'user_invite_direct': '直接推薦',
   'user_invite_indirect': '間接推薦',

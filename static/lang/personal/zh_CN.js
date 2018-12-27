@@ -136,7 +136,7 @@ export const personal = {
   'user_invite_link': '链接',
   'user_invite_people': '人',
   'user_invite_succeed': '成功',
-  'user_invite_have_obtained': '已获得的佣金预估',
+  'user_invite_have_obtained': '已获得佣金折合',
   'user_invite_statistics': '统计',
   'user_invite_direct': '直接推广',
   'user_invite_indirect': '间接推广',

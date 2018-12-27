@@ -464,8 +464,8 @@ export default {
       pushUID: '', // 每行数据ID
       pushPayCoinName: '', // 币种名称
       pushRecordList: [], // push列表记录
-      currentPageForMyEntrust: 1, // 当前委托页码
-      totalPageForMyEntrust: 1, // 当前委托总页数
+      currentPageForMyEntrust: 1, // 当前页码
+      totalPageForMyEntrust: 1, // 当前总页数
       pointLength: 4, // 保留小数位后四位
       errorMsg: '', // 错误提示
       partLoading: true, // 局部列表loading
@@ -507,7 +507,10 @@ export default {
      * 刚进页面时候 push列表展示
      */
     async getPushRecordList () {
-      let data = await getPushAssetList({})
+      let data = await getPushAssetList({
+        pageNum: this.currentPageForMyEntrust, // 分页
+        pageSize: this.pageSize // 页码
+      })
       if (!(returnAjaxMsg(data, this))) {
         // 接口失败清除局部loading
         this.partLoading = false

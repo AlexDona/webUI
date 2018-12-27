@@ -136,7 +136,7 @@ export const personal = {
   'user_invite_link': '鏈接',
   'user_invite_people': '人',
   'user_invite_succeed': '成功',
-  'user_invite_have_obtained': '已獲得的傭金預估',
+  'user_invite_have_obtained': '已獲得的傭金折合',
   'user_invite_statistics': '統計',
   'user_invite_direct': '直接推廣',
   'user_invite_indirect': '間接推廣',

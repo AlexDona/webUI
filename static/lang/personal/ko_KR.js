@@ -136,7 +136,7 @@ export const personal = {
   'user_invite_link': '링크',
   'user_invite_people': '사람',
   'user_invite_succeed': '성공',
-  'user_invite_have_obtained': '달성 된 수수료 추계액',
+  'user_invite_have_obtained': '커미션 을 받아 접합 하다',
   'user_invite_statistics': '통계',
   'user_invite_direct': '직접 보급',
   'user_invite_indirect': '간접 보급',

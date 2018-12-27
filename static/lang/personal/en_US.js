@@ -133,7 +133,7 @@ export const personal = {
   'user_invite_link': ' link',
   'user_invite_people': 'people',
   'user_invite_succeed': 'Success ',
-  'user_invite_have_obtained': 'Commissioned estimate',
+  'user_invite_have_obtained': 'Commissioned conversion',
   'user_invite_statistics': ' Statistics',
   'user_invite_direct': 'Direct promotion',
   'user_invite_indirect': 'Indirect promotion',
