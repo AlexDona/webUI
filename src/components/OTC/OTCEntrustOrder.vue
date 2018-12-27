@@ -87,19 +87,19 @@
           </span>
           <!-- 3 价格 -->
           <span class="item third-price">
-            {{item.price}}({{item.currencyName}})
+            {{filterNumber(item.price)}}({{item.currencyName}})
           </span>
           <!-- 4 挂单数量 -->
           <span class="item fourth-entrust-count">
-            {{item.entrustCount}}({{item.coinName}})
+            {{filterNumber(item.entrustCount)}}({{item.coinName}})
           </span>
           <!-- 5 已匹配数量 -->
           <span class="item fifth-match-count">
-            {{item.matchCount}}({{item.coinName}})
+            {{filterNumber(item.matchCount)}}({{item.coinName}})
           </span>
           <!-- 6 总金额 -->
           <span class="item sixth-total-amount">
-            {{item.totalAmount}}({{item.currencyName}})
+            {{filterNumber(item.totalAmount)}}({{item.currencyName}})
           </span>
           <!-- 7 挂单时间 -->
           <span class="item senventh-create-time">
@@ -133,7 +133,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {timeFilter} from '../../utils'
+import {timeFilter, scientificToNumber} from '../../utils'
 import {getOTCEntrustingOrders, querySelectedOrdersRevocation} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 // import {mapState} from 'vuex'
@@ -169,6 +169,10 @@ export default {
     ...mapMutations([
       'UPDATE_OTC_HOME_LIST_STATUS'
     ]),
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
+    },
     // 1.0 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum

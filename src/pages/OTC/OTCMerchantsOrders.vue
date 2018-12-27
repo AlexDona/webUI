@@ -278,15 +278,16 @@
               :label = "$t('M.otc_MerchantsOrders_transaction_price')"
             >
               <template slot-scope = "s">
-                <div>{{s.row.price}}</div>
+                <div>{{ filterNumber(s.row.price) }}</div>
               </template>
             </el-table-column>
             <!-- 成交量 -->
             <el-table-column
               :label = "$t('M.otc_MerchantsOrders_transaction_mount')"
+              width="100"
             >
               <template slot-scope = "s">
-                <div>{{s.row.pickCount}}</div>
+                <div>{{ filterNumber(s.row.pickCount) }}</div>
               </template>
             </el-table-column>
             <!-- 总金额 -->
@@ -294,7 +295,7 @@
               :label = "$t('M.otc_canceled_total')"
             >
               <template slot-scope = "s">
-                <div>{{s.row.payAmount}}</div>
+                <div>{{ filterNumber(s.row.payAmount) }}</div>
               </template>
             </el-table-column>
             <!-- 对方姓名 -->
@@ -336,7 +337,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import IconFontCommon from '../../components/Common/IconFontCommon'
-import {timeFilter} from '../../utils'
+import {timeFilter, scientificToNumber} from '../../utils'
 import {
   getOTCAvailableCurrency,
   getMerchantAvailablelegalTender,
@@ -424,6 +425,10 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
+    },
     // 1分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
