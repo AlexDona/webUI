@@ -39,7 +39,10 @@
                       :to="`NewsAndNoticeItem/${item.id}`"
                       class="content-item-link"
                     >
-                      <div class="left">
+                      <div
+                        class="left"
+                        v-if="isChineseLanguage"
+                      >
                           <div class="top">
                             <!--年-->
                             {{item.createTime.split('-')[0]+ $t('M.news_year')}}
@@ -48,7 +51,20 @@
                             <!--月-->
                             {{item.createTime.split('-')[1]-0+ $t('M.news_month')}}
                           </div>
+                      </div>
+                      <div
+                        class="left"
+                        v-else
+                      >
+                        <div class="top">
+                          <!--年-->
+                          {{item.createTime.split('-')[0]}}
                         </div>
+                        <div class="bottom">
+                          <!--月-->
+                          {{item.createTime.split('-')[1]-0+  monthList[(item.createTime.split('-')[1]-1)].label}}
+                        </div>
+                      </div>
                       <div class="right">
                         <p class="top">
                           {{item.title}}
@@ -91,7 +107,10 @@ import {
   returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
-import {mapState} from 'vuex'
+import {
+  mapState,
+  mapGetters
+} from 'vuex'
 export default {
   components: {},
   // props,
@@ -111,6 +130,56 @@ export default {
       newsTypeId: 1, // 当前新闻类型id
       // showNewsList: false, // 显示列表、详情状态
       showNewsList: true, // 显示列表、详情状态
+      monthList: [
+        {
+          value: 1,
+          label: 'Jan'
+        },
+        {
+          value: 2,
+          label: 'Feb'
+        },
+        {
+          value: 3,
+          label: 'Mar'
+        },
+        {
+          value: 4,
+          label: 'Apr'
+        },
+        {
+          value: 5,
+          label: 'May'
+        },
+        {
+          value: 6,
+          label: 'June'
+        },
+        {
+          value: 7,
+          label: 'July'
+        },
+        {
+          value: 8,
+          label: 'Aug'
+        },
+        {
+          value: 9,
+          label: 'Step'
+        },
+        {
+          value: 10,
+          label: 'Oct'
+        },
+        {
+          value: 11,
+          label: 'Nov'
+        },
+        {
+          value: 12,
+          label: 'Dec'
+        }
+      ],
       end: ''
     }
   },
@@ -134,7 +203,8 @@ export default {
   methods: {
     async resetNewTypeList () {
       await this.getAllNewsTypeList()
-      this.newsTypeId = this.newsTypeList[0].id
+      console.log(this.newsTypeList)
+      this.newsTypeId = getNestedData(this.newsTypeList, '[0].id')
       this.activeName = this.newsTypeId
     },
     changeTab (e) {
@@ -182,6 +252,9 @@ export default {
   },
   filter: {},
   computed: {
+    ...mapGetters('common', {
+      'isChineseLanguage': 'isChineseLanguage'
+    }),
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme,
@@ -197,12 +270,9 @@ export default {
     }
   },
   watch: {
-    newsDetailJumpId (newVal) {
-      console.log(newVal)
-    },
     async language () {
-      await this.getAllNewsTypeList()
-      await this.getNewsNoticeList()
+      await this.resetNewTypeList()
+      this.getNewsNoticeList()
     }
   }
 }
@@ -257,7 +327,7 @@ export default {
                 }
 
                 > .left {
-                  width: 85px;
+                  width: 110px;
                   height: 60px;
                   margin-right: 20px;
                   text-align: center;
@@ -281,7 +351,7 @@ export default {
 
                 > .right {
                   /* background-color: green; */
-                  width: 700px;
+                  width: 668px;
 
                   > .top {
                     width: 100%;
