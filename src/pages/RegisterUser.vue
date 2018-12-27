@@ -585,7 +585,7 @@
         >
           <div class="drag cp bdr5">
             <div class="drag_bg bdr5"></div>
-            <div class="drag_text bdr5">{{$t(confirmWords)}}</div>
+            <div class="drag_text bdr5">{{$t('M.login_verifyTips')}}</div>
             <div
               @touchstart.prevent="handleTouchStart"
               @touchmove="handleTouchMove"
@@ -690,7 +690,6 @@ export default {
   data () {
     return {
       emailNumRef: 'email-num-ref',
-      passwdRef: 'passwd-ref',
       phoneRef: 'phone-ref',
       mobilePhoneRef: 'mobile-phone-ref',
       activeMethod: 0, // 当前注册方式： 0： 手机注册 : 1 邮箱注册
@@ -716,7 +715,6 @@ export default {
       beginClientX: 0, /* 距离屏幕左端距离 */
       mouseMoveStatus: false, /* 触发拖动状态  判断 */
       maxwidth: 340, /* 拖动最大宽度，依据滑块宽度算出来的 */
-      confirmWords: this.$t('M.login_verifyTips'), /* 滑块文字 */
       confirmSuccess: false, /* 验证成功判断 */
       sliderFlag: true, // 滑块调用节流阀
       dragStatus: true, // 拖动标记
@@ -748,7 +746,7 @@ export default {
   mounted () {
     this.pcDragEvent()
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -1043,6 +1041,8 @@ export default {
       this.repeatPassword = ''
       this.checkCode = ''
       this.setErrorMsg()
+      this.$refs[this.phoneRef].value = ''
+      this.$refs[this.emailNumRef].value = ''
     },
     /**
      * 滑块验证

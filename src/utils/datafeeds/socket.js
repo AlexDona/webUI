@@ -27,9 +27,6 @@ class socket {
     // this.heartBeatTimer = setInterval(this.checkHeartbeat.bind(this), 20000)
     this.onReceiver({ Event: 'open' })
   }
-  checkOpen () {
-    return this.connState === 2
-  }
   onClose () {
     this.connState = 0
     if (this.connState) {

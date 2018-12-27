@@ -269,12 +269,12 @@
                   <!-- '请说明有关于您交易的相关条款或者其它您想让对方获悉得信息，以便对方和您快速交易', -->
                   {{$t('M.otc_publishAD_liveMessage')}}
                 </div>
-                <!-- 请输入备注：最多20个字符 -->
+                <!-- 请输入备注：最多30个字符 -->
                 <el-input
                   type="textarea"
                   auto-complete="off"
                   :placeholder="$t('M.otc_index_inputTips')"
-                  maxlength="20"
+                  maxlength="30"
                   v-model="remarkText"
                 >
                 </el-input>
@@ -424,7 +424,11 @@ import {
   addOTCPutUpOrders,
   getOTCCoinInfo
 } from '../../utils/api/OTC'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData,
+  isNeedPayPasswordAjax
+} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 import {
   timeFilter,
@@ -503,8 +507,12 @@ export default {
       priceBuySellErrorTipsBorder: false, // 买入单价卖出单价单位错误提示框
       minCountErrorTipsBorder: false, // 单笔最小限额错误提示框
       maxCountErrorTipsBorder: false, // 单笔最大限额错误提示框
-      parameterCurrencyId: '', // 参数法币id
-      parameterCoinId: '' // 参数币种id
+      // 参数法币id
+      parameterCurrencyId: '',
+      // 参数币种id
+      parameterCoinId: '',
+      // 是否需要交易密码
+      isNeedPayPassowrd: true
     }
   },
   created () {
@@ -533,8 +541,7 @@ export default {
   },
   mounted () {
   },
-  activited () {
-  },
+  activated () {},
   update () {
   },
   beforeRouteUpdate () {
@@ -839,54 +846,54 @@ export default {
       }
     },
     //  8.0 点击发布出售或者发布购买弹出输入交易密码框
-    showPasswordDialog () {
-      if (this.publishStyle === 'buy') {
-        if (!this.entrustCountBuy) {
-          // 请输入买入数量
-          this.errorTipsSum = this.$t('M.otc_index_inputBuyMount')
-          this.entrustCountBuySellErrorTipsBorder = true
-          this.entrustCountErrorTipsBorder = true
-          return false
-        }
-        if (!this.priceBuy) {
-          // 请输入买入单价
-          this.errorTipsPrice = this.$t('M.otc_index_inputBuyPrice')
-          this.priceErrorTipsBorder = true
-          this.priceBuySellErrorTipsBorder = true
-          return false
-        }
-      }
-      if (this.publishStyle === 'sell') {
-        if (!this.entrustCountSell) {
-          // 请输入卖出数量
-          this.errorTipsSum = this.$t('M.otc_index_inputSellMount')
-          this.entrustCountErrorTipsBorder = true
-          this.entrustCountBuySellErrorTipsBorder = true
-          return false
-        }
-        if (this.errorTipsSum) {
-          return false
-        }
-        if (!this.priceSell) {
-          // 请输入卖出单价
-          this.errorTipsPrice = this.$t('M.otc_index_inputSellPrice')
-          this.priceErrorTipsBorder = true
-          this.priceBuySellErrorTipsBorder = true
-          return false
-        }
+    async showPasswordDialog () {
+      this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+      switch (this.publishStyle) {
+        case 'buy':
+          if (!this.entrustCountBuy) {
+            // 请输入买入数量
+            this.errorTipsSum = this.$t('M.otc_index_inputBuyMount')
+            this.entrustCountBuySellErrorTipsBorder = true
+            this.entrustCountErrorTipsBorder = true
+            return false
+          }
+          if (!this.priceBuy) {
+            // 请输入买入单价
+            this.errorTipsPrice = this.$t('M.otc_index_inputBuyPrice')
+            this.priceErrorTipsBorder = true
+            this.priceBuySellErrorTipsBorder = true
+            return false
+          }
+          break
+        case 'sell':
+          if (!this.entrustCountSell) {
+            // 请输入卖出数量
+            this.errorTipsSum = this.$t('M.otc_index_inputSellMount')
+            this.entrustCountErrorTipsBorder = true
+            this.entrustCountBuySellErrorTipsBorder = true
+            return false
+          }
+          if (this.errorTipsSum) {
+            return false
+          }
+          if (!this.priceSell) {
+            // 请输入卖出单价
+            this.errorTipsPrice = this.$t('M.otc_index_inputSellPrice')
+            this.priceErrorTipsBorder = true
+            this.priceBuySellErrorTipsBorder = true
+            return false
+          }
+          break
       }
       // 如果单价错误提示有的话不能进行提交操作
-      if (this.errorTipsPrice) {
+      if (this.errorTipsPrice || this.errorTipsLimitMin || this.errorTipsLimitMax) {
         return false
       }
-      // 单笔最小最大限制
-      if (this.errorTipsLimitMin) {
-        return false
+      if (this.isNeedPayPassowrd) {
+        this.publishOrderTradePwdDialogStatus = true
+      } else {
+        this.addOTCPutUpOrdersSubmitButton()
       }
-      if (this.errorTipsLimitMax) {
-        return false
-      }
-      this.publishOrderTradePwdDialogStatus = true
     },
     // 交易密码框获得焦点清空错误提示信息
     tradePasswordFocus () {
@@ -894,7 +901,7 @@ export default {
     },
     // 9.0 点击输入密码框中的提交按钮
     async addOTCPutUpOrdersSubmitButton () {
-      if (!this.tradePassword) {
+      if (this.isNeedPayPassowrd && !this.tradePassword) {
         // 请输入交易密码
         this.errorPWd = this.$t('M.comm_please_enter') + this.$t('M.comm_password')
         return false
@@ -904,18 +911,26 @@ export default {
         currencyId: this.hopePaymentCoinId, // 法币id
         minCount: this.$refs.minCount.value, // 单笔最小限额（CNY）
         maxCount: this.$refs.maxCount.value, // 单笔最大限额（CNY）
-        remark: this.remarkText, // 备注
-        tradePassword: this.tradePassword // 交易密码
+        remark: this.remarkText // 备注
       }
-      if (this.publishStyle === 'buy') {
-        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
-        param.entrustCount = this.entrustCountBuy // 挂单数量
-        param.price = this.priceBuy // 单价
-      }
-      if (this.publishStyle === 'sell') {
-        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
-        param.entrustCount = this.entrustCountSell // 挂单数量
-        param.price = this.priceSell // 单价
+      param = this.isNeedPayPassowrd ? { ...param, tradePassword: this.tradePassword } : param// 交易密码
+      switch (this.publishStyle) {
+        case 'buy':
+          param = {...param,
+            ...{
+              entrustType: 'BUY', // 挂单类型（BUY SELL）
+              entrustCount: this.entrustCountBuy, // 挂单数量
+              price: this.priceBuy // 单价
+            }}
+          break
+        case 'sell':
+          param = {...param,
+            ...{
+              entrustType: 'SELL', // 挂单类型（BUY SELL）
+              entrustCount: this.entrustCountSell, // 挂单数量
+              price: this.priceSell // 单价
+            }}
+          break
       }
       const data = await addOTCPutUpOrders(param)
       // console.log(data)
@@ -1370,7 +1385,7 @@ export default {
 
             .password-dialog {
               .tips {
-                color: red;
+                color: #d45858;
               }
             }
           }
@@ -1581,7 +1596,7 @@ export default {
 
             .password-dialog {
               .tips {
-                color: red;
+                color: #d45858;
               }
             }
           }

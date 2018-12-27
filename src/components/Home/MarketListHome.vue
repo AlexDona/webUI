@@ -160,7 +160,7 @@ export default{
       activeIndex: null, // 当前activeName 对应index
       // 前两项行情数据
       filterMarketList: [],
-      moreBtnShowStatus: false, // 查看更多按钮显示状态
+      moreBtnShowStatus: true, // 查看更多按钮显示状态
       socket: new socket(),
       tabChangeCount: 0, // tab栏切换次数
       newMarketList: [], // 当前最新行情
@@ -181,11 +181,10 @@ export default{
     if (this.language) {
       await this.getHomeMarketByAjax()
     }
-    this.changeIsShowStatus()
   },
   mounted () {
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {
   },
@@ -356,18 +355,8 @@ export default{
       })
     },
     // 切换板块
-    changeTab (e) {
-      console.log(e.name)
+    changeTab () {
       this.searchFromMarketList()
-      console.log(this.newMarketList)
-      this.changeIsShowStatus()
-    },
-    // 是否显示查看更多按钮
-    changeIsShowStatus () {
-      let activeMarketList = this.newMarketList.filter(item => item.plateId == this.activeName)[0]
-      let targetList = getNestedData(activeMarketList, 'tradeAreaList') || []
-      console.log(targetList)
-      this.moreBtnShowStatus = targetList.length > 2 ? 1 : 0
     },
     // market过滤
     getFilterMarketList () {
@@ -458,11 +447,9 @@ export default{
   },
   watch: {
     filterMarketList (newVal) {
-      console.log(newVal)
       // 查看更多按钮显示状态判断
       for (let i = 2; i < newVal.length; i++) {
         let item = newVal[i]
-        console.log(item.content.length)
         if (item.content.length !== 0) {
           this.moreBtnShowStatus = true
           break

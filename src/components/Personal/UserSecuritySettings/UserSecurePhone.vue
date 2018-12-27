@@ -354,7 +354,7 @@ export default {
     this.refreshCode()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -707,8 +707,8 @@ export default {
       console.log(this.amendDataPhone.newPhoneAccounts)
       let goOnStatus = 0
       if (
-        this.tieCheckoutInputFormat(0, this.amendDataPhone.oldPhoneCode) &&
         this.tieCheckoutInputFormat(1, this.amendDataPhone.newPhoneAccounts) &&
+        this.tieCheckoutInputFormat(0, this.amendDataPhone.oldPhoneCode) &&
         this.tieCheckoutInputFormat(2, this.amendDataPhone.newPhoneCode) &&
         this.tieCheckoutInputFormat(3, this.amendDataPhone.transactionPassword)
       ) {

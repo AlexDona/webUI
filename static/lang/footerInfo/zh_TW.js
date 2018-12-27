@@ -14,8 +14,7 @@ export const footerInfo = {
   // ##########################任付伟20181117-1145新增国际化################################
   'about_footer_info_down1': '全平臺終端接入',
   'about_footer_info_down2': 'iOS、Android、Mac、Windows多個平臺支持全業務功能',
-  'about_footer_info_down3': '掃碼下載IOS、Android版',
-  'about_footer_info_down3_withoutIOS': '掃碼下載Android版',
+  'about_footer_info_down3': '掃碼下載ios、Android版',
   'about_footer_info_down4': '隨時關註 快速交易',
   'about_footer_info_down5': 'Mac 版本下載',
   'about_footer_info_down6': 'WIN 版本下載',

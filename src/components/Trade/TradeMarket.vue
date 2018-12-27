@@ -134,8 +134,7 @@ export default {
   },
   mounted () {
   },
-  activited () {
-  },
+  activated () {},
   update () {
   },
   beforeRouteUpdate () {
@@ -176,6 +175,7 @@ export default {
           })
         })
       })
+      console.log(newPlateList)
       this.$set(this.collectArea, 'plateList', newPlateList)
     },
     setActiveIndex (area) {
@@ -188,6 +188,8 @@ export default {
     },
     // 获取交易区信息
     async getTradeMarketData () {
+      this.collectPlateList = []
+      this.collectPlateFilterList = []
       let params = {
         i18n: this.language
       }
@@ -196,7 +198,8 @@ export default {
         return false
       } else {
         const objData = JSON.parse(unzip(data.data.data.obj))
-        let [...tickerList] = objData.tickerList
+        let tickerList = _.cloneDeep(objData.tickerList)
+        console.log(tickerList)
         let plateList = []
         // 板块筛选
         _.forEach(tickerList, (tickerItem) => {
@@ -236,12 +239,14 @@ export default {
         } else {
           await this.getCollectionList(collectSymbol)
         }
+        console.log(plateList)
         this.setCollectData(collectSymbol, plateList)
         this.newTradeMarketList = tickerList
         this.filterMarketList = this.newTradeMarketList
         this.setActiveIndex(this.middleTopData.area)
         this.activeName = this.middleTopData.area
         this.setActiveTabSymbolStr()
+        console.log(this.collectArea)
       }
     },
     // 设置 当前交易区

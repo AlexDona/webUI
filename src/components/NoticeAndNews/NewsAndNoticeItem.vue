@@ -92,7 +92,7 @@ export default {
     this.getAllTypeListNewsList()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   updated () {},
   beforeRouteUpdate () {},
   methods: {

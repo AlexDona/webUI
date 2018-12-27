@@ -623,7 +623,7 @@
                 </span>
                 <el-input
                   type="textarea"
-                  maxlength="20"
+                  maxlength="30"
                   v-model="appealTextareaValue"
                 >
                 </el-input>
@@ -844,7 +844,7 @@ export default {
     // this.getOTCTradingOrdersList()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -1450,7 +1450,7 @@ export default {
 
       > .password-dialog {
         .tips {
-          color: red;
+          color: #d45858;
         }
       }
     }

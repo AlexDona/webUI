@@ -75,11 +75,11 @@
           </span>
           <!-- 价格 -->
           <span class="item">
-            {{item.price}}({{item.currencyName}})
+            {{filterNumber(item.price)}}({{item.currencyName}})
           </span>
           <!-- 数量 -->
           <span class="item">
-            {{item.pickCount}}({{item.coinName}})
+            {{filterNumber(item.pickCount)}}({{item.coinName}})
           </span>
           <!-- 总金额 -->
           <span class="item">
@@ -158,7 +158,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {timeFilter} from '../../utils'
+import {timeFilter, scientificToNumber} from '../../utils'
 import {getOTCFrezzingOrders} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
@@ -182,10 +182,14 @@ export default {
     }
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
+    },
     // 1.0 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum

@@ -52,7 +52,7 @@ export default {
   mounted () {
     // console.log(this.$refs)
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

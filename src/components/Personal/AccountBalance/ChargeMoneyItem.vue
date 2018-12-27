@@ -40,7 +40,6 @@
         <p>* {{ $t('M.user_assets_recharge_hint4') }}</p>
         <!--为了快速到账，充值时可以适当提高网络手续费-->
         <p>* {{ $t('M.user_assets_recharge_hint5') }}</p>
-        <p>* 最小充值金额为 {{minRechargeAmount}}</p>
       </div>
     </div>
     <div class='recharge-content-right flex1'>
@@ -85,18 +84,14 @@ export default {
     // 是否需要备注（公信宝）
     'isNeedTag',
     // 充币地址备注信息
-    'rechargeNoteInfo',
-    // 细小充值金额
-    'minRechargeAmount'
+    'rechargeNoteInfo'
   ],
   data () {
     return {}
   },
-  created () {
-    console.log(this.minRechargeAmount)
-  },
+  created () {},
   mounted () {},
-  activited () {},
+  activated () {},
   updated () {},
   beforeRouteUpdate () {},
   methods: {
@@ -130,8 +125,7 @@ export default {
       theme: store => store.common.theme
     })
   },
-  watch: {
-  }
+  watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

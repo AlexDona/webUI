@@ -21,7 +21,7 @@ export const statusRushedToRecordList = (params) => get('queryWithdrawRecording'
   'not-loading': true
 }, params))
 // 账单明细—获取商户币种列表
-export const getMerchantCurrencyList = (params) => get('queryPartnerCoinList', Object.assign({
+export const getMerchantCurrencyList = (params) => get('personal/queryPartnerCoinList', Object.assign({
   'not-loading': true
 }, params))
 // 账单明细—个人资产综合查询
@@ -135,7 +135,9 @@ export const getOTCAvailableCurrency = params => get('otcCOin/getAvailOTCCoins',
   'not-loading': true
 }, params))
 // 查询用户所有挂单列表（分页）:也就是订单中的 委托中的订单
-export const getOTCEntrustingOrders = params => get('otcEntrust/selectEntrustsPage', params)
+export const getOTCEntrustingOrders = params => get('otcEntrust/selectEntrustsPage', Object.assign({
+  'not-loading': true
+}, params))
 // 分页查询所有用户otc各状态交易订单列表
 export const getQueryAllOrdersList = params => get('otcOrder/selectUserOrdersPage', Object.assign({
   'not-loading': true

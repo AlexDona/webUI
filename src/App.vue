@@ -62,7 +62,7 @@ export default {
   },
   mounted () {
   },
-  activited () {},
+  activated () {},
   update () {},
   methods: {
     ...mapMutations([

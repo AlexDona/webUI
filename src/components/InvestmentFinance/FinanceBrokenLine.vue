@@ -3,7 +3,18 @@
     <div
       id="finance"
       class="finance-line"
+      v-show="!noDataStatus"
     >
+    </div>
+    <div
+      class="no-data"
+      v-show="noDataStatus"
+    >
+      <img src="../../assets/finance/no-data.png">
+      <div class="text">
+        <!--暂无数据-->
+        {{$t('M.comm_no_data')}}
+      </div>
     </div>
   </div>
 </template>
@@ -18,6 +29,7 @@ require('echarts/lib/component/tooltip')
 export default {
   data () {
     return {
+      noDataStatus: false,
       financeCharts: '',
       options: {
         animation: false,
@@ -115,7 +127,7 @@ export default {
     this.resetOptions()
     this.resetChart(this.options)
   },
-  activited () {},
+  activated () {},
   update () {
   },
   beforeRouteUpdate () {},
@@ -188,7 +200,13 @@ export default {
       // this.$set(this.options.series, 'data', this.financeLineRenderPriceList.reverse())
       // 将时间数组倒序
       let [...financeLineRenderPriceList] = this.financeLineRenderPriceList
-      this.options.series[0].data = financeLineRenderPriceList
+      // this.options.series[0].data = financeLineRenderPriceList
+      if (financeLineRenderPriceList.length) {
+        this.options.series[0].data = financeLineRenderPriceList
+        this.noDataStatus = false
+      } else {
+        this.noDataStatus = true
+      }
       // 将价钱数组从小到打排序
       this.arrTime = this.financeLineRenderPriceList.sort((a, b) => a - b)
       // y轴最小值是数组的最小项
@@ -231,6 +249,22 @@ export default {
     width: 100%;
     height: 450px;
     margin-left: -100px;
+  }
+
+  > .no-data {
+    position: relative;
+    width: 1000px;
+    height: 274px;
+    margin: 100px 0 100px -100px;
+    line-height: 274px;
+    text-align: center;
+
+    > .text {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      color: #338ff5;
+    }
   }
 }
 </style>

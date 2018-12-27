@@ -675,7 +675,6 @@ export default{
       middleTopData: state => state.trade.middleTopData, // 当前交易对数据
       middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
       userInfo: state => state.user.loginStep1Info.userInfo,
-      paypasswordSet: state => state.user.loginStep1Info.userInfo.paypasswordSet, // 用户是否已进入交易密码
       activeLanguage: state => state.common.activeLanguage,
       userInfoRefreshStatus: state => state.common.userInfoRefreshStatus,
       logoSrc: state => state.common.logoSrc,
@@ -686,7 +685,7 @@ export default{
       otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus
     }),
     localPayPwdSet () {
-      return getNestedData(getCookieWithJSON('loginStep1Info'), 'userInfo.paypasswordSet') || this.paypasswordSet
+      return getNestedData(getCookieWithJSON('loginStep1Info'), 'userInfo.paypasswordSet') || getNestedData(this.userInfo, 'paypasswordSet')
     }
   },
   watch: {

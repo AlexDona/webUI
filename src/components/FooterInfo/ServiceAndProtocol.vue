@@ -128,7 +128,7 @@ export default {
   mounted () {
     this.getServiceProtocolData()
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

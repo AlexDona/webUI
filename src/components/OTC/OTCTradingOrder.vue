@@ -303,7 +303,7 @@
                   <el-button
                     type="primary"
                     size="mini"
-                    @click="comfirmPayMoney(index)"
+                    @click="confirmPayMoney(index)"
                   >
                     <!-- 确认付款 -->
                     {{$t('M.otc_trading_confirmpayment')}}
@@ -518,7 +518,7 @@
                   <el-button
                     type="primary"
                     size="mini"
-                    @click="comfirmGatherMoney(item.id)"
+                    @click="confirmGatherMoney(item.id)"
                   >
                     <!-- 确认收款 -->
                     {{$t('M.otc_trading_collectionconfirmation')}}
@@ -574,7 +574,7 @@
                 <span class="appeal-reason">*{{$t('M.otc_complaint_appeal_reason')}}</span>
                 <el-input
                   type="textarea"
-                  maxlength="20"
+                  maxlength="30"
                   v-model="appealTextareaValue"
                 >
                 </el-input>
@@ -751,7 +751,11 @@ import {
 } from '../../utils/api/OTC'
 import {timeFilter, formatSeconds} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData,
+  isNeedPayPasswordAjax
+} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -793,7 +797,9 @@ export default {
       errpwd: '', // 交易密码错提示
       cancelOrdersTimer: null, // 自动取消订单倒计时
       accomplishOrdersTimer: null, // 自动成交倒计时
-      pageSize: 5 // ，每页显示几条数据
+      pageSize: 5, // ，每页显示几条数据
+      // 是否输入
+      isNeedPayPassowrd: true
     }
   },
   created () {
@@ -803,7 +809,7 @@ export default {
     }
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -961,7 +967,7 @@ export default {
       })
     },
     // 4.0 买家点击确认付款按钮 弹出交易密码框
-    comfirmPayMoney (index) {
+    async confirmPayMoney (index) {
       if (!this.activePayModeList[index]) {
         this.$message({
           // 请选择支付方式
@@ -970,9 +976,15 @@ export default {
         })
         return false
       }
+      this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+      console.log(this.isNeedPayPassowrd)
       if (this.buttonStatusArr[index] === true) {
-        // 弹出交易密码框
-        this.dialogVisibleConfirmPayment = true
+        if (this.isNeedPayPassowrd) {
+          // 弹出交易密码框
+          this.dialogVisibleConfirmPayment = true
+        } else {
+          this.submitConfirmPayment()
+        }
       }
     },
     // 5.0 买家点击确认付款按钮 点击交易密码框中的提交按钮--交易密码狂获得焦点
@@ -981,17 +993,18 @@ export default {
     },
     // 7.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
     async submitConfirmPayment () {
-      if (!this.tradePassword) {
+      if (this.isNeedPayPassowrd && !this.tradePassword) {
         // '请输入交易密码'
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       } else {
         this.loading = true
-        const data = await buyerPayForOrder({
+        let params = {
           orderId: this.activedTradingOrderId, // 订单id
-          payId: this.activitedPayStyleId, // 支付账户id
-          tradePassword: this.tradePassword // 交易密码
-        })
+          payId: this.activitedPayStyleId // 支付账户id
+        }
+        params = this.isNeedPayPassowrd ? {...params, tradePassword: this.tradePassword} : params
+        const data = await buyerPayForOrder(params)
         // console.log(data)
         // 提示信息
         if (!(returnAjaxMsg(data, this, 1))) {
@@ -1008,25 +1021,30 @@ export default {
       }
     },
     // 8.0 卖家点击确认收款按钮
-    comfirmGatherMoney (id) {
+    async confirmGatherMoney (id) {
       this.activedTradingOrderId = id
-      // 弹出交易密码框
-      this.dialogVisibleConfirmReceipt = true
-      // console.log(id)
-      // console.log(this.activedTradingOrderId)
+      this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+      if (this.isNeedPayPassowrd) {
+        // 弹出交易密码框
+        this.dialogVisibleConfirmReceipt = true
+      } else {
+        this.submitConfirmGathering()
+      }
     },
     // 9.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
     async submitConfirmGathering () {
-      if (!this.tradePassword) {
+      if (this.isNeedPayPassowrd && !this.tradePassword) {
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
       this.loading = true
-      const data = await sellerConfirmGetMoney({
-        orderId: this.activedTradingOrderId, // 订单id
-        tradePassword: this.tradePassword // 交易密码
-      })
-      // console.log(data)
+      let params = {
+        orderId: this.activedTradingOrderId // 订单id
+      }
+      // 订单id
+      params = this.isNeedPayPassowrd ? {...params, tradePassword: this.tradePassword} : params
+      const data = await sellerConfirmGetMoney(params)
+
       // 提示信息
       if (!(returnAjaxMsg(data, this, 1))) {
         this.loading = false
@@ -1053,7 +1071,7 @@ export default {
       this.$set(this.showOrderAppeal, index, false)
     },
     // 12.0 卖家提交申诉按钮弹出交易密码框
-    sellerAppeal () {
+    async sellerAppeal () {
       if (!this.appealTextareaValue) {
         this.$message({
           // 请输入申诉原因
@@ -1062,21 +1080,27 @@ export default {
         })
         return false
       }
-      this.dialogVisibleSubmitComplaint = true
+      this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+      if (this.isNeedPayPassowrd) {
+        this.dialogVisibleSubmitComplaint = true
+      } else {
+        this.sellerSubmitAppeal()
+      }
     },
     // 13.0 卖家提交申诉按钮
     async sellerSubmitAppeal () {
-      if (!this.tradePassword) {
+      if (this.isNeedPayPassowrd && !this.tradePassword) {
         // 请输入交易密码
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
       this.loading = true
-      const data = await sellerSendAppeal({
+      let params = {
         orderId: this.activedTradingOrderId, // 订单id
-        reason: this.appealTextareaValue, // 申诉原因
-        tradePassword: this.tradePassword // 交易密码
-      })
+        reason: this.appealTextareaValue // 申诉原因
+      }
+      params = this.isNeedPayPassowrd ? {...params, tradePassword: this.tradePassword} : params
+      const data = await sellerSendAppeal(params)
       // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 1))) {
@@ -1575,7 +1599,7 @@ export default {
 
       > .password-dialog {
         .tips {
-          color: red;
+          color: #d45858;
         }
       }
     }
@@ -1865,7 +1889,7 @@ export default {
 
       > .password-dialog {
         .tips {
-          color: red;
+          color: #d45858;
         }
       }
     }

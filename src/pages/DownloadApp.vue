@@ -103,7 +103,7 @@ export default {
   },
   mounted () {
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -187,6 +187,7 @@ export default {
 
         > img {
           -webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, .1)));
+          width: 100%;
         }
       }
 

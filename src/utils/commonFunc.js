@@ -12,7 +12,8 @@ import {
 } from '../utils/api/personal'
 
 import {
-  sendMsgByPhoneOrEmial
+  sendMsgByPhoneOrEmial,
+  isNeedPayPassowrd
   // sendByPhoneOrEmial
 } from '../utils/api/user'
 import {
@@ -32,8 +33,22 @@ import {
   // getStoreWithJson,
   keep2Num
 } from './index'
-import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG, TPED_REG, URL_REG, WITHDRAWAL_REG, CHINESE_REG} from './regExp'
+import {
+  PHONE_REG,
+  EMAIL_REG,
+  ID_REG,
+  PWD_REG,
+  ALIPAY_REG,
+  BANK_REG,
+  GOOGLE_REG,
+  TPED_REG,
+  URL_REG,
+  WITHDRAWAL_REG,
+  CHINESE_REG
+} from './regExp'
+
 const store = storeCreater()
+
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；
@@ -170,8 +185,8 @@ export const repealMyEntrustCommon = async (params, that, callback) => {
 }
 
 /**
-* 商家订单列表请求
-*/
+ * 商家订单列表请求
+ */
 export const getMerchantsOrdersList = async (params, callback) => {
   const repealData = await getQueryAllOrdersList(params)
   callback(repealData)
@@ -318,6 +333,15 @@ export const changeLanguage = (language, self, commit) => {
       return false
     }
   })
+}
+
+export const isNeedPayPasswordAjax = async (self) => {
+  const data = await isNeedPayPassowrd()
+  if (!returnAjaxMsg(data, self)) {
+    return false
+  } else {
+    return data.data.data
+  }
 }
 // eslint-disable-next-line
 String.prototype.format = function (args) {

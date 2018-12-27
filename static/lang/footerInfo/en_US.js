@@ -14,8 +14,7 @@ export const footerInfo = {
   // ##########################任付伟20181117-1145新增国际化################################
   'about_footer_info_down1': 'Full platform terminal access',
   'about_footer_info_down2': 'Multiple platforms of iOS, Android, Mac and Windows support full-service functions',
-  'about_footer_info_down3': 'Download IOS and Android',
-  'about_footer_info_down3_withoutIOS': 'Download Android',
+  'about_footer_info_down3': 'Download ios and Android',
   'about_footer_info_down4': 'Keep an eye on quick trades',
   'about_footer_info_down5': 'Mac download',
   'about_footer_info_down6': 'WIN download ',

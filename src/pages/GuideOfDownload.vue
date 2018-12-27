@@ -126,7 +126,7 @@ export default {
     console.log(this.isNeedIOS)
   },
   mounted () {},
-  activited () {},
+  activated () {},
   updated () {},
   beforeRouteUpdate () {},
   methods: {

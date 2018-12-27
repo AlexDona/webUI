@@ -280,7 +280,7 @@
                   class="next-btn cursor-pointer"
                   @click="findPasswordStep3"
                 >
-                  <!--下一步-->
+                  <!--完成-->
                   {{ $t('M.forgetPassword_achieve') }}
                 </button>
               </span>
@@ -385,7 +385,7 @@ export default {
   },
   mounted () {
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -451,6 +451,9 @@ export default {
         return false
       } else {
         this.activeStepNumber = 4
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 3000)
       }
     },
     // 找回密码步骤2

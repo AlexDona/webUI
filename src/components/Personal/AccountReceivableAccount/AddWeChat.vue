@@ -210,7 +210,7 @@ export default {
     this.paymentMethodInformation()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -295,14 +295,14 @@ export default {
         goOnStatus = 0
       }
       console.log(this.dialogImageHandUrl1)
+      if (this.dialogImageHandUrl1 == '') {
+        this.$message({
+          message: this.$t('M.user_account_weChat_pla'),
+          type: 'error'
+        })
+        return false
+      }
       if (goOnStatus) {
-        if (this.dialogImageHandUrl1 == '') {
-          this.$message({
-            message: this.$t('M.user_account_weChat_pla'),
-            type: 'error'
-          })
-          return false
-        }
         let data
         let param = {
           token: this.userInfo.token,

@@ -102,7 +102,7 @@ export default {
     this.getGlobalMarket()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

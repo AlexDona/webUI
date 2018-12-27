@@ -77,7 +77,9 @@ export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMe
 //  币种详情：商家和普通用户挂单页面请求币种详情渲染页面
 export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
 // 投资理财请求数据
-export const getFinancialManagement = (params) => get('financialManagement', params)
+export const getFinancialManagement = (params) => get('financialManagement', Object.assign({
+  'not-loading': true
+}, params))
 // 投资理财立投资请求接口
 export const imediateInvestment = (params) => post('financialManagement', params)
 // 投资理财取消投资接口
@@ -88,3 +90,5 @@ export const getFinancialRecord = (params) => get('financialManagement/recordInf
 export const cancelUserOtcOrder = (params) => post('otcOrder/cancelUserOtcOrder', params)
 // 成交otc用户定单（过期卖家未收款）
 export const completeUserOtcOrder = (params) => post('otcOrder/completeUserOtcOrder', params)
+// 广告管理中订单点击修改跳转到商家专用发布广告页面，修改数据后再发布广告调取的接口
+export const addModifyPublishADOrder = (params) => postWithURLencoded('otcEntrust/upShelfOtcEntrust', params)

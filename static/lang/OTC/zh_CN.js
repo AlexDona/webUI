@@ -309,7 +309,7 @@ export const OTC = {
   'otc_index_how': '多少',
   'otc_index_nowUse': '当前可用',
   'otc_index_singleTradeLimit': '单笔成交限额',
-  'otc_index_inputTips': '请输入备注：最多20个字符',
+  'otc_index_inputTips': '请输入备注：最多30个字符',
   'otc_index_publish': '发布',
   'otc_index_buyAndSellFree': '买卖是免费的',
   'otc_index_pubTipsOne': '2、您可以在设置中设置您的收款方式；',
@@ -338,21 +338,5 @@ export const OTC = {
   'otc_apply_tips6': '申请提示',
   // 发布订单错误提示
   'otc_publish_order_err_tips1': '请选择要发布的币种',
-  'otc_publish_order_err_tips2': '请选择法币类型',
-  // 20181225添加
-  'OTC_SELL': 'OTC卖出',
-  'account_failure_0060': '理财不足，无法执行！',
-  'account_failure_0063': '回滚操作失败,没有可操作数据 ！',
-  'account_failure_0059': '用户可用到理财日志记录失败！',
-  'account_failure_00128': '只能查询三个月内的数据！',
-  'account_failure_0062': '用户理财到可用,日志记录失败！',
-  'account_failure_0056': '用户表商户，平台收益转移失败！',
-  'account_failure_0064': '该币种暂不可用',
-  'account_failure_0065': '无权查看该币种，请联系官方客服。',
-  'finish': '已完成',
-  'OTC_BUY': 'OTC买入',
-  'account_failure_0061': '用户理财到可用失败！',
-  'account_failure_00112': 'PUSH资产支付失败！',
-  'account_failure_0057': '用户表商户，平台收益转移日志记录失败！',
-  'account_failure_0058': '用户可用到理财失败！'
+  'otc_publish_order_err_tips2': '请选择法币类型'
 }

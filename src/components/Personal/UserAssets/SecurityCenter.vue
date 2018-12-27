@@ -696,7 +696,7 @@ export default {
     await this.getSecurityCenter('logon-record')
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

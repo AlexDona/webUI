@@ -142,7 +142,7 @@ export default {
     this.getRankingList()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   destroyed () {
@@ -176,11 +176,10 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language,
-      configInfo: state => state.common.footerInfo.configInfo,
-      innerWidth: state => state.common.innerWidth
+      configInfo: state => state.common.footerInfo.configInfo
     }),
     screenWidth () {
-      return this.innerWidth / 3
+      return window.innerWidth / 3
     },
     coinName () {
       return this.rankingList[0].coinName
