@@ -99,9 +99,16 @@
               <div class="promotion-info">
                 <p class="info-left">
                   <span
+                    v-if="totalPageMyNumber !== ''"
                     class="info-left-color font-size30"
                   >
                     {{ totalPageMyNumber }}
+                  </span>
+                  <span
+                    v-else
+                    class="info-left-color font-size30"
+                  >
+                    0
                   </span>
                   <span class="font-size12">
                     <!--人-->
@@ -117,9 +124,17 @@
             <div class="promotion-number">
               <div class="promotion-info">
                 <p class="info-right">
-                  <span class="info-left-color font-size30">
-                    <!--0.00000-->
-                    {{ BTCAssets }}
+                  <span
+                    class="info-left-color font-size30"
+                    v-if="totalSumBTC !== ''"
+                  >
+                    {{ totalSumBTC }}
+                  </span>
+                  <span
+                    class="info-left-color font-size30"
+                    v-else
+                  >
+                    0.00
                   </span>
                   <span>BTC</span>
                 </p>
@@ -307,8 +322,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
 import {
   userPromotionList,
-  getRecommendUserPromotionList,
-  currencyTransform
+  getRecommendUserPromotionList
 } from '../../../utils/api/personal'
 import {domain} from '../../../utils/env'
 import {
@@ -358,9 +372,7 @@ export default {
       partLoading: false // 局部列表loading
     }
   },
-  async created () {
-    // await this.currencyTransform()
-  },
+  async created () {},
   mounted () {
     console.log(domain)
     this.getInverData()
@@ -373,34 +385,12 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
-    // 汇率转换 已获得的佣金预估
-    async currencyTransform () {
-      console.log(1)
-      const params = {
-        coinName: 'BTC',
-        shortName: 'CNY'
-      }
-      const data = await currencyTransform(params)
-      console.log(2)
-      if (!returnAjaxMsg(data, this)) {
-        console.log(3)
-        return false
-      } else {
-        console.log(data)
-        if (data.data.data.coinPrice) {
-          // this.BTC2CNYRate = data.data.data.coinPrice
-          this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
-          console.log(this.BTC2CNYRate)
-        }
-      }
-    },
     // 类型筛选（直接 间接）
     changeId (e) {
       console.log(e)
       this.generalizeOptionsList.forEach(item => {
         if (e === item.value) {
           this.generalizeValue = e
-          // this.loading = true
           // this.loading = true
           this.getUserPromotionList()
           console.log(this.generalizeValue)
@@ -424,16 +414,12 @@ export default {
         // 接口成功清除局部loading
         this.partLoading = false
         // 返回展示
-        // this.extensionList = data.data.data.page.list
         this.extensionList = getNestedData(data, 'data.data.page.list')
         console.log(this.extensionList)
-        // this.totalPageForMyEntrust = data.data.data.page.pages - 0
         this.totalPageForMyEntrust = getNestedData(data, 'data.data.page.pages') - 0
-        // this.totalPageMyNumber = data.data.data.page.total - 0
         this.totalPageMyNumber = getNestedData(data, 'data.data.page.total') - 0
-        // 已获得的佣金预估
-        // this.totalSumBTC = data.data.data.account
-        this.totalSumBTC = getNestedData(data, 'data.data.account')
+        // 已获得的佣金折合
+        this.totalSumBTC = getNestedData(data, 'data.data.btc')
         console.log(this.totalSumBTC)
       }
     },
@@ -516,11 +502,7 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
-    }),
-    // BTC 已获得的佣金预估
-    BTCAssets () {
-      return (this.BTC2CNYRate - 0) * (this.totalSumBTC - 0)
-    }
+    })
   },
   watch: {
     loading (newVal) {

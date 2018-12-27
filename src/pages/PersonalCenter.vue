@@ -125,16 +125,16 @@
           <!--设置-->
           <div class="setting-title asset-info">
             <!--设置-->
-            设置
+            {{$t('M.comm_set')}}
           </div>
           <el-tab-pane
-            label = "设置"
+            :label = "$t('M.comm_set')"
             disabled
             class="title"
           >
           </el-tab-pane>
           <el-tab-pane
-            label = "个人设置"
+            :label = "$t('M.user_personal_setting')"
             name = "personal-setting"
           >
             <PersonalSettings/>

@@ -46,7 +46,7 @@
              <!--币种-->
              {{ $t('M.otc_Merchants_Orders_market') }}
            </span>
-           <span class="status-input">
+            <span class="status-input">
              <!--全部-->
            <el-select
              v-model="activitedMerchantsOrdersCoin"
@@ -89,7 +89,7 @@
                 </el-option>
               </el-select>
             </span>
-           </div>
+          </div>
           <div class="main-top-type trade-data float-left">
             <span class="filtrate-text font-size14">
               <!--起止日期-->
@@ -128,9 +128,9 @@
                 <!--查询-->
                 {{ $t('M.comm_query') }}
               </el-button>
-              <!--<el-button type="primary" @click.prevent="resetCondition">重置</el-button>-->
+               <!--<el-button type="primary" @click.prevent="resetCondition">重置</el-button>-->
             </span>
-           </div>
+          </div>
         </div>
         <!--交易中的订单-->
         <el-tab-pane
@@ -192,12 +192,10 @@ import FiatCoinCompletedOrder from '../FiatCoinContent/FiatCoinCompletedOrder'
 import FiatCoinFreezingOrder from '../FiatCoinContent/FiatCoinFreezingOrder'
 import FiatCoinEntrustOrder from '../FiatCoinContent/FiatCoinEntrustOrder'
 import {createNamespacedHelpers, mapState} from 'vuex'
-import {timeFilter} from '../../../utils'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
   getOTCAvailableCurrency,
   getOTCEntrustingOrders
-  // getOTCMerchantsOrdersList
 } from '../../../utils/api/personal'
 import {
   getMerchantAvailablelegalTender
@@ -275,7 +273,7 @@ export default {
     await this.getMerchantAvailablelegalTenderList()
   },
   mounted () {},
-  activated () {},
+  activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -286,13 +284,10 @@ export default {
     ]),
     // 切换tab时将全局当前页码改为1加载第一页的数据
     toggleTabPane () {
+      this.resetCondition()
       this.CHANGE_LEGAL_PAGE({
         legalTradePageNum: 1
       })
-    },
-    // 时间格式化
-    timeFormatting (date) {
-      return timeFilter(date, 'date')
     },
     // 页面加载时 可用币种查询
     async getOTCAvailableCurrencyList () {
@@ -304,21 +299,18 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.merchantsOrdersCoinList = data.data.data
         this.merchantsOrdersCoinList = getNestedData(data, 'data.data')
       }
     },
     // 页面加载时 可用法币查询
     async getMerchantAvailablelegalTenderList () {
-      const data = await getMerchantAvailablelegalTender({
-      })
+      const data = await getMerchantAvailablelegalTender()
       console.log('可用法币')
       console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.merchantsOrdersCurrencyList = data.data.data
         this.merchantsOrdersCurrencyList = getNestedData(data, 'data.data')
       }
     },
@@ -379,7 +371,7 @@ export default {
       this.activitedMerchantsOrdersStatusList = ''
       this.startTime = ''
       this.endTime = ''
-      this.getOTCEntrustingOrdersRevocation()
+      // this.getOTCEntrustingOrdersRevocation()
     },
     // 页面加载时请求接口渲染列表
     async getOTCEntrustingOrdersRevocation (activeName) {
@@ -411,7 +403,6 @@ export default {
         } else {
           // 接口成功清除loading
           this.fullscreenLoading = false
-          // let OTCEntrustingOrdersData = data.data.data
           let OTCEntrustingOrdersData = getNestedData(data, 'data.data')
           // 返回数据正确的逻辑 重新渲染列表
           this.SET_LEGAL_TENDER_LIST({
@@ -421,7 +412,6 @@ export default {
           console.log(data)
           this.CHANGE_LEGAL_PAGE({
             legalTradePageNum: OTCEntrustingOrdersData.pageNum,
-            // legalTradePageTotals: OTCEntrustingOrdersData.total
             legalTradePageTotals: OTCEntrustingOrdersData.pages
           })
         }
@@ -434,7 +424,6 @@ export default {
           } else {
             // 接口成功清除loading
             this.fullscreenLoading = false
-            // let merchantsOrdersListData = data.data.data
             let merchantsOrdersListData = getNestedData(data, 'data.data')
             // 返回数据正确的逻辑 重新渲染列表
             this.SET_LEGAL_TENDER_LIST({
@@ -447,7 +436,6 @@ export default {
             this.CHANGE_LEGAL_PAGE({
               legalTradePageNum: merchantsOrdersListData.pageNum,
               legalTradePageTotals: merchantsOrdersListData.pages
-              // legalTradePageTotals: merchantsOrdersListData.total
             })
           }
         })
@@ -508,6 +496,7 @@ export default {
       this.getOTCEntrustingOrdersRevocation(this.activeName)
     },
     userCenterActiveName (newVal) {
+      this.resetCondition()
       if (newVal === 'fiat-orders') {
         this.getOTCEntrustingOrdersRevocation(this.activeName)
       }

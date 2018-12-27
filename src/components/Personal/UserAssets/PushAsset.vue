@@ -99,7 +99,7 @@
             <!--交易密码-->
             <el-form-item
               :label="$t('M.comm_password')"
-              v-if="isNeedPayPassword"
+              v-if="isNeedPayPasswordComputed"
             >
               <input
                 type="password"
@@ -191,7 +191,7 @@
               :label="$t('M.comm_count')"
             >
               <template slot-scope="s">
-                <div>{{ s.row.count }}</div>
+                <div>{{ filterNumber(s.row.count) }}</div>
               </template>
             </el-table-column>
             <!--价格-->
@@ -199,15 +199,16 @@
               :label="$t('M.comm_price_metre') + pushPayCoinName"
             >
               <template slot-scope="s">
-                <div>{{ s.row.price }}</div>
+                <div>{{ filterNumber(s.row.price) }}</div>
               </template>
             </el-table-column>
             <!--金额-->
             <el-table-column
               :label="$t('M.comm_money')"
+              width="100"
             >
               <template slot-scope="s">
-                <div>{{ s.row.amount }}</div>
+                <div>{{ filterNumber(s.row.amount) }}</div>
               </template>
             </el-table-column>
             <!--时间-->
@@ -407,7 +408,11 @@ import {
 } from '../../../utils/api/personal'
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
-import {timeFilter, formatNumberInput} from '../../../utils/index'
+import {
+  timeFilter,
+  formatNumberInput,
+  scientificToNumber
+} from '../../../utils/index'
 import {createNamespacedHelpers, mapState} from 'vuex'
 import {
   returnAjaxMsg,
@@ -459,8 +464,8 @@ export default {
       pushUID: '', // 每行数据ID
       pushPayCoinName: '', // 币种名称
       pushRecordList: [], // push列表记录
-      currentPageForMyEntrust: 1, // 当前委托页码
-      totalPageForMyEntrust: 1, // 当前委托总页数
+      currentPageForMyEntrust: 1, // 当前页码
+      totalPageForMyEntrust: 1, // 当前总页数
       pointLength: 4, // 保留小数位后四位
       errorMsg: '', // 错误提示
       partLoading: true, // 局部列表loading
@@ -468,7 +473,7 @@ export default {
     }
   },
   async created () {
-    this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+    this.reflashIsNeedPayPassword()
   },
   mounted () {
   },
@@ -481,6 +486,10 @@ export default {
     ...mapMutations([
       'SET_PUSH_BUTTON_STATUS'
     ]),
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
+    },
     // 1.时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -498,7 +507,10 @@ export default {
      * 刚进页面时候 push列表展示
      */
     async getPushRecordList () {
-      let data = await getPushAssetList({})
+      let data = await getPushAssetList({
+        pageNum: this.currentPageForMyEntrust, // 分页
+        pageSize: this.pageSize // 页码
+      })
       if (!(returnAjaxMsg(data, this))) {
         // 接口失败清除局部loading
         this.partLoading = false
@@ -599,6 +611,10 @@ export default {
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
+    async reflashIsNeedPayPassword () {
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+      console.log(this.isNeedPayPassword)
+    },
     // 提交push资产
     async submitPushAssets () {
       let goOnStatus = 0
@@ -620,6 +636,7 @@ export default {
         if (!(returnAjaxMsg(data, this, 1))) {
           return false
         } else {
+          await this.reflashIsNeedPayPassword()
           this.isShowPayPasswordDialog = false
           // push列表展示
           this.getPushRecordList()
@@ -680,7 +697,7 @@ export default {
           this.pushAsset = item.coinName
           this.pushPrice = item.price
           this.pushCount = item.count
-          this.pushPaymentAmount = item.amount
+          this.pushPaymentAmount = this.filterNumber(item.amount)
         }
         return false
       })
@@ -708,6 +725,7 @@ export default {
         if (!(returnAjaxMsg(data, this, 1))) {
           return false
         } else {
+          await this.reflashIsNeedPayPassword()
           this.isShowPayPasswordDialog = false
           this.payPassword = ''
           // 付款成功刷新列表
@@ -722,12 +740,15 @@ export default {
       theme: state => state.common.theme,
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
-    })
+    }),
+    isNeedPayPasswordComputed () {
+      return this.isNeedPayPassword
+    }
   },
   watch: {
     async userCenterActiveName (newVal) {
       if (newVal === 'push-asset') {
-        this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+        await this.reflashIsNeedPayPassword()
         this.getPushRecordList()
         // 清空数据
         this.emptyInputData()
@@ -764,7 +785,7 @@ export default {
           }
 
           .form-button-common {
-            margin: 0 0 50px 120px;
+            margin: 0 0 50px 124px;
           }
         }
       }
@@ -891,6 +912,10 @@ export default {
 
       /* PUSH确认 */
       .push-affirm {
+        .el-form-item {
+          margin-bottom: 0 !important;
+        }
+
         .el-dialog {
           top: 10%;
           width: 350px;
@@ -1195,6 +1220,10 @@ export default {
         /* 个人中心（白色主题） */
         .el-form-item__label {
           color: #7d90ac;
+        }
+
+        .el-dialog__title {
+          color: #fff;
         }
 
         .el-select {

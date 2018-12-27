@@ -133,7 +133,7 @@ export const personal = {
   'user_invite_link': ' link',
   'user_invite_people': 'people',
   'user_invite_succeed': 'Success ',
-  'user_invite_have_obtained': 'Commissioned estimate',
+  'user_invite_have_obtained': 'Commissioned conversion',
   'user_invite_statistics': ' Statistics',
   'user_invite_direct': 'Direct promotion',
   'user_invite_indirect': 'Indirect promotion',
@@ -336,5 +336,12 @@ export const personal = {
   'user_bind_Bank_set': 'Modify Bank card',
   'user_bind_Bank_input_name': 'Input Bank name',
   'user_bind_Bank_input_card_num': 'Input Bank card number',
-  'user_bind_Bank_input_address': 'Input Branch address'
+  'user_bind_Bank_input_address': 'Input Branch address',
+  // 20181226添加
+  'user_personal_setting': 'Personal settings',
+  'user_exchange_validate': 'Transaction verification',
+  'user_pay_pwd_every': 'Verify passwords per transaction',
+  'user_pay_pwd_user_set': 'Free entry of transaction password within hours',
+  'user_pay_pwd_never': 'Never enter a transaction password',
+  'user_re_input_ip': 'The IP format is not correct, please re-enter'
 }

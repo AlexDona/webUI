@@ -136,7 +136,7 @@ export const personal = {
   'user_invite_link': '鏈接',
   'user_invite_people': '人',
   'user_invite_succeed': '成功',
-  'user_invite_have_obtained': '已獲得的傭金預估',
+  'user_invite_have_obtained': '已獲得的傭金折合',
   'user_invite_statistics': '統計',
   'user_invite_direct': '直接推廣',
   'user_invite_indirect': '間接推廣',
@@ -341,5 +341,12 @@ export const personal = {
   'user_bind_Bank_set': '設置銀行卡',
   'user_bind_Bank_input_name': '請輸入銀行名稱',
   'user_bind_Bank_input_card_num': '請輸入銀行卡號',
-  'user_bind_Bank_input_address': '請輸入支行地址'
+  'user_bind_Bank_input_address': '請輸入支行地址',
+  // 20181226添加
+  'user_personal_setting': '個人設置',
+  'user_exchange_validate': '交易驗證',
+  'user_pay_pwd_every': '每次交易驗證交易密碼',
+  'user_pay_pwd_user_set': '小時內免輸入交易密碼',
+  'user_pay_pwd_never': '永不輸入交易密碼',
+  'user_re_input_ip': 'IP格式不正確請重新輸入'
 }

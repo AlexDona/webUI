@@ -5,28 +5,30 @@
   >
     <header class="personal-setting-header personal-height40 line-height40 background-color">
       <span class="padding-left23 header-content font-size16">
-        <!--收款账户-->
-        {{ $t('M.user_account_credited') }}
+        <!--设置-->
+        {{$t('M.comm_set')}}
       </span>
     </header>
     <div class="personal-setting-main min-height500 margin-top9">
       <div class="inner-box">
         <h3 class="title">
-          个人设置
+          <!-- 个人设置 -->
+          {{$t('M.user_personal_setting')}}
         </h3>
         <div class="content">
           <div class="top">
             <div class="left">
-              <span>交易验证</span>
+              <span>{{$t('M.user_exchange_validate')}}</span>
             </div>
             <div class="middle">
-              <span>{{labelOfActiveFrequency}}</span>
+              <!--交易验证-->
+              <span><i v-if="activeFrequency == 'userset'">{{usersetTimeInterval}}</i>{{$t(labelOfActiveFrequency)}}</span>
             </div>
             <div class="right">
               <button
                 @click="showSettingBox"
                 class="setting-btn"
-              >设置
+              >{{$t('M.comm_set')}}
               </button>
             </div>
           </div>
@@ -48,14 +50,14 @@
                       type="radio"
                       @change="changeActiveFrequency"
                       name="password-frequency"
-                      :checked="item.value == activeFrequency"
+                      :checked="item.value == validatedActiveFrequency"
                       :value="item.value"
                     />
-                    {{item.label}}
+                    <span v-if="item.value=='userset'">{{usersetTimeInterval}}</span> {{$t(item.label)}}
                     <span
                       class="button"
                       :class="{
-                      'active': item.value == activeFrequency
+                      'active': item.value == validatedActiveFrequency
                     }"
                     ></span>
                   </label>
@@ -66,14 +68,16 @@
         </div>
       </div>
       <el-dialog
-        :title="$t('M.comm_set') + $t('M.comm_password')"
+        :title="$t('M.user_security_verify') + $t('M.comm_password')"
         :visible.sync="isCheckPayPassword"
-        center
+        :close-on-click-modal="false"
       >
+        <!-- 请输入交易密码 -->
         <el-input
           type="password"
           v-model="payPassword"
           @input="clearErrorMsg"
+          :placeholder="`${$t('M.comm_please_enter')}${$t('M.comm_password')}`"
         >
         </el-input>
         <div
@@ -128,32 +132,40 @@ export default {
     return {
       frequencyList: [
         {
-          'label': '永不输入交易密码',
+          // 永不输入交易密码
+          'label': 'M.user_pay_pwd_never',
           'value': 'never'
         },
         {
-          'label': `8小时内免输入交易密码`,
+          // 用户设置小时数 小时内免输入交易密码
+          'label': 'M.user_pay_pwd_user_set',
           'value': 'userset'
         },
         {
-          'label': '每次交易验证交易密码',
+          // 每次交易验证交易密码
+          'label': 'M.user_pay_pwd_every',
           'value': 'everytime'
         }
       ],
       usersetTimeInterval: '',
       isSetting: false,
       activeFrequency: '',
+      // 已校验的radio 选中值
+      validatedActiveFrequency: '',
       isCheckPayPassword: false,
       payPassword: '',
       params: {},
       oldFrequency: '',
       isNeedPayPassword: true,
-      isPayPasswordEmpty: false
+      isPayPasswordEmpty: false,
+      // 是否成功修改
+      isSuccessChanged: false
     }
   },
   async created () {
     await this.getConfig()
     this.activeFrequency = this.notInputPayPasswdTime
+    this.validatedActiveFrequency = this.activeFrequency
     this.oldFrequency = this.activeFrequency
   },
   mounted () {
@@ -171,6 +183,7 @@ export default {
     cancelSetting () {
       this.activeFrequency = this.oldFrequency
       this.isCheckPayPassword = false
+      this.payPassword = ''
     },
     changeActiveFrequency (e) {
       let newVal = e.target.value
@@ -186,7 +199,8 @@ export default {
       if (!this.isNeedPayPassword) {
         this.setUserInputPasswordFrequency(this.params)
       } else {
-        // 安全等级： 高 => 低
+        // 安全等级： 高 => 低'
+        this.isSuccessChanged = false
         this.isCheckPayPassword = true
       }
     },
@@ -200,8 +214,6 @@ export default {
         return false
       }
       await this.setUserInputPasswordFrequency(this.params)
-      this.isCheckPayPassword = false
-      this.payPassword = ''
     },
     async getConfig () {
       const data = await getConfigAjax()
@@ -209,7 +221,7 @@ export default {
         return false
       } else {
         this.usersetTimeInterval = getNestedData(data, 'data.data.notInputPayPasswdTime')
-        this.frequencyList[1].label = `${this.usersetTimeInterval}小时内免输入交易密码`
+        // this.frequencyList[1].label = `小时内免输入交易密码`
       }
     },
     // 设置用户交易密码时长
@@ -217,12 +229,17 @@ export default {
       const data = await setUserInputPasswordFrequency(params)
       if (!returnAjaxMsg(data, this, 1)) {
         this.activeFrequency = this.oldFrequency
+        this.isSuccessChanged = false
         return false
       } else {
+        this.isSuccessChanged = true
         this.activeFrequency = params.status
+        this.validatedActiveFrequency = this.activeFrequency
         await this.$store.dispatch('user/REFLASH_USER_INFO', {
           self: this
         })
+        this.isCheckPayPassword = false
+        this.payPassword = ''
       }
     },
     showSettingBox () {
@@ -236,13 +253,19 @@ export default {
       notInputPayPasswdTime: state => state.user.loginStep1Info.notInputPayPasswdTime
     }),
     labelOfActiveFrequency () {
-      let arr = _.filter(this.frequencyList, item => {
-        return item.value == this.activeFrequency
-      })
+      let arr = _.filter(this.frequencyList, item => item.value == this.activeFrequency)
+      console.log(getNestedData(arr, '[0].label'))
+      // if(){}
       return getNestedData(arr, '[0].label')
     }
   },
   watch: {
+    isCheckPayPassword (newVal) {
+      console.log(newVal)
+      if (!this.isSuccessChanged && !newVal) {
+        this.cancelSetting()
+      }
+    }
   }
 }
 </script>
@@ -275,6 +298,7 @@ export default {
 
             > .middle {
               flex: 1;
+              white-space: nowrap;
               color: $mainColor;
 
               > span {
