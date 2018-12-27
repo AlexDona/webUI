@@ -287,7 +287,7 @@
             <div class="right display-inline-block">
               <el-input
                 type="textarea"
-                maxlength="40"
+                maxlength="30"
                 auto-complete="off"
                 :placeholder="$t('M.otc_publishAD_liveMessage')"
                 v-model="remarkText"

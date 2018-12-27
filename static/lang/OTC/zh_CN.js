@@ -309,7 +309,7 @@ export const OTC = {
   'otc_index_how': '多少',
   'otc_index_nowUse': '当前可用',
   'otc_index_singleTradeLimit': '单笔成交限额',
-  'otc_index_inputTips': '请输入备注：最多20个字符',
+  'otc_index_inputTips': '请输入备注：最多30个字符',
   'otc_index_publish': '发布',
   'otc_index_buyAndSellFree': '买卖是免费的',
   'otc_index_pubTipsOne': '2、您可以在设置中设置您的收款方式；',

@@ -623,7 +623,7 @@
                 </span>
                 <el-input
                   type="textarea"
-                  maxlength="20"
+                  maxlength="30"
                   v-model="appealTextareaValue"
                 >
                 </el-input>

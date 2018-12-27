@@ -309,7 +309,7 @@ export const OTC = {
   'otc_index_how': '얼마나',
   'otc_index_nowUse': '현재 사용 가능',
   'otc_index_singleTradeLimit': '단번 거래 한도',
-  'otc_index_inputTips': '코멘트를 입력하십시오 : 많아서 20 자',
+  'otc_index_inputTips': '코멘트를 입력하십시오 : 많아서 30 자',
   'otc_index_publish': '게시',
   'otc_index_buyAndSellFree': '구매는 무료입니다',
   'otc_index_pubTipsOne': '2、설정에서 지불 방식을 설정할 수 있습니다.',

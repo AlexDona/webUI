@@ -308,7 +308,7 @@ export const OTC = {
   'otc_index_how': '多少',
   'otc_index_nowUse': '當前可用',
   'otc_index_singleTradeLimit': '單筆成交限額',
-  'otc_index_inputTips': '請輸入備註：最多20個字符',
+  'otc_index_inputTips': '請輸入備註：最多30個字符',
   'otc_index_publish': '發布',
   'otc_index_buyAndSellFree': '買賣是免費的',
   'otc_index_pubTipsOne': '2、您可以在設置中設置您的收款方式；',
