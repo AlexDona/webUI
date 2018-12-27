@@ -14,7 +14,7 @@ export const personal = {
   'user_asset_title11': '通貨注文',
   'user_asset_title12': 'まずはパスワードを設定して、OTC入金口座を設定する。',
   'user_asset_title13': 'OTCコレクションアカウントを設定する前に身元認証を完了してください！',
-  'user_asset_title14': 'まず、身分認証を済ませてから、取引検証をしてください！',
+  'user_asset_title14': '取引パスワードの设定后、取引検证を设定してください。！',
   'user_hidden_assets': '零資産は隠す',
   'user_asset_valuation': '資産評価',
   'user_assets_suspended': '充電休止、ウォレットのメンテナンス',

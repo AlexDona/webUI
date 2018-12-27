@@ -18,7 +18,10 @@
           <div
             class="advanced-main-header"
           >
-            <div class="header-border display-flex margin20">
+            <div
+              class="header-border display-flex margin20"
+              v-if="innerUserInfo"
+            >
               <span class="font-size16 main-header-title">
                 <!--实名认证-->
                 {{ $t('M.user_real_name') }}

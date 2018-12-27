@@ -14,7 +14,7 @@ export const personal = {
   'user_asset_title11': '法幣訂單',
   'user_asset_title12': '請先設置交易密碼后，再設置OTC收款賬戶!',
   'user_asset_title13': '請先完成身份認證后，再設置OTC收款賬戶!',
-  'user_asset_title14': '請先完成身份認證後，再設置交易驗證!',
+  'user_asset_title14': '請先設置交易密碼后，再設置交易驗證!',
   'user_hidden_assets': '隱藏資產為0的幣種',
   'user_asset_valuation': '資產估值',
   'user_assets_suspended': '充值暫停，錢包維護中',

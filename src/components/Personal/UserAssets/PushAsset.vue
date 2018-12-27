@@ -96,27 +96,9 @@
                 :isShow="!!errorShowStatusList[2]"
               />
             </el-form-item>
-            <!--交易密码-->
-            <el-form-item
-              :label="$t('M.comm_password')"
-              v-if="isNeedPayPasswordComputed"
-            >
-              <input
-                type="password"
-                class="form-input-common border-radius2 padding-l15"
-                v-model="payPassword"
-                @keydown="setErrorMsg(3, '')"
-                @blur="checkoutInputFormat(3, payPassword)"
-              />
-              <!--错误提示-->
-              <ErrorBox
-                :text="errorShowStatusList[3]"
-                :isShow="!!errorShowStatusList[3]"
-              />
-            </el-form-item>
             <button
               class="form-button-common border-radius4 cursor-pointer"
-              @click.prevent="submitPushAssets"
+              @click.prevent="checkISNeedPayPassowd"
             >
               <!--提交-->
               {{ $t('M.comm_sub_time') }}
@@ -329,7 +311,7 @@
               >
                 <el-button
                   type="primary"
-                  @click.prevent="confirmToPay"
+                  @click.prevent="showPayConfirmBox"
                 >
                   <!--确 定-->
                   {{ $t('M.comm_confirm') }}
@@ -373,7 +355,7 @@
               >
                 <el-button
                   type="primary"
-                  @click.prevent="payWithPassword"
+                  @click.prevent="submitWithPayPassword"
                 >
                   <!--确 定-->
                   {{ $t('M.comm_confirm') }}
@@ -469,7 +451,9 @@ export default {
       pointLength: 4, // 保留小数位后四位
       errorMsg: '', // 错误提示
       partLoading: true, // 局部列表loading
-      isNeedPayPassword: false
+      isNeedPayPassword: false,
+      // 付款类型： 'pay': 付款 'push': push
+      payType: 'pay'
     }
   },
   async created () {
@@ -502,6 +486,21 @@ export default {
       this[ref] = this.$refs[ref].value
       // 限制数量小数位位数
       formatNumberInput(this.$refs[ref], pointLength)
+    },
+    // 是否需要交易密码
+    async checkISNeedPayPassowd () {
+      await this.reflashIsNeedPayPassword()
+      let goOnStatus = 0
+      goOnStatus = (this.checkoutInputFormat(0, this.buyUID) && this.checkoutInputFormat(1, this.count) && this.checkoutInputFormat(2, this.price)) ? 1 : 0
+
+      if (goOnStatus) {
+        if (this.isNeedPayPassword) {
+          this.payType = 'push'
+          this.isShowPayPasswordDialog = true
+        } else {
+          this.submitPushAssets()
+        }
+      }
     },
     /**
      * 刚进页面时候 push列表展示
@@ -540,6 +539,17 @@ export default {
       } else {
         // 点击资产币种下拉
         this.currencyBalance = getNestedData(data, 'data.data.total')
+      }
+    },
+    // 付款方式封装
+    submitWithPayPassword () {
+      switch (this.payType) {
+        case 'pay':
+          this.payWithPassword()
+          break
+        case 'push':
+          this.submitPushAssets()
+          break
       }
     },
     /**
@@ -617,32 +627,24 @@ export default {
     },
     // 提交push资产
     async submitPushAssets () {
-      let goOnStatus = 0
-      console.log(this.price)
-      goOnStatus = (this.checkoutInputFormat(0, this.buyUID) && this.checkoutInputFormat(1, this.count) && this.checkoutInputFormat(2, this.price)) ? 1 : 0
-      if (this.isNeedPayPassword && goOnStatus) {
-        goOnStatus = this.checkoutInputFormat(3, this.payPassword) ? 1 : 0
+      let params = {
+        coinId: this.currencyValue, // 币种id
+        uid: this.buyUID, // 买方id
+        count: this.count, // push数量
+        price: this.price // push价格
       }
-      if (goOnStatus) {
-        let params = {
-          coinId: this.currencyValue, // 币种id
-          uid: this.buyUID, // 买方id
-          count: this.count, // push数量
-          price: this.price // push价格
-        }
 
-        params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
-        let data = await pushAssetsSubmit(params)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          return false
-        } else {
-          await this.reflashIsNeedPayPassword()
-          this.isShowPayPasswordDialog = false
-          // push列表展示
-          this.getPushRecordList()
-          // 清空数据
-          this.emptyInputData()
-        }
+      params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
+      let data = await pushAssetsSubmit(params)
+      if (!(returnAjaxMsg(data, this, 1))) {
+        return false
+      } else {
+        await this.reflashIsNeedPayPassword()
+        this.isShowPayPasswordDialog = false
+        // push列表展示
+        this.getPushRecordList()
+        // 清空数据
+        this.emptyInputData()
       }
     },
     // 分页
@@ -703,9 +705,11 @@ export default {
       })
     },
     // 点击确认用户信息并弹出交易密码框
-    confirmToPay () {
+    async showPayConfirmBox () {
+      await this.reflashIsNeedPayPassword()
       this.isShowPaymentDialog = false
       if (this.isNeedPayPassword) {
+        this.payType = 'pay'
         this.isShowPayPasswordDialog = true
       } else {
         this.payWithPassword()
@@ -740,10 +744,7 @@ export default {
       theme: state => state.common.theme,
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
-    }),
-    isNeedPayPasswordComputed () {
-      return this.isNeedPayPassword
-    }
+    })
   },
   watch: {
     async userCenterActiveName (newVal) {
