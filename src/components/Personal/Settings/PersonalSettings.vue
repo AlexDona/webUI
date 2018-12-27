@@ -243,6 +243,10 @@ export default {
       }
     },
     showSettingBox () {
+      if (!this.UserPayPassword) {
+        this.$parent.$parent.$parent.showNoPasswdNotice()
+        return
+      }
       this.isSetting = !this.isSetting
     }
   },
@@ -250,12 +254,12 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      notInputPayPasswdTime: state => state.user.loginStep1Info.notInputPayPasswdTime
+      notInputPayPasswdTime: state => state.user.loginStep1Info.notInputPayPasswdTime,
+      UserPayPassword: state => state.user.loginStep1Info.userInfo.payPassword
     }),
     labelOfActiveFrequency () {
       let arr = _.filter(this.frequencyList, item => item.value == this.activeFrequency)
       console.log(getNestedData(arr, '[0].label'))
-      // if(){}
       return getNestedData(arr, '[0].label')
     }
   },
