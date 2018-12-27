@@ -50,14 +50,14 @@
                       type="radio"
                       @change="changeActiveFrequency"
                       name="password-frequency"
-                      :checked="item.value == activeFrequency"
+                      :checked="item.value == validatedActiveFrequency"
                       :value="item.value"
                     />
                     <span v-if="item.value=='userset'">{{usersetTimeInterval}}</span> {{$t(item.label)}}
                     <span
                       class="button"
                       :class="{
-                      'active': item.value == activeFrequency
+                      'active': item.value == validatedActiveFrequency
                     }"
                     ></span>
                   </label>
@@ -68,15 +68,16 @@
         </div>
       </div>
       <el-dialog
-        :title="$t('M.comm_set') + $t('M.comm_password')"
+        :title="$t('M.user_security_verify') + $t('M.comm_password')"
         :visible.sync="isCheckPayPassword"
         :close-on-click-modal="false"
-        center
       >
+        <!-- 请输入交易密码 -->
         <el-input
           type="password"
           v-model="payPassword"
           @input="clearErrorMsg"
+          :placeholder="`${$t('M.comm_please_enter')}${$t('M.comm_password')}`"
         >
         </el-input>
         <div
@@ -149,6 +150,8 @@ export default {
       usersetTimeInterval: '',
       isSetting: false,
       activeFrequency: '',
+      // 已校验的radio 选中值
+      validatedActiveFrequency: '',
       isCheckPayPassword: false,
       payPassword: '',
       params: {},
@@ -162,6 +165,7 @@ export default {
   async created () {
     await this.getConfig()
     this.activeFrequency = this.notInputPayPasswdTime
+    this.validatedActiveFrequency = this.activeFrequency
     this.oldFrequency = this.activeFrequency
   },
   mounted () {
@@ -179,6 +183,7 @@ export default {
     cancelSetting () {
       this.activeFrequency = this.oldFrequency
       this.isCheckPayPassword = false
+      this.payPassword = ''
     },
     changeActiveFrequency (e) {
       let newVal = e.target.value
@@ -209,8 +214,6 @@ export default {
         return false
       }
       await this.setUserInputPasswordFrequency(this.params)
-      this.isCheckPayPassword = false
-      this.payPassword = ''
     },
     async getConfig () {
       const data = await getConfigAjax()
@@ -231,6 +234,7 @@ export default {
       } else {
         this.isSuccessChanged = true
         this.activeFrequency = params.status
+        this.validatedActiveFrequency = this.activeFrequency
         await this.$store.dispatch('user/REFLASH_USER_INFO', {
           self: this
         })
