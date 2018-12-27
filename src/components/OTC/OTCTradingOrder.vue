@@ -574,7 +574,7 @@
                 <span class="appeal-reason">*{{$t('M.otc_complaint_appeal_reason')}}</span>
                 <el-input
                   type="textarea"
-                  maxlength="20"
+                  maxlength="30"
                   v-model="appealTextareaValue"
                 >
                 </el-input>
@@ -809,7 +809,7 @@ export default {
     }
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

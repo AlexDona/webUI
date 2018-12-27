@@ -65,7 +65,7 @@ export default {
     await this.getSymbolRateData()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   updated () {},
   beforeRouteUpdate () {},
   methods: {

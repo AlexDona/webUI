@@ -174,10 +174,8 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    <!-- 防止丢失精度方法一 -->
-                    <!-- {{getOTCRemainingSum(s.row.entrustCount, s.row.matchCount, '-')}}{{selectedOTCAvailableCurrencyName}} -->
-                    <!-- 后台添加了剩余数量字段remainCount 方法二-->
-                    {{s.row.remainCount}}{{selectedOTCAvailableCurrencyName}}
+                    <!-- 后台添加了剩余数量字段remainCount-->
+                    {{filterNumber(s.row.remainCount)}}{{selectedOTCAvailableCurrencyName}}
                   </div>
                 </template>
               </el-table-column>
@@ -188,7 +186,7 @@
                 <template slot-scope = "s">
                   <!-- 此处的单位根据设置中的法币类型来变化：为人民币时候显示CNY，为美元时候显示$ 此处需要从全局拿到设置中的法币类型来渲染页面-->
                   <div class="red">
-                    {{s.row.price}}{{activitedCurrencyName}}
+                    {{filterNumber(s.row.price)}}{{activitedCurrencyName}}
                   </div>
                 </template>
               </el-table-column>
@@ -521,7 +519,7 @@ export default {
       this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(false)
     }
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

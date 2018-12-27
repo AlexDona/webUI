@@ -25,7 +25,7 @@ import {
   // getCountryList,
   getServiceProtocoDataAjax
 } from '../utils/api/header'
-import store from '../vuex'
+import storeCreater from '../vuex'
 import {
   removeStore,
   // getStore,
@@ -46,6 +46,9 @@ import {
   WITHDRAWAL_REG,
   CHINESE_REG
 } from './regExp'
+
+const store = storeCreater()
+
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；
@@ -285,7 +288,7 @@ export const setSocketData = (oldContent, newContent, targetList, targetIndex, t
 // 动态添加favicon
 export const addFavicon = (href, title) => {
   // 动态生成favicon
-  let link = document.querySelector('link[rel*=\'icon\']') || document.createElement('link')
+  let link = document.querySelector("link[rel*='icon']") || document.createElement('link')
   link.type = 'image/x-icon'
   link.rel = 'shortcut icon'
   link.href = href

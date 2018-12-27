@@ -432,7 +432,7 @@
                 :label = "$t('M.comm_count')"
               >
                 <template slot-scope = "s">
-                  <div>{{s.row.pickCount}}</div>
+                  <div>{{ filterNumber(s.row.pickCount) }}</div>
                 </template>
               </el-table-column>
               <!-- 单价 -->
@@ -440,7 +440,7 @@
                 :label = "$t('M.otc_index_UnitPrice')"
               >
                 <template slot-scope = "s">
-                  <div>{{s.row.price}}</div>
+                  <div>{{ filterNumber(s.row.price) }}</div>
                 </template>
               </el-table-column>
               <!-- 总金额 -->
@@ -448,7 +448,7 @@
                 :label = "$t('M.otc_canceled_total ')"
               >
                 <template slot-scope = "s">
-                  <div>{{s.row.payAmount}}</div>
+                  <div>{{ filterNumber(s.row.payAmount) }}</div>
                 </template>
               </el-table-column>
             </el-table>
@@ -479,7 +479,7 @@ import {
   getOTCReportFormStatisticsData
 } from '../../utils/api/OTC'
 import IconFontCommon from '../../components/Common/IconFontCommon'
-import {timeFilter} from '../../utils'
+import {timeFilter, scientificToNumber} from '../../utils'
 import {createNamespacedHelpers, mapState} from 'vuex'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('OTC')
@@ -530,12 +530,16 @@ export default {
   },
   mounted () {
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
     ]),
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
+    },
     // 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum

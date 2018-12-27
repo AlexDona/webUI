@@ -358,13 +358,13 @@
       </el-tabs>
       <!-- 交易密码 -->
       <el-dialog
-        :title="$t('M.comm_set') + $t('M.comm_password')"
+        :title="$t('M.user_security_verify') + $t('M.comm_password')"
         :visible.sync="isShowPayPassword"
-        center
       >
         <el-input
           type="password"
           v-model="payPassword"
+          :placeholder="`${$t('M.comm_please_enter')}${$t('M.comm_password')}`"
           @input="clearErrorMsg"
         >
         </el-input>
@@ -509,8 +509,7 @@ export default {
   mounted () {
     this.getRefValue(this.limitBuyPriceInputRef)
   },
-  activited () {
-  },
+  activated () {},
   update () {
   },
   beforeRouteUpdate () {

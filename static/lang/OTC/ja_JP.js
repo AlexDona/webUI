@@ -309,7 +309,7 @@ export const OTC = {
   'otc_index_how': 'どれくらい',
   'otc_index_nowUse': '現在利用可能',
   'otc_index_singleTradeLimit': '単一取引限度額',
-  'otc_index_inputTips': 'メモを入力してください：最大20文字',
+  'otc_index_inputTips': 'メモを入力してください：最大30文字',
   'otc_index_publish': 'リリース',
   'otc_index_buyAndSellFree': '売買は無料です',
   'otc_index_pubTipsOne': '2、設定でお支払い方法を設定することができます。',

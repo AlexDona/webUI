@@ -439,6 +439,7 @@
 import CountDownButton from '../../Common/CountDownCommon'// 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
+import { IP_REG } from '../../../utils/regExp' // 正则验证
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   multipleUserAPIInfo,
@@ -496,7 +497,7 @@ export default {
     this.getMultipleUserAPIInfo()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -535,13 +536,16 @@ export default {
         // 请输入IP地址
         this.createErrorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_binding') + 'IP' + this.$t('M.comm_site')
         return false
+      } else if (!IP_REG.test(this.ipSite)) {
+        this.createErrorMsg = this.$t('M.user_re_input_ip')
+        return false
       } else {
-        this.createErrorMsg = ''
+        // this.createErrorMsg = ''
+        // 调用安全方式接口
+        this.getSecurityCenter()
+        // 赋值创建IP修改时的带回
+        this.bindingIpAddress = this.ipSite
       }
-      // 调用安全方式接口
-      this.getSecurityCenter()
-      // 赋值创建IP修改时的带回
-      this.bindingIpAddress = this.ipSite
     },
     // 创建api检测输入格式
     editorInputFormat (type, targetNum) {

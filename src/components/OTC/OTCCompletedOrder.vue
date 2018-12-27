@@ -220,7 +220,7 @@
             width="118"
           >
             <template slot-scope="s">
-              {{ s.row.price }}({{ s.row.currencyName }})
+              {{ filterNumber(s.row.price) }}({{ s.row.currencyName }})
             </template>
           </el-table-column>
           <!-- 数量 -->
@@ -228,7 +228,7 @@
             :label="$t('M.comm_count')"
           >
             <template slot-scope="s">
-              {{ s.row.pickCount }}({{ s.row.coinName }})
+              {{ filterNumber(s.row.pickCount) }}({{ s.row.coinName }})
             </template>
           </el-table-column>
           <!-- 总金额 -->
@@ -265,7 +265,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {timeFilter} from '../../utils'
+import {timeFilter, scientificToNumber} from '../../utils'
 import {getOTCCompletedOrders} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
@@ -288,10 +288,14 @@ export default {
     }
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
+    },
     // 0.0 分页改变事件
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum

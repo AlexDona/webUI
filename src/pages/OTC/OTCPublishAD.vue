@@ -287,7 +287,7 @@
             <div class="right display-inline-block">
               <el-input
                 type="textarea"
-                maxlength="40"
+                maxlength="30"
                 auto-complete="off"
                 :placeholder="$t('M.otc_publishAD_liveMessage')"
                 v-model="remarkText"
@@ -573,7 +573,7 @@ export default {
     // console.log(this.limitOrderCount)
     // console.log(this.successOrderCount)
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -658,8 +658,10 @@ export default {
         this.marketPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.marketPrice')
         // 最低价
         this.minPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.minPrice')
+        console.log('最低价格' + this.minPrice)
         // 最高价
         this.maxPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxPrice')
+        console.log('最高价格' + this.maxPrice)
         // 当前币种返回的保留小数点位数限制
         this.pointLength = getNestedData(availableCoinListData, 'otcCoinQryResponse.unit')
         // 下面这两个字段当URL中没id时候才用这个渲染页面
@@ -680,18 +682,21 @@ export default {
         this.errorInfoEntrustCount = ''
         this.entrustCountErrorTipsBorder = false
       }
+      this.clearMainData()
       this.getOTCCoinInfo()
     },
     // 3.0 改变可用币种id
     changeAvailableCoinId (e) {
       this.activitedCoinId = e
       // console.log(this.activitedCoinId)
+      this.clearMainData()
       this.getOTCCoinInfo()
     },
     // 4.0 改变可用法币的币种id
     changeCurrencyId (e) {
       this.activitedCurrencyId = e
       // console.log(this.activitedCurrencyId)
+      this.clearMainData()
       this.getOTCCoinInfo()
     },
     // 5.0 点击发布广告弹出输入交易密码框
@@ -859,6 +864,14 @@ export default {
       this.tradePassword = ''
       // 交易密码错误提示
       this.errorInfoPassword = ''
+      // 清空错误边框红色警示
+      this.priceErrorTipsBorder = false
+      this.entrustCountErrorTipsBorder = false
+      this.minCountErrorTipsBorder = false
+      this.maxCountErrorTipsBorder = false
+      // 清空单笔最小最大限额错误提示
+      this.errorInfoMinCount = ''
+      this.errorInfoMaxCount = ''
     },
     // 清空input框数据
     clearInputData () {

@@ -128,7 +128,7 @@ export default {
       this.getDetailInfo(this.newsDetailJumpId)
     }
   },
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

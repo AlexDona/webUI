@@ -99,8 +99,7 @@ export default {
   mounted () {
     this.initKLine(this.symbol)
   },
-  activited () {
-  },
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   destroyed () {

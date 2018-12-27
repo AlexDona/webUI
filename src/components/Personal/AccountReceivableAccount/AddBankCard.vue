@@ -185,7 +185,7 @@ export default {
     this.paymentMethodInformation()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

@@ -14,6 +14,7 @@ export const personal = {
   'user_asset_title11': '통화 거래 주문',
   'user_asset_title12': '먼저 거래 비밀번호를 설정 한 다음 OTC 수금 계정을 설정하십시오!',
   'user_asset_title13': '먼저 인증을 완료하고 OTC 수금 계정을 설정하십시오!',
+  'user_asset_title14': '먼저 거래 비밀번호를 설정 한 후, 다시 거래 인증을 설정 하세요!',
   'user_hidden_assets': '통화가 0 인 자산 숨기기',
   'user_asset_valuation': '자산 평가',
   'user_assets_suspended': '충전 일시 중지, 지갑 유지 관리',
@@ -136,7 +137,7 @@ export const personal = {
   'user_invite_link': '링크',
   'user_invite_people': '사람',
   'user_invite_succeed': '성공',
-  'user_invite_have_obtained': '달성 된 수수료 추계액',
+  'user_invite_have_obtained': '커미션 을 받아 접합 하다',
   'user_invite_statistics': '통계',
   'user_invite_direct': '직접 보급',
   'user_invite_indirect': '간접 보급',
@@ -341,5 +342,12 @@ export const personal = {
   'user_bind_Bank_set': '은행카드 설정',
   'user_bind_Bank_input_name': '은행 명칭 입력해주세요.',
   'user_bind_Bank_input_card_num': '은행 카드번호 입력해주세요.',
-  'user_bind_Bank_input_address': '은행 주소 입력해주세요.'
+  'user_bind_Bank_input_address': '은행 주소 입력해주세요.',
+  // 20181226添加
+  'user_personal_setting': '개인 설정',
+  'user_exchange_validate': '거래 확인',
+  'user_pay_pwd_every': '트랜잭션 당 트랜잭션 암호 확인',
+  'user_pay_pwd_user_set': '몇 시간 내에 거래 비밀번호 무료 입력',
+  'user_pay_pwd_never': '트랜잭션 암호를 입력하지 마십시오',
+  'user_re_input_ip': 'IP 형식이 잘못 되었습니다. 다시 입력하십시오'
 }

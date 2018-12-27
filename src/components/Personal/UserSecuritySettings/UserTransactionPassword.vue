@@ -288,7 +288,7 @@ export default {
     await this.cancelPasswdDialog()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

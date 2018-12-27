@@ -269,12 +269,12 @@
                   <!-- '请说明有关于您交易的相关条款或者其它您想让对方获悉得信息，以便对方和您快速交易', -->
                   {{$t('M.otc_publishAD_liveMessage')}}
                 </div>
-                <!-- 请输入备注：最多20个字符 -->
+                <!-- 请输入备注：最多30个字符 -->
                 <el-input
                   type="textarea"
                   auto-complete="off"
                   :placeholder="$t('M.otc_index_inputTips')"
-                  maxlength="20"
+                  maxlength="30"
                   v-model="remarkText"
                 >
                 </el-input>
@@ -541,8 +541,7 @@ export default {
   },
   mounted () {
   },
-  activited () {
-  },
+  activated () {},
   update () {
   },
   beforeRouteUpdate () {

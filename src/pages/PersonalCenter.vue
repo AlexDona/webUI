@@ -125,16 +125,16 @@
           <!--设置-->
           <div class="setting-title asset-info">
             <!--设置-->
-            设置
+            {{$t('M.comm_set')}}
           </div>
           <el-tab-pane
-            label = "设置"
+            :label = "$t('M.comm_set')"
             disabled
             class="title"
           >
           </el-tab-pane>
           <el-tab-pane
-            label = "个人设置"
+            :label = "$t('M.user_personal_setting')"
             name = "personal-setting"
           >
             <PersonalSettings/>
@@ -157,7 +157,9 @@
           </div>
           <p class="font-size12 warning-text margin-top35 text-align-c">
             <!--请先设置交易密码，再来设置OTC收款账户!-->
-            {{ $t('M.user_asset_title12') }}
+            <span v-if="userCenterActiveName !== 'personal-setting'">{{ $t('M.user_asset_title12') }}</span>
+            <!--请先设置交易密码，再来设置交易验证-->
+            <span v-else>{{$t('M.user_asset_title14')}}</span>
           </p>
           <span
             slot="footer"
@@ -295,13 +297,17 @@ export default {
     this.showNoPosswdAndNoVerifyNotice()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
+    // 显示未设置交易密码弹窗
+    showNoPasswdNotice () {
+      this.setPwdDialogVisible = true
+    },
     showNoPosswdAndNoVerifyNotice () {
       if (this.userCenterActiveName === 'account-credited' && !this.payPassword) {
         this.setPwdDialogVisible = true

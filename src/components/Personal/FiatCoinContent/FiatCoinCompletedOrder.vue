@@ -329,7 +329,7 @@ export default {
   created () {
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

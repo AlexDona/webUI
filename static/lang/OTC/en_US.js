@@ -319,7 +319,7 @@ export const OTC = {
   'otc_index_how': ' price',
   'otc_index_nowUse': 'Available',
   'otc_index_singleTradeLimit': 'Minimum price',
-  'otc_index_inputTips': 'Please enter a note: up to 20 characters',
+  'otc_index_inputTips': 'Please enter a note: up to 30 characters',
   'otc_index_publish': 'Release ',
   'otc_index_buyAndSellFree': 'buy and sale is free',
   'otc_index_pubTipsOne': '2、Setting billing method in setting center;',

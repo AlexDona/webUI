@@ -21,7 +21,7 @@ export const statusRushedToRecordList = (params) => get('queryWithdrawRecording'
   'not-loading': true
 }, params))
 // 账单明细—获取商户币种列表
-export const getMerchantCurrencyList = (params) => get('queryPartnerCoinList', Object.assign({
+export const getMerchantCurrencyList = (params) => get('personal/queryPartnerCoinList', Object.assign({
   'not-loading': true
 }, params))
 // 账单明细—个人资产综合查询

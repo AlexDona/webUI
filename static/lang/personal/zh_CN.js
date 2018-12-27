@@ -14,6 +14,7 @@ export const personal = {
   'user_asset_title11': '法币订单',
   'user_asset_title12': '请先设置交易密码后，再设置OTC收款账户!',
   'user_asset_title13': '请先完成身份认证后，再设置OTC收款账户!',
+  'user_asset_title14': '请先设置交易密码后，再设置交易验证!',
   'user_hidden_assets': '隐藏资产为0的币种',
   'user_asset_valuation': '资产估值',
   'user_assets_suspended': '充值暂停，钱包维护中',
@@ -136,7 +137,7 @@ export const personal = {
   'user_invite_link': '链接',
   'user_invite_people': '人',
   'user_invite_succeed': '成功',
-  'user_invite_have_obtained': '已获得的佣金预估',
+  'user_invite_have_obtained': '已获得佣金折合',
   'user_invite_statistics': '统计',
   'user_invite_direct': '直接推广',
   'user_invite_indirect': '间接推广',
@@ -341,5 +342,12 @@ export const personal = {
   'user_bind_Bank_set': '设置银行卡',
   'user_bind_Bank_input_name': '请输入银行名称',
   'user_bind_Bank_input_card_num': '请输入银行卡号',
-  'user_bind_Bank_input_address': '请输入支行地址'
+  'user_bind_Bank_input_address': '请输入支行地址',
+  // 20181226添加
+  'user_personal_setting': '个人设置',
+  'user_exchange_validate': '交易验证',
+  'user_pay_pwd_every': '每次交易验证交易密码',
+  'user_pay_pwd_user_set': '小时内免输入交易密码',
+  'user_pay_pwd_never': '永不输入交易密码',
+  'user_re_input_ip': 'IP格式不正确请重新输入'
 }
