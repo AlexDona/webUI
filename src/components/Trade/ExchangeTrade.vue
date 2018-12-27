@@ -804,7 +804,7 @@ export default {
       if (!returnAjaxMsg(data, this, 1)) {
         return false
       } else {
-        this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
+        // this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
         this.isShowPayPassword = false
         this.clearFormData()
       }
