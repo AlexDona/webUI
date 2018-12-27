@@ -99,9 +99,16 @@
               <div class="promotion-info">
                 <p class="info-left">
                   <span
+                    v-if="totalPageMyNumber !== ''"
                     class="info-left-color font-size30"
                   >
                     {{ totalPageMyNumber }}
+                  </span>
+                  <span
+                    v-else
+                    class="info-left-color font-size30"
+                  >
+                    0
                   </span>
                   <span class="font-size12">
                     <!--人-->
