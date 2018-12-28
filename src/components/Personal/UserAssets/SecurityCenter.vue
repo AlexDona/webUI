@@ -373,6 +373,7 @@
                   class="send-code-btn cursor-pointer"
                   :status="disabledOfPhoneBtn"
                   @run="sendPhoneOrEmailCode(0)"
+                  v-if="closeValidation"
                 />
               </el-form-item>
               <!--没有绑定邮箱不显示-->
@@ -393,6 +394,7 @@
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfEmailBtn"
                     @run="sendPhoneOrEmailCode(1)"
+                    v-if="closeValidation"
                   />
               </el-form-item>
               <!--没有绑定谷歌不显示-->
@@ -458,6 +460,7 @@
                   class="send-code-btn cursor-pointer"
                   :status="disabledOfPhoneBtn"
                   @run="sendPhoneOrEmailCode(0)"
+                  v-if="openTheValidation"
                 />
               </el-form-item>
               <!--开启邮箱-->
@@ -476,6 +479,7 @@
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfEmailBtn"
                     @run="sendPhoneOrEmailCode(1)"
+                    v-if="openTheValidation"
                   />
               </el-form-item>
               <!--开启谷歌-->
@@ -708,7 +712,7 @@ export default {
       return timeFilter(date, 'normal')
     },
     coinMoneyOrders (tab) {
-      console.log(tab.name)
+      // console.log(tab.name)
       this.getSecurityCenter(tab.name)
     },
     /**
@@ -735,27 +739,21 @@ export default {
         if (data) {
           // 接口成功清除loading
           this.fullscreenLoading = false
-          // this.securityCenter = data.data.data
           this.securityCenter = getNestedData(data, 'data.data')
-          // this.securityLevel = data.data.data.person
           this.securityLevel = getNestedData(data, 'data.data.person')
           switch (entrustType) {
             case 'logon-record':
               // 登陆记录列表
-              // this.logonRecord = data.data.data.loginLog.list
               this.logonRecord = getNestedData(data, 'data.data.loginLog.list')
               // 登陆记录分页
-              // this.totalPageMyLogonRecordPage = data.data.data.loginLog.pages - 0
               this.totalPageMyLogonRecordPage = getNestedData(data, 'data.data.loginLog.pages') - 0
               break
             case 'security-record':
               // 安全设置列表
-              // this.securityRecord = data.data.data.setLog.list
               this.securityRecord = getNestedData(data, 'data.data.setLog.list')
               console.log('安全设置列表')
               console.log(this.securityRecord)
               // 安全设置分页
-              // this.totalPageMySecurityRecordPage = data.data.data.setLog.pages - 0
               this.totalPageMySecurityRecordPage = getNestedData(data, 'data.data.setLog.pages') - 0
               break
           }
@@ -764,7 +762,7 @@ export default {
     },
     // 分页
     async changeCurrentPage (entrustType, pageNum) {
-      console.log(pageNum)
+      // console.log(pageNum)
       switch (entrustType) {
         // 登陆记录分页
         case 'logon-record':
@@ -802,12 +800,12 @@ export default {
     },
     // 发送验证码
     sendPhoneOrEmailCode (loginType) {
-      console.log(this.disabledOfPhoneBtn)
-      console.log(this.disabledOfEmailBtn)
+      // console.log(this.disabledOfPhoneBtn)
+      // console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
-      console.log(this.userInfo)
+      // console.log(this.userInfo)
       let params = {
         userId: this.userInfo.userId
       }
@@ -868,8 +866,8 @@ export default {
     },
     // 关闭开启验证状态事件
     showStatusVerificationClose (paymentType, safeState) {
-      console.log(paymentType)
-      console.log(safeState)
+      // console.log(paymentType)
+      // console.log(safeState)
       this.emailCode = ''
       this.phoneCode = ''
       this.googleCode = ''
@@ -1007,9 +1005,9 @@ export default {
       }
       switch (type) {
         case 'email':
-          console.log(type)
+          // console.log(type)
           params.type = 'email'
-          console.log(params)
+          // console.log(params)
           if (state === 'enable') {
             params.status = 'enable'
           } else {

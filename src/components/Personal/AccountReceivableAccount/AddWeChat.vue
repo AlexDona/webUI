@@ -227,12 +227,11 @@ export default {
     // 上传微信二维码
     handleSuccessHand (response, file, fileList) {
       this.dialogImageHandUrl1 = response.data.fileUrl
-      console.log(response, file, fileList)
+      // console.log(response, file, fileList)
     },
     // 删除微信二维码
     handleRemove () {
       this.dialogImageHandUrl1 = ''
-      this.removeMaskLayer = false
     },
     // 删除事件
     showStatusCode (val) {
@@ -313,9 +312,9 @@ export default {
         }
         // 整页loading
         this.fullscreenLoading = true
-        console.log(this.dialogImageHandUrl1)
+        // console.log(this.dialogImageHandUrl1)
         data = await statusCardSettings(param)
-        console.log(data)
+        // console.log(data)
         if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
@@ -366,7 +365,7 @@ export default {
         if (detailData.id) {
           this.paymentTypeId = detailData.id
         }
-        console.log(this.dialogImageHandUrl1)
+        // console.log(this.dialogImageHandUrl1)
       }
     },
     // 成功自动跳转

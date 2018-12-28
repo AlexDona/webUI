@@ -67,6 +67,7 @@
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfEmailBtn"
                     @run="preCheckOnSendEmail"
+                    v-if="this.$route.path === '/SecureEmail'"
                   />
                 </template>
               </el-input>
@@ -159,7 +160,7 @@ export default {
         return false
       }
       await this.checkUserExistAjax('email', this.emailAccounts)
-      console.log(this.isEmailExist)
+      // console.log(this.isEmailExist)
       if (!this.isEmailExist) {
         this.sendPhoneOrEmailCode(1)
       }
@@ -233,7 +234,7 @@ export default {
       switch (type) {
         // 邮箱账号
         case 0:
-          console.log(type)
+          // console.log(type)
           switch (validateNumForUserInput('email', targetNum)) {
             case 0:
               // console.log(type)
