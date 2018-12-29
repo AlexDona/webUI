@@ -27,8 +27,7 @@
         <span class="item fourth-entrust-count">
           {{$t('M.otc_entrust_number')}}
         </span>
-        <!-- 已匹配数量 -->
-        <!-- 20181213改为 已成交数量-->
+        <!-- 已成交数量 -->
         <span class="item fifth-match-count">
           {{$t('M.otc_entrust_matching')}}
         </span>
@@ -51,7 +50,7 @@
       >
         <div
           class="no-data"
-          v-if="!OTCEntrustOrderList.length"
+          v-show="!OTCEntrustOrderList.length"
         >
           <!-- 暂无数据 -->
           {{$t('M.comm_no_data')}}
@@ -60,7 +59,7 @@
           class="entrust-list-content"
           v-for="(item,index) in OTCEntrustOrderList"
           :key="index"
-          v-if="OTCEntrustOrderList.length"
+          v-show="OTCEntrustOrderList.length"
         >
           <!-- 1 类型 -->
           <!-- 买入 -->
@@ -93,7 +92,7 @@
           <span class="item fourth-entrust-count">
             {{filterNumber(item.entrustCount)}}({{item.coinName}})
           </span>
-          <!-- 5 已匹配数量 -->
+          <!-- 5 已成交数量 -->
           <span class="item fifth-match-count">
             {{filterNumber(item.matchCount)}}({{item.coinName}})
           </span>

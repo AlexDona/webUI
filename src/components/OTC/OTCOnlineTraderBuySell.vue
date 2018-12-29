@@ -148,19 +148,9 @@
                   <el-form-item>
                     <!-- 标题 -->
                     <div class="want">
-                      <span
-                        class="want-text"
-                        v-show="onlineTraderStatus === 'onlineSell'"
-                      >
-                        <!-- 您想出售多少 -->
-                        {{$t('M.otc_index_sellMount')}}
-                      </span>
-                      <span
-                        class="want-text"
-                        v-show="onlineTraderStatus === 'onlineBuy'"
-                      >
-                        <!-- 您想购买多少 -->
-                        {{$t('M.otc_index_buyMount')}}
+                      <!--您想出售多少/您想购买多少-->
+                      <span class="want-text">
+                        {{onlineTraderStatus === 'onlineSell' ? $t('M.otc_index_sellMount') : $t('M.otc_index_buyMount')}}
                       </span>
                       <span
                         class="charge-money"
@@ -339,7 +329,7 @@
           >
             <!-- 请输入交易密码 -->
             <div class="input">
-              <input
+              <!--<input
                 v-if="this.onlineTraderStatus === 'onlineBuy'"
                 type="password"
                 :placeholder="$t('M.otc_publishAD_sellpassword')"
@@ -357,7 +347,18 @@
                 @focus="tradePasswordFocus"
                 @keyup.enter="submitPickOrdersToSell"
                 onpaste="return false"
+              >-->
+              <!--任2018129封装提交摘单买入和卖出方法-->
+              <input
+                type="password"
+                :placeholder="$t('M.otc_publishAD_sellpassword')"
+                class="password-input"
+                v-model="tradePassword"
+                @focus="tradePasswordFocus"
+                @keyup.enter="pickOrdersToBuyOrSell"
+                onpaste="return false"
               >
+              <!--任2018129封装提交摘单买入和卖出方法-->
             </div>
             <div class="error-info">
               <!-- 错误提示 -->
@@ -368,23 +369,32 @@
               class="dialog-footer"
             >
                 <!-- 在线购买提交 -->
-                <el-button
+                <!--<el-button
                   type="primary"
                   v-if="this.onlineTraderStatus === 'onlineBuy'"
                   @click="submitPickOrdersToBuy"
                 >
-                  <!-- 提交 -->
+                  &lt;!&ndash; 提交 &ndash;&gt;
                   {{$t('M.otc_submit')}}
                 </el-button>
-                <!-- 在线出售提交 -->
+                &lt;!&ndash; 在线出售提交 &ndash;&gt;
                 <el-button
                   type="primary"
                   v-if="this.onlineTraderStatus === 'onlineSell'"
                   @click="submitPickOrdersToSell"
                 >
-                  <!-- 提交 -->
+                  &lt;!&ndash; 提交 &ndash;&gt;
                   {{$t('M.otc_submit')}}
-                </el-button>
+                </el-button>-->
+              <!--任2018129封装提交摘单买入和卖出方法-->
+              <el-button
+                type="primary"
+                @click="pickOrdersToBuyOrSell"
+              >
+                <!-- 提交 -->
+                {{$t('M.otc_submit')}}
+              </el-button>
+              <!--任2018129封装提交摘单买入和卖出方法-->
             </span>
           </el-dialog>
         </div>
@@ -547,7 +557,10 @@ export default {
           if (this.isNeedPayPassword) {
             this.pickOrderTradePwdDialogStatus = true
           } else {
-            this.submitPickOrdersToBuy()
+            // this.submitPickOrdersToBuy()
+            // 任2018129封装提交摘单买入和卖出方法
+            this.pickOrdersToBuyOrSell()
+            // 任2018129封装提交摘单买入和卖出方法
           }
           break
         // 在线卖
@@ -564,7 +577,10 @@ export default {
           if (this.isNeedPayPassword) {
             this.pickOrderTradePwdDialogStatus = true
           } else {
-            this.submitPickOrdersToSell()
+            // this.submitPickOrdersToSell()
+            // 任2018129封装提交摘单买入和卖出方法
+            this.pickOrdersToBuyOrSell()
+            // 任2018129封装提交摘单买入和卖出方法
           }
           break
       }
@@ -758,7 +774,6 @@ export default {
       } else {
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
         let detailData = getNestedData(data, 'data.data')
-        // this.name = getNestedData(detailData, 'name') // 最小交易量币种名字（单位）
         this.coinName = getNestedData(detailData, 'name') // 最小交易量币种名字（单位）
         this.pointLength = getNestedData(detailData, 'unit') // 每个币种返回的保留小数点位数限制
         if (this.onlineTraderStatus === 'onlineBuy') {
@@ -769,8 +784,51 @@ export default {
         }
       }
     },
+    // 任2018129封装提交摘单买入和卖出方法
+    async pickOrdersToBuyOrSell () {
+      if (this.isNeedPayPassword && !this.tradePassword) {
+        this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
+        return false
+      }
+      // 判断是卖出还是买入分别调用不同的接口和传入不同的参数
+      let data
+      // 卖
+      switch (this.onlineTraderStatus) {
+        case 'onlineSell':
+          data = await pickOrdersToSell({
+            entrustId: this.id, // 挂单id
+            sellCount: this.$refs.sellCount.value, // 卖出数量
+            tradePassword: this.tradePassword // 交易密码
+          })
+          console.log(this.onlineTraderStatus)
+          break
+        case 'onlineBuy':
+          data = await pickOrdersToBuy({
+            entrustId: this.id, // 挂单id
+            buyCount: this.$refs.buyCount.value, // 买入数量
+            tradePassword: this.tradePassword // 交易密码
+          })
+          console.log(this.onlineTraderStatus)
+          break
+      }
+      // 提示信息
+      if (!(returnAjaxMsg(data, this, 1))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
+        this.clearInput(this.onlineTraderStatus) // 清空数据
+        this.querySelectedOrdersDetails()
+        this.queryUserTradeFeeAndCoinInfo()
+        // 改变全局锚点状态
+        this.CHANGE_OTC_ANCHOR_STATUS(true)
+        // 跳转到首页的交易中订单区
+        this.$router.push({path: '/OTCCenter'})
+      }
+    },
+    // 任2018129封装提交摘单买入和卖出方法
     // 7.0 点击 确认购买 按钮提交数据
-    async submitPickOrdersToBuy () {
+    /* async submitPickOrdersToBuy () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
@@ -794,27 +852,41 @@ export default {
         // 跳转到首页的交易中订单区
         this.$router.push({path: '/OTCCenter'})
       }
-    },
+    }, */
     // 8交易密码框获得焦点事件
     tradePasswordFocus () {
       this.tradePasswordTips = ''
     },
     // 9清空数量和金额和交易密码
     clearInput (val) {
-      // 买
-      if (val === 'onlineBuy') {
-        this.$refs.buyCount.value = ''
-        this.$refs.buyPrice.value = ''
-      }
-      // 卖
-      if (val === 'onlineSell') {
-        this.$refs.sellCount.value = ''
-        this.$refs.sellPrice.value = ''
-      }
+      // // 买
+      // if (val === 'onlineBuy') {
+      //   this.$refs.buyCount.value = ''
+      //   this.$refs.buyPrice.value = ''
+      // }
+      // // 卖
+      // if (val === 'onlineSell') {
+      //   this.$refs.sellCount.value = ''
+      //   this.$refs.sellPrice.value = ''
+      // }
+      // this.tradePassword = ''
+      // switch 改写
       this.tradePassword = ''
-    },
+      switch (val) {
+        // 买
+        case 'onlineBuy':
+          this.$refs.buyCount.value = ''
+          this.$refs.buyPrice.value = ''
+          break
+        // 卖
+        case 'onlineSell':
+          this.$refs.sellCount.value = ''
+          this.$refs.sellPrice.value = ''
+          break
+      }
+    }
     // 10.0 点击 确认出售 按钮提交数据
-    async submitPickOrdersToSell () {
+    /* async submitPickOrdersToSell () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
@@ -837,7 +909,7 @@ export default {
         // 跳转到首页的交易中订单区
         this.$router.push({path: '/OTCCenter'})
       }
-    }
+    } */
   },
   filter: {},
   computed: {

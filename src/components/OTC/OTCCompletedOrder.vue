@@ -109,17 +109,11 @@
                     <p class="order-info-middle">
                       <!-- 买单显示：卖家手机号 -->
                       <span v-if="s.row.orderType === 'BUY'">
-                        {{$t('M.otc_trading_sellphone')}}：
-                      </span>
-                      <span v-if="s.row.orderType === 'BUY'">
-                        {{s.row.sellPhone}}
+                        {{$t('M.otc_trading_sellphone')}}：{{s.row.sellPhone}}
                       </span>
                       <!-- 卖单显示：买家手机号  -->
                       <span v-if="s.row.orderType === 'SELL'">
-                        {{$t('M.otc_trading_buyphone')}}：
-                      </span>
-                      <span v-if="s.row.orderType === 'SELL'">
-                        {{s.row.buyPhone}}
+                        {{$t('M.otc_trading_buyphone')}}：{{s.row.buyPhone}}
                       </span>
                     </p>
                   </div>
@@ -159,7 +153,10 @@
                       <span>{{s.row.confirmTime ? s.row.confirmTime : s.row.completeTime}}</span>
                     </p>
                     <!--原因-->
-                    <p class="order-info-right" v-show="s.row.appeal == 'YES'">
+                    <p
+                      class="order-info-right"
+                      v-show="s.row.appeal == 'YES'"
+                    >
                       <el-tooltip
                         effect="dark"
                         :content="s.row.handleSuggest"
