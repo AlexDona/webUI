@@ -8,6 +8,6 @@ export default {
     return xDomain !== ''
   },
   isNeedIOS () {
-    return xDomain !== 'kbbt.com'
+    return xDomain !== 'kbbt.com' && xDomain !== 'bithumber.com'
   }
 }
