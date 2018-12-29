@@ -312,6 +312,10 @@
                     {{ $t('M.trade_exchange_market_price') }}
                   </div>
                   <span class="currency">{{middleTopData.area}}</span>
+                  <span
+                    class="error-box"
+                    v-show="errorMsg.market.sell.count"
+                  >{{errorMsg.market.sell.count}}</span>
                 </div>
                 <!--卖出量-->
                 <div class="input">
@@ -480,9 +484,11 @@ export default {
         },
         market: {
           buy: {
+            count: '',
             amount: ''
           },
           sell: {
+            count: '',
             amount: ''
           }
         }
@@ -602,6 +608,7 @@ export default {
         // 市价买
         case 'market-buy':
           this.errorMsg.market.buy.amount = ''
+          this.errorMsg.market.buy.count = ''
           // this.marketExchange.buyCount = this.getRefValue(this.limitSellPriceInputRef)
           this.marketExchange.buyCount = this.getRefValue(this.marketBuyCountInputRef)
           console.log(this.marketExchange.buyCount)
@@ -609,6 +616,7 @@ export default {
         // 市价卖
         case 'market-sell':
           this.errorMsg.market.sell.amount = ''
+          this.errorMsg.market.sell.count = ''
           this.marketExchange.sellCount = this.getRefValue(this.marketSellCountInputRef)
           break
       }
@@ -698,8 +706,8 @@ export default {
               } else {
                 this.errorMsg.limit.sell.amount = ''
               }
-
-              if ((this.buyUserCoinWallet.total / this.middleTopData.last) < params.count - 0) {
+              console.log((this.sellUserCoinWallet.total), params.count)
+              if (this.sellUserCoinWallet.total < (params.count - 0)) {
                 // 可用币种数量不足
                 this.errorMsg.limit.sell.price = this.$t('M.trade_exchange_currency_available')
                 return false
@@ -707,6 +715,7 @@ export default {
               next = true
               break
             case 'MARKET':
+              console.log(1)
               params.count = this.$refs[this.marketSellCountInputRef].value
               this.marketExchange.sellCount = params.count
               if (!this.marketExchange.sellCount) {
@@ -715,10 +724,12 @@ export default {
               } else {
                 this.errorMsg.market.sell.amount = ''
               }
-              if ((this.buyUserCoinWallet.total / this.middleTopData.last) < params.count - 0) {
+              if (this.sellUserCoinWallet.total < (params.count - 0)) {
                 // 可用币种数量不足
                 this.errorMsg.market.sell.count = this.$t('M.trade_exchange_currency_available')
                 return false
+              } else {
+                this.errorMsg.market.sell.count = ''
               }
               next = true
               break
