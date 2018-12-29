@@ -18,20 +18,8 @@ export const getOTCPutUpOrders = (params) => get('otcEntrust/selectByParams', Ob
 export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrustsPage', Object.assign({
   'not-loading': true
 }, params))
-// 查询3天内用户otc各状态交易---otc订单中 交易中 的订单
-export const getOTCTradingOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
-  'not-loading': true
-}, params))
-// 查询3天内用户otc各状态交易---otc订单中 已完成 的订单
-export const getOTCCompletedOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
-  'not-loading': true
-}, params))
-// 查询3天内用户otc各状态交易---otc订单中 已取消 的订单
-export const getOTCCanceledOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
-  'not-loading': true
-}, params))
-// 查询3天内用户otc各状态交易---otc订单中 冻结中 的订单
-export const getOTCFrezzingOrders = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
+// 查询3天内用户otc各状态交易订单
+export const getOTCOrdersThreeDay = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
   'not-loading': true
 }, params))
 // 添加otc挂单(商家与普通用户都可用)
@@ -49,7 +37,9 @@ export const querySelectedOrdersRevocation = (params) => postWithURLencoded('otc
 // 查询otc挂单用户交易币种手续费率以及币种详情
 export const queryUserTradeFeeAndCoinInfo = (params) => get('otcCOin/getUserTradeFeeAndCoinInfo', params)
 // otc广告管理一键撤销用户所有挂单--商家专用
-export const cancelAllOrdersOnekey = (params) => postWithURLencoded('otcEntrust/cancelAllEntrusts', {params})
+export const cancelAllOrdersOnekey = (params) => postWithURLencoded('otcEntrust/cancelAllEntrusts', Object.assign({
+  'not-loading': true
+}, params))
 // otc交易中订单，otc买家确认付款
 export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', params)
 // otc交易中订单， otc卖家确认收款

@@ -14,9 +14,9 @@
         <!-- 交易左边 -->
         <div class="online-trader-left">
             <!-- 左上部分商家信息部分 -->
-            <div class="shoper-info">
+            <div class="shopper-info">
                 <!-- 商家名字 -->
-                <div class="shoper-name">
+                <div class="shopper-name">
                   <!-- 如果是商家用户就显示商家图标 -->
                   <img
                     src="../../assets/develop/shangjia.png"
@@ -29,7 +29,7 @@
                   </span>
                 </div>
                 <!-- 商家交易统计 -->
-                <div class="shoper-statistics">
+                <div class="shopper-statistics">
                   <!-- 成交次数 -->
                   <div class="trader-total">
                     <p class="blue">{{successTimes}}</p>
@@ -66,7 +66,7 @@
                   {{$t('M.otc_index_givePrice')}}：
                 </span>
                 <span class="details-data">
-                  {{price}}{{currencyName}}
+                  {{filterNumber(price)}}{{currencyName}}
                 </span>
               </div>
               <!-- 限额 -->
@@ -76,7 +76,7 @@
                   {{$t('M.otc_index_priceLimit')}}：
                 </span>
                 <span class="details-data">
-                  {{minCount}}~{{maxCount}}{{currencyName}}
+                  {{filterNumber(minCount)}}~{{filterNumber(maxCount)}}{{currencyName}}
                 </span>
               </div>
               <!-- 剩余数量 -->
@@ -86,7 +86,8 @@
                   {{$t('M.otc_index_reduceQuantity')}}：
                 </span>
                 <span class="details-data">
-                  {{remainingNum}}{{name}}
+                  <!--{{filterNumber(remainingNum)}}{{name}}-->
+                  {{filterNumber(remainingNum)}}{{coinName}}
                 </span>
               </div>
               <!-- 付款方式 -->
@@ -206,7 +207,8 @@
                         class="unit"
                         :class = "{ coinNameBorder: errorWarningBorder }"
                       >
-                        {{name}}
+                        <!--{{name}}-->
+                        {{coinName}}
                       </span>
                       <!-- 2.0 金额部分 -->
                       <!--出售-->
@@ -280,7 +282,8 @@
                   {{$t('M.comm_service_charge')}}：
                 </span>
                 <span class="service-data">
-                  {{serviceCharge}} {{name}}
+                  <!--{{serviceCharge}} {{name}}-->
+                  {{serviceCharge}} {{coinName}}
                 </span>
                 <!-- 费率 -->
                 <span>
@@ -297,7 +300,8 @@
                   {{$t('M.comm_service_charge')}}：
                 </span>
                 <span class="service-data-sell">
-                  {{serviceCharge}} {{name}}
+                  <!--{{serviceCharge}} {{name}}-->
+                  {{serviceCharge}} {{coinName}}
                 </span>
                 <!-- 费率 -->
                 <span>
@@ -394,7 +398,8 @@ import {
   timeFilter,
   formatNumberInput,
   amendPrecision,
-  cutOutPointLength
+  cutOutPointLength,
+  scientificToNumber
 } from '../../utils'
 import {
   pickOrdersToBuy,
@@ -439,7 +444,8 @@ export default {
       // 付款期限
       payTerm: '',
       // 币种名字（单位）
-      name: '',
+      // name: '',
+      coinName: '',
       // 费率
       rate: '',
       // 手续费
@@ -450,13 +456,20 @@ export default {
       maxCount: '',
       // 单笔最小限额
       minCount: '',
-      labelPosition: 'top', //  表单label放置的位置
-      onlineTraderStatus: '', //  在线买卖的类型状态 购买（onlineBuy）和 出售（onlineSell)
-      sellCount: '', // 出售数量
-      buyCount: '', // 购买数量
-      sellPrice: '', // 出售金额
-      buyPrice: '', // 购买金额
-      tradePassword: '', // 交易密码
+      //  表单label放置的位置
+      labelPosition: 'top',
+      //  在线买卖的类型状态 购买（onlineBuy）和 出售（onlineSell)
+      onlineTraderStatus: '',
+      // 出售数量
+      sellCount: '',
+      // 购买数量
+      buyCount: '',
+      // 出售金额
+      sellPrice: '',
+      // 购买金额
+      buyPrice: '',
+      // 交易密码
+      tradePassword: '',
       // 往后台传送的参数 挂单id（otc首页挂单列表中每行的币种id）
       id: '',
       // 商户币种id
@@ -498,6 +511,10 @@ export default {
       // 改变全局锚点状态方法
       'CHANGE_OTC_ANCHOR_STATUS'
     ]),
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
+    },
     // 0.0 充币按钮跳转
     chargeMoney () {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'assets')
@@ -564,13 +581,10 @@ export default {
       if (this.onlineTraderStatus === 'onlineBuy') {
         if (this.$refs.buyCount.value) {
           this.$refs.buyPrice.value = this.$refs.buyCount.value * this.price
-          // this.$refs.buyPrice.value = Number(this.$refs.buyPrice.value).toFixed(2)
           // 修复截取小数点后几位
           this.$refs.buyPrice.value = cutOutPointLength(this.$refs.buyPrice.value, 2)
           // 手续费
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
-          // this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
-          // this.serviceCharge = parseFloat(this.serviceCharge) // 去掉数字后面多余的0
           // 修复截取小数点后几位
           this.serviceCharge = cutOutPointLength(this.serviceCharge, this.pointLength)
           if (this.$refs.buyCount.value * this.price < this.minCount) {
@@ -605,13 +619,10 @@ export default {
       if (this.onlineTraderStatus === 'onlineSell') {
         if (this.$refs.sellCount.value) {
           this.$refs.sellPrice.value = this.$refs.sellCount.value * this.price
-          // this.$refs.sellPrice.value = Number(this.$refs.sellPrice.value).toFixed(2)
           // 修复截取小数点后几位
           this.$refs.sellPrice.value = cutOutPointLength(this.$refs.sellPrice.value, 2)
           // 手续费
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
-          // this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
-          // this.serviceCharge = parseFloat(this.serviceCharge) // 去掉数字后面多余的0
           // 修复截取小数点后几位
           this.serviceCharge = cutOutPointLength(this.serviceCharge, this.pointLength)
           if (this.$refs.sellCount.value * this.price < this.minCount) {
@@ -650,13 +661,10 @@ export default {
       if (this.onlineTraderStatus === 'onlineBuy') {
         if (this.$refs.buyPrice.value) {
           this.$refs.buyCount.value = this.$refs.buyPrice.value / this.price
-          // this.$refs.buyCount.value = Number(this.$refs.buyCount.value).toFixed(this.pointLength)
           // 修复截取小数点后几位
           this.$refs.buyCount.value = cutOutPointLength(this.$refs.buyCount.value, this.pointLength)
           // 手续费
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
-          // this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
-          // this.serviceCharge = parseFloat(this.serviceCharge) // 去掉后面多余的0
           // 修复截取小数点后几位
           this.serviceCharge = cutOutPointLength(this.serviceCharge, this.pointLength)
           if (this.$refs.buyPrice.value < this.minCount) {
@@ -681,13 +689,10 @@ export default {
       if (this.onlineTraderStatus === 'onlineSell') {
         if (this.$refs.sellPrice.value) {
           this.$refs.sellCount.value = this.$refs.sellPrice.value / this.price
-          // this.$refs.sellCount.value = Number(this.$refs.sellCount.value).toFixed(this.pointLength)
           // 修复截取小数点后几位
           this.$refs.sellCount.value = cutOutPointLength(this.$refs.sellCount.value, this.pointLength)
           // 手续费
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
-          // this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
-          // this.serviceCharge = parseFloat(this.serviceCharge) // 去掉数字后面多余的0
           // 修复截取小数点后几位
           this.serviceCharge = cutOutPointLength(this.serviceCharge, this.pointLength)
           if (this.$refs.sellPrice.value < this.minCount) {
@@ -713,7 +718,8 @@ export default {
     // 5.0 查询otc挂单详情-商家和普通用户通用
     async querySelectedOrdersDetails () {
       const data = await querySelectedOrdersDetails({
-        entrustId: this.id // 挂单id
+        // 挂单id
+        entrustId: this.id
       })
       // console.log('otc挂单详情')
       // console.log(data)
@@ -752,7 +758,8 @@ export default {
       } else {
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
         let detailData = getNestedData(data, 'data.data')
-        this.name = getNestedData(detailData, 'name') // 最小交易量币种名字（单位）
+        // this.name = getNestedData(detailData, 'name') // 最小交易量币种名字（单位）
+        this.coinName = getNestedData(detailData, 'name') // 最小交易量币种名字（单位）
         this.pointLength = getNestedData(detailData, 'unit') // 每个币种返回的保留小数点位数限制
         if (this.onlineTraderStatus === 'onlineBuy') {
           this.rate = getNestedData(detailData, 'buyRate') // 费率
@@ -861,14 +868,14 @@ export default {
       > .online-trader-left {
         flex: 3;
 
-        > .shoper-info {
+        > .shopper-info {
           box-sizing: border-box;
           width: 320px;
           height: 180px;
           padding: 40px 35px 0;
           border-radius: 5px;
 
-          > .shoper-name {
+          > .shopper-name {
             height: 20px;
             line-height: 20px;
 
@@ -886,7 +893,7 @@ export default {
             }
           }
 
-          > .shoper-statistics {
+          > .shopper-statistics {
             display: flex;
             flex: 3;
             margin-top: 40px;
@@ -1164,16 +1171,16 @@ export default {
     > .online-trader-buy-sell-content {
       > .online-trader {
         > .online-trader-left {
-          > .shoper-info {
+          > .shopper-info {
             background-color: #1c1f32;
 
-            > .shoper-name {
+            > .shopper-name {
               > .name {
                 color: #fff;
               }
             }
 
-            > .shoper-statistics {
+            > .shopper-statistics {
               .blue {
                 color: #3e79d6;
               }
@@ -1353,14 +1360,14 @@ export default {
     > .online-trader-buy-sell-content {
       > .online-trader {
         > .online-trader-left {
-          > .shoper-info {
-            > .shoper-name {
+          > .shopper-info {
+            > .shopper-name {
               > .name {
                 color: #333;
               }
             }
 
-            > .shoper-statistics {
+            > .shopper-statistics {
               .blue {
                 color: #3e79d6;
               }

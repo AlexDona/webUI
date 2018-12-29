@@ -314,13 +314,18 @@ export default {
   },
   data () {
     return {
-      loading: true, // loading加载
-      height: '', // 广告管理内容的高度
+      // loading加载
+      loading: true,
+      // 广告管理内容的高度
+      height: '',
       // 分页
-      currentPage: 1, // 当前页码
-      totalPages: 1, // 总页数
+      // 当前页码
+      currentPage: 1,
+      // 总页数
+      totalPages: 1,
       // 1.0 广告管理筛选下拉框数组--交易类型
-      activitedADManageTraderStyleList: '', // 选中的筛选项
+      // 选中的筛选项
+      activitedADManageTraderStyleList: '',
       ADManageTraderStyleList: [
         {
           value: 'BUY',
@@ -369,13 +374,10 @@ export default {
     // 3.0 获取otc广告管理列表
     this.getOTCADManageList()
   },
-  mounted () {
-  },
+  mounted () {},
   activated () {},
-  update () {
-  },
-  beforeRouteUpdate () {
-  },
+  update () {},
+  beforeRouteUpdate () {},
   methods: {
     // 科学计数法转换
     filterNumber (num) {

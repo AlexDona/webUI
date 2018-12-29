@@ -62,14 +62,9 @@
           class="content font-size18"
         >
           <!-- 币种总资产 -->
-          <span>{{total}}</span>
-          <span>{{activitedTraderCoinName}}</span>
-          <span v-if="totalAssets">≈</span>
+          <span>{{filterNumber(total)}}&nbsp;{{activitedTraderCoinName}}</span>
           <!-- 法币总资产 -->
-          <span v-if="totalAssets">{{totalAssets}}</span>
-          <span v-if="totalAssets">
-            {{activitedtraderCurrencyCoinsName}}
-          </span>
+          <span v-show="totalAssets">≈&nbsp;{{filterNumber(totalAssets)}}&nbsp;{{activitedtraderCurrencyCoinsName}}</span>
         </div>
       </div>
       <!-- 2.4 购买和销售 -->
@@ -491,8 +486,10 @@ export default {
     return {
       // 分页
       pageSize: 10,
-      currentPage: 1, // 当前页码
-      totalPages: 1, // 总页数
+      // 当前页码
+      currentPage: 1,
+      // 总页数
+      totalPages: 1,
       // 1.0 广告管理筛选下拉框数组--交易币种
       traderCoinList: [],
       activitedTraderCoinId: '', // 选中的交易币种id
@@ -501,21 +498,34 @@ export default {
       traderCurrencyCoinsList: [],
       activitedtraderCurrencyCoinsId: '', // 选中的交易法币id
       activitedtraderCurrencyCoinsName: '', // 选中的交易法币name
-      startTimeValue: '', // 默认开始时间
-      endTimeValue: '', // 默认结束时间
-      activedRadioId: '', // 单选按钮时间
-      totalAssets: '', // 法币总资产
-      total: '', // 币种总资产
+      // 默认开始时间
+      startTimeValue: '',
+      // 默认结束时间
+      endTimeValue: '',
+      // 单选按钮时间
+      activedRadioId: '',
+      // 法币总资产
+      totalAssets: '',
+      // 币种总资产
+      total: '',
       // 订单详情
       orderInfoList: [],
-      buyDayMap: {}, // 购买当日交易
-      buyHistoryMap: {}, // 购买历史交易
-      buyMonthMap: {}, // 购买当月交易
-      buyWeekMap: {}, // 购买本周交易
-      sellDayMap: {}, // 出售当日交易
-      sellHistoryMap: {}, // 出售历史交易
-      sellMonthMap: {}, // 出售本月交易
-      sellWeekMap: {} // 出售本周交易
+      // 购买当日交易
+      buyDayMap: {},
+      // 购买历史交易
+      buyHistoryMap: {},
+      // 购买当月交易
+      buyMonthMap: {},
+      // 购买本周交易
+      buyWeekMap: {},
+      // 出售当日交易
+      sellDayMap: {},
+      // 出售历史交易
+      sellHistoryMap: {},
+      // 出售本月交易
+      sellMonthMap: {},
+      // 出售本周交易
+      sellWeekMap: {}
     }
   },
   async created () {
@@ -528,8 +538,7 @@ export default {
     // 报表统计主页
     this.getOTCReportFormStatistics()
   },
-  mounted () {
-  },
+  mounted () {},
   activated () {},
   update () {},
   beforeRouteUpdate () {},
@@ -562,10 +571,8 @@ export default {
         // 返回数据正确的逻辑
         this.traderCoinList = getNestedData(data, 'data.data')
         // 设置币种默认选中值
-        // this.activitedTraderCoinId = this.traderCoinList[0].coinId
         this.activitedTraderCoinId = getNestedData(this.traderCoinList[0], 'coinId')
         // 设置币种默认选中值的名称
-        // this.activitedTraderCoinName = this.traderCoinList[0].name
         this.activitedTraderCoinName = getNestedData(this.traderCoinList[0], 'name')
       }
     },
@@ -594,10 +601,8 @@ export default {
         // 返回数据正确的逻辑 将币种列表赋值
         this.traderCurrencyCoinsList = getNestedData(data, 'data.data')
         // 设置法币默认选中值
-        // this.activitedtraderCurrencyCoinsId = this.traderCurrencyCoinsList[0].id
         this.activitedtraderCurrencyCoinsId = getNestedData(this.traderCurrencyCoinsList[0], 'id')
         // 设置法币默认选中值的name
-        // this.activitedtraderCurrencyCoinsName = this.traderCurrencyCoinsList[0].shortName
         this.activitedtraderCurrencyCoinsName = getNestedData(this.traderCurrencyCoinsList[0], 'shortName')
       }
     },
@@ -669,34 +674,24 @@ export default {
       } else {
         let getData = getNestedData(data, 'data.data')
         // 法币总资产
-        // this.totalAssets = getData.totalAssets
         this.totalAssets = getNestedData(getData, 'totalAssets')
         // 币种总资产
-        // this.total = getData.total
         this.total = getNestedData(getData, 'total')
         // 当天交易
-        // this.buyDayMap = getData.buyDayMap
         this.buyDayMap = getNestedData(getData, 'buyDayMap')
         // 购买历史交易赋值
-        // this.buyHistoryMap = getData.buyHistoryMap
         this.buyHistoryMap = getNestedData(getData, 'buyHistoryMap')
         // 购买本月赋值
-        // this.buyMonthMap = getData.buyMonthMap
         this.buyMonthMap = getNestedData(getData, 'buyMonthMap')
         // 购买本周赋值
-        // this.buyWeekMap = getData.buyWeekMap
         this.buyWeekMap = getNestedData(getData, 'buyWeekMap')
         // 出售当天赋值
-        // this.sellDayMap = getData.sellDayMap
         this.sellDayMap = getNestedData(getData, 'sellDayMap')
         // 出售历史赋值
-        // this.sellHistoryMap = getData.sellHistoryMap
         this.sellHistoryMap = getNestedData(getData, 'sellHistoryMap')
         // 出售当月赋值
-        // this.sellMonthMap = getData.sellMonthMap
         this.sellMonthMap = getNestedData(getData, 'sellMonthMap')
         // 出售本周赋值
-        // this.sellWeekMap = getData.sellWeekMap
         this.sellWeekMap = getNestedData(getData, 'sellWeekMap')
       }
     },
@@ -725,10 +720,8 @@ export default {
       } else {
         // 返回数据正确的逻辑 重新渲染列表
         let ordersRevocationData = getNestedData(data, 'data.data')
-        // this.orderInfoList = ordersRevocationData.list
         this.orderInfoList = getNestedData(ordersRevocationData, 'list')
         // 分页
-        // this.totalPages = ordersRevocationData.pages - 0
         this.totalPages = getNestedData(ordersRevocationData, 'pages') - 0
       }
     }

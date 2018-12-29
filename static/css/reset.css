@@ -621,3 +621,44 @@ body.day {
 .slider-pagination-bullets {
   bottom: -2px !important;
 }
+
+/* 20181228任增加文本域字体大小改为12px,颜色按照设置图黑白切换改写 */
+.night textarea::-webkit-input-placeholder {
+  font-size: 12px;
+  color: #a9bed4;
+}
+
+.night textarea:-moz-placeholder {
+  font-size: 12px;
+  color: #a9bed4;
+}
+
+.night textarea::-moz-placeholder {
+  font-size: 12px;
+  color: #a9bed4;
+}
+
+.night textarea:-ms-input-placeholder {
+  font-size: 12px;
+  color: #a9bed4;
+}
+
+.day textarea::-webkit-input-placeholder {
+  font-size: 12px;
+  color: #7d90ac;
+}
+
+.day textarea:-moz-placeholder {
+  font-size: 12px;
+  color: #7d90ac;
+}
+
+.day textarea::-moz-placeholder {
+  font-size: 12px;
+  color: #7d90ac;
+}
+
+.day textarea:-ms-input-placeholder {
+  font-size: 12px;
+  color: #7d90ac;
+}

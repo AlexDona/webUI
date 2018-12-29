@@ -136,7 +136,6 @@
 import {timeFilter, scientificToNumber} from '../../utils'
 import {getOTCEntrustingOrders, querySelectedOrdersRevocation} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
-// import {mapState} from 'vuex'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
@@ -144,12 +143,17 @@ export default {
   // props,
   data () {
     return {
-      loading: true, // loading加载
+      // loading加载
+      loading: true,
       // 分页
-      pageSize: 10, // 每页展示的条数
-      currentPage: 1, // 当前页码
-      totalPages: 1, // 总页数
-      OTCEntrustOrderList: [] // OTC委托订单列表
+      // 每页展示的条数
+      pageSize: 10,
+      // 当前页码
+      currentPage: 1,
+      // 总页数
+      totalPages: 1,
+      // OTC委托订单列表
+      OTCEntrustOrderList: []
     }
   },
   created () {
@@ -158,13 +162,10 @@ export default {
       this.getOTCEntrustingOrdersList()
     }
   },
-  mounted () {
-  },
+  mounted () {},
   activated () {},
-  update () {
-  },
-  beforeRouteUpdate () {
-  },
+  update () {},
+  beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'UPDATE_OTC_HOME_LIST_STATUS'
@@ -208,9 +209,10 @@ export default {
     // 4.0 点击撤单按钮
     revocationOrder (id) {
       // 二次确认弹出框
-      this.$confirm(this.$t('M.otc_revoke'), { // 确定撤销委托单
-        cancelButtonText: this.$t('M.comm_cancel'), // 取消
-        confirmButtonText: this.$t('M.comm_confirm') // 确定
+      // 确定撤销委托单  // 取消   // 确定
+      this.$confirm(this.$t('M.otc_revoke'), {
+        cancelButtonText: this.$t('M.comm_cancel'),
+        confirmButtonText: this.$t('M.comm_confirm')
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
       }).catch(() => {})
@@ -353,7 +355,6 @@ export default {
     }
 
     .page {
-      /* padding: 10px 0; */
       text-align: center;
     }
 

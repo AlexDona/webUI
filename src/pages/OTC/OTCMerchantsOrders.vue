@@ -301,6 +301,7 @@
             <!-- 对方姓名 -->
             <el-table-column
               :label = "$t('M.otc_name_other')"
+              width="96"
             >
               <template slot-scope = "s">
                 <div>{{s.row.otherName}}</div>
@@ -351,14 +352,20 @@ export default {
   },
   data () {
     return {
-      loading: true, // loading加载
-      height: '', // 商家订单内容的高度
+      // loading加载
+      loading: true,
+      // 商家订单内容的高度
+      height: '',
       // 分页
-      pageSize: 10, // 每页显示的条数
-      currentPage: 1, // 当前页码
-      totalPages: 1, // 总页数
+      // 每页显示的条数
+      pageSize: 10,
+      // 当前页码
+      currentPage: 1,
+      // 总页数
+      totalPages: 1,
       // 1.0 商家订单筛选下拉框数组--交易类型
-      activitedMerchantsOrdersTraderStyleList: '', // 选中的筛选项
+      // 选中的筛选项
+      activitedMerchantsOrdersTraderStyleList: '',
       merchantsOrdersTraderStyleList: [
         {
           value: 'BUY',
@@ -376,7 +383,8 @@ export default {
       activitedMerchantsOrdersCurrency: '',
       merchantsOrdersCurrencyList: [],
       // 2.0 商家订单筛选下拉框数组--状态
-      activitedMerchantsOrdersStatusList: '', // 选中的筛选项
+      // 选中的筛选项
+      activitedMerchantsOrdersStatusList: '',
       merchantsOrdersStatusList: [
         // 已付款
         {
@@ -404,9 +412,12 @@ export default {
           label: 'M.otc_enum_status_yidongjie'
         }
       ],
-      startTimeValue: '', // 默认开始时间
-      endTimeValue: '', // 默认结束时间
-      merchantsOrdersList: [] // 商家订单列表
+      // 默认开始时间
+      startTimeValue: '',
+      // 默认结束时间
+      endTimeValue: '',
+      // 商家订单列表
+      merchantsOrdersList: []
     }
   },
   created () {

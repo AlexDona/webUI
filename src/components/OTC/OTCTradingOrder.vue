@@ -67,8 +67,8 @@
                   <span>
                     {{$t('M.otc_index_UnitPrice')}}：{{item.price}}
                   </span>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <!-- 数量 -->
+                  &nbsp;&nbsp;
                   <span>
                     {{$t('M.comm_count')}}：{{item.pickCount}}
                   </span>
@@ -633,7 +633,7 @@
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">{{errpwd}}</div>
+            <div class="tips">{{errPWD}}</div>
           </div>
           <span
             slot="footer"
@@ -671,7 +671,7 @@
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">{{errpwd}}</div>
+            <div class="tips">{{errPWD}}</div>
           </div>
           <span
             slot="footer"
@@ -710,7 +710,7 @@
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">{{errpwd}}</div>
+            <div class="tips">{{errPWD}}</div>
           </div>
           <span
             slot="footer"
@@ -742,7 +742,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {
-  getOTCTradingOrders,
+  getOTCOrdersThreeDay,
   buyerPayForOrder,
   sellerConfirmGetMoney,
   sellerSendAppeal,
@@ -794,7 +794,7 @@ export default {
       showOrderAppeal: [], // 订单申诉框显示与隐藏状态集
       cancelOrderTimeArr: [], // 自动取消订单倒计时数组集
       accomplishOrderTimeArr: [], // 自动成交倒计时数组集
-      errpwd: '', // 交易密码错提示
+      errPWD: '', // 交易密码错提示
       cancelOrdersTimer: null, // 自动取消订单倒计时
       accomplishOrdersTimer: null, // 自动成交倒计时
       pageSize: 5, // ，每页显示几条数据
@@ -883,7 +883,7 @@ export default {
       this.cancelOrderTimeArr = []
       this.accomplishOrderTimeArr = []
       console.log('当前页：' + this.currentPage)
-      const data = await getOTCTradingOrders({
+      const data = await getOTCOrdersThreeDay({
         status: 'TRADING', // 状态 (交易中 TRADING )
         pageNum: this.currentPage,
         pageSize: this.pageSize
@@ -989,13 +989,13 @@ export default {
     },
     // 5.0 买家点击确认付款按钮 点击交易密码框中的提交按钮--交易密码狂获得焦点
     passWordFocus () {
-      this.errpwd = ''
+      this.errPWD = ''
     },
     // 7.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
     async submitConfirmPayment () {
       if (this.isNeedPayPassowrd && !this.tradePassword) {
         // '请输入交易密码'
-        this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
+        this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       } else {
         this.loading = true
@@ -1013,7 +1013,7 @@ export default {
         } else {
           this.loading = false
           this.dialogVisibleConfirmPayment = false
-          this.errpwd = ''
+          this.errPWD = ''
           this.tradePassword = ''
           // 2再次调用接口刷新列表
           this.getOTCTradingOrdersList()
@@ -1034,7 +1034,7 @@ export default {
     // 9.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
     async submitConfirmGathering () {
       if (this.isNeedPayPassowrd && !this.tradePassword) {
-        this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
+        this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
       this.loading = true
@@ -1052,7 +1052,7 @@ export default {
       } else {
         this.loading = false
         this.dialogVisibleConfirmReceipt = false
-        this.errpwd = ''
+        this.errPWD = ''
         this.tradePassword = ''
         this.getOTCTradingOrdersList()
       }
@@ -1091,7 +1091,7 @@ export default {
     async sellerSubmitAppeal () {
       if (this.isNeedPayPassowrd && !this.tradePassword) {
         // 请输入交易密码
-        this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
+        this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
       this.loading = true
@@ -1109,7 +1109,7 @@ export default {
       } else {
         this.loading = false
         this.dialogVisibleSubmitComplaint = false
-        this.errpwd = '' // 清空密码错提示
+        this.errPWD = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框
         this.appealTextareaValue = '' // 清空申诉原因
         // 再次调用接口刷新列表
