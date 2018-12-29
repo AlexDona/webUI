@@ -158,7 +158,7 @@ export default {
           this.termsTypeIds = 5
           break
         // 交易须知
-        case 'TradingWraning':
+        case 'TradingWarning':
           this.termsTypeIds = 14
           break
       }
