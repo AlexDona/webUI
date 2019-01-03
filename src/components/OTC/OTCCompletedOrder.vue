@@ -109,17 +109,11 @@
                     <p class="order-info-middle">
                       <!-- 买单显示：卖家手机号 -->
                       <span v-if="s.row.orderType === 'BUY'">
-                        {{$t('M.otc_trading_sellphone')}}：
-                      </span>
-                      <span v-if="s.row.orderType === 'BUY'">
-                        {{s.row.sellPhone}}
+                        {{$t('M.otc_trading_sellphone')}}：{{s.row.sellPhone}}
                       </span>
                       <!-- 卖单显示：买家手机号  -->
                       <span v-if="s.row.orderType === 'SELL'">
-                        {{$t('M.otc_trading_buyphone')}}：
-                      </span>
-                      <span v-if="s.row.orderType === 'SELL'">
-                        {{s.row.buyPhone}}
+                        {{$t('M.otc_trading_buyphone')}}：{{s.row.buyPhone}}
                       </span>
                     </p>
                   </div>
@@ -159,7 +153,10 @@
                       <span>{{s.row.confirmTime ? s.row.confirmTime : s.row.completeTime}}</span>
                     </p>
                     <!--原因-->
-                    <p class="order-info-right" v-show="s.row.appeal == 'YES'">
+                    <p
+                      class="order-info-right"
+                      v-show="s.row.appeal == 'YES'"
+                    >
                       <el-tooltip
                         effect="dark"
                         :content="s.row.handleSuggest"
@@ -266,19 +263,24 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter, scientificToNumber} from '../../utils'
-import {getOTCCompletedOrders} from '../../utils/api/OTC'
+import {getOTCOrdersThreeDay} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
   data () {
     return {
-      loading: true, // loading
+      // loading
+      loading: true,
       // 分页
-      pageSize: 5, // 每页展示的条数
-      currentPage: 1, // 当前页码
-      totalPages: 1, // 总页数
-      completedOrdersList: [] // 完成订单列表
+      // 每页展示的条数
+      pageSize: 5,
+      // 当前页码
+      currentPage: 1,
+      // 总页数
+      totalPages: 1,
+      // 完成订单列表
+      completedOrdersList: []
     }
   },
   created () {
@@ -308,7 +310,7 @@ export default {
     // 2.0 请求已完成订单列表
     async getOTCCompletedOrdersList () {
       this.loading = true
-      const data = await getOTCCompletedOrders({
+      const data = await getOTCOrdersThreeDay({
         status: 'COMPLETED', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         pageNum: this.currentPage,
         pageSize: this.pageSize
@@ -323,6 +325,7 @@ export default {
         // 返回数据正确的逻辑
         this.loading = false
         let completedOrdersListData = getNestedData(data, 'data.data')
+        // 完成订单列表
         this.completedOrdersList = getNestedData(completedOrdersListData, 'list')
         // 分页
         this.totalPages = getNestedData(completedOrdersListData, 'pages') - 0
@@ -345,7 +348,6 @@ export default {
 .otc-completed-order-box {
   > .completed-order-content {
     .page {
-      /* padding: 10px 0; */
       text-align: center;
     }
 
@@ -376,7 +378,7 @@ export default {
         > .order-info-right {
           margin-left: 50px;
           line-height: 20px;
-          // 任付伟增加原因字段样式
+          // 增加原因字段样式
           .reason-content {
             display: inline-block;
             width: 250px;

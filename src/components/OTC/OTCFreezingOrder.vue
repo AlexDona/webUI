@@ -159,7 +159,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter, scientificToNumber} from '../../utils'
-import {getOTCFrezzingOrders} from '../../utils/api/OTC'
+import {getOTCOrdersThreeDay} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
@@ -167,18 +167,23 @@ export default {
   // props,
   data () {
     return {
-      loading: true, // loading 加载
+      // loading 加载
+      loading: true,
       // 分页
-      pageSize: 5, // 每页展示的条数
-      currentPage: 1, // 当前页码
-      totalPages: 1, // 总页数
-      otcFreezingOrderList: [] // OTC冻结订单列表
+      // 每页展示的条数
+      pageSize: 5,
+      // 当前页码
+      currentPage: 1,
+      // 总页数
+      totalPages: 1,
+      // OTC冻结订单列表
+      otcFreezingOrderList: []
     }
   },
   created () {
     // 1.0 请求冻结中订单列表:只有登录了才调用
     if (this.isLogin) {
-      this.getOTCFrezzingOrdersList()
+      this.getOTCFreezingOrdersList()
     }
   },
   mounted () {},
@@ -193,22 +198,22 @@ export default {
     // 1.0 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
-      this.getOTCFrezzingOrdersList()
+      this.getOTCFreezingOrdersList()
     },
     // 2.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
     // 3.0 请求冻结中订单列表
-    async getOTCFrezzingOrdersList () {
+    async getOTCFreezingOrdersList () {
       this.loading = true
-      const data = await getOTCFrezzingOrders({
+      const data = await getOTCOrdersThreeDay({
         status: 'FROZEN', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      // console.log('冻结中订单')
-      // console.log(data)
+      console.log('冻结中订单')
+      console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
         this.loading = false
@@ -226,8 +231,10 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme, // 主题
-      isLogin: state => state.user.isLogin // 是否登录
+      // 主题
+      theme: state => state.common.theme,
+      // 是否登录
+      isLogin: state => state.user.isLogin
     })
   },
   watch: {}
@@ -239,8 +246,6 @@ export default {
 
   .otc-freezing-order-box {
     > .freezing-order-content {
-      /* min-height: 472px; */
-
       > .freezing-table-head {
         box-sizing: border-box;
         width: 1043px;
@@ -331,7 +336,6 @@ export default {
     }
 
     .page {
-      /* padding-bottom: 20px; */
       text-align: center;
     }
 

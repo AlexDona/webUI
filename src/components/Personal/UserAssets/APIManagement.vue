@@ -219,6 +219,7 @@
                 class="send-code-btn cursor-pointer"
                 :status="disabledOfPhoneBtn"
                 @run="sendPhoneOrEmailCode(0)"
+                v-if="APIMoneyConfirm"
               />
             </el-form-item>
             <!--手机未认证-->
@@ -239,6 +240,7 @@
                 class="send-code-btn cursor-pointer"
                 :status="disabledOfEmailBtn"
                 @run="sendPhoneOrEmailCode(1)"
+                v-if="APIMoneyConfirm"
               />
             </el-form-item>
             <!--邮箱未认证-->
@@ -492,8 +494,6 @@ export default {
     }
   },
   created () {
-    // this.getSecurityCenter()
-    // this.stateEmptyData()
     this.getMultipleUserAPIInfo()
   },
   mounted () {},
@@ -512,8 +512,8 @@ export default {
     async getMultipleUserAPIInfo () {
       this.partLoading = true
       let data = await multipleUserAPIInfo({})
-      console.log('获取多个用户api信息')
-      console.log(data)
+      // console.log('获取多个用户api信息')
+      // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除局部loading
         this.partLoading = false
@@ -540,7 +540,6 @@ export default {
         this.createErrorMsg = this.$t('M.user_re_input_ip')
         return false
       } else {
-        // this.createErrorMsg = ''
         // 调用安全方式接口
         this.getSecurityCenter()
         // 赋值创建IP修改时的带回
@@ -618,7 +617,7 @@ export default {
       })
       // 整页loading
       this.fullscreenLoading = true
-      console.log(data)
+      // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
@@ -653,7 +652,7 @@ export default {
       })
       // 整页loading
       this.fullscreenLoading = true
-      console.log(data)
+      // console.log(data)
       if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
@@ -662,7 +661,7 @@ export default {
         // 接口成功清除loading
         this.fullscreenLoading = false
         // 返回展示
-        console.log(data)
+        // console.log(data)
         // 默认创建之后弹出二次挨批创建信息框 关闭
         // this.apiSecondaryConfirmation = false
         // 调用查询接口重新渲染
@@ -726,7 +725,7 @@ export default {
         })
         // 整页loading
         this.fullscreenLoading = true
-        console.log(data)
+        // console.log(data)
         if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
@@ -767,7 +766,7 @@ export default {
       })
       // 整页loading
       this.fullscreenLoading = true
-      console.log(data)
+      // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false

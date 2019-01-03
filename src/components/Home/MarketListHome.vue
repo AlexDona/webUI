@@ -181,6 +181,7 @@ export default{
     if (this.language) {
       await this.getHomeMarketByAjax()
     }
+    this.changeIsShowStatus()
   },
   mounted () {
   },
@@ -351,12 +352,22 @@ export default{
       this.socket.send({
         'tag': type,
         'content': `market.${params}.ticker`,
-        'id': `market_002`
+        'id': 'pc'
       })
     },
     // 切换板块
-    changeTab () {
+    changeTab (e) {
+      console.log(e.name)
       this.searchFromMarketList()
+      console.log(this.newMarketList)
+      this.changeIsShowStatus()
+    },
+    // 是否显示查看更多按钮
+    changeIsShowStatus () {
+      let activeMarketList = this.newMarketList.filter(item => item.plateId == this.activeName)[0]
+      let targetList = getNestedData(activeMarketList, 'tradeAreaList') || []
+      console.log(targetList)
+      this.moreBtnShowStatus = targetList.length > 2 ? 1 : 0
     },
     // market过滤
     getFilterMarketList () {

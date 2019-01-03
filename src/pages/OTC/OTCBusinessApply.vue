@@ -289,15 +289,19 @@ export default {
     downloadApplicationForm () {
       // console.log(this.downLoadUrl)
       // console.log(this.fileName)
-      fetch(this.downLoadUrl).then(res => res.blob().then(blob => {
-        let a = document.createElement('a')
-        let url = window.URL.createObjectURL(blob)
-        let filename = this.fileName
-        a.href = url
-        a.download = filename
-        a.click()
-        window.URL.revokeObjectURL(url)
-      }))
+      if (this.downLoadUrl) {
+        fetch(this.downLoadUrl).then(res => res.blob().then(blob => {
+          let a = document.createElement('a')
+          let url = window.URL.createObjectURL(blob)
+          let filename = this.fileName
+          a.href = url
+          a.download = filename
+          a.click()
+          window.URL.revokeObjectURL(url)
+        }))
+      } else {
+        return false
+      }
     },
     // 点击申请商家用户按钮发送请求
     submit () {

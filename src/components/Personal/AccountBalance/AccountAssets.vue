@@ -254,6 +254,7 @@
                       class="send-code-btn cursor-pointer"
                       :status="disabledOfPhoneBtn"
                       @run="sendPhoneOrEmailCode(0)"
+                      v-if="isShowWithdrowDialog"
                     />
                   </el-form-item>
                   <!--手机未认证-->
@@ -278,6 +279,7 @@
                       class="send-code-btn cursor-pointer"
                       :status="disabledOfEmailBtn"
                       @run="sendPhoneOrEmailCode(1)"
+                      v-if="isShowWithdrowDialog"
                     />
                   </el-form-item>
                   <!--邮箱未认证-->
@@ -627,18 +629,16 @@ export default {
       // this[ref] = this.$refs[ref].value
       // 获取输入数量
       // this.withdrawCountVModel = this.$refs.withdrawCount[index].value
-      console.log(this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value)
+      // console.log(this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value)
       this.withdrawCountVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value
       // console.log(this.withdrawCountVModel)
-      console.log(this.withdrawDepositList[index].total)
+      // console.log(this.withdrawDepositList[index].total)
       if (this.withdrawCountVModel - 0 > this.withdrawDepositList[index].total - 0) {
         this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = this.withdrawDepositList[index].total - 0
         this.withdrawCountVModel = this.withdrawDepositList[index].total - 0
       }
-      // this.withdrawCountVModel = this.$refs.withdrawCount[index].value
-      // let targetCount = amendPrecision(this.$refs.withdrawCount[index].value, this.$refs.withdrawalFee[index].value, '-')
       let targetCount = amendPrecision(this.withdrawCountVModel, this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value, '-')
-      console.log(targetCount)
+      // console.log(targetCount)
       this.accountCount = targetCount > 0 ? targetCount : 0
     },
     // 点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
@@ -687,7 +687,6 @@ export default {
     // 点击提现按钮显示提币内容（带回币种id 币种名称 当前index）
     async changeWithdrawBoxByCoin (id, name, index) {
       // 提币数量
-      // this.$refs.withdrawCount[index].value = ''
       this.resetWithdrawFormContent(index)
 
       // 当前币种id
@@ -789,12 +788,10 @@ export default {
         // let detailData = data.data.data
         let detailData = getNestedData(data, 'data.data')
         this.totalSumBTC = detailData.totalSum
-        // this.withdrawDepositList = detailData.userCoinWalletVOPageInfo.list
         this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
-        // this.totalPageForMyEntrust = detailData.userCoinWalletVOPageInfo.pages - 0
         this.totalPageForMyEntrust = getNestedData(detailData, 'userCoinWalletVOPageInfo.pages') - 0
-        console.log('我的资产币种列表')
-        console.log(this.withdrawDepositList)
+        // console.log('我的资产币种列表')
+        // console.log(this.withdrawDepositList)
       }
     },
     // 分页
@@ -809,7 +806,7 @@ export default {
       let data = await inquireWithdrawalAddressId({
         coinId: this.activeCoinId
       })
-      console.log(data)
+      // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
@@ -817,9 +814,8 @@ export default {
         // 对币种类型进行赋值 true公信宝类 false普通币种
         this.isNeedTag = withdrawalAddressData.needTag
         // 返回列表数据并渲染币种列表
-        // this.withdrawAddressList = withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList
         this.withdrawAddressList = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList')
-        console.log(this.withdrawAddressList)
+        // console.log(this.withdrawAddressList)
         this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address') || ''
       }
     },
@@ -852,12 +848,9 @@ export default {
         return false
       } else {
         // 返回列表数据
-        // this.feeRangeOfWidthdraw = data.data.data
         this.feeRangeOfWidthdraw = getNestedData(data, 'data.data')
-        // this.serviceCharge = data.data.data.minFees
         this.withdrawalFee = getNestedData(data, 'data.data.minFees')
         this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value = this.withdrawalFee
-        // this.$refs.withdrawalFee[index].value = this.withdrawalFee
         this.withdrawFeeVModel = this.withdrawalFee
       }
     },
@@ -1047,7 +1040,6 @@ export default {
     getSecurityCenter () {
       getSecurityCenter(this, {}, data => {
         if (data) {
-          // this.securityCenter = data.data.data
           this.securityCenter = getNestedData(data, 'data.data')
         }
       })
@@ -1064,7 +1056,6 @@ export default {
         return false
       } else {
         // 返回展示
-        // this.currencyTradingList = data.data.data.entrust
         this.currencyTradingList = getNestedData(data, 'data.data.entrust') || []
       }
     }
