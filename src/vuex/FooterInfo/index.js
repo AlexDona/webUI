@@ -17,9 +17,7 @@ const state = {
     rateData: {}, // 费率
     newsDetailJumpId: '', // 首页跳转公告id
     tradingWarningData: {} // 交易须知
-  },
-  // news
-  end: ''// 占位
+  }
 }
 
 export default {

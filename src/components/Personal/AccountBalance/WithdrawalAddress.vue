@@ -516,7 +516,7 @@ export default {
           params.email = this.innerUserInfo.email
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, this)
+      await sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     changeCurrentPage (pageNum) {
       this.currentPageForMyEntrust = pageNum
