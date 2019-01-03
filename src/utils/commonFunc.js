@@ -343,6 +343,25 @@ export const isNeedPayPasswordAjax = async (self) => {
     return data.data.data
   }
 }
+
+/**
+ * 截取数字前 pointLength位
+ * @param target
+ * @param pointLength
+ * @returns {string}
+ */
+export const formatPointLength = (target, pointLength) => {
+  target += ''
+  let targetArr = target.split('.')
+  let targetStr = ''
+  let pointStr = ''
+  targetStr += `${targetArr[0]}.`
+  if (targetArr[1]) {
+    pointStr = targetArr[1].substring(0, pointLength)
+    targetStr += pointStr
+  }
+  return !targetArr[1] && !pointStr ? 0 : targetStr
+}
 // eslint-disable-next-line
 String.prototype.format = function (args) {
   var result = this

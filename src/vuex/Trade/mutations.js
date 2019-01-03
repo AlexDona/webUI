@@ -5,7 +5,8 @@ import {
   SET_MIDDLE_TOP_DATA,
   SET_JUMP_STATUS,
   SET_JUMP_SYMBOL,
-  SET_IS_KLINE_DATA_READY
+  SET_IS_KLINE_DATA_READY,
+  SET_TARGET_EXCHANGE_DATA
 } from './mutations-types.js'
 
 // import {setStore} from '../../utils'
@@ -38,5 +39,31 @@ export default {
   },
   [SET_IS_KLINE_DATA_READY] (state, data) {
     state.isKlineDataReady = data
+  },
+  [SET_TARGET_EXCHANGE_DATA] (state, {
+    type,
+    buyPrice,
+    buyCount,
+    sellPrice,
+    sellCount,
+    buyAmount
+  }) {
+    switch (type) {
+      case 'limit':
+        state.limitExchange = {
+          buyPrice,
+          buyCount,
+          sellPrice,
+          sellCount
+        }
+        break
+      case 'market':
+        state.marketExchange = {
+          buyAmount,
+          sellCount
+        }
+        break
+    }
+    console.log(state.limitExchange, state.marketExchange)
   }
 }

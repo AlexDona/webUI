@@ -90,6 +90,7 @@ const state = {
     footerInfo2: {},
     configInfo: {}
   },
+  isSymbolChanged: false,
   isAjaxReady: false // 全局loading
 }
 

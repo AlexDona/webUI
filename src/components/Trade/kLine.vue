@@ -483,7 +483,7 @@ export default {
         this.socket.send({
           'tag': type,
           'content': `market.${symbol}.kline.${newInterval}.step5`,
-          'id': `kline_${symbol}`
+          'id': 'pc'
         })
       }
     },
@@ -493,7 +493,7 @@ export default {
       this.socket.send({
         'tag': type,
         'content': `market.${symbol}.trade`,
-        'id': `trade_${symbol}`
+        'id': 'pc'
       })
     },
     // 获取买卖单
@@ -502,7 +502,7 @@ export default {
       this.socket.send({
         'tag': type,
         'content': `market.${symbol}.depth.step1`,
-        'id': `depth_${symbol}`
+        'id': 'pc'
       })
     },
     // 深度图
@@ -510,7 +510,7 @@ export default {
       this.socket.send({
         'tag': type,
         'content': `market.${symbol}.depthrender`,
-        'id': `market_001`
+        'id': 'pc'
       })
     },
     // 获取币币交易市场 socket
@@ -520,7 +520,7 @@ export default {
         this.socket.send({
           'tag': type,
           'content': `market.${params}.ticker`,
-          'id': `market_001`
+          'id': 'pc'
         })
       }
     },
