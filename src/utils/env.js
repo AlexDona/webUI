@@ -6,60 +6,71 @@
  * imgapiCommonUrl: 图片所在域名地址
  *
  */
-let apiCommonUrl // api 接口前缀
-let socketUrl // socket 接口
-let loginSocketUrl // 扫码登录socket
-let xDomain = window.location.host.split(':')[0] // 后端专递headers
-xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
-let domain = window.location.href.split('/')// 项目域名
-domain.pop()
-domain = domain.join('/')
-if (!domain.endsWith('#')) {
-  domain += '#'
+let xDomainUrl = window.location.host.split(':')[0] // 后端专递headers
+xDomainUrl = xDomainUrl.startsWith('www') ? xDomainUrl.slice(4) : xDomainUrl
+let domainUrl = window.location.href.split('/')// 项目域名
+domainUrl.pop()
+domainUrl = domainUrl.join('/')
+if (!domainUrl.endsWith('#')) {
+  domainUrl += '#'
+}
+let targetConfig = {
+  domain: domainUrl,
+  xDomain: xDomainUrl
+}
+// eslint-disable-next-line
+let devTestConfig = {
+  apiCommonUrl: 'http://192.168.1.200:8888/',
+  socketUrl: 'ws://192.168.1.52:8087/market',
+  loginSocketUrl: 'ws://192.168.1.200:8087/qrcodeLogin/'
+}
+// eslint-disable-next-line
+let dev210Config = {
+  apiCommonUrl: 'http://192.168.1.210:8888/',
+  socketUrl: 'ws://192.168.1.210:8087/market',
+  loginSocketUrl: 'ws://192.168.1.210:8087/qrcodeLogin/'
+}
+// eslint-disable-next-line
+let prodConfig = {
+  apiCommonUrl: 'https://api.new.bzu.com/',
+  socketUrl: 'wss://ws.bzu.com/market',
+  loginSocketUrl: 'wss://api.new.bzu.com/qrcodeLogin/'
 }
 switch (process.env.NODE_ENV) {
   case 'development':
-    // eslint-disable-next-line
-    apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
-    xDomain = 'bithumber.com'
-    socketUrl = 'wss://ws.bzu.com/market'
-    loginSocketUrl = 'wss://api.new.bzu.com/qrcodeLogin/'
-    // eslint-disable-next-line
-   /* apiCommonUrl = 'http://192.168.1.200:8888/' // 内部测试
-    xDomain = 'new.test.com'
-    socketUrl = 'ws://192.168.1.52:8087/market'
-    loginSocketUrl = 'ws://192.168.1.200:8087/qrcodeLogin/'*/
-
-    // eslint-disable-next-line
-    /*apiCommonUrl = 'http://192.168.1.210:8888/' // 内部测试
-    xDomain = 'me.com'
-    socketUrl = 'ws://192.168.1.210:8087/market'
-    loginSocketUrl = 'ws://192.168.1.210:8087/qrcodeLogin/'*/
+    // 本地开发
+    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
+    // 210开发环境
+    // targetConfig = {...dev210Config, xDomain: 'me.com'}
+    // 生产环境
+    // targetConfig = {...proConfig, xDomain: 'new.bzu.com'}
     break
   case 'development210':
     // 210开发环境
-    apiCommonUrl = 'http://192.168.1.210:8888/'
-    socketUrl = 'ws://192.168.1.210:8087/market'
-    loginSocketUrl = 'ws://192.168.1.210:8087/qrcodeLogin/'
+    targetConfig = {...targetConfig, ...dev210Config}
     break
   case 'testing':
     // 200测试环境
-    apiCommonUrl = 'http://192.168.1.200:8888/'
-    socketUrl = 'ws://192.168.1.200:8087/market'
-    loginSocketUrl = 'ws://192.168.1.200:8888/qrcodeLogin/'
+    targetConfig = {...targetConfig, ...devTestConfig}
     break
   case 'production':
     // 生产环境
-    apiCommonUrl = 'https://api.new.bzu.com/'
-    socketUrl = 'wss://ws.bzu.com/market'
-    loginSocketUrl = 'wss://api.new.bzu.com/qrcodeLogin/'
+    targetConfig = {...targetConfig, ...prodConfig}
     break
 }
 
+let {
+  apiCommonUrl,
+  socketUrl,
+  loginSocketUrl,
+  xDomain,
+  domain
+} = targetConfig
+console.log(targetConfig)
 export {
   apiCommonUrl,
   socketUrl,
-  domain,
   loginSocketUrl,
-  xDomain
+  xDomain,
+  domain
 }

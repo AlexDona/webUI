@@ -157,6 +157,7 @@
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfPhoneBtn"
                     @run="sendPhoneOrEmailCodeWithPush(0)"
+                    v-if="this.$route.path === '/TransactionPassword'"
                   />
                 </template>
               </el-input>
@@ -182,6 +183,7 @@
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfEmailBtn"
                     @run="sendPhoneOrEmailCodeWithPush(1)"
+                    v-if="this.$route.path === '/TransactionPassword'"
                   />
                 </template>
               </el-input>
@@ -239,7 +241,6 @@ import {
 import {
   setTransactionPassword,
   resetUpdatePayPassword,
-  securityVerificationOnOff,
   cancelPasswdDialog
 } from '../../../utils/api/personal'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -518,28 +519,10 @@ export default {
     },
     // 确定重置交易密码
     async getUpdatePayPassword () {
-      // this.confirmVerifyInformation()
       // 问题：点击确认重置按钮直接接口调用成功了，
       // 原因：未调用验证input方法
-      // 任修复重置交易密码逻辑，应该调用confirmUpdate()而不是confirmVerifyInformation()
+      // 任修复重置交易密码逻辑，应该调用confirmUpdate()
       this.confirmUpdate()
-    },
-    // 手机邮箱谷歌验证
-    async confirmVerifyInformation () {
-      let data
-      let params = {
-        email: this.userInfoDetail.email, // 邮箱
-        phone: this.userInfoDetail.phone, // 手机
-        mailCode: this.modifyPassword.emailCode, // 邮箱验证
-        phoneCode: this.modifyPassword.phoneCode, // 手机验证
-        googleCode: this.modifyPassword.googleCode // 谷歌验证
-      }
-      data = await securityVerificationOnOff(params)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        await this.confirmUpdate()
-      }
     },
     // 确定重置接口处理
     async confirmUpdate () {
@@ -553,7 +536,7 @@ export default {
       } else {
         goOnStatus = 0
       }
-      console.log(goOnStatus)
+      // console.log(goOnStatus)
       if (goOnStatus) {
         if (this.securityCenter.isMailEnable && !this.modifyPassword.emailCode) {
           this.$message({
@@ -600,7 +583,6 @@ export default {
       getSecurityCenter(this, {}, data => {
         if (data) {
           // 接口成功清除loading
-          // this.securityCenter = data.data.data
           this.securityCenter = getNestedData(data, 'data.data')
         }
       })

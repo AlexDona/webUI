@@ -84,6 +84,9 @@ export default {
     }
   },
   watch: {
+    time (newVal) {
+      console.log(newVal)
+    },
     countDownResetStatus () {
       this.time = 0
       this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', false)

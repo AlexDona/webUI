@@ -130,6 +130,7 @@
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfPhoneBtn"
                     @run="sendPhoneOrEmailCode(0)"
+                    v-if="this.$route.path === '/SecurePhone'"
                   />
                 </template>
               </el-input>
@@ -179,6 +180,7 @@
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfOldPhoneBtn"
                     @run="sendPhoneOrEmailCode(0, 1, 1)"
+                    v-if="this.$route.path === '/SecurePhone'"
                   />
                 </template>
               </el-input>
@@ -247,6 +249,7 @@
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfPhoneBtn"
                     @run="sendPhoneOrEmailCode(0, 2, 0)"
+                    v-if="this.$route.path === '/SecurePhone'"
                   />
                 </template>
               </el-input>
@@ -389,19 +392,19 @@ export default {
         })
         return false
       } else if (!type && !val && this.bindingDataPhone.bindingNewPhoneAccounts) {
-        console.log(1)
-        console.log(this.checkoutInputFormat(0, this.bindingDataPhone.bindingNewPhoneAccounts))
+        // console.log(1)
+        // console.log(this.checkoutInputFormat(0, this.bindingDataPhone.bindingNewPhoneAccounts))
         if (!this.checkoutInputFormat(0, this.bindingDataPhone.bindingNewPhoneAccounts)) {
           return false
         }
       }
       // 绑定手机号
       if ((!loginType && !val && !type)) {
-        console.log(this.bindingDataPhone.bindingNewPhoneCode)
+        // console.log(this.bindingDataPhone.bindingNewPhoneCode)
         if (!this.emailBindPhoneCount) {
           let data = await this.checkUserExistAjax('phone', this.bindingDataPhone.bindingNewPhoneAccounts)
           this.emailBindPhoneCount++
-          console.log(data)
+          // console.log(data)
           if (!data) {
             this.emailBindPhoneCount = 0
             return false
@@ -412,7 +415,7 @@ export default {
         if (!this.emailBindPhoneCount) {
           let data = await this.checkUserExistAjax('phone', this.amendDataPhone.newPhoneAccounts)
           this.emailBindPhoneCount++
-          console.log(data)
+          // console.log(data)
           if (!data) {
             this.emailBindPhoneCount = 0
             return false
@@ -428,7 +431,7 @@ export default {
         })
         return false
       }
-      console.log(type)
+      // console.log(type)
       if (!type) {
         if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
           return false
@@ -445,7 +448,7 @@ export default {
         params.userId = this.userInfo.userId
       }
       if (!this.securityCenter.isPhoneBind) {
-        console.log(2)
+        // console.log(2)
         switch (loginType) {
           // 当是绑定手机时给收入新手机号发验证码
           case 0:
@@ -457,7 +460,7 @@ export default {
             break
         }
       } else {
-        console.log(loginType)
+        // console.log(loginType)
         switch (loginType) {
           case 0:
             if (val == 1) {
@@ -489,7 +492,7 @@ export default {
       switch (type) {
         // 手机号
         case 0:
-          console.log(validateNumForUserInput('phone', targetNum))
+          // console.log(validateNumForUserInput('phone', targetNum))
           switch (validateNumForUserInput('phone', targetNum)) {
             case 0:
               this.setErrorMsg(0, '')
@@ -525,7 +528,7 @@ export default {
           }
         // 短信验证码
         case 2:
-          console.log(targetNum)
+          // console.log(targetNum)
           if (!targetNum) {
             // 请输入短信验证码
             this.setErrorMsg(2, this.$t('M.login_please_input1'))
@@ -548,7 +551,7 @@ export default {
     },
     // 确定绑定
     async confirmBindingBailPhone () {
-      console.log(this.newPhoneIsExistStatus)
+      // console.log(this.newPhoneIsExistStatus)
       if (this.newPhoneIsExistStatus) {
         this.$message({
           type: 'error',
@@ -577,20 +580,20 @@ export default {
           return false
         } else {
           this.successJump()
-          console.log(data)
+          // console.log(data)
         }
       }
     },
     // 检测用户名是否存在
     async checkUserExistAjax (type, userName, isNewPhone) {
-      console.log(userName)
+      // console.log(userName)
       if (!validateNumForUserInput(type, userName)) {
         let params = {
           userName: userName,
           regType: type
         }
         const data = await checkUserExist(params)
-        console.log(this.emailBindPhoneCount)
+        // console.log(this.emailBindPhoneCount)
         if (!returnAjaxMsg(data, this)) {
           if (isNewPhone) {
             this.newPhoneIsExistStatus = true
@@ -601,8 +604,8 @@ export default {
           return 1
         }
       } else {
-        console.log(userName)
-        console.log(type)
+        // console.log(userName)
+        // console.log(type)
         switch (type) {
           case 'phone':
             if (this.tieCheckoutInputFormat(1, userName)) {
@@ -747,7 +750,6 @@ export default {
       // 整页loading
       getSecurityCenter(this, {}, data => {
         if (data) {
-          // this.securityCenter = data.data.data
           this.securityCenter = getNestedData(data, 'data.data')
         }
       })

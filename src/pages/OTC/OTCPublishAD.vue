@@ -609,10 +609,8 @@ export default {
         this.activitedCoinId = getNestedData(detailsData, 'coinId') // 可用币种id
         this.activitedCurrencyId = getNestedData(detailsData, 'currencyId') // 法币id
         this.activitedBuySellStyle = getNestedData(detailsData, 'entrustType') // 挂单类型
-        // this.limitOrderCount = getNestedData(detailsData, 'limitOrderCount') // 同时处理最大订单数
         this.$refs.limitRef.value = getNestedData(detailsData, 'limitOrderCount') // 同时处理最大订单数
         this.limitOrderCount = this.$refs.limitRef.value
-        // this.successOrderCount = getNestedData(detailsData, 'successOrderCount') // 卖家必须成交过几次
         this.$refs.successRef.value = getNestedData(detailsData, 'successOrderCount') // 卖家必须成交过几次
         this.successOrderCount = this.$refs.successRef.value
         this.$refs.entrustCount.value = getNestedData(detailsData, 'entrustCount') // 挂单数量

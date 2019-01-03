@@ -448,21 +448,33 @@ export default {
   },
   data () {
     return {
-      isdisabled: false, // 订单tabs面板切换禁用状态
-      isDisabledRadio: false, // 在线购买和在线出售按钮禁用状态
-      loading: false, // loading加载
+      // 订单tabs面板切换禁用状态
+      isdisabled: false,
+      // 在线购买和在线出售按钮禁用状态
+      isDisabledRadio: false,
+      // loading加载
+      loading: false,
       // 分页
-      currentPage: 1, // 当前页码
-      totalPages: 1, // 总页数
+      // 当前页码
+      currentPage: 1,
+      // 总页数
+      totalPages: 1,
       // 可用法币币种数组
-      activitedCurrencyId: '', // 选中的可用法币id
-      activitedCurrencyName: '', // 选中的可用法币name
+      // 选中的可用法币id
+      activitedCurrencyId: '',
+      // 选中的可用法币name
+      activitedCurrencyName: '',
       availableCurrencyId: [],
-      activeName: 'first', // 选中的tab面板的序号
-      tabPosition: 'left', //  订单管理面板标签方向状态
-      OTCBuySellStyle: 'onlineBuy', //  在线购买和在线出售选中类型
-      selectCurrencyNameStatus: 0, //  选中我要购买或者出售的币种名称
-      onlineBuySellTableList: [], // 在线购买和在线出售表格列表
+      // 选中的tab面板的序号
+      activeName: 'first',
+      //  订单管理面板标签方向状态
+      tabPosition: 'left',
+      //  在线购买和在线出售选中类型
+      OTCBuySellStyle: 'onlineBuy',
+      //  选中我要购买或者出售的币种名称
+      selectCurrencyNameStatus: 0,
+      // 在线购买和在线出售表格列表
+      onlineBuySellTableList: [],
       // 支付方式下拉框数据
       payWayBankinfoList: [
         {
@@ -490,9 +502,12 @@ export default {
           shortName: 'PAYPAL'
         }
       ],
-      activedPayWayBankinfoItem: this.$t('M.otc_index_Payment_method'), // 下拉框中选中的支付方式
-      checkedPayType: '', // 下拉框支付方式中选中的支付方式查询列表
-      IWantToBuySellArr: [] // 我要购买出售币种数组
+      // 下拉框中选中的支付方式
+      activedPayWayBankinfoItem: this.$t('M.otc_index_Payment_method'),
+      // 下拉框支付方式中选中的支付方式查询列表
+      checkedPayType: '',
+      // 我要购买出售币种数组
+      IWantToBuySellArr: []
     }
   },
   created () {
@@ -566,7 +581,7 @@ export default {
         }
         if (this.activeName === 'fourth') {
           // console.log('调冻结中订单')
-          this.$refs.freezing.getOTCFrezzingOrdersList() // 调用子组件冻结中订单的方法
+          this.$refs.freezing.getOTCFreezingOrdersList() // 调用子组件冻结中订单的方法
         }
         if (this.activeName === 'fifth') {
           // console.log('调委托订单')
@@ -721,9 +736,7 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.availableCurrencyId = getNestedData(data, 'data.data')
-        // this.activitedCurrencyId = this.availableCurrencyId[0].id
         this.activitedCurrencyId = getNestedData(this.availableCurrencyId[0], 'id')
-        // this.activitedCurrencyName = this.availableCurrencyId[0].shortName
         this.activitedCurrencyName = getNestedData(this.availableCurrencyId[0], 'shortName')
         // 3.0 otc主页面查询挂单列表:
         this.getOTCPutUpOrdersList()
@@ -755,10 +768,8 @@ export default {
         // 返回数据正确的逻辑
         this.loading = false
         let orderListData = getNestedData(data, 'data.data')
-        // this.onlineBuySellTableList = orderListData.list
         this.onlineBuySellTableList = getNestedData(orderListData, 'list')
         // 分页
-        // this.totalPages = orderListData.pages - 0
         this.totalPages = getNestedData(orderListData, 'pages') - 0
         // 改变全局 委托定单撤单后，更新首页挂单列表状态
         this.UPDATE_OTC_HOME_LIST_STATUS(false)
@@ -780,14 +791,8 @@ export default {
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
     async toggleBuyOrSellStyle (e) {
       this.currentPage = 1
-      console.log(this.currentPage)
-      // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
-      // this.isDisabledRadio = true
-      // setTimeout(() => {
-      //   this.isDisabledRadio = false
-      // }, 500)
+      // console.log(this.currentPage)
       this.OTCBuySellStyle = e
-      // console.log(this.OTCBuySellStyle)
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
     //  7.0 改变可用法币的币种id

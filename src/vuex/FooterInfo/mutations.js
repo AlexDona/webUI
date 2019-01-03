@@ -9,14 +9,13 @@ import {
 // import {localapi, proapi} from 'src/config/env'
 
 export default {
-  [CHANGE_FOOTER_ACTIVENAME] (state, data) {
-    console.log(data)
-    switch (data.type) {
+  [CHANGE_FOOTER_ACTIVENAME] (state, {type, activeName}) {
+    switch (type) {
       case '/NewsAndNoticeCenter':
-        state.newsAndNoticeActiveName = data.activeName
+        state.newsAndNoticeActiveName = activeName
         break
       case '/ServiceAndProtocol':
-        state.serviceActiveName = data.activeName
+        state.serviceActiveName = activeName
     }
   },
   [CHANGE_PROTOCOL_DATA] (state, {

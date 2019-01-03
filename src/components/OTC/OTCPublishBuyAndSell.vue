@@ -4,9 +4,6 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{'min-height':(height-305)+'px'}"
   >
-    <!-- :style="{
-      height: windowHeight+'px'
-    }" -->
     <!-- 挂单：商家和普通用户都可以用 -->
     <div
       class="publish-buy-and-sell-content"
@@ -200,7 +197,6 @@
                   <!-- 卖出量和买入量的提示 -->
                   <span class="errorSell">{{errorTipsSum}}</span>
                   <!-- 卖出单价和买入单价的提示 -->
-                  <!-- <span class="errorBuy">{{errorTipsPrice}}{{minPrice}}-{{maxPrice}}</span> -->
                   <span class="errorBuy">{{errorTipsPrice}}</span>
                 </div>
               </el-form-item>
@@ -289,7 +285,6 @@
                     class="predict-sum"
                     v-if="this.publishStyle === 'sell'"
                   >
-                    <!-- {{entrustCountSell * priceSell}} {{CurrencyCoinsName}} -->
                     {{traderSumSELL}} {{CurrencyCoinsName}}
                   </span>
                   <!-- 买 -->
@@ -297,7 +292,6 @@
                     class="predict-sum"
                     v-if="this.publishStyle === 'buy'"
                   >
-                    <!-- {{entrustCountBuy * priceBuy}} {{CurrencyCoinsName}} -->
                     {{traderSumBUY}} {{CurrencyCoinsName}}
                   </span>
                   <span class="predict-text">
@@ -309,7 +303,6 @@
                     class="predict-sum"
                     v-if="this.publishStyle === 'sell'"
                   >
-                    <!-- {{entrustCountSell * rate}} {{coinName}} -->
                     {{serviceChargeSELL}} {{coinName}}
                   </span>
                   <!-- 买 -->
@@ -317,7 +310,6 @@
                     class="predict-sum"
                     v-if="this.publishStyle === 'buy'"
                   >
-                    <!-- {{entrustCountBuy * rate}} {{coinName}} -->
                     {{serviceChargeBUY}} {{coinName}}
                   </span>
                   <span class="rate-text">
@@ -365,7 +357,7 @@
                       class="password-input"
                       v-model="tradePassword"
                       @focus="tradePasswordFocus"
-                      @keyup.enter="addOTCPutUpOrdersSubmitButton"
+                      @keyup.enter="publishOTCEntryOrders"
                       onpaste="return false"
                     >
                   </div>
@@ -378,7 +370,7 @@
                     class="dialog-footer">
                       <el-button
                         type="primary"
-                        @click="addOTCPutUpOrdersSubmitButton"
+                        @click="publishOTCEntryOrders"
                       >
                         <!-- 提 交 -->
                         {{$t('M.comm_sub_time')}}
@@ -441,25 +433,41 @@ export default {
   components: {},
   data () {
     return {
-      height: '', // 可视区内容的高度
-      serviceChargeSELL: 0, // 手续费：卖
-      traderSumSELL: 0, // 交易额：卖
-      serviceChargeBUY: 0, // 手续费：买
-      traderSumBUY: 0, // 交易额 :买
-      publishOrderTradePwdDialogStatus: false, // 交易密码弹窗状态
-      publishStyle: '', // 1购买和出售选中类型：挂单类型
-      labelPosition: 'top', // 表单label放置的位置
-      coinStyleList: [], // 可用币种类型列表
-      coinId: '', // 选中的币种类型：挂单币种id
-      coinName: '', // 选中的币种名称：挂单币种name
-      hopePaymentCoinStyleList: [], // 选择你希望付款的货币类型列表：可用法币类型
-      hopePaymentCoinId: '', // 选中的希望付款的货币类型:法币id
-      CurrencyCoinsName: '', // 选中的可用法币币种名称：法币名称
-      // 3挂单数量
+      // 可视区内容的高度
+      height: '',
+      // 手续费：卖
+      serviceChargeSELL: 0,
+      // 交易额：卖
+      traderSumSELL: 0,
+      // 手续费：买
+      serviceChargeBUY: 0,
+      // 交易额 :买
+      traderSumBUY: 0,
+      // 交易密码弹窗状态
+      publishOrderTradePwdDialogStatus: false,
+      // 1购买和出售选中类型：挂单类型
+      publishStyle: '',
+      // 表单label放置的位置
+      labelPosition: 'top',
+      // 可用币种类型列表
+      coinStyleList: [],
+      // 选中的币种类型：挂单币种id
+      coinId: '',
+      // 选中的币种名称：挂单币种name
+      coinName: '',
+      // 选择你希望付款的货币类型列表：可用法币类型
+      hopePaymentCoinStyleList: [],
+      // 选中的希望付款的货币类型:法币id
+      hopePaymentCoinId: '',
+      // 选中的可用法币币种名称：法币名称
+      CurrencyCoinsName: '',
+      // 3挂单数量卖
       entrustCountSell: '',
+      // 3挂单数量买
       entrustCountBuy: '',
-      // 4单价
+      // 4单价卖
       priceSell: '',
+      // 4单价买
       priceBuy: '',
       // 后台返回的最低价
       minPrice: '',
@@ -499,14 +507,22 @@ export default {
       errorTipsLimitMax: '',
       // 交易密码错误提示
       errorPWd: '',
-      pointLength: 4, // 当前币种返回的保留小数点位数限制
-      moneyPointLength: 2, // 当前金额小数点限制位数
-      entrustCountErrorTipsBorder: false, // 买入量卖出量错误提示框
-      entrustCountBuySellErrorTipsBorder: false, // 买入量卖出量单位错误提示框
-      priceErrorTipsBorder: false, // 买入单价卖出单价错误提示框
-      priceBuySellErrorTipsBorder: false, // 买入单价卖出单价单位错误提示框
-      minCountErrorTipsBorder: false, // 单笔最小限额错误提示框
-      maxCountErrorTipsBorder: false, // 单笔最大限额错误提示框
+      // 当前币种返回的保留小数点位数限制
+      pointLength: 4,
+      // 当前金额小数点限制位数
+      moneyPointLength: 2,
+      // 买入量卖出量错误提示框
+      entrustCountErrorTipsBorder: false,
+      // 买入量卖出量单位错误提示框
+      entrustCountBuySellErrorTipsBorder: false,
+      // 买入单价卖出单价错误提示框
+      priceErrorTipsBorder: false,
+      // 买入单价卖出单价单位错误提示框
+      priceBuySellErrorTipsBorder: false,
+      // 单笔最小限额错误提示框
+      minCountErrorTipsBorder: false,
+      // 单笔最大限额错误提示框
+      maxCountErrorTipsBorder: false,
       // 参数法币id
       parameterCurrencyId: '',
       // 参数币种id
@@ -531,21 +547,16 @@ export default {
       this.publishStyle = 'sell'
     }
     // 可用币种id
-    // this.coinId = this.$route.params.partnerCoinId
     this.parameterCoinId = this.$route.params.partnerCoinId
     // 可用法币
-    // this.hopePaymentCoinId = this.$route.params.currencyID
     this.parameterCurrencyId = this.$route.params.currencyID
     // 刚进页面就调此方法请求币种详情来渲染页面
     this.getOTCCoinInfo()
   },
-  mounted () {
-  },
+  mounted () {},
   activated () {},
-  update () {
-  },
-  beforeRouteUpdate () {
-  },
+  update () {},
+  beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
@@ -568,7 +579,6 @@ export default {
       const data = await getOTCCoinInfo({
         currencyId: this.parameterCurrencyId, // 法币id
         coinId: this.parameterCoinId // 交易币种id
-
       })
       console.log('币种详情')
       console.log(data)
@@ -625,23 +635,14 @@ export default {
     },
     // 2.0 改变可用币种类型
     changeCoinId (e) {
-      // console.log(e)
-      // this.coinId = e
-      // 任增加
       this.parameterCoinId = e
-      // console.log(this.coinId)
-      // this.clearErrInfo() // 清空错误信息
       this.clearInputData()
       // 币种详情
       this.getOTCCoinInfo()
     },
     // 3.0 改变你希望付款的货币类型：可用法币类型
     changeHopePaymentCoinId (e) {
-      // console.log(e)
-      // this.hopePaymentCoinId = e
-      // 任增加
       this.parameterCurrencyId = e
-      // console.log(this.hopePaymentCoinId)
       this.clearInputData()
       // 币种详情
       this.getOTCCoinInfo()
@@ -657,13 +658,20 @@ export default {
     },
     //  6.0 点击 购买 和 出售 按钮切换
     toggleBuySellButton (index) {
-      if (index === 1) {
-        this.publishStyle = 'sell'
-        // console.log(this.publishStyle)
-      }
-      if (index === 2) {
-        this.publishStyle = 'buy'
-        // console.log(this.publishStyle)
+      // if (index === 1) {
+      //   this.publishStyle = 'sell'
+      // }
+      // if (index === 2) {
+      //   this.publishStyle = 'buy'
+      // }
+      // switch改写
+      switch (index) {
+        case 1:
+          this.publishStyle = 'sell'
+          break
+        case 2:
+          this.publishStyle = 'buy'
+          break
       }
       // 清空表单数据
       this.clearInputData()
@@ -699,19 +707,6 @@ export default {
       this.errorTipsLimitMax = ''
       this.maxCountErrorTipsBorder = false
     },
-    // 清空错误信息
-    clearErrInfo () {
-      this.errorTipsSum = ''
-      this.entrustCountErrorTipsBorder = false
-      this.entrustCountBuySellErrorTipsBorder = false
-      this.errorTipsPrice = ''
-      this.priceErrorTipsBorder = false
-      this.priceBuySellErrorTipsBorder = false
-      this.errorTipsLimitMin = ''
-      this.minCountErrorTipsBorder = false
-      this.errorTipsLimitMax = ''
-      this.maxCountErrorTipsBorder = false
-    },
     // 卖出量和买入量input 获得焦点
     countInputFocus () {
       this.errorTipsSum = ''
@@ -728,23 +723,19 @@ export default {
       // 精度丢失问题修复
       // 类型：卖
       // 手续费
-      // this.serviceChargeSELL = parseFloat(amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*').toFixed(this.pointLength))
       // 修复截取小数点后几位
       this.serviceChargeSELL = amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*')
       this.serviceChargeSELL = cutOutPointLength(this.serviceChargeSELL, this.pointLength)
       // 交易额
-      // this.traderSumSELL = amendPrecision(this.$refs.entrustCountSell.value, this.$refs.priceSell.value, '*').toFixed(2)
       // 修复截取小数点后几位
       this.traderSumSELL = amendPrecision(this.$refs.entrustCountSell.value, this.$refs.priceSell.value, '*')
       this.traderSumSELL = cutOutPointLength(this.traderSumSELL, 2)
       // 类型：买
       // 手续费
-      // this.serviceChargeBUY = parseFloat(amendPrecision(this.$refs.entrustCountBuy.value, this.rate, '*').toFixed(this.pointLength))
       // 修复截取小数点后几位
       this.serviceChargeBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.rate, '*')
       this.serviceChargeBUY = cutOutPointLength(this.serviceChargeBUY, this.pointLength)
       // 交易额
-      // this.traderSumBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.$refs.priceBuy.value, '*').toFixed(2)
       // 修复截取小数点后几位
       this.traderSumBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.$refs.priceBuy.value, '*')
       this.traderSumBUY = cutOutPointLength(this.traderSumBUY, 2)
@@ -892,7 +883,7 @@ export default {
       if (this.isNeedPayPassowrd) {
         this.publishOrderTradePwdDialogStatus = true
       } else {
-        this.addOTCPutUpOrdersSubmitButton()
+        this.publishOTCEntryOrders()
       }
     },
     // 交易密码框获得焦点清空错误提示信息
@@ -900,7 +891,7 @@ export default {
       this.errorPWd = ''
     },
     // 9.0 点击输入密码框中的提交按钮
-    async addOTCPutUpOrdersSubmitButton () {
+    async publishOTCEntryOrders () {
       if (this.isNeedPayPassowrd && !this.tradePassword) {
         // 请输入交易密码
         this.errorPWd = this.$t('M.comm_please_enter') + this.$t('M.comm_password')

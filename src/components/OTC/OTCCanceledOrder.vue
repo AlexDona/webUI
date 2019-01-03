@@ -57,15 +57,15 @@
             v-if="item.orderType === 'BUY'"
             :class="{ red: item.orderType === 'BUY' }"
           >
-          <!-- 买入 -->
+            <!-- 买入 -->
             {{$t('M.comm_buy')}}
           </span>
-          <!-- 卖出 -->
           <span
             class="item"
             v-if="item.orderType === 'SELL'"
             :class="{ green: item.orderType === 'SELL' }"
           >
+            <!-- 卖出 -->
             {{$t('M.comm_sell')}}
           </span>
           <!-- 币种 -->
@@ -141,23 +141,23 @@
               v-show="item.appeal == 'YES'"
             >
               <!-- 支付宝账号 -->
-              <span v-if="item.payType === 'Alipay'">
+              <span v-show="item.payType === 'Alipay'">
                 {{$t('M.user_account_alipay')}}{{$t('M.user_account_number')}}：
               </span>
               <!-- 银行卡账号 -->
-              <span v-if="item.payType === 'Bankcard'">
+              <span v-show="item.payType === 'Bankcard'">
                 {{$t('M.otc_bank_num')}}：
               </span>
               <!-- 西联汇款账号 -->
-              <span v-if="item.payType === 'WestUnion'">
+              <span v-show="item.payType === 'WestUnion'">
                 {{$t('M.user_account_western_union')}}{{$t('M.user_account_number')}}：
               </span>
               <!-- PAYPAL账号 -->
-              <span v-if="item.payType === 'PAYPAL'">
+              <span v-show="item.payType === 'PAYPAL'">
                 PAYPAL{{$t('M.user_account_number')}}：
               </span>
               <!-- 微信账号 -->
-              <span v-if="item.payType === 'Wechat'">
+              <span v-show="item.payType === 'Wechat'">
                 {{$t('M.user_account_weChat')}}{{$t('M.user_account_number')}}：
               </span>
               <span>{{item.payAcctount}}</span>
@@ -175,7 +175,6 @@
           </div>
           <!-- 右边 -->
           <div class="info-right">
-            <!-- <p class="text-info text-blue">超时未支付，订单取消</p> -->
             <!-- 超时未支付，订单取消 -->
             <p
               class="text-info"
@@ -194,10 +193,11 @@
             <p class="text-info">
               {{$t('M.otc_canceled_cancel')}}:{{timeFormatting(item.cancelTime)}}
             </p>
-            <!-- <p class="text-info cancel-time">{{timeFormatting(item.cancelTime)}}</p> -->
-            <!-- <p class="text-info cancel-time">状态</p> -->
             <!--原因-->
-            <p class="text-info" v-show="item.appeal == 'YES'">
+            <p
+              class="text-info"
+              v-show="item.appeal == 'YES'"
+            >
               <el-tooltip
                 effect="dark"
                 :content="item.handleSuggest"
@@ -213,7 +213,7 @@
       </div>
       <div
         class="no-data"
-        v-if="!otcCanceledOrderList.length"
+        v-show="!otcCanceledOrderList.length"
       >
         <!-- 暂无数据 -->
         {{$t('M.comm_no_data')}}
@@ -236,7 +236,7 @@
 <script>
 import {timeFilter, scientificToNumber} from '../../utils'
 import {mapState} from 'vuex'
-import {getOTCCanceledOrders} from '../../utils/api/OTC'
+import {getOTCOrdersThreeDay} from '../../utils/api/OTC'
 import {
   returnAjaxMsg,
   getNestedData
@@ -246,12 +246,17 @@ export default {
   // props,
   data () {
     return {
-      loading: true, // loading加载缓冲
+      // loading加载缓冲
+      loading: true,
       // 分页
-      pageSize: 5, // 当前页显示几条数据
-      currentPage: 1, // 当前页码
-      totalPages: 1, // 总页数
-      otcCanceledOrderList: [] // OTC取消订单列表
+      // 当前页显示几条数据
+      pageSize: 5,
+      // 当前页码
+      currentPage: 1,
+      // 总页数
+      totalPages: 1,
+      // OTC取消订单列表
+      otcCanceledOrderList: []
     }
   },
   created () {
@@ -281,7 +286,7 @@ export default {
     // 3.0 请求已取消订单列表
     async getOTCCanceledOrdersList () {
       this.loading = true
-      const data = await getOTCCanceledOrders({
+      const data = await getOTCOrdersThreeDay({
         status: 'CANCELED', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         pageNum: this.currentPage,
         pageSize: this.pageSize
@@ -318,8 +323,6 @@ export default {
 
   .otc-canceled-order-box {
     > .canceled-order-content {
-      /* min-height: 500px; */
-
       > .canceled-table-head {
         box-sizing: border-box;
         width: 1043px;

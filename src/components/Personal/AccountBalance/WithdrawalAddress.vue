@@ -102,6 +102,7 @@
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfPhoneBtn"
                     @run="sendPhoneOrEmailCode(0)"
+                    v-if="mentionMoneyConfirm"
                   />
                 </el-form-item>
                 <!--手机未认证-->
@@ -121,6 +122,7 @@
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfEmailBtn"
                     @run="sendPhoneOrEmailCode(1)"
+                    v-if="mentionMoneyConfirm"
                   />
                 </el-form-item>
                 <!--邮箱未认证-->
@@ -302,12 +304,8 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
-    reg () {
-      let pets = ['http', 'https', 'www']
-      console.log(pets.includes('http'))
-    },
     checkoutInputFormat (type, targetNum) {
-      console.log(type)
+      // console.log(type)
       switch (type) {
         case 0:
           if (!targetNum) {
@@ -391,7 +389,6 @@ export default {
     async getSecurityCenter () {
       await getSecurityCenter(this, {}, data => {
         if (data) {
-          // this.securityCenter = data.data.data
           this.securityCenter = getNestedData(data, 'data.data')
           this.mentionMoneyConfirm = true
         }
@@ -459,8 +456,8 @@ export default {
         // 对币种名称列表进行赋值
         this.withdrawalAddressList = getNestedData(detailData, 'UserWithdrawAddressPage.list')
         this.totalPageForMyEntrust = getNestedData(detailData, 'UserWithdrawAddressPage.pages') - 0
-        console.log(this.currencyList)
-        console.log(this.withdrawalAddressList)
+        // console.log(this.currencyList)
+        // console.log(this.withdrawalAddressList)
       }
     },
     // 删除提币地址
@@ -513,15 +510,13 @@ export default {
       }
       switch (loginType) {
         case 0:
-          // params.phone = this.userInfo.userInfo.phone
           params.phone = this.innerUserInfo.phone
           break
         case 1:
-          // params.email = this.userInfo.userInfo.email
           params.email = this.innerUserInfo.email
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, this)
+      await sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     changeCurrentPage (pageNum) {
       this.currentPageForMyEntrust = pageNum

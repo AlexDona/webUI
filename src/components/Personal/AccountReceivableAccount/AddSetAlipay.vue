@@ -193,7 +193,7 @@ export default {
       alipayAccount: '', // 支付宝账号
       password: '', // 交易密码
       dialogImageHandUrl1: '', // 图片url
-      removeMaskLayer: false, // 删除遮罩层
+      removeMaskLayer: true, // 删除遮罩层
       paymentTypeId: '', // 收款类型ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
@@ -230,7 +230,7 @@ export default {
     // 上传支付宝二维码
     handleSuccessHand (response, file, fileList) {
       this.dialogImageHandUrl1 = response.data.fileUrl
-      console.log(response, file, fileList)
+      // console.log(response, file, fileList)
     },
     // 删除支付宝二维码
     handleRemove () {
@@ -250,11 +250,11 @@ export default {
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
-      console.log(type)
+      // console.log(type)
       switch (type) {
         // 请输入支付宝账号
         case 0:
-          console.log(type)
+          // console.log(type)
           if (!targetNum) {
             this.setErrorMsg(0, this.$t('M.user_bind_Alipay_please_input'))
             this.$forceUpdate()
@@ -266,7 +266,7 @@ export default {
           }
         // 请输入交易密码
         case 1:
-          console.log(type)
+          // console.log(type)
           if (!targetNum) {
             this.setErrorMsg(1, this.$t('M.user_push_input_pwd'))
             this.$forceUpdate()
@@ -317,9 +317,9 @@ export default {
         }
         // 整页loading
         this.fullscreenLoading = true
-        console.log(this.dialogImageHandUrl1)
+        // console.log(this.dialogImageHandUrl1)
         data = await statusCardSettings(param)
-        console.log(data)
+        // console.log(data)
         if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
