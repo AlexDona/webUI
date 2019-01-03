@@ -99,12 +99,19 @@
                 <span class="label-title">{{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;</span>
                 <div class='invest-mounte'>
                   <!-- 请输入数量 -->
-                  <input
+                  <!--<input
                     type="text"
                     ref="investMounteRef"
                     :placeholder="$t('M.finance_input_sum')"
                     @keyup="changeInvestMounte"
                     @input="checkInput('investMounteRef')"
+                  >-->
+                  <input
+                    type="text"
+                    ref="investMounteRef"
+                    :placeholder="$t('M.finance_input_sum')"
+                    @keyup="investNumLimit('investMounteRef', 2)"
+                    @input="investNumLimit('investMounteRef', 2)"
                   >
                   <strong>{{selecteCoindName}}</strong>
                 </div>
@@ -119,8 +126,8 @@
               <label for=" ">
                 <div class='submitBtn'>
                   <el-button
-                  plain
-                  @click="getInvestEarnings"
+                    plain
+                    @click="getInvestEarnings"
                   >
                   <!-- 立刻存币 -->
                   {{$t('M.finance_at_once_save')}}
@@ -522,13 +529,13 @@
 <script>
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
-import {timeFilter} from '../../utils'
+import {timeFilter, formatNumberInput} from '../../utils'
 import {
   getFinancialManagement,
   imediateInvestment,
   cancleInvestment,
   getFinancialRecord
-} from '../../utils/api/OTC'
+} from '../../utils/api/investmentFinance'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -638,8 +645,7 @@ export default {
     // 页面创建完成请求币种接口
     this.getFinancialManagementList()
   },
-  mounted () {
-  },
+  mounted () {},
   activated () {},
   update () {},
   beforeRouteUpdate () {},
@@ -664,7 +670,7 @@ export default {
       return timeFilter(data, 'data')
     },
     // 键盘弹起时时触发
-    changeInvestMounte (e) {
+    /* changeInvestMounte (e) {
       if (this.isLogin) {
         if (e.target.value > this.userCoindTotal) {
           this.isShow = true
@@ -673,11 +679,10 @@ export default {
         }
       } else {
         this.isShow = false
-        // this.$router.push({path: '/login'})
       }
-    },
+    }, */
     // 限制币存币数量不能为0
-    checkInput (ref) {
+    /* checkInput (ref) {
       let value = this.$refs[ref].value
       let arr = value.split('')
       let str = ''
@@ -692,6 +697,23 @@ export default {
       })
       this.$refs[ref].value = str
       this.investMounte = str
+    }, */
+    // 改写存币数量只能输入小数点后两位20190103任该写
+    investNumLimit (ref, pointLength) {
+      // console.log(this.$refs.investMounteRef.value)
+      // 限制输入数字和位数
+      this[ref] = this.$refs[ref].value
+      let target = this.$refs[ref]
+      formatNumberInput(target, pointLength)
+      if (this.isLogin) {
+        if (this.$refs.investMounteRef.value > this.userCoindTotal) {
+          this.isShow = true
+        } else {
+          this.isShow = false
+        }
+      } else {
+        this.isShow = false
+      }
     },
     // 输入金额改变时检测用户输入的币种总金额
     async getUserCoindTotal () {
@@ -710,7 +732,38 @@ export default {
     },
     // 点击立刻存币按钮执行
     getInvestEarnings () {
-      // console.log(111.00)
+      console.log(this.$refs.investMounteRef.value)
+      if (this.isLogin) {
+        if ((this.$refs.investMounteRef.value - 0) == 0) {
+          this.$message({
+            // 存币数量不能为0
+            message: this.$t('M.finance_invest_number'),
+            type: 'error'
+          })
+          return false
+        }
+        if (this.selectedInvestTypeId && this.$refs.investMounteRef.value) {
+          if (this.isShow === false) {
+            // 显示理财详情模态框前请求数据渲染模态框
+            this.clickGetInvestEarnings()
+            // 显示模态框
+            this.dialogVisible = true
+          } else {
+            return false
+          }
+        } else {
+          this.$message({
+            // 存币类型或存币数量不能为空
+            message: this.$t('M.finance_noemptyTips'),
+            type: 'error'
+          })
+        }
+      } else {
+        this.$router.push({path: '/login'})
+        return false
+      }
+    },
+    /* getInvestEarnings () {
       if (this.isLogin) {
         if (this.selectedInvestTypeId && this.investMounte) {
           if (this.isShow === false) {
@@ -732,7 +785,7 @@ export default {
         this.$router.push({path: '/login'})
         return false
       }
-    },
+    }, */
     // 点击取消按钮模态框关闭
     dialogCancel () {
       this.dialogVisible = false
@@ -770,7 +823,8 @@ export default {
     async clickGetInvestEarnings () {
       const data = await getFinancialRecord({
         financialManagementId: this.selectedInvestTypeId,
-        number: this.investMounte
+        // number: this.investMounte
+        number: this.$refs.investMounteRef.value
       })
       console.log('存币理财类型')
       console.log(data)
@@ -787,7 +841,8 @@ export default {
     async clickImmediateInvestment () {
       const data = await imediateInvestment({
         financialManagementId: this.selectedInvestTypeId,
-        number: this.investMounte
+        // number: this.investMounte
+        number: this.$refs.investMounteRef.value
       })
       console.log('存币理财类型')
       console.log(data)
@@ -885,7 +940,7 @@ export default {
         // 设置状态只要发生请求就让状态改变
         this.FINANCE_LINE_STATUS(1)
         // 将存币数量输入框清空
-        this.investMounte = ''
+        // this.investMounte = ''
         this.$refs.investMounteRef.value = ''
       }
     },
@@ -1140,7 +1195,7 @@ export default {
                     width: 407px;
                     height: 48px;
                     margin-left: 110px;
-                    border: 2px solid -webkit-linear-gradient(135deg, #2b396e, #2a5082);
+                    border-radius: 4px;
                     text-align: center;
                     color: #fff;
                     background: -webkit-linear-gradient(45deg, #2b396e, #2a5082);
