@@ -33,7 +33,9 @@ export const pickOrdersToSell = (params) => postWithURLencoded('otcOrder/pickEnt
 // 查询otc挂单详情-商家和普通用户通用
 export const querySelectedOrdersDetails = (params) => get('otcEntrust/selectUserEntrustDetail', params)
 // 查询otc挂单撤销
-export const querySelectedOrdersRevocation = (params) => postWithURLencoded('otcEntrust/cancelOtcEntrust', params)
+export const querySelectedOrdersRevocation = (params) => postWithURLencoded('otcEntrust/cancelOtcEntrust', Object.assign({
+  'not-loading': true
+}, params))
 // 查询otc挂单用户交易币种手续费率以及币种详情
 export const queryUserTradeFeeAndCoinInfo = (params) => get('otcCOin/getUserTradeFeeAndCoinInfo', params)
 // otc广告管理一键撤销用户所有挂单--商家专用
@@ -41,11 +43,17 @@ export const cancelAllOrdersOnekey = (params) => postWithURLencoded('otcEntrust/
   'not-loading': true
 }, params))
 // otc交易中订单，otc买家确认付款
-export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', params)
+export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', Object.assign({
+  'not-loading': true
+}, params))
 // otc交易中订单， otc卖家确认收款
-export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
+export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', Object.assign({
+  'not-loading': true
+}, params))
 // otc交易中订单， otc卖家申诉
-export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyOtcAppeal', params)
+export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyOtcAppeal', Object.assign({
+  'not-loading': true
+}, params))
 // 提交otc商家申请
 export const businessApply = (params) => postWithURLencoded('otcMerchApply/applyOTCMerch', params)
 // 首次进入otc商家申请页面
