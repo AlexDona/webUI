@@ -138,7 +138,9 @@
 import Slider from 'vue-slider-component'
 import {mapState} from 'vuex'
 import SliderBarTemplate from './SliderBarTemplate'
-import {keep2Num} from '../../utils'
+import {
+  cutOutPointLength
+} from '../../utils'
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
@@ -219,8 +221,9 @@ export default {
       let rate
       let currentAmount = newCount * newPrice
       rate = this.buyTotal < currentAmount ? 100 : (currentAmount / this.buyTotal) * 100
+      console.log(rate)
       // 买单价
-      this.setValue('limitBuySliderValue', keep2Num(rate))
+      this.setValue('limitBuySliderValue', cutOutPointLength(rate, 2))
     },
     setNewRateByUserMarket (type, newAmount) {
       let total = type == 'buy' ? this.buyTotal : this.sellTotal
@@ -229,10 +232,10 @@ export default {
         console.log(rate)
         switch (type) {
           case 'buy':
-            this.setValue('marketBuySliderValue', keep2Num(rate))
+            this.setValue('marketBuySliderValue', cutOutPointLength(rate, 2))
             break
           case 'sell':
-            this.setValue('marketSellSliderValue', keep2Num(rate))
+            this.setValue('marketSellSliderValue', cutOutPointLength(rate, 2))
             break
         }
       }
@@ -269,7 +272,7 @@ export default {
       if (newVal && this.sellTotal) {
         let rate = newVal < this.sellTotal ? (newVal / this.sellTotal) * 100 : 100
         console.log(rate)
-        this.setValue('limitSellSliderValue', keep2Num(rate))
+        this.setValue('limitSellSliderValue', cutOutPointLength(rate, 2))
       }
     },
     // 用户设置限价卖数量
