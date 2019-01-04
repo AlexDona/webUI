@@ -525,7 +525,7 @@ input[type="number"] {
 .night div::-webkit-scrollbar,
 body.night::-webkit-scrollbar {/* 滚动条整体部分，其中的属性有width,height,background,border等（就和一个块级元素一样）（位置1） */
   width: 4px;
-  height: 10px;
+  height: 0;
 }
 
 .night div::-webkit-scrollbar-button,
@@ -551,7 +551,7 @@ body.night::-webkit-scrollbar-thumb {/* 滚动条里面可以拖动的那部分�
 
 .night div::-webkit-scrollbar-corner,
 body.night::-webkit-scrollbar-corner {/* 边角（位置6） */
-  background: #82afff;
+  background: #272b41;
 }
 
 /* .night div::-webkit-scrollbar-resizer  {!*定义右下角拖动块的样式（位置7）*! */

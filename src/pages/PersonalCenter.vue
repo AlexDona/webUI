@@ -72,21 +72,21 @@
             :label = "$t('M.user_asset_title6')"
             name = "invitation-promote"
           >
-            <InvitingPromotion/>
+            <InvitingPromotion v-if="userCenterActiveName==='invitation-promote'"/>
           </el-tab-pane>
           <!--安全中心-->
           <el-tab-pane
             :label = "$t('M.user_asset_title7')"
             name = "security-center"
           >
-            <SecurityCenter/>
+            <SecurityCenter v-if="userCenterActiveName==='security-center'"/>
           </el-tab-pane>
           <!--API管理-->
           <el-tab-pane
             :label = "$t('M.comm_user_api_management')"
             name = "api-management"
           >
-            <APIManagement/>
+            <APIManagement v-if="userCenterActiveName==='api-management'"/>
           </el-tab-pane>
           <!--PUSH资产-->
           <el-tab-pane
@@ -112,14 +112,14 @@
             :label = "$t('M.user_asset_title10')"
             name = "coin-orders"
           >
-            <CoinOrders/>
+            <CoinOrders v-if="userCenterActiveName==='coin-orders'"/>
           </el-tab-pane>
           <!--法币订单-->
           <el-tab-pane
             :label = "$t('M.user_asset_title11')"
             name = "fiat-orders"
           >
-            <FiatOrders/>
+            <FiatOrders v-if="userCenterActiveName==='fiat-orders'"/>
           </el-tab-pane>
 
           <!--设置-->
@@ -427,7 +427,7 @@ export default {
         left: -179px;
         width: 160px;
         height: 44px;
-        padding-left: 18px;
+        padding-left: 21px;
         font-size: 18px;
         line-height: 40px;
         color: #338ff5;
@@ -447,7 +447,7 @@ export default {
       }
 
       .setting-title {
-        top: 616px;
+        top: 623px;
       }
     }
 
@@ -455,6 +455,10 @@ export default {
       /* tabs组件出现蓝色边框问题 */
       .el-tabs__active-bar {
         height: 0 !important;
+      }
+
+      .el-dialog__wrapper {
+        background: rgba(0, 0, 0, .7) !important;
       }
 
       .el-tabs__nav-wrap {

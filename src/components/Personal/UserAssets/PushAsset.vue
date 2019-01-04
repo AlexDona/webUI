@@ -14,7 +14,7 @@
       </div>
       <div class="push-assets-content-box padding-left15 margin-top9">
         <div class="push-from-box">
-          <el-form label-width="120px">
+          <el-form label-width="95px">
             <!--资产-->
             <el-form-item
               :label="$t('M.comm_property')"
@@ -145,7 +145,6 @@
             <!--对方UID-->
             <el-table-column
               :label="$t('M.user_push_opposite_side') + ' UID'"
-              width="100"
             >
               <template slot-scope="s">
                 <div
@@ -187,7 +186,6 @@
             <!--金额-->
             <el-table-column
               :label="$t('M.comm_money')"
-              width="100"
             >
               <template slot-scope="s">
                 <div>{{ filterNumber(s.row.amount) }}</div>
@@ -196,7 +194,7 @@
             <!--时间-->
             <el-table-column
               :label="$t('M.comm_time')"
-              width="180px"
+              width="180"
             >
               <template slot-scope="s">
                 <div>{{ timeFormatting(s.row.createTime) }}</div>
@@ -339,6 +337,7 @@
                     v-model="payPassword"
                     @keydown="setErrorMsg(3, '')"
                     @blur="checkoutInputFormat(3, payPassword,1)"
+                    @keyup.enter="submitWithPayPassword"
                   >
                 </el-form-item>
               </el-form>
@@ -774,7 +773,7 @@ export default {
         > .push-from-box {
           width: 400px;
           min-height: 577px;
-          padding-top: 29px;
+          padding-top: 70px;
           margin: 0 auto;
 
           .form-input-common,
@@ -786,7 +785,7 @@ export default {
           }
 
           .form-button-common {
-            margin: 0 0 50px 124px;
+            margin: 0 0 50px 95px;
           }
         }
       }
@@ -843,7 +842,7 @@ export default {
       }
 
       .el-form-item__label {
-        width: 124px !important;
+        width: 95px !important;
         color: #a9bed4;
       }
 

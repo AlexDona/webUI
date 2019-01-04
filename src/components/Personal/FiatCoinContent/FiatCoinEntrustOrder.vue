@@ -130,7 +130,7 @@
 import {timeFilter} from '../../../utils'
 import {
   querySelectedOrdersRevocation
-} from '../../../utils/api/personal'
+} from '../../../utils/api/OTC'
 import {
   returnAjaxMsg,
   changeCurrentPageForLegalTrader

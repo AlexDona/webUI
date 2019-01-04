@@ -152,16 +152,21 @@
   color: #fff !important;
 }
 
-.night .el-select-dropdown__wrap.el-scrollbar__wrap {
-  margin-bottom: -10px !important;
+.el-select-dropdown__wrap.el-scrollbar__wrap {
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.el-scrollbar {
+  overflow: inherit;
+}
+
+.el-scrollbar__bar.is-vertical {
+  width: 0;
 }
 
 .night .el-popper[x-placement^=top] .popper__arrow::after {
   border-top-color: #2a3242;
-}
-
-.day .el-select-dropdown__wrap.el-scrollbar__wrap {
-  margin-bottom: -10px !important;
 }
 
 /* 全局二次弹窗样式 */

@@ -1216,16 +1216,21 @@ export default {
             font-size: 12px;
           }
 
+          &:nth-child(1) {
+            div {
+              padding-left: 10px;
+            }
+          }
+
           &:nth-child(2) {
             div {
-              padding-right: 35px;
+              padding-right: 23px;
               text-align: right;
             }
           }
 
           &:nth-child(3) {
             div {
-              padding-right: 13px;
               text-align: right;
             }
           }
@@ -1237,7 +1242,7 @@ export default {
             }
 
             div {
-              padding-right: 13px;
+              padding-right: 20px;
               text-align: right;
             }
           }

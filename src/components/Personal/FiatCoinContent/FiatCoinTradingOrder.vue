@@ -787,13 +787,12 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {
-  // getQueryAllOrdersList,
   buyerPayForOrder,
   sellerConfirmGetMoney,
   sellerSendAppeal,
   cancelUserOtcOrder,
   completeUserOtcOrder
-} from '../../../utils/api/personal'
+} from '../../../utils/api/OTC'
 import {timeFilter, formatSeconds} from '../../../utils'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {

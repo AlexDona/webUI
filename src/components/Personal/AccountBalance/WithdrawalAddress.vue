@@ -15,7 +15,7 @@
         </span>
       </header>
       <div class="withdrawal-address-content padding-left15">
-        <div class="withdrawal-address-box paddinglr20 margin-top30">
+        <div class="withdrawal-address-box margin-top30">
           <el-form
             ref="form"
             label-width="70px"
@@ -601,13 +601,13 @@ export default {
           }
 
           .form-button {
-            margin: 10px 0 0 140px;
+            margin: 10px 0 0 91px;
           }
 
           /deep/ {
             .el-form .el-form-item {
               .el-form-item__label {
-                width: 120px !important;
+                width: 70px !important;
               }
             }
           }
@@ -901,6 +901,11 @@ export default {
     }
 
     /deep/ {
+      .el-table__empty-block {
+        width: 920px !important;
+        height: 255px;
+      }
+
       .el-input__inner {
         width: 130px;
         height: 34px;
