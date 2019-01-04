@@ -535,6 +535,25 @@ export default {
 
         .el-table__header {
           margin-bottom: 15px;
+
+          /* 任20190104增加已完成订单表头边框样式 */
+          thead {
+            > tr {
+              > th {
+                border: 1px solid #485776;
+                border-right: 0;
+                border-left: 0;
+
+                &:first-child {
+                  border-left: 1px solid #485776;
+                }
+
+                &:nth-last-child(2) {
+                  border-right: 1px solid #485776;
+                }
+              }
+            }
+          }
         }
 
         .el-table__body {
