@@ -106,7 +106,7 @@ import {
   // createNamespacedHelpers,
   mapState
 } from 'vuex'
-
+import { downloadFileWithUserDefined } from '../../utils'
 export default {
   components: {},
   // props,
@@ -153,15 +153,8 @@ export default {
     },
     // 下载资产预览表
     downloadPreviewTable () {
-      fetch(this.downloadUrl).then(res => res.blob().then(blob => {
-        let link = document.createElement('a')
-        let url = window.URL.createObjectURL(blob)
-        let filename = 'Coin application form'
-        link.href = url
-        link.download = filename
-        link.click()
-        window.URL.revokeObjectURL(url)
-      }))
+      let filename = 'Coin application form'
+      downloadFileWithUserDefined(this.downloadUrl, filename)
     }
   },
   filter: {},

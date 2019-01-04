@@ -51,20 +51,14 @@ export const post = (url, params) => {
   return util.ajax({
     method: 'post',
     url,
-    data: params,
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8'
-    }
+    data: params
   })
 }
 export const put = (url, params) => {
   return util.ajax({
     method: 'put',
     url,
-    data: params,
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8'
-    }
+    data: params
   })
 }
 export const postWithURLencoded = (url, params) => {

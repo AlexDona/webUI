@@ -1144,7 +1144,6 @@ export default {
 
     > .inner-box {
       width: 100%;
-      height: 100%;
 
       &.pc-bg {
         background: url('../assets/develop/login-bg.png') 25% 4%  no-repeat;
