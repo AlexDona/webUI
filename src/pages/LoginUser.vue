@@ -783,6 +783,7 @@ export default {
     },
     // 刷新二维码
     async reflashErCode () {
+      this.isScanSuccess = false
       if (this.socket) {
         this.socket.doClose()
       }

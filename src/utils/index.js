@@ -141,7 +141,7 @@ export const timeFilter = (date, methods) => {
   return filterTime
 }
 // 交易中订单倒计时国际标准时分秒 (09ˋ40′32″)
-export const formatSeconds = (date) => {
+export const formatSeconds = date => {
   let secondTime = parseInt(date / 1000)// 秒
   let minuteTime = 0 // 分
   let hourTime = 0 // 小时
@@ -173,7 +173,7 @@ export const formatSeconds = (date) => {
  * @param event : input框dom对象
  * @param targetPointLength ：限制小数点位数
  */
-export function formatNumberInput (event, targetPointLength) {
+export const formatNumberInput = (event, targetPointLength) => {
   let val = event.value
   let newVal = ''
   let newVal2 = ''
@@ -230,7 +230,7 @@ export function formatNumberInput (event, targetPointLength) {
  * 手机号输入限制
  * @param event ： 当前input DOM 对象
  */
-export function phoneNumRegexpInput (event) {
+export const phoneNumRegexpInput = event => {
   let val = event.value
   let finalVal = ''
   let valArr = val.split('')
@@ -247,7 +247,7 @@ export function phoneNumRegexpInput (event) {
  * 只能输入正整数限制
  * @param event ： 当前input DOM 对象
  */
-export function positiveIntegerNumRegexpInput (event) {
+export const positiveIntegerNumRegexpInput = event => {
   let val = event.value
   let finalVal = ''
   let valArr = val.split('')
@@ -264,7 +264,7 @@ export function positiveIntegerNumRegexpInput (event) {
  * 邮箱账号输入限制
  * @param event：当前input DOM对象
  */
-export function emailNumRegexpInput (event) {
+export const emailNumRegexpInput = event => {
   let val = event.value
   let finalVal = ''
   let valArr = val.split('')
@@ -291,7 +291,7 @@ export function emailNumRegexpInput (event) {
  * 身份证 证件号码输入限制
  * @param event：当前input DOM对象
  */
-export function idCardRegexpInputNum (event) {
+export const idCardRegexpInputNum = event => {
   let val = event.value
   let finalVal = ''
   let valArr = val.split('')
@@ -319,7 +319,7 @@ export function idCardRegexpInputNum (event) {
  * @param event：当前input DOM对象
  */
 
-export function passportEntryRestrictions (event) {
+export const passportEntryRestrictions = event => {
   let val = event.value
   let finalVal = ''
   let valArr = val.split('')
@@ -337,7 +337,7 @@ export function passportEntryRestrictions (event) {
   return finalVal
 }
 
-export function getRefValue (self, refName) {
+export const getRefValue = (self, refName) => {
   return self.$refs[refName].value
 }
 
@@ -346,7 +346,7 @@ export function getRefValue (self, refName) {
  * @param phoneNum
  * @returns {string}
  */
-export function phoneNumberFormat (phoneNum) {
+export const phoneNumberFormat = phoneNum => {
   return `${phoneNum.substring(0, 3)}****${phoneNum.substring(phoneNum.length - 4)}`
 }
 
@@ -355,7 +355,7 @@ export function phoneNumberFormat (phoneNum) {
  * @param number
  * @returns {*}
  */
-export function keep2Num (number) {
+export const keep2Num = number => {
   return number.toFixed(2) - 0
 }
 
@@ -366,7 +366,7 @@ export function keep2Num (number) {
  * @param symbol 计算符号
  * @returns {*}
  */
-export function amendPrecision (num1, num2, symbol) {
+export const amendPrecision = (num1, num2, symbol) => {
   num1 = scientificToNumber(num1)
   num2 = scientificToNumber(num2)
   let num1PointLength = ((num1 + '').split('.')[1] || []).length
@@ -391,7 +391,7 @@ export function amendPrecision (num1, num2, symbol) {
  * @param number
  * @returns {*}
  */
-export function scientificToNumber (number) {
+export const scientificToNumber = number => {
   var str = (number + '').toString()
   if (str.indexOf('.') == -1) {
     var reg = /^(\d+)(e)([\-]?\d+)$/
@@ -437,7 +437,7 @@ export function scientificToNumber (number) {
  * @param b64Data
  * @returns {string}
  */
-export function unzip (b64Data) {
+export const unzip = b64Data => {
   var strData = atob(b64Data)
   // Convert binary string to character-number array
   var charData = strData.split('').map(function (x) {
@@ -457,7 +457,7 @@ export function unzip (b64Data) {
  * @num 要截取的数字
  * @pointLength 小数点后需要截取的位数
  */
-export function cutOutPointLength (num, pointLength) {
+export const cutOutPointLength = (num, pointLength) => {
   let result
   let str = num + ''
   let arr = str.split('.')
@@ -468,4 +468,24 @@ export function cutOutPointLength (num, pointLength) {
     result = arr[0] + '.' + value
   }
   return result
+}
+/**
+ * 下载文件改名
+ * @param downloadUrl
+ * @param filename
+ * @returns {boolean}
+ */
+export const downloadFileWithUserDefined = (downloadUrl, filename) => {
+  if (downloadUrl) {
+    fetch(downloadUrl).then(res => res.blob().then(blob => {
+      let a = document.createElement('a')
+      let url = window.URL.createObjectURL(blob)
+      a.href = url
+      a.download = filename
+      a.click()
+      window.URL.revokeObjectURL(url)
+    }))
+  } else {
+    return false
+  }
 }
