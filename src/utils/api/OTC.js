@@ -72,18 +72,8 @@ export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOr
 export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMerchStatics', Object.assign({
   'not-loading': true
 }, params))
-//  币种详情：商家和普通用户挂单页面请求币种详情渲染页面
+// 币种详情：商家和普通用户挂单页面请求币种详情渲染页面
 export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
-// 投资理财请求数据
-export const getFinancialManagement = (params) => get('financialManagement', Object.assign({
-  'not-loading': true
-}, params))
-// 投资理财立投资请求接口
-export const imediateInvestment = (params) => post('financialManagement', params)
-// 投资理财取消投资接口
-export const cancleInvestment = (params) => get(`financialManagement/${params}`)
-// 投资理财添加理财记录接口
-export const getFinancialRecord = (params) => get('financialManagement/recordInfo', params)
 // 撤销otc用户定单（过期买家未付款）
 export const cancelUserOtcOrder = (params) => post('otcOrder/cancelUserOtcOrder', params)
 // 成交otc用户定单（过期卖家未收款）
