@@ -270,7 +270,7 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 科学计数法转换
+    // 0.0 科学计数法转换
     filterNumber (num) {
       return scientificToNumber(num)
     },

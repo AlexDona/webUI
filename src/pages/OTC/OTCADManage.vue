@@ -3,7 +3,6 @@
     class="otc-AD-manage-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-  <!-- :style="{'height':windowHeight+'px'}" -->
     <!-- 2.0 广告管理 -->
     <div class="otc-AD-manage-content" :style="{'min-height':(height-305)+'px'}">
       <!-- 2.1 大标题广告管理 -->
@@ -24,7 +23,7 @@
               <el-select
                 :placeholder="$t('M.comm_please_choose')"
                 :no-data-text="$t('M.comm_no_data')"
-                v-model="activitedADManageTraderStyleList"
+                v-model="activatedADManageTraderStyleList"
                 @change="changeSelectValue('changeADManageTraderStyleList', $event)"
                 clearable
               >
@@ -47,7 +46,7 @@
               <el-select
                 :no-data-text="$t('M.comm_no_data')"
                 :placeholder="$t('M.comm_please_choose')"
-                v-model="activitedADManageMarketList"
+                v-model="activatedADManageMarketList"
                 @change="changeSelectValue('changeADManageMarketList', $event)"
                 clearable
               >
@@ -70,7 +69,7 @@
               <el-select
                 :no-data-text="$t('M.comm_no_data')"
                 :placeholder="$t('M.comm_please_choose')"
-                v-model="activitedADManageCurrencyId"
+                v-model="activatedADManageCurrencyId"
                 @change="changeSelectValue('changeADManageCurrencyId', $event)"
                 clearable
               >
@@ -93,7 +92,7 @@
               <el-select
                 :no-data-text="$t('M.comm_no_data')"
                 :placeholder="$t('M.comm_please_choose')"
-                v-model="activitedADManageStatusList"
+                v-model="activatedADManageStatusList"
                 @change="changeSelectValue('changeADManageStatusList', $event)"
                 clearable
               >
@@ -131,17 +130,15 @@
         <div class="manage-main-middle">
           <!-- 一键下架所有广告 -->
           <span
-            class="all-unshelve cursor-pointer"
-            @click="cancelAllOnekey"
+            class="all-unShelve cursor-pointer"
+            @click="cancelAllOneKey"
           >
             <IconFontCommon
               class="font-size22"
               iconName="icon-xiajia5"
             />
-            <span
-              class="unshelve-text"
-            >
-            {{$t('M.otc_adMange_advertingAD')}}
+            <span>
+              {{$t('M.otc_adMange_advertingAD')}}
             </span>
           </span>
         </div>
@@ -171,14 +168,14 @@
             >
               <template slot-scope="s">
                 <div
-                  v-if="s.row.entrustType === 'BUY'"
+                  v-show="s.row.entrustType === 'BUY'"
                   :class="{red:s.row.entrustType === 'BUY'}"
                 >
                   <!-- 购买 -->
                   {{$t('M.otc_index_buy')}}
                 </div>
                 <div
-                  v-if="s.row.entrustType === 'SELL'"
+                  v-show="s.row.entrustType === 'SELL'"
                   :class="{green:s.row.entrustType === 'SELL'}"
                 >
                   <!-- 出售 -->
@@ -241,15 +238,15 @@
             >
               <template slot-scope="s">
                 <!-- 已上架 -->
-                <div v-if="s.row.status === 'ENTRUSTED'">
+                <div v-show="s.row.status === 'ENTRUSTED'">
                   {{$t('M.otc_adMange_already_getting')}}
                 </div>
                 <!-- 已完成 -->
-                <div v-if="s.row.status === 'COMPLETED'">
+                <div v-show="s.row.status === 'COMPLETED'">
                   {{$t('M.otc_adMange_already_accomplish')}}
                 </div>
                 <!-- 已下架 -->
-                <div v-if="s.row.status === 'CANCELED'">
+                <div v-show="s.row.status === 'CANCELED'">
                   {{$t('M.otc_adMange_already_adverting')}}
                 </div>
               </template>
@@ -263,7 +260,7 @@
                 <el-button
                   type="text"
                   v-if="s.row.status === 'ENTRUSTED'"
-                  @click="updateADUnshelve(s.row.id)"
+                  @click="updateADUnShelve(s.row.id)"
                 >
                   {{$t('M.otc_adMange_adverting')}}
                 </el-button>
@@ -325,7 +322,7 @@ export default {
       totalPages: 1,
       // 1.0 广告管理筛选下拉框数组--交易类型
       // 选中的筛选项
-      activitedADManageTraderStyleList: '',
+      activatedADManageTraderStyleList: '',
       ADManageTraderStyleList: [
         {
           value: 'BUY',
@@ -337,13 +334,13 @@ export default {
         }
       ],
       // 2.0 广告管理筛选下拉框数组--市场
-      activitedADManageMarketList: '', // 选中的筛选项
+      activatedADManageMarketList: '', // 选中的筛选项
       ADManageMarketList: [],
       // 交易法币
-      activitedADManageCurrencyId: '',
+      activatedADManageCurrencyId: '',
       ADManageCurrencyId: [],
       // 3.0 广告管理筛选下拉框数组--状态
-      activitedADManageStatusList: '', // 选中的筛选项
+      activatedADManageStatusList: '', // 选中的筛选项
       ADManageStatusList: [
         {
           value: 'ENTRUSTED',
@@ -358,9 +355,12 @@ export default {
           label: 'M.otc_adMange_already_adverting' // 已下架
         }
       ],
-      pageNum: 0, // 设置默认列表页数
-      pageSize: 10, // 设置列表当前页数
-      ADList: [] // 广告列表
+      // 设置默认列表页数
+      pageNum: 0,
+      // 设置列表当前页数
+      pageSize: 10,
+      // 广告列表
+      ADList: []
     }
   },
   created () {
@@ -394,13 +394,13 @@ export default {
       // 改变查询条件从第1页开始查询
       this.currentPage = 1
       // 清空交易类型
-      this.activitedADManageTraderStyleList = ''
+      this.activatedADManageTraderStyleList = ''
       // 清除选中币种id
-      this.activitedADManageMarketList = ''
+      this.activatedADManageMarketList = ''
       // 清除法币币种id
-      this.activitedADManageCurrencyId = ''
+      this.activatedADManageCurrencyId = ''
       // 选中状态清空
-      this.activitedADManageStatusList = ''
+      this.activatedADManageStatusList = ''
       // 重新获取列表
       this.loading = true
       this.getOTCADManageList()
@@ -412,10 +412,10 @@ export default {
     // 4.0 获取广告管理列表
     async getOTCADManageList () {
       const data = await getOTCADManageApplyList({
-        entrustType: this.activitedADManageTraderStyleList ? this.activitedADManageTraderStyleList : '',
-        coinId: this.activitedADManageMarketList ? this.activitedADManageMarketList : '',
-        currencyId: this.activitedADManageCurrencyId ? this.activitedADManageCurrencyId : '',
-        status: this.activitedADManageStatusList ? this.activitedADManageStatusList : '',
+        entrustType: this.activatedADManageTraderStyleList ? this.activatedADManageTraderStyleList : '',
+        coinId: this.activatedADManageMarketList ? this.activatedADManageMarketList : '',
+        currencyId: this.activatedADManageCurrencyId ? this.activatedADManageCurrencyId : '',
+        status: this.activatedADManageStatusList ? this.activatedADManageStatusList : '',
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
@@ -438,19 +438,19 @@ export default {
       switch (type) {
         // 交易类型选中赋值
         case 'changeADManageTraderStyleList':
-          this.activitedADManageTraderStyleList = targetValue
+          this.activatedADManageTraderStyleList = targetValue
           break
         // 交易类型选中赋值
         case 'changeADManageMarketList':
-          this.activitedADManageMarketList = targetValue
+          this.activatedADManageMarketList = targetValue
           break
         // 交易法币选中赋值
         case 'changeADManageCurrencyId':
-          this.activitedADManageCurrencyId = targetValue
+          this.activatedADManageCurrencyId = targetValue
           break
         // 交易状态选中赋值
         case 'changeADManageStatusList':
-          this.activitedADManageStatusList = targetValue
+          this.activatedADManageStatusList = targetValue
           break
       }
     },
@@ -479,18 +479,18 @@ export default {
       }
     },
     // 8.0 一键下架所有广告 二次确认弹出框
-    cancelAllOnekey () {
+    cancelAllOneKey () {
       this.$confirm(this.$t('M.otc_adMange_tipsContentThree'), {
         confirmButtonText: this.$t('M.comm_all_sold_out'), // 全部下架
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
         this.loading = true
-        this.cancelAllOnekeyConfirm()
+        this.cancelAllOneKeyConfirm()
       }).catch(() => {
       })
     },
     // 9.0 一键下架所有广告
-    async cancelAllOnekeyConfirm () {
+    async cancelAllOneKeyConfirm () {
       const data = await cancelAllOrdersOnekey()
       // 提示信息
       if (!(returnAjaxMsg(data, this, 1))) {
@@ -503,7 +503,7 @@ export default {
       }
     },
     // 10.0 点击表格中的下架按钮触发的事件
-    updateADUnshelve (id) {
+    updateADUnShelve (id) {
       this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
         confirmButtonText: this.$t('M.comm_sold_out'), // 下架
         cancelButtonText: this.$t('M.comm_cancel') // 取消
@@ -734,7 +734,7 @@ export default {
         }
 
         > .manage-main-middle {
-          > .all-unshelve {
+          > .all-unShelve {
             color: #338ff5;
           }
         }
@@ -852,7 +852,7 @@ export default {
         }
 
         > .manage-main-middle {
-          > .all-unshelve {
+          > .all-unShelve {
             color: #338ff5;
           }
         }

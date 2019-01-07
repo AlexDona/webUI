@@ -314,7 +314,7 @@ export const OTC = {
   'otc_index_wei': ' for ',
   'otc_index_maxRemain': 'Maximum remaining quantity',
   // ##############发布购买和出售##########Publish purchases and sales
-  'otc_index_chouseType': 'Currency Type',
+  'otc_index_chooseType': 'Currency Type',
   'otc_index_youWant': 'Favor ',
   'otc_index_how': ' price',
   'otc_index_nowUse': 'Available',

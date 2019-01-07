@@ -383,9 +383,7 @@ export default {
           setTimeout(() => {
             window.scrollTo(0, 2000)
           }, 100)
-          setTimeout(() => {
-            this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
-          }, 1000)
+          this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
         }
       }
     },
@@ -424,13 +422,10 @@ export default {
       // console.log('监控')
       // console.log(newVal)
       if (newVal && this.applyStatus !== 3) {
-        // console.log('执行此方法2')
         setTimeout(() => {
           window.scrollTo(0, 2000)
         }, 100)
-        setTimeout(() => {
-          this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
-        }, 1000)
+        this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
       }
     }
   }

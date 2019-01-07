@@ -304,7 +304,7 @@ export const OTC = {
   'otc_index_wei': 'の',
   'otc_index_maxRemain': '最大残量',
   // ##############購入と販売を公開する##########
-  'otc_index_chouseType': '支払う通貨のタイプを選択する',
+  'otc_index_chooseType': '支払う通貨のタイプを選択する',
   'otc_index_youWant': 'あなたが欲しい',
   'otc_index_how': 'どれくらい',
   'otc_index_nowUse': '現在利用可能',

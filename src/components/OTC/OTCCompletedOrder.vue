@@ -54,23 +54,23 @@
                     <!-- 付款账号 -->
                     <p class="order-info-left">
                       <!-- 支付宝账号 -->
-                      <span v-if="s.row.payType === 'Alipay'">
+                      <span v-show="s.row.payType === 'Alipay'">
                         {{$t('M.user_account_alipay')}}{{$t('M.user_account_number')}}：
                       </span>
                       <!-- 银行卡账号 -->
-                      <span v-if="s.row.payType === 'Bankcard'">
+                      <span v-show="s.row.payType === 'Bankcard'">
                         {{$t('M.otc_bank_num')}}：
                       </span>
                       <!-- 西联汇款账号 -->
-                      <span v-if="s.row.payType === 'WestUnion'">
+                      <span v-show="s.row.payType === 'WestUnion'">
                         {{$t('M.user_account_western_union')}}{{$t('M.user_account_number')}}：
                       </span>
                       <!-- PAYPAL账号 -->
-                      <span v-if="s.row.payType === 'PAYPAL'">
+                      <span v-show="s.row.payType === 'PAYPAL'">
                         PAYPAL{{$t('M.user_account_number')}}：
                       </span>
                       <!-- 微信账号 -->
-                      <span v-if="s.row.payType === 'Wechat'">
+                      <span v-show="s.row.payType === 'Wechat'">
                         {{$t('M.user_account_weChat')}}{{$t('M.user_account_number')}}：
                       </span>
                       <span>{{s.row.payAcctount}}</span>
@@ -82,14 +82,14 @@
                       <!-- 买单显示：卖家信息 -->
                       <span
                         class="buyer-seller-info"
-                        v-if="s.row.orderType === 'BUY'"
+                        v-show="s.row.orderType === 'BUY'"
                       >
                         {{$t('M.otc_stocks_seller')}}
                       </span>
                       <!-- 卖单显示：买家信息 -->
                       <span
                         class="buyer-seller-info"
-                        v-if="s.row.orderType === 'SELL'"
+                        v-show="s.row.orderType === 'SELL'"
                       >
                         {{$t('M.otc_stocks_buyinfo')}}
                       </span>
@@ -98,21 +98,21 @@
                       <!-- 姓名 -->
                       <span>{{$t('M.otc_name')}}：</span>
                       <!-- 买单显示：卖家姓名 -->
-                      <span v-if="s.row.orderType === 'BUY'">
+                      <span v-show="s.row.orderType === 'BUY'">
                         {{s.row.sellName}}
                       </span>
                       <!-- 卖单显示：买家姓名 -->
-                      <span v-if="s.row.orderType === 'SELL'">
+                      <span v-show="s.row.orderType === 'SELL'">
                         {{s.row.buyName}}
                       </span>
                     </p>
                     <p class="order-info-middle">
                       <!-- 买单显示：卖家手机号 -->
-                      <span v-if="s.row.orderType === 'BUY'">
+                      <span v-show="s.row.orderType === 'BUY'">
                         {{$t('M.otc_trading_sellphone')}}：{{s.row.sellPhone}}
                       </span>
                       <!-- 卖单显示：买家手机号  -->
-                      <span v-if="s.row.orderType === 'SELL'">
+                      <span v-show="s.row.orderType === 'SELL'">
                         {{$t('M.otc_trading_buyphone')}}：{{s.row.buyPhone}}
                       </span>
                     </p>
@@ -121,21 +121,21 @@
                   <div class="completed-info-right">
                     <p
                       class="order-info-right"
-                      v-if="s.row.appeal == 'NO' && s.row.confirmTime !== ''"
+                      v-show="s.row.appeal == 'NO' && s.row.confirmTime !== ''"
                     >
                       <!-- 交易已完成 -->
                       <span class="confirm-time">{{$t('M.otc_trade_complate')}}</span>
                     </p>
                     <p
                       class="order-info-right"
-                      v-if="s.row.appeal == 'YES'"
+                      v-show="s.row.appeal == 'YES'"
                     >
                     <!-- 申诉判定，订单完成 -->
                       <span class="confirm-time">{{$t('M.otc_decide_complate')}}</span>
                     </p>
                     <p
                       class="order-info-right"
-                      v-if="s.row.appeal == 'NO' && s.row.confirmTime == ''"
+                      v-show="s.row.appeal == 'NO' && s.row.confirmTime == ''"
                     >
                     <!-- 申诉判定，订单完成 -->
                       <span class="confirm-time">
@@ -187,14 +187,14 @@
           >
             <template slot-scope="s">
               <span
-                v-if="s.row.orderType === 'BUY'"
+                v-show="s.row.orderType === 'BUY'"
                 :class="{ red: s.row.orderType === 'BUY' }"
               >
                 <!-- 买入 -->
                 {{$t('M.comm_buy')}}
               </span>
               <span
-                v-if="s.row.orderType === 'SELL'"
+                v-show="s.row.orderType === 'SELL'"
                 :class="{ green: s.row.orderType === 'SELL' }"
               >
                 <!-- 卖出 -->
@@ -294,11 +294,11 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 科学计数法转换
+    // 0.1 科学计数法转换
     filterNumber (num) {
       return scientificToNumber(num)
     },
-    // 0.0 分页改变事件
+    // 0.2 分页改变事件
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
       this.getOTCCompletedOrdersList()

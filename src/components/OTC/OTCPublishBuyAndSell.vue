@@ -59,10 +59,10 @@
               </el-form-item>
               <!-- 2.0法币类型 -->
               <el-form-item
-                :label="$t('M.otc_index_chouseType')"
+                :label="$t('M.otc_index_chooseType')"
               >
                 <el-select
-                  :placeholder="$t('M.otc_index_chouseType')"
+                  :placeholder="$t('M.otc_index_chooseType')"
                   :no-data-text="$t('M.comm_no_data')"
                   v-model="hopePaymentCoinId"
                   @change="changeHopePaymentCoinId"
@@ -283,14 +283,14 @@
                   <!-- 卖 -->
                   <span
                     class="predict-sum"
-                    v-if="this.publishStyle === 'sell'"
+                    v-show="this.publishStyle === 'sell'"
                   >
                     {{traderSumSELL}} {{CurrencyCoinsName}}
                   </span>
                   <!-- 买 -->
                   <span
                     class="predict-sum"
-                    v-if="this.publishStyle === 'buy'"
+                    v-show="this.publishStyle === 'buy'"
                   >
                     {{traderSumBUY}} {{CurrencyCoinsName}}
                   </span>
@@ -301,14 +301,14 @@
                   <!-- 卖 -->
                   <span
                     class="predict-sum"
-                    v-if="this.publishStyle === 'sell'"
+                    v-show="this.publishStyle === 'sell'"
                   >
                     {{serviceChargeSELL}} {{coinName}}
                   </span>
                   <!-- 买 -->
                   <span
                     class="predict-sum"
-                    v-if="this.publishStyle === 'buy'"
+                    v-show="this.publishStyle === 'buy'"
                   >
                     {{serviceChargeBUY}} {{coinName}}
                   </span>
@@ -350,7 +350,7 @@
                   top="25vh"
                   width="470"
                 >
-                  <!-- <div>请输入交易密码</div> -->
+                  <!-- 请输入交易密码 -->
                   <div class="input">
                     <input
                       type="password"
@@ -528,7 +528,7 @@ export default {
       // 参数币种id
       parameterCoinId: '',
       // 是否需要交易密码
-      isNeedPayPassowrd: true
+      isNeedPayPassword: true
     }
   },
   created () {
@@ -658,12 +658,6 @@ export default {
     },
     //  6.0 点击 购买 和 出售 按钮切换
     toggleBuySellButton (index) {
-      // if (index === 1) {
-      //   this.publishStyle = 'sell'
-      // }
-      // if (index === 2) {
-      //   this.publishStyle = 'buy'
-      // }
       // switch改写
       switch (index) {
         case 1:
@@ -838,7 +832,7 @@ export default {
     },
     //  8.0 点击发布出售或者发布购买弹出输入交易密码框
     async showPasswordDialog () {
-      this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
       switch (this.publishStyle) {
         case 'buy':
           if (!this.entrustCountBuy) {
@@ -880,7 +874,7 @@ export default {
       if (this.errorTipsPrice || this.errorTipsLimitMin || this.errorTipsLimitMax) {
         return false
       }
-      if (this.isNeedPayPassowrd) {
+      if (this.isNeedPayPassword) {
         this.publishOrderTradePwdDialogStatus = true
       } else {
         this.publishOTCEntryOrders()
@@ -892,7 +886,7 @@ export default {
     },
     // 9.0 点击输入密码框中的提交按钮
     async publishOTCEntryOrders () {
-      if (this.isNeedPayPassowrd && !this.tradePassword) {
+      if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
         this.errorPWd = this.$t('M.comm_please_enter') + this.$t('M.comm_password')
         return false
@@ -904,7 +898,7 @@ export default {
         maxCount: this.$refs.maxCount.value, // 单笔最大限额（CNY）
         remark: this.remarkText // 备注
       }
-      param = this.isNeedPayPassowrd ? { ...param, tradePassword: this.tradePassword } : param// 交易密码
+      param = this.isNeedPayPassword ? { ...param, tradePassword: this.tradePassword } : param// 交易密码
       switch (this.publishStyle) {
         case 'buy':
           param = {...param,

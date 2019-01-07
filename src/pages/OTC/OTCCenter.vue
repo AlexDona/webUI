@@ -6,7 +6,10 @@
     <!--2.0 在线交易和订单管理-->
     <div class="otc-center-content">
       <!-- 2.1 在线交易-->
-      <div class="otc-online-trading" id="jumpScrollTop">
+      <div
+        class="otc-online-trading"
+        id="jumpScrollTop"
+      >
         <!-- 2.1.1 在线购买和在线出售按钮-->
         <div class="otc-online-buy-and-sell-button">
           <el-radio-group
@@ -35,25 +38,11 @@
           <div class="otc-filtrate-publish">
             <!-- 可用币种列表 -->
             <div class="otc-filtrate-box">
-              <!-- 我要购买 -->
-              <span
-                class="otc-i-wan"
-                v-show="OTCBuySellStyle === 'onlineBuy'"
-              >
-                <!-- 我要购买 ： -->
-                {{ $t('M.otc_index_wantTo_buy') }} :
+              <!-- 我要购买/我要出售 -->
+              <span class="otc-i-wan">
+                {{ OTCBuySellStyle === 'onlineBuy' ? $t('M.otc_index_wantTo_buy'): $t('M.otc_index_wantTo_sell') }}：
               </span>
-              <!-- 我要出售 -->
-              <span
-                class="otc-i-wan"
-                v-show="OTCBuySellStyle === 'onlineSell'"
-              >
-                <!-- 我要出售 ： -->
-                {{ $t('M.otc_index_wantTo_sell') }} :
-              </span>
-              <div
-                class="otc-filtrate-style"
-              >
+              <div class="otc-filtrate-style">
                 <span
                   v-for="(item, index) in IWantToBuySellArr"
                   :key="index"
@@ -102,7 +91,7 @@
                   @change="payWayChangeValue"
                 >
                   <el-option
-                    v-for="(item,index) in payWayBankinfoList"
+                    v-for="(item,index) in payWayBankInfoList"
                     :key="index"
                     :value="item.id"
                     :label="$t(item.shortName)"
@@ -115,7 +104,6 @@
                 type="primary"
                 @click="toPublishOrder"
               >
-                <!-- 发布订单 -->
               {{ $t('M.otc_release_order') }}
               </el-button>
             </div>
@@ -139,15 +127,15 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    <!-- 如果是商家用户就显示商家图标MERCHANT -->
+                    <!-- 如果是商家显示商家图标：认证商家:MERCHANT-->
                     <el-tooltip
                       effect="dark"
-                      content="已认证商家"
+                      :content="$t('M.otc_merchant')"
                       placement="bottom-start"
                     >
                       <img
                         src="../../assets/develop/shangjia.png"
-                        class="shang-icon"
+                        class="merchant-icon"
                         v-show="s.row.userType === 'MERCHANT'"
                       >
                     </el-tooltip>
@@ -200,22 +188,22 @@
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-zhifubao1"
-                      v-if="s.row.payTypes[0] === '1'"
+                      v-show="s.row.payTypes[0] === '1'"
                     />
                     <!-- 2微信 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-weixin1"
-                      v-if="s.row.payTypes[1] === '1'"
+                      v-show="s.row.payTypes[1] === '1'"
                     />
                     <!-- 3银行卡 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-yinhangqia"
-                      v-if="s.row.payTypes[2] === '1'"
+                      v-show="s.row.payTypes[2] === '1'"
                     />
                     <!-- 4西联汇款 -->
-                    <span v-if="s.row.payTypes[3] == '1'">
+                    <span v-show="s.row.payTypes[3] == '1'">
                       <img
                         src="../../assets/user/xilian.png"
                         class="xilian"
@@ -225,7 +213,7 @@
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-paypal"
-                      v-if="s.row.payTypes[4] === '1'"
+                      v-show="s.row.payTypes[4] === '1'"
                     />
                   </div>
                 </template>
@@ -318,7 +306,7 @@
           <!-- 2.2.1 交易中的订单 -->
           <el-tab-pane
             name = "first"
-            :disabled="isdisabled"
+            :disabled="isDisabled"
           >
             <span slot="label">
               <i
@@ -337,7 +325,7 @@
           <!-- 2.2.2 已完成订单 -->
           <el-tab-pane
             name = "second"
-            :disabled="isdisabled"
+            :disabled="isDisabled"
           >
             <span slot="label">
               <i
@@ -356,7 +344,7 @@
           <!-- 2.2.3 已取消订单 -->
           <el-tab-pane
             name = "third"
-            :disabled="isdisabled"
+            :disabled="isDisabled"
           >
             <span slot="label">
               <i
@@ -375,7 +363,7 @@
           <!-- 2.2.4 冻结中订单 -->
           <el-tab-pane
             name = "fourth"
-            :disabled="isdisabled"
+            :disabled="isDisabled"
           >
             <span slot="label">
               <i
@@ -394,7 +382,7 @@
           <!-- 2.2.5 委托订单 -->
           <el-tab-pane
             name = "fifth"
-            :disabled="isdisabled"
+            :disabled="isDisabled"
           >
             <span slot="label">
               <i
@@ -449,7 +437,7 @@ export default {
   data () {
     return {
       // 订单tabs面板切换禁用状态
-      isdisabled: false,
+      isDisabled: false,
       // 在线购买和在线出售按钮禁用状态
       isDisabledRadio: false,
       // loading加载
@@ -476,7 +464,7 @@ export default {
       // 在线购买和在线出售表格列表
       onlineBuySellTableList: [],
       // 支付方式下拉框数据
-      payWayBankinfoList: [
+      payWayBankInfoList: [
         {
           id: '',
           shortName: 'M.comm_all' // 全部
@@ -548,6 +536,7 @@ export default {
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS'
     ]),
+    // 刷新个人信息
     reflashUserInfo () {
       this.$store.dispatch('user/REFLASH_USER_INFO', this)
     },
@@ -558,9 +547,9 @@ export default {
     // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {
       // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
-      this.isdisabled = true
+      this.isDisabled = true
       setTimeout(() => {
-        this.isdisabled = false
+        this.isDisabled = false
       }, 500)
       // 未登录跳转到登录页面去
       if (!this.isLogin) {
@@ -934,7 +923,7 @@ export default {
             text-align: center;
           }
 
-          .shang-icon {
+          .merchant-icon {
             display: inline-block;
             width: 14px;
             height: 19px;

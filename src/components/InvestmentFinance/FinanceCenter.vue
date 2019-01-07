@@ -18,7 +18,7 @@
     >
       <!-- 2.0 币种类型 -->
       <div class="finance-inner">
-        <div class="container">
+        <div class="kline-container">
         <div class="finance-form-header">
           <el-select
             :placeholder="$t('M.comm_please_choose')"
@@ -1097,7 +1097,7 @@ export default {
         width: 1100px;
         margin: 0 auto;
 
-        > .container {
+        > .kline-container {
           padding: 100px 145px 0;
 
           > .finance-form-header {
@@ -1546,7 +1546,7 @@ export default {
       /deep/ {
         .inner-box {
           .finance-inner {
-            .container {
+            .kline-container {
               .finance-form-header {
                 .el-input__inner {
                   background: #fff !important;

@@ -304,7 +304,7 @@ export const OTC = {
   'otc_index_wei': '는',
   'otc_index_maxRemain': '최대 남은 수량은',
   // ##############发布购买和出售##########
-  'otc_index_chouseType': '지불하고자하는 통화 유형을 선택하십시오',
+  'otc_index_chooseType': '지불하고자하는 통화 유형을 선택하십시오',
   'otc_index_youWant': '원한다',
   'otc_index_how': '얼마나',
   'otc_index_nowUse': '현재 사용 가능',
