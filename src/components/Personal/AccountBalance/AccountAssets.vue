@@ -481,6 +481,10 @@ export default {
       rechargeNoteInfo: '', // 充币地址备注信息
       localLoading: true, // 页面列表局部loading
       isLegalWithdrawAddress: true, // 是否为合法提币地址
+      // 最小提币数量
+      minRechargeAmount: '',
+      // 确认次数
+      successCount: '',
       end: '' // 占位
     }
   },
@@ -876,7 +880,9 @@ export default {
         this.isNeedTag = getNestedData(data, 'data.data.userRechargeAddress.needTag')
         // 获取充值备注信息 rechargeNoteInfo
         this.rechargeNoteInfo = getNestedData(data, 'data.data.userRechargeAddress.tag')
-        console.log(data.data.data.userRechargeAddress.tag)
+        // console.log(data.data.data.userRechargeAddress.tag)
+        this.minRechargeAmount = getNestedData(data, 'data.data.userRechargeAddress.minRechargeAmount')
+        this.successCount = getNestedData(data, 'data.data.userRechargeAddress.successCount')
         console.log(this.chargeMoneyAddress)
       }
     },
