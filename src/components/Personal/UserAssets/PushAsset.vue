@@ -449,7 +449,7 @@ export default {
       totalPageForMyEntrust: 1, // 当前总页数
       pointLength: 4, // 保留小数位后四位
       errorMsg: '', // 错误提示
-      partLoading: true, // 局部列表loading
+      partLoading: false, // 局部列表loading
       isNeedPayPassword: false,
       // 付款类型： 'pay': 付款 'push': push
       payType: 'pay'

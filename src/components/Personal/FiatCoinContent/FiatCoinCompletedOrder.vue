@@ -573,7 +573,7 @@ export default {
           }
 
           td {
-            border-bottom: 1px solid #262f38;
+            /* border-bottom: 1px solid #262f38; */
           }
         }
 

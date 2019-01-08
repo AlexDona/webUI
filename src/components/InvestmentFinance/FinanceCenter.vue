@@ -74,8 +74,8 @@
               </div>
             </div>
             <div class="left-body">
-              <label for="">
-                <!-- 存币类型 -->
+              <label>
+                <!-- 存币方案 -->
                 <span class="label-title">{{$t('M.finance_invest_style')}}:&nbsp;</span>
                 <el-select
                   :placeholder="$t('M.comm_please_choose')"
@@ -92,7 +92,7 @@
                   </el-option>
                 </el-select>
               </label>
-              <label for="">
+              <label>
                 <!-- 存币数量 -->
                 <span class="label-title">{{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;</span>
                 <div class='invest-mounte'>
@@ -121,7 +121,7 @@
               >
                 {{$t('M.finance_errorTips')}}
               </div>
-              <label for=" ">
+              <label>
                 <div class='submitBtn'>
                   <el-button
                     plain
@@ -1153,7 +1153,7 @@ export default {
                 > .invest-mounte {
                   display: flex;
                   justify-content: space-between;
-                  width: 407px;
+                  width: 400px;
                   height: 48px;
                   padding: 13px 11px;
                   border: 1px solid rgba(169, 190, 212, 1);
@@ -1169,9 +1169,9 @@ export default {
 
                 .submitBtn {
                   > button {
-                    width: 407px;
+                    width: 400px;
                     height: 48px;
-                    margin-left: 110px;
+                    margin-left: 117px;
                     border-radius: 4px;
                     text-align: center;
                     color: #fff;
@@ -1303,7 +1303,7 @@ export default {
         .left {
           .left-body {
             .el-input__inner {
-              width: 407px;
+              width: 400px;
               height: 48px;
               border: 1px solid #464e5f;
               border-radius: 2px;

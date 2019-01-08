@@ -9,7 +9,7 @@ export const finance = {
   'finance_date': 'Today ',
   'finance_history': 'History ',
   'finance_invest': 'Deposit ',
-  'finance_invest_style': 'BalanceScheme',
+  'finance_invest_style': 'Balance Scheme',
   'finance_invest_coin1': 'Token',
   'finance_useBalance': 'Balance',
   'finance_errorTips': 'Deposits greater than assets',
