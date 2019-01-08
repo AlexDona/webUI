@@ -24,7 +24,7 @@ import {
 import {
   // getCountryList,
   getServiceProtocoDataAjax
-} from '../utils/api/header'
+} from './api/common'
 import storeCreater from '../vuex'
 import {
   removeStore,

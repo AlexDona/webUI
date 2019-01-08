@@ -70,6 +70,7 @@ import {
   getNewsDetail,
   getAllNewsTypeList
 } from '../../utils/api/home'
+import {changeNewDetialByLanguage} from '../../utils/api/news'
 import {
   returnAjaxMsg,
   getNestedData
@@ -82,8 +83,12 @@ export default {
   data () {
     return {
       newDetail: {},
-      newsTypeList: [], // 新闻类型列表
-      detailAllNewsList: [] // 详情页面新闻列表
+      // 新闻类型列表
+      newsTypeList: [],
+      // 详情页面新闻列表
+      detailAllNewsList: [],
+      // 当前项 templateId:
+      templateId: ''
     }
   },
   async created () {
@@ -96,6 +101,18 @@ export default {
   updated () {},
   beforeRouteUpdate () {},
   methods: {
+    async changeNewDetialByLanguage () {
+      let params = {
+        templateId: this.templateId,
+        language: this.language
+      }
+      const data = await changeNewDetialByLanguage(params)
+      if (!returnAjaxMsg(data, this)) {
+        return false
+      } else {
+        console.log(data)
+      }
+    },
     // 获取所有新闻类型
     async getAllNewsTypeList () {
       const params = {
@@ -115,6 +132,7 @@ export default {
         return false
       } else {
         this.newDetail = getNestedData(data, 'data.data')
+        console.log(this.newDetail)
       }
     },
     // 获取全部type类型的前5条数据
@@ -147,6 +165,7 @@ export default {
     async language () {
       await this.getAllNewsTypeList()
       await this.getAllTypeListNewsList()
+      await this.changeNewDetialByLanguage()
     }
   }
 }
