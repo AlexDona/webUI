@@ -107,7 +107,10 @@
         </div>
       </div>
     </div>
-    <div class="push-assets-main margin-top9">
+    <div
+      class="push-assets-main margin-top9"
+      v-if="userCenterActiveName==='push-asset'"
+    >
       <div class="award-record margin-top9 padding-top0">
         <header class="award-record-header line-height56">
           <span class="font-size16 header-color">
@@ -657,6 +660,8 @@ export default {
       this.$refs.count.value = ''
       this.$refs.price.value = ''
       this.payPassword = ''
+      this.count = ''
+      this.price = ''
     },
     /**
      * 取消push
@@ -748,6 +753,7 @@ export default {
   watch: {
     async userCenterActiveName (newVal) {
       if (newVal === 'push-asset') {
+        console.log(1)
         await this.reflashIsNeedPayPassword()
         this.getPushRecordList()
         // 清空数据

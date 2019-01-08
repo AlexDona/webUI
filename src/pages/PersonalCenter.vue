@@ -93,7 +93,8 @@
             :label = "$t('M.user_asset_title8')"
             name = "push-asset"
           >
-            <PushAsset v-if="userCenterActiveName==='push-asset'"/>
+            <!--<PushAsset v-if="userCenterActiveName==='push-asset'"/>-->
+            <PushAsset v-show="userCenterActiveName==='push-asset'"/>
           </el-tab-pane>
 
           <!--我的交易-->
