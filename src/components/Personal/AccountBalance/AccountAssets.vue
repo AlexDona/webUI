@@ -194,8 +194,11 @@
                     <div class="out-box">
                       <!--充币内容-->
                       <ChargeMoneyItem
+                        v-if="withdrawDepositList[index].rechargeIsShow"
                         :isShow="withdrawDepositList[index].rechargeIsShow"
                         :currencyName="currencyName"
+                        :minRechargeAmount="minRechargeAmount"
+                        :successCount="successCount"
                         :chargeMoneyAddress="chargeMoneyAddress"
                         :isNeedTag="isNeedTag"
                         :rechargeNoteInfo="rechargeNoteInfo"

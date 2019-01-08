@@ -20,7 +20,7 @@ export const getMakeDetail = (params) => get('queryMyEntrustOrder', Object.assig
 export const repealMyEntrustAjax = (params) => put('cancelEntrust', params)
 // 全球行情
 // params 格式： ETH_BTC
-export const getGLobalMarket = (params) => get(`market3rd/${params}`, {
+export const getGlobalMarket = (params) => get(`market3rd/${params}`, {
   'not-loading': true
 })
 // 默认交易对

@@ -78,7 +78,10 @@
         >
           <dt></dt>
           <dd
-            class="coin-item cursor-pointer"
+            class="coin-item"
+            :class="{
+              'cursor-pointer': !clickDalay
+            }"
             v-for="(innerItem,innerIndex) in item.content"
             :key="innerIndex"
             @click=changeActiveSymbol(innerItem)
@@ -169,9 +172,14 @@ export default {
     'list'
   ],
   data () {
-    return {}
+    return {
+      clickDalay: true
+    }
   },
   created () {
+    setTimeout(() => {
+      this.clickDalay = false
+    }, 1500)
   },
   mounted () {
   },
@@ -190,6 +198,9 @@ export default {
       return keep2Num(number)
     },
     changeActiveSymbol (activeSymbol, previousSymbol) {
+      if (this.clickDalay) {
+        return false
+      }
       console.log(this.isKlineDataReady)
       if (this.isKlineDataReady) {
         this.$emit('changeActiveSymbol', {

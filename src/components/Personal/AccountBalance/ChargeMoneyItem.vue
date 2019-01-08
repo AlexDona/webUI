@@ -35,11 +35,13 @@
           * {{ $t('M.user_assets_recharge_hint0').format([currencyName,currencyName]) }}{{rechargeNoteInfo}}
         </p>
         <!--禁止充值除 之外的其他资产，任何非 资产充值将不可找回-->
-        <p>* {{ $t('M.user_assets_recharge_hint1').format([currencyName]) }}</p>
-        <!--往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账-->
-        <p>* {{ $t('M.user_assets_recharge_hint4') }}</p>
+        <p>* {{ $t('M.user_assets_recharge_hint1').format([currencyName, currencyName]) }}</p>
+        <!--往该地址充值，汇款完成，等待网络自动确认（{}个确认）后系统自动到账-->
+        <p>* {{ $t('M.user_assets_recharge_hint4').format([successCount]) }}</p>
         <!--为了快速到账，充值时可以适当提高网络手续费-->
         <p>* {{ $t('M.user_assets_recharge_hint5') }}</p>
+        <!-- 3、最小充值金额{}。 -->
+        <p>* {{$t('M.user_assets_recharge_hint6').format([minRechargeAmount])}}</p>
       </div>
     </div>
     <div class='recharge-content-right flex1'>
@@ -84,12 +86,18 @@ export default {
     // 是否需要备注（公信宝）
     'isNeedTag',
     // 充币地址备注信息
-    'rechargeNoteInfo'
+    'rechargeNoteInfo',
+    // 确认数
+    'successCount',
+    // 最小充币数量
+    'minRechargeAmount'
   ],
   data () {
     return {}
   },
-  created () {},
+  created () {
+    console.log(this.minRechargeAmount)
+  },
   mounted () {},
   activated () {},
   updated () {},

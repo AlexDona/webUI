@@ -390,8 +390,7 @@ import {
 } from '../../utils/commonFunc'
 import {
   getStore,
-  setStore,
-  getCookieWithJSON
+  setStore
 } from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations, mapActions } = createNamespacedHelpers('common')
@@ -427,6 +426,8 @@ export default{
       ],
       activeTheme: '',
       // otc 子导航显示状态
+      // otcSubNavStatus: false,
+      // 任付伟大改动的：otc 子导航显示状态默认先显示，为了方便点击
       otcSubNavStatus: true,
       // 活动中心子导航显示状态
       activityCenterSubNavStatus: false,
@@ -506,6 +507,7 @@ export default{
       this.showApplyMerchantStatus = false
       this.$router.push({path: '/OTCBusinessApply'})
       // location.reload() // 重新刷新页面
+      // 任增加
       // console.log('全局申请状态原始' + this.otcApplyJumpBottomStatus)
       this.$store.commit('OTC/CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS', true)
       // console.log('全局申请状态更改后' + this.otcApplyJumpBottomStatus)
@@ -657,6 +659,7 @@ export default{
     setNewTitle () {
       if (this.title) {
         let newTitle = `${this.middleTopData.last} ${this.middleTopData.sellsymbol}/${this.middleTopData.area} ${this.title}`
+        console.log(newTitle)
         document.querySelector('title').innerText = newTitle
       } else {
         setTimeout(this.setNewTitle, 1000)
@@ -682,27 +685,14 @@ export default{
       otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus
     }),
     localPayPwdSet () {
-      return getNestedData(getCookieWithJSON('loginStep1Info'), 'userInfo.paypasswordSet') || getNestedData(this.userInfo, 'paypasswordSet')
+      return getNestedData(this.userInfo, 'paypasswordSet')
     }
   },
   watch: {
-    width (newVal) {
-      console.log(newVal)
-    },
-    showApplyMerchantStatus (newVal) {
-      // console.log(newVal)
-    },
-    localPayPwdSet (newVal) {
-      // console.log(newVal)
-    },
-    activeLanguage (newVal) {
-      // console.log(newVal)
-    },
     defaultLanguage (newVal) {
       this.$i18n.locale = newVal
     },
-    async language (newVal) {
-      // console.log(newVal)
+    async language () {
       await this.SET_PARTNER_INFO_ACTION({
         self: this,
         language: this.language
@@ -801,6 +791,10 @@ export default{
 
                 > a {
                   color: #8494a6;
+
+                  &.active {
+                    color: $mainColor;
+                  }
                 }
               }
             }
@@ -818,6 +812,10 @@ export default{
               width: 100%;
               height: 100%;
               color: $headerNavFontColor;
+
+              &.active {
+                color: $mainColor;
+              }
             }
 
             > .logo {
