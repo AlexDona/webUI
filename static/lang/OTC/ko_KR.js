@@ -235,7 +235,7 @@ export const OTC = {
   'otc_publishAD_inputmaxLimit': '입력 값이 최고 액수 초과 금지',
   'otc_publishAD_blur_tips1_min': '최소 한도를 입력하십시오.',
   'otc_publishAD_blur_tips2_max': '최대 한도를 입력하십시오.',
-  // 任增加
+  // 增加
   'otc_publishAD_entrustCountLimit': '최대 매출 가능량 부족',
   // ############# 광고 관리 ##################
   'otc_adMange': '광고 관리',

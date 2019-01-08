@@ -69,7 +69,7 @@
               <div class="balance">
                 {{$t('M.finance_useBalance')}}&nbsp;:&emsp;
                 <div>{{isLogin ? availableBalance : '--'}}
-                  <span> {{selecteCoindName}}</span>
+                  <span> {{selectedCoinName}}</span>
                 </div>
               </div>
             </div>
@@ -89,8 +89,6 @@
                     :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeEnglishDescription"
                     :value="item.id"
                   >
-                  <!-- 任增加存币类型国际化 -->
-                  <!-- :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeEnglishDescription" -->
                   </el-option>
                 </el-select>
               </label>
@@ -113,7 +111,7 @@
                     @keyup="investNumLimit('investMounteRef', 2)"
                     @input="investNumLimit('investMounteRef', 2)"
                   >
-                  <strong>{{selecteCoindName}}</strong>
+                  <strong>{{selectedCoinName}}</strong>
                 </div>
               </label>
               <!-- 您存币的币种数量已超过该币种的总资产 -->
@@ -167,7 +165,7 @@
                         ref='changeAlignNum'
                         @input="changeAlignNumber('changeAlignNum', 'investMounteRef', $event)"
                       >
-                      <strong>{{selecteCoindName}}</strong>
+                      <strong>{{selectedCoinName}}</strong>
                     </div>
                   </el-form-item>
                   <!-- 利率 -->
@@ -192,7 +190,7 @@
                         disabled
                       >
                       </el-input>
-                      <strong>{{selecteCoindName}}</strong>
+                      <strong>{{selectedCoinName}}</strong>
                     </div>
                   </el-form-item>
                   <!-- 收益发放 -->
@@ -224,7 +222,7 @@
                       >
                         <span>{{item.date}}</span>
                         <span class="blue">{{item.amount}}</span>
-                        <span class='blue'>{{selecteCoindName}}</span>
+                        <span class='blue'>{{selectedCoinName}}</span>
                         <span>
                           ({{index == formLabelAlign.jsonTimeline.length - 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}})
                         </span>
@@ -295,7 +293,7 @@
             <div class='showAll'>
               <router-link
                 class="blue"
-                :to="{path: isLogin ? '/FinanceInvestmentRecord' : '/login', query:{coinId:selectedCoinId,coinName:selecteCoindName}}"
+                :to="{path: isLogin ? '/FinanceInvestmentRecord' : '/login', query:{coinId:selectedCoinId,coinName:selectedCoinName}}"
               >
                 <!--查看全部-->
                 {{ $t('M.investment_look_all') }}
@@ -338,8 +336,6 @@
                   >
                   </el-table-column>
                   <!-- 存币类型 -->
-                  <!-- 任增加存币类型国际化 -->
-                  <!-- :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription" -->
                   <el-table-column
                     :label="$t('M.finance_invest_style')"
                   >
@@ -373,13 +369,11 @@
                     :label="$t('M.finance_paid_income')"
                   >
                   </el-table-column>
-                  <!-- 状态 prop="state" width="80"-->
                   <el-table-column
                     width="144"
                     :label="$t('M.comm_state')"
                   >
                     <template slot-scope="s">
-                      <!-- <div>{{s.row.state}}</div> -->
                       <div v-show="s.row.state === 'FREEZE'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">冻结</span>
                         <span v-else>Freeze</span>
@@ -481,7 +475,6 @@
                     :label="$t('M.finance_invest_coin1')"
                     width="150">
                   </el-table-column>
-                  <!-- 存币类型 prop="description" :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription"-->
                   <el-table-column
                     :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
                   >
@@ -547,12 +540,12 @@ export default {
   },
   data () {
     return {
-      newArrinvestTypeList: [],
+      newArrInvestTypeList: [],
       fullscreenLoading: false,
       // 选中币种的id
       selectedCoinId: '',
       // 选中币种的名称
-      selecteCoindName: '',
+      selectedCoinName: '',
       // 币种数组
       traderCoinList: [],
       // 存币数量
@@ -698,7 +691,7 @@ export default {
       this.$refs[ref].value = str
       this.investMounte = str
     }, */
-    // 改写存币数量只能输入小数点后两位20190103任该写
+    // 改写存币数量只能输入小数点后两位20190103该写
     investNumLimit (ref, pointLength) {
       // console.log(this.$refs.investMounteRef.value)
       // 限制输入数字和位数
@@ -726,7 +719,6 @@ export default {
         return false
       } else {
         // 重新掉一次币种接口刷新列表
-        // this.userCoindTotal = data.data.data.total
         this.userCoindTotal = getNestedData(data, 'data.data.total')
       }
     },
@@ -862,8 +854,7 @@ export default {
     },
     // 存币理财页面币种查询
     async getFinancialManagementList () {
-      // 任重写
-      this.newArrinvestTypeList = []
+      this.newArrInvestTypeList = []
       this.investTypeList = []
       this.selectedInvestTypeId = ''
       this.fullscreenLoading = true
@@ -871,7 +862,7 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
         coinId: this.selectedCoinId,
-        coinName: this.selecteCoindName
+        coinName: this.selectedCoinName
       })
       console.log('存币理财页面查询')
       console.log(data)
@@ -881,10 +872,7 @@ export default {
       } else {
         // console.log(data)
         this.fullscreenLoading = false
-        // let getData = Object.assign({}, data.data.data)
-        // let getData = data.data.data
         let getData = getNestedData(data, 'data.data')
-        // let getData = JSON.parse(JSON.stringify(data.data.data))
         // 设置可用币种数组
         this.traderCoinList = getData.idNameDtoList
         this.traderCoinList.forEach(item => {
@@ -899,7 +887,7 @@ export default {
           this.selectedCoinId = getData.tickerPriceResult.coinId
         }
         // 设置每次返回地币种名称
-        this.selecteCoindName = getData.tickerPriceResult.coinName
+        this.selectedCoinName = getData.tickerPriceResult.coinName
         // 最新价钱
         this.newnestPrice = getData.tickerPriceResult.price
         // 当日涨幅
@@ -909,14 +897,13 @@ export default {
         // 理财类型数组
         this.investTypeList = getData.managementList
         // 设置存币类型默认值
-        // 任重写
         if (getData.managementList.length) {
           getData.managementList.forEach((item, index) => {
             if (item.state === 'ENABLED') {
-              this.newArrinvestTypeList.push(item)
+              this.newArrInvestTypeList.push(item)
             }
           })
-          this.investTypeList = this.newArrinvestTypeList
+          this.investTypeList = this.newArrInvestTypeList
           this.selectedInvestTypeId = this.investTypeList[0].id
         }
         // 设置可用余额
@@ -961,7 +948,7 @@ export default {
       this.selectedCoinId = e
       this.traderCoinList.forEach(item => {
         if (item.id == e) {
-          this.selecteCoindName = item.name
+          this.selectedCoinName = item.name
         }
       })
       // 改变币种重新请求接口
@@ -973,8 +960,6 @@ export default {
       this.selectedInvestTypeId = e
       this.traderCoinList.forEach(item => {
         if (item.id == e) {
-          // this.selectedInvestTypeDiscri = item.typeDescription
-          // 任增加存币类型国际化
           if (this.language === 'zh_TW' || this.language === 'zh_CN') {
             this.selectedInvestTypeDiscri = item.typeDescription
           } else {
@@ -986,21 +971,13 @@ export default {
     cancleInvest (id) {
       // 用户点击取消按钮需要请求接口
       // this.clickCancleInvestment(id)
-      // 增加二次确认弹出框-任付伟
+      // 增加二次确认弹出框
       this.$confirm(this.$t('M.finance_tipsContentOne'), {
         confirmButtonText: this.$t('M.comm_confirm'), // 确定
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
         this.clickCancleInvestment(id)
-        // this.$message({
-        //   type: 'success',
-        //   message: '下架成功!'
-        // })
       }).catch(() => {
-        // this.$message({
-        //   type: 'success',
-        //   message: this.$t('M.comm_already') + this.$t('M.comm_cancel') + this.$t('M.otc_adMange_adverting') // 已取消下架
-        // })
       })
     }
   },

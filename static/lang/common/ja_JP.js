@@ -172,7 +172,7 @@ export const common = {
   'common_direction': 'タイプ',
   'common_average_price': '取引平均価',
   'comm_get_code': 'コードを取得',
-  // 全球行情任增加
+  // 全球行情增加
   'common_exchange': '取引所',
   'common_counterparty': '取引ペア',
   'common_transaction_price': '取引価格',

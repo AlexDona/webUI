@@ -521,7 +521,7 @@ export default {
     async getUpdatePayPassword () {
       // 问题：点击确认重置按钮直接接口调用成功了，
       // 原因：未调用验证input方法
-      // 任修复重置交易密码逻辑，应该调用confirmUpdate()
+      // 修复重置交易密码逻辑，应该调用confirmUpdate()
       this.confirmUpdate()
     },
     // 确定重置接口处理

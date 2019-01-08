@@ -112,14 +112,8 @@ body {
   font-size: 14px;
   font-family: Helvetica, Arial, sans-serif;
   text-align: left;
-
-  /* background-color: transparent; */
   color: #666;
-
-  /* 任更改背景色 */
   background-color: #272b41;
-
-  /* height:100%; */
 }
 
 body.night {
@@ -622,7 +616,7 @@ body.day {
   bottom: -2px !important;
 }
 
-/* 20181228任增加文本域字体大小改为12px,颜色按照设置图黑白切换改写 */
+/* 20181228增加文本域字体大小改为12px,颜色按照设置图黑白切换改写 */
 .night textarea::-webkit-input-placeholder {
   font-size: 12px;
   color: #a9bed4;

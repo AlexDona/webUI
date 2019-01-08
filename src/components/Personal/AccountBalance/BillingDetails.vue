@@ -614,6 +614,7 @@ export default {
 
         .demonstration {
           margin-right: 5px;
+          font-size: 12px;
         }
       }
     }

@@ -536,7 +536,7 @@ export default {
         .el-table__header {
           margin-bottom: 15px;
 
-          /* 任20190104增加已完成订单表头边框样式 */
+          /* 20190104增加已完成订单表头边框样式 */
           thead {
             > tr {
               > th {

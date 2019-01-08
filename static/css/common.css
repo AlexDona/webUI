@@ -110,7 +110,7 @@
   border: none !important;
 }
 
-/* otc 交易中支付码样式-任付伟添加 */
+/* otc 交易中支付码样式 */
 .day .el-popper[x-placement^=bottom] .popper__arrow::after {
   border-bottom-color: #eaf4fe;
 }
@@ -229,8 +229,6 @@
   z-index: 2300 !important;
 }
 
-/* 任付伟增加开始 */
-
 /* 商家图标鼠标放上去显示的样式 */
 .night .el-tooltip__popper {
   padding: 7px 10px;
@@ -238,9 +236,6 @@
 
 .night .el-tooltip__popper.is-dark {
   color: black;
-
-  /* background: #7a98f7;
-  color: #fff; */
   background: #fff;
 }
 

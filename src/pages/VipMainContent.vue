@@ -854,17 +854,8 @@ export default {
         this.fullscreenLoading = false
         return false
       } else {
-        // // 接口成功清除loading
-        // this.fullscreenLoading = false
-        // if (data.data.data) {
-        //   // 返回展示
-        //   this.vipPriceInfo1 = data.data.data
-        //   console.log(this.vipPriceInfo1[0].vipCoinName)
-        // }
-        // 任修复报错问题
         // 接口成功清除loading
         this.fullscreenLoading = false
-        // this.vipPriceInfo1 = data.data.data
         this.vipPriceInfo1 = getNestedData(data, 'data.data')
         console.log(this.vipPriceInfo1)
       }
@@ -907,8 +898,6 @@ export default {
       } else {
         // 接口成功清除loading
         this.fullscreenLoading = false
-        // this.currencyAsset = data.data.data.total
-        // 任修复报错问题
         this.currencyAsset = getNestedData(data, 'data.data.total')
         console.log(this.currencyAsset)
       }

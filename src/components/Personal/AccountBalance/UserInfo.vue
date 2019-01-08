@@ -286,7 +286,6 @@ export default {
       theme: state => state.common.theme,
       language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
-      // 任改动
       innerUserInfo: state => state.user.loginStep1Info.userInfo // 内存用户详细信息
     }),
     // CNY 资产

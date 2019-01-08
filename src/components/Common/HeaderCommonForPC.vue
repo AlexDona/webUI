@@ -427,8 +427,6 @@ export default{
       ],
       activeTheme: '',
       // otc 子导航显示状态
-      // otcSubNavStatus: false,
-      // 任付伟大改动的：otc 子导航显示状态默认先显示，为了方便点击
       otcSubNavStatus: true,
       // 活动中心子导航显示状态
       activityCenterSubNavStatus: false,
@@ -508,7 +506,6 @@ export default{
       this.showApplyMerchantStatus = false
       this.$router.push({path: '/OTCBusinessApply'})
       // location.reload() // 重新刷新页面
-      // 任增加
       // console.log('全局申请状态原始' + this.otcApplyJumpBottomStatus)
       this.$store.commit('OTC/CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS', true)
       // console.log('全局申请状态更改后' + this.otcApplyJumpBottomStatus)

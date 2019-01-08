@@ -235,7 +235,6 @@ export const OTC = {
   'otc_publishAD_inputmaxLimit': '输入值不能大于最大限额',
   'otc_publishAD_blur_tips1_min': '请输入单笔最小限额',
   'otc_publishAD_blur_tips2_max': '请输入单笔最大限额',
-  // 任增加
   'otc_publishAD_entrustCountLimit': '最大可卖出量不足',
   // #############广告管理##################
   'otc_adMange': '广告管理',

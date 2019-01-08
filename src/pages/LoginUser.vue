@@ -1574,8 +1574,7 @@ export default {
 
         > .tips {
           height: 50px;
-          // line-height: 50px;
-          margin-top: 10px; // 任增加
+          margin-top: 10px;
           color: #fff;
         }
 

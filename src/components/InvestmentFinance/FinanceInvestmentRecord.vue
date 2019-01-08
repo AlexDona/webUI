@@ -411,7 +411,7 @@ export default {
     cancleInvest (id) {
       // 用户点击取消按钮需要请求接口
       // this.clickCancleInvestment(id)
-      // 增加二次确认弹出框-任付伟
+      // 增加二次确认弹出框
       this.$confirm(this.$t('M.finance_tipsContentOne'), {
         confirmButtonText: this.$t('M.comm_confirm'), // 确定
         cancelButtonText: this.$t('M.comm_cancel') // 取消

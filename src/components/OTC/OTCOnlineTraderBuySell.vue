@@ -326,7 +326,7 @@
           >
             <!-- 请输入交易密码 -->
             <div class="input">
-              <!--任2018129封装提交摘单买入和卖出方法-->
+              <!--2018129封装提交摘单买入和卖出方法-->
               <input
                 type="password"
                 :placeholder="$t('M.otc_publishAD_sellpassword')"
@@ -336,7 +336,7 @@
                 @keyup.enter="pickOrdersToBuyOrSell"
                 onpaste="return false"
               >
-              <!--任2018129封装提交摘单买入和卖出方法-->
+              <!--2018129封装提交摘单买入和卖出方法-->
             </div>
             <div class="error-info">
               <!-- 错误提示 -->
@@ -346,7 +346,7 @@
               slot="footer"
               class="dialog-footer"
             >
-              <!--任2018129封装提交摘单买入和卖出方法-->
+              <!--2018129封装提交摘单买入和卖出方法-->
               <el-button
                 type="primary"
                 @click="pickOrdersToBuyOrSell"
@@ -354,7 +354,7 @@
                 <!-- 提交 -->
                 {{$t('M.otc_submit')}}
               </el-button>
-              <!--任2018129封装提交摘单买入和卖出方法-->
+              <!--2018129封装提交摘单买入和卖出方法-->
             </span>
           </el-dialog>
         </div>
@@ -524,9 +524,9 @@ export default {
           if (this.isNeedPayPassword) {
             this.pickOrderTradePwdDialogStatus = true
           } else {
-            // 任2018129封装提交摘单买入和卖出方法
+            // 2018129封装提交摘单买入和卖出方法
             this.pickOrdersToBuyOrSell()
-            // 任2018129封装提交摘单买入和卖出方法
+            // 2018129封装提交摘单买入和卖出方法
           }
           break
         // 在线卖
@@ -543,9 +543,9 @@ export default {
           if (this.isNeedPayPassword) {
             this.pickOrderTradePwdDialogStatus = true
           } else {
-            // 任2018129封装提交摘单买入和卖出方法
+            // 2018129封装提交摘单买入和卖出方法
             this.pickOrdersToBuyOrSell()
-            // 任2018129封装提交摘单买入和卖出方法
+            // 2018129封装提交摘单买入和卖出方法
           }
           break
       }
@@ -750,7 +750,7 @@ export default {
         }
       }
     },
-    // 任2018129封装提交摘单买入和卖出方法
+    // 2018129封装提交摘单买入和卖出方法
     async pickOrdersToBuyOrSell () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
@@ -794,7 +794,7 @@ export default {
         this.$router.push({path: '/OTCCenter'})
       }
     },
-    // 任2018129封装提交摘单买入和卖出方法
+    // 2018129封装提交摘单买入和卖出方法
     // 8交易密码框获得焦点事件
     tradePasswordFocus () {
       this.tradePasswordTips = ''

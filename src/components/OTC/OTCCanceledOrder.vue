@@ -389,7 +389,7 @@ export default {
 
             > .text-info {
               line-height: 20px;
-              // 任付伟增加原因字段样式
+              // 增加原因字段样式
               .reason-content {
                 display: inline-block;
                 width: 250px;

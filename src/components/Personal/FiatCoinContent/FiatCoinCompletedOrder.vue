@@ -131,11 +131,6 @@
                       </span>
                     </p>
                     <p class="order-info-middle">
-                      <!-- <span> -->
-                        <!--卖家手机号-->
-                        <!-- {{$t('M.otc_trading_sellphone')}}： -->
-                      <!-- </span> -->
-                      <!-- <span>{{s.row.sellPhone}}</span> -->
                       <!-- 买单显示：卖家手机号 -->
                       <span v-if="s.row.orderType === 'BUY'">
                         {{$t('M.otc_trading_sellphone')}}：
@@ -154,29 +149,6 @@
                   </div>
                   <!-- 右侧 -->
                   <div class="completed-info-right">
-                    <!--确认时间-->
-                    <!-- <p class="order-info-right">
-                      <span class="confirm-time">
-                        {{$t('M.otc_trade_complate')}}
-                      </span>
-                    </p> -->
-                    <!--付款确认时间-->
-                    <!-- <p class="order-info-right">
-                      <span>
-                        {{$t('M.otc_time_payment')}}：
-                      </span>
-                      <span>{{s.row.payTime}}</span>
-                    </p> -->
-                    <!--收款确认时间-->
-                    <!-- <p class="order-info-right">
-                      <span>
-                        {{$t('M.otc_time_collection')}}：
-                      </span>
-                      <span>
-                        {{s.row.confirmTime ? s.row.confirmTime : s.row.completeTime}}
-                      </span>
-                    </p> -->
-                    <!-- 任修复 -->
                     <p
                       class="order-info-right"
                       v-if="s.row.appeal == 'NO' && s.row.confirmTime !== ''"
@@ -420,7 +392,7 @@ export default {
               color: #5e95ec;
             }
 
-            // 任付伟增加原因字段样式
+            // 增加原因字段样式
             .reason-content {
               display: inline-block;
               width: 250px;

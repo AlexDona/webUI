@@ -113,7 +113,7 @@
             </p>
           </div>
           <div class="security-status text-align-r">
-            <!-- 任修复：将点击事件写在按钮上不要写在span上 -->
+            <!-- 修复：将点击事件写在按钮上不要写在span上 -->
             <button
               v-if="!securityCenter.isMailEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
