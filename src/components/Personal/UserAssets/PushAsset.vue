@@ -14,7 +14,7 @@
       </div>
       <div class="push-assets-content-box padding-left15 margin-top9">
         <div class="push-from-box">
-          <el-form label-width="120px">
+          <el-form label-width="95px">
             <!--资产-->
             <el-form-item
               :label="$t('M.comm_property')"
@@ -107,7 +107,10 @@
         </div>
       </div>
     </div>
-    <div class="push-assets-main margin-top9">
+    <div
+      class="push-assets-main margin-top9"
+      v-if="userCenterActiveName==='push-asset'"
+    >
       <div class="award-record margin-top9 padding-top0">
         <header class="award-record-header line-height56">
           <span class="font-size16 header-color">
@@ -145,7 +148,6 @@
             <!--对方UID-->
             <el-table-column
               :label="$t('M.user_push_opposite_side') + ' UID'"
-              width="100"
             >
               <template slot-scope="s">
                 <div
@@ -187,7 +189,6 @@
             <!--金额-->
             <el-table-column
               :label="$t('M.comm_money')"
-              width="100"
             >
               <template slot-scope="s">
                 <div>{{ filterNumber(s.row.amount) }}</div>
@@ -196,7 +197,7 @@
             <!--时间-->
             <el-table-column
               :label="$t('M.comm_time')"
-              width="180px"
+              width="180"
             >
               <template slot-scope="s">
                 <div>{{ timeFormatting(s.row.createTime) }}</div>
@@ -339,6 +340,7 @@
                     v-model="payPassword"
                     @keydown="setErrorMsg(3, '')"
                     @blur="checkoutInputFormat(3, payPassword,1)"
+                    @keyup.enter="submitWithPayPassword"
                   >
                 </el-form-item>
               </el-form>
@@ -450,7 +452,7 @@ export default {
       totalPageForMyEntrust: 1, // 当前总页数
       pointLength: 4, // 保留小数位后四位
       errorMsg: '', // 错误提示
-      partLoading: true, // 局部列表loading
+      partLoading: false, // 局部列表loading
       isNeedPayPassword: false,
       // 付款类型： 'pay': 付款 'push': push
       payType: 'pay'
@@ -658,6 +660,8 @@ export default {
       this.$refs.count.value = ''
       this.$refs.price.value = ''
       this.payPassword = ''
+      this.count = ''
+      this.price = ''
     },
     /**
      * 取消push
@@ -749,6 +753,7 @@ export default {
   watch: {
     async userCenterActiveName (newVal) {
       if (newVal === 'push-asset') {
+        console.log(1)
         await this.reflashIsNeedPayPassword()
         this.getPushRecordList()
         // 清空数据
@@ -774,7 +779,7 @@ export default {
         > .push-from-box {
           width: 400px;
           min-height: 577px;
-          padding-top: 29px;
+          padding-top: 70px;
           margin: 0 auto;
 
           .form-input-common,
@@ -786,7 +791,7 @@ export default {
           }
 
           .form-button-common {
-            margin: 0 0 50px 124px;
+            margin: 0 0 50px 95px;
           }
         }
       }
@@ -843,7 +848,7 @@ export default {
       }
 
       .el-form-item__label {
-        width: 124px !important;
+        width: 95px !important;
         color: #a9bed4;
       }
 

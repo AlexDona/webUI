@@ -122,7 +122,6 @@ export default {
       this.options.legend.textStyle.color = this.theme === 'night' ? '#fff' : '#666'
       this.options.series[0].data[0].value = this.investmentValue
       this.options.series[0].data[1].value = this.getMoneyValue
-      // 任增加国际化翻译
       this.options.legend.data[0] = this.$t('M.finance_invest')
       this.options.legend.data[1] = this.$t('M.finance_earnings')
       this.options.series[0].data[0].name = this.$t('M.finance_invest')

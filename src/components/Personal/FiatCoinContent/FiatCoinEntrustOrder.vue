@@ -130,7 +130,7 @@
 import {timeFilter} from '../../../utils'
 import {
   querySelectedOrdersRevocation
-} from '../../../utils/api/personal'
+} from '../../../utils/api/OTC'
 import {
   returnAjaxMsg,
   changeCurrentPageForLegalTrader
@@ -302,7 +302,7 @@ export default {
 
       > .fiat-entrust-order-table {
         > .entrust-table-head {
-          border: 1px solid #262f38;
+          border: 1px solid #262f38 !important;
           text-align: left;
           color: #617499;
           background-color: $nightMainBgColor;
@@ -340,7 +340,7 @@ export default {
 
       > .fiat-entrust-order-table {
         > .entrust-table-head {
-          border-bottom: 1px solid rgba(72, 87, 118, .1);
+          border: 1px solid rgba(72, 87, 118, .1) !important;
           color: #617499;
           background-color: $dayBgColor;
         }

@@ -303,7 +303,7 @@ export const OTC = {
   'otc_index_wei': '為',
   'otc_index_maxRemain': '最大剩余數量',
   // ##############發布購買和出售##########
-  'otc_index_chouseType': '選擇妳希望付款的貨幣類型',
+  'otc_index_chooseType': '選擇妳希望付款的貨幣類型',
   'otc_index_youWant': '妳想',
   'otc_index_how': '多少',
   'otc_index_nowUse': '當前可用',

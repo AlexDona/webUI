@@ -9,7 +9,7 @@ export const finance = {
   'finance_date': 'Today ',
   'finance_history': 'History ',
   'finance_invest': 'Deposit ',
-  'finance_invest_style': 'BalanceScheme',
+  'finance_invest_style': 'Balance Scheme',
   'finance_invest_coin1': 'Token',
   'finance_useBalance': 'Balance',
   'finance_errorTips': 'Deposits greater than assets',
@@ -42,5 +42,6 @@ export const finance = {
   'finance_capital': 'Capital',
   'finance_total_income': 'Income',
   // 二次确认弹框提示信息Secondary confirmation
-  'finance_tipsContentOne': 'Determine to retrieve the deposit?'
+  'finance_tipsContentOne': 'Determine to retrieve the deposit?',
+  'finance_invest_number': 'The amount of deposit cannot be 0'
 }

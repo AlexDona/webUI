@@ -235,7 +235,7 @@ export const OTC = {
   'otc_publishAD_inputmaxLimit': '입력 값이 최고 액수 초과 금지',
   'otc_publishAD_blur_tips1_min': '최소 한도를 입력하십시오.',
   'otc_publishAD_blur_tips2_max': '최대 한도를 입력하십시오.',
-  // 任增加
+  // 增加
   'otc_publishAD_entrustCountLimit': '최대 매출 가능량 부족',
   // ############# 광고 관리 ##################
   'otc_adMange': '광고 관리',
@@ -304,7 +304,7 @@ export const OTC = {
   'otc_index_wei': '는',
   'otc_index_maxRemain': '최대 남은 수량은',
   // ##############发布购买和出售##########
-  'otc_index_chouseType': '지불하고자하는 통화 유형을 선택하십시오',
+  'otc_index_chooseType': '지불하고자하는 통화 유형을 선택하십시오',
   'otc_index_youWant': '원한다',
   'otc_index_how': '얼마나',
   'otc_index_nowUse': '현재 사용 가능',

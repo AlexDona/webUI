@@ -787,13 +787,12 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {
-  // getQueryAllOrdersList,
   buyerPayForOrder,
   sellerConfirmGetMoney,
   sellerSendAppeal,
   cancelUserOtcOrder,
   completeUserOtcOrder
-} from '../../../utils/api/personal'
+} from '../../../utils/api/OTC'
 import {timeFilter, formatSeconds} from '../../../utils'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
@@ -877,7 +876,6 @@ export default {
           this.$set(this.cancelOrderTimeArr, index, this.cancelOrderTimeArr[index] - 1000)
           // console.log(this.cancelOrderTimeArr[index])
           // console.log(typeof (this.cancelOrderTimeArr[index]))
-          // 任增加
           if (this.cancelOrderTimeArr[index] < 0 || this.cancelOrderTimeArr[index] == 0) {
             this.cancelCompleteUserOtcOrder(1)
           }
@@ -899,7 +897,7 @@ export default {
         })
       }, 1000)
     },
-    // 1.5 任增加自动取消倒计时和自动成交倒计时接口
+    // 1.5 增加自动取消倒计时和自动成交倒计时接口
     // 撤销/成交otc用户定单
     async cancelCompleteUserOtcOrder (val) { // 1 取消 2 完成
       let data

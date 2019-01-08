@@ -113,7 +113,7 @@
             </p>
           </div>
           <div class="security-status text-align-r">
-            <!-- 任修复：将点击事件写在按钮上不要写在span上 -->
+            <!-- 修复：将点击事件写在按钮上不要写在span上 -->
             <button
               v-if="!securityCenter.isMailEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
@@ -1216,16 +1216,21 @@ export default {
             font-size: 12px;
           }
 
+          &:nth-child(1) {
+            div {
+              padding-left: 10px;
+            }
+          }
+
           &:nth-child(2) {
             div {
-              padding-right: 35px;
+              padding-right: 23px;
               text-align: right;
             }
           }
 
           &:nth-child(3) {
             div {
-              padding-right: 13px;
               text-align: right;
             }
           }
@@ -1237,7 +1242,7 @@ export default {
             }
 
             div {
-              padding-right: 13px;
+              padding-right: 20px;
               text-align: right;
             }
           }

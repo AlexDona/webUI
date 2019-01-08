@@ -2,8 +2,6 @@ import {post, get, put, postWithURLencoded, deleteMethod} from './axios'
 /**
  * 个人中心
  */
-// 查询国家列表
-export const queryCountryList = params => get('country/selectList', params)
 // 我的资产币种列表
 export const assetCurrenciesList = params => get('personal/getUserFinanceList', Object.assign({
   'not-loading': true
@@ -51,8 +49,6 @@ export const userRefreshUser = (params) => get('user/refreshUser', Object.assign
 /**
  * 安全中心
  * */
-// 邮箱、短信、谷歌验证码验证
-export const securityVerificationOnOff = (params) => postWithURLencoded('user/validate', params)
 // 安全中心
 export const statusSecurityCenter = (params) => get('user/security/index', Object.assign({
   'not-loading': true
@@ -130,31 +126,10 @@ export const modificationAccountPaymentTerm = params => get('user/bank/info', pa
 /**
  * 法币订单
  * */
-// 可用币种查询：我要购买/我要出售的币种列表
-export const getOTCAvailableCurrency = params => get('otcCOin/getAvailOTCCoins', Object.assign({
-  'not-loading': true
-}, params))
-// 查询用户所有挂单列表（分页）:也就是订单中的 委托中的订单
-export const getOTCEntrustingOrders = params => get('otcEntrust/selectEntrustsPage', Object.assign({
-  'not-loading': true
-}, params))
 // 分页查询所有用户otc各状态交易订单列表
 export const getQueryAllOrdersList = params => get('otcOrder/selectUserOrdersPage', Object.assign({
   'not-loading': true
 }, params))
-// 个人中心查询otc挂单撤销
-export const querySelectedOrdersRevocation = params => postWithURLencoded('otcEntrust/cancelOtcEntrust', params)
-// 交易中订单，买家确认付款
-export const buyerPayForOrder = params => postWithURLencoded('otcOrder/payForOrder', params)
-// 个人中心交易中订单， 个人中心卖家确认收款
-export const sellerConfirmGetMoney = params => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
-// 个人中心交易中订单， 个人中心卖家申诉
-export const sellerSendAppeal = params => postWithURLencoded('otcAppeal/applyOtcAppeal', params)
-// 任增加自动成交倒计时接口和自动取消倒计时接口
-// 撤销otc用户定单（过期买家未付款）
-export const cancelUserOtcOrder = params => post('otcOrder/cancelUserOtcOrder', params)
-// 成交otc用户定单（过期卖家未收款）
-export const completeUserOtcOrder = params => post('otcOrder/completeUserOtcOrder', params)
 /**
  * API
  * */

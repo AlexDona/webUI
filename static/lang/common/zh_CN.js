@@ -173,7 +173,7 @@ export const common = {
   'comm_get_code': '获取验证码',
   'common_direction': '方向',
   'common_average_price': '成交均价',
-  // 全球行情任增加
+  // 全球行情增加
   'common_exchange': '交易所',
   'common_counterparty': '交易对',
   'common_transaction_price': '交易价',

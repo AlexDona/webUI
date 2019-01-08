@@ -54,7 +54,7 @@
           <!-- 类型 买入 -->
           <span
             class="item"
-            v-if="item.orderType === 'BUY'"
+            v-show="item.orderType === 'BUY'"
             :class="{ red: item.orderType === 'BUY' }"
           >
             <!-- 买入 -->
@@ -63,7 +63,7 @@
           <!-- 类型卖出 -->
           <span
             class="item"
-            v-if="item.orderType === 'SELL'"
+            v-show="item.orderType === 'SELL'"
             :class="{ green: item.orderType === 'SELL' }"
           >
             <!-- 卖出 -->
@@ -191,7 +191,7 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 科学计数法转换
+    // 0.0 科学计数法转换
     filterNumber (num) {
       return scientificToNumber(num)
     },

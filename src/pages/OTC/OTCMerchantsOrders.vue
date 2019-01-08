@@ -23,7 +23,7 @@
           </span>
           <span class="status-input">
             <el-select
-              v-model="activitedMerchantsOrdersTraderStyleList"
+              v-model="activatedMerchantsOrdersTraderStyleList"
               :no-data-text="$t('M.comm_no_data')"
               @change="changeSelectValue('changeMerchantsOrdersTraderStyleList', $event)"
               clearable
@@ -44,7 +44,7 @@
           </span>
           <span class="status-input">
             <el-select
-              v-model="activitedMerchantsOrdersCoin"
+              v-model="activatedMerchantsOrdersCoin"
               :no-data-text="$t('M.comm_no_data')"
               @change="changeSelectValue('changeMerchantsOrdersCoin', $event)"
               clearable
@@ -65,7 +65,7 @@
           </span>
           <span class="status-input">
             <el-select
-              v-model="activitedMerchantsOrdersCurrency"
+              v-model="activatedMerchantsOrdersCurrency"
               :no-data-text="$t('M.comm_no_data')"
               @change="changeSelectValue('changeMerchantsOrdersCurrency', $event)"
               clearable
@@ -86,7 +86,7 @@
           </span>
           <span class="status-input">
             <el-select
-              v-model="activitedMerchantsOrdersStatusList"
+              v-model="activatedMerchantsOrdersStatusList"
               :no-data-text="$t('M.comm_no_data')"
               @change="changeSelectValue('changeMerchantsOrdersStatusList', $event)"
               clearable
@@ -365,7 +365,7 @@ export default {
       totalPages: 1,
       // 1.0 商家订单筛选下拉框数组--交易类型
       // 选中的筛选项
-      activitedMerchantsOrdersTraderStyleList: '',
+      activatedMerchantsOrdersTraderStyleList: '',
       merchantsOrdersTraderStyleList: [
         {
           value: 'BUY',
@@ -377,14 +377,14 @@ export default {
         }
       ],
       // 商家订单筛选下拉框 币种
-      activitedMerchantsOrdersCoin: '',
+      activatedMerchantsOrdersCoin: '',
       merchantsOrdersCoinList: [],
       // 商家订单筛选下拉框 法币
-      activitedMerchantsOrdersCurrency: '',
+      activatedMerchantsOrdersCurrency: '',
       merchantsOrdersCurrencyList: [],
       // 2.0 商家订单筛选下拉框数组--状态
       // 选中的筛选项
-      activitedMerchantsOrdersStatusList: '',
+      activatedMerchantsOrdersStatusList: '',
       merchantsOrdersStatusList: [
         // 已付款
         {
@@ -481,19 +481,19 @@ export default {
       switch (type) {
         // 选中交易 类型 赋值
         case 'changeMerchantsOrdersTraderStyleList':
-          this.activitedMerchantsOrdersTraderStyleList = targetValue
+          this.activatedMerchantsOrdersTraderStyleList = targetValue
           break
         // 选中 币种 状态赋值
         case 'changeMerchantsOrdersCoin':
-          this.activitedMerchantsOrdersCoin = targetValue
+          this.activatedMerchantsOrdersCoin = targetValue
           break
         // 选中 货币 状态赋值
         case 'changeMerchantsOrdersCurrency':
-          this.activitedMerchantsOrdersCurrency = targetValue
+          this.activatedMerchantsOrdersCurrency = targetValue
           break
         // 选中 状态 赋值
         case 'changeMerchantsOrdersStatusList':
-          this.activitedMerchantsOrdersStatusList = targetValue
+          this.activatedMerchantsOrdersStatusList = targetValue
           break
         // 初始 日期赋值
         case 'startDate':
@@ -534,10 +534,10 @@ export default {
     resetCondition () {
       // 改变查询条件从第1页开始查询
       this.currentPage = 1
-      this.activitedMerchantsOrdersTraderStyleList = ''
-      this.activitedMerchantsOrdersCoin = ''
-      this.activitedMerchantsOrdersCurrency = ''
-      this.activitedMerchantsOrdersStatusList = ''
+      this.activatedMerchantsOrdersTraderStyleList = ''
+      this.activatedMerchantsOrdersCoin = ''
+      this.activatedMerchantsOrdersCurrency = ''
+      this.activatedMerchantsOrdersStatusList = ''
       this.startTimeValue = ''
       this.endTimeValue = ''
       this.loading = true
@@ -551,17 +551,17 @@ export default {
         // 每页条数
         pageSize: this.pageSize,
         // 币种
-        coinId: this.activitedMerchantsOrdersCoin,
+        coinId: this.activatedMerchantsOrdersCoin,
         // 法币
-        currencyId: this.activitedMerchantsOrdersCurrency,
+        currencyId: this.activatedMerchantsOrdersCurrency,
         // 状态 状态 (未付款 PICKED 已付款 PAYED 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
-        status: this.activitedMerchantsOrdersStatusList,
+        status: this.activatedMerchantsOrdersStatusList,
         // 开始时间
         startTime: this.startTimeValue,
         // 结束时间
         endTime: this.endTimeValue,
         // 类型
-        tradeType: this.activitedMerchantsOrdersTraderStyleList
+        tradeType: this.activatedMerchantsOrdersTraderStyleList
       })
       // console.log('商家订单列表')
       // console.log(data)

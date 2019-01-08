@@ -40,7 +40,7 @@
                     {{item.bourseTrade.split('_').join('/')}}
                   </div><div class="td price">
                     <div class="top">
-                      {{keep2Num(item.boursePrice)}}
+                      {{cutOutPointLength(item.boursePrice, 8)}}
                     </div><!--货币转换-->
                     <div
                       class="bottom"
@@ -85,8 +85,11 @@ import {
   getNestedData,
   formatCount
 } from '../../utils/commonFunc'
-import {getGLobalMarket} from '../../utils/api/trade'
-import {keep2Num} from '../../utils'
+import {getGlobalMarket} from '../../utils/api/trade'
+import {
+  keep2Num,
+  cutOutPointLength
+} from '../../utils'
 
 export default {
   components: {},
@@ -118,6 +121,9 @@ export default {
         return formatCount(targetNum)
       }
     },
+    cutOutPointLength (num, pointLength) {
+      return cutOutPointLength(num, pointLength)
+    },
     keep2Num (targetNum) {
       return keep2Num(targetNum)
     },
@@ -129,7 +135,7 @@ export default {
       if (!symbol || !area) {
         return false
       }
-      const data = await getGLobalMarket(params)
+      const data = await getGlobalMarket(params)
       if (!returnAjaxMsg(data, this, 0, 1)) {
         return false
       } else {

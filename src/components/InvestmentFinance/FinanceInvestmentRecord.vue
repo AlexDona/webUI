@@ -178,7 +178,7 @@
                   layout="prev, pager, next"
                   page-size='10'
                   @current-change='changeInvestPage'
-                  :current-page = 'investCurrnetPage'
+                  :current-page = 'investCurrentPage'
                   :page-count.sync = 'investTotalPages'
                 >
                 </el-pagination>
@@ -261,7 +261,7 @@
                 v-if="interestTotal > 10 && this.activeName == '2'"
                 layout="prev, pager, next"
                 @current-change='changeInterestPage'
-                :current-page.sync = 'interestCurrnetPage'
+                :current-page.sync = 'interestCurrentPage'
                 :page-count='interestTotalPages'
               >
               </el-pagination>
@@ -279,7 +279,7 @@ import FinanceBrokenPie from './FinanceBrokenPie'
 import IconFontCommon from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
 import {timeFilter} from '../../utils'
-import {getFinancialManagement, cancleInvestment} from '../../utils/api/OTC'
+import {getFinancialManagement, cancleInvestment} from '../../utils/api/investmentFinance'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 export default {
   components: {
@@ -291,13 +291,13 @@ export default {
     return {
       loading: true,
       // 设置存币记录当前页码
-      investCurrnetPage: '1',
+      investCurrentPage: '1',
       // 设置存币记录总页数
       investTotalPages: '',
       // 设置存币记录总条数
       investTotal: '',
       // 设置收益列表当前页码
-      interestCurrnetPage: '1',
+      interestCurrentPage: '1',
       // 设置收益总页数
       interestTotalPages: '1',
       // 设置收益列表总条数
@@ -314,10 +314,10 @@ export default {
   created () {
     this.getFinancialManagementList()
     // if (activeName == 1) {
-    //   let historyPage = this.investCurrnetPage
+    //   let historyPage = this.investCurrentPage
     //   this.changeInvestPage(historyPage)
     // } else {
-    //   let historyPage = this.interestCurrnetPage
+    //   let historyPage = this.interestCurrentPage
     //   this.changeInterestPage(historyPage)
     // }
     console.log(this.$route.query)
@@ -338,25 +338,25 @@ export default {
       console.log(e.name)
       this.activeName = e.name
       if (this.activeName == '1') {
-        this.getFinancialManagementList(this.investCurrnetPage)
+        this.getFinancialManagementList(this.investCurrentPage)
       }
       if (this.activeName == '2') {
-        this.getFinancialManagementList(this.interestCurrnetPage)
+        this.getFinancialManagementList(this.interestCurrentPage)
       }
     },
     // 点击存币记录列表下一页查寻
     changeInvestPage (pageNum) {
       console.log(pageNum)
-      this.investCurrnetPage = pageNum
-      console.log(this.investCurrnetPage)
+      this.investCurrentPage = pageNum
+      console.log(this.investCurrentPage)
       // 重新获取列表
-      this.getFinancialManagementList(this.investCurrnetPage)
+      this.getFinancialManagementList(this.investCurrentPage)
     },
     // 点击收益记录下一页查询
     changeInterestPage (pageNum) {
       console.log(pageNum)
-      this.interestCurrnetPage = pageNum
-      this.getFinancialManagementList(this.interestCurrnetPage)
+      this.interestCurrentPage = pageNum
+      this.getFinancialManagementList(this.interestCurrentPage)
     },
     async getFinancialManagementList (pageNum) {
       this.loading = true
@@ -383,7 +383,7 @@ export default {
           // 存币记录总条数
           this.investTotal = getData.userFinancialManagementRecord.total
           // 从新赋值页码为当前页
-          // this.investCurrnetPage = pageNum
+          // this.investCurrentPage = pageNum
         } else if (this.activeName == '2') {
           // 收益记录列表
           this.userInterestRecord = getData.userInterestRecord.list
@@ -392,7 +392,7 @@ export default {
           // 收益记录总条数
           this.interestTotal = getData.userInterestRecord.total
           // 重新赋值收益列表在当前页
-          // this.interestCurrnetPage = pageNum
+          // this.interestCurrentPage = pageNum
         }
       }
     },
@@ -405,13 +405,13 @@ export default {
         return false
       } else {
         // 重新请求币种接口刷新列表 把当前页码传过去
-        this.getFinancialManagementList(this.investCurrnetPage)
+        this.getFinancialManagementList(this.investCurrentPage)
       }
     },
     cancleInvest (id) {
       // 用户点击取消按钮需要请求接口
       // this.clickCancleInvestment(id)
-      // 增加二次确认弹出框-任付伟
+      // 增加二次确认弹出框
       this.$confirm(this.$t('M.finance_tipsContentOne'), {
         confirmButtonText: this.$t('M.comm_confirm'), // 确定
         cancelButtonText: this.$t('M.comm_cancel') // 取消
@@ -521,7 +521,7 @@ export default {
           border-radius: 2px;
           font-size: 20px;
           color: #338ff5;
-          background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%);
+          background: linear-gradient(180deg, rgba(51, 143, 245, .1), transparent);
           box-shadow: 0 2px 2px rgba(13, 17, 25, 1);
         }
       }

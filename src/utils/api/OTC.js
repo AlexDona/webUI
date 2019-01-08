@@ -33,7 +33,9 @@ export const pickOrdersToSell = (params) => postWithURLencoded('otcOrder/pickEnt
 // 查询otc挂单详情-商家和普通用户通用
 export const querySelectedOrdersDetails = (params) => get('otcEntrust/selectUserEntrustDetail', params)
 // 查询otc挂单撤销
-export const querySelectedOrdersRevocation = (params) => postWithURLencoded('otcEntrust/cancelOtcEntrust', params)
+export const querySelectedOrdersRevocation = (params) => postWithURLencoded('otcEntrust/cancelOtcEntrust', Object.assign({
+  'not-loading': true
+}, params))
 // 查询otc挂单用户交易币种手续费率以及币种详情
 export const queryUserTradeFeeAndCoinInfo = (params) => get('otcCOin/getUserTradeFeeAndCoinInfo', params)
 // otc广告管理一键撤销用户所有挂单--商家专用
@@ -41,11 +43,17 @@ export const cancelAllOrdersOnekey = (params) => postWithURLencoded('otcEntrust/
   'not-loading': true
 }, params))
 // otc交易中订单，otc买家确认付款
-export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', params)
+export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', Object.assign({
+  'not-loading': true
+}, params))
 // otc交易中订单， otc卖家确认收款
-export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
+export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', Object.assign({
+  'not-loading': true
+}, params))
 // otc交易中订单， otc卖家申诉
-export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyOtcAppeal', params)
+export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyOtcAppeal', Object.assign({
+  'not-loading': true
+}, params))
 // 提交otc商家申请
 export const businessApply = (params) => postWithURLencoded('otcMerchApply/applyOTCMerch', params)
 // 首次进入otc商家申请页面
@@ -64,18 +72,8 @@ export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOr
 export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMerchStatics', Object.assign({
   'not-loading': true
 }, params))
-//  币种详情：商家和普通用户挂单页面请求币种详情渲染页面
+// 币种详情：商家和普通用户挂单页面请求币种详情渲染页面
 export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
-// 投资理财请求数据
-export const getFinancialManagement = (params) => get('financialManagement', Object.assign({
-  'not-loading': true
-}, params))
-// 投资理财立投资请求接口
-export const imediateInvestment = (params) => post('financialManagement', params)
-// 投资理财取消投资接口
-export const cancleInvestment = (params) => get(`financialManagement/${params}`)
-// 投资理财添加理财记录接口
-export const getFinancialRecord = (params) => get('financialManagement/recordInfo', params)
 // 撤销otc用户定单（过期买家未付款）
 export const cancelUserOtcOrder = (params) => post('otcOrder/cancelUserOtcOrder', params)
 // 成交otc用户定单（过期卖家未收款）

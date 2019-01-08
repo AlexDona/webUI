@@ -9,17 +9,23 @@ const store = storeCreater()
 const routerCreator = () => {
   const router = new Router({
     // mode: 'history',
-    routes
+    routes,
+    'linkActiveClass': 'active',
+    'linkExactActiveClass': 'active'
   })
   router.beforeEach((to, from, next) => {
     if (from.path !== '/login' || from.path !== '/register') {
       store.commit('common/CHANGE_ROUTER_PATH', from.path)
-      console.log(store.state.common.routerTo)
     }
-    console.log(store.state.user.isLogin)
-    console.log(store.state.user.loginStep1Info.userInfo)
     if (store.state.user.loginStep1Info.userInfo) {
       store.commit('user/USER_LOGIN', store.state.user.loginStep1Info)
+    }
+    if (to.path !== '/TradeCenter') {
+      console.log(store)
+      store.dispatch('common/SET_PARTNER_INFO_ACTION', {
+        self: Vue,
+        language: store.state.common.language
+      })
     }
     // 增加普通用户不能点击OTC导航功能
     if (to.matched.some(m => m.meta.auth)) {

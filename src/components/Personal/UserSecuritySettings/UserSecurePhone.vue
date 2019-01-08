@@ -843,7 +843,7 @@ export default {
             width: 220px;
             height: 34px;
           }
-          // 任修复图片验证码上移问题20181127-2309
+
           .phone-input-align {
             height: 44px;
             margin-left: -3px;

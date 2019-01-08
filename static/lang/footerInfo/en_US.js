@@ -11,7 +11,7 @@ export const footerInfo = {
   'about_digital_terms_hint4': 'Privacy Policy',
   'about_digital_terms_hint5': 'API doc.',
   'about_digital_terms_hint6': 'Information',
-  // ##########################任付伟20181117-1145新增国际化################################
+  // ##########################20181117-1145新增国际化################################
   'about_footer_info_down1': 'Full platform terminal access',
   'about_footer_info_down2': 'Multiple platforms of iOS, Android, Mac and Windows support full-service functions',
   'about_footer_info_down3': 'Download IOS and Android',
