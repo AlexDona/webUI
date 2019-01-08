@@ -273,7 +273,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .personal-setting {
@@ -571,7 +571,7 @@ export default {
 
         > .inner-box {
           > .title {
-            border-bottom: 1px solid #39424d;
+            border-bottom: 1px solid rgba(38, 47, 56, .1);
           }
 
           > .content {

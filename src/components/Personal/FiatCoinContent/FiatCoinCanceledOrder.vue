@@ -608,7 +608,7 @@ export default {
 
       > .canceled-order-content {
         > .canceled-table-head {
-          border: 1px solid rgba(38, 47, 56, .1);
+          border: 1px solid rgba(38, 47, 56, .1) !important;
           color: #617499;
           background-color: $dayBgColor;
           box-shadow: -2px 3px 5px 1px #191e28;
@@ -667,7 +667,6 @@ export default {
       /deep/ {
         .canceled-order-content {
           .canceled-table-head {
-            border: none;
             border-radius: 0;
             background-color: #fff;
             -webkit-box-shadow: none;
