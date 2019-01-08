@@ -430,9 +430,11 @@ export default {
         background-color: #1e2636;
       }
 
-      .el-icon-arrow-right {
-        &::before {
-          content: " ";
+      .el-table__expand-icon {
+        .el-icon-arrow-right {
+          &::before {
+            content: " ";
+          }
         }
       }
 
@@ -702,6 +704,22 @@ export default {
       }
 
       /deep/ {
+        .completed-order-content {
+          .el-table--enable-row-transition {
+            .el-table__body {
+              td {
+                border-top: 1px solid #ecf1f8;
+              }
+            }
+          }
+        }
+
+        tr:hover {
+          > td {
+            background-color: #fff;
+          }
+        }
+
         .el-table__header {
           margin-bottom: 0;
         }
