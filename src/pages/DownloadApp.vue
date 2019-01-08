@@ -66,6 +66,7 @@
 import {
   getAppDownLoadUrlAjax
 } from '../utils/api/user'
+import {downloadFileWithUserDefined} from '../utils'
 import {
   returnAjaxMsg,
   getNestedData
@@ -119,18 +120,20 @@ export default {
       } else {
         console.log(data)
         if (this.isAndroid) {
-          // alert('android')
           window.location.href = 'scheme: //fubt.com/'
           this.downloadUrl = getNestedData(data, 'data.data.android')
         } else if (this.isIOS) {
-          // alert('ios')
-          // window.location = 'com.top.Fubt://' // 打开某手机上的某个app应用
           this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${getNestedData(data, 'data.data.ios')}`
         }
       }
     },
     downloadApp () {
-      this.$refs['download'].click()
+      console.log(this.downloadUrl)
+      if (this.isAndroid) {
+        downloadFileWithUserDefined(this.downloadUrl, 'filename')
+      } else {
+        this.$refs['download'].click()
+      }
     }
   },
   filter: {},

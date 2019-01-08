@@ -11,7 +11,7 @@ export const footerInfo = {
   'about_digital_terms_hint4': '隐私条款',
   'about_digital_terms_hint5': 'API文档',
   'about_digital_terms_hint6': '币种资料',
-  // ##########################任付伟20181117-1145新增国际化################################
+  // ##########################20181117-1145新增国际化################################
   'about_footer_info_down1': '全平台终端接入',
   'about_footer_info_down2': 'iOS、Android、Mac、Windows多个平台支持全业务功能',
   'about_footer_info_down3': '扫码下载IOS、Android版',

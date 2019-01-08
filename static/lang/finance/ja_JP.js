@@ -41,5 +41,6 @@ export const finance = {
   'finance_total_income': '予想総収益',
   'finance_xiAndben': 'まず金利あと本金',
   'finance_capital': '本金',
-  'finance_accrual': '金利'
+  'finance_accrual': '金利',
+  'finance_invest_number': '入金金額を0にすることはできません'
 }

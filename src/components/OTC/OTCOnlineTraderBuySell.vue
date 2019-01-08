@@ -20,7 +20,7 @@
                   <!-- 如果是商家用户就显示商家图标 -->
                   <img
                     src="../../assets/develop/shangjia.png"
-                    class="shang-icon"
+                    class="merchants-icon"
                     v-show="this.userType === 'MERCHANT'"
                   >
                   <!-- 商户名称 -->
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <!-- 左下部分商家备注部分 -->
-            <div class="shoper-remark">
+            <div class="shopper-remark">
               <!-- 备注： -->
               <p class="remark-title">{{$t('M.comm_remark')}}：</p>
               <p class="remark-content">{{remark}}</p>
@@ -86,7 +86,6 @@
                   {{$t('M.otc_index_reduceQuantity')}}：
                 </span>
                 <span class="details-data">
-                  <!--{{filterNumber(remainingNum)}}{{name}}-->
                   {{filterNumber(remainingNum)}}{{coinName}}
                 </span>
               </div>
@@ -135,6 +134,7 @@
                   {{$t('M.otc_index_payTimeLimit')}}：
                 </span>
                 <span class="details-data">
+                  <!--30分钟-->
                   {{payTerm/60}}{{$t('M.otc_index_minute')}}
                 </span>
               </div>
@@ -197,7 +197,6 @@
                         class="unit"
                         :class = "{ coinNameBorder: errorWarningBorder }"
                       >
-                        <!--{{name}}-->
                         {{coinName}}
                       </span>
                       <!-- 2.0 金额部分 -->
@@ -272,7 +271,6 @@
                   {{$t('M.comm_service_charge')}}：
                 </span>
                 <span class="service-data">
-                  <!--{{serviceCharge}} {{name}}-->
                   {{serviceCharge}} {{coinName}}
                 </span>
                 <!-- 费率 -->
@@ -290,7 +288,6 @@
                   {{$t('M.comm_service_charge')}}：
                 </span>
                 <span class="service-data-sell">
-                  <!--{{serviceCharge}} {{name}}-->
                   {{serviceCharge}} {{coinName}}
                 </span>
                 <!-- 费率 -->
@@ -329,26 +326,7 @@
           >
             <!-- 请输入交易密码 -->
             <div class="input">
-              <!--<input
-                v-if="this.onlineTraderStatus === 'onlineBuy'"
-                type="password"
-                :placeholder="$t('M.otc_publishAD_sellpassword')"
-                class="password-input"
-                v-model="tradePassword"
-                @focus="tradePasswordFocus"
-                @keyup.enter="submitPickOrdersToBuy"
-              >
-              <input
-                v-if="this.onlineTraderStatus === 'onlineSell'"
-                type="password"
-                :placeholder="$t('M.otc_publishAD_sellpassword')"
-                class="password-input"
-                v-model="tradePassword"
-                @focus="tradePasswordFocus"
-                @keyup.enter="submitPickOrdersToSell"
-                onpaste="return false"
-              >-->
-              <!--任2018129封装提交摘单买入和卖出方法-->
+              <!--2018129封装提交摘单买入和卖出方法-->
               <input
                 type="password"
                 :placeholder="$t('M.otc_publishAD_sellpassword')"
@@ -358,7 +336,7 @@
                 @keyup.enter="pickOrdersToBuyOrSell"
                 onpaste="return false"
               >
-              <!--任2018129封装提交摘单买入和卖出方法-->
+              <!--2018129封装提交摘单买入和卖出方法-->
             </div>
             <div class="error-info">
               <!-- 错误提示 -->
@@ -368,25 +346,7 @@
               slot="footer"
               class="dialog-footer"
             >
-                <!-- 在线购买提交 -->
-                <!--<el-button
-                  type="primary"
-                  v-if="this.onlineTraderStatus === 'onlineBuy'"
-                  @click="submitPickOrdersToBuy"
-                >
-                  &lt;!&ndash; 提交 &ndash;&gt;
-                  {{$t('M.otc_submit')}}
-                </el-button>
-                &lt;!&ndash; 在线出售提交 &ndash;&gt;
-                <el-button
-                  type="primary"
-                  v-if="this.onlineTraderStatus === 'onlineSell'"
-                  @click="submitPickOrdersToSell"
-                >
-                  &lt;!&ndash; 提交 &ndash;&gt;
-                  {{$t('M.otc_submit')}}
-                </el-button>-->
-              <!--任2018129封装提交摘单买入和卖出方法-->
+              <!--2018129封装提交摘单买入和卖出方法-->
               <el-button
                 type="primary"
                 @click="pickOrdersToBuyOrSell"
@@ -394,7 +354,7 @@
                 <!-- 提交 -->
                 {{$t('M.otc_submit')}}
               </el-button>
-              <!--任2018129封装提交摘单买入和卖出方法-->
+              <!--2018129封装提交摘单买入和卖出方法-->
             </span>
           </el-dialog>
         </div>
@@ -481,7 +441,8 @@ export default {
       // 交易密码
       tradePassword: '',
       // 往后台传送的参数 挂单id（otc首页挂单列表中每行的币种id）
-      id: '',
+      // id: '',
+      entryOrdersID: '',
       // 商户币种id
       partnerCoinId: '',
       // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
@@ -504,11 +465,17 @@ export default {
     this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
     console.log(this.isNeedPayPassword)
     // 1.0 从OTCCenter传过来的URL中获取的
+    console.log(this.$route.params)
+    // 买卖类型
     this.onlineTraderStatus = this.$route.params.styleId
-    this.id = this.$route.params.id
+    // 从otc首页传过来的挂单id
+    // this.id = this.$route.params.id
+    this.entryOrdersID = this.$route.params.id
+    // OTC首页传过来的币种id
     this.partnerCoinId = this.$route.params.partnerCoinId
     // 2.0 查询选中的挂单，利用挂单id请求详情信息
-    if (this.id) {
+    // if (this.id) {
+    if (this.entryOrdersID) {
       this.querySelectedOrdersDetails()
     }
   },
@@ -518,19 +485,19 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      // 改变全局锚点状态方法
+      // 0.1 改变全局锚点状态方法
       'CHANGE_OTC_ANCHOR_STATUS'
     ]),
-    // 科学计数法转换
+    // 0.2 科学计数法转换
     filterNumber (num) {
       return scientificToNumber(num)
     },
-    // 0.0 充币按钮跳转
+    // 0.3 充币按钮跳转
     chargeMoney () {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'assets')
       this.$router.push({path: '/PersonalCenter'})
     },
-    // 0.1 输入限制
+    // 0.4 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
@@ -557,10 +524,9 @@ export default {
           if (this.isNeedPayPassword) {
             this.pickOrderTradePwdDialogStatus = true
           } else {
-            // this.submitPickOrdersToBuy()
-            // 任2018129封装提交摘单买入和卖出方法
+            // 2018129封装提交摘单买入和卖出方法
             this.pickOrdersToBuyOrSell()
-            // 任2018129封装提交摘单买入和卖出方法
+            // 2018129封装提交摘单买入和卖出方法
           }
           break
         // 在线卖
@@ -577,10 +543,9 @@ export default {
           if (this.isNeedPayPassword) {
             this.pickOrderTradePwdDialogStatus = true
           } else {
-            // this.submitPickOrdersToSell()
-            // 任2018129封装提交摘单买入和卖出方法
+            // 2018129封装提交摘单买入和卖出方法
             this.pickOrdersToBuyOrSell()
-            // 任2018129封装提交摘单买入和卖出方法
+            // 2018129封装提交摘单买入和卖出方法
           }
           break
       }
@@ -735,7 +700,8 @@ export default {
     async querySelectedOrdersDetails () {
       const data = await querySelectedOrdersDetails({
         // 挂单id
-        entrustId: this.id
+        // entrustId: this.id
+        entrustId: this.entryOrdersID
       })
       // console.log('otc挂单详情')
       // console.log(data)
@@ -784,7 +750,7 @@ export default {
         }
       }
     },
-    // 任2018129封装提交摘单买入和卖出方法
+    // 2018129封装提交摘单买入和卖出方法
     async pickOrdersToBuyOrSell () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
@@ -796,7 +762,8 @@ export default {
       switch (this.onlineTraderStatus) {
         case 'onlineSell':
           data = await pickOrdersToSell({
-            entrustId: this.id, // 挂单id
+            // entrustId: this.id, // 挂单id
+            entrustId: this.entryOrdersID, // 挂单id
             sellCount: this.$refs.sellCount.value, // 卖出数量
             tradePassword: this.tradePassword // 交易密码
           })
@@ -804,7 +771,8 @@ export default {
           break
         case 'onlineBuy':
           data = await pickOrdersToBuy({
-            entrustId: this.id, // 挂单id
+            // entrustId: this.id, // 挂单id
+            entrustId: this.entryOrdersID, // 挂单id
             buyCount: this.$refs.buyCount.value, // 买入数量
             tradePassword: this.tradePassword // 交易密码
           })
@@ -826,50 +794,13 @@ export default {
         this.$router.push({path: '/OTCCenter'})
       }
     },
-    // 任2018129封装提交摘单买入和卖出方法
-    // 7.0 点击 确认购买 按钮提交数据
-    /* async submitPickOrdersToBuy () {
-      if (this.isNeedPayPassword && !this.tradePassword) {
-        this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
-        return false
-      }
-      const data = await pickOrdersToBuy({
-        entrustId: this.id, // 挂单id
-        buyCount: this.$refs.buyCount.value, // 买入数量
-        tradePassword: this.tradePassword // 交易密码
-      })
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.pickOrderTradePwdDialogStatus = false
-        this.clearInput(this.onlineTraderStatus)
-        this.querySelectedOrdersDetails()
-        this.queryUserTradeFeeAndCoinInfo()
-        // 改变全局锚点状态
-        this.CHANGE_OTC_ANCHOR_STATUS(true)
-        // 跳转到首页的交易中订单区
-        this.$router.push({path: '/OTCCenter'})
-      }
-    }, */
+    // 2018129封装提交摘单买入和卖出方法
     // 8交易密码框获得焦点事件
     tradePasswordFocus () {
       this.tradePasswordTips = ''
     },
     // 9清空数量和金额和交易密码
     clearInput (val) {
-      // // 买
-      // if (val === 'onlineBuy') {
-      //   this.$refs.buyCount.value = ''
-      //   this.$refs.buyPrice.value = ''
-      // }
-      // // 卖
-      // if (val === 'onlineSell') {
-      //   this.$refs.sellCount.value = ''
-      //   this.$refs.sellPrice.value = ''
-      // }
-      // this.tradePassword = ''
       // switch 改写
       this.tradePassword = ''
       switch (val) {
@@ -885,31 +816,6 @@ export default {
           break
       }
     }
-    // 10.0 点击 确认出售 按钮提交数据
-    /* async submitPickOrdersToSell () {
-      if (this.isNeedPayPassword && !this.tradePassword) {
-        this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
-        return false
-      }
-      const data = await pickOrdersToSell({
-        entrustId: this.id, // 挂单id
-        sellCount: this.$refs.sellCount.value, // 卖出数量
-        tradePassword: this.tradePassword // 交易密码
-      })
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
-        this.clearInput(this.onlineTraderStatus) // 清空数据
-        this.querySelectedOrdersDetails()
-        this.queryUserTradeFeeAndCoinInfo()
-        // 改变全局锚点状态
-        this.CHANGE_OTC_ANCHOR_STATUS(true)
-        // 跳转到首页的交易中订单区
-        this.$router.push({path: '/OTCCenter'})
-      }
-    } */
   },
   filter: {},
   computed: {
@@ -951,7 +857,7 @@ export default {
             height: 20px;
             line-height: 20px;
 
-            > .shang-icon {
+            > .merchants-icon {
               display: inline-block;
               width: 14px;
               height: 19px;
@@ -994,7 +900,7 @@ export default {
           }
         }
 
-        > .shoper-remark {
+        > .shopper-remark {
           box-sizing: border-box;
           width: 320px;
           min-height: 130px;
@@ -1263,7 +1169,7 @@ export default {
             }
           }
 
-          > .shoper-remark {
+          > .shopper-remark {
             background-color: #1c1f32;
 
             > .remark-title {
@@ -1450,7 +1356,7 @@ export default {
             }
           }
 
-          > .shoper-remark {
+          > .shopper-remark {
             > .remark-title {
               color: #333;
             }

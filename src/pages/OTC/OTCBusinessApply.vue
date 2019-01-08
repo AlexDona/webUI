@@ -246,7 +246,12 @@
 </template>
 <script>
 import IconFontCommon from '../../components/Common/IconFontCommon'
-import {businessApply, firstEnterBusinessApply, argumentBusinessApply} from '../../utils/api/OTC'
+import {
+  businessApply,
+  firstEnterBusinessApply,
+  argumentBusinessApply
+} from '../../utils/api/OTC'
+import { downloadFileWithUserDefined } from '../../utils/'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
@@ -289,19 +294,7 @@ export default {
     downloadApplicationForm () {
       // console.log(this.downLoadUrl)
       // console.log(this.fileName)
-      if (this.downLoadUrl) {
-        fetch(this.downLoadUrl).then(res => res.blob().then(blob => {
-          let a = document.createElement('a')
-          let url = window.URL.createObjectURL(blob)
-          let filename = this.fileName
-          a.href = url
-          a.download = filename
-          a.click()
-          window.URL.revokeObjectURL(url)
-        }))
-      } else {
-        return false
-      }
+      downloadFileWithUserDefined(this.downLoadUrl, this.fileName)
     },
     // 点击申请商家用户按钮发送请求
     submit () {
@@ -390,9 +383,7 @@ export default {
           setTimeout(() => {
             window.scrollTo(0, 2000)
           }, 100)
-          setTimeout(() => {
-            this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
-          }, 1000)
+          this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
         }
       }
     },
@@ -431,13 +422,10 @@ export default {
       // console.log('监控')
       // console.log(newVal)
       if (newVal && this.applyStatus !== 3) {
-        // console.log('执行此方法2')
         setTimeout(() => {
           window.scrollTo(0, 2000)
         }, 100)
-        setTimeout(() => {
-          this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
-        }, 1000)
+        this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
       }
     }
   }

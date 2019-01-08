@@ -173,7 +173,7 @@ export const common = {
   'comm_get_code': 'Get Code',
   'common_direction': 'Type',
   'common_average_price': 'Average',
-  // 全球行情任增加
+  // 全球行情增加
   'common_exchange': 'Exchange',
   'common_counterparty': 'Pairs',
   'common_transaction_price': 'Price',

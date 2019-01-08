@@ -11,7 +11,7 @@ export const footerInfo = {
   'about_digital_terms_hint4': '사적정보 조항',
   'about_digital_terms_hint5': 'API문서',
   'about_digital_terms_hint6': '코인 자료',
-  // ##########################任付伟20181117-1145新增国际化################################
+  // ##########################20181117-1145新增国际化################################
   'about_footer_info_down1': '모든 플렛폼포트 접속',
   'about_footer_info_down2': 'IOS、Android、Mac、Windows 여러개 플랫폼이 모든 업무 기능 수행가능',
   'about_footer_info_down3': '다운로드 ios,Android',

@@ -193,12 +193,13 @@ import FiatCoinFreezingOrder from '../FiatCoinContent/FiatCoinFreezingOrder'
 import FiatCoinEntrustOrder from '../FiatCoinContent/FiatCoinEntrustOrder'
 import {createNamespacedHelpers, mapState} from 'vuex'
 import IconFontCommon from '../../Common/IconFontCommon'
+// import {
+//   getOTCEntrustingOrders
+// } from '../../../utils/api/personal'
 import {
+  getMerchantAvailablelegalTender,
   getOTCAvailableCurrency,
   getOTCEntrustingOrders
-} from '../../../utils/api/personal'
-import {
-  getMerchantAvailablelegalTender
 } from '../../../utils/api/OTC'
 import {
   returnAjaxMsg,

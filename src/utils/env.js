@@ -21,7 +21,7 @@ let targetConfig = {
 // eslint-disable-next-line
 let devTestConfig = {
   apiCommonUrl: 'http://192.168.1.200:8888/',
-  socketUrl: 'ws://192.168.1.52:8087/market',
+  socketUrl: 'ws://192.168.1.200:8087/market',
   loginSocketUrl: 'ws://192.168.1.200:8087/qrcodeLogin/'
 }
 // eslint-disable-next-line
@@ -45,16 +45,16 @@ switch (process.env.NODE_ENV) {
     // 生产环境
     // targetConfig = {...proConfig, xDomain: 'new.bzu.com'}
     break
+  // 210开发环境
   case 'development210':
-    // 210开发环境
     targetConfig = {...targetConfig, ...dev210Config}
     break
+  // 200测试环境
   case 'testing':
-    // 200测试环境
     targetConfig = {...targetConfig, ...devTestConfig}
     break
+  // 生产环境
   case 'production':
-    // 生产环境
     targetConfig = {...targetConfig, ...prodConfig}
     break
 }
@@ -66,7 +66,6 @@ let {
   xDomain,
   domain
 } = targetConfig
-console.log(targetConfig)
 export {
   apiCommonUrl,
   socketUrl,

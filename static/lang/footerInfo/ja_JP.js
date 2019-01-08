@@ -11,7 +11,7 @@ export const footerInfo = {
   'about_digital_terms_hint4': 'プライバシーポリシー',
   'about_digital_terms_hint5': 'APIドキュメント',
   'about_digital_terms_hint6': '通貨情報',
-  // ##########################任付伟20181117-1145新增国际化################################
+  // ##########################20181117-1145新增国际化################################
   'about_footer_info_down1': '全プラット端末がアクセスする',
   'about_footer_info_down2': 'iOS、Android、Windows多プラット全業務機能をサポートする',
   'about_footer_info_down3': 'IOSとAndroid ダウンロード',

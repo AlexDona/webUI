@@ -29,7 +29,7 @@
               <div class="right-style display-inline-block">
                 <el-select
                   :placeholder="$t('M.comm_please_choose')"
-                  v-model="activitedBuySellStyle"
+                  v-model="activatedBuySellStyle"
                   :no-data-text="$t('M.comm_no_data')"
                   @change="changeBuySellStyle"
                 >
@@ -90,16 +90,16 @@
               <div>
                 <p>
                   <!-- 最大可卖出量: -->
-                  <span v-if="activitedBuySellStyle === 'SELL'">
+                  <span v-if="activatedBuySellStyle === 'SELL'">
                     {{$t('M.otc_seller_maximum')}}:
                     <span class="max-avail-sell">
-                      {{total ? total : '--'}}{{activeedCoinName}}
+                      {{total ? total : '--'}}{{activatedCoinName}}
                     </span>
                   </span>
                   <!-- 市价 -->
                   <span>{{$t('M.otc_market_price')}}:
-                    <span class="markder-price">
-                      {{marketPrice ? marketPrice : '--'}}{{activeedCurrencyName}}
+                    <span class="market-price">
+                      {{marketPrice ? marketPrice : '--'}}{{activatedCurrencyName}}
                     </span>
                   </span>
                 </p>
@@ -121,11 +121,11 @@
                   class="unit font-size12"
                   :class="{ redBorderLeftNone: priceErrorTipsBorder }"
                 >
-                  {{activeedCurrencyName}}
+                  {{ activatedCurrencyName }}
                 </span>
               </div>
               <!-- 单价错误提示 -->
-              <div class="err">{{errorInfoPrice}}</div>
+              <div class="err">{{ errorInfoPrice }}</div>
             </div>
           </div>
           <!-- 交易方式 -->
@@ -138,7 +138,7 @@
             </div>
             <div class="right display-inline-block">
               <el-checkbox-group
-                v-model="activitedPayTypes"
+                v-model="activatedPayTypes"
                 @change='changePayTypes'
               >
                 <!-- 支付宝 -->
@@ -207,7 +207,7 @@
                   class="unit font-size14"
                   :class="{ redBorderLeftNone: entrustCountErrorTipsBorder }"
                 >
-                  {{activeedCoinName}}
+                  {{activatedCoinName}}
                 </span>
               </div>
               <div
@@ -242,7 +242,7 @@
                   class="unit font-size14"
                   :class="{ redBorderLeftNone: minCountErrorTipsBorder }"
                 >
-                  {{activeedCurrencyName}}
+                  {{activatedCurrencyName}}
                 </span>
                 <span class= "minMaxLink">一</span>
                 <!-- 单笔最大限额 -->
@@ -261,7 +261,7 @@
                   class="unit font-size14"
                   :class="{ redBorderLeftNone: maxCountErrorTipsBorder }"
                 >
-                  {{activeedCurrencyName}}
+                  {{activatedCurrencyName}}
                 </span>
               </div>
               <div>
@@ -467,7 +467,7 @@ export default {
       publishADTradePwdDialogStatus: false, // 弹窗状态
       ADManageJumpOrderStatus: 1, // 从广告管理点击修改订单跳转过来状态标识 1为不是跳转来的，2为跳转来的
       // 选择模块下拉列表循环数组
-      activitedBuySellStyle: 'SELL', // 选中的发布广告 买卖 类型
+      activatedBuySellStyle: 'SELL', // 选中的发布广告 买卖 类型
       // 1.0 发布广告 买卖 类型数组
       buySellStyle: [
         {
@@ -481,11 +481,11 @@ export default {
       ],
       // 2.0 币种名字下拉数组：可用币种
       activitedCoinId: '', // 选中的可用币种id
-      activeedCoinName: '', // 选中币种的name
+      activatedCoinName: '', // 选中币种的name
       availableCoinList: [], // 可用币种数组
       // 3.0 法币币种数组
       activitedCurrencyId: '', // 选中的可用法币id
-      activeedCurrencyName: '', // 选中的可用法币name
+      activatedCurrencyName: '', // 选中的可用法币name
       availableCurrencyList: [], // 可用法币币种数组
       transformationOldCurrencyName: '', // 法币改变之前选中的法币名称
       transformationNewCurrencyName: '', // 法币改变之后选中的法币名称
@@ -521,7 +521,7 @@ export default {
       // checkList: ['支付宝']
       // 支付方式错误提示
       errorInfoTradeWay: '',
-      activitedPayTypes: [],
+      activatedPayTypes: [],
       // 往后台传参数的支付方式类型
       parameterPayTypes: '',
       // 定价设置中的价格错误提示信息
@@ -548,7 +548,7 @@ export default {
       entrustCountErrorTipsBorder: false, // 交易数量错误提示框
       minCountErrorTipsBorder: false, // 单笔最小限额错误提示框
       maxCountErrorTipsBorder: false, // 单笔最大限额错误提示框
-      isNeedPayPassowrd: true
+      isNeedPayPassword: true
     }
   },
   created () {
@@ -608,7 +608,7 @@ export default {
         let detailsData = getNestedData(data, 'data.data')
         this.activitedCoinId = getNestedData(detailsData, 'coinId') // 可用币种id
         this.activitedCurrencyId = getNestedData(detailsData, 'currencyId') // 法币id
-        this.activitedBuySellStyle = getNestedData(detailsData, 'entrustType') // 挂单类型
+        this.activatedBuySellStyle = getNestedData(detailsData, 'entrustType') // 挂单类型
         this.$refs.limitRef.value = getNestedData(detailsData, 'limitOrderCount') // 同时处理最大订单数
         this.limitOrderCount = this.$refs.limitRef.value
         this.$refs.successRef.value = getNestedData(detailsData, 'successOrderCount') // 卖家必须成交过几次
@@ -639,7 +639,7 @@ export default {
             this.activitedCoinId = item.coinId
           }
         })
-        this.activeedCoinName = getNestedData(availableCoinListData, 'otcCoinQryResponse.name')
+        this.activatedCoinName = getNestedData(availableCoinListData, 'otcCoinQryResponse.name')
         // 2.0 法币种列表
         this.availableCurrencyList = getNestedData(availableCoinListData, 'currencyList')
         this.availableCurrencyList.forEach(item => {
@@ -647,7 +647,7 @@ export default {
             this.activitedCurrencyId = item.id
           }
         })
-        this.activeedCurrencyName = getNestedData(availableCoinListData, 'otcCoinQryResponse.currencyName')
+        this.activatedCurrencyName = getNestedData(availableCoinListData, 'otcCoinQryResponse.currencyName')
         // 3.0 交易支付方式
         this.payForListArr = getNestedData(availableCoinListData, 'userbankFlag')
         // 最大可卖出量:可用资产
@@ -673,10 +673,10 @@ export default {
     },
     // 2.0 改变发布广告 买卖 类型
     changeBuySellStyle (e) {
-      this.activitedBuySellStyle = e
-      // console.log(this.activitedBuySellStyle)
+      this.activatedBuySellStyle = e
+      // console.log(this.activatedBuySellStyle)
       // 切换买卖类型，如果是买单则清空交易数量错误提示
-      if (this.activitedBuySellStyle == 'BUY') {
+      if (this.activatedBuySellStyle == 'BUY') {
         this.errorInfoEntrustCount = ''
         this.entrustCountErrorTipsBorder = false
       }
@@ -749,8 +749,8 @@ export default {
         this.errorInfoSuccessOrderCount = this.$t('M.otc_publish_ad_err2')
         return false
       }
-      this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
-      if (this.isNeedPayPassowrd) {
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+      if (this.isNeedPayPassword) {
         // 限制设置--非必输选项
         this.publishADTradePwdDialogStatus = true
       } else {
@@ -767,13 +767,13 @@ export default {
     },
     // 6.0 点击密码框中的提交按提交钮发布广告
     async publishADSubmitButton () {
-      if (this.isNeedPayPassowrd && !this.tradePassword) {
+      if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
         this.errorInfoPassword = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
       let param = {
-        entrustType: this.activitedBuySellStyle, // 挂单类型(BUY SELL)
+        entrustType: this.activatedBuySellStyle, // 挂单类型(BUY SELL)
         coinId: this.activitedCoinId, // 挂单币种
         currencyId: this.activitedCurrencyId, // 法币Id
         entrustCount: this.$refs.entrustCount.value, // 挂单数量
@@ -786,8 +786,7 @@ export default {
         payTypes: this.parameterPayTypes // 支付方式（用，隔开的名字）
       }
       // 交易密码
-      param = this.isNeedPayPassowrd ? { ...param, tradePassword: this.tradePassword } : param
-
+      param = this.isNeedPayPassword ? { ...param, tradePassword: this.tradePassword } : param
       let data
       if (this.ADManageJumpOrderStatus == 1) {
         data = await addOTCPutUpOrdersMerchantdedicated(param)
@@ -796,7 +795,6 @@ export default {
         param.entrustId = this.messageId
         data = await addModifyPublishADOrder(param)
       }
-
       // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 1))) {
@@ -820,11 +818,11 @@ export default {
     // 改变支付方式
     changePayTypes (e) {
       console.log(e)
-      this.activitedPayTypes = e
-      // console.log(this.activitedPayTypes)
+      this.activatedPayTypes = e
+      // console.log(this.activatedPayTypes)
       // 处理支付方式数据格式，转成 a,b,c 形势
       let str = ''
-      this.activitedPayTypes.forEach(item => {
+      this.activatedPayTypes.forEach(item => {
         // console.log(item)
         str += item + ','
       })
@@ -847,7 +845,7 @@ export default {
       // 交易数量错误提示
       this.errorInfoEntrustCount = ''
       // 支付方式
-      this.activitedPayTypes = []
+      this.activatedPayTypes = []
       // 支付方式错误提示
       this.errorInfoTradeWay = ''
       // 备注
@@ -873,7 +871,7 @@ export default {
     },
     // 清空input框数据
     clearInputData () {
-      this.activitedBuySellStyle = ''
+      this.activatedBuySellStyle = ''
       this.activitedCoinId = ''
       this.activitedCurrencyId = ''
       this.entrustCount = ''
@@ -930,7 +928,7 @@ export default {
         this.entrustCountErrorTipsBorder = false
       }
       // 开始校验
-      if (this.activitedBuySellStyle == 'SELL') {
+      if (this.activatedBuySellStyle == 'SELL') {
         if (this.$refs.entrustCount.value > this.total) {
           // this.errorInfoEntrustCount = '最大可卖出量不足'
           this.errorInfoEntrustCount = this.$t('M.otc_publishAD_entrustCountLimit')
@@ -1387,7 +1385,7 @@ export default {
                 color: #30c296;
               }
 
-              .markder-price {
+              .market-price {
                 color: #e97345;
               }
 
@@ -1591,7 +1589,7 @@ export default {
                 color: #30c296;
               }
 
-              .markder-price {
+              .market-price {
                 color: #e97345;
               }
 

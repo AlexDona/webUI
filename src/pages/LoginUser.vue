@@ -783,6 +783,7 @@ export default {
     },
     // 刷新二维码
     async reflashErCode () {
+      this.isScanSuccess = false
       if (this.socket) {
         this.socket.doClose()
       }
@@ -1573,8 +1574,7 @@ export default {
 
         > .tips {
           height: 50px;
-          // line-height: 50px;
-          margin-top: 10px; // 任增加
+          margin-top: 10px;
           color: #fff;
         }
 

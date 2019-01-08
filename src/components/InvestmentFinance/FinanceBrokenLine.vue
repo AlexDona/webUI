@@ -153,7 +153,6 @@ export default {
     },
     // 监听主题变化options之后重绘列表
     resetOptions () {
-      // 任增加图示国际化
       this.options.tooltip.formatter = (params) => {
         return `${this.$t('M.comm_time')}：${params[0].axisValue}<br/>${this.$t('M.comm_price_metre')}：${params[0].data}`
       }

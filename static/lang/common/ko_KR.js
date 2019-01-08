@@ -174,7 +174,7 @@ export const common = {
   'comm_get_code': '인증번호 취득',
   'common_direction': '방향',
   'common_average_price': '거래 평균 가격',
-  // 全球行情任增加
+  // 全球行情增加
   'common_exchange': '거래소',
   'common_counterparty': '거래쌍',
   'common_transaction_price': '거래 가격',

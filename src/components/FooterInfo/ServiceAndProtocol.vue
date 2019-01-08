@@ -249,7 +249,7 @@ export default {
         activeName: newVal
       })
     },
-    // 任增加：改变语言重新请求对应语言的国际化内容
+    // 改变语言重新请求对应语言的国际化内容
     language () {
       this.changeTab({name: this.activeName})
     }
