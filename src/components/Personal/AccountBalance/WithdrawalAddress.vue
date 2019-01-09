@@ -256,8 +256,10 @@ import {
   validateNumForUserInput,
   getNestedData
 } from '../../../utils/commonFunc'
-import {mapState, createNamespacedHelpers} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('user')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     ErrorBox, // 错误提示接口
@@ -302,7 +304,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_USER_BUTTON_STATUS'
+      'SET_USER_BUTTON_STATUS',
+      'SET_NEW_WITHDRAW_ADDRESS'
     ]),
     checkoutInputFormat (type, targetNum) {
       // console.log(type)
@@ -452,7 +455,7 @@ export default {
         this.currencyList = getNestedData(detailData, 'canWithdrawPartnerCoinList')
         // 对ID名称进行赋值
         this.currencyValue = this.paramOfJumpToAddWithdrawAdress || getNestedData(detailData, 'canWithdrawPartnerCoinList[0].coinId')
-        this.$store.commit('personal/SET_NEW_WITHDRAW_ADDRESS', '')
+        this.SET_NEW_WITHDRAW_ADDRESS('')
         // 对币种名称列表进行赋值
         this.withdrawalAddressList = getNestedData(detailData, 'UserWithdrawAddressPage.list')
         this.totalPageForMyEntrust = getNestedData(detailData, 'UserWithdrawAddressPage.pages') - 0

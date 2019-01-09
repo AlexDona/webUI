@@ -227,8 +227,11 @@ import {
   getNestedData
 } from '../../utils/commonFunc'
 import Iconfont from '../Common/IconFontCommon'
-import {createNamespacedHelpers, mapState, mapGetters} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('footerInfo')
+import {
+  mapMutations,
+  mapState,
+  mapGetters
+} from 'vuex'
 export default {
   components: {
     Iconfont,
@@ -281,7 +284,7 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_FOOTER_ACTIVENAME'
+      'CHANGE_FOOTER_ACTIVE_NAME'
     ]),
     toggleShowStatus (type, data) {
       switch (type) {

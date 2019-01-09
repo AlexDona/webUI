@@ -18,6 +18,6 @@ export default {
     state.financeLineRenderPriceList = state.financeLineRenderPriceList.reverse()
   },
   [FINANCE_LINE_STATUS] (state, data) {
-    state.status += data
+    state.status = data
   }
 }

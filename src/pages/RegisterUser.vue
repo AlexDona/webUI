@@ -675,9 +675,12 @@ import {
   phoneNumRegexpInput,
   emailNumRegexpInput
 } from '../utils'
-import {createNamespacedHelpers, mapState, mapGetters} from 'vuex'
+import {
+  mapState,
+  mapGetters,
+  mapMutations
+} from 'vuex'
 // import {formatNumberInpu} from '../utils'
-const {mapMutations} = createNamespacedHelpers('user')
 export default {
   components: {
     ImageValidate,
@@ -752,7 +755,8 @@ export default {
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
-      'USER_LOGOUT'
+      'USER_LOGOUT',
+      'SET_COUNT_DOWN_RESET_STATUS'
     ]),
     emailNumRegexpInput (ref) {
       let target = this.$refs[ref]
@@ -1124,7 +1128,7 @@ export default {
   },
   watch: {
     activeMethod () {
-      this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', true)
+      this.SET_COUNT_DOWN_RESET_STATUS(true)
     }
   }
 }

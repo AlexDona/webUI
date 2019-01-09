@@ -417,9 +417,11 @@ import {
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
-import {createNamespacedHelpers, mapState} from 'vuex'
+import {
+  mapState,
+  mapMutations
+} from 'vuex'
 
-const {mapMutations} = createNamespacedHelpers('trade')
 export default {
   components: {
     IconFont
@@ -522,7 +524,8 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
+      'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
+      'CHANGE_FOOTER_ACTIVE_NAME'
     ]),
     // 获取用户对应交易对资产
     async getUserAssetOfActiveSymbol (targetPriceOfBuy, targetPriceOfSell) {
@@ -562,7 +565,7 @@ export default {
     },
     // 跳转
     jumpToOtherPage (router, activeName) {
-      this.$store.commit('footerInfo/CHANGE_FOOTER_ACTIVENAME', {
+      this.CHANGE_FOOTER_ACTIVE_NAME({
         activeName,
         type: router
       })

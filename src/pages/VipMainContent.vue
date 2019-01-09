@@ -613,7 +613,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   vipPriceInfo,
   buyVipPriceInfo,
@@ -626,7 +625,10 @@ import {
   getNestedData
 } from '../utils/commonFunc'
 // 底部
-const { mapMutations, mapActions } = createNamespacedHelpers('user')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {},
   data () {
@@ -660,7 +662,7 @@ export default {
       this.activeStatus = this.vipLeavl.split('')[3]
     }
     this.getServiceProtocolData()
-    await this.REFLASH_USER_INFO(this)
+    await this.REFRESH_USER_INFO_ACTION(this)
     await this.getVipPriceInfo()
     await this.getCurrencyApplicationDownloadUrl()
   },
@@ -671,7 +673,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'REFLASH_USER_INFO'
+      'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([
     ]),
@@ -834,7 +836,7 @@ export default {
           this.fullscreenLoading = false
           this.dialogFormVisible = false
           this.password = ''
-          this.REFLASH_USER_INFO(this)
+          this.REFRESH_USER_INFO_ACTION(this)
           this.toggleAssetsCurrencyId()
           console.log(data)
         }

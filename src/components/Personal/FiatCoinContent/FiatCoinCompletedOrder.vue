@@ -287,9 +287,11 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../../utils'
-import {createNamespacedHelpers, mapState} from 'vuex'
 import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
-const {mapMutations} = createNamespacedHelpers('personal')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {},
   // props,

@@ -653,8 +653,10 @@ import {
   getNestedData
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
-import {mapState, createNamespacedHelpers} from 'vuex'
-const { mapMutations } = createNamespacedHelpers('user')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     IconFontCommon, // 字体图标
@@ -695,7 +697,7 @@ export default {
     // 调用安全中心登陆记录 安全设置记录 邮箱 手机 谷歌 交易密码 状态
     if (this.refSecurityCenterStatus) {
       await this.getSecurityCenter()
-      this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', false)
+      this.CHANGE_REF_SECURITY_CENTER_INFO(false)
     }
     await this.getSecurityCenter('logon-record')
   },
@@ -705,7 +707,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_USER_BUTTON_STATUS'
+      'SET_USER_BUTTON_STATUS',
+      'CHANGE_REF_SECURITY_CENTER_INFO'
     ]),
     // 1.时间格式化
     timeFormatting (date) {

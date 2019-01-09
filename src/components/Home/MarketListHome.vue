@@ -128,8 +128,10 @@ import {
   getHomeMarketByAjax
   // getCollectionListAjax
 } from '../../utils/api/home'
-import {mapState, createNamespacedHelpers} from 'vuex'
-const { mapMutations } = createNamespacedHelpers('home')
+import {
+  mapState,
+  mapMutations
+} from 'vuex'
 export default{
   components: {
     IconFontCommon,
@@ -196,7 +198,8 @@ export default{
     ...mapMutations([
       'CHANGE_COLLECT_LIST',
       'CHANGE_COLLECT_SYMBOL',
-      'CHANGE_SYMBOL_MAP'
+      'CHANGE_SYMBOL_MAP',
+      'CHANGE_ACTIVE_TRADE_AREA'
     ]),
     setCollectData (collectSymbol) {
       this.CHANGE_COLLECT_SYMBOL({
@@ -297,12 +300,12 @@ export default{
     // 更改当前交易对
     changeActiveSymbol (e) {
       console.log(e)
-      this.$store.commit('trade/SET_JUMP_STATUS', true)
-      this.$store.commit('trade/SET_JUMP_SYMBOL', e)
+      this.SET_JUMP_STATUS(true)
+      this.SET_JUMP_SYMBOL(e)
       // 设置当前交易区
       const id = e.areaId
       const name = e.area
-      this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', {
+      this.CHANGE_ACTIVE_TRADE_AREA({
         id,
         name
       })

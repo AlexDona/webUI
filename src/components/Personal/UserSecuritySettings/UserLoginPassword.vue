@@ -103,8 +103,10 @@ import {
   returnAjaxMsg,
   validateNumForUserInput
 } from '../../../utils/commonFunc'
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('personal')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     IconFontCommon, // 字体图标
@@ -132,7 +134,8 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_REF_SECURITY_CENTER_INFO'
+      'CHANGE_REF_SECURITY_CENTER_INFO',
+      'USER_LOGOUT'
     ]),
     // 点击返回上个页面
     returnSuperior () {
@@ -235,7 +238,7 @@ export default {
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
-          this.$store.commit('user/USER_LOGOUT')
+          this.USER_LOGOUT()
           this.$router.push({path: '/home'})
         }
         this.successCountDown--

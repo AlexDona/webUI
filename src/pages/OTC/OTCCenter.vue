@@ -423,8 +423,11 @@ import {
   returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
-import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('OTC')
+import {
+  mapState,
+  mapMutations,
+  mapActions
+} from 'vuex'
 export default {
   components: {
     OTCTradingOrder, //  交易中订单
@@ -526,6 +529,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
+    ]),
     ...mapMutations([
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
@@ -534,11 +540,12 @@ export default {
       // 改变全局锚点状态方法
       'CHANGE_OTC_ANCHOR_STATUS',
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-      'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS'
+      'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 刷新个人信息
     reflashUserInfo () {
-      this.$store.dispatch('user/REFLASH_USER_INFO', this)
+      this.REFRESH_USER_INFO_ACTION(this)
     },
     // 科学计数法转换
     filterNumber (num) {
@@ -677,7 +684,7 @@ export default {
       } else {
         // 登录后：商家用户跳转到商家订单；普通用户跳转到个人中心中的法币订单
         if (this.userInfo.type === 'COMMON') {
-          this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'fiat-orders')
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('fiat-orders')
           this.$router.push({path: '/PersonalCenter'})
         }
         if (this.userInfo.type === 'MERCHANT') {

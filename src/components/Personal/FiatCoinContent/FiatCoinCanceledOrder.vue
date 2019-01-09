@@ -185,8 +185,10 @@
 import {timeFilter} from '../../../utils'
 // import {mapState, mapMutations} from 'vuex'
 import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
-import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('personal')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {},
   // props,

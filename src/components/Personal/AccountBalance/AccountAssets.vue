@@ -402,7 +402,6 @@ import {
   amendPrecision,
   scientificToNumber
 } from '../../../utils'
-import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   assetCurrenciesList,
   inquireRechargeAddressList,
@@ -418,7 +417,10 @@ import {
   getSecurityCenter,
   getNestedData
 } from '../../../utils/commonFunc'
-const { mapMutations } = createNamespacedHelpers('user')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     WithdrawDepositItem, // 提币 item
@@ -500,7 +502,12 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_USER_BUTTON_STATUS'
+      'SET_USER_BUTTON_STATUS',
+      'SET_JUMP_STATUS',
+      'SET_JUMP_SYMBOL',
+      'CHANGE_ACTIVE_TRADE_AREA',
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'SET_NEW_WITHDRAW_ADDRESS'
     ]),
     // 科学计数法转换
     filterNumber (num) {
@@ -593,14 +600,14 @@ export default {
         sellsymbol: e.sellCoinNickname,
         tradeId: e.id
       }
-      this.$store.commit('trade/SET_JUMP_STATUS', true)
-      this.$store.commit('trade/SET_JUMP_SYMBOL', activeSymbol)
+      this.SET_JUMP_STATUS(true)
+      this.SET_JUMP_SYMBOL(activeSymbol)
       console.log(this.activeSymbol)
       // 设置当前交易区
       const id = e.tradeAreaId
       const name = e.buyCoinName
       console.log(e)
-      this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', {
+      this.CHANGE_ACTIVE_TRADE_AREA({
         id,
         name
       })
@@ -1037,10 +1044,10 @@ export default {
       this.activeWithdrawDepositAddress = ''
     },
     jumpToOtherTab ({target, coinId}) {
-      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', target)
+      this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
       // 指定要跳转到的coinId
       if (coinId) {
-        this.$store.commit('personal/SET_NEW_WITHDRAW_ADDRESS', coinId)
+        this.SET_NEW_WITHDRAW_ADDRESS(coinId)
       }
     },
     /**

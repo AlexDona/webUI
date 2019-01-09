@@ -383,8 +383,10 @@ import {
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
-import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('OTC')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     IconFontCommon //  字体图标组件
@@ -486,7 +488,8 @@ export default {
   methods: {
     ...mapMutations([
       // 0.1 改变全局锚点状态方法
-      'CHANGE_OTC_ANCHOR_STATUS'
+      'CHANGE_OTC_ANCHOR_STATUS',
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 0.2 科学计数法转换
     filterNumber (num) {
@@ -494,7 +497,7 @@ export default {
     },
     // 0.3 充币按钮跳转
     chargeMoney () {
-      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'assets')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
       this.$router.push({path: '/PersonalCenter'})
     },
     // 0.4 输入限制

@@ -21,8 +21,10 @@
 <script>
 import echarts from 'echarts/lib/echarts'
 import {timeFilter} from '../../utils'
-import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('finance')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 require('echarts/lib/chart/line')
 // 引入提示框
 require('echarts/lib/component/tooltip')

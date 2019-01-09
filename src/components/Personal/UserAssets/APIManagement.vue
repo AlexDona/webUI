@@ -442,7 +442,6 @@ import CountDownButton from '../../Common/CountDownCommon'// 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import { IP_REG } from '../../../utils/regExp' // 正则验证
-import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   multipleUserAPIInfo,
   stateCreationApi,
@@ -457,7 +456,10 @@ import {
   getNestedData
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
-const { mapMutations } = createNamespacedHelpers('user')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     IconFontCommon, // 字体图标

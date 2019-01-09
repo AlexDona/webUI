@@ -293,7 +293,6 @@
 <script>
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
-import { createNamespacedHelpers, mapState } from 'vuex'
 import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {
@@ -309,7 +308,10 @@ import {
 } from '../../../utils/api/personal'
 import {phoneNumRegexpInput} from '../../../utils'
 import {checkUserExist} from '../../../utils/api/user'
-const { mapMutations } = createNamespacedHelpers('user')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     IconFontCommon, // 字体图标
@@ -362,7 +364,9 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_USER_BUTTON_STATUS'
+      'SET_USER_BUTTON_STATUS',
+      'CHANGE_REF_SECURITY_CENTER_INFO',
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     phoneNumRegexpInput (ref) {
       let target = this.$refs[ref]
@@ -370,8 +374,8 @@ export default {
     },
     // 点击返回上个页面
     returnSuperior () {
-      this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)
-      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'security-center')
+      this.CHANGE_REF_SECURITY_CENTER_INFO(true)
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       this.$router.push({path: '/PersonalCenter'})
     },
     // 4位随机数

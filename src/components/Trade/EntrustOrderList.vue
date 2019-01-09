@@ -287,8 +287,10 @@ import {
   repealMyEntrustCommon,
   getNestedData
 } from '../../utils/commonFunc'
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('trade')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 
 export default {
   components: {},
@@ -323,7 +325,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
+      'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 撤销所有委单
     cancelAllEntrust () {
@@ -359,7 +362,7 @@ export default {
     },
     // 跳转到个人中心
     jumpToPersonal () {
-      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'coin-orders')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('coin-orders')
       this.$router.push({path: '/PersonalCenter'})
     },
     /**

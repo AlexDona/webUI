@@ -11,8 +11,10 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('user')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {},
   props: {
@@ -37,7 +39,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_USER_BUTTON_STATUS'
+      'SET_USER_BUTTON_STATUS',
+      'SET_COUNT_DOWN_RESET_STATUS'
     ]),
     run () {
       console.log(this.status, this.disabledOfPhoneBtn, this.disabledOfEmailBtn)
@@ -89,7 +92,7 @@ export default {
     },
     countDownResetStatus () {
       this.time = 0
-      this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', false)
+      this.SET_COUNT_DOWN_RESET_STATUS(false)
     },
     status (newVal) {
       console.log(newVal)

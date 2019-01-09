@@ -264,7 +264,7 @@ export const getCollectionList = async (that, callback) => {
 // 协议跳转
 export const jumpToOtherPageForFooter = (router, activeName, that) => {
   that.$router.push({path: router})
-  that.$store.commit('footerInfo/CHANGE_FOOTER_ACTIVENAME', {
+  that.$store.commit('CHANGE_FOOTER_ACTIVE_NAME', {
     activeName,
     type: router
   })
