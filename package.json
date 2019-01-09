@@ -24,7 +24,7 @@
     "vue": "^2.5.2",
     "vue-concise-slider": "^2.4.8",
     "vue-router": "^3.0.1",
-    "vue-slider-component": "^2.7.6"
+    "vue-slider-component": "^2.8.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.2.1",
@@ -104,7 +104,7 @@
     "vue-lazyload": "^1.2.6",
     "vue-loader": "^13.3.0",
     "vue-slider-component": "^2.7.6",
-    "vue-style-loader": "^3.0.1",
+    "vue-style-loader": "^3.1.2",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.13.1",

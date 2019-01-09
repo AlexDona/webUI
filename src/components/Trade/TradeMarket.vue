@@ -259,6 +259,7 @@ export default {
         activeSymbol,
         previousSymbol
       })
+      this.$store.commit('common/CHANGE_SYMBOL_CHANGED_STATUS', false)
     },
     // 排序
     sortByUser (data) {
