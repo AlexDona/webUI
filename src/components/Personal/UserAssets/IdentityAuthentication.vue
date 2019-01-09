@@ -596,11 +596,11 @@ import {
   passportEntryRestrictions
 } from '../../../utils/index'
 import {
-  createNamespacedHelpers,
   mapState,
-  mapGetters
+  mapGetters,
+  mapActions,
+  mapMutations
 } from 'vuex'
-const {mapMutations, mapActions} = createNamespacedHelpers('common')
 export default {
   components: {
     ErrorBox, // 错误提示接口
@@ -687,13 +687,15 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapActions([
-      'GET_COUNTRY_LIST_ACTION'
+      'GET_COUNTRY_LIST_ACTION',
+      'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([
-      'SET_USER_INFO_REFRESH_STATUS'
+      'SET_USER_INFO_REFRESH_STATUS',
+      'SET_STEP1_INFO'
     ]),
     reflashUserInfo () {
-      this.$store.dispatch('user/REFLASH_USER_INFO', {
+      this.REFRESH_USER_INFO_ACTION({
         self: this
       })
     },
@@ -784,7 +786,7 @@ export default {
       } else {
         // 接口成功清除loading
         this.fullscreenLoading = false
-        this.$store.commit('user/SET_STEP1_INFO', data.data.data)
+        this.SET_STEP1_INFO(data.data.data)
         // 返回列表数据
         this.userInfoRefresh = getNestedData(data, 'data.data.userInfo')
         this.authenticationIsStatus()
@@ -989,7 +991,6 @@ export default {
       } else {
         // 接口成功清除loading
         this.fullscreenLoading = false
-        console.log(1)
         this.SET_USER_INFO_REFRESH_STATUS(true)
         await this.getUserRefreshUser()
         await this.getRealNameInformation()

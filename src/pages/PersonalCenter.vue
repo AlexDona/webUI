@@ -261,8 +261,10 @@ import {
 } from '../utils/api/personal'
 import IconFontCommon from '../components/Common/IconFontCommon'
 import {returnAjaxMsg} from '../utils/commonFunc'
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('personal')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     // 我的资产
@@ -303,7 +305,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'SET_STEP1_INFO'
     ]),
     // 显示未设置交易密码弹窗
     showNoPasswdNotice () {
@@ -345,7 +348,7 @@ export default {
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
-        this.$store.commit('user/SET_STEP1_INFO', data.data.data)
+        this.SET_STEP1_INFO(data.data.data)
         this.showNoPosswdAndNoVerifyNotice()
       }
     }

@@ -144,12 +144,11 @@
 </template>
 <script>
 import TradeNewPrice from './TradeNewPrice'
+import {getNestedData} from '../../utils/commonFunc'
 import {
-  createNamespacedHelpers,
+  mapMutations,
   mapState
 } from 'vuex'
-import {getNestedData} from '../../utils/commonFunc'
-const { mapMutations } = createNamespacedHelpers('trade')
 export default {
   components: {
     TradeNewPrice

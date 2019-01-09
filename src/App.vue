@@ -23,16 +23,14 @@
 </template>
 <script>
 import {getStore} from './utils'
-import {
-  mapState,
-  createNamespacedHelpers
-} from 'vuex'
 import NoticeHome from './components/Home/NoticeHome'
 import HeaderCommon from './components/Common/HeaderCommonForPC'
 import HeaderCommonForMobile from './components/Common/HeaderForMobile'
 import FooterCommon from './components/Common/FooterCommon'
-const { mapMutations } = createNamespacedHelpers('common')
-
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   name: 'App',
   components: {

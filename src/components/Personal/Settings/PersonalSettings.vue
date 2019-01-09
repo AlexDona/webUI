@@ -120,9 +120,11 @@ import {
 } from '../../../utils/commonFunc'
 import {setUserInputPasswordFrequency} from '../../../utils/api/user'
 import {getConfigAjax} from '../../../utils/api/header'
-import {mapState, createNamespacedHelpers} from 'vuex'
-
-const {mapMutations} = createNamespacedHelpers('personal')
+import {
+  mapMutations,
+  mapActions,
+  mapState
+} from 'vuex'
 export default {
   components: {
     IconFontCommon // 字体图标
@@ -176,6 +178,9 @@ export default {
   beforeRouteUpdate () {
   },
   methods: {
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
+    ]),
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_REF_ACCOUNT_CREDITED_STATE'
@@ -235,7 +240,7 @@ export default {
         this.isSuccessChanged = true
         this.activeFrequency = params.status
         this.validatedActiveFrequency = this.activeFrequency
-        await this.$store.dispatch('user/REFLASH_USER_INFO', {
+        await this.REFRESH_USER_INFO_ACTION({
           self: this
         })
         this.isCheckPayPassword = false

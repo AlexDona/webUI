@@ -456,8 +456,10 @@ import {
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
 // 引入全局变量和方法
-import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('OTC')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     IconFontCommon //  字体图标

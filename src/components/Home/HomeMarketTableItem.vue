@@ -261,11 +261,13 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState, createNamespacedHelpers} from 'vuex'
+import {
+  mapState,
+  mapMutations
+} from 'vuex'
 import {keep2Num} from '../../utils'
 import {formatCount} from '../../utils/commonFunc'
 import EchartsLineCommon from '../Common/EchartsLineCommon'
-const {mapMutations} = createNamespacedHelpers('trade')
 export default {
   components: {
     EchartsLineCommon
@@ -291,7 +293,8 @@ export default {
   methods: {
     ...mapMutations([
       'SET_JUMP_STATUS',
-      'SET_JUMP_SYMBOL'
+      'SET_JUMP_SYMBOL',
+      'CHANGE_ACTIVE_TRADE_AREA'
     ]),
     // 成交量格式化
     formatCount (targetNum) {
@@ -314,7 +317,7 @@ export default {
       // 设置当前交易区
       const id = e.areaId
       const name = e.area
-      this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', {
+      this.CHANGE_ACTIVE_TRADE_AREA({
         id,
         name
       })

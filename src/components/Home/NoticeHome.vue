@@ -43,8 +43,10 @@ import {
   returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
-import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('footerInfo')
+import {
+  mapState,
+  mapMutations
+} from 'vuex'
 
 export default {
   components: {
@@ -73,7 +75,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_NEWS_DETAIL_JUMP_ID'
+      'CHANGE_NEWS_DETAIL_JUMP_ID',
+      'CHANGE_NOTICE_VISIBLE'
     ]),
     jumpToNewsDetail (e) {
       this.CHANGE_NEWS_DETAIL_JUMP_ID(e.id)
@@ -93,7 +96,7 @@ export default {
     },
     // 关闭组件
     closeNotice () {
-      this.$store.commit('home/CHANGE_NOTICE_VISIBLE', false)
+      this.CHANGE_NOTICE_VISIBLE(false)
     },
     autoPlay () {
       this.animate = true

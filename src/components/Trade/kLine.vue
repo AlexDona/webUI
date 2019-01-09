@@ -44,8 +44,10 @@ import {
 import {
   unzip
 } from '../../utils'
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('common')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {},
   // props,
@@ -109,10 +111,12 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_ACTIVE_SYMBOL',
-      'CHANGE_SOCKET_AND_AJAX_DATA'
+      'CHANGE_SOCKET_AND_AJAX_DATA',
+      'SET_IS_KLINE_DATA_READY',
+      'SET_MIDDLE_TOP_DATA'
     ]),
     changeIsKlineDataReady (status) {
-      this.$store.commit('trade/SET_IS_KLINE_DATA_READY', status)
+      this.SET_IS_KLINE_DATA_READY(status)
     },
     // 接口获取K线数据
     async getKlineByAjax (tradeName, KlineType, KlineNum = 0, KlineStep = 'STEP5') {
@@ -197,7 +201,7 @@ export default {
           depthList.depthData.sells.list.reverse()
         }
         // 默认交易对 数据
-        this.$store.commit('trade/SET_MIDDLE_TOP_DATA', defaultTrade.content[0])
+        this.SET_MIDDLE_TOP_DATA(defaultTrade.content[0])
         // 买卖单
         this.ajaxData.buyAndSellData = depthList.depthData
         // 交易记录

@@ -644,8 +644,10 @@ import HeaderCommonForPC from '../components/Common/HeaderCommonForPC'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
 import IconFont from '../components/Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('user')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 Vue.use(VueClipboard)
 export default {
   components: {

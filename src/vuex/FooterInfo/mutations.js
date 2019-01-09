@@ -1,5 +1,5 @@
 import {
-  CHANGE_FOOTER_ACTIVENAME,
+  CHANGE_FOOTER_ACTIVE_NAME,
   CHANGE_PROTOCOL_DATA,
   CHANGE_NEWS_DETAIL_JUMP_ID
 } from './mutations-types.js'
@@ -9,7 +9,7 @@ import {
 // import {localapi, proapi} from 'src/config/env'
 
 export default {
-  [CHANGE_FOOTER_ACTIVENAME] (state, {type, activeName}) {
+  [CHANGE_FOOTER_ACTIVE_NAME] (state, {type, activeName}) {
     switch (type) {
       case '/NewsAndNoticeCenter':
         state.newsAndNoticeActiveName = activeName

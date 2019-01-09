@@ -191,7 +191,6 @@ import FiatCoinCanceledOrder from '../FiatCoinContent/FiatCoinCanceledOrder'
 import FiatCoinCompletedOrder from '../FiatCoinContent/FiatCoinCompletedOrder'
 import FiatCoinFreezingOrder from '../FiatCoinContent/FiatCoinFreezingOrder'
 import FiatCoinEntrustOrder from '../FiatCoinContent/FiatCoinEntrustOrder'
-import {createNamespacedHelpers, mapState} from 'vuex'
 import IconFontCommon from '../../Common/IconFontCommon'
 // import {
 //   getOTCEntrustingOrders
@@ -206,7 +205,10 @@ import {
   getMerchantsOrdersList,
   getNestedData
 } from '../../../utils/commonFunc'
-const {mapMutations} = createNamespacedHelpers('personal')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     IconFontCommon, //  字体图标

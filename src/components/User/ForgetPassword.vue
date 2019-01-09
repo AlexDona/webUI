@@ -334,8 +334,10 @@ import {
 } from '../../utils/commonFunc'
 import {CHECKPASSWORD_REG} from '../../utils/regExp'
 import ImageValidate from '../Common/ImageValidateCommon'
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('user')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     IconFont,
