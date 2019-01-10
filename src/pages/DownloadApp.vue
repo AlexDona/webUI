@@ -66,7 +66,7 @@
 import {
   getAppDownLoadUrlAjax
 } from '../utils/api/user'
-import {downloadFileWithUserDefined} from '../utils'
+// import {downloadFileWithUserDefined} from '../utils'
 import {
   returnAjaxMsg,
   getNestedData
@@ -129,11 +129,7 @@ export default {
     },
     downloadApp () {
       console.log(this.downloadUrl)
-      if (this.isAndroid) {
-        downloadFileWithUserDefined(this.downloadUrl, 'filename')
-      } else {
-        this.$refs['download'].click()
-      }
+      this.$refs['download'].click()
     }
   },
   filter: {},
