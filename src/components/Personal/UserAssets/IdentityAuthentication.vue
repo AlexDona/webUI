@@ -540,12 +540,12 @@
         name="1"
         center>
         <div class="advanced-certification-content">
-          <VueQrcode
+          <Qrcode
             class="ercode"
             :value="String('http://192.168.1.87/isAppOverPage.html')"
             :options="{ size: 140 }"
           >
-          </VueQrcode>
+          </Qrcode>
         </div>
         <div class="advanced-certification-text">
           <p class="text-tips font-size12">
@@ -576,6 +576,7 @@
 <script>
 import ErrorBox from '../../User/ErrorBox'
 import IconFontCommon from '../../Common/IconFontCommon'
+import Qrcode from '../../Common/Qrcode'
 import {
   submitRealNameAuthentication,
   submitSeniorCertification,
@@ -605,10 +606,7 @@ export default {
   components: {
     ErrorBox, // 错误提示接口
     IconFontCommon, // 字体图标
-    // 二维码组件
-    VueQrcode: resolve => {
-      require([('@xkeshi/vue-qrcode')], resolve)
-    }
+    Qrcode
   },
   data () {
     return {

@@ -30,7 +30,7 @@
                 class="ercode-box"
                 v-show="erCodeVisible"
               >
-                <VueQrcode
+                <Qrcode
                   class="ercode"
                   :value="erCodeString"
                 />
@@ -103,16 +103,14 @@
 import {mapState, mapGetters} from 'vuex'
 import {domain} from '../utils/env'
 import IconFont from '../components/Common/IconFontCommon'
+import Qrcode from '../components/Common/Qrcode'
 import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard)
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
     IconFont,
-    // 二维码组件
-    VueQrcode: resolve => {
-      require([('@xkeshi/vue-qrcode')], resolve)
-    }
+    Qrcode
   },
   // props,
   data () {

@@ -9,13 +9,13 @@ function getSize () {
   let width = window.innerWidth
   let height = window.innerHeight
   console.log(width)
-  store.commit('common/SET_WINDOW_WIDTH', width)
+  store.commit('SET_WINDOW_WIDTH', width)
   let isPC = IsPC()
   if (width < 1050 || !isPC) {
-    store.commit('user/TOGGLE_PC_MOBILE', true)
+    store.commit('TOGGLE_PC_MOBILE', true)
     document.body.classList.add('mobile')
   } else {
-    store.commit('user/TOGGLE_PC_MOBILE', false)
+    store.commit('TOGGLE_PC_MOBILE', false)
     document.body.classList.remove('mobile')
   }
   /* 640 100  320 50 */

@@ -22,6 +22,8 @@ export default {
   activated () {},
   updated () {},
   beforeRouteUpdate () {},
+  beforeDestroy () {},
+  destroyed () {},
   methods: {},
   filter: {},
   computed: {

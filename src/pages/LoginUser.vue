@@ -322,7 +322,7 @@
           @click="reflashErCode"
           class="cursor-pointer"
         >
-          <VueQrcode
+          <Qrcode
             class="ercode"
             :value="erCodeString"
           />
@@ -644,6 +644,8 @@ import HeaderCommonForPC from '../components/Common/HeaderCommonForPC'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
 import IconFont from '../components/Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
+import Qrcode from '../components/Common/Qrcode'
+
 import {
   mapMutations,
   mapState
@@ -657,10 +659,7 @@ export default {
     ImageValidate,
     ErrorBox,
     IconFont,
-    // 二维码组件
-    VueQrcode: resolve => {
-      require([('@xkeshi/vue-qrcode')], resolve)
-    }
+    Qrcode
   },
   data () {
     return {

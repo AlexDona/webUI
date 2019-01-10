@@ -31,7 +31,14 @@ const state = {
   disabledOfEmailBtn: false, // 邮箱验证码按钮可用状态
   disabledOfMobilePhoneBtn: false,
   disabledOfMobileEmailBtn: false,
-  end: '' // 占位
+  vip: {
+    // 当前选中
+    activeSelectLevel: '',
+    // vip 价格信息
+    VipPriceInfoList: [],
+    // vip操作： open、renew、update
+    vipAction: ''
+  }
 }
 
 export default {

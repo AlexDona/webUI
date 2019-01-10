@@ -23,7 +23,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getAboutUsDataAjax} from '../../utils/api/header'
+import {getAboutUsDataAjax} from '../../utils/api/common'
 import {
   returnAjaxMsg,
   getNestedData

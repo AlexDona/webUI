@@ -154,6 +154,11 @@ export const vipPriceInfo = params => get('vip/price', params)
 export const buyVipPriceInfo = params => postWithURLencoded('vip/buy', params)
 // 购买vip
 export const currencyApplicationDownloadUrl = params => get('getCurrencyApplicationDownloadUrl', params)
+
+// 获取购买vip应支付的价格
+export const getVipUserPayCount = params => get('vip/price/get', Object.assign({
+  'not-loading': true
+}, params))
 // 汇率转换
 export const currencyTransform = params => get('exchangeRate/coinPrice', Object.assign({
   'not-loading': true

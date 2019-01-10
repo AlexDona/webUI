@@ -560,7 +560,8 @@ export default {
     ...mapMutations([
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
       'CHANGE_FOOTER_ACTIVE_NAME',
-      'SET_TARGET_EXCHANGE_DATA'
+      'SET_TARGET_EXCHANGE_DATA',
+      'CHANGE_SYMBOL_CHANGED_STATUS'
     ]),
     changeSliderDisabled () {
       console.log(this.buyUserCoinWallet.total)
@@ -1022,7 +1023,7 @@ export default {
     },
     isSymbolChanged (newVal) {
       if (newVal) {
-        this.$store.commit('common/CHANGE_SYMBOL_CHANGED_STATUS', false)
+        this.CHANGE_SYMBOL_CHANGED_STATUS(false)
       }
     },
     language () {

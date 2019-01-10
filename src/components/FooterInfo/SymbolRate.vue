@@ -47,7 +47,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
-import {getSymbolRate} from '../../utils/api/header'
+import {getSymbolRate} from '../../utils/api/common'
 import {
   returnAjaxMsg,
   getNestedData
