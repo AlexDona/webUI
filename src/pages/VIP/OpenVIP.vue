@@ -80,6 +80,10 @@
             <p class="duration-currency font-size18">
               {{filteredData[1]?filteredData[1].value:'--'}}{{vipPriceInfo1[1]?vipPriceInfo1[1].vipCoinName:'--'}}
             </p>
+            <p class="duration-through ">
+              <!--600FUC-->
+              {{filteredData[1]?filteredData[1].costValue:'--'}}{{filteredData[1]?filteredData[1].vipCoinName:'--'}}
+            </p>
           </div>
           <div
             class="duration duration-left cursor-pointer text-align-c"
@@ -99,7 +103,7 @@
             </p>
             <p class="duration-through ">
               <!--600FUC-->
-              {{filteredData[2]?filteredData[2].value:'--'}}{{filteredData[2]?filteredData[2].vipCoinName:'--'}}
+              {{filteredData[2]?filteredData[2].costValue:'--'}}{{filteredData[2]?filteredData[2].vipCoinName:'--'}}
             </p>
           </div>
           <div
@@ -120,7 +124,7 @@
             </p>
             <p class="duration-through">
               <!--1200FUC-->
-              {{filteredData[3]?filteredData[3].value:'--'}}{{filteredData[3]?filteredData[3].vipCoinName:'--'}}
+              {{filteredData[3]?filteredData[3].costValue:'--'}}{{filteredData[3]?filteredData[3].vipCoinName:'--'}}
             </p>
           </div>
           <div
