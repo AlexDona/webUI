@@ -1,5 +1,7 @@
 <template>
-  <div class="slider-box clearfloat cursor-pointer">
+  <div
+    class="slider-box clearfloat cursor-pointer"
+  >
     <!-- 限价买-->
     <div
       class="inner-box"
@@ -227,7 +229,7 @@ export default {
     },
     setNewRateByUserMarket (type, newAmount) {
       let total = type == 'buy' ? this.buyTotal : this.sellTotal
-      if (newAmount && total) {
+      if (total) {
         let rate = newAmount < total ? (newAmount / total) * 100 : 100
         console.log(rate)
         switch (type) {
@@ -253,23 +255,26 @@ export default {
     })
   },
   watch: {
+    isSymbolChanged (newVal) {
+      console.log(newVal)
+    },
     // 用户设置买价格
     limitBuyPrice (newVal) {
       console.log(newVal)
-      if (newVal && this.buyTotal) {
+      if (this.buyTotal) {
         this.setNewRateByUserLimitBuy(newVal, this.limitBuyCount)
       }
     },
     // 用户设置买数量
     limitBuyCount (newVal) {
-      if (newVal && this.buyTotal) {
+      if (this.buyTotal) {
         this.setNewRateByUserLimitBuy(this.limitBuyPrice, newVal)
       }
     },
     // 用户设置限价卖数量
     limitSellCount (newVal) {
       console.log(newVal)
-      if (newVal && this.sellTotal) {
+      if (this.sellTotal) {
         let rate = newVal < this.sellTotal ? (newVal / this.sellTotal) * 100 : 100
         console.log(rate)
         this.setValue('limitSellSliderValue', cutOutPointLength(rate, 2))
@@ -315,6 +320,8 @@ export default {
   @import '../../../static/css/scss/index.scss';
 
   .slider-box {
+    min-width: 320px;
+
     .slider {
       float: left;
       width: 85%;

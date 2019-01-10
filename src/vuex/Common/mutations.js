@@ -95,7 +95,7 @@ export default {
       state.previousSymbol = previousSymbol
     }
   },
-  [CHANGE_SYMBOL_CHANGED_STATUS] (state, {status}) {
+  [CHANGE_SYMBOL_CHANGED_STATUS] (state, status) {
     state.isSymbolChanged = status
   },
   // 更改当前选中交易区

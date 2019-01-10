@@ -257,7 +257,7 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapGetters('common', {
+    ...mapGetters({
       'isChineseLanguage': 'isChineseLanguage'
     }),
     ...mapState({

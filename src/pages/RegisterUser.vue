@@ -1106,7 +1106,7 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapGetters('common', {
+    ...mapGetters({
       'isNeedApp': 'isNeedApp'
     }),
     ...mapState({
