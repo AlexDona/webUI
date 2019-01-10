@@ -298,7 +298,7 @@ export const personal = {
   'user_vip_text4': '一个月有效期时长为30个自然日',
   'user_vip_text5': '开通即代表您已同意',
   'user_vip_text6': 'VIP服务协议',
-  'user_vip_text7': '立即续费',
+  'user_vip_text7': '已开通',
   'user_vip_text8': 'VIP享手续费、提现优惠',
   'user_vip_text9': '立即升级',
   'user_vip_fee_discount': '手续费折扣',

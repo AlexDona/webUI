@@ -298,7 +298,7 @@ export const personal = {
   'user_vip_text4': '월간 유효 기간은 30 일입니다',
   'user_vip_text5': '오픈한다는 것은 고객님이 동의 함을 표시함',
   'user_vip_text6': 'VIP 서비스 계약',
-  'user_vip_text7': '즉시 비용을 연장하다',
+  'user_vip_text7': '열림',
   'user_vip_text8': 'VIP수수료,출금비 할인됨',
   'user_vip_text9': '즉시 업그레이드',
   'user_vip_fee_discount': '수수료 할인',

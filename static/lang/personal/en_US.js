@@ -293,7 +293,7 @@ export const personal = {
   'user_vip_text4': 'One month valid for 30 natural days',
   'user_vip_text5': 'Opening means that you have agreed',
   'user_vip_text6': 'VIP Service Agreement',
-  'user_vip_text7': 'Immediately a renewal',
+  'user_vip_text7': 'Already Opened',
   'user_vip_text8': 'VIP Discount',
   'user_vip_text9': 'Upgrade immediately',
   'user_vip_fee_discount': 'Fee discount',

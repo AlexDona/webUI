@@ -293,7 +293,7 @@ export const personal = {
   'user_vip_text4': '30日間の自然な日に有効な1ヶ月',
   'user_vip_text5': 'オープニングはあなたが同意したことを意味します',
   'user_vip_text6': 'VIPサービス契約',
-  'user_vip_text7': '即座に費用をつぐ',
+  'user_vip_text7': '開かれた',
   'user_vip_text8': 'VIP割引',
   'user_vip_text9': '直ちにアップグレードする',
   'user_vip_fee_discount': '手数料割引',
