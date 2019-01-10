@@ -205,6 +205,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
+                  v-if="!isSymbolChanged"
                 />
                 <!--预计交易额 手续费-->
                 <div class="volume-rate">
@@ -302,6 +303,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
+                  v-if="!isSymbolChanged"
                 />
                 <div class="submit">
                   <el-button
@@ -380,6 +382,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
+                  v-if="!isSymbolChanged"
                 />
                 <div class="submit">
                   <el-button
@@ -716,9 +719,17 @@ export default {
       switch (e.name) {
         case 'market-price':
           this.matchType = 'MARKET'
+          this.$refs[this.limitBuyCountInputRef].value = ''
+          this.limitExchange.buyCount = 0
+          this.$refs[this.limitSellCountInputRef].value = ''
+          this.limitExchange.sellCount = 0
           break
         case 'limit-price':
           this.matchType = 'LIMIT'
+          this.$refs[this.marketBuyAmountInputRef].value = ''
+          this.marketExchange.sellCount = 0
+          this.$refs[this.marketSellCountInputRef].value = ''
+          this.marketExchange.buyAmount = 0
           break
       }
     },
@@ -1028,9 +1039,26 @@ export default {
     }
   },
   watch: {
+    matchType (newVal) {
+    },
     'limitExchange.buyPrice' (newVal) {
     },
     isSymbolChanged (newVal) {
+      console.log(this.matchType)
+      switch (this.matchType) {
+        case 'LIMIT':
+          this.$refs[this.limitBuyCountInputRef].value = ''
+          this.limitExchange.buyCount = 0
+          this.$refs[this.limitSellCountInputRef].value = ''
+          this.limitExchange.sellCount = 0
+          break
+        case 'MARKET':
+          this.$refs[this.marketBuyAmountInputRef].value = ''
+          this.marketExchange.sellCount = 0
+          this.$refs[this.marketSellCountInputRef].value = ''
+          this.marketExchange.buyAmount = 0
+          break
+      }
       console.log(newVal)
       if (newVal) {
         this.CHANGE_SYMBOL_CHANGED_STATUS(false)
@@ -1060,6 +1088,7 @@ export default {
       this.setBuyAndSellPrice(this.getRefValue(this.limitBuyPriceInputRef), this.getRefValue(this.limitSellPriceInputRef))
     },
     activeSymbol () {
+      console.log(1)
       this.reflashCount = 0
     },
     // 用户手动设置价格

@@ -251,10 +251,17 @@ export default {
       limitBuyCount: state => state.trade.limitExchange.buyCount,
       limitSellCount: state => state.trade.limitExchange.sellCount,
       marketSellCount: state => state.trade.marketExchange.sellCount,
-      marketBuyAmount: state => state.trade.marketExchange.buyAmount
+      marketBuyAmount: state => state.trade.marketExchange.buyAmount,
+      activeSymbol: state => state.common.activeSymbol
     })
   },
   watch: {
+    activeSymbol () {
+      this.setValue('limitSellSliderValue', 0)
+      this.setValue('limitBuySliderValue', 0)
+      this.setValue('marketBuySliderValue', 0)
+      this.setValue('marketSellSliderValue', 0)
+    },
     isSymbolChanged (newVal) {
       console.log(newVal)
     },

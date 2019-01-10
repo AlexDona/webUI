@@ -268,6 +268,7 @@ export const personal = {
   // VIP
   'user_vip_one_key_open': 'vipを通じた特典サービス',
   'user_vip_please_choose': 'メンバー情報を開くように選択してください',
+  'user_vip_lack_of_available': '使い道が足りない',
   'user_vip_discount': '割引',
   'user_vip_immediately_opened': 'すぐに開く',
   'user_vip_look': '私のVIPアカウント',

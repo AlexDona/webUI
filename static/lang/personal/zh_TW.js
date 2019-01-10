@@ -273,6 +273,7 @@ export const personal = {
   // VIP
   'user_vip_one_key_open': '壹鍵開通VIP享受優惠特權',
   'user_vip_please_choose': '請選擇開通會員信息',
+  'user_vip_lack_of_available': '可用不足',
   'user_vip_discount': '折扣',
   'user_vip_immediately_opened': '立即開通',
   'user_vip_look': '查看我的VIP',

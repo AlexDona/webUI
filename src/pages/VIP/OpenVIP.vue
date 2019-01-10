@@ -495,6 +495,13 @@ export default {
         })
         return false
       }
+      if (this.needUserPayCount > this.currencyAsset) {
+        this.$message({
+          message: this.$t('M.user_vip_lack_of_available'),
+          type: 'error'
+        })
+        return false
+      }
       this.password = ''
       this.dialogFormVisible = true
     },
@@ -539,9 +546,7 @@ export default {
     },
     // 提交开通vip接口请求
     async confirmTransactionPassword () {
-      if (this.needUserPayCount > this.currencyAsset) {
-        return false
-      }
+      console.log(this.needUserPayCount, this.currencyAsset)
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.password)
