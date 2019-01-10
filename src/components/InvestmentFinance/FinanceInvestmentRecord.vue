@@ -434,10 +434,12 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       isLogin: state => state.user.isLogin,
-      language: state => state.common.language // 当前选中语言
+      // 当前选中语言
+      language: state => state.common.language,
+      clientWidth: state => state.common.clientWidth
     }),
     screenWidth () {
-      return window.innerWidth / 3
+      return this.clientWidth / 3
     }
   },
   watch: {

@@ -7,3 +7,9 @@ export const SET_STEP1_INFO = 'SET_STEP1_INFO' // 设置登录第一步信息
 export const SET_USER_BUTTON_STATUS = 'SET_USER_BUTTON_STATUS' // 设置登录发送验证码按钮状态
 export const USER_LOGIN = 'USER_LOGIN' // 用户登录
 export const USER_LOGOUT = 'USER_LOGOUT' // 用户登出
+// 修改当前选中vip等级
+export const CHANGE_CURRENT_VIP_LEVEL = 'CHANGE_CURRENT_VIP_LEVEL'
+// 修改vip 价格信息
+export const CHANGE_VIP_PRICE_INFO_LIST = 'CHANGE_VIP_PRICE_INFO_LIST'
+// 是否续费
+export const CHANGE_RENEW_STATUS = 'CHANGE_RENEW_STATUS'

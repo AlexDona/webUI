@@ -145,7 +145,8 @@ export default {
       'CHANGE_SYMBOL_MAP',
       'CHANGE_ACTIVE_SYMBOL',
       'CHANGE_ACTIVE_TAB_ID',
-      'SET_MIDDLE_TOP_DATA'
+      'SET_MIDDLE_TOP_DATA',
+      'CHANGE_SYMBOL_CHANGED_STATUS'
     ]),
     // 获取用户收藏列表
     async getCollectionList (collectSymbol) {
@@ -259,7 +260,7 @@ export default {
         activeSymbol,
         previousSymbol
       })
-      this.$store.commit('common/CHANGE_SYMBOL_CHANGED_STATUS', false)
+      this.CHANGE_SYMBOL_CHANGED_STATUS(false)
     },
     // 排序
     sortByUser (data) {

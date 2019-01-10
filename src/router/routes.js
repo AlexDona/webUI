@@ -30,7 +30,8 @@ const LoginPassword = r => require.ensure([], () => r(require('@/components/Pers
 /**
  * VIP
  */
-const VipMainContent = r => require.ensure([], () => r(require('@/pages/VipMainContent')), 'vip-main')
+const VipMainContent = r => require.ensure([], () => r(require('@/pages/VIP/VipMainContent')), 'vip-main')
+const OpenVIP = r => require.ensure([], () => r(require('@/pages/VIP/OpenVIP')), 'vip-main')
 /**
  * OTC
  */
@@ -118,6 +119,11 @@ const routes = [
     path: '/VipMainContent',
     // name: 'VipMainContent',
     component: VipMainContent
+  },
+  {
+    // 开通vip页面
+    path: '/openVIP',
+    component: OpenVIP
   },
   {
     path: '/TradeCenter',
@@ -347,9 +353,10 @@ const routes = [
     component: NewsAndNoticeCenter
   },
   {
-    path: '/NewsAndNoticeItem/:id',
+    path: '/NewsAndNoticeItem/:detailId',
     name: 'news-and-notice-item',
-    component: NewsAndNoticeItem
+    component: NewsAndNoticeItem,
+    props: true
   },
   {
     // 关于我们

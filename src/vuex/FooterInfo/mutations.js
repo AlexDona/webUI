@@ -1,7 +1,8 @@
 import {
   CHANGE_FOOTER_ACTIVE_NAME,
   CHANGE_PROTOCOL_DATA,
-  CHANGE_NEWS_DETAIL_JUMP_ID
+  CHANGE_NEWS_DETAIL_JUMP_ID,
+  CHANGE_NEWS_TYPE_ACTIVE_NAME
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -37,5 +38,10 @@ export default {
   },
   [CHANGE_NEWS_DETAIL_JUMP_ID] (state, data) {
     state.newsDetailJumpId = data
+  },
+  [CHANGE_NEWS_TYPE_ACTIVE_NAME] (state, {activeName}) {
+    console.log(activeName)
+    state.newsTypeActiveName = activeName
+    console.log(state.newsTypeActiveName)
   }
 }

@@ -241,12 +241,12 @@ export default {
       } else {
         const obj = getNestedData(data, 'data.data')
         const activeSymbol = {
-          id: (obj.sellCoinName + obj.buyCoinName).toLowerCase(),
-          tradeId: obj.id,
-          sellsymbol: obj.sellCoinName, // 币种简称
-          sellname: obj.buyCoinName, // 币种全程
-          area: obj.buyCoinName, // 交易区
-          areaId: obj.tradeAreaId
+          id: (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase(),
+          tradeId: getNestedData(obj, 'id'),
+          sellsymbol: getNestedData(obj, 'sellCoinName'), // 币种简称
+          sellname: getNestedData(obj, 'buyCoinName'), // 币种全程
+          area: getNestedData(obj, 'buyCoinName'), // 交易区
+          areaId: getNestedData(obj, 'tradeAreaId')
         }
         // 是否从其他页面跳转
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
@@ -526,6 +526,7 @@ export default {
     },
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min') {
+      console.log(symbol)
       this.getKlineByAjax(symbol, interval, this.KlineNum)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)

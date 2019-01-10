@@ -442,7 +442,7 @@ export default{
   async created () {
     // f5刷新页面刷新用户信息列表
     if (this.isLogin) {
-      this.reflashUserInfo()
+      this.refreshUserInfo()
     }
     if (getStore('convertCurrency')) {
       this.activeConvertCurrency = getStore('convertCurrency')
@@ -504,7 +504,6 @@ export default{
         if (!(this.userInfo.type === 'MERCHANT')) {
           this.showApplyMerchantStatus = true
           return false
-        } else {
         }
       }
     },
@@ -516,16 +515,14 @@ export default{
       this.$router.push({path: '/OTCBusinessApply'})
       // location.reload() // 重新刷新页面
       // 任增加
-      // console.log('全局申请状态原始' + this.otcApplyJumpBottomStatus)
       this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(true)
-      // console.log('全局申请状态更改后' + this.otcApplyJumpBottomStatus)
     },
     // 非商家禁止进入OTC导航页提示框--结束
-    reflashUserInfo () {
+    refreshUserInfo () {
       this.REFRESH_USER_INFO_ACTION(this)
     },
     handleScroll () {
-      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       if (scrollTop > 0) {
         this.styleTop = 0
         this.topPadding = '0 10%'
@@ -712,7 +709,7 @@ export default{
     userInfoRefreshStatus (newVal) {
       if (newVal) {
         if (this.isLogin) {
-          this.reflashUserInfo()
+          this.refreshUserInfo()
         }
         this.SET_USER_INFO_REFRESH_STATUS(false)
       }

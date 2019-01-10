@@ -6,7 +6,9 @@
       :src="bannerBackgroundImage"
       :style="{
         width:screenWidth*3+'px',
-        height:screenWidth/1.19+'px'
+        height:screenWidth/1.19+'px',
+        minWidth: '1366px',
+        minHeight: '383px'
       }"
     >
     <SliderHome/>
@@ -33,10 +35,11 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      bannerBackgroundImage: state => state.home.bannerBackgroundImage
+      bannerBackgroundImage: state => state.home.bannerBackgroundImage,
+      clientWidth: state => state.common.clientWidth
     }),
     screenWidth () {
-      return window.innerWidth / 3
+      return this.clientWidth / 3
     }
   },
   watch: {
@@ -54,8 +57,6 @@ export default {
 
     > img {
       /* width:100%; */
-
-      /* height:100%; */
     }
   }
 </style>

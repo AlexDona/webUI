@@ -17,6 +17,7 @@ import {
   CHANGE_DEFAULT_LANGUAGE,
   CHANGE_AJAX_READY_STATUS,
   CHANGE_SYMBOL_CHANGED_STATUS,
+  SET_WINDOW_WIDTH,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
@@ -86,6 +87,7 @@ export default {
   },
   // 更改当前选中交易对
   [CHANGE_ACTIVE_SYMBOL] (state, {activeSymbol, previousSymbol}) {
+    console.log(activeSymbol)
     if (activeSymbol) {
       state.activeSymbol = activeSymbol
     }
@@ -147,5 +149,9 @@ export default {
   },
   [CHANGE_AJAX_READY_STATUS] (state, data) {
     state.isAjaxReady = data
+  },
+  [SET_WINDOW_WIDTH] (state, width) {
+    state.clientWidth = width
+    console.log(state.clientWidth)
   }
 }

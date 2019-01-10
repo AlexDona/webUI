@@ -728,7 +728,7 @@ export default {
       startX: 0, // 开始时的坐标
       endX: 0, // 结束时的坐标
       moveX: 0, // 移动的坐标
-      mobileMaxwidth: 800, // 移动端拖动最大宽度
+      mobileMaxWidth: 800, // 移动端拖动最大宽度
       invitationRegisterSuccess: true, // 邀请注册成功
       registerParams: {}, // 注册参数
       successJumpTimer: null // 成功跳转倒计时
@@ -739,7 +739,6 @@ export default {
     if (this.isLogin) {
       this.USER_LOGOUT()
     }
-    require('../../static/css/list/User/Register.css')
     let params = this.$route.query.showId
     if (params) {
       this.inviter = params
@@ -752,6 +751,8 @@ export default {
   activated () {},
   update () {},
   beforeRouteUpdate () {},
+  destroyed () {
+  },
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
@@ -1073,7 +1074,7 @@ export default {
         return
       }
       // console.log(targetLeft)
-      if (targetLeft < this.mobileMaxwidth && targetLeft >= 0) {
+      if (targetLeft < this.mobileMaxWidth && targetLeft >= 0) {
         $(e.target).css({'left': left + 'px'})
       } else {
         this.successCallback(this.registerParams)

@@ -91,7 +91,9 @@ const state = {
     configInfo: {}
   },
   isSymbolChanged: false,
-  isAjaxReady: false // 全局loading
+  // 全局loading
+  isAjaxReady: false,
+  clientWidth: 0
 }
 
 export default {

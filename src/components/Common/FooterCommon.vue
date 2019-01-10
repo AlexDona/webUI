@@ -234,11 +234,7 @@ import {
 } from 'vuex'
 export default {
   components: {
-    Iconfont,
-    // 二维码组件
-    VueQrcode: resolve => {
-      require([('@xkeshi/vue-qrcode')], resolve)
-    }
+    Iconfont
   },
   // props,
   data () {

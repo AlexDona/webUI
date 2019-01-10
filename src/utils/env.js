@@ -1,14 +1,14 @@
 /**
  * 配置编译环境和线上环境之间的切换
- *
  * apiCommonUrl: 域名地址
  * routerMode: 路由模式
  * imgapiCommonUrl: 图片所在域名地址
- *
  */
-let xDomainUrl = window.location.host.split(':')[0] // 后端专递headers
+// 后端专递headers
+let xDomainUrl = window.location.host.split(':')[0]
 xDomainUrl = xDomainUrl.startsWith('www') ? xDomainUrl.slice(4) : xDomainUrl
-let domainUrl = window.location.href.split('/')// 项目域名
+// 项目域名
+let domainUrl = window.location.href.split('/')
 domainUrl.pop()
 domainUrl = domainUrl.join('/')
 if (!domainUrl.endsWith('#')) {
@@ -18,20 +18,20 @@ let targetConfig = {
   domain: domainUrl,
   xDomain: xDomainUrl
 }
-// eslint-disable-next-line
-let devTestConfig = {
+
+const devTestConfig = {
   apiCommonUrl: 'http://192.168.1.200:8888/',
   socketUrl: 'ws://192.168.1.200:8087/market',
   loginSocketUrl: 'ws://192.168.1.200:8087/qrcodeLogin/'
 }
-// eslint-disable-next-line
-let dev210Config = {
+
+const dev210Config = {
   apiCommonUrl: 'http://192.168.1.210:8888/',
   socketUrl: 'ws://192.168.1.210:8087/market',
   loginSocketUrl: 'ws://192.168.1.210:8087/qrcodeLogin/'
 }
-// eslint-disable-next-line
-let prodConfig = {
+
+const prodConfig = {
   apiCommonUrl: 'https://api.new.bzu.com/',
   socketUrl: 'wss://ws.bzu.com/market',
   loginSocketUrl: 'wss://api.new.bzu.com/qrcodeLogin/'
@@ -39,11 +39,11 @@ let prodConfig = {
 switch (process.env.NODE_ENV) {
   case 'development':
     // 本地开发
-    // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
+    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
     // 210开发环境
     // targetConfig = {...dev210Config, xDomain: 'me.com'}
     // 生产环境
-    targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
+    // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     break
   // 210开发环境
   case 'development210':
@@ -59,7 +59,7 @@ switch (process.env.NODE_ENV) {
     break
 }
 
-let {
+const {
   apiCommonUrl,
   socketUrl,
   loginSocketUrl,

@@ -15,7 +15,6 @@ const routerCreator = () => {
   })
   router.beforeEach((to, from, next) => {
     if (from.path !== '/login' || from.path !== '/register') {
-      // store.commit('common/CHANGE_ROUTER_PATH', from.path)
       store.commit('CHANGE_ROUTER_PATH', from.path)
     }
     if (store.state.user.loginStep1Info.userInfo) {

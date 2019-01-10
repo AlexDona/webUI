@@ -992,10 +992,11 @@ export default {
       financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList,
       // 获取当前语言
       language: state => state.common.language,
-      status: state => state.finance.status
+      status: state => state.finance.status,
+      clientWidth: state => state.common.clientWidth
     }),
     screenWidth () {
-      return window.innerWidth
+      return this.clientWidth
     }
   },
   watch: {
