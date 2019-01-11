@@ -425,8 +425,8 @@ export default {
     },
     // vip详情页面资产渲染
     changeVipLevel (type) {
-      console.log(type, this.activeId)
-      if (!(this.vipAction == 'update' && type >= this.activeSelectLevel) || this.vipAction === 'renew') {
+      console.log(type, this.activeSelectLevel, this.vipAction)
+      if ((this.vipAction == 'update' && type < this.activeSelectLevel - 0) || this.vipAction === 'renew') {
         return false
       }
       switch (type) {
