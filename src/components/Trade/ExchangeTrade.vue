@@ -115,7 +115,9 @@
                       <!--预计交易额-->
                       {{ $t('M.trade_exchange_estimated_turnover') }}：
                     </span>
-                    <span class="buy">{{limitBuyAmount}}</span>
+                    <span
+                      class="buy"
+                      v-show="limitBuyAmount">{{limitBuyAmount}}</span>
                     <span>{{middleTopData.area}}</span>
                   </div>
                 </div>
@@ -214,7 +216,10 @@
                       <!--预计交易额：-->
                       {{ $t('M.trade_exchange_estimated_turnover') }}：
                     </span>
-                    <span class="sell">{{limitSellAmount}}</span>
+                    <span
+                      class="sell"
+                      v-show="limitSellAmount"
+                    >{{limitSellAmount}}</span>
                     <span>{{middleTopData.area}}</span>
                   </div>
                 </div>
@@ -597,16 +602,32 @@ export default {
     // 清空交易密码
     clearFormData () {
       this.payPassword = ''
-      this.$refs[this.limitBuyPriceInputRef].value = ''
-      this.$refs[this.limitBuyCountInputRef].value = ''
-      this.$refs[this.marketBuyAmountInputRef].value = ''
-      this.$refs[this.limitSellPriceInputRef].value = ''
-      this.$refs[this.limitSellCountInputRef].value = ''
-      this.$refs[this.marketSellCountInputRef].value = ''
+      this.clearRefValue(this.limitBuyPriceInputRef)
+      this.clearRefValue(this.limitBuyCountInputRef)
+      this.clearRefValue(this.limitBuyCountInputRef)
+      this.clearRefValue(this.marketBuyAmountInputRef)
+      this.clearRefValue(this.limitSellPriceInputRef)
+      this.clearRefValue(this.limitSellCountInputRef)
+      this.clearRefValue(this.marketSellCountInputRef)
       this.limitExchange.buyCount = 0
       this.limitExchange.sellCount = 0
       this.marketExchange.sellCount = 0
       this.marketExchange.buyAmount = 0
+      this.setSiderBarValue('limit', {
+        buyPrice: 0,
+        buyCount: 0,
+        sellPrice: 0,
+        sellCount: 0
+      })
+      this.setSiderBarValue('market', {
+        buyAmount: 0,
+        sellCount: 0
+      })
+    },
+    clearRefValue (refName) {
+      if (this.$refs[refName]) {
+        this.$refs[refName].value = ''
+      }
     },
     clearPasswordErrorMsg () {
       this.isPayPasswordEmpty = false
@@ -698,7 +719,43 @@ export default {
           this.marketExchange.sellCount = this.getRefValue(this.marketSellCountInputRef)
           break
       }
-      console.log(this.limitExchange.buyCount)
+      this.setSiderBarValue('limit', {
+        buyPrice: this.limitExchange.buyPrice,
+        buyCount: this.limitExchange.buyCount,
+        sellPrice: this.limitExchange.sellPrice,
+        sellCount: this.limitExchange.sellCount
+      })
+      this.setSiderBarValue('market', {
+        buyAmount: this.marketExchange.buyAmount,
+        sellCount: this.marketExchange.sellCount
+      })
+    },
+    // 设置滑块value
+    setSiderBarValue (type, {
+      buyPrice,
+      buyCount,
+      sellPrice,
+      sellCount,
+      buyAmount
+    }) {
+      switch (type) {
+        case 'limit':
+          this.SET_TARGET_EXCHANGE_DATA({
+            type,
+            buyPrice,
+            buyCount,
+            sellPrice,
+            sellCount
+          })
+          break
+        case 'market':
+          this.SET_TARGET_EXCHANGE_DATA({
+            type,
+            buyAmount,
+            sellCount
+          })
+          break
+      }
       this.SET_TARGET_EXCHANGE_DATA({
         type: 'limit',
         buyPrice: this.limitExchange.buyPrice,
@@ -1042,15 +1099,13 @@ export default {
   },
   watch: {
     matchType (newVal) {
-      this.SET_TARGET_EXCHANGE_DATA({
-        type: 'limit',
+      this.setSiderBarValue('limit', {
         buyPrice: 0,
         buyCount: 0,
         sellPrice: 0,
         sellCount: 0
       })
-      this.SET_TARGET_EXCHANGE_DATA({
-        type: 'market',
+      this.setSiderBarValue('market', {
         buyAmount: 0,
         sellCount: 0
       })

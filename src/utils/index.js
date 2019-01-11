@@ -467,7 +467,7 @@ export const cutOutPointLength = (num, pointLength) => {
     let value = arr[1].slice(0, pointLength)
     result = arr[0] + '.' + value
   }
-  return result
+  return result - 0
 }
 /**
  * 下载文件改名
