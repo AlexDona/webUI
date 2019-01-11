@@ -189,6 +189,11 @@ export default {
   },
   methods: {
     setValue (name, newVal) {
+      if (isNaN(newVal)) {
+        console.log(newVal)
+        newVal = 0
+      }
+
       this.slider[name] = newVal
     },
     dragStart () {
@@ -247,6 +252,7 @@ export default {
       limitBuyPrice: state => state.trade.limitExchange.buyPrice,
       limitBuyCount: state => state.trade.limitExchange.buyCount,
       limitSellCount: state => state.trade.limitExchange.sellCount,
+      limitSellPrice: state => state.trade.limitExchange.sellPrice,
       marketSellCount: state => state.trade.marketExchange.sellCount,
       marketBuyAmount: state => state.trade.marketExchange.buyAmount,
       activeSymbol: state => state.common.activeSymbol
@@ -260,6 +266,9 @@ export default {
       this.setValue('marketSellSliderValue', 0)
     },
     isSymbolChanged (newVal) {
+      console.log(newVal)
+    },
+    limitSellPrice (newVal) {
       console.log(newVal)
     },
     // 用户设置买价格
