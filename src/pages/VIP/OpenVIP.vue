@@ -146,7 +146,7 @@
         </div>
         <!-- 应付 -->
         <div class="detail-usable display-flex">
-          <span class="usable-title font-size14">应付</span>
+          <span class="usable-title font-size14">{{$t('M.comm_should_pay')}}</span>
           <span class="usable">
             <span class="usable-asset font-size16">
               {{ needUserPayCount }}
@@ -158,7 +158,7 @@
         </div>
         <!-- 可用 -->
         <div class="detail-usable display-flex">
-          <span class="usable-title font-size14">可用</span>
+          <span class="usable-title font-size14">{{$t('M.comm_usable')}}</span>
           <span class="usable">
             <span class="usable-asset font-size16">
               {{ currencyAsset }}

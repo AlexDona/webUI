@@ -42,6 +42,7 @@ export const common = {
   'comm_entry': '保留中の注文',
   'comm_matched': '一致した',
   'comm_usable': '利用可能',
+  'comm_should_pay': '支払うべきである',
   'comm_freeze': 'フリーズ',
   'comm_surplus': '残っている',
   'comm_balance_completed1': '残高',

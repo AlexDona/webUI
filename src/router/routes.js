@@ -31,6 +31,7 @@ const LoginPassword = r => require.ensure([], () => r(require('@/components/Pers
  * VIP
  */
 const VipMainContent = r => require.ensure([], () => r(require('@/pages/VIP/VipMainContent')), 'vip-main')
+const OpenVIP = r => require.ensure([], () => r(require('@/pages/VIP/OpenVIP')), 'vip-main')
 /**
  * OTC
  */
@@ -118,6 +119,11 @@ const routes = [
     path: '/VipMainContent',
     // name: 'VipMainContent',
     component: VipMainContent
+  },
+  {
+    // 开通vip页面
+    path: '/openVIP',
+    component: OpenVIP
   },
   {
     path: '/TradeCenter',
