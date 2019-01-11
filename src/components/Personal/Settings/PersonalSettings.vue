@@ -240,9 +240,7 @@ export default {
         this.isSuccessChanged = true
         this.activeFrequency = params.status
         this.validatedActiveFrequency = this.activeFrequency
-        await this.REFRESH_USER_INFO_ACTION({
-          self: this
-        })
+        await this.REFRESH_USER_INFO_ACTION(this)
         this.isCheckPayPassword = false
         this.payPassword = ''
       }
