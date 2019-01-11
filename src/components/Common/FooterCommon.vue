@@ -106,7 +106,9 @@
               v-if="isNeedApp"
             >
               <!-- 客户端下载 -->
-              <router-link to="/guideOfDownload">{{$t('M.comm_Client_Downloads')}}</router-link>
+              <router-link
+                :to="isMobile?'/downloadApp':'/guideOfDownload'"
+              >{{$t('M.comm_Client_Downloads')}}</router-link>
             </dd>
             <dd
               class="dd-item"
@@ -308,7 +310,8 @@ export default {
       footerInfo: state => state.common.footerInfo,
       footerInfo1: state => state.common.footerInfo.footerInfo1,
       // 公司名称fubt fbt fuc、邮箱等信息
-      configInfo: state => state.common.footerInfo.configInfo
+      configInfo: state => state.common.footerInfo.configInfo,
+      isMobile: state => state.user.isMobile
     })
   },
   watch: {

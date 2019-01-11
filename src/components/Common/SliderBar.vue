@@ -190,7 +190,6 @@ export default {
   methods: {
     setValue (name, newVal) {
       this.slider[name] = newVal
-      console.log(this.slider)
     },
     dragStart () {
       this.$emit('dragStart')
@@ -223,7 +222,6 @@ export default {
       let rate
       let currentAmount = newCount * newPrice
       rate = this.buyTotal < currentAmount ? 100 : (currentAmount / this.buyTotal) * 100
-      console.log(rate)
       // 买单价
       this.setValue('limitBuySliderValue', cutOutPointLength(rate, 2))
     },
@@ -231,7 +229,6 @@ export default {
       let total = type == 'buy' ? this.buyTotal : this.sellTotal
       if (total) {
         let rate = newAmount < total ? (newAmount / total) * 100 : 100
-        console.log(rate)
         switch (type) {
           case 'buy':
             this.setValue('marketBuySliderValue', cutOutPointLength(rate, 2))
@@ -274,6 +271,8 @@ export default {
     },
     // 用户设置买数量
     limitBuyCount (newVal) {
+      console.log(newVal)
+      console.log(this.buyTotal)
       if (this.buyTotal) {
         this.setNewRateByUserLimitBuy(this.limitBuyPrice, newVal)
       }

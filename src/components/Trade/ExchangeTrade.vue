@@ -672,7 +672,6 @@ export default {
     },
     // 数据联动
     autoChangeData (type) {
-      console.log(1)
       this.clearErrorMsg(type)
       switch (type) {
         // 限价买
@@ -707,6 +706,7 @@ export default {
         sellPrice: this.limitExchange.sellPrice,
         sellCount: this.limitExchange.sellCount
       })
+      console.log(this.limitExchangeOfState)
       this.SET_TARGET_EXCHANGE_DATA({
         type: 'market',
         buyAmount: this.marketExchange.buyAmount,
@@ -1021,7 +1021,9 @@ export default {
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       middleTopData: state => state.trade.middleTopData,
-      isSymbolChanged: state => state.common.isSymbolChanged // 交易对是否改变
+      // 交易对是否改变
+      isSymbolChanged: state => state.common.isSymbolChanged,
+      limitExchangeOfState: state => state.trade.limitExchange
     }),
     isNeedErrorMsgForSellCount () {
       return this.marketExchange.sellCount > this.sellUserCoinWallet.total
@@ -1040,6 +1042,18 @@ export default {
   },
   watch: {
     matchType (newVal) {
+      this.SET_TARGET_EXCHANGE_DATA({
+        type: 'limit',
+        buyPrice: 0,
+        buyCount: 0,
+        sellPrice: 0,
+        sellCount: 0
+      })
+      this.SET_TARGET_EXCHANGE_DATA({
+        type: 'market',
+        buyAmount: 0,
+        sellCount: 0
+      })
     },
     'limitExchange.buyPrice' (newVal) {
     },
