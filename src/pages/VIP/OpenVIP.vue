@@ -35,7 +35,11 @@
           <div
             class="grade cursor-pointer text-align-c"
             @click.prevent="changeVipLevel(item.id)"
-            :class="{ active:activeId == item.id}"
+            :class="{
+              active:activeId == item.id,
+              disabled: (activeStatus >= item.id && vipAction=='update') || (activeStatus!=item.id && vipAction==='renew'),
+              'hover-active': (vipAction =='update' && activeStatus < item.id) || vipAction =='open'
+            }"
             v-for="item in VipPriceInfoList"
             :key="item"
           >
@@ -76,6 +80,10 @@
             <p class="duration-currency font-size18">
               {{filteredData[1]?filteredData[1].value:'--'}}{{vipPriceInfo1[1]?vipPriceInfo1[1].vipCoinName:'--'}}
             </p>
+            <p class="duration-through ">
+              <!--600FUC-->
+              {{filteredData[1]?filteredData[1].costValue:'--'}}{{filteredData[1]?filteredData[1].vipCoinName:'--'}}
+            </p>
           </div>
           <div
             class="duration duration-left cursor-pointer text-align-c"
@@ -95,7 +103,7 @@
             </p>
             <p class="duration-through ">
               <!--600FUC-->
-              {{filteredData[2]?filteredData[2].value:'--'}}{{filteredData[2]?filteredData[2].vipCoinName:'--'}}
+              {{filteredData[2]?filteredData[2].costValue:'--'}}{{filteredData[2]?filteredData[2].vipCoinName:'--'}}
             </p>
           </div>
           <div
@@ -116,7 +124,7 @@
             </p>
             <p class="duration-through">
               <!--1200FUC-->
-              {{filteredData[3]?filteredData[3].value:'--'}}{{filteredData[3]?filteredData[3].vipCoinName:'--'}}
+              {{filteredData[3]?filteredData[3].costValue:'--'}}{{filteredData[3]?filteredData[3].vipCoinName:'--'}}
             </p>
           </div>
           <div
@@ -138,7 +146,7 @@
         </div>
         <!-- 应付 -->
         <div class="detail-usable display-flex">
-          <span class="usable-title font-size14">应付</span>
+          <span class="usable-title font-size14">{{$t('M.comm_should_pay')}}</span>
           <span class="usable">
             <span class="usable-asset font-size16">
               {{ needUserPayCount }}
@@ -150,7 +158,7 @@
         </div>
         <!-- 可用 -->
         <div class="detail-usable display-flex">
-          <span class="usable-title font-size14">可用</span>
+          <span class="usable-title font-size14">{{$t('M.comm_usable')}}</span>
           <span class="usable">
             <span class="usable-asset font-size16">
               {{ currencyAsset }}
@@ -343,8 +351,9 @@ export default {
   async created () {
     console.log(this.vipAction)
     if (this.vipLevel) {
-      this.activeStatus = this.vipLevel.split('')[3]
+      this.activeStatus = this.vipLevel.split('')[3] - 0
     }
+    console.log(this.activeStatus)
     if (this.activeSelectLevel) {
       this.activeId = this.activeSelectLevel
       this.type = this.activeSelectLevel
@@ -417,36 +426,44 @@ export default {
     },
     // vip详情页面资产渲染
     changeVipLevel (type) {
-      if (this.vipAction !== 'open') {
+      console.log(type, this.activeSelectLevel, this.vipAction)
+      if ((this.vipAction == 'update' && type <= this.activeStatus) || this.vipAction === 'renew') {
         return false
       }
       switch (type) {
         case 1:
           this.type = 1
           this.activeId = 1
+          this.vipName = 1
           break
         case 2:
           this.type = 2
           this.activeId = 2
+          this.vipName = 2
           break
         case 3:
           this.type = 3
           this.activeId = 3
+          this.vipName = 3
           break
         case 4:
-          this.type = 3
+          this.type = 4
           this.activeId = 4
+          this.vipName = 4
           break
         case 5:
           this.type = 5
           this.activeId = 5
+          this.vipName = 5
           break
         case 6:
           this.type = 6
           this.activeId = 6
+          this.vipName = 6
           break
       }
       this.type = type
+      this.getVipUserPayCount()
     },
     // 创建api检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -475,6 +492,13 @@ export default {
       if ((!this.vipName || !this.month) && this.vipAction !== 'update') {
         this.$message({
           message: this.$t('M.user_vip_please_choose'),
+          type: 'error'
+        })
+        return false
+      }
+      if (this.needUserPayCount > this.currencyAsset) {
+        this.$message({
+          message: this.$t('M.user_vip_lack_of_available'),
           type: 'error'
         })
         return false
@@ -523,9 +547,7 @@ export default {
     },
     // 提交开通vip接口请求
     async confirmTransactionPassword () {
-      if (this.needUserPayCount > this.currencyAsset) {
-        return false
-      }
+      console.log(this.needUserPayCount, this.currencyAsset)
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.password)
@@ -634,6 +656,7 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       vipLevel: state => state.user.loginStep1Info.userInfo.level,
       originVipPriceInfoList: state => state.user.vip.VipPriceInfoList,
+      payPassword: state => state.user.loginStep1Info.userInfo.payPassword,
       activeSelectLevel: state => getStore('activeSelectLevel') || state.user.vip.activeSelectLevel,
       // vip操作
       vipAction: state => getStore('vipAction') || state.user.vip.vipAction
@@ -654,7 +677,7 @@ export default {
       console.log(newVal)
     },
     vipLevel (newVal) {
-      // console.log(newVal)
+      console.log(newVal)
     },
     VipPriceInfoList (newVal) {
       console.log(newVal)
@@ -1108,13 +1131,20 @@ export default {
               border: 1px solid #354057;
               background-color: #1a2233;
 
-              &:hover {
-                border: 1px solid #338ff5;
-                background-color: transparent;
+              &.disabled {
+                opacity: .3;
+                cursor: default;
+              }
 
-                > .grade-color,
-                > .grade-height {
-                  color: #338ff5;
+              &.hover-active {
+                &:hover {
+                  border: 1px solid #338ff5;
+                  background-color: transparent;
+
+                  > .grade-color,
+                  > .grade-height {
+                    color: #338ff5;
+                  }
                 }
               }
 

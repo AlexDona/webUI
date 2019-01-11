@@ -272,6 +272,7 @@ export default {
     }
   },
   created () {
+    console.log(this.isNeedApp)
   },
   mounted () {
   },
@@ -298,7 +299,7 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapGetters('common', {
+    ...mapGetters({
       'isNeedApp': 'isNeedApp'
     }),
     ...mapState({

@@ -273,6 +273,7 @@ export const personal = {
   // VIP
   'user_vip_one_key_open': '壹鍵開通VIP享受優惠特權',
   'user_vip_please_choose': '請選擇開通會員信息',
+  'user_vip_lack_of_available': '可用不足',
   'user_vip_discount': '折扣',
   'user_vip_immediately_opened': '立即開通',
   'user_vip_look': '查看我的VIP',
@@ -297,7 +298,7 @@ export const personal = {
   'user_vip_text4': '壹個月有效期時長為30個自然日',
   'user_vip_text5': '開通即代表您已同意',
   'user_vip_text6': 'VIP服務協議',
-  'user_vip_text7': '立即續費',
+  'user_vip_text7': '已開通',
   'user_vip_text8': 'VIP享手續費、提現優惠',
   'user_vip_text9': '立即升級',
   'user_vip_fee_discount': '手續費折扣',

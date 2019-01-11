@@ -29,7 +29,6 @@
         >
           <div
             class="content-box limit"
-            v-if="activeName ==='limit-price'"
           >
             <div class="inner-box left">
               <div class="header">
@@ -77,7 +76,10 @@
                   >{{errorMsg.limit.buy.price}}</span>
                 </div>
                 <!--买入量-->
-                <div class="input">
+                <div
+                  class="input"
+                  v-if="activeName === 'limit-price'"
+                >
                   <input
                     :class="{
                       'error':buyUserCoinWallet.total < limitBuyAmount
@@ -87,6 +89,7 @@
                     :ref="limitBuyCountInputRef"
                     @keyup="autoChangeData('limit-buy')"
                     @input="formatInput(limitBuyCountInputRef,middleTopData.countExchange)"
+                    onpaste="return false"
                   >
                   <span class="currency">{{middleTopData.sellsymbol}}</span>
                   <span
@@ -104,6 +107,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
+                  v-if="!isSymbolChanged && activeName === 'limit-price'"
                 />
                 <div class="volume-rate">
                   <div class="item">
@@ -183,6 +187,7 @@
                     :ref="limitSellCountInputRef"
                     @keyup="autoChangeData('limit-sell')"
                     @input="formatInput(limitSellCountInputRef,middleTopData.countExchange)"
+                    onpaste="return false"
                   >
                   <span class="currency">{{middleTopData.sellsymbol}}</span>
                   <span
@@ -200,6 +205,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
+                  v-if="!isSymbolChanged"
                 />
                 <!--预计交易额 手续费-->
                 <div class="volume-rate">
@@ -279,6 +285,7 @@
                     :ref="marketBuyAmountInputRef"
                     @keyup="autoChangeData('market-buy')"
                     @input="formatInput(marketBuyAmountInputRef,middleTopData.countExchange)"
+                    onpaste="return false"
                   >
                   <span class="currency">{{middleTopData.area}}</span>
                   <span
@@ -296,6 +303,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
+                  v-if="!isSymbolChanged"
                 />
                 <div class="submit">
                   <el-button
@@ -356,6 +364,7 @@
                     :ref="marketSellCountInputRef"
                     @keyup="autoChangeData('market-sell')"
                     @input="formatInput(marketSellCountInputRef,middleTopData.countExchange)"
+                    onpaste="return false"
                   >
                   <span class="currency">{{middleTopData.sellsymbol}}</span>
                   <span
@@ -373,6 +382,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
+                  v-if="!isSymbolChanged"
                 />
                 <div class="submit">
                   <el-button
@@ -549,7 +559,7 @@ export default {
   created () {
   },
   mounted () {
-    this.getRefValue(this.limitBuyPriceInputRef)
+    // this.getRefValue(this.limitBuyPriceInputRef)
   },
   activated () {},
   update () {
@@ -662,6 +672,7 @@ export default {
     },
     // 数据联动
     autoChangeData (type) {
+      console.log(1)
       this.clearErrorMsg(type)
       switch (type) {
         // 限价买
@@ -688,6 +699,7 @@ export default {
           this.marketExchange.sellCount = this.getRefValue(this.marketSellCountInputRef)
           break
       }
+      console.log(this.limitExchange.buyCount)
       this.SET_TARGET_EXCHANGE_DATA({
         type: 'limit',
         buyPrice: this.limitExchange.buyPrice,
@@ -707,9 +719,17 @@ export default {
       switch (e.name) {
         case 'market-price':
           this.matchType = 'MARKET'
+          this.$refs[this.limitBuyCountInputRef].value = ''
+          this.limitExchange.buyCount = 0
+          this.$refs[this.limitSellCountInputRef].value = ''
+          this.limitExchange.sellCount = 0
           break
         case 'limit-price':
           this.matchType = 'LIMIT'
+          this.$refs[this.marketBuyAmountInputRef].value = ''
+          this.marketExchange.sellCount = 0
+          this.$refs[this.marketSellCountInputRef].value = ''
+          this.marketExchange.buyAmount = 0
           break
       }
     },
@@ -1019,9 +1039,27 @@ export default {
     }
   },
   watch: {
+    matchType (newVal) {
+    },
     'limitExchange.buyPrice' (newVal) {
     },
     isSymbolChanged (newVal) {
+      console.log(this.matchType)
+      switch (this.matchType) {
+        case 'LIMIT':
+          this.$refs[this.limitBuyCountInputRef].value = ''
+          this.limitExchange.buyCount = 0
+          this.$refs[this.limitSellCountInputRef].value = ''
+          this.limitExchange.sellCount = 0
+          break
+        case 'MARKET':
+          this.$refs[this.marketBuyAmountInputRef].value = ''
+          this.marketExchange.sellCount = 0
+          this.$refs[this.marketSellCountInputRef].value = ''
+          this.marketExchange.buyAmount = 0
+          break
+      }
+      console.log(newVal)
       if (newVal) {
         this.CHANGE_SYMBOL_CHANGED_STATUS(false)
       }
@@ -1050,6 +1088,7 @@ export default {
       this.setBuyAndSellPrice(this.getRefValue(this.limitBuyPriceInputRef), this.getRefValue(this.limitSellPriceInputRef))
     },
     activeSymbol () {
+      console.log(1)
       this.reflashCount = 0
     },
     // 用户手动设置价格

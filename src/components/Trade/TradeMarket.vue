@@ -253,14 +253,13 @@ export default {
       }
     },
     // 设置 当前交易区
-    changeActiveSymbol (data) {
-      let {activeSymbol, previousSymbol} = data
+    changeActiveSymbol ({activeSymbol, previousSymbol}) {
       console.log(activeSymbol)
       this.CHANGE_ACTIVE_SYMBOL({
         activeSymbol,
         previousSymbol
       })
-      this.CHANGE_SYMBOL_CHANGED_STATUS(false)
+      this.CHANGE_SYMBOL_CHANGED_STATUS(true)
     },
     // 排序
     sortByUser (data) {

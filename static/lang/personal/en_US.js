@@ -268,6 +268,7 @@ export const personal = {
   // VIPVIP
   'user_vip_one_key_open': 'Open VIP discount',
   'user_vip_please_choose': 'Please choose to open member information',
+  'user_vip_lack_of_available': 'Lack of available',
   'user_vip_discount': 'discount',
   'user_vip_immediately_opened': 'Open Now',
   'user_vip_look': 'View my VIP',
