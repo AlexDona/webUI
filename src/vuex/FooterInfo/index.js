@@ -16,12 +16,14 @@ const state = {
     APIDocumentData: {}, // API文档
     rateData: {}, // 费率
     newsDetailJumpId: '', // 首页跳转公告id
-    tradingWarningData: {} // 交易须知
-  }
+    // 交易须知
+    tradingWarningData: {}
+  },
+  // 最新的类型
+  newsTypeActiveName: ''
 }
 
 export default {
-  namespaced: true,
   state,
   // getters,
   actions,

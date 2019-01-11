@@ -441,8 +441,10 @@ import {
   openAndCloseModeSetting,
   userRefreshUser
 } from '../../../utils/api/personal'
-import {mapState, createNamespacedHelpers} from 'vuex'
-const { mapMutations } = createNamespacedHelpers('personal')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     IconFontCommon // 字体图标
@@ -498,7 +500,8 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'SET_STEP1_INFO'
     ]),
     // 点击去认证跳转到身份认证
     authenticationJump () {
@@ -773,7 +776,7 @@ export default {
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
-        this.$store.commit('user/SET_STEP1_INFO', getNestedData(data, 'data.data'))
+        this.SET_STEP1_INFO(getNestedData(data, 'data.data'))
       }
     }
   },

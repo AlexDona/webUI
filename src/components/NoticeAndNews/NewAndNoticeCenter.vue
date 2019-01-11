@@ -193,9 +193,9 @@ export default {
   },
   mounted () {
     console.log(this.newsDetailJumpId)
-    if (this.newsDetailJumpId) {
-      this.getDetailInfo(this.newsDetailJumpId)
-    }
+    // if (this.newsDetailJumpId) {
+    // this.getDetailInfo(this.newsDetailJumpId)
+    // }
   },
   activated () {},
   update () {},
@@ -204,8 +204,13 @@ export default {
     async resetNewTypeList () {
       await this.getAllNewsTypeList()
       console.log(this.newsTypeList)
-      this.newsTypeId = getNestedData(this.newsTypeList, '[0].id')
-      this.activeName = this.newsTypeId
+      if (this.newsTypeActiveName) {
+        this.activeName = this.newsTypeActiveName
+        this.changeTab({name: this.activeName})
+      } else {
+        this.newsTypeId = getNestedData(this.newsTypeList, '[0].id')
+        this.activeName = this.newsTypeId
+      }
     },
     changeTab (e) {
       console.log(e.name)
@@ -252,13 +257,14 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapGetters('common', {
+    ...mapGetters({
       'isChineseLanguage': 'isChineseLanguage'
     }),
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme,
-      newsDetailJumpId: state => state.footerInfo.newsDetailJumpId
+      newsDetailJumpId: state => state.footerInfo.newsDetailJumpId,
+      newsTypeActiveName: state => state.footerInfo.newsTypeActiveName
       // newsAndNoticeActiveName: state => state.footerInfo.newsAndNoticeActiveName
     }),
     noticeFilterList () {
@@ -270,6 +276,10 @@ export default {
     }
   },
   watch: {
+    newsTypeActiveName (newVal) {
+      console.log(newVal)
+      this.activeName = newVal
+    },
     async language () {
       await this.resetNewTypeList()
       this.getNewsNoticeList()

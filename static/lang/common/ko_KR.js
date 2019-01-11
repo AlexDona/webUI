@@ -43,6 +43,7 @@ export const common = {
   'comm_entry': '대기중 주문',
   'comm_matched': '이미 배필',
   'comm_usable': '사용 가능',
+  'comm_should_pay': '당연히 지불 해야 한다',
   'comm_freeze': '동결',
   'comm_surplus': '나머지',
   'comm_balance_completed1': '남은 수량',

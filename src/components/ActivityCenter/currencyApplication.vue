@@ -103,7 +103,6 @@ import {
   getNestedData
 } from '../../utils/commonFunc'
 import {
-  // createNamespacedHelpers,
   mapState
 } from 'vuex'
 import { downloadFileWithUserDefined } from '../../utils'

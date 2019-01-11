@@ -20,7 +20,7 @@ util.ajax.interceptors.request.use((config) => {
   let needLoading = !getNestedData(config.params, 'not-loading')
   console.log(needLoading)
   if (needLoading) {
-    store.commit('common/CHANGE_AJAX_READY_STATUS', true)
+    store.commit('CHANGE_AJAX_READY_STATUS', true)
     console.log(store.state.common.isAjaxReady)
   }
   config.headers['x-domain'] = xDomain
@@ -39,7 +39,7 @@ util.ajax.interceptors.response.use(
       response.data = {}
     }
 
-    store.commit('common/CHANGE_AJAX_READY_STATUS', false)
+    store.commit('CHANGE_AJAX_READY_STATUS', false)
     return response
   },
   error => {

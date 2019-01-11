@@ -243,8 +243,11 @@ import {
   resetUpdatePayPassword,
   cancelPasswdDialog
 } from '../../../utils/api/personal'
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations, mapActions } = createNamespacedHelpers('user')
+import {
+  mapState,
+  mapMutations,
+  mapActions
+} from 'vuex'
 export default {
   components: {
     IconFontCommon, // 字体图标
@@ -294,10 +297,13 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapActions([
-      'REFLASH_USER_INFO'
+      'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([
-      'SET_USER_BUTTON_STATUS'
+      'SET_USER_BUTTON_STATUS',
+      'SET_USER_INFO_REFRESH_STATUS',
+      'CHANGE_REF_SECURITY_CENTER_INFO',
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 取消用户设置密码弹窗
     async cancelPasswdDialog () {
@@ -305,13 +311,13 @@ export default {
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        this.REFLASH_USER_INFO(this)
+        this.REFRESH_USER_INFO_ACTION(this)
       }
     },
     // 点击返回上个页面
     returnSuperior () {
-      this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)
-      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'security-center')
+      this.CHANGE_REF_SECURITY_CENTER_INFO(true)
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       this.$router.push({path: '/PersonalCenter'})
     },
     /**
@@ -427,7 +433,7 @@ export default {
         } else {
           console.log(data)
           this.stateEmptyData()
-          this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
+          this.SET_USER_INFO_REFRESH_STATUS(true)
           this.successJump()
         }
       }
@@ -572,7 +578,7 @@ export default {
         } else {
           this.successJump()
           this.stateEmptyData()
-          this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
+          this.SET_USER_INFO_REFRESH_STATUS(true)
         }
       }
     },

@@ -90,11 +90,13 @@ const state = {
     footerInfo2: {},
     configInfo: {}
   },
-  isAjaxReady: false // 全局loading
+  isSymbolChanged: false,
+  // 全局loading
+  isAjaxReady: false,
+  clientWidth: 0
 }
 
 export default {
-  namespaced: true,
   state,
   getters,
   actions,

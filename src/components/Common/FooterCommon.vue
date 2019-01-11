@@ -227,15 +227,14 @@ import {
   getNestedData
 } from '../../utils/commonFunc'
 import Iconfont from '../Common/IconFontCommon'
-import {createNamespacedHelpers, mapState, mapGetters} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('footerInfo')
+import {
+  mapMutations,
+  mapState,
+  mapGetters
+} from 'vuex'
 export default {
   components: {
-    Iconfont,
-    // 二维码组件
-    VueQrcode: resolve => {
-      require([('@xkeshi/vue-qrcode')], resolve)
-    }
+    Iconfont
   },
   // props,
   data () {
@@ -273,6 +272,7 @@ export default {
     }
   },
   created () {
+    console.log(this.isNeedApp)
   },
   mounted () {
   },
@@ -281,7 +281,7 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_FOOTER_ACTIVENAME'
+      'CHANGE_FOOTER_ACTIVE_NAME'
     ]),
     toggleShowStatus (type, data) {
       switch (type) {
@@ -299,7 +299,7 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapGetters('common', {
+    ...mapGetters({
       'isNeedApp': 'isNeedApp'
     }),
     ...mapState({

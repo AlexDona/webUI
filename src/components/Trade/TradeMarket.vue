@@ -99,10 +99,9 @@ import {
 // import {socket} from '../../utils/tradingview/socket'
 import {
   mapState,
-  createNamespacedHelpers
+  mapMutations
 } from 'vuex'
 import TradeMarketTableItem from './TradeMarketTableItem'
-const { mapMutations } = createNamespacedHelpers('home')
 export default {
   components: {
     TradeMarketTableItem
@@ -143,7 +142,11 @@ export default {
     ...mapMutations([
       'CHANGE_COLLECT_LIST',
       'CHANGE_COLLECT_SYMBOL',
-      'CHANGE_SYMBOL_MAP'
+      'CHANGE_SYMBOL_MAP',
+      'CHANGE_ACTIVE_SYMBOL',
+      'CHANGE_ACTIVE_TAB_ID',
+      'SET_MIDDLE_TOP_DATA',
+      'CHANGE_SYMBOL_CHANGED_STATUS'
     ]),
     // 获取用户收藏列表
     async getCollectionList (collectSymbol) {
@@ -221,7 +224,7 @@ export default {
         _.forEach(tickerList, tickerItem => {
           _.forEach(tickerItem.plateList, plateItem => {
             _.forEach(plateItem.content, contentItem => {
-              this.$store.commit('home/CHANGE_SYMBOL_MAP', {
+              this.CHANGE_SYMBOL_MAP({
                 key: contentItem.id,
                 val: contentItem
               })
@@ -250,13 +253,13 @@ export default {
       }
     },
     // 设置 当前交易区
-    changeActiveSymbol (data) {
-      let {activeSymbol, previousSymbol} = data
+    changeActiveSymbol ({activeSymbol, previousSymbol}) {
       console.log(activeSymbol)
-      this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
+      this.CHANGE_ACTIVE_SYMBOL({
         activeSymbol,
         previousSymbol
       })
+      this.CHANGE_SYMBOL_CHANGED_STATUS(true)
     },
     // 排序
     sortByUser (data) {
@@ -469,7 +472,7 @@ export default {
       }
       activeTabSymbolStr = this.middleTopData.id ? `${this.middleTopData.id}@${activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)}` : `${activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)}`
       console.log(activeTabSymbolStr)
-      this.$store.commit('trade/CHANGE_ACTIVE_TAB_ID', {
+      this.CHANGE_ACTIVE_TAB_ID({
         activeTabSymbolStr
       })
       console.log(this.activeTabSymbolStr)
@@ -541,7 +544,7 @@ export default {
             0,
             this
           )
-          this.$store.commit('trade/SET_MIDDLE_TOP_DATA', newMiddleDataList[0])
+          this.SET_MIDDLE_TOP_DATA(newMiddleDataList[0])
         }
         // 非自选区
         if (this.activeIndex != 1) {

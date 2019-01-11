@@ -421,14 +421,16 @@ import {
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
-import {createNamespacedHelpers, mapState} from 'vuex'
 import {
   timeFilter,
   formatNumberInput,
   amendPrecision,
   cutOutPointLength
 } from '../../utils'
-const {mapMutations} = createNamespacedHelpers('OTC')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {},
   data () {
@@ -560,7 +562,8 @@ export default {
   methods: {
     ...mapMutations([
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-      'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS'
+      'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 0.1 判断卖出量和买入量是否为零
     checkValue (name) {
@@ -935,7 +938,7 @@ export default {
     },
     // 10.0 充币按钮跳转
     chargeMoney () {
-      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'assets')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
       this.$router.push({path: '/PersonalCenter'})
     }
   },

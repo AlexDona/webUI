@@ -24,7 +24,7 @@ import {
 import {
   // getCountryList,
   getServiceProtocoDataAjax
-} from '../utils/api/header'
+} from './api/common'
 import storeCreater from '../vuex'
 import {
   removeStore,
@@ -72,7 +72,7 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
         case 401:
           removeStore('loginStep1Info')
           self.$router.push({path: '/login'})
-          store.commit('user/USER_LOGOUT')
+          store.commit('USER_LOGOUT')
           break
         case 500:
           self.$router.push({path: '/500'})
@@ -153,14 +153,14 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 
     console.log(type)
     switch (type) {
       case 0:
-        store.commit('user/SET_USER_BUTTON_STATUS', {
+        store.commit('SET_USER_BUTTON_STATUS', {
           loginType: 0,
           type: isNewPhone,
           status: true
         })
         break
       case 1:
-        store.commit('user/SET_USER_BUTTON_STATUS', {
+        store.commit('SET_USER_BUTTON_STATUS', {
           loginType: 1,
           type: isNewPhone,
           status: true
@@ -264,7 +264,7 @@ export const getCollectionList = async (that, callback) => {
 // 协议跳转
 export const jumpToOtherPageForFooter = (router, activeName, that) => {
   that.$router.push({path: router})
-  that.$store.commit('footerInfo/CHANGE_FOOTER_ACTIVENAME', {
+  store.commit('CHANGE_FOOTER_ACTIVE_NAME', {
     activeName,
     type: router
   })
@@ -342,6 +342,25 @@ export const isNeedPayPasswordAjax = async (self) => {
   } else {
     return data.data.data
   }
+}
+
+/**
+ * 截取数字前 pointLength位
+ * @param target
+ * @param pointLength
+ * @returns {string}
+ */
+export const formatPointLength = (target, pointLength) => {
+  target += ''
+  let targetArr = target.split('.')
+  let targetStr = ''
+  let pointStr = ''
+  targetStr += `${targetArr[0]}.`
+  if (targetArr[1]) {
+    pointStr = targetArr[1].substring(0, pointLength)
+    targetStr += pointStr
+  }
+  return !targetArr[1] && !pointStr ? 0 : targetStr
 }
 // eslint-disable-next-line
 String.prototype.format = function (args) {

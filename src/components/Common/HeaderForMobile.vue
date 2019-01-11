@@ -56,8 +56,11 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations, mapActions } = createNamespacedHelpers('common')
+import {
+  mapMutations,
+  mapState,
+  mapActions
+} from 'vuex'
 export default {
   components: {
   },
@@ -102,7 +105,8 @@ export default {
     ...mapActions([
       'GET_COUNTRY_LIST_ACTION',
       'GET_LANGUAGE_LIST_ACTION',
-      'SET_PARTNER_INFO_ACTION'
+      'SET_PARTNER_INFO_ACTION',
+      'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([
       // 修改语言
@@ -120,7 +124,7 @@ export default {
       'SET_LOGO_URL'
     ]),
     reflashUserInfo () {
-      this.$store.dispatch('user/REFLASH_USER_INFO', this)
+      this.REFRESH_USER_INFO_ACTION(this)
     },
     // 显示状态切换 （语言）
     toggleShowLanguageBox (status) {

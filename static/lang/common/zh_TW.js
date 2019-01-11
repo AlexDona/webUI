@@ -42,6 +42,7 @@ export const common = {
   'comm_entry': '掛單',
   'comm_matched': '已匹配',
   'comm_usable': '可用',
+  'comm_should_pay': '應付',
   'comm_freeze': '凍結',
   'comm_surplus': '剩余',
   'comm_balance_completed1': '剩余數量',

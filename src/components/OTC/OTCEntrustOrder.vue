@@ -135,8 +135,10 @@
 import {timeFilter, scientificToNumber} from '../../utils'
 import {getOTCEntrustingOrders, querySelectedOrdersRevocation} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
-import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('OTC')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {},
   // props,

@@ -7,12 +7,16 @@ import {
   SET_STEP1_INFO,
   SET_USER_BUTTON_STATUS,
   USER_LOGIN,
-  USER_LOGOUT
+  USER_LOGOUT,
+  CHANGE_CURRENT_VIP_LEVEL,
+  CHANGE_VIP_PRICE_INFO_LIST,
+  CHANGE_RENEW_STATUS
 } from './mutations-types.js'
 
 import {
   setCookie,
-  removeCookie
+  removeCookie,
+  setStore
 } from '../../utils'
 
 // import {localapi, proapi} from 'src/config/env'
@@ -86,5 +90,19 @@ export default {
     state.isLogin = false
     state.loginStep1Info = {}
     removeCookie('loginStep1Info')
+  },
+  // 修改选中vip等级
+  [CHANGE_CURRENT_VIP_LEVEL] (state, {activeSelectLevel}) {
+    state.vip.activeSelectLevel = activeSelectLevel
+    setStore('activeSelectLevel', activeSelectLevel)
+  },
+  [CHANGE_VIP_PRICE_INFO_LIST] (state, VipPriceInfoList) {
+    state.vip.VipPriceInfoList = VipPriceInfoList
+    setStore('VipPriceInfoList', VipPriceInfoList)
+  },
+  // 修改是否续费状态
+  [CHANGE_RENEW_STATUS] (state, action) {
+    state.vip.vipAction = action
+    setStore('vipAction', action)
   }
 }

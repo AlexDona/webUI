@@ -13,8 +13,10 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('personal')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {},
   props: ['text', 'isShow'],

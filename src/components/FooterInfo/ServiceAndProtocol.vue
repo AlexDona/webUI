@@ -104,8 +104,10 @@ import {
 import Content from './ServiceAndProtocolContent'
 import SymbolRate from './SymbolRate'
 import CurrencyInformation from './CurrencyInformation'
-import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('footerInfo')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     CurrencyInformation,
@@ -134,7 +136,7 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_PROTOCOL_DATA',
-      'CHANGE_FOOTER_ACTIVENAME'
+      'CHANGE_FOOTER_ACTIVE_NAME'
     ]),
     changeTab (e) {
       this.activeName = e.name
@@ -244,7 +246,7 @@ export default {
   },
   watch: {
     activeName (newVal) {
-      this.CHANGE_FOOTER_ACTIVENAME({
+      this.CHANGE_FOOTER_ACTIVE_NAME({
         type: '/ServiceAndProtocol',
         activeName: newVal
       })

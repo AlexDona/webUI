@@ -531,8 +531,10 @@ import {
 } from '../../utils/api/investmentFinance'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
-import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('finance')
+import {
+  mapState,
+  mapMutations
+} from 'vuex'
 export default {
   components: {
     FinanceBrokenLine,
@@ -925,7 +927,7 @@ export default {
         // 走势图y轴赋值
         this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
         // 设置状态只要发生请求就让状态改变
-        this.FINANCE_LINE_STATUS(1)
+        this.FINANCE_LINE_STATUS(1 + this.status)
         // 将存币数量输入框清空
         // this.investMounte = ''
         this.$refs.investMounteRef.value = ''
@@ -990,10 +992,11 @@ export default {
       financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList,
       // 获取当前语言
       language: state => state.common.language,
-      status: state => state.finance.status
+      status: state => state.finance.status,
+      clientWidth: state => state.common.clientWidth
     }),
     screenWidth () {
-      return window.innerWidth
+      return this.clientWidth
     }
   },
   watch: {
@@ -1007,7 +1010,7 @@ export default {
     }
   },
   destroyed () {
-    this.$store.status = 0
+    this.FINANCE_LINE_STATUS(0)
   }
 }
 </script>

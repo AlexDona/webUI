@@ -44,8 +44,10 @@ import {
 import {
   unzip
 } from '../../utils'
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('common')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {},
   // props,
@@ -109,10 +111,12 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_ACTIVE_SYMBOL',
-      'CHANGE_SOCKET_AND_AJAX_DATA'
+      'CHANGE_SOCKET_AND_AJAX_DATA',
+      'SET_IS_KLINE_DATA_READY',
+      'SET_MIDDLE_TOP_DATA'
     ]),
     changeIsKlineDataReady (status) {
-      this.$store.commit('trade/SET_IS_KLINE_DATA_READY', status)
+      this.SET_IS_KLINE_DATA_READY(status)
     },
     // 接口获取K线数据
     async getKlineByAjax (tradeName, KlineType, KlineNum = 0, KlineStep = 'STEP5') {
@@ -197,7 +201,7 @@ export default {
           depthList.depthData.sells.list.reverse()
         }
         // 默认交易对 数据
-        this.$store.commit('trade/SET_MIDDLE_TOP_DATA', defaultTrade.content[0])
+        this.SET_MIDDLE_TOP_DATA(defaultTrade.content[0])
         // 买卖单
         this.ajaxData.buyAndSellData = depthList.depthData
         // 交易记录
@@ -237,12 +241,12 @@ export default {
       } else {
         const obj = getNestedData(data, 'data.data')
         const activeSymbol = {
-          id: (obj.sellCoinName + obj.buyCoinName).toLowerCase(),
-          tradeId: obj.id,
-          sellsymbol: obj.sellCoinName, // 币种简称
-          sellname: obj.buyCoinName, // 币种全程
-          area: obj.buyCoinName, // 交易区
-          areaId: obj.tradeAreaId
+          id: (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase(),
+          tradeId: getNestedData(obj, 'id'),
+          sellsymbol: getNestedData(obj, 'sellCoinName'), // 币种简称
+          sellname: getNestedData(obj, 'buyCoinName'), // 币种全程
+          area: getNestedData(obj, 'buyCoinName'), // 交易区
+          areaId: getNestedData(obj, 'tradeAreaId')
         }
         // 是否从其他页面跳转
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
@@ -479,7 +483,7 @@ export default {
         this.socket.send({
           'tag': type,
           'content': `market.${symbol}.kline.${newInterval}.step5`,
-          'id': `kline_${symbol}`
+          'id': 'pc'
         })
       }
     },
@@ -489,7 +493,7 @@ export default {
       this.socket.send({
         'tag': type,
         'content': `market.${symbol}.trade`,
-        'id': `trade_${symbol}`
+        'id': 'pc'
       })
     },
     // 获取买卖单
@@ -498,7 +502,7 @@ export default {
       this.socket.send({
         'tag': type,
         'content': `market.${symbol}.depth.step1`,
-        'id': `depth_${symbol}`
+        'id': 'pc'
       })
     },
     // 深度图
@@ -506,7 +510,7 @@ export default {
       this.socket.send({
         'tag': type,
         'content': `market.${symbol}.depthrender`,
-        'id': `market_001`
+        'id': 'pc'
       })
     },
     // 获取币币交易市场 socket
@@ -516,12 +520,13 @@ export default {
         this.socket.send({
           'tag': type,
           'content': `market.${params}.ticker`,
-          'id': `market_001`
+          'id': 'pc'
         })
       }
     },
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min') {
+      console.log(symbol)
       this.getKlineByAjax(symbol, interval, this.KlineNum)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)

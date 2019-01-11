@@ -253,8 +253,10 @@ import {
 } from '../../utils/api/OTC'
 import { downloadFileWithUserDefined } from '../../utils/'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
-import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('OTC')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     IconFontCommon //  字体图标

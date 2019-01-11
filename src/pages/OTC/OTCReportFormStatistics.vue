@@ -475,9 +475,11 @@ import {
 } from '../../utils/api/OTC'
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter, scientificToNumber} from '../../utils'
-import {createNamespacedHelpers, mapState} from 'vuex'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
-const {mapMutations} = createNamespacedHelpers('OTC')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     IconFontCommon //  字体图标

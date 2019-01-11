@@ -46,12 +46,12 @@
     </div>
     <div class='recharge-content-right flex1'>
       <p class="recharge-content-code margin-top20 float-left">
-        <VueQrcode
+        <Qrcode
           class="ercode"
           :value="chargeMoneyAddress"
           :options="{ size: 100 }"
         >
-        </VueQrcode>
+        </Qrcode>
       </p>
       <p
         class="code-list text-align-r float-right cursor-pointer font-size12"
@@ -67,15 +67,13 @@
 <script>
 import {mapState} from 'vuex'
 import VueClipboard from 'vue-clipboard2'
+import Qrcode from '../../Common/Qrcode'
 Vue.use(VueClipboard)
 
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
-    // 二维码组件
-    VueQrcode: resolve => {
-      require([('@xkeshi/vue-qrcode')], resolve)
-    }
+    Qrcode
   },
   props: [
     'isShow',

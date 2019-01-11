@@ -124,8 +124,10 @@ import {
   statusCardSettings,
   modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('personal')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     ErrorBox, // 错误提示接口

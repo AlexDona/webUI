@@ -74,8 +74,10 @@ import {
 } from '../utils/commonFunc'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
 import WeChatMask from '../components/User/WeChatMask'
-import {mapState, createNamespacedHelpers} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('common')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 
 export default {
   components: {

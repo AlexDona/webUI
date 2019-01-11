@@ -16,5 +16,11 @@ export const SET_USER_INFO_REFRESH_STATUS = 'SET_USER_INFO_REFRESH_STATUS' // �
 export const SET_LOGO_URL = 'SET_LOGO_URL' // 设置公共logo
 export const SET_FOOTER_INFO = 'SET_FOOTER_INFO' // 设置尾部信息
 export const SET_COUNT_DOWN_RESET_STATUS = 'SET_COUNT_DOWN_RESET_STATUS' // 设置倒计时重置状态
-export const CHANGE_DEFAULT_LANGUAGE = 'CHANGE_DEFAULT_LANGUAGE' // 设置默认语言
-export const CHANGE_AJAX_READY_STATUS = 'CHANGE_AJAX_READY_STATUS' // 设置全局loading 状态
+// 设置默认语言
+export const CHANGE_DEFAULT_LANGUAGE = 'CHANGE_DEFAULT_LANGUAGE'
+// 设置全局loading 状态
+export const CHANGE_AJAX_READY_STATUS = 'CHANGE_AJAX_READY_STATUS'
+// 交易对是否更改
+export const CHANGE_SYMBOL_CHANGED_STATUS = 'CHANGE_SYMBOL_CHANGED_STATUS'
+// 页面宽度修改
+export const SET_WINDOW_WIDTH = 'SET_WINDOW_WIDTH'

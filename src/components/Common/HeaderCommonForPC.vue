@@ -392,8 +392,11 @@ import {
   getStore,
   setStore
 } from '../../utils'
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations, mapActions } = createNamespacedHelpers('common')
+import {
+  mapMutations,
+  mapState,
+  mapActions
+} from 'vuex'
 export default{
   components: {
     IconFontCommon
@@ -439,7 +442,7 @@ export default{
   async created () {
     // f5刷新页面刷新用户信息列表
     if (this.isLogin) {
-      this.reflashUserInfo()
+      this.refreshUserInfo()
     }
     if (getStore('convertCurrency')) {
       this.activeConvertCurrency = getStore('convertCurrency')
@@ -472,7 +475,8 @@ export default{
       'GET_COUNTRY_LIST_ACTION',
       'GET_TRANSITION_RATE_ACTION',
       'GET_LANGUAGE_LIST_ACTION',
-      'SET_PARTNER_INFO_ACTION'
+      'SET_PARTNER_INFO_ACTION',
+      'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([
       // 修改语言
@@ -488,7 +492,11 @@ export default{
       'SET_USER_INFO_REFRESH_STATUS',
       'CHANGE_REF_SECURITY_CENTER_INFO',
       'SET_FOOTER_INFO',
-      'SET_LOGO_URL'
+      'SET_LOGO_URL',
+      'CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS',
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'USER_LOGOUT',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     // 非商家禁止进入OTC导航页提示框--开始
     applyMerchant () {
@@ -496,7 +504,6 @@ export default{
         if (!(this.userInfo.type === 'MERCHANT')) {
           this.showApplyMerchantStatus = true
           return false
-        } else {
         }
       }
     },
@@ -508,16 +515,14 @@ export default{
       this.$router.push({path: '/OTCBusinessApply'})
       // location.reload() // 重新刷新页面
       // 任增加
-      // console.log('全局申请状态原始' + this.otcApplyJumpBottomStatus)
-      this.$store.commit('OTC/CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS', true)
-      // console.log('全局申请状态更改后' + this.otcApplyJumpBottomStatus)
+      this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(true)
     },
     // 非商家禁止进入OTC导航页提示框--结束
-    reflashUserInfo () {
-      this.$store.dispatch('user/REFLASH_USER_INFO', this)
+    refreshUserInfo () {
+      this.REFRESH_USER_INFO_ACTION(this)
     },
     handleScroll () {
-      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       if (scrollTop > 0) {
         this.styleTop = 0
         this.topPadding = '0 10%'
@@ -549,7 +554,7 @@ export default{
     },
     // 设置个人中心跳转
     setPersonalJump (target) {
-      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', target)
+      this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
     },
     // 开启vip
     stateOpenVip () {
@@ -562,7 +567,7 @@ export default{
     // 用户跳转到指定页面
     async stateReturnSuperior (val) {
       console.log(this.localPayPwdSet)
-      await this.$store.commit('user/REFLASH_USER_INFO', this)
+      await this.REFRESH_USER_INFO_ACTION(this)
       if (this.localPayPwdSet || this.userInfo.payPassword) {
         switch (val) {
           case 'account-balance':
@@ -576,10 +581,10 @@ export default{
             break
           case 'security-center':
             this.setPersonalJump('security-center')
-            this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)
+            this.CHANGE_REF_SECURITY_CENTER_INFO(true)
             break
           case 'receiving-set':
-            this.$store.commit('personal/CHANGE_REF_ACCOUNT_CREDITED_STATE', true)
+            this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
             this.setPersonalJump('account-credited')
             break
           case 'invite':
@@ -600,7 +605,7 @@ export default{
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        this.$store.commit('user/USER_LOGOUT')
+        this.USER_LOGOUT()
         this.$router.push({path: '/home'})
       }
     },
@@ -704,7 +709,7 @@ export default{
     userInfoRefreshStatus (newVal) {
       if (newVal) {
         if (this.isLogin) {
-          this.reflashUserInfo()
+          this.refreshUserInfo()
         }
         this.SET_USER_INFO_REFRESH_STATUS(false)
       }

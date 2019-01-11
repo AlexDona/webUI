@@ -17,6 +17,10 @@
       <!--列表区-->
       <div class="content-box">
         <div class="inner-box">
+          <el-breadcrumb separator="/">
+            <el-breadcrumb-item :to="{ path: '/NewsAndNoticeCenter' }">{{$t('M.comm_news_and_notice')}}</el-breadcrumb-item>
+            <el-breadcrumb-item>{{newDetail.newsTypeName}}</el-breadcrumb-item>
+          </el-breadcrumb>
           <div
             class="news-detail"
           >
@@ -40,7 +44,13 @@
                 v-for="(outerItem,outIndex) in newsTypeList"
                 :key="outIndex"
               >
-                <h2 class="news-type-title">{{outerItem.name}}</h2>
+                <h2 class="news-type-title">{{outerItem.name}}
+                  <span
+                    class="view-more"
+                    @click="backToParent(outerItem)"
+                  >
+                    更多 》
+                  </span></h2>
                 <ul
                   class="news-type-content"
                 >
@@ -64,30 +74,49 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import {mapState, createNamespacedHelpers} from 'vuex'
+
 import {
   getNewsNoticeList,
   getNewsDetail,
   getAllNewsTypeList
 } from '../../utils/api/home'
+import {changeNewDetailByLanguage} from '../../utils/api/news'
+import {
+  setStore,
+  getStore,
+  removeStore
+} from '../../utils'
 import {
   returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
+
+const {mapMutations} = createNamespacedHelpers('footerInfo')
+
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
   },
-  // props,
+  props: ['detailId'],
   data () {
     return {
       newDetail: {},
-      newsTypeList: [], // 新闻类型列表
-      detailAllNewsList: [] // 详情页面新闻列表
+      // 新闻类型列表
+      newsTypeList: [],
+      // 详情页面新闻列表
+      detailAllNewsList: [],
+      // 最新 templateId
+      templateId: ''
     }
   },
   async created () {
-    await this.getDetailInfo(this.$route.params.id)
+    this.templateId = getStore('templateId')
+    if (this.templateId) {
+      await this.changeNewDetailByLanguage()
+    } else {
+      await this.getDetailInfo(this.detailId)
+    }
     await this.getAllNewsTypeList()
     this.getAllTypeListNewsList()
   },
@@ -96,6 +125,33 @@ export default {
   updated () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'CHANGE_NEWS_TYPE_ACTIVE_NAME'
+    ]),
+    backToParent (item) {
+      console.log(item.id)
+      this.CHANGE_NEWS_TYPE_ACTIVE_NAME({
+        activeName: item.id
+      })
+      this.$router.push('/NewsAndNoticeCenter')
+    },
+    async changeNewDetailByLanguage () {
+      let params = {
+        templateId: this.templateId,
+        language: this.language
+      }
+      const data = await changeNewDetailByLanguage(params)
+      if (!returnAjaxMsg(data, this)) {
+        return false
+      } else {
+        console.log(data)
+        let newContent = getNestedData(data, 'data.data.content')
+        if (newContent) {
+          console.log(newContent)
+          this.newDetail = getNestedData(data, 'data.data')
+        }
+      }
+    },
     // 获取所有新闻类型
     async getAllNewsTypeList () {
       const params = {
@@ -115,6 +171,8 @@ export default {
         return false
       } else {
         this.newDetail = getNestedData(data, 'data.data')
+        this.templateId = getNestedData(data, 'data.data.templateId')
+        setStore('templateId', this.templateId)
       }
     },
     // 获取全部type类型的前5条数据
@@ -137,21 +195,32 @@ export default {
       }
     }
   },
+  beforeDestroy () {
+    removeStore('templateId')
+  },
   filter: {},
   computed: {
     ...mapState({
-      language: state => state.common.language
+      language: state => state.common.language,
+      theme: state => state.common.theme,
+      newsTypeActiveName: state => state.footerInfo.newsTypeActiveName
     })
   },
   watch: {
+    newsTypeActiveName (newVal) {
+      console.log(newVal)
+    },
     async language () {
       await this.getAllNewsTypeList()
       await this.getAllTypeListNewsList()
+      await this.changeNewDetailByLanguage()
     }
   }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
+@import '../../../static/css/scss/index.scss';
+
 .news-and-notice-box {
   > .inner-box {
     > .search-box {
@@ -181,7 +250,7 @@ export default {
       > .inner-box {
         width: 1100px;
         height: 1100px;
-        margin: 0 auto;
+        margin: 50px auto;
         overflow: hidden;
 
         .item-content {
@@ -311,7 +380,6 @@ export default {
           width: 100%;
           height: 100%;
           padding: 50px;
-          margin-top: 50px;
           overflow-y: auto;
 
           > .left {
@@ -322,35 +390,29 @@ export default {
             > h2 {
               padding: 0 10px;
               border-left: 2px solid #338ff5;
-              font-weight: 400;
+              font-weight: 700;
               font-size: 18px;
               color: #338ff5;
             }
 
             > .detail-content {
-              margin: 50px;
+              margin: 50px 170px 50px 50px;
 
               > .title {
                 line-height: 40px;
                 text-align: center;
-                color: #fff;
               }
 
               > .time {
                 margin-bottom: 40px;
                 text-align: center;
-                color: #8ba0ca;
-              }
-
-              > .content {
-                color: #8ba0ca;
               }
             }
           }
 
           > .right {
             /* flex:1; */
-            width: 40%;
+            width: 30%;
 
             /* border:1px solid #fff; */
             > .news-type-list {
@@ -361,8 +423,18 @@ export default {
                 margin-bottom: 20px;
                 border-left: 2px solid #338ff5;
                 font-weight: 400;
-                font-size: 18px;
+                font-size: 16px;
                 color: #338ff5;
+
+                > .view-more {
+                  float: right;
+                  font-size: 14px;
+                  cursor: pointer;
+
+                  &:hover {
+                    color: $mainColor;
+                  }
+                }
               }
 
               > .news-type-content {
@@ -375,14 +447,28 @@ export default {
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
-                    color: #fff;
                   }
 
                   > .time {
                     flex: 1;
                     text-align: right;
-                    color: #8ba0ca;
                   }
+                }
+              }
+            }
+          }
+        }
+
+        /deep/ {
+          .el-breadcrumb {
+            margin: 50px 50px 0;
+
+            span {
+              font-weight: 400;
+
+              &.is-link {
+                &:hover {
+                  color: $mainColor;
                 }
               }
             }
@@ -395,9 +481,9 @@ export default {
   &.night {
     > .inner-box {
       > .content-box {
-        background-color: #121824;
-
         > .inner-box {
+          background-color: #1e2636;
+
           .item-content {
             > .content-list {
               > .content-item {
@@ -432,6 +518,59 @@ export default {
 
           > .news-detail {
             background-color: #1e2636;
+
+            > .left {
+              > h2 {
+                color: #338ff5;
+              }
+
+              > .detail-content {
+                > .title {
+                  color: #fff;
+                }
+
+                > .time {
+                  color: #8ba0ca;
+                }
+
+                > .content {
+                  color: #8ba0ca;
+                }
+              }
+            }
+
+            > .right {
+              > .news-type-list {
+                > h2 {
+                  border-left: 2px solid #338ff5;
+                  color: #338ff5;
+
+                  .view-more {
+                    color: #8ba0ca;
+                  }
+                }
+
+                > .news-type-content {
+                  > .news-type-item {
+                    > .title {
+                      color: #fff;
+                    }
+
+                    > .time {
+                      color: #8ba0ca;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        /deep/ {
+          .el-breadcrumb {
+            span {
+              color: #8ba0ca;
+            }
           }
         }
       }
@@ -444,6 +583,8 @@ export default {
         background-color: #fff;
 
         > .inner-box {
+          border: 1px solid #ecf1f8;
+
           .item-content {
             > .content-list {
               > .content-item {
@@ -466,10 +607,6 @@ export default {
               }
             }
 
-            > .news-detail {
-              background-color: #fff;
-            }
-
             &.help {
               > .content-list {
                 > .content-item {
@@ -485,6 +622,64 @@ export default {
                   }
                 }
               }
+            }
+          }
+
+          > .news-detail {
+            background-color: #fff;
+
+            > .left {
+              > h2 {
+                color: #338ff5;
+              }
+
+              > .detail-content {
+                > .title {
+                  color: #666;
+                }
+
+                > .time {
+                  color: #666;
+                }
+
+                > .content {
+                  color: #666;
+                }
+              }
+            }
+
+            > .right {
+              > .news-type-list {
+                > h2 {
+                  > .view-more {
+                    color: #666;
+
+                    &:hover {
+                      color: $mainColor;
+                    }
+                  }
+                }
+
+                > .news-type-content {
+                  > .news-type-item {
+                    > .title {
+                      color: #666;
+                    }
+
+                    > .time {
+                      color: #666;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        /deep/ {
+          .el-breadcrumb {
+            span {
+              color: #666;
             }
           }
         }

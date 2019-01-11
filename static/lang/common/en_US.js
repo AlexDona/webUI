@@ -38,6 +38,7 @@ export const common = {
   'comm_entry': 'Pending order',
   'comm_matched': 'Matched',
   'comm_usable': 'Available',
+  'comm_should_pay': 'Payment should be',
   'comm_freeze': 'Freeze',
   'comm_surplus': 'Surplus',
   'comm_balance_completed1': 'Balance',

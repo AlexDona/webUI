@@ -24,8 +24,10 @@ import {
   returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
-import {mapState, createNamespacedHelpers} from 'vuex'
-const { mapMutations } = createNamespacedHelpers('home')
+import {
+  mapState,
+  mapMutations
+} from 'vuex'
 export default {
   components: {
     Slider

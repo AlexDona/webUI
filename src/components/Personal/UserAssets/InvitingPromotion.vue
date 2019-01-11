@@ -83,13 +83,13 @@
                   />
                   <!--复制-->
                    {{ $t('M.comm_copy') }}
-                  <VueQrcode
+                  <Qrcode
                     class="ercode"
                     :value="String(promoteLink + innerUserInfo.showId)"
                     :options="{ size: 100 }"
                     v-show="ercodeIsShowId"
                   >
-                  </VueQrcode>
+                  </Qrcode>
                 </span>
               </div>
             </div>
@@ -319,6 +319,7 @@
 <script>
 import {mapState} from 'vuex'
 import IconFontCommon from '../../Common/IconFontCommon'
+import Qrcode from '../../Common/Qrcode'
 import VueClipboard from 'vue-clipboard2'
 import {
   userPromotionList,
@@ -334,10 +335,7 @@ Vue.use(VueClipboard)
 export default {
   components: {
     IconFontCommon, // 字体图标
-    // 二维码组件
-    VueQrcode: resolve => {
-      require([('@xkeshi/vue-qrcode')], resolve)
-    }
+    Qrcode
   },
   data () {
     return {

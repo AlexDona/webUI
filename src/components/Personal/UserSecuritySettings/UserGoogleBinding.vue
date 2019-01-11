@@ -88,12 +88,12 @@
             <!-- 右边 -->
             <div class="google-validator validator-margin flex1">
               <div class="google-images google-images1 img-background1">
-                <VueQrcode
+                <Qrcode
                   class="ercode"
                   :value="googleTheSecretUrl"
                   :options="{ size: 97 }"
                 >
-                </VueQrcode>
+                </Qrcode>
               </div>
               <p class="google-info padding-l15 margin-top16 font-size12">
                 <!--请扫码或手工输入密钥，将手机上生成的-->
@@ -187,6 +187,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import IconFontCommon from '../../Common/IconFontCommon'
+import Qrcode from '../../Common/Qrcode'
 import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMsg,
@@ -199,15 +200,14 @@ import {
   bindGoogleAddress,
   unbindCheckGoogle
 } from '../../../utils/api/personal'
-import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('personal')
+import {
+  mapMutations,
+  mapState
+} from 'vuex'
 export default {
   components: {
     ErrorBox,
-    // 二维码组件
-    VueQrcode: resolve => {
-      require([('@xkeshi/vue-qrcode')], resolve)
-    },
+    Qrcode,
     IconFontCommon // 字体图标
   },
   data () {
