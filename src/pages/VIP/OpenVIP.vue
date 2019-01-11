@@ -37,8 +37,8 @@
             @click.prevent="changeVipLevel(item.id)"
             :class="{
               active:activeId == item.id,
-              disabled: (activeSelectLevel > item.id && vipAction=='update') || (activeSelectLevel!=item.id && vipAction==='renew'),
-              'hover-active': (vipAction =='update' && activeSelectLevel <= item.id) || vipAction =='open'
+              disabled: (activeStatus >= item.id && vipAction=='update') || (activeStatus!=item.id && vipAction==='renew'),
+              'hover-active': (vipAction =='update' && activeStatus < item.id) || vipAction =='open'
             }"
             v-for="item in VipPriceInfoList"
             :key="item"
@@ -351,8 +351,9 @@ export default {
   async created () {
     console.log(this.vipAction)
     if (this.vipLevel) {
-      this.activeStatus = this.vipLevel.split('')[3]
+      this.activeStatus = this.vipLevel.split('')[3] - 0
     }
+    console.log(this.activeStatus)
     if (this.activeSelectLevel) {
       this.activeId = this.activeSelectLevel
       this.type = this.activeSelectLevel
@@ -426,7 +427,7 @@ export default {
     // vip详情页面资产渲染
     changeVipLevel (type) {
       console.log(type, this.activeSelectLevel, this.vipAction)
-      if ((this.vipAction == 'update' && type < this.activeSelectLevel - 0) || this.vipAction === 'renew') {
+      if ((this.vipAction == 'update' && type <= this.activeStatus) || this.vipAction === 'renew') {
         return false
       }
       switch (type) {
@@ -676,7 +677,7 @@ export default {
       console.log(newVal)
     },
     vipLevel (newVal) {
-      // console.log(newVal)
+      console.log(newVal)
     },
     VipPriceInfoList (newVal) {
       console.log(newVal)
