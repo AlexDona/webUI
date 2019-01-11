@@ -693,9 +693,7 @@ export default {
       'SET_STEP1_INFO'
     ]),
     reflashUserInfo () {
-      this.REFRESH_USER_INFO_ACTION({
-        self: this
-      })
+      this.REFRESH_USER_INFO_ACTION(this)
     },
     // 隐藏上传按钮
     uploadImg (ref) {
