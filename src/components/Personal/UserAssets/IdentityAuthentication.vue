@@ -882,7 +882,9 @@ export default {
           nationCode: this.regionValue, // 国籍
           cardType: this.documentTypeValue, // 证件类型
           realname: this.realName, // 真实姓名
-          cardNo: this.identificationNumber // 证件号码
+          // 证件号码
+          cardNo: this.identificationNumber,
+          country: this.regionValue
         }
         // 整页loading
         this.fullscreenLoading = true
