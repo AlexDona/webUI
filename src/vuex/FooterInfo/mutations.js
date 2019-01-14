@@ -2,7 +2,8 @@ import {
   CHANGE_FOOTER_ACTIVE_NAME,
   CHANGE_PROTOCOL_DATA,
   CHANGE_NEWS_DETAIL_JUMP_ID,
-  CHANGE_NEWS_TYPE_ACTIVE_NAME
+  CHANGE_NEWS_TYPE_ACTIVE_NAME,
+  SET_APP_DOWNLOAD_URL
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -43,5 +44,9 @@ export default {
     console.log(activeName)
     state.newsTypeActiveName = activeName
     console.log(state.newsTypeActiveName)
+  },
+  [SET_APP_DOWNLOAD_URL] (state, {android, ios}) {
+    state.downloadUrl.android = android
+    state.downloadUrl.ios = ios
   }
 }

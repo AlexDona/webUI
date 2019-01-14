@@ -288,7 +288,7 @@ export const setSocketData = (oldContent, newContent, targetList, targetIndex, t
 // 动态添加favicon
 export const addFavicon = (href, title) => {
   // 动态生成favicon
-  let link = document.querySelector("link[rel*='icon']") || document.createElement('link')
+  let link = document.querySelector('link[rel*=\'icon\']') || document.createElement('link')
   link.type = 'image/x-icon'
   link.rel = 'shortcut icon'
   link.href = href
@@ -400,4 +400,13 @@ String.prototype.format = function (args) {
     }
   }
   return result
+}
+// 接口统一处理
+export const handleRequest = async (request, params, noTip, errorTip) => {
+  const DATA = await request(params)
+  if (!returnAjaxMsg(DATA, Vue, noTip, errorTip)) {
+    return false
+  } else {
+    return getNestedData(DATA, 'data') || {}
+  }
 }
