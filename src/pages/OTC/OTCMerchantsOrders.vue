@@ -9,7 +9,7 @@
       :style="{'min-height':(height-305)+'px'}"
     >
       <!-- 2.1 大标题商家订单 -->
-      <div class="merchants-title font-size20 padding-l15 font-weight700">
+      <div class="merchants-title font-size18 padding-l15 font-weight700">
         <!-- 商家订单 -->
         {{$t('M.otc_MerchantsOrders')}}
       </div>
@@ -341,7 +341,7 @@ import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter, scientificToNumber} from '../../utils'
 import {
   getOTCAvailableCurrency,
-  getMerchantAvailablelegalTender,
+  getMerchantAvailableLegalTender,
   getOTCMerchantsOrdersList
 } from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
@@ -427,7 +427,7 @@ export default {
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
-    this.getMerchantAvailablelegalTenderList()
+    this.getMerchantAvailableLegalTenderList()
     // 3.0 加载列表
     this.getOTCEntrustingOrdersRevocation()
   },
@@ -464,8 +464,8 @@ export default {
       }
     },
     // 4页面加载时 可用法币查询
-    async getMerchantAvailablelegalTenderList () {
-      const data = await getMerchantAvailablelegalTender({
+    async getMerchantAvailableLegalTenderList () {
+      const data = await getMerchantAvailableLegalTender({
       })
       // console.log('可用法币')
       // console.log(data)
@@ -600,12 +600,12 @@ export default {
     > .otc-merchants-orders-content {
       width: 1150px;
       padding-top: 50px;
-      margin: 70px auto 10px;
+      margin: 50px auto 10px;
 
       > .merchants-title {
-        height: 30px;
+        height: 20px;
         margin-bottom: 30px;
-        line-height: 30px;
+        line-height: 20px;
       }
 
       > .merchants-orders-main {

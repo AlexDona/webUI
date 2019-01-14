@@ -436,15 +436,15 @@ input {
   padding: 0 20px 20px;
 }
 
-.paddinglr15 {
+.padding-lr15 {
   padding: 0 15px;
 }
 
-.paddinglr13 {
+.padding-lr13 {
   padding: 0 13px;
 }
 
-.paddinglr20 {
+.padding-lr20 {
   padding: 0 20px;
 }
 
@@ -619,40 +619,48 @@ body.day {
 /* 20181228增加文本域字体大小改为12px,颜色按照设置图黑白切换改写 */
 .night textarea::-webkit-input-placeholder {
   font-size: 12px;
+  font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
   color: #a9bed4;
 }
 
 .night textarea:-moz-placeholder {
   font-size: 12px;
+  font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
   color: #a9bed4;
 }
 
 .night textarea::-moz-placeholder {
   font-size: 12px;
+  font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
   color: #a9bed4;
 }
 
 .night textarea:-ms-input-placeholder {
   font-size: 12px;
+  font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
   color: #a9bed4;
 }
 
 .day textarea::-webkit-input-placeholder {
   font-size: 12px;
+  font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
   color: #7d90ac;
 }
 
 .day textarea:-moz-placeholder {
   font-size: 12px;
+  font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
   color: #7d90ac;
 }
 
 .day textarea::-moz-placeholder {
   font-size: 12px;
+  font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
   color: #7d90ac;
 }
 
 .day textarea:-ms-input-placeholder {
   font-size: 12px;
+  font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
   color: #7d90ac;
 }

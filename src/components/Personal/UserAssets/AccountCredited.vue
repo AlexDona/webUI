@@ -295,16 +295,16 @@
             </span>
             <span
               class="text-info font-size16"
-              v-show="closeAlipay"
+              v-show="closeALIPAY"
             >
               <!--开启支付宝收款方式-->
               {{ $t('M.comm_open') }}{{ $t('M.user_account_alipay') }}{{ $t('M.user_account_payment_term') }}
             </span>
             <span
               class="text-info font-size16"
-              v-show="closePayapl"
+              v-show="closePayPal"
             >
-              <!--开启payapl收款方式-->
+              <!--开启PayPal收款方式-->
               {{ $t('M.comm_open') }}{{ $t('M.user_account_paypal') }}{{ $t('M.user_account_payment_term') }}
             </span>
             <span
@@ -355,17 +355,17 @@
               {{ $t('M.user_account_whether_close2') }}
             </span>
             <span
-              v-show="closeAlipay"
+              v-show="closeALIPAY"
               class="text-info font-size16"
             >
               <!--是否确定关闭支付宝收款方式-->
               {{ $t('M.user_account_whether_close3') }}
             </span>
             <span
-              v-show="closePayapl"
+              v-show="closePayPal"
               class="text-info font-size16"
             >
-              <!--是否确定关闭payapl收款方式-->
+              <!--是否确定关闭PayPal收款方式-->
               {{ $t('M.user_account_whether_close4') }}
             </span>
             <span
@@ -476,8 +476,8 @@ export default {
       }, // 收款方式
       closeBankCard: false, // 默认关闭银行卡
       closeMicroLetter: false, // 默认关闭微信
-      closeAlipay: false, // 默认关闭支付宝
-      closePayapl: false, // 默认关闭paypal
+      closeALIPAY: false, // 默认关闭支付宝
+      closePayPal: false, // 默认关闭PayPal
       closeWesternUnion: false, // 默认关闭西联汇款
       activeType: '', // 当前值类型
       state: '', // 开启关闭状态
@@ -553,15 +553,15 @@ export default {
               this.openCollectionMode = true
               this.closeBankCard = true
               this.closeMicroLetter = false
-              this.closeAlipay = false
-              this.closePayapl = false
+              this.closeALIPAY = false
+              this.closePayPal = false
               this.closeWesternUnion = false
             } else {
               this.closeCollectionMode = true
               this.closeBankCard = true
               this.closeMicroLetter = false
-              this.closeAlipay = false
-              this.closePayapl = false
+              this.closeALIPAY = false
+              this.closePayPal = false
               this.closeWesternUnion = false
             }
           } else {
@@ -579,15 +579,15 @@ export default {
               this.openCollectionMode = true
               this.closeBankCard = false
               this.closeMicroLetter = true
-              this.closeAlipay = false
-              this.closePayapl = false
+              this.closeALIPAY = false
+              this.closePayPal = false
               this.closeWesternUnion = false
             } else {
               this.closeCollectionMode = true
               this.closeBankCard = false
               this.closeMicroLetter = true
-              this.closeAlipay = false
-              this.closePayapl = false
+              this.closeALIPAY = false
+              this.closePayPal = false
               this.closeWesternUnion = false
             }
           } else {
@@ -605,15 +605,15 @@ export default {
               this.openCollectionMode = true
               this.closeBankCard = false
               this.closeMicroLetter = false
-              this.closeAlipay = true
-              this.closePayapl = false
+              this.closeALIPAY = true
+              this.closePayPal = false
               this.closeWesternUnion = false
             } else {
               this.closeCollectionMode = true
               this.closeBankCard = false
               this.closeMicroLetter = false
-              this.closeAlipay = true
-              this.closePayapl = false
+              this.closeALIPAY = true
+              this.closePayPal = false
               this.closeWesternUnion = false
             }
           } else {
@@ -631,15 +631,15 @@ export default {
               this.openCollectionMode = true
               this.closeBankCard = false
               this.closeMicroLetter = false
-              this.closeAlipay = false
-              this.closePayapl = true
+              this.closeALIPAY = false
+              this.closePayPal = true
               this.closeWesternUnion = false
             } else {
               this.closeCollectionMode = true
               this.closeBankCard = false
               this.closeMicroLetter = false
-              this.closeAlipay = false
-              this.closePayapl = true
+              this.closeALIPAY = false
+              this.closePayPal = true
               this.closeWesternUnion = false
             }
           } else {
@@ -657,15 +657,15 @@ export default {
               this.openCollectionMode = true
               this.closeBankCard = false
               this.closeMicroLetter = false
-              this.closeAlipay = false
-              this.closePayapl = false
+              this.closeALIPAY = false
+              this.closePayPal = false
               this.closeWesternUnion = true
             } else {
               this.closeCollectionMode = true
               this.closeBankCard = false
               this.closeMicroLetter = false
-              this.closeAlipay = false
-              this.closePayapl = false
+              this.closeALIPAY = false
+              this.closePayPal = false
               this.closeWesternUnion = true
             }
           } else {

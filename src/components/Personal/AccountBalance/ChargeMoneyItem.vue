@@ -215,6 +215,11 @@ export default {
         width: 110px;
         height: 110px;
         padding: 5px;
+
+        .ercode {
+          width: 100px !important;
+          height: 100px !important;
+        }
       }
 
       > .code-list {

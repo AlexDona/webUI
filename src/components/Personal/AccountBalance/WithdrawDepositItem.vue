@@ -18,7 +18,7 @@
       </p>
       <input
         type="text"
-        class="input-mention border-radius2 paddinglr15 box-sizing"
+        class="input-mention border-radius2 padding-lr15 box-sizing"
         v-model="withdrawRemark"
       >
     </div>
@@ -65,9 +65,9 @@
             @input="changeInputValue('feeInputRef', index, pointLengthAccountCount, 'serviceType')"
           >
           <span class="service-charge display-inline-block text-align-r">
-            {{feeRangeOfWidthdraw.minFees}}
+            {{feeRangeOfWithdraw.minFees}}
             -
-            {{feeRangeOfWidthdraw.maxFees}}
+            {{feeRangeOfWithdraw.maxFees}}
           </span>
         </div>
       </div>
@@ -79,7 +79,7 @@
           </p>
           <input
             type="text"
-            class="count-flex-input border-radius2 paddinglr15 box-sizing text-align-r"
+            class="count-flex-input border-radius2 padding-lr15 box-sizing text-align-r"
             ref="countInputRef"
             @blur="checkUserInputAvailable
 ('withdrawCount', index)"
@@ -92,9 +92,9 @@
               {{ $t('M.comm_limit') }}：
             </span>
             <span>
-              {{feeRangeOfWidthdraw.minWithdraw}}
+              {{feeRangeOfWithdraw.minWithdraw}}
               -
-              {{feeRangeOfWidthdraw.maxWithdraw}}
+              {{feeRangeOfWithdraw.maxWithdraw}}
             </span>
           </p>
         </div>
@@ -106,7 +106,7 @@
           <input
             type="text"
             disabled
-            class="count-text-input border-radius2 paddinglr15 box-sizing text-align-r"
+            class="count-text-input border-radius2 padding-lr15 box-sizing text-align-r"
             v-model="accountCountFilter"
           >
         </div>
@@ -172,7 +172,7 @@ export default {
     // 提币地址列表
     'withdrawAddressList',
     // 提币手续费范围
-    'feeRangeOfWidthdraw',
+    'feeRangeOfWithdraw',
     // 当前币种索引
     'index',
     // 到账数量

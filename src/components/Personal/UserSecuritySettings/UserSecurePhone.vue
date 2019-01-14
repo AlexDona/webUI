@@ -351,7 +351,8 @@ export default {
       ],
       successCountDown: 1, // 成功倒计时
       newPhoneIsExistStatus: false, // 新手机号是否已注册过
-      emailBindPhoneCount: 0 // 邮箱绑定手机次数
+      emailBindPhoneCount: 0, // 邮箱绑定手机次数
+      userSecurePhoneSuccessJumpTimer: null // 安全手机绑定成功自动跳转定时器
     }
   },
   created () {
@@ -760,7 +761,7 @@ export default {
     },
     // 成功自动跳转
     successJump () {
-      setInterval(() => {
+      this.userSecurePhoneSuccessJumpTimer = setInterval(() => {
         if (this.successCountDown === 0) {
           this.returnSuperior()
         }
@@ -787,6 +788,12 @@ export default {
   watch: {
     contryAreaList (newVal) {
       console.log(newVal)
+    }
+  },
+  destroyed () {
+    // 离开本组件清除定时器
+    if (this.userSecurePhoneSuccessJumpTimer) {
+      clearInterval(this.userSecurePhoneSuccessJumpTimer)
     }
   }
 }

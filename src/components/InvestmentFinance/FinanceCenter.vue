@@ -34,10 +34,10 @@
             >
             </el-option>
           </el-select>
-          <ul class="newnestPrice">
+          <ul class="newestPrice">
             <li>
-              <p class="newnestPriceColor">
-                {{newnestPrice}}<span>USDT</span>
+              <p class="newestPriceColor">
+                {{newestPrice}}<span>USDT</span>
               </p>
               <!-- 最新价钱 -->
               {{$t('M.finance_newestPrice')}}
@@ -95,21 +95,14 @@
               <label>
                 <!-- 存币数量 -->
                 <span class="label-title">{{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;</span>
-                <div class='invest-mounte'>
+                <div class='invest-amount'>
                   <!-- 请输入数量 -->
-                  <!--<input
-                    type="text"
-                    ref="investMounteRef"
-                    :placeholder="$t('M.finance_input_sum')"
-                    @keyup="changeInvestMounte"
-                    @input="checkInput('investMounteRef')"
-                  >-->
                   <input
                     type="text"
-                    ref="investMounteRef"
+                    ref="investAmountRef"
                     :placeholder="$t('M.finance_input_sum')"
-                    @keyup="investNumLimit('investMounteRef', 2)"
-                    @input="investNumLimit('investMounteRef', 2)"
+                    @keyup="investNumLimit('investAmountRef', 2)"
+                    @input="investNumLimit('investAmountRef', 2)"
                   >
                   <strong>{{selectedCoinName}}</strong>
                 </div>
@@ -158,12 +151,12 @@
                   <el-form-item
                     :label="$t('M.comm_count')"
                   >
-                    <div class='invest-mounte'>
+                    <div class='invest-amount'>
                       <input
                         class="red text-indent"
                         type='text'
                         ref='changeAlignNum'
-                        @input="changeAlignNumber('changeAlignNum', 'investMounteRef', $event)"
+                        @input="changeAlignNumber('changeAlignNum', 'investAmountRef', $event)"
                       >
                       <strong>{{selectedCoinName}}</strong>
                     </div>
@@ -172,7 +165,7 @@
                   <el-form-item
                     :label="$t('M.news_year') + $t('M.finance_interestRate') + '(%)'"
                   >
-                    <div class='invest-mounte'>
+                    <div class='invest-amount'>
                       <el-input
                         v-model="interestRateValue"
                         disabled
@@ -184,7 +177,7 @@
                   <el-form-item
                     :label="$t('M.finance_total_income')"
                   >
-                    <div class='invest-mounte'>
+                    <div class='invest-amount'>
                       <el-input
                         v-model="formLabelAlign.expectedEarning"
                         disabled
@@ -197,7 +190,7 @@
                   <el-form-item
                   :label="$t('M.finance_earnings') + $t('M.finance_grant')"
                   >
-                    <div class='invest-mounte'>
+                    <div class='invest-amount'>
                       <!-- 先息后本 -->
                       <el-input
                         :value="$t('M.finance_xiAndben')"
@@ -289,7 +282,7 @@
         </div>
         <!-- 5.0 存币记录和收益记录 -->
         <div class="invest-list">
-          <div class="nvest-list-body">
+          <div class="invest-list-body">
             <div class='showAll'>
               <router-link
                 class="blue"
@@ -434,7 +427,7 @@
                       <div
                         v-if="s.row.state == 'CURRENT'"
                         class="blue cancelBtn"
-                        @click="cancleInvest(s.row.id)"
+                        @click="cancelInvest(s.row.id)"
                       >
                         <!-- 取消 -->
                         {{$t('M.comm_cancel')}}
@@ -526,7 +519,7 @@ import {timeFilter, formatNumberInput} from '../../utils'
 import {
   getFinancialManagement,
   imediateInvestment,
-  cancleInvestment,
+  cancelInvestment,
   getFinancialRecord
 } from '../../utils/api/investmentFinance'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
@@ -551,10 +544,10 @@ export default {
       // 币种数组
       traderCoinList: [],
       // 存币数量
-      investMounte: '',
+      investAmount: '',
       // 存币类型
       selectedInvestTypeId: '',
-      selectedInvestTypeDiscri: '',
+      selectedInvestTypeDescription: '',
       // 存币类型列表
       investTypeList: [],
       // 默认显示存币记录
@@ -570,7 +563,7 @@ export default {
       // 总页数
       totalPages: '0',
       // 最新价钱
-      newnestPrice: '',
+      newestPrice: '',
       // 当日涨幅
       dayAmountIncrease: '',
       // 历史涨幅
@@ -584,7 +577,7 @@ export default {
       // 历史收益值
       getMoneyValue: 0,
       // 获取用户总资产
-      userCoindTotal: '',
+      userCoinTotal: '',
       // 走势图x轴数组
       renderTimeList: '',
       // 走势图y轴数组
@@ -630,8 +623,6 @@ export default {
           interest: 3
         }
       ],
-      // n天后的时间
-      brforeNtime: '',
       interestRateValue: '', // 年利率
       stopClick: false
     }
@@ -655,8 +646,8 @@ export default {
       let ss = 24 * 60 * 60 * 1000
       let timeSteps = new Date().getTime() // 当前时间撮
       let date1 = new Date(timeSteps + (n + 2) * ss) // n天前的时间撮
-      let newtime = date1.toLocaleString() // 将n天前的时间撮转换成当前日期
-      let arr = newtime.split(' ') // 将精确到日的日期摘出来
+      let newTime = date1.toLocaleString() // 将n天前的时间撮转换成当前日期
+      let arr = newTime.split(' ') // 将精确到日的日期摘出来
       let arr1 = arr[0].split('/') // 将日期格式改变
       let arr2 = arr1[0] + (-arr1[1]) + (-arr1[2])
       return arr2
@@ -664,44 +655,15 @@ export default {
     timeFormatting (data) {
       return timeFilter(data, 'data')
     },
-    // 键盘弹起时时触发
-    /* changeInvestMounte (e) {
-      if (this.isLogin) {
-        if (e.target.value > this.userCoindTotal) {
-          this.isShow = true
-        } else {
-          this.isShow = false
-        }
-      } else {
-        this.isShow = false
-      }
-    }, */
-    // 限制币存币数量不能为0
-    /* checkInput (ref) {
-      let value = this.$refs[ref].value
-      let arr = value.split('')
-      let str = ''
-      _.forEach(arr, (item, index) => {
-        if (index == 0 && item == '0') {
-          str = ''
-        } else {
-          if (item - 0 || item == '0') {
-            str += item
-          }
-        }
-      })
-      this.$refs[ref].value = str
-      this.investMounte = str
-    }, */
     // 改写存币数量只能输入小数点后两位20190103该写
     investNumLimit (ref, pointLength) {
-      // console.log(this.$refs.investMounteRef.value)
+      // console.log(this.$refs.investAmountRef.value)
       // 限制输入数字和位数
       this[ref] = this.$refs[ref].value
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
       if (this.isLogin) {
-        if (this.$refs.investMounteRef.value > this.userCoindTotal) {
+        if (this.$refs.investAmountRef.value > this.userCoinTotal) {
           this.isShow = true
         } else {
           this.isShow = false
@@ -711,7 +673,7 @@ export default {
       }
     },
     // 输入金额改变时检测用户输入的币种总金额
-    async getUserCoindTotal () {
+    async getUserCoinTotal () {
       const data = await getPushTotalByCoinId({
         coinId: this.selectedCoinId
       })
@@ -721,14 +683,14 @@ export default {
         return false
       } else {
         // 重新掉一次币种接口刷新列表
-        this.userCoindTotal = getNestedData(data, 'data.data.total')
+        this.userCoinTotal = getNestedData(data, 'data.data.total')
       }
     },
     // 点击立刻存币按钮执行
     getInvestEarnings () {
-      console.log(this.$refs.investMounteRef.value)
+      console.log(this.$refs.investAmountRef.value)
       if (this.isLogin) {
-        if ((this.$refs.investMounteRef.value - 0) == 0) {
+        if ((this.$refs.investAmountRef.value - 0) == 0) {
           this.$message({
             // 存币数量不能为0
             message: this.$t('M.finance_invest_number'),
@@ -736,7 +698,7 @@ export default {
           })
           return false
         }
-        if (this.selectedInvestTypeId && this.$refs.investMounteRef.value) {
+        if (this.selectedInvestTypeId && this.$refs.investAmountRef.value) {
           if (this.isShow === false) {
             // 显示理财详情模态框前请求数据渲染模态框
             this.clickGetInvestEarnings()
@@ -759,7 +721,7 @@ export default {
     },
     /* getInvestEarnings () {
       if (this.isLogin) {
-        if (this.selectedInvestTypeId && this.investMounte) {
+        if (this.selectedInvestTypeId && this.investAmount) {
           if (this.isShow === false) {
             // 显示理财详情模态框前请求数据渲染模态框
             this.clickGetInvestEarnings()
@@ -804,7 +766,7 @@ export default {
           }
         }
       })
-      this.investMounte = str
+      this.investAmount = str
       // 将本身赋值
       this.$refs[ref1].value = str
       // 主理财页面赋值
@@ -817,8 +779,8 @@ export default {
     async clickGetInvestEarnings () {
       const data = await getFinancialRecord({
         financialManagementId: this.selectedInvestTypeId,
-        // number: this.investMounte
-        number: this.$refs.investMounteRef.value
+        // number: this.investAmount
+        number: this.$refs.investAmountRef.value
       })
       console.log('存币理财类型')
       console.log(data)
@@ -835,8 +797,8 @@ export default {
     async clickImmediateInvestment () {
       const data = await imediateInvestment({
         financialManagementId: this.selectedInvestTypeId,
-        // number: this.investMounte
-        number: this.$refs.investMounteRef.value
+        // number: this.investAmount
+        number: this.$refs.investAmountRef.value
       })
       console.log('存币理财类型')
       console.log(data)
@@ -891,7 +853,7 @@ export default {
         // 设置每次返回地币种名称
         this.selectedCoinName = getData.tickerPriceResult.coinName
         // 最新价钱
-        this.newnestPrice = getData.tickerPriceResult.price
+        this.newestPrice = getData.tickerPriceResult.price
         // 当日涨幅
         this.dayAmountIncrease = getData.tickerPriceResult.chg
         // 历史涨幅
@@ -920,7 +882,7 @@ export default {
         this.userInterestRecord = this.isLogin ? getData.userInterestRecord.list : ''
         // 每次换一种币种就获取该币种的总资产
         if (this.isLogin) {
-          this.getUserCoindTotal()
+          this.getUserCoinTotal()
         }
         // 走势图x轴赋值
         this.FINANCE_LINE_RENDER_PRICE_LIST(getData.tickerPriceResult.renderPriceList)
@@ -929,13 +891,13 @@ export default {
         // 设置状态只要发生请求就让状态改变
         this.FINANCE_LINE_STATUS(1 + this.status)
         // 将存币数量输入框清空
-        // this.investMounte = ''
-        this.$refs.investMounteRef.value = ''
+        // this.investAmount = ''
+        this.$refs.investAmountRef.value = ''
       }
     },
     // 用户取消存币接口
-    async clickCancleInvestment (id) {
-      const data = await cancleInvestment(id)
+    async clickCancelInvestment (id) {
+      const data = await cancelInvestment(id)
       console.log('用户取消按钮')
       console.log(data)
       if (!(returnAjaxMsg(data, this, 1))) {
@@ -963,22 +925,22 @@ export default {
       this.traderCoinList.forEach(item => {
         if (item.id == e) {
           if (this.language === 'zh_TW' || this.language === 'zh_CN') {
-            this.selectedInvestTypeDiscri = item.typeDescription
+            this.selectedInvestTypeDescription = item.typeDescription
           } else {
-            this.selectedInvestTypeDiscri = item.typeEnglishDescription
+            this.selectedInvestTypeDescription = item.typeEnglishDescription
           }
         }
       })
     },
-    cancleInvest (id) {
+    cancelInvest (id) {
       // 用户点击取消按钮需要请求接口
-      // this.clickCancleInvestment(id)
+      // this.clickCancelInvestment(id)
       // 增加二次确认弹出框
       this.$confirm(this.$t('M.finance_tipsContentOne'), {
         confirmButtonText: this.$t('M.comm_confirm'), // 确定
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
-        this.clickCancleInvestment(id)
+        this.clickCancelInvestment(id)
       }).catch(() => {
       })
     }
@@ -1084,7 +1046,7 @@ export default {
             display: flex;
             width: 100%;
 
-            > .newnestPrice {
+            > .newestPrice {
               display: flex;
               flex: 1;
               height: 48px;
@@ -1153,7 +1115,7 @@ export default {
                   width: 120px;
                 }
 
-                > .invest-mounte {
+                > .invest-amount {
                   display: flex;
                   justify-content: space-between;
                   width: 400px;
@@ -1223,7 +1185,7 @@ export default {
         > .invest-list {
           margin-bottom: 200px;
 
-          > .nvest-list-body {
+          > .invest-list-body {
             position: relative;
 
             > .showAll {
@@ -1328,7 +1290,7 @@ export default {
             width: 240px;
           }
 
-          .invest-mounte {
+          .invest-amount {
             display: flex;
             justify-content: space-between;
             width: 280px;
@@ -1369,7 +1331,7 @@ export default {
         }
       }
 
-      .nvest-list-body {
+      .invest-list-body {
         .el-table {
           font-size: 12px;
           color: #a9bed4;
@@ -1477,7 +1439,7 @@ export default {
       }
 
       /deep/ {
-        .nvest-list-body {
+        .invest-list-body {
           .el-table {
             th {
               &.is-leaf {
@@ -1506,7 +1468,7 @@ export default {
         > .inner-box {
           > .finance-inner {
             > .invest-list {
-              > .nvest-list-body {
+              > .invest-list-body {
                 .finance-tips-box {
                   color: #617499;
                   background-color: #121824;
@@ -1533,12 +1495,12 @@ export default {
                   box-shadow: inset 1px 0 3px rgba(51, 143, 245, 1);
                 }
 
-                .newnestPrice {
+                .newestPrice {
                   display: flex;
                   flex: 1;
                   height: 48px;
 
-                  .newnestPriceColor {
+                  .newestPriceColor {
                     color: #000;
                   }
 
@@ -1577,7 +1539,7 @@ export default {
                 }
 
                 .left-body {
-                  .invest-mounte {
+                  .invest-amount {
                     input {
                       width: 380px;
                       vertical-align: center;
@@ -1586,7 +1548,7 @@ export default {
                   }
 
                   > label {
-                    > .invest-mounte {
+                    > .invest-amount {
                       > input {
                         color: #666;
                       }
@@ -1604,7 +1566,7 @@ export default {
             }
 
             .invest-list {
-              > .nvest-list-body {
+              > .invest-list-body {
                 .finance-tips-box {
                   background-color: #fff;
                 }
@@ -1624,7 +1586,7 @@ export default {
           }
 
           .dialogStyle {
-            .invest-mounte {
+            .invest-amount {
               border: 1px solid rgba(236, 241, 248, 1);
               background: #fff;
             }
@@ -1648,7 +1610,7 @@ export default {
           box-shadow: 0 0 4px rgba(51, 143, 245, .5);
         }
 
-        .nvest-list-body {
+        .invest-list-body {
           .el-table {
             color: #666;
             background: transparent;

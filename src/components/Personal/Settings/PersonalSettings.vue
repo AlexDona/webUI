@@ -170,13 +170,10 @@ export default {
     this.validatedActiveFrequency = this.activeFrequency
     this.oldFrequency = this.activeFrequency
   },
-  mounted () {
-  },
+  mounted () {},
   activated () {},
-  update () {
-  },
-  beforeRouteUpdate () {
-  },
+  update () {},
+  beforeRouteUpdate () {},
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'

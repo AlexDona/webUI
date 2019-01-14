@@ -123,11 +123,11 @@ export default {
       errorShowStatusList: [
         '', // 邮箱账号
         '' // 验证码
-      ]
+      ],
+      userSecureEmailSuccessJumpTimer: null // 安全邮箱设置成功自动跳转定时器
     }
   },
-  created () {
-  },
+  created () {},
   mounted () {},
   activated () {},
   update () {},
@@ -333,7 +333,7 @@ export default {
     },
     // 谷歌绑定成功自动跳转
     successJump () {
-      setInterval(() => {
+      this.userSecureEmailSuccessJumpTimer = setInterval(() => {
         if (this.successCountDown === 0) {
           this.returnSuperior()
         }
@@ -358,6 +358,12 @@ export default {
   watch: {
     isEmailExist (newVal) {
       console.log(newVal)
+    }
+  },
+  destroyed () {
+    // 离开本组件清除定时器
+    if (this.userSecureEmailSuccessJumpTimer) {
+      clearInterval(this.userSecureEmailSuccessJumpTimer)
     }
   }
 }
