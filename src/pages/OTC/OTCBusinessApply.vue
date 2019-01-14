@@ -173,12 +173,12 @@
     </div>
     <!-- 2.2商家 申请中 页面 -->
     <div
-      :style="{'min-height':(height-305)+'px'}"
+      :style="{'min-height':(height-405)+'px'}"
       class="business-applying-content"
       v-show="applyStatus === 2"
     >
       <div class="picture">
-        <img src="../../assets/develop/business-applying.png" alt="">
+        <img src="../../assets/develop/business-applying.png">
       </div>
       <div class="text">
         <p class="tip">{{$t('M.otc_merchant_audit')}}</p>
@@ -187,7 +187,7 @@
     </div>
     <!-- 2.3商家 申请成功 页面 -->
     <div
-      :style="{'min-height':(height-305)+'px'}"
+      :style="{'min-height':(height-405)+'px'}"
       class="business-apply-success-content"
       v-show="applyStatus === 3"
     >
@@ -274,12 +274,14 @@ export default {
       businessAgreementDialogStatus: false, // 弹出框状态
       argumentContent: '', // 协议文件
       fileName: '商家认证申请表 Merchant certification application form', // 下载文件名字
-      downLoadUrl: '' // 商家申请资料地址
+      downLoadUrl: '', // 商家申请资料地址
+      scrollToTimerOne: null, // 滚动跳转倒计时1
+      scrollToTimerTwo: null // 滚动跳转倒计时2
     }
   },
   created () {
     // 动态获取申请中 申请成功内容的高度
-    // console.log(document.documentElement.clientHeight)
+    console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
     this.determineUser()
   },
@@ -382,7 +384,7 @@ export default {
         // ren 增加非商家点击提示框申请按钮跳转到申请页面中的申请按钮部分功能
         if (getData.status !== 3 && this.otcApplyJumpBottomStatus) {
           // console.log('进入方法了' + this.otcApplyJumpBottomStatus)
-          setTimeout(() => {
+          this.scrollToTimerOne = setTimeout(() => {
             window.scrollTo(0, 2000)
           }, 100)
           this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
@@ -424,11 +426,20 @@ export default {
       // console.log('监控')
       // console.log(newVal)
       if (newVal && this.applyStatus !== 3) {
-        setTimeout(() => {
+        this.scrollToTimerTwo = setTimeout(() => {
           window.scrollTo(0, 2000)
         }, 100)
         this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
       }
+    }
+  },
+  destroyed () {
+    // 离开本组件清除定时器
+    if (this.scrollToTimerOne) {
+      clearTimeout(this.scrollToTimerOne)
+    }
+    if (this.scrollToTimerOne) {
+      clearTimeout(this.scrollToTimerTwo)
     }
   }
 }
@@ -605,6 +616,10 @@ export default {
     text-align: center;
     background-color: $mainNightBgColor;
 
+    > .picture {
+      margin-top: 80px;
+    }
+
     > .text {
       margin-top: 40px;
       font-size: 18px;
@@ -617,10 +632,6 @@ export default {
   }
 
   > .business-apply-success-content {
-    > .picture {
-      margin-top: 20px;
-    }
-
     > .text {
       margin-top: 10px;
     }

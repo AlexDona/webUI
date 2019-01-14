@@ -64,7 +64,7 @@
                 />
                 <!-- 货币类型 -->
                 <el-select
-                  v-model="activitedCurrencyId"
+                  v-model="checkedCurrencyId"
                   @change="changeCurrencyId"
                   :placeholder="$t('M.otc_index_currency_type')"
                   :no-data-text="$t('M.comm_no_data')"
@@ -174,7 +174,7 @@
                 <template slot-scope = "s">
                   <!-- 此处的单位根据设置中的法币类型来变化：为人民币时候显示CNY，为美元时候显示$ 此处需要从全局拿到设置中的法币类型来渲染页面-->
                   <div class="red">
-                    {{filterNumber(s.row.price)}}{{activitedCurrencyName}}
+                    {{filterNumber(s.row.price)}}{{checkedCurrencyName}}
                   </div>
                 </template>
               </el-table-column>
@@ -224,7 +224,7 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    {{ filterNumber(s.row.minCount) }}~{{ filterNumber(s.row.maxCount) }}{{activitedCurrencyName}}
+                    {{ filterNumber(s.row.minCount) }}~{{ filterNumber(s.row.maxCount) }}{{checkedCurrencyName}}
                   </div>
                 </template>
               </el-table-column>
@@ -411,7 +411,7 @@ import {
 import {
   getOTCAvailableCurrency,
   getOTCPutUpOrders,
-  getMerchantAvailablelegalTender
+  getMerchantAvailableLegalTender
 } from '../../utils/api/OTC'
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import OTCTradingOrder from '../../components/OTC/OTCTradingOrder'
@@ -452,9 +452,9 @@ export default {
       totalPages: 1,
       // 可用法币币种数组
       // 选中的可用法币id
-      activitedCurrencyId: '',
+      checkedCurrencyId: '',
       // 选中的可用法币name
-      activitedCurrencyName: '',
+      checkedCurrencyName: '',
       availableCurrencyId: [],
       // 选中的tab面板的序号
       activeName: 'first',
@@ -494,18 +494,19 @@ export default {
         }
       ],
       // 下拉框中选中的支付方式
-      activedPayWayBankinfoItem: this.$t('M.otc_index_Payment_method'),
+      // activedPayWayBankinfoItem: this.$t('M.otc_index_Payment_method'),
       // 下拉框支付方式中选中的支付方式查询列表
       checkedPayType: '',
       // 我要购买出售币种数组
-      IWantToBuySellArr: []
+      IWantToBuySellArr: [],
+      isDisabledTimer: null // 面板切换防止频繁点击倒计时
     }
   },
   created () {
     // 1.0 otc可用币种查询：我要购买/我要出售的币种列表
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
-    // this.getMerchantAvailablelegalTenderList()
+    // this.getMerchantAvailableLegalTenderList()
     // 3.0 用户登录了刷新用户个人信息
     if (this.isLogin) {
       this.reflashUserInfo() // 刷新用户信息
@@ -555,7 +556,7 @@ export default {
     toggleTabPane (tab, event) {
       // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
       this.isDisabled = true
-      setTimeout(() => {
+      this.isDisabledTimer = setTimeout(() => {
         this.isDisabled = false
       }, 500)
       // 未登录跳转到登录页面去
@@ -596,7 +597,7 @@ export default {
         })
         return false
       }
-      if (!this.activitedCurrencyId) {
+      if (!this.checkedCurrencyId) {
         // message: '请选择法币类型',
         this.$message({
           message: this.$t('M.otc_publish_order_err_tips2'),
@@ -631,8 +632,8 @@ export default {
         } else {
           // this.OTCBuySellStyle 当前买卖类型
           // this.selectedOTCAvailableCurrencyCoinID 选中的可用币种id
-          // this.activitedCurrencyId 当前选中的可用法币id
-          this.$router.push({path: '/OTCPublishBuyAndSell/' + this.OTCBuySellStyle + '/' + this.selectedOTCAvailableCurrencyCoinID + '/' + this.activitedCurrencyId})
+          // this.checkedCurrencyId 当前选中的可用法币id
+          this.$router.push({path: '/OTCPublishBuyAndSell/' + this.OTCBuySellStyle + '/' + this.selectedOTCAvailableCurrencyCoinID + '/' + this.checkedCurrencyId})
         }
       }
     },
@@ -718,13 +719,13 @@ export default {
           this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
           // 在得到可用币种之后再调用方法根据币种的第一项的币种id来渲染表格数据
           // 2.0 otc可用法币查询：
-          this.getMerchantAvailablelegalTenderList()
+          this.getMerchantAvailableLegalTenderList()
         }
       }
     },
     //  2.0 otc可用法币查询
-    async getMerchantAvailablelegalTenderList () {
-      const data = await getMerchantAvailablelegalTender({})
+    async getMerchantAvailableLegalTenderList () {
+      const data = await getMerchantAvailableLegalTender({})
       // console.log('otc法币查询列表')
       // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
@@ -732,8 +733,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.availableCurrencyId = getNestedData(data, 'data.data')
-        this.activitedCurrencyId = getNestedData(this.availableCurrencyId[0], 'id')
-        this.activitedCurrencyName = getNestedData(this.availableCurrencyId[0], 'shortName')
+        this.checkedCurrencyId = getNestedData(this.availableCurrencyId[0], 'id')
+        this.checkedCurrencyName = getNestedData(this.availableCurrencyId[0], 'shortName')
         // 3.0 otc主页面查询挂单列表:
         this.getOTCPutUpOrdersList()
       }
@@ -745,7 +746,7 @@ export default {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
-        currencyId: this.activitedCurrencyId // 法币id
+        currencyId: this.checkedCurrencyId // 法币id
       }
       if (this.OTCBuySellStyle === 'onlineBuy') {
         param.entrustType = 'SELL' // 挂单类型（BUY SELL）
@@ -795,12 +796,12 @@ export default {
     changeCurrencyId (e) {
       this.currentPage = 1
       console.log(this.currentPage)
-      this.activitedCurrencyId = e
-      // console.log(this.activitedCurrencyId)
+      this.checkedCurrencyId = e
+      // console.log(this.checkedCurrencyId)
       this.availableCurrencyId.forEach(item => {
         if (e === item.id) {
           // console.log(item.shortName)
-          this.activitedCurrencyName = item.shortName
+          this.checkedCurrencyName = item.shortName
         }
       })
       // otc主页面查询挂单列表
@@ -836,6 +837,12 @@ export default {
       if (newVal) {
         this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
       }
+    }
+  },
+  destroyed () {
+    // 离开本组件清除定时器
+    if (this.isDisabledTimer) {
+      clearTimeout(this.isDisabledTimer)
     }
   }
 }
@@ -1265,7 +1272,7 @@ export default {
         background-color: #d45858;
       }
 
-      .nvest-list-body {
+      .invest-list-body {
         .el-table {
           td {
             border-top: 1px solid rgba(97, 116, 153, .2);

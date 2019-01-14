@@ -11,7 +11,7 @@
         {{ $t('M.user_asset_title2') }}
       </span>
     </header>
-    <div class="billing-details-main paddinglr20 margin-top9">
+    <div class="billing-details-main padding-lr20 margin-top9">
       <el-tabs
         v-model="activeName"
         @tab-click = "coinMoneyOrders"

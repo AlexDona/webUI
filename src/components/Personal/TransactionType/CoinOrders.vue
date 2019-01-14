@@ -515,7 +515,7 @@ export default {
     await this.commissionList('current-entrust')
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {

@@ -3,7 +3,7 @@ import {get, postWithURLencoded, post} from './axios'
  *OTC
  */
 // 查询某商户可用法币币种列表
-export const getMerchantAvailablelegalTender = (params) => get('otcCOin/getAvailCurrencyCoins', Object.assign({
+export const getMerchantAvailableLegalTender = (params) => get('otcCOin/getAvailCurrencyCoins', Object.assign({
   'not-loading': true
 }, params))
 // otc可用币种查询：我要购买/我要出售的币种列表
@@ -25,7 +25,7 @@ export const getOTCOrdersThreeDay = (params) => get('otcOrder/selectUserOrdersIn
 // 添加otc挂单(商家与普通用户都可用)
 export const addOTCPutUpOrders = (params) => postWithURLencoded('otcEntrust/addOtcEntrustForCommon', params)
 // 添加otc挂单(仅商家可用)
-export const addOTCPutUpOrdersMerchantdedicated = (params) => postWithURLencoded('otcEntrust/addOtcEntrustForMerch', params)
+export const addOTCPutUpOrdersMerchantDedicated = (params) => postWithURLencoded('otcEntrust/addOtcEntrustForMerch', params)
 // otc摘单买入
 export const pickOrdersToBuy = (params) => postWithURLencoded('otcOrder/pickEntrustBuy', params)
 // otc摘单卖出

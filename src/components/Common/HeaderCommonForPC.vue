@@ -381,7 +381,7 @@
   </div>
 </template>
 <script>
-import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
+import {getMerchantAvailableLegalTender} from '../../utils/api/OTC'
 import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
 import {
@@ -462,7 +462,7 @@ export default{
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币
-    await this.getMerchantAvailablelegalTenderList()
+    await this.getMerchantAvailableLegalTenderList()
   },
   mounted () {
     window.addEventListener('scroll', this.handleScroll)
@@ -651,8 +651,8 @@ export default{
       this.toggleShowSettingBox(0)
     },
     // 查询某商户可用法币币种列表
-    async getMerchantAvailablelegalTenderList () {
-      let data = await getMerchantAvailablelegalTender({})
+    async getMerchantAvailableLegalTenderList () {
+      let data = await getMerchantAvailableLegalTender({})
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {

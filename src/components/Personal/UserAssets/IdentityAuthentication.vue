@@ -210,7 +210,7 @@
       >
         <!--authenticationMethod // 点击弹出扫码确认框-->
         <p
-          class="header-border paddinglr20"
+          class="header-border padding-lr20"
           @click.prevent="authenticationMethod"
         >
           <span class="font-size16 main-header-title">

@@ -40,7 +40,7 @@
             >
               <p>1. The invitation to reward {{coinName}} statistics start time is 2018-05-20 10:18, before this has been invitation  to register no cumulative {{coinName}} to this event;</p>
               <p>2. Login in the platform account - Finance Center - Promotion of registration link - copy exclusive promotion link;</p>
-              <p>3. Assume that the new user A completes the real-name authentication through your promotion registration link , he will be your direct subordinate, thesystem will add 10{{coinName}} to your account; the new user B will become your indirect subordinate through the promotion link of the new user A. Indirect subordinates do not enjoy the gift of {{coinName}};</p>
+              <p>3. Assume that the new user A completes the real-name authentication through your promotion registration link , he will be your direct subordinate, the system will add 10{{coinName}} to your account; the new user B will become your indirect subordinate through the promotion link of the new user A. Indirect subordinates do not enjoy the gift of {{coinName}};</p>
               <p>4. In order to maintain the rights of normal promoters, if there is a cheater, the analysis is true, the reward will be forcibly cancelled, and the platform has the right to judge the fraudulent behavior of promoting false users;</p>
               <p>5. The new user registration is approved by real-name authentication, and the system automatically accumulates {{coinName}};</p>
               <p>6. The activity reward {{coinName}} coins are the official first and second voting got {{coinName}} coins;</p>

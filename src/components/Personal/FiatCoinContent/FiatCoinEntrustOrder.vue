@@ -149,15 +149,11 @@ export default {
       // OTCEntrustOrderList: []
     }
   },
-  created () {
-  },
-  mounted () {
-  },
+  created () {},
+  mounted () {},
   activated () {},
-  update () {
-  },
-  beforeRouteUpdate () {
-  },
+  update () {},
+  beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_LEGAL_PAGE',

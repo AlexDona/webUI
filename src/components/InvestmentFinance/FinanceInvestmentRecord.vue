@@ -9,8 +9,8 @@
       <div class="finance-inner">
         <!-- 存币 -->
         <div class="invest-list">
-          <div class="nvest-list-body">
-            <div class="gobackInvest">
+          <div class="invest-list-body">
+            <div class="goBackInvest">
               <IconFontCommon
                 class='blue'
                 iconName="icon-fanhui"
@@ -164,7 +164,7 @@
                       <div
                         v-if="s.row.state == 'CURRENT'"
                         class="blue cancelBtn"
-                        @click="cancleInvest(s.row.id)"
+                        @click="cancelInvest(s.row.id)"
                       >
                         <!-- 取消 -->
                         {{$t('M.comm_cancel')}}
@@ -279,7 +279,7 @@ import FinanceBrokenPie from './FinanceBrokenPie'
 import IconFontCommon from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
 import {timeFilter} from '../../utils'
-import {getFinancialManagement, cancleInvestment} from '../../utils/api/investmentFinance'
+import {getFinancialManagement, cancelInvestment} from '../../utils/api/investmentFinance'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 export default {
   components: {
@@ -325,10 +325,6 @@ export default {
   mounted () {},
   activated () {},
   updated () {},
-  beforeRouteUpdate () {},
-  aftereRouteUpdate () {
-    window.scrollTo(0, 0)
-  },
   methods: {
     timeFormatting (data) {
       return timeFilter(data, 'data')
@@ -397,8 +393,8 @@ export default {
       }
     },
     // 点击取消按钮执行
-    async clickCancleInvestment (id) {
-      const data = await cancleInvestment(id)
+    async clickCancelInvestment (id) {
+      const data = await cancelInvestment(id)
       console.log('用户取消按钮')
       console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
@@ -408,15 +404,15 @@ export default {
         this.getFinancialManagementList(this.investCurrentPage)
       }
     },
-    cancleInvest (id) {
+    cancelInvest (id) {
       // 用户点击取消按钮需要请求接口
-      // this.clickCancleInvestment(id)
+      // this.clickCancelInvestment(id)
       // 增加二次确认弹出框
       this.$confirm(this.$t('M.finance_tipsContentOne'), {
         confirmButtonText: this.$t('M.comm_confirm'), // 确定
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
-        this.clickCancleInvestment(id)
+        this.clickCancelInvestment(id)
         // this.$message({
         //   type: 'success',
         //   message: '下架成功!'
@@ -459,10 +455,6 @@ export default {
     min-width: 1300px;
     height: 100%;
 
-    > .banner-box {
-      background: #121824 url('../../assets/finance/banner.png') no-repeat center center/100% 100%;
-    }
-
     > .inner-box {
       display: flex;
       width: 100%;
@@ -475,39 +467,14 @@ export default {
           margin-top: 100px;
           margin-bottom: 200px;
 
-          > .invest-list-header {
-            display: flex;
-            justify-content: space-between;
-
-            a {
-              line-height: 57px;
-              cursor: pointer;
-            }
-          }
-
-          > .nvest-list-body {
+          > .invest-list-body {
             position: relative;
 
-            > .gobackInvest {
+            > .goBackInvest {
               position: absolute;
               z-index: 10;
               top: 25px;
               right: 0;
-            }
-
-            .finance-tips-box {
-              position: absolute;
-              z-index: 10;
-              top: 55px;
-              left: 0;
-              width: 100%;
-              height: 100%;
-              line-height: 200px;
-              text-align: center;
-
-              > a {
-                color: #338ff5;
-              }
             }
           }
         }
@@ -515,19 +482,6 @@ export default {
     }
 
     /deep/ {
-      .finance-form-header {
-        .el-input__inner {
-          width: 168px;
-          height: 48px;
-          border: 1px solid #338ff5;
-          border-radius: 2px;
-          font-size: 20px;
-          color: #338ff5;
-          background: linear-gradient(180deg, rgba(51, 143, 245, .1), transparent);
-          box-shadow: 0 2px 2px rgba(13, 17, 25, 1);
-        }
-      }
-
       .el-tabs__active-bar {
         background: none !important;
       }
@@ -564,74 +518,7 @@ export default {
         margin-bottom: 0;
       }
 
-      .finance-inner-box {
-        .left {
-          .left-body {
-            .el-input__inner {
-              width: 407px;
-              height: 48px;
-              border: 1px solid #464e5f;
-              border-radius: 2px;
-              background: #1e2636;
-            }
-          }
-        }
-
-        .dialogStyle {
-          .el-input__inner {
-            width: 250px !important;
-            height: 38px !important;
-            border: none !important;
-            line-height: 38px;
-            background: transparent !important;
-          }
-
-          .el-input {
-            width: 240px;
-          }
-
-          .invest-mounte {
-            display: flex;
-            justify-content: space-between;
-            width: 280px;
-            height: 38px;
-            padding-right: 5px;
-            border-radius: 5px;
-            background: #20273d;
-
-            &:focus {
-              border: 1px solid #ccc;
-            }
-          }
-
-          .el-button {
-            width: 110px;
-            height: 40px;
-            border: 1px solid #338ff5;
-            border-radius: 4px;
-            color: #fff;
-            background: none;
-          }
-
-          .el-dialog__footer {
-            text-align: center;
-          }
-
-          .el-button--primary {
-            margin-left: 40px;
-            border: none;
-            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
-          }
-        }
-
-        .el-dialog__wrapper {
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, .5);
-        }
-      }
-
-      .nvest-list-body {
+      .invest-list-body {
         .el-table {
           font-size: 12px;
           color: #a9bed4;
@@ -694,36 +581,6 @@ export default {
         line-height: 480px;
       }
 
-      .el-dialog {
-        background: #28334a;
-      }
-
-      .el-dialog__header {
-        background: #20293c;
-        box-shadow: 0 1px 2px 0 rgba(29, 33, 49, 1);
-      }
-
-      .el-dialog__title {
-        color: #fff;
-      }
-
-      .el-dialog__headerbtn {
-        .el-dialog__close {
-          color: #fff;
-        }
-      }
-
-      .dialogStyle {
-        .el-dialog__body {
-          height: 380px;
-          overflow: auto;
-        }
-      }
-
-      .el-dialog__body {
-        color: #8c99b4 !important;
-      }
-
       .el-form-item__label {
         color: #8c99b4 !important;
       }
@@ -735,7 +592,7 @@ export default {
       }
 
       /deep/ {
-        .nvest-list-body {
+        .invest-list-body {
           .el-table {
             th {
               &.is-leaf {
@@ -760,19 +617,6 @@ export default {
         .el-table__header {
           box-shadow: 4px 0 4px 4px rgba(25, 30, 40, 1);
         }
-
-        > .inner-box {
-          > .finance-inner {
-            > .invest-list {
-              > .nvest-list-body {
-                .finance-tips-box {
-                  color: #617499;
-                  background-color: #121824;
-                }
-              }
-            }
-          }
-        }
       }
     }
 
@@ -781,137 +625,13 @@ export default {
         background-color: #fff;
       }
 
-      .invest {
-        color: #338ff5;
-        background: linear-gradient(left, rgba(51, 143, 245, .5), transparent);
-      }
-
       /deep/ {
-        .inner-box {
-          .finance-inner {
-            .container {
-              .finance-form-header {
-                .el-input__inner {
-                  background: #fff !important;
-                  box-shadow: inset 1px 0 3px rgba(51, 143, 245, 1);
-                }
-
-                .newnestPrice {
-                  display: flex;
-                  flex: 1;
-                  height: 48px;
-
-                  .newnestPriceColor {
-                    color: #000;
-                  }
-
-                  li {
-                    border-right: 1px solid rgba(30, 38, 54, .3);
-                    color: #666;
-
-                    p {
-                      font-size: 22px;
-
-                      &:last-child {
-                        border: none;
-                      }
-
-                      span {
-                        font-size: 12px;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-
-            .finance-inner-box {
-              .left {
-                color: #666;
-
-                .nav-header {
-                  .balance {
-                    color: #666;
-
-                    div {
-                      color: #338ff5;
-                    }
-                  }
-                }
-
-                .left-body {
-                  .invest-mounte {
-                    input {
-                      width: 380px;
-                      vertical-align: center;
-                      color: #666;
-                    }
-                  }
-
-                  > label {
-                    > .invest-mounte {
-                      > input {
-                        color: #666;
-                      }
-                    }
-                  }
-                }
-              }
-
-              .right {
-                .pieCharts {
-                  width: 282px;
-                  padding-top: 50px;
-                }
-              }
-            }
-
-            .invest-list {
-              > .nvest-list-body {
-                .finance-tips-box {
-                  background-color: #fff;
-                }
-              }
-            }
-          }
-        }
-
-        .finance-inner-box {
-          .left {
-            .left-body {
-              .el-input__inner {
-                border: 1px solid #338ff5;
-                background: #eaf4fe;
-              }
-            }
-          }
-
-          .dialogStyle {
-            .invest-mounte {
-              border: 1px solid rgba(236, 241, 248, 1);
-              background: #fff;
-            }
-
-            .el-button {
-              color: #338ff5;
-            }
-
-            .el-button--primary {
-              color: #fff;
-            }
-
-            .saveTime {
-              color: #333;
-            }
-          }
-        }
-
         .el-table__header {
           margin-top: 2px;
           box-shadow: 0 0 4px rgba(51, 143, 245, .5);
         }
 
-        .nvest-list-body {
+        .invest-list-body {
           .el-table {
             color: #666;
             background: transparent;
@@ -969,41 +689,12 @@ export default {
           }
         }
 
-        .invest {
-          color: #338ff5;
-          background: linear-gradient(90deg, rgba(51, 143, 245, .8), transparent);
-        }
-
         .el-tabs__item {
           &.is-active {
             color: #338ff5;
           }
         }
-
-        .el-dialog {
-          background: #fff;
-        }
-
-        .el-dialog__header {
-          background: #eaf4fe;
-          box-shadow: 0 1px 2px 0 rgba(29, 33, 49, .1);
-        }
-
-        .el-dialog__title {
-          color: #333;
-        }
-
-        .el-dialog__headerbtn {
-          .el-dialog__close {
-            color: #333;
-          }
-        }
       }
-    }
-
-    .goback-icon {
-      margin-right: 5px;
-      font-size: 16px;
     }
 
     .cancelBtn {
@@ -1012,29 +703,6 @@ export default {
 
     .blue {
       color: #338ff5;
-    }
-
-    .green {
-      color: #008069;
-    }
-
-    .red {
-      color: #d45858;
-    }
-
-    .nav-header {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: #fff;
-    }
-
-    .invest {
-      width: 150px;
-      padding: 14px 0 14px 26px;
-      font-size: 22px;
-      color: #fff;
-      background: linear-gradient(left, rgba(34, 80, 135, 1), transparent);
     }
   }
 </style>
