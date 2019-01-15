@@ -1,5 +1,5 @@
 import mutations from './mutations'
-import actions from './action'
+import actions from './actions'
 // import {getStore} from '../../utils'
 // import getters from './getters'
 
@@ -20,7 +20,12 @@ const state = {
     tradingWarningData: {}
   },
   // 最新的类型
-  newsTypeActiveName: ''
+  newsTypeActiveName: '',
+  // 下载地址
+  downloadUrl: {
+    android: '',
+    ios: ''
+  }
 }
 
 export default {

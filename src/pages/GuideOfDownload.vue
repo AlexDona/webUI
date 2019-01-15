@@ -37,16 +37,31 @@
               </div>
             </transition>
             <p
-              class="scan-btn"
               @mouseover="toggleErCode(1)"
               @mouseleave="toggleErCode(0)"
             >
+              <span
+                class="scan-btn cursor-pointer"
+                @click="downloadApp('android')"
+              >Android</span>
+              <span
+                class="scan-btn cursor-pointer"
+                @click="downloadApp('ios')"
+              >iPhone</span>
               <!-- 扫码下载ios、Android版 -->
-              <span v-if="isNeedIOS">{{$t('M.about_footer_info_down3')}}</span>
-              <span v-else>{{$t('M.about_footer_info_down3_withoutIOS')}}</span>
+              <!--<span v-if="isNeedIOS">{{$t('M.about_footer_info_down3')}}</span>-->
+              <!--<span v-else>{{// $t('M.about_footer_info_down3_withoutIOS')}}</span>-->
             </p>
-            <!-- <p>随时关注 快速交易</p> -->
-            <p>{{$t('M.about_footer_info_down4')}}</p>
+            <a
+              :href="downloadUrl"
+              ref="download-link"
+              download="android"
+              :style="{
+                display:none
+              }"
+                ></a>
+            <!-- 下载app -->
+
           </div>
         </div>
         <!--pc端-->
@@ -98,9 +113,13 @@
     </div>
   </div>
 </template>
-<!--请严格按照如下书写书序-->
 <script>
-import {mapState, mapGetters} from 'vuex'
+import {
+  mapState,
+  mapGetters,
+  mapActions
+} from 'vuex'
+import {downloadFileWithUserDefined} from '../utils'
 import {domain} from '../utils/env'
 import IconFont from '../components/Common/IconFontCommon'
 import Qrcode from '../components/Common/Qrcode'
@@ -117,17 +136,39 @@ export default {
     return {
       erCodeVisible: false,
       erCodeString: `${domain}/downloadApp?language=${this.language}`,
-      isOpen: true
+      isOpen: true,
+      downloadUrl: ''
     }
   },
-  created () {
+  async created () {
     console.log(this.isNeedIOS)
+    this.GET_APP_URL_ACTION()
   },
   mounted () {},
   activated () {},
   updated () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_APP_URL_ACTION'
+    ]),
+    downloadApp (type) {
+      switch (type) {
+        case 'android':
+          window.location.href = 'scheme: //fubt.com/'
+          this.downloadUrl = this.androidUrl
+          console.log(this.isMobile)
+          break
+        case 'ios':
+          this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
+          break
+      }
+      if (this.isMobile) {
+        this.$refs['download-link'].click()
+      } else {
+        downloadFileWithUserDefined(this.downloadUrl, 'filename')
+      }
+    },
     toggleIsOpen (data) {
       this.isOpen = data
     },
@@ -137,11 +178,14 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapGetters('common', {
+    ...mapGetters({
       isNeedIOS: 'isNeedIOS'
     }),
     ...mapState({
-      language: state => state.common.language
+      language: state => state.common.language,
+      androidUrl: state => state.footerInfo.downloadUrl.android,
+      iosUrl: state => state.footerInfo.downloadUrl.ios,
+      isMobile: state => state.user.isMobile
     }),
     windowHeight () {
       return window.innerHeight
@@ -211,7 +255,7 @@ export default {
             > .ercode-box {
               /* transition: all .5s; */
               position: absolute;
-              top: -160px;
+              top: -180px;
               left: 50%;
               width: 170px;
               height: 170px;
@@ -229,12 +273,13 @@ export default {
               }
             }
 
-            > .scan-btn {
+            .scan-btn {
+              display: block;
               width: 220px;
-              height: 50px;
-              margin-top: 20px;
+              height: 40px;
+              margin-bottom: 20px;
               border-radius: 25px;
-              line-height: 50px;
+              line-height: 40px;
               text-align: center;
               color: #fff;
               background: linear-gradient(90deg, rgba(43, 78, 129, 1) 0%, rgba(43, 60, 112, 1) 100%);
