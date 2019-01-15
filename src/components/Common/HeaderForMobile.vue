@@ -75,11 +75,8 @@ export default {
   },
   async created () {
     // 获取 语言列表
-    await this.GET_LANGUAGE_LIST_ACTION({
-      self: this
-    })
+    await this.GET_LANGUAGE_LIST_ACTION(this)
     await this.SET_PARTNER_INFO_ACTION({
-      self: this,
       language: this.language
     })
     if (this.routeLanguage) {
@@ -90,9 +87,7 @@ export default {
       })
     }
     this.activeTheme = this.theme
-    this.GET_COUNTRY_LIST_ACTION({
-      self: this
-    })
+    this.GET_COUNTRY_LIST_ACTION()
     if (this.isLogin) {
       this.reflashUserInfo()
     }

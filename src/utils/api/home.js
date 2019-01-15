@@ -19,6 +19,8 @@ export const removeCollectionAjax = (params) => postWithURLencoded('collection/c
 // 收藏列表
 export const getCollectionListAjax = () => get('collection')
 // 首页行情
-export const getHomeMarketByAjax = (params) => get('market/homeMarket', params)
+export const getHomeMarketByAjax = (params) => get('market/homeMarket', Object.assign({
+  'loading': true
+}, params))
 // 通过邀请ID获取用户信息
 export const findUserInfoByShowId = (params) => get('user/findByShowId', params)

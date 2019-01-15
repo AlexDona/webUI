@@ -45,5 +45,12 @@ export const footerInfo = {
   'user_pay_account_set5': 'Please set Western Union first',
   'user_pay_account_set6': 'Receipt Type',
   'user_register_input_pwd': 'Please enter password',
-  'user_register_input_confirm_pwd': 'Please enter password again'
+  'user_register_input_confirm_pwd': 'Please enter password again',
+  // 交易区费率
+  'rate_withdraw_rate': 'Withdraw fee',
+  'rate_withdraw': ' Minimum withdrawal per trade',
+  'rate_withdraw_min': 'Maxmum withdrawal per trade',
+  'rate_withdraw_max': 'Daily withdrawal limit',
+  'rate_withdraw_amount': 'Daily withdrawal times',
+  'rate_withdraw_times': 'Trade pair rate'
 }

@@ -172,9 +172,9 @@ export default {
         language: this.language
       }
       if (this.termsTypeIds !== 5) {
-        getServiceProtocolData(this, params, (data) => {
+        getServiceProtocolData(params, (data) => {
           if (data) {
-            const targetData = getNestedData(data, 'data.data[0]')
+            const targetData = getNestedData(data, 'data[0]')
             console.log(targetData)
             // avatar: "",
             // content: "",

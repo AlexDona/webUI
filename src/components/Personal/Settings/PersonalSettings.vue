@@ -119,7 +119,7 @@ import {
   getNestedData
 } from '../../../utils/commonFunc'
 import {setUserInputPasswordFrequency} from '../../../utils/api/user'
-import {getConfigAjax} from '../../../utils/api/header'
+import {getConfigAjax} from '../../../utils/api/common'
 import {
   mapMutations,
   mapActions,
