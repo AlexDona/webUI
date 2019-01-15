@@ -72,8 +72,8 @@ export default {
         termsTypeIds: this.termsTypeIds, // 用户协议代号
         language: this.language
       }
-      await getServiceProtocolData(params, data => {
-        this.contentHTML = data.data.length ? getNestedData(data, 'data[0].content') : ''
+      await getServiceProtocolData(this, params, data => {
+        this.contentHTML = data.data.data.length ? getNestedData(data, 'data.data[0].content') : ''
       })
     },
     // 获取资产列表下载地址

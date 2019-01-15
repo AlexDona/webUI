@@ -45,12 +45,5 @@ export const footerInfo = {
   'user_pay_account_set5': '請先設置西聯匯款',
   'user_pay_account_set6': '收款類型',
   'user_register_input_pwd': '請輸入密碼',
-  'user_register_input_confirm_pwd': '請再次輸入密碼',
-  // 交易区费率
-  'rate_withdraw_rate': '幣種費率',
-  'rate_withdraw': '提現手續費',
-  'rate_withdraw_min': '單筆最小提現',
-  'rate_withdraw_max': '單筆最大提現',
-  'rate_withdraw_amount': '每日提現額度',
-  'rate_withdraw_times': '每日提現次數'
+  'user_register_input_confirm_pwd': '請再次輸入密碼'
 }

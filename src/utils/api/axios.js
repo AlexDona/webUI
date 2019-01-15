@@ -17,10 +17,8 @@ util.ajax = axios.create({
 })
 
 util.ajax.interceptors.request.use((config) => {
-  console.log(config)
-  console.log(config.data)
-  let needLoading = getNestedData(config.params, 'loading') || getNestedData(config.data, 'loading')
-
+  let needLoading = !getNestedData(config.params, 'not-loading')
+  console.log(needLoading)
   if (needLoading) {
     store.commit('CHANGE_AJAX_READY_STATUS', true)
     console.log(store.state.common.isAjaxReady)
@@ -40,9 +38,8 @@ util.ajax.interceptors.response.use(
     if (!response.data) {
       response.data = {}
     }
-    setTimeout(() => {
-      store.commit('CHANGE_AJAX_READY_STATUS', false)
-    }, 3000)
+
+    store.commit('CHANGE_AJAX_READY_STATUS', false)
     return response
   },
   error => {

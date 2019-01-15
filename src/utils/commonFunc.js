@@ -23,7 +23,7 @@ import {
 } from '../utils/api/home'
 import {
   // getCountryList,
-  getServiceProtocolDataAjax
+  getServiceProtocoDataAjax
 } from './api/common'
 import storeCreater from '../vuex'
 import {
@@ -48,6 +48,7 @@ import {
 } from './regExp'
 
 const store = storeCreater()
+
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；
@@ -57,46 +58,36 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
     return false
   }
   const meta = data.data.meta
-  const VUE = Vue._installedPlugins[3].vm
   if (meta) {
     if (!meta.success && !errorTip) {
       if (meta.code !== 500) {
-        ELEMENT.Message({
+        self.$message({
           type: 'error',
           // duration: 5000000,
-          message: (!meta.params || !meta.params.length) ? VUE.$t(`M.${meta.i18n_code}`) : VUE.$t(`M.${meta.i18n_code}`).format(meta.params)
+          message: (!meta.params || !meta.params.length) ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
         })
       }
       // 登录失效
       switch (meta.code) {
         case 401:
           removeStore('loginStep1Info')
-          VUE.$router.push({path: '/login'})
+          self.$router.push({path: '/login'})
           store.commit('USER_LOGOUT')
           break
         case 500:
-          VUE.$router.push({path: '/500'})
+          self.$router.push({path: '/500'})
           break
       }
       return 0
     } else {
       if (noTip) {
-        ELEMENT.Message({
+        self.$message({
           type: 'success',
-          message: VUE.$t(`M.${meta.i18n_code}`)
+          message: self.$t(`M.${meta.i18n_code}`)
         })
       }
       return 1
     }
-  }
-}
-// 接口统一处理
-export const handleRequest = async (request, params, noTip, errorTip) => {
-  const DATA = await request(params)
-  if (!returnAjaxMsg(DATA, noTip, errorTip)) {
-    return false
-  } else {
-    return getNestedData(DATA, 'data') || {}
   }
 }
 /**
@@ -212,10 +203,13 @@ export const changeCurrentPageForLegalTrader = (currentPage, type, that) => {
   })
 }
 // 服务条款接口
-export const getServiceProtocolData = async (params, callback) => {
-  const data = await getServiceProtocolDataAjax(params)
-  console.log(data)
-  callback(data)
+export const getServiceProtocolData = async (that, params, callback) => {
+  const data = await getServiceProtocoDataAjax(params)
+  if (!returnAjaxMsg(data, that)) {
+    return false
+  } else {
+    callback(data)
+  }
 }
 /**
  *  刷新用户安全状态
@@ -330,8 +324,8 @@ export const isWXBrowser = () => {
   const ua = navigator.userAgent.toLowerCase()
   return ua.match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
 }
-export const changeLanguage = (language, commit, that) => {
-  _.forEach(that.languageList, item => {
+export const changeLanguage = (language, self, commit) => {
+  _.forEach(self.languageList, item => {
     if (item.shortName === language) {
       console.log(item)
       commit('CHANGE_LANGUAGE', item)
@@ -406,4 +400,13 @@ String.prototype.format = function (args) {
     }
   }
   return result
+}
+// 接口统一处理
+export const handleRequest = async (request, params, noTip, errorTip) => {
+  const DATA = await request(params)
+  if (!returnAjaxMsg(DATA, Vue, noTip, errorTip)) {
+    return false
+  } else {
+    return getNestedData(DATA, 'data') || {}
+  }
 }

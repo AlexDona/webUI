@@ -43,7 +43,7 @@
 import {
   getCurrencyInfoList,
   getCurrencyDetails
-} from '../../utils/api/common'
+} from '../../utils/api/header'
 import {
   returnAjaxMsg,
   getNestedData
@@ -91,12 +91,18 @@ export default {
           language = 'en_US'
           break
       }
-      const data = await getCurrencyInfoList({language})
-      this.currencyList = getNestedData(data, 'data')
-      if (this.currencyList.length) {
-        this.currencyId = getNestedData(this.currencyList.filter(item => item.name == this.middleTopData.sellsymbol), '[0].id') || getNestedData(this.currencyList, '[0].id')
-      }
+      const data = await getCurrencyInfoList({
+        language
+      })
       console.log(data)
+      if (!returnAjaxMsg(data, this)) {
+        return false
+      } else {
+        this.currencyList = getNestedData(data, 'data.data')
+        if (this.currencyList.length) {
+          this.currencyId = getNestedData(this.currencyList.filter(item => item.name == this.middleTopData.sellsymbol), '[0].id') || getNestedData(this.currencyList, '[0].id')
+        }
+      }
     },
     changeCurrentCurrency (id) {
       this.currencyId = id

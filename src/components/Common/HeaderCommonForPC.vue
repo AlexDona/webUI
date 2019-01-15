@@ -440,7 +440,6 @@ export default{
     }
   },
   async created () {
-    console.log(this)
     // f5刷新页面刷新用户信息列表
     if (this.isLogin) {
       this.refreshUserInfo()
@@ -449,12 +448,17 @@ export default{
       this.activeConvertCurrency = getStore('convertCurrency')
     }
     // 获取 语言列表
-    await this.GET_LANGUAGE_LIST_ACTION(this)
-    console.log(this.activeLanguage)
+    await this.GET_LANGUAGE_LIST_ACTION({
+      self: this
+    })
+    console.log(this.language)
     await this.SET_PARTNER_INFO_ACTION({
+      self: this,
       language: this.language
     })
-    await this.GET_COUNTRY_LIST_ACTION()
+    await this.GET_COUNTRY_LIST_ACTION({
+      self: this
+    })
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币
@@ -544,6 +548,7 @@ export default{
       })
       await this.GET_TRANSITION_RATE_ACTION({
         params,
+        self: this,
         activeConvertCurrencyObj: this.activeConvertCurrencyObj
       })
     },
@@ -694,6 +699,7 @@ export default{
     },
     async language () {
       await this.SET_PARTNER_INFO_ACTION({
+        self: this,
         language: this.language
       })
     },

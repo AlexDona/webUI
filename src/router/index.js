@@ -23,6 +23,7 @@ const routerCreator = () => {
     if (to.path !== '/TradeCenter') {
       console.log(store)
       store.dispatch('SET_PARTNER_INFO_ACTION', {
+        self: Vue,
         language: store.state.common.language
       })
     }

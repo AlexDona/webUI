@@ -4,7 +4,6 @@ import {
   // put,
   // postWithURLencoded
 } from './axios'
-import {handleRequest} from '../commonFunc'
 
 /**
  * 头部
@@ -42,6 +41,4 @@ export const getConfigAjax = () => get('config', {
   'not-loading': true
 })
 // 获取交易对费率
-export const getSymbolRate = () => handleRequest(() => get('/trade/rate'))
-// 获取币种费率
-export const getCurrencyRate = () => handleRequest(() => get('/selectCoinRate'))
+export const getSymbolRate = () => get('/trade/rate')

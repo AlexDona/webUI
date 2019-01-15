@@ -79,14 +79,14 @@
               :no-data-text="$t('M.comm_no_data')"
             >
               <!-- <el-option
-                v-for="(item, index) in countryAreaList"
+                v-for="(item, index) in contryAreaList"
                 :key="index"
                 :label="item.chinese"
                 :value="item.chinese"
               >
               </el-option> -->
               <el-option
-                v-for="(item, index) in countryAreaList"
+                v-for="(item, index) in contryAreaList"
                 :key="index"
                 :label="language === 'zh_CN' || language === 'zh_TW'? item.chinese : item.english"
                 :value="item.chinese"
@@ -1033,7 +1033,7 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       configInfo: state => state.common.footerInfo.configInfo,
-      countryAreaList: state => state.common.countryAreaList,
+      contryAreaList: state => state.common.contryAreaList,
       userCenterActiveName: state => state.personal.userCenterActiveName
     }),
     apiCommonUrl () {
@@ -1047,15 +1047,16 @@ export default {
         this.SET_USER_INFO_REFRESH_STATUS(true)
         this.getUserRefreshUser()
         // 国家列表展示
-        this.GET_COUNTRY_LIST_ACTION((data) => {
-          console.log(data)
-          this.regionList = data.data
-          this.regionValue = data.data[0].id
-          this.regionValue = data.data[0].chinese
-        })
+        this.GET_COUNTRY_LIST_ACTION({
+          self: this,
+          callback: (data) => {
+            this.regionList = data.data.data
+            this.regionValue = data.data.data[0].id
+            this.regionValue = data.data.data[0].chinese
+          }})
       }
     },
-    countryAreaList (newVal) {
+    contryAreaList (newVal) {
       console.log(newVal)
       if (newVal) {
         console.log(newVal)

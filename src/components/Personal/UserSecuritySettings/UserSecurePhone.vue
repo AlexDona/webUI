@@ -51,7 +51,7 @@
                 :no-data-text="$t('M.comm_no_data')"
               >
                 <el-option
-                  v-for="item in countryAreaList"
+                  v-for="item in contryAreaList"
                   :key="item.nationCode"
                   :label="item.nationCode"
                   :value="item.nationCode"
@@ -199,7 +199,7 @@
                 :no-data-text="$t('M.comm_no_data')"
               >
                 <el-option
-                  v-for="item in countryAreaList"
+                  v-for="item in contryAreaList"
                   :key="item.nationCode"
                   :label="item.nationCode"
                   :value="item.nationCode"
@@ -776,7 +776,7 @@ export default {
       language: state => state.common.language,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userInfoDetail: state => state.user.loginStep1Info.userInfo,
-      countryAreaList: state => state.common.countryAreaList,
+      contryAreaList: state => state.common.contryAreaList,
       disabledOfOldPhoneBtn: state => state.user.disabledOfOldPhoneBtn,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
@@ -786,7 +786,7 @@ export default {
     }
   },
   watch: {
-    countryAreaList (newVal) {
+    contryAreaList (newVal) {
       console.log(newVal)
     }
   },

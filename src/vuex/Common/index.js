@@ -6,7 +6,7 @@ const state = {
   title: '', // 网站title
   countDownResetStatus: false, // 倒计时重置状态
   theme: getStore('theme') || 'night',
-  countryAreaList: [], // 国家列表（国家码）
+  contryAreaList: [], // 国家列表（国家码）
   defaultLanguage: 'en_US',
   // 国际化语言
   language: getStore('language') || this.defaultLanguage,
