@@ -40,7 +40,6 @@
 import IconFont from '../Common/IconFontCommon'
 import {getAllNewsNoticeListForHomePage} from '../../utils/api/home'
 import {
-  returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -88,11 +87,7 @@ export default {
         language: this.language
       }
       const data = await getAllNewsNoticeListForHomePage(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.noticeList = getNestedData(data, 'data.data')
-      }
+      this.noticeList = getNestedData(data, 'data')
     },
     // 关闭组件
     closeNotice () {

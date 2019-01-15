@@ -104,7 +104,6 @@ import {
   // getNewsDetail
 } from '../../utils/api/home'
 import {
-  returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -228,11 +227,7 @@ export default {
         language: this.language
       }
       const data = await getAllNewsTypeList(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.newsTypeList = getNestedData(data, 'data.data')
-      }
+      this.newsTypeList = getNestedData(data, 'data') || []
     },
     // 获取新闻公告列表
     async getNewsNoticeList () {
@@ -243,16 +238,10 @@ export default {
         newsTypeId: this.newsTypeId
       }
       const data = await getNewsNoticeList(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        console.log(data)
-        const targetData = getNestedData(data, 'data.data')
-        console.log(targetData)
-        this.noticeList = getNestedData(targetData, 'list') || []
-        this.pageNum = getNestedData(targetData, 'pageNum')
-        this.totalPages = getNestedData(targetData, 'pages')
-      }
+      const targetData = getNestedData(data, 'data')
+      this.noticeList = getNestedData(targetData, 'list') || []
+      this.pageNum = getNestedData(targetData, 'pageNum')
+      this.totalPages = getNestedData(targetData, 'pages')
     }
   },
   filter: {},

@@ -237,29 +237,21 @@ export const getAccountPaymentTerm = async (that) => {
   }
 }
 // 首页、币币交易切换收藏
-export const toggleUserCollection = async (type, tradeId, that) => {
+export const toggleUserCollection = async (type, tradeId) => {
   const params = {
     tradeId
   }
-  let data
   if (type === 'add') {
-    data = await addUserCollectionAjax(params)
+    await addUserCollectionAjax(params)
   } else if (type === 'remove') {
-    data = await removeCollectionAjax(params)
-  }
-  if (!returnAjaxMsg(data, that)) {
-    return false
+    await removeCollectionAjax(params)
   }
 }
 
 // 获取用户收藏列表
-export const getCollectionList = async (that, callback) => {
+export const getCollectionList = async (callback) => {
   const data = await getCollectionListAjax()
-  if (!returnAjaxMsg(data, that)) {
-    return false
-  } else {
-    callback(data)
-  }
+  callback(data)
 }
 // 协议跳转
 export const jumpToOtherPageForFooter = (router, activeName, that) => {

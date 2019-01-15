@@ -34,7 +34,7 @@ export const checkUserExist = (params) => postWithURLencoded('user/checkUserExis
 // 用户注册
 export const sendRegisterUser = (params) => postWithURLencoded('user/reg', params)
 // 用户登录第一步
-export const userLoginForStep1 = (params) => postWithFormData('user/userLoginForStep1', params)
+export const userLoginForStep1 = (params) => postWithFormData('user/userLoginForStep1', params, {'loading': true})
 // 用户登录第二步
 export const userLoginForStep2 = (params) => postWithURLencoded('user/userLoginForStep2', params)
 // 退出登录

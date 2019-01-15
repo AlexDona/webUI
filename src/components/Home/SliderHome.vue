@@ -21,7 +21,6 @@
 import Slider from 'vue-concise-slider'// 引入slider组件
 import {getBanner} from '../../utils/api/home'
 import {
-  returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -68,14 +67,10 @@ export default {
         language: this.language
       }
       const data = await getBanner(params)
-      if (!returnAjaxMsg(data, this, 0)) {
-        return false
-      } else {
-        this.sliderListAjax = getNestedData(data, 'data.data')
-        let sliderList = []
-        this.pages = sliderList
-        this.renderSlider()
-      }
+      this.sliderListAjax = getNestedData(data, 'data')
+      let sliderList = []
+      this.pages = sliderList
+      this.renderSlider()
     },
     slide (data) {
       let bigUrl = getNestedData(this.sliderListAjax[data.currentPage - 1], 'bigUrl')
