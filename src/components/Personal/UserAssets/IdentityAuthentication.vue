@@ -73,30 +73,10 @@
           <el-form-item
             :label="$t('M.user_real_region')"
           >
-            <el-select
-              :placeholder="$t('M.comm_please_choose')"
-              v-model="regionValue"
-              :no-data-text="$t('M.comm_no_data')"
-            >
-              <!-- <el-option
-                v-for="(item, index) in contryAreaList"
-                :key="index"
-                :label="item.chinese"
-                :value="item.chinese"
-              >
-              </el-option> -->
-              <el-option
-                v-for="(item, index) in contryAreaList"
-                :key="index"
-                :label="language === 'zh_CN' || language === 'zh_TW'? item.chinese : item.english"
-                :value="item.chinese"
-              >
-              </el-option>
-            </el-select>
-            <!--错误提示-->
-            <ErrorBox
-              :text="errorShowStatusList[3]"
-              :isShow="!!errorShowStatusList[3]"
+            <input
+              class="common-input"
+              v-model="userInfo.country.chinese"
+              disabled
             />
           </el-form-item>
           <!-- 证件类型 -->
@@ -116,13 +96,6 @@
                 :value="item.certificateId"
               >
               </el-option>
-              <!-- <el-option
-                v-for="(item, index) in documentTypeList"
-                :key="index"
-                :label="item.certificateName"
-                :value="item.certificateName"
-              >
-              </el-option> -->
             </el-select>
           </el-form-item>
           <!-- 真实姓名 -->
@@ -615,7 +588,6 @@ export default {
         'token': '',
         'x-domain': ''
       },
-      regionValue: '', // 国家
       regionList: [], // 国家地区列表
       documentTypeValue: 1, // 证件
       documentTypeList: [
@@ -762,7 +734,6 @@ export default {
         // 返回列表数据
         this.realNameInformationObj = getNestedData(data, 'data.data')
         this.statusRealNameInformation = getNestedData(data, 'data.data.authInfo')
-        console.log(data.data.data.authInfo)
         this.authenticationIsStatus()
       }
     },
@@ -868,7 +839,6 @@ export default {
     async stateSubmitRealName () {
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(3, this.regionValue) &&
         this.checkoutInputFormat(0, this.realName) &&
         this.checkoutInputFormat(this.documentTypeValue, this.identificationNumber)
       ) {
@@ -879,12 +849,12 @@ export default {
       if (goOnStatus) {
         let data
         let param = {
-          nationCode: this.regionValue, // 国籍
+          nationCode: this.userInfo.country.chinese, // 国籍
           cardType: this.documentTypeValue, // 证件类型
           realname: this.realName, // 真实姓名
           // 证件号码
           cardNo: this.identificationNumber,
-          country: this.regionValue
+          country: this.userInfo.country.chinese
         }
         // 整页loading
         this.fullscreenLoading = true
@@ -1033,29 +1003,13 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       configInfo: state => state.common.footerInfo.configInfo,
-      contryAreaList: state => state.common.contryAreaList,
-      userCenterActiveName: state => state.personal.userCenterActiveName
+      contryAreaList: state => state.common.contryAreaList
     }),
     apiCommonUrl () {
       return apiCommonUrl
     }
   },
   watch: {
-    userCenterActiveName (newVal) {
-      if (newVal === 'identity-authentication') {
-        this.getRealNameInformation()
-        this.SET_USER_INFO_REFRESH_STATUS(true)
-        this.getUserRefreshUser()
-        // 国家列表展示
-        this.GET_COUNTRY_LIST_ACTION({
-          self: this,
-          callback: (data) => {
-            this.regionList = data.data.data
-            this.regionValue = data.data.data[0].id
-            this.regionValue = data.data.data[0].chinese
-          }})
-      }
-    },
     contryAreaList (newVal) {
       console.log(newVal)
       if (newVal) {
