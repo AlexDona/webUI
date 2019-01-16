@@ -58,32 +58,33 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
     return false
   }
   const meta = data.data.meta
+  const VUE = Vue._installedPlugins[3].vm
   if (meta) {
     if (!meta.success && !errorTip) {
       if (meta.code !== 500) {
-        self.$message({
+        ELEMENT.Message({
           type: 'error',
           // duration: 5000000,
-          message: (!meta.params || !meta.params.length) ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
+          message: (!meta.params || !meta.params.length) ? VUE.$t(`M.${meta.i18n_code}`) : VUE.$t(`M.${meta.i18n_code}`).format(meta.params)
         })
       }
       // 登录失效
       switch (meta.code) {
         case 401:
           removeStore('loginStep1Info')
-          self.$router.push({path: '/login'})
+          VUE.$router.push({path: '/login'})
           store.commit('USER_LOGOUT')
           break
         case 500:
-          self.$router.push({path: '/500'})
+          VUE.$router.push({path: '/500'})
           break
       }
       return 0
     } else {
       if (noTip) {
-        self.$message({
+        ELEMENT.Message({
           type: 'success',
-          message: self.$t(`M.${meta.i18n_code}`)
+          message: VUE.$t(`M.${meta.i18n_code}`)
         })
       }
       return 1

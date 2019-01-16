@@ -213,6 +213,7 @@
                v-model="password"
                @keydown="setErrorMsg()"
                @blur="checkoutInputFormat(4,password)"
+               onpaste="return false"
              >
            </div>
           </div>
@@ -226,6 +227,7 @@
                :placeholder="$t('M.login_welcome_register_pwd2')"
                @keydown="setErrorMsg()"
                v-model="repeatPassword"
+               onpaste="return false"
                @blur="checkoutInputFormat(5,repeatPassword)"
              >
            </div>

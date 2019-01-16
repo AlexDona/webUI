@@ -813,8 +813,10 @@ export default {
             console.log(data)
             let socketData = data
             // 用户已扫码
-            if (socketData.scan) {
+            if (socketData.scan === 'scaned') {
               this.isScanSuccess = true
+            } else if (socketData.scan === 'canceled') {
+              this.backToScan()
             }
             // 登录成功
             if (socketData.data && socketData.data.userInfo) {
