@@ -113,7 +113,8 @@ export default {
       'CHANGE_ACTIVE_SYMBOL',
       'CHANGE_SOCKET_AND_AJAX_DATA',
       'SET_IS_KLINE_DATA_READY',
-      'SET_MIDDLE_TOP_DATA'
+      'SET_MIDDLE_TOP_DATA',
+      'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
     ]),
     changeIsKlineDataReady (status) {
       this.SET_IS_KLINE_DATA_READY(status)
@@ -252,6 +253,9 @@ export default {
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = getNestedData(this.activeSymbol, 'id')
+        if (this.isLogin) {
+          this.getUserOrderSocket(this.symbol, this.userId)
+        }
       }
     },
     init (options) {
@@ -314,8 +318,7 @@ export default {
                 .append(item.label)
             })
           }
-          let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
-          console.dir(iframe$('.add7'))
+          // let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
           // iframe$('.add7').click()
           // console.log()
           this.klineInitCount++
@@ -440,7 +443,10 @@ export default {
         case 'TICKER':
           console.log(data)
           this.socketData.tradeMarkeContentItem = getNestedData(data, 'data')
-          console.log(this.socketData.tradeMarkeContentItem)
+          break
+        case 'USERORDER':
+          console.log(data)
+          this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           break
       }
       this.CHANGE_SOCKET_AND_AJAX_DATA({
@@ -524,6 +530,14 @@ export default {
         })
       }
     },
+    // 委单事实刷新标记
+    getUserOrderSocket (symbol, userId) {
+      this.socket.send({
+        'tag': 'SUB',
+        'content': `market.${symbol}.userorder.${userId}`,
+        'id': 'pc'
+      })
+    },
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min') {
       console.log(symbol)
@@ -547,7 +561,9 @@ export default {
       activeTabSymbolStr: state => state.trade.activeTabSymbolStr,
       mainColor: state => state.common.mainColor,
       isJumpToTradeCenter: state => state.trade.isJumpToTradeCenter,
-      jumpSymbol: state => state.trade.jumpSymbol
+      jumpSymbol: state => state.trade.jumpSymbol,
+      isLogin: state => state.user.isLogin,
+      userId: state => state.user.loginStep1Info.userId
     })
   },
   watch: {
