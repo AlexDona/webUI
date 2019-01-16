@@ -74,8 +74,15 @@
             :label="$t('M.user_real_region')"
           >
             <input
+              v-if="language === 'zh_CN' || language === 'zh_TW'"
               class="common-input"
               v-model="userInfo.country.chinese"
+              disabled
+            />
+            <input
+              v-else
+              class="common-input"
+              v-model="userInfo.country.english"
               disabled
             />
           </el-form-item>
