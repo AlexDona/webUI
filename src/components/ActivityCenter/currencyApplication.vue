@@ -38,7 +38,6 @@ import {
   // downloadFile
 } from '../../utils/api/activityCenter'
 import {
-  returnAjaxMsg,
   getServiceProtocolData,
   getNestedData
 } from '../../utils/commonFunc'
@@ -82,13 +81,9 @@ export default {
         key: 'COIN_APPLY'
       }
       const data = await getCurrencyApplicationDownloadUrl(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        let detailData = getNestedData(data, 'data.data')
-        this.downloadUrl = detailData.url
-        this.fileName = detailData.name
-      }
+      let detailData = getNestedData(data, 'data')
+      this.downloadUrl = detailData.url
+      this.fileName = detailData.name
     },
     // 下载资产预览表
     downloadPreviewTable () {

@@ -121,7 +121,6 @@ import {
 } from '../../utils'
 import {getRankingList} from '../../utils/api/activityCenter'
 import {
-  returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 
@@ -155,11 +154,7 @@ export default {
     // 获取 排行榜数据
     async getRankingList () {
       const data = await getRankingList()
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.rankingList = getNestedData(data, 'data.data')
-      }
+      this.rankingList = getNestedData(data, 'data')
     },
     // 获取当前时间
     getRealTime () {

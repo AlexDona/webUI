@@ -43,7 +43,7 @@
 import {
   getCurrencyInfoList,
   getCurrencyDetails
-} from '../../utils/api/header'
+} from '../../utils/api/common'
 import {
   returnAjaxMsg,
   getNestedData

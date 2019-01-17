@@ -448,9 +448,7 @@ export default{
       this.activeConvertCurrency = getStore('convertCurrency')
     }
     // 获取 语言列表
-    await this.GET_LANGUAGE_LIST_ACTION({
-      self: this
-    })
+    await this.GET_LANGUAGE_LIST_ACTION(this)
     console.log(this.language)
     await this.SET_PARTNER_INFO_ACTION({
       self: this,
@@ -548,7 +546,6 @@ export default{
       })
       await this.GET_TRANSITION_RATE_ACTION({
         params,
-        self: this,
         activeConvertCurrencyObj: this.activeConvertCurrencyObj
       })
     },

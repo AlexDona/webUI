@@ -395,8 +395,8 @@ String.prototype.format = function (args) {
   return result
 }
 // 接口统一处理
-export const handleRequest = async (request, params, noTip, errorTip) => {
-  const DATA = await request(params)
+export const handleRequest = async (request, noTip, errorTip) => {
+  const DATA = await request()
   if (!returnAjaxMsg(DATA, Vue, noTip, errorTip)) {
     return false
   } else {

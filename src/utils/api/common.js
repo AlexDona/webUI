@@ -10,13 +10,9 @@ import {handleRequest} from '../commonFunc'
  * 头部
  */
 // 获取语言列表
-export const getLanguageList = () => get('lan/selectList', {
-  'not-loading': true
-})
+export const getLanguageList = () => handleRequest(() => get('lan/selectList'))
 // 获取货币转换汇率价格
-export const getTransitionCurrencyRateAjax = (params) => get('exchangeRate/tradeAreaPrice', Object.assign({
-  'not-loading': true
-}, params))
+export const getTransitionCurrencyRateAjax = (params) => handleRequest(() => get('exchangeRate/tradeAreaPrice', params))
 // 获取国家列表
 export const getCountryList = () => get('country/selectList', {
   'not-loading': true
@@ -38,9 +34,8 @@ export const getServiceProtocoDataAjax = (params) => get('cms/terms/selectAll', 
 // 获取关于我们信息
 export const getAboutUsDataAjax = (params) => get('cms/aboutUs/selectAll', params)
 // 获取网站配置信息
-export const getConfigAjax = () => get('config', {
-  'not-loading': true
-})
+export const getConfigAjax = () => handleRequest(() => get('config')
+)
 // 获取交易对费率
 export const getSymbolRate = () => handleRequest(() => get('/trade/rate'))
 // 获取币种费率

@@ -17,7 +17,7 @@ import {
   getFooterInfo2,
   getLanguageList,
   getTransitionCurrencyRateAjax
-} from '../../utils/api/header'
+} from '../../utils/api/common'
 import {
   addFavicon,
   getNestedData,
@@ -52,37 +52,25 @@ export default {
     }
   },
   // 获取目标汇率
-  async [GET_TRANSITION_RATE_ACTION] ({commit}, {params, self, activeConvertCurrencyObj}) {
+  async [GET_TRANSITION_RATE_ACTION] ({commit}, {params, activeConvertCurrencyObj}) {
     const data = await getTransitionCurrencyRateAjax(params)
-    if (!returnAjaxMsg(data, self)) {
-      return false
-    } else {
-      commit('CHANGE_CURRENCY_RATE_LIST', {
-        currencyRateList: data.data.data,
-        activeConvertCurrencyObj
-      })
-    }
+    commit('CHANGE_CURRENCY_RATE_LIST', {
+      currencyRateList: data.data,
+      activeConvertCurrencyObj
+    })
   },
   // 获取语言列表信息
-  async [GET_LANGUAGE_LIST_ACTION] ({commit, state}, {self}) {
+  async [GET_LANGUAGE_LIST_ACTION] ({commit, state}, self) {
     console.log(state)
     const data = await getLanguageList()
-    if (!returnAjaxMsg(data, self)) {
-      return false
-    } else {
-      self.languageList = data.data.data
-      const data1 = await getConfigAjax()
-      if (!returnAjaxMsg(data1, self)) {
-        return false
-      } else {
-        let configInfo = getNestedData(data1, 'data.data')
-        console.log(configInfo, self.languageList)
-        changeLanguage(getStore('language') || configInfo.defaultLanguage, self, commit)
-        commit('SET_FOOTER_INFO', {
-          configInfo
-        })
-      }
-    }
+    self.languageList = data.data
+    const data1 = await getConfigAjax()
+    let configInfo = getNestedData(data1, 'data')
+    console.log(configInfo, self.languageList)
+    changeLanguage(getStore('language') || configInfo.defaultLanguage, self, commit)
+    commit('SET_FOOTER_INFO', {
+      configInfo
+    })
   },
   // 设置用户信息
   async [SET_PARTNER_INFO_ACTION] ({commit, state}, {self, language}) {
