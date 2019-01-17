@@ -450,13 +450,8 @@ export default{
     // 获取 语言列表
     await this.GET_LANGUAGE_LIST_ACTION(this)
     console.log(this.language)
-    await this.SET_PARTNER_INFO_ACTION({
-      self: this,
-      language: this.language
-    })
-    await this.GET_COUNTRY_LIST_ACTION({
-      self: this
-    })
+    await this.SET_PARTNER_INFO_ACTION(this.language)
+    await this.GET_COUNTRY_LIST_ACTION()
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币
@@ -695,10 +690,7 @@ export default{
       this.$i18n.locale = newVal
     },
     async language () {
-      await this.SET_PARTNER_INFO_ACTION({
-        self: this,
-        language: this.language
-      })
+      await this.SET_PARTNER_INFO_ACTION(this.language)
     },
     middleTopDataPrice () {
       this.setNewTitle()

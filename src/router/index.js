@@ -22,10 +22,7 @@ const routerCreator = () => {
     }
     if (to.path !== '/TradeCenter') {
       console.log(store)
-      store.dispatch('SET_PARTNER_INFO_ACTION', {
-        self: Vue,
-        language: store.state.common.language
-      })
+      store.dispatch('SET_PARTNER_INFO_ACTION', store.state.common.language)
     }
     // 增加普通用户不能点击OTC导航功能
     if (to.matched.some(m => m.meta.auth)) {

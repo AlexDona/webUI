@@ -37,8 +37,8 @@ import {
   getCurrencyApplicationDownloadUrl
   // downloadFile
 } from '../../utils/api/activityCenter'
+import {getServiceProtocoDataAjax} from '../../utils/api/common'
 import {
-  getServiceProtocolData,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -71,9 +71,8 @@ export default {
         termsTypeIds: this.termsTypeIds, // 用户协议代号
         language: this.language
       }
-      await getServiceProtocolData(this, params, data => {
-        this.contentHTML = data.data.data.length ? getNestedData(data, 'data.data[0].content') : ''
-      })
+      const data = await getServiceProtocoDataAjax(params)
+      this.contentHTML = getNestedData(data, 'data').length ? getNestedData(data, 'data[0].content') : ''
     },
     // 获取资产列表下载地址
     async getDownUrl () {

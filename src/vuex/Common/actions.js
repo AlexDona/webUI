@@ -21,13 +21,12 @@ import {
 import {
   addFavicon,
   getNestedData,
-  returnAjaxMsg,
   changeLanguage
 } from '../../utils/commonFunc'
 // import store from "../index";
 export default {
   // 获取国家列表
-  async [GET_COUNTRY_LIST_ACTION] ({commit}, {self, callback}) {
+  async [GET_COUNTRY_LIST_ACTION] ({commit}, callback) {
     let localCountry = getStoreWithJson('countryList')
     let saveTimeStamp = getStore('timeStamp')
     let nowTimeStamp = new Date().getTime()
@@ -39,15 +38,11 @@ export default {
       return false
     } else {
       data = await getCountryList()
-      if (!returnAjaxMsg(data, self)) {
-        return false
-      } else {
-        commit('SET_COUNTRY_AREA_LIST', data.data.data)
-        setStore('countryList', data.data.data)
-        setStore('timeStamp', new Date().getTime())
-        if (callback) {
-          callback(data)
-        }
+      commit('SET_COUNTRY_AREA_LIST', getNestedData(data, 'data'))
+      setStore('countryList', getNestedData(data, 'data'))
+      setStore('timeStamp', new Date().getTime())
+      if (callback) {
+        callback(data)
       }
     }
   },
@@ -73,34 +68,27 @@ export default {
     })
   },
   // 设置用户信息
-  async [SET_PARTNER_INFO_ACTION] ({commit, state}, {self, language}) {
+  async [SET_PARTNER_INFO_ACTION] ({commit, state}, language) {
     const params = {
       language
     }
     const data1 = await getFooterInfo1(params)
     const data2 = await getFooterInfo2(params)
-    if (
-      !returnAjaxMsg(data1, self) &&
-      !returnAjaxMsg(data2, self)
-    ) {
-      return false
-    } else {
-      let footerInfo1 = getNestedData(data1, 'data.data')
-      let footerInfo2 = getNestedData(data2, 'data.data')
-      commit('SET_FOOTER_INFO', {
-        footerInfo1,
-        footerInfo2
-      })
-      console.log(footerInfo1.title)
-      // favicon 添加
-      addFavicon(
-        getNestedData(footerInfo1, 'headTitleLogo'),
-        getNestedData(footerInfo1, 'title')
-      )
-      commit('SET_LOGO_URL', {
-        logoSrc: getNestedData(footerInfo1, 'headLogo'),
-        title: getNestedData(footerInfo1, 'title')
-      })
-    }
+    let footerInfo1 = getNestedData(data1, 'data')
+    let footerInfo2 = getNestedData(data2, 'data')
+    commit('SET_FOOTER_INFO', {
+      footerInfo1,
+      footerInfo2
+    })
+    console.log(footerInfo1.title)
+    // favicon 添加
+    addFavicon(
+      getNestedData(footerInfo1, 'headTitleLogo'),
+      getNestedData(footerInfo1, 'title')
+    )
+    commit('SET_LOGO_URL', {
+      logoSrc: getNestedData(footerInfo1, 'headLogo'),
+      title: getNestedData(footerInfo1, 'title')
+    })
   }
 }
