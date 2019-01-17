@@ -261,6 +261,7 @@
           >
             <el-input
               type="password"
+              autocomplete= "new-password"
               v-model="password"
             >
             </el-input>
@@ -345,7 +346,8 @@ export default {
       // 整页loading
       fullscreenLoading: true,
       // 用户需要支付金额
-      needUserPayCount: 0
+      needUserPayCount: 0,
+      returnJumpTimer: null // 返回跳转倒计时
     }
   },
   async created () {
@@ -579,7 +581,7 @@ export default {
           this.REFRESH_USER_INFO_ACTION(this)
           this.toggleAssetsCurrencyId()
           console.log(data)
-          setTimeout(() => {
+          this.returnJumpTimer = setTimeout(() => {
             this.$router.push('/VipMainContent')
           }, 3000)
         }
@@ -684,6 +686,12 @@ export default {
     },
     filteredData (newVal) {
       console.log(newVal)
+    }
+  },
+  destroyed () {
+    // 离开本组件清除定时器
+    if (this.returnJumpTimer) {
+      clearTimeout(this.returnJumpTimer)
     }
   }
 }

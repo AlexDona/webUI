@@ -158,22 +158,14 @@ export default {
         language: this.language
       }
       const data = await getAllNewsTypeList(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.newsTypeList = getNestedData(data, 'data.data') || []
-      }
+      this.newsTypeList = getNestedData(data, 'data') || []
     },
     // 获取详情信息
     async getDetailInfo (id) {
       const data = await getNewsDetail(id)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.newDetail = getNestedData(data, 'data.data')
-        this.templateId = getNestedData(data, 'data.data.templateId')
-        setStore('templateId', this.templateId)
-      }
+      this.newDetail = getNestedData(data, 'data')
+      this.templateId = getNestedData(data, 'data.templateId')
+      setStore('templateId', this.templateId)
     },
     // 获取全部type类型的前5条数据
     async getAllTypeListNewsList () {
@@ -186,12 +178,8 @@ export default {
         const item = this.newsTypeList[i]
         params.newsTypeId = item.id - 0
         const data = await getNewsNoticeList(params)
-        if (!returnAjaxMsg(data, this)) {
-          return false
-        } else {
-          const targetData = getNestedData(data, 'data.data.list')
-          this.detailAllNewsList.push(targetData)
-        }
+        const targetData = getNestedData(data, 'data.list')
+        this.detailAllNewsList.push(targetData)
       }
     }
   },

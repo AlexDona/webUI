@@ -75,6 +75,7 @@
         <!-- 请输入交易密码 -->
         <el-input
           type="password"
+          autocomplete= "new-password"
           v-model="payPassword"
           @input="clearErrorMsg"
           :placeholder="`${$t('M.comm_please_enter')}${$t('M.comm_password')}`"
@@ -170,13 +171,10 @@ export default {
     this.validatedActiveFrequency = this.activeFrequency
     this.oldFrequency = this.activeFrequency
   },
-  mounted () {
-  },
+  mounted () {},
   activated () {},
-  update () {
-  },
-  beforeRouteUpdate () {
-  },
+  update () {},
+  beforeRouteUpdate () {},
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'

@@ -329,6 +329,7 @@
               <!--2018129封装提交摘单买入和卖出方法-->
               <input
                 type="password"
+                autocomplete= "new-password"
                 :placeholder="$t('M.otc_publishAD_sellpassword')"
                 class="password-input"
                 v-model="tradePassword"

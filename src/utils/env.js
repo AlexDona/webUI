@@ -22,13 +22,13 @@ let targetConfig = {
 const devTestConfig = {
   apiCommonUrl: 'http://192.168.1.200:8888/',
   socketUrl: 'ws://192.168.1.200:8087/market',
-  loginSocketUrl: 'ws://192.168.1.200:8087/qrcodeLogin/'
+  loginSocketUrl: 'ws://192.168.1.200:8888/qrcodeLogin/'
 }
 
 const dev210Config = {
   apiCommonUrl: 'http://192.168.1.210:8888/',
   socketUrl: 'ws://192.168.1.210:8087/market',
-  loginSocketUrl: 'ws://192.168.1.210:8087/qrcodeLogin/'
+  loginSocketUrl: 'ws://192.168.1.210:8888/qrcodeLogin/'
 }
 
 const prodConfig = {

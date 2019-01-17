@@ -104,7 +104,7 @@
                 </div>
               </div>
               <div
-                class="table-tr font-size12 paddinglr20"
+                class="table-tr font-size12 padding-lr20"
                 v-for="(assetItem, index) in withdrawDepositList"
                 :key="index"
               >
@@ -216,7 +216,7 @@
                         :currencyName="currencyName"
                         :originalActiveWithdrawDepositAddress="originalActiveWithdrawDepositAddress"
                         :withdrawAddressList="withdrawAddressList"
-                        :feeRangeOfWidthdraw="feeRangeOfWidthdraw"
+                        :feeRangeOfWithdraw="feeRangeOfWithdraw"
                         :index="index"
                         :accountCount="accountCount"
                         :pointLengthAccountCount="pointLengthAccountCount"
@@ -236,7 +236,7 @@
               <!--提币验证-->
               <el-dialog
                 :title="$t('M.comm_mention_money') + $t('M.comm_site')"
-                :visible.sync="isShowWithdrowDialog"
+                :visible.sync="isShowWithdrawDialog"
               >
                 <el-form
                   :label-position="labelPosition"
@@ -257,7 +257,7 @@
                       class="send-code-btn cursor-pointer"
                       :status="disabledOfPhoneBtn"
                       @run="sendPhoneOrEmailCode(0)"
-                      v-if="isShowWithdrowDialog"
+                      v-if="isShowWithdrawDialog"
                     />
                   </el-form-item>
                   <!--手机未认证-->
@@ -282,7 +282,7 @@
                       class="send-code-btn cursor-pointer"
                       :status="disabledOfEmailBtn"
                       @run="sendPhoneOrEmailCode(1)"
-                      v-if="isShowWithdrowDialog"
+                      v-if="isShowWithdrawDialog"
                     />
                   </el-form-item>
                   <!--邮箱未认证-->
@@ -314,6 +314,7 @@
                   >
                     <input
                       type="password"
+                      autocomplete= "new-password"
                       class="content-input input-google padding-l15 box-sizing"
                       v-model="password"
                     >
@@ -442,7 +443,7 @@ export default {
       withdrawDepositList: [], // 我的资产全部币种列表
       chargeMoneyAddress: '', // 根据充币地址生成二维码条件
       withdrawalFee: '', // 自定义提币手续费
-      feeRangeOfWidthdraw: {}, // 提币手续费范围
+      feeRangeOfWithdraw: {}, // 提币手续费范围
       withdrawCount: '', // 提币数量
       accountCount: '', // 自定义到账数量
       tradingState: false, // 跳转交易对默认不显示
@@ -464,7 +465,7 @@ export default {
       withdrawCountVModel: '', // 数量
       withdrawFeeVModel: '', // 手续费
       pointLengthAccountCount: 4, // 提币数量小数位限制
-      isShowWithdrowDialog: false, // 默认提币确认弹窗
+      isShowWithdrawDialog: false, // 默认提币确认弹窗
       phoneCode: '', // 邮箱验证
       emailCode: '', // 手机验证
       googleCode: '', // 谷歌验证
@@ -700,6 +701,16 @@ export default {
     },
     // 点击提现按钮显示提币内容（带回币种id 币种名称 当前index）
     async changeWithdrawBoxByCoin (id, name, index) {
+      console.log(this.userInfo)
+      console.log(this.coinStatus)
+      if (this.coinStatus == 'disable') {
+        // 该账号已被禁止提币，请咨询客服
+        this.$message({
+          type: 'error',
+          message: this.$t('M.recharge_withdraw_failure_0041')
+        })
+        return
+      }
       // 提币数量
       this.resetWithdrawFormContent(index)
 
@@ -708,7 +719,7 @@ export default {
       this.currencyName = name
       // 每行数据币种名
       // 隐藏验证弹窗
-      this.isShowWithdrowDialog = false
+      this.isShowWithdrawDialog = false
       // 循环列表 隐藏充值或提现框
       this.withdrawDepositList.forEach((item) => {
         item.rechargeIsShow = false
@@ -862,7 +873,7 @@ export default {
         return false
       } else {
         // 返回列表数据
-        this.feeRangeOfWidthdraw = getNestedData(data, 'data.data')
+        this.feeRangeOfWithdraw = getNestedData(data, 'data.data')
         this.withdrawalFee = getNestedData(data, 'data.data.minFees')
         this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value = this.withdrawalFee
         this.withdrawFeeVModel = this.withdrawalFee
@@ -902,7 +913,7 @@ export default {
      * 点击提币按钮 验证
      * */
     validateOfWithdraw (index) {
-      this.isShowWithdrowDialog = false
+      this.isShowWithdrawDialog = false
       console.log(index)
       if (this.isNeedTag) {
         if (!this.withdrawRemark) {
@@ -947,14 +958,14 @@ export default {
         return false
       }
       console.log(this.accountCount)
-      if (this.withdrawFeeVModel < this.feeRangeOfWidthdraw.minFees) {
+      if (this.withdrawFeeVModel < this.feeRangeOfWithdraw.minFees) {
         // 判断输入手续费小于最小提现手续费
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint5'),
           type: 'error'
         })
         return false
-      } else if (this.withdrawFeeVModel > this.feeRangeOfWidthdraw.maxFees) {
+      } else if (this.withdrawFeeVModel > this.feeRangeOfWithdraw.maxFees) {
         // // 判断输入手续费大于于最大提现手续费
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint6'),
@@ -962,15 +973,15 @@ export default {
         })
         return false
       }
-      console.log(this.withdrawFeeVModel, this.feeRangeOfWidthdraw)
-      if (this.withdrawCountVModel > this.feeRangeOfWidthdraw.maxWithdraw) {
+      console.log(this.withdrawFeeVModel, this.feeRangeOfWithdraw)
+      if (this.withdrawCountVModel > this.feeRangeOfWithdraw.maxWithdraw) {
         // 大于最大限额
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint8'),
           type: 'error'
         })
         return false
-      } else if (this.withdrawCountVModel < this.feeRangeOfWidthdraw.minWithdraw) {
+      } else if (this.withdrawCountVModel < this.feeRangeOfWithdraw.minWithdraw) {
         // 小于最小限额
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint9'),
@@ -989,7 +1000,7 @@ export default {
       if (!this.userInfo.userInfo.payPassword) {
         this.dialogVisible = true
       } else {
-        this.isShowWithdrowDialog = true
+        this.isShowWithdrawDialog = true
       }
     },
     confirm () {
@@ -1024,7 +1035,7 @@ export default {
       if (!(returnAjaxMsg(data, this, 1))) {
         return false
       } else {
-        this.isShowWithdrowDialog = false
+        this.isShowWithdrawDialog = false
         // 提币地址列表查询
         this.getAssetCurrenciesList()
         // this.stateEmptyData()
@@ -1086,7 +1097,9 @@ export default {
       activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
-      userCenterActiveName: state => state.personal.userCenterActiveName
+      userCenterActiveName: state => state.personal.userCenterActiveName,
+      // 是否允许提币
+      coinStatus: state => state.user.loginStep1Info.userInfo.coinStatus
     }),
     // 提现手续费输入input ref
     feeInputRef () {

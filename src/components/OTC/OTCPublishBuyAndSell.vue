@@ -354,6 +354,7 @@
                   <div class="input">
                     <input
                       type="password"
+                      autocomplete= "new-password"
                       class="password-input"
                       v-model="tradePassword"
                       @focus="tradePasswordFocus"

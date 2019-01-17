@@ -150,8 +150,8 @@ export default {
     ]),
     // 获取用户收藏列表
     async getCollectionList (collectSymbol) {
-      await getCollectionList(this, data => {
-        _.forEach(data.data.data, item => {
+      await getCollectionList(data => {
+        _.forEach(data.data, item => {
           collectSymbol[item.content] = item.content
         })
       })
@@ -380,7 +380,7 @@ export default {
           }
         })
         if (this.isLogin) {
-          await toggleUserCollection('add', id, this)
+          await toggleUserCollection('add', id)
         }
       } else {
         this.CHANGE_COLLECT_SYMBOL({
@@ -398,7 +398,7 @@ export default {
         this.collectPlateList = this.collectArea.plateList
         // 取消收藏
         if (this.isLogin) {
-          await toggleUserCollection('remove', id, this)
+          await toggleUserCollection('remove', id)
         }
       }
       if (!this.isLogin) {

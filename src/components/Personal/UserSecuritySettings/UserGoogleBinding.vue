@@ -44,7 +44,7 @@
                   <img :src="googleImages">
                 </div>
               </div>
-              <p class="google-info paddinglr15 margin-top16 font-size12">
+              <p class="google-info padding-lr15 margin-top16 font-size12">
                 {{ $t('M.user_google_text1') }}
                 <span class="google-info-download">
                   {{ $t('M.user_google_text2') }}
@@ -59,7 +59,7 @@
                 </div>
                 <div class="text-align-c color-black margin-top2">IOS</div>
               </div>
-              <p class="google-info paddinglr13 margin-top16 font-size12">
+              <p class="google-info padding-lr13 margin-top16 font-size12">
                 <!--若未安装谷歌验证器请-->
                 {{ $t('M.user_google_text1') }}
                 <span class="google-info-download">
@@ -76,7 +76,7 @@
                 </div>
                 <div class="text-align-c color-black margin-top2">Android</div>
               </div>
-              <p class="google-info paddinglr13 margin-top16 font-size12">
+              <p class="google-info padding-lr13 margin-top16 font-size12">
                 <!--若未安装谷歌验证器请-->
                 {{ $t('M.user_google_text1') }}
                 <span class="google-info-download">
@@ -222,7 +222,8 @@ export default {
       googleVerificationCode: '', // 谷歌验证码
       googleUserInformation: {}, // 谷歌验证信息
       successCountDown: 1, // 成功倒计时
-      errorShowStatusList: '' // 设置错误信息
+      errorShowStatusList: '', // 设置错误信息
+      googleBindSuccessCountDownTimer: null // 谷歌绑定成功跳转定时器
     }
   },
   created () {
@@ -358,7 +359,7 @@ export default {
     },
     // 谷歌绑定成功自动跳转
     successJump () {
-      setInterval(() => {
+      this.googleBindSuccessCountDownTimer = setInterval(() => {
         if (this.successCountDown === 0) {
           this.returnSuperior()
         }
@@ -407,6 +408,12 @@ export default {
   watch: {
     googleTheSecretUrl (newVal) {
       console.log(newVal)
+    }
+  },
+  destroyed () {
+    // 离开本组件清除定时器
+    if (this.googleBindSuccessCountDownTimer) {
+      clearInterval(this.googleBindSuccessCountDownTimer)
     }
   }
 }
@@ -467,6 +474,11 @@ export default {
                   width: 100px;
                   height: 100px;
                   padding: 10px;
+                }
+
+                .ercode {
+                  width: 98px !important;
+                  height: 100px !important;
                 }
               }
             }

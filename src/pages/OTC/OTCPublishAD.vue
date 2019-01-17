@@ -11,7 +11,7 @@
       <!--发布广告左侧主体内容-->
       <div class="publish-AD-left">
         <!-- 大标题发布广告 -->
-        <div class="AD-title font-size20 padding-l15 font-weight700">
+        <div class="AD-title font-size18 padding-l15 font-weight700">
           {{$t('M.otc_merchant_publishAD')}}
         </div>
         <!-- 大表单 -->
@@ -20,8 +20,8 @@
           <div class="common choice">
             <div class="left display-inline-block">
               <!-- 选择 -->
-              <p class="tips font-size14">
-                {{$t('M.otc_pl')}}
+              <p class="tips font-size12 tips-choose">
+                &nbsp;&nbsp;{{$t('M.otc_pl')}}
               </p>
             </div>
             <div class="right display-inline-block">
@@ -45,7 +45,7 @@
               <div class="right-change display-inline-block">
                 <!-- 可用币种 -->
                 <el-select
-                  v-model="activitedCoinId"
+                  v-model="activatedCoinId"
                   :placeholder="$t('M.comm_please_choose')"
                   :no-data-text="$t('M.comm_no_data')"
                   @change="changeAvailableCoinId"
@@ -61,8 +61,9 @@
                 </el-select>
                 <span class="double-sided-arrow display-inline-block">
                 </span>
+                <!--可用法币-->
                 <el-select
-                  v-model="activitedCurrencyId"
+                  v-model="activatedCurrencyId"
                   :placeholder="$t('M.comm_please_choose')"
                   :no-data-text="$t('M.comm_no_data')"
                   @change="changeCurrencyId"
@@ -82,8 +83,8 @@
           <div class="common sale-price">
             <div class="left display-inline-block">
               <!-- 销售价格 -->
-                <p class="tips font-size14">
-                  <span class="must-fill-star">*</span>{{$t('M.otc_sell')}}{{$t('M.otc_index_price')}}
+                <p class="tips font-size12">
+                  <span class="must-fill-star">*&nbsp;</span>{{$t('M.otc_sell')}}{{$t('M.otc_index_price')}}
                 </p>
             </div>
             <div class="right display-inline-block">
@@ -132,8 +133,8 @@
           <div class="common trade-way">
             <div class="left display-inline-block">
               <!-- 交易方式 -->
-                <p class="tips font-size14">
-                  <span class="must-fill-star">*</span>{{$t("M.otc_publishAD_selltype")}}
+                <p class="tips font-size12">
+                  <span class="must-fill-star">*&nbsp;</span>{{$t("M.otc_publishAD_selltype")}}
                 </p>
             </div>
             <div class="right display-inline-block">
@@ -185,8 +186,8 @@
           <div class="common sum-limit">
             <div class="left display-inline-block">
                 <!-- 数量与限额 -->
-                <p class="tips font-size14">
-                  <span class="must-fill-star">*</span>{{$t('M.otc_publishAD_sum_and_limitMoney')}}
+                <p class="tips font-size12">
+                  <span class="must-fill-star">*&nbsp;</span>{{$t('M.otc_publishAD_sum_and_limitMoney')}}
                 </p>
             </div>
             <div class="right display-inline-block">
@@ -204,7 +205,7 @@
                   onpaste="return false"
                 >
                 <span
-                  class="unit font-size14"
+                  class="unit font-size12"
                   :class="{ redBorderLeftNone: entrustCountErrorTipsBorder }"
                 >
                   {{activatedCoinName}}
@@ -239,7 +240,7 @@
                   onpaste="return false"
                 >
                 <span
-                  class="unit font-size14"
+                  class="unit font-size12"
                   :class="{ redBorderLeftNone: minCountErrorTipsBorder }"
                 >
                   {{activatedCurrencyName}}
@@ -258,7 +259,7 @@
                   onpaste="return false"
                 >
                 <span
-                  class="unit font-size14"
+                  class="unit font-size12"
                   :class="{ redBorderLeftNone: maxCountErrorTipsBorder }"
                 >
                   {{activatedCurrencyName}}
@@ -268,7 +269,7 @@
                 <span class="err err-min-count">
                   <span>{{errorInfoMinCount}}</span>
                 </span>
-                <span class="err">{{errorInfoMaxCount}}</span>
+                <span class="err err-max-count">{{errorInfoMaxCount}}</span>
               </div>
             </div>
           </div>
@@ -276,12 +277,12 @@
           <div class="common remark">
             <div class="left display-inline-block">
               <!-- 备注 -->
-                <p class="tips font-size14">
-                  {{$t('M.comm_remark')}}
+                <p class="tips font-size12">
+                  &nbsp;&nbsp;{{$t('M.comm_remark')}}
                 </p>
                 <!-- 可选填 -->
                 <p class="warning font-size12">
-                  {{$t('M.otc_publishAD_adviceToFill')}}
+                  &nbsp;&nbsp;{{$t('M.otc_publishAD_adviceToFill')}}
                 </p>
             </div>
             <div class="right display-inline-block">
@@ -299,8 +300,8 @@
           <div class="common limit-set">
             <div class="left display-inline-block">
               <!-- 限制设置 -->
-                <p class="tips font-size14">
-                  <span class="must-fill-star">*</span>{{$t('M.otc_publishAD_setLimit')}}
+                <p class="tips font-size12">
+                  <span class="must-fill-star">*&nbsp;</span>{{$t('M.otc_publishAD_setLimit')}}
                 </p>
             </div>
             <div class="right display-inline-block">
@@ -321,7 +322,7 @@
                       {{$t('M.otc_publishAD_setDiscriptTwo')}}
                     </div>
                     <IconFontCommon
-                      class="font-size14"
+                      class="font-size12"
                       iconName="icon-wenhao"
                     />
                   </el-tooltip>
@@ -341,7 +342,7 @@
                 <div class="err">{{errorInfoLimitOrderCount}}</div>
               </div>
               <!-- 卖家必须成交过几次（0=不限制） -->
-              <div>
+              <div class="num-success">
                 {{$t('M.otc_publishAD_sellNeedLimit')}}(0={{$t('M.otc_publishAD_noLimit')}})
               </div>
               <div>
@@ -362,7 +363,7 @@
           <!-- 提交按钮 -->
           <div class="button">
             <button
-              class="AD-button font-size14 cursor-pointer"
+              class="AD-button font-size12 cursor-pointer"
               @click.prevent="showPasswordDialog"
             >
               <!-- 发布广告 -->
@@ -384,12 +385,12 @@
               <div class="input">
                 <input
                   type="password"
+                  autocomplete= "new-password"
                   class="password-input"
                   v-model="tradePassword"
                   @focus="tradePasswordFocus"
                   @keyup.enter="publishADSubmitButton"
                   onpaste="return false"
-                  AUTOCOMPLETE="off"
                 >
               </div>
               <div class="error-info">
@@ -443,7 +444,7 @@ import {
 } from '../../utils'
 import {
   querySelectedOrdersDetails,
-  addOTCPutUpOrdersMerchantdedicated,
+  addOTCPutUpOrdersMerchantDedicated,
   getOTCCoinInfo,
   addModifyPublishADOrder
 } from '../../utils/api/OTC'
@@ -482,11 +483,11 @@ export default {
         }
       ],
       // 2.0 币种名字下拉数组：可用币种
-      activitedCoinId: '', // 选中的可用币种id
+      activatedCoinId: '', // 选中的可用币种id
       activatedCoinName: '', // 选中币种的name
       availableCoinList: [], // 可用币种数组
       // 3.0 法币币种数组
-      activitedCurrencyId: '', // 选中的可用法币id
+      activatedCurrencyId: '', // 选中的可用法币id
       activatedCurrencyName: '', // 选中的可用法币name
       availableCurrencyList: [], // 可用法币币种数组
       transformationOldCurrencyName: '', // 法币改变之前选中的法币名称
@@ -608,8 +609,8 @@ export default {
         return false
       } else {
         let detailsData = getNestedData(data, 'data.data')
-        this.activitedCoinId = getNestedData(detailsData, 'coinId') // 可用币种id
-        this.activitedCurrencyId = getNestedData(detailsData, 'currencyId') // 法币id
+        this.activatedCoinId = getNestedData(detailsData, 'coinId') // 可用币种id
+        this.activatedCurrencyId = getNestedData(detailsData, 'currencyId') // 法币id
         this.activatedBuySellStyle = getNestedData(detailsData, 'entrustType') // 挂单类型
         this.$refs.limitRef.value = getNestedData(detailsData, 'limitOrderCount') // 同时处理最大订单数
         this.limitOrderCount = this.$refs.limitRef.value
@@ -624,8 +625,8 @@ export default {
     // 1.0 币种详情 : 商家和普通用户挂单页面请求币种详情渲染页面
     async getOTCCoinInfo () {
       const data = await getOTCCoinInfo({
-        currencyId: this.activitedCurrencyId, // 法币id
-        coinId: this.activitedCoinId // 币种id
+        currencyId: this.activatedCurrencyId, // 法币id
+        coinId: this.activatedCoinId // 币种id
       })
       // console.log('币种详情')
       // console.log(data)
@@ -638,7 +639,7 @@ export default {
         this.availableCoinList = getNestedData(availableCoinListData, 'coinlist')
         this.availableCoinList.forEach(item => {
           if (availableCoinListData.otcCoinQryResponse.coinId === item.coinId) {
-            this.activitedCoinId = item.coinId
+            this.activatedCoinId = item.coinId
           }
         })
         this.activatedCoinName = getNestedData(availableCoinListData, 'otcCoinQryResponse.name')
@@ -646,7 +647,7 @@ export default {
         this.availableCurrencyList = getNestedData(availableCoinListData, 'currencyList')
         this.availableCurrencyList.forEach(item => {
           if (availableCoinListData.otcCoinQryResponse.currencyName === item.shortName) {
-            this.activitedCurrencyId = item.id
+            this.activatedCurrencyId = item.id
           }
         })
         this.activatedCurrencyName = getNestedData(availableCoinListData, 'otcCoinQryResponse.currencyName')
@@ -687,15 +688,15 @@ export default {
     },
     // 3.0 改变可用币种id
     changeAvailableCoinId (e) {
-      this.activitedCoinId = e
-      // console.log(this.activitedCoinId)
+      this.activatedCoinId = e
+      // console.log(this.activatedCoinId)
       this.clearMainData()
       this.getOTCCoinInfo()
     },
     // 4.0 改变可用法币的币种id
     changeCurrencyId (e) {
-      this.activitedCurrencyId = e
-      // console.log(this.activitedCurrencyId)
+      this.activatedCurrencyId = e
+      // console.log(this.activatedCurrencyId)
       this.clearMainData()
       this.getOTCCoinInfo()
     },
@@ -776,8 +777,8 @@ export default {
       }
       let param = {
         entrustType: this.activatedBuySellStyle, // 挂单类型(BUY SELL)
-        coinId: this.activitedCoinId, // 挂单币种
-        currencyId: this.activitedCurrencyId, // 法币Id
+        coinId: this.activatedCoinId, // 挂单币种
+        currencyId: this.activatedCurrencyId, // 法币Id
         entrustCount: this.$refs.entrustCount.value, // 挂单数量
         price: this.$refs.price.value, // 单价
         minCount: this.$refs.minCountValue.value, // 用户输入的单笔最小限额（单位：选中法币） 0 - 不限制
@@ -791,7 +792,7 @@ export default {
       param = this.isNeedPayPassword ? { ...param, tradePassword: this.tradePassword } : param
       let data
       if (this.ADManageJumpOrderStatus == 1) {
-        data = await addOTCPutUpOrdersMerchantdedicated(param)
+        data = await addOTCPutUpOrdersMerchantDedicated(param)
       }
       if (this.ADManageJumpOrderStatus == 2) {
         param.entrustId = this.messageId
@@ -874,8 +875,8 @@ export default {
     // 清空input框数据
     clearInputData () {
       this.activatedBuySellStyle = ''
-      this.activitedCoinId = ''
-      this.activitedCurrencyId = ''
+      this.activatedCoinId = ''
+      this.activatedCurrencyId = ''
       this.entrustCount = ''
       this.price = ''
       this.minCount = ''
@@ -1031,6 +1032,27 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index";
 
+/* input框中placeholder字体设置 */
+input::-webkit-input-placeholder {
+  font-size: 12px;
+  color: #aab2bd;
+}
+
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  font-size: 12px;
+  color: #aab2bd;
+}
+
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  font-size: 12px;
+  color: #aab2bd;
+}
+
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  font-size: 12px;
+  color: #aab2bd;
+}
+
 .otc-publish-AD-box {
   margin-top: 66px;
   overflow: hidden;
@@ -1050,15 +1072,15 @@ export default {
     flex: 3;
     width: 1150px;
     padding-top: 50px;
-    margin: 70px auto;
+    margin: 50px auto;
 
     > .publish-AD-left {
       flex: 2;
 
       > .AD-title {
-        height: 30px;
+        height: 20px;
         margin-bottom: 30px;
-        line-height: 30px;
+        line-height: 20px;
       }
 
       > .AD-big-form {
@@ -1070,22 +1092,30 @@ export default {
 
         > .common {
           box-sizing: border-box;
-          padding: 30px 0;
+          padding: 20px 0;
 
           > .left {
-            width: 110px;
+            width: 115px;
             vertical-align: top;
+
+            .tips-choose {
+              padding-top: 4px;
+            }
           }
 
           > .right {
-            font-size: 14px;
+            font-size: 12px;
+
+            .err {
+              padding-top: 4px;
+            }
           }
         }
 
         > .choice {
           > .right {
             > .right-style {
-              margin-right: 50px;
+              margin-right: 25px;
             }
 
             > .right-change {
@@ -1103,11 +1133,11 @@ export default {
             }
 
             > .input {
-              margin: 10px 0 5px;
+              margin: 10px 0 0;
 
               > .price-input {
-                width: 234px;
-                height: 36px;
+                width: 130px;
+                height: 32px;
                 padding-left: 10px;
                 border-bottom-left-radius: 4px;
                 border-top-left-radius: 4px;
@@ -1115,12 +1145,12 @@ export default {
 
               > .unit {
                 display: inline-block;
-                width: 58px;
-                height: 36px;
+                width: 50px;
+                height: 32px;
                 margin-left: -5px;
                 border-top-right-radius: 4px;
                 border-bottom-right-radius: 4px;
-                line-height: 36px;
+                line-height: 32px;
                 text-align: center;
                 vertical-align: top;
               }
@@ -1132,15 +1162,19 @@ export default {
           > .right {
             .err-min-count {
               display: inline-block;
-              width: 250px;
+              width: 200px;
+            }
+
+            .err-max-count {
+              margin-left: 24px;
             }
 
             > .input-top {
-              margin: 15px 0 5px;
+              margin: 8px 0 0;
 
               > .input-sum {
-                width: 198px;
-                height: 36px;
+                width: 130px;
+                height: 32px;
                 padding-left: 10px;
                 border-bottom-left-radius: 4px;
                 border-top-left-radius: 4px;
@@ -1148,32 +1182,32 @@ export default {
 
               > .unit {
                 display: inline-block;
-                width: 60px;
-                height: 36px;
+                width: 50px;
+                height: 32px;
                 margin-left: -5px;
                 border-top-right-radius: 4px;
                 border-bottom-right-radius: 4px;
-                line-height: 36px;
+                line-height: 32px;
                 text-align: center;
                 vertical-align: top;
               }
             }
 
             > .text {
-              margin-top: 20px;
+              margin-top: 15px;
 
               > .money-max {
-                margin-left: 166px;
+                margin-left: 156px;
               }
             }
 
             > .input-bottom {
-              margin: 10px 0 5px;
+              margin: 8px 0 0;
 
               > .input-min,
               .input-max {
-                width: 140px;
-                height: 36px;
+                width: 130px;
+                height: 32px;
                 padding-left: 10px;
                 border-bottom-left-radius: 4px;
                 border-top-left-radius: 4px;
@@ -1181,12 +1215,12 @@ export default {
 
               > .unit {
                 display: inline-block;
-                width: 60px;
-                height: 36px;
+                width: 50px;
+                height: 32px;
                 margin-left: -5px;
                 border-top-right-radius: 4px;
                 border-bottom-right-radius: 4px;
-                line-height: 36px;
+                line-height: 32px;
                 text-align: center;
                 vertical-align: top;
               }
@@ -1199,26 +1233,30 @@ export default {
         }
 
         > .limit-set {
-          border-bottom: 0;
-
           > .right {
             .input-limit {
-              width: 258px;
-              height: 36px;
+              box-sizing: border-box;
+              width: 200px;
+              height: 32px;
               padding-left: 10px;
-              margin: 15px 0 5px;
+              margin: 10px 0 0;
               border-radius: 4px;
+            }
+
+            .num-success {
+              margin-top: 15px;
             }
           }
         }
 
         > .button {
-          margin-top: 20px;
-          text-align: center;
+          padding-left: 115px;
+          margin-top: 40px;
+          margin-bottom: 50px;
 
           > .AD-button {
-            width: 590px;
-            height: 44px;
+            width: 200px;
+            height: 32px;
             border-radius: 4px;
           }
         }
@@ -1242,7 +1280,7 @@ export default {
   /deep/ {
     .right-style {
       .el-select {
-        width: 140px;
+        width: 180px;
       }
     }
 
@@ -1254,14 +1292,15 @@ export default {
 
     .choice {
       .el-input__inner {
-        height: 36px;
+        height: 32px;
         border: none;
+        font-size: 12px;
       }
     }
 
     .trade-way {
-      .el-checkbox-group {
-        margin-top: 5px;
+      .el-checkbox__label {
+        font-size: 12px;
       }
 
       .el-checkbox__inner {
@@ -1274,12 +1313,12 @@ export default {
     }
 
     .el-textarea__inner {
-      width: 580px;
-      height: 100px;
-      margin-bottom: 10px;
+      width: 600px;
+      height: 120px;
+      padding-top: 10px;
       border: 0;
       resize: none;
-      font-size: 14px;
+      font-size: 12px;
     }
 
     .password-dialog {
@@ -1351,6 +1390,10 @@ export default {
         }
 
         > .AD-big-form {
+          .common {
+            border-bottom: 1px solid rgba(50, 54, 76, 1);
+          }
+
           .err {
             color: #d45858;
           }
@@ -1439,8 +1482,6 @@ export default {
           }
 
           > .limit-set {
-            border-bottom: 0;
-
             > .right {
               .input-limit {
                 color: #9da5b3;
@@ -1497,7 +1538,6 @@ export default {
         }
 
         .el-checkbox + .el-checkbox {
-          /* padding-right: 20px; */
           margin-left: 0;
         }
 
@@ -1648,8 +1688,6 @@ export default {
           }
 
           > .limit-set {
-            border-bottom: 0;
-
             > .right {
               .input-limit {
                 border: 1px solid rgba(236, 241, 248, 1);
@@ -1700,7 +1738,6 @@ export default {
         }
 
         .el-checkbox + .el-checkbox {
-          /* padding-right: 20px; */
           margin-left: 0;
         }
       }
@@ -1796,6 +1833,8 @@ export default {
             }
 
             > .common {
+              border-bottom: 1px solid rgba(50, 54, 76, .1);
+
               > .left {
                 > .warning[data-v-6b1c45d6] {
                   color: #3e79d6;
@@ -1805,10 +1844,6 @@ export default {
                   color: #333;
                 }
               }
-            }
-
-            .common[data-v-6b1c45d6] {
-              border-bottom: 1px solid rgba(57, 66, 77, .1);
             }
           }
         }

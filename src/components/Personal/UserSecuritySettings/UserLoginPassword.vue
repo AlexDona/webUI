@@ -36,6 +36,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="login-input border-radius2 padding-l15 box-sizing"
                 v-model="originalLoginPassword"
                 @keydown="setErrorMsg(0,'')"
@@ -53,6 +54,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="login-input border-radius2 padding-l15 box-sizing"
                 v-model="newLoginPassword"
                 @keydown="setErrorMsg(1,'')"
@@ -70,6 +72,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="login-input border-radius2 padding-l15 box-sizing"
                 v-model="confirmLoginPassword"
                 @keydown="setErrorMsg(2,'')"
@@ -122,11 +125,11 @@ export default {
         '', // 原登录密码
         '', // 新登录密码
         '' // 确认登录密码
-      ]
+      ],
+      userLoginPWDSuccessJumpTimer: null // 登录密码修改成功自动跳转定时器
     }
   },
-  created () {
-  },
+  created () {},
   mounted () {},
   activated () {},
   update () {},
@@ -236,7 +239,7 @@ export default {
     },
     // 谷歌绑定成功自动跳转
     successJump () {
-      setInterval(() => {
+      this.userLoginPWDSuccessJumpTimer = setInterval(() => {
         if (this.successCountDown === 0) {
           this.USER_LOGOUT()
           this.$router.push({path: '/home'})
@@ -255,7 +258,13 @@ export default {
       return window.innerHeight
     }
   },
-  watch: {}
+  watch: {},
+  destroyed () {
+    // 离开本组件清除定时器
+    if (this.userLoginPWDSuccessJumpTimer) {
+      clearInterval(this.userLoginPWDSuccessJumpTimer)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

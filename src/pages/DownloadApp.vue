@@ -63,20 +63,13 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {
-  getAppDownLoadUrlAjax
-} from '../utils/api/user'
 // import {downloadFileWithUserDefined} from '../utils'
-import {
-  returnAjaxMsg,
-  getNestedData
-  // isWXBrowser
-} from '../utils/commonFunc'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
 import WeChatMask from '../components/User/WeChatMask'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 
 export default {
@@ -110,34 +103,33 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_APP_URL_ACTION'
+    ]),
     ...mapMutations([
       'SET_FOOTER_INFO'
     ]),
     // 获取app下载地址
     async getAppDownLoadUrl () {
-      const data = await getAppDownLoadUrlAjax()
+      await this.GET_APP_URL_ACTION()
       this.fullscreenLoading = false
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        console.log(data)
-        if (this.isAndroid) {
-          window.location.href = 'scheme: //fubt.com/'
-          this.downloadUrl = getNestedData(data, 'data.data.android')
-        } else if (this.isIOS) {
-          this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${getNestedData(data, 'data.data.ios')}`
-        }
+      if (this.isAndroid) {
+        window.location.href = 'scheme: //fubt.com/'
+        this.downloadUrl = this.androidUrl
+      } else if (this.isIOS) {
+        this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
       }
     },
     downloadApp () {
-      console.log(this.downloadUrl)
       this.$refs['download'].click()
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      logoSrc: state => state.common.logoSrc
+      logoSrc: state => state.common.logoSrc,
+      androidUrl: state => state.footerInfo.downloadUrl.android,
+      iosUrl: state => state.footerInfo.downloadUrl.ios
     }),
     windowHeight () {
       return window.innerHeight + 200
@@ -147,7 +139,7 @@ export default {
         this.language === 'zh_TW'
     },
     language () {
-      return (navigator.browserLanguage || navigator.language).split('-').join('_') || this.$route.query.language
+      return (navigator.browserLanguage || navigator.language).split('-').join('_')
     }
     // isWXBrowserStatus () {
     //   return isWXBrowser()

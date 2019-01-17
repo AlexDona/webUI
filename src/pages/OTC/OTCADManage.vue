@@ -6,7 +6,7 @@
     <!-- 2.0 广告管理 -->
     <div class="otc-AD-manage-content" :style="{'min-height':(height-305)+'px'}">
       <!-- 2.1 大标题广告管理 -->
-      <div class="AD-title font-size20 padding-l15 font-weight700">
+      <div class="AD-title font-size18 padding-l15 font-weight700">
         <!-- 广告管理 -->
         {{$t('M.otc_adMange')}}
       </div>
@@ -297,7 +297,7 @@
 import {
   cancelAllOrdersOnekey,
   getOTCAvailableCurrency,
-  getMerchantAvailablelegalTender,
+  getMerchantAvailableLegalTender,
   getOTCADManageApplyList,
   querySelectedOrdersRevocation
 } from '../../utils/api/OTC'
@@ -370,7 +370,7 @@ export default {
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
-    this.getMerchantAvailablelegalTenderList()
+    this.getMerchantAvailableLegalTenderList()
     // 3.0 获取otc广告管理列表
     this.getOTCADManageList()
   },
@@ -467,8 +467,8 @@ export default {
       }
     },
     // 7.0 可用法币查询
-    async getMerchantAvailablelegalTenderList () {
-      const data = await getMerchantAvailablelegalTender({})
+    async getMerchantAvailableLegalTenderList () {
+      const data = await getMerchantAvailableLegalTender({})
       // console.log('可用法币')
       // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
@@ -572,12 +572,12 @@ export default {
   > .otc-AD-manage-content {
     width: 1150px;
     padding-top: 50px;
-    margin: 70px auto 10px;
+    margin: 50px auto 10px;
 
     > .AD-title {
-      height: 30px;
+      height: 20px;
       margin-bottom: 30px;
-      line-height: 30px;
+      line-height: 20px;
     }
 
     > .AD-manage-main {

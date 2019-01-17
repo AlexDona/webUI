@@ -135,7 +135,7 @@
                     v-if="activeBankType[index] === 'Bankcard'"
                   >
                     <span>
-                      {{$t('M.comm_bill_house')}}: {{activedPayAccountArr[index]}}
+                      {{$t('M.comm_bill_house')}}: {{checkedPayAccountArr[index]}}
                     </span>
                   </p>
                   <p
@@ -144,7 +144,7 @@
                   >
                   <!-- 支付宝账户 -->
                     <span>{{$t('M.comm_alipay')}}{{$t('M.comm_bill_house')}}:</span>
-                    <span>{{activedPayAccountArr[index]}}</span>
+                    <span>{{checkedPayAccountArr[index]}}</span>
                   </p>
                   <p
                     class="bank-info"
@@ -152,7 +152,7 @@
                   >
                   <!-- 微信账户 -->
                     <span>{{$t('M.comm_weixin')}}{{$t('M.comm_bill_house')}}:</span>
-                    <span>{{activedPayAccountArr[index]}}</span>
+                    <span>{{checkedPayAccountArr[index]}}</span>
                   </p>
                   <p
                     class="bank-info"
@@ -160,7 +160,7 @@
                   >
                     <!-- paypal -->
                     <span>PAYPAL{{$t('M.comm_bill_house')}}:</span>
-                    <span>{{activedPayAccountArr[index]}}</span>
+                    <span>{{checkedPayAccountArr[index]}}</span>
                   </p>
                   <p
                     class="bank-info"
@@ -168,7 +168,7 @@
                   >
                   <!-- 西联汇款账户 -->
                     <span>{{$t('M.comm_xilian')}}{{$t('M.comm_bill_house')}}:</span>
-                    <span>{{activedPayAccountArr[index]}}</span>
+                    <span>{{checkedPayAccountArr[index]}}</span>
                   </p>
                 </div>
                 <!-- 扫码支付 activeBankCode[index]  :src="item.coinUrl"-->
@@ -410,7 +410,7 @@
                 v-if="item.status == 'PICKED'"
               >
                 <div class="trader-info display-inline-block">
-                  <p class="order-cancle-tips">
+                  <p class="order-cancel-tips">
                     {{$t('M.otc_tradingorder_orderExact')}}{{item.cancelTerm/60}}{{$t('M.otc_tradingorder_autoCancel')}}
                   </p>
                 </div>
@@ -623,6 +623,7 @@
             <!-- 交易密码 -->
             <input
               type="password"
+              autocomplete= "new-password"
               :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
@@ -661,6 +662,7 @@
             <!-- 交易密码 -->
             <input
               type="password"
+              autocomplete= "new-password"
               :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
@@ -700,6 +702,7 @@
           <!-- 交易密码 -->
             <input
               type="password"
+              autocomplete= "new-password"
               :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
@@ -772,13 +775,13 @@ export default {
       dialogVisibleConfirmReceipt: false, // 确认收款交易密码框
       dialogVisibleSubmitComplaint: false, // 提交申诉交易密码框
       appealTextAreaValue: '', // 订单申诉原因文本域内容
-      activitedPayStyle: '', //  选中的支付方式
-      activitedPayStyleId: '', //  选中的支付方式id-往后台传送的参数
+      checkedPayStyle: '', //  选中的支付方式:checkedPayStyle
+      checkedPayStyleId: '', //  选中的支付方式id-往后台传送的参数
       // 交易中订单列表
       tradingOrderList: [],
       activePayModeListID: '', // 选中的支付方式id
-      activedTradingOrderId: '', // 选中的订单id
-      activedPayAccountArr: [], // 当前选中的订单中付款方式中的付款账号 ：为了解决支付宝和微信账号一样做的bug修复
+      checkedTradingOrderId: '', // 选中的订单id
+      checkedPayAccountArr: [], // 当前选中的订单中付款方式中的付款账号 ：为了解决支付宝和微信账号一样做的bug修复
       // 支付方式
       activePayModeList: [], // 当前选中支付方式中的哪一个 -->为了解决支付宝和微信账号一样做的bug修复// 当前选中的支付方式的id
       activeBankFidList: [], // 当前选中支付方式的id
@@ -944,14 +947,14 @@ export default {
       // console.log('选中的订单id')
       // console.log(this.tradingOrderList[index].id)
       // console.log(this.activePayModeList[index])
-      this.activedTradingOrderId = this.tradingOrderList[index].id
+      this.checkedTradingOrderId = this.tradingOrderList[index].id
       this.tradingOrderList[index].userBankList.forEach((item) => {
         if (item.id == this.activePayModeList[index]) {
-          this.activedPayAccountArr[index] = item.cardNo
-          // console.log('选中的付款账号：' + this.activedPayAccountArr[index])
+          this.checkedPayAccountArr[index] = item.cardNo
+          // console.log('选中的付款账号：' + this.checkedPayAccountArr[index])
           this.activeBankFidList[index] = item.id
           // console.log('选中的支付方式id' + this.activeBankFidList[index])
-          this.activitedPayStyleId = this.activeBankFidList[index]
+          this.checkedPayStyleId = this.activeBankFidList[index]
           // 省
           this.activeBankProv[index] = item.prov
           // 市
@@ -1007,8 +1010,8 @@ export default {
       } else {
         this.loading = true
         let params = {
-          orderId: this.activedTradingOrderId, // 订单id
-          payId: this.activitedPayStyleId // 支付账户id
+          orderId: this.checkedTradingOrderId, // 订单id
+          payId: this.checkedPayStyleId // 支付账户id
         }
         params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
         const data = await buyerPayForOrder(params)
@@ -1029,7 +1032,7 @@ export default {
     },
     // 8.0 卖家点击确认收款按钮
     async confirmGatherMoney (id) {
-      this.activedTradingOrderId = id
+      this.checkedTradingOrderId = id
       this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
       if (this.isNeedPayPassword) {
         // 弹出交易密码框
@@ -1046,7 +1049,7 @@ export default {
       }
       this.loading = true
       let params = {
-        orderId: this.activedTradingOrderId // 订单id
+        orderId: this.checkedTradingOrderId // 订单id
       }
       // 订单id
       params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
@@ -1069,8 +1072,8 @@ export default {
       // console.log(id)
       // this.showOrderAppeal[index] = true
       this.$set(this.showOrderAppeal, index, true)
-      this.activedTradingOrderId = id
-      // console.log(this.activedTradingOrderId)
+      this.checkedTradingOrderId = id
+      // console.log(this.checkedTradingOrderId)
     },
     // 11.0 取消订单申诉按钮
     cancelOrderAppeal (index) {
@@ -1103,7 +1106,7 @@ export default {
       }
       this.loading = true
       let params = {
-        orderId: this.activedTradingOrderId, // 订单id
+        orderId: this.checkedTradingOrderId, // 订单id
         reason: this.appealTextAreaValue // 申诉原因
       }
       params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
@@ -1269,7 +1272,7 @@ export default {
                   line-height: 20px;
                 }
 
-                > .order-cancle-tips {
+                > .order-cancel-tips {
                   margin-left: 20px;
                   line-height: 20px;
                 }

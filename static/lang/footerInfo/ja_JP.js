@@ -45,5 +45,12 @@ export const footerInfo = {
   'user_pay_account_set5': 'まずWestern Unionを設定する',
   'user_pay_account_set6': '入金タイプ',
   'user_register_input_pwd': '入力パスワード',
-  'user_register_input_confirm_pwd': 'もう一度入力パスワード'
+  'user_register_input_confirm_pwd': 'もう一度入力パスワード',
+  // 交易区费率
+  'rate_withdraw_rate': '出金手数料',
+  'rate_withdraw': '毎回最小出金',
+  'rate_withdraw_min': '毎回最大出金',
+  'rate_withdraw_max': '毎日出金額',
+  'rate_withdraw_amount': '毎日出金回',
+  'rate_withdraw_times': '取引ペア率'
 }

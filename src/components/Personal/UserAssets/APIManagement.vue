@@ -530,6 +530,8 @@ export default {
     },
     // 点击创建
     stateEstablishApiButton () {
+      let isAllIpRight = true
+
       if (!this.remark) {
         // 请输入备注
         this.createErrorMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_remark')
@@ -538,14 +540,24 @@ export default {
         // 请输入IP地址
         this.createErrorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_binding') + 'IP' + this.$t('M.comm_site')
         return false
-      } else if (!IP_REG.test(this.ipSite)) {
-        this.createErrorMsg = this.$t('M.user_re_input_ip')
-        return false
       } else {
-        // 调用安全方式接口
-        this.getSecurityCenter()
-        // 赋值创建IP修改时的带回
-        this.bindingIpAddress = this.ipSite
+        let ipSiteList = this.ipSite.split(',')
+        ipSiteList.forEach(ip => {
+          if (!IP_REG.test(ip)) {
+            isAllIpRight = false
+            return false
+          }
+        })
+
+        if (!isAllIpRight) {
+          this.createErrorMsg = this.$t('M.user_re_input_ip')
+          return false
+        } else {
+          // 调用安全方式接口
+          this.getSecurityCenter()
+          // 赋值创建IP修改时的带回
+          this.bindingIpAddress = this.ipSite
+        }
       }
     },
     // 创建api检测输入格式

@@ -45,5 +45,12 @@ export const footerInfo = {
   'user_pay_account_set5': '우선 Western Union설정',
   'user_pay_account_set6': '수금 유형',
   'user_register_input_pwd': '비밀번호 입력',
-  'user_register_input_confirm_pwd': '비밀번호 재입력'
+  'user_register_input_confirm_pwd': '비밀번호 재입력',
+  // 交易区费率
+  'rate_withdraw_rate': '현금 인출 수수료',
+  'rate_withdraw': '단필로 가장적게 현금을 인출하다',
+  'rate_withdraw_min': '단필 최대 현금 인출',
+  'rate_withdraw_max': '매일 현금 인출 한도',
+  'rate_withdraw_amount': '매일 현금 인출 횟수',
+  'rate_withdraw_times': '거래 대 요율'
 }

@@ -45,5 +45,12 @@ export const footerInfo = {
   'user_pay_account_set5': '请先设置西联汇款',
   'user_pay_account_set6': '收款类型',
   'user_register_input_pwd': '请输入密码',
-  'user_register_input_confirm_pwd': '请再次输入密码'
+  'user_register_input_confirm_pwd': '请再次输入密码',
+  // 交易区费率
+  'rate_withdraw_rate': '币种费率',
+  'rate_withdraw': '提现手续费',
+  'rate_withdraw_min': '单笔最小提现',
+  'rate_withdraw_max': '单笔最大提现',
+  'rate_withdraw_amount': '每日提现额度',
+  'rate_withdraw_times': '每日提现次数'
 }
