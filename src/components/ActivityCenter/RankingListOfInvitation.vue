@@ -21,7 +21,33 @@
             >
               {{timeFilter(date)}}
             </h1>
-            <div v-html="rulesOfInvitation"></div>
+            <div
+              class="chinese"
+              v-if="language=='zh_CN' || language=='zh_TW'"
+            >
+              <p>1.邀请奖励{{coinName}}统计起始时间为{{startDate}} - {{endDate}}，在此之前已邀请 注册的无累计{{coinName}}至此活动；</p>
+              <p>2.登录平台账户—财务中心—推广注册链接—复制专属推广链接；</p>
+              <p>3.假设新用户A通过您的推广链接注册完成实名认证，即成为您的直接下级，系统会在您的账户增加{{configInfo.coinCount}}{{coinName}}；新用户B通过新用户A的推广链接，即成为您的间接下级，间接下级不享受赠送{{coinName}}；</p>
+              <p>4.为维护正常推广者权益，如发现有作弊者，经分析属实，将强制取消奖励，平台有权对推广虚假用户骗取奖励行为进行判定；</p>
+              <p>5.邀请的新用户注册通过实名认证，系统则自动累计{{coinName}}；</p>
+              <p>6.活动奖励{{coinName}}币均为官方第一、第二期新币投票所得{{coinName}}币；</p>
+              <p>7.邀请注册详细数据用户可进入财务中心—代理下级查询，近期官网将展示邀请排行榜，排名按照积分排序，公平公正公开；</p>
+              <p>8.数据每隔5分钟刷新1次</p>
+            </div>
+            <div
+              class="english"
+              v-else
+            >
+              <p>1. The invitation to reward {{coinName}} statistics start time is 2018-05-20 10:18, before this has been invitation  to register no cumulative {{coinName}} to this event;</p>
+              <p>2. Login in the platform account - Finance Center - Promotion of registration link - copy exclusive promotion link;</p>
+              <p>3. Assume that the new user A completes the real-name authentication through your promotion registration link , he will be your direct subordinate, the system will add 10{{coinName}} to your account; the new user B will become your indirect subordinate through the promotion link of the new user A. Indirect subordinates do not enjoy the gift of {{coinName}};</p>
+              <p>4. In order to maintain the rights of normal promoters, if there is a cheater, the analysis is true, the reward will be forcibly cancelled, and the platform has the right to judge the fraudulent behavior of promoting false users;</p>
+              <p>5. The new user registration is approved by real-name authentication, and the system automatically accumulates {{coinName}};</p>
+              <p>6. The activity reward {{coinName}} coins are the official first and second voting got {{coinName}} coins;</p>
+              <p>7. Invite registered detailed data users can enter the financial center to  - agent lower level query, the official website will display the invitation list, the ranking is ranked according to points, fair and open;</p>
+              <p>8. Data is refreshed once every 5 minutes.</p>
+            </div>
+            <!--<div v-html="rulesOfInvitation"></div>-->
           </div>
           <div class="middle-line"></div>
           <div class="main-content">
@@ -117,7 +143,7 @@ export default {
   created () {
     this.getRealTime()
     this.getRankingList()
-    this.getRulesOfInvitation(this.language)
+    // this.getRulesOfInvitation(this.language)
   },
   mounted () {},
   activated () {},
@@ -190,7 +216,7 @@ export default {
   },
   watch: {
     language (newVal) {
-      this.getRulesOfInvitation(newVal)
+      // this.getRulesOfInvitation(newVal)
     },
     coinName (newVal) {
       console.log(newVal)
