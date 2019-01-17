@@ -71,7 +71,7 @@
                     :label="$t('M.rate_withdraw')"
                   >
                     <template slot-scope="s">
-                      <div>{{ s.row.withdrawRate*100 }}%</div>
+                      <div>{{ s.row.withdrawRate }}%</div>
                     </template>
                   </el-table-column>
                   <!-- 单笔最小提现 -->
