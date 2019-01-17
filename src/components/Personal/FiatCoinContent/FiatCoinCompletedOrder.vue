@@ -300,8 +300,7 @@ export default {
       // completedOrdersList: []
     }
   },
-  created () {
-  },
+  created () {},
   mounted () {},
   activated () {},
   update () {},

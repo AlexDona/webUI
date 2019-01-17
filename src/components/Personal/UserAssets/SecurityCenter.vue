@@ -82,7 +82,7 @@
       </div>
     </div>
     <div class="security-setting security-background margin-top9">
-      <header class="security-setting-header line-height50 paddinglr20 font-size16">
+      <header class="security-setting-header line-height50 padding-lr20 font-size16">
         <!--安全设置-->
         {{ $t('M.user_security_safety') }}{{ $t('M.comm_set') }}
       </header>

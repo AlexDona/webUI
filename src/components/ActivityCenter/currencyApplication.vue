@@ -5,72 +5,12 @@
   >
     <!-- 上币申请 -->
     <div class="inner-box">
-      <div class="top">
-        <img
-          src="../../assets/develop/applyfor.png"
-        >
-        <!-- 上币申请 -->
-        <h1 class="title">{{ $t('M.actionCenter_coin_apply') }}</h1>
-      </div>
       <div class="bottom">
         <div
           class="content"
         >
-          <!-- <div
-            class="top"
-            v-html="contentHTML"
-          > -->
-          <div
-            class="top"
-          >
-            <div class="item">
-              <p class="title">
-                <!-- 申请 -->
-                {{$t('M.actionCenter_Token_step1')}}
-              </p>
-              <p class="content">
-                <!-- 提交申请资料到平台 -->
-                {{$t('M.actionCenter_Token_step2')}}
-              </p>
-              <span class="index">1</span>
-            </div>
-            <div class="arrow"></div>
-            <div class="item">
-              <p class="title">
-                <!-- 审核 -->
-                {{$t('M.actionCenter_Token_step3')}}
-              </p>
-              <p class="content">
-                <!-- 平台审核资料信息 -->
-                {{$t('M.actionCenter_Token_step4')}}
-              </p>
-              <span class="index">2</span>
-            </div>
-            <div class="arrow reverse"></div>
-            <div class="item">
-              <p class="title">
-                <!-- 投票 -->
-                {{$t('M.actionCenter_Token_step5')}}
-              </p>
-              <p class="content">
-                <!-- 新币登录投票 -->
-                {{$t('M.actionCenter_Token_step6')}}
-              </p>
-              <span class="index">3</span>
-            </div>
-            <div class="arrow"></div>
-            <div class="item">
-              <p class="title">
-                <!-- 上线 -->
-                {{$t('M.actionCenter_Token_step7')}}
-              </p>
-              <p class="content">
-                <!-- 上线交易区 -->
-                {{$t('M.actionCenter_Token_step8')}}
-              </p>
-              <span class="index">4</span>
-            </div>
-          </div>
+          <h1 class="title">{{ $t('M.actionCenter_coin_apply') }}</h1>
+
           <div
             v-html="contentHTML"
             class="return_content"
@@ -173,47 +113,33 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @import "../../../static/css/scss/index.scss";
+
   .currency-application-box {
-    margin-top: 66px;
+    padding: 184px 0 0;
+    background-size: 100% 100%;
 
     > .inner-box {
-      > .top {
-        position: relative;
-        height: 344px;
-        overflow: hidden;
-        font-weight: bold;
-        font-size: 30px;
-        line-height: 250px;
-        text-align: center;
-        color: rgba(255, 255, 255, 1);
-
-        > img {
-          width: 100%;
-          height: 100%;
-        }
-
-        > .title {
-          position: absolute;
-          top: 0;
-          left: 50%;
-          font-weight: 500;
-          font-size: 36px;
-          transform: translate(-50%, 0);
-        }
-      }
-
       > .bottom {
         position: relative;
         width: 100%;
-        height: 1310px;
+        height: 1100px;
 
         > .content {
           position: absolute;
-          top: -164px;
           left: 50%;
           width: 1100px;
-          height: 1310px;
+          height: 1000px;
+          background: url(../../assets/develop/applaction-inner-night-bg.png) no-repeat center center;
+          background-size: 100% 100%;
           transform: translate(-50%, 0);
+
+          > .title {
+            font-size: 36px;
+            font-family: HYk2gj;
+            line-height: 140px;
+            text-align: center;
+          }
 
           > .top {
             padding: 56px;
@@ -265,12 +191,12 @@ export default {
           }
 
           > .return_content {
-            padding: 0 50px;
+            max-height: 1000px;
+            padding: 0 170px;
+            overflow: auto;
           }
 
           > .bottom {
-            padding: 50px 40px;
-
             > .item {
               margin-bottom: 50px;
 
@@ -295,18 +221,19 @@ export default {
 
             > .download-box {
               width: 100%;
-              text-align: center;
+              padding: 0 125px;
+              text-align: left;
 
               > .download-btn {
                 display: inline-block;
-                width: 300px;
+                width: 200px;
                 height: 50px;
                 margin: 150px auto;
                 border-radius: 4px;
                 font-size: 16px;
                 line-height: 50px;
                 color: #fff;
-                background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                background-color: $mainColor;
               }
             }
           }
@@ -316,13 +243,12 @@ export default {
 
     &.night {
       color: #a9bed4;
+      background: url(../../assets/develop/applaction-bg.png) no-repeat center center;
 
       > .inner-box {
         > .bottom {
-          background-color: #121824;
-
           > .content {
-            background-color: #1e2636;
+            background-color: rgba(19, 43, 96, .3);
 
             > .top {
               > .item {
@@ -340,16 +266,10 @@ export default {
             }
 
             > .bottom {
-              padding: 50px 40px;
-
               > .email-download {
                 .target-email {
                   color: #338ff5;
                 }
-              }
-
-              > .download-box {
-                text-align: center;
               }
             }
           }
@@ -359,11 +279,16 @@ export default {
 
     &.day {
       color: #000;
+      background-color: #f5f5f5;
 
       > .inner-box {
         > .bottom {
           > .content {
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, .3);
+
+            > .title {
+              color: $mainColor;
+            }
 
             > .top {
               > .item {
@@ -372,8 +297,6 @@ export default {
             }
 
             > .bottom {
-              padding: 50px 40px;
-
               > .item {
                 margin-bottom: 50px;
 

@@ -336,6 +336,7 @@
                 >
                   <input
                     type="password"
+                    autocomplete= "new-password"
                     class="form-input-common border-radius2 padding-l15 box-sizing"
                     v-model="payPassword"
                     @keydown="setErrorMsg(3, '')"

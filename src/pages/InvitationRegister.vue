@@ -43,8 +43,8 @@
 <script>
 import {
   // getFooterInfo,
-  returnAjaxMsg,
-  isWXBrowser
+  isWXBrowser,
+  getNestedData
 } from '../utils/commonFunc'
 import {
   findUserInfoByShowId
@@ -102,13 +102,8 @@ export default {
         showId: this.$route.query.showId
       }
       const data = await findUserInfoByShowId(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        console.log(data)
-        this.inviter = data.data.data.userName
-        this.fullscreenLoading = false
-      }
+      this.inviter = getNestedData(data, 'data.userName')
+      this.fullscreenLoading = false
     }
   },
   filter: {},

@@ -128,6 +128,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="account-input border-radius2"
                 v-model="password"
                 @keydown="setErrorMsg(1, '')"
@@ -205,7 +206,8 @@ export default {
         '' // 交易密码
       ],
       // loadingCircle: {} // 整页loading
-      fullscreenLoading: false // 整页loading
+      fullscreenLoading: false, // 整页loading
+      addAlipaySuccessJumpTimer: null // 添加支付宝成功后自动跳转定时器
     }
   },
   created () {
@@ -300,9 +302,9 @@ export default {
       }
       console.log(this.dialogImageHandUrl1)
       if (this.dialogImageHandUrl1 == '') {
-        // 请上传微信收款码
+        // 请上传支付宝收款码
         this.$message({
-          message: this.$t('M.user_account_weChat_pla'),
+          message: this.$t('M.user_account_alipay_pla'),
           type: 'error'
         })
         return false
@@ -378,7 +380,7 @@ export default {
     },
     // 成功自动跳转
     successJump () {
-      setInterval(() => {
+      this.addAlipaySuccessJumpTimer = setInterval(() => {
         if (this.successCountDown === 0) {
           this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
           this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
@@ -403,7 +405,13 @@ export default {
       return apiCommonUrl
     }
   },
-  watch: {}
+  watch: {},
+  destroyed () {
+    // 离开本组件清除定时器
+    if (this.addAlipaySuccessJumpTimer) {
+      clearInterval(this.addAlipaySuccessJumpTimer)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

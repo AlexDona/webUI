@@ -3,7 +3,6 @@ const store = storeCreater()
 getSize()
 
 function getSize () {
-  /* 让文字和标签的大小随着屏幕的尺寸做变话 等比缩放 */
   let html = document.getElementsByTagName('html')[0]
   /* 取到屏幕的宽度 */
   let width = window.innerWidth

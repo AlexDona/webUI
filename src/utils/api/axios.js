@@ -8,6 +8,7 @@ import {
 import {getNestedData} from '../commonFunc'
 import axios from 'axios'
 import storeCreater from '../../vuex'
+
 const store = storeCreater()
 let util = {}
 util.ajax = axios.create({
@@ -17,8 +18,9 @@ util.ajax = axios.create({
 })
 
 util.ajax.interceptors.request.use((config) => {
-  let needLoading = !getNestedData(config.params, 'not-loading')
-  console.log(needLoading)
+  const url = `${config.url}`
+  let needLoading = getNestedData(config.params, 'loading') || getNestedData(config.data, 'loading') || url.endsWith('user/userLoginForStep1')
+
   if (needLoading) {
     store.commit('CHANGE_AJAX_READY_STATUS', true)
     console.log(store.state.common.isAjaxReady)
@@ -38,7 +40,6 @@ util.ajax.interceptors.response.use(
     if (!response.data) {
       response.data = {}
     }
-
     store.commit('CHANGE_AJAX_READY_STATUS', false)
     return response
   },

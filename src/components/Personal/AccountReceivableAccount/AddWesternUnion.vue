@@ -79,6 +79,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="western-input border-radius2"
                 v-model="transactionPassword"
                 @keydown="setErrorMsg(1, '')"
@@ -146,7 +147,8 @@ export default {
       errorShowStatusList: [
         '', // 西联汇款账号
         '' // 交易密码
-      ]
+      ],
+      addWesternUnionSuccessJumpTimer: null // 添加西联汇款成功后自动跳转定时器
     }
   },
   created () {
@@ -280,7 +282,7 @@ export default {
     },
     // 成功自动跳转
     successJump () {
-      setInterval(() => {
+      this.addWesternUnionSuccessJumpTimer = setInterval(() => {
         if (this.successCountDown === 0) {
           this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
           this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
@@ -302,7 +304,13 @@ export default {
       return window.innerHeight
     }
   },
-  watch: {}
+  watch: {},
+  destroyed () {
+    // 离开本组件清除定时器
+    if (this.addWesternUnionSuccessJumpTimer) {
+      clearInterval(this.addWesternUnionSuccessJumpTimer)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

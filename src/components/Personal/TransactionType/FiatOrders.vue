@@ -25,7 +25,7 @@
             <span class="style-input">
               <!--全部-->
               <el-select
-                v-model="activitedMerchantsOrdersTraderStyleList"
+                v-model="activatedMerchantsOrdersTraderStyleList"
                 :no-data-text="$t('M.comm_no_data')"
                 @change="changeMerchantsOrdersTraderStyleList"
                 clearable
@@ -49,7 +49,7 @@
             <span class="status-input">
              <!--全部-->
            <el-select
-             v-model="activitedMerchantsOrdersCoin"
+             v-model="activatedMerchantsOrdersCoin"
              :no-data-text="$t('M.comm_no_data')"
              @change="changeMerchantsOrdersCoin"
              clearable
@@ -73,7 +73,7 @@
             <span class="status-input">
               <!--全部-->
               <el-select
-                v-model="activitedMerchantsOrdersCurrency"
+                v-model="activatedMerchantsOrdersCurrency"
                 :no-data-text="$t('M.comm_no_data')"
                 @change="changeMerchantsOrdersCurrency"
                 clearable
@@ -196,7 +196,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 //   getOTCEntrustingOrders
 // } from '../../../utils/api/personal'
 import {
-  getMerchantAvailablelegalTender,
+  getMerchantAvailableLegalTender,
   getOTCAvailableCurrency,
   getOTCEntrustingOrders
 } from '../../../utils/api/OTC'
@@ -223,7 +223,7 @@ export default {
     return {
       activeName: 'TRADING',
       // 1.0 商家订单筛选下拉框数组--交易类型
-      activitedMerchantsOrdersTraderStyleList: '', // 选中的筛选项
+      activatedMerchantsOrdersTraderStyleList: '', // 选中的筛选项
       merchantsOrdersTraderStyleList: [
         {
           value: 'BUY',
@@ -235,13 +235,13 @@ export default {
         }
       ],
       // 商家订单筛选下拉框 币种
-      activitedMerchantsOrdersCoin: '',
+      activatedMerchantsOrdersCoin: '',
       merchantsOrdersCoinList: [],
       // 商家订单筛选下拉框 法币
-      activitedMerchantsOrdersCurrency: '',
+      activatedMerchantsOrdersCurrency: '',
       merchantsOrdersCurrencyList: [],
       // 2.0 商家订单筛选下拉框数组--状态
-      activitedMerchantsOrdersStatusList: '', // 选中的筛选项
+      activatedMerchantsOrdersStatusList: '', // 选中的筛选项
       merchantsOrdersStatusList: [
         {
           value: 'PAYED',
@@ -273,10 +273,10 @@ export default {
   },
   async created () {
     await this.getOTCAvailableCurrencyList()
-    await this.getMerchantAvailablelegalTenderList()
+    await this.getMerchantAvailableLegalTenderList()
   },
   mounted () {},
-  activited () {},
+  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -306,8 +306,8 @@ export default {
       }
     },
     // 页面加载时 可用法币查询
-    async getMerchantAvailablelegalTenderList () {
-      const data = await getMerchantAvailablelegalTender()
+    async getMerchantAvailableLegalTenderList () {
+      const data = await getMerchantAvailableLegalTender()
       console.log('可用法币')
       console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
@@ -319,19 +319,19 @@ export default {
     },
     // 选中交易 类型 赋值
     changeMerchantsOrdersTraderStyleList (e) {
-      this.activitedMerchantsOrdersTraderStyleList = e
+      this.activatedMerchantsOrdersTraderStyleList = e
     },
     // 选中 币种 状态赋值
     changeMerchantsOrdersCoin (e) {
-      this.activitedMerchantsOrdersCoin = e
+      this.activatedMerchantsOrdersCoin = e
     },
     // 选中 货币 状态赋值
     changeMerchantsOrdersCurrency (e) {
-      this.activitedMerchantsOrdersCurrency = e
+      this.activatedMerchantsOrdersCurrency = e
     },
     // 选中 状态 赋值
     changeMerchantsOrdersStatusList (e) {
-      this.activitedMerchantsOrdersStatusList = e
+      this.activatedMerchantsOrdersStatusList = e
     },
     // 点击查询按钮
     findFilter (activeName) {
@@ -348,17 +348,17 @@ export default {
       //   // 每页条数
       //   // pageSize: 0,
       //   // 币种
-      //   coinId: this.activitedMerchantsOrdersCoin,
+      //   coinId: this.activatedMerchantsOrdersCoin,
       //   // 法币
-      //   currencyId: this.activitedMerchantsOrdersCurrency,
+      //   currencyId: this.activatedMerchantsOrdersCurrency,
       //   // 状态
-      //   status: this.activitedMerchantsOrdersStatusList,
+      //   status: this.activatedMerchantsOrdersStatusList,
       //   // 开始时间
       //   startTime: this.startTime,
       //   // 结束时间
       //   endTime: this.endTime,
       //   // 类型
-      //   tradeType: this.activitedMerchantsOrdersTraderStyleList
+      //   tradeType: this.activatedMerchantsOrdersTraderStyleList
       // })
       // if (!(returnAjaxMsg(data, this, 0))) {
       //   return false
@@ -368,10 +368,10 @@ export default {
       // }
     },
     resetCondition () {
-      this.activitedMerchantsOrdersTraderStyleList = ''
-      this.activitedMerchantsOrdersCoin = ''
-      this.activitedMerchantsOrdersCurrency = ''
-      this.activitedMerchantsOrdersStatusList = ''
+      this.activatedMerchantsOrdersTraderStyleList = ''
+      this.activatedMerchantsOrdersCoin = ''
+      this.activatedMerchantsOrdersCurrency = ''
+      this.activatedMerchantsOrdersStatusList = ''
       this.startTime = ''
       this.endTime = ''
       // this.getOTCEntrustingOrdersRevocation()
@@ -383,9 +383,9 @@ export default {
       this.fullscreenLoading = true
       let params = {
         // 币种
-        coinId: this.activitedMerchantsOrdersCoin,
+        coinId: this.activatedMerchantsOrdersCoin,
         // 法币
-        currencyId: this.activitedMerchantsOrdersCurrency,
+        currencyId: this.activatedMerchantsOrdersCurrency,
         // 状态
         status: activeName,
         // 开始时间
@@ -393,7 +393,7 @@ export default {
         // 结束时间
         endTime: this.endTime,
         // 类型
-        tradeType: this.activitedMerchantsOrdersTraderStyleList,
+        tradeType: this.activatedMerchantsOrdersTraderStyleList,
         pageNum: this.legalTradePageNum,
         pageSize: this.legalTradePageSize
       }

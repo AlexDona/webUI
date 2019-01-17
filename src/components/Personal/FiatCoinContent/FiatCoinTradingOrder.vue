@@ -329,7 +329,7 @@
                   <el-button
                     type="primary"
                     size="mini"
-                    @click="comfirmPayMoney(index)"
+                    @click="confirmPayMoney(index)"
                   >
                     <!--确认付款-->
                     {{$t('M.otc_trading_confirmpayment')}}
@@ -452,7 +452,7 @@
                 v-if="item.status == 'PICKED'"
               >
                 <div class="trader-info display-inline-block">
-                  <p class="order-cancle-tips">
+                  <p class="order-cancel-tips">
                     <!--订单生成后{{item.cancelTerm/60}}分钟内对方未提交付款，订单将自动取消-->
                     {{$t('M.otc_tradingorder_orderExact')}}{{item.cancelTerm/60}}{{$t('M.otc_tradingorder_autoCancel')}}
                   </p>
@@ -566,7 +566,7 @@
                   <el-button
                     type="primary"
                     size="mini"
-                    @click="comfirmGatherMoney(item.id)"
+                    @click="confirmGatherMoney(item.id)"
                   >
                     <!--确认收款-->
                     {{$t('M.otc_trading_collectionconfirmation')}}
@@ -681,6 +681,7 @@
           <div class="input">
             <input
               type="password"
+              autocomplete= "new-password"
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
@@ -721,6 +722,7 @@
           <div class="input">
             <input
               type="password"
+              autocomplete= "new-password"
               class="password-input"
               v-model="tradePassword"
             >
@@ -759,6 +761,7 @@
           <div class="input">
             <input
               type="password"
+              autocomplete= "new-password"
               class="password-input"
               v-model="tradePassword"
             >
@@ -990,7 +993,7 @@ export default {
       })
     },
     // 4.0 买家点击确认付款按钮 弹出交易密码框
-    comfirmPayMoney (index) {
+    confirmPayMoney (index) {
       if (!this.activePayModeList[index]) {
         this.$message({
           // 请选择支付方式
@@ -1056,7 +1059,7 @@ export default {
     //  console.log(e)
     // },
     // 8.0 卖家点击确认收款按钮
-    comfirmGatherMoney (id) {
+    confirmGatherMoney (id) {
       this.activedTradingOrderId = id
       // 弹出交易密码框
       this.dialogVisible2 = true
@@ -1335,7 +1338,7 @@ export default {
                     line-height: 20px;
                   }
 
-                  > .order-cancle-tips {
+                  > .order-cancel-tips {
                     margin-left: 20px;
                     line-height: 20px;
                   }

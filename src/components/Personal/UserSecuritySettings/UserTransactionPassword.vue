@@ -65,6 +65,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 v-model="setPassword.newPassword"
                 @keydown="setErrorMsg(1,'')"
@@ -82,6 +83,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 v-model="setPassword.confirmPassword"
                 @keydown="setErrorMsg(2,'')"
@@ -113,6 +115,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 v-model="modifyPassword.transactionPassword"
                 @keydown="tieErrorMsg(0,'')"
@@ -130,6 +133,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 v-model="modifyPassword.resetTransactionPassword"
                 @keydown="tieErrorMsg(1,'')"
@@ -284,7 +288,8 @@ export default {
         '', // 邮箱验证码
         '' // 谷歌验证码
       ],
-      successCountDown: 1 // 成功倒计时
+      successCountDown: 1, // 成功倒计时
+      googleBindSuccessJumpTimer: null // 谷歌绑定成功跳转定时器
     }
   },
   async created () {
@@ -595,7 +600,7 @@ export default {
     },
     // 谷歌绑定成功自动跳转
     successJump () {
-      setInterval(() => {
+      this.googleBindSuccessJumpTimer = setInterval(() => {
         if (this.successCountDown === 0) {
           this.returnSuperior()
         }
@@ -618,7 +623,13 @@ export default {
       return window.innerHeight
     }
   },
-  watch: {}
+  watch: {},
+  destroyed () {
+    // 离开本组件清除定时器
+    if (this.googleBindSuccessJumpTimer) {
+      clearInterval(this.googleBindSuccessJumpTimer)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

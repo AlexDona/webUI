@@ -117,7 +117,6 @@ import {
   unzip
 } from '../../utils'
 import {
-  returnAjaxMsg,
   // splitSocketParams
   toggleUserCollection,
   getCollectionList,
@@ -313,8 +312,8 @@ export default{
     },
     // 获取用户收藏列表
     async getCollectionList (collectSymbol) {
-      await getCollectionList(this, data => {
-        _.forEach(data.data.data, item => {
+      await getCollectionList(data => {
+        _.forEach(data.data, item => {
           collectSymbol[item.content] = item.content
         })
       })
@@ -325,30 +324,25 @@ export default{
         i18n: this.language
       }
       const data = await getHomeMarketByAjax(params)
-      console.log(data)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        let objData = getNestedData(data, 'data.data.obj')
-        this.newMarketList = JSON.parse(unzip(objData))
-        this.ergodicNewMarketList(item => {
-          this.CHANGE_SYMBOL_MAP({
-            key: item.id,
-            val: item
-          })
+      let objData = getNestedData(data, 'data.obj')
+      this.newMarketList = JSON.parse(unzip(objData))
+      this.ergodicNewMarketList(item => {
+        this.CHANGE_SYMBOL_MAP({
+          key: item.id,
+          val: item
         })
-        this.activeName = getNestedData(this.newMarketList[0], 'plateId')
-        this.activeIndex = 0
-        let collectSymbol = {}
-        if (!this.isLogin) {
-          collectSymbol = JSON.parse(getStore('collectSymbol')) || {}
-        } else {
-          await this.getCollectionList(collectSymbol)
-        }
-        this.setCollectData(collectSymbol)
-        this.concatSocketParamsStr(this.activeIndex)
-        this.getFilterMarketList()
+      })
+      this.activeName = getNestedData(this.newMarketList[0], 'plateId')
+      this.activeIndex = 0
+      let collectSymbol = {}
+      if (!this.isLogin) {
+        collectSymbol = JSON.parse(getStore('collectSymbol')) || {}
+      } else {
+        await this.getCollectionList(collectSymbol)
       }
+      this.setCollectData(collectSymbol)
+      this.concatSocketParamsStr(this.activeIndex)
+      this.getFilterMarketList()
     },
     getSocketData (type, params) {
       // 首页socket
@@ -429,7 +423,7 @@ export default{
         })
         this.collectArea.content.push(row)
         if (this.isLogin) {
-          await toggleUserCollection('add', id, this)
+          await toggleUserCollection('add', id)
         }
       } else {
         this.CHANGE_COLLECT_SYMBOL({
@@ -441,7 +435,7 @@ export default{
         let newList = this.collectArea.content.filter(item => item.id !== id)
         this.$set(this.collectArea, 'content', newList)
         if (this.isLogin) {
-          await toggleUserCollection('remove', id, this)
+          await toggleUserCollection('remove', id)
         }
       }
       if (!this.isLogin) {

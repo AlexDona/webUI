@@ -6,7 +6,7 @@
     <!-- 2.0 -->
     <div class="report-form-statistics-content">
       <!-- 2.1 报表统计标题 -->
-      <div class="report-form-title font-size20 padding-l15 font-weight700">
+      <div class="report-form-title font-size18 padding-l15 font-weight700">
         <!-- 报表统计 -->
         {{$t('M.otc_formStatistics')}}
       </div>
@@ -469,7 +469,7 @@
 <script>
 import {
   getOTCAvailableCurrency,
-  getMerchantAvailablelegalTender,
+  getMerchantAvailableLegalTender,
   getOTCMerchantsOrdersList,
   getOTCReportFormStatisticsData
 } from '../../utils/api/OTC'
@@ -534,7 +534,7 @@ export default {
     // 1.0 otc可用币种查询
     await this.getOTCAvailableCurrencyList()
     // 2.0 查询可用法币币种列表
-    await this.getMerchantAvailablelegalTenderList()
+    await this.getMerchantAvailableLegalTenderList()
     // 订单详情列表
     this.getOTCEntrustingOrdersRevocation()
     // 报表统计主页
@@ -591,8 +591,8 @@ export default {
       this.getOTCEntrustingOrdersRevocation()
     },
     //  3.0 查询 可用法币 币种列表
-    async getMerchantAvailablelegalTenderList () {
-      const data = await getMerchantAvailablelegalTender({
+    async getMerchantAvailableLegalTenderList () {
+      const data = await getMerchantAvailableLegalTender({
       })
       // console.log('查询可用法币币种列表')
       // console.log(data)
@@ -750,12 +750,12 @@ export default {
   > .report-form-statistics-content {
     width: 1150px;
     padding-top: 50px;
-    margin: 70px auto 10px;
+    margin: 50px auto 10px;
 
     > .report-form-title {
-      height: 30px;
+      height: 20px;
       margin-bottom: 30px;
-      line-height: 30px;
+      line-height: 20px;
     }
 
     > .report-form-filtrate {

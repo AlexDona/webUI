@@ -62,9 +62,9 @@
               <el-input
                 type="textarea"
                 :autosize="{ minRows: 4, maxRows: 2}"
-                v-model="paypalAccount"
+                v-model="PayPalAccount"
                 @keydown="setErrorMsg(0, '')"
-                @blur="checkoutInputFormat(0, paypalAccount)"
+                @blur="checkoutInputFormat(0, PayPalAccount)"
               >
                 <!--错误提示-->
                 <ErrorBox
@@ -79,6 +79,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="payment-input border-radius2"
                 v-model="transactionPassword"
                 @keydown="setErrorMsg(1, '')"
@@ -135,7 +136,7 @@ export default {
   },
   data () {
     return {
-      paypalAccount: '', // paypal账号
+      PayPalAccount: '', // paypal账号
       transactionPassword: '', // 交易密码
       // bankType: 'paypal', // 类型
       id: '', // ID
@@ -147,7 +148,8 @@ export default {
       errorShowStatusList: [
         '', // paypal账号
         '' // 交易密码
-      ]
+      ],
+      addPAYPALSuccessJumpTimer: null // 添加PayPal成功后跳转定时器
     }
   },
   created () {
@@ -208,7 +210,7 @@ export default {
       this.stateSeniorCertification()
     },
     async stateSeniorCertification () {
-      if (!this.paypalAccount) {
+      if (!this.PayPalAccount) {
         // 请输入paypal账号
         this.$message({
           message: this.$t('M.user_bind_paypal_please_input'),
@@ -218,7 +220,7 @@ export default {
       }
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(0, this.paypalAccount) &&
+        this.checkoutInputFormat(0, this.PayPalAccount) &&
         this.checkoutInputFormat(1, this.transactionPassword)
       ) {
         goOnStatus = 1
@@ -228,7 +230,7 @@ export default {
       if (goOnStatus) {
         let data
         let param = {
-          cardNo: this.paypalAccount, // paypal账号
+          cardNo: this.PayPalAccount, // paypal账号
           payPassword: this.transactionPassword, // 交易密码
           bankType: 'PAYPAL', // type
           id: this.id
@@ -251,7 +253,7 @@ export default {
     },
     // 接口请求完成之后清空数据
     stateEmptyData () {
-      this.paypalAccount = ''
+      this.PayPalAccount = ''
       this.transactionPassword = ''
     },
     // 获取支付方式信息
@@ -275,14 +277,14 @@ export default {
         let detailData = data.data.data
         this.paymentMethodList = detailData
         // 修改时带回paypal账号
-        this.paypalAccount = detailData.cardNo
+        this.PayPalAccount = detailData.cardNo
         this.id = detailData.id
         console.log(this.paymentMethodList)
       }
     },
     // 成功自动跳转
     successJump () {
-      setInterval(() => {
+      this.addPAYPALSuccessJumpTimer = setInterval(() => {
         if (this.successCountDown === 0) {
           this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
           this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
@@ -304,7 +306,13 @@ export default {
       return window.innerHeight
     }
   },
-  watch: {}
+  watch: {},
+  destroyed () {
+    // 离开本组件清除定时器
+    if (this.addPAYPALSuccessJumpTimer) {
+      clearInterval(this.addPAYPALSuccessJumpTimer)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

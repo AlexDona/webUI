@@ -12,7 +12,7 @@
     <div class="invitation-promotion-main min-height500 margin-top9">
       <!---邀请推广-->
       <div class="extension-info">
-        <header class="extension-info-header line-height56 paddinglr20 border-radius2">
+        <header class="extension-info-header line-height56 padding-lr20 border-radius2">
           <span class="font-size16 header-color">
             <!---邀请推广-->
             {{ $t('M.comm_user_invite_generalize') }}
@@ -584,6 +584,8 @@ export default {
                     position: absolute;
                     bottom: 35px;
                     right: 180px;
+                    width: 100px !important;
+                    height: 100px !important;
                     border-radius: 5px;
                   }
                 }
