@@ -126,6 +126,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="chat-input border-radius2"
                 v-model="password"
                 @keydown="setErrorMsg(1, '')"

@@ -104,6 +104,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="bank-input border-radius2"
                 v-model="password"
                 @keydown="setErrorMsg(3, '')"

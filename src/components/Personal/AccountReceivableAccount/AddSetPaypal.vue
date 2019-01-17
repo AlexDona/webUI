@@ -79,6 +79,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="payment-input border-radius2"
                 v-model="transactionPassword"
                 @keydown="setErrorMsg(1, '')"

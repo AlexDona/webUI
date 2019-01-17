@@ -623,6 +623,7 @@
             <!-- 交易密码 -->
             <input
               type="password"
+              autocomplete= "new-password"
               :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
@@ -661,6 +662,7 @@
             <!-- 交易密码 -->
             <input
               type="password"
+              autocomplete= "new-password"
               :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
@@ -700,6 +702,7 @@
           <!-- 交易密码 -->
             <input
               type="password"
+              autocomplete= "new-password"
               :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"

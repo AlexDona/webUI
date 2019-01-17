@@ -410,6 +410,7 @@
       >
         <el-input
           type="password"
+          autocomplete= "new-password"
           v-model="payPassword"
           :placeholder="`${$t('M.comm_please_enter')}${$t('M.comm_password')}`"
           @input="clearPasswordErrorMsg"

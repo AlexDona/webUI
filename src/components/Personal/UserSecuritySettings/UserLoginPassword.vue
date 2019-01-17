@@ -36,6 +36,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="login-input border-radius2 padding-l15 box-sizing"
                 v-model="originalLoginPassword"
                 @keydown="setErrorMsg(0,'')"
@@ -53,6 +54,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="login-input border-radius2 padding-l15 box-sizing"
                 v-model="newLoginPassword"
                 @keydown="setErrorMsg(1,'')"
@@ -70,6 +72,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="login-input border-radius2 padding-l15 box-sizing"
                 v-model="confirmLoginPassword"
                 @keydown="setErrorMsg(2,'')"

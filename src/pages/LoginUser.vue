@@ -64,13 +64,13 @@
                 <!-- 请输入密码 -->
                 <input
                   type="password"
-                  autocomplete="off"
+                  autocomplete= "new-password"
                   v-model.trim="password"
                   :placeholder="$t('M.login_tips2')"
                   @keydown="setErrorMsg(1,'')"
                   @keyup.enter="loginForStep1"
                   @blur="checkoutInputFormat(1,password)"
-                >
+                />
               </div>
               <ErrorBox
                 :text="errorShowStatusList[1]"
@@ -390,6 +390,7 @@
               <!-- 请输入密码 -->
               <input
                 type="password"
+                autocomplete= "new-password"
                 :placeholder="$t('M.comm_please_enter') + $t('M.comm_loginpassword')"
                 v-model.trim="password"
                 @focus="setErrorMsg('')"

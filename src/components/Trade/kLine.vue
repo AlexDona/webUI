@@ -254,7 +254,7 @@ export default {
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = getNestedData(this.activeSymbol, 'id')
         if (this.isLogin) {
-          this.getUserOrderSocket(this.symbol, this.userId)
+          this.getUserOrderSocket('SUB', this.symbol)
         }
       }
     },
@@ -531,10 +531,10 @@ export default {
       }
     },
     // 委单事实刷新标记
-    getUserOrderSocket (symbol, userId) {
+    getUserOrderSocket (type, symbol) {
       this.socket.send({
-        'tag': 'SUB',
-        'content': `market.${symbol}.userorder.${userId}`,
+        'tag': type,
+        'content': `market.${symbol}.userorder.${this.userId}`,
         'id': 'pc'
       })
     },
@@ -602,9 +602,11 @@ export default {
         this.getBuyAndSellBySocket('CANCEL', oldVal)
         this.getDepthDataBySocket('CANCEL', oldVal)
         this.getTradeRecordBySocket('CANCEL', oldVal)
+        this.getUserOrderSocket('CANCEL', oldVal)
       }
       this.getActiveSymbolData(newVal)
       this.subscribeSocketData(newVal)
+      this.getUserOrderSocket('SUB', newVal)
     },
     interval () {
       this.KlineNum = 0

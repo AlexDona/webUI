@@ -265,6 +265,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="phone-input border-radius2 padding-l15 box-sizing"
                 v-model="amendDataPhone.transactionPassword"
                 @keydown="tieErrorMsg(3,'')"

@@ -261,6 +261,7 @@
           >
             <el-input
               type="password"
+              autocomplete= "new-password"
               v-model="password"
             >
             </el-input>

@@ -128,6 +128,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="account-input border-radius2"
                 v-model="password"
                 @keydown="setErrorMsg(1, '')"

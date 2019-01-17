@@ -314,6 +314,7 @@
                   >
                     <input
                       type="password"
+                      autocomplete= "new-password"
                       class="content-input input-google padding-l15 box-sizing"
                       v-model="password"
                     >

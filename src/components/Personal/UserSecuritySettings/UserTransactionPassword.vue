@@ -65,6 +65,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 v-model="setPassword.newPassword"
                 @keydown="setErrorMsg(1,'')"
@@ -82,6 +83,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 v-model="setPassword.confirmPassword"
                 @keydown="setErrorMsg(2,'')"
@@ -113,6 +115,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 v-model="modifyPassword.transactionPassword"
                 @keydown="tieErrorMsg(0,'')"
@@ -130,6 +133,7 @@
             >
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 v-model="modifyPassword.resetTransactionPassword"
                 @keydown="tieErrorMsg(1,'')"

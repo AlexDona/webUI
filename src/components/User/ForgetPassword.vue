@@ -253,6 +253,7 @@
                 <input
                   class="username-input"
                   type="password"
+                  autocomplete= "new-password"
                   @input="checkValue('newPassword', $event)"
                   :value="newPassword"
                 />
@@ -267,6 +268,7 @@
                 <input
                   class="username-input"
                   type="password"
+                  autocomplete= "new-password"
                   @input="checkValue('confirmPassword',$event)"
                   :value="confirmPassword"
                 />

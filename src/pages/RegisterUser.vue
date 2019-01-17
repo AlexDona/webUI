@@ -208,6 +208,7 @@
              <!--登录密码-->
              <input
                type="password"
+               autocomplete= "new-password"
                class="input"
                :placeholder="$t('M.login_welcome_register_pwd1')"
                v-model="password"
@@ -223,6 +224,7 @@
              <!--请再次输入密码-->
              <input
                type="password"
+               autocomplete= "new-password"
                class="input"
                :placeholder="$t('M.login_welcome_register_pwd2')"
                @keydown="setErrorMsg()"
@@ -482,6 +484,7 @@
               <!--请输入密码-->
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="input"
                 :placeholder="$t('M.user_register_input_pwd')"
                 v-model="password"
@@ -495,6 +498,7 @@
               <!--请再次输入密码-->
               <input
                 type="password"
+                autocomplete= "new-password"
                 class="input"
                 :placeholder="$t('M.user_register_input_confirm_pwd')"
                 @keydown="setErrorMsg()"
