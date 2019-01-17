@@ -405,5 +405,8 @@ export const fromApi = {
   'user_api_select_is_null_failure': '사용자 API 조회 실패.이 정보 존재 하지 않습니다',
   'user_api_select_no_permission': '조회 실패. 조회 권한 없습니다.',
   'user_api_to_long': '사용자 API 메모 10글자 초과 불가능.',
-  'user_api_update_failure': '사용자 API 수정 실패'
+  'user_api_update_failure': '사용자 API 수정 실패',
+  'recharge_withdraw_failure_0041': '계정에서 동전 회수를 금지했습니다. 고객 서비스에 문의하십시오.',
+  'entrust_failure_0027': '이 계정은 거래가 금지되어 있으므로 고객 서비스에 문의하십시오.',
+  'otc_failure_0090': '계좌가 거래 금지되었습니다OTC. 고객 서비스에 문의하십시오.'
 }

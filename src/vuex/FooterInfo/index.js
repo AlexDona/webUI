@@ -24,7 +24,8 @@ const state = {
   // 下载地址
   downloadUrl: {
     android: '',
-    ios: ''
+    ios: '',
+    iosIpa: ''
   }
 }
 

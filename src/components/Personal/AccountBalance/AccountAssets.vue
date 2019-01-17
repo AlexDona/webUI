@@ -700,6 +700,16 @@ export default {
     },
     // 点击提现按钮显示提币内容（带回币种id 币种名称 当前index）
     async changeWithdrawBoxByCoin (id, name, index) {
+      console.log(this.userInfo)
+      console.log(this.coinStatus)
+      if (this.coinStatus == 'disable') {
+        // 该账号已被禁止提币，请咨询客服
+        this.$message({
+          type: 'error',
+          message: this.$t('M.recharge_withdraw_failure_0041')
+        })
+        return
+      }
       // 提币数量
       this.resetWithdrawFormContent(index)
 
@@ -1086,7 +1096,9 @@ export default {
       activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
-      userCenterActiveName: state => state.personal.userCenterActiveName
+      userCenterActiveName: state => state.personal.userCenterActiveName,
+      // 是否允许提币
+      coinStatus: state => state.user.loginStep1Info.userInfo.coinStatus
     }),
     // 提现手续费输入input ref
     feeInputRef () {

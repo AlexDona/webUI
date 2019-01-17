@@ -405,5 +405,8 @@ export const fromApi = {
   'user_api_select_is_null_failure': '用戶API查詢失敗，此信息不存在',
   'user_api_select_no_permission': '查詢失敗, 無權限查詢',
   'user_api_to_long': '用戶api備註不能超過10個字符',
-  'user_api_update_failure': '用戶API修改失敗'
+  'user_api_update_failure': '用戶API修改失敗',
+  'recharge_withdraw_failure_0041': '該帳號已被禁止提幣，請諮詢客服',
+  'entrust_failure_0027': '該帳號已被禁止交易，請諮詢客服',
+  'otc_failure_0090': '該帳號已被禁止交易OTC，請諮詢客服'
 }

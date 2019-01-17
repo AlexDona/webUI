@@ -405,5 +405,8 @@ export const fromApi = {
   'user_api_select_is_null_failure': 'ユーザapi問合せは、この情報は存在しない',
   'user_api_select_no_permission': 'クエリに失敗しました。許可クエリはありません',
   'user_api_to_long': 'ユーザーAPIノートは10文字を超えることはできません',
-  'user_api_update_failure': 'ユーザーAPIの変更に失敗しました'
+  'user_api_update_failure': 'ユーザーAPIの変更に失敗しました',
+  'recharge_withdraw_failure_0041': 'このアカウントは出金が禁止になって、サービスへお問い合わせ下さい',
+  'entrust_failure_0027': 'このアカウントは取引が禁止になって、サービスへお問い合わせ下さい',
+  'otc_failure_0090': 'このアカウントは取引が禁止になってOTC、サービスへお問い合わせ下さい'
 }

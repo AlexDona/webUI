@@ -139,7 +139,7 @@ export default {
         this.language === 'zh_TW'
     },
     language () {
-      return (navigator.browserLanguage || navigator.language).split('-').join('_') || this.$route.query.language
+      return (navigator.browserLanguage || navigator.language).split('-').join('_')
     }
     // isWXBrowserStatus () {
     //   return isWXBrowser()

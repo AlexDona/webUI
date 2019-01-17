@@ -27,18 +27,18 @@
               leave-active-class="animated fadeOut"
             >
               <div
-                class="ercode-box"
-                v-show="erCodeVisible"
+                class="qrcode-box"
+                v-show="qrcodeVisible"
               >
                 <Qrcode
-                  class="ercode"
-                  :value="erCodeString"
+                  class="qrcode"
+                  :value="qrcodeString"
                 />
               </div>
             </transition>
             <p
-              @mouseover="toggleErCode(1)"
-              @mouseleave="toggleErCode(0)"
+              @mouseover="toggleQrcode(1)"
+              @mouseleave="toggleQrcode(0)"
             >
               <span
                 class="scan-btn cursor-pointer"
@@ -59,7 +59,7 @@
               :style="{
                 display:none
               }"
-                ></a>
+            ></a>
             <!-- 下载app -->
 
           </div>
@@ -78,35 +78,35 @@
             />
           </div>
           <div class="r-right"
-              v-show="isOpen"
-            >
-              <button>
-                <IconFont
-                  icon-name="icon-pingguo"
-                  class-name="icon"
-                />
-                <!-- Mac 版本下载 -->
-                {{$t('M.about_footer_info_down5')}}
-              </button>
-              <button>
-                <IconFont
-                  icon-name="icon-windows"
-                  class-name="icon"
-                />
-                <!-- WIN 版本下载 -->
-                {{$t('M.about_footer_info_down6')}}
-              </button>
-            </div>
+               v-show="isOpen"
+          >
+            <button>
+              <IconFont
+                icon-name="icon-pingguo"
+                class-name="icon"
+              />
+              <!-- Mac 版本下载 -->
+              {{$t('M.about_footer_info_down5')}}
+            </button>
+            <button>
+              <IconFont
+                icon-name="icon-windows"
+                class-name="icon"
+              />
+              <!-- WIN 版本下载 -->
+              {{$t('M.about_footer_info_down6')}}
+            </button>
+          </div>
           <div
-              class="r-right"
-              v-show="!isOpen"
+            class="r-right"
+            v-show="!isOpen"
+          >
+            <p
+              class="please-wait"
             >
-              <p
-                class="please-wait"
-              >
-                <!-- 暂未开放，敬请期待 -->
-                {{$t('M.about_footer_info_down7')}}
-              </p>
+              <!-- 暂未开放，敬请期待 -->
+              {{$t('M.about_footer_info_down7')}}
+            </p>
           </div>
         </div>
       </div>
@@ -119,11 +119,14 @@ import {
   mapGetters,
   mapActions
 } from 'vuex'
-import {downloadFileWithUserDefined} from '../utils'
-import {domain} from '../utils/env'
+import {
+  domain,
+  xDomain
+} from '../utils/env'
 import IconFont from '../components/Common/IconFontCommon'
 import Qrcode from '../components/Common/Qrcode'
 import VueClipboard from 'vue-clipboard2'
+
 Vue.use(VueClipboard)
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
@@ -134,8 +137,8 @@ export default {
   // props,
   data () {
     return {
-      erCodeVisible: false,
-      erCodeString: `${domain}/downloadApp?language=${this.language}`,
+      qrcodeVisible: false,
+      qrcodeString: `${domain}/downloadApp`,
       isOpen: true,
       downloadUrl: ''
     }
@@ -144,36 +147,60 @@ export default {
     console.log(this.isNeedIOS)
     this.GET_APP_URL_ACTION()
   },
-  mounted () {},
-  activated () {},
-  updated () {},
-  beforeRouteUpdate () {},
+  mounted () {
+  },
+  activated () {
+  },
+  updated () {
+  },
+  beforeRouteUpdate () {
+  },
   methods: {
     ...mapActions([
       'GET_APP_URL_ACTION'
     ]),
     downloadApp (type) {
-      switch (type) {
-        case 'android':
-          window.location.href = 'scheme: //fubt.com/'
-          this.downloadUrl = this.androidUrl
-          console.log(this.isMobile)
-          break
-        case 'ios':
-          this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
-          break
-      }
       if (this.isMobile) {
+        switch (type) {
+          case 'android':
+            window.location.href = 'scheme: //fubt.com/'
+            this.downloadUrl = this.androidUrl
+            console.log(this.isMobile)
+            break
+          case 'ios':
+            this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
+            break
+        }
         this.$refs['download-link'].click()
       } else {
-        downloadFileWithUserDefined(this.downloadUrl, 'filename')
+        console.log(xDomain)
+        let domainList = xDomain.split('.')
+        domainList.pop()
+        const FILENAME = domainList.join('.')
+        console.log(FILENAME)
+        switch (type) {
+          case 'android':
+            // var src = `${this.androidUrl}?&fsname=com.snda.wifilocating_4.2.91_3211.apk`
+            // var iframe = document.createElement('iframe')
+            // iframe.style.display = 'none'
+            // iframe.src = 'javascript: \'<script>location.href="' + src + '"<\/script>\''
+            // document.getElementsByTagName('body')[0].appendChild(iframe)
+            // downloadFileWithUserDefined(this.androidUrl, FILENAME)
+            // window.location.href = this.androidUrl
+            this.downloadUrl = this.androidUrl
+            this.$refs['download-link'].click()
+            break
+          case 'ios':
+            window.location.href = this.iosIpaUrl
+            break
+        }
       }
     },
     toggleIsOpen (data) {
       this.isOpen = data
     },
-    toggleErCode (data) {
-      this.erCodeVisible = data
+    toggleQrcode (data) {
+      this.qrcodeVisible = data
     }
   },
   filter: {},
@@ -185,6 +212,7 @@ export default {
       language: state => state.common.language,
       androidUrl: state => state.footerInfo.downloadUrl.android,
       iosUrl: state => state.footerInfo.downloadUrl.ios,
+      iosIpaUrl: state => state.footerInfo.downloadUrl.iosIpa,
       isMobile: state => state.user.isMobile
     }),
     windowHeight () {
@@ -252,7 +280,7 @@ export default {
             text-align: center;
             color: $mainColor;
 
-            > .ercode-box {
+            > .qrcode-box {
               /* transition: all .5s; */
               position: absolute;
               top: -180px;
@@ -263,12 +291,9 @@ export default {
               background-color: #fff;
               transform: translate(-50%, 0);
 
-              > .ercode {
-                /* width:160px; */
-
-                /* height:160px; */
-                width: 100%;
-                height: 100%;
+              > .qrcode {
+                width: 100% !important;
+                height: 100% !important;
                 background-color: #fff;
               }
             }

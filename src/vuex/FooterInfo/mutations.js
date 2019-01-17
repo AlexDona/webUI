@@ -45,8 +45,9 @@ export default {
     state.newsTypeActiveName = activeName
     console.log(state.newsTypeActiveName)
   },
-  [SET_APP_DOWNLOAD_URL] (state, {android, ios}) {
+  [SET_APP_DOWNLOAD_URL] (state, {android, ios, iosIpa}) {
     state.downloadUrl.android = android
     state.downloadUrl.ios = ios
+    state.downloadUrl.iosIpa = iosIpa
   }
 }

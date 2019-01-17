@@ -405,5 +405,8 @@ export const fromApi = {
   'user_api_select_is_null_failure': '用户API查询失败，此信息不存在',
   'user_api_select_no_permission': '查询失败, 无权限查询',
   'user_api_to_long': '用户api备注不能超过10个字符',
-  'user_api_update_failure': '用户API修改失败'
+  'user_api_update_failure': '用户API修改失败',
+  'recharge_withdraw_failure_0041': '该账号已被禁止提币，请咨询客服',
+  'entrust_failure_0027': '该账号已被禁止交易，请咨询客服',
+  'otc_failure_0090': '该账号已被禁止交易OTC，请咨询客服'
 }

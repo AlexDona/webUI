@@ -406,5 +406,8 @@ export const fromApi = {
   'user_api_select_is_null_failure': 'User API query failed. This information does not exist',
   'user_api_select_no_permission': 'Query failed, no permission query',
   'user_api_to_long': 'User api notes cannot exceed 10 characters',
-  'user_api_update_failure': 'User API modification failed'
+  'user_api_update_failure': 'User API modification failed',
+  'recharge_withdraw_failure_0041': 'This account has been forbidden to withdraw money, please consult the customer service',
+  'entrust_failure_0027': 'This account has been banned from trading, please consult the customer service',
+  'otc_failure_0090': 'This account has been banned from trading OTC, please contact customer service'
 }

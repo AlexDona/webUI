@@ -10,7 +10,8 @@ export default {
     const data = await handleRequest(getAppDownLoadUrlAjax)
     commit('SET_APP_DOWNLOAD_URL', {
       android: getNestedData(data, 'data.android'),
-      ios: getNestedData(data, 'data.ios')
+      ios: getNestedData(data, 'data.ios'),
+      iosIpa: getNestedData(data, 'data.ios_ipa')
     })
   }
 }

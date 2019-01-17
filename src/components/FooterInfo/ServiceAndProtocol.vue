@@ -125,7 +125,6 @@ export default {
     // require('../../../static/css/list/FooterInfo/ServiceAndProtocol.css')
     this.changeTab({name: this.serviceActiveName})
     // const data = await getSymbolRate()
-    // console.log(data)
   },
   mounted () {
     this.getServiceProtocolData()
