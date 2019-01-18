@@ -364,32 +364,27 @@ export default {
       })
       console.log('存币理财页面查询')
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        this.loading = false
-        return false
-      } else {
-        this.loading = false
-        // let getData = data.data.data
-        let getData = getNestedData(data, 'data.data')
-        if (this.activeName == '1') {
-          // 存币记录列表赋值
-          this.investList = getData.userFinancialManagementRecord.list
-          // 存币记录总页数
-          this.investTotalPages = getData.userFinancialManagementRecord.pages
-          // 存币记录总条数
-          this.investTotal = getData.userFinancialManagementRecord.total
-          // 从新赋值页码为当前页
-          // this.investCurrentPage = pageNum
-        } else if (this.activeName == '2') {
-          // 收益记录列表
-          this.userInterestRecord = getData.userInterestRecord.list
-          // 收益记录总页数
-          this.interestTotalPages = getData.userInterestRecord.pages
-          // 收益记录总条数
-          this.interestTotal = getData.userInterestRecord.total
-          // 重新赋值收益列表在当前页
-          // this.interestCurrentPage = pageNum
-        }
+      this.loading = false
+      // let getData = data.data.data
+      let getData = getNestedData(data, 'data')
+      if (this.activeName == '1') {
+        // 存币记录列表赋值
+        this.investList = getData.userFinancialManagementRecord.list
+        // 存币记录总页数
+        this.investTotalPages = getData.userFinancialManagementRecord.pages
+        // 存币记录总条数
+        this.investTotal = getData.userFinancialManagementRecord.total
+        // 从新赋值页码为当前页
+        // this.investCurrentPage = pageNum
+      } else if (this.activeName == '2') {
+        // 收益记录列表
+        this.userInterestRecord = getData.userInterestRecord.list
+        // 收益记录总页数
+        this.interestTotalPages = getData.userInterestRecord.pages
+        // 收益记录总条数
+        this.interestTotal = getData.userInterestRecord.total
+        // 重新赋值收益列表在当前页
+        // this.interestCurrentPage = pageNum
       }
     },
     // 点击取消按钮执行
