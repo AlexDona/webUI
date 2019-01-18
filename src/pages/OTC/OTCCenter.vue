@@ -420,7 +420,7 @@ import OTCCanceledOrder from '../../components/OTC/OTCCanceledOrder'
 import OTCFreezingOrder from '../../components/OTC/OTCFreezingOrder'
 import OTCEntrustOrder from '../../components/OTC/OTCEntrustOrder'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -707,12 +707,10 @@ export default {
       const data = await getOTCAvailableCurrency({})
       // console.log('otc可用币种查询')
       // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.IWantToBuySellArr = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data) {
+        this.IWantToBuySellArr = getNestedData(data, 'data')
         if (this.IWantToBuySellArr.length) {
           this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
           this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
@@ -728,11 +726,11 @@ export default {
       const data = await getMerchantAvailableLegalTender({})
       // console.log('otc法币查询列表')
       // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.availableCurrencyId = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data) {
+        this.availableCurrencyId = getNestedData(data, 'data')
+        // console.log(this.availableCurrencyId)
         this.checkedCurrencyId = getNestedData(this.availableCurrencyId[0], 'id')
         this.checkedCurrencyName = getNestedData(this.availableCurrencyId[0], 'shortName')
         // 3.0 otc主页面查询挂单列表:
@@ -757,14 +755,11 @@ export default {
       const data = await getOTCPutUpOrders(param)
       console.log('otc主页面查询挂单列表')
       console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.loading = false
-        let orderListData = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      this.loading = false
+      if (!data) return false
+      if (data) {
+        let orderListData = getNestedData(data, 'data')
         this.onlineBuySellTableList = getNestedData(orderListData, 'list')
         // 分页
         this.totalPages = getNestedData(orderListData, 'pages') - 0

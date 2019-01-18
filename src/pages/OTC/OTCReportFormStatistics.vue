@@ -475,7 +475,10 @@ import {
 } from '../../utils/api/OTC'
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter, scientificToNumber} from '../../utils'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  // returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {
   mapMutations,
   mapState
@@ -562,16 +565,13 @@ export default {
     },
     //  2.0 otc可用币种查询
     async getOTCAvailableCurrencyList () {
-      const data = await getOTCAvailableCurrency({
-      })
+      const data = await getOTCAvailableCurrency({})
       // console.log('otc可用币种查询')
       // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.traderCoinList = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data) {
+        this.traderCoinList = getNestedData(data, 'data')
         // 设置币种默认选中值
         this.activatedTraderCoinId = getNestedData(this.traderCoinList[0], 'coinId')
         // 设置币种默认选中值的名称
@@ -592,16 +592,13 @@ export default {
     },
     //  3.0 查询 可用法币 币种列表
     async getMerchantAvailableLegalTenderList () {
-      const data = await getMerchantAvailableLegalTender({
-      })
+      const data = await getMerchantAvailableLegalTender({})
       // console.log('查询可用法币币种列表')
       // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑 将币种列表赋值
-        this.traderCurrencyCoinsList = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑 将币种列表赋值
+      if (!data) return false
+      if (data) {
+        this.traderCurrencyCoinsList = getNestedData(data, 'data')
         // 设置法币默认选中值
         this.activatedTraderCurrencyCoinsId = getNestedData(this.traderCurrencyCoinsList[0], 'id')
         // 设置法币默认选中值的name
@@ -671,12 +668,11 @@ export default {
         currencyId: this.activatedTraderCurrencyCoinsId
       })
       // 提示信息
-      // console.log('资产信息')
-      // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        let getData = getNestedData(data, 'data.data')
+      console.log('报表统计的主页面资产信息')
+      console.log(data)
+      if (!data) return false
+      if (data) {
+        let getData = getNestedData(data, 'data')
         // 法币总资产
         this.totalAssets = getNestedData(getData, 'totalAssets')
         // 币种总资产
@@ -717,16 +713,14 @@ export default {
         // 日期类型
         dateType: this.activatedRadioId
       })
-      // console.log('报表列表')
-      // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑 重新渲染列表
-        let ordersRevocationData = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑 重新渲染列表
+      console.log('报表列表')
+      console.log(data)
+      if (!data) return false
+      if (data) {
+        let ordersRevocationData = getNestedData(data, 'data')
         this.orderInfoList = getNestedData(ordersRevocationData, 'list')
-        // 分页
-        this.totalPages = getNestedData(ordersRevocationData, 'pages') - 0
+        this.totalPages = getNestedData(ordersRevocationData, 'pages') - 0 // 分页
       }
     }
   },
