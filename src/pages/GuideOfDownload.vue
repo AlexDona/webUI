@@ -120,8 +120,7 @@ import {
   mapActions
 } from 'vuex'
 import {
-  domain,
-  xDomain
+  domain
 } from '../utils/env'
 import IconFont from '../components/Common/IconFontCommon'
 import Qrcode from '../components/Common/Qrcode'
@@ -173,27 +172,7 @@ export default {
         }
         this.$refs['download-link'].click()
       } else {
-        console.log(xDomain)
-        let domainList = xDomain.split('.')
-        domainList.pop()
-        const FILENAME = domainList.join('.')
-        console.log(FILENAME)
-        switch (type) {
-          case 'android':
-            // var src = `${this.androidUrl}?&fsname=com.snda.wifilocating_4.2.91_3211.apk`
-            // var iframe = document.createElement('iframe')
-            // iframe.style.display = 'none'
-            // iframe.src = 'javascript: \'<script>location.href="' + src + '"<\/script>\''
-            // document.getElementsByTagName('body')[0].appendChild(iframe)
-            // downloadFileWithUserDefined(this.androidUrl, FILENAME)
-            // window.location.href = this.androidUrl
-            this.downloadUrl = this.androidUrl
-            this.$refs['download-link'].click()
-            break
-          case 'ios':
-            window.location.href = this.iosIpaUrl
-            break
-        }
+        window.location.href = type == 'android' ? this.androidUrl : this.iosIpaUrl
       }
     },
     toggleIsOpen (data) {
