@@ -283,9 +283,8 @@ import {
   cancelAllEntrustAjax
 } from '../../utils/api/trade'
 import {
-  returnAjaxMsg,
-  repealMyEntrustCommon,
-  getNestedData
+  getNestedData,
+  repealMyEntrustCommon
 } from '../../utils/commonFunc'
 import {
   mapMutations,
@@ -340,12 +339,8 @@ export default {
         }
 
         const data = await cancelAllEntrustAjax(params)
-        if (!returnAjaxMsg(data, this)) {
-          return false
-        } else {
-          console.log(data)
-          this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
-        }
+        if (!data) return false
+        this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
       }).catch(() => {
       })
     },
@@ -375,12 +370,12 @@ export default {
         confirmButtonText: this.$t('M.comm_confirm'),
         // 取消
         cancelButtonText: this.$t('M.comm_cancel')
-      }).then(() => {
+      }).then(async () => {
         let params = {
           id,
           version
         }
-        repealMyEntrustCommon(params, this, () => {
+        repealMyEntrustCommon(params, () => {
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
         })
       }).catch(() => {
@@ -410,12 +405,9 @@ export default {
         tradeId: this.middleTopData.partnerTradeId
       }
       const data = await getHistoryEntrust(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.historyEntrustList = getNestedData(data, 'data.data.list') || []
-        this.totalPageForHistoryEntrust = getNestedData(data, 'data.data.pages') - 0
-      }
+      if (!data) return false
+      this.historyEntrustList = getNestedData(data, 'data.list') || []
+      this.totalPageForHistoryEntrust = getNestedData(data, 'data.pages') - 0
     },
     // 获取我的当前委单
     async getMyCurrentEntrust () {
@@ -426,12 +418,9 @@ export default {
         tradeId: this.middleTopData.partnerTradeId
       }
       const data = await getMyEntrust(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.currentEntrustList = getNestedData(data, 'data.data.list') || []
-        this.totalPageForMyEntrust = getNestedData(data, 'data.data.pages') - 0
-      }
+      if (!data) return false
+      this.currentEntrustList = getNestedData(data, 'data.list') || []
+      this.totalPageForMyEntrust = getNestedData(data, 'data.pages') - 0
     }
   },
   filter: {},

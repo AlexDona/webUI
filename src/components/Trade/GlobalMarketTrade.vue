@@ -81,7 +81,6 @@
 <script>
 import {mapState} from 'vuex'
 import {
-  returnAjaxMsg,
   getNestedData,
   formatCount
 } from '../../utils/commonFunc'
@@ -136,11 +135,8 @@ export default {
         return false
       }
       const data = await getGlobalMarket(params)
-      if (!returnAjaxMsg(data, this, 0, 1)) {
-        return false
-      } else {
-        this.globalMarketList = getNestedData(data, 'data.data') || []
-      }
+      if (!data) return false
+      this.globalMarketList = getNestedData(data, 'data') || []
     },
     // 切换内容显示隐藏
     toggleShowContent () {

@@ -172,13 +172,10 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 
 /**
  * 撤销委单
  */
-export const repealMyEntrustCommon = async (params, that, callback) => {
+export const repealMyEntrustCommon = async (params, callback) => {
   const data = await repealMyEntrustAjax(params)
-  if (!returnAjaxMsg(data, that, 1)) {
-    return false
-  } else {
-    callback(data)
-  }
+  if (!data) return false
+  callback(data)
 }
 
 /**

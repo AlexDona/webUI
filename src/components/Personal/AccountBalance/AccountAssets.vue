@@ -22,14 +22,14 @@
                   {{ $t('M.user_hidden_assets') }}
                   <p class="float-right header-right-show margin-left10">
                     <img
-                      v-show="showStatusButton"
+                      v-show="isShowAllCurrency"
                       @click.prevent="statusOpenToCloseCurrency('all')"
                       class="switch-img"
                       :src="closePictureSrc"
                     >
                     <img
-                      v-show="hideStatusButton"
-                      @click.prevent="statusOpenToCloseCurrency('noall')"
+                      v-show="!isShowAllCurrency"
+                      @click.prevent="statusOpenToCloseCurrency('not_all')"
                       class="switch-img"
                       :src="openPictureSrc"
                     >
@@ -435,8 +435,7 @@ export default {
     return {
       labelPosition: 'top', // form表单label方向
       errorMessage: '', // 提币验证错误提示
-      showStatusButton: true, // 显示币种
-      hideStatusButton: false, // 隐藏币种// 显示所有/余额切换，
+      isShowAllCurrency: true, // 隐藏币种// 显示所有/余额切换，
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
       openPictureSrc: require('../../../assets/user/yes.png'), // 全显示
       searchKeyWord: '', // 搜索关键字
@@ -516,16 +515,7 @@ export default {
     },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
-      switch (e) {
-        case 'all':
-          this.showStatusButton = false
-          this.hideStatusButton = true
-          break
-        case 'noall':
-          this.hideStatusButton = false
-          this.showStatusButton = true
-          break
-      }
+      this.isShowAllCurrency = e == 'all' ? true : false
       this.getAssetCurrenciesList(e)
     },
     // 跳转当前交易对
@@ -785,13 +775,13 @@ export default {
         pageNum: this.currentPageForMyEntrust,
         pageSize: this.pageSize,
         shortName: this.searchKeyWord, // 搜索关键字
-        selectType: 'all' // all：所有币种 noall：有资产币种
+        selectType: 'all' // all：所有币种 not_all：有资产币种
       }
       switch (type) {
         case 'all':
-          params.selectType = 'noall'
+          params.selectType = 'not_all'
           break
-        case 'noall':
+        case 'not_all':
           params.selectType = 'all'
           break
       }

@@ -90,7 +90,6 @@ import {
   getTradeMarketDataAjax
 } from '../../utils/api/trade'
 import {
-  returnAjaxMsg,
   // getPartnerListAjax,
   toggleUserCollection,
   getCollectionList,
@@ -197,60 +196,55 @@ export default {
         i18n: this.language
       }
       const data = await getTradeMarketDataAjax(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        const objData = JSON.parse(unzip(data.data.data.obj))
-        let tickerList = _.cloneDeep(objData.tickerList)
-        console.log(tickerList)
-        let plateList = []
-        // 板块筛选
-        _.forEach(tickerList, (tickerItem) => {
-          _.forEach(tickerItem.plateList, plateItem => {
-            let initPlateItem = {
-              content: [],
-              plateId: plateItem.plateId,
-              plateName: plateItem.plateName.replace('+', ' ')
-            }
-            let isExist = plateList.some(item => item.plateId == plateItem.plateId)
-            if (!isExist) {
-              plateList.push(_.cloneDeep(initPlateItem))
-              this.collectPlateList.push(_.cloneDeep(initPlateItem))
-              this.collectPlateFilterList.push(_.cloneDeep(initPlateItem))
-            }
-          })
+      if (!data) return false
+
+      const objData = JSON.parse(unzip(data.data.obj))
+      let tickerList = _.cloneDeep(objData.tickerList)
+      let plateList = []
+      // 板块筛选
+      _.forEach(tickerList, (tickerItem) => {
+        _.forEach(tickerItem.plateList, plateItem => {
+          let initPlateItem = {
+            content: [],
+            plateId: plateItem.plateId,
+            plateName: plateItem.plateName.replace('+', ' ')
+          }
+          let isExist = plateList.some(item => item.plateId == plateItem.plateId)
+          if (!isExist) {
+            plateList.push(_.cloneDeep(initPlateItem))
+            this.collectPlateList.push(_.cloneDeep(initPlateItem))
+            this.collectPlateFilterList.push(_.cloneDeep(initPlateItem))
+          }
         })
-        // 生成symbolMap
-        _.forEach(tickerList, tickerItem => {
-          _.forEach(tickerItem.plateList, plateItem => {
-            _.forEach(plateItem.content, contentItem => {
-              this.CHANGE_SYMBOL_MAP({
-                key: contentItem.id,
-                val: contentItem
-              })
-              _.forEach(plateList, (plateListItem, plateListIndex) => {
-                if (plateListItem.plateId == plateItem.plateId) {
-                  plateList[plateListIndex].content.push(contentItem)
-                }
-              })
+      })
+      // 生成symbolMap
+      _.forEach(tickerList, tickerItem => {
+        _.forEach(tickerItem.plateList, plateItem => {
+          _.forEach(plateItem.content, contentItem => {
+            this.CHANGE_SYMBOL_MAP({
+              key: contentItem.id,
+              val: contentItem
+            })
+            _.forEach(plateList, (plateListItem, plateListIndex) => {
+              if (plateListItem.plateId == plateItem.plateId) {
+                plateList[plateListIndex].content.push(contentItem)
+              }
             })
           })
         })
-        let collectSymbol = {}
-        if (!this.isLogin) {
-          collectSymbol = JSON.parse(getStore('collectSymbol')) || {}
-        } else {
-          await this.getCollectionList(collectSymbol)
-        }
-        console.log(plateList)
-        this.setCollectData(collectSymbol, plateList)
-        this.newTradeMarketList = tickerList
-        this.filterMarketList = this.newTradeMarketList
-        this.setActiveIndex(this.middleTopData.area)
-        this.activeName = this.middleTopData.area
-        this.setActiveTabSymbolStr()
-        console.log(this.collectArea)
+      })
+      let collectSymbol = {}
+      if (!this.isLogin) {
+        collectSymbol = JSON.parse(getStore('collectSymbol')) || {}
+      } else {
+        await this.getCollectionList(collectSymbol)
       }
+      this.setCollectData(collectSymbol, plateList)
+      this.newTradeMarketList = tickerList
+      this.filterMarketList = this.newTradeMarketList
+      this.setActiveIndex(this.middleTopData.area)
+      this.activeName = this.middleTopData.area
+      this.setActiveTabSymbolStr()
     },
     // 设置 当前交易区
     changeActiveSymbol ({activeSymbol, previousSymbol}) {

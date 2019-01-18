@@ -459,7 +459,6 @@ import {
   getUserAssetOfActiveSymbol
 } from '../../utils/api/trade'
 import {
-  returnAjaxMsg,
   getNestedData,
   isNeedPayPasswordAjax,
   formatPointLength
@@ -591,14 +590,11 @@ export default {
         tradeId: this.middleTopData.partnerTradeId // 交易对id
       }
       const data = await getUserAssetOfActiveSymbol(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.buyUserCoinWallet = getNestedData(data, 'data.data.buyUserCoinWallet')
-        this.sellUserCoinWallet = getNestedData(data, 'data.data.sellUserCoinWallet')
-        this.setBuyAndSellPrice(targetPriceOfBuy, targetPriceOfSell)
-        this.changeSliderDisabled()
-      }
+      if (!data) return false
+      this.buyUserCoinWallet = getNestedData(data, 'data.buyUserCoinWallet')
+      this.sellUserCoinWallet = getNestedData(data, 'data.sellUserCoinWallet')
+      this.setBuyAndSellPrice(targetPriceOfBuy, targetPriceOfSell)
+      this.changeSliderDisabled()
     },
     // 清空交易密码
     clearFormData () {
@@ -971,13 +967,10 @@ export default {
           break
       }
       const data = await saveEntrustTrade(params)
-      if (!returnAjaxMsg(data, this, 1)) {
-        return false
-      } else {
-        this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
-        this.isShowPayPassword = false
-        this.clearFormData()
-      }
+      this.isShowPayPassword = false
+      if (!data) return false
+      this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
+      this.clearFormData()
     },
     // 设置买卖价格
     setBuyAndSellPrice (targetPriceOfBuy, targetPriceOfSell = targetPriceOfBuy) {

@@ -390,14 +390,8 @@ export default {
     // 点击取消按钮执行
     async clickCancelInvestment (id) {
       const data = await cancelInvestment(id)
-      console.log('用户取消按钮')
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 重新请求币种接口刷新列表 把当前页码传过去
-        this.getFinancialManagementList(this.investCurrentPage)
-      }
+      if (!data) return false
+      this.getFinancialManagementList(this.investCurrentPage)
     },
     cancelInvest (id) {
       // 用户点击取消按钮需要请求接口

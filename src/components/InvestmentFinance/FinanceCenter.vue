@@ -782,16 +782,10 @@ export default {
         // number: this.investAmount
         number: this.$refs.investAmountRef.value
       })
-      console.log('存币理财类型')
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        this.formLabelAlign = getNestedData(data, 'data.data')
-        this.$refs.changeAlignNum.value = this.formLabelAlign.number
-        console.log(this.$refs.changeAlignNum.value)
-        this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
-      }
+      if (!data) return false
+      this.formLabelAlign = getNestedData(data, 'data')
+      this.$refs.changeAlignNum.value = this.formLabelAlign.number
+      this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
     },
     // 添加理财记录
     async clickImmediateInvestment () {
@@ -800,21 +794,16 @@ export default {
         // number: this.investAmount
         number: this.$refs.investAmountRef.value
       })
-      console.log('存币理财类型')
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 重新调一次币种接口刷新列表
-        this.getFinancialManagementList()
-        // 请求回来时将按钮解除禁用
-        this.stopClick = false
-        // 存币成功
-        this.$message({
-          message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
-          type: 'success'
-        })
-      }
+      if (!data) return false
+      // 重新调一次币种接口刷新列表
+      this.getFinancialManagementList()
+      // 请求回来时将按钮解除禁用
+      this.stopClick = false
+      // 存币成功
+      this.$message({
+        message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
+        type: 'success'
+      })
     },
     // 存币理财页面币种查询
     async getFinancialManagementList () {
@@ -857,7 +846,8 @@ export default {
       // 设置存币类型默认值
       if (getData.managementList.length) {
         getData.managementList.forEach((item, index) => {
-          if (item.state === 'ENABLED') {
+          // 描述不能为空
+          if (item.state === 'ENABLED' && item.typeDescription && item.typeEnglishDescription) {
             this.newArrInvestTypeList.push(item)
           }
         })
@@ -893,12 +883,8 @@ export default {
       const data = await cancelInvestment(id)
       console.log('用户取消按钮')
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        // 重新请求币种接口刷新列表
-        this.getFinancialManagementList()
-      }
+      if (!data) return false
+      this.getFinancialManagementList()
     },
     // 币种选择变化时赋值币种名称
     changeTraderCoin (e) {
