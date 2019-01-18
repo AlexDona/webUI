@@ -120,7 +120,7 @@ import {
   getNestedData
 } from '../../../utils/commonFunc'
 import {setUserInputPasswordFrequency} from '../../../utils/api/user'
-import {getConfigAjax} from '../../../utils/api/header'
+import {getConfigAjax} from '../../../utils/api/common'
 import {
   mapMutations,
   mapActions,
@@ -220,12 +220,7 @@ export default {
     },
     async getConfig () {
       const data = await getConfigAjax()
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.usersetTimeInterval = getNestedData(data, 'data.data.notInputPayPasswdTime')
-        // this.frequencyList[1].label = `小时内免输入交易密码`
-      }
+      this.usersetTimeInterval = getNestedData(data, 'data.notInputPayPasswdTime')
     },
     // 设置用户交易密码时长
     async setUserInputPasswordFrequency (params) {

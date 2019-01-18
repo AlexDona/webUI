@@ -21,10 +21,6 @@ import {
   removeCollectionAjax,
   getCollectionListAjax
 } from '../utils/api/home'
-import {
-  // getCountryList,
-  getServiceProtocoDataAjax
-} from './api/common'
 import storeCreater from '../vuex'
 import {
   removeStore,
@@ -202,15 +198,6 @@ export const changeCurrentPageForLegalTrader = (currentPage, type, that) => {
     type,
     status: true
   })
-}
-// 服务条款接口
-export const getServiceProtocolData = async (that, params, callback) => {
-  const data = await getServiceProtocoDataAjax(params)
-  if (!returnAjaxMsg(data, that)) {
-    return false
-  } else {
-    callback(data)
-  }
 }
 /**
  *  刷新用户安全状态
@@ -395,8 +382,8 @@ String.prototype.format = function (args) {
   return result
 }
 // 接口统一处理
-export const handleRequest = async (request, params, noTip, errorTip) => {
-  const DATA = await request(params)
+export const handleRequest = async (request, noTip, errorTip) => {
+  const DATA = await request()
   if (!returnAjaxMsg(DATA, Vue, noTip, errorTip)) {
     return false
   } else {

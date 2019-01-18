@@ -185,9 +185,9 @@ import {
 } from '../../utils/api/personal'
 import {
   returnAjaxMsg,
-  getServiceProtocolData,
   getNestedData
 } from '../../utils/commonFunc'
+import {getServiceProtocoDataAjax} from '../../utils/api/common'
 // 底部
 import {
   mapMutations,
@@ -262,11 +262,9 @@ export default {
         termsTypeIds: '11,12', // 用户协议代号
         language: this.language
       }
-      await getServiceProtocolData(this, params, (data) => {
-        console.log(data)
-        this.serviceAgreementContent = getNestedData(data, 'data.data[0].content')
-        this.discountsInstructionContent = getNestedData(data, 'data.data[1].content')
-      })
+      const data = await getServiceProtocoDataAjax(params)
+      this.serviceAgreementContent = getNestedData(data, 'data[0].content')
+      this.discountsInstructionContent = getNestedData(data, 'data[1].content')
     },
     // 跳转我的资产
     goToAccountAssets () {

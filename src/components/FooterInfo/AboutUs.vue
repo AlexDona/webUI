@@ -25,7 +25,6 @@
 <script>
 import {getAboutUsDataAjax} from '../../utils/api/common'
 import {
-  returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {mapState} from 'vuex'
@@ -51,11 +50,7 @@ export default {
         language: this.language
       }
       const data = await getAboutUsDataAjax(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.aboutData = getNestedData(data, 'data.data[0]') || {content: ''}
-      }
+      this.aboutData = getNestedData(data, 'data[0]') || {content: ''}
     }
   },
   filter: {},

@@ -120,7 +120,8 @@ import {
   mapActions
 } from 'vuex'
 import {
-  domain
+  domain,
+  xDomain
 } from '../utils/env'
 import IconFont from '../components/Common/IconFontCommon'
 import Qrcode from '../components/Common/Qrcode'
@@ -143,6 +144,7 @@ export default {
     }
   },
   async created () {
+    console.log(this.isNeedIOS)
     this.GET_APP_URL_ACTION()
   },
   mounted () {
@@ -163,6 +165,7 @@ export default {
           case 'android':
             window.location.href = 'scheme: //fubt.com/'
             this.downloadUrl = this.androidUrl
+            console.log(this.isMobile)
             break
           case 'ios':
             this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
@@ -170,7 +173,27 @@ export default {
         }
         this.$refs['download-link'].click()
       } else {
-        window.location.href = type == 'android' ? this.androidUrl : this.iosIpaUrl
+        console.log(xDomain)
+        let domainList = xDomain.split('.')
+        domainList.pop()
+        const FILENAME = domainList.join('.')
+        console.log(FILENAME)
+        switch (type) {
+          case 'android':
+            // var src = `${this.androidUrl}?&fsname=com.snda.wifilocating_4.2.91_3211.apk`
+            // var iframe = document.createElement('iframe')
+            // iframe.style.display = 'none'
+            // iframe.src = 'javascript: \'<script>location.href="' + src + '"<\/script>\''
+            // document.getElementsByTagName('body')[0].appendChild(iframe)
+            // downloadFileWithUserDefined(this.androidUrl, FILENAME)
+            // window.location.href = this.androidUrl
+            this.downloadUrl = this.androidUrl
+            this.$refs['download-link'].click()
+            break
+          case 'ios':
+            window.location.href = this.iosIpaUrl
+            break
+        }
       }
     },
     toggleIsOpen (data) {
