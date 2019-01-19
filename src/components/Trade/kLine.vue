@@ -1,4 +1,5 @@
-`<template>
+`
+<template>
   <div
     class="kline-container"
   >
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import { widget as TvWidget } from '../../../static/tradeview/charting_library/charting_library.min.js'
+import {widget as TvWidget} from '../../../static/tradeview/charting_library/charting_library.min.js'
 import socket from '../../utils/datafeeds/socket'
 import datafeeds from '../../utils/datafeeds/datafees'
 import {
@@ -47,6 +48,7 @@ import {
   mapMutations,
   mapState
 } from 'vuex'
+
 export default {
   components: {},
   // props,
@@ -100,9 +102,12 @@ export default {
   mounted () {
     this.initKLine(this.symbol)
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  activated () {
+  },
+  update () {
+  },
+  beforeRouteUpdate () {
+  },
   destroyed () {
     this.socket.destroy()
     this.widget = null
@@ -522,11 +527,13 @@ export default {
     },
     // 委单事实刷新标记
     getUserOrderSocket (type, symbol) {
-      this.socket.send({
-        'tag': type,
-        'content': `market.${symbol}.userorder.${this.userId}`,
-        'id': 'pc'
-      })
+      if (this.isLogin) {
+        this.socket.send({
+          'tag': type,
+          'content': `market.${symbol}.userorder.${this.userId}`,
+          'id': 'pc'
+        })
+      }
     },
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min') {
@@ -557,6 +564,11 @@ export default {
     })
   },
   watch: {
+    isLogin (newVal) {
+      if (newVal) {
+        this.getUserOrderSocket('SUB', newVal)
+      }
+    },
     KlineNum (newVal, oldVal) {
       console.log(newVal, oldVal)
     },
