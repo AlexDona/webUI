@@ -385,12 +385,12 @@
               <div class="input">
                 <input
                   type="password"
+                  autocomplete="new-password"
                   class="password-input"
                   v-model="tradePassword"
                   @focus="tradePasswordFocus"
                   @keyup.enter="publishADSubmitButton"
                   onpaste="return false"
-                  AUTOCOMPLETE="off"
                 >
               </div>
               <div class="error-info">
