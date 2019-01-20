@@ -681,7 +681,6 @@
           <div class="input">
             <input
               type="password"
-              autocomplete= "new-password"
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
@@ -722,7 +721,6 @@
           <div class="input">
             <input
               type="password"
-              autocomplete= "new-password"
               class="password-input"
               v-model="tradePassword"
             >
@@ -761,7 +759,6 @@
           <div class="input">
             <input
               type="password"
-              autocomplete= "new-password"
               class="password-input"
               v-model="tradePassword"
             >
@@ -799,7 +796,7 @@ import {
 import {timeFilter, formatSeconds} from '../../../utils'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   changeCurrentPageForLegalTrader
 } from '../../../utils/commonFunc'
 import {
@@ -909,9 +906,8 @@ export default {
       if (val === 1) {
         data = await cancelUserOtcOrder()
         console.log('撤销（过期 买家 未付款）')
-        if (!(returnAjaxMsg(data, this, 0))) {
-          return false
-        } else {
+        if (!data) return false
+        if (data) {
           // 返回数据正确的逻辑：重新渲染列表
           // this.getOTCTradingOrdersList()
           this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
@@ -921,9 +917,8 @@ export default {
         data = await completeUserOtcOrder()
         console.log('成交（过期 卖家 未收款）')
         // console.log(data)
-        if (!(returnAjaxMsg(data, this, 0))) {
-          return false
-        } else {
+        if (!data) return false
+        if (data) {
           // 返回数据正确的逻辑：重新渲染列表
           // this.getOTCTradingOrdersList()
           this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
@@ -1024,10 +1019,9 @@ export default {
           tradePassword: this.tradePassword // 交易密码
         })
         console.log(data)
-        // 提示信息
-        if (!(returnAjaxMsg(data, this, 1))) {
-          return false
-        } else {
+        // 正确逻辑
+        if (!data) return false
+        if (data) {
           // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
           // 付款成功后，根据返回的状态再渲染
           // 付款成功后逻辑
@@ -1073,10 +1067,9 @@ export default {
         tradePassword: this.tradePassword // 交易密码
       })
       console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
+      // 正确逻辑
+      if (!data) return false
+      if (data) {
         // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
         // 付款成功后，根据返回的状态再渲染
         // 付款成功后逻辑
@@ -1127,10 +1120,9 @@ export default {
         tradePassword: this.tradePassword // 交易密码
       })
       console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
+      // 正确逻辑
+      if (!data) return false
+      if (data) {
         this.dialogVisible3 = false
         this.errpwd = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框

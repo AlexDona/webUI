@@ -280,7 +280,10 @@ import IconFontCommon from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
 import {timeFilter} from '../../utils'
 import {getFinancialManagement, cancelInvestment} from '../../utils/api/investmentFinance'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  // returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 export default {
   components: {
     FinanceBrokenLine,

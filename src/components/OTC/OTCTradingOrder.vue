@@ -623,7 +623,6 @@
             <!-- 交易密码 -->
             <input
               type="password"
-              autocomplete= "new-password"
               :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
@@ -662,7 +661,6 @@
             <!-- 交易密码 -->
             <input
               type="password"
-              autocomplete= "new-password"
               :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
@@ -702,7 +700,6 @@
           <!-- 交易密码 -->
             <input
               type="password"
-              autocomplete= "new-password"
               :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
@@ -755,7 +752,7 @@ import {
 import {timeFilter, formatSeconds} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
@@ -863,14 +860,6 @@ export default {
     // 1.5 撤销/成交otc用户定单
     async cancelCompleteUserOtcOrder (val) { // 1 取消 2 完成
       let data
-      // if (val === 1) {
-      //   data = await cancelUserOtcOrder()
-      //   // console.log('撤销otc用户定单（过期买家未付款）')
-      // }
-      // if (val === 2) {
-      //   data = await completeUserOtcOrder()
-      //   // console.log('成交otc用户定单（过期卖家未收款）')
-      // }
       // switch 改写
       switch (val) {
         case 1:
@@ -880,11 +869,10 @@ export default {
           data = await completeUserOtcOrder()
           break
       }
+      // 返回数据正确的逻辑：重新渲染列表
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑：重新渲染列表
+      if (!data) return false
+      if (data) {
         this.getOTCTradingOrdersList()
       }
     },
@@ -902,14 +890,11 @@ export default {
       })
       console.log('交易中订单列表')
       console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.loading = false
-        let detailsData = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      this.loading = false
+      if (!data) return false
+      if (data) {
+        let detailsData = getNestedData(data, 'data')
         this.tradingOrderList = getNestedData(detailsData, 'list')
         // console.log('交易中订单')
         // console.log(this.tradingOrderList)
@@ -1016,12 +1001,10 @@ export default {
         params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
         const data = await buyerPayForOrder(params)
         // console.log(data)
-        // 提示信息
-        if (!(returnAjaxMsg(data, this, 1))) {
-          this.loading = false
-          return false
-        } else {
-          this.loading = false
+        // 正确逻辑
+        this.loading = false
+        if (!data) return false
+        if (data) {
           this.dialogVisibleConfirmPayment = false
           this.errPWD = ''
           this.tradePassword = ''
@@ -1054,13 +1037,10 @@ export default {
       // 订单id
       params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
       const data = await sellerConfirmGetMoney(params)
-
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 1))) {
-        this.loading = false
-        return false
-      } else {
-        this.loading = false
+      // 正确逻辑
+      this.loading = false
+      if (!data) return false
+      if (data) {
         this.dialogVisibleConfirmReceipt = false
         this.errPWD = ''
         this.tradePassword = ''
@@ -1112,12 +1092,10 @@ export default {
       params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
       const data = await sellerSendAppeal(params)
       // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 1))) {
-        this.loading = false
-        return false
-      } else {
-        this.loading = false
+      // 正确逻辑
+      this.loading = false
+      if (!data) return false
+      if (data) {
         this.dialogVisibleSubmitComplaint = false
         this.errPWD = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框

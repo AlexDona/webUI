@@ -385,12 +385,12 @@
               <div class="input">
                 <input
                   type="password"
-                  autocomplete= "new-password"
                   class="password-input"
                   v-model="tradePassword"
                   @focus="tradePasswordFocus"
                   @keyup.enter="publishADSubmitButton"
                   onpaste="return false"
+                  AUTOCOMPLETE="off"
                 >
               </div>
               <div class="error-info">
@@ -452,7 +452,7 @@ import {
 import IconFontCommon from '../../components/Common/IconFontCommon'
 // 引入提示信息
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
@@ -604,11 +604,11 @@ export default {
         entrustId: this.messageId
       })
       // console.log('广告管理跳转过来挂单详情')
-      // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        let detailsData = getNestedData(data, 'data.data')
+      console.log(data)
+      // 正确逻辑
+      if (!data) return false
+      if (data) {
+        let detailsData = getNestedData(data, 'data')
         this.activatedCoinId = getNestedData(detailsData, 'coinId') // 可用币种id
         this.activatedCurrencyId = getNestedData(detailsData, 'currencyId') // 法币id
         this.activatedBuySellStyle = getNestedData(detailsData, 'entrustType') // 挂单类型
@@ -628,14 +628,13 @@ export default {
         currencyId: this.activatedCurrencyId, // 法币id
         coinId: this.activatedCoinId // 币种id
       })
-      // console.log('币种详情')
-      // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
+      console.log('币种详情')
+      console.log(data)
+      if (!data) return false
+      if (data) {
         // 返回数据正确的逻辑
         // 1.0 可用币种列表
-        let availableCoinListData = getNestedData(data, 'data.data')
+        let availableCoinListData = getNestedData(data, 'data')
         this.availableCoinList = getNestedData(availableCoinListData, 'coinlist')
         this.availableCoinList.forEach(item => {
           if (availableCoinListData.otcCoinQryResponse.coinId === item.coinId) {
@@ -798,12 +797,10 @@ export default {
         param.entrustId = this.messageId
         data = await addModifyPublishADOrder(param)
       }
+      // 返回数据正确的逻辑
       // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
+      if (!data) return false
+      if (data) {
         this.publishADTradePwdDialogStatus = false
         // 改变标识状态为不是跳转来的
         this.ADManageJumpOrderStatus = 1
