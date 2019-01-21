@@ -989,7 +989,7 @@ export default {
             .errorInfo {
               > .number {
                 display: inline-block;
-                width: 320px;
+                width: 310px;
                 height: 30px;
                 font-size: 12px;
                 line-height: 30px;

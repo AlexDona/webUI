@@ -587,6 +587,7 @@ export default {
         }
 
         .el-table {
+          color: #9da5b3;
           background-color: #272b41;
 
           th {

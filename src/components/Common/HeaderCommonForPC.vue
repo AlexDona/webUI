@@ -644,12 +644,11 @@ export default{
     },
     // 查询某商户可用法币币种列表
     async getMerchantAvailableLegalTenderList () {
-      let data = await getMerchantAvailableLegalTender({})
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.convertCurrencyList = getNestedData(data, 'data.data')
+      let data = await getMerchantAvailableLegalTender()
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data) {
+        this.convertCurrencyList = getNestedData(data, 'data')
         await this.changeActiveTransitionCurrency()
       }
     },

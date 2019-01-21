@@ -46,7 +46,7 @@ export const getOTCADManageApplyList = (params) => handleRequest(() => get('otcE
 // 21 商家订单列表请求
 export const getOTCMerchantsOrdersList = (params) => handleRequest(() => get('otcOrder/selectMerchOrdersPage', params))
 // 22 报表统计
-export const getOTCReportFormStatisticsData = (params) => handleRequest(() => get('otcOrder/selectMerchStatics', params))
+export const getOTCReportFormStatisticsData = (params) => handleRequest(() => get('otcOrder/selectMerchStatics', {...params, 'loading': true}))
 // 23 币种详情：商家和普通用户挂单页面请求币种详情渲染页面
 export const getOTCCoinInfo = (params) => handleRequest(() => get('otcCOin/getCoinInfo', {...params, 'loading': true}))
 // 24 撤销otc用户定单（过期买家未付款）
