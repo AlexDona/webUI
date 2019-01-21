@@ -37,14 +37,8 @@ import {
   getCurrencyApplicationDownloadUrl
   // downloadFile
 } from '../../utils/api/activityCenter'
+import {getNestedData} from '../../utils/commonFunc'
 import {getServiceProtocoDataAjax} from '../../utils/api/common'
-import {
-<<<<<<< HEAD
-=======
-  returnAjaxMsg,
->>>>>>> style: common接口整理完毕
-  getNestedData
-} from '../../utils/commonFunc'
 import {
   mapState
 } from 'vuex'
