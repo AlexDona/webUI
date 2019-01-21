@@ -635,6 +635,10 @@ import {
   sendPhoneOrEmailCodeAjax,
   getNestedData
 } from '../utils/commonFunc'
+import {
+  getUserAgent,
+  detectOS
+} from '../utils'
 import socket from '../utils/datafeeds/socket'
 
 // import {getPersonalAssetsList} from '../../kits/globalFunction'
@@ -714,6 +718,11 @@ export default {
     }
   },
   created () {
+    // let u = navigator.userAgent
+    // console.log(navigator.appVersion)
+    // console.log(u)
+    // const userAgentList = u.split(';')
+    // console.log(userAgentList)
     document.getElementsByTagName('body')[0].style.zoom = 1
     if (this.isLogin) {
       this.$router.push({path: '/home'})
@@ -898,6 +907,8 @@ export default {
       let params = new FormData()
       params.append('userName', this.username)
       params.append('password', this.password)
+      params.append('terminal', getUserAgent())
+      params.append('os', detectOS())
       const data = await userLoginForStep1(params)
       if (!returnAjaxMsg(data, this, 0)) {
         return false
@@ -1030,7 +1041,6 @@ export default {
         }
       }
       let params = {
-        token: this.token,
         phone: this.userInfo.phone,
         phoneCode: this.step3PhoneMsgCode,
         email: this.userInfo.email,

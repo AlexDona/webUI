@@ -48,7 +48,9 @@ export const removeStore = name => {
  * @param value
  */
 export const setCookie = (name, value, times) => {
-  value = JSON.stringify(value)
+  if (value instanceof Object) {
+    value = JSON.stringify(value)
+  }
   let expires
   if (times) {
     let date = new Date()
@@ -488,4 +490,64 @@ export const downloadFileWithUserDefined = (downloadUrl, filename) => {
   } else {
     return false
   }
+}
+/**
+ * 获取浏览器版本、操作系统
+ */
+export const getUserAgent = () => {
+  var UserAgent = navigator.userAgent.toLowerCase()
+  if (/ucweb/.test(UserAgent)) return 'UC'
+  if (/chrome/.test(UserAgent.substr(-34, 6))) return 'Chrome'
+  if (/firefox/.test(UserAgent)) return 'firefox'
+  if (/opera/.test(UserAgent)) return 'opera'
+  if (/safari/.test(UserAgent) && !/chrome/.test(UserAgent)) return 'safari'
+  if (/360se/.test(UserAgent)) return '360'
+  if (/bidubrowser/.test(UserAgent)) return 'baidu'
+  if (/metasr/.test(UserAgent)) return 'sougou'
+  if (/msie 6.0/.test(UserAgent)) return 'IE6'
+  if (/msie 7.0/.test(UserAgent)) return 'IE7'
+  if (/msie 8.0/.test(UserAgent)) return 'IE8'
+  if (/msie 9.0/.test(UserAgent)) return 'IE9'
+  if (/msie 10.0/.test(UserAgent)) return 'IE10'
+  if (/msie 11.0/.test(UserAgent)) return 'IE11'
+  if (/lbbrowser/.test(UserAgent)) return 'liebao'
+  if (/micromessenger/.test(UserAgent)) return 'weixin'
+  if (/qqbrowser/.test(UserAgent)) return 'QQ'
+}
+
+export const detectOS = () => {
+  let {platform} = navigator
+  let sUserAgent = navigator.userAgent
+
+  let isWin = (platform == 'Win32') || (platform == 'Windows')
+  let isMac = (platform == 'Mac68K') || (platform == 'MacPPC') || (platform == 'Macintosh') || (platform == 'MacIntel')
+  if (isMac) return 'Mac'
+  let isUnix = (platform == 'X11') && !isWin && !isMac
+  if (isUnix) return 'Unix'
+  let isLinux = (String(platform).indexOf('Linux') > -1)
+
+  let bIsAndroid = sUserAgent.toLowerCase().match(/android/i) == 'android'
+  if (isLinux) {
+    if (bIsAndroid) {
+      return 'Android'
+    } else {
+      return 'Linux'
+    }
+  }
+  if (isWin) {
+    let isWin2K = sUserAgent.indexOf('Windows NT 5.0') > -1 || sUserAgent.indexOf('Windows 2000') > -1
+    if (isWin2K) return 'Windows 2000'
+    let isWinXP = sUserAgent.indexOf('Windows NT 5.1') > -1 ||
+      sUserAgent.indexOf('Windows XP') > -1
+    if (isWinXP) return 'Windows XP'
+    let isWin2003 = sUserAgent.indexOf('Windows NT 5.2') > -1 || sUserAgent.indexOf('Windows 2003') > -1
+    if (isWin2003) return 'Windows 2003'
+    let isWinVista = sUserAgent.indexOf('Windows NT 6.0') > -1 || sUserAgent.indexOf('Windows Vista') > -1
+    if (isWinVista) return 'Windows Vista'
+    let isWin7 = sUserAgent.indexOf('Windows NT 6.1') > -1 || sUserAgent.indexOf('Windows 7') > -1
+    if (isWin7) return 'Windows 7'
+    let isWin10 = sUserAgent.indexOf('Windows NT 10.0') > -1 || sUserAgent.indexOf('Windows 10') > -1
+    if (isWin10) return 'Windows 10'
+  }
+  return 'other'
 }
