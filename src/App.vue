@@ -58,8 +58,7 @@ export default {
     const convertCurrency = getStore('convertCurrency')
     this.CHANGE_CONVERT_CURRENCY(convertCurrency)
   },
-  mounted () {
-  },
+  mounted () {},
   activated () {},
   update () {},
   methods: {

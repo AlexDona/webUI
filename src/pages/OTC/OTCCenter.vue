@@ -1046,7 +1046,7 @@ export default {
       }
 
       .el-table__empty-block {
-        height: 639px;
+        height: 620px;
       }
     }
 
