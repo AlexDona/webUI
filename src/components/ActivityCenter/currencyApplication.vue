@@ -37,10 +37,8 @@ import {
   getCurrencyApplicationDownloadUrl
   // downloadFile
 } from '../../utils/api/activityCenter'
+import {getNestedData} from '../../utils/commonFunc'
 import {getServiceProtocoDataAjax} from '../../utils/api/common'
-import {
-  getNestedData
-} from '../../utils/commonFunc'
 import {
   mapState
 } from 'vuex'
