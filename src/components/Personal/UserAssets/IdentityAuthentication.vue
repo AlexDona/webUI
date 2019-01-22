@@ -725,8 +725,8 @@ export default {
     },
     // 判断图片大小限制
     beforeAvatarUpload (size) {
-      // 10M压缩后最大 尺寸
-      const COMPRESS_SIZE = 245500
+      // 10M 尺寸
+      const COMPRESS_SIZE = 10485760
       let isLt10M = false
       if (size > COMPRESS_SIZE) {
         this.CHANGE_AJAX_READY_STATUS(false)
