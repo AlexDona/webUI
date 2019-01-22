@@ -5,29 +5,17 @@ import {handleRequest} from '../commonFunc'
  * 个人中心
  */
 // 我的资产币种列表
-export const assetCurrenciesList = params => get('personal/getUserFinanceList', Object.assign({
-  'not-loading': true
-}, params))
+export const assetCurrenciesList = params => get('personal/getUserFinanceList', params)
 // 提币地址列表查询
-export const inquireWithdrawalAddressList = params => get('personal/getWithdrawAddress', Object.assign({
-  'not-loading': true
-}, params))
+export const inquireWithdrawalAddressList = params => get('personal/getWithdrawAddress', params)
 // 根据币种id查询提币地址
-export const inquireWithdrawalAddressId = (params) => get('personal/getCoinWithdrawAddress', Object.assign({
-  'not-loading': true
-}, params))
+export const inquireWithdrawalAddressId = (params) => get('personal/getCoinWithdrawAddress', params)
 // 账单明细—冲提记录
-export const statusRushedToRecordList = (params) => get('queryWithdrawRecording', Object.assign({
-  'not-loading': true
-}, params))
+export const statusRushedToRecordList = (params) => get('queryWithdrawRecording', params)
 // 账单明细—获取商户币种列表
-export const getMerchantCurrencyList = (params) => get('personal/queryPartnerCoinList', Object.assign({
-  'not-loading': true
-}, params))
+export const getMerchantCurrencyList = (params) => get('personal/queryPartnerCoinList', params)
 // 账单明细—个人资产综合查询
-export const getComprehensiveRecordsList = (params) => get('personal/queryColligate', Object.assign({
-  'not-loading': true
-}, params))
+export const getComprehensiveRecordsList = (params) => get('personal/queryColligate', params)
 // 提币
 export const statusSubmitWithdrawButton = (params) => post('addWithdraw', params)
 // 新增用户提币地址
@@ -41,20 +29,14 @@ export const inquireRechargeAddressList = (params) => get('personal/getRechargeA
 // 获取提币信息
 export const withdrawalInformation = (params) => get('queryWithdrawInfo', params)
 // 根据coinid查询交易信息
-export const queryTransactionInformation = (params) => get('personal/getTradeUrl', Object.assign({
-  'not-loading': true
-}, params))
+export const queryTransactionInformation = (params) => get('personal/getTradeUrl', params)
 //  刷新用户信息
-export const userRefreshUser = (params) => get('user/refreshUser', Object.assign({
-  'not-loading': true
-}, params))
+export const userRefreshUser = (params) => get('user/refreshUser', params)
 /**
  * 安全中心
  * */
 // 安全中心
-export const statusSecurityCenter = (params) => get('user/security/index', Object.assign({
-  'not-loading': true
-}, params))
+export const statusSecurityCenter = (params) => get('user/security/index', params)
 // 绑定邮箱
 export const bindEmailAddress = (params) => postWithURLencoded('user/security/bindMail', params)
 // 绑定手机
@@ -88,15 +70,11 @@ export const realNameInformation = (params) => get('user/center/userauth', param
  * push资产
  * */
 // push资产记录列表/push币种列表/默认余额total
-export const getPushAssetList = (params) => get('push/getPushList', Object.assign({
-  'not-loading': true
-}, params))
+export const getPushAssetList = (params) => get('push/getPushList', params)
 // push根据币种id获取可用余额
 export const getPushTotalByCoinId = (params) => get('push/getTotalByCoinId', params)
 // 交易区列表查询
-export const getEntrustSelectBox = (params) => get('queryEntrustSelectBox', Object.assign({
-  'not-loading': true
-}, params))
+export const getEntrustSelectBox = (params) => get('queryEntrustSelectBox', params)
 // push资产提交
 export const pushAssetsSubmit = (params) => post('push/pushSub', params)
 // push资产撤销
@@ -107,13 +85,9 @@ export const pushPropertyTransaction = (params) => put('push/pushPay', params)
  * 邀请推广
  * */
 // 直接推广 间接推广列表
-export const userPromotionList = (params) => get('user/center/inviter', Object.assign({
-  'not-loading': true
-}, params))
+export const userPromotionList = (params) => get('user/center/inviter', params)
 // 推荐用户币种列表
-export const getRecommendUserPromotionList = (params) => get('user/center/inviterCoin', Object.assign({
-  'not-loading': true
-}, params))
+export const getRecommendUserPromotionList = (params) => get('user/center/inviterCoin', params)
 /**
  * 收款方式
  * */
@@ -129,16 +103,12 @@ export const modificationAccountPaymentTerm = params => handleRequest(() => get(
  * 法币订单
  * */
 // 分页查询所有用户otc各状态交易订单列表
-export const getQueryAllOrdersList = params => get('otcOrder/selectUserOrdersPage', Object.assign({
-  'not-loading': true
-}, params))
+export const getQueryAllOrdersList = params => get('otcOrder/selectUserOrdersPage', params)
 /**
  * API
  * */
 // 获取多个用户api信息
-export const multipleUserAPIInfo = params => get('userApi', Object.assign({
-  'not-loading': true
-}, params))
+export const multipleUserAPIInfo = params => get('userApi', params)
 // 添加用户api信息
 export const stateCreationApi = params => post('userApi', params)
 //  获取秘钥
@@ -158,13 +128,9 @@ export const buyVipPriceInfo = params => postWithURLencoded('vip/buy', params)
 export const currencyApplicationDownloadUrl = params => get('getCurrencyApplicationDownloadUrl', params)
 
 // 获取购买vip应支付的价格
-export const getVipUserPayCount = params => get('vip/price/get', Object.assign({
-  'not-loading': true
-}, params))
+export const getVipUserPayCount = params => get('vip/price/get', params)
 // 汇率转换
-export const currencyTransform = params => get('exchangeRate/coinPrice', Object.assign({
-  'not-loading': true
-}, params))
+export const currencyTransform = params => get('exchangeRate/coinPrice', params)
 
 export const cancelPasswdDialog = params => post('user/payPasswordSet', params)
 

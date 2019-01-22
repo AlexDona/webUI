@@ -3,6 +3,7 @@ import Router from 'vue-router'
 // eslint-disable-next-line
 import storeCreater from '../vuex'
 import routes from './routes'
+
 Vue.use(Router)
 const store = storeCreater()
 
@@ -14,6 +15,7 @@ const routerCreator = () => {
     'linkExactActiveClass': 'active'
   })
   router.beforeEach((to, from, next) => {
+    store.commit('CHANGE_AJAX_READY_STATUS', true)
     if (from.path !== '/login' || from.path !== '/register') {
       store.commit('CHANGE_ROUTER_PATH', from.path)
     }

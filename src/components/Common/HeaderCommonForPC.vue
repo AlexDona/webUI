@@ -385,7 +385,6 @@ import {getMerchantAvailableLegalTender} from '../../utils/api/OTC'
 import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
 import {
-  returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -594,12 +593,9 @@ export default{
     // 用户登出
     async userLoginOut () {
       const data = await userLoginOut()
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.USER_LOGOUT()
-        this.$router.push({path: '/home'})
-      }
+      if (!data) return false
+      this.USER_LOGOUT()
+      this.$router.push({path: '/home'})
     },
     // 显示状态切换（子导航）
     toggleShowSubNavBox (item, status) {

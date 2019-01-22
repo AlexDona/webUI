@@ -3,6 +3,7 @@ import {
   get,
   postWithFormData
 } from './axios'
+import {handleRequest} from '../commonFunc'
 // import {handleRequest} from '../commonFunc'
 /**
  * User
@@ -37,9 +38,9 @@ export const sendRegisterUser = (params) => postWithURLencoded('user/reg', param
 // 用户登录第一步
 export const userLoginForStep1 = (params) => postWithFormData('user/userLoginForStep1', params, {'loading': true})
 // 用户登录第二步
-export const userLoginForStep2 = (params) => postWithURLencoded('user/userLoginForStep2', params)
+export const userLoginForStep2 = params => handleRequest(() => postWithURLencoded('user/userLoginForStep2', {...params, 'loading': true}), 1)
 // 退出登录
-export const userLoginOut = () => postWithURLencoded('user/logout')
+export const userLoginOut = () => handleRequest(() => postWithURLencoded('user/logout'), {'loading': true})
 // 找回密码步骤1
 export const findPasswordStep1 = (params) => postWithURLencoded('user/forgetPassword1', params)
 // 找回密码步骤2

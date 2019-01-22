@@ -1048,13 +1048,10 @@ export default {
         os: detectOS()
       }
       const data = await userLoginForStep2(params)
-      if (!returnAjaxMsg(data, this, 1)) {
-        return false
-      } else {
-        this.clearInputValue()
-        this.step3DialogShowStatus = false
-        this.userLoginSuccess(data.data.data)
-      }
+      if (!data) return false
+      this.clearInputValue()
+      this.step3DialogShowStatus = false
+      this.userLoginSuccess(getNestedData(data, 'data'))
     },
     /**
       * 验证码自动提交登录
