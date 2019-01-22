@@ -85,40 +85,32 @@
             >
               <div
                 class="chat-upload border-radius4"
-                @mouseenter="showStatusCode(1)"
-                @mouseleave="showStatusCode(2)"
               >
-                <div
-                  class="mask-layer cursor-pointer"
-                  v-show="removeMaskLayer"
-                >
-                  <i
-                    class="el-icon-delete mask-icon cursor-pointer"
-                    @click="handleRemove"
-                  >
-                  </i>
-                </div>
-                <el-upload
-                  :action="apiCommonUrl+'uploadfile'"
-                  :headers="tokenObj"
-                  list-type="picture-card"
-                  accept=".jpg,.jpeg,.png,.bmp"
-                  :on-success="handleSuccessHand"
-                  :on-remove="handleRemove"
-                >
-                  <img
-                    class="mask-images"
-                    v-show="dialogImageHandUrl1"
-                    width="118"
-                    height="118"
-                    :src="dialogImageHandUrl1"
-                  >
-                  <IconFontCommon
-                    v-show="!dialogImageHandUrl1"
-                    class="font-size40 icon-plus"
-                    iconName="icon-iconjia"
+                <div class="img">
+                  <!-- 上传微信收款码 -->
+                  <input
+                    @change="getPicture"
+                    type="file"
+                    id="fileInput"
+                    ref="fileInput"
+                    class="upload-input"
+                    accept="image/jpeg,image/jpg,image/png,image/bmp"
                   />
-                </el-upload>
+                  <div
+                    class="picture"
+                    @click="choosePicture"
+                  >
+                    <IconFontCommon
+                      class="font-size60"
+                      iconName="icon-jia1"
+                    />
+                    <img
+                      v-show="wechatImgUrl"
+                      class="cursor-pointer user-upload-img"
+                      :src="wechatImgUrl"
+                    >
+                  </div>
+                </div>
               </div>
             </el-form-item>
             <el-form-item
@@ -166,16 +158,15 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMsg,
-  getAccountPaymentTerm
+  getAccountPaymentTerm,
+  getNestedData
 } from '../../../utils/commonFunc'
 import {
   statusCardSettings,
+  uploadImageAjax,
   modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
-import {
-  apiCommonUrl,
-  xDomain
-} from '../../../utils/env'
+import lrz from 'lrz'
 import {
   mapMutations,
   mapState
@@ -187,14 +178,9 @@ export default {
   },
   data () {
     return {
-      tokenObj: {
-        'token': '',
-        'x-domain': ''
-      },
       cardNo: '', // 微信账号
       password: '', // 交易密码
       dialogImageHandUrl1: '', // 图片url
-      removeMaskLayer: true, // 删除遮罩层
       paymentTypeId: '', // 收款类型ID
       paymentTerm: {}, // 收款方式
       successCountDown: 1, // 成功倒计时
@@ -204,13 +190,14 @@ export default {
         '', // 微信账号
         '' // 交易密码
       ],
-      addWeChatSuccessJumpTimer: null // 添加微信成功后自动跳转定时器
+      // 添加微信成功后自动跳转定时器
+      addWeChatSuccessJumpTimer: null,
+      // 微信二维码地址
+      wechatImgUrl: ''
     }
   },
-  created () {
-    this.tokenObj.token = this.userInfo.token
-    this.tokenObj['x-domain'] = xDomain
-    getAccountPaymentTerm(this)
+  async created () {
+    await getAccountPaymentTerm(this)
     this.paymentMethodInformation()
   },
   mounted () {},
@@ -220,34 +207,52 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'CHANGE_AJAX_READY_STATUS'
     ]),
+    // 选择图片文件
+    choosePicture () {
+      this.$refs[`fileInput`].click()
+    },
+    getPicture (e) {
+      lrz(e.target.files[0]).then(async res => {
+        console.log(res)
+        this.CHANGE_AJAX_READY_STATUS(true)
+        const {base64, file, fileLen} = res
+        if (this.beforeAvatarUpload(fileLen)) return false
+        await this.uploadImg(file)
+        this.wechatImgUrl = base64
+      })
+    },
+    async uploadImg (file) {
+      let formData = new FormData()
+      // console.log(res.file)
+      formData.append('file', file)
+      const data = await uploadImageAjax(formData)
+      this.CHANGE_AJAX_READY_STATUS(false)
+      if (!data) return false
+      console.log(data.data)
+      this.dialogImageHandUrl1 = getNestedData(data, 'data.fileUrl')
+      console.log(this.wechatImgUrl)
+    },
+    // 判断图片大小限制
+    beforeAvatarUpload (size) {
+      // 10M压缩后最大 尺寸
+      const COMPRESS_SIZE = 245500
+      let isLt10M = false
+      if (size > COMPRESS_SIZE) {
+        this.CHANGE_AJAX_READY_STATUS(false)
+        // 上传头像图片大小不能超过 10M!
+        this.$message.error(this.$t('M.user_senior_hint5'))
+        isLt10M = true
+      }
+      return isLt10M
+    },
     // 点击返回上个页面
     returnSuperior () {
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
       this.$router.push({path: '/PersonalCenter'})
-    },
-    // 上传微信二维码
-    handleSuccessHand (response, file, fileList) {
-      this.dialogImageHandUrl1 = response.data.fileUrl
-      // console.log(response, file, fileList)
-    },
-    // 删除微信二维码
-    handleRemove () {
-      this.dialogImageHandUrl1 = ''
-    },
-    // 删除事件
-    showStatusCode (val) {
-      if (!this.dialogImageHandUrl1) {
-        if (val == 1 && this.dialogImageHandUrl1) {
-          // 显示删除icon
-          this.removeMaskLayer = true
-        } else {
-          // 隐藏删除icon
-          this.removeMaskLayer = false
-        }
-      }
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -297,8 +302,7 @@ export default {
       } else {
         goOnStatus = 0
       }
-      console.log(this.dialogImageHandUrl1)
-      if (this.dialogImageHandUrl1 == '') {
+      if (!this.wechatImgUrl) {
         this.$message({
           message: this.$t('M.user_account_weChat_pla'),
           type: 'error'
@@ -343,33 +347,25 @@ export default {
         userId: this.userInfo.userId,
         type: 'Wechat'
       }
-      // 整页loading
-      this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        let detailData = data.data.data
-        // 返回状态展示
-        if (detailData) {
-          this.paymentMethodList = detailData
-        }
-        if (detailData.cardNo) {
-          // 修改时带回微信号
-          this.cardNo = detailData.cardNo
-        }
-        if (detailData.qrcode) {
-          // 修改时带回微信收款码
-          this.dialogImageHandUrl1 = detailData.qrcode
-        }
-        if (detailData.id) {
-          this.paymentTypeId = detailData.id
-        }
-        // console.log(this.dialogImageHandUrl1)
+      if (!data) return false
+      let detailData = getNestedData(data, 'data')
+      const {cardNo, qrcode, id} = detailData
+      // 返回状态展示
+      if (detailData) {
+        this.paymentMethodList = detailData
+      }
+      if (cardNo) {
+        // 修改时带回微信号
+        this.cardNo = cardNo
+      }
+      if (qrcode) {
+        // 修改时带回微信收款码
+        this.dialogImageHandUrl1 = qrcode
+        this.wechatImgUrl = qrcode
+      }
+      if (id) {
+        this.paymentTypeId = id
       }
     },
     // 成功自动跳转
@@ -392,9 +388,6 @@ export default {
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       refAccountCenterStatus: state => state.personal.refAccountCenterStatus
     }),
-    apiCommonUrl () {
-      return apiCommonUrl
-    },
     windowHeight () {
       return window.innerHeight
     }
@@ -465,27 +458,26 @@ export default {
             line-height: 100px;
             text-align: center;
 
-            .mask-layer {
-              position: absolute;
-              z-index: 9;
-              top: 0;
-              width: 122px;
-              height: 122px;
-              border-radius: 6px;
-              line-height: 118px;
-              background: transparent;
-              opacity: 0;
-            }
+            > .img {
+              > .upload-input {
+                display: none;
+              }
 
-            &:hover .mask-layer {
-              width: 122px;
-              height: 122px;
-              background-color: rgba(0, 0, 0, .4);
-              opacity: 1;
+              > .picture {
+                position: relative;
+                width: 122px;
+                height: 122px;
+                border: 1px dashed rgba(255, 255, 255, .3);
+                text-align: center;
+                cursor: pointer;
 
-              .mask-icon {
-                font-size: 19px;
-                color: #fff;
+                > .user-upload-img {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                }
               }
             }
           }

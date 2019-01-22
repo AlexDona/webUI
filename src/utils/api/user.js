@@ -3,6 +3,7 @@ import {
   get,
   postWithFormData
 } from './axios'
+// import {handleRequest} from '../commonFunc'
 /**
  * User
  */

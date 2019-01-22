@@ -119,6 +119,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMsg,
+  getNestedData,
   getAccountPaymentTerm
 } from '../../../utils/commonFunc'
 import {
@@ -261,24 +262,15 @@ export default {
         userId: this.userInfo.userId,
         type: 'WestUnion'
       }
-      // 整页loading
-      this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        let detailData = data.data.data
-        // 返回状态展示
-        this.paymentMethodList = detailData
-        // 修改时带回西联汇款账号
-        this.telegraphicTransferAddress = detailData.address
-        this.id = detailData.id
-        console.log(this.paymentMethodList)
-      }
+      if (!data) return false
+      let detailData = getNestedData(data, 'data')
+      // 返回状态展示
+      this.paymentMethodList = detailData
+      const {address, id} = detailData
+      // 修改时带回西联汇款账号
+      this.telegraphicTransferAddress = address
+      this.id = id
     },
     // 成功自动跳转
     successJump () {

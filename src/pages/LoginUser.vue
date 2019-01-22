@@ -907,8 +907,6 @@ export default {
       let params = new FormData()
       params.append('userName', this.username)
       params.append('password', this.password)
-      params.append('terminal', getUserAgent())
-      params.append('os', detectOS())
       const data = await userLoginForStep1(params)
       if (!returnAjaxMsg(data, this, 0)) {
         return false
@@ -1045,7 +1043,9 @@ export default {
         phoneCode: this.step3PhoneMsgCode,
         email: this.userInfo.email,
         emailCode: this.step3EmailMsgCode,
-        googleCode: this.step3GoogleMsgCode
+        googleCode: this.step3GoogleMsgCode,
+        terminal: getUserAgent(),
+        os: detectOS()
       }
       const data = await userLoginForStep2(params)
       if (!returnAjaxMsg(data, this, 1)) {

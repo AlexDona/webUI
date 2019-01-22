@@ -497,7 +497,7 @@ export const downloadFileWithUserDefined = (downloadUrl, filename) => {
 export const getUserAgent = () => {
   var UserAgent = navigator.userAgent.toLowerCase()
   if (/ucweb/.test(UserAgent)) return 'UC'
-  if (/chrome/.test(UserAgent.substr(-34, 6))) return 'Chrome'
+  if (/chrome/.test(UserAgent.substr(-34, 6)) || /chrome/.test(UserAgent.substr(-33, 6))) return 'Chrome'
   if (/firefox/.test(UserAgent)) return 'firefox'
   if (/opera/.test(UserAgent)) return 'opera'
   if (/safari/.test(UserAgent) && !/chrome/.test(UserAgent)) return 'safari'
@@ -513,6 +513,7 @@ export const getUserAgent = () => {
   if (/lbbrowser/.test(UserAgent)) return 'liebao'
   if (/micromessenger/.test(UserAgent)) return 'weixin'
   if (/qqbrowser/.test(UserAgent)) return 'QQ'
+  return 'other'
 }
 
 export const detectOS = () => {

@@ -1,4 +1,6 @@
 import {post, get, put, postWithURLencoded, deleteMethod} from './axios'
+import {handleRequest} from '../commonFunc'
+
 /**
  * 个人中心
  */
@@ -122,7 +124,7 @@ export const statusCardSettings = params => postWithURLencoded('user/bank/save',
 // 开启关闭收款方式设置
 export const openAndCloseModeSetting = params => postWithURLencoded('user/bank/enable', params)
 // 获取支付方式信息
-export const modificationAccountPaymentTerm = params => get('user/bank/info', params)
+export const modificationAccountPaymentTerm = params => handleRequest(() => get('user/bank/info', {...params, 'loading': true}))
 /**
  * 法币订单
  * */
@@ -165,3 +167,6 @@ export const currencyTransform = params => get('exchangeRate/coinPrice', Object.
 }, params))
 
 export const cancelPasswdDialog = params => post('user/payPasswordSet', params)
+
+// 文件上传
+export const uploadImageAjax = params => handleRequest(() => post('uploadfile', params), 1)

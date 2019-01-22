@@ -213,7 +213,7 @@ export const getSecurityCenter = async (that, params, callback) => {
  */
 export const getAccountPaymentTerm = async (that) => {
   console.log(store)
-  const data = await accountPaymentTerm({})
+  const data = await accountPaymentTerm()
   if (!(returnAjaxMsg(data, that))) {
     return false
   } else {

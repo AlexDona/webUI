@@ -119,6 +119,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMsg,
+  getNestedData,
   getAccountPaymentTerm
 } from '../../../utils/commonFunc'
 import {
@@ -263,24 +264,15 @@ export default {
         userId: this.userInfo.userId,
         type: 'PAYPAL'
       }
-      // 整页loading
-      this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        // 返回状态展示
-        let detailData = data.data.data
-        this.paymentMethodList = detailData
-        // 修改时带回paypal账号
-        this.PayPalAccount = detailData.cardNo
-        this.id = detailData.id
-        console.log(this.paymentMethodList)
-      }
+      if (!data) return false
+      // 返回状态展示
+      let detailData = getNestedData(data, 'data')
+      this.paymentMethodList = detailData
+      const {id, cardNo} = detailData
+      // 修改时带回paypal账号
+      this.PayPalAccount = cardNo
+      this.id = id
     },
     // 成功自动跳转
     successJump () {
