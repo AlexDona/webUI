@@ -211,9 +211,7 @@
                   {{activatedCoinName}}
                 </span>
               </div>
-              <div
-                class="err"
-              >
+              <div class="err">
                 {{errorInfoEntrustCount}}
               </div>
               <p class="text">
@@ -269,7 +267,9 @@
                 <span class="err err-min-count">
                   <span>{{errorInfoMinCount}}</span>
                 </span>
-                <span class="err err-max-count">{{errorInfoMaxCount}}</span>
+                <span class="err err-max-count">
+                  {{errorInfoMaxCount}}
+                </span>
               </div>
             </div>
           </div>
@@ -1163,6 +1163,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             }
 
             .err-max-count {
+              display: inline-block;
               margin-left: 24px;
             }
 
@@ -1191,7 +1192,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             }
 
             > .text {
-              margin-top: 15px;
+              margin-top: 10px;
 
               > .money-max {
                 margin-left: 156px;
