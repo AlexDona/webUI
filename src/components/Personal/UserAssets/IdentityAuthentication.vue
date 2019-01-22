@@ -694,7 +694,7 @@ export default {
       lrz(e.target.files[0]).then(async res => {
         const {base64, file, fileLen} = res
         if (this.beforeAvatarUpload(fileLen)) return false
-        await this.uploadImg(file)
+        await this.uploadImg(file, INPUT_ID.substr(INPUT_ID.length - 1, 1) - 0)
         switch (INPUT_ID) {
           case 'fileInput1':
             console.log(this.firstPictureSrc)
@@ -715,13 +715,26 @@ export default {
         }
       })
     },
-    async uploadImg (file) {
+    async uploadImg (file, index) {
+      console.log(index)
       let formData = new FormData()
       // console.log(res.file)
       formData.append('file', file)
       const data = await uploadImageAjax(formData)
       this.CHANGE_AJAX_READY_STATUS(false)
       if (!data) return false
+      switch (index) {
+        case 1:
+          this.dialogImageFrontUrl = getNestedData(data, 'data.fileUrl')
+          break
+        case 2:
+          this.dialogImageReverseSideUrl = getNestedData(data, 'data.fileUrl')
+          break
+        case 3:
+          this.dialogImageHandUrl = getNestedData(data, 'data.fileUrl')
+          break
+      }
+      console.log(this.dialogImageFrontUrl)
     },
     // 判断图片大小限制
     beforeAvatarUpload (size) {
