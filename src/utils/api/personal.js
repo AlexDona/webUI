@@ -9,7 +9,7 @@ export const assetCurrenciesList = params => get('personal/getUserFinanceList', 
 // 提币地址列表查询
 export const inquireWithdrawalAddressList = params => get('personal/getWithdrawAddress', params)
 // 根据币种id查询提币地址
-export const inquireWithdrawalAddressId = (params) => get('personal/getCoinWithdrawAddress', params)
+export const inquireWithdrawalAddressId = params => handleRequest(() => get('personal/getCoinWithdrawAddress', {...params, loading: true}))
 // 账单明细—冲提记录
 export const statusRushedToRecordList = (params) => get('queryWithdrawRecording', params)
 // 账单明细—获取商户币种列表
@@ -25,9 +25,12 @@ export const checkCurrencyAddress = (params) => get('personal/validateAddress', 
 // 提币地址删除
 export const deleteUserWithdrawAddress = (params) => put('personal/deleteUserWithdrawAddress', params)
 // 查询充币地址
-export const inquireRechargeAddressList = (params) => get('personal/getRechargeAddress', params)
+export const inquireRechargeAddressList = params => handleRequest(() => get('personal/getRechargeAddress', {
+  ...params,
+  loading: true
+}))
 // 获取提币信息
-export const withdrawalInformation = (params) => get('queryWithdrawInfo', params)
+export const withdrawalInformation = params => handleRequest(() => get('queryWithdrawInfo', params))
 // 根据coinid查询交易信息
 export const queryTransactionInformation = (params) => get('personal/getTradeUrl', params)
 //  刷新用户信息

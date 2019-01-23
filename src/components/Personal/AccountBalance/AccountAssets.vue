@@ -649,14 +649,16 @@ export default {
     },
     // 点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
     async showRechargeBox (id, name, index) {
-      console.log(name)
-      // 显示充值框
-      this.chargeDialogVisible = true
       // 每行数据ID
       this.chargeMoneyAddressId = id
       // 每行数据币种名称
       this.currencyName = name
-      console.log(this.currencyName)
+
+      // 调用充币地址方法
+      if (!await this.fillingCurrencyAddress()) return false
+      // 显示充值框
+      this.chargeDialogVisible = true
+
       // 循环列表 隐藏充值或提现框
       this.withdrawDepositList.forEach((item) => {
         item.rechargeIsShow = false
@@ -677,8 +679,6 @@ export default {
           this.withdrawDepositList[index].provideWithdrawDepositIsShow = false
         }
       }
-      // 调用充币地址方法
-      await this.fillingCurrencyAddress()
     },
     // 重置提现表单内容
     resetWithdrawFormContent (index) {
@@ -708,6 +708,7 @@ export default {
       // 当前币种id
       this.activeCoinId = id
       this.currencyName = name
+
       // 每行数据币种名
       // 隐藏验证弹窗
       this.isShowWithdrawDialog = false
@@ -723,10 +724,11 @@ export default {
 
       // 隐藏充值弹窗
       this.withdrawDepositList[index].rechargeIsShow = false
+      if (!await this.queryWithdrawalAddressList()) return false
       // 调用充币地址方法
-      await this.queryWithdrawalAddressList()
+
       // 调用手续费信息
-      this.getWithdrawalInformation(index)
+      if (!await this.getWithdrawalInformation(index)) return false
       this.getSecurityCenter()
     },
     // 显示交易对跳转币种信息
@@ -822,18 +824,14 @@ export default {
       let data = await inquireWithdrawalAddressId({
         coinId: this.activeCoinId
       })
-      // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        let withdrawalAddressData = getNestedData(data, 'data.data')
-        // 对币种类型进行赋值 true公信宝类 false普通币种
-        this.isNeedTag = withdrawalAddressData.needTag
-        // 返回列表数据并渲染币种列表
-        this.withdrawAddressList = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList')
-        // console.log(this.withdrawAddressList)
-        this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address') || ''
-      }
+      if (!data) return false
+      let withdrawalAddressData = getNestedData(data, 'data')
+      // 对币种类型进行赋值 true公信宝类 false普通币种
+      this.isNeedTag = withdrawalAddressData.needTag
+      // 返回列表数据并渲染币种列表
+      this.withdrawAddressList = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList')
+      // console.log(this.withdrawAddressList)
+      this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address') || ''
     },
     // select框自定义提币地址校验地址
     // 新增用户提币地址校验
@@ -860,15 +858,12 @@ export default {
         coinId: this.activeCoinId
       })
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回列表数据
-        this.feeRangeOfWithdraw = getNestedData(data, 'data.data')
-        this.withdrawalFee = getNestedData(data, 'data.data.minFees')
-        this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value = this.withdrawalFee
-        this.withdrawFeeVModel = this.withdrawalFee
-      }
+      if (!data) return false
+      // 返回列表数据
+      this.feeRangeOfWithdraw = getNestedData(data, 'data')
+      this.withdrawalFee = getNestedData(data, 'data.minFees')
+      this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value = this.withdrawalFee
+      this.withdrawFeeVModel = this.withdrawalFee
     },
     /**
      *  点击充币按钮时 查询充币地址查询
@@ -877,23 +872,16 @@ export default {
       let data = await inquireRechargeAddressList({
         coinId: this.chargeMoneyAddressId
       })
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回列表数据
-        console.log(data.data.data)
-        // 获取充币地址
-        this.chargeMoneyAddress = getNestedData(data, 'data.data.userRechargeAddress.address')
-        // 获取币种类型 true公信宝类 false普通币种
-        this.isNeedTag = getNestedData(data, 'data.data.userRechargeAddress.needTag')
-        // 获取充值备注信息 rechargeNoteInfo
-        this.rechargeNoteInfo = getNestedData(data, 'data.data.userRechargeAddress.tag')
-        // console.log(data.data.data.userRechargeAddress.tag)
-        this.minRechargeAmount = getNestedData(data, 'data.data.userRechargeAddress.minRechargeAmount')
-        this.successCount = getNestedData(data, 'data.data.userRechargeAddress.successCount')
-        console.log(this.chargeMoneyAddress)
-      }
+      if (!data) return false
+      // 获取充币地址
+      this.chargeMoneyAddress = getNestedData(data, 'data.userRechargeAddress.address')
+      // 获取币种类型 true公信宝类 false普通币种
+      this.isNeedTag = getNestedData(data, 'data.userRechargeAddress.needTag')
+      // 获取充值备注信息 rechargeNoteInfo
+      this.rechargeNoteInfo = getNestedData(data, 'data.userRechargeAddress.tag')
+      // console.log(data.data.data.userRechargeAddress.tag)
+      this.minRechargeAmount = getNestedData(data, 'data.userRechargeAddress.minRechargeAmount')
+      this.successCount = getNestedData(data, 'data.userRechargeAddress.successCount')
     },
     // 当前提币地址改变回调
     changeWithdrawAddress ({activeWithdrawDepositAddress}) {
