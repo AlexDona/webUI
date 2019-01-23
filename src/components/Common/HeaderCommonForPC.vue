@@ -511,7 +511,7 @@ export default{
     },
     // 非商家禁止进入OTC导航页提示框--结束
     refreshUserInfo () {
-      this.REFRESH_USER_INFO_ACTION(this)
+      this.REFRESH_USER_INFO_ACTION()
     },
     handleScroll () {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -558,7 +558,7 @@ export default{
     // 用户跳转到指定页面
     async stateReturnSuperior (val) {
       console.log(this.localPayPwdSet)
-      await this.REFRESH_USER_INFO_ACTION(this)
+      await this.REFRESH_USER_INFO_ACTION()
       if (this.localPayPwdSet || this.userInfo.payPassword) {
         switch (val) {
           case 'account-balance':

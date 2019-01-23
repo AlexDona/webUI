@@ -365,7 +365,7 @@ export default {
       }
     }
     this.getServiceProtocolData()
-    await this.REFRESH_USER_INFO_ACTION(this)
+    await this.REFRESH_USER_INFO_ACTION()
     await this.getVipPriceInfo()
     await this.getCurrencyApplicationDownloadUrl()
     console.log(this.VipPriceInfoList)
@@ -576,7 +576,7 @@ export default {
           this.fullscreenLoading = false
           this.dialogFormVisible = false
           this.password = ''
-          this.REFRESH_USER_INFO_ACTION(this)
+          this.REFRESH_USER_INFO_ACTION()
           this.toggleAssetsCurrencyId()
           console.log(data)
           this.returnJumpTimer = setTimeout(() => {

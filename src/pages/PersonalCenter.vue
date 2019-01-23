@@ -256,14 +256,11 @@ import FiatOrders from '../components/Personal/TransactionType/FiatOrders'
 // 个人设置
 import PersonalSettings from '../components/Personal/Settings/PersonalSettings'
 
-import {
-  userRefreshUser
-} from '../utils/api/personal'
 import IconFontCommon from '../components/Common/IconFontCommon'
-import {returnAjaxMsg} from '../utils/commonFunc'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -295,8 +292,7 @@ export default {
     }
   },
   async created () {
-    console.log(this.userCenterActiveName)
-    await this.getUserRefreshUser()
+    await this.REFRESH_USER_INFO_ACTION()
     this.showNoPosswdAndNoVerifyNotice()
   },
   mounted () {},
@@ -304,6 +300,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
+    ]),
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'SET_STEP1_INFO'
@@ -335,21 +334,6 @@ export default {
 
         this.$router.push({path: '/PersonalCenter'})
         this.notVerifyDialogVisible = false
-      }
-    },
-    /**
-     *  刷新用户信息
-     */
-    async getUserRefreshUser () {
-      let data = await userRefreshUser({
-        token: this.token
-      })
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        this.SET_STEP1_INFO(data.data.data)
-        this.showNoPosswdAndNoVerifyNotice()
       }
     }
   },

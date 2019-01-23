@@ -515,7 +515,8 @@ export default {
     },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
-      this.isShowAllCurrency = e == 'all' ? true : false
+      console.log(e)
+      this.isShowAllCurrency = e == 'not_all' ? true : false
       this.getAssetCurrenciesList(e)
     },
     // 跳转当前交易对

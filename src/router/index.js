@@ -22,10 +22,6 @@ const routerCreator = () => {
     if (store.state.user.loginStep1Info.userInfo) {
       store.commit('USER_LOGIN', store.state.user.loginStep1Info)
     }
-    if (to.path !== '/TradeCenter') {
-      console.log(store)
-      store.dispatch('SET_PARTNER_INFO_ACTION', store.state.common.language)
-    }
     // 增加普通用户不能点击OTC导航功能
     if (to.matched.some(m => m.meta.auth)) {
       if (store.state.user.isLogin) {

@@ -31,7 +31,7 @@ export const withdrawalInformation = (params) => get('queryWithdrawInfo', params
 // 根据coinid查询交易信息
 export const queryTransactionInformation = (params) => get('personal/getTradeUrl', params)
 //  刷新用户信息
-export const userRefreshUser = (params) => get('user/refreshUser', params)
+export const userRefreshUser = params => handleRequest(() => get('user/refreshUser', params))
 /**
  * 安全中心
  * */
@@ -98,7 +98,10 @@ export const statusCardSettings = params => postWithURLencoded('user/bank/save',
 // 开启关闭收款方式设置
 export const openAndCloseModeSetting = params => postWithURLencoded('user/bank/enable', params)
 // 获取支付方式信息
-export const modificationAccountPaymentTerm = params => handleRequest(() => get('user/bank/info', {...params, 'loading': true}))
+export const modificationAccountPaymentTerm = params => handleRequest(() => get('user/bank/info', {
+  ...params,
+  'loading': true
+}))
 /**
  * 法币订单
  * */

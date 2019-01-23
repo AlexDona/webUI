@@ -655,7 +655,7 @@ export default {
   },
   async created () {
     this.SET_USER_INFO_REFRESH_STATUS(true)
-    await this.REFRESH_USER_INFO_ACTION(this)
+    await this.REFRESH_USER_INFO_ACTION()
     this.tokenObj.token = this.userInfo.token
     this.tokenObj['x-domain'] = xDomain
     await this.reflashUserInfo()
@@ -681,7 +681,7 @@ export default {
       'CHANGE_AJAX_READY_STATUS'
     ]),
     reflashUserInfo () {
-      this.REFRESH_USER_INFO_ACTION(this)
+      this.REFRESH_USER_INFO_ACTION()
     },
     // 选择图片文件
     choosePicture (index) {
@@ -874,7 +874,7 @@ export default {
         } else {
           // 接口成功清除loading
           this.fullscreenLoading = false
-          await this.REFRESH_USER_INFO_ACTION(this)
+          await this.REFRESH_USER_INFO_ACTION()
           await this.getRealNameInformation()
           console.log(data)
         }
@@ -964,7 +964,7 @@ export default {
         // 接口成功清除loading
         this.fullscreenLoading = false
         this.SET_USER_INFO_REFRESH_STATUS(true)
-        await this.REFRESH_USER_INFO_ACTION(this)
+        await this.REFRESH_USER_INFO_ACTION()
         await this.getRealNameInformation()
         this.authenticationStatusFront = false
         this.stateEmptyData()

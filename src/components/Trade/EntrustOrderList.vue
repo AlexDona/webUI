@@ -455,6 +455,7 @@ export default {
       }
     },
     middleTopData (newVal) {
+      console.log(newVal)
       this.getEntrustData()
     }
   }

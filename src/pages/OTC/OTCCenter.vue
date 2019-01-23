@@ -546,7 +546,7 @@ export default {
     ]),
     // 刷新个人信息
     reflashUserInfo () {
-      this.REFRESH_USER_INFO_ACTION(this)
+      this.REFRESH_USER_INFO_ACTION()
     },
     // 科学计数法转换
     filterNumber (num) {

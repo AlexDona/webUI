@@ -74,6 +74,7 @@ export default {
     }
   },
   async created () {
+    console.log(this.isMobile)
     // 获取 语言列表
     await this.GET_LANGUAGE_LIST_ACTION(this)
     await this.SET_PARTNER_INFO_ACTION(this.language)
@@ -117,7 +118,7 @@ export default {
       'SET_LOGO_URL'
     ]),
     reflashUserInfo () {
-      this.REFRESH_USER_INFO_ACTION(this)
+      this.REFRESH_USER_INFO_ACTION()
     },
     // 显示状态切换 （语言）
     toggleShowLanguageBox (status) {
@@ -136,7 +137,9 @@ export default {
       logoSrc: state => state.common.logoSrc,
       activeLanguage: state => state.common.activeLanguage,
       language: state => state.common.language, // 语言
-      defaultLanguage: state => state.common.defaultLanguage // 语言
+      // 默认语言
+      defaultLanguage: state => state.common.defaultLanguage,
+      isMobile: state => state.user.isMobile
     }),
     routeLanguage () {
       return this.$route.query.language
