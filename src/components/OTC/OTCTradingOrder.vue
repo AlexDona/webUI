@@ -126,7 +126,6 @@
                   >
                   <!-- 开户行 -->
                     <span>{{$t('M.otc_opening_bank')}}: </span>
-                    <!-- <span>{{activeBankProv[index]}}{{activeBankCity[index]}}{{activeBankArea[index]}}{{activeBankName[index]}}{{activeBankDetailAddress[index]}}</span> -->
                     <span>{{activeBankProv[index]}}{{activeBankCity[index]}}{{activeBankDetailAddress[index]}}</span>
                   </p>
                   <!-- 账户 -->
@@ -791,7 +790,7 @@ export default {
       activeBankName: [], // 当前选中支付银行名字
       activeBankDetailAddress: [], // 当前选中支付银行具体地址
       activeBankType: [], // 当前选中支付方式类型（银行卡、支付宝等）
-      activeBankCode: [], // 选中的支付宝和尾微信的支付码
+      activeBankCode: [], // 选中的支付宝和微信的支付码
       tradePassword: '', // 交易密码1
       buttonStatusArr: [], // 确认付款按钮是否可用状态集
       showOrderAppeal: [], // 订单申诉框显示与隐藏状态集
@@ -883,6 +882,7 @@ export default {
     async getOTCTradingOrdersList () {
       this.loading = true
       this.activePayModeList = [] // 清空支付方式数组：防止换页码之后之前选中的在此页面付款方式也被选中的问题
+      this.activeBankType = [] // 清空选中的支付方式所展示的付款账户和账号
       this.cancelOrderTimeArr = []
       this.accomplishOrderTimeArr = []
       console.log('当前页：' + this.currentPage)
