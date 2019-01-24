@@ -29,7 +29,7 @@ export const finance = {
   'finance_huoqi': '現在の期間',
   'finance_grant': 'リリス',
   'finance_noemptyTips': '預金の種類または預金の金額は空ではありません',
-  'finance_loginTips': '@あなたはまだログインしていません。',
+  'finance_loginTips': 'あなたはまだログインしていません。',
   'finance_or': 'または',
   'finance_loginTipsTwo': 'それからそれをチェックしてください！',
   // 二次确认弹框提示信息''二次確認窓かぎメッセージ'

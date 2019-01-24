@@ -354,7 +354,7 @@
                   <div class="input">
                     <input
                       type="password"
-                      autocomplete= "new-password"
+                      autocomplete="new-password"
                       class="password-input"
                       v-model="tradePassword"
                       @focus="tradePasswordFocus"
@@ -418,7 +418,7 @@ import {
   getOTCCoinInfo
 } from '../../utils/api/OTC'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
@@ -586,16 +586,14 @@ export default {
       })
       console.log('币种详情')
       console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
+      if (!data) return false
+      if (data.data) {
         // 可用币种id
         this.coinId = this.parameterCoinId
         // 可用法币
         this.hopePaymentCoinId = this.parameterCurrencyId
         // 返回数据正确的逻辑
-        let detailsData = getNestedData(data, 'data.data')
+        let detailsData = getNestedData(data, 'data')
         // 1.0 可用币种列表
         this.coinStyleList = getNestedData(detailsData, 'coinlist')
         this.coinStyleList.forEach(item => {
@@ -922,20 +920,16 @@ export default {
           break
       }
       const data = await addOTCPutUpOrders(param)
-      // console.log(data)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        // 关闭交易密码框
-        this.publishOrderTradePwdDialogStatus = false
-        // 清空表单数据
-        this.clearInputData()
-        // 下单成功跳转到首页挂单列表去
-        // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
-        this.$router.push({ path: '/OTCCenter' })
-      }
+      // 返回数据正确的逻辑
+      if (!data) return false
+      // 关闭交易密码框
+      this.publishOrderTradePwdDialogStatus = false
+      // 清空表单数据
+      this.clearInputData()
+      // 下单成功跳转到首页挂单列表去
+      // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+      this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+      this.$router.push({ path: '/OTCCenter' })
     },
     // 10.0 充币按钮跳转
     chargeMoney () {

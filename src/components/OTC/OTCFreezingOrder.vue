@@ -160,7 +160,10 @@
 <script>
 import {timeFilter, scientificToNumber} from '../../utils'
 import {getOTCOrdersThreeDay} from '../../utils/api/OTC'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  // returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
@@ -214,14 +217,11 @@ export default {
       })
       console.log('冻结中订单')
       console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.loading = false
-        let otcFreezingOrderListData = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      this.loading = false
+      if (!data) return false
+      if (data.data) {
+        let otcFreezingOrderListData = getNestedData(data, 'data')
         this.otcFreezingOrderList = getNestedData(otcFreezingOrderListData, 'list')
         // 分页
         this.totalPages = getNestedData(otcFreezingOrderListData, 'pages') - 0

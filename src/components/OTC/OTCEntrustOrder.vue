@@ -134,7 +134,10 @@
 <script>
 import {timeFilter, scientificToNumber} from '../../utils'
 import {getOTCEntrustingOrders, querySelectedOrdersRevocation} from '../../utils/api/OTC'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  // returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {
   mapMutations,
   mapState
@@ -194,14 +197,11 @@ export default {
       })
       console.log('委托中订单列表')
       console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.loading = false
-        let OTCEntrustOrderListData = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      this.loading = false
+      if (!data) return false
+      if (data.data) {
+        let OTCEntrustOrderListData = getNestedData(data, 'data')
         this.OTCEntrustOrderList = getNestedData(OTCEntrustOrderListData, 'list')
         // 分页
         this.totalPages = getNestedData(OTCEntrustOrderListData, 'pages') - 0
@@ -223,15 +223,11 @@ export default {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
       })
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.getOTCEntrustingOrdersList()
-        // 改变全局 委托定单撤单后，更新首页挂单列表状态
-        this.UPDATE_OTC_HOME_LIST_STATUS(true)
-      }
+      // 返回数据正确的逻辑
+      if (!data) return false
+      this.getOTCEntrustingOrdersList()
+      // 改变全局 委托定单撤单后，更新首页挂单列表状态
+      this.UPDATE_OTC_HOME_LIST_STATUS(true)
     }
   },
   filter: {},

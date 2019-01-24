@@ -43,9 +43,8 @@
 import {
   getCurrencyInfoList,
   getCurrencyDetails
-} from '../../utils/api/header'
+} from '../../utils/api/common'
 import {
-  returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {mapState} from 'vuex'
@@ -91,17 +90,11 @@ export default {
           language = 'en_US'
           break
       }
-      const data = await getCurrencyInfoList({
-        language
-      })
+      const data = await getCurrencyInfoList({language})
       console.log(data)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.currencyList = getNestedData(data, 'data.data')
-        if (this.currencyList.length) {
-          this.currencyId = getNestedData(this.currencyList.filter(item => item.name == this.middleTopData.sellsymbol), '[0].id') || getNestedData(this.currencyList, '[0].id')
-        }
+      this.currencyList = getNestedData(data, 'data')
+      if (this.currencyList.length) {
+        this.currencyId = getNestedData(this.currencyList.filter(item => item.name == this.middleTopData.sellsymbol), '[0].id') || getNestedData(this.currencyList, '[0].id')
       }
     },
     changeCurrentCurrency (id) {
@@ -114,11 +107,7 @@ export default {
       let currencyId = this.currencyId || getNestedData(this.currencyList, '[0].id')
       if (currencyId) {
         const data = await getCurrencyDetails(this.currencyId || getNestedData(this.currencyList, '[0].id'))
-        if (!(returnAjaxMsg(data, this, 0))) {
-          return false
-        } else {
-          this.currencyInfo = getNestedData(data, 'data.data')
-        }
+        this.currencyInfo = getNestedData(data, 'data')
       }
     }
   },

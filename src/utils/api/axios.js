@@ -5,6 +5,10 @@ import {
   apiCommonUrl,
   xDomain
 } from '../env'
+import {
+  setCookie,
+  getCookie
+} from '../index'
 import {getNestedData} from '../commonFunc'
 import axios from 'axios'
 import storeCreater from '../../vuex'
@@ -16,20 +20,21 @@ util.ajax = axios.create({
   timeout: 30000,
   withCredentials: true
 })
-
+let token = getCookie('token')
 util.ajax.interceptors.request.use((config) => {
   const url = `${config.url}`
   let needLoading = getNestedData(config.params, 'loading') || getNestedData(config.data, 'loading') || url.endsWith('user/userLoginForStep1')
-
+  if (getNestedData(config.params, 'loading')) delete config.params.loading
+  if (getNestedData(config.data, 'loading')) delete config.data.loading
   if (needLoading) {
     store.commit('CHANGE_AJAX_READY_STATUS', true)
-    console.log(store.state.common.isAjaxReady)
   }
+  console.log(token)
   config.headers['x-domain'] = xDomain
-  if (store.state.user.loginStep1Info.token) {
-    let userToken = store.state.user.loginStep1Info.token
-    config.headers['token'] = userToken
-  }
+  let userToken = store.state.user.loginStep1Info.token
+  config.headers['token'] = token || userToken
+
+  console.log(config)
   return config
 }, (error) => {
   return error
@@ -37,6 +42,12 @@ util.ajax.interceptors.request.use((config) => {
 
 util.ajax.interceptors.response.use(
   response => {
+    console.log(response.headers.token)
+    if (response.headers.token) {
+      token = response.headers.token
+      console.log(token)
+      setCookie('token', token)
+    }
     if (!response.data) {
       response.data = {}
     }

@@ -782,16 +782,10 @@ export default {
         // number: this.investAmount
         number: this.$refs.investAmountRef.value
       })
-      console.log('存币理财类型')
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        this.formLabelAlign = getNestedData(data, 'data.data')
-        this.$refs.changeAlignNum.value = this.formLabelAlign.number
-        console.log(this.$refs.changeAlignNum.value)
-        this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
-      }
+      if (!data) return false
+      this.formLabelAlign = getNestedData(data, 'data')
+      this.$refs.changeAlignNum.value = this.formLabelAlign.number
+      this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
     },
     // 添加理财记录
     async clickImmediateInvestment () {
@@ -800,21 +794,16 @@ export default {
         // number: this.investAmount
         number: this.$refs.investAmountRef.value
       })
-      console.log('存币理财类型')
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 重新调一次币种接口刷新列表
-        this.getFinancialManagementList()
-        // 请求回来时将按钮解除禁用
-        this.stopClick = false
-        // 存币成功
-        this.$message({
-          message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
-          type: 'success'
-        })
-      }
+      if (!data) return false
+      // 重新调一次币种接口刷新列表
+      this.getFinancialManagementList()
+      // 请求回来时将按钮解除禁用
+      this.stopClick = false
+      // 存币成功
+      this.$message({
+        message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
+        type: 'success'
+      })
     },
     // 存币理财页面币种查询
     async getFinancialManagementList () {
@@ -830,75 +819,76 @@ export default {
       })
       console.log(data)
       this.fullscreenLoading = false
-      let getData = getNestedData(data, 'data')
-      // 设置可用币种数组
-      this.traderCoinList = getData.idNameDtoList
-      this.traderCoinList.forEach(item => {
-        if (getData.idNameDtoList.id == item.id) {
-          this.selectedCoinId = item.id
-        }
-      })
-      // 设置每次返回回来的币种id
-      if (!getData.tickerPriceResult.coinId) {
-        this.selectedCoinId = ''
-      } else {
-        this.selectedCoinId = getData.tickerPriceResult.coinId
-      }
-      // 设置每次返回地币种名称
-      this.selectedCoinName = getData.tickerPriceResult.coinName
-      // 最新价钱
-      this.newestPrice = getData.tickerPriceResult.price
-      // 当日涨幅
-      this.dayAmountIncrease = getData.tickerPriceResult.chg
-      // 历史涨幅
-      this.historyAmountIncrease = getData.tickerPriceResult.historyAmountIncrease
-      // 理财类型数组
-      this.investTypeList = getData.managementList
-      // 设置存币类型默认值
-      if (getData.managementList.length) {
-        getData.managementList.forEach((item, index) => {
-          if (item.state === 'ENABLED') {
-            this.newArrInvestTypeList.push(item)
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data) {
+        let getData = getNestedData(data, 'data')
+        // 设置可用币种数组
+        this.traderCoinList = getData.idNameDtoList
+        this.traderCoinList.forEach(item => {
+          if (getData.idNameDtoList.id == item.id) {
+            this.selectedCoinId = item.id
           }
         })
-        this.investTypeList = this.newArrInvestTypeList
-        this.selectedInvestTypeId = this.investTypeList[0].id
+        // 设置每次返回回来的币种id
+        if (!getData.tickerPriceResult.coinId) {
+          this.selectedCoinId = ''
+        } else {
+          this.selectedCoinId = getData.tickerPriceResult.coinId
+        }
+        // 设置每次返回地币种名称
+        this.selectedCoinName = getData.tickerPriceResult.coinName
+        // 最新价钱
+        this.newestPrice = getData.tickerPriceResult.price
+        // 当日涨幅
+        this.dayAmountIncrease = getData.tickerPriceResult.chg
+        // 历史涨幅
+        this.historyAmountIncrease = getData.tickerPriceResult.historyAmountIncrease
+        // 理财类型数组
+        this.investTypeList = getData.managementList
+        // 设置存币类型默认值
+        if (getData.managementList.length) {
+          getData.managementList.forEach((item, index) => {
+            // 描述不能为空
+            if (item.state === 'ENABLED' && item.typeDescription && item.typeEnglishDescription) {
+              this.newArrInvestTypeList.push(item)
+            }
+          })
+          this.investTypeList = this.newArrInvestTypeList
+          this.selectedInvestTypeId = this.investTypeList[0].id
+        }
+        // 设置可用余额
+        this.availableBalance = getData.userTotal
+        // 存币估计值
+        this.InvestmentValue = getData.userNumber
+        // 历史收益
+        this.getMoneyValue = getData.userInterest
+        // 存币记录列表赋值
+        this.investList = this.isLogin ? getData.userFinancialManagementRecord.list : ''
+        // 收益记录列表
+        this.userInterestRecord = this.isLogin ? getData.userInterestRecord.list : ''
+        // 每次换一种币种就获取该币种的总资产
+        if (this.isLogin) {
+          this.getUserCoinTotal()
+        }
+        // 走势图x轴赋值
+        this.FINANCE_LINE_RENDER_PRICE_LIST(getData.tickerPriceResult.renderPriceList)
+        // 走势图y轴赋值
+        this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
+        // 设置状态只要发生请求就让状态改变
+        this.FINANCE_LINE_STATUS(1 + this.status)
+        // 将存币数量输入框清空
+        // this.investAmount = ''
+        this.$refs.investAmountRef.value = ''
       }
-      // 设置可用余额
-      this.availableBalance = getData.userTotal
-      // 存币估计值
-      this.InvestmentValue = getData.userNumber
-      // 历史收益
-      this.getMoneyValue = getData.userInterest
-      // 存币记录列表赋值
-      this.investList = this.isLogin ? getData.userFinancialManagementRecord.list : ''
-      // 收益记录列表
-      this.userInterestRecord = this.isLogin ? getData.userInterestRecord.list : ''
-      // 每次换一种币种就获取该币种的总资产
-      if (this.isLogin) {
-        this.getUserCoinTotal()
-      }
-      // 走势图x轴赋值
-      this.FINANCE_LINE_RENDER_PRICE_LIST(getData.tickerPriceResult.renderPriceList)
-      // 走势图y轴赋值
-      this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
-      // 设置状态只要发生请求就让状态改变
-      this.FINANCE_LINE_STATUS(1 + this.status)
-      // 将存币数量输入框清空
-      // this.investAmount = ''
-      this.$refs.investAmountRef.value = ''
     },
     // 用户取消存币接口
     async clickCancelInvestment (id) {
       const data = await cancelInvestment(id)
       console.log('用户取消按钮')
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        // 重新请求币种接口刷新列表
-        this.getFinancialManagementList()
-      }
+      if (!data) return false
+      this.getFinancialManagementList()
     },
     // 币种选择变化时赋值币种名称
     changeTraderCoin (e) {
@@ -1464,7 +1454,8 @@ export default {
               > .invest-list-body {
                 .finance-tips-box {
                   color: #617499;
-                  background-color: #121824;
+
+                  /* background-color: #121824; */
                 }
               }
             }

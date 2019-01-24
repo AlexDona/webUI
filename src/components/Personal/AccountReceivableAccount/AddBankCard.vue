@@ -184,8 +184,8 @@ export default {
       successCountDownJumpTimer: null // 成功自动跳转定时器
     }
   },
-  created () {
-    getAccountPaymentTerm(this)
+  async created () {
+    await getAccountPaymentTerm(this)
     this.paymentMethodInformation()
   },
   mounted () {},
@@ -316,22 +316,18 @@ export default {
         type: 'Bankcard'
       }
       data = await modificationAccountPaymentTerm(params)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // let detailData = data.data.data
-        let detailData = getNestedData(data, 'data.data')
-        // 返回状态展示
-        this.paymentMethodList = detailData
-        // 修改时带回银行卡名称
-        this.bankName = getNestedData(detailData, 'bankName')
-        // 修改时带回银行卡号
-        this.bankCard = getNestedData(detailData, 'cardNo')
-        // 修改时带回银行卡地址
-        this.branchAddress = getNestedData(detailData, 'address')
-        this.id = getNestedData(detailData, 'id')
-        console.log(this.paymentMethodList)
-      }
+      if (!data) return false
+      let detailData = getNestedData(data, 'data')
+      // 返回状态展示
+      this.paymentMethodList = detailData
+      const {bankName, cardNo, address, id} = detailData
+      // 修改时带回银行卡名称
+      this.bankName = bankName
+      // 修改时带回银行卡号
+      this.bankCard = cardNo
+      // 修改时带回银行卡地址
+      this.branchAddress = address
+      this.id = id
     },
     // 成功自动跳转
     successJump () {

@@ -283,7 +283,9 @@ export default {
     ...mapMutations([
       'SET_LEGAL_TENDER_LIST',
       'CHANGE_LEGAL_PAGE',
-      'CHANGE_RE_RENDER_TRADING_LIST_STATUS' // 更改重新渲染交易中订单列表状态
+      // 更改重新渲染交易中订单列表状态
+      'CHANGE_RE_RENDER_TRADING_LIST_STATUS',
+      'SET_LEGAL_TENDER_REFLASH_STATUS'
     ]),
     // 切换tab时将全局当前页码改为1加载第一页的数据
     toggleTabPane () {
@@ -298,11 +300,10 @@ export default {
       })
       console.log('可用币种列表')
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.merchantsOrdersCoinList = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data) {
+        this.merchantsOrdersCoinList = getNestedData(data, 'data')
       }
     },
     // 页面加载时 可用法币查询
@@ -310,11 +311,10 @@ export default {
       const data = await getMerchantAvailableLegalTender()
       console.log('可用法币')
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.merchantsOrdersCurrencyList = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data) {
+        this.merchantsOrdersCurrencyList = getNestedData(data, 'data')
       }
     },
     // 选中交易 类型 赋值
@@ -399,14 +399,11 @@ export default {
       }
       if (activeName == 'ENTRUSTED') {
         const data = await getOTCEntrustingOrders(params)
-        if (!returnAjaxMsg(data, this)) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
-          return false
-        } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
-          let OTCEntrustingOrdersData = getNestedData(data, 'data.data')
+        // 接口成功清除loading
+        this.fullscreenLoading = false
+        if (!data) return false
+        if (data) {
+          let OTCEntrustingOrdersData = getNestedData(data, 'data')
           // 返回数据正确的逻辑 重新渲染列表
           this.SET_LEGAL_TENDER_LIST({
             type: activeName,
@@ -497,6 +494,12 @@ export default {
     },
     legalTraderEntrustReflashStatus (newVal) {
       this.getOTCEntrustingOrdersRevocation(this.activeName)
+      if (newVal) {
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'ENTRUSTED',
+          status: false
+        })
+      }
     },
     userCenterActiveName (newVal) {
       this.resetCondition()

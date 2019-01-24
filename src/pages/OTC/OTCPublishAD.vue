@@ -211,9 +211,7 @@
                   {{activatedCoinName}}
                 </span>
               </div>
-              <div
-                class="err"
-              >
+              <div class="err">
                 {{errorInfoEntrustCount}}
               </div>
               <p class="text">
@@ -269,7 +267,9 @@
                 <span class="err err-min-count">
                   <span>{{errorInfoMinCount}}</span>
                 </span>
-                <span class="err err-max-count">{{errorInfoMaxCount}}</span>
+                <span class="err err-max-count">
+                  {{errorInfoMaxCount}}
+                </span>
               </div>
             </div>
           </div>
@@ -385,7 +385,7 @@
               <div class="input">
                 <input
                   type="password"
-                  autocomplete= "new-password"
+                  autocomplete="new-password"
                   class="password-input"
                   v-model="tradePassword"
                   @focus="tradePasswordFocus"
@@ -452,7 +452,7 @@ import {
 import IconFontCommon from '../../components/Common/IconFontCommon'
 // 引入提示信息
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
@@ -604,11 +604,11 @@ export default {
         entrustId: this.messageId
       })
       // console.log('广告管理跳转过来挂单详情')
-      // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        let detailsData = getNestedData(data, 'data.data')
+      console.log(data)
+      // 正确逻辑
+      if (!data) return false
+      if (data.data) {
+        let detailsData = getNestedData(data, 'data')
         this.activatedCoinId = getNestedData(detailsData, 'coinId') // 可用币种id
         this.activatedCurrencyId = getNestedData(detailsData, 'currencyId') // 法币id
         this.activatedBuySellStyle = getNestedData(detailsData, 'entrustType') // 挂单类型
@@ -628,14 +628,13 @@ export default {
         currencyId: this.activatedCurrencyId, // 法币id
         coinId: this.activatedCoinId // 币种id
       })
-      // console.log('币种详情')
-      // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
+      console.log('币种详情')
+      console.log(data)
+      if (!data) return false
+      if (data.data) {
         // 返回数据正确的逻辑
         // 1.0 可用币种列表
-        let availableCoinListData = getNestedData(data, 'data.data')
+        let availableCoinListData = getNestedData(data, 'data')
         this.availableCoinList = getNestedData(availableCoinListData, 'coinlist')
         this.availableCoinList.forEach(item => {
           if (availableCoinListData.otcCoinQryResponse.coinId === item.coinId) {
@@ -798,21 +797,17 @@ export default {
         param.entrustId = this.messageId
         data = await addModifyPublishADOrder(param)
       }
+      // 返回数据正确的逻辑
       // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.publishADTradePwdDialogStatus = false
-        // 改变标识状态为不是跳转来的
-        this.ADManageJumpOrderStatus = 1
-        // 清空数据
-        this.clearMainData()
-        // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
-        this.$router.push({ path: '/OTCCenter' })
-      }
+      if (!data) return false
+      this.publishADTradePwdDialogStatus = false
+      // 改变标识状态为不是跳转来的
+      this.ADManageJumpOrderStatus = 1
+      // 清空数据
+      this.clearMainData()
+      // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+      this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+      this.$router.push({ path: '/OTCCenter' })
     },
     // 7.0 交易密码框获得焦点
     tradePasswordFocus () {
@@ -1166,6 +1161,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             }
 
             .err-max-count {
+              display: inline-block;
               margin-left: 24px;
             }
 
@@ -1194,7 +1190,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             }
 
             > .text {
-              margin-top: 15px;
+              margin-top: 10px;
 
               > .money-max {
                 margin-left: 156px;

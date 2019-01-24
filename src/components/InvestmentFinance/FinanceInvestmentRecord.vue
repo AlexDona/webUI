@@ -280,7 +280,10 @@ import IconFontCommon from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
 import {timeFilter} from '../../utils'
 import {getFinancialManagement, cancelInvestment} from '../../utils/api/investmentFinance'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  // returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 export default {
   components: {
     FinanceBrokenLine,
@@ -365,39 +368,35 @@ export default {
       console.log('存币理财页面查询')
       console.log(data)
       this.loading = false
-      // let getData = data.data.data
-      let getData = getNestedData(data, 'data')
-      if (this.activeName == '1') {
-        // 存币记录列表赋值
-        this.investList = getData.userFinancialManagementRecord.list
-        // 存币记录总页数
-        this.investTotalPages = getData.userFinancialManagementRecord.pages
-        // 存币记录总条数
-        this.investTotal = getData.userFinancialManagementRecord.total
-        // 从新赋值页码为当前页
-        // this.investCurrentPage = pageNum
-      } else if (this.activeName == '2') {
-        // 收益记录列表
-        this.userInterestRecord = getData.userInterestRecord.list
-        // 收益记录总页数
-        this.interestTotalPages = getData.userInterestRecord.pages
-        // 收益记录总条数
-        this.interestTotal = getData.userInterestRecord.total
-        // 重新赋值收益列表在当前页
-        // this.interestCurrentPage = pageNum
+      if (!data) return false
+      if (data) {
+        let getData = getNestedData(data, 'data')
+        if (this.activeName == '1') {
+          // 存币记录列表赋值
+          this.investList = getData.userFinancialManagementRecord.list
+          // 存币记录总页数
+          this.investTotalPages = getData.userFinancialManagementRecord.pages
+          // 存币记录总条数
+          this.investTotal = getData.userFinancialManagementRecord.total
+          // 从新赋值页码为当前页
+          // this.investCurrentPage = pageNum
+        } else if (this.activeName == '2') {
+          // 收益记录列表
+          this.userInterestRecord = getData.userInterestRecord.list
+          // 收益记录总页数
+          this.interestTotalPages = getData.userInterestRecord.pages
+          // 收益记录总条数
+          this.interestTotal = getData.userInterestRecord.total
+          // 重新赋值收益列表在当前页
+          // this.interestCurrentPage = pageNum
+        }
       }
     },
     // 点击取消按钮执行
     async clickCancelInvestment (id) {
       const data = await cancelInvestment(id)
-      console.log('用户取消按钮')
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 重新请求币种接口刷新列表 把当前页码传过去
-        this.getFinancialManagementList(this.investCurrentPage)
-      }
+      if (!data) return false
+      this.getFinancialManagementList(this.investCurrentPage)
     },
     cancelInvest (id) {
       // 用户点击取消按钮需要请求接口

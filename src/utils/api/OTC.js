@@ -1,82 +1,57 @@
 import {get, postWithURLencoded, post} from './axios'
+import {handleRequest} from '../commonFunc'
 /**
  *OTC
  */
-// 查询某商户可用法币币种列表
-export const getMerchantAvailableLegalTender = (params) => get('otcCOin/getAvailCurrencyCoins', Object.assign({
-  'not-loading': true
-}, params))
-// otc可用币种查询：我要购买/我要出售的币种列表
-export const getOTCAvailableCurrency = (params) => get('otcCOin/getAvailOTCCoins', Object.assign({
-  'not-loading': true
-}, params))
-// otc主页面查询otc挂单列表
-export const getOTCPutUpOrders = (params) => get('otcEntrust/selectByParams', Object.assign({
-  'not-loading': true
-}, params))
-// 查询用户所有otc挂单列表（分页）:也就是订单中的 委托中的订单
-export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrustsPage', Object.assign({
-  'not-loading': true
-}, params))
-// 查询3天内用户otc各状态交易订单
-export const getOTCOrdersThreeDay = (params) => get('otcOrder/selectUserOrdersIn3Day', Object.assign({
-  'not-loading': true
-}, params))
-// 添加otc挂单(商家与普通用户都可用)
-export const addOTCPutUpOrders = (params) => postWithURLencoded('otcEntrust/addOtcEntrustForCommon', params)
-// 添加otc挂单(仅商家可用)
-export const addOTCPutUpOrdersMerchantDedicated = (params) => postWithURLencoded('otcEntrust/addOtcEntrustForMerch', params)
-// otc摘单买入
-export const pickOrdersToBuy = (params) => postWithURLencoded('otcOrder/pickEntrustBuy', params)
-// otc摘单卖出
-export const pickOrdersToSell = (params) => postWithURLencoded('otcOrder/pickEntrustSell', params)
-// 查询otc挂单详情-商家和普通用户通用
-export const querySelectedOrdersDetails = (params) => get('otcEntrust/selectUserEntrustDetail', params)
-// 查询otc挂单撤销
-export const querySelectedOrdersRevocation = (params) => postWithURLencoded('otcEntrust/cancelOtcEntrust', Object.assign({
-  'not-loading': true
-}, params))
-// 查询otc挂单用户交易币种手续费率以及币种详情
-export const queryUserTradeFeeAndCoinInfo = (params) => get('otcCOin/getUserTradeFeeAndCoinInfo', params)
-// otc广告管理一键撤销用户所有挂单--商家专用
-export const cancelAllOrdersOnekey = (params) => postWithURLencoded('otcEntrust/cancelAllEntrusts', Object.assign({
-  'not-loading': true
-}, params))
-// otc交易中订单，otc买家确认付款
-export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', Object.assign({
-  'not-loading': true
-}, params))
-// otc交易中订单， otc卖家确认收款
-export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', Object.assign({
-  'not-loading': true
-}, params))
-// otc交易中订单， otc卖家申诉
-export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyOtcAppeal', Object.assign({
-  'not-loading': true
-}, params))
-// 提交otc商家申请
-export const businessApply = (params) => postWithURLencoded('otcMerchApply/applyOTCMerch', params)
-// 首次进入otc商家申请页面
-export const firstEnterBusinessApply = (params) => get('otcMerchApply/getUserMerchInfo', params)
-// 商家申请页面点击用户协议
-export const argumentBusinessApply = (params) => get('cms/terms/selectAll', params)
-// 广告管理列表请求
-export const getOTCADManageApplyList = (params) => get('otcEntrust/selectMerchEntrustsPage', Object.assign({
-  'not-loading': true
-}, params))
-// 商家订单列表请求
-export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', Object.assign({
-  'not-loading': true
-}, params))
-// 报表统计
-export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMerchStatics', Object.assign({
-  'not-loading': true
-}, params))
-// 币种详情：商家和普通用户挂单页面请求币种详情渲染页面
-export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
-// 撤销otc用户定单（过期买家未付款）
-export const cancelUserOtcOrder = (params) => post('otcOrder/cancelUserOtcOrder', params)
-// 成交otc用户定单（过期卖家未收款）
-export const completeUserOtcOrder = (params) => post('otcOrder/completeUserOtcOrder', params)
-// 广告管理中订单点击修改跳转到商家专用发布广告页面，修改数据后再发布广告调取的接口
-export const addModifyPublishADOrder = (params) => postWithURLencoded('otcEntrust/upShelfOtcEntrust', params)
+// 1.0 查询某商户可用法币币种列表
+export const getMerchantAvailableLegalTender = (params) => handleRequest(() => get('otcCOin/getAvailCurrencyCoins', params))
+// 2.0 otc可用币种查询：我要购买/我要出售的币种列表
+export const getOTCAvailableCurrency = (params) => handleRequest(() => get('otcCOin/getAvailOTCCoins', params))
+// 3.0 otc主页面查询otc挂单列表
+export const getOTCPutUpOrders = (params) => handleRequest(() => get('otcEntrust/selectByParams', params))
+// 4.0 查询用户所有otc挂单列表（分页）:也就是订单中的 委托中的订单
+export const getOTCEntrustingOrders = (params) => handleRequest(() => get('otcEntrust/selectEntrustsPage', params))
+// 5.0 查询3天内用户otc各状态交易订单
+export const getOTCOrdersThreeDay = (params) => handleRequest(() => get('otcOrder/selectUserOrdersIn3Day', params))
+// 6.0 添加otc挂单(商家与普通用户都可用)
+export const addOTCPutUpOrders = (params) => handleRequest(() => postWithURLencoded('otcEntrust/addOtcEntrustForCommon', {...params, 'loading': true}), 1)
+// 7.0 添加otc挂单(仅商家可用)
+export const addOTCPutUpOrdersMerchantDedicated = (params) => handleRequest(() => postWithURLencoded('otcEntrust/addOtcEntrustForMerch', {...params, 'loading': true}), 1)
+// 8.0 otc摘单买入
+export const pickOrdersToBuy = (params) => handleRequest(() => postWithURLencoded('otcOrder/pickEntrustBuy', {...params, 'loading': true}), 1)
+// 9.0 otc摘单卖出
+export const pickOrdersToSell = (params) => handleRequest(() => postWithURLencoded('otcOrder/pickEntrustSell', {...params, 'loading': true}), 1)
+// 10 查询otc挂单详情-商家和普通用户通用
+export const querySelectedOrdersDetails = (params) => handleRequest(() => get('otcEntrust/selectUserEntrustDetail', {...params, 'loading': true}))
+// 11 查询otc挂单撤销
+export const querySelectedOrdersRevocation = (params) => handleRequest(() => postWithURLencoded('otcEntrust/cancelOtcEntrust', params), 1)
+// 12 查询otc挂单用户交易币种手续费率以及币种详情
+export const queryUserTradeFeeAndCoinInfo = (params) => handleRequest(() => get('otcCOin/getUserTradeFeeAndCoinInfo', {...params, 'loading': true}))
+// 13 otc广告管理一键撤销用户所有挂单--商家专用
+export const cancelAllOrdersOnekey = (params) => handleRequest(() => postWithURLencoded('otcEntrust/cancelAllEntrusts', params), 1)
+// 14 otc交易中订单，otc买家确认付款
+export const buyerPayForOrder = (params) => handleRequest(() => postWithURLencoded('otcOrder/payForOrder', params), 1)
+// 15 otc交易中订单， otc卖家确认收款
+export const sellerConfirmGetMoney = (params) => handleRequest(() => postWithURLencoded('otcOrder/confirmReceiveForOrder', params), 1)
+// 16 otc交易中订单， otc卖家申诉
+export const sellerSendAppeal = (params) => handleRequest(() => postWithURLencoded('otcAppeal/applyOtcAppeal', params), 1)
+// 17 提交otc商家申请
+export const businessApply = (params) => handleRequest(() => postWithURLencoded('otcMerchApply/applyOTCMerch', {...params, 'loading': true}), 1)
+// 18 首次进入otc商家申请页面
+export const firstEnterBusinessApply = (params) => handleRequest(() => get('otcMerchApply/getUserMerchInfo', {...params, 'loading': true}))
+// 19 商家申请页面点击用户协议
+export const argumentBusinessApply = (params) => handleRequest(() => get('cms/terms/selectAll', {...params, 'loading': true}))
+// 20 广告管理列表请求
+export const getOTCADManageApplyList = (params) => handleRequest(() => get('otcEntrust/selectMerchEntrustsPage', params))
+// 21 商家订单列表请求
+export const getOTCMerchantsOrdersList = (params) => handleRequest(() => get('otcOrder/selectMerchOrdersPage', params))
+// 22 报表统计
+export const getOTCReportFormStatisticsData = (params) => handleRequest(() => get('otcOrder/selectMerchStatics', {...params, 'loading': true}))
+// 23 币种详情：商家和普通用户挂单页面请求币种详情渲染页面
+export const getOTCCoinInfo = (params) => handleRequest(() => get('otcCOin/getCoinInfo', {...params, 'loading': true}))
+// 24 撤销otc用户定单（过期买家未付款）
+export const cancelUserOtcOrder = (params) => handleRequest(() => post('otcOrder/cancelUserOtcOrder', {...params, 'loading': true}))
+// 25 成交otc用户定单（过期卖家未收款）
+export const completeUserOtcOrder = (params) => handleRequest(() => post('otcOrder/completeUserOtcOrder', {...params, 'loading': true}))
+// 26 广告管理中订单点击修改跳转到商家专用发布广告页面，修改数据后再发布广告调取的接口
+export const addModifyPublishADOrder = (params) => handleRequest(() => postWithURLencoded('otcEntrust/upShelfOtcEntrust', {...params, 'loading': true}), 1)

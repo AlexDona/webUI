@@ -6,7 +6,10 @@
     <div class="inner-box">
 
       <!--查看更多委单记录-->
-      <div class="view-more">
+      <div
+        class="view-more"
+        v-if="isLogin"
+      >
         <button
           class="cancel-all-entrust"
           :class="{
@@ -283,9 +286,8 @@ import {
   cancelAllEntrustAjax
 } from '../../utils/api/trade'
 import {
-  returnAjaxMsg,
-  repealMyEntrustCommon,
-  getNestedData
+  getNestedData,
+  repealMyEntrustCommon
 } from '../../utils/commonFunc'
 import {
   mapMutations,
@@ -340,21 +342,20 @@ export default {
         }
 
         const data = await cancelAllEntrustAjax(params)
-        if (!returnAjaxMsg(data, this)) {
-          return false
-        } else {
-          console.log(data)
-          this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
-        }
+        if (!data) return false
+        this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
       }).catch(() => {
       })
     },
     getEntrustData () {
-      if (this.isLogin) {
-        // 获取我的当前委托
-        this.getMyCurrentEntrust()
-        // 获取历史委托
-        this.getHistoryEntrust()
+      if (!this.isLogin) return false
+      switch (this.activeName) {
+        case 'current-entrust':
+          this.getMyCurrentEntrust()
+          break
+        case 'history-entrust':
+          this.getHistoryEntrust()
+          break
       }
     },
     scientificToNumber (num) {
@@ -375,12 +376,12 @@ export default {
         confirmButtonText: this.$t('M.comm_confirm'),
         // 取消
         cancelButtonText: this.$t('M.comm_cancel')
-      }).then(() => {
+      }).then(async () => {
         let params = {
           id,
           version
         }
-        repealMyEntrustCommon(params, this, () => {
+        repealMyEntrustCommon(params, () => {
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
         })
       }).catch(() => {
@@ -404,34 +405,26 @@ export default {
     // 获取历史委托
     async getHistoryEntrust () {
       let params = {
-        userId: this.userInfo.userId,
         currentPage: this.currentPageForHistoryEntrust,
         pageSize: this.pageSize,
         tradeId: this.middleTopData.partnerTradeId
       }
       const data = await getHistoryEntrust(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.historyEntrustList = getNestedData(data, 'data.data.list') || []
-        this.totalPageForHistoryEntrust = getNestedData(data, 'data.data.pages') - 0
-      }
+      if (!data) return false
+      this.historyEntrustList = getNestedData(data, 'data.list') || []
+      this.totalPageForHistoryEntrust = getNestedData(data, 'data.pages') - 0
     },
     // 获取我的当前委单
     async getMyCurrentEntrust () {
       let params = {
-        userId: this.userInfo.userId,
         currentPage: this.currentPageForMyEntrust,
         pageSize: this.pageSize,
         tradeId: this.middleTopData.partnerTradeId
       }
       const data = await getMyEntrust(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.currentEntrustList = getNestedData(data, 'data.data.list') || []
-        this.totalPageForMyEntrust = getNestedData(data, 'data.data.pages') - 0
-      }
+      if (!data) return false
+      this.currentEntrustList = getNestedData(data, 'data.list') || []
+      this.totalPageForMyEntrust = getNestedData(data, 'data.pages') - 0
     }
   },
   filter: {},
@@ -447,25 +440,16 @@ export default {
     })
   },
   watch: {
-    activeName (newVal) {
-      if (!this.isLogin) return false
-      switch (newVal) {
-        case 'current-entrust':
-          this.getMyCurrentEntrust()
-          break
-        case 'history-entrust':
-          this.getHistoryEntrust()
-          break
-      }
+    activeName () {
+      this.getEntrustData()
     },
     refreshEntrustStatus (newVal) {
       if (newVal) {
-        this.getMyCurrentEntrust()
-        this.getHistoryEntrust()
+        this.getEntrustData()
         this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(false)
       }
     },
-    middleTopData (newVal) {
+    middleTopData () {
       this.getEntrustData()
     }
   }

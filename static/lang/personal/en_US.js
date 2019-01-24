@@ -138,6 +138,8 @@ export const personal = {
   'user_invite_have_obtained': 'Commissioned conversion',
   'user_invite_statistics': ' Statistics',
   'user_invite_direct': 'Direct promotion',
+  'user_direct_reward': 'Direct reward',
+  'user_indirect_reward': 'Indirect reward',
   'user_invite_indirect': 'Indirect promotion',
   'user_invite_audit': 'Pending review',
   'user_invite_already_passed': 'passed',

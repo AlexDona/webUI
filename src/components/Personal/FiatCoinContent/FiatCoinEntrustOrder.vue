@@ -132,7 +132,7 @@ import {
   querySelectedOrdersRevocation
 } from '../../../utils/api/OTC'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   changeCurrentPageForLegalTrader
 } from '../../../utils/commonFunc'
 import {
@@ -186,16 +186,12 @@ export default {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
       })
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.SET_LEGAL_TENDER_REFLASH_STATUS({
-          type: 'ENTRUSTED',
-          status: true
-        })
-      }
+      // 返回数据正确的逻辑
+      if (!data) return false
+      this.SET_LEGAL_TENDER_REFLASH_STATUS({
+        type: 'ENTRUSTED',
+        status: true
+      })
     }
   },
   filter: {},

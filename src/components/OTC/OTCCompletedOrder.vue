@@ -264,7 +264,10 @@
 <script>
 import {timeFilter, scientificToNumber} from '../../utils'
 import {getOTCOrdersThreeDay} from '../../utils/api/OTC'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  // returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
@@ -317,14 +320,11 @@ export default {
       })
       console.log('已完成订单')
       console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.loading = false
-        let completedOrdersListData = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      this.loading = false
+      if (!data) return false
+      if (data.data) {
+        let completedOrdersListData = getNestedData(data, 'data')
         // 完成订单列表
         this.completedOrdersList = getNestedData(completedOrdersListData, 'list')
         // 分页
@@ -587,6 +587,7 @@ export default {
         }
 
         .el-table {
+          color: #9da5b3;
           background-color: #272b41;
 
           th {

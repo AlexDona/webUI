@@ -238,7 +238,7 @@ import {timeFilter, scientificToNumber} from '../../utils'
 import {mapState} from 'vuex'
 import {getOTCOrdersThreeDay} from '../../utils/api/OTC'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 export default {
@@ -293,14 +293,11 @@ export default {
       })
       console.log('请求已取消订单列表')
       console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.loading = false
-        let canceledOrderData = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      this.loading = false
+      if (!data) return false
+      if (data.data) {
+        let canceledOrderData = getNestedData(data, 'data')
         this.otcCanceledOrderList = getNestedData(canceledOrderData, 'list')
         // 分页
         this.totalPages = getNestedData(canceledOrderData, 'pages') - 0

@@ -595,7 +595,7 @@ export default {
         // 确定
         confirmButtonText: this.$t('M.comm_confirm')
       }).then(() => {
-        repealMyEntrustCommon(params, this, () => {
+        repealMyEntrustCommon(params, () => {
           this.commissionList()
         })
       }).catch(() => {
@@ -625,50 +625,29 @@ export default {
         case 'current-entrust':
           params.currentPage = this.currentPageForMyEntrust
           data = await getMyEntrust(params)
-          console.log(data)
-          if (!returnAjaxMsg(data, this)) {
-            // 接口失败清除局部loading
-            this.partLoading = false
-            return false
-          } else {
-            // 接口成功清除局部loading
-            this.partLoading = false
-            this.currentEntrustList = getNestedData(data, 'data.data.list') || []
-            this.totalPageForMyEntrust = getNestedData(data, 'data.data.pages') - 0
-          }
+          this.partLoading = false
+          if (!data) return false
+          this.currentEntrustList = getNestedData(data, 'data.list') || []
+          this.totalPageForMyEntrust = getNestedData(data, 'data.pages') - 0
           break
         case 'history-entrust':
           params.currentPage = this.currentPageForHistoryEntrust
           data1 = await getHistoryEntrust(params)
-          console.log(data1)
-          if (!returnAjaxMsg(data1, this)) {
-            // 接口失败清除局部loading
-            this.partLoading = false
-            return false
-          } else {
-            // 接口成功清除局部loading
-            this.partLoading = false
-            if (data1.data.data.list) {
-              this.historyEntrustList = getNestedData(data1, 'data.data.list') || []
-              this.totalPageForHistoryEntrust = getNestedData(data1, 'data.data.pages') - 0
-            }
+          this.partLoading = false
+          if (!data1) return false
+          if (data1.data.list) {
+            this.historyEntrustList = getNestedData(data1, 'data.list') || []
+            this.totalPageForHistoryEntrust = getNestedData(data1, 'data.pages') - 0
           }
           break
         case 'make-detail':
           params.currentPage = this.currentPageMakeDetailEntrust
           data2 = await getMakeDetail(params)
-          console.log(data2)
-          if (!returnAjaxMsg(data2, this)) {
-            // 接口失败清除局部loading
-            this.partLoading = false
-            return false
-          } else {
-            // 接口成功清除局部loading
-            this.partLoading = false
-            if (data2.data.data.list) {
-              this.currentMakeDetailList = getNestedData(data2, 'data.data.list') || []
-              this.totalPageForMakeDetailEntrust = getNestedData(data2, 'data.data.pages') - 0
-            }
+          this.partLoading = false
+          if (!data2) return false
+          if (data2.data.list) {
+            this.currentMakeDetailList = getNestedData(data2, 'data.list') || []
+            this.totalPageForMakeDetailEntrust = getNestedData(data2, 'data.pages') - 0
           }
           break
       }

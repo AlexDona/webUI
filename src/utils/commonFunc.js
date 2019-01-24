@@ -21,10 +21,6 @@ import {
   removeCollectionAjax,
   getCollectionListAjax
 } from '../utils/api/home'
-import {
-  // getCountryList,
-  getServiceProtocoDataAjax
-} from './api/common'
 import storeCreater from '../vuex'
 import {
   removeStore,
@@ -176,13 +172,10 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 
 /**
  * 撤销委单
  */
-export const repealMyEntrustCommon = async (params, that, callback) => {
+export const repealMyEntrustCommon = async (params, callback) => {
   const data = await repealMyEntrustAjax(params)
-  if (!returnAjaxMsg(data, that, 1)) {
-    return false
-  } else {
-    callback(data)
-  }
+  if (!data) return false
+  callback(data)
 }
 
 /**
@@ -203,15 +196,6 @@ export const changeCurrentPageForLegalTrader = (currentPage, type, that) => {
     status: true
   })
 }
-// 服务条款接口
-export const getServiceProtocolData = async (that, params, callback) => {
-  const data = await getServiceProtocoDataAjax(params)
-  if (!returnAjaxMsg(data, that)) {
-    return false
-  } else {
-    callback(data)
-  }
-}
 /**
  *  刷新用户安全状态
  */
@@ -229,7 +213,7 @@ export const getSecurityCenter = async (that, params, callback) => {
  */
 export const getAccountPaymentTerm = async (that) => {
   console.log(store)
-  const data = await accountPaymentTerm({})
+  const data = await accountPaymentTerm()
   if (!(returnAjaxMsg(data, that))) {
     return false
   } else {
@@ -395,8 +379,8 @@ String.prototype.format = function (args) {
   return result
 }
 // 接口统一处理
-export const handleRequest = async (request, params, noTip, errorTip) => {
-  const DATA = await request(params)
+export const handleRequest = async (request, noTip, errorTip) => {
+  const DATA = await request()
   if (!returnAjaxMsg(DATA, Vue, noTip, errorTip)) {
     return false
   } else {

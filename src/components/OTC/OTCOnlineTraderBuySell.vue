@@ -329,7 +329,7 @@
               <!--2018129封装提交摘单买入和卖出方法-->
               <input
                 type="password"
-                autocomplete= "new-password"
+                autocomplete="new-password"
                 :placeholder="$t('M.otc_publishAD_sellpassword')"
                 class="password-input"
                 v-model="tradePassword"
@@ -380,7 +380,7 @@ import {
 } from '../../utils/api/OTC'
 import IconFontCommon from '../Common/IconFontCommon'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
@@ -703,18 +703,14 @@ export default {
     // 5.0 查询otc挂单详情-商家和普通用户通用
     async querySelectedOrdersDetails () {
       const data = await querySelectedOrdersDetails({
-        // 挂单id
-        // entrustId: this.id
         entrustId: this.entryOrdersID
       })
+      // 正确逻辑
       // console.log('otc挂单详情')
       // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑:将返回的数据赋值到页面中
-        let detailsData = getNestedData(data, 'data.data')
+      if (!data) return false
+      if (data.data) {
+        let detailsData = getNestedData(data, 'data')
         this.userName = getNestedData(detailsData, 'userName') // 挂单人姓名
         this.successTimes = getNestedData(detailsData, 'successTimes') // 成交次数
         this.failTimes = getNestedData(detailsData, 'failTimes') // 失败次数
@@ -736,14 +732,12 @@ export default {
       const data = await queryUserTradeFeeAndCoinInfo({
         coinId: this.partnerCoinId // 商户币种id
       })
-      // console.log('用户交易币种手续费率以及币种详情')
-      // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑:将返回的数据赋值到页面中
-        let detailData = getNestedData(data, 'data.data')
+      console.log('用户交易币种手续费率以及币种详情11')
+      console.log(data)
+      // 返回数据正确的逻辑:将返回的数据赋值到页面中
+      if (!data) return false
+      if (data.data) {
+        let detailData = getNestedData(data, 'data')
         this.coinName = getNestedData(detailData, 'name') // 最小交易量币种名字（单位）
         this.pointLength = getNestedData(detailData, 'unit') // 每个币种返回的保留小数点位数限制
         if (this.onlineTraderStatus === 'onlineBuy') {
@@ -775,7 +769,6 @@ export default {
           break
         case 'onlineBuy':
           data = await pickOrdersToBuy({
-            // entrustId: this.id, // 挂单id
             entrustId: this.entryOrdersID, // 挂单id
             buyCount: this.$refs.buyCount.value, // 买入数量
             tradePassword: this.tradePassword // 交易密码
@@ -783,20 +776,17 @@ export default {
           console.log(this.onlineTraderStatus)
           break
       }
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
-        this.clearInput(this.onlineTraderStatus) // 清空数据
-        this.querySelectedOrdersDetails()
-        this.queryUserTradeFeeAndCoinInfo()
-        // 改变全局锚点状态
-        this.CHANGE_OTC_ANCHOR_STATUS(true)
-        // 跳转到首页的交易中订单区
-        this.$router.push({path: '/OTCCenter'})
-      }
+      // 返回数据正确的逻辑
+      console.log(data)
+      if (!data) return false
+      this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
+      this.clearInput(this.onlineTraderStatus) // 清空数据
+      this.querySelectedOrdersDetails()
+      this.queryUserTradeFeeAndCoinInfo()
+      // 改变全局锚点状态
+      this.CHANGE_OTC_ANCHOR_STATUS(true)
+      // 跳转到首页的交易中订单区
+      this.$router.push({path: '/OTCCenter'})
     },
     // 2018129封装提交摘单买入和卖出方法
     // 8交易密码框获得焦点事件
@@ -997,7 +987,7 @@ export default {
             .errorInfo {
               > .number {
                 display: inline-block;
-                width: 320px;
+                width: 310px;
                 height: 30px;
                 font-size: 12px;
                 line-height: 30px;

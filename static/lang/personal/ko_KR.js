@@ -141,6 +141,8 @@ export const personal = {
   'user_invite_have_obtained': '커미션 을 받아 접합 하다',
   'user_invite_statistics': '통계',
   'user_invite_direct': '직접 보급',
+  'user_direct_reward': '직접 장려하다',
+  'user_indirect_reward': '간접 장려',
   'user_invite_indirect': '간접 보급',
   'user_invite_audit': '검토 대기 중',
   'user_invite_already_passed': '통과했습니다',

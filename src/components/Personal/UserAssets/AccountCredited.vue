@@ -438,12 +438,12 @@ import {
 } from '../../../utils/commonFunc'
 import {
   accountPaymentTerm,
-  openAndCloseModeSetting,
-  userRefreshUser
+  openAndCloseModeSetting
 } from '../../../utils/api/personal'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -486,7 +486,6 @@ export default {
   },
   async created () {
     // 调用收款方式 银行卡 微信 支付宝 paypal 西联汇款 状态
-    await this.getUserRefreshUser()
     await this.getAccountPaymentTerm()
     if (this.refsAccountCenterStatus) {
       this.getAccountPaymentTerm()
@@ -494,10 +493,14 @@ export default {
     }
   },
   mounted () {},
-  activated () {},
+  activated () {
+  },
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
+    ]),
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_REF_ACCOUNT_CREDITED_STATE',
@@ -764,20 +767,6 @@ export default {
         this.paymentTerm = getNestedData(data, 'data.data')
         console.log(data)
       }
-    },
-    /**
-     *  刷新用户信息
-     */
-    async getUserRefreshUser () {
-      let data = await userRefreshUser({
-        token: this.userInfo.token
-      })
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        this.SET_STEP1_INFO(getNestedData(data, 'data.data'))
-      }
     }
   },
   filter: {},
@@ -793,7 +782,7 @@ export default {
   watch: {
     async userCenterActiveName (newVal) {
       if (newVal === 'account-credited') {
-        await this.getUserRefreshUser()
+        await this.REFRESH_USER_INFO_ACTION()
         await this.getAccountPaymentTerm()
       }
     },

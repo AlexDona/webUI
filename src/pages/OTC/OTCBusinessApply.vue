@@ -252,7 +252,10 @@ import {
   argumentBusinessApply
 } from '../../utils/api/OTC'
 import { downloadFileWithUserDefined } from '../../utils/'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  // returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {
   mapMutations,
   mapState
@@ -330,13 +333,11 @@ export default {
     // 请求申请状态
     async getOTCBusinessApply () {
       const data = await businessApply()
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        console.log(data)
-        let detailMeta = getNestedData(data, 'data.meta')
+      // 返回数据正确的逻辑
+      console.log(data)
+      if (!data) return false
+      if (data.meta) {
+        let detailMeta = getNestedData(data, 'meta')
         if (detailMeta.success == true) {
           this.applyStatus = 2
           this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
@@ -355,15 +356,11 @@ export default {
       // 刚进页面接口请求回来之前先展示缓冲界面
       this.applyStatus = 4
       const data = await firstEnterBusinessApply()
-      // console.log(' 首次点击商家申请请求数据')
-      // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 刚进页面接口请求错误时候显示申请界面
-        this.applyStatus = 1
-        return false
-      } else {
-        let getData = getNestedData(data, 'data.data')
+      console.log(' 首次点击商家申请请求数据')
+      console.log(data)
+      // 正确逻辑
+      if (data) {
+        let getData = getNestedData(data, 'data')
         // 返回数据正确的逻辑
         this.successTimes = getNestedData(getData, 'successTimes')
         this.coinName = getNestedData(getData, 'coinName')
@@ -389,6 +386,10 @@ export default {
           }, 100)
           this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
         }
+      } else {
+        // 刚进页面接口请求错误时候显示申请界面
+        this.applyStatus = 1
+        return false
       }
     },
     // 商家申请界面用户协议
@@ -397,12 +398,12 @@ export default {
         termsTypeIds: 9,
         language: this.language
       })
-      // console.log(data.data.data)
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        this.argumentContent = getNestedData(data, 'data.data[0].content')
+      console.log('商家申请界面用户协议')
+      console.log(data)
+      // 正确逻辑
+      if (!data) return false
+      if (data.data) {
+        this.argumentContent = getNestedData(data, 'data[0].content')
       }
     },
     businessArgument () {

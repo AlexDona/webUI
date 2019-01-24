@@ -344,7 +344,10 @@ import {
   getMerchantAvailableLegalTender,
   getOTCMerchantsOrdersList
 } from '../../utils/api/OTC'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  // returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -456,11 +459,10 @@ export default {
       })
       // console.log('可用币种列表')
       // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.merchantsOrdersCoinList = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data.data) {
+        this.merchantsOrdersCoinList = getNestedData(data, 'data')
       }
     },
     // 4页面加载时 可用法币查询
@@ -469,11 +471,10 @@ export default {
       })
       // console.log('可用法币')
       // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.merchantsOrdersCurrencyList = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data.data) {
+        this.merchantsOrdersCurrencyList = getNestedData(data, 'data')
       }
     },
     // 5 change事件改变时赋值
@@ -563,20 +564,15 @@ export default {
         // 类型
         tradeType: this.activatedMerchantsOrdersTraderStyleList
       })
-      // console.log('商家订单列表')
-      // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        this.loading = false
-        return false
-      } else {
-        this.loading = false
-        // 返回数据正确的逻辑 重新渲染列表
-        let merchantsOrdersListData = getNestedData(data, 'data.data')
-        // this.merchantsOrdersList = merchantsOrdersListData.list
+      // 返回数据正确的逻辑 重新渲染列表
+      console.log('商家订单列表')
+      console.log(data)
+      this.loading = false
+      if (!data) return false
+      if (data.data) {
+        let merchantsOrdersListData = getNestedData(data, 'data')
         this.merchantsOrdersList = getNestedData(merchantsOrdersListData, 'list')
-        // 分页
-        // this.totalPages = merchantsOrdersListData.pages - 0
-        this.totalPages = getNestedData(merchantsOrdersListData, 'pages') - 0
+        this.totalPages = getNestedData(merchantsOrdersListData, 'pages') - 0 // 分页
       }
     }
   },

@@ -15,54 +15,54 @@
       <!--实名认证-->
       <div class="real-name-authentication identity-background">
         <!--(1.姓名、2.身份证号、3.状态)-->
+        <div
+          class="advanced-main-header"
+        >
           <div
-            class="advanced-main-header"
+            class="header-border display-flex margin20"
+            v-if="innerUserInfo"
           >
-            <div
-              class="header-border display-flex margin20"
-              v-if="innerUserInfo"
-            >
               <span class="font-size16 main-header-title">
                 <!--实名认证-->
                 {{ $t('M.user_real_name') }}
               </span>
-              <p
-                v-if="innerUserInfo.realname === ''"
-                class="authentication-type font-size12"
-              >
-                （{{ $t('M.user_real_info') }}）
-              </p>
-              <p
-                v-else
-                class="authentication-type-info font-size12 box-sizing"
-              >
-                （
-                <span class="authentication-info">
+            <p
+              v-if="realname === ''"
+              class="authentication-type font-size12"
+            >
+              （{{ $t('M.user_real_info') }}）
+            </p>
+            <p
+              v-else
+              class="authentication-type-info font-size12 box-sizing"
+            >
+              （
+              <span class="authentication-info">
                   <!--您已通过实名认证-->
                   {{ $t('M.user_real_already') }} {{ $t('M.user_real_name') }}
                 </span>
-                <span
-                  class="type-info"
-                >
+              <span
+                class="type-info"
+              >
                   <!--姓名：-->
                   {{ $t('M.comm_name') }}：
-                  {{ innerUserInfo.realname }}
+                  {{ realname }}
                 </span>、
-                <span class="type-info">
+              <span class="type-info">
                   <!--证件号码：-->
                   {{ $t('M.comm_credentials_number') }}：
                    {{ innerUserInfo.cardNo.substring(0,2)}}
                   ****
                    {{ innerUserInfo.cardNo.substring(16,18)}}
                 </span>
-                &nbsp;）
-              </p>
-              <!--<i class="el-icon-arrow-down icon-down float-right"></i>-->
-            </div>
+              &nbsp;）
+            </p>
+            <!--<i class="el-icon-arrow-down icon-down float-right"></i>-->
           </div>
+        </div>
       </div>
       <div
-        v-if="innerUserInfo.realname === ''"
+        v-if="realname === ''"
         class="name-authentication-content margin-top9"
       >
         <el-form
@@ -198,21 +198,21 @@
             {{ $t('M.user_senior_certification') }}
           </span>
           <span
-            v-if="innerUserInfo.advancedAuth === ''"
+            v-if="advancedAuth === ''"
             class="authentication-type font-size12"
           >
             <!--未高级认证-->
             ({{ $t('M.user_advanced_authentication_tips1') }})
           </span>
           <span
-            v-if="innerUserInfo.advancedAuth === 'pass'"
+            v-if="advancedAuth === 'pass'"
             class="authentication-type font-size12"
           >
             <!--已通过实名认证-->
             （{{ $t('M.user_real_already') }}{{ $t('M.user_real_name') }}）
           </span>
           <span
-            v-if="innerUserInfo.advancedAuth === 'waitVeritfy'"
+            v-if="advancedAuth === 'waitVeritfy'"
             class="authentication-type font-size12"
           >
             <!--待审核-->
@@ -220,7 +220,7 @@
           </span>
           <span
             class="float-right authentication-type font-size12"
-            v-if="innerUserInfo.advancedAuth === ''"
+            v-if="advancedAuth === ''"
           >
             <!--去认证-->
             {{ $t('M.user_senior_go_certification') }}
@@ -261,7 +261,7 @@
                   <span
                     class="user-info font-size14"
                   >
-                    {{ innerUserInfo.realname }}
+                    {{ realname }}
                   </span>
                 </p>
                 <!-- 证件号 -->
@@ -271,7 +271,7 @@
                   </span>
                   <span class="user-info font-size14">
                     <!--{{ innerUserInfo.cardNo.substring(0,4)}}-->
-                      <!--****-->
+                    <!--****-->
                     <!--{{ userInfoRefresh.cardNo.substring(14,18)}}-->
                      {{ innerUserInfo.cardNo}}
                   </span>
@@ -313,7 +313,8 @@
                 <!--2. 请确保照片无水印，无污渍，身份信息清晰，头像完整，非文字反向照片！照片请勿进行PS处理！-->
                 <p class="text-hints">2. {{ $t('M.user_senior_text3') }}</p>
                 <!--3. 手持身份证照片：需要您本人一只手持您的身份证，另一只手持一张有您手写的fubt.top账号ID的白纸。确保身份证和白纸在您的胸前，不遮挡您的脸部，并且身份证和白纸上的信息清晰可见！-->
-                <p class="text-hints">3. {{ $t('M.user_senior_text4') }} {{configInfo.otcAd}} {{ $t('M.user_senior_text6') }}</p>
+                <p class="text-hints">3. {{ $t('M.user_senior_text4') }} {{configInfo.otcAd}} {{
+                  $t('M.user_senior_text6') }}</p>
                 <!--以下图片仅作为示例，请提交您本人的身份材料照片。照片勿进行PS处理！-->
                 <p class="text-hints margin-top30">{{ $t('M.user_senior_text5') }}</p>
               </div>
@@ -321,24 +322,24 @@
                 <div class="upload">
                   <!-- 上传身份证正面 -->
                   <div class="default-center">
-                    <el-upload
-                      ref='firstUpload'
-                      :action="apiCommonUrl+'uploadfile'"
-                      :headers="tokenObj"
-                      list-type="picture-card"
-                      accept=".jpg,.jpeg,.png,.bmp"
-                      :on-remove="handleRemoveFront"
-                      :on-success="handleSuccessFront"
-                      :before-upload="beforeAvatarUpload"
-                    >
+                    <div class="img">
+                      <!-- 上传手持身份证 -->
+                      <input
+                        @change="getPicture"
+                        type="file"
+                        id="fileInput1"
+                        ref="fileInput1"
+                        class="upload-input"
+                        accept="image/jpeg,image/jpg,image/png,image/bmp"
+                      />
                       <div
                         class="picture"
-                        v-show="firstPictureSrcShow"
+                        @click="choosePicture(1)"
                       >
                         <img
-                          v-show="isChinese"
-                          class="default-picture cursor-pointer"
+                          class="cursor-pointer"
                           :src="firstPictureSrc"
+                          v-show="isChinese"
                         >
                         <img
                           v-show="!isChinese"
@@ -346,13 +347,12 @@
                           :src="passportPositiveImg"
                         >
                       </div>
-                      <button ref="first-submit"></button>
-                    </el-upload>
+                    </div>
                   </div>
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click="uploadImg('first-submit')"
+                    @click="choosePicture(1)"
                   >
                     <!--@click.prevent="handleSuccessFront"-->
                     <!--上传身份证正面-->
@@ -362,24 +362,23 @@
                 <div class="upload">
                   <!-- 上传身份证反面 -->
                   <div class="default-center">
-                    <el-upload
-                      ref='secondUpload'
-                      :action="apiCommonUrl+'uploadfile'"
-                      :headers="tokenObj"
-                      list-type="picture-card"
-                      accept=".jpg,.jpeg,.png,.bmp"
-                      :on-remove="handleRemoveSide"
-                      :before-upload="beforeAvatarUpload"
-                      :on-success="handleSuccessReverseSide"
-                    >
+                    <div class="img">
+                      <input
+                        @change="getPicture"
+                        type="file"
+                        id="fileInput2"
+                        ref="fileInput2"
+                        class="upload-input"
+                        accept="image/jpeg,image/jpg,image/png,image/bmp"
+                      />
                       <div
                         class="picture"
-                        v-show="secondPictureSrcShow"
+                        @click="choosePicture(2)"
                       >
                         <img
-                          v-show="isChinese"
-                          class="default-picture cursor-pointer"
+                          class="cursor-pointer"
                           :src="secondPictureSrc"
+                          v-show="isChinese"
                         >
                         <img
                           v-show="!isChinese"
@@ -387,13 +386,12 @@
                           :src="passportOppositeImg"
                         >
                       </div>
-                      <button ref="second-submit"></button>
-                    </el-upload>
+                    </div>
                   </div>
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click="uploadImg('second-submit')"
+                    @click="choosePicture(2)"
                   >
                     <!--上传身份证反面-->
                     {{ $t('M.user_senior_upload2') }}
@@ -402,38 +400,36 @@
                 <div class="upload">
                   <!-- 上传手持身份证 -->
                   <div class="default-center">
-                    <el-upload
-                      ref='thirdUpload'
-                      :action="apiCommonUrl+'uploadfile'"
-                      :headers="tokenObj"
-                      list-type="picture-card"
-                      accept=".jpg,.jpeg,.png,.bmp"
-                      :on-remove="handleRemoveHand"
-                      :on-success="handleSuccessHand"
-                      :before-upload="beforeAvatarUpload"
-                    >
-                      <div
-                        class="picture"
-                        v-show="thirdPictureSrcShow"
-                      >
-                        <img
-                          v-show="isChinese"
-                          class="default-picture cursor-pointer"
-                          :src="thirdPictureSrc"
-                        >
-                        <img
-                          v-show="!isChinese"
-                          class="default-picture cursor-pointer"
-                          :src="passportHandImg"
-                        >
-                      </div>
-                      <button ref="third-submit"></button>
-                    </el-upload>
+                   <div class="img">
+                     <input
+                       @change="getPicture"
+                       type="file"
+                       id="fileInput3"
+                       ref="fileInput3"
+                       class="upload-input"
+                       accept="image/jpeg,image/jpg,image/png,image/bmp"
+                     />
+                     <div
+                       class="picture"
+                       @click="choosePicture(3)"
+                     >
+                       <img
+                         class="cursor-pointer"
+                         :src="thirdPictureSrc"
+                         v-show="isChinese"
+                       >
+                       <img
+                         v-show="!isChinese"
+                         class="default-picture cursor-pointer"
+                         :src="passportHandImg"
+                       >
+                     </div>
+                   </div>
                   </div>
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click="uploadImg('third-submit')"
+                    @click="choosePicture(3)"
                   >
                     <!--上传手持身份证-->
                     {{ $t('M.user_senior_upload3') }}
@@ -442,8 +438,8 @@
               </div>
               <div class="upload-button">
                 <div
-                  class = "false-tips fz14 tl mt-5"
-                  v-show = "errorMessage"
+                  class="false-tips fz14 tl mt-5"
+                  v-show="errorMessage"
                 >
                   <i></i>
                   {{ errorMessage }}
@@ -532,8 +528,8 @@
             <!--请准备好您本人身份证使用浏览器或APP扫码进行高级认证。-->
             {{ $t('M.user_senior_hint1') }}
             <!--<a class="tips-refresh">-->
-              <!--&lt;!&ndash;点击刷新&ndash;&gt;-->
-              <!--&lt;!&ndash;{{ $t('M.user_senior_hint2') }}&ndash;&gt;-->
+            <!--&lt;!&ndash;点击刷新&ndash;&gt;-->
+            <!--&lt;!&ndash;{{ $t('M.user_senior_hint2') }}&ndash;&gt;-->
             <!--</a>-->
           </p>
           <p class="text-tips font-size12 tips-top">
@@ -557,21 +553,18 @@
 import ErrorBox from '../../User/ErrorBox'
 import IconFontCommon from '../../Common/IconFontCommon'
 import Qrcode from '../../Common/Qrcode'
+import lrz from 'lrz'
 import {
   submitRealNameAuthentication,
   submitSeniorCertification,
   realNameInformation,
-  userRefreshUser
+  uploadImageAjax
 } from '../../../utils/api/personal'
 import {
   returnAjaxMsg,
   getNestedData,
   validateNumForUserInput // 用户输入验证
 } from '../../../utils/commonFunc'
-import {
-  apiCommonUrl,
-  xDomain
-} from '../../../utils/env'
 import {
   idCardRegexpInputNum,
   passportEntryRestrictions
@@ -582,6 +575,7 @@ import {
   mapActions,
   mapMutations
 } from 'vuex'
+
 export default {
   components: {
     ErrorBox, // 错误提示接口
@@ -590,11 +584,6 @@ export default {
   },
   data () {
     return {
-      // 上传图片 token
-      tokenObj: {
-        'token': '',
-        'x-domain': ''
-      },
       regionList: [], // 国家地区列表
       documentTypeValue: 1, // 证件
       documentTypeList: [
@@ -631,6 +620,12 @@ export default {
       passportPositiveImg: require('../../../assets/user/passport-positive.png'), // 正面
       passportOppositeImg: require('../../../assets/user/passport-opposite.png'), // 反面
       passportHandImg: require('../../../assets/user/hand.png'), // 手持
+      // 是否上传身份证正面
+      isUploadImg1: false,
+      // 是否上传身份证反面
+      isUploadImg2: false,
+      // 是否上传手持身份证
+      isUploadImg3: false,
       dialogImageFrontUrl: '', // 上传身份证正面url
       dialogImageReverseSideUrl: '', // 上传身份证反面url
       dialogImageHandUrl: '', // 上传手持身份证url
@@ -650,18 +645,16 @@ export default {
     }
   },
   async created () {
-    this.SET_USER_INFO_REFRESH_STATUS(true)
-    await this.getUserRefreshUser()
-    this.tokenObj.token = this.userInfo.token
-    this.tokenObj['x-domain'] = xDomain
-    await this.reflashUserInfo()
     this.authenticationIsStatus()
-    console.log(this.authenticationNotPass)
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  mounted () {
+  },
+  activated () {
+  },
+  update () {
+  },
+  beforeRouteUpdate () {
+  },
   methods: {
     ...mapActions([
       'GET_COUNTRY_LIST_ACTION',
@@ -669,63 +662,78 @@ export default {
     ]),
     ...mapMutations([
       'SET_USER_INFO_REFRESH_STATUS',
-      'SET_STEP1_INFO'
+      'SET_STEP1_INFO',
+      'CHANGE_AJAX_READY_STATUS'
     ]),
-    reflashUserInfo () {
-      this.REFRESH_USER_INFO_ACTION(this)
+    // 选择图片文件
+    choosePicture (index) {
+      this.$refs[`fileInput${index}`].click()
     },
-    // 隐藏上传按钮
-    uploadImg (ref) {
-      this.$refs[ref].click()
+    getPicture (e) {
+      console.dir(e.target.id)
+      const INPUT_ID = e.target.id
+      this.CHANGE_AJAX_READY_STATUS(true)
+      lrz(e.target.files[0]).then(async res => {
+        const {base64, file, fileLen} = res
+        if (this.beforeAvatarUpload(fileLen)) return false
+        await this.uploadImg(file, INPUT_ID.substr(INPUT_ID.length - 1, 1) - 0)
+        switch (INPUT_ID) {
+          case 'fileInput1':
+            console.log(this.firstPictureSrc)
+            this.firstPictureSrc = base64
+            this.passportPositiveImg = base64
+            this.isUploadImg1 = true
+            break
+          case 'fileInput2':
+            this.secondPictureSrc = base64
+            this.passportOppositeImg = base64
+            this.isUploadImg2 = true
+            break
+          case 'fileInput3':
+            this.thirdPictureSrc = base64
+            this.passportHandImg = base64
+            this.isUploadImg3 = true
+            break
+        }
+      })
     },
-    // 上传身份证正面
-    handleSuccessFront (response) {
-      console.log(response)
-      this.dialogImageFrontUrl = response.data.fileUrl
-      this.firstPictureSrcShow = false
-    },
-    // 上传身份证反面
-    handleSuccessReverseSide (response) {
-      console.log(response)
-      this.dialogImageReverseSideUrl = response.data.fileUrl
-      this.secondPictureSrcShow = false
-    },
-    // 上传手持身份证
-    handleSuccessHand (response) {
-      console.log(response)
-      this.dialogImageHandUrl = response.data.fileUrl
-      this.thirdPictureSrcShow = false
-    },
-    // 删除身份证正面
-    handleRemoveFront () {
-      this.dialogImageFrontUrl = ''
-      this.firstPictureSrcShow = true
-    },
-    // 删除身份证反面
-    handleRemoveSide () {
-      this.dialogImageReverseSideUrl = ''
-      this.secondPictureSrcShow = true
-    },
-    // 删除手持身份证
-    handleRemoveHand () {
-      this.dialogImageHandUrl = ''
-      this.thirdPictureSrcShow = true
-      console.log(this.thirdPictureSrcShow)
+    async uploadImg (file, index) {
+      console.log(index)
+      let formData = new FormData()
+      // console.log(res.file)
+      formData.append('file', file)
+      const data = await uploadImageAjax(formData)
+      this.CHANGE_AJAX_READY_STATUS(false)
+      if (!data) return false
+      switch (index) {
+        case 1:
+          this.dialogImageFrontUrl = getNestedData(data, 'data.fileUrl')
+          break
+        case 2:
+          this.dialogImageReverseSideUrl = getNestedData(data, 'data.fileUrl')
+          break
+        case 3:
+          this.dialogImageHandUrl = getNestedData(data, 'data.fileUrl')
+          break
+      }
+      console.log(this.dialogImageFrontUrl)
     },
     // 判断图片大小限制
-    beforeAvatarUpload (file) {
-      console.log(file)
-      const isLt10M = file.size
-      if (isLt10M > 102400000) {
-        console.log(isLt10M)
+    beforeAvatarUpload (size) {
+      // 10M 尺寸
+      const COMPRESS_SIZE = 10485760
+      let isLt10M = false
+      if (size > COMPRESS_SIZE) {
+        this.CHANGE_AJAX_READY_STATUS(false)
         // 上传头像图片大小不能超过 10M!
         this.$message.error(this.$t('M.user_senior_hint5'))
-        return false
+        isLt10M = true
       }
+      return isLt10M
     },
     /**
-    *  刚进页面时候 获取用户实名信息
-    */
+     *  刚进页面时候 获取用户实名信息
+     */
     async getRealNameInformation () {
       let data = await realNameInformation()
       // 整页loading
@@ -741,28 +749,6 @@ export default {
         // 返回列表数据
         this.realNameInformationObj = getNestedData(data, 'data.data')
         this.statusRealNameInformation = getNestedData(data, 'data.data.authInfo')
-        this.authenticationIsStatus()
-      }
-    },
-    /**
-     *  刷新用户信息
-     */
-    async getUserRefreshUser () {
-      let data = await userRefreshUser({
-        token: this.userInfo.token
-      })
-      // 整页loading
-      this.fullscreenLoading = true
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        this.SET_STEP1_INFO(data.data.data)
-        // 返回列表数据
-        this.userInfoRefresh = getNestedData(data, 'data.data.userInfo')
         this.authenticationIsStatus()
       }
     },
@@ -804,7 +790,7 @@ export default {
               this.setErrorMsg(1, this.$t('M.user_please_input20'))
               this.$forceUpdate()
               return 0
-              // '请输入正确的证件号码'
+            // '请输入正确的证件号码'
             case 2:
               console.log(1)
               this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_real_certificate_cone'))
@@ -840,10 +826,7 @@ export default {
       this.errorShowStatusList[index] = msg
     },
     // 提交实名认证
-    submitRealName () {
-      this.stateSubmitRealName()
-    },
-    async stateSubmitRealName () {
+    async submitRealName () {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.realName) &&
@@ -873,7 +856,7 @@ export default {
         } else {
           // 接口成功清除loading
           this.fullscreenLoading = false
-          await this.getUserRefreshUser()
+          await this.REFRESH_USER_INFO_ACTION()
           await this.getRealNameInformation()
           console.log(data)
         }
@@ -881,14 +864,11 @@ export default {
     },
     // 高级认证弹窗
     authenticationMethod () {
-      console.log('aaaaaaaaa')
       // 判断是否高级认证&&实名认证
-      if (this.userInfoRefresh.realname !== '' && this.innerUserInfo.advancedAuth === '') {
-        // 显示弹出框
-        // this.seniorAuthentication = true
+      if (this.realname !== '' && this.advancedAuth === '') {
         // 显示高级认证页面
         this.authenticationStatusFront = true
-      } else if (this.userInfoRefresh.realname !== '') {
+      } else if (this.realname !== '') {
         // 隐藏弹出框
         // this.seniorAuthentication = false
         // 隐藏高级认证页面
@@ -897,8 +877,7 @@ export default {
     },
     // 高级认证未通过被驳回
     authenticationIsStatus () {
-      if (this.innerUserInfo.advancedAuth === 'notPass') {
-        console.log(this.innerUserInfo)
+      if (this.advancedAuth === 'notPass') {
         this.authenticationNotPass = true
         this.authenticationStatusFront = false
       } else {
@@ -925,21 +904,21 @@ export default {
       this.stateSeniorCertification()
     },
     async stateSeniorCertification () {
-      if (this.dialogImageFrontUrl === '') {
+      if (!this.isUploadImg1) {
         // 请上传证件正面
         this.$message({
           message: this.$t('M.user_senior_upload1'),
           type: 'error'
         })
         return false
-      } else if (this.dialogImageReverseSideUrl === '') {
+      } else if (!this.isUploadImg2) {
         // 请上传证件反面
         this.$message({
           message: this.$t('M.user_senior_upload2'),
           type: 'error'
         })
         return false
-      } else if (this.dialogImageHandUrl === '') {
+      } else if (!this.isUploadImg3) {
         // 请上传证件反面
         this.$message({
           message: this.$t('M.user_senior_upload3'),
@@ -967,37 +946,18 @@ export default {
         // 接口成功清除loading
         this.fullscreenLoading = false
         this.SET_USER_INFO_REFRESH_STATUS(true)
-        await this.getUserRefreshUser()
+        await this.REFRESH_USER_INFO_ACTION()
         await this.getRealNameInformation()
         this.authenticationStatusFront = false
         this.stateEmptyData()
-        this.clearUploadRefValue()
       }
-    },
-    clearUploadRefValue () {
-      this.$refs.firstUpload.clearFiles()
-      this.$refs.secondUpload.clearFiles()
-      this.$refs.thirdUpload.clearFiles()
-      this.handleRemoveFront()
-      this.handleRemoveHand()
-      this.handleRemoveSide()
-      // this.$forceUpdate()
     },
     // 接口请求完成之后清空数据
     stateEmptyData () {
       this.dialogImageFrontUrl = ''
       this.dialogImageReverseSideUrl = ''
       this.dialogImageHandUrl = ''
-      // this.$forceUpdate()
     }
-    // 检测上传图片大小
-    // bytesToSize (bytes) {
-    //   if (bytes === 0) return '0 B'
-    //   let k = 1000 // or1024
-    //   let sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-    //   let i = Math.floor(Math.log(bytes) / Math.log(k))
-    //   return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i]
-    // }
   },
   filter: {},
   computed: {
@@ -1010,11 +970,12 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       configInfo: state => state.common.footerInfo.configInfo,
-      contryAreaList: state => state.common.contryAreaList
-    }),
-    apiCommonUrl () {
-      return apiCommonUrl
-    }
+      contryAreaList: state => state.common.contryAreaList,
+      // 是否通过高级认证
+      advancedAuth: state => state.user.loginStep1Info.userInfo.advancedAuth,
+      // 实名认证
+      realname: state => state.user.loginStep1Info.userInfo.realname
+    })
   },
   watch: {
     contryAreaList (newVal) {
@@ -1184,8 +1145,21 @@ export default {
               height: 116px;
               overflow: hidden;
 
-              > .upload-input {
+              .upload-input {
                 display: none;
+              }
+
+              > .img {
+                > .picture {
+                  height: 116px;
+                  border-radius: 5px;
+                  overflow: hidden;
+
+                  > img {
+                    height: 100%;
+                    border-radius: 5px;
+                  }
+                }
               }
             }
 

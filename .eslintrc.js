@@ -30,6 +30,7 @@ module.exports = {
     "no-unused-expressions":0,
     "new-cap":0,
     "standard/no-callback-literal":0,
-    "no-useless-escape":0
+    "no-useless-escape":0,
+    "no-unneeded-ternary":0
   }
 }

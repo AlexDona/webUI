@@ -143,6 +143,7 @@ export default {
     }
   },
   async created () {
+    console.log(this.isNeedIOS)
     this.GET_APP_URL_ACTION()
   },
   mounted () {
@@ -163,6 +164,7 @@ export default {
           case 'android':
             window.location.href = 'scheme: //fubt.com/'
             this.downloadUrl = this.androidUrl
+            console.log(this.isMobile)
             break
           case 'ios':
             this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`

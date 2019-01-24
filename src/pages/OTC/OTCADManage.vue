@@ -303,7 +303,10 @@ import {
 } from '../../utils/api/OTC'
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter, scientificToNumber} from '../../utils'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  // returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -419,18 +422,15 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
+      // 返回数据正确的逻辑 渲染列表
       console.log('获取广告管理列表')
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑 渲染列表
-        this.loading = false
-        let ADData = getNestedData(data, 'data.data')
+      this.loading = false
+      if (!data) return false
+      if (data.data) {
+        let ADData = getNestedData(data, 'data')
         this.ADList = getNestedData(ADData, 'list')
-        // 分页
-        this.totalPages = getNestedData(ADData, 'pages') - 0
+        this.totalPages = getNestedData(ADData, 'pages') - 0 // 分页
       }
     },
     // 5.0
@@ -459,11 +459,10 @@ export default {
       const data = await getOTCAvailableCurrency({})
       // console.log('可用币种列表')
       // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.ADManageMarketList = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data.data) {
+        this.ADManageMarketList = getNestedData(data, 'data')
       }
     },
     // 7.0 可用法币查询
@@ -471,11 +470,10 @@ export default {
       const data = await getMerchantAvailableLegalTender({})
       // console.log('可用法币')
       // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.ADManageCurrencyId = getNestedData(data, 'data.data')
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data.data) {
+        this.ADManageCurrencyId = getNestedData(data, 'data')
       }
     },
     // 8.0 一键下架所有广告 二次确认弹出框
@@ -492,15 +490,10 @@ export default {
     // 9.0 一键下架所有广告
     async cancelAllOneKeyConfirm () {
       const data = await cancelAllOrdersOnekey()
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 1))) {
-        this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.loading = false
-        this.getOTCADManageList()
-      }
+      // 返回数据正确的逻辑
+      if (!data) return false
+      this.loading = false
+      this.getOTCADManageList()
     },
     // 10.0 点击表格中的下架按钮触发的事件
     updateADUnShelve (id) {
@@ -518,17 +511,9 @@ export default {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
       })
-      // 提示信息
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑 重新渲染列表
-        this.getOTCADManageList()
-        this.$message({
-          type: 'success',
-          message: this.$t('M.otc_adMange_adverting') + this.$t('M.comm_success') + '!' // 下架成功
-        })
-      }
+      // 返回数据正确的逻辑 重新渲染列表
+      if (!data) return false
+      this.getOTCADManageList()
     },
     // 12.0 点击 修改 按钮钮触发的事件
     modifyAD (id) {

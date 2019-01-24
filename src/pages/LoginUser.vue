@@ -635,6 +635,10 @@ import {
   sendPhoneOrEmailCodeAjax,
   getNestedData
 } from '../utils/commonFunc'
+import {
+  getUserAgent,
+  detectOS
+} from '../utils'
 import socket from '../utils/datafeeds/socket'
 
 // import {getPersonalAssetsList} from '../../kits/globalFunction'
@@ -714,6 +718,11 @@ export default {
     }
   },
   created () {
+    // let u = navigator.userAgent
+    // console.log(navigator.appVersion)
+    // console.log(u)
+    // const userAgentList = u.split(';')
+    // console.log(userAgentList)
     document.getElementsByTagName('body')[0].style.zoom = 1
     if (this.isLogin) {
       this.$router.push({path: '/home'})
@@ -1030,21 +1039,19 @@ export default {
         }
       }
       let params = {
-        token: this.token,
         phone: this.userInfo.phone,
         phoneCode: this.step3PhoneMsgCode,
         email: this.userInfo.email,
         emailCode: this.step3EmailMsgCode,
-        googleCode: this.step3GoogleMsgCode
+        googleCode: this.step3GoogleMsgCode,
+        terminal: getUserAgent(),
+        os: detectOS()
       }
       const data = await userLoginForStep2(params)
-      if (!returnAjaxMsg(data, this, 1)) {
-        return false
-      } else {
-        this.clearInputValue()
-        this.step3DialogShowStatus = false
-        this.userLoginSuccess(data.data.data)
-      }
+      if (!data) return false
+      this.clearInputValue()
+      this.step3DialogShowStatus = false
+      this.userLoginSuccess(getNestedData(data, 'data'))
     },
     /**
       * 验证码自动提交登录
@@ -1081,7 +1088,7 @@ export default {
         /*
          * 是否需要图片验证码验证（条件：3次登录失败）
          **/
-        if (this.failureNum > 3) {
+        if (this.failureNum >= 3) {
           // 多次错误登录
           // 显示图片验证码
           this.userInputImageCode = ''

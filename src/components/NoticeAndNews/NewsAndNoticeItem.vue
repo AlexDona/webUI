@@ -88,7 +88,6 @@ import {
   removeStore
 } from '../../utils'
 import {
-  returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 
@@ -141,15 +140,9 @@ export default {
         language: this.language
       }
       const data = await changeNewDetailByLanguage(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        console.log(data)
-        let newContent = getNestedData(data, 'data.data.content')
-        if (newContent) {
-          console.log(newContent)
-          this.newDetail = getNestedData(data, 'data.data')
-        }
+      let newContent = getNestedData(data, 'data.content')
+      if (newContent) {
+        this.newDetail = getNestedData(data, 'data')
       }
     },
     // 获取所有新闻类型

@@ -38,7 +38,6 @@ import {
   getKlineDataAjax
 } from '../../utils/api/trade'
 import {
-  returnAjaxMsg,
   getNestedData
   // getCollectionList
 } from '../../utils/commonFunc'
@@ -134,56 +133,52 @@ export default {
         KlineStep
       }
       const data = await getKlineDataAjax(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.isAllowDrag = true
-        let klineData = getNestedData(data, 'data.data.obj')
-        klineData = JSON.parse(unzip(klineData))
-        console.log(klineData)
-        let klineList = getNestedData(klineData, 'klineList')
-        if (klineList) {
-          this.KlineNum = klineData.num
-          let list = []
-          const ticker = `${this.symbol}-${this.interval}`
-          switch (KlineNum) {
-            case 0:
-              klineList.forEach(item => {
-                list.push({
-                  time: item.time - 0,
-                  open: item.open,
-                  high: item.high,
-                  low: item.low,
-                  close: item.close,
-                  volume: item.volume
-                })
+      if (!data) return false
+      this.isAllowDrag = true
+      let klineData = getNestedData(data, 'data.obj')
+      klineData = JSON.parse(unzip(klineData))
+      let klineList = getNestedData(klineData, 'klineList')
+      if (klineList) {
+        this.KlineNum = klineData.num
+        let list = []
+        const ticker = `${this.symbol}-${this.interval}`
+        switch (KlineNum) {
+          case 0:
+            klineList.forEach(item => {
+              list.push({
+                time: item.time - 0,
+                open: item.open,
+                high: item.high,
+                low: item.low,
+                close: item.close,
+                volume: item.volume
               })
-              this.cacheData[ticker] = list
-              this.lastTime = getNestedData(list[list.length - 1], 'time')
-              break
-            default:
-              console.log(klineData)
-              let reflashList = []
-              klineList.forEach(item => {
-                reflashList.push({
-                  time: item.time - 0,
-                  open: item.open,
-                  high: item.high,
-                  low: item.low,
-                  close: item.close,
-                  volume: item.volume
-                })
+            })
+            this.cacheData[ticker] = list
+            this.lastTime = getNestedData(list[list.length - 1], 'time')
+            break
+          default:
+            console.log(klineData)
+            let reflashList = []
+            klineList.forEach(item => {
+              reflashList.push({
+                time: item.time - 0,
+                open: item.open,
+                high: item.high,
+                low: item.low,
+                close: item.close,
+                volume: item.volume
               })
-              let newList = reflashList.concat(this.cacheData[ticker])
-              this.cacheData[ticker] = newList
-              break
-          }
+            })
+            let newList = reflashList.concat(this.cacheData[ticker])
+            this.cacheData[ticker] = newList
+            break
         }
-        this.fullscreenLoading = false
-        setTimeout(() => {
-          this.changeIsKlineDataReady(true)
-        }, 500)
       }
+      this.fullscreenLoading = false
+      setTimeout(() => {
+        this.changeIsKlineDataReady(true)
+      }, 500)
     },
     // 获取当前交易对socket数据
     async getActiveSymbolData (tradeName) {
@@ -192,37 +187,34 @@ export default {
       }
       params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        let activeSymbolData = getNestedData(data, 'data.data.obj')
-        activeSymbolData = JSON.parse(unzip(activeSymbolData))
-        let {
-          defaultTrade, // 默认交易对
-          depthList, // 买卖单、深度
-          tradeList, // 交易记录
-          tickerList // 行情交易区列表
-        } = activeSymbolData
-        if (depthList.depthData.sells.list) {
-          depthList.depthData.sells.list.reverse()
-        }
-        // 默认交易对 数据
-        this.SET_MIDDLE_TOP_DATA(defaultTrade.content[0])
-        // 买卖单
-        this.ajaxData.buyAndSellData = depthList.depthData
-        // 交易记录
-        this.ajaxData.tardeRecordList = tradeList
-        // 深度图
-        this.ajaxData.depthData = depthList.depthResult
-
-        // 行情交易区列表
-        this.ajaxData.tradeMarketList = tickerList
-
-        this.CHANGE_SOCKET_AND_AJAX_DATA({
-          ajaxData: this.ajaxData,
-          type: 'ajax'
-        })
+      if (!data) return false
+      let activeSymbolData = getNestedData(data, 'data.obj')
+      activeSymbolData = JSON.parse(unzip(activeSymbolData))
+      let {
+        defaultTrade, // 默认交易对
+        depthList, // 买卖单、深度
+        tradeList, // 交易记录
+        tickerList // 行情交易区列表
+      } = activeSymbolData
+      if (depthList.depthData.sells.list) {
+        depthList.depthData.sells.list.reverse()
       }
+      // 默认交易对 数据
+      this.SET_MIDDLE_TOP_DATA(defaultTrade.content[0])
+      // 买卖单
+      this.ajaxData.buyAndSellData = depthList.depthData
+      // 交易记录
+      this.ajaxData.tardeRecordList = tradeList
+      // 深度图
+      this.ajaxData.depthData = depthList.depthResult
+
+      // 行情交易区列表
+      this.ajaxData.tradeMarketList = tickerList
+
+      this.CHANGE_SOCKET_AND_AJAX_DATA({
+        ajaxData: this.ajaxData,
+        type: 'ajax'
+      })
     },
     // k线初始化
     initKLine (symbol) {
@@ -242,25 +234,23 @@ export default {
     // 获取初始交易对
     async getDefaultSymbol () {
       const data = await getDefaultSymbol()
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        const obj = getNestedData(data, 'data.data')
-        const activeSymbol = {
-          id: (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase(),
-          tradeId: getNestedData(obj, 'id'),
-          sellsymbol: getNestedData(obj, 'sellCoinName'), // 币种简称
-          sellname: getNestedData(obj, 'buyCoinName'), // 币种全程
-          area: getNestedData(obj, 'buyCoinName'), // 交易区
-          areaId: getNestedData(obj, 'tradeAreaId')
-        }
-        // 是否从其他页面跳转
-        this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
-        this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
-        this.symbol = getNestedData(this.activeSymbol, 'id')
-        if (this.isLogin) {
-          this.getUserOrderSocket('SUB', this.symbol)
-        }
+      if (!data) return false
+
+      const obj = getNestedData(data, 'data')
+      const activeSymbol = {
+        id: (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase(),
+        tradeId: getNestedData(obj, 'id'),
+        sellsymbol: getNestedData(obj, 'sellCoinName'), // 币种简称
+        sellname: getNestedData(obj, 'buyCoinName'), // 币种全程
+        area: getNestedData(obj, 'buyCoinName'), // 交易区
+        areaId: getNestedData(obj, 'tradeAreaId')
+      }
+      // 是否从其他页面跳转
+      this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
+      this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
+      this.symbol = getNestedData(this.activeSymbol, 'id')
+      if (this.isLogin) {
+        this.getUserOrderSocket('SUB', this.symbol)
       }
     },
     init (options) {
