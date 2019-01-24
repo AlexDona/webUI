@@ -486,7 +486,6 @@ export default {
   },
   async created () {
     // 调用收款方式 银行卡 微信 支付宝 paypal 西联汇款 状态
-    await this.REFRESH_USER_INFO_ACTION()
     await this.getAccountPaymentTerm()
     if (this.refsAccountCenterStatus) {
       this.getAccountPaymentTerm()

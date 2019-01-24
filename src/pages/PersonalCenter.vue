@@ -349,6 +349,9 @@ export default {
     })
   },
   watch: {
+    userCenterActiveName () {
+      this.REFRESH_USER_INFO_ACTION()
+    }
   }
 }
 </script>

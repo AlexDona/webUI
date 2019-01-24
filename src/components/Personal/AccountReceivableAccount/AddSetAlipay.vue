@@ -227,7 +227,6 @@ export default {
     },
     async uploadImg (file) {
       let formData = new FormData()
-      // console.log(res.file)
       formData.append('file', file)
       const data = await uploadImageAjax(formData)
       this.CHANGE_AJAX_READY_STATUS(false)

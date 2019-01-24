@@ -440,7 +440,8 @@ export default{
   },
   async created () {
     // f5刷新页面刷新用户信息列表
-    if (this.isLogin) {
+    console.log(this.$route)
+    if (this.isLogin && this.$route.path !== '/PersonalCenter') {
       this.refreshUserInfo()
     }
     if (getStore('convertCurrency')) {
@@ -448,7 +449,6 @@ export default{
     }
     // 获取 语言列表
     await this.GET_LANGUAGE_LIST_ACTION(this)
-    console.log(this.language)
     await this.SET_PARTNER_INFO_ACTION(this.language)
     await this.GET_COUNTRY_LIST_ACTION()
     this.activeTheme = this.theme

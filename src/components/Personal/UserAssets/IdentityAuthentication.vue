@@ -566,10 +566,6 @@ import {
   validateNumForUserInput // 用户输入验证
 } from '../../../utils/commonFunc'
 import {
-  apiCommonUrl,
-  xDomain
-} from '../../../utils/env'
-import {
   idCardRegexpInputNum,
   passportEntryRestrictions
 } from '../../../utils/index'
@@ -588,11 +584,6 @@ export default {
   },
   data () {
     return {
-      // 上传图片 token
-      tokenObj: {
-        'token': '',
-        'x-domain': ''
-      },
       regionList: [], // 国家地区列表
       documentTypeValue: 1, // 证件
       documentTypeList: [
@@ -654,13 +645,7 @@ export default {
     }
   },
   async created () {
-    this.SET_USER_INFO_REFRESH_STATUS(true)
-    await this.REFRESH_USER_INFO_ACTION()
-    this.tokenObj.token = this.userInfo.token
-    this.tokenObj['x-domain'] = xDomain
-    await this.reflashUserInfo()
     this.authenticationIsStatus()
-    console.log(this.authenticationNotPass)
   },
   mounted () {
   },
@@ -680,9 +665,6 @@ export default {
       'SET_STEP1_INFO',
       'CHANGE_AJAX_READY_STATUS'
     ]),
-    reflashUserInfo () {
-      this.REFRESH_USER_INFO_ACTION()
-    },
     // 选择图片文件
     choosePicture (index) {
       this.$refs[`fileInput${index}`].click()
@@ -993,10 +975,7 @@ export default {
       advancedAuth: state => state.user.loginStep1Info.userInfo.advancedAuth,
       // 实名认证
       realname: state => state.user.loginStep1Info.userInfo.realname
-    }),
-    apiCommonUrl () {
-      return apiCommonUrl
-    }
+    })
   },
   watch: {
     contryAreaList (newVal) {

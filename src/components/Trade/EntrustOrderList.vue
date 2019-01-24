@@ -345,11 +345,14 @@ export default {
       })
     },
     getEntrustData () {
-      if (this.isLogin) {
-        // 获取我的当前委托
-        this.getMyCurrentEntrust()
-        // 获取历史委托
-        this.getHistoryEntrust()
+      if (!this.isLogin) return false
+      switch (this.activeName) {
+        case 'current-entrust':
+          this.getMyCurrentEntrust()
+          break
+        case 'history-entrust':
+          this.getHistoryEntrust()
+          break
       }
     },
     scientificToNumber (num) {
@@ -399,7 +402,6 @@ export default {
     // 获取历史委托
     async getHistoryEntrust () {
       let params = {
-        userId: this.userInfo.userId,
         currentPage: this.currentPageForHistoryEntrust,
         pageSize: this.pageSize,
         tradeId: this.middleTopData.partnerTradeId
@@ -412,7 +414,6 @@ export default {
     // 获取我的当前委单
     async getMyCurrentEntrust () {
       let params = {
-        userId: this.userInfo.userId,
         currentPage: this.currentPageForMyEntrust,
         pageSize: this.pageSize,
         tradeId: this.middleTopData.partnerTradeId
@@ -436,26 +437,16 @@ export default {
     })
   },
   watch: {
-    activeName (newVal) {
-      if (!this.isLogin) return false
-      switch (newVal) {
-        case 'current-entrust':
-          this.getMyCurrentEntrust()
-          break
-        case 'history-entrust':
-          this.getHistoryEntrust()
-          break
-      }
+    activeName () {
+      this.getEntrustData()
     },
     refreshEntrustStatus (newVal) {
       if (newVal) {
-        this.getMyCurrentEntrust()
-        this.getHistoryEntrust()
+        this.getEntrustData()
         this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(false)
       }
     },
-    middleTopData (newVal) {
-      console.log(newVal)
+    middleTopData () {
       this.getEntrustData()
     }
   }

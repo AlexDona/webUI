@@ -88,7 +88,7 @@ export default {
     this.activeTheme = this.theme
     this.GET_COUNTRY_LIST_ACTION()
     if (this.isLogin) {
-      this.reflashUserInfo()
+      this.REFRESH_USER_INFO_ACTION()
     }
   },
   mounted () {},
@@ -117,9 +117,6 @@ export default {
       'SET_FOOTER_INFO',
       'SET_LOGO_URL'
     ]),
-    reflashUserInfo () {
-      this.REFRESH_USER_INFO_ACTION()
-    },
     // 显示状态切换 （语言）
     toggleShowLanguageBox (status) {
       this.langSelecting = Boolean(status)
