@@ -547,6 +547,8 @@ export const detectOS = () => {
     if (isWinVista) return 'Windows Vista'
     let isWin7 = sUserAgent.indexOf('Windows NT 6.1') > -1 || sUserAgent.indexOf('Windows 7') > -1
     if (isWin7) return 'Windows 7'
+    let isWin8 = sUserAgent.indexOf('Windows NT 6.2') > -1 || sUserAgent.indexOf('Windows 8') > -1
+    if (isWin8) return 'Windows 8'
     let isWin10 = sUserAgent.indexOf('Windows NT 10.0') > -1 || sUserAgent.indexOf('Windows 10') > -1
     if (isWin10) return 'Windows 10'
   }

@@ -40,6 +40,9 @@ const routerCreator = () => {
       next()
     }
   })
+  router.afterEach((to, from) => {
+    store.commit('CHANGE_AJAX_READY_STATUS', false)
+  })
   return router
 }
 
