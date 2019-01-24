@@ -15,7 +15,6 @@ const routerCreator = () => {
     'linkExactActiveClass': 'active'
   })
   router.beforeEach((to, from, next) => {
-    store.commit('CHANGE_AJAX_READY_STATUS', true)
     if (from.path !== '/login' || from.path !== '/register') {
       store.commit('CHANGE_ROUTER_PATH', from.path)
     }
@@ -39,9 +38,6 @@ const routerCreator = () => {
     } else {
       next()
     }
-  })
-  router.afterEach((to, from) => {
-    store.commit('CHANGE_AJAX_READY_STATUS', false)
   })
   return router
 }
