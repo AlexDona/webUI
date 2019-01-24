@@ -24,10 +24,10 @@ let token = getCookie('token')
 util.ajax.interceptors.request.use((config) => {
   const url = `${config.url}`
   let needLoading = getNestedData(config.params, 'loading') || getNestedData(config.data, 'loading') || url.endsWith('user/userLoginForStep1')
-
+  if (getNestedData(config.params, 'loading')) delete config.params.loading
+  if (getNestedData(config.data, 'loading')) delete config.data.loading
   if (needLoading) {
     store.commit('CHANGE_AJAX_READY_STATUS', true)
-    console.log(store.state.common.isAjaxReady)
   }
   console.log(token)
   config.headers['x-domain'] = xDomain

@@ -275,7 +275,15 @@
               <template slot-scope = "s">
                 <div>
                   <!--邀请奖励-->
-                  {{ $t('M.comm_user_invite') }}{{ $t('M.user_invite_award') }}
+                  <!--{{ $t('M.comm_user_invite') }}{{ $t('M.user_invite_award') }}-->
+                  <!-- 直接奖励-->
+                  <span v-if="generalizeValue==='first'">
+                    {{ $t('M.user_direct_reward') }}
+                  </span>
+                  <!--间接奖励-->
+                  <span v-else>
+                    {{ $t('M.user_indirect_reward') }}
+                  </span>
                 </div>
               </template>
             </el-table-column>
@@ -391,6 +399,7 @@ export default {
           this.generalizeValue = e
           // this.loading = true
           this.getUserPromotionList()
+          this.getRecommendUserPromotion()
           console.log(this.generalizeValue)
         }
       })
@@ -431,7 +440,8 @@ export default {
       // this.loading = true
       let data = await getRecommendUserPromotionList({
         pageNumber: this.currentPageMyEntrust, // 页码
-        pageSize: this.pageSize // 条数
+        pageSize: this.pageSize, // 条数
+        type: this.generalizeValue // 类型
       })
       console.log(data)
       if (!returnAjaxMsg(data, this)) {

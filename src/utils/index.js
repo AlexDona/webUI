@@ -497,7 +497,7 @@ export const downloadFileWithUserDefined = (downloadUrl, filename) => {
 export const getUserAgent = () => {
   var UserAgent = navigator.userAgent.toLowerCase()
   if (/ucweb/.test(UserAgent)) return 'UC'
-  if (/chrome/.test(UserAgent.substr(-34, 6))) return 'Chrome'
+  if (/chrome/.test(UserAgent.substr(-34, 6)) || /chrome/.test(UserAgent.substr(-33, 6))) return 'Chrome'
   if (/firefox/.test(UserAgent)) return 'firefox'
   if (/opera/.test(UserAgent)) return 'opera'
   if (/safari/.test(UserAgent) && !/chrome/.test(UserAgent)) return 'safari'
@@ -513,6 +513,7 @@ export const getUserAgent = () => {
   if (/lbbrowser/.test(UserAgent)) return 'liebao'
   if (/micromessenger/.test(UserAgent)) return 'weixin'
   if (/qqbrowser/.test(UserAgent)) return 'QQ'
+  return 'other'
 }
 
 export const detectOS = () => {
@@ -546,6 +547,8 @@ export const detectOS = () => {
     if (isWinVista) return 'Windows Vista'
     let isWin7 = sUserAgent.indexOf('Windows NT 6.1') > -1 || sUserAgent.indexOf('Windows 7') > -1
     if (isWin7) return 'Windows 7'
+    let isWin8 = sUserAgent.indexOf('Windows NT 6.2') > -1 || sUserAgent.indexOf('Windows 8') > -1
+    if (isWin8) return 'Windows 8'
     let isWin10 = sUserAgent.indexOf('Windows NT 10.0') > -1 || sUserAgent.indexOf('Windows 10') > -1
     if (isWin10) return 'Windows 10'
   }

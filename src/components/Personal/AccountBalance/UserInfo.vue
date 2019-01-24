@@ -187,7 +187,6 @@
 import {mapState} from 'vuex'
 import {
   assetCurrenciesList,
-  userRefreshUser,
   currencyTransform
 } from '../../../utils/api/personal'
 import {
@@ -248,8 +247,8 @@ export default {
         case 'all':
           params.selectType = 'all'
           break
-        case 'noall':
-          params.selectType = 'noall'
+        case 'no_all':
+          params.selectType = 'not_all'
           break
       }
       data = await assetCurrenciesList(params)
@@ -261,22 +260,6 @@ export default {
         this.totalSumBTC = getNestedData(data, 'data.data.totalSum')
         console.log(data.data.data)
         console.log(this.totalSumBTC)
-      }
-    },
-    /**
-     *  刷新用户信息
-     */
-    async getUserRefreshUser () {
-      let data = await userRefreshUser({
-        token: this.userInfo.token
-      })
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回列表数据
-        // this.userInfoRefresh = data.data.data.userInfo
-        this.userInfoRefresh = getNestedData(data, 'data.data.userInfo')
       }
     }
   },

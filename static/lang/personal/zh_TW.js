@@ -141,6 +141,8 @@ export const personal = {
   'user_invite_have_obtained': '已獲得的傭金折合',
   'user_invite_statistics': '統計',
   'user_invite_direct': '直接推廣',
+  'user_direct_reward': '直接獎勵',
+  'user_indirect_reward': '間接獎勵',
   'user_invite_indirect': '間接推廣',
   'user_invite_audit': '待審核',
   'user_invite_already_passed': '已通過',

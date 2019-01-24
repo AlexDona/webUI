@@ -922,7 +922,6 @@ export default {
         return false
       }
       let params = {
-        userId: this.loginStep1Info.userId,
         tradeId: this.middleTopData.partnerTradeId + '',
         type: this.entrustType ? 'SELL' : 'BUY', // 委单类型
         matchType: this.matchType, // 撮合类型

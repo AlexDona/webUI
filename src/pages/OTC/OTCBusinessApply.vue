@@ -336,7 +336,7 @@ export default {
       // 返回数据正确的逻辑
       console.log(data)
       if (!data) return false
-      if (data) {
+      if (data.meta) {
         let detailMeta = getNestedData(data, 'meta')
         if (detailMeta.success == true) {
           this.applyStatus = 2
@@ -402,7 +402,7 @@ export default {
       console.log(data)
       // 正确逻辑
       if (!data) return false
-      if (data) {
+      if (data.data) {
         this.argumentContent = getNestedData(data, 'data[0].content')
       }
     },

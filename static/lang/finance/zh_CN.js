@@ -29,7 +29,7 @@ export const finance = {
   'finance_huoqi': '活期',
   'finance_grant': '发放',
   'finance_noemptyTips': '存币类型或存币数量不能为空',
-  'finance_loginTips': '@您还没有登陆,请',
+  'finance_loginTips': '您还没有登陆,请',
   'finance_or': '或者',
   'finance_loginTipsTwo': '之后查看!',
   'finance_interestRate': '利率',

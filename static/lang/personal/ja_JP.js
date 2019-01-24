@@ -137,6 +137,8 @@ export const personal = {
   'user_invite_have_obtained': '口銭を取得した',
   'user_invite_statistics': '統計',
   'user_invite_direct': '直接推薦',
+  'user_direct_reward': '直接奨励する',
+  'user_indirect_reward': '間接奨励',
   'user_invite_indirect': '間接推薦',
   'user_invite_audit': '保留中のレビュー',
   'user_invite_already_passed': '合格',

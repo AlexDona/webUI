@@ -331,8 +331,8 @@ import {
 } from '../../utils/api/user'
 import {phoneNumberFormat} from '../../utils'
 import {
-  returnAjaxMsg,
-  sendPhoneOrEmailCodeAjax
+  sendPhoneOrEmailCodeAjax,
+  getNestedData
 } from '../../utils/commonFunc'
 import {CHECKPASSWORD_REG} from '../../utils/regExp'
 import ImageValidate from '../Common/ImageValidateCommon'
@@ -381,6 +381,8 @@ export default {
       phoneNumTips: 'M.forgetPassword_text4',
       // 邮箱号提示信息 若该邮箱无法使用请联系客服
       emailNumTips: 'M.forgetPassword_text5',
+      // 下一步携带token
+      nextStepToken: '',
       end: ''
     }
   },
@@ -447,18 +449,15 @@ export default {
       }
 
       const params = {
-        token: this.userInfo.token,
+        token: this.nextStepToken,
         newPassword: this.newPassword
       }
       const data = await findPasswordStep3(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.activeStepNumber = 4
-        setTimeout(() => {
-          this.$router.push('/login')
-        }, 3000)
-      }
+      if (!data) return false
+      this.activeStepNumber = 4
+      setTimeout(() => {
+        this.$router.push('/login')
+      }, 3000)
     },
     // 找回密码步骤2
     async findPasswordStep2 () {
@@ -495,12 +494,9 @@ export default {
         googleCode: this.googleCode
       }
       const data = await findPasswordStep2(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        console.log(data)
-        this.activeStepNumber = 3
-      }
+      if (!data) return false
+      this.nextStepToken = getNestedData(data, 'data')
+      this.activeStepNumber = 3
     },
     // 图片验证码验证
     validateImageCode () {
@@ -530,13 +526,10 @@ export default {
         userName: this.username
       }
       const data = await findPasswordStep1(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.userInfo = data.data.data
-        console.log(this.userInfo)
-        this.activeStepNumber = 2
-      }
+      if (!data) return false
+
+      this.userInfo = getNestedData(data, 'data')
+      this.activeStepNumber = 2
     },
     // 发送验证码
     sendPhoneOrEmailCode (msgType) {

@@ -385,7 +385,6 @@ import {getMerchantAvailableLegalTender} from '../../utils/api/OTC'
 import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
 import {
-  returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -441,7 +440,8 @@ export default{
   },
   async created () {
     // f5刷新页面刷新用户信息列表
-    if (this.isLogin) {
+    console.log(this.$route)
+    if (this.isLogin && this.$route.path !== '/PersonalCenter') {
       this.refreshUserInfo()
     }
     if (getStore('convertCurrency')) {
@@ -449,7 +449,6 @@ export default{
     }
     // 获取 语言列表
     await this.GET_LANGUAGE_LIST_ACTION(this)
-    console.log(this.language)
     await this.SET_PARTNER_INFO_ACTION(this.language)
     await this.GET_COUNTRY_LIST_ACTION()
     this.activeTheme = this.theme
@@ -512,7 +511,7 @@ export default{
     },
     // 非商家禁止进入OTC导航页提示框--结束
     refreshUserInfo () {
-      this.REFRESH_USER_INFO_ACTION(this)
+      this.REFRESH_USER_INFO_ACTION()
     },
     handleScroll () {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -559,7 +558,7 @@ export default{
     // 用户跳转到指定页面
     async stateReturnSuperior (val) {
       console.log(this.localPayPwdSet)
-      await this.REFRESH_USER_INFO_ACTION(this)
+      await this.REFRESH_USER_INFO_ACTION()
       if (this.localPayPwdSet || this.userInfo.payPassword) {
         switch (val) {
           case 'account-balance':
@@ -594,12 +593,9 @@ export default{
     // 用户登出
     async userLoginOut () {
       const data = await userLoginOut()
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.USER_LOGOUT()
-        this.$router.push({path: '/home'})
-      }
+      if (!data) return false
+      this.USER_LOGOUT()
+      this.$router.push({path: '/home'})
     },
     // 显示状态切换（子导航）
     toggleShowSubNavBox (item, status) {
@@ -647,7 +643,7 @@ export default{
       let data = await getMerchantAvailableLegalTender()
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data) {
+      if (data.data) {
         this.convertCurrencyList = getNestedData(data, 'data')
         await this.changeActiveTransitionCurrency()
       }

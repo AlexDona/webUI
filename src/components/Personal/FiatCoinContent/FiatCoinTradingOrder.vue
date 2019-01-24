@@ -907,22 +907,18 @@ export default {
         data = await cancelUserOtcOrder()
         console.log('撤销（过期 买家 未付款）')
         if (!data) return false
-        if (data) {
-          // 返回数据正确的逻辑：重新渲染列表
-          // this.getOTCTradingOrdersList()
-          this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
-        }
+        // 返回数据正确的逻辑：重新渲染列表
+        // this.getOTCTradingOrdersList()
+        this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
       if (val === 2) {
         data = await completeUserOtcOrder()
         console.log('成交（过期 卖家 未收款）')
         // console.log(data)
         if (!data) return false
-        if (data) {
-          // 返回数据正确的逻辑：重新渲染列表
-          // this.getOTCTradingOrdersList()
-          this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
-        }
+        // 返回数据正确的逻辑：重新渲染列表
+        // this.getOTCTradingOrdersList()
+        this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
     },
     // 2.0 倒计时逻辑方法 timerLogicMethod
@@ -1021,23 +1017,21 @@ export default {
         console.log(data)
         // 正确逻辑
         if (!data) return false
-        if (data) {
-          // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
-          // 付款成功后，根据返回的状态再渲染
-          // 付款成功后逻辑
-          // 1关闭交易密码框
-          this.dialogVisible1 = false
-          this.errpwd = '' // 清空密码错提示
-          this.tradePassword = '' // 清空密码框
-          // 2再次调用接口刷新列表
-          // this.SET_LEGAL_TENDER_REFLASH_STATUS({
-          //   type: 'TRADING',
-          //   status: true
-          // })
-          // 2再次调用接口刷新列表
-          // this.getOTCTradingOrdersList()
-          this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
-        }
+        // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
+        // 付款成功后，根据返回的状态再渲染
+        // 付款成功后逻辑
+        // 1关闭交易密码框
+        this.dialogVisible1 = false
+        this.errpwd = '' // 清空密码错提示
+        this.tradePassword = '' // 清空密码框
+        // 2再次调用接口刷新列表
+        // this.SET_LEGAL_TENDER_REFLASH_STATUS({
+        //   type: 'TRADING',
+        //   status: true
+        // })
+        // 2再次调用接口刷新列表
+        // this.getOTCTradingOrdersList()
+        this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
     },
     // 7.0 卖家在买家付款前点击确认收款按钮的提示事件
@@ -1069,23 +1063,21 @@ export default {
       console.log(data)
       // 正确逻辑
       if (!data) return false
-      if (data) {
-        // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
-        // 付款成功后，根据返回的状态再渲染
-        // 付款成功后逻辑
-        // 1关闭交易密码框
-        this.dialogVisible2 = false
-        this.errpwd = '' // 清空密码错提示
-        this.tradePassword = '' // 清空密码框
-        // 2再次调用接口刷新列表
-        // this.SET_LEGAL_TENDER_REFLASH_STATUS({
-        //   type: 'TRADING',
-        //   status: true
-        // })
-        // 2再次调用接口刷新列表
-        // this.getOTCTradingOrdersList()
-        this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
-      }
+      // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
+      // 付款成功后，根据返回的状态再渲染
+      // 付款成功后逻辑
+      // 1关闭交易密码框
+      this.dialogVisible2 = false
+      this.errpwd = '' // 清空密码错提示
+      this.tradePassword = '' // 清空密码框
+      // 2再次调用接口刷新列表
+      // this.SET_LEGAL_TENDER_REFLASH_STATUS({
+      //   type: 'TRADING',
+      //   status: true
+      // })
+      // 2再次调用接口刷新列表
+      // this.getOTCTradingOrdersList()
+      this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
     },
     // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index) {
@@ -1122,14 +1114,12 @@ export default {
       console.log(data)
       // 正确逻辑
       if (!data) return false
-      if (data) {
-        this.dialogVisible3 = false
-        this.errpwd = '' // 清空密码错提示
-        this.tradePassword = '' // 清空密码框
-        // 2再次调用接口刷新列表
-        // this.getOTCTradingOrdersList()
-        this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
-      }
+      this.dialogVisible3 = false
+      this.errpwd = '' // 清空密码错提示
+      this.tradePassword = '' // 清空密码框
+      // 2再次调用接口刷新列表
+      // this.getOTCTradingOrdersList()
+      this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
     }
   },
   filter: {},

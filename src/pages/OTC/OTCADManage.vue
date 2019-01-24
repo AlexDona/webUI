@@ -427,7 +427,7 @@ export default {
       console.log(data)
       this.loading = false
       if (!data) return false
-      if (data) {
+      if (data.data) {
         let ADData = getNestedData(data, 'data')
         this.ADList = getNestedData(ADData, 'list')
         this.totalPages = getNestedData(ADData, 'pages') - 0 // 分页
@@ -461,7 +461,7 @@ export default {
       // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data) {
+      if (data.data) {
         this.ADManageMarketList = getNestedData(data, 'data')
       }
     },
@@ -472,7 +472,7 @@ export default {
       // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data) {
+      if (data.data) {
         this.ADManageCurrencyId = getNestedData(data, 'data')
       }
     },
@@ -492,10 +492,8 @@ export default {
       const data = await cancelAllOrdersOnekey()
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data) {
-        this.loading = false
-        this.getOTCADManageList()
-      }
+      this.loading = false
+      this.getOTCADManageList()
     },
     // 10.0 点击表格中的下架按钮触发的事件
     updateADUnShelve (id) {
@@ -515,9 +513,7 @@ export default {
       })
       // 返回数据正确的逻辑 重新渲染列表
       if (!data) return false
-      if (data) {
-        this.getOTCADManageList()
-      }
+      this.getOTCADManageList()
     },
     // 12.0 点击 修改 按钮钮触发的事件
     modifyAD (id) {

@@ -323,7 +323,7 @@ export default {
       // 返回数据正确的逻辑
       this.loading = false
       if (!data) return false
-      if (data) {
+      if (data.data) {
         let completedOrdersListData = getNestedData(data, 'data')
         // 完成订单列表
         this.completedOrdersList = getNestedData(completedOrdersListData, 'list')

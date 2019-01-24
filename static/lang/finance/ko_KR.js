@@ -29,7 +29,7 @@ export const finance = {
   'finance_huoqi': '당좌',
   'finance_grant': '발급',
   'finance_noemptyTips': '저축종류 혹은 저축수량이 비여서는 안됩니다',
-  'finance_loginTips': '@아직 로그인 못했습니다,어서',
+  'finance_loginTips': '아직 로그인 못했습니다,어서',
   'finance_or': '혹은',
   'finance_loginTipsTwo': '후 확인!',
   'finance_interestRate': '이자률',

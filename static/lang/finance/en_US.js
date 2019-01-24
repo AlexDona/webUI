@@ -30,7 +30,7 @@ export const finance = {
   'finance_huoqi': 'current',
   'finance_grant': 'Issue',
   'finance_noemptyTips': 'Deposit type and amount cannot be empty',
-  'finance_loginTips': '@Not logged in yet',
+  'finance_loginTips': 'Not logged in yet',
   'finance_or': 'or',
   'finance_loginTipsTwo': 'Check later!',
   'finance_interestRate': 'rate',

@@ -74,6 +74,7 @@ export default {
     }
   },
   async created () {
+    console.log(this.isMobile)
     // 获取 语言列表
     await this.GET_LANGUAGE_LIST_ACTION(this)
     await this.SET_PARTNER_INFO_ACTION(this.language)
@@ -87,7 +88,7 @@ export default {
     this.activeTheme = this.theme
     this.GET_COUNTRY_LIST_ACTION()
     if (this.isLogin) {
-      this.reflashUserInfo()
+      this.REFRESH_USER_INFO_ACTION()
     }
   },
   mounted () {},
@@ -116,9 +117,6 @@ export default {
       'SET_FOOTER_INFO',
       'SET_LOGO_URL'
     ]),
-    reflashUserInfo () {
-      this.REFRESH_USER_INFO_ACTION(this)
-    },
     // 显示状态切换 （语言）
     toggleShowLanguageBox (status) {
       this.langSelecting = Boolean(status)
@@ -136,7 +134,9 @@ export default {
       logoSrc: state => state.common.logoSrc,
       activeLanguage: state => state.common.activeLanguage,
       language: state => state.common.language, // 语言
-      defaultLanguage: state => state.common.defaultLanguage // 语言
+      // 默认语言
+      defaultLanguage: state => state.common.defaultLanguage,
+      isMobile: state => state.user.isMobile
     }),
     routeLanguage () {
       return this.$route.query.language
