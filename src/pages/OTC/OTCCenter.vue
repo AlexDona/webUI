@@ -502,12 +502,14 @@ export default {
       isDisabledTimer: null // 面板切换防止频繁点击倒计时
     }
   },
-  created () {
+  async created () {
     // 1.0 otc可用币种查询：我要购买/我要出售的币种列表
-    this.getOTCAvailableCurrencyList()
+    await this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
-    // this.getMerchantAvailableLegalTenderList()
-    // 3.0 用户登录了刷新用户个人信息
+    await this.getMerchantAvailableLegalTenderList()
+    // 3.0 otc主页面查询挂单列表:
+    await this.getOTCPutUpOrdersList()
+    // 4.0 用户登录了刷新用户个人信息
     if (this.isLogin) {
       this.reflashUserInfo() // 刷新用户信息
     }
@@ -709,7 +711,7 @@ export default {
       // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data) {
+      if (data.data) {
         this.IWantToBuySellArr = getNestedData(data, 'data')
         if (this.IWantToBuySellArr.length) {
           this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
@@ -717,7 +719,9 @@ export default {
           this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
           // 在得到可用币种之后再调用方法根据币种的第一项的币种id来渲染表格数据
           // 2.0 otc可用法币查询：
-          this.getMerchantAvailableLegalTenderList()
+          // this.getMerchantAvailableLegalTenderList()
+          // 3.0 otc主页面查询挂单列表:
+          // this.getOTCPutUpOrdersList()
         }
       }
     },
@@ -728,43 +732,51 @@ export default {
       // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data) {
+      if (data.data) {
         this.availableCurrencyId = getNestedData(data, 'data')
         // console.log(this.availableCurrencyId)
         this.checkedCurrencyId = getNestedData(this.availableCurrencyId[0], 'id')
         this.checkedCurrencyName = getNestedData(this.availableCurrencyId[0], 'shortName')
         // 3.0 otc主页面查询挂单列表:
-        this.getOTCPutUpOrdersList()
+        // this.getOTCPutUpOrdersList()
       }
     },
     //  3.0 刚进页面时候 otc主页面查询挂单列表
     async getOTCPutUpOrdersList () {
-      this.loading = true
-      let param = {
-        pageNum: this.currentPage,
-        payType: this.checkedPayType, // 按照选中的支付方式查询列表
-        coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
-        currencyId: this.checkedCurrencyId // 法币id
-      }
-      if (this.OTCBuySellStyle === 'onlineBuy') {
-        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
-      }
-      if (this.OTCBuySellStyle === 'onlineSell') {
-        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
-      }
-      const data = await getOTCPutUpOrders(param)
-      console.log('otc主页面查询挂单列表')
-      console.log(data)
-      // 返回数据正确的逻辑
-      this.loading = false
-      if (!data) return false
-      if (data) {
-        let orderListData = getNestedData(data, 'data')
-        this.onlineBuySellTableList = getNestedData(orderListData, 'list')
-        // 分页
-        this.totalPages = getNestedData(orderListData, 'pages') - 0
-        // 改变全局 委托定单撤单后，更新首页挂单列表状态
-        this.UPDATE_OTC_HOME_LIST_STATUS(false)
+      if (this.selectedOTCAvailableCurrencyCoinID && this.checkedCurrencyId) {
+        // console.log('有法币和可以币种id')
+        this.loading = true
+        let param = {
+          pageNum: this.currentPage,
+          payType: this.checkedPayType, // 按照选中的支付方式查询列表
+          coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
+          currencyId: this.checkedCurrencyId // 法币id
+        }
+        if (this.OTCBuySellStyle === 'onlineBuy') {
+          param.entrustType = 'SELL' // 挂单类型（BUY SELL）
+        }
+        if (this.OTCBuySellStyle === 'onlineSell') {
+          param.entrustType = 'BUY' // 挂单类型（BUY SELL）
+        }
+        const data = await getOTCPutUpOrders(param)
+        console.log('otc主页面查询挂单列表')
+        console.log(data)
+        // 返回数据正确的逻辑
+        this.loading = false
+        if (!data) return false
+        if (data) {
+          let orderListData = getNestedData(data, 'data')
+          this.onlineBuySellTableList = getNestedData(orderListData, 'list')
+          // 分页
+          this.totalPages = getNestedData(orderListData, 'pages') - 0
+          // 改变全局 委托定单撤单后，更新首页挂单列表状态
+          this.UPDATE_OTC_HOME_LIST_STATUS(false)
+        }
+      } else {
+        // console.log('没有法币或者可以币种id')
+        // console.log(this.selectedOTCAvailableCurrencyCoinID)
+        // console.log(this.checkedCurrencyId)
+        return false
       }
     },
     //  4.0 选中我想购买和出售币种名称
