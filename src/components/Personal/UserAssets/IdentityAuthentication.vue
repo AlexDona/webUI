@@ -429,7 +429,7 @@
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click="uploadImg('third-submit')"
+                    @click="choosePicture(3)"
                   >
                     <!--上传手持身份证-->
                     {{ $t('M.user_senior_upload3') }}
