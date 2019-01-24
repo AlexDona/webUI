@@ -1454,7 +1454,8 @@ export default {
               > .invest-list-body {
                 .finance-tips-box {
                   color: #617499;
-                  background-color: #121824;
+
+                  /* background-color: #121824; */
                 }
               }
             }
