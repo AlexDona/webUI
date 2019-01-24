@@ -97,8 +97,7 @@
                 </p>
                 <p>
                   <span>
-                    {{$t('M.comm_buying')}}
-                    {{$t('M.otc_formStatistics_average')}}:
+                    {{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:
                   </span>
                   <span class="data">
                     {{ buyDayMap.average }}{{ activatedTraderCurrencyCoinsName }}
