@@ -1088,7 +1088,7 @@ export default {
         /*
          * 是否需要图片验证码验证（条件：3次登录失败）
          **/
-        if (this.failureNum > 3) {
+        if (this.failureNum >= 3) {
           // 多次错误登录
           // 显示图片验证码
           this.userInputImageCode = ''
