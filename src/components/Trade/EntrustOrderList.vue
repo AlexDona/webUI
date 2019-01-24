@@ -6,7 +6,10 @@
     <div class="inner-box">
 
       <!--查看更多委单记录-->
-      <div class="view-more">
+      <div
+        class="view-more"
+        v-if="isLogin"
+      >
         <button
           class="cancel-all-entrust"
           :class="{
