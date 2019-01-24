@@ -200,7 +200,7 @@ export default {
       // 返回数据正确的逻辑
       this.loading = false
       if (!data) return false
-      if (data) {
+      if (data.data) {
         let OTCEntrustOrderListData = getNestedData(data, 'data')
         this.OTCEntrustOrderList = getNestedData(OTCEntrustOrderListData, 'list')
         // 分页
@@ -225,11 +225,9 @@ export default {
       })
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data) {
-        this.getOTCEntrustingOrdersList()
-        // 改变全局 委托定单撤单后，更新首页挂单列表状态
-        this.UPDATE_OTC_HOME_LIST_STATUS(true)
-      }
+      this.getOTCEntrustingOrdersList()
+      // 改变全局 委托定单撤单后，更新首页挂单列表状态
+      this.UPDATE_OTC_HOME_LIST_STATUS(true)
     }
   },
   filter: {},

@@ -296,7 +296,7 @@ export default {
       // 返回数据正确的逻辑
       this.loading = false
       if (!data) return false
-      if (data) {
+      if (data.data) {
         let canceledOrderData = getNestedData(data, 'data')
         this.otcCanceledOrderList = getNestedData(canceledOrderData, 'list')
         // 分页

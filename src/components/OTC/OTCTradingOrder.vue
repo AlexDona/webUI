@@ -874,9 +874,7 @@ export default {
       // 返回数据正确的逻辑：重新渲染列表
       console.log(data)
       if (!data) return false
-      if (data) {
-        this.getOTCTradingOrdersList()
-      }
+      this.getOTCTradingOrdersList()
     },
     // 2.0 请求交易中订单列表
     async getOTCTradingOrdersList () {
@@ -896,7 +894,7 @@ export default {
       // 返回数据正确的逻辑
       this.loading = false
       if (!data) return false
-      if (data) {
+      if (data.data) {
         let detailsData = getNestedData(data, 'data')
         this.tradingOrderList = getNestedData(detailsData, 'list')
         // console.log('交易中订单')
@@ -1007,13 +1005,11 @@ export default {
         // 正确逻辑
         this.loading = false
         if (!data) return false
-        if (data) {
-          this.dialogVisibleConfirmPayment = false
-          this.errPWD = ''
-          this.tradePassword = ''
-          // 2再次调用接口刷新列表
-          this.getOTCTradingOrdersList()
-        }
+        this.dialogVisibleConfirmPayment = false
+        this.errPWD = ''
+        this.tradePassword = ''
+        // 2再次调用接口刷新列表
+        this.getOTCTradingOrdersList()
       }
     },
     // 8.0 卖家点击确认收款按钮
@@ -1043,12 +1039,10 @@ export default {
       // 正确逻辑
       this.loading = false
       if (!data) return false
-      if (data) {
-        this.dialogVisibleConfirmReceipt = false
-        this.errPWD = ''
-        this.tradePassword = ''
-        this.getOTCTradingOrdersList()
-      }
+      this.dialogVisibleConfirmReceipt = false
+      this.errPWD = ''
+      this.tradePassword = ''
+      this.getOTCTradingOrdersList()
     },
     // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index) {
@@ -1098,14 +1092,12 @@ export default {
       // 正确逻辑
       this.loading = false
       if (!data) return false
-      if (data) {
-        this.dialogVisibleSubmitComplaint = false
-        this.errPWD = '' // 清空密码错提示
-        this.tradePassword = '' // 清空密码框
-        this.appealTextAreaValue = '' // 清空申诉原因
-        // 再次调用接口刷新列表
-        this.getOTCTradingOrdersList()
-      }
+      this.dialogVisibleSubmitComplaint = false
+      this.errPWD = '' // 清空密码错提示
+      this.tradePassword = '' // 清空密码框
+      this.appealTextAreaValue = '' // 清空申诉原因
+      // 再次调用接口刷新列表
+      this.getOTCTradingOrdersList()
     }
   },
   filter: {},

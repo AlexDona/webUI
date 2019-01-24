@@ -709,7 +709,7 @@ export default {
       // console.log('otc挂单详情')
       // console.log(data)
       if (!data) return false
-      if (data) {
+      if (data.data) {
         let detailsData = getNestedData(data, 'data')
         this.userName = getNestedData(detailsData, 'userName') // 挂单人姓名
         this.successTimes = getNestedData(detailsData, 'successTimes') // 成交次数
@@ -736,7 +736,7 @@ export default {
       console.log(data)
       // 返回数据正确的逻辑:将返回的数据赋值到页面中
       if (!data) return false
-      if (data) {
+      if (data.data) {
         let detailData = getNestedData(data, 'data')
         this.coinName = getNestedData(detailData, 'name') // 最小交易量币种名字（单位）
         this.pointLength = getNestedData(detailData, 'unit') // 每个币种返回的保留小数点位数限制
@@ -779,16 +779,14 @@ export default {
       // 返回数据正确的逻辑
       console.log(data)
       if (!data) return false
-      if (data) {
-        this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
-        this.clearInput(this.onlineTraderStatus) // 清空数据
-        this.querySelectedOrdersDetails()
-        this.queryUserTradeFeeAndCoinInfo()
-        // 改变全局锚点状态
-        this.CHANGE_OTC_ANCHOR_STATUS(true)
-        // 跳转到首页的交易中订单区
-        this.$router.push({path: '/OTCCenter'})
-      }
+      this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
+      this.clearInput(this.onlineTraderStatus) // 清空数据
+      this.querySelectedOrdersDetails()
+      this.queryUserTradeFeeAndCoinInfo()
+      // 改变全局锚点状态
+      this.CHANGE_OTC_ANCHOR_STATUS(true)
+      // 跳转到首页的交易中订单区
+      this.$router.push({path: '/OTCCenter'})
     },
     // 2018129封装提交摘单买入和卖出方法
     // 8交易密码框获得焦点事件

@@ -607,7 +607,7 @@ export default {
       console.log(data)
       // 正确逻辑
       if (!data) return false
-      if (data) {
+      if (data.data) {
         let detailsData = getNestedData(data, 'data')
         this.activatedCoinId = getNestedData(detailsData, 'coinId') // 可用币种id
         this.activatedCurrencyId = getNestedData(detailsData, 'currencyId') // 法币id
@@ -631,7 +631,7 @@ export default {
       console.log('币种详情')
       console.log(data)
       if (!data) return false
-      if (data) {
+      if (data.data) {
         // 返回数据正确的逻辑
         // 1.0 可用币种列表
         let availableCoinListData = getNestedData(data, 'data')
@@ -800,16 +800,14 @@ export default {
       // 返回数据正确的逻辑
       // console.log(data)
       if (!data) return false
-      if (data) {
-        this.publishADTradePwdDialogStatus = false
-        // 改变标识状态为不是跳转来的
-        this.ADManageJumpOrderStatus = 1
-        // 清空数据
-        this.clearMainData()
-        // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
-        this.$router.push({ path: '/OTCCenter' })
-      }
+      this.publishADTradePwdDialogStatus = false
+      // 改变标识状态为不是跳转来的
+      this.ADManageJumpOrderStatus = 1
+      // 清空数据
+      this.clearMainData()
+      // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+      this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+      this.$router.push({ path: '/OTCCenter' })
     },
     // 7.0 交易密码框获得焦点
     tradePasswordFocus () {

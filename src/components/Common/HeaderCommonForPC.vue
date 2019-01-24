@@ -643,7 +643,7 @@ export default{
       let data = await getMerchantAvailableLegalTender()
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data) {
+      if (data.data) {
         this.convertCurrencyList = getNestedData(data, 'data')
         await this.changeActiveTransitionCurrency()
       }

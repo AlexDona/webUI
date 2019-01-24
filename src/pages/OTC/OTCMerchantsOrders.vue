@@ -461,7 +461,7 @@ export default {
       // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data) {
+      if (data.data) {
         this.merchantsOrdersCoinList = getNestedData(data, 'data')
       }
     },
@@ -473,7 +473,7 @@ export default {
       // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data) {
+      if (data.data) {
         this.merchantsOrdersCurrencyList = getNestedData(data, 'data')
       }
     },
@@ -569,7 +569,7 @@ export default {
       console.log(data)
       this.loading = false
       if (!data) return false
-      if (data) {
+      if (data.data) {
         let merchantsOrdersListData = getNestedData(data, 'data')
         this.merchantsOrdersList = getNestedData(merchantsOrdersListData, 'list')
         this.totalPages = getNestedData(merchantsOrdersListData, 'pages') - 0 // 分页

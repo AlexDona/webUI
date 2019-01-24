@@ -569,7 +569,7 @@ export default {
       // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data) {
+      if (data.data) {
         this.traderCoinList = getNestedData(data, 'data')
         // 设置币种默认选中值
         this.activatedTraderCoinId = getNestedData(this.traderCoinList[0], 'coinId')
@@ -596,7 +596,7 @@ export default {
       // console.log(data)
       // 返回数据正确的逻辑 将币种列表赋值
       if (!data) return false
-      if (data) {
+      if (data.data) {
         this.traderCurrencyCoinsList = getNestedData(data, 'data')
         // 设置法币默认选中值
         this.activatedTraderCurrencyCoinsId = getNestedData(this.traderCurrencyCoinsList[0], 'id')
@@ -670,7 +670,7 @@ export default {
       console.log('报表统计的主页面资产信息')
       console.log(data)
       if (!data) return false
-      if (data) {
+      if (data.data) {
         let getData = getNestedData(data, 'data')
         // 法币总资产
         this.totalAssets = getNestedData(getData, 'totalAssets')
@@ -716,7 +716,7 @@ export default {
       console.log('报表列表')
       console.log(data)
       if (!data) return false
-      if (data) {
+      if (data.data) {
         let ordersRevocationData = getNestedData(data, 'data')
         this.orderInfoList = getNestedData(ordersRevocationData, 'list')
         this.totalPages = getNestedData(ordersRevocationData, 'pages') - 0 // 分页
