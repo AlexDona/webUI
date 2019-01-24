@@ -38,7 +38,7 @@
           <span
             class="font-size12 theme-color"
             v-show="middleTopData.last&&activeConvertCurrencyObj.symbol&&currencyRateList[middleTopData.area]"
-          >≈ {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[middleTopData.area]-0)*(middleTopData.last-0))}}</span>
+          >≈ {{activeConvertCurrencyObj.symbol}}{{$keep2Num((currencyRateList[middleTopData.area]-0)*(middleTopData.last-0))}}</span>
         </div>
       </div>
       <!--涨跌-->
@@ -101,7 +101,7 @@
               class="font-size14 theme-color"
               v-show="middleTopData.vol24hour"
             >
-              {{formatCount(middleTopData.vol24hour)}}
+              {{$formatCount(middleTopData.vol24hour)}}
             </span>
         </div>
       </div>
@@ -110,8 +110,6 @@
 </template>
 <script>
 import {mapState} from 'vuex'
-import {keep2Num} from '../../utils'
-import {formatCount} from '../../utils/commonFunc'
 
 export default {
   components: {},
@@ -125,14 +123,6 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 截取2位小数
-    keep2Num (number) {
-      return keep2Num(number)
-    },
-    // 成交量格式化
-    formatCount (targetNum) {
-      return formatCount(targetNum)
-    }
   },
   filter: {},
   computed: {

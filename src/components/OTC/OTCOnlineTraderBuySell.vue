@@ -66,7 +66,7 @@
                   {{$t('M.otc_index_givePrice')}}：
                 </span>
                 <span class="details-data">
-                  {{filterNumber(price)}}{{currencyName}}
+                  {{$scientificToNumber(price)}}{{currencyName}}
                 </span>
               </div>
               <!-- 限额 -->
@@ -76,7 +76,7 @@
                   {{$t('M.otc_index_priceLimit')}}：
                 </span>
                 <span class="details-data">
-                  {{filterNumber(minCount)}}~{{filterNumber(maxCount)}}{{currencyName}}
+                  {{$scientificToNumber(minCount)}}~{{$scientificToNumber(maxCount)}}{{currencyName}}
                 </span>
               </div>
               <!-- 剩余数量 -->
@@ -86,7 +86,7 @@
                   {{$t('M.otc_index_reduceQuantity')}}：
                 </span>
                 <span class="details-data">
-                  {{filterNumber(remainingNum)}}{{coinName}}
+                  {{$scientificToNumber(remainingNum)}}{{coinName}}
                 </span>
               </div>
               <!-- 付款方式 -->
@@ -369,8 +369,7 @@ import {
   timeFilter,
   formatNumberInput,
   amendPrecision,
-  cutOutPointLength,
-  scientificToNumber
+  cutOutPointLength
 } from '../../utils'
 import {
   pickOrdersToBuy,
@@ -492,14 +491,10 @@ export default {
       'CHANGE_OTC_ANCHOR_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
-    // 0.2 科学计数法转换
-    filterNumber (num) {
-      return scientificToNumber(num)
-    },
     // 0.3 充币按钮跳转
     chargeMoney () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
-      this.$router.push({path: '/PersonalCenter'})
+      this.$goToPage('/PersonalCenter')
     },
     // 0.4 输入限制
     formatInput (ref, pointLength) {
@@ -787,7 +782,7 @@ export default {
         // 改变全局锚点状态
         this.CHANGE_OTC_ANCHOR_STATUS(true)
         // 跳转到首页的交易中订单区
-        this.$router.push({path: '/OTCCenter'})
+        this.$goToPage('/OTCCenter')
       }
     },
     // 2018129封装提交摘单买入和卖出方法

@@ -120,14 +120,14 @@
             </dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage('/ServiceAndProtocol','APIDocument')"
+              @click="$footerJump('/ServiceAndProtocol','APIDocument')"
             >
               <!--API文档-->
               {{$t('M.comm_api_doc')}}
             </dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage('/ServiceAndProtocol','CurrencyInformation')"
+              @click="$footerJump('/ServiceAndProtocol','CurrencyInformation')"
             >
               <!--币种资料-->
               {{$t('M.comm_currency_info')}}
@@ -148,7 +148,7 @@
             </dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage('/NewsAndNoticeCenter','notice')"
+              @click="$footerJump('/NewsAndNoticeCenter','notice')"
             >
               <!--新闻公告-->
               {{$t('M.comm_news_and_notice')}}
@@ -161,35 +161,35 @@
             </dt>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage('/ServiceAndProtocol','UserProtocol')"
+              @click="$footerJump('/ServiceAndProtocol','UserProtocol')"
             >
               <!--用户协议-->
               {{$t('M.common_footer_user_agreement')}}
             </dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage('/ServiceAndProtocol','PrivacyClause')"
+              @click="$footerJump('/ServiceAndProtocol','PrivacyClause')"
             >
               <!--隐私条款-->
               {{$t('M.common_footer_privacy_policy')}}
             </dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage('/ServiceAndProtocol','LegislationExplain')"
+              @click="$footerJump('/ServiceAndProtocol','LegislationExplain')"
             >
               <!--法律声明-->
               {{$t('M.common_footer_legal_notice')}}
             </dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage('/ServiceAndProtocol','Rate')"
+              @click="$footerJump('/ServiceAndProtocol','Rate')"
             >
               <!--费率-->
               {{$t('M.comm_rate1')}}
             </dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage('/ServiceAndProtocol','TradingWarning')"
+              @click="$footerJump('/ServiceAndProtocol','TradingWarning')"
             >
               <!--交易须知-->
               {{$t('M.otc_index_tradeKnow')}}
@@ -224,8 +224,6 @@
 </template>
 <script>
 import {
-  // returnAjaxMsg,
-  jumpToOtherPageForFooter,
   getNestedData
 } from '../../utils/commonFunc'
 import Iconfont from '../Common/IconFontCommon'
@@ -294,9 +292,6 @@ export default {
           this.isShowQQ = data
           break
       }
-    },
-    jumpToOtherPage (router, activeName) {
-      jumpToOtherPageForFooter(router, activeName, this)
     }
   },
   filter: {},

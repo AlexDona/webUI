@@ -451,7 +451,6 @@ import SliderBar from '../Common/SliderBar'
 import {
   formatNumberInput,
   getRefValue,
-  keep2Num,
   cutOutPointLength
 } from '../../utils'
 import {
@@ -661,26 +660,22 @@ export default {
     cancelAddEntrust () {
       this.isShowPayPassword = false
     },
-    // 截取2位小数
-    keep2Num (number) {
-      return keep2Num(number)
-    },
     // 跳转
     jumpToOtherPage (router, activeName) {
       this.CHANGE_FOOTER_ACTIVE_NAME({
         activeName,
         type: router
       })
-      this.$router.push({path: router})
+      this.$goToPage(router)
     },
     // 设置转换后的价格
     setTransformPrice (type, targetNum) {
       switch (type) {
         case 'limit-buy':
-          this.limitExchange.transformBuyPrice = keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
+          this.limitExchange.transformBuyPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
           break
         case 'limit-sell':
-          this.limitExchange.transformSellPrice = keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
+          this.limitExchange.transformSellPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
           break
       }
     },
@@ -909,7 +904,7 @@ export default {
     // 新增委单
     async addEntrust () {
       if (!this.isLogin) {
-        this.$router.push('/login')
+        this.$goToPage('/login')
         return false
       }
       if (!this.loginStep1Info.userInfo.payPassword) {
@@ -918,7 +913,7 @@ export default {
           type: 'error',
           message: this.$t('M.comm_please_set_up') + this.$t('M.comm_password') + this.$t('M.trade_exchange_after_operation')
         })
-        this.$router.push({path: '/TransactionPassword'})
+        this.$goToPage('/TransactionPassword')
         return false
       }
       let params = {

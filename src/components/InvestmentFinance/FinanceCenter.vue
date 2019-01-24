@@ -715,7 +715,7 @@ export default {
           })
         }
       } else {
-        this.$router.push({path: '/login'})
+        this.$goToPage('/login')
         return false
       }
     },
@@ -738,7 +738,7 @@ export default {
           })
         }
       } else {
-        this.$router.push({path: '/login'})
+        this.$goToPage('/login')
         return false
       }
     }, */

@@ -106,23 +106,23 @@
                   </li>
                   <!--价格-->
                   <li class="td price">
-                    {{scientificToNumber(item.price-0)}}
+                    {{$scientificToNumber(item.price-0)}}
                   </li>
                   <!--数量-->
                   <li class="td count">
-                    {{scientificToNumber(item.count-0)}}
+                    {{$scientificToNumber(item.count-0)}}
                   </li>
                   <!--委托总额-->
                   <li class="td entrust">
-                    {{scientificToNumber(item.amount-0)}}
+                    {{$scientificToNumber(item.amount-0)}}
                   </li>
                   <!--已成交量-->
                   <li class="td already">
-                    {{scientificToNumber(item.completeCount-0)}}
+                    {{$scientificToNumber(item.completeCount-0)}}
                   </li>
                   <!--未成交量-->
                   <li class="td already">
-                    {{scientificToNumber(item.leftCount-0)}}
+                    {{$scientificToNumber(item.leftCount-0)}}
                   </li>
                   <!--操作-->
                   <li class="td todos">
@@ -227,19 +227,19 @@
                   </li>
                   <!--价格-->
                   <li class="td price">
-                    {{scientificToNumber(item.price-0)}}
+                    {{$scientificToNumber(item.price-0)}}
                   </li>
                   <!--委托量-->
                   <li class="td count">
-                    {{scientificToNumber(item.count-0)}}
+                    {{$scientificToNumber(item.count-0)}}
                   </li>
                   <!--成交量-->
                   <li class="td price">
-                    {{scientificToNumber(item.completeCount-0)}}
+                    {{$scientificToNumber(item.completeCount-0)}}
                   </li>
                   <!--成交均价-->
                   <li class="td price">
-                    {{scientificToNumber(item.completePrice-0)}}
+                    {{$scientificToNumber(item.completePrice-0)}}
                   </li>
                   <!--状态-->
                   <li class="td status">
@@ -273,10 +273,6 @@
   </div>
 </template>
 <script>
-import {
-  // timeFilter,
-  scientificToNumber
-} from '../../utils'
 import {
   getMyEntrust,
   getHistoryEntrust,
@@ -355,13 +351,10 @@ export default {
           break
       }
     },
-    scientificToNumber (num) {
-      return scientificToNumber(num)
-    },
     // 跳转到个人中心
     jumpToPersonal () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('coin-orders')
-      this.$router.push({path: '/PersonalCenter'})
+      this.$goToPage('/PersonalCenter')
     },
     /**
      *撤销委单

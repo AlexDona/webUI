@@ -725,7 +725,7 @@ export default {
     // console.log(userAgentList)
     document.getElementsByTagName('body')[0].style.zoom = 1
     if (this.isLogin) {
-      this.$router.push({path: '/home'})
+      this.$goToPage('/home')
     }
     require('../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
@@ -782,9 +782,9 @@ export default {
         !this.routerTo.startsWith('/ForgetPassword') &&
         !this.routerTo.startsWith('/nofind404')
       ) {
-        this.$router.push({path: this.routerTo})
+        this.$goToPage(this.routerTo)
       } else {
-        this.$router.push({path: '/home'})
+        this.$goToPage('/home')
       }
     },
     // 返回登录

@@ -132,7 +132,7 @@ export default {
       this.CHANGE_NEWS_TYPE_ACTIVE_NAME({
         activeName: item.id
       })
-      this.$router.push('/NewsAndNoticeCenter')
+      this.$goToPage('/NewsAndNoticeCenter')
     },
     async changeNewDetailByLanguage () {
       let params = {

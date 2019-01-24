@@ -239,8 +239,9 @@ export const getCollectionList = async (callback) => {
   callback(data)
 }
 // 协议跳转
-export const jumpToOtherPageForFooter = (router, activeName, that) => {
-  that.$router.push({path: router})
+export const jumpToOtherPageForFooter = (router, activeName) => {
+  const VUE = Vue._installedPlugins[3].vm
+  VUE.$router.push({path: router})
   store.commit('CHANGE_FOOTER_ACTIVE_NAME', {
     activeName,
     type: router

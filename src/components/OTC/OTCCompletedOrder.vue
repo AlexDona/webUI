@@ -217,7 +217,7 @@
             width="118"
           >
             <template slot-scope="s">
-              {{ filterNumber(s.row.price) }}({{ s.row.currencyName }})
+              {{ $scientificToNumber(s.row.price) }}({{ s.row.currencyName }})
             </template>
           </el-table-column>
           <!-- 数量 -->
@@ -225,7 +225,7 @@
             :label="$t('M.comm_count')"
           >
             <template slot-scope="s">
-              {{ filterNumber(s.row.pickCount) }}({{ s.row.coinName }})
+              {{ $scientificToNumber(s.row.pickCount) }}({{ s.row.coinName }})
             </template>
           </el-table-column>
           <!-- 总金额 -->
@@ -262,7 +262,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {timeFilter, scientificToNumber} from '../../utils'
+import {timeFilter} from '../../utils'
 import {getOTCOrdersThreeDay} from '../../utils/api/OTC'
 import {
   // returnAjaxMsg,
@@ -297,10 +297,6 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 0.1 科学计数法转换
-    filterNumber (num) {
-      return scientificToNumber(num)
-    },
     // 0.2 分页改变事件
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum

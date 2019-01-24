@@ -156,8 +156,6 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
-import {scientificToNumber} from '../../../utils'
-// import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
   },
@@ -235,7 +233,7 @@ export default {
       theme: store => store.common.theme
     }),
     accountCountFilter () {
-      return scientificToNumber(this.accountCount)
+      return this.$scientificToNumber(this.accountCount)
     }
   },
   watch: {

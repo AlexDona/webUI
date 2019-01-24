@@ -74,11 +74,11 @@
           </span>
           <!-- 价格 -->
           <span class="item">
-            {{filterNumber(item.price)}}({{item.currencyName}})
+            {{$scientificToNumber(item.price)}}({{item.currencyName}})
           </span>
           <!-- 数量 -->
           <span class="item">
-            {{filterNumber(item.pickCount)}}({{item.coinName}})
+            {{$scientificToNumber(item.pickCount)}}({{item.coinName}})
           </span>
           <!-- 总金额 -->
           <span class="item">
@@ -234,7 +234,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {timeFilter, scientificToNumber} from '../../utils'
+import {timeFilter} from '../../utils'
 import {mapState} from 'vuex'
 import {getOTCOrdersThreeDay} from '../../utils/api/OTC'
 import {
@@ -270,10 +270,6 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 0.0 科学计数法转换
-    filterNumber (num) {
-      return scientificToNumber(num)
-    },
     // 1.0 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum

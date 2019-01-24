@@ -252,7 +252,7 @@ export default {
     returnSuperior () {
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
-      this.$router.push({path: '/PersonalCenter'})
+      this.$goToPage('/PersonalCenter')
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -374,7 +374,7 @@ export default {
         if (this.successCountDown === 0) {
           this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
           this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
-          this.$router.push({path: '/PersonalCenter'})
+          this.$goToPage('/PersonalCenter')
         }
         this.successCountDown--
       }, 1000)

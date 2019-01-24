@@ -456,7 +456,7 @@ export default {
       } else {
         this.activeStepNumber = 4
         setTimeout(() => {
-          this.$router.push('/login')
+          this.$goToPage('/login')
         }, 3000)
       }
     },

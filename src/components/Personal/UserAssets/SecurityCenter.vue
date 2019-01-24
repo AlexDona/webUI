@@ -785,19 +785,19 @@ export default {
     setShowStatusSecurity (val) {
       switch (val) {
         case 'email':
-          this.$router.push({path: '/SecureEmail'})
+          this.$goToPage('/SecureEmail')
           break
         case 'phone':
-          this.$router.push({path: '/SecurePhone'})
+          this.$goToPage('/SecurePhone')
           break
         case 'google':
-          this.$router.push({path: '/GoogleBinding'})
+          this.$goToPage('/GoogleBinding')
           break
         case 'transaction-password':
-          this.$router.push({path: '/TransactionPassword'})
+          this.$goToPage('/TransactionPassword')
           break
         case 'login-password':
-          this.$router.push({path: '/LoginPassword'})
+          this.$goToPage('/LoginPassword')
           break
       }
     },
