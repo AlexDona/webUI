@@ -275,7 +275,15 @@
               <template slot-scope = "s">
                 <div>
                   <!--邀请奖励-->
-                  {{ $t('M.comm_user_invite') }}{{ $t('M.user_invite_award') }}
+                  <!--{{ $t('M.comm_user_invite') }}{{ $t('M.user_invite_award') }}-->
+                  <!-- 直接奖励-->
+                  <span v-if="generalizeValue==='first'">
+                    {{ $t('M.user_direct_reward') }}
+                  </span>
+                  <!--间接奖励-->
+                  <span v-else>
+                    {{ $t('M.user_indirect_reward') }}
+                  </span>
                 </div>
               </template>
             </el-table-column>

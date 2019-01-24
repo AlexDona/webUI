@@ -141,6 +141,8 @@ export const personal = {
   'user_invite_have_obtained': '已获得佣金折合',
   'user_invite_statistics': '统计',
   'user_invite_direct': '直接推广',
+  'user_direct_reward': '直接奖励',
+  'user_indirect_reward': '间接奖励',
   'user_invite_indirect': '间接推广',
   'user_invite_audit': '待审核',
   'user_invite_already_passed': '已通过',
