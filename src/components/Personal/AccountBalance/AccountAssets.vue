@@ -654,11 +654,6 @@ export default {
       // 每行数据币种名称
       this.currencyName = name
 
-      // 调用充币地址方法
-      if (!await this.fillingCurrencyAddress()) return false
-      // 显示充值框
-      this.chargeDialogVisible = true
-
       // 循环列表 隐藏充值或提现框
       this.withdrawDepositList.forEach((item) => {
         item.rechargeIsShow = false
@@ -667,6 +662,7 @@ export default {
         // 公信宝类币种提币默认显示框
         item.provideWithdrawDepositIsShow = false
       })
+
       if (!this.withdrawDepositList[index].rechargeIsShow) {
         // 显示充值框
         this.withdrawDepositList[index].rechargeIsShow = true
@@ -679,6 +675,8 @@ export default {
           this.withdrawDepositList[index].provideWithdrawDepositIsShow = false
         }
       }
+
+      this.fillingCurrencyAddress()
     },
     // 重置提现表单内容
     resetWithdrawFormContent (index) {
@@ -724,11 +722,8 @@ export default {
 
       // 隐藏充值弹窗
       this.withdrawDepositList[index].rechargeIsShow = false
-      if (!await this.queryWithdrawalAddressList()) return false
-      // 调用充币地址方法
-
-      // 调用手续费信息
-      if (!await this.getWithdrawalInformation(index)) return false
+      await this.queryWithdrawalAddressList()
+      await this.getWithdrawalInformation(index)
       this.getSecurityCenter()
     },
     // 显示交易对跳转币种信息
@@ -872,6 +867,7 @@ export default {
       let data = await inquireRechargeAddressList({
         coinId: this.chargeMoneyAddressId
       })
+      console.log(data)
       if (!data) return false
       // 获取充币地址
       this.chargeMoneyAddress = getNestedData(data, 'data.userRechargeAddress.address')
@@ -882,6 +878,7 @@ export default {
       // console.log(data.data.data.userRechargeAddress.tag)
       this.minRechargeAmount = getNestedData(data, 'data.userRechargeAddress.minRechargeAmount')
       this.successCount = getNestedData(data, 'data.userRechargeAddress.successCount')
+      return true
     },
     // 当前提币地址改变回调
     changeWithdrawAddress ({activeWithdrawDepositAddress}) {
