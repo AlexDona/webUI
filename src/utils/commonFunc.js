@@ -292,7 +292,13 @@ export const formatCount = (targetNum) => {
       return newNum
   }
 }
-// 获取嵌套数据
+
+/**
+ * 获取嵌套数据
+ * @param data
+ * @param index
+ * @returns {*}
+ */
 export const getNestedData = (data, index) => {
   return _.get(data, index)
 }
@@ -378,7 +384,13 @@ String.prototype.format = function (args) {
   }
   return result
 }
-// 接口统一处理
+/**
+ * 接口统一处理
+ * @param request
+ * @param noTip
+ * @param errorTip
+ * @returns {Promise<*>}
+ */
 export const handleRequest = async (request, noTip, errorTip) => {
   const DATA = await request()
   if (!returnAjaxMsg(DATA, Vue, noTip, errorTip)) {
@@ -387,7 +399,12 @@ export const handleRequest = async (request, noTip, errorTip) => {
     return getNestedData(DATA, 'data') || {}
   }
 }
-
+/**
+ * http => https
+ * @param str
+ * @returns {*}
+ */
 export const replaceHTTPUrl = (str) => {
+  if (!str) return false
   return str.startsWith('http://') ? str.replace('http://', 'https://') : str
 }

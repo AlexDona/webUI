@@ -22,7 +22,10 @@
     <!--表格内容-->
     <div
       class="right"
-      :style="'height:'+(50*(item.content.length||1)+108)+'px'"
+      :style="{
+        'height':`${+(50*(item.content.length||1)+108)}px`,
+        'max-height':'560px'
+      }"
     >
       <el-table
         class="cursor-pointer"
