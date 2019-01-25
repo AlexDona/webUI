@@ -1,5 +1,11 @@
 /* 全局修改element样式 */
 
+/* 解决单选按钮组双击显示蓝色边框阴影的问题 */
+.el-radio-button:focus:not(.is-focus):not(:active) {
+  /* box-shadow: 0 0 2px 2px #409eff; 这是bug存在的现象去掉就行了 */
+  box-shadow: none;
+}
+
 /* table 底部边框 */
 .el-table--border::after,
 .el-table--group::after,
