@@ -161,7 +161,7 @@ import {
   returnAjaxMsg,
   getAccountPaymentTerm,
   getNestedData,
-  replaceHTTPUrl
+  http2https
 } from '../../../utils/commonFunc'
 import {
   statusCardSettings,
@@ -362,8 +362,8 @@ export default {
       }
       if (qrcode) {
         // 修改时带回支付宝收款码
-        this.dialogImageHandUrl1 = replaceHTTPUrl(qrcode)
-        this.alipayImgUrl = replaceHTTPUrl(qrcode)
+        this.dialogImageHandUrl1 = http2https(qrcode)
+        this.alipayImgUrl = http2https(qrcode)
       }
       if (id) {
         // 修改时带回类id

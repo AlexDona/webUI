@@ -138,7 +138,7 @@
                 'down':innerItem.chg<0
               }"
               >
-              {{innerItem.last}}
+              {{$scientificToNumber(innerItem.last)}}
             </span>
             <span
               class="rose text-align-r"

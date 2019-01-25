@@ -160,7 +160,7 @@ import {
   returnAjaxMsg,
   getAccountPaymentTerm,
   getNestedData,
-  replaceHTTPUrl
+  http2https
 } from '../../../utils/commonFunc'
 import {
   statusCardSettings,
@@ -362,8 +362,8 @@ export default {
       }
       if (qrcode) {
         // 修改时带回微信收款码
-        this.dialogImageHandUrl1 = replaceHTTPUrl(qrcode)
-        this.wechatImgUrl = replaceHTTPUrl(qrcode)
+        this.dialogImageHandUrl1 = http2https(qrcode)
+        this.wechatImgUrl = http2https(qrcode)
       }
       if (id) {
         this.paymentTypeId = id

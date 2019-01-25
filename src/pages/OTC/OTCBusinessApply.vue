@@ -254,7 +254,8 @@ import {
 import { downloadFileWithUserDefined } from '../../utils/'
 import {
   // returnAjaxMsg,
-  getNestedData
+  getNestedData,
+  http2https
 } from '../../utils/commonFunc'
 import {
   mapMutations,
@@ -365,7 +366,7 @@ export default {
         this.successTimes = getNestedData(getData, 'successTimes')
         this.coinName = getNestedData(getData, 'coinName')
         this.count = getNestedData(getData, 'count')
-        this.downLoadUrl = getNestedData(getData, 'downLoadUrl')
+        this.downLoadUrl = http2https(getNestedData(getData, 'downLoadUrl'))
         // 返回数据的状态 1 表示展示初次进入
         if (getData.status == 1) {
           this.applyStatus = 1

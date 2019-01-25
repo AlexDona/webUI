@@ -22,7 +22,7 @@ import {
   addFavicon,
   getNestedData,
   changeLanguage,
-  replaceHTTPUrl
+  http2https
 } from '../../utils/commonFunc'
 // import store from "../index";
 export default {
@@ -84,11 +84,11 @@ export default {
     console.log(footerInfo1.title)
     // favicon 添加
     addFavicon(
-      replaceHTTPUrl(getNestedData(footerInfo1, 'headTitleLogo')),
+      http2https(getNestedData(footerInfo1, 'headTitleLogo')),
       getNestedData(footerInfo1, 'title')
     )
     commit('SET_LOGO_URL', {
-      logoSrc: replaceHTTPUrl(getNestedData(footerInfo1, 'headLogo')),
+      logoSrc: http2https(getNestedData(footerInfo1, 'headLogo')),
       title: getNestedData(footerInfo1, 'title')
     })
   }

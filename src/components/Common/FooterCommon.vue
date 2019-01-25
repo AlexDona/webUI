@@ -16,7 +16,7 @@
           <div class="logo"
             v-if="footerInfo1.logo"
           >
-            <img :src="replaceHTTPUrl(footerInfo1.logo)">
+            <img :src="http2https(footerInfo1.logo)">
           </div>
           <!--简介-->
           <div
@@ -33,7 +33,7 @@
               :key="index"
             >
               <a
-                :href="replaceHTTPUrl(item.ercodeSrc)"
+                :href="http2https(item.ercodeSrc)"
                 class="mini-icon"
                 v-show="index!==2 && index!==3"
               >
@@ -209,11 +209,11 @@
           >
             <a
               class="link-item"
-              :href="replaceHTTPUrl(item.link)"
+              :href="item.link"
               target="_blank"
             >
               <img
-                :src="replaceHTTPUrl(item.logo)"
+                :src="http2https(item.logo)"
               >
             </a>
           </li>
@@ -224,7 +224,8 @@
 </template>
 <script>
 import {
-  getNestedData
+  getNestedData,
+  http2https
 } from '../../utils/commonFunc'
 import Iconfont from '../Common/IconFontCommon'
 import {
@@ -283,8 +284,8 @@ export default {
     ...mapMutations([
       'CHANGE_FOOTER_ACTIVE_NAME'
     ]),
-    replaceHTTPUrl (str) {
-      return replaceHTTPUrl(str)
+    http2https (str) {
+      return http2https(str)
     },
     toggleShowStatus (type, data) {
       switch (type) {

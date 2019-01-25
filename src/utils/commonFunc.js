@@ -405,7 +405,7 @@ export const handleRequest = async (request, noTip, errorTip) => {
  * @param str
  * @returns {*}
  */
-export const replaceHTTPUrl = (str) => {
+export const http2https = (str) => {
   if (!str) return false
   return str.startsWith('http://') ? str.replace('http://', 'https://') : str
 }

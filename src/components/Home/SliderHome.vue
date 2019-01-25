@@ -22,7 +22,7 @@ import Slider from 'vue-concise-slider'// 引入slider组件
 import {getBanner} from '../../utils/api/home'
 import {
   getNestedData,
-  replaceHTTPUrl
+  http2https
 } from '../../utils/commonFunc'
 import {
   mapState,
@@ -97,9 +97,9 @@ export default {
             props: ['item', 'sliderinit', 'pages'],
             data () {
               return {
-                miniImg: replaceHTTPUrl(item.url),
+                miniImg: http2https(item.url),
                 // background: `${require('../../assets/develop/banner-bg.png')}`
-                background: replaceHTTPUrl(item.bigUrl)
+                background: http2https(item.bigUrl)
               }
             },
             mounted () {
@@ -136,7 +136,7 @@ export default {
             },
             template: `<a
                          style="width: 100%;height:100%"
-                         href="${replaceHTTPUrl(item.redirectUrl)}"
+                         href="${http2https(item.redirectUrl)}"
                    >
                      <img
                       style="width: 100%;height:100%"

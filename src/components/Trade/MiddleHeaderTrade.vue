@@ -34,7 +34,7 @@
               'up':middleTopData.chg>0,
               'down':middleTopData.chg<0
             }"
-          >{{middleTopData.last}}</span>
+          >{{$scientificToNumber(middleTopData.last)}}</span>
           <span
             class="font-size12 theme-color"
             v-show="middleTopData.last&&activeConvertCurrencyObj.symbol&&currencyRateList[middleTopData.area]"
@@ -56,7 +56,7 @@
               'up':middleTopData.chg>0,
               'down':middleTopData.chg<0
             }"
-          >{{middleTopData.chg}}%</span>
+          >{{$scientificToNumber(middleTopData.chg)}}%</span>
         </div>
       </div>
       <div class="item">
@@ -73,7 +73,7 @@
               'up':middleTopData.chg>0,
               'down':middleTopData.chg<0
             }"
-          >{{middleTopData.high}}</span>
+          >{{$scientificToNumber(middleTopData.high)}}</span>
         </div>
       </div>
       <div class="item">
@@ -86,7 +86,7 @@
         <div class="bottom">
           <span
             class="font-size14 theme-color"
-          >{{middleTopData.low}}</span>
+          >{{$scientificToNumber(middleTopData.low)}}</span>
         </div>
       </div>
       <div class="item">

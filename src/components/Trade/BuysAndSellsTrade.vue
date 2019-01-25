@@ -90,9 +90,9 @@
                         </span><span
                         class="price text-align-l sell-bg"
                       >
-                        {{item.price}}
+                        {{$scientificToNumber(item.price)}}
                       </span><span class="amount text-align-r">
-                        {{item.amount}}
+                        {{$scientificToNumber(item.amount)}}
                       </span><span class="total text-align-r">
                         {{item.total}}
                       </span><!--宽度条--><i
@@ -121,11 +121,11 @@
                         <!--买-->
                         {{ $t('M.comm_bid') }} {{item.index}}
                       </span><span class="price text-align-l buy-bg">
-                        {{item.price}}
+                        {{$scientificToNumber(item.price)}}
                       </span><span class="amount text-align-r">
-                        {{item.amount}}
+                        {{$scientificToNumber(item.amount)}}
                       </span><span class="total text-align-r">
-                        {{item.total}}
+                        {{$scientificToNumber(item.total)}}
                       </span><!--宽度条--><i
                           class="color-buy-bg"
                           :style="`width:${item.amount/buysAndSellsList.buys.highestAmount*100}%`"

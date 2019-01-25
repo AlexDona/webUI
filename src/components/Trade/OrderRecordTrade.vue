@@ -42,7 +42,7 @@
                         buy:s.row.direction==='BUY',
                         sell:s.row.direction==='SELL'}"
                     >
-                      {{s.row.price}}
+                      {{$scientificToNumber(s.row.price)}}
                     </span>
                   </template>
                 </el-table-column>
@@ -52,7 +52,7 @@
                 >
                   <template slot-scope="s">
                     <span class="text-align-r font-size12">
-                      {{s.row.amount}}
+                      {{$scientificToNumber(s.row.amount)}}
                     </span>
                   </template>
                 </el-table-column>
