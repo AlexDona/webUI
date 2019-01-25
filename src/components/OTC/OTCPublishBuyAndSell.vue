@@ -922,19 +922,21 @@ export default {
       const data = await addOTCPutUpOrders(param)
       // 返回数据正确的逻辑
       if (!data) return false
-      // 关闭交易密码框
-      this.publishOrderTradePwdDialogStatus = false
-      // 清空表单数据
-      this.clearInputData()
-      // 下单成功跳转到首页挂单列表去
-      // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-      this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
-      this.$router.push({ path: '/OTCCenter' })
+      if (data) {
+        // 关闭交易密码框
+        this.publishOrderTradePwdDialogStatus = false
+        // 清空表单数据
+        this.clearInputData()
+        // 下单成功跳转到首页挂单列表去
+        // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+        this.$goToPage('/OTCCenter')
+      }
     },
     // 10.0 充币按钮跳转
     chargeMoney () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
-      this.$router.push({path: '/PersonalCenter'})
+      this.$goToPage('/PersonalCenter')
     }
   },
   filter: {},

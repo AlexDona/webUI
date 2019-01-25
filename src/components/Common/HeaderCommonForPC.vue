@@ -504,7 +504,7 @@ export default{
     },
     confirmApply () {
       this.showApplyMerchantStatus = false
-      this.$router.push({path: '/OTCBusinessApply'})
+      this.$goToPage('/OTCBusinessApply')
       // location.reload() // 重新刷新页面
       // 任增加
       this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(true)
@@ -550,9 +550,9 @@ export default{
     // 开启vip
     stateOpenVip () {
       if (this.localPayPwdSet || this.userInfo.payPassword) {
-        this.$router.push({path: '/VipMainContent'})
+        this.$goToPage('/VipMainContent')
       } else {
-        this.$router.push({path: '/TransactionPassword'})
+        this.$goToPage('/TransactionPassword')
       }
     },
     // 用户跳转到指定页面
@@ -585,9 +585,9 @@ export default{
             this.setPersonalJump('api-management')
             break
         }
-        this.$router.push({path: '/PersonalCenter'})
+        this.$goToPage('/PersonalCenter')
       } else {
-        this.$router.push({path: '/TransactionPassword'})
+        this.$goToPage('/TransactionPassword')
       }
     },
     // 用户登出
@@ -595,7 +595,7 @@ export default{
       const data = await userLoginOut()
       if (!data) return false
       this.USER_LOGOUT()
-      this.$router.push({path: '/home'})
+      this.$goToPage('/home')
     },
     // 显示状态切换（子导航）
     toggleShowSubNavBox (item, status) {

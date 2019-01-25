@@ -5,10 +5,12 @@ import 'babel-polyfill'
 import storeCreater from './vuex'
 import '../static/js/rem'
 import VueLazyLoad from 'vue-lazyload'
+import Mixin from './mixins'
 
 Vue.use(VueLazyLoad, {
   loading: require('./assets/develop/loading.svg')
 })
+Vue.mixin(Mixin)
 
 const store = storeCreater()
 const router = routerCreator()

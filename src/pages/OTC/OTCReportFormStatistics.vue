@@ -62,9 +62,9 @@
           class="content font-size18"
         >
           <!-- 币种总资产 -->
-          <span>{{filterNumber(total)}}&nbsp;{{activatedTraderCoinName}}</span>
+          <span>{{$scientificToNumber(total)}}&nbsp;{{activatedTraderCoinName}}</span>
           <!-- 法币总资产 -->
-          <span v-show="totalAssets">≈&nbsp;{{filterNumber(totalAssets)}}&nbsp;{{activatedTraderCurrencyCoinsName}}</span>
+          <span v-show="totalAssets">≈&nbsp;{{$scientificToNumber(totalAssets)}}&nbsp;{{activatedTraderCurrencyCoinsName}}</span>
         </div>
       </div>
       <!-- 2.4 购买和销售 -->
@@ -426,7 +426,7 @@
                 :label = "$t('M.comm_count')"
               >
                 <template slot-scope = "s">
-                  <div>{{ filterNumber(s.row.pickCount) }}</div>
+                  <div>{{ $scientificToNumber(s.row.pickCount) }}</div>
                 </template>
               </el-table-column>
               <!-- 单价 -->
@@ -434,7 +434,7 @@
                 :label = "$t('M.otc_index_UnitPrice')"
               >
                 <template slot-scope = "s">
-                  <div>{{ filterNumber(s.row.price) }}</div>
+                  <div>{{ $scientificToNumber(s.row.price) }}</div>
                 </template>
               </el-table-column>
               <!-- 总金额 -->
@@ -442,7 +442,7 @@
                 :label = "$t('M.otc_canceled_total ')"
               >
                 <template slot-scope = "s">
-                  <div>{{ filterNumber(s.row.payAmount) }}</div>
+                  <div>{{ $scientificToNumber(s.row.payAmount) }}</div>
                 </template>
               </el-table-column>
             </el-table>
@@ -473,7 +473,7 @@ import {
   getOTCReportFormStatisticsData
 } from '../../utils/api/OTC'
 import IconFontCommon from '../../components/Common/IconFontCommon'
-import {timeFilter, scientificToNumber} from '../../utils'
+import {timeFilter} from '../../utils'
 import {
   // returnAjaxMsg,
   getNestedData
@@ -549,10 +549,6 @@ export default {
   methods: {
     ...mapMutations([
     ]),
-    // 科学计数法转换
-    filterNumber (num) {
-      return scientificToNumber(num)
-    },
     // 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum

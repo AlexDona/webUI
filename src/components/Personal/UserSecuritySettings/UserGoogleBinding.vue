@@ -244,7 +244,7 @@ export default {
     returnSuperior () {
       this.CHANGE_REF_SECURITY_CENTER_INFO(true)
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-      this.$router.push({path: '/PersonalCenter'})
+      this.$goToPage('/PersonalCenter')
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {

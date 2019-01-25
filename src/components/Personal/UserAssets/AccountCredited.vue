@@ -510,11 +510,11 @@ export default {
     authenticationJump () {
       this.centerModelWarning = false
       if (!this.realUserInfo.payPassword) {
-        this.$router.push({path: '/TransactionPassword'})
+        this.$goToPage('/TransactionPassword')
       }
       if (!this.realUserInfo.realname) {
         this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
-        this.$router.push({path: '/PersonalCenter'})
+        this.$goToPage('/PersonalCenter')
       }
     },
     // 路由跳转对应组件
@@ -527,19 +527,19 @@ export default {
       }
       switch (val) {
         case 'bank':
-          this.$router.push({path: '/AddBankCard'})
+          this.$goToPage('/AddBankCard')
           break
         case 'weChat':
-          this.$router.push({path: '/AddWeChat'})
+          this.$goToPage('/AddWeChat')
           break
         case 'alipay':
-          this.$router.push({path: '/AddSetAlipay'})
+          this.$goToPage('/AddSetAlipay')
           break
         case 'paypal':
-          this.$router.push({path: '/AddSetPaypal'})
+          this.$goToPage('/AddSetPaypal')
           break
         case 'westernUnion':
-          this.$router.push({path: '/AddWesternUnion'})
+          this.$goToPage('/AddWesternUnion')
           break
       }
     },

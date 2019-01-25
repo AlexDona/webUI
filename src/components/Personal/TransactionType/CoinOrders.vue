@@ -186,7 +186,7 @@
                 >
                   <template slot-scope="s">
                     <!--<span>{{ s.row.count-0 }}</span>-->
-                    <span>{{ parseFloat(filterNumber(s.row.count)) }}</span>
+                    <span>{{ parseFloat($scientificToNumber(s.row.count)) }}</span>
                   </template>
                 </el-table-column>
                 <!--委托总额-->
@@ -196,7 +196,7 @@
                 >
                   <template slot-scope="s">
                     <!--<span>{{ s.row.amount-0}}</span>-->
-                    <span>{{ parseFloat(filterNumber(s.row.amount)) }}</span>
+                    <span>{{ parseFloat($scientificToNumber(s.row.amount)) }}</span>
                   </template>
                 </el-table-column>
                 <!--已成交-->
@@ -206,7 +206,7 @@
                 >
                   <template slot-scope="s">
                     <!--<span>{{s.row.completeCount-0}}</span>-->
-                    <span>{{ parseFloat(filterNumber(s.row.completeCount)) }}</span>
+                    <span>{{ parseFloat($scientificToNumber(s.row.completeCount)) }}</span>
                   </template>
                 </el-table-column>
                 <!--未成交-->
@@ -318,7 +318,7 @@
             >
               <template slot-scope="s">
                 <!--<span>{{ s.row.count }}</span>-->
-                <span>{{ parseFloat(filterNumber(s.row.count)) }}</span>
+                <span>{{ parseFloat($scientificToNumber(s.row.count)) }}</span>
               </template>
             </el-table-column>
             <!--成交量-->
@@ -328,7 +328,7 @@
             >
               <template slot-scope="s">
                 <!--<span>{{ s.row.completeCount-0}}</span>-->
-                <span>{{ parseFloat(filterNumber(s.row.completeCount)) }}</span>
+                <span>{{ parseFloat($scientificToNumber(s.row.completeCount)) }}</span>
               </template>
             </el-table-column>
             <!--成交价-->
@@ -338,7 +338,7 @@
             >
               <template slot-scope="s">
                 <!--<span>{{s.row.completeCount-0}}</span>-->
-                <span>{{ parseFloat(filterNumber(s.row.completePrice)) }}</span>
+                <span>{{ parseFloat($scientificToNumber(s.row.completePrice)) }}</span>
               </template>
             </el-table-column>
             <!--状态-->
@@ -421,7 +421,7 @@
             >
               <template slot-scope="s">
                 <!--<span>{{ s.row.count-0 }}</span>-->
-                <span>{{ parseFloat(filterNumber(s.row.count)) }}</span>
+                <span>{{ parseFloat($scientificToNumber(s.row.count)) }}</span>
               </template>
             </el-table-column>
             <!--成交额-->
@@ -430,7 +430,7 @@
             >
               <template slot-scope="s">
                 <!--<span>{{ s.row.amount-0}}</span>-->
-                <span>{{ parseFloat(filterNumber(s.row.amount)) }}</span>
+                <span>{{ parseFloat($scientificToNumber(s.row.amount)) }}</span>
               </template>
             </el-table-column>
             <!--手续费-->
@@ -439,7 +439,7 @@
             >
               <template slot-scope="s">
                 <!--<span>{{ s.row.fees - 0 }}</span>-->
-                <span>{{ parseFloat(filterNumber(s.row.fees)) }}</span>
+                <span>{{ parseFloat($scientificToNumber(s.row.fees)) }}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -474,8 +474,7 @@ import {
   getNestedData
 } from '../../../utils/commonFunc'
 import {
-  timeFilter,
-  scientificToNumber
+  timeFilter
 } from '../../../utils'
 export default {
   components: {},
@@ -529,10 +528,6 @@ export default {
     searchWithCondition (entrustType) {
       this.partLoading = true
       this.commissionList(entrustType)
-    },
-    // 科学计数法转换
-    filterNumber (num) {
-      return scientificToNumber(num)
     },
     /**
      * 交易区列表查询

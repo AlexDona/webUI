@@ -204,7 +204,7 @@
               :label="$t('M.otc_index_UnitPrice')"
             >
               <template slot-scope="s">
-                <div>{{ filterNumber(s.row.price) }}</div>
+                <div>{{ $scientificToNumber(s.row.price) }}</div>
               </template>
             </el-table-column>
             <!-- 数量 -->
@@ -212,7 +212,7 @@
               :label="$t('M.comm_count')"
             >
               <template slot-scope="s">
-                <div>{{ filterNumber(s.row.entrustCount) }}</div>
+                <div>{{ $scientificToNumber(s.row.entrustCount) }}</div>
               </template>
             </el-table-column>
             <!-- 剩余数量 -->
@@ -220,7 +220,7 @@
               :label="$t('M.comm_balance_completed1')"
             >
               <template slot-scope="s">
-                <div>{{ filterNumber(s.row.remainCount) }}</div>
+                <div>{{ $scientificToNumber(s.row.remainCount) }}</div>
               </template>
             </el-table-column>
             <!-- 已完成数量 -->
@@ -229,7 +229,7 @@
               width="120px"
             >
               <template slot-scope="s">
-                <div>{{ filterNumber(s.row.matchCount) }}</div>
+                <div>{{ $scientificToNumber(s.row.matchCount) }}</div>
               </template>
             </el-table-column>
             <!-- 状态 -->
@@ -302,7 +302,7 @@ import {
   querySelectedOrdersRevocation
 } from '../../utils/api/OTC'
 import IconFontCommon from '../../components/Common/IconFontCommon'
-import {timeFilter, scientificToNumber} from '../../utils'
+import {timeFilter} from '../../utils'
 import {
   // returnAjaxMsg,
   getNestedData
@@ -382,10 +382,6 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 科学计数法转换
-    filterNumber (num) {
-      return scientificToNumber(num)
-    },
     // 1.0 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
@@ -522,7 +518,7 @@ export default {
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
         // 跳转发布广告页面并携带一条信息的参数
-        this.$router.push({path: '/OTCPublishAD', query: {id: id}})
+        this.$goToPage('/OTCPublishAD', {id})
       }).catch(() => {
       })
     },

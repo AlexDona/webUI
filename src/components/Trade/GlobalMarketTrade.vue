@@ -55,7 +55,7 @@
                   </div><div class="td count">
                       <div class="top"
                       >
-                      {{formatCount(keep2Num(item.bourseCount))}}
+                      {{formatCount($keep2Num(item.bourseCount))}}
                       </div>
                       <!--货币转换-->
                       <div
@@ -81,12 +81,10 @@
 <script>
 import {mapState} from 'vuex'
 import {
-  getNestedData,
-  formatCount
+  getNestedData
 } from '../../utils/commonFunc'
 import {getGlobalMarket} from '../../utils/api/trade'
 import {
-  keep2Num,
   cutOutPointLength
 } from '../../utils'
 
@@ -110,21 +108,14 @@ export default {
   methods: {
     // 交易价转换
     formatPrice (price) {
-      return keep2Num((this.currencyRateList[this.activeSymbol.area] - 0) * price)
+      return this.$keep2Num((this.currencyRateList[this.activeSymbol.area] - 0) * price)
     },
     // 成交量格式化
     formatCount (targetNum, targetPrice) {
-      if (targetPrice) {
-        return formatCount(keep2Num((this.currencyRateList[this.activeSymbol.area] - 0) * targetPrice * targetNum))
-      } else {
-        return formatCount(targetNum)
-      }
+      return this.$formatCount(targetPrice ? this.$keep2Num((this.currencyRateList[this.activeSymbol.area] - 0) * targetPrice * targetNum) : targetNum)
     },
     cutOutPointLength (num, pointLength) {
       return cutOutPointLength(num, pointLength)
-    },
-    keep2Num (targetNum) {
-      return keep2Num(targetNum)
     },
     // 获取全球行情
     async getGlobalMarket () {

@@ -79,7 +79,7 @@ export default {
     ]),
     jumpToNewsDetail (e) {
       this.CHANGE_NEWS_DETAIL_JUMP_ID(e.id)
-      this.$router.push({'path': '/NewsAndNoticeCenter'})
+      this.$goToPage('/NewsAndNoticeCenter')
     },
     // 获取新闻公告列表
     async getNewsNoticeList () {

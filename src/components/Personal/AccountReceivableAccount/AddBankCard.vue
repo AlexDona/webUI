@@ -200,7 +200,7 @@ export default {
     // 点击返回上个页面
     returnSuperior () {
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
-      this.$router.push({path: '/PersonalCenter'})
+      this.$goToPage('/PersonalCenter')
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
     },
     statusTetBankCard () {
@@ -334,7 +334,7 @@ export default {
       this.successCountDownJumpTimer = setInterval(() => {
         if (this.successCountDown === 0) {
           this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
-          this.$router.push({path: '/PersonalCenter'})
+          this.$goToPage('/PersonalCenter')
           this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
         }
         this.successCountDown--

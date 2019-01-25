@@ -257,7 +257,7 @@
                </span>
                <a
                  class="main-color"
-                 @click.prevent="jumpToOtherPage('/ServiceAndProtocol','UserProtocol')"
+                 @click.prevent="$footerJump('/ServiceAndProtocol','UserProtocol')"
                >
                  <!--《用户协议》-->
                  {{ $t('M.forgetPassword_hint7') }}
@@ -529,7 +529,7 @@
                </span>
                 <a
                   class="main-color"
-                  @click.prevent="jumpToOtherPage('/ServiceAndProtocol','UserProtocol')"
+                  @click.prevent="$footerJump('/ServiceAndProtocol','UserProtocol')"
                 >
                   <!--《用户协议》-->
                   {{ $t('M.forgetPassword_hint7') }}
@@ -623,7 +623,7 @@
         </p>
         <button
           class="cursor-pointer jump-login"
-          @click="loginImmediately"
+          @click="$goToPage('/login')"
         >
           <!--立即登录-->
           {{ $t('M.forgetPassword_text3') }}
@@ -674,8 +674,7 @@ import {
 import {
   returnAjaxMsg, // 接口返回信息
   validateNumForUserInput, // 用户输入验证
-  sendPhoneOrEmailCodeAjax,
-  jumpToOtherPageForFooter
+  sendPhoneOrEmailCodeAjax
 } from '../utils/commonFunc'
 import {
   phoneNumRegexpInput,
@@ -798,13 +797,10 @@ export default {
     },
     jumpToDownAppPage () {
       if (this.inviter && this.isNeedApp && this.isMobile) {
-        this.$router.push({'path': `/downloadApp?language${this.language}`})
+        this.$goToPage(`/downloadApp?language${this.language}`)
       } else {
-        this.$router.push({'path': '/login'})
+        this.$goToPage('/login')
       }
-    },
-    jumpToOtherPage (router, activeName) {
-      jumpToOtherPageForFooter(router, activeName, this)
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -1032,10 +1028,6 @@ export default {
           this.jumpToDownAppPage()
         }
       }, 1000)
-    },
-    // 立即登录
-    loginImmediately () {
-      this.$router.push({'path': '/login'})
     },
     // 切换注册方式
     toggleMethod (method) {
