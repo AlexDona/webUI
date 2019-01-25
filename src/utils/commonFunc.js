@@ -387,3 +387,7 @@ export const handleRequest = async (request, noTip, errorTip) => {
     return getNestedData(DATA, 'data') || {}
   }
 }
+
+export const replaceHTTPUrl = (str) => {
+  return str.startsWith('http://') ? str.replace('http://', 'https://') : str
+}

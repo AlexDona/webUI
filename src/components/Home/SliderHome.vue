@@ -21,7 +21,8 @@
 import Slider from 'vue-concise-slider'// 引入slider组件
 import {getBanner} from '../../utils/api/home'
 import {
-  getNestedData
+  getNestedData,
+  replaceHTTPUrl
 } from '../../utils/commonFunc'
 import {
   mapState,
@@ -96,9 +97,9 @@ export default {
             props: ['item', 'sliderinit', 'pages'],
             data () {
               return {
-                miniImg: item.url,
+                miniImg: replaceHTTPUrl(item.url),
                 // background: `${require('../../assets/develop/banner-bg.png')}`
-                background: item.bigUrl
+                background: replaceHTTPUrl(item.bigUrl)
               }
             },
             mounted () {
@@ -135,7 +136,7 @@ export default {
             },
             template: `<a
                          style="width: 100%;height:100%"
-                         href="${item.redirectUrl}"
+                         href="${replaceHTTPUrl(item.redirectUrl)}"
                    >
                      <img
                       style="width: 100%;height:100%"
