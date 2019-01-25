@@ -159,7 +159,8 @@ import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMsg,
   getAccountPaymentTerm,
-  getNestedData
+  getNestedData,
+  replaceHTTPUrl
 } from '../../../utils/commonFunc'
 import {
   statusCardSettings,
@@ -361,8 +362,8 @@ export default {
       }
       if (qrcode) {
         // 修改时带回微信收款码
-        this.dialogImageHandUrl1 = qrcode
-        this.wechatImgUrl = qrcode
+        this.dialogImageHandUrl1 = replaceHTTPUrl(qrcode)
+        this.wechatImgUrl = replaceHTTPUrl(qrcode)
       }
       if (id) {
         this.paymentTypeId = id

@@ -21,7 +21,8 @@ import {
 import {
   addFavicon,
   getNestedData,
-  changeLanguage
+  changeLanguage,
+  replaceHTTPUrl
 } from '../../utils/commonFunc'
 // import store from "../index";
 export default {
@@ -83,11 +84,11 @@ export default {
     console.log(footerInfo1.title)
     // favicon 添加
     addFavicon(
-      getNestedData(footerInfo1, 'headTitleLogo'),
+      replaceHTTPUrl(getNestedData(footerInfo1, 'headTitleLogo')),
       getNestedData(footerInfo1, 'title')
     )
     commit('SET_LOGO_URL', {
-      logoSrc: getNestedData(footerInfo1, 'headLogo'),
+      logoSrc: replaceHTTPUrl(getNestedData(footerInfo1, 'headLogo')),
       title: getNestedData(footerInfo1, 'title')
     })
   }

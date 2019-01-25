@@ -160,7 +160,8 @@ import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMsg,
   getAccountPaymentTerm,
-  getNestedData
+  getNestedData,
+  replaceHTTPUrl
 } from '../../../utils/commonFunc'
 import {
   statusCardSettings,
@@ -361,8 +362,8 @@ export default {
       }
       if (qrcode) {
         // 修改时带回支付宝收款码
-        this.dialogImageHandUrl1 = qrcode
-        this.alipayImgUrl = qrcode
+        this.dialogImageHandUrl1 = replaceHTTPUrl(qrcode)
+        this.alipayImgUrl = replaceHTTPUrl(qrcode)
       }
       if (id) {
         // 修改时带回类id

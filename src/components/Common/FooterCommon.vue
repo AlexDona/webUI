@@ -16,7 +16,7 @@
           <div class="logo"
             v-if="footerInfo1.logo"
           >
-            <img :src="footerInfo1.logo">
+            <img :src="replaceHTTPUrl(footerInfo1.logo)">
           </div>
           <!--简介-->
           <div
@@ -33,7 +33,7 @@
               :key="index"
             >
               <a
-                :href="item.ercodeSrc"
+                :href="replaceHTTPUrl(item.ercodeSrc)"
                 class="mini-icon"
                 v-show="index!==2 && index!==3"
               >
@@ -209,11 +209,11 @@
           >
             <a
               class="link-item"
-              :href="item.link"
+              :href="replaceHTTPUrl(item.link)"
               target="_blank"
             >
               <img
-                :src="item.logo"
+                :src="replaceHTTPUrl(item.logo)"
               >
             </a>
           </li>
@@ -226,7 +226,8 @@
 import {
   // returnAjaxMsg,
   jumpToOtherPageForFooter,
-  getNestedData
+  getNestedData,
+  replaceHTTPUrl
 } from '../../utils/commonFunc'
 import Iconfont from '../Common/IconFontCommon'
 import {
@@ -285,6 +286,9 @@ export default {
     ...mapMutations([
       'CHANGE_FOOTER_ACTIVE_NAME'
     ]),
+    replaceHTTPUrl (str) {
+      return replaceHTTPUrl(str)
+    },
     toggleShowStatus (type, data) {
       switch (type) {
         case 'weixin':
