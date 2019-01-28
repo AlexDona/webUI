@@ -59,18 +59,18 @@
                 <p class="trade-info">
                   <span>{{$t('M.comm_money')}}：</span>
                   <span class="money">
-                    {{item.symbol}}{{item.payAmount}}
+                    {{item.symbol}}&nbsp;{{$scientificToNumber(item.payAmount)}}
                   </span>
                 </p>
                 <!-- 单价 -->
                 <p class="trade-info">
                   <span>
-                    {{$t('M.otc_index_UnitPrice')}}：{{item.price}}
+                    {{$t('M.otc_index_UnitPrice')}}：{{$scientificToNumber(item.price)}}
                   </span>
                   <!-- 数量 -->
                   &nbsp;&nbsp;
                   <span>
-                    {{$t('M.comm_count')}}：{{item.pickCount}}
+                    {{$t('M.comm_count')}}：{{$scientificToNumber(item.pickCount)}}
                   </span>
                 </p>
                 <!-- 卖家手机号 -->
@@ -384,16 +384,16 @@
                 <!-- 金额 -->
                 <p class="trade-info">
                   <span>{{$t('M.comm_money')}}：</span>
-                  <span class="money">{{item.symbol}}{{item.payAmount}}</span>
+                  <span class="money">{{item.symbol}}&nbsp;{{$scientificToNumber(item.payAmount)}}</span>
                 </p>
                 <!-- 单价 -->
                 <p class="trade-info">
                   <span>
-                    {{$t('M.otc_index_UnitPrice')}}：{{item.price}}
+                    {{$t('M.otc_index_UnitPrice')}}：{{$scientificToNumber(item.price)}}
                   </span>
                   &nbsp;&nbsp;
                   <!-- 数量 -->
-                  <span>{{$t('M.comm_count')}}：{{item.pickCount}}</span>
+                  <span>{{$t('M.comm_count')}}：{{$scientificToNumber(item.pickCount)}}</span>
                 </p>
                 <!-- 卖家手机号 -->
                 <p class="trade-info">
