@@ -37,7 +37,10 @@ import {
   getCurrencyApplicationDownloadUrl
   // downloadFile
 } from '../../utils/api/activityCenter'
-import {getNestedData} from '../../utils/commonFunc'
+import {
+  getNestedData,
+  http2https
+} from '../../utils/commonFunc'
 import {getServiceProtocoDataAjax} from '../../utils/api/common'
 import {
   mapState
@@ -78,8 +81,9 @@ export default {
         key: 'COIN_APPLY'
       }
       const data = await getCurrencyApplicationDownloadUrl(params)
+      if (!data) return false
       let detailData = getNestedData(data, 'data')
-      this.downloadUrl = detailData.url
+      this.downloadUrl = http2https(detailData.url)
       this.fileName = detailData.name
     },
     // 下载资产预览表

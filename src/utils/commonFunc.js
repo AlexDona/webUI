@@ -387,3 +387,12 @@ export const handleRequest = async (request, noTip, errorTip) => {
     return getNestedData(DATA, 'data') || {}
   }
 }
+/**
+ * http => https
+ * @param str
+ * @returns {*}
+ */
+export const http2https = (str) => {
+  if (!str) return false
+  return str.startsWith('http://') ? str.replace('http://', 'https://') : str
+}
