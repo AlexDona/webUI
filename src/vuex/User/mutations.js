@@ -83,7 +83,11 @@ export default {
   [USER_LOGIN] (state, data) {
     state.isLogin = true
     state.loginStep1Info = data
+    const {token} = data
     setCookie('loginStep1Info', data)
+    if (token) {
+      setCookie('token', token)
+    }
   },
   // 用户出
   [USER_LOGOUT] (state) {

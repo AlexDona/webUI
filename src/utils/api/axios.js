@@ -7,7 +7,8 @@ import {
 } from '../env'
 import {
   setCookie,
-  getCookie
+  getCookie,
+  removeCookie
 } from '../index'
 import {getNestedData} from '../commonFunc'
 import axios from 'axios'
@@ -20,8 +21,9 @@ util.ajax = axios.create({
   timeout: 30000,
   withCredentials: true
 })
-let token = getCookie('token')
+let token
 util.ajax.interceptors.request.use((config) => {
+  token = getCookie('token')
   const url = `${config.url}`
   let needLoading = getNestedData(config.params, 'loading') || getNestedData(config.data, 'loading') || url.endsWith('user/userLoginForStep1')
   if (getNestedData(config.params, 'loading')) delete config.params.loading
@@ -29,12 +31,10 @@ util.ajax.interceptors.request.use((config) => {
   if (needLoading) {
     store.commit('CHANGE_AJAX_READY_STATUS', true)
   }
-  console.log(token)
   config.headers['x-domain'] = xDomain
   let userToken = store.state.user.loginStep1Info.token
   config.headers['token'] = token || userToken
 
-  console.log(config)
   return config
 }, (error) => {
   return error
@@ -42,11 +42,12 @@ util.ajax.interceptors.request.use((config) => {
 
 util.ajax.interceptors.response.use(
   response => {
-    console.log(response.headers.token)
     if (response.headers.token) {
       token = response.headers.token
-      console.log(token)
       setCookie('token', token)
+    }
+    if (response.config.url.endsWith('logout')) {
+      removeCookie('token')
     }
     if (!response.data) {
       response.data = {}
@@ -55,7 +56,6 @@ util.ajax.interceptors.response.use(
     return response
   },
   error => {
-    console.dir(error)
     return error.response // 返回接口返回的错误信息
   })
 
