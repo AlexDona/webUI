@@ -214,6 +214,7 @@
             >
               <img
                 :src="http2https(item.logo)"
+                target="_blank"
               >
             </a>
           </li>
@@ -224,6 +225,7 @@
 </template>
 <script>
 import {
+  // returnAjaxMsg,
   getNestedData,
   http2https
 } from '../../utils/commonFunc'
