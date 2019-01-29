@@ -100,13 +100,13 @@
                   v-show="s.row.chg>=0"
                   style="color:#d45858;"
                 >
-                  {{s.row.last}}
+                  {{$scientificToNumber(s.row.last)}}
                 </span>
                 <span
                   v-show="s.row.chg<0"
                   style="color:#008069;"
                 >
-                          {{s.row.last}}
+                          {{$scientificToNumber(s.row.last)}}
                         </span>
               </div>
               <!--货币转换-->
@@ -135,7 +135,7 @@
                 width:140px;
                 line-height: 30px;
                 margin:10px auto; ">
-              {{s.row.high}}
+              {{$scientificToNumber(s.row.high)}}
             </div>
           </template>
         </el-table-column>
@@ -153,7 +153,7 @@
                 padding-left:12px;
                 line-height: 30px;
                 margin:10px auto; ">
-              {{s.row.low}}
+              {{$scientificToNumber(s.row.low)}}
             </div>
           </template>
         </el-table-column>
