@@ -1,102 +1,63 @@
-
-/**
- * Common
- */
-
-const HomeCenter = r => require.ensure([], () => r(require('@/pages/HomeCenter')), 'home-center')
-/**
- * Personal
- */
-const PersonalCenter = r => require.ensure([], () => r(require('@/pages/PersonalCenter')), 'user-center')
+const HomeCenter = () => import('@/pages/HomeCenter')
+const PersonalCenter = () => import('@/pages/PersonalCenter')
 // 银行卡设置
-const AddBankCard = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddBankCard')), 'add-bank')
+const AddBankCard = () => import('@com/Personal/AccountReceivableAccount/AddBankCard')
 // 微信设置
-const AddWeChat = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddWeChat')), 'add-chat')
+const AddWeChat = () => import('@com/Personal/AccountReceivableAccount/AddWeChat')
 // 支付宝设置
-const AddSetAlipay = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddSetAlipay')), 'add-alipay')
+const AddSetAlipay = () => import('@com/Personal/AccountReceivableAccount/AddSetAlipay')
 // paypal设置
-const AddSetPaypal = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddSetPaypal')), 'add-payment')
+const AddSetPaypal = () => import('@com/Personal/AccountReceivableAccount/AddSetPaypal')
 // 西联汇款设置
-const AddWesternUnion = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddWesternUnion')), 'add-western')
+const AddWesternUnion = () => import('@com/Personal/AccountReceivableAccount/AddWesternUnion')
 // 安全邮箱设置
-const SecureEmail = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserSecureEmail')), 'set-email')
+const SecureEmail = () => import('@com/Personal/UserSecuritySettings/UserSecureEmail')
 // 安全手机设置
-const SecurePhone = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserSecurePhone')), 'set-phone')
+const SecurePhone = () => import('@com/Personal/UserSecuritySettings/UserSecurePhone')
 // 谷歌验证
-const GoogleBinding = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserGoogleBinding')), 'binding-google')
+const GoogleBinding = () => import('@com/Personal/UserSecuritySettings/UserGoogleBinding')
 // 设置交易密码
-const TransactionPassword = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserTransactionPassword')), 'transaction-password')
+const TransactionPassword = () => import('@com/Personal/UserSecuritySettings/UserTransactionPassword')
 // 修改登录密码
-const LoginPassword = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserLoginPassword')), 'login-password')
-/**
- * VIP
- */
-const VipMainContent = r => require.ensure([], () => r(require('@/pages/VIP/VipMainContent')), 'vip-main')
-const OpenVIP = r => require.ensure([], () => r(require('@/pages/VIP/OpenVIP')), 'vip-main')
-/**
- * OTC
- */
-const OTCCenter = r => require.ensure([], () => r(require('@/pages/OTC/OTCCenter')), 'otc-center')
-const OTCPublishBuyAndSell = r => require.ensure([], () => r(require('@/components/OTC/OTCPublishBuyAndSell')), 'otc-publish-buy-and-sell')
-const OTCOnlineTraderBuySell = r => require.ensure([], () => r(require('@/components/OTC/OTCOnlineTraderBuySell')), 'otc-online-trader-buy-sell')
-const OTCPublishAD = r => require.ensure([], () => r(require('@/pages/OTC/OTCPublishAD')), 'otc-publish-AD')
-const OTCADManage = r => require.ensure([], () => r(require('@/pages/OTC/OTCADManage')), 'otc-AD-manage')
-const OTCMerchantsOrders = r => require.ensure([], () => r(require('@/pages/OTC/OTCMerchantsOrders')), 'otc-merchants-orders')
-const OTCReportFormStatistics = r => require.ensure([], () => r(require('@/pages/OTC/OTCReportFormStatistics')), 'otc-report-form-statistics')
-const OTCBusinessApply = r => require.ensure([], () => r(require('@/pages/OTC/OTCBusinessApply')), 'otc-business-apply')
-/**
- * 投资理财
- */
-const FinanceCenter = r => require.ensure([], () => r(require('@/components/InvestmentFinance/FinanceCenter')), 'finance-center')
-const FinanceInvestmentRecord = r => require.ensure([], () => r(require('@/components/InvestmentFinance/FinanceInvestmentRecord')), 'finance-investment-record')
-/**
- * User
- */
+const LoginPassword = () => import('@com/Personal/UserSecuritySettings/UserLoginPassword')
+// VIP
+const VipMainContent = () => import('@/pages/VIP/VipMainContent')
+const OpenVIP = () => import('@/pages/VIP/OpenVIP')
+// OTC
+const OTCCenter = () => import('@/pages/OTC/OTCCenter')
+const OTCPublishBuyAndSell = () => import('@com/OTC/OTCPublishBuyAndSell')
+const OTCOnlineTraderBuySell = () => import('@com/OTC/OTCOnlineTraderBuySell')
+const OTCPublishAD = () => import('@/pages/OTC/OTCPublishAD')
+const OTCADManage = () => import('@/pages/OTC/OTCADManage')
+const OTCMerchantsOrders = () => import('@/pages/OTC/OTCMerchantsOrders')
+const OTCReportFormStatistics = () => import('@/pages/OTC/OTCReportFormStatistics')
+const OTCBusinessApply = () => import('@/pages/OTC/OTCBusinessApply')
+// 投资理财
+const FinanceCenter = () => import('@com/InvestmentFinance/FinanceCenter')
+const FinanceInvestmentRecord = () => import('@com/InvestmentFinance/FinanceInvestmentRecord')
 // 登录
-const Login = r => require.ensure([], () => r(require('@/pages/LoginUser')), 'login')
+const Login = () => import('@/pages/LoginUser')
 // 注册
-const Register = r => require.ensure([], () => r(require('@/pages/RegisterUser')), 'register')
-const InvitationRegister = r => require.ensure([], () => r(require('@/pages/InvitationRegister')), 'invitationRegister')
-const ForgetPassword = r => require.ensure([], () => r(require('@/components/User/ForgetPassword')), 'forget-password')
-/**
- * TradeCenter
- */
-// 币币交易
-const TradeCenter = r => require.ensure([], () => r(require('@/pages/TradeCenter')), 'trade-center')
+const Register = () => import('@/pages/RegisterUser')
+const InvitationRegister = () => import('@/pages/InvitationRegister')
+const ForgetPassword = () => import('@com/User/ForgetPassword')
+// TradeCenter
+const TradeCenter = () => import('@/pages/TradeCenter')
+const RankingListOfInvitation = () => import('@com/ActivityCenter/RankingListOfInvitation')
 
-/**
- * ActivityCenter
- */
-const RankingListOfInvitation = r => require.ensure([], () => r(require('@/components/ActivityCenter/RankingListOfInvitation')), 'ranking-list-of-invitation')
 // 上币申请
-const currencyApplication = r => require.ensure([], () => r(require('@/components/ActivityCenter/currencyApplication')), 'currency-application')
-
-/**
- * 新闻公告
- */
-const NewsAndNoticeCenter = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewAndNoticeCenter')), 'news-andNotice-center')
-/**
- * 新闻列表
- */
-// const NewsAndNoticeList = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewsAndNoticeList')), 'news-andNotice-list')
-/**
- * 新闻详情
- */
-const NewsAndNoticeItem = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewsAndNoticeItem')), 'news-andNotice-item')
-
-const HelpCenter = r => require.ensure([], () => r(require('@/components/FooterInfo/HelpCenter')), 'news-andNotice-list')
-/**
- * FooterInfo
- */
-// aboutUs
-const AboutUs = r => require.ensure([], () => r(require('@/components/FooterInfo/AboutUs')), 'about-us')
-const ServiceAndProtocol = r => require.ensure([], () => r(require('@/components/FooterInfo/ServiceAndProtocol')), 'service-protocol')
-/**
- * appDownload
- */
-const DownloadApp = r => require.ensure([], () => r(require('@/pages/DownloadApp')), 'download-app')
-const GuideOfDownload = r => require.ensure([], () => r(require('@/pages/GuideOfDownload')))
-const errorFor404And500 = r => require.ensure([], () => r(require('@/pages/ErrorFor500And404')), 'error')
+const currencyApplication = () => import('@com/ActivityCenter/currencyApplication')
+// 新闻公告
+const NewsAndNoticeCenter = () => import('@com/NoticeAndNews/NewAndNoticeCenter')
+// 新闻详情
+const NewsAndNoticeItem = () => import('@com/NoticeAndNews/NewsAndNoticeItem')
+const HelpCenter = () => import('@com/FooterInfo/HelpCenter')
+// FooterInfo
+const AboutUs = () => import('@com/FooterInfo/AboutUs')
+const ServiceAndProtocol = () => import('@com/FooterInfo/ServiceAndProtocol')
+const DownloadApp = () => import('@/pages/DownloadApp')
+const GuideOfDownload = () => import('@/pages/GuideOfDownload')
+const errorFor404And500 = () => import('@/pages/ErrorFor500And404')
 
 const routes = [
   {
