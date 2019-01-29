@@ -349,9 +349,7 @@ export default{
     },
     // 切换板块
     changeTab (e) {
-      console.log(e.name)
       this.searchFromMarketList()
-      console.log(this.newMarketList)
       this.changeIsShowStatus()
     },
     // 是否显示查看更多按钮
