@@ -175,9 +175,9 @@ export default {
     }
   },
   created () {
-    setTimeout(() => {
-      this.clickDalay = false
-    }, 1500)
+    // setTimeout(() => {
+    this.clickDalay = false
+    // }, 1500)
   },
   mounted () {
   },
