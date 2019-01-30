@@ -117,7 +117,7 @@ export default {
     state.withdrawDepositList = data
   },
   [SET_COUNTRY_AREA_LIST] (state, data) {
-    state.contryAreaList = data
+    state.countryAreaList = data
   },
   [USER_INFORMATION_REFRESH] (state, data) {
     state.userRefreshUserList = data
