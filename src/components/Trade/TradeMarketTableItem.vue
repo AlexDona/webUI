@@ -254,7 +254,7 @@ export default {
         }
 
         &.rose {
-          margin-right: 20px;
+          margin-right: 30px;
           text-align: right;
         }
 
@@ -329,7 +329,7 @@ export default {
           /* margin-left: 16px; */
 
           /* padding: 0 20px; */
-          padding: 0 4.5%;
+          padding: 0 3.5%;
           line-height: 30px;
 
           .click-button {

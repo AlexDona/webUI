@@ -1233,6 +1233,10 @@ export default {
             > .left {
               flex: 2;
             }
+
+            > .right {
+              text-align: right;
+            }
           }
 
           > .content {
