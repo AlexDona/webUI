@@ -65,7 +65,7 @@
                 <input
                   type="password"
                   autocomplete= "new-password"
-                  v-model.trim="password"
+                  v-model="password"
                   :placeholder="$t('M.login_tips2')"
                   @keydown="setErrorMsg(1,'')"
                   @keyup.enter="loginForStep1"
