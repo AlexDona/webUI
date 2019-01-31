@@ -282,6 +282,7 @@ export default {
           const _self = this
           // let chart = getNestedData(_self, 'widget.chart()')
           let chart
+          console.log(_self.widget.chart)
           if (_self.widget && _self.widget.chart) {
             chart = _self.widget.chart()
           }
@@ -395,8 +396,8 @@ export default {
     },
     onMessage (data) {
       console.log(data)
-      const {symbol} = data
-      if (this.activeSymbol.id !== symbol) return false
+      // const {symbol} = data
+      // if (this.activeSymbol.id !== symbol) return false
       switch (data.tradeType) {
         case 'KLINE':
           console.log(data.data[0])
@@ -427,7 +428,7 @@ export default {
         // 买卖单
         case 'DEPTH':
           console.log(data)
-          console.log(symbol, this.activeSymbol.id)
+          // console.log(symbol, this.activeSymbol.id)
 
           const depthData = getNestedData(data, 'data')
           console.log(depthData)

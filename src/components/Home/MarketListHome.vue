@@ -263,8 +263,13 @@ export default {
         if (data.type == 1) {
           const newData = data.data
           let {buyCoinName, tradeName} = newData
-          const areaIndex = this.newTradeAreaIndexMap.get(this.activeIndex).get(buyCoinName)
-          const contentIndex = this.newSymbolIndexMap.get(this.activeIndex).get(buyCoinName).get(tradeName)
+
+          let areaMap = this.newTradeAreaIndexMap.get(this.activeIndex)
+          if (!areaMap) return false
+          const areaIndex = areaMap.get(buyCoinName)
+          let contentMap = this.newSymbolIndexMap.get(this.activeIndex).get(buyCoinName)
+          if (!contentMap) return false
+          const contentIndex = contentMap.get(tradeName)
           const newContent = {...this.newMarketList[this.activeIndex].tradeAreaList[areaIndex].content[contentIndex], ...newData}
           this.$set(this.newMarketList[this.activeIndex].tradeAreaList[areaIndex].content, contentIndex, newContent)
           this.getFilterMarketList()
