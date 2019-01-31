@@ -49,7 +49,8 @@
                     class="view-more"
                     @click="backToParent(outerItem)"
                   >
-                    更多 》
+                    <!--查看更多-->
+                    {{$t('M.comm_view_more')}} 》
                   </span></h2>
                 <ul
                   class="news-type-content"
