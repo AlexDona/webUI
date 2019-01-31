@@ -912,7 +912,7 @@ export default {
       }
       // 调用第一接口
       let params = new FormData()
-      params.append('userName', this.username)
+      params.append('userName', this.username.toLowerCase())
       params.append('password', this.password)
       const data = await userLoginForStep1(params)
       if (!returnAjaxMsg(data, this, 0)) {
