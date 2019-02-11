@@ -16,6 +16,7 @@
             :name="outItem.plateId"
             v-for="(outItem,outIndex) in filterMarketList"
             :key="outIndex"
+            :track-by="outIndex"
           >
             <div
               class="tab-content"
@@ -44,6 +45,7 @@
                 v-for="(item) in outItem.tradeAreaList"
                 :id="'tab-item.'+item.id"
                 :key="item.id"
+                :track-by="item.id"
               >
                 <div
                   class="inner-item-box"
@@ -130,7 +132,8 @@ import {
   mapState,
   mapMutations
 } from 'vuex'
-export default{
+
+export default {
   components: {
     IconFontCommon,
     Footer,
@@ -174,7 +177,19 @@ export default{
         id: 3,
         content: []
       },
-      socketParamsStr: '' // socket请求参数字符串
+      // socket请求参数字符串
+      socketParamsStr: '',
+      // 最新的list
+      newMarketFilterList: [],
+      marketMap: new Map(),
+      // 最新的marketMap
+      newCurrentMarketMap: new Map(),
+      newMarketSet: new Set(),
+      // 最新的交易区内容map
+      newContentMap: new Map(),
+      // 最新的交易区map
+      newTradeAreaIndexMap: new Map(),
+      newSymbolIndexMap: new Map()
     }
   },
   async created () {
@@ -185,8 +200,10 @@ export default{
   },
   mounted () {
   },
-  activated () {},
-  update () {},
+  activated () {
+  },
+  update () {
+  },
   beforeRouteUpdate () {
   },
   destroyed () {
@@ -254,7 +271,6 @@ export default{
       }
 
       this.socket.on('message', (data) => {
-        console.log(data.data)
         if (data.type == 1) {
           const newData = data.data
           // 非自选区
@@ -293,7 +309,6 @@ export default{
     },
     // 更改当前交易对
     changeActiveSymbol (e) {
-      console.log(e)
       this.SET_JUMP_STATUS(true)
       this.SET_JUMP_SYMBOL(e)
       // 设置当前交易区
@@ -356,7 +371,6 @@ export default{
     changeIsShowStatus () {
       let activeMarketList = this.newMarketList.filter(item => item.plateId == this.activeName)[0]
       let targetList = getNestedData(activeMarketList, 'tradeAreaList') || []
-      console.log(targetList)
       this.moreBtnShowStatus = targetList.length > 2 ? 1 : 0
     },
     // market过滤
@@ -372,7 +386,7 @@ export default{
         this.filterMarketList = this.newMarketList
       }
     },
-    // 搜索关键字
+    // 搜索关键字e
     searchFromMarketList () {
       this.searchList = []
       this.searchArea.content = this.searchList
@@ -405,7 +419,6 @@ export default{
     // 切换收藏
     async toggleCollect (data) {
       let {id, status, row} = data
-      console.log(id)
       status = Boolean(status)
       this.$set(this.collectStatusList, id, status)
       if (status) {
@@ -423,7 +436,6 @@ export default{
           type: 'cancel',
           collectSymbol: id
         })
-        console.log(id, this.collectArea.content)
         // // 取消收藏
         let newList = this.collectArea.content.filter(item => item.id !== id)
         this.$set(this.collectArea, 'content', newList)

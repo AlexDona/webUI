@@ -61,6 +61,7 @@
                     :placeholder="$t('M.comm_buy') + $t('M.comm_price')"
                     :ref="limitBuyPriceInputRef"
                     @keyup="autoChangeData('limit-buy')"
+                    maxlength="14"
                     @input="formatInput(limitBuyPriceInputRef,middleTopData.priceExchange)"
                   >
                   <span class="currency">{{middleTopData.area}}</span>
@@ -85,6 +86,7 @@
                       'error':buyUserCoinWallet.total < limitBuyAmount
                     }"
                     type="text"
+                    maxlength="14"
                     :placeholder="$t('M.comm_buy') + $t('M.comm_quantity')"
                     :ref="limitBuyCountInputRef"
                     @keyup="autoChangeData('limit-buy')"
@@ -161,6 +163,7 @@
                 <div class="input">
                   <input
                     type="text"
+                    maxlength="14"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_price')"
                     :ref="limitSellPriceInputRef"
                     @keyup="autoChangeData('limit-sell')"
@@ -184,6 +187,7 @@
                     :class="{
                       'error': sellUserCoinWallet.total < limitExchange.sellCount
                     }"
+                    maxlength="14"
                     type="text"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="limitSellCountInputRef"
@@ -285,6 +289,7 @@
                     :class="{
                       error: isNeedErrorMsgForBuyAmount
                     }"
+                    maxlength="14"
                     type="text"
                     :placeholder="$t('M.user_coin_volume')"
                     :ref="marketBuyAmountInputRef"
@@ -364,6 +369,7 @@
                     :class="{
                       error: isNeedErrorMsgForSellCount
                     }"
+                    maxlength="14"
                     type="text"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="marketSellCountInputRef"
@@ -672,7 +678,9 @@ export default {
     setTransformPrice (type, targetNum) {
       switch (type) {
         case 'limit-buy':
+          // this.limitExchange.transformBuyPrice = this.$scientificToNumber(this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum))
           this.limitExchange.transformBuyPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
+          console.log(this.limitExchange.transformBuyPrice)
           break
         case 'limit-sell':
           this.limitExchange.transformSellPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
@@ -1232,6 +1240,10 @@ export default {
 
             > .left {
               flex: 2;
+            }
+
+            > .right {
+              text-align: right;
             }
           }
 
