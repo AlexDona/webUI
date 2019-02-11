@@ -1002,7 +1002,7 @@ export default {
   .finance-box {
     width: 100%;
     min-width: 1300px;
-    margin-top: 66px;
+    margin-top: 50px;
 
     > .banner-box {
       position: relative;

@@ -422,7 +422,7 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .binding-google {
-    margin-top: 66px;
+    margin-top: 50px;
     overflow: hidden;
 
     > .binding-google-main {

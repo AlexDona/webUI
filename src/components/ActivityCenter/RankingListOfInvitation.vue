@@ -221,7 +221,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   .ranking-list-of-invitation-box {
-    margin-top: 66px;
+    margin-top: 50px;
 
     > .inner-box {
       width: 100%;

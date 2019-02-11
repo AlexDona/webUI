@@ -1051,7 +1051,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 }
 
 .otc-publish-AD-box {
-  margin-top: 66px;
+  margin-top: 50px;
   overflow: hidden;
 
   .redBorderRightNone {

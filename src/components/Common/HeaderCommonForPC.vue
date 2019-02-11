@@ -718,8 +718,8 @@ export default{
 
     > .top {
       display: flex;
-      height: 66px;
-      line-height: 66px;
+      height: 50px;
+      line-height: 50px;
       transition: all .5s;
 
       > .left {
@@ -810,7 +810,7 @@ export default{
             > .logo {
               display: inline-block;
               width: 100px;
-              height: 66px;
+              height: 50px;
 
               > .img {
                 width: 100%;
@@ -854,7 +854,7 @@ export default{
               > .login-info {
                 position: absolute;
                 z-index: 2;
-                top: 66px;
+                top: 50px;
                 right: -100px;
                 box-sizing: border-box;
                 width: 210px;
@@ -987,7 +987,7 @@ export default{
     > .bottom {
       position: absolute;
       z-index: 1;
-      top: 66px;
+      top: 50px;
       width: 100%;
       height: 36px;
       background-color: $nightSubNavBgColor;

@@ -5,7 +5,7 @@
       'day':theme == 'day',
       'night':theme == 'night',
       'min-height':windowHeight < 800,
-      'margin-top':isMobile?'0':'66px'
+      'margin-top':isMobile?'0':'50px'
       }"
     :style="{height: windowHeight + 'px'}"
   >
@@ -1257,7 +1257,7 @@ export default {
                 text-align: center;
                 color: $mainColor;
 
-                /* width:66px; */
+                /* width:50px; */
               }
             }
           }
@@ -1425,7 +1425,7 @@ export default {
                 text-align: center;
                 color: $mainColor;
 
-                /* width:66px; */
+                /* width:50px; */
               }
             }
           }

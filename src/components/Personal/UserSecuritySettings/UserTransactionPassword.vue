@@ -636,7 +636,7 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .transaction-password {
-    margin-top: 66px;
+    margin-top: 50px;
     overflow: hidden;
 
     > .transaction-password-main {

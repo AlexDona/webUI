@@ -80,7 +80,7 @@ export default {
 
   .help-box {
     > .inner-box {
-      padding-top: 66px;
+      padding-top: 50px;
 
       > .search-box {
         height: 250px;

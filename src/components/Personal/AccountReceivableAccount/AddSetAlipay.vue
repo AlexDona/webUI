@@ -407,7 +407,7 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
 
   .add-account {
-    margin-top: 66px;
+    margin-top: 50px;
     overflow: hidden;
 
     > .add-account-main {

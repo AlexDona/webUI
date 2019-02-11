@@ -272,7 +272,7 @@ export default {
 
   .login-password-box {
     width: 100%;
-    margin-top: 66px;
+    margin-top: 50px;
     overflow: hidden;
 
     > .login-password-main {

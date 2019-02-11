@@ -372,7 +372,7 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .set-email {
-    margin-top: 66px;
+    margin-top: 50px;
     overflow: hidden;
 
     > .set-email-main {
