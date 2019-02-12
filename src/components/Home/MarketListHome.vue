@@ -229,17 +229,6 @@ export default {
       })
       this.$set(this.collectArea, 'content', newContent)
     },
-    // 遍历行情数组
-    ergodicNewMarketList (callback) {
-      _.forEach(this.newMarketList, item => {
-        _.forEach(item.tradeAreaList, innerItem => {
-          _.forEach(innerItem.content, fourthItem => {
-            callback(fourthItem)
-          })
-        })
-        return false
-      })
-    },
     // 拼接socket参数
     concatSocketParamsStr (activeIndexOfNewMarketList) {
       this.socketParamsStr = ''
@@ -273,24 +262,17 @@ export default {
       this.socket.on('message', (data) => {
         if (data.type == 1) {
           const newData = data.data
-          // 非自选区
-          _.forEach(this.newMarketList[this.activeIndex].tradeAreaList, (item, index) => {
-            console.log(item)
-            _.forEach(item.content, (innerItem, innerIndex) => {
-              let newContent = innerItem
-              if (innerItem.tradeId === newData.tradeId) {
-                setSocketData(
-                  newContent,
-                  newData,
-                  this.newMarketList[this.activeIndex].tradeAreaList[index].content,
-                  innerIndex,
-                  this
-                )
-                this.getFilterMarketList()
-                return false
-              }
-            })
-          })
+          let {buyCoinName, tradeName} = newData
+
+          let areaMap = this.newTradeAreaIndexMap.get(this.activeIndex)
+          if (!areaMap) return false
+          const areaIndex = areaMap.get(buyCoinName)
+          let contentMap = this.newSymbolIndexMap.get(this.activeIndex).get(buyCoinName)
+          if (!contentMap) return false
+          const contentIndex = this.newSymbolIndexMap.get(this.activeIndex).get(buyCoinName).get(tradeName)
+          const newContent = {...this.newMarketList[this.activeIndex].tradeAreaList[areaIndex].content[contentIndex], ...newData}
+          this.$set(this.newMarketList[this.activeIndex].tradeAreaList[areaIndex].content, contentIndex, newContent)
+          this.getFilterMarketList()
           //  自选区
           _.forEach(this.collectArea.content, (item, index) => {
             let newContent = item
@@ -302,6 +284,7 @@ export default {
                 index,
                 this
               )
+              return false
             }
           })
         }
@@ -336,12 +319,6 @@ export default {
       const data = await getHomeMarketByAjax(params)
       let objData = getNestedData(data, 'data.obj')
       this.newMarketList = JSON.parse(unzip(objData))
-      this.ergodicNewMarketList(item => {
-        this.CHANGE_SYMBOL_MAP({
-          key: item.id,
-          val: item
-        })
-      })
       this.activeName = getNestedData(this.newMarketList[0], 'plateId')
       this.activeIndex = 0
       let collectSymbol = {}
@@ -353,6 +330,25 @@ export default {
       this.setCollectData(collectSymbol)
       this.concatSocketParamsStr(this.activeIndex)
       this.getFilterMarketList()
+
+      _.forEach(this.newMarketList, (plateItem, plateIndex) => {
+        this.marketMap.set(plateIndex, new Map())
+        this.newTradeAreaIndexMap.set(plateIndex, new Map())
+        this.newSymbolIndexMap.set(plateIndex, new Map())
+        _.forEach(plateItem.tradeAreaList, (tradeAreaItem, tradeAreaIndex) => {
+          this.marketMap.get(plateIndex).set(tradeAreaItem.area, new Map())
+          this.newTradeAreaIndexMap.get(plateIndex).set(tradeAreaItem.area, tradeAreaIndex)
+          this.newSymbolIndexMap.get(plateIndex).set(tradeAreaItem.area, new Map())
+          _.forEach(tradeAreaItem.content, (contentItem, contentIndex) => {
+            this.marketMap.get(plateIndex).get(tradeAreaItem.area).set(contentItem.id, contentItem)
+            this.newSymbolIndexMap.get(plateIndex).get(tradeAreaItem.area).set(contentItem.id, contentIndex)
+            this.CHANGE_SYMBOL_MAP({
+              key: contentItem.id,
+              val: contentItem
+            })
+          })
+        })
+      })
     },
     getSocketData (type, params) {
       // 首页socket
