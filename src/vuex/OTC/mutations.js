@@ -1,3 +1,4 @@
+import {setStore} from '../../utils'
 import {
   // OTC改变选中的可用币种名字
   CHANGE_OTC_AVAILABLE_CURRENCY_NAME,
@@ -12,7 +13,9 @@ import {
   // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
   CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS,
   // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
-  CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS
+  CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS,
+  // 设置otc币种里诶包
+  SET_OTC_COIN_LIST_M
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -47,5 +50,11 @@ export default {
   // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
   [CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS] (state, data) {
     state.otcApplyJumpBottomStatus = data
+  },
+  // 设置otc币种列表
+  [SET_OTC_COIN_LIST_M] (state, OTCCoinList) {
+    state.OTCCoinList = OTCCoinList
+    setStore('OTCCoinList', OTCCoinList)
+    setStore('OTCCoinListTimeStamp', new Date().getTime())
   }
 }

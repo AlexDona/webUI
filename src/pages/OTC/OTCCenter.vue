@@ -44,7 +44,7 @@
               </span>
               <div class="otc-filtrate-style">
                 <span
-                  v-for="(item, index) in IWantToBuySellArr"
+                  v-for="(item, index) in OTCCoinList"
                   :key="index"
                   class="otc-filtrate-currency-name"
                   :class="{ currencyNameActived: selectCurrencyNameStatus === index }"
@@ -408,7 +408,6 @@ import {
   amendPrecision
 } from '../../utils'
 import {
-  getOTCAvailableCurrency,
   getOTCPutUpOrders,
   getMerchantAvailableLegalTender
 } from '../../utils/api/OTC'
@@ -503,14 +502,17 @@ export default {
   },
   async created () {
     // 1.0 otc可用币种查询：我要购买/我要出售的币种列表
-    await this.getOTCAvailableCurrencyList()
+    await this.GET_OTC_COIN_LIST_ACTION()
+    if (this.OTCCoinList.length) {
+      this.changeOTCActiveCoin()
+    }
     // 2.0 otc可用法币查询：
     await this.getMerchantAvailableLegalTenderList()
     // 3.0 otc主页面查询挂单列表:
     await this.getOTCPutUpOrdersList()
     // 4.0 用户登录了刷新用户个人信息
     if (this.isLogin) {
-      this.reflashUserInfo() // 刷新用户信息
+      this.REFRESH_USER_INFO_ACTION()
     }
   },
   mounted () {
@@ -532,7 +534,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapActions([
-      'REFRESH_USER_INFO_ACTION'
+      'REFRESH_USER_INFO_ACTION',
+      'GET_OTC_COIN_LIST_ACTION'
     ]),
     ...mapMutations([
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
@@ -545,9 +548,11 @@ export default {
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
-    // 刷新个人信息
-    reflashUserInfo () {
-      this.REFRESH_USER_INFO_ACTION()
+    // 设置otc选中币种
+    changeOTCActiveCoin (index = 0) {
+      this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.OTCCoinList[index].name)
+      this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.OTCCoinList[index].coinId)
+      this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.OTCCoinList[index].partnerCoinId)
     },
     // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {
@@ -606,7 +611,7 @@ export default {
       if (!this.isLogin) {
         this.$goToPage('/login')
       } else {
-        this.reflashUserInfo() // 刷新用户信息
+        this.REFRESH_USER_INFO_ACTION()
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
@@ -639,8 +644,7 @@ export default {
       if (!this.isLogin) {
         this.$goToPage('/login')
       } else {
-        // 刷新用户信息
-        this.reflashUserInfo()
+        this.REFRESH_USER_INFO_ACTION()
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
@@ -698,27 +702,6 @@ export default {
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
-    },
-    //  1.0 otc可用币种查询：我要购买/我要出售的币种列表
-    async getOTCAvailableCurrencyList () {
-      const data = await getOTCAvailableCurrency({})
-      // console.log('otc可用币种查询')
-      // console.log(data)
-      // 返回数据正确的逻辑
-      if (!data) return false
-      if (data.data) {
-        this.IWantToBuySellArr = getNestedData(data, 'data')
-        if (this.IWantToBuySellArr.length) {
-          this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
-          this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
-          this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
-          // 在得到可用币种之后再调用方法根据币种的第一项的币种id来渲染表格数据
-          // 2.0 otc可用法币查询：
-          // this.getMerchantAvailableLegalTenderList()
-          // 3.0 otc主页面查询挂单列表:
-          // this.getOTCPutUpOrdersList()
-        }
-      }
     },
     //  2.0 otc可用法币查询
     async getMerchantAvailableLegalTenderList () {
@@ -780,9 +763,7 @@ export default {
       console.log(this.currentPage)
       // console.log(index)
       this.selectCurrencyNameStatus = index
-      this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name) // 币种名称
-      this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[index].partnerCoinId) // 商户币种id
-      this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId) // 币种id
+      this.changeOTCActiveCoin(index)
       // console.log(this.selectedOTCAvailableCurrencyName)
       // console.log('币种id：' + this.selectedOTCAvailableCurrencyCoinID)
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
@@ -830,7 +811,8 @@ export default {
       language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
-      updateOTCHomeListStatus: state => state.OTC.updateOTCHomeListStatus // 委托定单撤单后，更新首页挂单列表状态
+      updateOTCHomeListStatus: state => state.OTC.updateOTCHomeListStatus, // 委托定单撤单后，更新首页挂单列表状态
+      OTCCoinList: state => state.OTC.OTCCoinList
     })
   },
   watch: {

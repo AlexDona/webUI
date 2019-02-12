@@ -51,7 +51,7 @@
                 clearable
               >
                 <el-option
-                  v-for="(item,index) in ADManageMarketList"
+                  v-for="(item,index) in OTCCoinList"
                   :key="index"
                   :label="item.name"
                   :value="item.coinId"
@@ -296,7 +296,6 @@
 <script>
 import {
   cancelAllOrdersOnekey,
-  getOTCAvailableCurrency,
   getMerchantAvailableLegalTender,
   getOTCADManageApplyList,
   querySelectedOrdersRevocation
@@ -307,7 +306,10 @@ import {
   // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
-import {mapState} from 'vuex'
+import {
+  mapState,
+  mapActions
+} from 'vuex'
 export default {
   components: {
     IconFontCommon //  字体图标
@@ -338,7 +340,6 @@ export default {
       ],
       // 2.0 广告管理筛选下拉框数组--市场
       activatedADManageMarketList: '', // 选中的筛选项
-      ADManageMarketList: [],
       // 交易法币
       activatedADManageCurrencyId: '',
       ADManageCurrencyId: [],
@@ -371,7 +372,7 @@ export default {
     // console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
     // 1.0 otc可用币种查询：
-    this.getOTCAvailableCurrencyList()
+    this.GET_OTC_COIN_LIST_ACTION()
     // 2.0 otc可用法币查询：
     this.getMerchantAvailableLegalTenderList()
     // 3.0 获取otc广告管理列表
@@ -382,6 +383,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_OTC_COIN_LIST_ACTION'
+    ]),
     // 1.0 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
@@ -448,17 +452,6 @@ export default {
         case 'changeADManageStatusList':
           this.activatedADManageStatusList = targetValue
           break
-      }
-    },
-    // 6.0 币种查询
-    async getOTCAvailableCurrencyList () {
-      const data = await getOTCAvailableCurrency({})
-      // console.log('可用币种列表')
-      // console.log(data)
-      // 返回数据正确的逻辑
-      if (!data) return false
-      if (data.data) {
-        this.ADManageMarketList = getNestedData(data, 'data')
       }
     },
     // 7.0 可用法币查询
@@ -534,7 +527,8 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language, // 当前选中语言
-      theme: state => state.common.theme // 主题颜色
+      theme: state => state.common.theme, // 主题颜色
+      OTCCoinList: state => state.OTC.OTCCoinList
     }),
     windowHeight () {
       return window.innerHeight

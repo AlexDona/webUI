@@ -23,7 +23,7 @@
             @change="changeCoinId"
           >
             <el-option
-              v-for="(item,index) in traderCoinList"
+              v-for="(item,index) in OTCCoinList"
               :key="index"
               :value="item.coinId"
               :label="item.name"
@@ -499,7 +499,6 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {
-  getOTCAvailableCurrency,
   getMerchantAvailableLegalTender,
   getOTCMerchantsOrdersList,
   getOTCReportFormStatisticsData
@@ -512,7 +511,8 @@ import {
 } from '../../utils/commonFunc'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -527,7 +527,6 @@ export default {
       // 总页数
       totalPages: 1,
       // 1.0 广告管理筛选下拉框数组--交易币种
-      traderCoinList: [],
       activatedTraderCoinId: '', // 选中的交易币种id
       activatedTraderCoinName: '', // 选中的交易币种name
       // 2.0 广告管理筛选下拉框数组--交易法币
@@ -566,7 +565,11 @@ export default {
   },
   async created () {
     // 1.0 otc可用币种查询
-    await this.getOTCAvailableCurrencyList()
+    await this.GET_OTC_COIN_LIST_ACTION()
+    // 设置币种默认选中值
+    this.activatedTraderCoinId = getNestedData(this.OTCCoinList[0], 'coinId')
+    // 设置币种默认选中值的名称
+    this.activatedTraderCoinName = getNestedData(this.OTCCoinList[0], 'name')
     // 2.0 查询可用法币币种列表
     await this.getMerchantAvailableLegalTenderList()
     // 订单详情列表
@@ -579,6 +582,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_OTC_COIN_LIST_ACTION'
+    ]),
     ...mapMutations([
     ]),
     // 分页
@@ -590,25 +596,10 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
-    //  2.0 otc可用币种查询
-    async getOTCAvailableCurrencyList () {
-      const data = await getOTCAvailableCurrency({})
-      // console.log('otc可用币种查询')
-      // console.log(data)
-      // 返回数据正确的逻辑
-      if (!data) return false
-      if (data.data) {
-        this.traderCoinList = getNestedData(data, 'data')
-        // 设置币种默认选中值
-        this.activatedTraderCoinId = getNestedData(this.traderCoinList[0], 'coinId')
-        // 设置币种默认选中值的名称
-        this.activatedTraderCoinName = getNestedData(this.traderCoinList[0], 'name')
-      }
-    },
     //  2.1 改变可用币种类型
     changeCoinId (e) {
       this.activatedTraderCoinId = e
-      this.traderCoinList.forEach(item => {
+      this.OTCCoinList.forEach(item => {
         if (e === item.coinId) {
           this.activatedTraderCoinName = item.name
           // console.log(this.activatedTraderCoinName)
@@ -755,7 +746,8 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language,
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      OTCCoinList: state => state.OTC.OTCCoinList
     })
   },
   watch: {}

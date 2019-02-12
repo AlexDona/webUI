@@ -177,6 +177,14 @@
                         </span>
                         <p
                           class="transaction-list text-align-c"
+                          v-show="OTCCenterHasCurrentCoin"
+                          @click="jumpToOTCCenter(assetItem.coinId)"
+                        >
+                          <!-- otc 交易-->
+                          {{$t('M.comm_otc_center')}}
+                        </p>
+                        <p
+                          class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
                           :key="index"
                           @click.prevent="changeActiveSymbol(item, index)"
@@ -419,7 +427,8 @@ import {
 } from '../../../utils/commonFunc'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -486,12 +495,14 @@ export default {
       minRechargeAmount: '',
       // 确认次数
       successCount: '',
-      end: '' // 占位
+      // 当前币种是否含有OTC交易
+      OTCCenterHasCurrentCoin: false
     }
   },
   created () {
     // 刚进页面时候 个人资产列表展示
     this.getAssetCurrenciesList()
+    this.GET_OTC_COIN_LIST_ACTION()
   },
   mounted () {
     console.log(this.$refs)
@@ -500,6 +511,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_OTC_COIN_LIST_ACTION'
+    ]),
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
       'SET_JUMP_STATUS',
@@ -508,6 +522,11 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'SET_NEW_WITHDRAW_ADDRESS'
     ]),
+    // otc跳转
+    jumpToOTCCenter (coinId) {
+      console.log(coinId)
+      this.$goToPage('/OTCCenter')
+    },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
       console.log(e)
@@ -1050,12 +1069,12 @@ export default {
         coinId: this.currencyTradingId // 币种coinId
       })
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.currencyTradingList = getNestedData(data, 'data.data.entrust') || []
-      }
+      if (!data) return false
+      // 返回展示
+      this.currencyTradingList = getNestedData(data, 'data.entrust') || []
+
+      if (!this.currencyTradingList.length) return false
+      this.OTCCenterHasCurrentCoin = this.OTCCoinList.some((item) => item.coinId == this.currencyTradingList[0].sellCoinId)
     }
   },
   filter: {},
@@ -1070,7 +1089,9 @@ export default {
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // 是否允许提币
-      coinStatus: state => state.user.loginStep1Info.userInfo.coinStatus
+      coinStatus: state => state.user.loginStep1Info.userInfo.coinStatus,
+      // otc可用币种
+      OTCCoinList: state => state.OTC.OTCCoinList
     }),
     // 提现手续费输入input ref
     feeInputRef () {
