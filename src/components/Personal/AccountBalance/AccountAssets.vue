@@ -1091,9 +1091,6 @@ export default {
         console.log(newVal)
         this.getAssetCurrenciesList()
       }
-    },
-    activeWithdrawDepositAddress (newVal) {
-      console.log(newVal)
     }
   }
 }

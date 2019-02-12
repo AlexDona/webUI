@@ -36,8 +36,8 @@
             </li>
             <li
               class="nav-item"
-              @mouseenter="toggleShowSubNavBox('otc',1)"
-              @mouseleave="toggleShowSubNavBox('otc',0)"
+              @mouseenter="toggleBox('otc',true)"
+              @mouseleave="toggleBox('otc',false)"
             >
               <router-link to="/OTCCenter">
                 <!--<span>OTC交易</span>-->
@@ -101,8 +101,8 @@
             </li>
             <li
               class="nav-item"
-              @mouseenter="toggleShowSubNavBox('activity',1)"
-              @mouseleave="toggleShowSubNavBox('activity',0)"
+              @mouseenter="toggleBox('activity',true)"
+              @mouseleave="toggleBox('activity',false)"
             >
               <router-link to="/ActivityCenter">
                 <!--<span>活动中心</span>-->
@@ -132,11 +132,56 @@
         <!--注册登录-->
         <div class="right login">
           <ul class="ul-list">
+            <!--消息-->
+            <li
+              class="li-item notice-li"
+              @mouseenter="toggleBox('notice',true)"
+              @mouseleave="toggleBox('notice',false)"
+            >
+              <button class="notice-btn">
+                <IconFontCommon
+                  class="font-size26"
+                  icon-name="icon-xiaoxi"
+                />
+              </button>
+              <el-collapse-transition>
+                <ul
+                  class="notice-list"
+                  v-show="showNoticeList"
+                  :style="{
+                    height: `${homeNoticeList.length*40}px`
+                  }"
+                >
+                  <li
+                    class="notice-item"
+                    v-for="noticeItem in homeNoticeList.length < 5? homeNoticeList : homeNoticeList.slice(0,5)"
+                    :key="noticeItem.id"
+                    :track-by="noticeItem.id"
+                  >
+                      <router-link
+                        :to="`NewsAndNoticeItem/${noticeItem.id}`"
+                      >
+                        {{noticeItem.title}}
+                      </router-link>
+                  </li>
+                  <li
+                    class="notice-item view-more"
+                    v-show="homeNoticeList.length >= 5"
+                  >
+                    <!-- 查看全部 -->
+                    <router-link
+                      to="/NewsAndNoticeCenter"
+                      class="view-more-link"
+                    >{{$t('M.investment_look_all')}}</router-link>
+                  </li>
+                </ul>
+              </el-collapse-transition>
+            </li>
             <li class="li-item setting-li">
               <!--设置（语言，换肤）-->
               <button
                 class="setting"
-                @click="toggleShowSettingBox(1)"
+                @click="toggleBox('setting',true)"
               >
                 <IconFontCommon
                   class="font-size26"
@@ -241,8 +286,8 @@
             <li class="li-item">
               <dl
                 class="lang-box"
-                @mouseenter="toggleShowLanguageBox(1)"
-                @mouseleave="toggleShowLanguageBox(0)"
+                @mouseenter="toggleBox('lang',true)"
+                @mouseleave="toggleBox('lang',false)"
               >
                 <dt
                   class="lang-selected"
@@ -313,7 +358,6 @@
           </p>
           <!-- 主题选择框 -->
           <el-radio-group
-            @on-change="changeTheme"
             v-model="activeTheme">
             <el-radio-button
               v-for="(item,index) in themeList"
@@ -403,6 +447,8 @@ export default{
   data () {
     return {
       showApplyMerchantStatus: false, // 是否显示申请商家弹窗
+      // 是否显示小写列表
+      showNoticeList: false,
       // 语言选择中
       langSelecting: false,
       // 设置弹窗状态
@@ -597,9 +643,17 @@ export default{
       this.USER_LOGOUT()
       this.$goToPage('/home')
     },
-    // 显示状态切换（子导航）
-    toggleShowSubNavBox (item, status) {
-      switch (item) {
+    toggleBox (type, status) {
+      switch (type) {
+        case 'notice':
+          this.showNoticeList = status
+          break
+        case 'setting':
+          this.showSetting = status
+          break
+        case 'lang':
+          this.langSelecting = status
+          break
         case 'otc':
           this.otcSubNavStatus = status
           break
@@ -608,35 +662,21 @@ export default{
           break
       }
     },
-    // 显示状态切换 （设置）
-    toggleShowSettingBox (status) {
-      console.log(Boolean(status))
-      this.showSetting = Boolean(status)
-    },
-    // 显示状态切换 （语言）
-    toggleShowLanguageBox (status) {
-      this.langSelecting = Boolean(status)
-    },
     // 切换语言
     changeLanguage (e) {
       this.CHANGE_LANGUAGE(e)
       this.$i18n.locale = e.shortName
     },
-    // 切换主题
-    changeTheme (e) {
-      console.log(e)
-    },
     // 更改设置
     async changeSetting () {
       // 主题设置
       this.CHANGE_THEME(this.activeTheme)
-      document.body.classList.remove('day')
-      document.body.classList.remove('night')
+      document.body.classList.remove('day', 'night')
       document.body.classList.add(this.activeTheme)
       // 汇率转换设置
       await this.changeActiveTransitionCurrency()
       this.CHANGE_CONVERT_CURRENCY(this.activeConvertCurrency)
-      this.toggleShowSettingBox(0)
+      this.toggleBox('setting', false)
     },
     // 查询某商户可用法币币种列表
     async getMerchantAvailableLegalTenderList () {
@@ -674,7 +714,9 @@ export default{
       $mainNightBgColor: state => state.common.mainColor.$mainNightBgColor,
       noticeCloseVisible: state => state.home.noticeCloseVisible,
       // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
-      otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus
+      otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus,
+      // 首页消息列表
+      homeNoticeList: state => state.home.noticeList
     }),
     localPayPwdSet () {
       return getNestedData(this.userInfo, 'paypasswordSet')
@@ -737,6 +779,7 @@ export default{
             padding: 0 2%;
             text-align: center;
             vertical-align: top;
+            white-space: nowrap;
             transition: all .5s;
 
             &:first-of-type {
@@ -862,7 +905,7 @@ export default{
                 padding: 0 25px;
                 overflow: hidden;
                 text-align: center;
-                background-color: rgba(10, 27, 47, 1);
+                background-color: $mainContentNightBgColor;
 
                 > .sub-nav-user {
                   > .nav-vip {
@@ -916,6 +959,63 @@ export default{
               padding: 0;
             }
 
+            /* 消息 */
+            &.notice-li {
+              position: relative;
+
+              > .notice-btn {
+                color: $mainColor;
+                cursor: pointer;
+              }
+
+              .notice-list {
+                position: absolute;
+                top: 50px;
+                left: -10px;
+                width: 300px;
+                max-height: 240px;
+                border-radius: 0 0 2px 2px;
+                overflow: hidden;
+                box-shadow: 0 1px 1px 0 rgb(32, 35, 55);
+
+                > .notice-item {
+                  box-sizing: border-box;
+                  height: 40px;
+                  padding: 0 14px;
+                  border-bottom: 1px solid #292c42;
+                  font-size: 12px;
+                  line-height: 40px;
+                  text-align: left;
+                  background-color: $mainContentNightBgColor;
+
+                  > a {
+                    display: block;
+                    height: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    color: $mainNightTitleColor;
+
+                    &:hover {
+                      color: $mainColor;
+                    }
+                  }
+
+                  &.view-more {
+                    background-color: #2c3047;
+                  }
+
+                  .view-more-link {
+                    display: inline-block;
+                    width: 100%;
+                    text-align: center;
+                    color: $mainColor;
+                    cursor: pointer;
+                  }
+                }
+              }
+            }
+
             /* 设置 */
             .setting {
               padding: 0;
@@ -956,7 +1056,7 @@ export default{
                 z-index: 2;
                 top: 64px;
                 left: 0;
-                background-color: #2a3242;
+                background-color: $mainContentNightBgColor;
 
                 > .lang-item {
                   display: block;
@@ -966,11 +1066,10 @@ export default{
                   line-height: 30px;
                   text-align: left;
                   color: #fff;
-                  transition: all 1s;
                   cursor: pointer;
 
                   &:hover {
-                    background-color: $mainColor;
+                    color: $mainColor;
                   }
 
                   > .icon {
@@ -1061,16 +1160,45 @@ export default{
         > .right {
           > .ul-list {
             > .li-item {
+              /* 消息 */
+              &.notice-li {
+                .notice-list {
+                  box-shadow: 0 2px 10px 0 rgb(225, 232, 240);
+
+                  > .notice-item {
+                    border-bottom: 1px solid #e5eef8;
+                    background-color: $mainDayBgColor;
+
+                    > a {
+                      color: #7d90ac;
+
+                      &:hover {
+                        color: $mainColor;
+                      }
+                    }
+
+                    &.view-more {
+                      background-color: #f2f6fa;
+                    }
+
+                    .view-more-link {
+                      color: $mainColor;
+                    }
+                  }
+                }
+              }
+
               /* 语言选择 dl */
               > .lang-box {
                 > .lang-list {
                   background-color: #fff;
+                  box-shadow: 0 2px 10px 0 rgb(225, 232, 240);
 
                   > .lang-item {
                     color: #7d90ac;
 
                     &:hover {
-                      color: #fff;
+                      color: $mainColor;
                     }
                   }
                 }
@@ -1089,7 +1217,7 @@ export default{
 
                     > .nav-button {
                       border-radius: 4px;
-                      color: #338ff5;
+                      color: $mainColor;
                       background: rgba(51, 143, 245, .1);
                     }
                   }

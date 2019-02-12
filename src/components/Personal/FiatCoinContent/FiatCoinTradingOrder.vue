@@ -1142,14 +1142,6 @@ export default {
     // }
   },
   watch: {
-    activeLanguage (newVal) {
-      console.log('当前选中语言')
-      console.log(newVal)
-    },
-    language (newVal) {
-      console.log('language')
-      console.log(newVal)
-    },
     // 监控交易中订单列表并调用倒计时逻辑方法
     tradingOrderList (newVal) {
       this.timerLogicMethod()
@@ -1172,9 +1164,6 @@ export default {
     //   this.accomplishSetInter()
     // }
     // },
-    legalTradePageTotals (newVal) {
-      console.log(newVal)
-    },
     activeName () {
       this.getOTCEntrustingOrdersRevocation(this.activeName)
     }

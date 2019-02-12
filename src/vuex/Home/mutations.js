@@ -3,7 +3,8 @@ import {
   CHANGE_BANNER_ACTIVE,
   CHANGE_COLLECT_SYMBOL,
   CHANGE_SYMBOL_MAP,
-  CHANGE_NOTICE_VISIBLE
+  CHANGE_NOTICE_VISIBLE,
+  SET_HOME_NOTICE_LIST
 } from './mutations-types.js'
 import Vue from 'vue'
 // import {setStore, getStore} from '../utils'
@@ -39,5 +40,8 @@ export default {
   },
   [CHANGE_NOTICE_VISIBLE] (state, data) {
     state.noticeCloseVisible = data
+  },
+  [SET_HOME_NOTICE_LIST] (state, noticeList) {
+    state.noticeList = noticeList
   }
 }

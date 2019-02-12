@@ -520,10 +520,6 @@ export default {
       this.activeName = this.$t('M.trade_market_optional')
       this.getTradeMarketData()
     },
-    activeSymbol (newVal) {},
-    activeTabSymbolStr (newVal) {
-      console.log(newVal)
-    },
     // socket 更新数据
     tradeMarkeContentItem (newVal) {
       if (newVal) {
@@ -580,9 +576,6 @@ export default {
     middleTopData (newVal) {
       this.setActiveIndex(newVal.area)
       this.activeName = newVal.area
-    },
-    activeIndex (newVal) {
-      console.log(newVal)
     },
     activeName (newVal, oldVal) {
       this.setActiveTabSymbolStr()

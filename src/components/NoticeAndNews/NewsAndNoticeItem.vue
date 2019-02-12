@@ -111,14 +111,12 @@ export default {
     }
   },
   async created () {
+    this.CHANGE_AJAX_READY_STATUS(true)
     this.templateId = getStore('templateId')
-    if (this.templateId) {
-      await this.changeNewDetailByLanguage()
-    } else {
-      await this.getDetailInfo(this.detailId)
-    }
+    this.templateId ? await this.changeNewDetailByLanguage() : await this.getDetailInfo(this.detailId)
     await this.getAllNewsTypeList()
-    this.getAllTypeListNewsList()
+    await this.getAllTypeListNewsList()
+    this.CHANGE_AJAX_READY_STATUS(false)
   },
   mounted () {},
   activated () {},
@@ -126,6 +124,7 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
+      'CHANGE_AJAX_READY_STATUS',
       'CHANGE_NEWS_TYPE_ACTIVE_NAME'
     ]),
     backToParent (item) {
@@ -163,6 +162,7 @@ export default {
     },
     // 获取全部type类型的前5条数据
     async getAllTypeListNewsList () {
+      this.CHANGE_AJAX_READY_STATUS(true)
       let params = {
         pageNum: 1,
         pageSize: 5,
@@ -189,9 +189,6 @@ export default {
     })
   },
   watch: {
-    newsTypeActiveName (newVal) {
-      console.log(newVal)
-    },
     async language () {
       await this.getAllNewsTypeList()
       await this.getAllTypeListNewsList()

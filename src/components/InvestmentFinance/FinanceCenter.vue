@@ -945,9 +945,6 @@ export default {
     }
   },
   watch: {
-    InvestmentValue (newVal, oldVal) {
-      console.log(newVal, oldVal)
-    },
     language (newVal) {
       console.log('当前选中语言')
       console.log(newVal)

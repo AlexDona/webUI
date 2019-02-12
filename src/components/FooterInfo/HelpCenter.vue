@@ -69,9 +69,6 @@ export default {
     })
   },
   watch: {
-    isNeedApp (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>

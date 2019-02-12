@@ -126,9 +126,6 @@ export default {
     }
   },
   watch: {
-    configInfo (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>
