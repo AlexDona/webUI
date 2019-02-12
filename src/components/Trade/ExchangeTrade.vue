@@ -38,7 +38,7 @@
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!buyUserCoinWallet.total">--</span>
-                    <span v-show="buyUserCoinWallet.total">{{buyUserCoinWallet.total}}</span>
+                    <span v-show="buyUserCoinWallet.total">{{$scientificToNumber(buyUserCoinWallet.total)}}</span>
                     <span>{{middleTopData.area}}</span>
                   </span>
                 </div>
@@ -143,7 +143,7 @@
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!sellUserCoinWallet.total">--</span>
-                    <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
+                    <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
@@ -258,7 +258,7 @@
                     {{$t('M.comm_usable')}}:
                     <span v-show="!buyUserCoinWallet.total||!middleTopData.last">--</span>
                     <span v-show="buyUserCoinWallet.total&&middleTopData.last">
-                      {{buyUserCoinWallet.total}}
+                      {{$scientificToNumber(buyUserCoinWallet.total)}}
                     </span>
                     <span>{{middleTopData.area}}</span>
                   </span>
@@ -335,7 +335,7 @@
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!sellUserCoinWallet.total">--</span>
-                    <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
+                    <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
@@ -907,7 +907,7 @@ export default {
     // 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]
-      return formatNumberInput(target, pointLength) - 0
+      return this.$scientificToNumber(formatNumberInput(target, pointLength) - 0)
     },
     // 新增委单
     async addEntrust () {
@@ -1086,11 +1086,11 @@ export default {
     },
     // 限价买预计成交额
     limitBuyAmount () {
-      return cutOutPointLength(this.limitExchange.buyPrice * this.limitExchange.buyCount, 2)
+      return this.$scientificToNumber(cutOutPointLength(this.limitExchange.buyPrice * this.limitExchange.buyCount, 2))
     },
     // 限价卖预计成交额
     limitSellAmount () {
-      return cutOutPointLength(this.limitExchange.sellPrice * this.limitExchange.sellCount, 2)
+      return this.$scientificToNumber(cutOutPointLength(this.limitExchange.sellPrice * this.limitExchange.sellCount, 2))
     }
   },
   watch: {
@@ -1153,7 +1153,6 @@ export default {
       this.setBuyAndSellPrice(this.getRefValue(this.limitBuyPriceInputRef), this.getRefValue(this.limitSellPriceInputRef))
     },
     activeSymbol () {
-      console.log(1)
       this.reflashCount = 0
     },
     // 用户手动设置价格
