@@ -175,14 +175,14 @@
                           v-show="currencyTradingList.length"
                         >
                         </span>
-                        <p
-                          class="transaction-list text-align-c"
-                          v-show="OTCCenterHasCurrentCoin"
-                          @click="jumpToOTCCenter(assetItem.coinId)"
-                        >
-                          <!-- otc 交易-->
-                          {{$t('M.comm_otc_center')}}
-                        </p>
+                        <!--<p-->
+                          <!--class="transaction-list text-align-c"-->
+                          <!--v-show="OTCCenterHasCurrentCoin"-->
+                          <!--@click="jumpToOTCCenter(assetItem.coinId)"-->
+                        <!--&gt;-->
+                          <!--&lt;!&ndash; otc 交易&ndash;&gt;-->
+                          <!--{{$t('M.comm_otc_center')}}-->
+                        <!--</p>-->
                         <p
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
@@ -523,13 +523,13 @@ export default {
       'SET_NEW_WITHDRAW_ADDRESS'
     ]),
     // otc跳转
-    jumpToOTCCenter (coinId) {
-      this.$router.push({
-        path: '/OTCCenter',
-        params: {coinId: coinId}
-      })
-      // this.$goToPage('/OTCCenter', coinId)
-    },
+    // jumpToOTCCenter (coinId) {
+    //   this.$router.push({
+    //     path: '/OTCCenter',
+    //     params: {coinId: coinId}
+    //   })
+    //   // this.$goToPage('/OTCCenter', coinId)
+    // },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
       this.isShowAllCurrency = e == 'not_all' ? true : false
