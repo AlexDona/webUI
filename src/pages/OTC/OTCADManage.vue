@@ -480,8 +480,8 @@ export default {
     async cancelAllOneKeyConfirm () {
       const data = await cancelAllOrdersOnekey()
       // 返回数据正确的逻辑
-      if (!data) return false
       this.loading = false
+      if (!data) return false
       this.getOTCADManageList()
     },
     // 10.0 点击表格中的下架按钮触发的事件
@@ -501,6 +501,7 @@ export default {
         entrustId: id
       })
       // 返回数据正确的逻辑 重新渲染列表
+      this.loading = false
       if (!data) return false
       this.getOTCADManageList()
     },
