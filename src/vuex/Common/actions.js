@@ -7,8 +7,7 @@ import {
 } from './actions-types'
 import {
   getStoreWithJson,
-  getStore,
-  setStore
+  getStore
 } from '../../utils'
 import {
   getConfigAjax,
@@ -33,15 +32,14 @@ export default {
     let nowTimeStamp = new Date().getTime()
     let diffTime = Math.abs(nowTimeStamp - saveTimeStamp)
     let data
-    if (localCountry && diffTime < 86400000) {
+    const ONE_DAY = 86400000
+    if (localCountry && diffTime < ONE_DAY) {
       data = localCountry
       commit('SET_COUNTRY_AREA_LIST', data)
       return false
     } else {
       data = await getCountryList()
       commit('SET_COUNTRY_AREA_LIST', getNestedData(data, 'data'))
-      setStore('countryList', getNestedData(data, 'data'))
-      setStore('timeStamp', new Date().getTime())
       if (callback) {
         callback(data)
       }
@@ -57,7 +55,6 @@ export default {
   },
   // 获取语言列表信息
   async [GET_LANGUAGE_LIST_ACTION] ({commit, state}, self) {
-    console.log(state)
     const data = await getLanguageList()
     self.languageList = data.data
     const data1 = await getConfigAjax()

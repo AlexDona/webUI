@@ -2,15 +2,17 @@ import App from './App'
 import routerCreator from './router'
 import {getStore} from './utils'
 import 'babel-polyfill'
-import storeCreater from './vuex'
+import storeCreator from './vuex'
 import '../static/js/rem'
 import VueLazyLoad from 'vue-lazyload'
+import Mixin from './mixins'
 
 Vue.use(VueLazyLoad, {
   loading: require('./assets/develop/loading.svg')
 })
+Vue.mixin(Mixin)
 
-const store = storeCreater()
+const store = storeCreator()
 const router = routerCreator()
 // 多语言
 const i18n = new VueI18n({

@@ -22,7 +22,10 @@
     <!--表格内容-->
     <div
       class="right"
-      :style="'height:'+(50*(item.content.length||1)+108)+'px'"
+      :style="{
+        'height':`${+(50*(item.content.length||1)+108)}px`,
+        'max-height':'560px'
+      }"
     >
       <el-table
         class="cursor-pointer"
@@ -113,7 +116,7 @@
                   line-height: 15px;"
                 v-show="currencyRateList[s.row.area]&&activeConvertCurrencyObj"
               >
-                ≈ {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[s.row.area]-0)*(s.row.last-0))}}
+                ≈ {{activeConvertCurrencyObj.symbol}}{{$keep2Num((currencyRateList[s.row.area]-0)*(s.row.last-0))}}
               </div>
             </div>
           </template>
@@ -168,7 +171,7 @@
                 height:30px;
                 line-height: 30px;
                 margin:10px auto; ">
-              {{formatCount(s.row.vol24hour)}}
+              {{$formatCount(s.row.vol24hour)}}
             </div>
           </template>
         </el-table-column>
@@ -192,18 +195,18 @@
                 v-show="s.row.chg>0"
                 style="color:#d45858;"
               >
-                {{keep2Num(s.row.chg)}}%
+                {{$keep2Num(s.row.chg)}}%
               </span>
               <span
                 v-show="s.row.chg==0"
               >
-                {{keep2Num(s.row.chg)}}%
+                {{$keep2Num(s.row.chg)}}%
               </span>
               <span
                 v-show="s.row.chg<0"
                 style="color:#008069;"
               >
-               {{keep2Num(s.row.chg)}}%
+               {{$keep2Num(s.row.chg)}}%
               </span>
             </div>
           </template>
@@ -265,8 +268,6 @@ import {
   mapState,
   mapMutations
 } from 'vuex'
-import {keep2Num} from '../../utils'
-import {formatCount} from '../../utils/commonFunc'
 import EchartsLineCommon from '../Common/EchartsLineCommon'
 export default {
   components: {
@@ -296,20 +297,12 @@ export default {
       'SET_JUMP_SYMBOL',
       'CHANGE_ACTIVE_TRADE_AREA'
     ]),
-    // 成交量格式化
-    formatCount (targetNum) {
-      return formatCount(targetNum)
-    },
     toggleCollect (id, status, row) {
       this.$emit('toggleCollect', {
         id,
         status,
         row
       })
-    },
-    // 截取2位小数
-    keep2Num (number) {
-      return keep2Num(number)
     },
     changeActiveSymbol (e) {
       this.SET_JUMP_STATUS(true)
@@ -321,7 +314,7 @@ export default {
         id,
         name
       })
-      this.$router.push({'path': '/TradeCenter'})
+      this.$goToPage('/TradeCenter')
     },
     // 正面动画
     beforeEnter (el) {

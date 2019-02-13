@@ -21,7 +21,7 @@ import {
   removeCollectionAjax,
   getCollectionListAjax
 } from '../utils/api/home'
-import storeCreater from '../vuex'
+import storeCreator from '../vuex'
 import {
   removeStore,
   // getStore,
@@ -43,7 +43,7 @@ import {
   CHINESE_REG
 } from './regExp'
 
-const store = storeCreater()
+const store = storeCreator()
 
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
@@ -239,8 +239,9 @@ export const getCollectionList = async (callback) => {
   callback(data)
 }
 // 协议跳转
-export const jumpToOtherPageForFooter = (router, activeName, that) => {
-  that.$router.push({path: router})
+export const jumpToOtherPageForFooter = (router, activeName) => {
+  const VUE = Vue._installedPlugins[3].vm
+  VUE.$router.push({path: router})
   store.commit('CHANGE_FOOTER_ACTIVE_NAME', {
     activeName,
     type: router
@@ -292,7 +293,13 @@ export const formatCount = (targetNum) => {
       return newNum
   }
 }
-// 获取嵌套数据
+
+/**
+ * 获取嵌套数据
+ * @param data
+ * @param index
+ * @returns {*}
+ */
 export const getNestedData = (data, index) => {
   return _.get(data, index)
 }
@@ -378,7 +385,13 @@ String.prototype.format = function (args) {
   }
   return result
 }
-// 接口统一处理
+/**
+ * 接口统一处理
+ * @param request
+ * @param noTip
+ * @param errorTip
+ * @returns {Promise<*>}
+ */
 export const handleRequest = async (request, noTip, errorTip) => {
   const DATA = await request()
   if (!returnAjaxMsg(DATA, Vue, noTip, errorTip)) {

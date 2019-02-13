@@ -800,14 +800,16 @@ export default {
       // 返回数据正确的逻辑
       // console.log(data)
       if (!data) return false
-      this.publishADTradePwdDialogStatus = false
-      // 改变标识状态为不是跳转来的
-      this.ADManageJumpOrderStatus = 1
-      // 清空数据
-      this.clearMainData()
-      // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-      this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
-      this.$router.push({ path: '/OTCCenter' })
+      if (data) {
+        this.publishADTradePwdDialogStatus = false
+        // 改变标识状态为不是跳转来的
+        this.ADManageJumpOrderStatus = 1
+        // 清空数据
+        this.clearMainData()
+        // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+        this.$goToPage('/OTCCenter')
+      }
     },
     // 7.0 交易密码框获得焦点
     tradePasswordFocus () {

@@ -113,7 +113,6 @@ import socket from '../../utils/datafeeds/socket'
 import {
   getStore,
   setStore,
-  keep2Num,
   unzip
 } from '../../utils'
 import {
@@ -292,10 +291,6 @@ export default{
         }
       })
     },
-    // 截取2位小数
-    keep2Num (number) {
-      return keep2Num(number)
-    },
     // 更改当前交易对
     changeActiveSymbol (e) {
       console.log(e)
@@ -308,7 +303,7 @@ export default{
         id,
         name
       })
-      this.$router.push({'path': '/TradeCenter'})
+      this.$goToPage('/TradeCenter')
     },
     // 获取用户收藏列表
     async getCollectionList (collectSymbol) {
@@ -354,9 +349,7 @@ export default{
     },
     // 切换板块
     changeTab (e) {
-      console.log(e.name)
       this.searchFromMarketList()
-      console.log(this.newMarketList)
       this.changeIsShowStatus()
     },
     // 是否显示查看更多按钮

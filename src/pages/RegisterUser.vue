@@ -66,7 +66,7 @@
                class="phone-select"
              >
                <el-option
-                 v-for="item in contryAreaList"
+                 v-for="item in countryAreaList"
                  :key="item.nationCode"
                  :label="item.nationCode"
                  :value="item.nationCode"
@@ -117,7 +117,7 @@
                   v-show="language=='zh_CN'"
                 >
                   <el-option
-                    v-for="item in contryAreaList"
+                    v-for="item in countryAreaList"
                     :key="item.nationCode"
                     :label="item.chinese"
                     :value="item.abbreviation"
@@ -141,7 +141,7 @@
                   v-show="language!=='zh_CN'"
                 >
                   <el-option
-                    v-for="item in contryAreaList"
+                    v-for="item in countryAreaList"
                     :key="item.nationCode"
                     :label="item.english"
                     :value="item.abbreviation"
@@ -257,7 +257,7 @@
                </span>
                <a
                  class="main-color"
-                 @click.prevent="jumpToOtherPage('/ServiceAndProtocol','UserProtocol')"
+                 @click.prevent="$footerJump('/ServiceAndProtocol','UserProtocol')"
                >
                  <!--《用户协议》-->
                  {{ $t('M.forgetPassword_hint7') }}
@@ -342,7 +342,7 @@
                   class="phone-select"
                 >
                   <el-option
-                    v-for="item in contryAreaList"
+                    v-for="item in countryAreaList"
                     :key="item.nationCode"
                     :label="item.nationCode"
                     :value="item.nationCode"
@@ -393,7 +393,7 @@
                   v-show="language=='zh_CN'"
                 >
                   <el-option
-                    v-for="item in contryAreaList"
+                    v-for="item in countryAreaList"
                     :key="item.nationCode"
                     :label="item.chinese"
                     :value="item.abbreviation"
@@ -417,7 +417,7 @@
                   v-show="language!=='zh_CN'"
                 >
                   <el-option
-                    v-for="item in contryAreaList"
+                    v-for="item in countryAreaList"
                     :key="item.nationCode"
                     :label="item.english"
                     :value="item.abbreviation"
@@ -529,7 +529,7 @@
                </span>
                 <a
                   class="main-color"
-                  @click.prevent="jumpToOtherPage('/ServiceAndProtocol','UserProtocol')"
+                  @click.prevent="$footerJump('/ServiceAndProtocol','UserProtocol')"
                 >
                   <!--《用户协议》-->
                   {{ $t('M.forgetPassword_hint7') }}
@@ -623,7 +623,7 @@
         </p>
         <button
           class="cursor-pointer jump-login"
-          @click="loginImmediately"
+          @click="$goToPage('/login')"
         >
           <!--立即登录-->
           {{ $t('M.forgetPassword_text3') }}
@@ -674,8 +674,7 @@ import {
 import {
   returnAjaxMsg, // 接口返回信息
   validateNumForUserInput, // 用户输入验证
-  sendPhoneOrEmailCodeAjax,
-  jumpToOtherPageForFooter
+  sendPhoneOrEmailCodeAjax
 } from '../utils/commonFunc'
 import {
   phoneNumRegexpInput,
@@ -702,7 +701,7 @@ export default {
       phoneRef: 'phone-ref',
       mobilePhoneRef: 'mobile-phone-ref',
       activeMethod: 0, // 当前注册方式： 0： 手机注册 : 1 邮箱注册
-      // contryAreaList: [], // 国家区域列表
+      // countryAreaList: [], // 国家区域列表
       activeCountryCodeWithPhone: '86',
       activeCountryCodeWithEmail: '86',
       activeCountryAbbreviationWithEmail: 'CHN', // 当前国家简称
@@ -798,13 +797,10 @@ export default {
     },
     jumpToDownAppPage () {
       if (this.inviter && this.isNeedApp && this.isMobile) {
-        this.$router.push({'path': `/downloadApp?language${this.language}`})
+        this.$goToPage(`/downloadApp?language${this.language}`)
       } else {
-        this.$router.push({'path': '/login'})
+        this.$goToPage('/login')
       }
-    },
-    jumpToOtherPage (router, activeName) {
-      jumpToOtherPageForFooter(router, activeName, this)
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -937,7 +933,7 @@ export default {
     },
     // 发送验证码（短信、邮箱）
     async sendPhoneOrEmailCode (type) {
-      this.activeCountryCodeWithEmail = _.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].nationCode
+      this.activeCountryCodeWithEmail = _.filter(this.countryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].nationCode
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -1033,10 +1029,6 @@ export default {
         }
       }, 1000)
     },
-    // 立即登录
-    loginImmediately () {
-      this.$router.push({'path': '/login'})
-    },
     // 切换注册方式
     toggleMethod (method) {
       this.activeMethod = method
@@ -1120,7 +1112,7 @@ export default {
       isLogin: state => state.user.isLogin,
       isMobile: state => state.user.isMobile,
       language: state => state.common.language,
-      contryAreaList: state => state.common.contryAreaList,
+      countryAreaList: state => state.common.countryAreaList,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       configInfo: state => state.common.footerInfo.configInfo

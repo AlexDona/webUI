@@ -56,7 +56,7 @@
              :placeholder="$t('M.comm_all')"
            >
              <el-option
-               v-for="(item,index) in merchantsOrdersCoinList"
+               v-for="(item,index) in OTCCoinList"
                :key="index"
                :label="item.name"
                :value="item.coinId"
@@ -197,7 +197,6 @@ import IconFontCommon from '../../Common/IconFontCommon'
 // } from '../../../utils/api/personal'
 import {
   getMerchantAvailableLegalTender,
-  getOTCAvailableCurrency,
   getOTCEntrustingOrders
 } from '../../../utils/api/OTC'
 import {
@@ -207,7 +206,8 @@ import {
 } from '../../../utils/commonFunc'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -236,7 +236,6 @@ export default {
       ],
       // 商家订单筛选下拉框 币种
       activatedMerchantsOrdersCoin: '',
-      merchantsOrdersCoinList: [],
       // 商家订单筛选下拉框 法币
       activatedMerchantsOrdersCurrency: '',
       merchantsOrdersCurrencyList: [],
@@ -272,7 +271,7 @@ export default {
     }
   },
   async created () {
-    await this.getOTCAvailableCurrencyList()
+    await this.GET_OTC_COIN_LIST_ACTION()
     await this.getMerchantAvailableLegalTenderList()
   },
   mounted () {},
@@ -280,6 +279,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_OTC_COIN_LIST_ACTION'
+    ]),
     ...mapMutations([
       'SET_LEGAL_TENDER_LIST',
       'CHANGE_LEGAL_PAGE',
@@ -293,18 +295,6 @@ export default {
       this.CHANGE_LEGAL_PAGE({
         legalTradePageNum: 1
       })
-    },
-    // 页面加载时 可用币种查询
-    async getOTCAvailableCurrencyList () {
-      const data = await getOTCAvailableCurrency({
-      })
-      console.log('可用币种列表')
-      console.log(data)
-      // 返回数据正确的逻辑
-      if (!data) return false
-      if (data) {
-        this.merchantsOrdersCoinList = getNestedData(data, 'data')
-      }
     },
     // 页面加载时 可用法币查询
     async getMerchantAvailableLegalTenderList () {
@@ -479,7 +469,9 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
-      reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus // 从全局获得的重新渲染交易中订单列表状态
+      // 从全局获得的重新渲染交易中订单列表状态
+      reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus,
+      OTCCoinList: state => state.OTC.OTCCoinList
     })
   },
   watch: {

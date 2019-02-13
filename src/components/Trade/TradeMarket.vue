@@ -648,6 +648,7 @@ export default {
       /* 表格内容 */
       > .content {
         height: 1584px;
+        overflow: auto;
       }
     }
 

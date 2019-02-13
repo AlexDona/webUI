@@ -51,7 +51,7 @@
               :placeholder="$t('M.comm_all')"
             >
               <el-option
-                v-for="(item,index) in merchantsOrdersCoinList"
+                v-for="(item,index) in OTCCoinList"
                 :key="index"
                 :label="item.name"
                 :value="item.coinId"
@@ -278,7 +278,7 @@
               :label = "$t('M.otc_MerchantsOrders_transaction_price')"
             >
               <template slot-scope = "s">
-                <div>{{ filterNumber(s.row.price) }}</div>
+                <div>{{ $scientificToNumber(s.row.price) }}</div>
               </template>
             </el-table-column>
             <!-- 成交量 -->
@@ -287,7 +287,7 @@
               width="100"
             >
               <template slot-scope = "s">
-                <div>{{ filterNumber(s.row.pickCount) }}</div>
+                <div>{{ $scientificToNumber(s.row.pickCount) }}</div>
               </template>
             </el-table-column>
             <!-- 总金额 -->
@@ -295,7 +295,7 @@
               :label = "$t('M.otc_canceled_total')"
             >
               <template slot-scope = "s">
-                <div>{{ filterNumber(s.row.payAmount) }}</div>
+                <div>{{ $scientificToNumber(s.row.payAmount) }}</div>
               </template>
             </el-table-column>
             <!-- 对方姓名 -->
@@ -338,9 +338,8 @@
 <!--请严格按照如下书写书序-->
 <script>
 import IconFontCommon from '../../components/Common/IconFontCommon'
-import {timeFilter, scientificToNumber} from '../../utils'
+import {timeFilter} from '../../utils'
 import {
-  getOTCAvailableCurrency,
   getMerchantAvailableLegalTender,
   getOTCMerchantsOrdersList
 } from '../../utils/api/OTC'
@@ -348,7 +347,10 @@ import {
   // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
-import {mapState} from 'vuex'
+import {
+  mapState,
+  mapActions
+} from 'vuex'
 export default {
   components: {
     IconFontCommon //  字体图标
@@ -381,7 +383,6 @@ export default {
       ],
       // 商家订单筛选下拉框 币种
       activatedMerchantsOrdersCoin: '',
-      merchantsOrdersCoinList: [],
       // 商家订单筛选下拉框 法币
       activatedMerchantsOrdersCurrency: '',
       merchantsOrdersCurrencyList: [],
@@ -428,7 +429,7 @@ export default {
     // console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
     // 1.0 otc可用币种查询：
-    this.getOTCAvailableCurrencyList()
+    this.GET_OTC_COIN_LIST_ACTION()
     // 2.0 otc可用法币查询：
     this.getMerchantAvailableLegalTenderList()
     // 3.0 加载列表
@@ -439,10 +440,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 科学计数法转换
-    filterNumber (num) {
-      return scientificToNumber(num)
-    },
+    ...mapActions([
+      'GET_OTC_COIN_LIST_ACTION'
+    ]),
     // 1分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
@@ -453,24 +453,9 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'date')
     },
-    // 3页面加载时 可用币种查询
-    async getOTCAvailableCurrencyList () {
-      const data = await getOTCAvailableCurrency({
-      })
-      // console.log('可用币种列表')
-      // console.log(data)
-      // 返回数据正确的逻辑
-      if (!data) return false
-      if (data.data) {
-        this.merchantsOrdersCoinList = getNestedData(data, 'data')
-      }
-    },
     // 4页面加载时 可用法币查询
     async getMerchantAvailableLegalTenderList () {
-      const data = await getMerchantAvailableLegalTender({
-      })
-      // console.log('可用法币')
-      // console.log(data)
+      const data = await getMerchantAvailableLegalTender()
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
@@ -580,7 +565,8 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language,
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      OTCCoinList: state => state.OTC.OTCCoinList
     })
   },
   watch: {}
