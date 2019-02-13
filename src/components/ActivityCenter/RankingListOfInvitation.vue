@@ -176,6 +176,7 @@ export default {
     // 获取 排行榜数据
     async getRankingList () {
       const data = await getRankingList()
+      console.log(data)
       this.rankingList = getNestedData(data, 'data')
     },
     // 获取当前时间
@@ -200,13 +201,13 @@ export default {
       return this.clientWidth / 3
     },
     coinName () {
-      return this.rankingList[0].coinName
+      return getNestedData(this.rankingList[0], 'coinName')
     },
     startDate () {
-      return this.configInfo.regStartTime
+      return getNestedData(this.configInfo, 'regStartTime')
     },
     endDate () {
-      return this.configInfo.regEndTime
+      return getNestedData(this.configInfo, 'regEndTime')
     }
   },
   watch: {

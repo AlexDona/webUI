@@ -16,6 +16,7 @@
             :name="outItem.plateId"
             v-for="(outItem,outIndex) in filterMarketList"
             :key="outIndex"
+            :track-by="outIndex"
           >
             <div
               class="tab-content"
@@ -44,6 +45,7 @@
                 v-for="(item) in outItem.tradeAreaList"
                 :id="'tab-item.'+item.id"
                 :key="item.id"
+                :track-by="item.id"
               >
                 <div
                   class="inner-item-box"
@@ -130,7 +132,8 @@ import {
   mapState,
   mapMutations
 } from 'vuex'
-export default{
+
+export default {
   components: {
     IconFontCommon,
     Footer,
@@ -174,7 +177,19 @@ export default{
         id: 3,
         content: []
       },
-      socketParamsStr: '' // socket请求参数字符串
+      // socket请求参数字符串
+      socketParamsStr: '',
+      // 最新的list
+      newMarketFilterList: [],
+      marketMap: new Map(),
+      // 最新的marketMap
+      newCurrentMarketMap: new Map(),
+      newMarketSet: new Set(),
+      // 最新的交易区内容map
+      newContentMap: new Map(),
+      // 最新的交易区map
+      newTradeAreaIndexMap: new Map(),
+      newSymbolIndexMap: new Map()
     }
   },
   async created () {
@@ -185,8 +200,10 @@ export default{
   },
   mounted () {
   },
-  activated () {},
-  update () {},
+  activated () {
+  },
+  update () {
+  },
   beforeRouteUpdate () {
   },
   destroyed () {
@@ -211,17 +228,6 @@ export default{
         }
       })
       this.$set(this.collectArea, 'content', newContent)
-    },
-    // 遍历行情数组
-    ergodicNewMarketList (callback) {
-      _.forEach(this.newMarketList, item => {
-        _.forEach(item.tradeAreaList, innerItem => {
-          _.forEach(innerItem.content, fourthItem => {
-            callback(fourthItem)
-          })
-        })
-        return false
-      })
     },
     // 拼接socket参数
     concatSocketParamsStr (activeIndexOfNewMarketList) {
@@ -254,27 +260,19 @@ export default{
       }
 
       this.socket.on('message', (data) => {
-        console.log(data.data)
         if (data.type == 1) {
           const newData = data.data
-          // 非自选区
-          _.forEach(this.newMarketList[this.activeIndex].tradeAreaList, (item, index) => {
-            console.log(item)
-            _.forEach(item.content, (innerItem, innerIndex) => {
-              let newContent = innerItem
-              if (innerItem.tradeId === newData.tradeId) {
-                setSocketData(
-                  newContent,
-                  newData,
-                  this.newMarketList[this.activeIndex].tradeAreaList[index].content,
-                  innerIndex,
-                  this
-                )
-                this.getFilterMarketList()
-                return false
-              }
-            })
-          })
+          let {buyCoinName, tradeName} = newData
+
+          let areaMap = this.newTradeAreaIndexMap.get(this.activeIndex)
+          if (!areaMap) return false
+          const areaIndex = areaMap.get(buyCoinName)
+          let contentMap = this.newSymbolIndexMap.get(this.activeIndex).get(buyCoinName)
+          if (!contentMap) return false
+          const contentIndex = this.newSymbolIndexMap.get(this.activeIndex).get(buyCoinName).get(tradeName)
+          const newContent = {...this.newMarketList[this.activeIndex].tradeAreaList[areaIndex].content[contentIndex], ...newData}
+          this.$set(this.newMarketList[this.activeIndex].tradeAreaList[areaIndex].content, contentIndex, newContent)
+          this.getFilterMarketList()
           //  自选区
           _.forEach(this.collectArea.content, (item, index) => {
             let newContent = item
@@ -286,6 +284,7 @@ export default{
                 index,
                 this
               )
+              return false
             }
           })
         }
@@ -293,7 +292,6 @@ export default{
     },
     // 更改当前交易对
     changeActiveSymbol (e) {
-      console.log(e)
       this.SET_JUMP_STATUS(true)
       this.SET_JUMP_SYMBOL(e)
       // 设置当前交易区
@@ -321,12 +319,6 @@ export default{
       const data = await getHomeMarketByAjax(params)
       let objData = getNestedData(data, 'data.obj')
       this.newMarketList = JSON.parse(unzip(objData))
-      this.ergodicNewMarketList(item => {
-        this.CHANGE_SYMBOL_MAP({
-          key: item.id,
-          val: item
-        })
-      })
       this.activeName = getNestedData(this.newMarketList[0], 'plateId')
       this.activeIndex = 0
       let collectSymbol = {}
@@ -338,6 +330,25 @@ export default{
       this.setCollectData(collectSymbol)
       this.concatSocketParamsStr(this.activeIndex)
       this.getFilterMarketList()
+
+      _.forEach(this.newMarketList, (plateItem, plateIndex) => {
+        this.marketMap.set(plateIndex, new Map())
+        this.newTradeAreaIndexMap.set(plateIndex, new Map())
+        this.newSymbolIndexMap.set(plateIndex, new Map())
+        _.forEach(plateItem.tradeAreaList, (tradeAreaItem, tradeAreaIndex) => {
+          this.marketMap.get(plateIndex).set(tradeAreaItem.area, new Map())
+          this.newTradeAreaIndexMap.get(plateIndex).set(tradeAreaItem.area, tradeAreaIndex)
+          this.newSymbolIndexMap.get(plateIndex).set(tradeAreaItem.area, new Map())
+          _.forEach(tradeAreaItem.content, (contentItem, contentIndex) => {
+            this.marketMap.get(plateIndex).get(tradeAreaItem.area).set(contentItem.id, contentItem)
+            this.newSymbolIndexMap.get(plateIndex).get(tradeAreaItem.area).set(contentItem.id, contentIndex)
+            this.CHANGE_SYMBOL_MAP({
+              key: contentItem.id,
+              val: contentItem
+            })
+          })
+        })
+      })
     },
     getSocketData (type, params) {
       // 首页socket
@@ -356,7 +367,6 @@ export default{
     changeIsShowStatus () {
       let activeMarketList = this.newMarketList.filter(item => item.plateId == this.activeName)[0]
       let targetList = getNestedData(activeMarketList, 'tradeAreaList') || []
-      console.log(targetList)
       this.moreBtnShowStatus = targetList.length > 2 ? 1 : 0
     },
     // market过滤
@@ -372,7 +382,7 @@ export default{
         this.filterMarketList = this.newMarketList
       }
     },
-    // 搜索关键字
+    // 搜索关键字e
     searchFromMarketList () {
       this.searchList = []
       this.searchArea.content = this.searchList
@@ -405,7 +415,6 @@ export default{
     // 切换收藏
     async toggleCollect (data) {
       let {id, status, row} = data
-      console.log(id)
       status = Boolean(status)
       this.$set(this.collectStatusList, id, status)
       if (status) {
@@ -423,7 +432,6 @@ export default{
           type: 'cancel',
           collectSymbol: id
         })
-        console.log(id, this.collectArea.content)
         // // 取消收藏
         let newList = this.collectArea.content.filter(item => item.id !== id)
         this.$set(this.collectArea, 'content', newList)

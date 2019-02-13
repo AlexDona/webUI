@@ -340,6 +340,7 @@ export const passportEntryRestrictions = event => {
 }
 
 export const getRefValue = (self, refName) => {
+  if (!self.$refs[refName]) return false
   return self.$refs[refName].value
 }
 

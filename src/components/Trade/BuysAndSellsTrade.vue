@@ -225,14 +225,24 @@ export default {
     activeSymbolId () {
       this.reflashCount = 0
     },
+    buysAndSellsList (newVal) {
+      console.log(newVal)
+    },
+    buysAndSellsListByAjax (newVal) {
+      console.log(newVal)
+    },
     buysAndSellsListBySocket: {
       handler (newVal) {
+        console.log(newVal)
         if (!this.reflashCount && newVal) {
           this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
-          this.reflashCount++
+          this.reflashCount += 1
         }
       },
       deep: true
+    },
+    reflashCount (newVal) {
+      console.log(newVal)
     }
   }
 }
