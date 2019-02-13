@@ -159,7 +159,7 @@
         </el-table-column>
         <!--24H交易量-->
         <el-table-column
-          prop="volume"
+          prop="vol24hour"
           :label="'24H' + $t('M.home_market_volume')"
           width="150px"
           sortable
@@ -177,7 +177,7 @@
         </el-table-column>
         <!--涨跌-->
         <el-table-column
-          prop="rose"
+          prop="chg"
           :label="$t('M.trade_ups_and_downs')"
           width="110px"
           sortable
