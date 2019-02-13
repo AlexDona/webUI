@@ -420,15 +420,14 @@ import {
   checkCurrencyAddress
 } from '../../../utils/api/personal'
 import {
-  // returnAjaxMsg,
+  returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter,
   getNestedData
 } from '../../../utils/commonFunc'
 import {
   mapMutations,
-  mapState,
-  mapActions
+  mapState
 } from 'vuex'
 export default {
   components: {
@@ -495,14 +494,12 @@ export default {
       minRechargeAmount: '',
       // 确认次数
       successCount: '',
-      // 当前币种是否含有OTC交易
-      OTCCenterHasCurrentCoin: false
+      end: '' // 占位
     }
   },
   created () {
     // 刚进页面时候 个人资产列表展示
     this.getAssetCurrenciesList()
-    this.GET_OTC_COIN_LIST_ACTION()
   },
   mounted () {
     console.log(this.$refs)
@@ -511,9 +508,6 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapActions([
-      'GET_OTC_COIN_LIST_ACTION'
-    ]),
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
       'SET_JUMP_STATUS',
@@ -522,21 +516,15 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'SET_NEW_WITHDRAW_ADDRESS'
     ]),
-    // otc跳转
-    // jumpToOTCCenter (coinId) {
-    //   this.$router.push({
-    //     path: '/OTCCenter',
-    //     params: {coinId: coinId}
-    //   })
-    //   // this.$goToPage('/OTCCenter', coinId)
-    // },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
+      console.log(e)
       this.isShowAllCurrency = e == 'not_all' ? true : false
       this.getAssetCurrenciesList(e)
     },
     // 跳转当前交易对
     changeActiveSymbol (e) {
+      console.log(e)
       // changeActiveSymbol
       /*
         * {
@@ -707,7 +695,7 @@ export default {
     async changeWithdrawBoxByCoin (id, name, index) {
       console.log(this.userInfo)
       console.log(this.coinStatus)
-      if (this.coinStatus === 'disable') {
+      if (this.coinStatus == 'disable') {
         // 该账号已被禁止提币，请咨询客服
         this.$message({
           type: 'error',
@@ -751,7 +739,6 @@ export default {
     leave () {
       this.tradingState = false
       this.current = null
-      this.OTCCenterHasCurrentCoin = false
     },
     // 清空内容信息
     emptyStatus () {
@@ -800,7 +787,7 @@ export default {
           break
       }
       data = await assetCurrenciesList(params)
-      if (!data) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.localLoading = false
         return false
@@ -815,7 +802,7 @@ export default {
         })
         // 返回数据
         // let detailData = data.data.data
-        let detailData = getNestedData(data, 'data')
+        let detailData = getNestedData(data, 'data.data')
         this.totalSumBTC = detailData.totalSum
         this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
         this.totalPageForMyEntrust = getNestedData(detailData, 'userCoinWalletVOPageInfo.pages') - 0
@@ -852,7 +839,7 @@ export default {
         address: this.activeWithdrawDepositAddress
       }
       let data = await checkCurrencyAddress(param)
-      if (!data) {
+      if (!(returnAjaxMsg(data, this))) {
         this.isLegalWithdrawAddress = false
         return false
       } else {
@@ -1024,13 +1011,16 @@ export default {
         payCode: this.password // 交易密码
       }
       data = await statusSubmitWithdrawButton(param)
-      if (!data) return false
-      this.isShowWithdrawDialog = false
-      // 提币地址列表查询
-      this.getAssetCurrenciesList()
-      // this.stateEmptyData()
-      this.resetWithdrawFormContent()
-      this.stateEmptyData()
+      if (!(returnAjaxMsg(data, this, 1))) {
+        return false
+      } else {
+        this.isShowWithdrawDialog = false
+        // 提币地址列表查询
+        this.getAssetCurrenciesList()
+        // this.stateEmptyData()
+        this.resetWithdrawFormContent()
+        this.stateEmptyData()
+      }
     },
     // 接口请求完成之后普通币种清空数据
     stateEmptyData (index) {
@@ -1067,12 +1057,13 @@ export default {
       let data = await queryTransactionInformation({
         coinId: this.currencyTradingId // 币种coinId
       })
-      if (!data) return false
-      // 返回展示
-      this.currencyTradingList = getNestedData(data, 'data.entrust') || []
-
-      if (!this.currencyTradingList.length) return false
-      this.OTCCenterHasCurrentCoin = this.OTCCoinList.some((item) => item.coinId == this.currencyTradingList[0].sellCoinId)
+      console.log(data)
+      if (!(returnAjaxMsg(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.currencyTradingList = getNestedData(data, 'data.data.entrust') || []
+      }
     }
   },
   filter: {},
@@ -1087,9 +1078,7 @@ export default {
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // 是否允许提币
-      coinStatus: state => state.user.loginStep1Info.userInfo.coinStatus,
-      // otc可用币种
-      OTCCoinList: state => state.OTC.OTCCoinList
+      coinStatus: state => state.user.loginStep1Info.userInfo.coinStatus
     }),
     // 提现手续费输入input ref
     feeInputRef () {

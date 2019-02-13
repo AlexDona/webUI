@@ -51,7 +51,7 @@
               :placeholder="$t('M.comm_all')"
             >
               <el-option
-                v-for="(item,index) in OTCCoinList"
+                v-for="(item,index) in merchantsOrdersCoinList"
                 :key="index"
                 :label="item.name"
                 :value="item.coinId"
@@ -340,6 +340,7 @@
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter} from '../../utils'
 import {
+  getOTCAvailableCurrency,
   getMerchantAvailableLegalTender,
   getOTCMerchantsOrdersList
 } from '../../utils/api/OTC'
@@ -347,10 +348,7 @@ import {
   // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
-import {
-  mapState,
-  mapActions
-} from 'vuex'
+import {mapState} from 'vuex'
 export default {
   components: {
     IconFontCommon //  字体图标
@@ -383,6 +381,7 @@ export default {
       ],
       // 商家订单筛选下拉框 币种
       activatedMerchantsOrdersCoin: '',
+      merchantsOrdersCoinList: [],
       // 商家订单筛选下拉框 法币
       activatedMerchantsOrdersCurrency: '',
       merchantsOrdersCurrencyList: [],
@@ -429,7 +428,7 @@ export default {
     // console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
     // 1.0 otc可用币种查询：
-    this.GET_OTC_COIN_LIST_ACTION()
+    this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
     this.getMerchantAvailableLegalTenderList()
     // 3.0 加载列表
@@ -440,9 +439,6 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapActions([
-      'GET_OTC_COIN_LIST_ACTION'
-    ]),
     // 1分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
@@ -453,9 +449,24 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'date')
     },
+    // 3页面加载时 可用币种查询
+    async getOTCAvailableCurrencyList () {
+      const data = await getOTCAvailableCurrency({
+      })
+      // console.log('可用币种列表')
+      // console.log(data)
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data.data) {
+        this.merchantsOrdersCoinList = getNestedData(data, 'data')
+      }
+    },
     // 4页面加载时 可用法币查询
     async getMerchantAvailableLegalTenderList () {
-      const data = await getMerchantAvailableLegalTender()
+      const data = await getMerchantAvailableLegalTender({
+      })
+      // console.log('可用法币')
+      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
@@ -565,8 +576,7 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language,
-      theme: state => state.common.theme,
-      OTCCoinList: state => state.OTC.OTCCoinList
+      theme: state => state.common.theme
     })
   },
   watch: {}

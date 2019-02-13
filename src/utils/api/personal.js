@@ -32,7 +32,7 @@ export const inquireRechargeAddressList = params => handleRequest(() => get('per
 // 获取提币信息
 export const withdrawalInformation = params => handleRequest(() => get('queryWithdrawInfo', params))
 // 根据coinid查询交易信息
-export const queryTransactionInformation = params => handleRequest(() => get('personal/getTradeUrl', params))
+export const queryTransactionInformation = (params) => get('personal/getTradeUrl', params)
 //  刷新用户信息
 export const userRefreshUser = params => handleRequest(() => get('user/refreshUser', params))
 /**
