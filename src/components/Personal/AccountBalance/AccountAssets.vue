@@ -420,7 +420,7 @@ import {
   checkCurrencyAddress
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter,
   getNestedData
@@ -524,18 +524,19 @@ export default {
     ]),
     // otc跳转
     jumpToOTCCenter (coinId) {
-      console.log(coinId)
-      this.$goToPage('/OTCCenter')
+      this.$router.push({
+        path: '/OTCCenter',
+        params: {coinId: coinId}
+      })
+      // this.$goToPage('/OTCCenter', coinId)
     },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
-      console.log(e)
       this.isShowAllCurrency = e == 'not_all' ? true : false
       this.getAssetCurrenciesList(e)
     },
     // 跳转当前交易对
     changeActiveSymbol (e) {
-      console.log(e)
       // changeActiveSymbol
       /*
         * {
@@ -706,7 +707,7 @@ export default {
     async changeWithdrawBoxByCoin (id, name, index) {
       console.log(this.userInfo)
       console.log(this.coinStatus)
-      if (this.coinStatus == 'disable') {
+      if (this.coinStatus === 'disable') {
         // 该账号已被禁止提币，请咨询客服
         this.$message({
           type: 'error',
@@ -750,6 +751,7 @@ export default {
     leave () {
       this.tradingState = false
       this.current = null
+      this.OTCCenterHasCurrentCoin = false
     },
     // 清空内容信息
     emptyStatus () {
@@ -798,7 +800,7 @@ export default {
           break
       }
       data = await assetCurrenciesList(params)
-      if (!(returnAjaxMsg(data, this, 0))) {
+      if (!data) {
         // 接口失败清除loading
         this.localLoading = false
         return false
@@ -813,7 +815,7 @@ export default {
         })
         // 返回数据
         // let detailData = data.data.data
-        let detailData = getNestedData(data, 'data.data')
+        let detailData = getNestedData(data, 'data')
         this.totalSumBTC = detailData.totalSum
         this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
         this.totalPageForMyEntrust = getNestedData(detailData, 'userCoinWalletVOPageInfo.pages') - 0
@@ -850,7 +852,7 @@ export default {
         address: this.activeWithdrawDepositAddress
       }
       let data = await checkCurrencyAddress(param)
-      if (!(returnAjaxMsg(data, this))) {
+      if (!data) {
         this.isLegalWithdrawAddress = false
         return false
       } else {
@@ -1022,16 +1024,13 @@ export default {
         payCode: this.password // 交易密码
       }
       data = await statusSubmitWithdrawButton(param)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        this.isShowWithdrawDialog = false
-        // 提币地址列表查询
-        this.getAssetCurrenciesList()
-        // this.stateEmptyData()
-        this.resetWithdrawFormContent()
-        this.stateEmptyData()
-      }
+      if (!data) return false
+      this.isShowWithdrawDialog = false
+      // 提币地址列表查询
+      this.getAssetCurrenciesList()
+      // this.stateEmptyData()
+      this.resetWithdrawFormContent()
+      this.stateEmptyData()
     },
     // 接口请求完成之后普通币种清空数据
     stateEmptyData (index) {
@@ -1068,7 +1067,6 @@ export default {
       let data = await queryTransactionInformation({
         coinId: this.currencyTradingId // 币种coinId
       })
-      console.log(data)
       if (!data) return false
       // 返回展示
       this.currencyTradingList = getNestedData(data, 'data.entrust') || []
