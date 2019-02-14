@@ -252,15 +252,12 @@ export default {
           break
       }
       data = await assetCurrenciesList(params)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据
-        // this.totalSumBTC = data.data.data.totalSum
-        this.totalSumBTC = getNestedData(data, 'data.data.totalSum')
-        console.log(data.data.data)
-        console.log(this.totalSumBTC)
-      }
+      if (!data) return false
+      // 返回数据
+      // this.totalSumBTC = data.data.data.totalSum
+      this.totalSumBTC = getNestedData(data, 'data.totalSum')
+      console.log(data.data.data)
+      console.log(this.totalSumBTC)
     }
   },
   filter: {},
