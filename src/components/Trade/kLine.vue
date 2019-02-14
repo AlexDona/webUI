@@ -187,6 +187,7 @@ export default {
       }
       params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
+      console.log(data)
       if (!data) return false
       let activeSymbolData = getNestedData(data, 'data.obj')
       activeSymbolData = JSON.parse(unzip(activeSymbolData))
@@ -196,17 +197,21 @@ export default {
         tradeList, // 交易记录
         tickerList // 行情交易区列表
       } = activeSymbolData
-      if (depthList.depthData.sells.list) {
+      console.log(activeSymbolData)
+      if (depthList && depthList.depthData.sells.list) {
         depthList.depthData.sells.list.reverse()
       }
       // 默认交易对 数据
-      this.SET_MIDDLE_TOP_DATA(defaultTrade.content[0])
+      const defaultTradeContent = getNestedData(defaultTrade, 'content[0]')
+      if (defaultTradeContent) {
+        this.SET_MIDDLE_TOP_DATA(defaultTradeContent)
+      }
       // 买卖单
-      this.ajaxData.buyAndSellData = depthList.depthData
+      this.ajaxData.buyAndSellData = getNestedData(depthList, 'depthData')
       // 交易记录
       this.ajaxData.tardeRecordList = tradeList
       // 深度图
-      this.ajaxData.depthData = depthList.depthResult
+      this.ajaxData.depthData = getNestedData(depthList, 'depthResult')
 
       // 行情交易区列表
       this.ajaxData.tradeMarketList = tickerList
@@ -237,6 +242,9 @@ export default {
       if (!data) return false
 
       const obj = getNestedData(data, 'data')
+      console.log(obj)
+      const id = (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName'))
+      if (!id) return false
       const activeSymbol = {
         id: (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase(),
         tradeId: getNestedData(obj, 'id'),
