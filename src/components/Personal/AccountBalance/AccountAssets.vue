@@ -113,16 +113,16 @@
                     {{ assetItem.coinName }}
                   </div>
                   <div class="table-td flex1">
-                    {{ filterNumber(assetItem.sum - 0) }}
+                    {{ $scientificToNumber(assetItem.sum - 0) }}
                   </div>
                   <div class="table-td flex1">
-                    {{ filterNumber(assetItem.frozen - 0) }}
+                    {{ $scientificToNumber(assetItem.frozen - 0) }}
                   </div>
                   <div class="table-td flex1">
-                    {{ filterNumber(assetItem.total - 0) }}
+                    {{ $scientificToNumber(assetItem.total - 0) }}
                   </div>
                   <div class="table-td flex1 text-align-c">
-                    {{ filterNumber(assetItem.btcValue) }}
+                    {{ $scientificToNumber(assetItem.btcValue) }}
                   </div>
                   <div class="table-td flex1 display-flex text-align-r font-size12">
                     <div
@@ -175,6 +175,14 @@
                           v-show="currencyTradingList.length"
                         >
                         </span>
+                        <!--<p-->
+                          <!--class="transaction-list text-align-c"-->
+                          <!--v-show="OTCCenterHasCurrentCoin"-->
+                          <!--@click="jumpToOTCCenter(assetItem.coinId)"-->
+                        <!--&gt;-->
+                          <!--&lt;!&ndash; otc 交易&ndash;&gt;-->
+                          <!--{{$t('M.comm_otc_center')}}-->
+                        <!--</p>-->
                         <p
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
@@ -400,8 +408,7 @@ import ChargeMoneyItem from './ChargeMoneyItem'
 import WithdrawDepositItem from './WithdrawDepositItem'
 import {
   formatNumberInput,
-  amendPrecision,
-  scientificToNumber
+  amendPrecision
 } from '../../../utils'
 import {
   assetCurrenciesList,
@@ -509,10 +516,6 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'SET_NEW_WITHDRAW_ADDRESS'
     ]),
-    // 科学计数法转换
-    filterNumber (num) {
-      return scientificToNumber(num)
-    },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
       console.log(e)
@@ -603,7 +606,7 @@ export default {
         id,
         name
       })
-      this.$router.push({'path': '/TradeCenter'})
+      this.$goToPage('/TradeCenter')
     },
     // 修改input value 输入限制
     changeInputValue ({ref, index, pointLengthAccountCount, val}) {
@@ -980,7 +983,7 @@ export default {
       }
     },
     confirm () {
-      this.$router.push({path: '/TransactionPassword'})
+      this.$goToPage('/TransactionPassword')
     },
     submitMentionMoney () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {

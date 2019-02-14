@@ -970,7 +970,7 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       configInfo: state => state.common.footerInfo.configInfo,
-      contryAreaList: state => state.common.contryAreaList,
+      countryAreaList: state => state.common.countryAreaList,
       // 是否通过高级认证
       advancedAuth: state => state.user.loginStep1Info.userInfo.advancedAuth,
       // 实名认证
@@ -978,7 +978,7 @@ export default {
     })
   },
   watch: {
-    contryAreaList (newVal) {
+    countryAreaList (newVal) {
       console.log(newVal)
       if (newVal) {
         console.log(newVal)

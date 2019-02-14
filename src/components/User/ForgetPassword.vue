@@ -456,7 +456,7 @@ export default {
       if (!data) return false
       this.activeStepNumber = 4
       setTimeout(() => {
-        this.$router.push('/login')
+        this.$goToPage('/login')
       }, 3000)
     },
     // 找回密码步骤2

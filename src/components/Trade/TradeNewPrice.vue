@@ -6,7 +6,7 @@
           up:middleTopData.chg>0,
           down:middleTopData.chg<0
         }"
-      >{{middleTopData.last}}</span>
+      >{{$scientificToNumber(middleTopData.last)}}</span>
       <IconFontCommon
         v-show="middleTopData.chg<0"
         iconName="icon-down"

@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // eslint-disable-next-line
-import storeCreater from '../vuex'
+import storeCreator from '../vuex'
 import routes from './routes'
 
 Vue.use(Router)
-const store = storeCreater()
+const store = storeCreator()
 
 const routerCreator = () => {
   const router = new Router({
@@ -38,6 +38,9 @@ const routerCreator = () => {
     } else {
       next()
     }
+  })
+  router.afterEach((to, from) => {
+    store.commit('CHANGE_AJAX_READY_STATUS', false)
   })
   return router
 }

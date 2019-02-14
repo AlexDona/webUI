@@ -407,21 +407,55 @@
                 />
               </div>
             </div>
-            <p class="font-size12 warning-text margin-top35 text-align-c">
-              <!--请先完成身份认证并且设置交易密码，再来设置OTC收款账户!-->
+            <p
+              class="font-size12 warning-text margin-top35 text-align-c"
+              v-if="!realUserInfo.payPassword"
+            >
+              <!--请先设置交易密码后，再设置OTC收款账户!-->
+              {{ $t('M.user_asset_title12') }}
+            </p>
+            <p
+              class="font-size12 warning-text margin-top35 text-align-c"
+              v-else-if="realUserInfo.advancedAuth!=='pass'"
+            >
+              <!--请完成高级认证后，再设置OTC收款账户！-->
               {{ $t('M.user_account_text1') }}
             </p>
             <span
               slot="footer"
               class="dialog-footer"
+              v-if="!realUserInfo.payPassword"
+            >
+              <!--确 定 取 消-->
+              <button
+                class="button-color border-radius4 cursor-pointer"
+                type="primary"
+                @click.prevent="authenticationJump"
+              >
+                <!--确 定-->
+                {{ $t('M.comm_confirm') }}
+              </button>
+              <button
+                class="btn border-radius4 cursor-pointer"
+                @click.prevent="centerModelWarning = false"
+              >
+                <!--取 消-->
+                {{ $t('M.comm_cancel') }}
+              </button>
+
+            </span>
+            <span
+              slot="footer"
+              class="dialog-footer"
+              v-else-if="realUserInfo.advancedAuth!=='pass'"
             >
               <el-button
                 type="primary"
                 @click.prevent="authenticationJump"
               >
-                <!--去认证-->
-                {{ $t('M.user_senior_go_certification') }}
-              </el-button>
+              <!--去认证-->
+              {{ $t('M.user_senior_go_certification') }}
+            </el-button>
             </span>
           </el-dialog>
         </div>
@@ -510,36 +544,35 @@ export default {
     authenticationJump () {
       this.centerModelWarning = false
       if (!this.realUserInfo.payPassword) {
-        this.$router.push({path: '/TransactionPassword'})
-      }
-      if (!this.realUserInfo.realname) {
+        this.$goToPage('/TransactionPassword')
+      } else if (this.realUserInfo.advancedAuth !== 'pass') {
         this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
-        this.$router.push({path: '/PersonalCenter'})
+        this.$goToPage('/PersonalCenter')
       }
     },
     // 路由跳转对应组件
     setShowStatusSecurity (val) {
       console.log(this.userInfo)
-      // 判断是否实名认证
-      if (!this.realUserInfo.realname || !this.realUserInfo.payPassword) {
+      // 判断是否通过高级认证
+      if (!this.realUserInfo.payPassword || this.realUserInfo.advancedAuth !== 'pass') {
         this.centerModelWarning = true
         return false
       }
       switch (val) {
         case 'bank':
-          this.$router.push({path: '/AddBankCard'})
+          this.$goToPage('/AddBankCard')
           break
         case 'weChat':
-          this.$router.push({path: '/AddWeChat'})
+          this.$goToPage('/AddWeChat')
           break
         case 'alipay':
-          this.$router.push({path: '/AddSetAlipay'})
+          this.$goToPage('/AddSetAlipay')
           break
         case 'paypal':
-          this.$router.push({path: '/AddSetPaypal'})
+          this.$goToPage('/AddSetPaypal')
           break
         case 'westernUnion':
-          this.$router.push({path: '/AddWesternUnion'})
+          this.$goToPage('/AddWesternUnion')
           break
       }
     },
@@ -816,6 +849,14 @@ export default {
             margin: 30px 0 0;
           }
 
+          .button-color {
+            width: 80px;
+            height: 35px;
+            margin-right: 15px;
+            border: 0;
+            line-height: 0;
+          }
+
           .btn {
             width: 90px;
             height: 35px;
@@ -960,6 +1001,11 @@ export default {
           > .payment-content {
             .text-info {
               color: #fff;
+            }
+
+            .button-color {
+              color: rgba(255, 255, 255, .7);
+              background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
             }
 
             .btn {

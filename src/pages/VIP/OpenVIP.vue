@@ -422,7 +422,7 @@ export default {
     // 跳转我的资产
     goToAccountAssets () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
-      this.$router.push({path: '/PersonalCenter'})
+      this.$goToPage('/PersonalCenter')
     },
     // vip详情页面资产渲染
     changeVipLevel (type) {
@@ -580,7 +580,7 @@ export default {
           this.toggleAssetsCurrencyId()
           console.log(data)
           this.returnJumpTimer = setTimeout(() => {
-            this.$router.push('/VipMainContent')
+            this.$goToPage('/VipMainContent')
           }, 3000)
         }
       }

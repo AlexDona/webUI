@@ -269,7 +269,7 @@ export default {
     // 跳转我的资产
     goToAccountAssets () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
-      this.$router.push({path: '/PersonalCenter'})
+      this.$goToPage('/PersonalCenter')
     },
     // vip开通页面点击页面
     openOrRenewVIP (paymentType, action) {
@@ -278,7 +278,7 @@ export default {
       this.CHANGE_CURRENT_VIP_LEVEL({
         activeSelectLevel: paymentType
       })
-      this.$router.push('/OpenVIP')
+      this.$goToPage('/OpenVIP')
     },
     /**
     /**

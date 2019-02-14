@@ -34,11 +34,11 @@
               'up':middleTopData.chg>0,
               'down':middleTopData.chg<0
             }"
-          >{{middleTopData.last}}</span>
+          >{{$scientificToNumber(middleTopData.last)}}</span>
           <span
             class="font-size12 theme-color"
             v-show="middleTopData.last&&activeConvertCurrencyObj.symbol&&currencyRateList[middleTopData.area]"
-          >≈ {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[middleTopData.area]-0)*(middleTopData.last-0))}}</span>
+          >≈ {{activeConvertCurrencyObj.symbol}}{{$keep2Num((currencyRateList[middleTopData.area]-0)*(middleTopData.last-0))}}</span>
         </div>
       </div>
       <!--涨跌-->
@@ -56,7 +56,7 @@
               'up':middleTopData.chg>0,
               'down':middleTopData.chg<0
             }"
-          >{{middleTopData.chg}}%</span>
+          >{{$scientificToNumber(middleTopData.chg)}}%</span>
         </div>
       </div>
       <div class="item">
@@ -73,7 +73,7 @@
               'up':middleTopData.chg>0,
               'down':middleTopData.chg<0
             }"
-          >{{middleTopData.high}}</span>
+          >{{$scientificToNumber(middleTopData.high)}}</span>
         </div>
       </div>
       <div class="item">
@@ -86,7 +86,7 @@
         <div class="bottom">
           <span
             class="font-size14 theme-color"
-          >{{middleTopData.low}}</span>
+          >{{$scientificToNumber(middleTopData.low)}}</span>
         </div>
       </div>
       <div class="item">
@@ -101,7 +101,7 @@
               class="font-size14 theme-color"
               v-show="middleTopData.vol24hour"
             >
-              {{formatCount(middleTopData.vol24hour)}}
+              {{$formatCount(middleTopData.vol24hour)}}
             </span>
         </div>
       </div>
@@ -110,8 +110,6 @@
 </template>
 <script>
 import {mapState} from 'vuex'
-import {keep2Num} from '../../utils'
-import {formatCount} from '../../utils/commonFunc'
 
 export default {
   components: {},
@@ -125,14 +123,6 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 截取2位小数
-    keep2Num (number) {
-      return keep2Num(number)
-    },
-    // 成交量格式化
-    formatCount (targetNum) {
-      return formatCount(targetNum)
-    }
   },
   filter: {},
   computed: {

@@ -138,7 +138,7 @@
                 'down':innerItem.chg<0
               }"
               >
-              {{innerItem.last}}
+              {{$scientificToNumber(innerItem.last)}}
             </span>
             <span
               class="rose text-align-r"
@@ -147,7 +147,7 @@
                 'down':innerItem.chg<0
               }"
             >
-              {{keep2Num(innerItem.chg)}}%
+              {{$keep2Num(innerItem.chg)}}%
             </span>
           </dd>
         </dl>
@@ -158,8 +158,6 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
-import {keep2Num} from '../../utils'
-// import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
   },
@@ -177,9 +175,9 @@ export default {
     }
   },
   created () {
-    setTimeout(() => {
-      this.clickDalay = false
-    }, 1500)
+    // setTimeout(() => {
+    this.clickDalay = false
+    // }, 1500)
   },
   mounted () {
   },
@@ -192,10 +190,6 @@ export default {
         sortMethod,
         list
       })
-    },
-    // 截取2位小数
-    keep2Num (number) {
-      return keep2Num(number)
     },
     changeActiveSymbol (activeSymbol, previousSymbol) {
       if (this.clickDalay) {
@@ -260,7 +254,7 @@ export default {
         }
 
         &.rose {
-          margin-right: 20px;
+          margin-right: 30px;
           text-align: right;
         }
 
@@ -335,7 +329,7 @@ export default {
           /* margin-left: 16px; */
 
           /* padding: 0 20px; */
-          padding: 0 4.5%;
+          padding: 0 3.5%;
           line-height: 30px;
 
           .click-button {

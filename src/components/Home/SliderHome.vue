@@ -136,7 +136,7 @@ export default {
             },
             template: `<a
                          style="width: 100%;height:100%"
-                         href="${http2https(item.redirectUrl)}"
+                         href="${http2https(item.redirectUrl) || `javascript:void(0)`}"
                    >
                      <img
                       style="width: 100%;height:100%"

@@ -163,7 +163,7 @@
                 <template slot-scope = "s">
                   <div>
                     <!-- 后台添加了剩余数量字段remainCount-->
-                    {{filterNumber(s.row.remainCount)}}{{selectedOTCAvailableCurrencyName}}
+                    {{$scientificToNumber(s.row.remainCount)}}{{selectedOTCAvailableCurrencyName}}
                   </div>
                 </template>
               </el-table-column>
@@ -174,7 +174,7 @@
                 <template slot-scope = "s">
                   <!-- 此处的单位根据设置中的法币类型来变化：为人民币时候显示CNY，为美元时候显示$ 此处需要从全局拿到设置中的法币类型来渲染页面-->
                   <div class="red">
-                    {{filterNumber(s.row.price)}}{{checkedCurrencyName}}
+                    {{$scientificToNumber(s.row.price)}}{{checkedCurrencyName}}
                   </div>
                 </template>
               </el-table-column>
@@ -224,7 +224,7 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    {{ filterNumber(s.row.minCount) }}~{{ filterNumber(s.row.maxCount) }}{{checkedCurrencyName}}
+                    {{ $scientificToNumber(s.row.minCount) }}~{{ $scientificToNumber(s.row.maxCount) }}{{checkedCurrencyName}}
                   </div>
                 </template>
               </el-table-column>
@@ -405,8 +405,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {
-  amendPrecision,
-  scientificToNumber
+  amendPrecision
 } from '../../utils'
 import {
   getOTCAvailableCurrency,
@@ -550,10 +549,6 @@ export default {
     reflashUserInfo () {
       this.REFRESH_USER_INFO_ACTION()
     },
-    // 科学计数法转换
-    filterNumber (num) {
-      return scientificToNumber(num)
-    },
     // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {
       // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
@@ -563,7 +558,7 @@ export default {
       }, 500)
       // 未登录跳转到登录页面去
       if (!this.isLogin) {
-        this.$router.push({path: '/login'})
+        this.$goToPage('/login')
         return false
       } else {
         if (this.activeName === 'first') {
@@ -609,7 +604,7 @@ export default {
       }
       // 未登录跳转到登录页面
       if (!this.isLogin) {
-        this.$router.push({path: '/login'})
+        this.$goToPage('/login')
       } else {
         this.reflashUserInfo() // 刷新用户信息
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
@@ -635,14 +630,14 @@ export default {
           // this.OTCBuySellStyle 当前买卖类型
           // this.selectedOTCAvailableCurrencyCoinID 选中的可用币种id
           // this.checkedCurrencyId 当前选中的可用法币id
-          this.$router.push({path: '/OTCPublishBuyAndSell/' + this.OTCBuySellStyle + '/' + this.selectedOTCAvailableCurrencyCoinID + '/' + this.checkedCurrencyId})
+          this.$goToPage(`/OTCPublishBuyAndSell/${this.OTCBuySellStyle}/${this.selectedOTCAvailableCurrencyCoinID}/${this.checkedCurrencyId}`)
         }
       }
     },
     // 0.3 点击 购买 或者 出售 按钮跳转到在线购买或者出售页面
     toOnlineBuyOrSell (id, coinId, userId) {
       if (!this.isLogin) {
-        this.$router.push({path: '/login'})
+        this.$goToPage('/login')
       } else {
         // 刷新用户信息
         this.reflashUserInfo()
@@ -675,7 +670,7 @@ export default {
           } else {
             // console.log(id) // 挂单id
             // console.log(coinId) // 币种id
-            this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
+            this.$goToPage(`/OTCOnlineTraderBuySell/${this.OTCBuySellStyle}/${id}/${coinId}`)
           }
         }
       }
@@ -683,15 +678,15 @@ export default {
     // 0.5 查询更多订单按钮点击事件
     queryMoreOrder () {
       if (!this.isLogin) { // 未登录跳转登录页
-        this.$router.push({path: '/login'})
+        this.$goToPage('/login')
       } else {
         // 登录后：商家用户跳转到商家订单；普通用户跳转到个人中心中的法币订单
         if (this.userInfo.type === 'COMMON') {
           this.CHANGE_USER_CENTER_ACTIVE_NAME('fiat-orders')
-          this.$router.push({path: '/PersonalCenter'})
+          this.$goToPage('/PersonalCenter')
         }
         if (this.userInfo.type === 'MERCHANT') {
-          this.$router.push({path: '/OTCMerchantsOrders'})
+          this.$goToPage('/OTCMerchantsOrders')
         }
       }
     },

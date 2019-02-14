@@ -88,7 +88,6 @@ export default {
   },
   watch: {
     time (newVal) {
-      console.log(newVal)
     },
     countDownResetStatus () {
       this.time = 0

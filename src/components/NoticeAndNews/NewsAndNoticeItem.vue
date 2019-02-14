@@ -49,7 +49,8 @@
                     class="view-more"
                     @click="backToParent(outerItem)"
                   >
-                    更多 》
+                    <!--查看更多-->
+                    {{$t('M.comm_view_more')}} 》
                   </span></h2>
                 <ul
                   class="news-type-content"
@@ -132,7 +133,7 @@ export default {
       this.CHANGE_NEWS_TYPE_ACTIVE_NAME({
         activeName: item.id
       })
-      this.$router.push('/NewsAndNoticeCenter')
+      this.$goToPage('/NewsAndNoticeCenter')
     },
     async changeNewDetailByLanguage () {
       let params = {

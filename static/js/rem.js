@@ -1,5 +1,5 @@
-import storeCreater from '../../src/vuex'
-const store = storeCreater()
+import storeCreator from '../../src/vuex'
+const store = storeCreator()
 getSize()
 
 function getSize () {

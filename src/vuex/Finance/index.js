@@ -1,5 +1,5 @@
 import mutations from './mutations'
-import actions from './action'
+import actions from './actions'
 // import {getStore} from '../../utils'
 // import getters from './getters'
 

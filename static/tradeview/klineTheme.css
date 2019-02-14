@@ -83,3 +83,7 @@
 .context-menu .action-separator {
   display: none;
 }
+
+.chart-container.active{
+  background-color: transparent !important;
+}

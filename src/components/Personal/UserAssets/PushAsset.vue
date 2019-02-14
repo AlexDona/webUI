@@ -175,7 +175,7 @@
               :label="$t('M.comm_count')"
             >
               <template slot-scope="s">
-                <div>{{ filterNumber(s.row.count) }}</div>
+                <div>{{ $scientificToNumber(s.row.count) }}</div>
               </template>
             </el-table-column>
             <!--价格-->
@@ -183,7 +183,7 @@
               :label="$t('M.comm_price_metre') + pushPayCoinName"
             >
               <template slot-scope="s">
-                <div>{{ filterNumber(s.row.price) }}</div>
+                <div>{{ $scientificToNumber(s.row.price) }}</div>
               </template>
             </el-table-column>
             <!--金额-->
@@ -191,7 +191,7 @@
               :label="$t('M.comm_money')"
             >
               <template slot-scope="s">
-                <div>{{ filterNumber(s.row.amount) }}</div>
+                <div>{{ $scientificToNumber(s.row.amount) }}</div>
               </template>
             </el-table-column>
             <!--时间-->
@@ -395,8 +395,7 @@ import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   timeFilter,
-  formatNumberInput,
-  scientificToNumber
+  formatNumberInput
 } from '../../../utils/index'
 import {
   returnAjaxMsg,
@@ -474,10 +473,6 @@ export default {
     ...mapMutations([
       'SET_PUSH_BUTTON_STATUS'
     ]),
-    // 科学计数法转换
-    filterNumber (num) {
-      return scientificToNumber(num)
-    },
     // 1.时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -705,7 +700,7 @@ export default {
           this.pushAsset = item.coinName
           this.pushPrice = item.price
           this.pushCount = item.count
-          this.pushPaymentAmount = this.filterNumber(item.amount)
+          this.pushPaymentAmount = this.$scientificToNumber(item.amount)
         }
         return false
       })
@@ -996,6 +991,10 @@ export default {
 
       .el-dialog--center {
         text-align: left;
+      }
+
+      .gutter {
+        display: block !important;
       }
     }
 

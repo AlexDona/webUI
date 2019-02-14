@@ -328,11 +328,10 @@ export default {
     },
     confirm (val) {
       if (val == 1) {
-        this.$router.push({path: '/TransactionPassword'})
+        this.$goToPage('/TransactionPassword')
       } else {
         this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
-
-        this.$router.push({path: '/PersonalCenter'})
+        this.$goToPage('/PersonalCenter')
         this.notVerifyDialogVisible = false
       }
     }

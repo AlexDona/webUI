@@ -64,8 +64,9 @@
                 <!-- 请输入密码 -->
                 <input
                   type="password"
+                  maxlength="20"
                   autocomplete= "new-password"
-                  v-model.trim="password"
+                  v-model="password"
                   :placeholder="$t('M.login_tips2')"
                   @keydown="setErrorMsg(1,'')"
                   @keyup.enter="loginForStep1"
@@ -260,6 +261,7 @@
                 <input
                   type="text"
                   class="input"
+                  maxlength="6"
                   v-model="step3GoogleMsgCode"
                   @keyup.enter="loginForStep2"
                   @keyup="step3AutoLogin(step3GoogleMsgCode)"
@@ -390,6 +392,7 @@
               <!-- 请输入密码 -->
               <input
                 type="password"
+                maxlength="20"
                 autocomplete= "new-password"
                 :placeholder="$t('M.comm_please_enter') + $t('M.comm_loginpassword')"
                 v-model.trim="password"
@@ -519,6 +522,7 @@
                   <input
                     type="text"
                     class="input"
+                    maxlength="6"
                     v-model="step3GoogleMsgCode"
                     @keyup.enter="loginForStep2"
                     @keyup="step3AutoLogin(step3GoogleMsgCode)"
@@ -620,7 +624,10 @@
   </div>
 </template>
 <script>
-import {EMAIL_REG} from '../utils/regExp' // 正则验证
+import {
+  EMAIL_REG,
+  GOOGLE_REG
+} from '../utils/regExp' // 正则验证
 import {
   loginSocketUrl
   // xDomain
@@ -725,7 +732,7 @@ export default {
     // console.log(userAgentList)
     document.getElementsByTagName('body')[0].style.zoom = 1
     if (this.isLogin) {
-      this.$router.push({path: '/home'})
+      this.$goToPage('/home')
     }
     require('../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
@@ -782,9 +789,9 @@ export default {
         !this.routerTo.startsWith('/ForgetPassword') &&
         !this.routerTo.startsWith('/nofind404')
       ) {
-        this.$router.push({path: this.routerTo})
+        this.$goToPage(this.routerTo)
       } else {
-        this.$router.push({path: '/home'})
+        this.$goToPage('/home')
       }
     },
     // 返回登录
@@ -905,7 +912,7 @@ export default {
       }
       // 调用第一接口
       let params = new FormData()
-      params.append('userName', this.username)
+      params.append('userName', this.username.toLowerCase())
       params.append('password', this.password)
       const data = await userLoginForStep1(params)
       if (!returnAjaxMsg(data, this, 0)) {
@@ -1016,12 +1023,15 @@ export default {
     async loginForStep2 () {
       if (!this.loginIpEquals && this.firstLogin) {
         // 谷歌验证
-        if (this.isBindGoogle && !this.step3GoogleMsgCode) {
-          this.$message({
-            type: 'error',
-            message: this.$t('M.comm_please_enter') + this.$t('M.login_google') + this.$t('M.comm_code') // 请输入谷歌验证码
-          })
-          return false
+        if (this.isBindGoogle) {
+          console.log(1)
+          if (!this.step3GoogleMsgCode) {
+            this.$message({
+              type: 'error',
+              message: this.$t('M.comm_please_enter') + this.$t('M.login_google') + this.$t('M.comm_code') // 请输入谷歌验证码
+            })
+            return false
+          }
         }
         if (this.isBindEmail && !this.step3EmailMsgCode) {
           this.$message({
@@ -1038,6 +1048,7 @@ export default {
           return false
         }
       }
+      if (this.isBindGoogle && !GOOGLE_REG.test(this.step3GoogleMsgCode)) return false
       let params = {
         phone: this.userInfo.phone,
         phoneCode: this.step3PhoneMsgCode,

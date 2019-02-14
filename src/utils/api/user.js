@@ -65,7 +65,7 @@ export const getLoginErcode = () => get('user/qrcode')
 export const getAppDownLoadUrlAjax = () => get('appDown')
 
 // 设置 用户交易密码时长
-export const setUserInputPasswordFrequency = (params) => postWithURLencoded('user/notInputPayPasswd', params)
+export const setUserInputPasswordFrequency = params => handleRequest(() => postWithURLencoded('user/notInputPayPasswd', {...params, loading: true}), 1)
 
 // 是否需要输入交易密码（交易）
 export const isNeedPayPassowrd = (params) => get('user/isInputPayPasswd', params)
