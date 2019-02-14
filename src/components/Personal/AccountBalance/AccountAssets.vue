@@ -787,7 +787,7 @@ export default {
           break
       }
       data = await assetCurrenciesList(params)
-      if (!(returnAjaxMsg(data, this, 0))) {
+      if (!data) {
         // 接口失败清除loading
         this.localLoading = false
         return false
@@ -802,12 +802,12 @@ export default {
         })
         // 返回数据
         // let detailData = data.data.data
-        let detailData = getNestedData(data, 'data.data')
+        let detailData = getNestedData(data, 'data')
         this.totalSumBTC = detailData.totalSum
         this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
         this.totalPageForMyEntrust = getNestedData(detailData, 'userCoinWalletVOPageInfo.pages') - 0
         // console.log('我的资产币种列表')
-        // console.log(this.withdrawDepositList)
+        console.log(this.withdrawDepositList)
       }
     },
     // 分页

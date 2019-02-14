@@ -1024,7 +1024,6 @@ export default {
       if (!this.loginIpEquals && this.firstLogin) {
         // 谷歌验证
         if (this.isBindGoogle) {
-          console.log(1)
           if (!this.step3GoogleMsgCode) {
             this.$message({
               type: 'error',
@@ -1032,18 +1031,16 @@ export default {
             })
             return false
           }
-        }
-        if (this.isBindEmail && !this.step3EmailMsgCode) {
-          this.$message({
-            type: 'error',
-            message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
-          })
-          return false
-        }
-        if (this.isBindPhone && !this.step3PhoneMsgCode) {
+        } else if (this.isBindPhone && !this.step3PhoneMsgCode) {
           this.$message({
             type: 'error',
             message: this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code') // '请输入手机验证码'
+          })
+          return false
+        } else if (this.isBindEmail && !this.step3EmailMsgCode) {
+          this.$message({
+            type: 'error',
+            message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
           })
           return false
         }
