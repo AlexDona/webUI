@@ -5,23 +5,23 @@ import {handleRequest} from '../commonFunc'
  * 个人中心
  */
 // 我的资产币种列表
-export const assetCurrenciesList = params => get('personal/getUserFinanceList', params)
+export const assetCurrenciesList = params => handleRequest(() => get('personal/getUserFinanceList', params))
 // 提币地址列表查询
 export const inquireWithdrawalAddressList = params => get('personal/getWithdrawAddress', params)
 // 根据币种id查询提币地址
 export const inquireWithdrawalAddressId = params => handleRequest(() => get('personal/getCoinWithdrawAddress', {...params, loading: true}))
 // 账单明细—冲提记录
-export const statusRushedToRecordList = (params) => get('queryWithdrawRecording', params)
+export const statusRushedToRecordList = (params) => handleRequest(() => get('queryWithdrawRecording', params))
 // 账单明细—获取商户币种列表
-export const getMerchantCurrencyList = (params) => get('personal/queryPartnerCoinList', params)
+export const getMerchantCurrencyList = (params) => handleRequest(() => get('personal/queryPartnerCoinList', params))
 // 账单明细—个人资产综合查询
-export const getComprehensiveRecordsList = (params) => get('personal/queryColligate', params)
+export const getComprehensiveRecordsList = (params) => handleRequest(() => get('personal/queryColligate', params))
 // 提币
-export const statusSubmitWithdrawButton = (params) => post('addWithdraw', params)
+export const statusSubmitWithdrawButton = (params) => handleRequest(() => post('addWithdraw', params))
 // 新增用户提币地址
 export const addNewWithdrawalAddress = (params) => post('personal/addWithdrawAddress', params)
 // 验证提币地址是否正确
-export const checkCurrencyAddress = (params) => get('personal/validateAddress', params)
+export const checkCurrencyAddress = (params) => handleRequest(() => get('personal/validateAddress', params))
 // 提币地址删除
 export const deleteUserWithdrawAddress = (params) => put('personal/deleteUserWithdrawAddress', params)
 // 查询充币地址

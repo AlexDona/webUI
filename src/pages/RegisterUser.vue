@@ -950,7 +950,7 @@ export default {
           if (!this.checkoutInputFormat(type, this.emailNum)) {
             return false
           }
-          params.email = this.emailNum
+          params.email = this.transformedEmail
           params.nationCode = this.activeCountryCodeWithEmail
           break
       }
@@ -989,7 +989,7 @@ export default {
       }
       console.log(goOnStatus)
       if (goOnStatus) {
-        let userName = this.activeMethod ? this.emailNum : this.phoneNum
+        let userName = this.activeMethod ? this.transformedEmail : this.phoneNum
         let countryCode = this.activeMethod ? this.activeCountryCodeWithEmail : this.activeCountryCodeWithPhone
         this.registerParams = {
           userName: userName,
@@ -1096,7 +1096,7 @@ export default {
         $('.handler').css({'left': 0})
         $('.drag_bg').css({'width': 0})
         let type = !this.activeMethod ? 'phone' : 'email'
-        let userName = !this.activeMethod ? this.phoneNum : this.emailNum
+        let userName = !this.activeMethod ? this.phoneNum : this.transformedEmail
         await this.checkUserExistAjax(type, userName)
         await this.sendRegister(params)
       } // 验证成功函数
@@ -1123,6 +1123,9 @@ export default {
     windowHeight () {
       console.log(window.innerHeight)
       return window.innerHeight + 300
+    },
+    transformedEmail () {
+      return this.emailNum.toLowerCase()
     }
   },
   watch: {

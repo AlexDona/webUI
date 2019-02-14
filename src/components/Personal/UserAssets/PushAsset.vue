@@ -992,6 +992,10 @@ export default {
       .el-dialog--center {
         text-align: left;
       }
+
+      .gutter {
+        display: block !important;
+      }
     }
 
     &.night {

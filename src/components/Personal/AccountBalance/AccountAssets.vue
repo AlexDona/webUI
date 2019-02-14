@@ -175,6 +175,14 @@
                           v-show="currencyTradingList.length"
                         >
                         </span>
+                        <!--<p-->
+                          <!--class="transaction-list text-align-c"-->
+                          <!--v-show="OTCCenterHasCurrentCoin"-->
+                          <!--@click="jumpToOTCCenter(assetItem.coinId)"-->
+                        <!--&gt;-->
+                          <!--&lt;!&ndash; otc 交易&ndash;&gt;-->
+                          <!--{{$t('M.comm_otc_center')}}-->
+                        <!--</p>-->
                         <p
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"

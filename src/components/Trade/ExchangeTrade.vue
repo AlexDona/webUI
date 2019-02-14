@@ -38,7 +38,7 @@
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!buyUserCoinWallet.total">--</span>
-                    <span v-show="buyUserCoinWallet.total">{{buyUserCoinWallet.total}}</span>
+                    <span v-show="buyUserCoinWallet.total">{{$scientificToNumber(buyUserCoinWallet.total)}}</span>
                     <span>{{middleTopData.area}}</span>
                   </span>
                 </div>
@@ -61,6 +61,7 @@
                     :placeholder="$t('M.comm_buy') + $t('M.comm_price')"
                     :ref="limitBuyPriceInputRef"
                     @keyup="autoChangeData('limit-buy')"
+                    maxlength="14"
                     @input="formatInput(limitBuyPriceInputRef,middleTopData.priceExchange)"
                   >
                   <span class="currency">{{middleTopData.area}}</span>
@@ -85,6 +86,7 @@
                       'error':buyUserCoinWallet.total < limitBuyAmount
                     }"
                     type="text"
+                    maxlength="14"
                     :placeholder="$t('M.comm_buy') + $t('M.comm_quantity')"
                     :ref="limitBuyCountInputRef"
                     @keyup="autoChangeData('limit-buy')"
@@ -141,7 +143,7 @@
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!sellUserCoinWallet.total">--</span>
-                    <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
+                    <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
@@ -161,6 +163,7 @@
                 <div class="input">
                   <input
                     type="text"
+                    maxlength="14"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_price')"
                     :ref="limitSellPriceInputRef"
                     @keyup="autoChangeData('limit-sell')"
@@ -184,6 +187,7 @@
                     :class="{
                       'error': sellUserCoinWallet.total < limitExchange.sellCount
                     }"
+                    maxlength="14"
                     type="text"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="limitSellCountInputRef"
@@ -254,7 +258,7 @@
                     {{$t('M.comm_usable')}}:
                     <span v-show="!buyUserCoinWallet.total||!middleTopData.last">--</span>
                     <span v-show="buyUserCoinWallet.total&&middleTopData.last">
-                      {{buyUserCoinWallet.total}}
+                      {{$scientificToNumber(buyUserCoinWallet.total)}}
                     </span>
                     <span>{{middleTopData.area}}</span>
                   </span>
@@ -285,6 +289,7 @@
                     :class="{
                       error: isNeedErrorMsgForBuyAmount
                     }"
+                    maxlength="14"
                     type="text"
                     :placeholder="$t('M.user_coin_volume')"
                     :ref="marketBuyAmountInputRef"
@@ -330,7 +335,7 @@
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!sellUserCoinWallet.total">--</span>
-                    <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
+                    <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
@@ -364,6 +369,7 @@
                     :class="{
                       error: isNeedErrorMsgForSellCount
                     }"
+                    maxlength="14"
                     type="text"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="marketSellCountInputRef"
@@ -672,7 +678,9 @@ export default {
     setTransformPrice (type, targetNum) {
       switch (type) {
         case 'limit-buy':
+          // this.limitExchange.transformBuyPrice = this.$scientificToNumber(this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum))
           this.limitExchange.transformBuyPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
+          console.log(this.limitExchange.transformBuyPrice)
           break
         case 'limit-sell':
           this.limitExchange.transformSellPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
@@ -899,7 +907,7 @@ export default {
     // 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]
-      return formatNumberInput(target, pointLength) - 0
+      return this.$scientificToNumber(formatNumberInput(target, pointLength) - 0)
     },
     // 新增委单
     async addEntrust () {
@@ -1078,11 +1086,11 @@ export default {
     },
     // 限价买预计成交额
     limitBuyAmount () {
-      return cutOutPointLength(this.limitExchange.buyPrice * this.limitExchange.buyCount, 2)
+      return this.$scientificToNumber(cutOutPointLength(this.limitExchange.buyPrice * this.limitExchange.buyCount, 2))
     },
     // 限价卖预计成交额
     limitSellAmount () {
-      return cutOutPointLength(this.limitExchange.sellPrice * this.limitExchange.sellCount, 2)
+      return this.$scientificToNumber(cutOutPointLength(this.limitExchange.sellPrice * this.limitExchange.sellCount, 2))
     }
   },
   watch: {
@@ -1145,7 +1153,6 @@ export default {
       this.setBuyAndSellPrice(this.getRefValue(this.limitBuyPriceInputRef), this.getRefValue(this.limitSellPriceInputRef))
     },
     activeSymbol () {
-      console.log(1)
       this.reflashCount = 0
     },
     // 用户手动设置价格
@@ -1232,6 +1239,10 @@ export default {
 
             > .left {
               flex: 2;
+            }
+
+            > .right {
+              text-align: right;
             }
           }
 

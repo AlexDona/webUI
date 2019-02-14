@@ -1,5 +1,5 @@
 import mutations from './mutations'
-import actions from './action'
+import actions from './actions'
 // import getters from './getters'
 
 // Vue.use(Vuex)
@@ -18,7 +18,9 @@ const state = {
   // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
   publishOrderJumpTopStatus: false,
   // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
-  otcApplyJumpBottomStatus: false
+  otcApplyJumpBottomStatus: false,
+  // otc可用币种列表
+  OTCCoinList: []
 }
 
 export default {

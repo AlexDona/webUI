@@ -567,6 +567,10 @@ export default {
           font-size: 12px;
           white-space: nowrap;
 
+          &:last-of-type {
+            padding: 0 11px;
+          }
+
           &.time {
             width: 17%;
           }

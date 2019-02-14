@@ -234,6 +234,9 @@ export default {
         activeName: newVal
       })
     },
+    serviceActiveName (newVal) {
+      this.activeName = newVal
+    },
     // 改变语言重新请求对应语言的国际化内容
     language () {
       this.changeTab({name: this.activeName})

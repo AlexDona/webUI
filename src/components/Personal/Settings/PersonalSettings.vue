@@ -22,7 +22,7 @@
             </div>
             <div class="middle">
               <!--交易验证-->
-              <span><i v-if="activeFrequency == 'userset'">{{usersetTimeInterval}}</i>{{$t(labelOfActiveFrequency)}}</span>
+              <span><i v-if="validatedActiveFrequency == 'userset'">{{usersetTimeInterval}}</i>{{$t(labelOfActiveFrequency)}}</span>
             </div>
             <div class="right">
               <button
@@ -116,7 +116,6 @@
 <script>
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
-  returnAjaxMsg,
   getNestedData
 } from '../../../utils/commonFunc'
 import {setUserInputPasswordFrequency} from '../../../utils/api/user'
@@ -162,12 +161,15 @@ export default {
       isNeedPayPassword: true,
       isPayPasswordEmpty: false,
       // 是否成功修改
-      isSuccessChanged: false
+      isSuccessChanged: false,
+      // 当前选中验证方式
+      labelOfActiveFrequency: ''
     }
   },
   async created () {
     await this.getConfig()
     this.activeFrequency = this.notInputPayPasswdTime
+    this.setLabelOfActiveFrequency()
     this.validatedActiveFrequency = this.activeFrequency
     this.oldFrequency = this.activeFrequency
   },
@@ -189,6 +191,7 @@ export default {
       this.payPassword = ''
     },
     changeActiveFrequency (e) {
+      this.isSuccessChanged = false
       let newVal = e.target.value
       this.oldFrequency = this.activeFrequency
       this.activeFrequency = newVal
@@ -225,7 +228,7 @@ export default {
     // 设置用户交易密码时长
     async setUserInputPasswordFrequency (params) {
       const data = await setUserInputPasswordFrequency(params)
-      if (!returnAjaxMsg(data, this, 1)) {
+      if (!data) {
         this.activeFrequency = this.oldFrequency
         this.isSuccessChanged = false
         return false
@@ -236,7 +239,11 @@ export default {
         await this.REFRESH_USER_INFO_ACTION()
         this.isCheckPayPassword = false
         this.payPassword = ''
+        this.setLabelOfActiveFrequency()
       }
+    },
+    setLabelOfActiveFrequency () {
+      this.labelOfActiveFrequency = getNestedData(_.filter(this.frequencyList, item => item.value == this.activeFrequency), '[0].label')
     },
     showSettingBox () {
       if (!this.UserPayPassword) {
@@ -252,16 +259,10 @@ export default {
       theme: state => state.common.theme,
       notInputPayPasswdTime: state => state.user.loginStep1Info.notInputPayPasswdTime,
       UserPayPassword: state => state.user.loginStep1Info.userInfo.payPassword
-    }),
-    labelOfActiveFrequency () {
-      let arr = _.filter(this.frequencyList, item => item.value == this.activeFrequency)
-      console.log(getNestedData(arr, '[0].label'))
-      return getNestedData(arr, '[0].label')
-    }
+    })
   },
   watch: {
     isCheckPayPassword (newVal) {
-      console.log(newVal)
       if (!this.isSuccessChanged && !newVal) {
         this.cancelSetting()
       }

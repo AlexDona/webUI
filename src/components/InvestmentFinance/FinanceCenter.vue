@@ -817,7 +817,6 @@ export default {
         coinId: this.selectedCoinId,
         coinName: this.selectedCoinName
       })
-      console.log(data)
       this.fullscreenLoading = false
       // 返回数据正确的逻辑
       if (!data) return false
@@ -885,8 +884,6 @@ export default {
     // 用户取消存币接口
     async clickCancelInvestment (id) {
       const data = await cancelInvestment(id)
-      console.log('用户取消按钮')
-      console.log(data)
       if (!data) return false
       this.getFinancialManagementList()
     },

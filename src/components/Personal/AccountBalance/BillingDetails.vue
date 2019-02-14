@@ -334,7 +334,6 @@ import {
   getComprehensiveRecordsList
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg,
   getNestedData
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils'
@@ -434,13 +433,9 @@ export default {
       let param = {
       }
       data = await getMerchantCurrencyList(param)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        this.currencyList = getNestedData(data, 'data.data')
-        this.defaultCurrencyId = getNestedData(data, 'data.data')[0].id
-        console.log(this.currencyList)
-      }
+      if (!data) return false
+      this.currencyList = getNestedData(data, 'data')
+      this.defaultCurrencyId = getNestedData(data, 'data')[0] ? getNestedData(data, 'data')[0].id : ''
     },
     // 搜索按钮
     stateSearchButton (entrustType) {
@@ -478,7 +473,7 @@ export default {
           params.endTime = this.startTime[1] == null ? '' : timeFilter(this.startTime[1], 'normal') // 结束起止时间
           data = await statusRushedToRecordList(params)
           // console.log(data)
-          if (!returnAjaxMsg(data, this, 0)) {
+          if (!data) {
             // 接口失败清除局部loading
             this.partLoading = false
             return false
@@ -486,7 +481,7 @@ export default {
             // 接口成功清除局部loading
             this.partLoading = false
             // 返回冲提记录列表展示
-            let detailData = getNestedData(data, 'data.data')
+            let detailData = getNestedData(data, 'data')
             // 充提记录
             this.chargeRecordList = getNestedData(detailData, 'list')
             this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
@@ -500,19 +495,16 @@ export default {
           // console.log(params)
           // console.log(this.startTime)
           data1 = await getComprehensiveRecordsList(params)
-          // console.log(data1)
-          if (!returnAjaxMsg(data1, this, 0)) {
+          console.log(data1)
+          if (!data1) {
             // 接口失败清除局部loading
             this.partLoading = false
             return false
           } else {
             // 接口成功清除局部loading
             this.partLoading = false
-            console.log(data1)
-            if (data1.data.data.list) {
-              this.otherRecordsList = getNestedData(data1, 'data.data.list')
-              this.totalPagesOtherRecords = getNestedData(data1, 'data.data.pages') - 0
-            }
+            this.otherRecordsList = getNestedData(data1, 'data.data.list')
+            this.totalPagesOtherRecords = getNestedData(data1, 'data.data.pages') - 0
           }
           break
       }
