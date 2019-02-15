@@ -317,8 +317,13 @@ export default {
         i18n: this.language
       }
       const data = await getHomeMarketByAjax(params)
-      let objData = getNestedData(data, 'data.obj')
-      this.newMarketList = JSON.parse(unzip(objData))
+      let objList = getNestedData(data, 'data.obj')
+      let resultStr = ''
+      _.forEach(objList, (objItem) => {
+        resultStr += unzip(objItem)
+      })
+
+      this.newMarketList = JSON.parse(resultStr)
       this.activeName = getNestedData(this.newMarketList[0], 'plateId')
       this.activeIndex = 0
       let collectSymbol = {}
@@ -372,6 +377,7 @@ export default {
     // market过滤
     getFilterMarketList () {
       let list = _.cloneDeep(this.newMarketList)
+      // let list = [...this.newMarketList]
       if (!this.tabContentMoreStatus) {
         this.filterMarketList = list
         for (let k = 0; k < list.length; k++) {
