@@ -189,8 +189,13 @@ export default {
       const data = await getActiveSymbolDataAjax(params)
       console.log(data)
       if (!data) return false
-      let activeSymbolData = getNestedData(data, 'data.obj')
-      activeSymbolData = JSON.parse(unzip(activeSymbolData))
+      let resultStr = ''
+      let objList = getNestedData(data, 'data.obj')
+      _.forEach(objList, objItem => {
+        resultStr += unzip(objItem)
+      })
+
+      let activeSymbolData = JSON.parse(resultStr)
       let {
         defaultTrade, // 默认交易对
         depthList, // 买卖单、深度
