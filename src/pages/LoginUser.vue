@@ -1031,13 +1031,17 @@ export default {
             })
             return false
           }
-        } else if (this.isBindPhone && !this.step3PhoneMsgCode) {
+        }
+
+        if (!this.isBindGoogle && this.isBindPhone && !this.step3PhoneMsgCode) {
           this.$message({
             type: 'error',
             message: this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code') // '请输入手机验证码'
           })
           return false
-        } else if (this.isBindEmail && !this.step3EmailMsgCode) {
+        }
+
+        if (!this.isBindPhone && this.isBindEmail && !this.step3EmailMsgCode) {
           this.$message({
             type: 'error',
             message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
