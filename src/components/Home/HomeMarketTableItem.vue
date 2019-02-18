@@ -30,7 +30,7 @@
       <el-table
         class="cursor-pointer"
         :class="{
-          'has-data': item.content.length && item.content[0].id!='-1'
+          'has-data': item.content.length
         }"
         :data="item.content"
         @row-click="changeActiveSymbol"
@@ -61,7 +61,6 @@
                 <div
                   class="top"
                   style="height:15px;"
-                  v-show="s.row.id!='-1'"
                   :class="{
                     'line-height15':language=='zh_CN',
                     'line-height30':language!=='zh_CN'
@@ -239,7 +238,7 @@
             <!--非自选区-->
             <div
               class="collect-box"
-              v-show="s.row.id!='-1' &&item.id!=collectAreaId"
+              v-show="item.id!=collectAreaId"
             >
               <i
                 class="el-icon-star-on collected collect font-size16 cursor-pointer"
@@ -255,7 +254,7 @@
             <!--自选区-->
             <div
               class="collect-box"
-              v-show="s.row.id!='-1' && item.id==collectAreaId"
+              v-show="item.id==collectAreaId"
             >
               <i
                 class="el-icon-star-on collected collect font-size16 cursor-pointer"

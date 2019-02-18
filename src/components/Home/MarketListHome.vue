@@ -210,7 +210,6 @@ export default {
       if (!this.plates.length) return false
       this.activeName = getNestedData(this.plates[0], 'id')
       await this.getTradeAreas({})
-      // await this.getHomeMarketByAjax()
     }
   },
   mounted () {
@@ -248,14 +247,6 @@ export default {
       console.log(areas)
       // 交易区查看更多
       if (!areaId) {
-        _.forEach(areas, area => {
-          console.log(area)
-          if (!area.content.length) {
-            area.content.push({
-              id: '-1'
-            })
-          }
-        })
         console.log(areas)
         this.areas = more ? this.areas.concat(areas) : areas
         this.moreBtnShowStatus = getNestedData(data, 'data.more')
