@@ -359,6 +359,8 @@ export const phoneNumberFormat = phoneNum => {
  * @returns {*}
  */
 export const keep2Num = number => {
+  if (!number || isNaN(number)) return 0.00
+  console.log(number)
   return number.toFixed(2) - 0
 }
 

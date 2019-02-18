@@ -839,7 +839,7 @@ export default {
         address: this.activeWithdrawDepositAddress
       }
       let data = await checkCurrencyAddress(param)
-      if (!(returnAjaxMsg(data, this))) {
+      if (!data) {
         this.isLegalWithdrawAddress = false
         return false
       } else {

@@ -29,6 +29,9 @@
     >
       <el-table
         class="cursor-pointer"
+        :class="{
+          'has-data': item.content.length && item.content[0].id!='-1'
+        }"
         :data="item.content"
         @row-click="changeActiveSymbol"
         :height="isGetMore ? 548: 598"
@@ -55,12 +58,14 @@
                    style="height:30px;
                       margin:10px 4px;"
               >
-                <div class="top"
-                     style="height:15px;"
-                     :class="{
-                                'line-height15':language=='zh_CN',
-                                'line-height30':language!=='zh_CN'
-                             }"
+                <div
+                  class="top"
+                  style="height:15px;"
+                  v-show="s.row.id!='-1'"
+                  :class="{
+                    'line-height15':language=='zh_CN',
+                    'line-height30':language!=='zh_CN'
+                  }"
                 >
                   <span class="symbol">{{s.row.sellsymbol}}</span>
                   <span
@@ -166,6 +171,7 @@
         >
           <template slot-scope="s">
             <div
+              v-show="String($formatCount(s.row.vol24hour))!='NaN'"
               style=" width: 120px;
                 padding-left:10px;
                 height:30px;
@@ -233,7 +239,7 @@
             <!--非自选区-->
             <div
               class="collect-box"
-              v-show="item.id!=collectAreaId"
+              v-show="s.row.id!='-1' &&item.id!=collectAreaId"
             >
               <i
                 class="el-icon-star-on collected collect font-size16 cursor-pointer"
@@ -249,7 +255,7 @@
             <!--自选区-->
             <div
               class="collect-box"
-              v-show="item.id==collectAreaId"
+              v-show="s.row.id!='-1' && item.id==collectAreaId"
             >
               <i
                 class="el-icon-star-on collected collect font-size16 cursor-pointer"

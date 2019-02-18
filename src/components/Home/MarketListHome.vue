@@ -239,17 +239,31 @@ export default {
       if (areaId) params.areaId = areaId
       const data = await getTradeAreaAJAX(params)
       console.log(data)
-      if (!data) return false
+      if (!data) {
+        this.moreBtnShowStatus = false
+        return false
+      }
+      console.log(data)
       let areas = JSON.parse(unzip(getNestedData(data, 'data.obj')))
       console.log(areas)
       // 交易区查看更多
       if (!areaId) {
+        _.forEach(areas, area => {
+          console.log(area)
+          if (!area.content.length) {
+            area.content.push({
+              id: '-1'
+            })
+          }
+        })
+        console.log(areas)
         this.areas = more ? this.areas.concat(areas) : areas
         this.moreBtnShowStatus = getNestedData(data, 'data.more')
         console.log(areas, this.areas)
       }
       // 交易对查看更多
       if (more && areaId) {
+        console.log(areas)
         let areaIndex = this.areas.findIndex(val => val.id === areaId)
         console.log(areaIndex)
         let partOfContent = this.areas[areaIndex].content
@@ -408,6 +422,7 @@ export default {
         console.log(area)
         area.content = []
       })
+      this.moreBtnShowStatus = false
       this.getTradeAreas({})
     },
     // 搜索关键字e
@@ -641,18 +656,38 @@ export default {
             }
           }
 
+          td {
+            border-bottom: none;
+          }
+
           th,
           tr {
             background-color: transparent;
           }
         }
 
-        /* 选中行颜色 */
+        .has-data {
+          td {
+            border-bottom: 1px solid #222c35;
+          }
+
+          /* 选中行颜色 */
+          &.el-table--enable-row-hover {
+            .el-table__body tr {
+              &:hover {
+                > td {
+                  background-color: #282a3c;
+                }
+              }
+            }
+          }
+        }
+
         .el-table--enable-row-hover {
           .el-table__body tr {
             &:hover {
               > td {
-                background-color: #282a3c;
+                background-color: transparent;
               }
             }
           }
@@ -696,9 +731,36 @@ export default {
       background-color: $dayBgColor;
 
       /deep/ {
-        /* 选中行颜色 */
-        .el-table--enable-row-hover .el-table__body tr:hover > td {
-          background-color: #eaf2fa;
+        .el-table--enable-row-hover {
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background-color: transparent;
+                }
+              }
+
+              td {
+                border-bottom: none;
+              }
+            }
+          }
+
+          &.has-data {
+            .el-table__body {
+              tr {
+                td {
+                  border-bottom: 1px solid #ebeef5;
+                }
+
+                &:hover {
+                  > td {
+                    background-color: #eaf2fa;
+                  }
+                }
+              }
+            }
+          }
         }
 
         .el-table {

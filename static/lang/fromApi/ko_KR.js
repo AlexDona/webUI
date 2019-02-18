@@ -408,5 +408,11 @@ export const fromApi = {
   'user_api_update_failure': '사용자 API 수정 실패',
   'recharge_withdraw_failure_0041': '계정에서 동전 회수를 금지했습니다. 고객 서비스에 문의하십시오.',
   'entrust_failure_0027': '이 계정은 거래가 금지되어 있으므로 고객 서비스에 문의하십시오.',
-  'otc_failure_0090': '계좌가 거래 금지되었습니다OTC. 고객 서비스에 문의하십시오.'
+  'otc_failure_0090': '계좌가 거래 금지되었습니다OTC. 고객 서비스에 문의하십시오.',
+  'market_failure_00100': '사용 가능한 색션 정보 없음',
+  'market_failure_00101': '거래 색션 정보 가져오기 실폐',
+  'market_failure_00102': '요청한 거래 색션 사용 가능한 거래 시장 없음',
+  'market_failure_00103': '요청한 거래 색션 사용 더 이상 가능한 거래 시장 없음',
+  'market_failure_00104': '요청한 거래 시장에 사용 가능한 거래 페어 없음',
+  'market_failure_00105': '요청한 거래 시장에 더 이상 사용 가능한 거래 페어 없음'
 }
