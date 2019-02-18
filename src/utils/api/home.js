@@ -24,3 +24,8 @@ export const getCollectionListAjax = () => handleRequest(() => get('collection')
 export const getHomeMarketByAjax = params => handleRequest(() => get('market/homeMarket', {...params, 'loading': true}))
 // 通过邀请ID获取用户信息
 export const findUserInfoByShowId = params => handleRequest(() => get('user/findByShowId', params))
+
+// 获取板块信息
+export const getPlatesAJAX = params => handleRequest(() => get('/market/getTradePlate', params))
+// 根据板块id 获取定义的交易区信息
+export const getTradeAreaAJAX = params => handleRequest(() => get('market/plate/getInfo', params))
