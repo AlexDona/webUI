@@ -461,6 +461,7 @@ export default {
       totalPageForMyEntrust: 1, // 当前委托总页数
       // 充值
       chargeDialogVisible: false, // 默认隐藏充值框
+      currentState: 'not_all', // 当前显示状态
       chargeMoneyAddressId: '', // 数据ID
       currencyName: '', // 币种名称
       // 提币
@@ -520,6 +521,7 @@ export default {
     statusOpenToCloseCurrency (e) {
       console.log(e)
       this.isShowAllCurrency = e == 'not_all' ? true : false
+      this.currentState = e
       this.getAssetCurrenciesList(e)
     },
     // 跳转当前交易对
@@ -771,14 +773,15 @@ export default {
      * 刚进页面时候 个人资产列表展示
      */
     async getAssetCurrenciesList (type) {
+      console.log(type)
       let data
       let params = {
         pageNum: this.currentPageForMyEntrust,
         pageSize: this.pageSize,
         shortName: this.searchKeyWord, // 搜索关键字
-        selectType: 'all' // all：所有币种 not_all：有资产币种
+        selectType: this.currentState // all：所有币种 not_all：有资产币种
       }
-      switch (type) {
+      switch (this.currentState) {
         case 'all':
           params.selectType = 'not_all'
           break
@@ -786,6 +789,7 @@ export default {
           params.selectType = 'all'
           break
       }
+      this.localLoading = true
       data = await assetCurrenciesList(params)
       if (!data) {
         // 接口失败清除loading
