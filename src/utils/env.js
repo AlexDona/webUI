@@ -32,8 +32,8 @@ const dev210Config = {
 }
 
 const prodConfig = {
-  apiCommonUrl: 'https://uat.api.bzu.com/',
-  socketUrl: 'wss://uat.ws.bzu.com/market',
+  apiCommonUrl: 'https://api.bzu.com/',
+  socketUrl: 'wss://ws.bzu.com/market',
   loginSocketUrl: 'wss://api.new.bzu.com/qrcodeLogin/'
 }
 switch (process.env.NODE_ENV) {
