@@ -177,7 +177,6 @@ export default {
 
       .el-pagination button,
       .el-pager li {
-        width: 16px;
         height: 16px;
         font-size: 12px;
         line-height: 16px;

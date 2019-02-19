@@ -83,8 +83,8 @@ export default {
             // 委托价
             // 委托量
             return `
-                      ${this.$t('M.trade_coin_entrusted_price')}：${params[0].data[0].toFixed(4)}<br/>
-                      ${this.$t('M.trade_coin_entrusted_amount')}：${params[0].data[1].toFixed(4)}
+                      ${this.$t('M.trade_coin_entrusted_price')}：${this.$scientificToNumber(params[0].data[0])}<br/>
+                      ${this.$t('M.trade_coin_entrusted_amount')}：${this.$scientificToNumber(params[0].data[1])}
                       `
           }
         },

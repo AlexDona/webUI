@@ -73,6 +73,7 @@ export default {
         language: this.language
       }
       const data = await getServiceProtocoDataAjax(params)
+      if (!data) return false
       this.contentHTML = getNestedData(data, 'data').length ? getNestedData(data, 'data[0].content') : ''
     },
     // 获取资产列表下载地址

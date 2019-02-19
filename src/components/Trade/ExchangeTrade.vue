@@ -976,6 +976,8 @@ export default {
     },
     // 设置买卖价格
     setBuyAndSellPrice (targetPriceOfBuy, targetPriceOfSell = targetPriceOfBuy) {
+      targetPriceOfBuy = this.$scientificToNumber(targetPriceOfBuy)
+      targetPriceOfSell = this.$scientificToNumber(targetPriceOfSell)
       if (this.$refs[this.limitBuyPriceInputRef]) {
         this.$refs[this.limitBuyPriceInputRef].value = targetPriceOfBuy
         this.limitExchange.buyPrice = targetPriceOfBuy
@@ -1086,11 +1088,11 @@ export default {
     },
     // 限价买预计成交额
     limitBuyAmount () {
-      return this.$scientificToNumber(cutOutPointLength(this.limitExchange.buyPrice * this.limitExchange.buyCount, 2))
+      return this.$scientificToNumber(cutOutPointLength(this.$scientificToNumber(this.limitExchange.buyPrice * this.limitExchange.buyCount), 2))
     },
     // 限价卖预计成交额
     limitSellAmount () {
-      return this.$scientificToNumber(cutOutPointLength(this.limitExchange.sellPrice * this.limitExchange.sellCount, 2))
+      return this.$scientificToNumber(cutOutPointLength(this.$scientificToNumber(this.limitExchange.sellPrice * this.limitExchange.sellCount), 2))
     }
   },
   watch: {
@@ -1167,6 +1169,7 @@ export default {
       let targetPriceOfSell = newVal.sell || newVal.kai
       // 首次打开设置价格
       if (!this.reflashCount) {
+        console.log(newVal.last)
         if (newVal.last) {
           this.reflashCount++
         }

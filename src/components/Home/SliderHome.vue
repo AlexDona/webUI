@@ -68,6 +68,7 @@ export default {
         language: this.language
       }
       const data = await getBanner(params)
+      if (!data) return false
       this.sliderListAjax = getNestedData(data, 'data') || []
       let sliderList = []
       this.pages = sliderList

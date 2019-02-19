@@ -151,10 +151,12 @@ export default {
   methods: {
     async getCurrencyRate () {
       const DATA = await getCurrencyRate()
+      if (!DATA) return false
       this.currencyRateList = getNestedData(DATA, 'data') || []
     },
     async getSymbolRateData () {
       const DATA = await getSymbolRate()
+      if (!DATA) return false
       this.symbolRateList = getNestedData(DATA, 'data') || []
     }
   },

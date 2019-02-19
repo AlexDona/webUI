@@ -9,6 +9,7 @@ import {
 export default {
   async [GET_APP_URL_ACTION] ({commit}) {
     const data = await handleRequest(getAppDownLoadUrlAjax)
+    if (!data) return false
     commit('SET_APP_DOWNLOAD_URL', {
       android: http2https(getNestedData(data, 'data.android')),
       ios: http2https(getNestedData(data, 'data.ios')),

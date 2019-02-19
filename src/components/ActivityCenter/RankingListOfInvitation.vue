@@ -162,21 +162,19 @@ export default {
         language
       }
       const data = await getServiceProtocoDataAjax(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
+      if (!data) return false
+      let targetContent = getNestedData(data, 'data[0].content')
+      if (targetContent) {
+        this.rulesOfInvitation = targetContent
       } else {
-        let targetContent = getNestedData(data, 'data.data[0].content')
-        if (targetContent) {
-          this.rulesOfInvitation = targetContent
-        } else {
-          this.getRulesOfInvitation()
-        }
+        this.getRulesOfInvitation()
       }
     },
     // 获取 排行榜数据
     async getRankingList () {
       const data = await getRankingList()
       console.log(data)
+      if (!data) return false
       this.rankingList = getNestedData(data, 'data')
     },
     // 获取当前时间
