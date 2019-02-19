@@ -21,7 +21,7 @@ export const removeCollectionAjax = params => handleRequest(() => postWithURLenc
 // 收藏列表
 export const getCollectionListAjax = () => handleRequest(() => get('collection'))
 // 首页行情
-export const getHomeMarketByAjax = params => handleRequest(() => get('market/homeMarket', {...params, 'loading': true}))
+// export const getHomeMarketByAjax = params => handleRequest(() => get('market/homeMarket', {...params, 'loading': true}))
 // 通过邀请ID获取用户信息
 export const findUserInfoByShowId = params => handleRequest(() => get('user/findByShowId', params))
 

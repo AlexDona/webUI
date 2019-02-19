@@ -650,7 +650,7 @@ export default{
     },
     setNewTitle () {
       if (this.title) {
-        let newTitle = `${this.middleTopData.last} ${this.middleTopData.sellsymbol}/${this.middleTopData.area} ${this.title}`
+        let newTitle = `${this.$scientificToNumber(this.middleTopData.last)} ${this.middleTopData.sellsymbol}/${this.middleTopData.area} ${this.title}`
         console.log(newTitle)
         document.querySelector('title').innerText = newTitle
       } else {
@@ -779,6 +779,7 @@ export default{
                 }
 
                 > a {
+                  white-space: nowrap;
                   color: #8494a6;
 
                   &.active {
@@ -800,6 +801,7 @@ export default{
               display: inline-block;
               width: 100%;
               height: 100%;
+              white-space: nowrap;
               color: $headerNavFontColor;
 
               &.active {

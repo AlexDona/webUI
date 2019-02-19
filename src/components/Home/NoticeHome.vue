@@ -87,6 +87,7 @@ export default {
         language: this.language
       }
       const data = await getAllNewsNoticeListForHomePage(params)
+      if (!data) return false
       this.noticeList = getNestedData(data, 'data') || []
     },
     // 关闭组件

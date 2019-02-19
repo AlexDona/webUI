@@ -236,6 +236,7 @@ export const toggleUserCollection = async (type, tradeId) => {
 // 获取用户收藏列表
 export const getCollectionList = async (callback) => {
   const data = await getCollectionListAjax()
+  if (!data) return false
   callback(data)
 }
 // 协议跳转

@@ -94,7 +94,7 @@
                       </span><span class="amount text-align-r">
                         {{$scientificToNumber(item.amount)}}
                       </span><span class="total text-align-r">
-                        {{item.total}}
+                        {{$scientificToNumber(item.total)}}
                       </span><!--宽度条--><i
                           class="color-sell-bg"
                           :style="`width:${item.amount/buysAndSellsList.sells.highestAmount*100}%`"

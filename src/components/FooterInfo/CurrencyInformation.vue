@@ -91,6 +91,7 @@ export default {
           break
       }
       const data = await getCurrencyInfoList({language})
+      if (!data) return false
       console.log(data)
       this.currencyList = getNestedData(data, 'data')
       if (this.currencyList.length) {
@@ -107,6 +108,7 @@ export default {
       let currencyId = this.currencyId || getNestedData(this.currencyList, '[0].id')
       if (currencyId) {
         const data = await getCurrencyDetails(this.currencyId || getNestedData(this.currencyList, '[0].id'))
+        if (!data) return false
         this.currencyInfo = getNestedData(data, 'data')
       }
     }
