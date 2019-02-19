@@ -389,6 +389,7 @@
           background
           v-show="activeName === 'current-entrust' && withdrawDepositList.length"
           layout="prev, pager, next"
+          :current-page="currentPageForMyEntrust"
           :page-count="totalPageForMyEntrust"
           @current-change="changeCurrentPage"
         >
@@ -519,10 +520,19 @@ export default {
     ]),
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
-      console.log(e)
       this.isShowAllCurrency = e == 'not_all' ? true : false
+      if (this.currentPageForMyEntrust != 1) {
+        switch (e) {
+          case 'all':
+            this.currentState = 'not_all'
+            break
+          case 'not_all':
+            this.currentState = 'all'
+        }
+        this.currentPageForMyEntrust = 1
+      }
       this.currentState = e
-      this.getAssetCurrenciesList(e)
+      this.getAssetCurrenciesList()
     },
     // 跳转当前交易对
     changeActiveSymbol (e) {
