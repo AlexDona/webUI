@@ -18,6 +18,13 @@
       element-loading-background="rgb(28, 31, 50)"
     >
     </div>
+    <div
+      class="interval-loading-box"
+      v-if="intervalLoading"
+      v-loading.lock="intervalLoading"
+      element-loading-background="rgba(28, 31, 50, 0.4)"
+    >
+    </div>
   </div>
 </template>
 
@@ -84,6 +91,8 @@ export default {
       ajaxData: {}, // 接口请求数据
       resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week'],
       fullscreenLoading: true,
+      // 时间周期loading
+      intervalLoading: false,
       loadingCount: 0, // loading 次数
       KlineNum: 0, // 拖拽k线档数
       isAllowDrag: true, // 是否允许拖拽
@@ -178,6 +187,7 @@ export default {
       this.fullscreenLoading = false
       setTimeout(() => {
         this.changeIsKlineDataReady(true)
+        this.intervalLoading = false
       }, 500)
     },
     // 获取当前交易对socket数据
@@ -320,6 +330,7 @@ export default {
               button.attr('class', 'button ' + item.class + selected + ' add' + index)
                 .attr('data-chart-type', item.chartType === undefined ? 1 : item.chartType)
                 .on('click', function (e) {
+                  _self.intervalLoading = true
                   let chartType = +button.attr('data-chart-type')
                   if (chart.resolution() !== item.resolution) {
                     chart.setResolution(item.resolution)
@@ -661,7 +672,8 @@ export default {
       }
     }
 
-    .loading-box {
+    .loading-box,
+    .interval-loading-box {
       position: absolute;
       z-index: 15;
       top: 0;

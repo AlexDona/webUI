@@ -408,5 +408,11 @@ export const fromApi = {
   'user_api_update_failure': '用戶API修改失敗',
   'recharge_withdraw_failure_0041': '該帳號已被禁止提幣，請諮詢客服',
   'entrust_failure_0027': '該帳號已被禁止交易，請諮詢客服',
-  'otc_failure_0090': '該帳號已被禁止交易OTC，請諮詢客服'
+  'otc_failure_0090': '該帳號已被禁止交易OTC，請諮詢客服',
+  'market_failure_00100': '沒有可用的板塊資訊',
+  'market_failure_00101': '獲取交易板塊資訊失敗',
+  'market_failure_00102': '請求的交易板塊暫無可用的交易區',
+  'market_failure_00103': '請求的交易板塊暫無更多可用的交易區',
+  'market_failure_00104': '請求交易區下暫無可用的交易對',
+  'market_failure_00105': '請求交易區下暫無更多可用的交易對'
 }

@@ -408,5 +408,11 @@ export const fromApi = {
   'user_api_update_failure': '用户API修改失败',
   'recharge_withdraw_failure_0041': '该账号已被禁止提币，请咨询客服',
   'entrust_failure_0027': '该账号已被禁止交易，请咨询客服',
-  'otc_failure_0090': '该账号已被禁止交易OTC，请咨询客服'
+  'otc_failure_0090': '该账号已被禁止交易OTC，请咨询客服',
+  'market_failure_00100': '没有可用的板块信息',
+  'market_failure_00101': '获取交易板块信息失败',
+  'market_failure_00102': '请求的交易板块暂无可用的交易区',
+  'market_failure_00103': '请求的交易板块暂无更多可用的交易区',
+  'market_failure_00104': '请求交易区下暂无可用的交易对',
+  'market_failure_00105': '请求交易区下暂无更多可用的交易对'
 }

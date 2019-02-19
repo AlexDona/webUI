@@ -12,14 +12,15 @@
           @tab-click="changeTab"
         >
           <el-tab-pane
-            :label="outItem.plateName.replace('+',' ')"
-            :name="outItem.plateId"
-            v-for="(outItem,outIndex) in filterMarketList"
-            :key="outIndex"
-            :track-by="outIndex"
+            :label="plate.name.replace('+',' ')"
+            :name="plate.id"
+            v-for="plate in plates"
+            :key="plate"
+            :track-by="plate"
           >
             <div
               class="tab-content"
+              v-if="activeName === plate.id"
             >
               <!--搜索区-->
               <HomeMarketTableItem
@@ -42,17 +43,17 @@
               />
               <div
                 class="tab-item"
-                v-for="(item) in outItem.tradeAreaList"
-                :id="'tab-item.'+item.id"
-                :key="item.id"
-                :track-by="item.id"
+                v-for="area in areas"
+                :id="'tab-item.' + area.id"
+                :key="area.id"
+                :track-by="area.id"
               >
                 <div
                   class="inner-item-box"
-                  v-if="(item.content.length&&item.id!==searchAreaId)||(item.id==searchAreaId&&searchKeyWord!=='')"
-                  :style="'height:'+(50*(item.content.length||1)+102)+'px'"
+                  v-if="(area.content.length && area.id !== searchAreaId)||( area.id == searchAreaId && searchKeyWord!=='')"
+                  :style="'height:'+(50*(moreBtnShowStatus ? (area.content.length + 1) : area.content.length || 1)+102)+'px'"
                   :class="{
-                  'force-height':!(item.id==searchAreaId||item.id==collectAreaId),
+                  'force-height': !(area.id == searchAreaId || area.id == collectAreaId),
                   'max-height':true
                   }"
                 >
@@ -61,9 +62,12 @@
                     :collectAreaId="collectAreaId"
                     :searchAreaId="searchAreaId"
                     :collectStatusList="collectStatusList"
-                    :item="item"
+                    :item="area"
                     :collectSymbol="collectSymbol"
+                    :activeName="activeName"
                     @toggleCollect="toggleCollect"
+                    :hasMoreSymbols="area.more"
+                    @getMoreSymbols="getTradeAreas"
                   />
                 </div>
               </div>
@@ -83,7 +87,8 @@
                 <!--查看更多交易区-->
                 <el-button
                   round
-                  @click="toggleTabContentHeightStatus"
+                  @click="getTradeAreas({more: true})"
+                  v-show="moreBtnShowStatus"
                 >
                   {{$t(moreBtnText)}}
                 </el-button>
@@ -125,7 +130,8 @@ import {
   getNestedData
 } from '../../utils/commonFunc'
 import {
-  getHomeMarketByAjax
+  getPlatesAJAX,
+  getTradeAreaAJAX
   // getCollectionListAjax
 } from '../../utils/api/home'
 import {
@@ -163,7 +169,7 @@ export default {
       activeIndex: null, // 当前activeName 对应index
       // 前两项行情数据
       filterMarketList: [],
-      moreBtnShowStatus: true, // 查看更多按钮显示状态
+      moreBtnShowStatus: false, // 查看更多按钮显示状态
       socket: new socket(),
       tabChangeCount: 0, // tab栏切换次数
       newMarketList: [], // 当前最新行情
@@ -189,14 +195,22 @@ export default {
       newContentMap: new Map(),
       // 最新的交易区map
       newTradeAreaIndexMap: new Map(),
-      newSymbolIndexMap: new Map()
+      newSymbolIndexMap: new Map(),
+      // 板块列表
+      plates: [],
+      // 当前板块下的交易区
+      areas: [],
+      areasIndexMap: new Map(),
+      symbolsIndexMap: new Map()
     }
   },
   async created () {
     if (this.language) {
-      await this.getHomeMarketByAjax()
+      await this.getPlates()
+      if (!this.plates.length) return false
+      this.activeName = getNestedData(this.plates[0], 'id')
+      await this.getTradeAreas({})
     }
-    this.changeIsShowStatus()
   },
   mounted () {
   },
@@ -216,36 +230,100 @@ export default {
       'CHANGE_SYMBOL_MAP',
       'CHANGE_ACTIVE_TRADE_AREA'
     ]),
+    async getTradeAreas ({plateId = this.activeName, more = false, areaId = ''}) {
+      let params = {
+        plateId,
+        more
+      }
+      if (areaId) params.areaId = areaId
+      const data = await getTradeAreaAJAX(params)
+      console.log(data)
+      if (!data) {
+        this.moreBtnShowStatus = false
+        return false
+      }
+      console.log(data)
+      let areas = JSON.parse(unzip(getNestedData(data, 'data.obj')))
+      console.log(areas)
+      // 交易区查看更多
+      if (!areaId) {
+        console.log(areas)
+        this.areas = more ? this.areas.concat(areas) : areas
+        this.moreBtnShowStatus = getNestedData(data, 'data.more')
+        console.log(areas, this.areas)
+      }
+      // 交易对查看更多
+      if (more && areaId) {
+        console.log(areas)
+        let areaIndex = this.areas.findIndex(val => val.id === areaId)
+        console.log(areaIndex)
+        let partOfContent = this.areas[areaIndex].content
+        this.areas[areaIndex].content = partOfContent.concat(areas)
+      }
+      console.log(this.moreBtnShowStatus)
+      _.forEach(this.areas, (area, areaIndex) => {
+        console.log(area)
+        this.areasIndexMap.set(area.area, areaIndex)
+        this.symbolsIndexMap.set(areaIndex, new Map())
+        _.forEach(area.content, (symbol, symbolIndex) => {
+          this.symbolsIndexMap.get(areaIndex).set(symbol.id, symbolIndex)
+          this.CHANGE_SYMBOL_MAP({
+            key: symbol.id,
+            val: symbol
+          })
+        })
+      })
+      this.activeIndex = 0
+      let collectSymbol = {}
+      if (!this.isLogin) {
+        collectSymbol = JSON.parse(getStore('collectSymbol')) || {}
+      } else {
+        await this.getCollectionList(collectSymbol)
+      }
+      console.log(collectSymbol)
+      this.setCollectData(collectSymbol)
+      // more
+      this.setSymbolsForSocket()
+      console.log(this.symbolsIndexMap)
+    },
+    // 获取板块信息
+    async getPlates () {
+      const data = await getPlatesAJAX({i18n: this.language})
+      if (!data) return false
+      this.plates = JSON.parse(unzip(getNestedData(data, 'data'))) || []
+      console.log(this.plates)
+    },
     setCollectData (collectSymbol) {
       this.CHANGE_COLLECT_SYMBOL({
         type: 'reset',
         collectSymbol
       })
       let newContent = []
+      console.log(this.symbolMap.get('topcbtc'))
       _.forEach(collectSymbol, outItem => {
         if (this.symbolMap.get(outItem)) {
           newContent.push(this.symbolMap.get(outItem))
         }
       })
+      console.log(newContent)
       this.$set(this.collectArea, 'content', newContent)
     },
     // 拼接socket参数
-    concatSocketParamsStr (activeIndexOfNewMarketList) {
+    setSymbolsForSocket () {
       this.socketParamsStr = ''
-      let currentList = this.newMarketList[activeIndexOfNewMarketList]
-      if (currentList && currentList.tradeAreaList) {
-        _.forEach(currentList.tradeAreaList, outItem => {
-          _.forEach(outItem.content, item => {
-            this.socketParamsStr += `${item.id}@`
-          })
+      console.log(this.areas)
+      _.forEach(this.areas, area => {
+        _.forEach(area.content, symbol => {
+          console.log(symbol)
+          this.socketParamsStr += `${symbol.id}@`
         })
-        _.forEach(this.collectArea.content, item => {
-          if (item) {
-            this.socketParamsStr += `${item.id}@`
-          }
-        })
-        this.socketParamsStr = this.socketParamsStr.slice(0, this.socketParamsStr.length - 1)
-      }
+      })
+      _.forEach(this.collectArea.content, symbol => {
+        if (symbol) {
+          this.socketParamsStr += `${symbol.id}@`
+        }
+      })
+      this.socketParamsStr = this.socketParamsStr.slice(0, this.socketParamsStr.length - 1)
     },
     // 订阅数据
     subscribeSocket (type, params) {
@@ -262,31 +340,40 @@ export default {
       this.socket.on('message', (data) => {
         if (data.type == 1) {
           const newData = data.data
-          let {buyCoinName, tradeName} = newData
+          let {
+            buyCoinName, // 'BTC'、'FBT'
+            tradeName // rdnbtc、 fucfbt
+          } = newData
+          console.log(tradeName, newData, this.areasIndexMap, this.symbolsIndexMap)
 
-          let areaMap = this.newTradeAreaIndexMap.get(this.activeIndex)
-          if (!areaMap) return false
-          const areaIndex = areaMap.get(buyCoinName)
-          let contentMap = this.newSymbolIndexMap.get(this.activeIndex).get(buyCoinName)
-          if (!contentMap) return false
-          const contentIndex = this.newSymbolIndexMap.get(this.activeIndex).get(buyCoinName).get(tradeName)
-          const newContent = {...this.newMarketList[this.activeIndex].tradeAreaList[areaIndex].content[contentIndex], ...newData}
-          this.$set(this.newMarketList[this.activeIndex].tradeAreaList[areaIndex].content, contentIndex, newContent)
-          this.getFilterMarketList()
-          //  自选区
-          _.forEach(this.collectArea.content, (item, index) => {
-            let newContent = item
-            if (item && item.tradeId === newData.tradeId) {
-              setSocketData(
-                newContent,
-                newData,
-                this.collectArea.content,
-                index,
-                this
-              )
-              return false
-            }
+          let areaIndex = this.areasIndexMap.get(buyCoinName)
+          console.log(this.symbolsIndexMap, areaIndex)
+          if (!areaIndex || !this.symbolsIndexMap.get(areaIndex)) return false
+          let symbolIndex = this.symbolsIndexMap.get(areaIndex).get(tradeName)
+          const newSymbol = {...this.areas[areaIndex].content[symbolIndex], ...newData}
+          this.$set(this.areas[areaIndex].content, symbolIndex, newSymbol)
+          this.CHANGE_SYMBOL_MAP({
+            key: newData.id,
+            val: newData
           })
+          this.setCollectionAndSearchContent(this.searchArea.content, newData)
+          this.setCollectionAndSearchContent(this.collectArea.content, newData)
+        }
+      })
+    },
+    setCollectionAndSearchContent (target, newData) {
+      if (!target.length) return false
+      // 搜索区
+      _.forEach(target, (symbol, symbolIndex) => {
+        let newSymbol = symbol
+        if (symbol && symbol.tradeId === newData.tradeId) {
+          setSocketData(
+            newSymbol,
+            newData,
+            target,
+            symbolIndex,
+            this
+          )
         }
       })
     },
@@ -311,50 +398,6 @@ export default {
         })
       })
     },
-    // 首次链接接口获取行情数据
-    async getHomeMarketByAjax () {
-      const params = {
-        i18n: this.language
-      }
-      const data = await getHomeMarketByAjax(params)
-      let objList = getNestedData(data, 'data.obj')
-      let resultStr = ''
-      _.forEach(objList, (objItem) => {
-        resultStr += unzip(objItem)
-      })
-
-      this.newMarketList = JSON.parse(resultStr)
-      this.activeName = getNestedData(this.newMarketList[0], 'plateId')
-      this.activeIndex = 0
-      let collectSymbol = {}
-      if (!this.isLogin) {
-        collectSymbol = JSON.parse(getStore('collectSymbol')) || {}
-      } else {
-        await this.getCollectionList(collectSymbol)
-      }
-      this.setCollectData(collectSymbol)
-      this.concatSocketParamsStr(this.activeIndex)
-      this.getFilterMarketList()
-
-      _.forEach(this.newMarketList, (plateItem, plateIndex) => {
-        this.marketMap.set(plateIndex, new Map())
-        this.newTradeAreaIndexMap.set(plateIndex, new Map())
-        this.newSymbolIndexMap.set(plateIndex, new Map())
-        _.forEach(plateItem.tradeAreaList, (tradeAreaItem, tradeAreaIndex) => {
-          this.marketMap.get(plateIndex).set(tradeAreaItem.area, new Map())
-          this.newTradeAreaIndexMap.get(plateIndex).set(tradeAreaItem.area, tradeAreaIndex)
-          this.newSymbolIndexMap.get(plateIndex).set(tradeAreaItem.area, new Map())
-          _.forEach(tradeAreaItem.content, (contentItem, contentIndex) => {
-            this.marketMap.get(plateIndex).get(tradeAreaItem.area).set(contentItem.id, contentItem)
-            this.newSymbolIndexMap.get(plateIndex).get(tradeAreaItem.area).set(contentItem.id, contentIndex)
-            this.CHANGE_SYMBOL_MAP({
-              key: contentItem.id,
-              val: contentItem
-            })
-          })
-        })
-      })
-    },
     getSocketData (type, params) {
       // 首页socket
       this.socket.send({
@@ -366,57 +409,32 @@ export default {
     // 切换板块
     changeTab (e) {
       this.searchFromMarketList()
-      this.changeIsShowStatus()
-    },
-    // 是否显示查看更多按钮
-    changeIsShowStatus () {
-      let activeMarketList = this.newMarketList.filter(item => item.plateId == this.activeName)[0]
-      let targetList = getNestedData(activeMarketList, 'tradeAreaList') || []
-      this.moreBtnShowStatus = targetList.length > 2 ? 1 : 0
-    },
-    // market过滤
-    getFilterMarketList () {
-      let list = _.cloneDeep(this.newMarketList)
-      // let list = [...this.newMarketList]
-      if (!this.tabContentMoreStatus) {
-        this.filterMarketList = list
-        for (let k = 0; k < list.length; k++) {
-          let newList = list[k].tradeAreaList.slice(0, 2)
-          this.$set(this.filterMarketList[k], 'tradeAreaList', newList)
-        }
-      } else if (this.tabContentMoreStatus) {
-        this.filterMarketList = this.newMarketList
-      }
+      _.forEach(this.areas, area => {
+        console.log(area)
+        area.content = []
+      })
+      this.moreBtnShowStatus = false
+      this.getTradeAreas({})
     },
     // 搜索关键字e
     searchFromMarketList () {
-      this.searchList = []
-      this.searchArea.content = this.searchList
+      let searchList = []
+      this.searchArea.content = searchList
       if (this.searchKeyWord.trim() !== '') {
         this.symbolMap.forEach(item => {
+          console.log(item)
           if (item.plateId === this.activeName) {
             const result1 = item.sellsymbol.search(this.searchKeyWord.toUpperCase())
             const result2 = item.sellname.search(this.searchKeyWord)
             if (result1 !== -1 || result2 !== -1) {
-              this.searchList.push(item)
+              searchList.push(item)
             }
           }
         })
-        this.searchArea.content = this.searchList
+        this.searchArea.content = searchList
       } else {
         this.searchArea.content = []
       }
-    },
-    // 切换查看更多
-    toggleTabContentHeightStatus () {
-      this.itemAreaMoreStatus = false
-      this.tabContentMoreStatus = !this.tabContentMoreStatus
-      this.toggleViewMoreBtnText()
-      this.getFilterMarketList()
-    },
-    // 切换 查看更多按钮文字
-    toggleViewMoreBtnText () {
-      this.moreBtnText = this.tabContentMoreStatus ? 'M.comm_pack_up' : 'M.comm_view_more'
     },
     // 切换收藏
     async toggleCollect (data) {
@@ -474,6 +492,7 @@ export default {
       }
     },
     activeName (newVal) {
+      console.log(newVal)
       this.tabChangeCount++
       _.forEach(this.newMarketList, (item, index) => {
         if (item.plateId === newVal) {
@@ -481,19 +500,20 @@ export default {
           return false
         }
       })
-      this.concatSocketParamsStr(this.activeIndex)
+      this.setSymbolsForSocket()
     },
     async language (newVal) {
       this.collectArea.area = this.$t('M.home_market_district')
       this.searchArea.area = this.$t('M.home_market_field_search')
       if (newVal) {
-        await this.getHomeMarketByAjax()
+        await this.getTradeAreas({})
       }
     },
     socketParamsStr (newVal, oldVal) {
       if (oldVal) {
         this.subscribeSocket('CANCEL', oldVal)
       }
+      console.log(newVal)
       this.subscribeSocket('SUB', newVal)
     },
     isLogin (newVal) {
@@ -580,11 +600,11 @@ export default {
             overflow: hidden;
 
             &.max-height {
-              max-height: 560px;
+              max-height: 610px;
             }
 
             &.force-height {
-              height: 560px !important;
+              height: 610px !important;
             }
           }
         }
@@ -627,18 +647,38 @@ export default {
             }
           }
 
+          td {
+            border-bottom: none;
+          }
+
           th,
           tr {
             background-color: transparent;
           }
         }
 
-        /* 选中行颜色 */
+        .has-data {
+          td {
+            border-bottom: 1px solid #222c35;
+          }
+
+          /* 选中行颜色 */
+          &.el-table--enable-row-hover {
+            .el-table__body tr {
+              &:hover {
+                > td {
+                  background-color: #282a3c;
+                }
+              }
+            }
+          }
+        }
+
         .el-table--enable-row-hover {
           .el-table__body tr {
             &:hover {
               > td {
-                background-color: #282a3c;
+                background-color: transparent;
               }
             }
           }
@@ -682,9 +722,36 @@ export default {
       background-color: $dayBgColor;
 
       /deep/ {
-        /* 选中行颜色 */
-        .el-table--enable-row-hover .el-table__body tr:hover > td {
-          background-color: #eaf2fa;
+        .el-table--enable-row-hover {
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background-color: transparent;
+                }
+              }
+
+              td {
+                border-bottom: none;
+              }
+            }
+          }
+
+          &.has-data {
+            .el-table__body {
+              tr {
+                td {
+                  border-bottom: 1px solid #ebeef5;
+                }
+
+                &:hover {
+                  > td {
+                    background-color: #eaf2fa;
+                  }
+                }
+              }
+            }
+          }
         }
 
         .el-table {
@@ -751,7 +818,7 @@ export default {
 
       .el-table--enable-row-transition .el-table__body td {
         box-sizing: border-box;
-        height: 49px;
+        height: 49px !important;
         padding: 0;
       }
 
@@ -761,6 +828,10 @@ export default {
           height: 38px;
           padding: 0 0 0 14px;
           border-top: 1px solid #2f3a8c;
+        }
+
+        tr {
+          max-height: 50px !important;
         }
 
         .cell,

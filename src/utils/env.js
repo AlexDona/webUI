@@ -32,8 +32,8 @@ const dev210Config = {
 }
 
 const prodConfig = {
-  apiCommonUrl: 'https://api.new.bzu.com/',
-  socketUrl: 'wss://ws.bzu.com/market',
+  apiCommonUrl: 'https://uat.api.bzu.com/',
+  socketUrl: 'wss://uat.ws.bzu.com/market',
   loginSocketUrl: 'wss://api.new.bzu.com/qrcodeLogin/'
 }
 switch (process.env.NODE_ENV) {
@@ -43,7 +43,7 @@ switch (process.env.NODE_ENV) {
     // 210开发环境
     // targetConfig = {...dev210Config, xDomain: 'me.com'}
     // 生产环境
-    // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
+    // targetConfig = {...prodConfig, xDomain: 'fubt.bzu.com'}
     break
   // 210开发环境
   case 'development210':

@@ -99,7 +99,6 @@
         <div class="bottom">
             <span
               class="font-size14 theme-color"
-              v-show="middleTopData.vol24hour"
             >
               {{$formatCount(middleTopData.vol24hour)}}
             </span>

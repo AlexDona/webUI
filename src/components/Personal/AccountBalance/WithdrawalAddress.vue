@@ -375,7 +375,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await checkCurrencyAddress(param)
-      if (!(returnAjaxMsg(data, this))) {
+      if (!data) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -422,7 +422,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await addNewWithdrawalAddress(param)
-      if (!(returnAjaxMsg(data, this))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false

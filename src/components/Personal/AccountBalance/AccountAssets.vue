@@ -389,6 +389,7 @@
           background
           v-show="activeName === 'current-entrust' && withdrawDepositList.length"
           layout="prev, pager, next"
+          :current-page="currentPageForMyEntrust"
           :page-count="totalPageForMyEntrust"
           @current-change="changeCurrentPage"
         >
@@ -461,6 +462,7 @@ export default {
       totalPageForMyEntrust: 1, // 当前委托总页数
       // 充值
       chargeDialogVisible: false, // 默认隐藏充值框
+      currentState: 'not_all', // 当前显示状态
       chargeMoneyAddressId: '', // 数据ID
       currencyName: '', // 币种名称
       // 提币
@@ -518,9 +520,19 @@ export default {
     ]),
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
-      console.log(e)
       this.isShowAllCurrency = e == 'not_all' ? true : false
-      this.getAssetCurrenciesList(e)
+      if (this.currentPageForMyEntrust != 1) {
+        switch (e) {
+          case 'all':
+            this.currentState = 'not_all'
+            break
+          case 'not_all':
+            this.currentState = 'all'
+        }
+        this.currentPageForMyEntrust = 1
+      }
+      this.currentState = e
+      this.getAssetCurrenciesList()
     },
     // 跳转当前交易对
     changeActiveSymbol (e) {
@@ -771,14 +783,15 @@ export default {
      * 刚进页面时候 个人资产列表展示
      */
     async getAssetCurrenciesList (type) {
+      console.log(type)
       let data
       let params = {
         pageNum: this.currentPageForMyEntrust,
         pageSize: this.pageSize,
         shortName: this.searchKeyWord, // 搜索关键字
-        selectType: 'all' // all：所有币种 not_all：有资产币种
+        selectType: this.currentState // all：所有币种 not_all：有资产币种
       }
-      switch (type) {
+      switch (this.currentState) {
         case 'all':
           params.selectType = 'not_all'
           break
@@ -786,6 +799,7 @@ export default {
           params.selectType = 'all'
           break
       }
+      this.localLoading = true
       data = await assetCurrenciesList(params)
       if (!data) {
         // 接口失败清除loading
@@ -839,7 +853,7 @@ export default {
         address: this.activeWithdrawDepositAddress
       }
       let data = await checkCurrencyAddress(param)
-      if (!(returnAjaxMsg(data, this))) {
+      if (!data) {
         this.isLegalWithdrawAddress = false
         return false
       } else {

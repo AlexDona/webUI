@@ -409,5 +409,11 @@ export const fromApi = {
   'user_api_update_failure': 'User API modification failed',
   'recharge_withdraw_failure_0041': 'This account has been forbidden to withdraw money, please consult the customer service',
   'entrust_failure_0027': 'This account has been banned from trading, please consult the customer service',
-  'otc_failure_0090': 'This account has been banned from trading OTC, please contact customer service'
+  'otc_failure_0090': 'This account has been banned from trading OTC, please contact customer service',
+  'market_failure_00100': 'No block information available',
+  'market_failure_00101': 'Failed to obtain trading information',
+  'market_failure_00102': 'There are no available trade zones in the requested trade block',
+  'market_failure_00103': 'There are no more available trade zones in the requested trade block',
+  'market_failure_00104': 'There are no available trade pairs under the request trade area',
+  'market_failure_00105': 'There are no more available trade pairs under the request trade area'
 }

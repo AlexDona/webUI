@@ -172,6 +172,7 @@ export default {
       }
       if (this.termsTypeIds !== 5) {
         const data = await getServiceProtocoDataAjax(params)
+        if (!data) return false
         const targetData = getNestedData(data, 'data[0]')
         switch (this.termsTypeIds) {
           case 1:
