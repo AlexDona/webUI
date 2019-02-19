@@ -40,7 +40,7 @@
                     {{item.bourseTrade.split('_').join('/')}}
                   </div><div class="td price">
                     <div class="top">
-                      {{cutOutPointLength(item.boursePrice, 8)}}
+                      {{$scientificToNumber(cutOutPointLength(item.boursePrice, 8))}}
                     </div><!--货币转换-->
                     <div
                       class="bottom"
