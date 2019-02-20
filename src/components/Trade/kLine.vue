@@ -135,6 +135,8 @@ export default {
     // 接口获取K线数据
     async getKlineByAjax (tradeName, KlineType, KlineNum = 0, KlineStep = 'STEP5') {
       this.isAllowDrag = false
+      console.log(tradeName)
+      tradeName = tradeName.toLowerCase()
       const params = {
         tradeName,
         KlineType,
