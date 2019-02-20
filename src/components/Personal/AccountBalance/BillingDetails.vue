@@ -457,7 +457,7 @@ export default {
       this.otherRecordsList = []
       let params = {
         pageSize: this.pageSize, // 每页显示条数
-        userId: this.userInfo.userId, // 用户ID
+        userId: getNestedData(this.userInfo, 'userId'), // 用户ID
         coinId: this.defaultCurrencyId, // 币种ID
         type: this.otherRecordsValue, // 类型（RECHARGE:充值 WITHDRAW:提现 / 其他记录类型
         startTime: '', // 开始起止时间
