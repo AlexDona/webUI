@@ -48,8 +48,8 @@ export default {
   },
   async created () {
     // require('../static/css/common.css')
-    require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
-    require('../static/css/theme/night/Common/HeaderCommonNight.css')
+    // require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
+    // require('../static/css/theme/night/Common/HeaderCommonNight.css')
     // 取主题
     const theme = getStore('theme') || 'night'
     this.CHANGE_THEME(theme)
@@ -123,6 +123,7 @@ export default {
 </script>
 
 <style>
+
   .body-container {
     height: 100%;
     font-size: 14px;
