@@ -349,7 +349,8 @@ export default {
     })
   },
   watch: {
-    userCenterActiveName () {
+    userCenterActiveName (e) {
+      this.crrentUserCenterActiveName = e
       this.REFRESH_USER_INFO_ACTION()
     }
   }

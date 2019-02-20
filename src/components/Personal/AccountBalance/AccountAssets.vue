@@ -853,14 +853,11 @@ export default {
         address: this.activeWithdrawDepositAddress
       }
       let data = await checkCurrencyAddress(param)
-      if (!data) {
-        this.isLegalWithdrawAddress = false
-        return false
-      } else {
-        this.isLegalWithdrawAddress = true
-        // 验证通过调用验证方式接口
-        this.getSecurityCenter()
-      }
+      this.isLegalWithdrawAddress = false
+      if (!data) return false
+      this.isLegalWithdrawAddress = true
+      // 验证通过调用验证方式接口
+      this.getSecurityCenter()
     },
     /**
      *  点击提币按钮时 获取提币信息（最大最小手续费）
@@ -1025,16 +1022,13 @@ export default {
         payCode: this.password // 交易密码
       }
       data = await statusSubmitWithdrawButton(param)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        this.isShowWithdrawDialog = false
-        // 提币地址列表查询
-        this.getAssetCurrenciesList()
-        // this.stateEmptyData()
-        this.resetWithdrawFormContent()
-        this.stateEmptyData()
-      }
+      console.log(data)
+      if (!data) return false
+      this.isShowWithdrawDialog = false
+      // 提币地址列表查询
+      this.getAssetCurrenciesList()
+      this.resetWithdrawFormContent()
+      this.stateEmptyData()
     },
     // 接口请求完成之后普通币种清空数据
     stateEmptyData (index) {

@@ -689,7 +689,7 @@ export default {
       state: '', // 开启关闭状态
       closeErrorMsg: '', // 关闭错误提示close
       openErrorMsg: '', // 开启错误提示open
-      securityLevel: '', // 账号安全级别
+      securityLevel: 0, // 账号安全级别
       fullscreenLoading: false // 整页loading
     }
   },

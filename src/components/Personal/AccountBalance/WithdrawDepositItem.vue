@@ -30,6 +30,7 @@
             {{ $t('M.comm_mention_money') }}{{ $t('M.comm_site') }}
           </p>
           <el-select
+            placeholder=""
             v-model="activeWithdrawDepositAddress"
             :no-data-text="$t('M.comm_no_data')"
             filterable
