@@ -143,7 +143,6 @@
                 <el-form
                   :label-position="labelPosition"
                   label-width="80px"
-                  :model="formLabelAlign"
                 >
                   <el-form-item>
                     <!-- 标题 -->

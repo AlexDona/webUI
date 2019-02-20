@@ -922,6 +922,10 @@ export default {
   }
 
   /deep/ {
+    .el-input__icon {
+      line-height: 34px;
+    }
+
     .currency-input {
       .el-select {
         width: 120px;
