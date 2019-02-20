@@ -19,6 +19,7 @@
             <div v-show="contentShowStatus">
               <el-table
                 :data="orderRecordList"
+                :empty-text="$t('M.comm_no_data')"
                 height="574"
               >
                 <!--时间-->

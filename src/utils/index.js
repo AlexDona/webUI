@@ -361,7 +361,7 @@ export const phoneNumberFormat = phoneNum => {
  */
 export const keep2Num = number => {
   // if (!number || isNaN(number)) return 0.00
-  console.log(number)
+  // console.log(number)
   return (number - 0).toFixed(2) - 0
 }
 
