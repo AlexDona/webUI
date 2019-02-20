@@ -179,7 +179,7 @@
                   :label="$t('M.comm_count')"
                 >
                   <template slot-scope = "s">
-                    <div>{{ s.row.amount }}</div>
+                    <div>{{ s.row.amount - 0 }}</div>
                   </template>
                 </el-table-column>
                 <!--提交时间-->

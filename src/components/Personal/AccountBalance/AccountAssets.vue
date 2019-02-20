@@ -341,7 +341,7 @@
                 >
                   <el-button
                     type="primary"
-                    @click.prevent="submitMentionMoney"
+                    @click.prevent="submitMentionMoney()"
                   >
                     <!--确 定-->
                     {{ $t('M.comm_confirm') }}
@@ -492,10 +492,9 @@ export default {
       rechargeNoteInfo: '', // 充币地址备注信息
       localLoading: true, // 页面列表局部loading
       isLegalWithdrawAddress: true, // 是否为合法提币地址
-      // 最小提币数量
-      minRechargeAmount: '',
-      // 确认次数
-      successCount: '',
+      minRechargeAmount: '', // 最小提币数量
+      successCount: '', // 确认次数
+      currentIndex: '', // 提币清空数据当前索引
       end: '' // 占位
     }
   },
@@ -695,6 +694,8 @@ export default {
     },
     // 重置提现表单内容
     resetWithdrawFormContent (index) {
+      this.currentIndex = index
+      console.log(this.$refs[`withdrawItemRef${index}`][0])
       this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = ''
       // 到账数量
       this.accountCount = ''
@@ -948,14 +949,14 @@ export default {
         return false
       }
       console.log(this.accountCount)
-      if (this.withdrawFeeVModel < this.feeRangeOfWithdraw.minFees) {
+      if (this.withdrawFeeVModel - this.feeRangeOfWithdraw.minFees < 0) {
         // 判断输入手续费小于最小提现手续费
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint5'),
           type: 'error'
         })
         return false
-      } else if (this.withdrawFeeVModel > this.feeRangeOfWithdraw.maxFees) {
+      } else if (this.withdrawFeeVModel - this.feeRangeOfWithdraw.maxFees > 0) {
         // // 判断输入手续费大于于最大提现手续费
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint6'),
@@ -964,14 +965,14 @@ export default {
         return false
       }
       console.log(this.withdrawFeeVModel, this.feeRangeOfWithdraw)
-      if (this.withdrawCountVModel > this.feeRangeOfWithdraw.maxWithdraw) {
+      if (this.withdrawCountVModel - this.feeRangeOfWithdraw.maxWithdraw > 0) {
         // 大于最大限额
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint8'),
           type: 'error'
         })
         return false
-      } else if (this.withdrawCountVModel < this.feeRangeOfWithdraw.minWithdraw) {
+      } else if (this.withdrawCountVModel - this.feeRangeOfWithdraw.minWithdraw < 0) {
         // 小于最小限额
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint9'),
@@ -1027,17 +1028,15 @@ export default {
       this.isShowWithdrawDialog = false
       // 提币地址列表查询
       this.getAssetCurrenciesList()
-      this.resetWithdrawFormContent()
+      this.resetWithdrawFormContent(this.currentIndex)
       this.stateEmptyData()
     },
     // 接口请求完成之后普通币种清空数据
-    stateEmptyData (index) {
+    stateEmptyData () {
       this.phoneCode = '' // 短信验证码
       this.emailCode = '' // 邮箱验证码
       this.googleCode = '' // 谷歌验证码
       this.password = '' // 交易密码
-      this.$refs.withdrawalFee[index].value = ''
-      this.$refs.withdrawCount[index].value = ''
       this.accountCount = ''
       this.activeWithdrawDepositAddress = ''
     },

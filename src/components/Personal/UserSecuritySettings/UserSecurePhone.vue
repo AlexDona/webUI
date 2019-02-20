@@ -39,7 +39,6 @@
           <!--绑定手机-->
           <el-form
             v-if="!securityCenter.isPhoneBind"
-            :label-position="labelPosition"
             label-width="120px"
           >
             <!--手机号码-->
@@ -52,7 +51,7 @@
               >
                 <el-option
                   v-for="item in countryAreaList"
-                  :key="item.nationCode"
+                  :key="item.english"
                   :label="item.nationCode"
                   :value="item.nationCode"
                 >
@@ -154,7 +153,6 @@
           <!--换绑手机-->
           <el-form
             v-else
-            :label-position="labelPosition"
             label-width="120px"
           >
             <!--姓名-->
@@ -200,7 +198,7 @@
               >
                 <el-option
                   v-for="item in countryAreaList"
-                  :key="item.nationCode"
+                  :key="item.english"
                   :label="item.nationCode"
                   :value="item.nationCode"
                 >
@@ -222,7 +220,7 @@
               <input
                 type="text"
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
-                @keydown="tieErrorMsg(1,'')"
+                @keydown="tieErrorMsg(1, '')"
                 :ref="phoneNumRef"
                 @keyup="phoneNumRegexpInput(phoneNumRef)"
                 @input="phoneNumRegexpInput(phoneNumRef)"
@@ -241,7 +239,7 @@
             >
               <el-input
                 v-model="amendDataPhone.newPhoneCode"
-                @keydown="tieErrorMsg(2,'')"
+                @keydown="tieErrorMsg(2, '')"
                 @blur="tieCheckoutInputFormat(2, amendDataPhone.newPhoneCode)"
               >
                 <template slot="append">
@@ -268,7 +266,7 @@
                 autocomplete= "new-password"
                 class="phone-input border-radius2 padding-l15 box-sizing"
                 v-model="amendDataPhone.transactionPassword"
-                @keydown="tieErrorMsg(3,'')"
+                @keydown="tieErrorMsg(3, '')"
                 @blur="tieCheckoutInputFormat(3, amendDataPhone.transactionPassword)"
               />
               <!--错误提示-->
@@ -753,7 +751,6 @@ export default {
      * 安全中心
      */
     getSecurityCenter () {
-      // 整页loading
       getSecurityCenter(this, {}, data => {
         if (data) {
           this.securityCenter = getNestedData(data, 'data.data')
