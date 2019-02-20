@@ -68,6 +68,7 @@
 import {mapState} from 'vuex'
 import VueClipboard from 'vue-clipboard2'
 import Qrcode from '../../Common/Qrcode'
+import Vue from 'vue'
 Vue.use(VueClipboard)
 
 // import {returnAjaxMsg} from '../../utils/commonFunc'

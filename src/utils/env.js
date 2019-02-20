@@ -32,18 +32,18 @@ const dev210Config = {
 }
 
 const prodConfig = {
-  apiCommonUrl: 'https://api.new.bzu.com/',
-  socketUrl: 'wss://ws.bzu.com/market',
-  loginSocketUrl: 'wss://api.new.bzu.com/qrcodeLogin/'
+  apiCommonUrl: 'https://api.new.bzu.com/', // 全局接口 commonURL
+  socketUrl: 'wss://ws.bzu.com/market', // 行情 socket
+  loginSocketUrl: 'wss://api.new.bzu.com/qrcodeLogin/' // 扫码登录 socket
 }
 switch (process.env.NODE_ENV) {
   case 'development':
     // 本地开发
-    // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
+    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
     // 210开发环境
     // targetConfig = {...dev210Config, xDomain: 'me.com'}
     // 生产环境
-    targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
+    // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     break
   // 210开发环境
   case 'development210':

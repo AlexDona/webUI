@@ -131,10 +131,9 @@
                 :visible.sync="dialogVisible"
                 width="440px"
                 class='dialogStyle'
-                :before-close="handleClose"
               >
                 <el-form
-                  :label-position="right"
+                  label-position="right"
                   label-width="90px"
                   :model="formLabelAlign"
                 >
@@ -294,7 +293,6 @@
             </div>
             <el-tabs
               v-model="activeName"
-              @tab-click="handleClick"
             >
               <!-- 5.1 存币记录 -->
               <el-tab-pane
@@ -863,9 +861,9 @@ export default {
         // 历史收益
         this.getMoneyValue = getData.userInterest
         // 存币记录列表赋值
-        this.investList = this.isLogin ? getData.userFinancialManagementRecord.list : ''
+        this.investList = this.isLogin ? getData.userFinancialManagementRecord.list : []
         // 收益记录列表
-        this.userInterestRecord = this.isLogin ? getData.userInterestRecord.list : ''
+        this.userInterestRecord = this.isLogin ? getData.userInterestRecord.list : []
         // 每次换一种币种就获取该币种的总资产
         if (this.isLogin) {
           this.getUserCoinTotal()

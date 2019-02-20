@@ -75,7 +75,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState, createNamespacedHelpers} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 
 import {
   getNewsNoticeList,
@@ -92,8 +92,6 @@ import {
   getNestedData
 } from '../../utils/commonFunc'
 
-const {mapMutations} = createNamespacedHelpers('footerInfo')
-
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
@@ -107,7 +105,8 @@ export default {
       // 详情页面新闻列表
       detailAllNewsList: [],
       // 最新 templateId
-      templateId: ''
+      templateId: '',
+      searchKeyWord: ''
     }
   },
   async created () {

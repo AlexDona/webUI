@@ -156,7 +156,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      // 'bannerActive',
+      bannerActive: state => state.home.bannerActive,
       language: state => state.common.language
     })
   },

@@ -483,7 +483,7 @@ export default {
             // 返回冲提记录列表展示
             let detailData = getNestedData(data, 'data')
             // 充提记录
-            this.chargeRecordList = getNestedData(detailData, 'list')
+            this.chargeRecordList = getNestedData(detailData, 'list') || []
             this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
           }
           break
@@ -503,7 +503,7 @@ export default {
           } else {
             // 接口成功清除局部loading
             this.partLoading = false
-            this.otherRecordsList = getNestedData(data1, 'data.data.list')
+            this.otherRecordsList = getNestedData(data1, 'data.data.list') || []
             this.totalPagesOtherRecords = getNestedData(data1, 'data.data.pages') - 0
           }
           break
