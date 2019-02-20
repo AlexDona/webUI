@@ -23,7 +23,7 @@
         <div
           class="content-main-box"
           v-for="item in VipPriceInfoList"
-          :key="item"
+          :key="item.id"
         >
           <div
             class="content-module cursor-pointer"

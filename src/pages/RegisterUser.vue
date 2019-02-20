@@ -67,7 +67,7 @@
              >
                <el-option
                  v-for="item in countryAreaList"
-                 :key="item.nationCode"
+                 :key="item.english"
                  :label="item.nationCode"
                  :value="item.nationCode"
                >
@@ -118,7 +118,7 @@
                 >
                   <el-option
                     v-for="item in countryAreaList"
-                    :key="item.nationCode"
+                    :key="item.english"
                     :label="item.chinese"
                     :value="item.abbreviation"
                   >
@@ -142,7 +142,7 @@
                 >
                   <el-option
                     v-for="item in countryAreaList"
-                    :key="item.nationCode"
+                    :key="item.english"
                     :label="item.english"
                     :value="item.abbreviation"
                   >
@@ -394,7 +394,7 @@
                 >
                   <el-option
                     v-for="item in countryAreaList"
-                    :key="item.nationCode"
+                    :key="item.english"
                     :label="item.chinese"
                     :value="item.abbreviation"
                   >
@@ -418,7 +418,7 @@
                 >
                   <el-option
                     v-for="item in countryAreaList"
-                    :key="item.nationCode"
+                    :key="item.english"
                     :label="item.english"
                     :value="item.abbreviation"
                   >
@@ -1033,7 +1033,7 @@ export default {
     toggleMethod (method) {
       this.activeMethod = method
       // 短信验证码 邮箱验证码
-      this.activeCodePlaceholder = !this.activeMethod ? this.$t('M.forgetPassword_hint10') : this.$t('M.forgetPassword_hint11')
+      // this.activeCodePlaceholder = !this.activeMethod ? 'M.forgetPassword_hint10' : 'M.forgetPassword_hint11'
       this.clearFormData()
     },
     // 清空表单信息

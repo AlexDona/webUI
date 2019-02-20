@@ -24,6 +24,9 @@ export default {
     },
     status: {
       type: Boolean
+    },
+    className: {
+      type: String
     }
   },
   data () {

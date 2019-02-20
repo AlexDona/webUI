@@ -309,7 +309,7 @@ export default {
       language: state => state.common.language,
       logoSrc: state => state.common.logoSrc,
       footerInfo: state => state.common.footerInfo,
-      footerInfo1: state => state.common.footerInfo.footerInfo1,
+      // footerInfo1: state => state.common.footerInfo.footerInfo1,
       // 公司名称fubt fbt fuc、邮箱等信息
       configInfo: state => state.common.footerInfo.configInfo,
       isMobile: state => state.user.isMobile

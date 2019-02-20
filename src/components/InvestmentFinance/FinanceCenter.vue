@@ -131,10 +131,9 @@
                 :visible.sync="dialogVisible"
                 width="440px"
                 class='dialogStyle'
-                :before-close="handleClose"
               >
                 <el-form
-                  :label-position="right"
+                  label-position="right"
                   label-width="90px"
                   :model="formLabelAlign"
                 >
@@ -152,11 +151,17 @@
                     :label="$t('M.comm_count')"
                   >
                     <div class='invest-amount'>
+                      <!--<input-->
+                        <!--class="red text-indent"-->
+                        <!--type='text'-->
+                        <!--ref='changeAlignNum'-->
+                        <!--@input="changeAlignNumber('changeAlignNum', 'investAmountRef', $event)"-->
+                      <!--&gt;-->
                       <input
                         class="red text-indent"
                         type='text'
                         ref='changeAlignNum'
-                        @input="changeAlignNumber('changeAlignNum', 'investAmountRef', $event)"
+                        disabled
                       >
                       <strong>{{selectedCoinName}}</strong>
                     </div>
@@ -213,10 +218,10 @@
                         v-for="(item,index) in formLabelAlign.jsonTimeline"
                         :key="index"
                       >
-                        <span>{{item.date}}</span>
+                        <span class="black">{{item.date}}</span>
                         <span class="blue">{{item.amount}}</span>
                         <span class='blue'>{{selectedCoinName}}</span>
-                        <span>
+                        <span class="black">
                           ({{index == formLabelAlign.jsonTimeline.length - 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}})
                         </span>
                       </li>
@@ -294,7 +299,6 @@
             </div>
             <el-tabs
               v-model="activeName"
-              @tab-click="handleClick"
             >
               <!-- 5.1 存币记录 -->
               <el-tab-pane
@@ -677,8 +681,6 @@ export default {
       const data = await getPushTotalByCoinId({
         coinId: this.selectedCoinId
       })
-      console.log('获取币种总资产')
-      console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
@@ -690,7 +692,7 @@ export default {
     getInvestEarnings () {
       console.log(this.$refs.investAmountRef.value)
       if (this.isLogin) {
-        if ((this.$refs.investAmountRef.value - 0) == 0) {
+        if ((this.$refs.investAmountRef.value - 0) === 0) {
           this.$message({
             // 存币数量不能为0
             message: this.$t('M.finance_invest_number'),
@@ -820,66 +822,60 @@ export default {
       this.fullscreenLoading = false
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data) {
-        let getData = getNestedData(data, 'data')
-        // 设置可用币种数组
-        this.traderCoinList = getData.idNameDtoList
-        this.traderCoinList.forEach(item => {
-          if (getData.idNameDtoList.id == item.id) {
-            this.selectedCoinId = item.id
+      let getData = getNestedData(data, 'data')
+      // 设置可用币种数组
+      this.traderCoinList = getNestedData(getData, 'idNameDtoList')
+      // this.traderCoinList.forEach(item => {
+      //   if (getData.idNameDtoList.id == item.id) {
+      //     this.selectedCoinId = item.id
+      //   }
+      // })
+      // 设置每次返回回来的币种id
+      this.selectedCoinId = getNestedData(getData, 'tickerPriceResult.coinId')
+      // 设置每次返回地币种名称
+      this.selectedCoinName = getNestedData(getData, 'tickerPriceResult.coinName')
+      // 最新价钱
+      this.newestPrice = getNestedData(getData, 'tickerPriceResult.price')
+      // 当日涨幅
+      this.dayAmountIncrease = getNestedData(getData, 'tickerPriceResult.chg')
+      // 历史涨幅
+      this.historyAmountIncrease = getNestedData(getData, 'tickerPriceResult.historyAmountIncrease')
+      // 理财类型数组
+      this.investTypeList = getNestedData(getData, 'managementList')
+      // 设置存币类型默认值
+      if (this.investTypeList.length) {
+        _.forEach(this.investTypeList, (item) => {
+          // 描述不能为空
+          if (item.state === 'ENABLED' && item.typeDescription && item.typeEnglishDescription) {
+            this.newArrInvestTypeList.push(item)
           }
         })
-        // 设置每次返回回来的币种id
-        if (!getData.tickerPriceResult.coinId) {
-          this.selectedCoinId = ''
-        } else {
-          this.selectedCoinId = getData.tickerPriceResult.coinId
-        }
-        // 设置每次返回地币种名称
-        this.selectedCoinName = getData.tickerPriceResult.coinName
-        // 最新价钱
-        this.newestPrice = getData.tickerPriceResult.price
-        // 当日涨幅
-        this.dayAmountIncrease = getData.tickerPriceResult.chg
-        // 历史涨幅
-        this.historyAmountIncrease = getData.tickerPriceResult.historyAmountIncrease
-        // 理财类型数组
-        this.investTypeList = getData.managementList
-        // 设置存币类型默认值
-        if (getData.managementList.length) {
-          getData.managementList.forEach((item, index) => {
-            // 描述不能为空
-            if (item.state === 'ENABLED' && item.typeDescription && item.typeEnglishDescription) {
-              this.newArrInvestTypeList.push(item)
-            }
-          })
-          this.investTypeList = this.newArrInvestTypeList
-          this.selectedInvestTypeId = this.investTypeList[0].id
-        }
-        // 设置可用余额
-        this.availableBalance = getData.userTotal
-        // 存币估计值
-        this.InvestmentValue = getData.userNumber
-        // 历史收益
-        this.getMoneyValue = getData.userInterest
-        // 存币记录列表赋值
-        this.investList = this.isLogin ? getData.userFinancialManagementRecord.list : ''
-        // 收益记录列表
-        this.userInterestRecord = this.isLogin ? getData.userInterestRecord.list : ''
-        // 每次换一种币种就获取该币种的总资产
-        if (this.isLogin) {
-          this.getUserCoinTotal()
-        }
-        // 走势图x轴赋值
-        this.FINANCE_LINE_RENDER_PRICE_LIST(getData.tickerPriceResult.renderPriceList)
-        // 走势图y轴赋值
-        this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
-        // 设置状态只要发生请求就让状态改变
-        this.FINANCE_LINE_STATUS(1 + this.status)
-        // 将存币数量输入框清空
-        // this.investAmount = ''
-        this.$refs.investAmountRef.value = ''
+        this.investTypeList = this.newArrInvestTypeList
+        this.selectedInvestTypeId = this.investTypeList.length ? this.investTypeList[0].id : ''
       }
+      // 设置可用余额
+      this.availableBalance = getNestedData(getData, 'userTotal')
+      // 存币估计值
+      this.InvestmentValue = getNestedData(getData, 'userNumber')
+      // 历史收益
+      this.getMoneyValue = getNestedData(getData, 'userInterest')
+      if (this.isLogin) {
+        // 存币记录列表赋值
+        this.investList = getNestedData(getData, 'userFinancialManagementRecord.list')
+        // 收益记录列表
+        this.userInterestRecord = getNestedData(getData, 'userInterestRecord.list')
+        // 每次换一种币种就获取该币种的总资产
+        this.getUserCoinTotal()
+      }
+      // 走势图x轴赋值
+      this.FINANCE_LINE_RENDER_PRICE_LIST(getNestedData(getData, 'tickerPriceResult.renderPriceList'))
+      // 走势图y轴赋值
+      this.FINANCE_LINE_RENDER_TIME_LIST(getNestedData(getData, 'tickerPriceResult.renderTimeList'))
+      // 设置状态只要发生请求就让状态改变
+      this.FINANCE_LINE_STATUS(1 + this.status)
+      // 将存币数量输入框清空
+      // this.investAmount = ''
+      this.$refs.investAmountRef.value = ''
     },
     // 用户取消存币接口
     async clickCancelInvestment (id) {
@@ -890,8 +886,8 @@ export default {
     // 币种选择变化时赋值币种名称
     changeTraderCoin (e) {
       this.selectedCoinId = e
-      this.traderCoinList.forEach(item => {
-        if (item.id == e) {
+      _.forEach(this.traderCoinList, item => {
+        if (item.id === e) {
           this.selectedCoinName = item.name
         }
       })
@@ -902,8 +898,8 @@ export default {
     electedInvestTypeDisc (e) {
       console.log(e)
       this.selectedInvestTypeId = e
-      this.traderCoinList.forEach(item => {
-        if (item.id == e) {
+      _.forEach(this.traderCoinList, item => {
+        if (item.id === e) {
           if (this.language === 'zh_TW' || this.language === 'zh_CN') {
             this.selectedInvestTypeDescription = item.typeDescription
           } else {
@@ -1678,6 +1674,10 @@ export default {
             color: #333;
           }
         }
+      }
+
+      .black {
+        color: #333;
       }
     }
 

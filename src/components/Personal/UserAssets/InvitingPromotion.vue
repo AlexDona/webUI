@@ -339,6 +339,7 @@ import {
   getNestedData
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
+import Vue from 'vue'
 Vue.use(VueClipboard)
 export default {
   components: {

@@ -6,7 +6,9 @@ import user from './User'
 import trade from './Trade'
 import footerInfo from './FooterInfo'
 import finance from './Finance'
-// Vue.use(Vuex)
+import Vue from 'vue'
+import Vuex from 'vuex'
+Vue.use(Vuex)
 
 const storeCreator = () => {
   const store = new Vuex.Store({

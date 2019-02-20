@@ -41,7 +41,7 @@
               'hover-active': (vipAction =='update' && activeStatus < item.id) || vipAction =='open'
             }"
             v-for="item in VipPriceInfoList"
-            :key="item"
+            :key="item.id"
           >
             <p class="font-size16 grade-color font-weight600">
               VIP{{item.id}}

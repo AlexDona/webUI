@@ -169,7 +169,7 @@ export default {
         debug: false,
         piecewiseLabel: true,
         tooltip: false,
-        disabled: this.disabled,
+        disabled: Boolean(this.disabled),
         limitBuySliderValue: 0,
         limitSellSliderValue: 0,
         marketBuySliderValue: 0,

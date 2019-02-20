@@ -6,7 +6,7 @@
     <div class="personal-center-main">
       <div class="personal-center-content clearfix">
         <el-tabs
-          v-model="userCenterActiveName"
+          v-model="currentUserCenterActiveName"
           :tab-position="tabPosition"
           @tab-click="statusSwitchPanel"
         >
@@ -287,11 +287,13 @@ export default {
     return {
       tabPosition: 'left', // 导航位置方向
       setPwdDialogVisible: false,
-      notVerifyDialogVisible: false
+      notVerifyDialogVisible: false,
+      currentUserCenterActiveName: 'assets'
       // isDisabled: false
     }
   },
   async created () {
+    this.currentUserCenterActiveName = this.userCenterActiveName
     await this.REFRESH_USER_INFO_ACTION()
     this.showNoPosswdAndNoVerifyNotice()
   },
@@ -348,7 +350,8 @@ export default {
     })
   },
   watch: {
-    userCenterActiveName () {
+    userCenterActiveName (e) {
+      this.currentUserCenterActiveName = e
       this.REFRESH_USER_INFO_ACTION()
     }
   }

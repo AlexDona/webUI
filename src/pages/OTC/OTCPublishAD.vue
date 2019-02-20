@@ -1276,6 +1276,10 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
   }
 
   /deep/ {
+    .el-input__icon {
+      line-height: 34px;
+    }
+
     .right-style {
       .el-select {
         width: 180px;

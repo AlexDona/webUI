@@ -179,7 +179,7 @@
                   :label="$t('M.comm_count')"
                 >
                   <template slot-scope = "s">
-                    <div>{{ s.row.amount }}</div>
+                    <div>{{ s.row.amount - 0 }}</div>
                   </template>
                 </el-table-column>
                 <!--提交时间-->
@@ -347,6 +347,7 @@ export default {
       hours: new Date().getHours(),
       minutes: new Date().getMinutes(),
       seconds: new Date().getSeconds(),
+      pickerOptionsTime: {},
       chargeRecordList: [], // 充提记录列表
       activeName: 'current-entrust', // 充提记录
       recordPageNumber: 1, // 充提记录页码
@@ -405,7 +406,7 @@ export default {
       ],
       pickerOptionsStart: {},
       pickerOptionsEnd: {},
-      partLoading: true // 局部loading
+      partLoading: false // 局部loading
     }
   },
   async created () {
@@ -473,19 +474,26 @@ export default {
           params.endTime = this.startTime[1] == null ? '' : timeFilter(this.startTime[1], 'normal') // 结束起止时间
           data = await statusRushedToRecordList(params)
           // console.log(data)
-          if (!data) {
-            // 接口失败清除局部loading
-            this.partLoading = false
-            return false
-          } else {
-            // 接口成功清除局部loading
-            this.partLoading = false
-            // 返回冲提记录列表展示
-            let detailData = getNestedData(data, 'data')
-            // 充提记录
-            this.chargeRecordList = getNestedData(detailData, 'list')
-            this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
-          }
+          this.partLoading = false
+          if (!data) return false
+          // 返回冲提记录列表展示
+          let detailData = getNestedData(data, 'data')
+          // 充提记录
+          this.chargeRecordList = getNestedData(detailData, 'list') || []
+          this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
+          // if (!data) {
+          //   // 接口失败清除局部loading
+          //   this.partLoading = false
+          //   return false
+          // } else {
+          //   // 接口成功清除局部loading
+          //   this.partLoading = false
+          //   // 返回冲提记录列表展示
+          //   let detailData = getNestedData(data, 'data')
+          //   // 充提记录
+          //   this.chargeRecordList = getNestedData(detailData, 'list') || []
+          //   this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
+          // }
           break
         case 'other-records':
           params.pageNum = this.otherRecordPageNumbers
@@ -496,16 +504,21 @@ export default {
           // console.log(this.startTime)
           data1 = await getComprehensiveRecordsList(params)
           console.log(data1)
-          if (!data1) {
-            // 接口失败清除局部loading
-            this.partLoading = false
-            return false
-          } else {
-            // 接口成功清除局部loading
-            this.partLoading = false
-            this.otherRecordsList = getNestedData(data1, 'data.data.list')
-            this.totalPagesOtherRecords = getNestedData(data1, 'data.data.pages') - 0
-          }
+          this.partLoading = false
+          if (!data) return false
+          // 接口成功清除局部loading
+          this.otherRecordsList = getNestedData(data1, 'data.data.list') || []
+          this.totalPagesOtherRecords = getNestedData(data1, 'data.data.pages') - 0
+          // if (!data1) {
+          //   // 接口失败清除局部loading
+          //   this.partLoading = false
+          //   return false
+          // } else {
+          //   // 接口成功清除局部loading
+          //   this.partLoading = false
+          //   this.otherRecordsList = getNestedData(data1, 'data.data.list') || []
+          //   this.totalPagesOtherRecords = getNestedData(data1, 'data.data.pages') - 0
+          // }
           break
       }
     },
