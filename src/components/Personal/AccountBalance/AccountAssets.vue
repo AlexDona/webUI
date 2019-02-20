@@ -169,6 +169,7 @@
                       <div
                         class="type-transaction border-radius4"
                         v-show="tradingState&&index==current"
+                        v-if="currencyTradingList.length"
                       >
                         <span
                           class="triangle-border display-inline-block"
@@ -192,6 +193,7 @@
                           {{ item.name }}
                         </p>
                       </div>
+                      <span v-else></span>
                     </div>
                   </div>
                 </div>

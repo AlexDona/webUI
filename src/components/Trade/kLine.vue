@@ -620,6 +620,9 @@ export default {
     },
     language () {
       this.initKLine(this.symbol)
+      setTimeout(() => {
+        this.fullscreenLoading = false
+      }, 1000)
     },
     async activeSymbolId (newVal) {
       this.changeIsKlineDataReady(false)

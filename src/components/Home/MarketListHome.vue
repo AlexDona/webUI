@@ -506,7 +506,7 @@ export default {
       this.collectArea.area = this.$t('M.home_market_district')
       this.searchArea.area = this.$t('M.home_market_field_search')
       if (newVal) {
-        await this.getTradeAreas({})
+        await this.getPlates()
       }
     },
     socketParamsStr (newVal, oldVal) {
