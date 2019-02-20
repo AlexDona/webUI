@@ -458,7 +458,7 @@
         </div>
         <div
           class="wait-veritfy-back"
-          v-if="userInfoRefresh.advancedAuth === 'waitVeritfy'"
+          v-if="advancedAuth === 'waitVeritfy'"
         >
           <div class="wait-veritfy text-align-c">
             <IconFontCommon
@@ -972,9 +972,11 @@ export default {
       configInfo: state => state.common.footerInfo.configInfo,
       countryAreaList: state => state.common.countryAreaList,
       // 是否通过高级认证
-      advancedAuth: state => state.user.loginStep1Info.userInfo.advancedAuth,
+      // advancedAuth: state => state.user.loginStep1Info.userInfo.advancedAuth,
+      advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
       // 实名认证
-      realname: state => state.user.loginStep1Info.userInfo.realname
+      // realname: state => state.user.loginStep1Info.userInfo.realname
+      realname: state => getNestedData(state, 'user.loginStep1Info.userInfo.realname')
     })
   },
   watch: {
