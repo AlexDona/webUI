@@ -351,7 +351,9 @@ export const getRefValue = (self, refName) => {
  * @returns {string}
  */
 export const phoneNumberFormat = phoneNum => {
-  return `${phoneNum.substring(0, 3)}****${phoneNum.substring(phoneNum.length - 4)}`
+  if (phoneNum) {
+    return `${phoneNum.substring(0, 3)}****${phoneNum.substring(phoneNum.length - 4)}`
+  }
 }
 
 /**
