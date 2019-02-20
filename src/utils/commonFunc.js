@@ -334,8 +334,14 @@ export const isNeedPayPasswordAjax = async (self) => {
  * @returns {string}
  */
 export const formatPointLength = (target, pointLength) => {
+  console.log(target)
   target += ''
   let targetArr = target.split('.')
+  console.log(targetArr)
+  if (targetArr.length == 1) {
+    console.log(target)
+    return target - 0
+  }
   let targetStr = ''
   let pointStr = ''
   targetStr += `${targetArr[0]}.`
@@ -343,7 +349,7 @@ export const formatPointLength = (target, pointLength) => {
     pointStr = targetArr[1].substring(0, pointLength)
     targetStr += pointStr
   }
-  return !targetArr[1] && !pointStr ? 0 : targetStr
+  return !targetArr[1] && !pointStr ? 0 : targetStr - 0
 }
 // eslint-disable-next-line
 String.prototype.format = function (args) {

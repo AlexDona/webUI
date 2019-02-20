@@ -596,8 +596,7 @@ export default {
       'CHANGE_SYMBOL_CHANGED_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
-    jumpToPersonalCenter (e) {
-      e.preventdef
+    jumpToPersonalCenter () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
       this.$goToPage('/PersonalCenter')
     },
