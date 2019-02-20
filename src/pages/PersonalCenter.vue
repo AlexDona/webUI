@@ -293,6 +293,7 @@ export default {
     }
   },
   async created () {
+    this.currentUserCenterActiveName = this.userCenterActiveName
     await this.REFRESH_USER_INFO_ACTION()
     this.showNoPosswdAndNoVerifyNotice()
   },
@@ -350,7 +351,7 @@ export default {
   },
   watch: {
     userCenterActiveName (e) {
-      this.crrentUserCenterActiveName = e
+      this.currentUserCenterActiveName = e
       this.REFRESH_USER_INFO_ACTION()
     }
   }
