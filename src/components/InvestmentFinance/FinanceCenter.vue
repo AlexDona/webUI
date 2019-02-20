@@ -218,10 +218,10 @@
                         v-for="(item,index) in formLabelAlign.jsonTimeline"
                         :key="index"
                       >
-                        <span>{{item.date}}</span>
+                        <span class="black">{{item.date}}</span>
                         <span class="blue">{{item.amount}}</span>
                         <span class='blue'>{{selectedCoinName}}</span>
-                        <span>
+                        <span class="black">
                           ({{index == formLabelAlign.jsonTimeline.length - 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}})
                         </span>
                       </li>
@@ -1674,6 +1674,10 @@ export default {
             color: #333;
           }
         }
+      }
+
+      .black {
+        color: #333;
       }
     }
 
