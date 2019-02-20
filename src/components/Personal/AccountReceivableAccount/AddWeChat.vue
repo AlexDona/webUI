@@ -44,7 +44,6 @@
         <!--</header>-->
         <div class="chat-content-from">
           <el-form
-            :label-position="labelPosition"
             label-width="120px"
           >
             <!--名 称-->
