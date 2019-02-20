@@ -47,7 +47,7 @@ export default {
     }
   },
   async created () {
-    require('../static/css/common.css')
+    // require('../static/css/common.css')
     require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
     require('../static/css/theme/night/Common/HeaderCommonNight.css')
     // 取主题
