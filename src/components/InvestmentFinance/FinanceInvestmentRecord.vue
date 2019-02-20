@@ -176,7 +176,6 @@
                   background
                   v-if="investTotal > 10 && this.activeName == '1'"
                   layout="prev, pager, next"
-                  page-size='10'
                   @current-change='changeInvestPage'
                   :current-page = 'investCurrentPage'
                   :page-count.sync = 'investTotalPages'
@@ -294,7 +293,7 @@ export default {
     return {
       loading: true,
       // 设置存币记录当前页码
-      investCurrentPage: '1',
+      investCurrentPage: 1,
       // 设置存币记录总页数
       investTotalPages: '',
       // 设置存币记录总条数
@@ -336,24 +335,21 @@ export default {
     changeTab (e) {
       console.log(e.name)
       this.activeName = e.name
-      if (this.activeName == '1') {
+      if (this.activeName === '1') {
         this.getFinancialManagementList(this.investCurrentPage)
       }
-      if (this.activeName == '2') {
+      if (this.activeName === '2') {
         this.getFinancialManagementList(this.interestCurrentPage)
       }
     },
     // 点击存币记录列表下一页查寻
     changeInvestPage (pageNum) {
-      console.log(pageNum)
       this.investCurrentPage = pageNum
-      console.log(this.investCurrentPage)
       // 重新获取列表
       this.getFinancialManagementList(this.investCurrentPage)
     },
     // 点击收益记录下一页查询
     changeInterestPage (pageNum) {
-      console.log(pageNum)
       this.interestCurrentPage = pageNum
       this.getFinancialManagementList(this.interestCurrentPage)
     },
@@ -365,31 +361,27 @@ export default {
         coinId: this.coinId,
         coinName: this.coinName
       })
-      console.log('存币理财页面查询')
-      console.log(data)
       this.loading = false
       if (!data) return false
-      if (data) {
-        let getData = getNestedData(data, 'data')
-        if (this.activeName == '1') {
-          // 存币记录列表赋值
-          this.investList = getData.userFinancialManagementRecord.list
-          // 存币记录总页数
-          this.investTotalPages = getData.userFinancialManagementRecord.pages
-          // 存币记录总条数
-          this.investTotal = getData.userFinancialManagementRecord.total
-          // 从新赋值页码为当前页
-          // this.investCurrentPage = pageNum
-        } else if (this.activeName == '2') {
-          // 收益记录列表
-          this.userInterestRecord = getData.userInterestRecord.list
-          // 收益记录总页数
-          this.interestTotalPages = getData.userInterestRecord.pages
-          // 收益记录总条数
-          this.interestTotal = getData.userInterestRecord.total
-          // 重新赋值收益列表在当前页
-          // this.interestCurrentPage = pageNum
-        }
+      let getData = getNestedData(data, 'data')
+      if (this.activeName === '1') {
+        // 存币记录列表赋值
+        this.investList = getNestedData(getData, 'userFinancialManagementRecord.list')
+        // 存币记录总页数
+        this.investTotalPages = getNestedData(getData, 'userFinancialManagementRecord.pages')
+        // 存币记录总条数
+        this.investTotal = getNestedData(getData, 'userFinancialManagementRecord.total')
+        // 从新赋值页码为当前页
+        // this.investCurrentPage = pageNum
+      } else if (this.activeName === '2') {
+        // 收益记录列表
+        this.userInterestRecord = getNestedData(getData, 'userInterestRecord.list')
+        // 收益记录总页数
+        this.interestTotalPages = getNestedData(getData, 'userInterestRecord.pages')
+        // 收益记录总条数
+        this.interestTotal = getNestedData(getData, 'userInterestRecord.total')
+        // 重新赋值收益列表在当前页
+        // this.interestCurrentPage = pageNum
       }
     },
     // 点击取消按钮执行
