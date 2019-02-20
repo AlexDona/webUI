@@ -406,7 +406,7 @@ export default {
       ],
       pickerOptionsStart: {},
       pickerOptionsEnd: {},
-      partLoading: true // 局部loading
+      partLoading: false // 局部loading
     }
   },
   async created () {
@@ -504,9 +504,9 @@ export default {
           // console.log(this.startTime)
           data1 = await getComprehensiveRecordsList(params)
           console.log(data1)
+          this.partLoading = false
           if (!data) return false
           // 接口成功清除局部loading
-          this.partLoading = false
           this.otherRecordsList = getNestedData(data1, 'data.data.list') || []
           this.totalPagesOtherRecords = getNestedData(data1, 'data.data.pages') - 0
           // if (!data1) {
