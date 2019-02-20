@@ -31,7 +31,6 @@
         </header>
         <div class="email-content-from">
           <el-form
-            :label-position="labelPosition"
             label-width="120px"
           >
             <!--邮箱账号-->

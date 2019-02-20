@@ -209,7 +209,7 @@
                   v-model="step3PhoneMsgCode"
                   @keydown="setErrorMsg(3,'')"
                   @keyup="step3AutoLogin(step3PhoneMsgCode)"
-                  @blur="checkoutInputFormat(3,checkCode)"
+                  @blur="checkoutInputFormat(3,step3PhoneMsgCode)"
                 >
                 <CountDownButton
                   v-if="!isMobile"
@@ -238,7 +238,7 @@
                   v-model="step3EmailMsgCode"
                   @keydown="setErrorMsg(3,'')"
                   @keyup="step3AutoLogin(step3EmailMsgCode)"
-                  @blur="checkoutInputFormat(3,checkCode)"
+                  @blur="checkoutInputFormat(3,step3EmailMsgCode)"
                 >
                 <CountDownButton
                   v-if="!isMobile"
@@ -467,7 +467,7 @@
                     v-model="step3PhoneMsgCode"
                     @keydown="setErrorMsg(3,'')"
                     @keyup="step3AutoLogin(step3PhoneMsgCode)"
-                    @blur="checkoutInputFormat(3,checkCode)"
+                    @blur="checkoutInputFormat(3,step3PhoneMsgCode)"
                   >
                   <CountDownButton
                     v-if="isMobile"
@@ -499,7 +499,7 @@
                     v-model="step3EmailMsgCode"
                     @keyup="step3AutoLogin(step3EmailMsgCode)"
                     @keydown="setErrorMsg(3,'')"
-                    @blur="checkoutInputFormat(3,checkCode)"
+                    @blur="checkoutInputFormat(3,step3EmailMsgCode)"
                   >
                   <CountDownButton
                     v-if="isMobile"
@@ -662,6 +662,7 @@ import {
   mapMutations,
   mapState
 } from 'vuex'
+import Vue from 'vue'
 Vue.use(VueClipboard)
 export default {
   components: {

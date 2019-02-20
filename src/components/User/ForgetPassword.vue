@@ -553,6 +553,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      theme: state => state.common.theme,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     }),

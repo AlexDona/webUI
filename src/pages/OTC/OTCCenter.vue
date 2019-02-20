@@ -1000,6 +1000,10 @@ export default {
   }
 
   /deep/ {
+    .el-input__icon {
+      line-height: 34px;
+    }
+
     .otc-online-buy-and-sell-button {
       .el-radio-button__inner {
         border: 0;

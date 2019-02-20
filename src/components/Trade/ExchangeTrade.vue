@@ -43,14 +43,20 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/PersonalCenter">
+                  <a
+                    @click.stop="jumpToPersonalCenter"
+                    :style="{'cursor': 'pointer'}"
+                  >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </router-link>
-                  <router-link to="/PersonalCenter">
+                  </a>
+                  <a
+                    @click.stop="jumpToPersonalCenter"
+                    :style="{'cursor': 'pointer'}"
+                  >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
-                  </router-link>
+                  </a>
                 </div>
               </div>
               <div class="content">
@@ -148,14 +154,20 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/PersonalCenter">
+                  <a
+                    @click="jumpToPersonalCenter"
+                    :style="{'cursor': 'pointer'}"
+                  >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </router-link>
-                  <router-link to="/PersonalCenter">
+                  </a>
+                  <a
+                    @click="jumpToPersonalCenter"
+                    :style="{'cursor': 'pointer'}"
+                  >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
-                  </router-link>
+                  </a>
                 </div>
               </div>
               <div class="content">
@@ -581,8 +593,14 @@ export default {
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
       'CHANGE_FOOTER_ACTIVE_NAME',
       'SET_TARGET_EXCHANGE_DATA',
-      'CHANGE_SYMBOL_CHANGED_STATUS'
+      'CHANGE_SYMBOL_CHANGED_STATUS',
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
+    jumpToPersonalCenter (e) {
+      e.preventdef
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
+      this.$goToPage('/PersonalCenter')
+    },
     changeSliderDisabled () {
       console.log(this.buyUserCoinWallet.total)
       this.slider.isbuySliderBarDisabled = !this.buyUserCoinWallet.total ? 1 : 0

@@ -3,7 +3,7 @@
     class="market-list-box home"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <LoadingBox class="loading-box"/>
+    <!--<LoadingBox class="loading-box"/>-->
     <div class="inner-box">
       <!--表头-->
       <template>
@@ -15,7 +15,7 @@
             :label="plate.name.replace('+',' ')"
             :name="plate.id"
             v-for="plate in plates"
-            :key="plate"
+            :key="plate.name"
             :track-by="plate"
           >
             <div

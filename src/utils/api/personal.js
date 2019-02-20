@@ -17,7 +17,7 @@ export const getMerchantCurrencyList = (params) => handleRequest(() => get('pers
 // 账单明细—个人资产综合查询
 export const getComprehensiveRecordsList = (params) => handleRequest(() => get('personal/queryColligate', params))
 // 提币
-export const statusSubmitWithdrawButton = (params) => handleRequest(() => post('addWithdraw', params))
+export const statusSubmitWithdrawButton = (params) => handleRequest(() => post('addWithdraw', params), 1)
 // 新增用户提币地址
 export const addNewWithdrawalAddress = (params) => post('personal/addWithdrawAddress', params)
 // 验证提币地址是否正确

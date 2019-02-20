@@ -630,6 +630,7 @@ export default {
 
     .el-input__icon {
       height: 34px;
+      line-height: 34px;
     }
 
     .inquire-button {

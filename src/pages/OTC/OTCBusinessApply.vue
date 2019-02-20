@@ -109,7 +109,7 @@
             <p>{{$t('M. otc_merchant_videoKode')}}：</p>
             <p>{{$t('M.otc_merchant_detailOne')}}</p>
             <p>{{$t('M.otc_merchant_detailTwo')}}</p>
-            <p>{{$t('M.otc_merchant_applyLimit')}}<spn>{{successTimes}}</spn>{{$t('M.otc_ci')}}。②{{$t('M.otc_merchant_account')}}<span>{{coinName}}</span>{{$t('M.comm_count')}}{{$t('M.otc_xu')}}≥<span>{{count}}</span></p>
+            <p>{{$t('M.otc_merchant_applyLimit')}}<span>{{successTimes}}</span>{{$t('M.otc_ci')}}。②{{$t('M.otc_merchant_account')}}<span>{{coinName}}</span>{{$t('M.comm_count')}}{{$t('M.otc_xu')}}≥<span>{{count}}</span></p>
             <h4 class="title">
               {{$t('M.otc_merchant_step2')}}
             </h4>
@@ -155,7 +155,6 @@
             :title="$t('M.otc_merchant_authentication')"
             :visible.sync="businessAgreementDialogStatus"
             width="50%"
-            :before-close="handleClose"
           >
             <div v-html="argumentContent"></div>
           </el-dialog>

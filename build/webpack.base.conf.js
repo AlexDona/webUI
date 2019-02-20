@@ -99,14 +99,13 @@ module.exports = {
     ]
   },
   externals: {
-    'vue': 'Vue',
-    'vuex': 'Vuex',
-    'axios': 'axios',
-    'vue-router': 'VueRouter',
-    'i18n': 'VueI18n',
-    // 'iview': 'iview',
+    // 'vue': 'Vue',
+    // 'vuex': 'Vuex',
+    // 'axios': 'axios',
+    // 'vue-router': 'VueRouter',
+    // 'i18n': 'VueI18n',
     // 'moment': 'moment',
-    'jquery': 'jQuery'
+    // 'jquery': 'jQuery'
     // 'vue-clipboard2':'VueClipboard'
   },
   node: {

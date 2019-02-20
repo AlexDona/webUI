@@ -221,6 +221,7 @@ export default {
   // props,
   data () {
     return {
+      tabPosition: 'top', //  面板标签方向状态
       activeName: 'TRADING',
       // 1.0 商家订单筛选下拉框数组--交易类型
       activatedMerchantsOrdersTraderStyleList: '', // 选中的筛选项
