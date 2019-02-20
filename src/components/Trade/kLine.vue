@@ -136,7 +136,9 @@ export default {
     async getKlineByAjax (tradeName, KlineType, KlineNum = 0, KlineStep = 'STEP5') {
       this.isAllowDrag = false
       console.log(tradeName)
-      tradeName = tradeName.toLowerCase()
+      if (tradeName) {
+        tradeName = tradeName.toLowerCase()
+      }
       const params = {
         tradeName,
         KlineType,
