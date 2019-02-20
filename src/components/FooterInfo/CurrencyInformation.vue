@@ -17,7 +17,7 @@
             :key="index"
             @click="changeCurrentCurrency(item.id)"
           >
-            <span>{{item.name}} {{item.shortName}} </span>
+            <span>{{item.name}} （{{item.shortName}}）</span>
           </li>
         </ul>
       </div>
@@ -26,7 +26,7 @@
           class="inner-box"
         >
           <h1>
-            {{currencyInfo.name}} {{currencyInfo.shortName}}
+            {{currencyInfo.name}} （{{currencyInfo.shortName}}）
           </h1>
           <div
             class="information"
@@ -155,15 +155,18 @@ export default {
         > .list {
           width: 180px;
           height: 100%;
-          padding: 0 2px;
           overflow-y: auto;
-          text-align: center;
+          text-align: left;
 
           > .currency-item {
             box-sizing: border-box;
-            width: 176px;
+            width: 100%;
             height: 30px;
+            padding: 0 0 0 10px;
+            overflow: hidden;
             line-height: 30px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
 
             &.active {
               color: #338ff5;
