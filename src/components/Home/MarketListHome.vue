@@ -89,6 +89,7 @@
                   round
                   @click="getTradeAreas({more: true})"
                   v-show="moreBtnShowStatus"
+                  :disabled="disabledStatus"
                 >
                   {{$t(moreBtnText)}}
                 </el-button>
@@ -148,6 +149,7 @@ export default {
   },
   data () {
     return {
+      disabledStatus: false, // 查看更多按钮禁用状态
       // 单个交易区查看全部状态
       itemAreaMoreStatus: false,
       // 搜索关键字
@@ -231,6 +233,8 @@ export default {
       'CHANGE_ACTIVE_TRADE_AREA'
     ]),
     async getTradeAreas ({plateId = this.activeName, more = false, areaId = ''}) {
+      this.disabledStatus = true
+      console.log('点击了查看更多')
       let params = {
         plateId,
         more
@@ -285,6 +289,7 @@ export default {
       // more
       this.setSymbolsForSocket()
       console.log(this.symbolsIndexMap)
+      this.disabledStatus = false
     },
     // 获取板块信息
     async getPlates () {
