@@ -275,6 +275,24 @@ export default {
                 background: rgba(190, 217, 248, 1);
               }
             }
+
+            &::-webkit-scrollbar {
+              width: 2px;
+            }
+
+            &::-webkit-scrollbar-track-piece {
+              background-color: #b7c3d0;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              border-radius: 2px;
+              background-color: #7e94ab;
+            }
+
+            &::-webkit-scrollbar-button {
+              display: none;
+              background-color: #fff;
+            }
           }
         }
 
