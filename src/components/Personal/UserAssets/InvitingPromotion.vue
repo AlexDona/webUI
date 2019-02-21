@@ -21,7 +21,7 @@
         <div class="extension-info-content padding-top0">
           <div class="info-record border-radius2">
             <div class="extension-code">
-              <div class="code-left font-size12">
+              <div class="code-left font-size14">
                 <!--推广码-->
                 {{ $t('M.comm_user_generalize') }}{{ $t('M.user_invite_yard') }}
               </div>
