@@ -27,7 +27,7 @@
                 {{ $t('M.user_real_name') }}
               </span>
             <p
-              v-if="realname === ''"
+              v-if="realNameAuth === 'n'"
               class="authentication-type font-size12"
             >
               （{{ $t('M.user_real_info') }}）
@@ -62,7 +62,7 @@
         </div>
       </div>
       <div
-        v-if="realname === ''"
+        v-if="realNameAuth === 'n'"
         class="name-authentication-content margin-top9"
       >
         <el-form
@@ -209,7 +209,7 @@
             class="authentication-type font-size12"
           >
             <!--已通过实名认证-->
-            （{{ $t('M.user_real_already') }}{{ $t('M.user_real_name') }}）
+            （{{ $t('M.user_real_already') }}{{ $t('M.user_senior_certification') }}）
           </span>
           <span
             v-if="advancedAuth === 'waitVeritfy'"
@@ -865,10 +865,10 @@ export default {
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (this.realname !== '' && this.advancedAuth === '') {
+      if (this.realNameAuth !== 'n' && this.advancedAuth === '') {
         // 显示高级认证页面
         this.authenticationStatusFront = true
-      } else if (this.realname !== '') {
+      } else if (this.realNameAuth !== 'n') {
         // 隐藏弹出框
         // this.seniorAuthentication = false
         // 隐藏高级认证页面
@@ -975,8 +975,8 @@ export default {
       // advancedAuth: state => state.user.loginStep1Info.userInfo.advancedAuth,
       advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
       // 实名认证
-      // realname: state => state.user.loginStep1Info.userInfo.realname
-      realname: state => getNestedData(state, 'user.loginStep1Info.userInfo.realname')
+      realname: state => state.user.loginStep1Info.userInfo.realname,
+      realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth')
     })
   },
   watch: {
