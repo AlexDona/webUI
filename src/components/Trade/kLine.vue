@@ -49,7 +49,8 @@ import {
   // getCollectionList
 } from '../../utils/commonFunc'
 import {
-  unzip
+  unzip,
+  getStoreWithJson
 } from '../../utils'
 import {
   mapMutations,
@@ -257,21 +258,29 @@ export default {
     },
     // 获取初始交易对
     async getDefaultSymbol () {
-      const data = await getDefaultSymbol()
-      if (!data) return false
+      let storeSymbol = getStoreWithJson('activeSymbol') || {}
+      console.log(storeSymbol)
+      let activeSymbol
+      if (!getNestedData(storeSymbol, 'id')) {
+        let data = await getDefaultSymbol()
+        if (!data) return false
 
-      const obj = getNestedData(data, 'data')
-      console.log(obj)
-      const id = (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName'))
-      if (!id) return false
-      const activeSymbol = {
-        id: (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase(),
-        tradeId: getNestedData(obj, 'id'),
-        sellsymbol: getNestedData(obj, 'sellCoinName'), // 币种简称
-        sellname: getNestedData(obj, 'buyCoinName'), // 币种全程
-        area: getNestedData(obj, 'buyCoinName'), // 交易区
-        areaId: getNestedData(obj, 'tradeAreaId')
+        const obj = getNestedData(data, 'data')
+        console.log(obj)
+        const id = (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName'))
+        if (!id) return false
+        activeSymbol = {
+          id: (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase(),
+          tradeId: getNestedData(obj, 'id'),
+          sellsymbol: getNestedData(obj, 'sellCoinName'), // 币种简称
+          sellname: getNestedData(obj, 'buyCoinName'), // 币种全程
+          area: getNestedData(obj, 'buyCoinName'), // 交易区
+          areaId: getNestedData(obj, 'tradeAreaId')
+        }
+      } else {
+        activeSymbol = storeSymbol
       }
+
       // 是否从其他页面跳转
       this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
       this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})

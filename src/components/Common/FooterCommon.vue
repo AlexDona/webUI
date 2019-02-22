@@ -486,5 +486,12 @@ export default {
         }
       }
     }
+
+    /* 设置底部字体图标微信QQ等为22px */
+    /deep/ {
+      .icon {
+        font-size: 22px;
+      }
+    }
   }
 </style>
