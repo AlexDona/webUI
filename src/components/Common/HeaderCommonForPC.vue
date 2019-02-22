@@ -650,9 +650,10 @@ export default{
     },
     setNewTitle (path) {
       let newTitle = ''
+      let priceData = this.$scientificToNumber(this.middleTopData.last)
       if (this.title) {
-        if (path && path === '/TradeCenter') {
-          newTitle = `${this.$scientificToNumber(this.middleTopData.last)} ${this.middleTopData.sellsymbol}/${this.middleTopData.area} ${this.title}`
+        if (path && path === '/TradeCenter' && priceData && this.middleTopData.sellsymbol && this.middleTopData.area) {
+          newTitle = `${priceData} ${this.middleTopData.sellsymbol}/${this.middleTopData.area} ${this.title}`
         } else {
           newTitle = `${this.title}`
         }
