@@ -445,7 +445,7 @@ export default {
     return {
       labelPosition: 'top', // form表单label方向
       errorMessage: '', // 提币验证错误提示
-      isShowAllCurrency: false, // 隐藏币种// 显示所有/余额切换，
+      isShowAllCurrency: true, // 隐藏币种// 显示所有/余额切换，
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
       openPictureSrc: require('../../../assets/user/yes.png'), // 全显示
       searchKeyWord: '', // 搜索关键字
@@ -464,7 +464,7 @@ export default {
       totalPageForMyEntrust: 1, // 当前委托总页数
       // 充值
       chargeDialogVisible: false, // 默认隐藏充值框
-      currentState: 'all', // 当前显示状态
+      currentState: 'not_all', // 当前显示状态
       chargeMoneyAddressId: '', // 数据ID
       currencyName: '', // 币种名称
       // 提币
@@ -524,10 +524,10 @@ export default {
       this.isShowAllCurrency = e == 'not_all' ? true : false
       if (this.currentPageForMyEntrust != 1) {
         switch (e) {
-          case 'not_all':
+          case 'all':
             this.currentState = 'not_all'
             break
-          case 'all':
+          case 'not_all':
             this.currentState = 'all'
         }
         this.currentPageForMyEntrust = 1
