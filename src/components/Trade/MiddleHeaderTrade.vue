@@ -99,6 +99,7 @@
         <div class="bottom">
             <span
               class="font-size14 theme-color"
+              v-show="$formatCount(middleTopData.vol24hour)!='NaN'"
             >
               {{$formatCount(middleTopData.vol24hour)}}
             </span>

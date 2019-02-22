@@ -239,7 +239,7 @@ export default {
 
     > .depth {
       width: 100%;
-      height: 308px;
+      height: 332px;
     }
 
     &.night {
