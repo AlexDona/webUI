@@ -26,6 +26,8 @@ export const getCollectionListAjax = () => handleRequest(() => get('collection')
 export const findUserInfoByShowId = params => handleRequest(() => get('user/findByShowId', params))
 
 // 获取板块信息
-export const getPlatesAJAX = params => handleRequest(() => get('/market/getTradePlate', params))
+export const getPlatesAJAX = params => handleRequest(() => get('/market/getTradePlate', {...params, loading: true}))
 // 根据板块id 获取定义的交易区信息
 export const getTradeAreaAJAX = params => handleRequest(() => get('market/plate/getInfo', params))
+
+export const getAllTradeAreasAJAX = params => handleRequest(() => get('market/plate/getAllInfo', {...params, loading: true}))

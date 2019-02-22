@@ -139,7 +139,8 @@ export default {
     > .inner-box {
       display: flex;
       width: 100%;
-      margin-left: 10px;//
+      margin-left: 10px;
+
       > .left {
         width: 180px;
         height: 720px;
@@ -154,9 +155,27 @@ export default {
 
         > .list {
           width: 180px;
-          height: 100%;
+          height: 690px;
           overflow-y: auto;
           text-align: left;
+
+          &::-webkit-scrollbar {
+            width: 4px;
+          }
+
+          &::-webkit-scrollbar-track-piece {
+            background-color: #2a343e;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: #4a5662;
+          }
+
+          &::-webkit-scrollbar-button {
+            display: none;
+            background-color: #fff;
+          }
 
           > .currency-item {
             box-sizing: border-box;
@@ -255,6 +274,24 @@ export default {
               &.active {
                 background: rgba(190, 217, 248, 1);
               }
+            }
+
+            &::-webkit-scrollbar {
+              width: 2px;
+            }
+
+            &::-webkit-scrollbar-track-piece {
+              background-color: #b7c3d0;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              border-radius: 2px;
+              background-color: #7e94ab;
+            }
+
+            &::-webkit-scrollbar-button {
+              display: none;
+              background-color: #fff;
             }
           }
         }

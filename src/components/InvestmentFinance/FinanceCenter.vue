@@ -324,8 +324,9 @@
                 <el-table
                   :data="investList"
                   style="width: 100%;"
-                  :empty-text="$t('M.comm_no_data')"
+                  :empty-text=this.noData
                 >
+                  <!--:empty-text="$t('M.comm_no_data')"-->
                   <!-- 存币币种 -->
                   <el-table-column
                     prop="coinShortName"
@@ -464,8 +465,9 @@
                 <el-table
                   :data="userInterestRecord"
                   style="width: 100%;"
-                  :empty-text="$t('M.comm_no_data')"
+                  :empty-text=this.noData
                 >
+                  <!--:empty-text="$t('M.comm_no_data')"-->
                   <!-- 存币币种 -->
                   <el-table-column
                     prop="coinShortName"
@@ -539,6 +541,7 @@ export default {
   },
   data () {
     return {
+      noData: '', // 记录列表暂无数据
       newArrInvestTypeList: [],
       fullscreenLoading: false,
       // 选中币种的id
@@ -864,8 +867,16 @@ export default {
         this.investList = getNestedData(getData, 'userFinancialManagementRecord.list')
         // 收益记录列表
         this.userInterestRecord = getNestedData(getData, 'userInterestRecord.list')
+        if (this.investList.length == 0 || this.userInterestRecord.length == 0) {
+          // this.noData = '暂无数据'
+          this.noData = this.$t('M.comm_no_data')
+        } else {
+          this.noData = ''
+        }
         // 每次换一种币种就获取该币种的总资产
         this.getUserCoinTotal()
+      } else {
+        this.noData = ' '
       }
       // 走势图x轴赋值
       this.FINANCE_LINE_RENDER_PRICE_LIST(getNestedData(getData, 'tickerPriceResult.renderPriceList'))
