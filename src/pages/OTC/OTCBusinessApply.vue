@@ -25,7 +25,7 @@
           {{$t('M.otc_merchant_publishAD')}}
             </span>
             <p class="text font-size14">
-              <!-- 自由发布定价、浮价广告 </br>买卖更灵活、额度更大 -->
+              <!-- 自由发布广告 </br>买卖更灵活、额度更大 -->
               {{$t('M.otc_merchant_pubshorder')}}<br />
               {{$t('M.otc_merchant_bigmount')}}
             </p>
@@ -122,16 +122,16 @@
               {{$t('M.otc_merchant_step4')}}
             </h4>
             <p>{{$t('M.otc_merchant_datailSeven')}}</p>
-            <h4 class="title tips">
-              {{$t('M.otc_merchant_loveTips')}}
-              <el-button
-                type="text"
-                @click="businessArgument"
-                class="agree font-size14"
-              >
-                《{{$t('M.otc_merchant_authentication')}}》
-              </el-button>
-            </h4>
+            <!--<h4 class="title tips">-->
+              <!--{{$t('M.otc_merchant_loveTips')}}-->
+              <!--<el-button-->
+                <!--type="text"-->
+                <!--@click="businessArgument"-->
+                <!--class="agree font-size14"-->
+              <!--&gt;-->
+                <!--《{{$t('M.otc_merchant_authentication')}}》-->
+              <!--</el-button>-->
+            <!--</h4>-->
           </div>
         </div>
         <!-- 2.2.4 同意协议部分 -->
