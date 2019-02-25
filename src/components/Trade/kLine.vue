@@ -211,7 +211,7 @@ export default {
       _.forEach(objList, objItem => {
         resultStr += unzip(objItem)
       })
-
+      console.log(resultStr)
       let activeSymbolData = JSON.parse(resultStr)
       let {
         defaultTrade, // 默认交易对
