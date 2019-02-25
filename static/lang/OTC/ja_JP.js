@@ -159,7 +159,7 @@ export const OTC = {
   'otc_merchant': '商家',
   'otc_privilege': '特権',
   'otc_merchant_publishAD': '広告発表',
-  'otc_merchant_pubshorder': '自由に価格設定、浮動価格広告',
+  'otc_merchant_pubshorder': '自由に広告発表',
   'otc_merchant_bigmount': '柔軟な取引、もっと多くの額度',
   'otc_merchant_singleFag': '独占的なマーク',
   'otc_merchant_tipsLine': '商家発表広告は',

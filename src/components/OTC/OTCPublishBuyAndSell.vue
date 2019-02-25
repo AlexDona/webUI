@@ -614,7 +614,7 @@ export default {
         this.marketPrice = getNestedData(detailsData, 'otcCoinQryResponse.marketPrice')
         // 币种 最大 交易限额maxCount
         this.backReturnCurrentMaxCount = getNestedData(detailsData, 'otcCoinQryResponse.maxCount')
-        console.log(this.backReturnCurrentMaxCount)
+        // console.log(this.backReturnCurrentMaxCount)
         this.$refs.maxCount.value = this.backReturnCurrentMaxCount
         console.log(this.$refs.maxCount.value)
         // 币种 最小 交易限额minCount

@@ -159,7 +159,7 @@ export const OTC = {
   'otc_merchant': '상가',
   'otc_privilege': '특권',
   'otc_merchant_publishAD': '광고 게시',
-  'otc_merchant_pubshorder': '자유로 가격 제출, 변동 가격 광고',
+  'otc_merchant_pubshorder': '자유롭게 시장가 지정가 광고하기',
   'otc_merchant_bigmount': '더욱 유연한 매매, 더욱 많은 할당량',
   'otc_merchant_singleFag': '표지 독점',
   'otc_merchant_tipsLine': '판매자가 게시 한 광고에는',

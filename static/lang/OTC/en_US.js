@@ -168,7 +168,7 @@ export const OTC = {
   'otc_privilege': ' Privilege',
   // 'otc_merchant_publishAD': 'Place an AD',
   'otc_merchant_publishAD': 'Post offers',
-  'otc_merchant_pubshorder': 'Freely price, floating offers',
+  'otc_merchant_pubshorder': 'Free advertising',
   'otc_merchant_bigmount': 'Flexible trading, more quota',
   'otc_merchant_singleFag': 'Exclusive sign',
   'otc_merchant_tipsLine': 'Merchants  offers',

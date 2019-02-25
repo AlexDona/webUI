@@ -505,10 +505,10 @@ export default {
           data1 = await getComprehensiveRecordsList(params)
           console.log(data1)
           this.partLoading = false
-          if (!data) return false
+          if (!data1) return false
           // 接口成功清除局部loading
-          this.otherRecordsList = getNestedData(data1, 'data.data.list') || []
-          this.totalPagesOtherRecords = getNestedData(data1, 'data.data.pages') - 0
+          this.otherRecordsList = getNestedData(data1, 'data.list') || []
+          this.totalPagesOtherRecords = getNestedData(data1, 'data.pages') - 0
           // if (!data1) {
           //   // 接口失败清除局部loading
           //   this.partLoading = false

@@ -103,6 +103,7 @@
               <el-button
                 type="primary"
                 @click="toPublishOrder"
+                v-if="userPutUpOrderStatus"
               >
               {{ $t('M.otc_release_order') }}
               </el-button>
@@ -410,7 +411,8 @@ import {
 import {
   getOTCAvailableCurrency,
   getOTCPutUpOrders,
-  getMerchantAvailableLegalTender
+  getMerchantAvailableLegalTender,
+  getCommonPutUpOrderStatus
 } from '../../utils/api/OTC'
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import OTCTradingOrder from '../../components/OTC/OTCTradingOrder'
@@ -438,6 +440,8 @@ export default {
   },
   data () {
     return {
+      // 用户是否可以发单状态
+      userPutUpOrderStatus: false,
       // 订单tabs面板切换禁用状态
       isDisabled: false,
       // 在线购买和在线出售按钮禁用状态
@@ -502,6 +506,8 @@ export default {
     }
   },
   async created () {
+    // 0.0 查询用户是否可以发单状态
+    await this.getUserPutUpOrderStatus()
     // 1.0 otc可用币种查询：我要购买/我要出售的币种列表
     await this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
@@ -548,6 +554,17 @@ export default {
     // 刷新个人信息
     reflashUserInfo () {
       this.REFRESH_USER_INFO_ACTION()
+    },
+    // 查询用户是否可以发单状态
+    async getUserPutUpOrderStatus () {
+      const data = await getCommonPutUpOrderStatus()
+      console.log(data)
+      console.log(data.data.flag)
+      // 返回数据正确的逻辑
+      if (!data) return false
+      if (data.data.flag === 'true') {
+        this.userPutUpOrderStatus = true
+      }
     },
     // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {

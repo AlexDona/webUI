@@ -25,7 +25,7 @@
           {{$t('M.otc_merchant_publishAD')}}
             </span>
             <p class="text font-size14">
-              <!-- 自由发布定价、浮价广告 </br>买卖更灵活、额度更大 -->
+              <!-- 自由发布广告 </br>买卖更灵活、额度更大 -->
               {{$t('M.otc_merchant_pubshorder')}}<br />
               {{$t('M.otc_merchant_bigmount')}}
             </p>

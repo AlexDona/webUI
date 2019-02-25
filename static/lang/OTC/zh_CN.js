@@ -159,7 +159,7 @@ export const OTC = {
   'otc_merchant': '商家',
   'otc_privilege': '特权',
   'otc_merchant_publishAD': '发布广告',
-  'otc_merchant_pubshorder': '自由发布定价、浮价广告',
+  'otc_merchant_pubshorder': '自由发布广告',
   'otc_merchant_bigmount': '买卖更灵活、额度更大',
   'otc_merchant_singleFag': '独享标志',
   'otc_merchant_tipsLine': '商家发布的广告会带有',
