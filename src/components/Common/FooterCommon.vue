@@ -86,12 +86,12 @@
             </li>
           </ul>
           <!-- 版权 -->
-          <div class="copyright">
+          <div class="email">
             <span
-              class="copyright-content"
-              v-if="configInfo"
+              class="email-content"
+              v-if="configInfo['otcEmail']"
             >
-              {{configInfo.copyright}}
+              EMAIL: {{configInfo['otcEmail']}}
             </span>
           </div>
         </div>
@@ -220,6 +220,9 @@
           </li>
         </ul>
       </div>
+      <div class="copyright">
+        <p>{{configInfo['copyright']}}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -318,6 +321,7 @@ export default {
   watch: {
     footerInfo: {
       handler (newVal) {
+        console.log(newVal)
         if (newVal) {
           this.isloading = false
           this.footerInfo1 = newVal.footerInfo1
@@ -421,10 +425,10 @@ export default {
             }
           }
 
-          > .copyright {
+          > .email {
             margin-top: 10px;
 
-            > .copyright-content {
+            > .email-content {
               font-size: 12px;
               color: #cecece;
             }
@@ -483,6 +487,16 @@ export default {
               }
             }
           }
+        }
+      }
+
+      > .copyright {
+        height: 30px;
+        line-height: 30px;
+
+        > p {
+          font-size: 12px;
+          text-align: center;
         }
       }
     }
