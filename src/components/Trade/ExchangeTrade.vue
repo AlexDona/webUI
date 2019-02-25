@@ -624,8 +624,10 @@ export default {
     }
   },
   async created () {
-    await this.REFRESH_USER_INFO_ACTION()
-    console.log(this.REFRESH_USER_INFO_ACTION)
+    if (this.isLogin) {
+      await this.REFRESH_USER_INFO_ACTION()
+      console.log(this.REFRESH_USER_INFO_ACTION)
+    }
   },
   mounted () {
     // this.getRefValue(this.limitBuyPriceInputRef)
