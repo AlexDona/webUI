@@ -354,7 +354,7 @@ export const fromApi = {
   'user-fail-google-code': 'Google verification code error',
   'user-fail-inviter-notexist': 'The recommender does not exist',
   'user-fail-login-disable': 'Account disabled',
-  'user-fail-login-lock': 'Account is locked',
+  'user-fail-login-lock': 'The account has been locked. Please try again in two hours',
   'user-fail-login-password': 'User name or password error, remaining retry times {}',
   'user-fail-mail-binded': 'The mailbox has been bound',
   'user-fail-not-realname': 'Please first real name certification',

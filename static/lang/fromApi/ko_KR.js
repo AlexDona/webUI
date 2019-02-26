@@ -353,7 +353,7 @@ export const fromApi = {
   'user-fail-google-code': '구글 인증 코드 오류',
   'user-fail-inviter-notexist': '추천자 존재하지 않습니다.',
   'user-fail-login-disable': '계정 정지되었습니다.',
-  'user-fail-login-lock': '계정 잠겼습니다.',
+  'user-fail-login-lock': '계정이 잠겼습니다. 2시간 후에 다시 시도해 주십시오.',
   'user-fail-login-password': '사용자 ID 또는 비밀번호 틀립니다. 잔여 시도 횟수 {}',
   'user-fail-mail-binded': '이메일 이미 연동되었습니다',
   'user-fail-not-realname': '먼저 실명 인증 하세요',

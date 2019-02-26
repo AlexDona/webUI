@@ -506,7 +506,7 @@ export default {
     }
   },
   async created () {
-    // 0.0 查询用户是否可以发单状态
+    // 0.0 查询用户是否可以发单状态:不分登录前和登录后
     await this.getUserPutUpOrderStatus()
     // 1.0 otc可用币种查询：我要购买/我要出售的币种列表
     await this.getOTCAvailableCurrencyList()

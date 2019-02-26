@@ -353,7 +353,7 @@ export const fromApi = {
   'user-fail-google-code': '谷歌验证码错误',
   'user-fail-inviter-notexist': '推荐人不存在',
   'user-fail-login-disable': '账户被禁用',
-  'user-fail-login-lock': '账号被锁定',
+  'user-fail-login-lock': '账号已被锁定，请两小时后重试',
   'user-fail-login-password': '用户名或密码错误,剩余重试次数{}',
   'user-fail-mail-binded': '邮箱已被绑定',
   'user-fail-not-realname': '请先实名认证',
