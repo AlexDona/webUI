@@ -212,6 +212,7 @@ export default {
         resultStr += unzip(objItem)
       })
       console.log(resultStr)
+      if (!resultStr) return false
       let activeSymbolData = JSON.parse(resultStr)
       let {
         defaultTrade, // 默认交易对

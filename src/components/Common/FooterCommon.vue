@@ -123,7 +123,10 @@
               class="dd-item"
             >
               <!--API文档-->
-              <a href="https://github.com/bizuyun/API/wiki">
+              <a
+                href="https://github.com/bizuyun/API/wiki"
+                target="_blank"
+              >
                 {{$t('M.comm_api_doc')}}
               </a>
             </dd>
