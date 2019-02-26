@@ -130,6 +130,7 @@
                 :title="$t('M.finance_save_moneydetail')"
                 :visible.sync="dialogVisible"
                 width="440px"
+                :close-on-click-modal="false"
                 class='dialogStyle'
               >
                 <el-form
@@ -239,14 +240,30 @@
                   <!-- 确定 -->
                   <el-button
                     type="primary"
-                    :disabled="stopClick"
                     @click="dialogSuer"
                   >
                     {{$t('M.comm_affirm')}}
                   </el-button>
                 </span>
               </el-dialog>
-              <button></button>
+              <el-dialog
+                :title="$t('M.comm_password')"
+                :visible.sync="isShowPasswordDialog"
+                width="340px"
+                top="42vh"
+                :close-on-click-modal="false"
+                class='passwordDialog'
+              >
+                <input
+                  v-model="passwords"
+                  @input="deleteErrorTips"
+                  class="password"
+                >
+                <p v-if="isShowErrorTips" class="errorTips">{{$t('M.otc_publishAD_pleaseInput') + $t('M.comm_password') }}</p>
+                <span slot="footer" class="dialog-footer">
+                  <el-button type="primary" @click="submitPassword"  :disabled="isDisable">确 定</el-button>
+                </span>
+              </el-dialog>
             </div>
           </div>
           <!-- 我的存币 -->
@@ -630,8 +647,15 @@ export default {
           interest: 3
         }
       ],
-      interestRateValue: '', // 年利率
-      stopClick: false
+      interestRateValue: '',
+      // 存币详情确定按钮是否禁用
+      isDisable: false,
+      // 输入交易框是否弹出
+      isShowPasswordDialog: false,
+      // 交易密码
+      passwords: '',
+      // 是否显示交易密码为空的提示
+      isShowErrorTips: false
     }
   },
   created () {
@@ -661,6 +685,23 @@ export default {
     },
     timeFormatting (data) {
       return timeFilter(data, 'data')
+    },
+    // 判断是否出现错误提示
+    deleteErrorTips () {
+      if (this.passwords.length) {
+        this.isShowErrorTips = false
+      }
+    },
+    // 提交交易密码
+    async submitPassword () {
+      if (this.passwords && !this.isShowErrorTips) {
+        // 输入密码框关闭
+        this.isShowPasswordDialog = false
+        // 请求理财记录列表
+        this.clickImmediateInvestment()
+      } else {
+        this.isShowErrorTips = true
+      }
     },
     // 改写存币数量只能输入小数点后两位20190103该写
     investNumLimit (ref, pointLength) {
@@ -724,62 +765,42 @@ export default {
         return false
       }
     },
-    /* getInvestEarnings () {
-      if (this.isLogin) {
-        if (this.selectedInvestTypeId && this.investAmount) {
-          if (this.isShow === false) {
-            // 显示理财详情模态框前请求数据渲染模态框
-            this.clickGetInvestEarnings()
-            // 显示模态框
-            this.dialogVisible = true
-          } else {
-            return false
-          }
-        } else {
-          this.$message({
-            // 存币类型或存币数量不能为空
-            message: this.$t('M.finance_noemptyTips'),
-            type: 'error'
-          })
-        }
-      } else {
-        this.$goToPage('/login')
-        return false
-      }
-    }, */
     // 点击取消按钮模态框关闭
     dialogCancel () {
       this.dialogVisible = false
     },
     // 点击确定按钮模态框关闭
     dialogSuer () {
-      this.stopClick = true
       this.dialogVisible = false
-      // 执行存币按钮
-      this.clickImmediateInvestment()
-    },
-    // 模态框数字发生变化时需要执行的方法
-    changeAlignNumber (ref1, ref2, e) {
-      let arr = e.target.value.split('')
-      let str = ''
-      _.forEach(arr, (item, index) => {
-        if (index == 0 && item == '0') {
-          str = ''
-        } else {
-          if (item - 0 || item == '0') {
-            str += item
-          }
-        }
-      })
-      this.investAmount = str
-      // 将本身赋值
-      this.$refs[ref1].value = str
-      // 主理财页面赋值
-      this.$refs[ref2].value = str
-      if (str) {
-        this.clickGetInvestEarnings()
+      if (this.isShowPasswordDialog) {
+        return false
+      } else {
+        this.isShowPasswordDialog = true
+        this.passwords = ''
       }
     },
+    // 模态框数字发生变化时需要执行的方法
+    // changeAlignNumber (ref1, ref2, e) {
+    //   let arr = e.target.value.split('')
+    //   let str = ''
+    //   _.forEach(arr, (item, index) => {
+    //     if (index == 0 && item == '0') {
+    //       str = ''
+    //     } else {
+    //       if (item - 0 || item == '0') {
+    //         str += item
+    //       }
+    //     }
+    //   })
+    //   this.investAmount = str
+    //   // 将本身赋值
+    //   this.$refs[ref1].value = str
+    //   // 主理财页面赋值
+    //   this.$refs[ref2].value = str
+    //   if (str) {
+    //     this.clickGetInvestEarnings()
+    //   }
+    // },
     // 理财记录模态框显示
     async clickGetInvestEarnings () {
       const data = await getFinancialRecord({
@@ -794,21 +815,25 @@ export default {
     },
     // 添加理财记录
     async clickImmediateInvestment () {
+      // 请求回来时将按钮解除禁用
+      this.isDisable = true
       const data = await imediateInvestment({
         financialManagementId: this.selectedInvestTypeId,
-        // number: this.investAmount
+        payPassword: this.passwords,
         number: this.$refs.investAmountRef.value
       })
       if (!data) return false
+      // 请求回来时将按钮解除禁用
+      this.isDisable = false
       // 重新调一次币种接口刷新列表
       this.getFinancialManagementList()
-      // 请求回来时将按钮解除禁用
-      this.stopClick = false
       // 存币成功
       this.$message({
         message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
         type: 'success'
       })
+      // 清空交易密码
+      this.passwords = ''
     },
     // 存币理财页面币种查询
     async getFinancialManagementList () {
@@ -920,13 +945,12 @@ export default {
       })
     },
     cancelInvest (id) {
-      // 用户点击取消按钮需要请求接口
-      // this.clickCancelInvestment(id)
       // 增加二次确认弹出框
       this.$confirm(this.$t('M.finance_tipsContentOne'), {
         confirmButtonText: this.$t('M.comm_confirm'), // 确定
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
+        // 用户点击取消按钮需要请求接口
         this.clickCancelInvestment(id)
       }).catch(() => {
       })
@@ -953,8 +977,6 @@ export default {
       console.log(newVal, oldVal)
     },
     language (newVal) {
-      console.log('当前选中语言')
-      console.log(newVal)
       this.getFinancialManagementList()
     }
   },
@@ -1311,6 +1333,31 @@ export default {
           }
         }
 
+        .passwordDialog {
+          .password {
+            box-sizing: border-box;
+            width: 300px;
+            height: 36px;
+            padding: 0 10px;
+            border: 1px solid #485776;
+            color: #fff;
+            background-color: #1a2233;
+          }
+
+          .errorTips {
+            line-height: 36px;
+            color: #d45858;
+          }
+
+          .el-button.el-button--primary {
+            width: 300px;
+            height: 36px;
+            border: 0;
+            line-height: 0;
+            background: linear-gradient(81deg, #2b396e 0%, #2a5082 100%);
+          }
+        }
+
         .el-dialog__wrapper {
           width: 100%;
           height: 100%;
@@ -1589,6 +1636,14 @@ export default {
 
             .saveTime {
               color: #333;
+            }
+          }
+
+          .passwordDialog {
+            .password {
+              border: 1px solid #ecf1f8;
+              color: #333;
+              background-color: #fff;
             }
           }
         }

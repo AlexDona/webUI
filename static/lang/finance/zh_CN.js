@@ -41,6 +41,6 @@ export const finance = {
   'finance_capital': '本金',
   'finance_total_income': '预计总收益',
   // 二次确认弹框提示信息
-  'finance_tipsContentOne': '确定取回存币?',
+  'finance_tipsContentOne': '确定取消存币?',
   'finance_invest_number': '存币数量不能为0'
 }
