@@ -20,7 +20,7 @@
                 <div class="header-right-text text-align-r">
                   <!--隐藏资产为0的币种-->
                   {{ $t('M.user_hidden_assets') }}
-                  <p class="float-right header-right-show margin-left10">
+                  <p class="float-right header-right-show margin-left10 cursor-pointer">
                     <img
                       v-show="isShowAllCurrency"
                       @click.prevent="statusOpenToCloseCurrency('all')"
@@ -46,7 +46,6 @@
                   type="text"
                   class="header-right-search border-radius2 padding-left25 font-size12"
                   v-model="searchKeyWord"
-                  @keyup="statusSearch"
                 >
               </p>
             </div>
@@ -64,67 +63,145 @@
               <div class="table-title-th display-flex margin20 font-size12">
                 <!--币种-->
                 <div
-                  class="flex1"
+                  class="title-width"
                 >
                   {{ $t('M.comm_currency') }}
                 </div>
                 <!--总数量-->
                 <div
-                  class="flex1"
+                  class="title-width"
                 >
                   {{ $t('M.user_assets_sum1') }}
                 </div>
                 <!--冻结数量-->
                 <div
-                  class="flex1"
+                  class="title-width title-position"
                 >
                   {{ $t('M.user_assets_sum2') }}
+                  <div class="icon-caret">
+                    <!--升序-->
+                    <i
+                      class="el-icon-caret-bottom caret-text cursor-pointer"
+                      :class="{active: blueStyleFrozen == 1}"
+                      @click.prevent="assetsSorting('up', 'frozen')"
+                    >
+                    </i>
+                    <!--降序-->
+                    <i
+                      class="el-icon-caret-top caret-text-order cursor-pointer"
+                      :class="{active: blueStyleFrozen == 2}"
+                      @click.prevent="assetsSorting('down', 'frozen')"
+                    >
+                    </i>
+                  </div>
                 </div>
                 <!--可用数量-->
                 <div
-                  class="flex1"
+                  class="title-width-header title-position"
                 >
                   {{ $t('M.user_assets_sum3') }}
+                  <div class="icon-caret-order">
+                    <!--升序-->
+                    <i
+                      class="el-icon-caret-bottom caret-text cursor-pointer"
+                      :class="{active: blueStyleTotal == 1}"
+                      @click.prevent="assetsSorting1('up', 'total')"
+                    >
+                    </i>
+                    <!--降序-->
+                    <i
+                      class="el-icon-caret-top caret-text-order cursor-pointer"
+                      :class="{active: blueStyleTotal == 2}"
+                      @click.prevent="assetsSorting1('down', 'total')"
+                    >
+                    </i>
+                  </div>
                 </div>
                 <!--资产估值(BTC)-->
                 <div
-                  class="flex1 flex-asset"
+                  class="flex-asset title-width1"
                 >
                   {{ $t('M.user_assets_sum4') }}(BTC)
                   <div class="icon-caret">
-                    <i class="el-icon-caret-bottom caret-text cursor-pointer"></i>
-                    <i class="el-icon-caret-top caret-text1 cursor-pointer"></i>
+                    <!--升序-->
+                    <i
+                      class="el-icon-caret-bottom caret-text cursor-pointer"
+                      :class="{active: blueStyleValue == 1}"
+                      @click.prevent="assetsSorting2('up', 'btcValue')"
+                    >
+                    </i>
+                    <!--降序-->
+                    <i
+                      class="el-icon-caret-top caret-text-order cursor-pointer"
+                      :class="{active: blueStyleValue == 2}"
+                      @click.prevent="assetsSorting2('down', 'btcValue')"
+                    >
+                    </i>
                   </div>
                 </div>
                 <!--操作-->
                 <div
-                  class="flex1 text-align-c"
+                  class="text-align-c title-width title-width-last"
                 >
                   {{ $t('M.comm_operation') }}
                 </div>
               </div>
               <div
                 class="table-tr font-size12 padding-lr20"
-                v-for="(assetItem, index) in withdrawDepositList"
+                v-for="(assetItem, index) in (isShowAllCurrency?filteredData1:filteredData2)"
                 :key="index"
               >
-                <div class="table-box display-flex">
-                  <div class="table-td flex1">
+                <div class="table-box display-flex title-width">
+                  <!--币种-->
+                  <div class="table-td title-width">
                     {{ assetItem.coinName }}
                   </div>
-                  <div class="table-td flex1">
-                    {{ $scientificToNumber(assetItem.sum - 0) }}
+                  <!--总数量-->
+                  <div class="table-td title-width">
+                    <span v-if="assetItem.sum > 0">
+                      {{ $scientificToNumber(assetItem.sum - 0) }}
+                    </span>
+                    <span v-else>
+                      0.00000000
+                    </span>
                   </div>
-                  <div class="table-td flex1">
-                    {{ $scientificToNumber(assetItem.frozen - 0) }}
+                  <!--冻结数量-->
+                  <div class="table-td title-width">
+                    <span v-if="assetItem.frozen > 0">
+                      {{ $scientificToNumber(assetItem.frozen - 0) }}
+                    </span>
+                    <span v-else>
+                      0.00000000
+                    </span>
                   </div>
-                  <div class="table-td flex1">
-                    {{ $scientificToNumber(assetItem.total - 0) }}
+                  <!--可用数量-->
+                  <div class="table-td title-width-header">
+                    <span v-if="assetItem.total > 0">
+                      {{ $scientificToNumber(assetItem.total - 0) }}
+                    </span>
+                    <span v-else>
+                      0.00000000
+                    </span>
                   </div>
-                  <div class="table-td flex1 text-align-c">
-                    {{ $scientificToNumber(assetItem.btcValue) }}
+                  <!--资产估值-->
+                  <div
+                    class="table-td text-align-r title-width1"
+                  >
+                    <div
+                      class="title-width-right"
+                      v-if="assetItem.btcValue > 0"
+                    >
+                      {{ keep8Num($scientificToNumber(assetItem.btcValue)) }} ≈ {{ $keep2Num($scientificToNumber(assetItem.btcValue) * BTC2CNYRate) }} {{ activeConvertCurrencyObj.shortName }}
+                    </div>
+                    <div
+                      class="title-width-right"
+                      v-else
+                    >
+                      0.00000000 ≈ 0.00 {{activeConvertCurrencyObj.shortName}}
+                    </div>
                   </div>
-                  <div class="table-td flex1 display-flex text-align-r font-size12">
+                  <!--操作-->
+                  <div class="table-td display-flex text-align-r font-size12 title-width title-width-la">
                     <div
                       v-if="withdrawDepositList[index].isRecharge === 'true'"
                       class="table-charge-money flex1 cursor-pointer"
@@ -177,12 +254,12 @@
                         >
                         </span>
                         <!--<p-->
-                          <!--class="transaction-list text-align-c"-->
-                          <!--v-show="OTCCenterHasCurrentCoin"-->
-                          <!--@click="jumpToOTCCenter(assetItem.coinId)"-->
+                        <!--class="transaction-list text-align-c"-->
+                        <!--v-show="OTCCenterHasCurrentCoin"-->
+                        <!--@click="jumpToOTCCenter(assetItem.coinId)"-->
                         <!--&gt;-->
-                          <!--&lt;!&ndash; otc 交易&ndash;&gt;-->
-                          <!--{{$t('M.comm_otc_center')}}-->
+                        <!--&lt;!&ndash; otc 交易&ndash;&gt;-->
+                        <!--{{$t('M.comm_otc_center')}}-->
                         <!--</p>-->
                         <p
                           class="transaction-list text-align-c"
@@ -385,18 +462,6 @@
           </div>
         </div>
       </div>
-      <div class="paging">
-        <!--分页-->
-        <el-pagination
-          background
-          v-show="activeName === 'current-entrust' && withdrawDepositList.length"
-          layout="prev, pager, next"
-          :current-page="currentPageForMyEntrust"
-          :page-count="totalPageForMyEntrust"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
-      </div>
     </div>
   </div>
 </template>
@@ -420,7 +485,8 @@ import {
   withdrawalInformation,
   queryTransactionInformation,
   inquireWithdrawalAddressId,
-  checkCurrencyAddress
+  checkCurrencyAddress,
+  currencyTransform
 } from '../../../utils/api/personal'
 import {
   returnAjaxMsg,
@@ -449,6 +515,10 @@ export default {
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
       openPictureSrc: require('../../../assets/user/yes.png'), // 全显示
       searchKeyWord: '', // 搜索关键字
+      blueStyleFrozen: 0, // 排序默认样式
+      blueStyleTotal: 0, // 排序默认样式
+      blueStyleValue: 0, // 排序默认样式
+      BTC2CNYRate: '', // 转换汇率
       withdrawDepositList: [], // 我的资产全部币种列表
       chargeMoneyAddress: '', // 根据充币地址生成二维码条件
       withdrawalFee: '', // 自定义提币手续费
@@ -500,9 +570,13 @@ export default {
       end: '' // 占位
     }
   },
-  created () {
+  async created () {
     // 刚进页面时候 个人资产列表展示
     this.getAssetCurrenciesList()
+    if (this.currencyRateList.BTC) {
+      // 汇率转换
+      await this.currencyTransform()
+    }
   },
   mounted () {
     console.log(this.$refs)
@@ -519,21 +593,88 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'SET_NEW_WITHDRAW_ADDRESS'
     ]),
+    // 汇率折算以及根据header切换显示对应资产换算
+    async currencyTransform () {
+      // console.log(this.currencyRateList, this.activeConvertCurrencyObj)
+      const params = {
+        coinName: 'BTC',
+        shortName: this.activeConvertCurrencyObj.shortName
+      }
+      const data = await currencyTransform(params)
+      // console.log(data)
+      if (!returnAjaxMsg(data, this)) {
+        console.log(3)
+        return false
+      } else {
+        // console.log(data)
+        if (data.data.data.coinPrice) {
+          // 获取汇率
+          this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
+          // console.log(this.BTC2CNYRate)
+        }
+      }
+    },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
       this.isShowAllCurrency = e == 'not_all' ? true : false
-      if (this.currentPageForMyEntrust != 1) {
-        switch (e) {
-          case 'all':
-            this.currentState = 'not_all'
-            break
-          case 'not_all':
-            this.currentState = 'all'
-        }
-        this.currentPageForMyEntrust = 1
+    },
+    // 资产估值升序降序
+    assetsSorting (type, val) {
+      // type 冻结(frozen) 可用(total) 资产估值(btcValue)
+      // val 升序(order) 降序(invertedOrder)
+      console.log(type, val)
+      switch (type) {
+        case 'up':
+          this.blueStyleFrozen = 1
+          this.blueStyleTotal = 0
+          this.blueStyleTotal = 0
+          this.withdrawDepositList.sort((a, b) => b[val] - a[val])
+          break
+        case 'down':
+          this.blueStyleFrozen = 2
+          this.blueStyleTotal = 0
+          this.blueStyleTotal = 0
+          this.withdrawDepositList.sort((a, b) => a[val] - b[val])
+          break
       }
-      this.currentState = e
-      this.getAssetCurrenciesList()
+    },
+    assetsSorting1 (type, val) {
+      // type 冻结(frozen) 可用(total) 资产估值(btcValue)
+      // val 升序(order) 降序(invertedOrder)
+      console.log(type, val)
+      switch (type) {
+        case 'up':
+          this.blueStyleTotal = 1
+          this.blueStyleFrozen = 0
+          this.blueStyleValue = 0
+          this.withdrawDepositList.sort((a, b) => b[val] - a[val])
+          break
+        case 'down':
+          this.blueStyleTotal = 2
+          this.blueStyleFrozen = 0
+          this.blueStyleValue = 0
+          this.withdrawDepositList.sort((a, b) => a[val] - b[val])
+          break
+      }
+    },
+    assetsSorting2 (type, val) {
+      // type 冻结(frozen) 可用(total) 资产估值(btcValue)
+      // val 升序(order) 降序(invertedOrder)
+      console.log(type, val)
+      switch (type) {
+        case 'up':
+          this.blueStyleValue = 1
+          this.blueStyleTotal = 0
+          this.blueStyleFrozen = 0
+          this.withdrawDepositList.sort((a, b) => b[val] - a[val])
+          break
+        case 'down':
+          this.blueStyleValue = 2
+          this.blueStyleTotal = 0
+          this.blueStyleFrozen = 0
+          this.withdrawDepositList.sort((a, b) => a[val] - b[val])
+          break
+      }
     },
     // 跳转当前交易对
     changeActiveSymbol (e) {
@@ -779,9 +920,9 @@ export default {
       sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     // 调取后台接口 搜索关键字模糊查询
-    statusSearch () {
-      this.getAssetCurrenciesList()
-    },
+    // statusSearch () {
+    //   this.getAssetCurrenciesList()
+    // },
     /**
      * 刚进页面时候 个人资产列表展示
      */
@@ -790,7 +931,7 @@ export default {
       let data
       let params = {
         pageNum: this.currentPageForMyEntrust,
-        pageSize: this.pageSize,
+        pageSize: '10000',
         shortName: this.searchKeyWord, // 搜索关键字
         selectType: this.currentState // all：所有币种 not_all：有资产币种
       }
@@ -827,11 +968,11 @@ export default {
         console.log(this.withdrawDepositList)
       }
     },
-    // 分页
-    changeCurrentPage (pageNum) {
-      this.currentPageForMyEntrust = pageNum
-      this.getAssetCurrenciesList()
-    },
+    // // 分页
+    // changeCurrentPage (pageNum) {
+    //   this.currentPageForMyEntrust = pageNum
+    //   this.getAssetCurrenciesList()
+    // },
     // 根据币种id查询提币地址
     async queryWithdrawalAddressList () {
       this.activeWithdrawDepositAddress = ''
@@ -1087,7 +1228,9 @@ export default {
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // 是否允许提币
-      coinStatus: state => state.user.loginStep1Info.userInfo.coinStatus
+      coinStatus: state => state.user.loginStep1Info.userInfo.coinStatus,
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
+      currencyRateList: state => state.common.currencyRateList // 折算货币列表
     }),
     // 提现手续费输入input ref
     feeInputRef () {
@@ -1100,9 +1243,42 @@ export default {
     // 提币地址初始化赋值
     originalActiveWithdrawDepositAddress () {
       return this.activeWithdrawDepositAddress
+    },
+    filteredData: function () {
+      return this.withdrawDepositList.filter((item) => {
+        return item['coinName'].indexOf(this.searchKeyWord.toLocaleUpperCase()) !== -1
+      })
+    },
+    // 筛选币种为小于零的币种
+    filteredData1: function () {
+      return this.filteredData.filter(function (item) {
+        return item
+      })
+    },
+    // 开启关闭币种小于零的币种
+    filteredData2: function () {
+      return this.filteredData.filter(function (item) {
+        return item.total > 0
+      })
     }
   },
   watch: {
+    async activeConvertCurrencyObj () {
+      if (this.currencyRateList.BTC) {
+        // 汇率转换
+        await this.currencyTransform()
+      }
+      console.log(this.activeConvertCurrencyObj)
+    },
+    currencyRateList () {
+      console.log(this.currencyRateList)
+    },
+    filteredData1 () {
+      console.log(this.filteredData1)
+    },
+    filteredData2 () {
+      console.log(this.filteredData2)
+    },
     userCenterActiveName (newVal) {
       if (newVal === 'assets') {
         console.log(newVal)
@@ -1122,10 +1298,25 @@ export default {
     > .account-assets-main {
       > .account-assets-box {
         min-height: 480px;
+        margin-bottom: 50px;
 
         .account-assets-header {
           > .header-flex {
+            position: relative;
             height: 100%;
+
+            > .right-search {
+              position: absolute;
+              top: 35px;
+              right: 23px;
+              width: 140px;
+
+              > .right-search-list {
+                width: 100%;
+                height: 30px;
+                line-height: 30px;
+              }
+            }
 
             > .header-right-left {
               > .header-right-text {
@@ -1151,6 +1342,10 @@ export default {
                 top: 12px;
                 left: 95px;
               }
+
+              .select-full {
+                width: 150px;
+              }
             }
           }
         }
@@ -1159,6 +1354,50 @@ export default {
           > .content-list {
             > .table-body {
               width: 100%;
+
+              .title-width {
+                width: 150px;
+              }
+
+              .title-position {
+                position: relative;
+
+                .icon-caret {
+                  position: absolute;
+                  top: 0;
+                  right: 100px;
+                }
+
+                .icon-caret1 {
+                  position: absolute;
+                  top: 0;
+                  right: 90px;
+                }
+              }
+
+              .title-width1 {
+                width: 170px;
+              }
+
+              .title-width-last {
+                margin-left: 20px;
+              }
+
+              .title-width-la {
+                margin-left: 7px;
+              }
+
+              .title-width-header {
+                width: 140px;
+              }
+
+              .title-width-right {
+                margin-right: 10px;
+              }
+
+              .title-last {
+                width: 170px;
+              }
 
               .error-info {
                 height: 20px;
@@ -1182,10 +1421,15 @@ export default {
 
               .flex-asset {
                 position: relative;
-                text-align: left;
+                text-align: center;
               }
 
-              .icon-caret {
+              .active {
+                color: #3e79d6;
+              }
+
+              .icon-caret,
+              .icon-caret-order {
                 position: absolute;
                 top: 0;
                 right: 40px;
@@ -1196,11 +1440,17 @@ export default {
                   left: 5px;
                 }
 
-                .caret-text1 {
+                .caret-text-order {
                   position: absolute;
                   top: 15px;
                   left: 5px;
                 }
+              }
+
+              .icon-caret-order {
+                position: absolute;
+                top: 0;
+                right: 85px;
               }
 
               > .table-tr {
@@ -1224,7 +1474,7 @@ export default {
                       > .triangle {
                         position: absolute;
                         top: -7px;
-                        right: 113px;
+                        right: 118px;
                         width: 12px;
                         height: 12px;
                         -ms-transform: rotate(135deg);
@@ -1235,7 +1485,7 @@ export default {
                       }
 
                       > .triangle-one {
-                        right: 55px;
+                        right: 65px;
                       }
 
                       > .mention {
@@ -1366,7 +1616,7 @@ export default {
 
                         > .text-info-mention {
                           position: relative;
-                          top: -20px;
+                          top: -15px;
                           padding-left: 15px;
 
                           &.need-tag-top {
@@ -1379,7 +1629,7 @@ export default {
                           }
 
                           > .mention-button {
-                            margin-top: 41px;
+                            margin-top: 30px;
 
                             > .submit-but {
                               width: 80px;
@@ -1486,6 +1736,15 @@ export default {
         height: 34px;
         border: 0;
         border-radius: 2px;
+      }
+
+      .header-right-right .el-select .el-input--suffix .el-input__inner {
+        width: 150px;
+        height: 30px;
+      }
+
+      .el-select-dropdown__empty {
+        padding: 5px 0;
       }
 
       .el-input__icon {

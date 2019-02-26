@@ -256,7 +256,7 @@ export default {
     > .triangle {
       position: absolute;
       top: -7px;
-      right: 113px;
+      right: 118px;
       width: 12px;
       height: 12px;
       -ms-transform: rotate(135deg);
@@ -267,7 +267,7 @@ export default {
     }
 
     > .triangle-one {
-      right: 55px;
+      right: 70px;
     }
 
     > .mention {
@@ -398,7 +398,7 @@ export default {
 
       > .text-info-mention {
         position: relative;
-        top: -20px;
+        top: -15px;
         padding-left: 15px;
 
         &.need-tag-top {
@@ -411,7 +411,7 @@ export default {
         }
 
         > .mention-button {
-          margin-top: 41px;
+          margin-top: 30px;
 
           > .submit-but {
             width: 80px;

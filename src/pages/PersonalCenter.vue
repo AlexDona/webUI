@@ -460,6 +460,10 @@ export default {
         }
       }
 
+      .el-tabs--left .el-tabs__nav-wrap.is-left {
+        margin-right: 0;
+      }
+
       /* 做二级导航宽度 */
       .el-tabs--left {
         /* height: 625px; */
