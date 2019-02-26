@@ -51,12 +51,12 @@
             </el-tab-pane>
             <!--API文档-->
             <el-tab-pane
-              :label="$t('M.about_digital_terms_hint5')"
-              name="APIDocument"
+              :label="$t('M.about_digital_terms_hint7')"
+              name="AML"
             >
               <div class="tab-content">
                 <Content
-                  :content="APIDocumentData.content"
+                  :content="AML.content"
                 />
               </div>
             </el-tab-pane>
@@ -86,6 +86,17 @@
               <div class="tab-content">
                 <Content
                   :content="tradingWarningData.content"
+                />
+              </div>
+            </el-tab-pane>
+            <!-- OTC 服务协议 -->
+            <el-tab-pane
+              :label="$t('M.about_digital_terms_hint8')"
+              name="OTCServices"
+            >
+              <div class="tab-content">
+                <Content
+                  :content="OTCServices.content"
                 />
               </div>
             </el-tab-pane>
@@ -152,8 +163,8 @@ export default {
         case 'PrivacyClause':
           this.termsTypeIds = 2
           break
-        case 'APIDocument':
-          this.termsTypeIds = 7
+        case 'AML':
+          this.termsTypeIds = 4
           break
         case 'Rate':
           this.termsTypeIds = 5
@@ -161,6 +172,10 @@ export default {
         // 交易须知
         case 'TradingWarning':
           this.termsTypeIds = 14
+          break
+        // OTC 服务协议
+        case 'OTCServices':
+          this.termsTypeIds = 16
           break
       }
       this.getServiceProtocolData()
@@ -190,9 +205,9 @@ export default {
               legislationExplainData: targetData
             })
             break
-          case 7:
+          case 4:
             this.CHANGE_PROTOCOL_DATA({
-              APIDocumentData: targetData
+              AML: targetData
             })
             break
           case 8:
@@ -203,6 +218,11 @@ export default {
           case 14:
             this.CHANGE_PROTOCOL_DATA({
               tradingWarningData: targetData
+            })
+            break
+          case 16:
+            this.CHANGE_PROTOCOL_DATA({
+              OTCServices: targetData
             })
             break
         }
@@ -221,8 +241,9 @@ export default {
       userProtocolData: state => state.footerInfo.serviceProtocolData.userProtocolData,
       privacyClauseData: state => state.footerInfo.serviceProtocolData.privacyClauseData,
       rateData: state => state.footerInfo.serviceProtocolData.rateData,
-      APIDocumentData: state => state.footerInfo.serviceProtocolData.APIDocumentData,
-      tradingWarningData: state => state.footerInfo.serviceProtocolData.tradingWarningData
+      AML: state => state.footerInfo.serviceProtocolData.AML,
+      tradingWarningData: state => state.footerInfo.serviceProtocolData.tradingWarningData,
+      OTCServices: state => state.footerInfo.serviceProtocolData.OTCServices
     }),
     windowHeight () {
       return window.innerHeight

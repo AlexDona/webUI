@@ -120,10 +120,11 @@
             </dd>
             <dd
               class="dd-item"
-              @click="$footerJump('/ServiceAndProtocol','APIDocument')"
             >
               <!--API文档-->
-              {{$t('M.comm_api_doc')}}
+              <a href="https://github.com/bizuyun/API/wiki">
+                {{$t('M.comm_api_doc')}}
+              </a>
             </dd>
             <dd
               class="dd-item"
@@ -153,11 +154,18 @@
               <!--新闻公告-->
               {{$t('M.comm_news_and_notice')}}
             </dd>
+            <dd
+              class="dd-item"
+              @click="$footerJump('/ServiceAndProtocol','AML')"
+            >
+              <!--反洗钱-->
+              {{$t('M.comm_about')}}{{$t('M.about_digital_terms_hint7')}}
+            </dd>
           </dl>
           <dl class="right-dl">
             <dt class="title">
               <!--说明-->
-              {{$t('M.comm_description')}}
+              {{$t('M.comm_clause')}}
             </dt>
             <dd
               class="dd-item"
@@ -193,6 +201,13 @@
             >
               <!--交易须知-->
               {{$t('M.otc_index_tradeKnow')}}
+            </dd>
+            <dd
+              class="dd-item"
+              @click="$footerJump('/ServiceAndProtocol','OTCServices')"
+            >
+              <!--OTC 服务协议-->
+              {{$t('M.about_digital_terms_hint8')}}
             </dd>
           </dl>
         </div>

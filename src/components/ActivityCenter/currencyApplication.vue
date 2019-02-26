@@ -89,7 +89,7 @@ export default {
     },
     // 下载资产预览表
     downloadPreviewTable () {
-      let filename = 'Coin application form'
+      let filename = 'Token application form'
       downloadFileWithUserDefined(this.downloadUrl, filename)
     }
   },

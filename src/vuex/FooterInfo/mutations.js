@@ -25,7 +25,8 @@ export default {
     clauseExplainData,
     legislationExplainData,
     privacyClauseData,
-    APIDocumentData,
+    AML,
+    OTCServices,
     rateData,
     tradingWarningData
   }) {
@@ -33,7 +34,8 @@ export default {
     state.serviceProtocolData.clauseExplainData = clauseExplainData || {}
     state.serviceProtocolData.legislationExplainData = legislationExplainData || {}
     state.serviceProtocolData.privacyClauseData = privacyClauseData || {}
-    state.serviceProtocolData.APIDocumentData = APIDocumentData || {}
+    state.serviceProtocolData.APIDocumentData = AML || {}
+    state.serviceProtocolData.OTCServices = OTCServices || {}
     state.serviceProtocolData.rateData = rateData || {}
     state.serviceProtocolData.tradingWarningData = tradingWarningData || {}
   },

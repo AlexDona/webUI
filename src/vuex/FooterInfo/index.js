@@ -13,7 +13,9 @@ const state = {
     clauseExplainData: {}, // 条款说明
     legislationExplainData: {}, // 法律声明
     privacyClauseData: {}, // 隐私条款
-    APIDocumentData: {}, // API文档
+    AML: {}, // 反洗钱策略
+    // OTC 服务协议
+    OTCServices: {},
     rateData: {}, // 费率
     newsDetailJumpId: '', // 首页跳转公告id
     // 交易须知

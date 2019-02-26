@@ -11,6 +11,8 @@ export const footerInfo = {
   'about_digital_terms_hint4': '隱私條款',
   'about_digital_terms_hint5': 'API文檔',
   'about_digital_terms_hint6': '幣種資料',
+  'about_digital_terms_hint7': '反洗錢',
+  'about_digital_terms_hint8': 'OTC 服務協議',
   // ##########################20181117-1145新增国际化################################
   'about_footer_info_down1': '全平臺終端接入',
   'about_footer_info_down2': 'iOS、Android、Mac、Windows多個平臺支持全業務功能',
