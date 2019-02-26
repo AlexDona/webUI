@@ -858,9 +858,9 @@ export default {
         payPassword: this.passwords,
         number: this.$refs.investAmountRef.value
       })
+      this.isDisable = false
       if (!data) return false
       // 请求回来时将按钮解除禁用
-      this.isDisable = false
       // 重新调一次币种接口刷新列表
       this.getFinancialManagementList()
       // 存币成功
