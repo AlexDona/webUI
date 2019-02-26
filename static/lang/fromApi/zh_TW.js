@@ -353,7 +353,7 @@ export const fromApi = {
   'user-fail-google-code': '穀歌驗證碼錯誤',
   'user-fail-inviter-notexist': '推薦人不存在',
   'user-fail-login-disable': '帳戶被禁用',
-  'user-fail-login-lock': '帳號被鎖定',
+  'user-fail-login-lock': '賬號已被鎖定，請兩小時後重試',
   'user-fail-login-password': '用戶名或密碼錯誤,剩餘重試次數{}',
   'user-fail-mail-binded': '郵箱已被綁定',
   'user-fail-not-realname': '請先實名認證',

@@ -353,7 +353,7 @@ export const fromApi = {
   'user-fail-google-code': 'Google認証コードのエラー',
   'user-fail-inviter-notexist': '推薦者は存在しません',
   'user-fail-login-disable': 'アカウントは無効です',
-  'user-fail-login-lock': 'アカウントがロックされています',
+  'user-fail-login-lock': 'アカウントがロックされましたので、2時間かけてお試し下さい',
   'user-fail-login-password': 'ユーザー名またはパスワードに誤りがある場合、再試行回数{}',
   'user-fail-mail-binded': '郵便ポストは既に結び付けられた',
   'user-fail-not-realname': '最初の本名の証明をしてください',

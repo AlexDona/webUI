@@ -370,6 +370,9 @@ export default {
     }
   },
   watch: {
+    async language () {
+      await this.getServiceProtocolData()
+    },
     vipLevel (newVal) {
       console.log(newVal)
     },
