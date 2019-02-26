@@ -239,7 +239,6 @@ export const fromApi = {
   'otc_failure_0057': '没有该状态',
   'otc_failure_0058': '更改挂单记录数不正确',
   'otc_failure_0059': '冻结失败，摘单失败',
-  'otc_failure_0060': '摘单人没有挂单人要求支付方式，摘单失败',
   'otc_failure_0061': '卖家必须成交过{}次',
   'otc_failure_0062': '卖出数量不能小于等于0',
   'otc_failure_0063': '卖出数量不能大于该挂单当前剩余数量',
@@ -414,5 +413,16 @@ export const fromApi = {
   'market_failure_00102': '请求的交易板块暂无可用的交易区',
   'market_failure_00103': '请求的交易板块暂无更多可用的交易区',
   'market_failure_00104': '请求交易区下暂无可用的交易对',
-  'market_failure_00105': '请求交易区下暂无更多可用的交易对'
+  'market_failure_00105': '请求交易区下暂无更多可用的交易对',
+  'recharge_withdraw_failure_0042': '该币种已禁止提币,请咨询客服',
+  'recharge_withdraw_failure_0043': '该币种已超当天最大提币次数,请咨询客服',
+  'recharge_withdraw_failure_0044': '该币种已超当天最大提币数量,请咨询客服',
+  'recharge_withdraw_failure_0045': '提币数量小于最小提币量',
+  'recharge_withdraw_failure_0046': '提币数量大于最大提币量',
+  'user_asset_title17': '请先进行实名认证!',
+  'user_pay_password_not_setting': '请先设置交易密码后进行存币投资',
+  'user_pay_disable_state': '该账号交易密码错误已达{}次已被禁止交易,请过2个小时之后重试',
+  'financial_management_record_less_than_min_number': '添加的币数量小于设置的最小的数量',
+  'otc_failure_0060': '请在支付设置中绑定商家指定类型的收款账户！',
+  'otc_failure_0091': '普通用户不能进行otc挂单,请先申请为商家'
 }
