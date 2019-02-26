@@ -159,7 +159,7 @@
                   <!--总数量-->
                   <div class="table-td title-width">
                     <span v-if="assetItem.sum > 0">
-                      {{ $scientificToNumber(assetItem.sum - 0) }}
+                      {{ $scientificToNumber($keep8Num(assetItem.sum - 0)) }}
                     </span>
                     <span v-else>
                       0.00000000
@@ -168,7 +168,7 @@
                   <!--冻结数量-->
                   <div class="table-td title-width">
                     <span v-if="assetItem.frozen > 0">
-                      {{ $scientificToNumber(assetItem.frozen - 0) }}
+                      {{ $scientificToNumber($keep8Num(assetItem.frozen - 0)) }}
                     </span>
                     <span v-else>
                       0.00000000
@@ -177,7 +177,7 @@
                   <!--可用数量-->
                   <div class="table-td title-width-header">
                     <span v-if="assetItem.total > 0">
-                      {{ $scientificToNumber(assetItem.total - 0) }}
+                      {{ $scientificToNumber($keep8Num(assetItem.total - 0)) }}
                     </span>
                     <span v-else>
                       0.00000000
@@ -191,7 +191,7 @@
                       class="title-width-right"
                       v-if="assetItem.btcValue > 0"
                     >
-                      {{ $keep8Num($scientificToNumber(assetItem.btcValue)) }} ≈ {{ $keep2Num($scientificToNumber(assetItem.btcValue) * BTC2CNYRate) }} {{ activeConvertCurrencyObj.shortName }}
+                      {{ $scientificToNumber($keep8Num(assetItem.btcValue)) }} ≈ {{ $scientificToNumber($keep2Num(assetItem.btcValue) * BTC2CNYRate) }} {{ activeConvertCurrencyObj.shortName }}
                     </div>
                     <div
                       class="title-width-right"
@@ -556,7 +556,6 @@
         </button>
         </span>
       </el-dialog>
->>>>>>> release-20190226
     </div>
   </div>
 </template>

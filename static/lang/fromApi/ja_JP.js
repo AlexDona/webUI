@@ -422,7 +422,7 @@ export const fromApi = {
   'user_asset_title17': 'まずは実名認証をお願い!',
   'user_pay_password_not_setting': '取引パスワードを設定して、あらかじめ積立金投資を行ってください',
   'user_pay_disable_state': 'このアカウント取引のパスワードを{}回取引が禁止されたので、2时间后に再试験をしてください',
-  'financial_management_record_less_than_min_number': '追加される紙幣の数は、設定されている最小の数より小さい',
+  'financial_management_record_less_than_min_number': '追加される紙幣の数は、設定されている最小の数より小さい {}',
   'otc_failure_0060': '支払い設定におけるバインディング業者指定のタイプの入金口座を!',
   'otc_failure_0091': '貨幣IDが空になってはならない'
 }

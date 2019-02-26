@@ -422,7 +422,7 @@ export const fromApi = {
   'user_asset_title17': '请先进行实名认证!',
   'user_pay_password_not_setting': '请先设置交易密码后进行存币投资',
   'user_pay_disable_state': '该账号交易密码错误已达{}次已被禁止交易,请过2个小时之后重试',
-  'financial_management_record_less_than_min_number': '添加的币数量小于设置的最小的数量',
+  'financial_management_record_less_than_min_number': '添加的币数量小于设置的最小的数量 {}',
   'otc_failure_0060': '请在支付设置中绑定商家指定类型的收款账户！',
   'otc_failure_0091': '普通用户不能进行otc挂单,请先申请为商家'
 }
