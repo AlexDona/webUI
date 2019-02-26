@@ -366,7 +366,16 @@ export const keep2Num = number => {
   // console.log(number)
   return (number - 0).toFixed(2) - 0
 }
-
+/**
+ * 截取8位小数
+ * @param number
+ * @returns {*}
+ */
+export const keep8Num = number => {
+  // if (!number || isNaN(number)) return 0.00
+  // console.log(number)
+  return (number - 0).toFixed(8) - 0
+}
 /**
  * 修正精度
  * @param num1

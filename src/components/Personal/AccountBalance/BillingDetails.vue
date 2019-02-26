@@ -307,6 +307,7 @@
         background
         v-show="activeName === 'current-entrust' && chargeRecordList.length"
         layout="prev, pager, next"
+        :current-page="recordPageNumber"
         :page-count="recordTotalPageNumber"
         @current-change="changeCurrentPage('current-entrust',$event)"
       >
@@ -318,6 +319,7 @@
         background
         v-show="activeName === 'other-records' && otherRecordsList.length"
         layout="prev, pager, next"
+        :current-page="otherRecordPageNumbers"
         :page-count="totalPagesOtherRecords"
         @current-change="changeCurrentPage('other-records',$event)"
       >
@@ -440,6 +442,8 @@ export default {
     },
     // 搜索按钮
     stateSearchButton (entrustType) {
+      this.recordPageNumber = 1
+      this.otherRecordPageNumbers = 1
       this.partLoading = true
       this.getChargeMentionList(entrustType)
     },
@@ -481,19 +485,6 @@ export default {
           // 充提记录
           this.chargeRecordList = getNestedData(detailData, 'list') || []
           this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
-          // if (!data) {
-          //   // 接口失败清除局部loading
-          //   this.partLoading = false
-          //   return false
-          // } else {
-          //   // 接口成功清除局部loading
-          //   this.partLoading = false
-          //   // 返回冲提记录列表展示
-          //   let detailData = getNestedData(data, 'data')
-          //   // 充提记录
-          //   this.chargeRecordList = getNestedData(detailData, 'list') || []
-          //   this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
-          // }
           break
         case 'other-records':
           params.pageNum = this.otherRecordPageNumbers
@@ -509,16 +500,6 @@ export default {
           // 接口成功清除局部loading
           this.otherRecordsList = getNestedData(data1, 'data.list') || []
           this.totalPagesOtherRecords = getNestedData(data1, 'data.pages') - 0
-          // if (!data1) {
-          //   // 接口失败清除局部loading
-          //   this.partLoading = false
-          //   return false
-          // } else {
-          //   // 接口成功清除局部loading
-          //   this.partLoading = false
-          //   this.otherRecordsList = getNestedData(data1, 'data.data.list') || []
-          //   this.totalPagesOtherRecords = getNestedData(data1, 'data.data.pages') - 0
-          // }
           break
       }
     },

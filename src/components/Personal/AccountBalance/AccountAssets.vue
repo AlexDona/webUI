@@ -105,14 +105,14 @@
                     <i
                       class="el-icon-caret-bottom caret-text cursor-pointer"
                       :class="{active: blueStyleTotal == 1}"
-                      @click.prevent="assetsSorting1('up', 'total')"
+                      @click.prevent="assetsSorting('up', 'total')"
                     >
                     </i>
                     <!--降序-->
                     <i
                       class="el-icon-caret-top caret-text-order cursor-pointer"
                       :class="{active: blueStyleTotal == 2}"
-                      @click.prevent="assetsSorting1('down', 'total')"
+                      @click.prevent="assetsSorting('down', 'total')"
                     >
                     </i>
                   </div>
@@ -127,14 +127,14 @@
                     <i
                       class="el-icon-caret-bottom caret-text cursor-pointer"
                       :class="{active: blueStyleValue == 1}"
-                      @click.prevent="assetsSorting2('up', 'btcValue')"
+                      @click.prevent="assetsSorting('up', 'btcValue')"
                     >
                     </i>
                     <!--降序-->
                     <i
                       class="el-icon-caret-top caret-text-order cursor-pointer"
                       :class="{active: blueStyleValue == 2}"
-                      @click.prevent="assetsSorting2('down', 'btcValue')"
+                      @click.prevent="assetsSorting('down', 'btcValue')"
                     >
                     </i>
                   </div>
@@ -191,7 +191,7 @@
                       class="title-width-right"
                       v-if="assetItem.btcValue > 0"
                     >
-                      {{ keep8Num($scientificToNumber(assetItem.btcValue)) }} ≈ {{ $keep2Num($scientificToNumber(assetItem.btcValue) * BTC2CNYRate) }} {{ activeConvertCurrencyObj.shortName }}
+                      {{ $keep8Num($scientificToNumber(assetItem.btcValue)) }} ≈ {{ $keep2Num($scientificToNumber(assetItem.btcValue) * BTC2CNYRate) }} {{ activeConvertCurrencyObj.shortName }}
                     </div>
                     <div
                       class="title-width-right"
@@ -515,9 +515,9 @@ export default {
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
       openPictureSrc: require('../../../assets/user/yes.png'), // 全显示
       searchKeyWord: '', // 搜索关键字
-      blueStyleFrozen: 0, // 排序默认样式
-      blueStyleTotal: 0, // 排序默认样式
-      blueStyleValue: 0, // 排序默认样式
+      blueStyleFrozen: 0, // 排序冻结默认样式
+      blueStyleTotal: 0, // 排序可用默认样式
+      blueStyleValue: 0, // 排序估值默认样式
       BTC2CNYRate: '', // 转换汇率
       withdrawDepositList: [], // 我的资产全部币种列表
       chargeMoneyAddress: '', // 根据充币地址生成二维码条件
@@ -628,54 +628,40 @@ export default {
           this.blueStyleFrozen = 1
           this.blueStyleTotal = 0
           this.blueStyleTotal = 0
+          if (val == 'frozen') {
+            this.blueStyleFrozen = 1
+            this.blueStyleTotal = 0
+            this.blueStyleTotal = 0
+          } else if (val == 'total') {
+            this.blueStyleTotal = 1
+            this.blueStyleFrozen = 0
+            this.blueStyleValue = 0
+          } else {
+            this.blueStyleValue = 1
+            this.blueStyleTotal = 0
+            this.blueStyleFrozen = 0
+          }
           this.withdrawDepositList.sort((a, b) => b[val] - a[val])
           break
         case 'down':
-          this.blueStyleFrozen = 2
-          this.blueStyleTotal = 0
-          this.blueStyleTotal = 0
+          if (val == 'frozen') {
+            this.blueStyleFrozen = 2
+            this.blueStyleTotal = 0
+            this.blueStyleTotal = 0
+          } else if (val == 'total') {
+            this.blueStyleTotal = 2
+            this.blueStyleFrozen = 0
+            this.blueStyleValue = 0
+          } else {
+            this.blueStyleValue = 2
+            this.blueStyleTotal = 0
+            this.blueStyleFrozen = 0
+          }
           this.withdrawDepositList.sort((a, b) => a[val] - b[val])
           break
       }
     },
-    assetsSorting1 (type, val) {
-      // type 冻结(frozen) 可用(total) 资产估值(btcValue)
-      // val 升序(order) 降序(invertedOrder)
-      console.log(type, val)
-      switch (type) {
-        case 'up':
-          this.blueStyleTotal = 1
-          this.blueStyleFrozen = 0
-          this.blueStyleValue = 0
-          this.withdrawDepositList.sort((a, b) => b[val] - a[val])
-          break
-        case 'down':
-          this.blueStyleTotal = 2
-          this.blueStyleFrozen = 0
-          this.blueStyleValue = 0
-          this.withdrawDepositList.sort((a, b) => a[val] - b[val])
-          break
-      }
-    },
-    assetsSorting2 (type, val) {
-      // type 冻结(frozen) 可用(total) 资产估值(btcValue)
-      // val 升序(order) 降序(invertedOrder)
-      console.log(type, val)
-      switch (type) {
-        case 'up':
-          this.blueStyleValue = 1
-          this.blueStyleTotal = 0
-          this.blueStyleFrozen = 0
-          this.withdrawDepositList.sort((a, b) => b[val] - a[val])
-          break
-        case 'down':
-          this.blueStyleValue = 2
-          this.blueStyleTotal = 0
-          this.blueStyleFrozen = 0
-          this.withdrawDepositList.sort((a, b) => a[val] - b[val])
-          break
-      }
-    },
+
     // 跳转当前交易对
     changeActiveSymbol (e) {
       console.log(e)
