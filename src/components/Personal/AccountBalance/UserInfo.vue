@@ -162,15 +162,23 @@
             </span>
             <span
               class="info-color"
-              v-show="CNYAssets"
             >
               <!--或-->
                {{ $t('M.user_assets_or') }}
-              <span class="info-color font-size16">
-                {{ CNYAssets }}
+              <span
+                class="info-color font-size16"
+                v-if="this.totalSumBTC > 0"
+              >
+               {{ $keep2Num($scientificToNumber(this.totalSumBTC) * BTC2CNYRate) }}
+              </span>
+              <span
+                v-else
+                class="info-color font-size16"
+              >
+               0.00
               </span>
               <span class="info-color font-size12">
-                CNY
+                {{ activeConvertCurrencyObj.shortName }}
               </span>
             </span>
           </p>
@@ -210,8 +218,11 @@ export default {
     }
   },
   async created () {
-    await this.currencyTransform()
     await this.getAssetCurrenciesList()
+    if (this.currencyRateList.BTC) {
+      // 汇率转换
+      this.currencyTransform()
+    }
   },
   mounted () {},
   activated () {},
@@ -221,12 +232,12 @@ export default {
     async currencyTransform () {
       const params = {
         coinName: 'BTC',
-        shortName: 'CNY'
+        shortName: this.activeConvertCurrencyObj.shortName
       }
       const data = await currencyTransform(params)
-      console.log(2)
+      // console.log(2)
       if (!returnAjaxMsg(data, this)) {
-        console.log(3)
+        // console.log(3)
         return false
       } else {
         console.log(data)
@@ -273,14 +284,22 @@ export default {
       email: state => getNestedData(state, 'user.loginStep1Info.userInfo.email'),
       phoneEnable: state => getNestedData(state, 'user.loginStep1Info.userInfo.phoneEnable'),
       googleEnable: state => getNestedData(state, 'user.loginStep1Info.userInfo.googleEnable'),
-      level: state => getNestedData(state, 'user.loginStep1Info.userInfo.level')
-    }),
-    // CNY 资产
-    CNYAssets () {
-      return (this.BTC2CNYRate - 0) * (this.totalSumBTC - 0)
-    }
+      level: state => getNestedData(state, 'user.loginStep1Info.userInfo.level'),
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
+      currencyRateList: state => state.common.currencyRateList // 折算货币列表
+    })
   },
   watch: {
+    async activeConvertCurrencyObj () {
+      console.log(this.activeConvertCurrencyObj)
+      if (this.currencyRateList.BTC) {
+        // 汇率转换
+        await this.currencyTransform()
+      }
+    },
+    currencyRateList () {
+      console.log(this.currencyRateList)
+    },
     totalSumBTC () {
     },
     // 任改动
