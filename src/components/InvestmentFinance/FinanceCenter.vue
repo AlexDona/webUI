@@ -125,6 +125,8 @@
                   </el-button>
                 </div>
               </label>
+              <!--存币说明-->
+              <div class="investExplain">阅读<span class="blue" @click="investExplain">《存币说明》</span></div>
               <!-- 存币详情 -->
               <el-dialog
                 :title="$t('M.finance_save_moneydetail')"
@@ -263,6 +265,14 @@
                 <span slot="footer" class="dialog-footer">
                   <el-button type="primary" @click="submitPassword"  :disabled="isDisable">确 定</el-button>
                 </span>
+              </el-dialog>
+              <el-dialog
+                :title="$t('M.finance_invest') + $t('M.comm_description')"
+                :visible.sync="isShowInvestExplain"
+                width="50%"
+                class="explainBox"
+              >
+                <div v-html="argumentContent" class="plainText"></div>
               </el-dialog>
             </div>
           </div>
@@ -546,6 +556,7 @@ import {
   getFinancialRecord
 } from '../../utils/api/investmentFinance'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
+import {argumentBusinessApply} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {
   mapState,
@@ -655,7 +666,11 @@ export default {
       // 交易密码
       passwords: '',
       // 是否显示交易密码为空的提示
-      isShowErrorTips: false
+      isShowErrorTips: false,
+      // 是否显示存币说明框
+      isShowInvestExplain: false,
+      // 存币说明富文本
+      argumentContent: ''
     }
   },
   created () {
@@ -685,6 +700,23 @@ export default {
     },
     timeFormatting (data) {
       return timeFilter(data, 'data')
+    },
+    // 点击存币说明弹出存币说明弹窗
+    investExplain () {
+      this.argumentBusinessApplyRequest()
+      this.isShowInvestExplain = true
+    },
+    // 商家申请界面用户协议
+    async argumentBusinessApplyRequest () {
+      const data = await argumentBusinessApply({
+        termsTypeIds: 13,
+        language: this.language
+      })
+      // 正确逻辑
+      if (!data) return false
+      if (data.data) {
+        this.argumentContent = getNestedData(data, 'data[0].content')
+      }
     },
     // 判断是否出现错误提示
     deleteErrorTips () {
@@ -772,10 +804,15 @@ export default {
     // 点击确定按钮模态框关闭
     dialogSuer () {
       this.dialogVisible = false
+      // 判断输入密码框是否显示
       if (this.isShowPasswordDialog) {
         return false
       } else {
+        // 设置交易密码弹窗为显示
         this.isShowPasswordDialog = true
+        // 让交易密码为空的提示隐藏
+        this.isShowErrorTips = false
+        // 输入密码input框清空
         this.passwords = ''
       }
     },
@@ -805,7 +842,6 @@ export default {
     async clickGetInvestEarnings () {
       const data = await getFinancialRecord({
         financialManagementId: this.selectedInvestTypeId,
-        // number: this.investAmount
         number: this.$refs.investAmountRef.value
       })
       if (!data) return false
@@ -1116,7 +1152,7 @@ export default {
 
               > label {
                 display: flex;
-                margin: 44px 0;
+                margin: 32px 0;
                 line-height: 50px;
 
                 > .label-title {
@@ -1151,6 +1187,15 @@ export default {
                     color: #fff;
                     background: -webkit-linear-gradient(45deg, #2b396e, #2a5082);
                   }
+                }
+              }
+
+              .investExplain {
+                line-height: 0;
+                text-align: right;
+
+                span:hover {
+                  cursor: pointer;
                 }
               }
             }
@@ -1192,7 +1237,7 @@ export default {
         }
 
         > .invest-list {
-          margin-bottom: 200px;
+          margin: 96px 0 200px;
 
           > .invest-list-body {
             position: relative;
@@ -1451,6 +1496,21 @@ export default {
         .el-dialog__body {
           height: 380px;
           overflow: auto;
+        }
+      }
+
+      .explainBox {
+        .el-dialog {
+          > .el-dialog__body {
+            height: 700px;
+            padding: 0;
+            overflow: scroll;
+
+            .plainText {
+              padding: 30px 20px;
+              color: #8ba0ca;
+            }
+          }
         }
       }
 
@@ -1791,7 +1851,7 @@ export default {
     }
 
     .totalTipsPositon {
-      margin: -36px 0 -20px 110px;
+      margin: -20px 0 -20px 115px;
       color: #d45858;
     }
   }
