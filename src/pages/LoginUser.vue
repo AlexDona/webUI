@@ -1035,6 +1035,7 @@ export default {
         }
 
         if (!this.isBindGoogle && this.isBindPhone && !this.step3PhoneMsgCode) {
+          console.log(1)
           this.$message({
             type: 'error',
             message: this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code') // '请输入手机验证码'
@@ -1042,7 +1043,7 @@ export default {
           return false
         }
 
-        if (!this.isBindPhone && this.isBindEmail && !this.step3EmailMsgCode) {
+        if (!this.isBindGoogle && !this.isBindPhone && this.isBindEmail && !this.step3EmailMsgCode) {
           this.$message({
             type: 'error',
             message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
