@@ -100,6 +100,17 @@
                 />
               </div>
             </el-tab-pane>
+            <!-- OTC 商家认证协议 -->
+            <el-tab-pane
+              :label="$t('M.otc_merchant_authentication')"
+              name="OTCMerchant"
+            >
+              <div class="tab-content">
+                <Content
+                  :content="OTCMerchant.content"
+                />
+              </div>
+            </el-tab-pane>
           </el-tabs>
         </div>
       </div>
@@ -154,20 +165,24 @@ export default {
         case 'UserProtocol':
           this.termsTypeIds = 1
           break
-        case 'ClauseExplain':
-          this.termsTypeIds = 8
+        case 'PrivacyClause':
+          this.termsTypeIds = 2
           break
         case 'LegislationExplain':
           this.termsTypeIds = 3
-          break
-        case 'PrivacyClause':
-          this.termsTypeIds = 2
           break
         case 'AML':
           this.termsTypeIds = 4
           break
         case 'Rate':
           this.termsTypeIds = 5
+          break
+        case 'ClauseExplain':
+          this.termsTypeIds = 8
+          break
+        // OTC 认证商家协议
+        case 'OTCMerchant':
+          this.termsTypeIds = 9
           break
         // 交易须知
         case 'TradingWarning':
@@ -215,6 +230,11 @@ export default {
               clauseExplainData: targetData
             })
             break
+          case 9:
+            this.CHANGE_PROTOCOL_DATA({
+              OTCMerchant: targetData
+            })
+            break
           case 14:
             this.CHANGE_PROTOCOL_DATA({
               tradingWarningData: targetData
@@ -243,7 +263,8 @@ export default {
       rateData: state => state.footerInfo.serviceProtocolData.rateData,
       AML: state => state.footerInfo.serviceProtocolData.AML,
       tradingWarningData: state => state.footerInfo.serviceProtocolData.tradingWarningData,
-      OTCServices: state => state.footerInfo.serviceProtocolData.OTCServices
+      OTCServices: state => state.footerInfo.serviceProtocolData.OTCServices,
+      OTCMerchant: state => state.footerInfo.serviceProtocolData.OTCMerchant
     }),
     windowHeight () {
       return window.innerHeight

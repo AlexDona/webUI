@@ -16,6 +16,7 @@ const state = {
     AML: {}, // 反洗钱策略
     // OTC 服务协议
     OTCServices: {},
+    OTCMerchant: {},
     rateData: {}, // 费率
     newsDetailJumpId: '', // 首页跳转公告id
     // 交易须知

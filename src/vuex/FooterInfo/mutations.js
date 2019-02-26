@@ -26,6 +26,7 @@ export default {
     legislationExplainData,
     privacyClauseData,
     AML,
+    OTCMerchant,
     OTCServices,
     rateData,
     tradingWarningData
@@ -38,6 +39,7 @@ export default {
     state.serviceProtocolData.OTCServices = OTCServices || {}
     state.serviceProtocolData.rateData = rateData || {}
     state.serviceProtocolData.tradingWarningData = tradingWarningData || {}
+    state.serviceProtocolData.OTCMerchant = OTCMerchant || {}
   },
   [CHANGE_NEWS_DETAIL_JUMP_ID] (state, data) {
     state.newsDetailJumpId = data

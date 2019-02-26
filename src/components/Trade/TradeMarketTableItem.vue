@@ -125,7 +125,7 @@
               <span
                 class="currency-chn-name"
                 v-show="language === 'zh_CN'"
-              >{{innerItem.sellname}}</span>
+              >{{innerItem.sellname.replace('+', ' ')}}</span>
               <span
                 class="area"
                 v-show="language !== 'zh_CN'"
