@@ -180,7 +180,7 @@ export const OTC = {
   'otc_merchant_step3': '步骤三：提交申请',
   'otc_merchant_step4': '步骤四：资料审核',
   'otc_merchant_applyMaterial': '商家申请资料模板',
-  'otc_merchant_authentication': 'OTC商家认证协议',
+  'otc_merchant_authentication': 'OTC认证商家协议',
   'otc_merchant_content_one': '按要求填写申请资料',
   'otc_merchant_pleaseDowload': '1.请下载',
   'otc_merchant_videoKode': '2.录制视频资料，要求如下',

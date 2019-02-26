@@ -97,7 +97,9 @@ export default {
       loadingCount: 0, // loading 次数
       KlineNum: 0, // 拖拽k线档数
       isAllowDrag: true, // 是否允许拖拽
-      defaultButton: null // 默认buttonDom
+      defaultButton: null, // 默认buttonDom
+      // 当前交易
+      currentInterval: ''
     }
   },
   beforeCreate () {
@@ -209,7 +211,8 @@ export default {
       _.forEach(objList, objItem => {
         resultStr += unzip(objItem)
       })
-
+      console.log(resultStr)
+      if (!resultStr) return false
       let activeSymbolData = JSON.parse(resultStr)
       let {
         defaultTrade, // 默认交易对
@@ -251,7 +254,7 @@ export default {
       this.options.areaId = this.activeTabId
       this.options.paneProperties.background = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
       this.options.paneProperties.vertGridPropertiesColor = this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
-      this.options.interval = '1'
+      this.options.interval = '15'
       this.options.language = this.language
       this.init(this.options)
       this.getBars()
@@ -339,7 +342,7 @@ export default {
                 align: 'left'
               })
               item.resolution === _self.widget._options.interval && _self.updateSelectedIntervalButton(button)
-              const selected = index == 1 ? ' selected' : ''
+              const selected = index == 3 ? ' selected' : ''
               button.attr('class', 'button ' + item.class + selected + ' add' + index)
                 .attr('data-chart-type', item.chartType === undefined ? 1 : item.chartType)
                 .on('click', function (e) {
@@ -352,6 +355,12 @@ export default {
                     chart.setChartType(chartType)
                   }
                   _self.updateSelectedIntervalButton(button)
+                  console.log(chart.resolution(), item.resolution)
+                  if (_self.currentInterval == item.resolution) {
+                    console.log(item.resolution)
+                    _self.intervalLoading = false
+                  }
+                  _self.currentInterval = item.resolution
                 })
                 .append(item.label)
             })
@@ -583,7 +592,7 @@ export default {
       }
     },
     // 订阅消息
-    subscribeSocketData (symbol, interval = 'min') {
+    subscribeSocketData (symbol, interval = 'min15') {
       console.log(symbol)
       this.getKlineByAjax(symbol, interval, this.KlineNum)
       this.getKlineDataBySocket('SUB', symbol, interval)

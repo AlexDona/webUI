@@ -461,16 +461,18 @@ export default {
           console.log(tradeName, newData, this.areasIndexMap, this.symbolsIndexMap)
 
           let areaIndex = this.areasIndexMap.get(buyCoinName)
-          console.log(this.symbolsIndexMap, areaIndex)
-          if (!areaIndex || !this.symbolsIndexMap.get(areaIndex)) return false
+          console.log(this.symbolsIndexMap, areaIndex, this.symbolsIndexMap.get(areaIndex))
+          if (String(areaIndex) == 'undefined' || !this.symbolsIndexMap.get(areaIndex)) return false
           let symbolIndex = this.symbolsIndexMap.get(areaIndex).get(tradeName)
-          const newSymbol = {...this.areas[areaIndex].content[symbolIndex], ...newData}
-          this.$set(this.areas[areaIndex].content, symbolIndex, newSymbol)
+          console.log(this.areas, this.areas[areaIndex], areaIndex)
+          if (!this.areas[areaIndex]) return false
+          const newSymbol = {...this.areas[areaIndex]['content'][symbolIndex], ...newData}
+          this.$set(this.areas[areaIndex]['content'], symbolIndex, newSymbol)
           this.CHANGE_SYMBOL_MAP({
             key: newData.id,
             val: newData
           })
-          console.log(tradeName, this.areas[areaIndex].content[symbolIndex])
+          console.log(tradeName, this.areas[areaIndex]['content'][symbolIndex])
           this.setCollectionAndSearchContent(this.searchArea.content, newData)
           this.setCollectionAndSearchContent(this.collectArea.content, newData)
         }

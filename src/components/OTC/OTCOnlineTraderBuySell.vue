@@ -567,19 +567,19 @@ export default {
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
           // 修复截取小数点后几位
           this.serviceCharge = cutOutPointLength(this.serviceCharge, this.pointLength)
-          if (this.$refs.buyCount.value * this.price < this.minCount) {
+          if (this.$refs.buyCount.value * this.price - this.minCount < 0) {
             // 单笔最小限额为
             this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
             return false
-          } else if (this.$refs.buyCount.value * this.price > this.maxCount) {
+          } else if (this.$refs.buyCount.value * this.price - this.maxCount > 0) {
             // 单笔最大限额为
             this.moneyTips = this.$t('M.otc_publishAD_maxlimitMoney') + this.$t('M.otc_index_wei') + this.maxCount
             // 最大剩余数量为
             this.numberTips = this.$t('M.otc_index_maxRemain') + this.$t('M.otc_index_wei') + this.remainingNum
             this.errorWarningBorder = true
             return false
-          } else if (this.$refs.buyCount.value > this.remainingNum) {
+          } else if (this.$refs.buyCount.value - this.remainingNum > 0) {
             // 单笔最大限额为
             this.moneyTips = this.$t('M.otc_publishAD_maxlimitMoney') + this.$t('M.otc_index_wei') + this.maxCount
             this.numberTips = this.$t('M.otc_index_maxRemain') + this.$t('M.otc_index_wei') + this.remainingNum
@@ -605,16 +605,16 @@ export default {
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
           // 修复截取小数点后几位
           this.serviceCharge = cutOutPointLength(this.serviceCharge, this.pointLength)
-          if (this.$refs.sellCount.value * this.price < this.minCount) {
+          if (this.$refs.sellCount.value * this.price - this.minCount < 0) {
             this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
             return false
-          } else if (this.$refs.sellCount.value * this.price > this.maxCount) {
+          } else if (this.$refs.sellCount.value * this.price - this.maxCount > 0) {
             this.moneyTips = this.$t('M.otc_publishAD_maxlimitMoney') + this.$t('M.otc_index_wei') + this.maxCount
             this.numberTips = this.$t('M.otc_index_maxRemain') + this.$t('M.otc_index_wei') + this.remainingNum
             this.errorWarningBorder = true
             return false
-          } else if (this.$refs.sellCount.value > this.remainingNum) {
+          } else if (this.$refs.sellCount.value - this.remainingNum > 0) {
             this.moneyTips = this.$t('M.otc_publishAD_maxlimitMoney') + this.$t('M.otc_index_wei') + this.maxCount
             this.numberTips = this.$t('M.otc_index_maxRemain') + this.$t('M.otc_index_wei') + this.remainingNum
             this.errorWarningBorder = true
@@ -647,11 +647,11 @@ export default {
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
           // 修复截取小数点后几位
           this.serviceCharge = cutOutPointLength(this.serviceCharge, this.pointLength)
-          if (this.$refs.buyPrice.value < this.minCount) {
+          if (this.$refs.buyPrice.value - this.minCount < 0) {
             this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
             return false
-          } else if (this.$refs.buyPrice.value > this.maxCount) {
+          } else if (this.$refs.buyPrice.value - this.maxCount > 0) {
             this.moneyTips = this.$t('M.otc_publishAD_maxlimitMoney') + this.$t('M.otc_index_wei') + this.maxCount
             this.numberTips = this.$t('M.otc_index_maxRemain') + this.$t('M.otc_index_wei') + this.remainingNum
             this.errorWarningBorder = true
@@ -675,11 +675,11 @@ export default {
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
           // 修复截取小数点后几位
           this.serviceCharge = cutOutPointLength(this.serviceCharge, this.pointLength)
-          if (this.$refs.sellPrice.value < this.minCount) {
+          if (this.$refs.sellPrice.value - this.minCount < 0) {
             this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
             return false
-          } else if (this.$refs.sellPrice.value > this.maxCount) {
+          } else if (this.$refs.sellPrice.value - this.maxCount > 0) {
             this.moneyTips = this.$t('M.otc_publishAD_maxlimitMoney') + this.$t('M.otc_index_wei') + this.maxCount
             this.numberTips = this.$t('M.otc_index_maxRemain') + this.$t('M.otc_index_wei') + this.remainingNum
             this.errorWarningBorder = true

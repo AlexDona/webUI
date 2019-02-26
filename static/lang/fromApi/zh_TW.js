@@ -239,7 +239,6 @@ export const fromApi = {
   'otc_failure_0057': '沒有該狀態',
   'otc_failure_0058': '更改掛單記錄數不正確',
   'otc_failure_0059': '凍結失敗，摘單失敗',
-  'otc_failure_0060': '摘單人沒有掛單人要求支付方式，摘單失敗',
   'otc_failure_0061': '賣家必須成交過{}次',
   'otc_failure_0062': '賣出數量不能小於等於0',
   'otc_failure_0063': '賣出數量不能大於該掛單當前剩餘數量',
@@ -414,5 +413,17 @@ export const fromApi = {
   'market_failure_00102': '請求的交易板塊暫無可用的交易區',
   'market_failure_00103': '請求的交易板塊暫無更多可用的交易區',
   'market_failure_00104': '請求交易區下暫無可用的交易對',
-  'market_failure_00105': '請求交易區下暫無更多可用的交易對'
+  'market_failure_00105': '請求交易區下暫無更多可用的交易對',
+
+  'recharge_withdraw_failure_0042': '該幣種已禁止提幣,請諮詢客服',
+  'recharge_withdraw_failure_0043': '該幣種已超當天最大提幣次數,請諮詢客服',
+  'recharge_withdraw_failure_0044': '該幣種已超當天最大提幣數量,請諮詢客服',
+  'recharge_withdraw_failure_0045': '提幣數量小於最小提幣量',
+  'recharge_withdraw_failure_0046': '提幣數量大於最大提幣量',
+  'user_asset_title17': '請先進行實名認證!',
+  'user_pay_password_not_setting': '請先設置交易密碼後進行存幣投資',
+  'user_pay_disable_state': '該帳號交易密碼錯誤已達{}次已被禁止交易,請過3個小時之後重試',
+  'financial_management_record_less_than_min_number': '添加的幣數量小於設置的最小的數量',
+  'otc_failure_0060': '請在支付設置中綁定商家指定類型的收款帳戶！',
+  'otc_failure_0091': '普通用戶不能進行otc掛單,請先申請為商家'
 }

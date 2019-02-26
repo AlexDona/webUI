@@ -25,7 +25,9 @@
         <div
           class="inner-box"
         >
-          <h1>
+          <h1
+            v-show="currencyInfo.shortName"
+          >
             {{currencyInfo.name}} （{{currencyInfo.shortName}}）
           </h1>
           <div

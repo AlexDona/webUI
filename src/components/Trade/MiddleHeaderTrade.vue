@@ -17,7 +17,7 @@
           <span>{{middleTopData.area}}</span>
         </div>
         <div class="bottom font-size12">
-          <span>{{middleTopData.sellname}}</span>
+          <span>{{(middleTopData.sellname||' ').replace('+',' ')}}</span>
         </div>
       </div>
       <!--最新价-->

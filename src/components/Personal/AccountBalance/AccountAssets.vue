@@ -463,6 +463,101 @@
         </div>
       </div>
     </div>
+    <!--未实名认证前弹框提示-->
+    <div class="warning">
+      <el-dialog
+        :visible.sync="notVerifyDialogVisible"
+        center
+      >
+        <div class="dialog-warning">
+          <div class="dialog-warning-box">
+            <IconFontCommon
+              class="font-size60"
+              iconName="icon-gantanhao"
+            />
+          </div>
+        </div>
+        <p class="font-size12 warning-text margin-top35 text-align-c">
+          <!--请先完成实名认证，再进行提币操作！-->
+          <span v-show="!(this.realNameAuth === 'y')">
+            {{ $t('M.user_asset_title15') }}
+          </span>
+          <!--请先完成高级认证，再进行提币操作！-->
+          <span v-show="this.realNameAuth === 'y' && !(this.advancedAuth === 'pass')">
+            {{ $t('M.user_asset_title16') }}
+          </span>
+        </p>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <!--确 定 取 消-->
+        <button
+          class="button-color border-radius4 cursor-pointer"
+          type="primary"
+          @click="realNameAuthConfirm"
+        >
+          <!--确 定-->
+          {{ $t('M.comm_confirm') }}
+        </button>
+        <button
+          class="btn border-radius4 cursor-pointer"
+          @click.prevent="notVerifyDialogVisible = false"
+        >
+          <!--取 消-->
+          {{ $t('M.comm_cancel') }}
+        </button>
+        </span>
+      </el-dialog>
+    </div>
+    <!--未实名认证前弹框提示-->
+    <div class="warning">
+      <el-dialog
+        :visible.sync="notVerifyDialogVisible"
+        center
+      >
+        <div class="dialog-warning">
+          <div class="dialog-warning-box">
+            <IconFontCommon
+              class="font-size60"
+              iconName="icon-gantanhao"
+            />
+          </div>
+        </div>
+        <p class="font-size12 warning-text margin-top35 text-align-c">
+          <!--请先完成实名认证，再进行提币操作！-->
+          <span v-show="!(this.realNameAuth === 'y')">
+            {{ $t('M.user_asset_title15') }}
+          </span>
+          <!--请先完成高级认证，再进行提币操作！-->
+          <span v-show="this.realNameAuth === 'y' && !(this.advancedAuth === 'pass')">
+            {{ $t('M.user_asset_title16') }}
+          </span>
+        </p>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <!--确 定 取 消-->
+        <button
+          class="button-color border-radius4 cursor-pointer"
+          type="primary"
+          @click="realNameAuthConfirm"
+        >
+          <!--确 定-->
+          {{ $t('M.comm_confirm') }}
+        </button>
+        <button
+          class="btn border-radius4 cursor-pointer"
+          @click.prevent="notVerifyDialogVisible = false"
+        >
+          <!--取 消-->
+          {{ $t('M.comm_cancel') }}
+        </button>
+        </span>
+      </el-dialog>
+>>>>>>> release-20190226
+    </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -509,6 +604,7 @@ export default {
   // props,
   data () {
     return {
+      notVerifyDialogVisible: false, // 实名/高级认证弹窗显示与隐藏
       labelPosition: 'top', // form表单label方向
       errorMessage: '', // 提币验证错误提示
       isShowAllCurrency: true, // 隐藏币种// 显示所有/余额切换，
@@ -833,8 +929,22 @@ export default {
       // 地址标签备注
       this.withdrawRemark = ''
     },
+    // 实名认证验证
+    realNameAuthConfirm () {
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
+      this.$goToPage('/PersonalCenter')
+      this.notVerifyDialogVisible = false
+    },
     // 点击提现按钮显示提币内容（带回币种id 币种名称 当前index）
     async changeWithdrawBoxByCoin (id, name, index) {
+      if (!(this.realNameAuth === 'y')) {
+        this.notVerifyDialogVisible = true
+        return false
+      }
+      if (!(this.advancedAuth === 'pass')) {
+        this.notVerifyDialogVisible = true
+        return false
+      }
       console.log(this.userInfo)
       console.log(this.coinStatus)
       if (this.coinStatus == 'disable') {
@@ -1215,6 +1325,10 @@ export default {
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // 是否允许提币
       coinStatus: state => state.user.loginStep1Info.userInfo.coinStatus,
+      // 是否通过高级认证
+      advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
+      // 实名认证
+      realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth'),
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
     }),
@@ -1645,7 +1759,58 @@ export default {
       }
     }
 
+    > .warning {
+      .dialog-warning {
+        width: 90px;
+        height: 90px;
+        padding-top: 6px;
+        margin: 0 auto;
+        border-radius: 50%;
+        background: rgba(42, 122, 211, .2);
+
+        .dialog-warning-box {
+          width: 78px;
+          height: 78px;
+          margin: 0 auto;
+          border-radius: 50%;
+          line-height: 75px;
+          text-align: center;
+          background: linear-gradient(90deg, #2b396e, #2a5082);
+        }
+      }
+
+      .warning-text {
+        color: #fff;
+      }
+
+      .button-color {
+        width: 80px;
+        height: 35px;
+        margin-right: 15px;
+        border: 0;
+        line-height: 0;
+      }
+
+      .btn {
+        width: 80px;
+        height: 35px;
+        line-height: 0;
+      }
+    }
+
     /deep/ {
+      .warning {
+        .el-dialog {
+          width: 350px;
+          border-radius: 5px;
+        }
+
+        .el-dialog__footer {
+          margin-top: 20px;
+          text-align: center;
+        }
+      }
+
       /* tabs组件出现蓝色边框问题 */
       .el-tabs__active-bar {
         height: 0 !important;
@@ -1743,6 +1908,17 @@ export default {
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
+
+      .button-color {
+        color: rgba(255, 255, 255, .7);
+        background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+      }
+
+      .btn {
+        border: 1px solid #338ff5;
+        color: #fff;
+        background-color: transparent;
+      }
 
       .account-assets-box {
         background-color: $nightMainBgColor;
@@ -2000,6 +2176,21 @@ export default {
     &.day {
       color: $dayFontColor;
       background-color: $dayBgColor;
+
+      .warning-text {
+        color: #333;
+      }
+
+      .button-color {
+        color: rgba(255, 255, 255, .7);
+        background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+      }
+
+      .btn {
+        border: 1px solid #338ff5;
+        color: #333;
+        background-color: transparent;
+      }
 
       .account-assets-box {
         border: 1px solid rgba(38, 47, 56, .1);

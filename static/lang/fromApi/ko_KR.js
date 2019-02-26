@@ -239,7 +239,6 @@ export const fromApi = {
   'otc_failure_0057': '해당 상태 없음',
   'otc_failure_0058': '주문 변경 레코드 수 올바르지 않습니다.',
   'otc_failure_0059': '동결 실패, 주문 실패',
-  'otc_failure_0060': '요구한 지불방식이 없어, 주문 실패.',
   'otc_failure_0061': '상가는 반드시 {} 번을 거래완료해야 한다',
   'otc_failure_0062': '매도 수량은 0보다 커야 합니다.',
   'otc_failure_0063': '매도 수량은 현재 잔여 수량을 초과할 수 없다.',
@@ -414,5 +413,16 @@ export const fromApi = {
   'market_failure_00102': '요청한 거래 색션 사용 가능한 거래 시장 없음',
   'market_failure_00103': '요청한 거래 색션 사용 더 이상 가능한 거래 시장 없음',
   'market_failure_00104': '요청한 거래 시장에 사용 가능한 거래 페어 없음',
-  'market_failure_00105': '요청한 거래 시장에 더 이상 사용 가능한 거래 페어 없음'
+  'market_failure_00105': '요청한 거래 시장에 더 이상 사용 가능한 거래 페어 없음',
+  'recharge_withdraw_failure_0042': '해당 화폐는 인출이 금지되어 있으니 고객님들께 문의하세요',
+  'recharge_withdraw_failure_0043': '이 화폐는 이미 당일 최대 인출건수를 초과했습니다. 고객님들 문의 주세요',
+  'recharge_withdraw_failure_0044': '해당 화폐는 이미 당일 최대 인출량을 초과했습니다. 고객님들 문의하세요',
+  'recharge_withdraw_failure_0045': '화페인출량이 최소인출량보다 적다',
+  'recharge_withdraw_failure_0046': '화페인상의 수량이 최대인상의 화페인상의 량보다 많다',
+  'user_asset_title17': '실명 인증부터 해주세요!',
+  'user_pay_password_not_setting': '먼저 거래 비밀 번호를 설치한 후에 돈을 예금하고 투자하세요',
+  'user_pay_disable_state': '이 계정 거래 비밀번호 오류 {}에 의해 거래가 금지되었습니다. 2시간 후에 다시 시도하십시오',
+  'financial_management_record_less_than_min_number': '추가된 화폐의 수량이 설정한 최소량보다 작다',
+  'otc_failure_0060': '상품 지정 타입에 바인딩을 해 주는 상품 계정을 설정해 주십시오!',
+  'otc_failure_0091': '보통사용자는 otc 주문서를 접수할수 없습니다. 우선 상가로 신청하십시오'
 }
