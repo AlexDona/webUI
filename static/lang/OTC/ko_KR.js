@@ -180,7 +180,7 @@ export const OTC = {
   'otc_merchant_step3': '3 단계 : 신청 제출',
   'otc_merchant_step4': '4 단계 : 자료 검토',
   'otc_merchant_applyMaterial': '상가 신청 자료 템플릿',
-  'otc_merchant_authentication': '인증 상가 협의',
+  'otc_merchant_authentication': 'OTC 상가 인정 프로토콜',
   'otc_merchant_content_one': '필요에 따라 애플리케이션 정보를 입력하십시오.',
   'otc_merchant_pleaseDowload': '1. 다운 로드',
   'otc_merchant_videoKode': '2. 비디오 자료를 기록하십시오,요구는 하기와 같이',

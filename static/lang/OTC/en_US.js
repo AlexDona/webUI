@@ -189,7 +189,7 @@ export const OTC = {
   'otc_merchant_step3': 'Step 3: Submit your application',
   'otc_merchant_step4': 'Step 4: Data review',
   'otc_merchant_applyMaterial': 'Merchant application information template',
-  'otc_merchant_authentication': 'Certified Merchant Agreement',
+  'otc_merchant_authentication': 'OTC Merchant Agreement',
   'otc_merchant_content_one': 'Fill in the application materials as required',
   'otc_merchant_pleaseDowload': '1. Please download',
   'otc_merchant_videoKode': '2. Record video material, the requirements are as follows',

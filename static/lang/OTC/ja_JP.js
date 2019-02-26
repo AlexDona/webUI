@@ -180,7 +180,7 @@ export const OTC = {
   'otc_merchant_step3': 'ステップ3：申請書を提出する',
   'otc_merchant_step4': 'ステップ4：データレビュー',
   'otc_merchant_applyMaterial': '商家申請データテンプレート',
-  'otc_merchant_authentication': '認証商家契約',
+  'otc_merchant_authentication': 'OTC商家契約',
   'otc_merchant_content_one': '要求に応じて申請データを記入してください',
   'otc_merchant_pleaseDowload': '1.ダウンロード',
   'otc_merchant_videoKode': '2.記録ビデオ素材、要件は以下のとおりです：',
