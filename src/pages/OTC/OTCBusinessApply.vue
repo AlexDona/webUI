@@ -122,16 +122,16 @@
               {{$t('M.otc_merchant_step4')}}
             </h4>
             <p>{{$t('M.otc_merchant_datailSeven')}}</p>
-            <h4 class="title tips">
-              {{$t('M.otc_merchant_loveTips')}}
-              <el-button
-                type="text"
-                @click="businessArgument"
-                class="agree font-size14"
-              >
-                《{{$t('M.otc_merchant_authentication')}}》
-              </el-button>
-            </h4>
+            <!--<h4 class="title tips">-->
+              <!--{{$t('M.otc_merchant_loveTips')}}-->
+              <!--<el-button-->
+                <!--type="text"-->
+                <!--@click="businessArgument"-->
+                <!--class="agree font-size14"-->
+              <!--&gt;-->
+                <!--《{{$t('M.otc_merchant_authentication')}}》-->
+              <!--</el-button>-->
+            <!--</h4>-->
           </div>
         </div>
         <!-- 2.2.4 同意协议部分 -->
