@@ -422,7 +422,7 @@ export const fromApi = {
   'user_asset_title17': 'Please verify your real name first!',
   'user_pay_password_not_setting': 'Please set the transaction password before the deposit investment',
   'user_pay_disable_state': 'The transaction password of this account has been wrong {}. The transaction has been banned. Please try again after 2 hours',
-  'financial_management_record_less_than_min_number': 'The number of COINS added is less than the minimum number set',
+  'financial_management_record_less_than_min_number': 'The number of COINS added is less than the minimum number set {}',
   'otc_failure_0060': 'Please bind the merchant specified type of receiving account in the payment setting!',
   'otc_failure_0091': 'ordinary users cannot make otc pending orders, please apply for merchants first'
 }
