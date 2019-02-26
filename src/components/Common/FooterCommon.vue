@@ -112,11 +112,12 @@
             </dd>
             <dd
               class="dd-item"
+              @click="downloadCurrencyForm"
             >
-              <router-link to="/HelpCenter">
-                <!--帮助中心-->
-                {{$t('M.comm_help_center')}}
-              </router-link>
+              <!--<router-link to="/HelpCenter">-->
+                <!--上币申请-->
+                {{$t('M.actionCenter_coin_apply')}}
+              <!--</router-link>-->
             </dd>
             <dd
               class="dd-item"
@@ -136,15 +137,15 @@
           </dl>
           <dl class="right-dl">
             <dt class="title">
-              <!--关于-->
-              {{$t('M.comm_about')}}
+              <!--关于我们-->
+              {{$t('M.comm_us')}}
             </dt>
             <dd
               class="dd-item"
             >
               <router-link to="/AboutUs">
-                <!--关于我们-->
-                {{$t('M.comm_us')}}
+                <!--公司简介-->
+                {{$t('M.about_digital_terms_hint9')}}
               </router-link>
             </dd>
             <dd
@@ -153,6 +154,21 @@
             >
               <!--新闻公告-->
               {{$t('M.comm_news_and_notice')}}
+            </dd>
+            <dd
+              class="dd-item"
+            >
+              <router-link to="/HelpCenter">
+                <!--帮助中心-->
+                {{$t('M.comm_help_center')}}
+              </router-link>
+            </dd>
+            <dd
+              class="dd-item"
+              @click="$footerJump('/ServiceAndProtocol','TradingWarning')"
+            >
+              <!--交易须知-->
+              {{$t('M.otc_index_tradeKnow')}}
             </dd>
             <dd
               class="dd-item"
@@ -194,13 +210,6 @@
             >
               <!--费率-->
               {{$t('M.comm_rate1')}}
-            </dd>
-            <dd
-              class="dd-item"
-              @click="$footerJump('/ServiceAndProtocol','TradingWarning')"
-            >
-              <!--交易须知-->
-              {{$t('M.otc_index_tradeKnow')}}
             </dd>
             <dd
               class="dd-item"
@@ -247,11 +256,13 @@ import {
   getNestedData,
   http2https
 } from '../../utils/commonFunc'
+import {downloadFileWithUserDefined} from '../../utils'
 import Iconfont from '../Common/IconFontCommon'
 import {
   mapMutations,
   mapState,
-  mapGetters
+  mapGetters,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -289,11 +300,18 @@ export default {
       footerInfo1: {},
       footerInfo2: {},
       linkList: [], // 友情链接
-      isloading: true
+      isloading: true,
+      // 上币申请模板下载url
+      currencyApplicationURL: ''
     }
   },
-  created () {
+  async created () {
     console.log(this.isNeedApp)
+    const data = await this.GET_CURRENCY_URL_ACTION({
+      key: 'COIN_APPLY'
+    })
+    if (!data) return false
+    this.currencyApplicationURL = data
   },
   mounted () {
   },
@@ -301,9 +319,17 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_CURRENCY_URL_ACTION'
+    ]),
     ...mapMutations([
       'CHANGE_FOOTER_ACTIVE_NAME'
     ]),
+    downloadCurrencyForm () {
+      let filename = 'Token application form'
+      if (!this.currencyApplicationURL) return
+      downloadFileWithUserDefined(this.currencyApplicationURL, filename)
+    },
     http2https (str) {
       return http2https(str)
     },

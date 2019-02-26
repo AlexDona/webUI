@@ -13,6 +13,7 @@ export const footerInfo = {
   'about_digital_terms_hint6': '币种资料',
   'about_digital_terms_hint7': '反洗钱',
   'about_digital_terms_hint8': 'OTC 服务协议',
+  'about_digital_terms_hint9': '公司简介',
   // ##########################20181117-1145新增国际化################################
   'about_footer_info_down1': '全平台终端接入',
   'about_footer_info_down2': 'iOS、Android、Mac、Windows多个平台支持全业务功能',

@@ -13,6 +13,7 @@ export const footerInfo = {
   'about_digital_terms_hint6': '코인 자료',
   'about_digital_terms_hint7': '돈세탁방지',
   'about_digital_terms_hint8': 'OTC 서비스계약',
+  'about_digital_terms_hint9': '회사 소개',
   // ##########################20181117-1145新增国际化################################
   'about_footer_info_down1': '모든 플렛폼포트 접속',
   'about_footer_info_down2': 'IOS、Android、Mac、Windows 여러개 플랫폼이 모든 업무 기능 수행가능',
