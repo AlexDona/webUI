@@ -752,7 +752,7 @@ export default {
       }
       // 输入的数量能大于最大可卖出量校验
       if (this.publishStyle == 'sell') {
-        if (this.$refs.entrustCountSell.value > this.currentlyAvailable) {
+        if (this.$refs.entrustCountSell.value - this.currentlyAvailable > 0) {
           // this.errorTipsSum = '当前可用 + 资产不足'
           this.errorTipsSum = this.$t('M.otc_index_nowUse') + this.$t('M.user-fail-assetnotenough-error')
           this.entrustCountErrorTipsBorder = true
@@ -762,7 +762,7 @@ export default {
       }
       // 卖出单价、买入单价价格区间控制
       if (this.$refs.priceSell.value) {
-        if (this.$refs.priceSell.value < this.minPrice || this.$refs.priceSell.value > this.maxPrice) {
+        if (this.$refs.priceSell.value - this.minPrice < 0 || this.$refs.priceSell.value - this.maxPrice > 0) {
         //  请输入.....之间的价格
           this.errorTipsPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice
           this.priceErrorTipsBorder = true
@@ -774,7 +774,7 @@ export default {
         }
       }
       if (this.$refs.priceBuy.value) {
-        if (this.$refs.priceBuy.value < this.minPrice || this.$refs.priceBuy.value > this.maxPrice) {
+        if (this.$refs.priceBuy.value - this.minPrice < 0 || this.$refs.priceBuy.value - this.maxPrice > 0) {
           this.errorTipsPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice
           this.priceErrorTipsBorder = true
           this.priceBuySellErrorTipsBorder = true
@@ -786,7 +786,7 @@ export default {
       }
       // 单笔成交限额验证
       // 最小
-      if (this.$refs.minCount.value < this.backReturnCurrentMinCount) {
+      if (this.$refs.minCount.value - this.backReturnCurrentMinCount < 0) {
         // 输入值不能小于最小限额
         this.errorTipsLimitMin = this.$t('M.otc_publishAD_inputminLimit')
         this.minCountErrorTipsBorder = true
@@ -795,7 +795,7 @@ export default {
         this.errorTipsLimitMin = ''
         this.minCountErrorTipsBorder = false
       }
-      if (this.$refs.minCount.value > this.$refs.maxCount.value - 0) {
+      if (this.$refs.minCount.value - this.$refs.maxCount.value > 0) {
         // 输入值不能大于最大限额
         this.errorTipsLimitMin = this.$t('M.otc_publishAD_inputmaxLimit')
         this.minCountErrorTipsBorder = true
@@ -804,12 +804,12 @@ export default {
         this.errorTipsLimitMin = ''
         this.minCountErrorTipsBorder = false
       }
-      if (this.$refs.minCount.value < this.$refs.maxCount.value - 0) {
+      if (this.$refs.minCount.value - this.$refs.maxCount.value < 0) {
         this.errorTipsLimitMax = ''
         this.maxCountErrorTipsBorder = false
       }
       // 最大
-      if (this.$refs.maxCount.value > this.backReturnCurrentMaxCount) {
+      if (this.$refs.maxCount.value - this.backReturnCurrentMaxCount > 0) {
         // 输入值不能大于最大限额
         this.errorTipsLimitMax = this.$t('M.otc_publishAD_inputmaxLimit')
         this.maxCountErrorTipsBorder = true
@@ -818,7 +818,7 @@ export default {
         this.errorTipsLimitMax = ''
         this.maxCountErrorTipsBorder = false
       }
-      if (this.$refs.maxCount.value < this.$refs.minCount.value - 0) {
+      if (this.$refs.maxCount.value - this.$refs.minCount.value < 0) {
         // 输入值不能小于最小限额
         this.errorTipsLimitMax = this.$t('M.otc_publishAD_inputminLimit')
         this.maxCountErrorTipsBorder = true
@@ -827,7 +827,7 @@ export default {
         this.errorTipsLimitMax = ''
         this.maxCountErrorTipsBorder = false
       }
-      if (this.$refs.maxCount.value > this.$refs.minCount.value - 0) {
+      if (this.$refs.maxCount.value - this.$refs.minCount.value > 0) {
         this.errorTipsLimitMin = ''
         this.minCountErrorTipsBorder = false
       }
