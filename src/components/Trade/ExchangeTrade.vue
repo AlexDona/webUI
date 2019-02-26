@@ -867,120 +867,124 @@ export default {
     },
     // 交易密码
     async showPayPassword (entrustType, matchType) {
-      if (!(this.realNameAuth === 'y')) {
-        this.notVerifyDialogVisible = true
-        return false
-      }
-      this.entrustType = entrustType
-      this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
-      console.log(entrustType, matchType)
-      let next = false
-      let params = {}
-      switch (entrustType) {
-        // 买入
-        case 0:
-          switch (this.matchType) {
-            case 'LIMIT':
-              params.price = this.getRefValue(this.limitBuyPriceInputRef)
-              params.count = this.getRefValue(this.limitBuyCountInputRef)
-              this.limitExchange.buyCount = params.count
-              this.limitExchange.buyPrice = params.price
-              if (!this.limitExchange.buyPrice) {
-                // 请输入买入价
-                this.errorMsg.limit.buy.price = this.$t('M.trade_empty_buy_price')
-                return false
-              } else {
-                this.errorMsg.limit.buy.price = ''
-              }
+      if (this.isLogin) {
+        if (!(this.realNameAuth === 'y')) {
+          this.notVerifyDialogVisible = true
+          return false
+        }
+        this.entrustType = entrustType
+        this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+        console.log(entrustType, matchType)
+        let next = false
+        let params = {}
+        switch (entrustType) {
+          // 买入
+          case 0:
+            switch (this.matchType) {
+              case 'LIMIT':
+                params.price = this.getRefValue(this.limitBuyPriceInputRef)
+                params.count = this.getRefValue(this.limitBuyCountInputRef)
+                this.limitExchange.buyCount = params.count
+                this.limitExchange.buyPrice = params.price
+                if (!this.limitExchange.buyPrice) {
+                  // 请输入买入价
+                  this.errorMsg.limit.buy.price = this.$t('M.trade_empty_buy_price')
+                  return false
+                } else {
+                  this.errorMsg.limit.buy.price = ''
+                }
 
-              if (!this.limitExchange.buyCount) {
-                // 请输入买入量
-                this.errorMsg.limit.buy.amount = this.$t('M.trade_empty_buy_count')
-                return false
-              } else {
-                this.errorMsg.limit.buy.amount = ''
-              }
+                if (!this.limitExchange.buyCount) {
+                  // 请输入买入量
+                  this.errorMsg.limit.buy.amount = this.$t('M.trade_empty_buy_count')
+                  return false
+                } else {
+                  this.errorMsg.limit.buy.amount = ''
+                }
 
-              if ((this.buyUserCoinWallet.total / params.price) < params.count) {
-                this.errorMsg.limit.buy.price = this.$t('M.trade_exchange_currency_available')
-                return false
-              }
-              next = true
-              break
-            case 'MARKET':
-              if (!this.marketExchange.buyAmount) {
-                this.errorMsg.market.buy.amount = this.$t('M.trade_empty_buy_count')
-                return false
-              } else {
-                this.errorMsg.market.buy.amount = ''
-              }
-              params.count = this.getRefValue(this.marketBuyAmountInputRef)
-              if (this.buyUserCoinWallet.total < params.count) {
-                this.errorMsg.market.buy.amount = this.$t('M.trade_exchange_currency_available')
-                return false
-              }
-              next = true
-          }
-          break
-        // 卖出
-        case 1:
-          switch (this.matchType) {
-            case 'LIMIT':
+                if ((this.buyUserCoinWallet.total / params.price) < params.count) {
+                  this.errorMsg.limit.buy.price = this.$t('M.trade_exchange_currency_available')
+                  return false
+                }
+                next = true
+                break
+              case 'MARKET':
+                if (!this.marketExchange.buyAmount) {
+                  this.errorMsg.market.buy.amount = this.$t('M.trade_empty_buy_count')
+                  return false
+                } else {
+                  this.errorMsg.market.buy.amount = ''
+                }
+                params.count = this.getRefValue(this.marketBuyAmountInputRef)
+                if (this.buyUserCoinWallet.total < params.count) {
+                  this.errorMsg.market.buy.amount = this.$t('M.trade_exchange_currency_available')
+                  return false
+                }
+                next = true
+            }
+            break
+          // 卖出
+          case 1:
+            switch (this.matchType) {
+              case 'LIMIT':
 
-              params.price = this.getRefValue(this.limitSellPriceInputRef)
-              params.count = this.getRefValue(this.limitSellCountInputRef)
-              this.limitExchange.sellCount = params.count
-              this.limitExchange.sellPrice = params.price
-              if (!this.limitExchange.sellPrice) {
-                this.errorMsg.limit.sell.price = this.$t('M.trade_empty_sell_price')
-                return false
-              } else {
-                this.errorMsg.limit.sell.price = ''
-              }
-              if (!this.limitExchange.sellCount) {
-                this.errorMsg.limit.sell.amount = this.$t('M.trade_empty_sell_count')
-                return false
-              } else {
-                this.errorMsg.limit.sell.amount = ''
-              }
-              console.log((this.sellUserCoinWallet.total), params.count)
-              if (this.sellUserCoinWallet.total < (params.count)) {
-                // 可用币种数量不足
-                this.errorMsg.limit.sell.price = this.$t('M.trade_exchange_currency_available')
-                return false
-              }
-              next = true
-              break
-            case 'MARKET':
-              console.log(1)
-              params.count = this.getRefValue(this.marketSellCountInputRef)
-              this.marketExchange.sellCount = params.count
-              if (!this.marketExchange.sellCount) {
-                this.errorMsg.market.sell.amount = '请输入卖出量'
-                return false
-              } else {
-                this.errorMsg.market.sell.amount = ''
-              }
-              if (this.sellUserCoinWallet.total < (params.count)) {
-                // 可用币种数量不足
-                this.errorMsg.market.sell.count = this.$t('M.trade_exchange_currency_available')
-                return false
-              } else {
-                this.errorMsg.market.sell.count = ''
-              }
-              next = true
-              break
-          }
-          break
-      }
-      if (!next) {
-        return false
-      }
-      if (this.isNeedPayPassowrd) {
-        this.isShowPayPassword = true
-        this.clearPasswordErrorMsg()
+                params.price = this.getRefValue(this.limitSellPriceInputRef)
+                params.count = this.getRefValue(this.limitSellCountInputRef)
+                this.limitExchange.sellCount = params.count
+                this.limitExchange.sellPrice = params.price
+                if (!this.limitExchange.sellPrice) {
+                  this.errorMsg.limit.sell.price = this.$t('M.trade_empty_sell_price')
+                  return false
+                } else {
+                  this.errorMsg.limit.sell.price = ''
+                }
+                if (!this.limitExchange.sellCount) {
+                  this.errorMsg.limit.sell.amount = this.$t('M.trade_empty_sell_count')
+                  return false
+                } else {
+                  this.errorMsg.limit.sell.amount = ''
+                }
+                console.log((this.sellUserCoinWallet.total), params.count)
+                if (this.sellUserCoinWallet.total < (params.count)) {
+                  // 可用币种数量不足
+                  this.errorMsg.limit.sell.price = this.$t('M.trade_exchange_currency_available')
+                  return false
+                }
+                next = true
+                break
+              case 'MARKET':
+                console.log(1)
+                params.count = this.getRefValue(this.marketSellCountInputRef)
+                this.marketExchange.sellCount = params.count
+                if (!this.marketExchange.sellCount) {
+                  this.errorMsg.market.sell.amount = '请输入卖出量'
+                  return false
+                } else {
+                  this.errorMsg.market.sell.amount = ''
+                }
+                if (this.sellUserCoinWallet.total < (params.count)) {
+                  // 可用币种数量不足
+                  this.errorMsg.market.sell.count = this.$t('M.trade_exchange_currency_available')
+                  return false
+                } else {
+                  this.errorMsg.market.sell.count = ''
+                }
+                next = true
+                break
+            }
+            break
+        }
+        if (!next) {
+          return false
+        }
+        if (this.isNeedPayPassowrd) {
+          this.isShowPayPassword = true
+          this.clearPasswordErrorMsg()
+        } else {
+          this.addEntrust()
+        }
       } else {
-        this.addEntrust()
+        this.$goToPage('/login')
       }
     },
     // 输入限制
