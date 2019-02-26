@@ -558,11 +558,14 @@ export default {
     // 查询用户是否可以发单状态
     async getUserPutUpOrderStatus () {
       const data = await getCommonPutUpOrderStatus()
-      console.log(data)
-      console.log(data.data.flag)
       // 返回数据正确的逻辑
+      // console.log(data)
+      // console.log(data.data.flag)
       if (!data) return false
-      if (data.data.flag === 'true') {
+      let flagStatus
+      flagStatus = getNestedData(data, 'data.flag')
+      console.log(flagStatus)
+      if (flagStatus === 'true') {
         this.userPutUpOrderStatus = true
       }
     },
