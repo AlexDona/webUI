@@ -31,7 +31,7 @@
           <p class="info-top">
             <!--未实名-->
             <span
-              v-if="!realName"
+              v-if="realNameAuth !== 'y'"
               class="icon-user-info info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -155,7 +155,7 @@
           </p>
           <p class="asset-info margin-top9">
             <span class="info-color font-size16">
-              {{ totalSumBTC }}
+              {{ $keep8Num(totalSumBTC) }}
             </span>
             <span class="info-color font-size12">
               BTC
@@ -279,7 +279,7 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内存用户详细信息
       userName: state => getNestedData(state, 'user.loginStep1Info.userInfo.userName'),
-      realName: state => getNestedData(state, 'user.loginStep1Info.userInfo.realName'),
+      realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth'),
       showId: state => getNestedData(state, 'user.loginStep1Info.userInfo.showId'),
       email: state => getNestedData(state, 'user.loginStep1Info.userInfo.email'),
       phoneEnable: state => getNestedData(state, 'user.loginStep1Info.userInfo.phoneEnable'),

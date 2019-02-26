@@ -144,7 +144,7 @@ export default {
     > .triangle {
       position: absolute;
       top: -7px;
-      right: 125px;
+      right: 122px;
       width: 12px;
       height: 12px;
       -ms-transform: rotate(135deg);
@@ -180,11 +180,11 @@ export default {
       }
     }
 
-    > .recharge-content {
+    .recharge-content {
       flex: 2;
       padding: 0 20px;
 
-      > .recharge-content-hint {
+      .recharge-content-hint {
         height: 20px;
         margin-bottom: 5px;
         line-height: 20px;
@@ -370,6 +370,136 @@ export default {
       > .recharge-content-right {
         > .recharge-content-code {
           background-color: #fff;
+        }
+      }
+
+      > .recharge-list-left {
+        > .list-left-flex {
+          > .flex-box {
+            > .flex-input {
+              color: #fff;
+              background-color: #2d3651;
+            }
+
+            > .text-input {
+              color: #fff;
+              background-color: #37424c;
+            }
+
+            > .left-flex-hint,
+            > .new-address {
+              color: #338ff5;
+            }
+
+            > .address-bg {
+              background-color: #2d3651;
+            }
+          }
+        }
+
+        > .count-box {
+          > .count-flex-box {
+            > .content-flex-hint {
+              color: #338ff5;
+            }
+
+            > .count-flex-text {
+              color: #83909b;
+            }
+
+            > .count-flex-input {
+              color: #fff;
+              background-color: #2d3651;
+            }
+
+            > .count-text-input {
+              color: #fff;
+              background-color: #20273d;
+            }
+          }
+        }
+
+        > .text-info-mention {
+          > .currency-rule {
+            color: #d45858;
+          }
+
+          > .prompt-message {
+            color: #58616a;
+          }
+
+          > .mention-button {
+            > .submit-but {
+              color: #fff;
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+            }
+          }
+        }
+      }
+
+      > .text-info {
+        > .currency-rule {
+          color: #d45858;
+        }
+
+        > .prompt-message {
+          color: #58616a;
+        }
+
+        > .mention-button {
+          > .submit-but {
+            color: #fff;
+            background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+          }
+        }
+      }
+
+      > .email-input {
+        width: 220px;
+        height: 34px;
+      }
+    }
+
+    &.day {
+      border: 1px solid #338ff5;
+
+      > .triangle {
+        position: absolute;
+        top: -7px;
+        right: 113px;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid #338ff5;
+        border-left: 1px solid #338ff5;
+        background-color: #fff;
+        border-right: 1px solid transparent;
+      }
+
+      > .recharge-content {
+        > .recharge-content-hint {
+          color: #338ff5;
+        }
+
+        > .input-box {
+          > .hint-input {
+            border: 1px solid rgba(38, 47, 56, .1);
+            color: #333;
+            background: rgba(51, 143, 245, .1);
+          }
+
+          > .code-copy {
+            color: #fff;
+            background-color: #338ff5;
+          }
+        }
+
+        > .recharge-content-title {
+          color: #d45858;
+        }
+      }
+
+      > .recharge-content-right {
+        > .recharge-content-code {
+          background-color: rgba(51, 143, 245, .1);
         }
       }
 

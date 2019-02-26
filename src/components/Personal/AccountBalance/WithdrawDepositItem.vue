@@ -582,6 +582,9 @@ export default {
       }
 
       > .triangle {
+        position: absolute;
+        top: -7px;
+        right: 63px;
         border-top: 1px solid transparent;
         border-bottom: 1px solid #338ff5;
         border-left: 1px solid #338ff5;

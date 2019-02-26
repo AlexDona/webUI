@@ -90,14 +90,13 @@
                 <!--日期-->
                 {{ $t('M.user_coin_order4') }}
               </span>
-              <!--开始日期-->
               <el-date-picker
                 v-model="startTime"
                 type="datetimerange"
                 align="right"
-                unlink-panels
-                @change="changeTime"
                 :editable="false"
+                :clearable="false"
+                range-separator="~"
                 :start-placeholder="$t('M.otc_no1')"
                 :end-placeholder="$t('M.otc_no2')"
                 value-format = "yyyy-MM-dd HH:mm:ss"
@@ -114,12 +113,11 @@
                 <!--日期-->
                 {{ $t('M.user_coin_order4') }}
               </span>
-              <!--开始日期-->
               <el-date-picker
                 v-model="startTime"
                 type="datetimerange"
                 align="right"
-                unlink-panels
+                range-separator="~"
                 @change="changeTime"
                 :editable="false"
                 :clearable="false"
@@ -528,10 +526,14 @@ export default {
     changeTime () {
       this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
         disabledDate: (time) => {
+          // let curDate = (new Date()).getTime()
+          // let three = 92 * 24 * 3600 * 1000
+          // let threeMonths = curDate - three
+          // return time.getTime() > Date.now() + (1 * 24 * 60 * 60 * 1000) || time.getTime() < threeMonths
           let curDate = (new Date()).getTime()
-          let three = 92 * 24 * 3600 * 1000
+          let three = 90 * 24 * 3600 * 1000
           let threeMonths = curDate - three
-          return time.getTime() > Date.now() + (1 * 24 * 60 * 60 * 1000) || time.getTime() < threeMonths
+          return time.getTime() > Date.now() || time.getTime() < threeMonths
         }
       })
     }

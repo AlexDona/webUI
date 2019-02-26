@@ -1291,19 +1291,6 @@ export default {
             position: relative;
             height: 100%;
 
-            > .right-search {
-              position: absolute;
-              top: 35px;
-              right: 23px;
-              width: 140px;
-
-              > .right-search-list {
-                width: 100%;
-                height: 30px;
-                line-height: 30px;
-              }
-            }
-
             > .header-right-left {
               > .header-right-text {
                 width: 200px;
@@ -1328,10 +1315,6 @@ export default {
                 top: 12px;
                 left: 95px;
               }
-
-              .select-full {
-                width: 150px;
-              }
             }
           }
         }
@@ -1351,18 +1334,12 @@ export default {
                 .icon-caret {
                   position: absolute;
                   top: 0;
-                  right: 100px;
-                }
-
-                .icon-caret1 {
-                  position: absolute;
-                  top: 0;
-                  right: 90px;
+                  right: 102px;
                 }
               }
 
               .title-width1 {
-                width: 170px;
+                width: 175px;
               }
 
               .title-width-last {
@@ -1379,10 +1356,6 @@ export default {
 
               .title-width-right {
                 margin-right: 10px;
-              }
-
-              .title-last {
-                width: 170px;
               }
 
               .error-info {
@@ -1418,7 +1391,7 @@ export default {
               .icon-caret-order {
                 position: absolute;
                 top: 0;
-                right: 40px;
+                right: 46px;
 
                 .caret-text {
                   position: absolute;
@@ -1436,39 +1409,18 @@ export default {
               .icon-caret-order {
                 position: absolute;
                 top: 0;
-                right: 85px;
+                right: 90px;
               }
 
               > .table-tr {
                 > .table-box {
                   width: 100%;
 
-                  > .recharge-list-mention {
-                    height: 236px !important;
-                  }
-
-                  > .list-mention-treasure {
-                    height: 295px !important;
-                  }
-
                   > .out-box {
                     > .recharge-list {
                       position: relative;
                       z-index: 2;
                       padding: 20px 6px;
-
-                      > .triangle {
-                        position: absolute;
-                        top: -7px;
-                        right: 118px;
-                        width: 12px;
-                        height: 12px;
-                        -ms-transform: rotate(135deg);
-                        -moz-transform: rotate(135deg);
-                        -webkit-transform: rotate(135deg);
-                        -o-transform: rotate(135deg);
-                        transform: rotate(135deg);
-                      }
 
                       > .triangle-one {
                         right: 65px;
@@ -1659,7 +1611,7 @@ export default {
               .send-code-btn {
                 position: absolute;
                 z-index: 999;
-                top: 4px;
+                top: 3px;
                 right: 2px;
                 width: 95px;
                 height: 34px;
@@ -1880,14 +1832,6 @@ export default {
               > .out-box {
                 > .recharge-list {
                   border: 1px solid #338ff5;
-
-                  > .triangle {
-                    border-top: 1px solid transparent;
-                    border-bottom: 1px solid #338ff5;
-                    border-left: 1px solid #338ff5;
-                    background-color: #1c1f32;
-                    border-right: 1px solid transparent;
-                  }
 
                   > .recharge-content {
                     > .recharge-content-hint {
@@ -2143,17 +2087,9 @@ export default {
               }
 
               > .out-box {
-                > .recharge-list {
+                .recharge-list {
                   border: 1px solid #338ff5;
                   background: #fff;
-
-                  > .triangle {
-                    border-top: 1px solid transparent;
-                    border-bottom: 1px solid #338ff5;
-                    border-left: 1px solid #338ff5;
-                    background-color: #fff;
-                    border-right: 1px solid transparent;
-                  }
 
                   > .recharge-content {
                     > .recharge-content-hint {
