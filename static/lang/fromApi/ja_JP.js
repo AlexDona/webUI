@@ -239,7 +239,6 @@ export const fromApi = {
   'otc_failure_0057': 'この状態がない',
   'otc_failure_0058': '保留中のオーダーレコードの数が正しくない',
   'otc_failure_0059': '凍結に失敗し、つみ出しに失敗する',
-  'otc_failure_0060': 'ピッカーに支払いを要求する保留中の注文がなく、ピッキングが失敗します',
   'otc_failure_0061': '売り手は一度ぐらい成約しなければならない',
   'otc_failure_0062': '販売数量は0以下ではありません',
   'otc_failure_0063': '販売数量は、保留中の注文の現在の残量より大きくすることはできません',
@@ -414,5 +413,16 @@ export const fromApi = {
   'market_failure_00102': '要求された取引ブロック可用な取引区まだない。',
   'market_failure_00103': '要求された取引ブロックもっと可用な取引区まだない。',
   'market_failure_00104': '要求された取引区可用な取引ペアまだない。',
-  'market_failure_00105': '要求された取引区もっと可用な取引ペアまだない。'
+  'market_failure_00105': '要求された取引区もっと可用な取引ペアまだない。',
+  'recharge_withdraw_failure_0042': 'この通货は持ち货が禁止されていますので、お客様にお问い合わせください',
+  'recharge_withdraw_failure_0043': 'その通货が当日の最大値を超えた场合は、お客様にお问い合わせください',
+  'recharge_withdraw_failure_0044': 'その通货が当日の最大値を超えたので、お客様にお问い合わせください',
+  'recharge_withdraw_failure_0045': '引き出し数は最小の引き出し量より小さい',
+  'recharge_withdraw_failure_0046': '最大提货よりも数が多い',
+  'user_asset_title17': 'まずは実名認証をお願い!',
+  'user_pay_password_not_setting': '取引パスワードを設定して、あらかじめ積立金投資を行ってください',
+  'user_pay_disable_state': 'このアカウント取引のパスワードを{}回取引が禁止されたので、2时间后に再试験をしてください',
+  'financial_management_record_less_than_min_number': '追加される紙幣の数は、設定されている最小の数より小さい',
+  'otc_failure_0060': '支払い設定におけるバインディング業者指定のタイプの入金口座を!',
+  'otc_failure_0091': '貨幣IDが空になってはならない'
 }
