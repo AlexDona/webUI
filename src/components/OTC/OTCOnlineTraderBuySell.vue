@@ -82,8 +82,9 @@
               <!-- 剩余数量 -->
               <div class="details-row">
                 <span class="details-tip">
-                  <!-- 剩余数量： -->
-                  {{$t('M.otc_index_reduceQuantity')}}：
+                  <!-- 剩余可买/可卖： -->
+                  <!--{{$t('M.otc_index_reduceQuantity')}}：-->
+                  {{onlineTraderStatus === 'onlineSell' ? $t('M.otc_index_reduceQuantitySell') : $t('M.otc_index_reduceQuantityBuy')}}：
                 </span>
                 <span class="details-data">
                   {{$scientificToNumber(remainingNum)}}{{coinName}}
