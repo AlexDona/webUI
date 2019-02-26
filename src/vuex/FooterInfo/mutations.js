@@ -33,7 +33,8 @@ export default {
     state.serviceProtocolData.clauseExplainData = clauseExplainData || {}
     state.serviceProtocolData.legislationExplainData = legislationExplainData || {}
     state.serviceProtocolData.privacyClauseData = privacyClauseData || {}
-    state.serviceProtocolData.APIDocumentData = APIDocumentData || {}
+    state.serviceProtocolData.AML = AML || {}
+    state.serviceProtocolData.OTCServices = OTCServices || {}
     state.serviceProtocolData.rateData = rateData || {}
     state.serviceProtocolData.tradingWarningData = tradingWarningData || {}
   },
