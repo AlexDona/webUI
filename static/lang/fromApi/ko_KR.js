@@ -422,7 +422,7 @@ export const fromApi = {
   'user_asset_title17': '실명 인증부터 해주세요!',
   'user_pay_password_not_setting': '먼저 거래 비밀 번호를 설치한 후에 돈을 예금하고 투자하세요',
   'user_pay_disable_state': '이 계정 거래 비밀번호 오류 {}에 의해 거래가 금지되었습니다. 2시간 후에 다시 시도하십시오',
-  'financial_management_record_less_than_min_number': '추가된 화폐의 수량이 설정한 최소량보다 작다',
+  'financial_management_record_less_than_min_number': '추가된 화폐의 수량이 설정한 최소량보다 작다 {}',
   'otc_failure_0060': '상품 지정 타입에 바인딩을 해 주는 상품 계정을 설정해 주십시오!',
   'otc_failure_0091': '보통사용자는 otc 주문서를 접수할수 없습니다. 우선 상가로 신청하십시오'
 }
