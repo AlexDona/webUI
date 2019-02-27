@@ -265,6 +265,7 @@
                   @input="deleteErrorTips"
                   type="password"
                   class="password"
+                  @keyup.enter="submitPassword"
                 >
                 <p v-if="isShowErrorTips" class="errorTips">{{$t('M.otc_publishAD_pleaseInput') + $t('M.comm_password') }}</p>
                 <span slot="footer" class="dialog-footer">
