@@ -1737,7 +1737,7 @@ export default {
             position: absolute;
             z-index: 2;
             top: 10px;
-            left: 56px;
+            left: 48px;
             width: 135px;
 
             > .triangle-border {

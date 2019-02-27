@@ -260,7 +260,7 @@
                 v-if="interestTotal > 10 && this.activeName == '2'"
                 layout="prev, pager, next"
                 @current-change='changeInterestPage'
-                :current-page.sync = 'interestCurrentPage'
+                :current-page.sync = "interestCurrentPage"
                 :page-count='interestTotalPages'
               >
               </el-pagination>
@@ -299,7 +299,7 @@ export default {
       // 设置存币记录总条数
       investTotal: '',
       // 设置收益列表当前页码
-      interestCurrentPage: '1',
+      interestCurrentPage: 1,
       // 设置收益总页数
       interestTotalPages: '1',
       // 设置收益列表总条数

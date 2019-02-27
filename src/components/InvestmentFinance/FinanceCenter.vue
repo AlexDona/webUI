@@ -148,7 +148,7 @@
                     :label="$t('M.finance_timeLong')"
                     class='saveTime'
                   >
-                    {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day)}}
+                    {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day ? formLabelAlign.day : 0)}}
                     <span class="blue">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
                     <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
                   </el-form-item>
@@ -1143,7 +1143,7 @@ export default {
                   font-weight: 600;
                   font-size: 24px;
                   color: #7cb8fa;
-                  -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg, rgba(124, 184, 250, 0), rgba(124, 184, 250, .2));
+                  -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg, rgba(124, 184, 250, 0), rgba(124, 184, 250, .2) 200%);
 
                   > span {
                     font-size: 12px;
@@ -1196,6 +1196,7 @@ export default {
               }
 
               .investExplain {
+                font-size: 12px;
                 line-height: 0;
                 text-align: right;
 
