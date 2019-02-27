@@ -263,6 +263,7 @@
                 <input
                   v-model="passwords"
                   @input="deleteErrorTips"
+                  type="password"
                   class="password"
                 >
                 <p v-if="isShowErrorTips" class="errorTips">{{$t('M.otc_publishAD_pleaseInput') + $t('M.comm_password') }}</p>
