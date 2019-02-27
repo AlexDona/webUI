@@ -42,5 +42,7 @@ export const finance = {
   'finance_total_income': '预计总收益',
   // 二次确认弹框提示信息
   'finance_tipsContentOne': '确定取消存币?',
-  'finance_invest_number': '存币数量不能为0'
+  'finance_invest_number': '存币数量不能为0',
+  'finance_invest_read': '阅读',
+  'finance_invest_explain': '存币说明'
 }

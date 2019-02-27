@@ -40,14 +40,14 @@
                 {{newestPrice}}<span>USDT</span>
               </p>
               <!-- 最新价钱 -->
-              {{$t('M.finance_newestPrice')}}
+              <span>{{$t('M.finance_newestPrice')}}</span>
             </li>
             <li>
               <p class="green">
                 {{dayAmountIncrease}}<span>USDT</span>
               </p>
               <!-- 当日涨幅 -->
-              {{$t('M.finance_date')}}{{$t('M.finance_increase')}}
+              <span>{{$t('M.finance_date')}}{{$t('M.finance_increase')}}</span>
             </li>
             <li v-if='this.historyAmountIncrease'>
               <p class="red">{{historyAmountIncrease}}</p>
@@ -126,7 +126,10 @@
                 </div>
               </label>
               <!--存币说明-->
-              <div class="investExplain">阅读<span class="blue" @click="investExplain">《存币说明》</span></div>
+              <div class="investExplain">
+                {{$t('M.finance_invest_read')}}
+                <span class="blue" @click="investExplain">《{{$t('M.finance_invest_explain')}}》</span>
+              </div>
               <!-- 存币详情 -->
               <el-dialog
                 :title="$t('M.finance_save_moneydetail')"
@@ -248,6 +251,7 @@
                   </el-button>
                 </span>
               </el-dialog>
+              <!--交易密码-->
               <el-dialog
                 :title="$t('M.comm_password')"
                 :visible.sync="isShowPasswordDialog"
@@ -263,9 +267,10 @@
                 >
                 <p v-if="isShowErrorTips" class="errorTips">{{$t('M.otc_publishAD_pleaseInput') + $t('M.comm_password') }}</p>
                 <span slot="footer" class="dialog-footer">
-                  <el-button type="primary" @click="submitPassword"  :disabled="isDisable">确 定</el-button>
+                  <el-button type="primary" @click="submitPassword"  :disabled="isDisable">{{$t('M.comm_confirm')}}</el-button>
                 </span>
               </el-dialog>
+              <!--存币说明-->
               <el-dialog
                 :title="$t('M.finance_invest') + $t('M.comm_description')"
                 :visible.sync="isShowInvestExplain"
@@ -1094,6 +1099,7 @@ export default {
             > .newestPrice {
               display: flex;
               flex: 1;
+              align-items: center;
               height: 48px;
 
               > li {
@@ -1104,10 +1110,10 @@ export default {
 
                 > p {
                   font-weight: bolder;
-                  font-size: 22px;
+                  font-size: 16px;
 
                   > span {
-                    font-size: 12px;
+                    font-size: 14px;
                   }
                 }
 
@@ -1180,7 +1186,7 @@ export default {
                 .submitBtn {
                   > button {
                     width: 400px;
-                    height: 48px;
+                    height: 50px;
                     margin-left: 117px;
                     border-radius: 4px;
                     text-align: center;
@@ -1231,6 +1237,7 @@ export default {
               > .pieCharts {
                 width: 282px;
                 padding-top: 50px;
+                margin-right: 50px;
               }
             }
           }
@@ -1245,7 +1252,7 @@ export default {
             > .showAll {
               position: absolute;
               z-index: 10;
-              top: 25px;
+              top: 7px;
               right: 0;
             }
 
@@ -1272,10 +1279,10 @@ export default {
       .finance-form-header {
         .el-input__inner {
           width: 168px;
-          height: 48px;
+          height: 40px;
           border: 1px solid #338ff5;
           border-radius: 2px;
-          font-size: 20px;
+          font-size: 15px;
           color: #338ff5;
           background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
           box-shadow: 0 2px 2px rgba(13, 17, 25, 1);
@@ -1288,7 +1295,7 @@ export default {
 
       .el-tabs__nav {
         width: 300px;
-        padding: 9px 0 9px 26px;
+        padding: 0 0 0 26px;
         font-weight: bold;
         color: rgba(97, 116, 153, 1);
         background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
@@ -1302,7 +1309,7 @@ export default {
       }
 
       .el-tabs__item {
-        font-size: 22px;
+        font-size: 16px;
         color: #617499;
 
         &.is-active {
@@ -1323,7 +1330,7 @@ export default {
           .left-body {
             .el-input__inner {
               width: 400px;
-              height: 48px;
+              height: 50px;
               border: 1px solid #464e5f;
               border-radius: 2px;
               background: #1e2636;
@@ -1462,6 +1469,10 @@ export default {
 
       .el-table__header {
         margin-bottom: 10px;
+      }
+
+      .el-table th {
+        padding: 8px 0;
       }
 
       .el-button {
@@ -1604,14 +1615,14 @@ export default {
                     color: #666;
 
                     p {
-                      font-size: 22px;
+                      font-size: 16px;
 
                       &:last-child {
                         border: none;
                       }
 
                       span {
-                        font-size: 12px;
+                        font-size: 14px;
                       }
                     }
                   }
@@ -1812,6 +1823,7 @@ export default {
     }
 
     .blue {
+      font-size: 12px;
       color: #338ff5;
     }
 
@@ -1843,9 +1855,9 @@ export default {
     }
 
     .invest {
-      width: 166px;
-      padding: 14px 0 14px 26px;
-      font-size: 22px;
+      width: 130px;
+      padding: 10px 0 10px 26px;
+      font-size: 16px;
       color: #fff;
       background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
     }
