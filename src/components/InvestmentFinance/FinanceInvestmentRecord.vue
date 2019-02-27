@@ -459,8 +459,9 @@ export default {
             > .goBackInvest {
               position: absolute;
               z-index: 10;
-              top: 25px;
+              top: 7px;
               right: 0;
+              font-size: 14px;
             }
           }
         }
@@ -474,7 +475,7 @@ export default {
 
       .el-tabs__nav {
         width: 300px;
-        padding: 9px 0 9px 26px;
+        padding: 0 0 0 26px;
         font-weight: bold;
         color: rgba(97, 116, 153, 1);
         background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
@@ -488,7 +489,7 @@ export default {
       }
 
       .el-tabs__item {
-        font-size: 22px;
+        font-size: 16px;
         color: #617499;
 
         &.is-active {
@@ -556,6 +557,10 @@ export default {
 
       .el-table__header {
         margin-bottom: 10px;
+      }
+
+      .el-table th {
+        padding: 8px 0;
       }
 
       .el-button {

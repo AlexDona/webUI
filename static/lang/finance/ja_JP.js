@@ -42,5 +42,7 @@ export const finance = {
   'finance_xiAndben': 'まず金利あと本金',
   'finance_capital': '本金',
   'finance_accrual': '金利',
-  'finance_invest_number': '入金金額を0にすることはできません'
+  'finance_invest_number': '入金金額を0にすることはできません',
+  'finance_invest_read': '閲読',
+  'finance_invest_explain': 'デポジット説明'
 }
