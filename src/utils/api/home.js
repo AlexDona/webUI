@@ -31,3 +31,5 @@ export const getPlatesAJAX = params => handleRequest(() => get('/market/getTrade
 export const getTradeAreaAJAX = params => handleRequest(() => get('market/plate/getInfo', params))
 
 export const getAllTradeAreasAJAX = params => handleRequest(() => get('market/plate/getAllInfo', {...params, loading: true}))
+// 获取所有交易区
+export const getAllSymbolsAJAX = params => handleRequest(() => get('market/getTradeData', params))
