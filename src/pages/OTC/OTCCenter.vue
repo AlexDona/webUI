@@ -729,6 +729,14 @@ export default {
       if (data.data) {
         this.IWantToBuySellArr = getNestedData(data, 'data')
         if (this.IWantToBuySellArr.length) {
+          console.log(this.IWantToBuySellArr)
+          _.forEach(this.IWantToBuySellArr, (coin, coinIndex) => {
+            if (coin.name == 'FBT') {
+              this.IWantToBuySellArr.splice(coinIndex, 1)
+              this.IWantToBuySellArr.unshift(coin)
+              return false
+            }
+          })
           this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
           this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
           this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
