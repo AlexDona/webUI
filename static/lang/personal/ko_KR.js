@@ -221,7 +221,9 @@ export const personal = {
   // API管理
   // 创建API
   'user_api_administration': '관리',
-  'user_api_text1': '본 플랫폼은 강력한 API를 제공하며 API를 통해 시장 쿼리, 자동 거래 및 기타 서비스에 사용할 수 있음,API 문서를 통해 이를 사용하는 방법을 볼수 있음. ',
+  'user_api_text0': '통과하다',
+  'user_api_text01': '어떻게 사용하는지 확인하다;',
+  'user_api_text1': '본 플랫폼은 강력한 API를 제공하며 API를 통해 시장 쿼리, 자동 거래 및 기타 서비스에 사용할 수 있음,',
   'user_api_text2': '각 사용자가 최대 5 세트의 API 키를 생성합니다.',
   'user_api_text3': '자산 손실을 방지하기 위해 API 키를 비공개 필요, 보안상의 이유로 IP를 API 키에 바인딩하는 것이 좋음. 매개 API 키는 최대 4 개의 IP에 바인딩됨. 단일 주소는 직접 입력하고 여러 IP 주소는 쉼표로 구분됩니다 (예 : 192.168.1.1, 192.168.1.2 및 192.168.1.3).',
   'user_api_text4': '방문 키',
