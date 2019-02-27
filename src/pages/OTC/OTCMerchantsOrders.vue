@@ -586,7 +586,7 @@ export default {
   @import "../../../static/css/scss/index";
 
   .otc-merchants-orders-box {
-    margin-top: 66px;
+    margin-top: 50px;
     overflow: hidden;
 
     > .otc-merchants-orders-content {

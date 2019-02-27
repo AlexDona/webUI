@@ -66,7 +66,6 @@
                     :collectSymbol="collectSymbol"
                     :activeName="activeName"
                     @toggleCollect="toggleCollect"
-                    :hasMoreSymbols="area.more"
                     @getMoreSymbols="getMoreSymbols"
                   />
                 </div>
@@ -134,7 +133,8 @@ import {
 import {
   getPlatesAJAX,
   getTradeAreaAJAX,
-  getAllTradeAreasAJAX
+  getAllTradeAreasAJAX,
+  getAllSymbolsAJAX
   // getCollectionListAjax
 } from '../../utils/api/home'
 import {
@@ -209,7 +209,11 @@ export default {
       areasFromAPI: [],
       platesMap: new Map(),
       FIVE_MINUTES: 5 * 60 * 1000,
-      timer: null
+      MAX_AREAS_LENGTH: 2,
+      MAX_SYMBOLS_LENGTH: 10,
+      timer: null,
+      isCollectAreaReady: false,
+      collectOriginalSymbols: []
     }
   },
   async created () {
@@ -278,8 +282,34 @@ export default {
       } else {
         this.areasFromAPI = storePlates[plateId]
       }
-      let symbolJSON = getStoreWithJson('symbolJSON')
+
+      const SYMBOL_AGE = getStore('symbolJSONAge')
+      const NOW = new Date().getTime()
+      let symbolJSON
+      let localSymbolJSON = getStoreWithJson('symbolJSON') || {}
+      let localSymbolLength = Object.keys(localSymbolJSON).length
+      if (NOW - SYMBOL_AGE < this.FIVE_MINUTES * 100 && localSymbolLength) {
+        symbolJSON = localSymbolJSON
+      } else {
+        if (this.plates.length == 1) return false
+        let symbolsData = await getAllSymbolsAJAX({
+          i18n: this.language
+        })
+        if (!symbolsData) return false
+        let symbolsObjs = getNestedData(symbolsData, 'data.obj')
+        console.log(symbolsObjs)
+        let symbolsStr = ''
+        _.forEach(symbolsObjs, (symbolObj) => {
+          symbolsStr += unzip(symbolObj)
+        })
+        if (!symbolsStr) return false
+        let symbolsSJONFromBackEnd = JSON.parse(symbolsStr)
+        symbolJSON = symbolsSJONFromBackEnd
+        setStore('symbolJSONAge', new Date().getTime())
+      }
+
       for (let k in symbolJSON) {
+        console.log(symbolJSON[k])
         this.CHANGE_SYMBOL_MAP({
           key: symbolJSON[k].id,
           val: symbolJSON[k]
@@ -300,14 +330,14 @@ export default {
       let newAreas = [...this.areasFromAPI]
       _.forEach(this.areasFromAPI, (area, areaIndex) => {
         console.log(area)
-        if (area.content.length > 10) {
-          newAreas[areaIndex].content = area.content.slice(0, 10)
+        if (area.content.length > this.MAX_SYMBOLS_LENGTH) {
+          newAreas[areaIndex].content = area.content.slice(0, this.MAX_SYMBOLS_LENGTH)
           newAreas[areaIndex].more = true
         }
       })
       console.log(this.areasFromAPI)
-      if (newAreas.length > 2) {
-        this.areas = [...newAreas.slice(0, 2)]
+      if (newAreas.length > this.MAX_AREAS_LENGTH) {
+        this.areas = [...newAreas.slice(0, this.MAX_AREAS_LENGTH)]
         this.moreBtnShowStatus = true
         this.disabledStatus = false
       } else {
@@ -458,25 +488,28 @@ export default {
             buyCoinName, // 'BTC'、'FBT'
             tradeName // rdnbtc、 fucfbt
           } = newData
-          console.log(tradeName, newData, this.areasIndexMap, this.symbolsIndexMap)
-
-          let areaIndex = this.areasIndexMap.get(buyCoinName)
-          console.log(this.symbolsIndexMap, areaIndex, this.symbolsIndexMap.get(areaIndex))
-          if (String(areaIndex) == 'undefined' || !this.symbolsIndexMap.get(areaIndex)) return false
-          let symbolIndex = this.symbolsIndexMap.get(areaIndex).get(tradeName)
-          console.log(this.areas, this.areas[areaIndex], areaIndex)
-          if (!this.areas[areaIndex]) return false
-          const newSymbol = {...this.areas[areaIndex]['content'][symbolIndex], ...newData}
-          this.$set(this.areas[areaIndex]['content'], symbolIndex, newSymbol)
+          console.log(tradeName, newData)
+          this.updateSymbol(buyCoinName, tradeName, newData)
           this.CHANGE_SYMBOL_MAP({
-            key: newData.id,
-            val: newData
+            key: tradeName,
+            val: {...this.symbolMap.get(tradeName), ...newData}
           })
-          console.log(tradeName, this.areas[areaIndex]['content'][symbolIndex])
+          let symbol = getStoreWithJson('symbolJSON')
+          console.log(symbol)
+          console.log(symbol[tradeName])
           this.setCollectionAndSearchContent(this.searchArea.content, newData)
           this.setCollectionAndSearchContent(this.collectArea.content, newData)
         }
       })
+    },
+    // 更新交易区
+    updateSymbol (area, tradeName, newData) {
+      let areaIndex = this.areasIndexMap.get(area)
+      if (String(areaIndex) == 'undefined' || !this.symbolsIndexMap.get(areaIndex)) return false
+      let symbolIndex = this.symbolsIndexMap.get(areaIndex).get(tradeName)
+      if (!this.areas[areaIndex]) return false
+      const newSymbol = {...this.areas[areaIndex]['content'][symbolIndex], ...newData}
+      this.$set(this.areas[areaIndex]['content'], symbolIndex, newSymbol)
     },
     setCollectionAndSearchContent (target, newData) {
       if (!target.length) return false
@@ -565,6 +598,8 @@ export default {
     },
     // 切换收藏
     async toggleCollect (data) {
+      this.collectArea.area = this.$t('M.home_market_district')
+      this.searchArea.area = this.$t('M.home_market_field_search')
       let {id, status, row} = data
       status = Boolean(status)
       this.$set(this.collectStatusList, id, status)

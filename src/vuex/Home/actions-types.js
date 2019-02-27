@@ -1,0 +1,1 @@
+export const GET_ALL_NOTICE_ACTION = 'GET_ALL_NOTICE_ACTION' // 获取全部公告

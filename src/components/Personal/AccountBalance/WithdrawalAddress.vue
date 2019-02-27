@@ -533,14 +533,6 @@ export default {
     })
   },
   watch: {
-    userCenterActiveName (newVal) {
-      console.log(newVal)
-      if (newVal === 'mention-address') {
-      }
-    },
-    paramOfJumpToAddWithdrawAdress (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>

@@ -40,14 +40,14 @@
                 {{newestPrice}}<span>USDT</span>
               </p>
               <!-- 最新价钱 -->
-              {{$t('M.finance_newestPrice')}}
+              <span>{{$t('M.finance_newestPrice')}}</span>
             </li>
             <li>
               <p class="green">
                 {{dayAmountIncrease}}<span>USDT</span>
               </p>
               <!-- 当日涨幅 -->
-              {{$t('M.finance_date')}}{{$t('M.finance_increase')}}
+              <span>{{$t('M.finance_date')}}{{$t('M.finance_increase')}}</span>
             </li>
             <li v-if='this.historyAmountIncrease'>
               <p class="red">{{historyAmountIncrease}}</p>
@@ -125,11 +125,17 @@
                   </el-button>
                 </div>
               </label>
+              <!--存币说明-->
+              <div class="investExplain">
+                {{$t('M.finance_invest_read')}}
+                <span class="blue" @click="investExplain">《{{$t('M.finance_invest_explain')}}》</span>
+              </div>
               <!-- 存币详情 -->
               <el-dialog
                 :title="$t('M.finance_save_moneydetail')"
                 :visible.sync="dialogVisible"
                 width="440px"
+                :close-on-click-modal="false"
                 class='dialogStyle'
               >
                 <el-form
@@ -142,7 +148,7 @@
                     :label="$t('M.finance_timeLong')"
                     class='saveTime'
                   >
-                    {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day)}}
+                    {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day ? formLabelAlign.day : 0)}}
                     <span class="blue">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
                     <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
                   </el-form-item>
@@ -239,14 +245,42 @@
                   <!-- 确定 -->
                   <el-button
                     type="primary"
-                    :disabled="stopClick"
                     @click="dialogSuer"
                   >
                     {{$t('M.comm_affirm')}}
                   </el-button>
                 </span>
               </el-dialog>
-              <button></button>
+              <!--交易密码-->
+              <el-dialog
+                :title="$t('M.comm_password')"
+                :visible.sync="isShowPasswordDialog"
+                width="340px"
+                top="42vh"
+                :close-on-click-modal="false"
+                class='passwordDialog'
+              >
+                <input
+                  v-model="passwords"
+                  @input="deleteErrorTips"
+                  type="password"
+                  class="password"
+                  @keyup.enter="submitPassword"
+                >
+                <p v-if="isShowErrorTips" class="errorTips">{{$t('M.otc_publishAD_pleaseInput') + $t('M.comm_password') }}</p>
+                <span slot="footer" class="dialog-footer">
+                  <el-button type="primary" @click="submitPassword"  :disabled="isDisable">{{$t('M.comm_confirm')}}</el-button>
+                </span>
+              </el-dialog>
+              <!--存币说明-->
+              <el-dialog
+                :title="$t('M.finance_invest') + $t('M.comm_description')"
+                :visible.sync="isShowInvestExplain"
+                width="50%"
+                class="explainBox"
+              >
+                <div v-html="argumentContent" class="plainText"></div>
+              </el-dialog>
             </div>
           </div>
           <!-- 我的存币 -->
@@ -529,6 +563,7 @@ import {
   getFinancialRecord
 } from '../../utils/api/investmentFinance'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
+import {argumentBusinessApply} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {
   mapState,
@@ -630,8 +665,19 @@ export default {
           interest: 3
         }
       ],
-      interestRateValue: '', // 年利率
-      stopClick: false
+      interestRateValue: '',
+      // 存币详情确定按钮是否禁用
+      isDisable: false,
+      // 输入交易框是否弹出
+      isShowPasswordDialog: false,
+      // 交易密码
+      passwords: '',
+      // 是否显示交易密码为空的提示
+      isShowErrorTips: false,
+      // 是否显示存币说明框
+      isShowInvestExplain: false,
+      // 存币说明富文本
+      argumentContent: ''
     }
   },
   created () {
@@ -661,6 +707,40 @@ export default {
     },
     timeFormatting (data) {
       return timeFilter(data, 'data')
+    },
+    // 点击存币说明弹出存币说明弹窗
+    investExplain () {
+      this.argumentBusinessApplyRequest()
+      this.isShowInvestExplain = true
+    },
+    // 商家申请界面用户协议
+    async argumentBusinessApplyRequest () {
+      const data = await argumentBusinessApply({
+        termsTypeIds: 13,
+        language: this.language
+      })
+      // 正确逻辑
+      if (!data) return false
+      if (data.data) {
+        this.argumentContent = getNestedData(data, 'data[0].content')
+      }
+    },
+    // 判断是否出现错误提示
+    deleteErrorTips () {
+      if (this.passwords.length) {
+        this.isShowErrorTips = false
+      }
+    },
+    // 提交交易密码
+    async submitPassword () {
+      if (this.passwords && !this.isShowErrorTips) {
+        // 输入密码框关闭
+        this.isShowPasswordDialog = false
+        // 请求理财记录列表
+        this.clickImmediateInvestment()
+      } else {
+        this.isShowErrorTips = true
+      }
     },
     // 改写存币数量只能输入小数点后两位20190103该写
     investNumLimit (ref, pointLength) {
@@ -724,67 +804,51 @@ export default {
         return false
       }
     },
-    /* getInvestEarnings () {
-      if (this.isLogin) {
-        if (this.selectedInvestTypeId && this.investAmount) {
-          if (this.isShow === false) {
-            // 显示理财详情模态框前请求数据渲染模态框
-            this.clickGetInvestEarnings()
-            // 显示模态框
-            this.dialogVisible = true
-          } else {
-            return false
-          }
-        } else {
-          this.$message({
-            // 存币类型或存币数量不能为空
-            message: this.$t('M.finance_noemptyTips'),
-            type: 'error'
-          })
-        }
-      } else {
-        this.$goToPage('/login')
-        return false
-      }
-    }, */
     // 点击取消按钮模态框关闭
     dialogCancel () {
       this.dialogVisible = false
     },
     // 点击确定按钮模态框关闭
     dialogSuer () {
-      this.stopClick = true
       this.dialogVisible = false
-      // 执行存币按钮
-      this.clickImmediateInvestment()
-    },
-    // 模态框数字发生变化时需要执行的方法
-    changeAlignNumber (ref1, ref2, e) {
-      let arr = e.target.value.split('')
-      let str = ''
-      _.forEach(arr, (item, index) => {
-        if (index == 0 && item == '0') {
-          str = ''
-        } else {
-          if (item - 0 || item == '0') {
-            str += item
-          }
-        }
-      })
-      this.investAmount = str
-      // 将本身赋值
-      this.$refs[ref1].value = str
-      // 主理财页面赋值
-      this.$refs[ref2].value = str
-      if (str) {
-        this.clickGetInvestEarnings()
+      // 判断输入密码框是否显示
+      if (this.isShowPasswordDialog) {
+        return false
+      } else {
+        // 设置交易密码弹窗为显示
+        this.isShowPasswordDialog = true
+        // 让交易密码为空的提示隐藏
+        this.isShowErrorTips = false
+        // 输入密码input框清空
+        this.passwords = ''
       }
     },
+    // 模态框数字发生变化时需要执行的方法
+    // changeAlignNumber (ref1, ref2, e) {
+    //   let arr = e.target.value.split('')
+    //   let str = ''
+    //   _.forEach(arr, (item, index) => {
+    //     if (index == 0 && item == '0') {
+    //       str = ''
+    //     } else {
+    //       if (item - 0 || item == '0') {
+    //         str += item
+    //       }
+    //     }
+    //   })
+    //   this.investAmount = str
+    //   // 将本身赋值
+    //   this.$refs[ref1].value = str
+    //   // 主理财页面赋值
+    //   this.$refs[ref2].value = str
+    //   if (str) {
+    //     this.clickGetInvestEarnings()
+    //   }
+    // },
     // 理财记录模态框显示
     async clickGetInvestEarnings () {
       const data = await getFinancialRecord({
         financialManagementId: this.selectedInvestTypeId,
-        // number: this.investAmount
         number: this.$refs.investAmountRef.value
       })
       if (!data) return false
@@ -794,21 +858,25 @@ export default {
     },
     // 添加理财记录
     async clickImmediateInvestment () {
+      // 请求回来时将按钮解除禁用
+      this.isDisable = true
       const data = await imediateInvestment({
         financialManagementId: this.selectedInvestTypeId,
-        // number: this.investAmount
+        payPassword: this.passwords,
         number: this.$refs.investAmountRef.value
       })
+      this.isDisable = false
       if (!data) return false
+      // 请求回来时将按钮解除禁用
       // 重新调一次币种接口刷新列表
       this.getFinancialManagementList()
-      // 请求回来时将按钮解除禁用
-      this.stopClick = false
       // 存币成功
       this.$message({
         message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
         type: 'success'
       })
+      // 清空交易密码
+      this.passwords = ''
     },
     // 存币理财页面币种查询
     async getFinancialManagementList () {
@@ -920,13 +988,12 @@ export default {
       })
     },
     cancelInvest (id) {
-      // 用户点击取消按钮需要请求接口
-      // this.clickCancelInvestment(id)
       // 增加二次确认弹出框
       this.$confirm(this.$t('M.finance_tipsContentOne'), {
         confirmButtonText: this.$t('M.comm_confirm'), // 确定
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
+        // 用户点击取消按钮需要请求接口
         this.clickCancelInvestment(id)
       }).catch(() => {
       })
@@ -949,12 +1016,7 @@ export default {
     }
   },
   watch: {
-    InvestmentValue (newVal, oldVal) {
-      console.log(newVal, oldVal)
-    },
     language (newVal) {
-      console.log('当前选中语言')
-      console.log(newVal)
       this.getFinancialManagementList()
     }
   },
@@ -1006,7 +1068,7 @@ export default {
   .finance-box {
     width: 100%;
     min-width: 1300px;
-    margin-top: 66px;
+    margin-top: 50px;
 
     > .banner-box {
       position: relative;
@@ -1036,6 +1098,7 @@ export default {
             > .newestPrice {
               display: flex;
               flex: 1;
+              align-items: center;
               height: 48px;
 
               > li {
@@ -1046,10 +1109,10 @@ export default {
 
                 > p {
                   font-weight: bolder;
-                  font-size: 22px;
+                  font-size: 16px;
 
                   > span {
-                    font-size: 12px;
+                    font-size: 14px;
                   }
                 }
 
@@ -1080,7 +1143,7 @@ export default {
                   font-weight: 600;
                   font-size: 24px;
                   color: #7cb8fa;
-                  -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg, rgba(124, 184, 250, 0), rgba(124, 184, 250, .2));
+                  -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg, rgba(124, 184, 250, 0), rgba(124, 184, 250, .2) 200%);
 
                   > span {
                     font-size: 12px;
@@ -1094,7 +1157,7 @@ export default {
 
               > label {
                 display: flex;
-                margin: 44px 0;
+                margin: 32px 0;
                 line-height: 50px;
 
                 > .label-title {
@@ -1122,13 +1185,23 @@ export default {
                 .submitBtn {
                   > button {
                     width: 400px;
-                    height: 48px;
+                    height: 50px;
                     margin-left: 117px;
                     border-radius: 4px;
                     text-align: center;
                     color: #fff;
                     background: -webkit-linear-gradient(45deg, #2b396e, #2a5082);
                   }
+                }
+              }
+
+              .investExplain {
+                font-size: 12px;
+                line-height: 0;
+                text-align: right;
+
+                span:hover {
+                  cursor: pointer;
                 }
               }
             }
@@ -1164,13 +1237,14 @@ export default {
               > .pieCharts {
                 width: 282px;
                 padding-top: 50px;
+                margin-right: 50px;
               }
             }
           }
         }
 
         > .invest-list {
-          margin-bottom: 200px;
+          margin: 96px 0 200px;
 
           > .invest-list-body {
             position: relative;
@@ -1178,7 +1252,7 @@ export default {
             > .showAll {
               position: absolute;
               z-index: 10;
-              top: 25px;
+              top: 7px;
               right: 0;
             }
 
@@ -1205,10 +1279,10 @@ export default {
       .finance-form-header {
         .el-input__inner {
           width: 168px;
-          height: 48px;
+          height: 40px;
           border: 1px solid #338ff5;
           border-radius: 2px;
-          font-size: 20px;
+          font-size: 15px;
           color: #338ff5;
           background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
           box-shadow: 0 2px 2px rgba(13, 17, 25, 1);
@@ -1221,7 +1295,7 @@ export default {
 
       .el-tabs__nav {
         width: 300px;
-        padding: 9px 0 9px 26px;
+        padding: 0 0 0 26px;
         font-weight: bold;
         color: rgba(97, 116, 153, 1);
         background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
@@ -1235,7 +1309,7 @@ export default {
       }
 
       .el-tabs__item {
-        font-size: 22px;
+        font-size: 16px;
         color: #617499;
 
         &.is-active {
@@ -1256,7 +1330,7 @@ export default {
           .left-body {
             .el-input__inner {
               width: 400px;
-              height: 48px;
+              height: 50px;
               border: 1px solid #464e5f;
               border-radius: 2px;
               background: #1e2636;
@@ -1308,6 +1382,31 @@ export default {
             margin-left: 40px;
             border: none;
             background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
+        }
+
+        .passwordDialog {
+          .password {
+            box-sizing: border-box;
+            width: 300px;
+            height: 36px;
+            padding: 0 10px;
+            border: 1px solid #485776;
+            color: #fff;
+            background-color: #1a2233;
+          }
+
+          .errorTips {
+            line-height: 36px;
+            color: #d45858;
+          }
+
+          .el-button.el-button--primary {
+            width: 300px;
+            height: 36px;
+            border: 0;
+            line-height: 0;
+            background: linear-gradient(81deg, #2b396e 0%, #2a5082 100%);
           }
         }
 
@@ -1372,6 +1471,10 @@ export default {
         margin-bottom: 10px;
       }
 
+      .el-table th {
+        padding: 8px 0;
+      }
+
       .el-button {
         border: none;
       }
@@ -1404,6 +1507,21 @@ export default {
         .el-dialog__body {
           height: 380px;
           overflow: auto;
+        }
+      }
+
+      .explainBox {
+        .el-dialog {
+          > .el-dialog__body {
+            height: 700px;
+            padding: 0;
+            overflow: scroll;
+
+            .plainText {
+              padding: 30px 20px;
+              color: #8ba0ca;
+            }
+          }
         }
       }
 
@@ -1497,14 +1615,14 @@ export default {
                     color: #666;
 
                     p {
-                      font-size: 22px;
+                      font-size: 16px;
 
                       &:last-child {
                         border: none;
                       }
 
                       span {
-                        font-size: 12px;
+                        font-size: 14px;
                       }
                     }
                   }
@@ -1589,6 +1707,14 @@ export default {
 
             .saveTime {
               color: #333;
+            }
+          }
+
+          .passwordDialog {
+            .password {
+              border: 1px solid #ecf1f8;
+              color: #333;
+              background-color: #fff;
             }
           }
         }
@@ -1697,6 +1823,7 @@ export default {
     }
 
     .blue {
+      font-size: 12px;
       color: #338ff5;
     }
 
@@ -1728,15 +1855,15 @@ export default {
     }
 
     .invest {
-      width: 166px;
-      padding: 14px 0 14px 26px;
-      font-size: 22px;
+      width: 130px;
+      padding: 10px 0 10px 26px;
+      font-size: 16px;
       color: #fff;
       background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
     }
 
     .totalTipsPositon {
-      margin: -36px 0 -20px 110px;
+      margin: -20px 0 -20px 115px;
       color: #d45858;
     }
   }

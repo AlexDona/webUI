@@ -75,7 +75,7 @@
                 </div>
                 <!--冻结数量-->
                 <div
-                  class="title-width title-position"
+                  class="title-width title-position padding-l7"
                 >
                   {{ $t('M.user_assets_sum2') }}
                   <div class="icon-caret">
@@ -97,7 +97,7 @@
                 </div>
                 <!--可用数量-->
                 <div
-                  class="title-width-header title-position"
+                  class="title-width-header title-position padding-l7"
                 >
                   {{ $t('M.user_assets_sum3') }}
                   <div class="icon-caret-order">
@@ -188,10 +188,9 @@
                     class="table-td text-align-r title-width1"
                   >
                     <div
-                      class="title-width-right"
                       v-if="assetItem.btcValue > 0"
                     >
-                      {{ $scientificToNumber($keep8Num(assetItem.btcValue)) }} ≈ {{ $scientificToNumber($keep2Num(assetItem.btcValue) * BTC2CNYRate) }} {{ activeConvertCurrencyObj.shortName }}
+                      {{ $scientificToNumber($keep8Num(assetItem.btcValue)) }} ≈ {{ $scientificToNumber($keep2Num((assetItem.btcValue) * BTC2CNYRate)) }} {{ activeConvertCurrencyObj.shortName }}
                     </div>
                     <div
                       class="title-width-right"
@@ -253,14 +252,6 @@
                           v-show="currencyTradingList.length"
                         >
                         </span>
-                        <!--<p-->
-                        <!--class="transaction-list text-align-c"-->
-                        <!--v-show="OTCCenterHasCurrentCoin"-->
-                        <!--@click="jumpToOTCCenter(assetItem.coinId)"-->
-                        <!--&gt;-->
-                        <!--&lt;!&ndash; otc 交易&ndash;&gt;-->
-                        <!--{{$t('M.comm_otc_center')}}-->
-                        <!--</p>-->
                         <p
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
@@ -1063,11 +1054,6 @@ export default {
         console.log(this.withdrawDepositList)
       }
     },
-    // // 分页
-    // changeCurrentPage (pageNum) {
-    //   this.currentPageForMyEntrust = pageNum
-    //   this.getAssetCurrenciesList()
-    // },
     // 根据币种id查询提币地址
     async queryWithdrawalAddressList () {
       this.activeWithdrawDepositAddress = ''
@@ -1383,9 +1369,6 @@ export default {
         console.log(newVal)
         this.getAssetCurrenciesList()
       }
-    },
-    activeWithdrawDepositAddress (newVal) {
-      console.log(newVal)
     }
   }
 }
@@ -1447,12 +1430,16 @@ export default {
                 .icon-caret {
                   position: absolute;
                   top: 0;
-                  right: 102px;
+                  right: 90px;
                 }
               }
 
+              .padding-l7 {
+                padding-left: 7px;
+              }
+
               .title-width1 {
-                width: 175px;
+                width: 200px;
               }
 
               .title-width-last {
@@ -1465,10 +1452,6 @@ export default {
 
               .title-width-header {
                 width: 140px;
-              }
-
-              .title-width-right {
-                margin-right: 10px;
               }
 
               .error-info {
@@ -1493,7 +1476,8 @@ export default {
 
               .flex-asset {
                 position: relative;
-                text-align: center;
+                padding-right: 15px;
+                text-align: right;
               }
 
               .active {
@@ -1504,7 +1488,7 @@ export default {
               .icon-caret-order {
                 position: absolute;
                 top: 0;
-                right: 46px;
+                right: 15px;
 
                 .caret-text {
                   position: absolute;
@@ -1522,7 +1506,7 @@ export default {
               .icon-caret-order {
                 position: absolute;
                 top: 0;
-                right: 90px;
+                right: 77px;
               }
 
               > .table-tr {
@@ -1740,7 +1724,7 @@ export default {
             position: absolute;
             z-index: 2;
             top: 10px;
-            left: 56px;
+            left: 48px;
             width: 135px;
 
             > .triangle-border {

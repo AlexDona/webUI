@@ -92,7 +92,7 @@ export default {
     box-sizing: border-box;
     width: 100%;
     min-width: 1366px;
-    margin-top: 66px;
+    margin-top: 50px;
 
     > .inner-box {
       display: block;

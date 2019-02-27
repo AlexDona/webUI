@@ -195,7 +195,9 @@
               :label="$t('M.user_invite_login_name')"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.userName }}</div>
+                <div>
+                  {{ s.row.userName.substring(0,3)}}*****{{ s.row.userName.substring(8,11)}}
+                </div>
               </template>
             </el-table-column>
             <!-- 注册时间 -->
@@ -213,7 +215,19 @@
               width="100"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.realname }}</div>
+                <div v-if="!s.row.realname"></div>
+                <div v-else-if="s.row.realname.length === 2 ">
+                  {{ s.row.realname.substring(0,1)}}*
+                </div>
+                <div v-else-if="s.row.realname.length === 3">
+                  {{ s.row.realname.substring(0,2)}}*
+                </div>
+                <div v-else-if="s.row.realname.length === 44">
+                  {{ s.row.realname.substring(0,2)}}*
+                </div>
+                <div v-else>
+                  {{ s.row.realname.substring(0,2)}}**
+                </div>
               </template>
             </el-table-column>
             <!-- 高级认证 -->
@@ -514,22 +528,12 @@ export default {
     })
   },
   watch: {
-    loading (newVal) {
-      // console.log(newVal)
-    },
-    ercodeIsShowId (newVal) {
-      // console.log(newVal)
-    },
     userCenterActiveName (newVal) {
       // console.log(newVal)
       // console.log('invitation-promote')
       if (newVal === 'invitation-promote') {
         this.getInverData()
       }
-    },
-    language (newVal) {
-      // console.log('当前选中语言')
-      // console.log(newVal)
     }
   }
 }

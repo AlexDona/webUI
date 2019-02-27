@@ -44,7 +44,8 @@ import {
 } from '../../utils/commonFunc'
 import {
   mapState,
-  mapMutations
+  mapMutations,
+  mapActions
 } from 'vuex'
 
 export default {
@@ -64,7 +65,9 @@ export default {
     this.noticeList = [
     ]
     if (this.language) {
-      await this.getNewsNoticeList()
+      // await this.getNewsNoticeList()
+      await this.GET_ALL_NOTICE_ACTION(this.language)
+      this.noticeList = [...this.homeNoticeList]
       this.timer = setInterval(this.autoPlay, 4000)
     }
   },
@@ -73,6 +76,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_ALL_NOTICE_ACTION'
+    ]),
     ...mapMutations([
       'CHANGE_NEWS_DETAIL_JUMP_ID',
       'CHANGE_NOTICE_VISIBLE'
@@ -107,7 +113,8 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language,
-      noticeCloseVisible: state => state.home.noticeCloseVisible
+      noticeCloseVisible: state => state.home.noticeCloseVisible,
+      homeNoticeList: state => state.home.noticeList
     })
   },
   watch: {

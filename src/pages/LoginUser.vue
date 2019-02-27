@@ -4,7 +4,7 @@
     :style="{
      'min-height':windowHeight < 800,
      'height': windowHeight + 'px',
-     'margin-top':isMobile?'0':'66px'
+     'margin-top':isMobile?'0':'50px'
     }"
   >
     <keep-alive>

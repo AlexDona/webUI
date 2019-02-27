@@ -955,7 +955,7 @@ export default {
 @import "../../../static/css/scss/index";
 
 .otc-publish-buy-and-sell-box {
-  margin-top: 66px;
+  margin-top: 50px;
   overflow: hidden;
 
   .redBorderRightNone {

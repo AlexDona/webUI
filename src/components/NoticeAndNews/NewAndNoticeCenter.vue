@@ -108,7 +108,8 @@ import {
 } from '../../utils/commonFunc'
 import {
   mapState,
-  mapGetters
+  mapGetters,
+  mapMutations
 } from 'vuex'
 export default {
   components: {},
@@ -183,23 +184,22 @@ export default {
     }
   },
   async created () {
+    this.CHANGE_AJAX_READY_STATUS(true)
     await this.resetNewTypeList()
     await this.getNewsNoticeList()
     this.helpList.forEach(() => {
       this.helpShowStatusList.push(false)
     })
-    console.log(this.newsTypeList)
   },
   mounted () {
-    console.log(this.newsDetailJumpId)
-    // if (this.newsDetailJumpId) {
-    // this.getDetailInfo(this.newsDetailJumpId)
-    // }
   },
   activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'CHANGE_AJAX_READY_STATUS'
+    ]),
     async resetNewTypeList () {
       await this.getAllNewsTypeList()
       console.log(this.newsTypeList)
@@ -232,6 +232,7 @@ export default {
     },
     // 获取新闻公告列表
     async getNewsNoticeList () {
+      this.CHANGE_AJAX_READY_STATUS(true)
       const params = {
         pageNum: this.pageNum,
         pageSize: this.pageSize,
@@ -244,6 +245,7 @@ export default {
       this.noticeList = getNestedData(targetData, 'list') || []
       this.pageNum = getNestedData(targetData, 'pageNum')
       this.totalPages = getNestedData(targetData, 'pages')
+      this.CHANGE_AJAX_READY_STATUS(false)
     }
   },
   filter: {},

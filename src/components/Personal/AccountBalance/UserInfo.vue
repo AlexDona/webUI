@@ -115,14 +115,28 @@
               <!--会员等级 - -->
               {{ $t('M.user_assets_grade_membership') }} -
             </span>
-            <p class="info-picture margin-left10 float-left">
-              <img :src="vipShowPictureSrc">
+            <p
+              class="info-picture margin-left10 float-left cursor-pointer"
+              @click="stateOpenVip"
+            >
+              <!--未申请VIP默认背景-->
+              <img
+                v-if="!level"
+                :src="vipShowDefaultSrc"
+              >
+              <!--已开通VIP背景-->
+              <img
+                v-else
+                :src="vipShowPictureSrc"
+              >
+              <!--未申请VIP默认VIP-->
               <span
                 v-if="!level"
                 class="info-centre-right font-size12"
               >
                 VIP0
               </span>
+              <!--已开通VIP显示对应VIP等级-->
               <span
                 v-else
                 class="info-centre-right font-size12"
@@ -211,7 +225,8 @@ export default {
   data () {
     return {
       userInfoRefresh: {}, // 获取全局个人信息
-      vipShowPictureSrc: require('../../../assets/user/vip.png'), // VIP图片
+      vipShowPictureSrc: require('../../../assets/user/vip.png'), // 开通VIP之后点亮图片
+      vipShowDefaultSrc: require('../../../assets/user/default.png'), // 未开通VIP默认图片
       discountRate: '无', // 自定义折扣率
       totalSumBTC: '', // btc资产
       BTC2CNYRate: '' // 转换汇率
@@ -235,18 +250,19 @@ export default {
         shortName: this.activeConvertCurrencyObj.shortName
       }
       const data = await currencyTransform(params)
-      // console.log(2)
       if (!returnAjaxMsg(data, this)) {
-        // console.log(3)
         return false
       } else {
         console.log(data)
         if (data.data.data.coinPrice) {
-          // this.BTC2CNYRate = data.data.data.coinPrice
           // 获取汇率
           this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
         }
       }
+    },
+    // Vip跳转
+    stateOpenVip () {
+      this.$goToPage('/VipMainContent')
     },
     /**
      * 刚进页面时候 个人资产列表展示
