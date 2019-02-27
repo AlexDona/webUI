@@ -18,6 +18,7 @@ import {
   CHANGE_AJAX_READY_STATUS,
   CHANGE_SYMBOL_CHANGED_STATUS,
   SET_WINDOW_WIDTH,
+  SET_NOTICE_ID,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
@@ -156,5 +157,8 @@ export default {
   [SET_WINDOW_WIDTH] (state, width) {
     state.clientWidth = width
     console.log(state.clientWidth)
+  },
+  [SET_NOTICE_ID] (state, noticeId) {
+    state.newsItemId = noticeId
   }
 }

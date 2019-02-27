@@ -158,11 +158,12 @@
                     :key="noticeItem.id"
                     :track-by="noticeItem.id"
                   >
-                      <router-link
-                        :to="`NewsAndNoticeItem/${noticeItem.id}`"
+                      <a
+                        class="cursor-pointer"
+                        @click.stop="jumpToNewsItem(noticeItem.id)"
                       >
                         {{noticeItem.title}}
-                      </router-link>
+                      </a>
                   </li>
                   <li
                     class="notice-item view-more"
@@ -534,8 +535,19 @@ export default{
       'CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'USER_LOGOUT',
-      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'SET_NOTICE_ID'
     ]),
+    jumpToNewsItem (noticeId) {
+      console.log(this.$route)
+      //  NewsAndNoticeItem
+      let currentRoute = this.$route.path
+      if (!currentRoute.startsWith('/NewsAndNoticeItem')) {
+        this.$goToPage(`/NewsAndNoticeItem/${noticeId}`)
+      } else {
+        this.SET_NOTICE_ID(noticeId)
+      }
+    },
     // 非商家禁止进入OTC导航页提示框--开始
     applyMerchant () {
       if (this.isLogin) {
