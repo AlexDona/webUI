@@ -221,7 +221,9 @@ export const personal = {
   // API管理
   // 創建API
   'user_api_administration': '管理',
-  'user_api_text1': '本平臺為您提供了強大的API，您可以通過 API 使用行情查詢、自動交易等服務。通過 API 文檔 查看如何使用;',
+  'user_api_text0': '通過',
+  'user_api_text01': '查看如何使用;',
+  'user_api_text1': '本平臺為您提供了強大的API，您可以通過 API 使用行情查詢、自動交易等服務。',
   'user_api_text2': '每個用戶最多創建5組API Key;',
   'user_api_text3': '請不要泄露您的API Key，以免造成資產損失。出於安全考慮，建議為API Key綁定IP，每個API Key最多綁定4個IP。 單個地址直接填寫，多個IP地址用半角逗號分隔，如：192.168.1.1,192.168.1.2,192.168.1.3。',
   'user_api_text4': '訪問秘鑰',

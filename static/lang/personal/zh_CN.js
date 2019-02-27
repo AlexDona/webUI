@@ -45,7 +45,7 @@ export const personal = {
   'user_assets_grade_membership': '会员等级',
   'user_assets_or': '或',
   'user_assets_current_total': '当前资产总估值',
-  'user_assets_attention': '注：资产总估仅提供参考，请以单项资金为准',
+  'user_assets_attention': '注：资产总估值仅提供参考，请以单项资金为准',
   'user_address_withdrawal': '非法地址',
   // 账单明细
   // 'user_billing_attention': '充提',
@@ -221,7 +221,9 @@ export const personal = {
   // API管理
   // 创建API
   'user_api_administration': '管理',
-  'user_api_text1': '本平台为您提供了强大的API，您可以通过 API 使用行情查询、自动交易等服务。通过 API 文档 查看如何使用;',
+  'user_api_text0': '通过',
+  'user_api_text01': '查看如何使用;',
+  'user_api_text1': '本平台为您提供了强大的API，您可以通过 API 使用行情查询、自动交易等服务。',
   'user_api_text2': '每个用户最多创建5组API Key;',
   'user_api_text3': '请不要泄露您的API Key，以免造成资产损失。出于安全考虑，建议为API Key绑定IP，每个API Key最多绑定4个IP。 单个地址直接填写，多个IP地址用半角逗号分隔，如：192.168.1.1,192.168.1.2,192.168.1.3。',
   'user_api_text4': '访问秘钥',

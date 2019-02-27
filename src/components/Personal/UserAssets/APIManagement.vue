@@ -87,6 +87,15 @@
               <span class="style">● </span>
               <p class="content-text">
                 {{ $t('M.user_api_text1') }}
+                {{$t('M.user_api_text0')}}
+                <a
+                  class="link-info"
+                  href="https://github.com/bizuyun/API/wiki"
+                  target="_blank"
+                >
+                  {{$t('M.comm_api_doc')}}
+                </a>
+                {{$t('M.user_api_text01')}}
               </p>
             </div>
             <div class="content-info">
@@ -950,6 +959,10 @@ export default {
               .content-text {
                 flex: 4;
                 padding-right: 40px;
+
+                .link-info {
+                  color: #338ff5;
+                }
               }
             }
 

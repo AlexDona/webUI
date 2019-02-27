@@ -217,7 +217,9 @@ export const personal = {
   // API管理API management
   // 创建APICreate API
   'user_api_administration': ' Management',
-  'user_api_text1': 'This platform provides you with a powerful API that allows you to use quotes, automated trading and more. See how to use it through the API documentation;',
+  'user_api_text0': 'By',
+  'user_api_text01': 'to see how to use it;',
+  'user_api_text1': 'This platform provides you with a powerful API that allows you to use quotes, automated trading and more. ',
   'user_api_text2': 'Create up to 5 sets of API Keys per user;',
   'user_api_text3': 'Please do not reveal your API Key to avoid loss of assets. For security reasons, it is recommended to bind IP to the API Key. Each API Key is bound to a maximum of 4 IPs. A single address is directly filled in. Multiple IP addresses are separated by commas, such as 192.168.1.1, 192.168.1.2, and 192.168.1.3.',
   'user_api_text4': ' Access Key',
