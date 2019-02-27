@@ -24,6 +24,9 @@ export default {
     },
     status: {
       type: Boolean
+    },
+    className: {
+      type: String
     }
   },
   data () {
@@ -88,7 +91,6 @@ export default {
   },
   watch: {
     time (newVal) {
-      console.log(newVal)
     },
     countDownResetStatus () {
       this.time = 0

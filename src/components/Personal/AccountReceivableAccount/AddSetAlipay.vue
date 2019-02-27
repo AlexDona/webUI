@@ -45,7 +45,6 @@
         </header>
         <div class="account-content-from">
           <el-form
-            :label-position="labelPosition"
             label-width="120px"
           >
             <!--名称-->

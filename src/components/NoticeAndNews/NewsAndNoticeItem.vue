@@ -49,7 +49,8 @@
                     class="view-more"
                     @click="backToParent(outerItem)"
                   >
-                    更多 》
+                    <!--查看更多-->
+                    {{$t('M.comm_view_more')}} 》
                   </span></h2>
                 <ul
                   class="news-type-content"
@@ -74,7 +75,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState, createNamespacedHelpers} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 
 import {
   getNewsNoticeList,
@@ -91,8 +92,6 @@ import {
   getNestedData
 } from '../../utils/commonFunc'
 
-const {mapMutations} = createNamespacedHelpers('footerInfo')
-
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
@@ -106,7 +105,8 @@ export default {
       // 详情页面新闻列表
       detailAllNewsList: [],
       // 最新 templateId
-      templateId: ''
+      templateId: '',
+      searchKeyWord: ''
     }
   },
   async created () {
@@ -140,6 +140,7 @@ export default {
         language: this.language
       }
       const data = await changeNewDetailByLanguage(params)
+      if (!data) return false
       let newContent = getNestedData(data, 'data.content')
       if (newContent) {
         this.newDetail = getNestedData(data, 'data')
@@ -151,11 +152,13 @@ export default {
         language: this.language
       }
       const data = await getAllNewsTypeList(params)
+      if (!data) return false
       this.newsTypeList = getNestedData(data, 'data') || []
     },
     // 获取详情信息
     async getDetailInfo (id) {
       const data = await getNewsDetail(id)
+      if (!data) return false
       this.newDetail = getNestedData(data, 'data')
       this.templateId = getNestedData(data, 'data.templateId')
       setStore('templateId', this.templateId)
@@ -171,6 +174,7 @@ export default {
         const item = this.newsTypeList[i]
         params.newsTypeId = item.id - 0
         const data = await getNewsNoticeList(params)
+        if (!data) break
         const targetData = getNestedData(data, 'data.list')
         this.detailAllNewsList.push(targetData)
       }

@@ -90,14 +90,13 @@
                 <!--日期-->
                 {{ $t('M.user_coin_order4') }}
               </span>
-              <!--开始日期-->
               <el-date-picker
                 v-model="startTime"
                 type="datetimerange"
                 align="right"
-                unlink-panels
-                @change="changeTime"
                 :editable="false"
+                :clearable="false"
+                range-separator="~"
                 :start-placeholder="$t('M.otc_no1')"
                 :end-placeholder="$t('M.otc_no2')"
                 value-format = "yyyy-MM-dd HH:mm:ss"
@@ -114,12 +113,11 @@
                 <!--日期-->
                 {{ $t('M.user_coin_order4') }}
               </span>
-              <!--开始日期-->
               <el-date-picker
                 v-model="startTime"
                 type="datetimerange"
                 align="right"
-                unlink-panels
+                range-separator="~"
                 @change="changeTime"
                 :editable="false"
                 :clearable="false"
@@ -179,7 +177,7 @@
                   :label="$t('M.comm_count')"
                 >
                   <template slot-scope = "s">
-                    <div>{{ s.row.amount }}</div>
+                    <div>{{ s.row.amount - 0 }}</div>
                   </template>
                 </el-table-column>
                 <!--提交时间-->
@@ -307,6 +305,7 @@
         background
         v-show="activeName === 'current-entrust' && chargeRecordList.length"
         layout="prev, pager, next"
+        :current-page="recordPageNumber"
         :page-count="recordTotalPageNumber"
         @current-change="changeCurrentPage('current-entrust',$event)"
       >
@@ -318,6 +317,7 @@
         background
         v-show="activeName === 'other-records' && otherRecordsList.length"
         layout="prev, pager, next"
+        :current-page="otherRecordPageNumbers"
         :page-count="totalPagesOtherRecords"
         @current-change="changeCurrentPage('other-records',$event)"
       >
@@ -334,7 +334,6 @@ import {
   getComprehensiveRecordsList
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg,
   getNestedData
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils'
@@ -348,6 +347,7 @@ export default {
       hours: new Date().getHours(),
       minutes: new Date().getMinutes(),
       seconds: new Date().getSeconds(),
+      pickerOptionsTime: {},
       chargeRecordList: [], // 充提记录列表
       activeName: 'current-entrust', // 充提记录
       recordPageNumber: 1, // 充提记录页码
@@ -406,7 +406,7 @@ export default {
       ],
       pickerOptionsStart: {},
       pickerOptionsEnd: {},
-      partLoading: true // 局部loading
+      partLoading: false // 局部loading
     }
   },
   async created () {
@@ -434,16 +434,14 @@ export default {
       let param = {
       }
       data = await getMerchantCurrencyList(param)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        this.currencyList = getNestedData(data, 'data.data')
-        this.defaultCurrencyId = getNestedData(data, 'data.data')[0].id
-        console.log(this.currencyList)
-      }
+      if (!data) return false
+      this.currencyList = getNestedData(data, 'data')
+      this.defaultCurrencyId = getNestedData(data, 'data')[0] ? getNestedData(data, 'data')[0].id : ''
     },
     // 搜索按钮
     stateSearchButton (entrustType) {
+      this.recordPageNumber = 1
+      this.otherRecordPageNumbers = 1
       this.partLoading = true
       this.getChargeMentionList(entrustType)
     },
@@ -461,7 +459,7 @@ export default {
       this.otherRecordsList = []
       let params = {
         pageSize: this.pageSize, // 每页显示条数
-        userId: this.userInfo.userId, // 用户ID
+        userId: getNestedData(this.userInfo, 'userId'), // 用户ID
         coinId: this.defaultCurrencyId, // 币种ID
         type: this.otherRecordsValue, // 类型（RECHARGE:充值 WITHDRAW:提现 / 其他记录类型
         startTime: '', // 开始起止时间
@@ -478,19 +476,13 @@ export default {
           params.endTime = this.startTime[1] == null ? '' : timeFilter(this.startTime[1], 'normal') // 结束起止时间
           data = await statusRushedToRecordList(params)
           // console.log(data)
-          if (!returnAjaxMsg(data, this, 0)) {
-            // 接口失败清除局部loading
-            this.partLoading = false
-            return false
-          } else {
-            // 接口成功清除局部loading
-            this.partLoading = false
-            // 返回冲提记录列表展示
-            let detailData = getNestedData(data, 'data.data')
-            // 充提记录
-            this.chargeRecordList = getNestedData(detailData, 'list')
-            this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
-          }
+          this.partLoading = false
+          if (!data) return false
+          // 返回冲提记录列表展示
+          let detailData = getNestedData(data, 'data')
+          // 充提记录
+          this.chargeRecordList = getNestedData(detailData, 'list') || []
+          this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
           break
         case 'other-records':
           params.pageNum = this.otherRecordPageNumbers
@@ -500,20 +492,12 @@ export default {
           // console.log(params)
           // console.log(this.startTime)
           data1 = await getComprehensiveRecordsList(params)
-          // console.log(data1)
-          if (!returnAjaxMsg(data1, this, 0)) {
-            // 接口失败清除局部loading
-            this.partLoading = false
-            return false
-          } else {
-            // 接口成功清除局部loading
-            this.partLoading = false
-            console.log(data1)
-            if (data1.data.data.list) {
-              this.otherRecordsList = getNestedData(data1, 'data.data.list')
-              this.totalPagesOtherRecords = getNestedData(data1, 'data.data.pages') - 0
-            }
-          }
+          console.log(data1)
+          this.partLoading = false
+          if (!data1) return false
+          // 接口成功清除局部loading
+          this.otherRecordsList = getNestedData(data1, 'data.list') || []
+          this.totalPagesOtherRecords = getNestedData(data1, 'data.pages') - 0
           break
       }
     },
@@ -542,10 +526,14 @@ export default {
     changeTime () {
       this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
         disabledDate: (time) => {
+          // let curDate = (new Date()).getTime()
+          // let three = 92 * 24 * 3600 * 1000
+          // let threeMonths = curDate - three
+          // return time.getTime() > Date.now() + (1 * 24 * 60 * 60 * 1000) || time.getTime() < threeMonths
           let curDate = (new Date()).getTime()
-          let three = 92 * 24 * 3600 * 1000
+          let three = 90 * 24 * 3600 * 1000
           let threeMonths = curDate - three
-          return time.getTime() > Date.now() + (1 * 24 * 60 * 60 * 1000) || time.getTime() < threeMonths
+          return time.getTime() > Date.now() || time.getTime() < threeMonths
         }
       })
     }

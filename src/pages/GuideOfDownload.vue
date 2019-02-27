@@ -57,11 +57,10 @@
               ref="download-link"
               download="android"
               :style="{
-                display:none
+                display:'none'
               }"
             ></a>
             <!-- 下载app -->
-
           </div>
         </div>
         <!--pc端-->
@@ -125,7 +124,7 @@ import {
 import IconFont from '../components/Common/IconFontCommon'
 import Qrcode from '../components/Common/Qrcode'
 import VueClipboard from 'vue-clipboard2'
-
+import Vue from 'vue'
 Vue.use(VueClipboard)
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {

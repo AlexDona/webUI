@@ -109,7 +109,6 @@
           </div>
           <div class="google-info-show">
             <el-form
-              :label-position="labelPosition"
               label-width="120px"
             >
               <!--私钥-->

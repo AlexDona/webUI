@@ -162,20 +162,19 @@ export default {
         language
       }
       const data = await getServiceProtocoDataAjax(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
+      if (!data) return false
+      let targetContent = getNestedData(data, 'data[0].content')
+      if (targetContent) {
+        this.rulesOfInvitation = targetContent
       } else {
-        let targetContent = getNestedData(data, 'data.data[0].content')
-        if (targetContent) {
-          this.rulesOfInvitation = targetContent
-        } else {
-          this.getRulesOfInvitation()
-        }
+        this.getRulesOfInvitation()
       }
     },
     // 获取 排行榜数据
     async getRankingList () {
       const data = await getRankingList()
+      console.log(data)
+      if (!data) return false
       this.rankingList = getNestedData(data, 'data')
     },
     // 获取当前时间
@@ -200,13 +199,13 @@ export default {
       return this.clientWidth / 3
     },
     coinName () {
-      return this.rankingList[0].coinName
+      return getNestedData(this.rankingList[0], 'coinName')
     },
     startDate () {
-      return this.configInfo.regStartTime
+      return getNestedData(this.configInfo, 'regStartTime')
     },
     endDate () {
-      return this.configInfo.regEndTime
+      return getNestedData(this.configInfo, 'regEndTime')
     }
   },
   watch: {

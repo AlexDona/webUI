@@ -11,6 +11,9 @@ export const footerInfo = {
   'about_digital_terms_hint4': 'プライバシーポリシー',
   'about_digital_terms_hint5': 'APIドキュメント',
   'about_digital_terms_hint6': '通貨情報',
+  'about_digital_terms_hint7': 'AML',
+  'about_digital_terms_hint8': 'OTC サービス契約',
+  'about_digital_terms_hint9': '会社紹介',
   // ##########################20181117-1145新增国际化################################
   'about_footer_info_down1': '全プラット端末がアクセスする',
   'about_footer_info_down2': 'iOS、Android、Windows多プラット全業務機能をサポートする',

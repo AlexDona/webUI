@@ -18,8 +18,8 @@
             class="cursor-pointer"
             @click="jumpToNewsDetail(item)"
           >
-            <span class="type">【{{ $t(item.typeName) }}】</span>
-            <span>{{ $t(item.title) }}</span>
+            <span class="type">【{{ item.typeName }}】</span>
+            <span>{{ item.title }}</span>
           </span>
         </router-link>
       </div>
@@ -87,7 +87,8 @@ export default {
         language: this.language
       }
       const data = await getAllNewsNoticeListForHomePage(params)
-      this.noticeList = getNestedData(data, 'data')
+      if (!data) return false
+      this.noticeList = getNestedData(data, 'data') || []
     },
     // 关闭组件
     closeNotice () {

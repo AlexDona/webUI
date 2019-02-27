@@ -2,17 +2,17 @@
   <div
     class="table-item-box"
     v-show="item.content.length||searchKeyWord"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div
       class="left"
     >
-      <!--正面-->
         <div
           class="right-side animate"
         >
           <div class="top">
             <span>{{item.area}}</span>
-            <span v-show="item.id!=collectAreaId&&item.id!=searchAreaId">
+            <span v-show="item.id != collectAreaId && item.id != searchAreaId">
               <!--交易区-->
               {{ $t('M.home_market_trade_sector') }}
             </span>
@@ -23,15 +23,18 @@
     <div
       class="right"
       :style="{
-        'height':`${+(50*(item.content.length||1)+108)}px`,
-        'max-height':'560px'
+        'height':`${+(50*((isGetMore ? (item.content.length + 1) : item.content.length) || 1) + 108)}px`,
+        'max-height':'610px'
       }"
     >
       <el-table
         class="cursor-pointer"
+        :class="{
+          'has-data': item.content.length
+        }"
         :data="item.content"
         @row-click="changeActiveSymbol"
-        height="547"
+        :height="isGetMore ? 548: 598"
       >
         <!--交易对:label="$t('M.comm_deal') + $t('M.comm_pair')"-->
         <el-table-column
@@ -55,12 +58,13 @@
                    style="height:30px;
                       margin:10px 4px;"
               >
-                <div class="top"
-                     style="height:15px;"
-                     :class="{
-                                'line-height15':language=='zh_CN',
-                                'line-height30':language!=='zh_CN'
-                             }"
+                <div
+                  class="top"
+                  style="height:15px;"
+                  :class="{
+                    'line-height15':language=='zh_CN',
+                    'line-height30':language!=='zh_CN'
+                  }"
                 >
                   <span class="symbol">{{s.row.sellsymbol}}</span>
                   <span
@@ -100,13 +104,13 @@
                   v-show="s.row.chg>=0"
                   style="color:#d45858;"
                 >
-                  {{s.row.last}}
+                  {{$scientificToNumber(s.row.last)}}
                 </span>
                 <span
                   v-show="s.row.chg<0"
                   style="color:#008069;"
                 >
-                          {{s.row.last}}
+                          {{$scientificToNumber(s.row.last)}}
                         </span>
               </div>
               <!--货币转换-->
@@ -135,7 +139,7 @@
                 width:140px;
                 line-height: 30px;
                 margin:10px auto; ">
-              {{s.row.high}}
+              {{$scientificToNumber(s.row.high)}}
             </div>
           </template>
         </el-table-column>
@@ -153,19 +157,20 @@
                 padding-left:12px;
                 line-height: 30px;
                 margin:10px auto; ">
-              {{s.row.low}}
+              {{$scientificToNumber(s.row.low)}}
             </div>
           </template>
         </el-table-column>
         <!--24H交易量-->
         <el-table-column
-          prop="volume"
+          prop="vol24hour"
           :label="'24H' + $t('M.home_market_volume')"
           width="150px"
           sortable
         >
           <template slot-scope="s">
             <div
+              v-show="String($formatCount(s.row.vol24hour))!='NaN'"
               style=" width: 120px;
                 padding-left:10px;
                 height:30px;
@@ -177,7 +182,7 @@
         </el-table-column>
         <!--涨跌-->
         <el-table-column
-          prop="rose"
+          prop="chg"
           :label="$t('M.trade_ups_and_downs')"
           width="110px"
           sortable
@@ -259,6 +264,12 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 查看更多-->
+      <button
+        v-show="isGetMore"
+        @click="getMoreSymbols({plateId:activeName,areaId:item.id})"
+        class="more-btn"
+      >{{$t('M.comm_view_more')}}</button>
     </div>
   </div>
 </template>
@@ -279,12 +290,18 @@ export default {
     'searchAreaId',
     'collectStatusList',
     'collectSymbol',
-    'item'
+    'item',
+    'hasMoreSymbols',
+    'activeName'
   ],
   data () {
-    return {}
+    return {
+      more: false
+    }
   },
   created () {
+    console.log(this.item)
+    this.more = this.item.more
   },
   mounted () {
   },
@@ -303,6 +320,15 @@ export default {
         status,
         row
       })
+    },
+    // 获取更多交易对
+    getMoreSymbols ({plateId = this.activeName, more = true, areaId}) {
+      this.$emit('getMoreSymbols', {
+        plateId,
+        more,
+        areaId
+      })
+      this.more = false
     },
     changeActiveSymbol (e) {
       this.SET_JUMP_STATUS(true)
@@ -357,9 +383,13 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language, // 语言
+      theme: state => state.common.theme,
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
-    })
+    }),
+    isGetMore () {
+      return this.more
+    }
   },
   watch: {
   }
@@ -517,6 +547,48 @@ export default {
     margin: 13px 0 0;
     overflow: hidden;
     background-color: transparent;
+
+    > .more-btn {
+      box-sizing: border-box;
+      width: 100%;
+      height: 50px;
+      font-size: 14px;
+      color: $mainColor;
+      background-color: #1c1f32;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #282a3c;
+      }
+    }
+
+    /deep/ {
+      .el-table {
+        .el-table__row {
+          td {
+            div {
+              height: 50px;
+
+              .collect-box {
+                line-height: 50px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.day {
+    > .right {
+      > .more-btn {
+        background-color: #fff;
+
+        &:hover {
+          background-color: #eaf2fa;
+        }
+      }
+    }
   }
 }
 </style>

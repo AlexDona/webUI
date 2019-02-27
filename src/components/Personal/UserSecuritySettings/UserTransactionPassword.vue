@@ -39,7 +39,6 @@
           <!--设置交易密码-->
           <el-form
             v-if="!securityCenter.payPassword"
-            :label-position="labelPosition"
             label-width="120px"
           >
             <!--昵称-->
@@ -106,7 +105,6 @@
           <!--重置交易密码-->
           <el-form
             v-else
-            :label-position="labelPosition"
             label-width="120px"
           >
             <!--交易密码-->

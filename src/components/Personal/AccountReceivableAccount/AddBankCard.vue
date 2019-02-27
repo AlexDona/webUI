@@ -39,7 +39,6 @@
       <div class="add-bank-content">
         <div class="bank-content-from">
           <el-form
-            :label-position="labelPosition"
             label-width="120px"
           >
             <!--名 称-->

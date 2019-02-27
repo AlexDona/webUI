@@ -44,7 +44,6 @@
         <!--</header>-->
         <div class="payment-content-from">
           <el-form
-            :label-position="labelPosition"
             label-width="190px"
           >
             <!--名 称-->

@@ -25,13 +25,8 @@
         </span>
       </header>
       <div class="set-email-content">
-        <header class="email-content-title">
-          <!--*请确认您的银行卡已开启短信通知功能-->
-          {{ $t('M.user_security_text0') }}
-        </header>
         <div class="email-content-from">
           <el-form
-            :label-position="labelPosition"
             label-width="120px"
           >
             <!--邮箱账号-->

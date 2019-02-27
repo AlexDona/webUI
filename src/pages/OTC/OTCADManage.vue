@@ -265,9 +265,11 @@
                   {{$t('M.otc_adMange_adverting')}}
                 </el-button>
                 <!-- 修改 -->
+                <!--20190222修改：后台增加字段币种是否可用来动态显示隐藏修改按钮s.row.coinStatus === 'ENABLE'-->
+                <!--也可以用禁用按钮方法：:disabled="s.row.coinStatus === 'DISABLE'"-->
                 <el-button
                   type="text"
-                  v-if="s.row.status === 'CANCELED'"
+                  v-if="s.row.status === 'CANCELED' && s.row.coinStatus === 'ENABLE'"
                   @click="modifyAD(s.row.id)"
                 >
                   {{$t('M.otc_adMange_change')}}
@@ -487,8 +489,8 @@ export default {
     async cancelAllOneKeyConfirm () {
       const data = await cancelAllOrdersOnekey()
       // 返回数据正确的逻辑
-      if (!data) return false
       this.loading = false
+      if (!data) return false
       this.getOTCADManageList()
     },
     // 10.0 点击表格中的下架按钮触发的事件
@@ -508,6 +510,7 @@ export default {
         entrustId: id
       })
       // 返回数据正确的逻辑 重新渲染列表
+      this.loading = false
       if (!data) return false
       this.getOTCADManageList()
     },
@@ -629,6 +632,7 @@ export default {
 
     .el-input__icon {
       height: 34px;
+      line-height: 34px;
     }
 
     .inquire-button {

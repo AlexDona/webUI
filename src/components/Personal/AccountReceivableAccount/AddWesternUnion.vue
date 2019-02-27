@@ -45,7 +45,6 @@
         <div class="western-content-from">
           <!--名 称-->
           <el-form
-            :label-position="labelPosition"
             label-width="160px"
           >
             <el-form-item

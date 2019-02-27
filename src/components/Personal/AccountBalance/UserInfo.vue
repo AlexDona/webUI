@@ -19,11 +19,11 @@
                 {{ $t('M.comm_hello') }}
               </span>
               <span class="color">
-                {{ innerUserInfo.userName }}
+                {{ userName }}
               </span>
             </p>
             <span class="display-inline-block margin-top9 text-color">
-              UID： {{ innerUserInfo.showId }}
+              UID： {{ showId }}
             </span>
           </div>
         </div>
@@ -31,7 +31,7 @@
           <p class="info-top">
             <!--未实名-->
             <span
-              v-if="!innerUserInfo.realname"
+              v-if="realNameAuth !== 'y'"
               class="icon-user-info info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -51,7 +51,7 @@
             </span>
             <!--未绑定邮箱-->
             <span
-              v-if="!innerUserInfo.email"
+              v-if="!email"
               class="icon-user-info info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -71,7 +71,7 @@
             </span>
             <!--未绑定绑定手机-->
             <span
-              v-if="innerUserInfo.phoneEnable === 'disable' || innerUserInfo.phoneEnable === ''"
+              v-if="phoneEnable === 'disable' || phoneEnable === ''"
               class="icon-user-info info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -91,7 +91,7 @@
             </span>
             <!--未绑定谷歌-->
             <span
-              v-if="innerUserInfo.googleEnable === 'disable' || innerUserInfo.googleEnable === ''"
+              v-if="googleEnable === 'disable' || googleEnable === ''"
               class="icon-user-info display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -118,7 +118,7 @@
             <p class="info-picture margin-left10 float-left">
               <img :src="vipShowPictureSrc">
               <span
-                v-if="!innerUserInfo.level"
+                v-if="!level"
                 class="info-centre-right font-size12"
               >
                 VIP0
@@ -128,25 +128,25 @@
                 class="info-centre-right font-size12"
               >
                 <!-- {{ userInfo.userInfo.level }} -->
-                {{ innerUserInfo.level }}
+                {{ level }}
               </span>
             </p>
           </div>
           <!--<p class="info-discount margin-top45">-->
-            <!--<span class="discount-text font-size12">折扣率</span>&nbsp;-->
-            <!--<span class="discount-state font-size12">{{ discountRate }}</span>-->
+          <!--<span class="discount-text font-size12">折扣率</span>&nbsp;-->
+          <!--<span class="discount-state font-size12">{{ discountRate }}</span>-->
           <!--</p>-->
           <p></p>
         </div>
         <!--<div class="volume float-left">-->
-          <!--<p class="volume-text font-size12">近30天交易量</p>-->
-          <!--<p class="volume-info margin-top9">-->
-            <!--<span class="info-color font-size16">{{ BTCAssets }}</span>-->
-            <!--<span class="info-color font-size12">BTC</span>-->
-            <!--或-->
-            <!--<span class="info-color font-size16">{{ CNYAssets }}</span>-->
-            <!--<span class="info-color font-size12">CNY</span>-->
-          <!--</p>-->
+        <!--<p class="volume-text font-size12">近30天交易量</p>-->
+        <!--<p class="volume-info margin-top9">-->
+        <!--<span class="info-color font-size16">{{ BTCAssets }}</span>-->
+        <!--<span class="info-color font-size12">BTC</span>-->
+        <!--或-->
+        <!--<span class="info-color font-size16">{{ CNYAssets }}</span>-->
+        <!--<span class="info-color font-size12">CNY</span>-->
+        <!--</p>-->
         <!--</div>-->
         <div class="asset float-left flex1">
           <p class="asset-text font-size12">
@@ -155,22 +155,30 @@
           </p>
           <p class="asset-info margin-top9">
             <span class="info-color font-size16">
-              {{ totalSumBTC }}
+              {{ $keep8Num(totalSumBTC) }}
             </span>
             <span class="info-color font-size12">
               BTC
             </span>
             <span
               class="info-color"
-              v-show="CNYAssets"
             >
               <!--或-->
                {{ $t('M.user_assets_or') }}
-              <span class="info-color font-size16">
-                {{ CNYAssets }}
+              <span
+                class="info-color font-size16"
+                v-if="this.totalSumBTC > 0"
+              >
+               {{ $keep2Num($scientificToNumber(this.totalSumBTC) * BTC2CNYRate) }}
+              </span>
+              <span
+                v-else
+                class="info-color font-size16"
+              >
+               0.00
               </span>
               <span class="info-color font-size12">
-                CNY
+                {{ activeConvertCurrencyObj.shortName }}
               </span>
             </span>
           </p>
@@ -210,8 +218,11 @@ export default {
     }
   },
   async created () {
-    await this.currencyTransform()
     await this.getAssetCurrenciesList()
+    if (this.currencyRateList.BTC) {
+      // 汇率转换
+      this.currencyTransform()
+    }
   },
   mounted () {},
   activated () {},
@@ -221,12 +232,12 @@ export default {
     async currencyTransform () {
       const params = {
         coinName: 'BTC',
-        shortName: 'CNY'
+        shortName: this.activeConvertCurrencyObj.shortName
       }
       const data = await currencyTransform(params)
-      console.log(2)
+      // console.log(2)
       if (!returnAjaxMsg(data, this)) {
-        console.log(3)
+        // console.log(3)
         return false
       } else {
         console.log(data)
@@ -252,15 +263,12 @@ export default {
           break
       }
       data = await assetCurrenciesList(params)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据
-        // this.totalSumBTC = data.data.data.totalSum
-        this.totalSumBTC = getNestedData(data, 'data.data.totalSum')
-        console.log(data.data.data)
-        console.log(this.totalSumBTC)
-      }
+      if (!data) return false
+      // 返回数据
+      // this.totalSumBTC = data.data.data.totalSum
+      this.totalSumBTC = getNestedData(data, 'data.totalSum')
+      console.log(data.data.data)
+      console.log(this.totalSumBTC)
     }
   },
   filter: {},
@@ -269,14 +277,29 @@ export default {
       theme: state => state.common.theme,
       language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
-      innerUserInfo: state => state.user.loginStep1Info.userInfo // 内存用户详细信息
-    }),
-    // CNY 资产
-    CNYAssets () {
-      return (this.BTC2CNYRate - 0) * (this.totalSumBTC - 0)
-    }
+      innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内存用户详细信息
+      userName: state => getNestedData(state, 'user.loginStep1Info.userInfo.userName'),
+      realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth'),
+      showId: state => getNestedData(state, 'user.loginStep1Info.userInfo.showId'),
+      email: state => getNestedData(state, 'user.loginStep1Info.userInfo.email'),
+      phoneEnable: state => getNestedData(state, 'user.loginStep1Info.userInfo.phoneEnable'),
+      googleEnable: state => getNestedData(state, 'user.loginStep1Info.userInfo.googleEnable'),
+      level: state => getNestedData(state, 'user.loginStep1Info.userInfo.level'),
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
+      currencyRateList: state => state.common.currencyRateList // 折算货币列表
+    })
   },
   watch: {
+    async activeConvertCurrencyObj () {
+      console.log(this.activeConvertCurrencyObj)
+      if (this.currencyRateList.BTC) {
+        // 汇率转换
+        await this.currencyTransform()
+      }
+    },
+    currencyRateList () {
+      console.log(this.currencyRateList)
+    },
     totalSumBTC () {
     },
     // 任改动

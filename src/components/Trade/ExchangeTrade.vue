@@ -38,19 +38,25 @@
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!buyUserCoinWallet.total">--</span>
-                    <span v-show="buyUserCoinWallet.total">{{buyUserCoinWallet.total}}</span>
+                    <span v-show="buyUserCoinWallet.total">{{$scientificToNumber(buyUserCoinWallet.total)}}</span>
                     <span>{{middleTopData.area}}</span>
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/PersonalCenter">
+                  <a
+                    @click.stop="jumpToPersonalCenter"
+                    :style="{'cursor': 'pointer'}"
+                  >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </router-link>
-                  <router-link to="/PersonalCenter">
+                  </a>
+                  <a
+                    @click.stop="jumpToPersonalCenter"
+                    :style="{'cursor': 'pointer'}"
+                  >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
-                  </router-link>
+                  </a>
                 </div>
               </div>
               <div class="content">
@@ -61,6 +67,7 @@
                     :placeholder="$t('M.comm_buy') + $t('M.comm_price')"
                     :ref="limitBuyPriceInputRef"
                     @keyup="autoChangeData('limit-buy')"
+                    maxlength="14"
                     @input="formatInput(limitBuyPriceInputRef,middleTopData.priceExchange)"
                   >
                   <span class="currency">{{middleTopData.area}}</span>
@@ -85,6 +92,7 @@
                       'error':buyUserCoinWallet.total < limitBuyAmount
                     }"
                     type="text"
+                    maxlength="14"
                     :placeholder="$t('M.comm_buy') + $t('M.comm_quantity')"
                     :ref="limitBuyCountInputRef"
                     @keyup="autoChangeData('limit-buy')"
@@ -141,19 +149,25 @@
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!sellUserCoinWallet.total">--</span>
-                    <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
+                    <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/PersonalCenter">
+                  <a
+                    @click="jumpToPersonalCenter"
+                    :style="{'cursor': 'pointer'}"
+                  >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </router-link>
-                  <router-link to="/PersonalCenter">
+                  </a>
+                  <a
+                    @click="jumpToPersonalCenter"
+                    :style="{'cursor': 'pointer'}"
+                  >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
-                  </router-link>
+                  </a>
                 </div>
               </div>
               <div class="content">
@@ -161,6 +175,7 @@
                 <div class="input">
                   <input
                     type="text"
+                    maxlength="14"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_price')"
                     :ref="limitSellPriceInputRef"
                     @keyup="autoChangeData('limit-sell')"
@@ -184,6 +199,7 @@
                     :class="{
                       'error': sellUserCoinWallet.total < limitExchange.sellCount
                     }"
+                    maxlength="14"
                     type="text"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="limitSellCountInputRef"
@@ -254,7 +270,7 @@
                     {{$t('M.comm_usable')}}:
                     <span v-show="!buyUserCoinWallet.total||!middleTopData.last">--</span>
                     <span v-show="buyUserCoinWallet.total&&middleTopData.last">
-                      {{buyUserCoinWallet.total}}
+                      {{$scientificToNumber(buyUserCoinWallet.total)}}
                     </span>
                     <span>{{middleTopData.area}}</span>
                   </span>
@@ -285,6 +301,7 @@
                     :class="{
                       error: isNeedErrorMsgForBuyAmount
                     }"
+                    maxlength="14"
                     type="text"
                     :placeholder="$t('M.user_coin_volume')"
                     :ref="marketBuyAmountInputRef"
@@ -330,7 +347,7 @@
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!sellUserCoinWallet.total">--</span>
-                    <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
+                    <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
@@ -364,6 +381,7 @@
                     :class="{
                       error: isNeedErrorMsgForSellCount
                     }"
+                    maxlength="14"
                     type="text"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="marketSellCountInputRef"
@@ -443,6 +461,49 @@
         </span>
       </el-dialog>
     </div>
+    <!--未实名认证前弹框提示-->
+    <div class="warning">
+      <el-dialog
+        :visible.sync="notVerifyDialogVisible"
+        center
+      >
+        <div class="dialog-warning">
+          <div class="dialog-warning-box">
+            <IconFont
+              class="font-size60"
+              iconName="icon-gantanhao"
+            />
+          </div>
+        </div>
+        <p class="font-size12 warning-text margin-top35 text-align-c">
+          <!--请先进行实名认证！-->
+          <span v-show="!(this.realNameAuth === 'y')">
+            {{ $t('M.user_asset_title17') }}
+          </span>
+        </p>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <!--确 定 取 消-->
+        <button
+          class="button-color border-radius4 cursor-pointer"
+          type="primary"
+          @click="realNameAuthConfirm"
+        >
+          <!--确 定-->
+          {{ $t('M.comm_confirm') }}
+        </button>
+        <button
+          class="btn border-radius4 cursor-pointer"
+          @click.prevent="notVerifyDialogVisible = false"
+        >
+          <!--取 消-->
+          {{ $t('M.comm_cancel') }}
+        </button>
+        </span>
+      </el-dialog>
+    </div>
   </div>
 </template>
 <script>
@@ -464,7 +525,8 @@ import {
 } from '../../utils/commonFunc'
 import {
   mapState,
-  mapMutations
+  mapMutations,
+  mapActions
 } from 'vuex'
 
 export default {
@@ -475,6 +537,7 @@ export default {
   // props,
   data () {
     return {
+      notVerifyDialogVisible: false, // 实名认证弹窗显示与隐藏
       activeName: 'limit-price',
       // 限价交易 买入价input ref name
       limitBuyPriceInputRef: 'limitBuyPriceInput',
@@ -560,7 +623,11 @@ export default {
       isUserChangePrice: true
     }
   },
-  created () {
+  async created () {
+    if (this.isLogin) {
+      await this.REFRESH_USER_INFO_ACTION()
+      console.log(this.REFRESH_USER_INFO_ACTION)
+    }
   },
   mounted () {
     // this.getRefValue(this.limitBuyPriceInputRef)
@@ -575,8 +642,22 @@ export default {
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
       'CHANGE_FOOTER_ACTIVE_NAME',
       'SET_TARGET_EXCHANGE_DATA',
-      'CHANGE_SYMBOL_CHANGED_STATUS'
+      'CHANGE_SYMBOL_CHANGED_STATUS',
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
+    ]),
+    // 实名认证验证
+    realNameAuthConfirm () {
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
+      this.$goToPage('/PersonalCenter')
+      this.notVerifyDialogVisible = false
+    },
+    jumpToPersonalCenter () {
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
+      this.$goToPage('/PersonalCenter')
+    },
     changeSliderDisabled () {
       console.log(this.buyUserCoinWallet.total)
       this.slider.isbuySliderBarDisabled = !this.buyUserCoinWallet.total ? 1 : 0
@@ -672,7 +753,9 @@ export default {
     setTransformPrice (type, targetNum) {
       switch (type) {
         case 'limit-buy':
+          // this.limitExchange.transformBuyPrice = this.$scientificToNumber(this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum))
           this.limitExchange.transformBuyPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
+          console.log(this.limitExchange.transformBuyPrice)
           break
         case 'limit-sell':
           this.limitExchange.transformSellPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
@@ -784,122 +867,130 @@ export default {
     },
     // 交易密码
     async showPayPassword (entrustType, matchType) {
-      this.entrustType = entrustType
-      this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
-      console.log(entrustType, matchType)
-      let next = false
-      let params = {}
-      switch (entrustType) {
-        // 买入
-        case 0:
-          switch (this.matchType) {
-            case 'LIMIT':
-              params.price = this.getRefValue(this.limitBuyPriceInputRef)
-              params.count = this.getRefValue(this.limitBuyCountInputRef)
-              this.limitExchange.buyCount = params.count
-              this.limitExchange.buyPrice = params.price
-              if (!this.limitExchange.buyPrice) {
-                // 请输入买入价
-                this.errorMsg.limit.buy.price = this.$t('M.trade_empty_buy_price')
-                return false
-              } else {
-                this.errorMsg.limit.buy.price = ''
-              }
+      if (this.isLogin) {
+        if (!(this.realNameAuth === 'y')) {
+          this.notVerifyDialogVisible = true
+          return false
+        }
+        this.entrustType = entrustType
+        this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+        console.log(entrustType, matchType)
+        let next = false
+        let params = {}
+        switch (entrustType) {
+          // 买入
+          case 0:
+            switch (this.matchType) {
+              case 'LIMIT':
+                params.price = this.getRefValue(this.limitBuyPriceInputRef)
+                params.count = this.getRefValue(this.limitBuyCountInputRef)
+                this.limitExchange.buyCount = params.count
+                this.limitExchange.buyPrice = params.price
+                if (!this.limitExchange.buyPrice) {
+                  // 请输入买入价
+                  this.errorMsg.limit.buy.price = this.$t('M.trade_empty_buy_price')
+                  return false
+                } else {
+                  this.errorMsg.limit.buy.price = ''
+                }
 
-              if (!this.limitExchange.buyCount) {
-                // 请输入买入量
-                this.errorMsg.limit.buy.amount = this.$t('M.trade_empty_buy_count')
-                return false
-              } else {
-                this.errorMsg.limit.buy.amount = ''
-              }
+                if (!this.limitExchange.buyCount) {
+                  // 请输入买入量
+                  this.errorMsg.limit.buy.amount = this.$t('M.trade_empty_buy_count')
+                  return false
+                } else {
+                  this.errorMsg.limit.buy.amount = ''
+                }
 
-              if ((this.buyUserCoinWallet.total / params.price) < params.count) {
-                this.errorMsg.limit.buy.price = this.$t('M.trade_exchange_currency_available')
-                return false
-              }
-              next = true
-              break
-            case 'MARKET':
-              if (!this.marketExchange.buyAmount) {
-                this.errorMsg.market.buy.amount = this.$t('M.trade_empty_buy_count')
-                return false
-              } else {
-                this.errorMsg.market.buy.amount = ''
-              }
-              params.count = this.getRefValue(this.marketBuyAmountInputRef)
-              if (this.buyUserCoinWallet.total < params.count) {
-                this.errorMsg.market.buy.amount = this.$t('M.trade_exchange_currency_available')
-                return false
-              }
-              next = true
-          }
-          break
-        // 卖出
-        case 1:
-          switch (this.matchType) {
-            case 'LIMIT':
+                if ((this.buyUserCoinWallet.total / params.price) < params.count) {
+                  this.errorMsg.limit.buy.price = this.$t('M.trade_exchange_currency_available')
+                  return false
+                }
+                next = true
+                break
+              case 'MARKET':
+                if (!this.marketExchange.buyAmount) {
+                  this.errorMsg.market.buy.amount = this.$t('M.trade_empty_buy_count')
+                  return false
+                } else {
+                  this.errorMsg.market.buy.amount = ''
+                }
+                params.count = this.getRefValue(this.marketBuyAmountInputRef)
+                if (this.buyUserCoinWallet.total < params.count) {
+                  this.errorMsg.market.buy.amount = this.$t('M.trade_exchange_currency_available')
+                  return false
+                }
+                next = true
+            }
+            break
+          // 卖出
+          case 1:
+            switch (this.matchType) {
+              case 'LIMIT':
 
-              params.price = this.getRefValue(this.limitSellPriceInputRef)
-              params.count = this.getRefValue(this.limitSellCountInputRef)
-              this.limitExchange.sellCount = params.count
-              this.limitExchange.sellPrice = params.price
-              if (!this.limitExchange.sellPrice) {
-                this.errorMsg.limit.sell.price = this.$t('M.trade_empty_sell_price')
-                return false
-              } else {
-                this.errorMsg.limit.sell.price = ''
-              }
-              if (!this.limitExchange.sellCount) {
-                this.errorMsg.limit.sell.amount = this.$t('M.trade_empty_sell_count')
-                return false
-              } else {
-                this.errorMsg.limit.sell.amount = ''
-              }
-              console.log((this.sellUserCoinWallet.total), params.count)
-              if (this.sellUserCoinWallet.total < (params.count)) {
-                // 可用币种数量不足
-                this.errorMsg.limit.sell.price = this.$t('M.trade_exchange_currency_available')
-                return false
-              }
-              next = true
-              break
-            case 'MARKET':
-              console.log(1)
-              params.count = this.getRefValue(this.marketSellCountInputRef)
-              this.marketExchange.sellCount = params.count
-              if (!this.marketExchange.sellCount) {
-                this.errorMsg.market.sell.amount = '请输入卖出量'
-                return false
-              } else {
-                this.errorMsg.market.sell.amount = ''
-              }
-              if (this.sellUserCoinWallet.total < (params.count)) {
-                // 可用币种数量不足
-                this.errorMsg.market.sell.count = this.$t('M.trade_exchange_currency_available')
-                return false
-              } else {
-                this.errorMsg.market.sell.count = ''
-              }
-              next = true
-              break
-          }
-          break
-      }
-      if (!next) {
-        return false
-      }
-      if (this.isNeedPayPassowrd) {
-        this.isShowPayPassword = true
-        this.clearPasswordErrorMsg()
+                params.price = this.getRefValue(this.limitSellPriceInputRef)
+                params.count = this.getRefValue(this.limitSellCountInputRef)
+                this.limitExchange.sellCount = params.count
+                this.limitExchange.sellPrice = params.price
+                if (!this.limitExchange.sellPrice) {
+                  this.errorMsg.limit.sell.price = this.$t('M.trade_empty_sell_price')
+                  return false
+                } else {
+                  this.errorMsg.limit.sell.price = ''
+                }
+                if (!this.limitExchange.sellCount) {
+                  this.errorMsg.limit.sell.amount = this.$t('M.trade_empty_sell_count')
+                  return false
+                } else {
+                  this.errorMsg.limit.sell.amount = ''
+                }
+                console.log((this.sellUserCoinWallet.total), params.count)
+                if (this.sellUserCoinWallet.total < (params.count)) {
+                  // 可用币种数量不足
+                  this.errorMsg.limit.sell.price = this.$t('M.trade_exchange_currency_available')
+                  return false
+                }
+                next = true
+                break
+              case 'MARKET':
+                console.log(1)
+                params.count = this.getRefValue(this.marketSellCountInputRef)
+                this.marketExchange.sellCount = params.count
+                if (!this.marketExchange.sellCount) {
+                  this.errorMsg.market.sell.amount = '请输入卖出量'
+                  return false
+                } else {
+                  this.errorMsg.market.sell.amount = ''
+                }
+                if (this.sellUserCoinWallet.total < (params.count)) {
+                  // 可用币种数量不足
+                  this.errorMsg.market.sell.count = this.$t('M.trade_exchange_currency_available')
+                  return false
+                } else {
+                  this.errorMsg.market.sell.count = ''
+                }
+                next = true
+                break
+            }
+            break
+        }
+        if (!next) {
+          return false
+        }
+        if (this.isNeedPayPassowrd) {
+          this.isShowPayPassword = true
+          this.clearPasswordErrorMsg()
+        } else {
+          this.addEntrust()
+        }
       } else {
-        this.addEntrust()
+        this.$goToPage('/login')
       }
     },
     // 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]
-      return formatNumberInput(target, pointLength) - 0
+      return this.$scientificToNumber(formatNumberInput(target, pointLength) - 0)
     },
     // 新增委单
     async addEntrust () {
@@ -968,6 +1059,8 @@ export default {
     },
     // 设置买卖价格
     setBuyAndSellPrice (targetPriceOfBuy, targetPriceOfSell = targetPriceOfBuy) {
+      targetPriceOfBuy = this.$scientificToNumber(targetPriceOfBuy)
+      targetPriceOfSell = this.$scientificToNumber(targetPriceOfSell)
       if (this.$refs[this.limitBuyPriceInputRef]) {
         this.$refs[this.limitBuyPriceInputRef].value = targetPriceOfBuy
         this.limitExchange.buyPrice = targetPriceOfBuy
@@ -1068,7 +1161,11 @@ export default {
       middleTopData: state => state.trade.middleTopData,
       // 交易对是否改变
       isSymbolChanged: state => state.common.isSymbolChanged,
-      limitExchangeOfState: state => state.trade.limitExchange
+      limitExchangeOfState: state => state.trade.limitExchange,
+      // 是否通过高级认证
+      advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
+      // 实名认证
+      realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth')
     }),
     isNeedErrorMsgForSellCount () {
       return this.marketExchange.sellCount > this.sellUserCoinWallet.total
@@ -1078,11 +1175,11 @@ export default {
     },
     // 限价买预计成交额
     limitBuyAmount () {
-      return cutOutPointLength(this.limitExchange.buyPrice * this.limitExchange.buyCount, 2)
+      return this.$scientificToNumber(cutOutPointLength(this.$scientificToNumber(this.limitExchange.buyPrice * this.limitExchange.buyCount), 2))
     },
     // 限价卖预计成交额
     limitSellAmount () {
-      return cutOutPointLength(this.limitExchange.sellPrice * this.limitExchange.sellCount, 2)
+      return this.$scientificToNumber(cutOutPointLength(this.$scientificToNumber(this.limitExchange.sellPrice * this.limitExchange.sellCount), 2))
     }
   },
   watch: {
@@ -1145,7 +1242,6 @@ export default {
       this.setBuyAndSellPrice(this.getRefValue(this.limitBuyPriceInputRef), this.getRefValue(this.limitSellPriceInputRef))
     },
     activeSymbol () {
-      console.log(1)
       this.reflashCount = 0
     },
     // 用户手动设置价格
@@ -1160,6 +1256,7 @@ export default {
       let targetPriceOfSell = newVal.sell || newVal.kai
       // 首次打开设置价格
       if (!this.reflashCount) {
+        console.log(newVal.last)
         if (newVal.last) {
           this.reflashCount++
         }
@@ -1232,6 +1329,10 @@ export default {
 
             > .left {
               flex: 2;
+            }
+
+            > .right {
+              text-align: right;
             }
           }
 
@@ -1340,7 +1441,57 @@ export default {
       }
     }
 
+    > .warning {
+      .dialog-warning {
+        width: 90px;
+        height: 90px;
+        padding-top: 6px;
+        margin: 0 auto;
+        border-radius: 50%;
+        background: rgba(42, 122, 211, .2);
+
+        .dialog-warning-box {
+          width: 78px;
+          height: 78px;
+          margin: 0 auto;
+          border-radius: 50%;
+          line-height: 75px;
+          text-align: center;
+          background: linear-gradient(90deg, #2b396e, #2a5082);
+        }
+      }
+
+      .warning-text {
+        color: #fff;
+      }
+
+      .button-color {
+        width: 80px;
+        height: 35px;
+        margin-right: 15px;
+        border: 0;
+        line-height: 0;
+      }
+
+      .btn {
+        width: 80px;
+        height: 35px;
+        line-height: 0;
+      }
+    }
+
     /deep/ {
+      .warning {
+        .el-dialog {
+          width: 350px;
+          border-radius: 5px;
+        }
+
+        .el-dialog__footer {
+          margin-top: 5px;
+        }
+      }
+
       .el-button {
         width: 100%;
         margin-top: 20px;
@@ -1419,6 +1570,19 @@ export default {
     &.night {
       color: $nightFontColor;
       background-color: $mainContentNightBgColor;
+
+      .warning {
+        .button-color {
+          color: rgba(255, 255, 255, .7);
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+
+        .btn {
+          border: 1px solid #338ff5;
+          color: #fff;
+          background-color: transparent;
+        }
+      }
 
       > .inner-box {
         .content-box {
@@ -1508,6 +1672,23 @@ export default {
     &.day {
       color: $dayFontColor;
       background-color: $dayMainBgColor;
+
+      .warning {
+        .warning-text {
+          color: #333;
+        }
+
+        .button-color {
+          color: rgba(255, 255, 255, .7);
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+
+        .btn {
+          border: 1px solid #338ff5;
+          color: #333;
+          background-color: transparent;
+        }
+      }
 
       > .inner-box {
         .content-box {

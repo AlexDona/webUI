@@ -1354,6 +1354,10 @@ export default {
   }
 
   /deep/ {
+    .el-input__icon {
+      line-height: 26px;
+    }
+
     .el-input--suffix {
       .el-input__inner {
         width: 170px;

@@ -67,7 +67,7 @@
              >
                <el-option
                  v-for="item in countryAreaList"
-                 :key="item.nationCode"
+                 :key="item.english"
                  :label="item.nationCode"
                  :value="item.nationCode"
                >
@@ -118,7 +118,7 @@
                 >
                   <el-option
                     v-for="item in countryAreaList"
-                    :key="item.nationCode"
+                    :key="item.english"
                     :label="item.chinese"
                     :value="item.abbreviation"
                   >
@@ -142,7 +142,7 @@
                 >
                   <el-option
                     v-for="item in countryAreaList"
-                    :key="item.nationCode"
+                    :key="item.english"
                     :label="item.english"
                     :value="item.abbreviation"
                   >
@@ -394,7 +394,7 @@
                 >
                   <el-option
                     v-for="item in countryAreaList"
-                    :key="item.nationCode"
+                    :key="item.english"
                     :label="item.chinese"
                     :value="item.abbreviation"
                   >
@@ -418,7 +418,7 @@
                 >
                   <el-option
                     v-for="item in countryAreaList"
-                    :key="item.nationCode"
+                    :key="item.english"
                     :label="item.english"
                     :value="item.abbreviation"
                   >
@@ -950,7 +950,7 @@ export default {
           if (!this.checkoutInputFormat(type, this.emailNum)) {
             return false
           }
-          params.email = this.emailNum
+          params.email = this.transformedEmail
           params.nationCode = this.activeCountryCodeWithEmail
           break
       }
@@ -989,7 +989,7 @@ export default {
       }
       console.log(goOnStatus)
       if (goOnStatus) {
-        let userName = this.activeMethod ? this.emailNum : this.phoneNum
+        let userName = this.activeMethod ? this.transformedEmail : this.phoneNum
         let countryCode = this.activeMethod ? this.activeCountryCodeWithEmail : this.activeCountryCodeWithPhone
         this.registerParams = {
           userName: userName,
@@ -1033,7 +1033,7 @@ export default {
     toggleMethod (method) {
       this.activeMethod = method
       // 短信验证码 邮箱验证码
-      this.activeCodePlaceholder = !this.activeMethod ? this.$t('M.forgetPassword_hint10') : this.$t('M.forgetPassword_hint11')
+      // this.activeCodePlaceholder = !this.activeMethod ? 'M.forgetPassword_hint10' : 'M.forgetPassword_hint11'
       this.clearFormData()
     },
     // 清空表单信息
@@ -1096,7 +1096,7 @@ export default {
         $('.handler').css({'left': 0})
         $('.drag_bg').css({'width': 0})
         let type = !this.activeMethod ? 'phone' : 'email'
-        let userName = !this.activeMethod ? this.phoneNum : this.emailNum
+        let userName = !this.activeMethod ? this.phoneNum : this.transformedEmail
         await this.checkUserExistAjax(type, userName)
         await this.sendRegister(params)
       } // 验证成功函数
@@ -1123,6 +1123,9 @@ export default {
     windowHeight () {
       console.log(window.innerHeight)
       return window.innerHeight + 300
+    },
+    transformedEmail () {
+      return this.emailNum.toLowerCase()
     }
   },
   watch: {

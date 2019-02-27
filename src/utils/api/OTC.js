@@ -55,3 +55,5 @@ export const cancelUserOtcOrder = (params) => handleRequest(() => post('otcOrder
 export const completeUserOtcOrder = (params) => handleRequest(() => post('otcOrder/completeUserOtcOrder', {...params, 'loading': true}))
 // 26 广告管理中订单点击修改跳转到商家专用发布广告页面，修改数据后再发布广告调取的接口
 export const addModifyPublishADOrder = (params) => handleRequest(() => postWithURLencoded('otcEntrust/upShelfOtcEntrust', {...params, 'loading': true}), 1)
+// 27 校验otc普通用户是否能挂单
+export const getCommonPutUpOrderStatus = (params) => handleRequest(() => get('otcEntrust/otcCommonFlag', params))

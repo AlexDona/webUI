@@ -27,7 +27,6 @@
       <div class="login-password-content">
         <div class="login-content-from">
           <el-form
-            :label-position="labelPosition"
             label-width="120px"
           >
             <!--原登录密码-->

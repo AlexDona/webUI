@@ -131,6 +131,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      theme: state => state.common.theme,
       logoSrc: state => state.common.logoSrc,
       activeLanguage: state => state.common.activeLanguage,
       language: state => state.common.language, // 语言

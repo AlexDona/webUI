@@ -86,12 +86,12 @@
             </li>
           </ul>
           <!-- 版权 -->
-          <div class="copyright">
+          <div class="email">
             <span
-              class="copyright-content"
-              v-if="configInfo"
+              class="email-content"
+              v-if="configInfo['otcEmail']"
             >
-              {{configInfo.copyright}}
+              EMAIL: {{configInfo['otcEmail']}}
             </span>
           </div>
         </div>
@@ -112,18 +112,23 @@
             </dd>
             <dd
               class="dd-item"
+              @click="downloadCurrencyForm"
             >
-              <router-link to="/HelpCenter">
-                <!--帮助中心-->
-                {{$t('M.comm_help_center')}}
-              </router-link>
+              <!--<router-link to="/HelpCenter">-->
+                <!--上币申请-->
+                {{$t('M.actionCenter_coin_apply')}}
+              <!--</router-link>-->
             </dd>
             <dd
               class="dd-item"
-              @click="$footerJump('/ServiceAndProtocol','APIDocument')"
             >
               <!--API文档-->
-              {{$t('M.comm_api_doc')}}
+              <a
+                href="https://github.com/bizuyun/API/wiki"
+                target="_blank"
+              >
+                {{$t('M.comm_api_doc')}}
+              </a>
             </dd>
             <dd
               class="dd-item"
@@ -135,15 +140,15 @@
           </dl>
           <dl class="right-dl">
             <dt class="title">
-              <!--关于-->
-              {{$t('M.comm_about')}}
+              <!--关于我们-->
+              {{$t('M.comm_us')}}
             </dt>
             <dd
               class="dd-item"
             >
               <router-link to="/AboutUs">
-                <!--关于我们-->
-                {{$t('M.comm_us')}}
+                <!--公司简介-->
+                {{$t('M.about_digital_terms_hint9')}}
               </router-link>
             </dd>
             <dd
@@ -153,11 +158,33 @@
               <!--新闻公告-->
               {{$t('M.comm_news_and_notice')}}
             </dd>
+            <dd
+              class="dd-item"
+            >
+              <router-link to="/HelpCenter">
+                <!--帮助中心-->
+                {{$t('M.comm_help_center')}}
+              </router-link>
+            </dd>
+            <dd
+              class="dd-item"
+              @click="$footerJump('/ServiceAndProtocol','TradingWarning')"
+            >
+              <!--交易须知-->
+              {{$t('M.otc_index_tradeKnow')}}
+            </dd>
+            <dd
+              class="dd-item"
+              @click="$footerJump('/ServiceAndProtocol','AML')"
+            >
+              <!--反洗钱-->
+              {{$t('M.comm_about')}}{{$t('M.about_digital_terms_hint7')}}
+            </dd>
           </dl>
           <dl class="right-dl">
             <dt class="title">
               <!--说明-->
-              {{$t('M.comm_description')}}
+              {{$t('M.comm_clause')}}
             </dt>
             <dd
               class="dd-item"
@@ -189,10 +216,10 @@
             </dd>
             <dd
               class="dd-item"
-              @click="$footerJump('/ServiceAndProtocol','TradingWarning')"
+              @click="$footerJump('/ServiceAndProtocol','OTCServices')"
             >
-              <!--交易须知-->
-              {{$t('M.otc_index_tradeKnow')}}
+              <!--OTC 服务协议-->
+              {{$t('M.about_digital_terms_hint8')}}
             </dd>
           </dl>
         </div>
@@ -220,6 +247,9 @@
           </li>
         </ul>
       </div>
+      <div class="copyright">
+        <p>{{configInfo['copyright']}}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -229,11 +259,13 @@ import {
   getNestedData,
   http2https
 } from '../../utils/commonFunc'
+import {downloadFileWithUserDefined} from '../../utils'
 import Iconfont from '../Common/IconFontCommon'
 import {
   mapMutations,
   mapState,
-  mapGetters
+  mapGetters,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -271,11 +303,18 @@ export default {
       footerInfo1: {},
       footerInfo2: {},
       linkList: [], // 友情链接
-      isloading: true
+      isloading: true,
+      // 上币申请模板下载url
+      currencyApplicationURL: ''
     }
   },
-  created () {
+  async created () {
     console.log(this.isNeedApp)
+    const data = await this.GET_CURRENCY_URL_ACTION({
+      key: 'COIN_APPLY'
+    })
+    if (!data) return false
+    this.currencyApplicationURL = data
   },
   mounted () {
   },
@@ -283,9 +322,17 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_CURRENCY_URL_ACTION'
+    ]),
     ...mapMutations([
       'CHANGE_FOOTER_ACTIVE_NAME'
     ]),
+    downloadCurrencyForm () {
+      let filename = 'Token application form'
+      if (!this.currencyApplicationURL) return
+      downloadFileWithUserDefined(this.currencyApplicationURL, filename)
+    },
     http2https (str) {
       return http2https(str)
     },
@@ -309,7 +356,7 @@ export default {
       language: state => state.common.language,
       logoSrc: state => state.common.logoSrc,
       footerInfo: state => state.common.footerInfo,
-      footerInfo1: state => state.common.footerInfo.footerInfo1,
+      // footerInfo1: state => state.common.footerInfo.footerInfo1,
       // 公司名称fubt fbt fuc、邮箱等信息
       configInfo: state => state.common.footerInfo.configInfo,
       isMobile: state => state.user.isMobile
@@ -318,6 +365,7 @@ export default {
   watch: {
     footerInfo: {
       handler (newVal) {
+        console.log(newVal)
         if (newVal) {
           this.isloading = false
           this.footerInfo1 = newVal.footerInfo1
@@ -421,10 +469,10 @@ export default {
             }
           }
 
-          > .copyright {
+          > .email {
             margin-top: 10px;
 
-            > .copyright-content {
+            > .email-content {
               font-size: 12px;
               color: #cecece;
             }
@@ -484,6 +532,23 @@ export default {
             }
           }
         }
+      }
+
+      > .copyright {
+        height: 30px;
+        line-height: 30px;
+
+        > p {
+          font-size: 12px;
+          text-align: center;
+        }
+      }
+    }
+
+    /* 设置底部字体图标微信QQ等为22px */
+    /deep/ {
+      .icon {
+        font-size: 22px;
       }
     }
   }

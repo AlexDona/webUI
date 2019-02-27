@@ -6,7 +6,7 @@ import {
   CHANGE_NOTICE_VISIBLE
 } from './mutations-types.js'
 import Vue from 'vue'
-// import {setStore, getStore} from '../utils'
+import {setStore} from '../../utils'
 
 // import {localapi, proapi} from 'src/config/env'
 
@@ -35,7 +35,12 @@ export default {
   },
   // 设置交易对map映射
   [CHANGE_SYMBOL_MAP] (state, {key, val}) {
-    state.symbolMap.set(key, val)
+    if (key && val) {
+      state.symbolMap.set(key, val)
+      state.symbolJSON[key] = val
+      setStore('symbolJSON', state.symbolJSON)
+    }
+    console.log(state.symbolMap)
   },
   [CHANGE_NOTICE_VISIBLE] (state, data) {
     state.noticeCloseVisible = data
