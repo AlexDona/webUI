@@ -141,7 +141,6 @@
                 v-else
                 class="info-centre-right font-size12"
               >
-                <!-- {{ userInfo.userInfo.level }} -->
                 {{ level }}
               </span>
             </p>
