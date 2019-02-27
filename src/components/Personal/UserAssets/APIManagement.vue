@@ -843,12 +843,6 @@ export default {
         this.getMultipleUserAPIInfo()
       }
     },
-    APIMoneyConfirm (newVal) {
-
-    },
-    apiSecondaryConfirmation (newVal) {
-
-    },
     compileUserApi (newVal) {
       if (!newVal) {
         this.clearUserInputMsg()

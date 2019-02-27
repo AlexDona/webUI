@@ -980,18 +980,6 @@ export default {
     })
   },
   watch: {
-    countryAreaList (newVal) {
-      console.log(newVal)
-      if (newVal) {
-        console.log(newVal)
-      }
-    },
-    userInfo (newVal) {
-      console.log(newVal)
-    },
-    language (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>

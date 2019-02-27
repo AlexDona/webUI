@@ -13,7 +13,7 @@ export const getNewsNoticeList = params => handleRequest(() => get('newsBulletin
 // 首页获取所有新闻列表
 export const getAllNewsNoticeListForHomePage = params => handleRequest(() => get('newsBulletin/all', params))
 // 获取新闻详情
-export const getNewsDetail = params => handleRequest(() => get(`newsBulletin/${params}`))
+export const getNewsDetail = params => handleRequest(() => get(`newsBulletin/${params}`, {loading: true}))
 // 添加收藏
 export const addUserCollectionAjax = params => handleRequest(() => postWithURLencoded('collection', params))
 // 取消收藏

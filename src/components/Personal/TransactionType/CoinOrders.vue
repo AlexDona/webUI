@@ -708,9 +708,6 @@ export default {
         this.endTime = ''
       }
     },
-    activeMatchType (newVal) {
-      console.log(newVal)
-    },
     userCenterActiveName (newVal) {
       this.emptyData()
       if (newVal === 'coin-orders') {

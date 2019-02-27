@@ -209,12 +209,6 @@ export default {
     }
   },
   watch: {
-    language (newVal) {
-      // this.getRulesOfInvitation(newVal)
-    },
-    coinName (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>

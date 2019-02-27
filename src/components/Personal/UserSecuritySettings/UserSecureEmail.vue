@@ -351,9 +351,6 @@ export default {
     }
   },
   watch: {
-    isEmailExist (newVal) {
-      console.log(newVal)
-    }
   },
   destroyed () {
     // 离开本组件清除定时器
