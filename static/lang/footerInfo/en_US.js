@@ -11,6 +11,9 @@ export const footerInfo = {
   'about_digital_terms_hint4': 'Privacy Policy',
   'about_digital_terms_hint5': 'API doc.',
   'about_digital_terms_hint6': 'Information',
+  'about_digital_terms_hint7': 'AML',
+  'about_digital_terms_hint8': 'OTC service agreement',
+  'about_digital_terms_hint9': 'Company profile',
   // ##########################20181117-1145新增国际化################################
   'about_footer_info_down1': 'Full platform terminal access',
   'about_footer_info_down2': 'Multiple platforms of iOS, Android, Mac and Windows support full-service functions',

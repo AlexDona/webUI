@@ -18,6 +18,13 @@
       element-loading-background="rgb(28, 31, 50)"
     >
     </div>
+    <div
+      class="interval-loading-box"
+      v-if="intervalLoading"
+      v-loading.lock="intervalLoading"
+      element-loading-background="rgba(28, 31, 50, 0.4)"
+    >
+    </div>
   </div>
 </template>
 
@@ -42,7 +49,8 @@ import {
   // getCollectionList
 } from '../../utils/commonFunc'
 import {
-  unzip
+  unzip,
+  getStoreWithJson
 } from '../../utils'
 import {
   mapMutations,
@@ -84,10 +92,14 @@ export default {
       ajaxData: {}, // 接口请求数据
       resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week'],
       fullscreenLoading: true,
+      // 时间周期loading
+      intervalLoading: false,
       loadingCount: 0, // loading 次数
       KlineNum: 0, // 拖拽k线档数
       isAllowDrag: true, // 是否允许拖拽
-      defaultButton: null // 默认buttonDom
+      defaultButton: null, // 默认buttonDom
+      // 当前交易
+      currentInterval: ''
     }
   },
   beforeCreate () {
@@ -126,6 +138,10 @@ export default {
     // 接口获取K线数据
     async getKlineByAjax (tradeName, KlineType, KlineNum = 0, KlineStep = 'STEP5') {
       this.isAllowDrag = false
+      console.log(tradeName)
+      if (tradeName) {
+        tradeName = tradeName.toLowerCase()
+      }
       const params = {
         tradeName,
         KlineType,
@@ -178,6 +194,7 @@ export default {
       this.fullscreenLoading = false
       setTimeout(() => {
         this.changeIsKlineDataReady(true)
+        this.intervalLoading = false
       }, 500)
     },
     // 获取当前交易对socket数据
@@ -187,26 +204,37 @@ export default {
       }
       params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
+      console.log(data)
       if (!data) return false
-      let activeSymbolData = getNestedData(data, 'data.obj')
-      activeSymbolData = JSON.parse(unzip(activeSymbolData))
+      let resultStr = ''
+      let objList = getNestedData(data, 'data.obj')
+      _.forEach(objList, objItem => {
+        resultStr += unzip(objItem)
+      })
+      console.log(resultStr)
+      if (!resultStr) return false
+      let activeSymbolData = JSON.parse(resultStr)
       let {
         defaultTrade, // 默认交易对
         depthList, // 买卖单、深度
         tradeList, // 交易记录
         tickerList // 行情交易区列表
       } = activeSymbolData
-      if (depthList.depthData.sells.list) {
+      console.log(activeSymbolData)
+      if (depthList && depthList.depthData.sells.list) {
         depthList.depthData.sells.list.reverse()
       }
       // 默认交易对 数据
-      this.SET_MIDDLE_TOP_DATA(defaultTrade.content[0])
+      const defaultTradeContent = getNestedData(defaultTrade, 'content[0]')
+      if (defaultTradeContent) {
+        this.SET_MIDDLE_TOP_DATA(defaultTradeContent)
+      }
       // 买卖单
-      this.ajaxData.buyAndSellData = depthList.depthData
+      this.ajaxData.buyAndSellData = getNestedData(depthList, 'depthData')
       // 交易记录
       this.ajaxData.tardeRecordList = tradeList
       // 深度图
-      this.ajaxData.depthData = depthList.depthResult
+      this.ajaxData.depthData = getNestedData(depthList, 'depthResult')
 
       // 行情交易区列表
       this.ajaxData.tradeMarketList = tickerList
@@ -226,25 +254,36 @@ export default {
       this.options.areaId = this.activeTabId
       this.options.paneProperties.background = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
       this.options.paneProperties.vertGridPropertiesColor = this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
-      this.options.interval = '1'
+      this.options.interval = '15'
       this.options.language = this.language
       this.init(this.options)
       this.getBars()
     },
     // 获取初始交易对
     async getDefaultSymbol () {
-      const data = await getDefaultSymbol()
-      if (!data) return false
+      let storeSymbol = getStoreWithJson('activeSymbol') || {}
+      console.log(storeSymbol)
+      let activeSymbol
+      if (!getNestedData(storeSymbol, 'id')) {
+        let data = await getDefaultSymbol()
+        if (!data) return false
 
-      const obj = getNestedData(data, 'data')
-      const activeSymbol = {
-        id: (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase(),
-        tradeId: getNestedData(obj, 'id'),
-        sellsymbol: getNestedData(obj, 'sellCoinName'), // 币种简称
-        sellname: getNestedData(obj, 'buyCoinName'), // 币种全程
-        area: getNestedData(obj, 'buyCoinName'), // 交易区
-        areaId: getNestedData(obj, 'tradeAreaId')
+        const obj = getNestedData(data, 'data')
+        console.log(obj)
+        const id = (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName'))
+        if (!id) return false
+        activeSymbol = {
+          id: (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase(),
+          tradeId: getNestedData(obj, 'id'),
+          sellsymbol: getNestedData(obj, 'sellCoinName'), // 币种简称
+          sellname: getNestedData(obj, 'buyCoinName'), // 币种全程
+          area: getNestedData(obj, 'buyCoinName'), // 交易区
+          areaId: getNestedData(obj, 'tradeAreaId')
+        }
+      } else {
+        activeSymbol = storeSymbol
       }
+
       // 是否从其他页面跳转
       this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
       this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
@@ -303,10 +342,11 @@ export default {
                 align: 'left'
               })
               item.resolution === _self.widget._options.interval && _self.updateSelectedIntervalButton(button)
-              const selected = index == 1 ? ' selected' : ''
+              const selected = index == 3 ? ' selected' : ''
               button.attr('class', 'button ' + item.class + selected + ' add' + index)
                 .attr('data-chart-type', item.chartType === undefined ? 1 : item.chartType)
                 .on('click', function (e) {
+                  _self.intervalLoading = true
                   let chartType = +button.attr('data-chart-type')
                   if (chart.resolution() !== item.resolution) {
                     chart.setResolution(item.resolution)
@@ -315,6 +355,12 @@ export default {
                     chart.setChartType(chartType)
                   }
                   _self.updateSelectedIntervalButton(button)
+                  console.log(chart.resolution(), item.resolution)
+                  if (_self.currentInterval == item.resolution) {
+                    console.log(item.resolution)
+                    _self.intervalLoading = false
+                  }
+                  _self.currentInterval = item.resolution
                 })
                 .append(item.label)
             })
@@ -546,7 +592,7 @@ export default {
       }
     },
     // 订阅消息
-    subscribeSocketData (symbol, interval = 'min') {
+    subscribeSocketData (symbol, interval = 'min15') {
       console.log(symbol)
       this.getKlineByAjax(symbol, interval, this.KlineNum)
       this.getKlineDataBySocket('SUB', symbol, interval)
@@ -592,6 +638,9 @@ export default {
     },
     language () {
       this.initKLine(this.symbol)
+      setTimeout(() => {
+        this.fullscreenLoading = false
+      }, 1000)
     },
     async activeSymbolId (newVal) {
       this.changeIsKlineDataReady(false)
@@ -648,7 +697,8 @@ export default {
       }
     }
 
-    .loading-box {
+    .loading-box,
+    .interval-loading-box {
       position: absolute;
       z-index: 15;
       top: 0;

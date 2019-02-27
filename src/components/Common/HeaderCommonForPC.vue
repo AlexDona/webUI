@@ -688,9 +688,15 @@ export default{
         await this.changeActiveTransitionCurrency()
       }
     },
-    setNewTitle () {
+    setNewTitle (path) {
+      let newTitle = ''
+      let priceData = this.$scientificToNumber(this.middleTopData.last)
       if (this.title) {
-        let newTitle = `${this.middleTopData.last} ${this.middleTopData.sellsymbol}/${this.middleTopData.area} ${this.title}`
+        if (path && path === '/TradeCenter' && priceData && this.middleTopData.sellsymbol && this.middleTopData.area) {
+          newTitle = `${priceData} ${this.middleTopData.sellsymbol}/${this.middleTopData.area} ${this.title}`
+        } else {
+          newTitle = `${this.title}`
+        }
         console.log(newTitle)
         document.querySelector('title').innerText = newTitle
       } else {
@@ -730,7 +736,15 @@ export default{
       await this.SET_PARTNER_INFO_ACTION(this.language)
     },
     middleTopDataPrice () {
-      this.setNewTitle()
+      this.setNewTitle('/TradeCenter')
+    },
+    $route: {
+      // val是改变之后的路由，oldVal是改变之前的val
+      handler: function (val, oldVal) {
+        this.setNewTitle(val.path)
+      },
+      // 深度观察监听
+      deep: true
     },
     userInfoRefreshStatus (newVal) {
       if (newVal) {
@@ -822,6 +836,7 @@ export default{
                 }
 
                 > a {
+                  white-space: nowrap;
                   color: #8494a6;
 
                   &.active {
@@ -843,6 +858,7 @@ export default{
               display: inline-block;
               width: 100%;
               height: 100%;
+              white-space: nowrap;
               color: $headerNavFontColor;
 
               &.active {

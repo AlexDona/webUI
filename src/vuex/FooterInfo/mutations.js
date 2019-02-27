@@ -25,7 +25,9 @@ export default {
     clauseExplainData,
     legislationExplainData,
     privacyClauseData,
-    APIDocumentData,
+    AML,
+    OTCMerchant,
+    OTCServices,
     rateData,
     tradingWarningData
   }) {
@@ -33,9 +35,11 @@ export default {
     state.serviceProtocolData.clauseExplainData = clauseExplainData || {}
     state.serviceProtocolData.legislationExplainData = legislationExplainData || {}
     state.serviceProtocolData.privacyClauseData = privacyClauseData || {}
-    state.serviceProtocolData.APIDocumentData = APIDocumentData || {}
+    state.serviceProtocolData.AML = AML || {}
+    state.serviceProtocolData.OTCServices = OTCServices || {}
     state.serviceProtocolData.rateData = rateData || {}
     state.serviceProtocolData.tradingWarningData = tradingWarningData || {}
+    state.serviceProtocolData.OTCMerchant = OTCMerchant || {}
   },
   [CHANGE_NEWS_DETAIL_JUMP_ID] (state, data) {
     state.newsDetailJumpId = data

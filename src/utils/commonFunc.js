@@ -1,6 +1,8 @@
 /**
  * 和业务逻辑相关的全局方法
  */
+import ElementUI from 'element-ui'
+import that from '../main'
 import {
   repealMyEntrustAjax
 } from '../utils/api/trade'
@@ -21,7 +23,7 @@ import {
   removeCollectionAjax,
   getCollectionListAjax
 } from '../utils/api/home'
-import storeCreater from '../vuex'
+import storeCreator from '../vuex'
 import {
   removeStore,
   // getStore,
@@ -42,9 +44,7 @@ import {
   WITHDRAWAL_REG,
   CHINESE_REG
 } from './regExp'
-
-const store = storeCreater()
-
+const store = storeCreator()
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；
@@ -54,33 +54,32 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
     return false
   }
   const meta = data.data.meta
-  const VUE = Vue._installedPlugins[3].vm
   if (meta) {
     if (!meta.success && !errorTip) {
       if (meta.code !== 500) {
-        ELEMENT.Message({
+        ElementUI.Message({
           type: 'error',
           // duration: 5000000,
-          message: (!meta.params || !meta.params.length) ? VUE.$t(`M.${meta.i18n_code}`) : VUE.$t(`M.${meta.i18n_code}`).format(meta.params)
+          message: (!meta.params || !meta.params.length) ? that.$t(`M.${meta.i18n_code}`) : that.$t(`M.${meta.i18n_code}`).format(meta.params)
         })
       }
       // 登录失效
       switch (meta.code) {
         case 401:
           removeStore('loginStep1Info')
-          VUE.$router.push({path: '/login'})
+          that.$router.push({path: '/login'})
           store.commit('USER_LOGOUT')
           break
         case 500:
-          VUE.$router.push({path: '/500'})
+          that.$router.push({path: '/500'})
           break
       }
       return 0
     } else {
       if (noTip) {
-        ELEMENT.Message({
+        ElementUI.Message({
           type: 'success',
-          message: VUE.$t(`M.${meta.i18n_code}`)
+          message: that.$t(`M.${meta.i18n_code}`)
         })
       }
       return 1
@@ -236,12 +235,12 @@ export const toggleUserCollection = async (type, tradeId) => {
 // 获取用户收藏列表
 export const getCollectionList = async (callback) => {
   const data = await getCollectionListAjax()
+  if (!data) return false
   callback(data)
 }
 // 协议跳转
 export const jumpToOtherPageForFooter = (router, activeName) => {
-  const VUE = Vue._installedPlugins[3].vm
-  VUE.$router.push({path: router})
+  that.$router.push({path: router})
   store.commit('CHANGE_FOOTER_ACTIVE_NAME', {
     activeName,
     type: router
@@ -335,8 +334,14 @@ export const isNeedPayPasswordAjax = async (self) => {
  * @returns {string}
  */
 export const formatPointLength = (target, pointLength) => {
+  console.log(target)
   target += ''
   let targetArr = target.split('.')
+  console.log(targetArr)
+  if (targetArr.length == 1) {
+    console.log(target)
+    return target - 0
+  }
   let targetStr = ''
   let pointStr = ''
   targetStr += `${targetArr[0]}.`
@@ -344,7 +349,7 @@ export const formatPointLength = (target, pointLength) => {
     pointStr = targetArr[1].substring(0, pointLength)
     targetStr += pointStr
   }
-  return !targetArr[1] && !pointStr ? 0 : targetStr
+  return !targetArr[1] && !pointStr ? 0 : targetStr - 0
 }
 // eslint-disable-next-line
 String.prototype.format = function (args) {
@@ -394,7 +399,7 @@ String.prototype.format = function (args) {
  */
 export const handleRequest = async (request, noTip, errorTip) => {
   const DATA = await request()
-  if (!returnAjaxMsg(DATA, Vue, noTip, errorTip)) {
+  if (!returnAjaxMsg(DATA, that, noTip, errorTip)) {
     return false
   } else {
     return getNestedData(DATA, 'data') || {}

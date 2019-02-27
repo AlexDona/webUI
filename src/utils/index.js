@@ -7,6 +7,7 @@ import {
   ID_REG,
   WITHDRAWAL_REG
 } from './regExp'
+import citys from './citys'
 
 const pako = require('pako')
 /**
@@ -350,7 +351,9 @@ export const getRefValue = (self, refName) => {
  * @returns {string}
  */
 export const phoneNumberFormat = phoneNum => {
-  return `${phoneNum.substring(0, 3)}****${phoneNum.substring(phoneNum.length - 4)}`
+  if (phoneNum) {
+    return `${phoneNum.substring(0, 3)}****${phoneNum.substring(phoneNum.length - 4)}`
+  }
 }
 
 /**
@@ -359,9 +362,20 @@ export const phoneNumberFormat = phoneNum => {
  * @returns {*}
  */
 export const keep2Num = number => {
-  return number.toFixed(2) - 0
+  // if (!number || isNaN(number)) return 0.00
+  // console.log(number)
+  return (number - 0).toFixed(2) - 0
 }
-
+/**
+ * 截取8位小数
+ * @param number
+ * @returns {*}
+ */
+export const keep8Num = number => {
+  // if (!number || isNaN(number)) return 0.00
+  // console.log(number)
+  return (number - 0).toFixed(8) - 0
+}
 /**
  * 修正精度
  * @param num1
@@ -441,6 +455,8 @@ export const scientificToNumber = number => {
  * @returns {string}
  */
 export const unzip = b64Data => {
+  console.log(b64Data)
+  if (!b64Data) return false
   var strData = atob(b64Data)
   // Convert binary string to character-number array
   var charData = strData.split('').map(function (x) {
@@ -554,4 +570,43 @@ export const detectOS = () => {
     if (isWin10) return 'Windows 10'
   }
   return 'other'
+}
+
+// 身份证正则校验
+export const IdentityCodeValid = (code) => {
+  var city = citys
+  // var tip = ''
+  var pass = true
+
+  if (!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)) {
+    // tip = '身份证号格式错误'
+    pass = false
+  } else if (!city[code.substr(0, 2)]) {
+    // tip = '地址编码错误'
+    pass = false
+  } else {
+    // 18位身份证需要验证最后一位校验位
+    if (code.length == 18) {
+      code = code.split('')
+      // 加权因子
+      var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
+      // 校验位
+      var parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2]
+      var sum = 0
+      var ai = 0
+      var wi = 0
+      for (var i = 0; i < 17; i++) {
+        ai = code[i]
+        wi = factor[i]
+        sum += ai * wi
+      }
+      // var last = parity[sum % 11]
+      if (parity[sum % 11] != code[17]) {
+        // tip = '校验位错误'
+        pass = false
+      }
+    }
+  }
+  if (!pass) console.log('no-pass')
+  return pass
 }

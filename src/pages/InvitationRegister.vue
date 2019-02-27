@@ -102,6 +102,7 @@ export default {
         showId: this.$route.query.showId
       }
       const data = await findUserInfoByShowId(params)
+      if (!data) return false
       this.inviter = getNestedData(data, 'data.userName')
       this.fullscreenLoading = false
     }

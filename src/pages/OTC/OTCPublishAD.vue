@@ -708,7 +708,7 @@ export default {
         this.errorInfoPrice = this.$t('M.otc_please_enter_price')
         this.priceErrorTipsBorder = true
         return false
-      } else if (this.$refs.price.value < this.minPrice || this.$refs.price.value > this.maxPrice) {
+      } else if (this.$refs.price.value - this.minPrice < 0 || this.$refs.price.value - this.maxPrice > 0) {
         this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice
         this.priceErrorTipsBorder = true
         return false
@@ -900,11 +900,14 @@ export default {
       this[ref] = this.$refs[ref].value
       // console.log(this[ref])
       // console.log(this.price)
-      // console.log(this.$refs.price.value)
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
       if (this.$refs.price.value) {
-        if (this.price < this.minPrice || this.price > this.maxPrice) {
+        // console.log(this.$refs.price.value)
+        // console.log(this.minPrice)
+        // console.log(this.maxPrice)
+        if (this.$refs.price.value - this.minPrice < 0 || this.$refs.price.value - this.maxPrice > 0) {
+          console.log('111111111111111')
           this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice
           this.priceErrorTipsBorder = true
           return false
@@ -929,7 +932,7 @@ export default {
       }
       // 开始校验
       if (this.activatedBuySellStyle == 'SELL') {
-        if (this.$refs.entrustCount.value > this.total) {
+        if (this.$refs.entrustCount.value - this.total > 0) {
           // this.errorInfoEntrustCount = '最大可卖出量不足'
           this.errorInfoEntrustCount = this.$t('M.otc_publishAD_entrustCountLimit')
           this.entrustCountErrorTipsBorder = true
@@ -946,7 +949,7 @@ export default {
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
       // 开始校验
-      if (this.$refs.minCountValue.value < this.minCount) {
+      if (this.$refs.minCountValue.value - this.minCount < 0) {
         // 输入值不能小于最小限额
         this.errorInfoMinCount = this.$t('M.otc_publishAD_inputminLimit')
         this.minCountErrorTipsBorder = true
@@ -955,7 +958,7 @@ export default {
         this.errorInfoMinCount = ''
         this.minCountErrorTipsBorder = false
       }
-      if (this.$refs.minCountValue.value > this.$refs.maxCountValue.value - 0) {
+      if (this.$refs.minCountValue.value - this.$refs.maxCountValue.value > 0) {
         this.errorInfoMinCount = this.$t('M.otc_publishAD_inputmaxLimit')
         this.minCountErrorTipsBorder = true
         return false
@@ -963,7 +966,7 @@ export default {
         this.errorInfoMinCount = ''
         this.minCountErrorTipsBorder = false
       }
-      if (this.$refs.minCountValue.value < this.$refs.maxCountValue.value - 0) {
+      if (this.$refs.minCountValue.value - this.$refs.maxCountValue.value < 0) {
         this.errorInfoMaxCount = ''
         this.maxCountErrorTipsBorder = false
       }
@@ -991,7 +994,7 @@ export default {
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
       // 开始校验
-      if (this.$refs.maxCountValue.value > this.maxCount) {
+      if (this.$refs.maxCountValue.value - this.maxCount > 0) {
         // 输入值不能大于最大限额
         this.errorInfoMaxCount = this.$t('M.otc_publishAD_inputmaxLimit')
         this.maxCountErrorTipsBorder = true
@@ -1000,7 +1003,7 @@ export default {
         this.errorInfoMaxCount = ''
         this.maxCountErrorTipsBorder = false
       }
-      if (this.$refs.maxCountValue.value < this.$refs.minCountValue.value - 0) {
+      if (this.$refs.maxCountValue.value - this.$refs.minCountValue.value < 0) {
         // 输入值不能小于最小限额
         this.errorInfoMaxCount = this.$t('M.otc_publishAD_inputminLimit')
         this.maxCountErrorTipsBorder = true
@@ -1009,7 +1012,7 @@ export default {
         this.errorInfoMaxCount = ''
         this.maxCountErrorTipsBorder = false
       }
-      if (this.$refs.maxCountValue.value > this.$refs.minCountValue.value - 0) {
+      if (this.$refs.maxCountValue.value - this.$refs.minCountValue.value > 0) {
         this.errorInfoMinCount = ''
         this.minCountErrorTipsBorder = false
       }
@@ -1276,6 +1279,10 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
   }
 
   /deep/ {
+    .el-input__icon {
+      line-height: 34px;
+    }
+
     .right-style {
       .el-select {
         width: 180px;

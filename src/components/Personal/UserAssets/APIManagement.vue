@@ -17,7 +17,7 @@
         <header class="extension-info-header line-height56">
           <span
             class="font-size16 header-color"
-            v-if="lang === 'ko_KR'"
+            v-if="language === 'ko_KR'"
           >
             <!--创建API KEY-->
             API KEY{{ $t('M.comm_creation') }}
@@ -244,7 +244,7 @@
               />
             </el-form-item>
             <!--邮箱未认证-->
-            <span v-elsee></span>
+            <span v-else></span>
             <!--谷歌已认证-->
             <!--谷歌验证-->
             <el-form-item
@@ -484,6 +484,7 @@ export default {
       accessKey: '', // API访问秘钥 （Access Key）
       secretKey: '', // API访问秘钥 （Access Key）
       ipSite: '', // 备注
+      remark: '',
       bindingIpAddress: '', // 绑定IP地址
       extensionList: [], // 展示渲染IP列表
       compileUserApi: false, // 编辑用户api弹窗

@@ -34,16 +34,12 @@
 </template>
 <script>
 import {
-  getCurrencyApplicationDownloadUrl
-  // downloadFile
-} from '../../utils/api/activityCenter'
-import {
-  getNestedData,
-  http2https
+  getNestedData
 } from '../../utils/commonFunc'
 import {getServiceProtocoDataAjax} from '../../utils/api/common'
 import {
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 import { downloadFileWithUserDefined } from '../../utils'
 export default {
@@ -67,28 +63,30 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_CURRENCY_URL_ACTION'
+    ]),
     async getServiceProtocolData () {
       const params = {
         termsTypeIds: this.termsTypeIds, // 用户协议代号
         language: this.language
       }
       const data = await getServiceProtocoDataAjax(params)
+      if (!data) return false
       this.contentHTML = getNestedData(data, 'data').length ? getNestedData(data, 'data[0].content') : ''
     },
     // 获取资产列表下载地址
     async getDownUrl () {
-      let params = {
+      const data = await this.GET_CURRENCY_URL_ACTION({
         key: 'COIN_APPLY'
-      }
-      const data = await getCurrencyApplicationDownloadUrl(params)
+      })
       if (!data) return false
-      let detailData = getNestedData(data, 'data')
-      this.downloadUrl = http2https(detailData.url)
-      this.fileName = detailData.name
+      this.downloadUrl = data
     },
     // 下载资产预览表
     downloadPreviewTable () {
-      let filename = 'Coin application form'
+      let filename = 'Token application form'
+      if (!this.downloadUrl) return
       downloadFileWithUserDefined(this.downloadUrl, filename)
     }
   },

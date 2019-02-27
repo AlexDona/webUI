@@ -20,7 +20,7 @@
                 <div class="header-right-text text-align-r">
                   <!--隐藏资产为0的币种-->
                   {{ $t('M.user_hidden_assets') }}
-                  <p class="float-right header-right-show margin-left10">
+                  <p class="float-right header-right-show margin-left10 cursor-pointer">
                     <img
                       v-show="isShowAllCurrency"
                       @click.prevent="statusOpenToCloseCurrency('all')"
@@ -46,7 +46,6 @@
                   type="text"
                   class="header-right-search border-radius2 padding-left25 font-size12"
                   v-model="searchKeyWord"
-                  @keyup="statusSearch"
                 >
               </p>
             </div>
@@ -64,67 +63,145 @@
               <div class="table-title-th display-flex margin20 font-size12">
                 <!--币种-->
                 <div
-                  class="flex1"
+                  class="title-width"
                 >
                   {{ $t('M.comm_currency') }}
                 </div>
                 <!--总数量-->
                 <div
-                  class="flex1"
+                  class="title-width"
                 >
                   {{ $t('M.user_assets_sum1') }}
                 </div>
                 <!--冻结数量-->
                 <div
-                  class="flex1"
+                  class="title-width title-position"
                 >
                   {{ $t('M.user_assets_sum2') }}
+                  <div class="icon-caret">
+                    <!--升序-->
+                    <i
+                      class="el-icon-caret-bottom caret-text cursor-pointer"
+                      :class="{active: blueStyleFrozen == 1}"
+                      @click.prevent="assetsSorting('up', 'frozen')"
+                    >
+                    </i>
+                    <!--降序-->
+                    <i
+                      class="el-icon-caret-top caret-text-order cursor-pointer"
+                      :class="{active: blueStyleFrozen == 2}"
+                      @click.prevent="assetsSorting('down', 'frozen')"
+                    >
+                    </i>
+                  </div>
                 </div>
                 <!--可用数量-->
                 <div
-                  class="flex1"
+                  class="title-width-header title-position"
                 >
                   {{ $t('M.user_assets_sum3') }}
+                  <div class="icon-caret-order">
+                    <!--升序-->
+                    <i
+                      class="el-icon-caret-bottom caret-text cursor-pointer"
+                      :class="{active: blueStyleTotal == 1}"
+                      @click.prevent="assetsSorting('up', 'total')"
+                    >
+                    </i>
+                    <!--降序-->
+                    <i
+                      class="el-icon-caret-top caret-text-order cursor-pointer"
+                      :class="{active: blueStyleTotal == 2}"
+                      @click.prevent="assetsSorting('down', 'total')"
+                    >
+                    </i>
+                  </div>
                 </div>
                 <!--资产估值(BTC)-->
                 <div
-                  class="flex1 flex-asset"
+                  class="flex-asset title-width1"
                 >
                   {{ $t('M.user_assets_sum4') }}(BTC)
                   <div class="icon-caret">
-                    <i class="el-icon-caret-bottom caret-text cursor-pointer"></i>
-                    <i class="el-icon-caret-top caret-text1 cursor-pointer"></i>
+                    <!--升序-->
+                    <i
+                      class="el-icon-caret-bottom caret-text cursor-pointer"
+                      :class="{active: blueStyleValue == 1}"
+                      @click.prevent="assetsSorting('up', 'btcValue')"
+                    >
+                    </i>
+                    <!--降序-->
+                    <i
+                      class="el-icon-caret-top caret-text-order cursor-pointer"
+                      :class="{active: blueStyleValue == 2}"
+                      @click.prevent="assetsSorting('down', 'btcValue')"
+                    >
+                    </i>
                   </div>
                 </div>
                 <!--操作-->
                 <div
-                  class="flex1 text-align-c"
+                  class="text-align-c title-width title-width-last"
                 >
                   {{ $t('M.comm_operation') }}
                 </div>
               </div>
               <div
                 class="table-tr font-size12 padding-lr20"
-                v-for="(assetItem, index) in withdrawDepositList"
+                v-for="(assetItem, index) in (isShowAllCurrency?filteredData1:filteredData2)"
                 :key="index"
               >
-                <div class="table-box display-flex">
-                  <div class="table-td flex1">
+                <div class="table-box display-flex title-width">
+                  <!--币种-->
+                  <div class="table-td title-width">
                     {{ assetItem.coinName }}
                   </div>
-                  <div class="table-td flex1">
-                    {{ $scientificToNumber(assetItem.sum - 0) }}
+                  <!--总数量-->
+                  <div class="table-td title-width">
+                    <span v-if="assetItem.sum > 0">
+                      {{ $scientificToNumber($keep8Num(assetItem.sum - 0)) }}
+                    </span>
+                    <span v-else>
+                      0.00000000
+                    </span>
                   </div>
-                  <div class="table-td flex1">
-                    {{ $scientificToNumber(assetItem.frozen - 0) }}
+                  <!--冻结数量-->
+                  <div class="table-td title-width">
+                    <span v-if="assetItem.frozen > 0">
+                      {{ $scientificToNumber($keep8Num(assetItem.frozen - 0)) }}
+                    </span>
+                    <span v-else>
+                      0.00000000
+                    </span>
                   </div>
-                  <div class="table-td flex1">
-                    {{ $scientificToNumber(assetItem.total - 0) }}
+                  <!--可用数量-->
+                  <div class="table-td title-width-header">
+                    <span v-if="assetItem.total > 0">
+                      {{ $scientificToNumber($keep8Num(assetItem.total - 0)) }}
+                    </span>
+                    <span v-else>
+                      0.00000000
+                    </span>
                   </div>
-                  <div class="table-td flex1 text-align-c">
-                    {{ $scientificToNumber(assetItem.btcValue) }}
+                  <!--资产估值-->
+                  <div
+                    class="table-td text-align-r title-width1"
+                  >
+                    <div
+                      class="title-width-right"
+                      v-if="assetItem.btcValue > 0"
+                    >
+                      {{ $scientificToNumber($keep8Num(assetItem.btcValue)) }} ≈ {{ $scientificToNumber($keep2Num(assetItem.btcValue) * BTC2CNYRate) }} {{ activeConvertCurrencyObj.shortName }}
+                    </div>
+                    <div
+                      class="title-width-right"
+                      v-else
+                    >
+                      0.00000000 ≈ 0.00 {{activeConvertCurrencyObj.shortName}}
+                    </div>
                   </div>
-                  <div class="table-td flex1 display-flex text-align-r font-size12">
+                  <!--操作-->
+                  <div class="table-td display-flex text-align-r font-size12 title-width title-width-la">
                     <div
                       v-if="withdrawDepositList[index].isRecharge === 'true'"
                       class="table-charge-money flex1 cursor-pointer"
@@ -169,12 +246,21 @@
                       <div
                         class="type-transaction border-radius4"
                         v-show="tradingState&&index==current"
+                        v-if="currencyTradingList.length"
                       >
                         <span
                           class="triangle-border display-inline-block"
                           v-show="currencyTradingList.length"
                         >
                         </span>
+                        <!--<p-->
+                        <!--class="transaction-list text-align-c"-->
+                        <!--v-show="OTCCenterHasCurrentCoin"-->
+                        <!--@click="jumpToOTCCenter(assetItem.coinId)"-->
+                        <!--&gt;-->
+                        <!--&lt;!&ndash; otc 交易&ndash;&gt;-->
+                        <!--{{$t('M.comm_otc_center')}}-->
+                        <!--</p>-->
                         <p
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
@@ -184,6 +270,7 @@
                           {{ item.name }}
                         </p>
                       </div>
+                      <span v-else></span>
                     </div>
                   </div>
                 </div>
@@ -333,7 +420,7 @@
                 >
                   <el-button
                     type="primary"
-                    @click.prevent="submitMentionMoney"
+                    @click.prevent="submitMentionMoney()"
                   >
                     <!--确 定-->
                     {{ $t('M.comm_confirm') }}
@@ -375,17 +462,100 @@
           </div>
         </div>
       </div>
-      <div class="paging">
-        <!--分页-->
-        <el-pagination
-          background
-          v-show="activeName === 'current-entrust' && withdrawDepositList.length"
-          layout="prev, pager, next"
-          :page-count="totalPageForMyEntrust"
-          @current-change="changeCurrentPage"
+    </div>
+    <!--未实名认证前弹框提示-->
+    <div class="warning">
+      <el-dialog
+        :visible.sync="notVerifyDialogVisible"
+        center
+      >
+        <div class="dialog-warning">
+          <div class="dialog-warning-box">
+            <IconFontCommon
+              class="font-size60"
+              iconName="icon-gantanhao"
+            />
+          </div>
+        </div>
+        <p class="font-size12 warning-text margin-top35 text-align-c">
+          <!--请先完成实名认证，再进行提币操作！-->
+          <span v-show="!(this.realNameAuth === 'y')">
+            {{ $t('M.user_asset_title15') }}
+          </span>
+          <!--请先完成高级认证，再进行提币操作！-->
+          <span v-show="this.realNameAuth === 'y' && !(this.advancedAuth === 'pass')">
+            {{ $t('M.user_asset_title16') }}
+          </span>
+        </p>
+        <span
+          slot="footer"
+          class="dialog-footer"
         >
-        </el-pagination>
-      </div>
+          <!--确 定 取 消-->
+        <button
+          class="button-color border-radius4 cursor-pointer"
+          type="primary"
+          @click="realNameAuthConfirm"
+        >
+          <!--确 定-->
+          {{ $t('M.comm_confirm') }}
+        </button>
+        <button
+          class="btn border-radius4 cursor-pointer"
+          @click.prevent="notVerifyDialogVisible = false"
+        >
+          <!--取 消-->
+          {{ $t('M.comm_cancel') }}
+        </button>
+        </span>
+      </el-dialog>
+    </div>
+    <!--未实名认证前弹框提示-->
+    <div class="warning">
+      <el-dialog
+        :visible.sync="notVerifyDialogVisible"
+        center
+      >
+        <div class="dialog-warning">
+          <div class="dialog-warning-box">
+            <IconFontCommon
+              class="font-size60"
+              iconName="icon-gantanhao"
+            />
+          </div>
+        </div>
+        <p class="font-size12 warning-text margin-top35 text-align-c">
+          <!--请先完成实名认证，再进行提币操作！-->
+          <span v-show="!(this.realNameAuth === 'y')">
+            {{ $t('M.user_asset_title15') }}
+          </span>
+          <!--请先完成高级认证，再进行提币操作！-->
+          <span v-show="this.realNameAuth === 'y' && !(this.advancedAuth === 'pass')">
+            {{ $t('M.user_asset_title16') }}
+          </span>
+        </p>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <!--确 定 取 消-->
+        <button
+          class="button-color border-radius4 cursor-pointer"
+          type="primary"
+          @click="realNameAuthConfirm"
+        >
+          <!--确 定-->
+          {{ $t('M.comm_confirm') }}
+        </button>
+        <button
+          class="btn border-radius4 cursor-pointer"
+          @click.prevent="notVerifyDialogVisible = false"
+        >
+          <!--取 消-->
+          {{ $t('M.comm_cancel') }}
+        </button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -409,7 +579,8 @@ import {
   withdrawalInformation,
   queryTransactionInformation,
   inquireWithdrawalAddressId,
-  checkCurrencyAddress
+  checkCurrencyAddress,
+  currencyTransform
 } from '../../../utils/api/personal'
 import {
   returnAjaxMsg,
@@ -432,12 +603,17 @@ export default {
   // props,
   data () {
     return {
+      notVerifyDialogVisible: false, // 实名/高级认证弹窗显示与隐藏
       labelPosition: 'top', // form表单label方向
       errorMessage: '', // 提币验证错误提示
       isShowAllCurrency: true, // 隐藏币种// 显示所有/余额切换，
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
       openPictureSrc: require('../../../assets/user/yes.png'), // 全显示
       searchKeyWord: '', // 搜索关键字
+      blueStyleFrozen: 0, // 排序冻结默认样式
+      blueStyleTotal: 0, // 排序可用默认样式
+      blueStyleValue: 0, // 排序估值默认样式
+      BTC2CNYRate: '', // 转换汇率
       withdrawDepositList: [], // 我的资产全部币种列表
       chargeMoneyAddress: '', // 根据充币地址生成二维码条件
       withdrawalFee: '', // 自定义提币手续费
@@ -453,6 +629,7 @@ export default {
       totalPageForMyEntrust: 1, // 当前委托总页数
       // 充值
       chargeDialogVisible: false, // 默认隐藏充值框
+      currentState: 'not_all', // 当前显示状态
       chargeMoneyAddressId: '', // 数据ID
       currencyName: '', // 币种名称
       // 提币
@@ -482,16 +659,19 @@ export default {
       rechargeNoteInfo: '', // 充币地址备注信息
       localLoading: true, // 页面列表局部loading
       isLegalWithdrawAddress: true, // 是否为合法提币地址
-      // 最小提币数量
-      minRechargeAmount: '',
-      // 确认次数
-      successCount: '',
+      minRechargeAmount: '', // 最小提币数量
+      successCount: '', // 确认次数
+      currentIndex: '', // 提币清空数据当前索引
       end: '' // 占位
     }
   },
-  created () {
+  async created () {
     // 刚进页面时候 个人资产列表展示
     this.getAssetCurrenciesList()
+    if (this.currencyRateList.BTC) {
+      // 汇率转换
+      await this.currencyTransform()
+    }
   },
   mounted () {
     console.log(this.$refs)
@@ -508,12 +688,75 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'SET_NEW_WITHDRAW_ADDRESS'
     ]),
+    // 汇率折算以及根据header切换显示对应资产换算
+    async currencyTransform () {
+      // console.log(this.currencyRateList, this.activeConvertCurrencyObj)
+      const params = {
+        coinName: 'BTC',
+        shortName: this.activeConvertCurrencyObj.shortName
+      }
+      const data = await currencyTransform(params)
+      // console.log(data)
+      if (!returnAjaxMsg(data, this)) {
+        console.log(3)
+        return false
+      } else {
+        // console.log(data)
+        if (data.data.data.coinPrice) {
+          // 获取汇率
+          this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
+          // console.log(this.BTC2CNYRate)
+        }
+      }
+    },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
-      console.log(e)
       this.isShowAllCurrency = e == 'not_all' ? true : false
-      this.getAssetCurrenciesList(e)
     },
+    // 资产估值升序降序
+    assetsSorting (type, val) {
+      // type 冻结(frozen) 可用(total) 资产估值(btcValue)
+      // val 升序(order) 降序(invertedOrder)
+      console.log(type, val)
+      switch (type) {
+        case 'up':
+          this.blueStyleFrozen = 1
+          this.blueStyleTotal = 0
+          this.blueStyleTotal = 0
+          if (val == 'frozen') {
+            this.blueStyleFrozen = 1
+            this.blueStyleTotal = 0
+            this.blueStyleTotal = 0
+          } else if (val == 'total') {
+            this.blueStyleTotal = 1
+            this.blueStyleFrozen = 0
+            this.blueStyleValue = 0
+          } else {
+            this.blueStyleValue = 1
+            this.blueStyleTotal = 0
+            this.blueStyleFrozen = 0
+          }
+          this.withdrawDepositList.sort((a, b) => b[val] - a[val])
+          break
+        case 'down':
+          if (val == 'frozen') {
+            this.blueStyleFrozen = 2
+            this.blueStyleTotal = 0
+            this.blueStyleTotal = 0
+          } else if (val == 'total') {
+            this.blueStyleTotal = 2
+            this.blueStyleFrozen = 0
+            this.blueStyleValue = 0
+          } else {
+            this.blueStyleValue = 2
+            this.blueStyleTotal = 0
+            this.blueStyleFrozen = 0
+          }
+          this.withdrawDepositList.sort((a, b) => a[val] - b[val])
+          break
+      }
+    },
+
     // 跳转当前交易对
     changeActiveSymbol (e) {
       console.log(e)
@@ -675,6 +918,8 @@ export default {
     },
     // 重置提现表单内容
     resetWithdrawFormContent (index) {
+      this.currentIndex = index
+      console.log(this.$refs[`withdrawItemRef${index}`][0])
       this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = ''
       // 到账数量
       this.accountCount = ''
@@ -683,8 +928,22 @@ export default {
       // 地址标签备注
       this.withdrawRemark = ''
     },
+    // 实名认证验证
+    realNameAuthConfirm () {
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
+      this.$goToPage('/PersonalCenter')
+      this.notVerifyDialogVisible = false
+    },
     // 点击提现按钮显示提币内容（带回币种id 币种名称 当前index）
     async changeWithdrawBoxByCoin (id, name, index) {
+      if (!(this.realNameAuth === 'y')) {
+        this.notVerifyDialogVisible = true
+        return false
+      }
+      if (!(this.advancedAuth === 'pass')) {
+        this.notVerifyDialogVisible = true
+        return false
+      }
       console.log(this.userInfo)
       console.log(this.coinStatus)
       if (this.coinStatus == 'disable') {
@@ -756,21 +1015,22 @@ export default {
       sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     // 调取后台接口 搜索关键字模糊查询
-    statusSearch () {
-      this.getAssetCurrenciesList()
-    },
+    // statusSearch () {
+    //   this.getAssetCurrenciesList()
+    // },
     /**
      * 刚进页面时候 个人资产列表展示
      */
     async getAssetCurrenciesList (type) {
+      console.log(type)
       let data
       let params = {
         pageNum: this.currentPageForMyEntrust,
-        pageSize: this.pageSize,
+        pageSize: '10000',
         shortName: this.searchKeyWord, // 搜索关键字
-        selectType: 'all' // all：所有币种 not_all：有资产币种
+        selectType: this.currentState // all：所有币种 not_all：有资产币种
       }
-      switch (type) {
+      switch (this.currentState) {
         case 'all':
           params.selectType = 'not_all'
           break
@@ -778,8 +1038,9 @@ export default {
           params.selectType = 'all'
           break
       }
+      this.localLoading = true
       data = await assetCurrenciesList(params)
-      if (!(returnAjaxMsg(data, this, 0))) {
+      if (!data) {
         // 接口失败清除loading
         this.localLoading = false
         return false
@@ -794,19 +1055,19 @@ export default {
         })
         // 返回数据
         // let detailData = data.data.data
-        let detailData = getNestedData(data, 'data.data')
+        let detailData = getNestedData(data, 'data')
         this.totalSumBTC = detailData.totalSum
         this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
         this.totalPageForMyEntrust = getNestedData(detailData, 'userCoinWalletVOPageInfo.pages') - 0
         // console.log('我的资产币种列表')
-        // console.log(this.withdrawDepositList)
+        console.log(this.withdrawDepositList)
       }
     },
-    // 分页
-    changeCurrentPage (pageNum) {
-      this.currentPageForMyEntrust = pageNum
-      this.getAssetCurrenciesList()
-    },
+    // // 分页
+    // changeCurrentPage (pageNum) {
+    //   this.currentPageForMyEntrust = pageNum
+    //   this.getAssetCurrenciesList()
+    // },
     // 根据币种id查询提币地址
     async queryWithdrawalAddressList () {
       this.activeWithdrawDepositAddress = ''
@@ -831,14 +1092,11 @@ export default {
         address: this.activeWithdrawDepositAddress
       }
       let data = await checkCurrencyAddress(param)
-      if (!(returnAjaxMsg(data, this))) {
-        this.isLegalWithdrawAddress = false
-        return false
-      } else {
-        this.isLegalWithdrawAddress = true
-        // 验证通过调用验证方式接口
-        this.getSecurityCenter()
-      }
+      this.isLegalWithdrawAddress = false
+      if (!data) return false
+      this.isLegalWithdrawAddress = true
+      // 验证通过调用验证方式接口
+      this.getSecurityCenter()
     },
     /**
      *  点击提币按钮时 获取提币信息（最大最小手续费）
@@ -929,14 +1187,14 @@ export default {
         return false
       }
       console.log(this.accountCount)
-      if (this.withdrawFeeVModel < this.feeRangeOfWithdraw.minFees) {
+      if (this.withdrawFeeVModel - this.feeRangeOfWithdraw.minFees < 0) {
         // 判断输入手续费小于最小提现手续费
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint5'),
           type: 'error'
         })
         return false
-      } else if (this.withdrawFeeVModel > this.feeRangeOfWithdraw.maxFees) {
+      } else if (this.withdrawFeeVModel - this.feeRangeOfWithdraw.maxFees > 0) {
         // // 判断输入手续费大于于最大提现手续费
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint6'),
@@ -945,14 +1203,14 @@ export default {
         return false
       }
       console.log(this.withdrawFeeVModel, this.feeRangeOfWithdraw)
-      if (this.withdrawCountVModel > this.feeRangeOfWithdraw.maxWithdraw) {
+      if (this.withdrawCountVModel - this.feeRangeOfWithdraw.maxWithdraw > 0) {
         // 大于最大限额
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint8'),
           type: 'error'
         })
         return false
-      } else if (this.withdrawCountVModel < this.feeRangeOfWithdraw.minWithdraw) {
+      } else if (this.withdrawCountVModel - this.feeRangeOfWithdraw.minWithdraw < 0) {
         // 小于最小限额
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint9'),
@@ -1003,25 +1261,20 @@ export default {
         payCode: this.password // 交易密码
       }
       data = await statusSubmitWithdrawButton(param)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        this.isShowWithdrawDialog = false
-        // 提币地址列表查询
-        this.getAssetCurrenciesList()
-        // this.stateEmptyData()
-        this.resetWithdrawFormContent()
-        this.stateEmptyData()
-      }
+      console.log(data)
+      if (!data) return false
+      this.isShowWithdrawDialog = false
+      // 提币地址列表查询
+      this.getAssetCurrenciesList()
+      this.resetWithdrawFormContent(this.currentIndex)
+      this.stateEmptyData()
     },
     // 接口请求完成之后普通币种清空数据
-    stateEmptyData (index) {
+    stateEmptyData () {
       this.phoneCode = '' // 短信验证码
       this.emailCode = '' // 邮箱验证码
       this.googleCode = '' // 谷歌验证码
       this.password = '' // 交易密码
-      this.$refs.withdrawalFee[index].value = ''
-      this.$refs.withdrawCount[index].value = ''
       this.accountCount = ''
       this.activeWithdrawDepositAddress = ''
     },
@@ -1070,7 +1323,13 @@ export default {
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // 是否允许提币
-      coinStatus: state => state.user.loginStep1Info.userInfo.coinStatus
+      coinStatus: state => state.user.loginStep1Info.userInfo.coinStatus,
+      // 是否通过高级认证
+      advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
+      // 实名认证
+      realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth'),
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
+      currencyRateList: state => state.common.currencyRateList // 折算货币列表
     }),
     // 提现手续费输入input ref
     feeInputRef () {
@@ -1083,9 +1342,42 @@ export default {
     // 提币地址初始化赋值
     originalActiveWithdrawDepositAddress () {
       return this.activeWithdrawDepositAddress
+    },
+    filteredData: function () {
+      return this.withdrawDepositList.filter((item) => {
+        return item['coinName'].indexOf(this.searchKeyWord.toLocaleUpperCase()) !== -1
+      })
+    },
+    // 筛选币种为小于零的币种
+    filteredData1: function () {
+      return this.filteredData.filter(function (item) {
+        return item
+      })
+    },
+    // 开启关闭币种小于零的币种
+    filteredData2: function () {
+      return this.filteredData.filter(function (item) {
+        return item.total > 0
+      })
     }
   },
   watch: {
+    async activeConvertCurrencyObj () {
+      if (this.currencyRateList.BTC) {
+        // 汇率转换
+        await this.currencyTransform()
+      }
+      console.log(this.activeConvertCurrencyObj)
+    },
+    currencyRateList () {
+      console.log(this.currencyRateList)
+    },
+    filteredData1 () {
+      console.log(this.filteredData1)
+    },
+    filteredData2 () {
+      console.log(this.filteredData2)
+    },
     userCenterActiveName (newVal) {
       if (newVal === 'assets') {
         console.log(newVal)
@@ -1102,9 +1394,11 @@ export default {
     > .account-assets-main {
       > .account-assets-box {
         min-height: 480px;
+        margin-bottom: 50px;
 
         .account-assets-header {
           > .header-flex {
+            position: relative;
             height: 100%;
 
             > .header-right-left {
@@ -1140,6 +1434,40 @@ export default {
             > .table-body {
               width: 100%;
 
+              .title-width {
+                width: 150px;
+              }
+
+              .title-position {
+                position: relative;
+
+                .icon-caret {
+                  position: absolute;
+                  top: 0;
+                  right: 102px;
+                }
+              }
+
+              .title-width1 {
+                width: 175px;
+              }
+
+              .title-width-last {
+                margin-left: 20px;
+              }
+
+              .title-width-la {
+                margin-left: 7px;
+              }
+
+              .title-width-header {
+                width: 140px;
+              }
+
+              .title-width-right {
+                margin-right: 10px;
+              }
+
               .error-info {
                 height: 20px;
                 line-height: 35px;
@@ -1162,13 +1490,18 @@ export default {
 
               .flex-asset {
                 position: relative;
-                text-align: left;
+                text-align: center;
               }
 
-              .icon-caret {
+              .active {
+                color: #3e79d6;
+              }
+
+              .icon-caret,
+              .icon-caret-order {
                 position: absolute;
                 top: 0;
-                right: 40px;
+                right: 46px;
 
                 .caret-text {
                   position: absolute;
@@ -1176,24 +1509,22 @@ export default {
                   left: 5px;
                 }
 
-                .caret-text1 {
+                .caret-text-order {
                   position: absolute;
                   top: 15px;
                   left: 5px;
                 }
               }
 
+              .icon-caret-order {
+                position: absolute;
+                top: 0;
+                right: 90px;
+              }
+
               > .table-tr {
                 > .table-box {
                   width: 100%;
-
-                  > .recharge-list-mention {
-                    height: 236px !important;
-                  }
-
-                  > .list-mention-treasure {
-                    height: 295px !important;
-                  }
 
                   > .out-box {
                     > .recharge-list {
@@ -1201,21 +1532,8 @@ export default {
                       z-index: 2;
                       padding: 20px 6px;
 
-                      > .triangle {
-                        position: absolute;
-                        top: -7px;
-                        right: 113px;
-                        width: 12px;
-                        height: 12px;
-                        -ms-transform: rotate(135deg);
-                        -moz-transform: rotate(135deg);
-                        -webkit-transform: rotate(135deg);
-                        -o-transform: rotate(135deg);
-                        transform: rotate(135deg);
-                      }
-
                       > .triangle-one {
-                        right: 55px;
+                        right: 65px;
                       }
 
                       > .mention {
@@ -1346,7 +1664,7 @@ export default {
 
                         > .text-info-mention {
                           position: relative;
-                          top: -20px;
+                          top: -15px;
                           padding-left: 15px;
 
                           &.need-tag-top {
@@ -1359,7 +1677,7 @@ export default {
                           }
 
                           > .mention-button {
-                            margin-top: 41px;
+                            margin-top: 30px;
 
                             > .submit-but {
                               width: 80px;
@@ -1403,7 +1721,7 @@ export default {
               .send-code-btn {
                 position: absolute;
                 z-index: 999;
-                top: 4px;
+                top: 3px;
                 right: 2px;
                 width: 95px;
                 height: 34px;
@@ -1437,7 +1755,58 @@ export default {
       }
     }
 
+    > .warning {
+      .dialog-warning {
+        width: 90px;
+        height: 90px;
+        padding-top: 6px;
+        margin: 0 auto;
+        border-radius: 50%;
+        background: rgba(42, 122, 211, .2);
+
+        .dialog-warning-box {
+          width: 78px;
+          height: 78px;
+          margin: 0 auto;
+          border-radius: 50%;
+          line-height: 75px;
+          text-align: center;
+          background: linear-gradient(90deg, #2b396e, #2a5082);
+        }
+      }
+
+      .warning-text {
+        color: #fff;
+      }
+
+      .button-color {
+        width: 80px;
+        height: 35px;
+        margin-right: 15px;
+        border: 0;
+        line-height: 0;
+      }
+
+      .btn {
+        width: 80px;
+        height: 35px;
+        line-height: 0;
+      }
+    }
+
     /deep/ {
+      .warning {
+        .el-dialog {
+          width: 350px;
+          border-radius: 5px;
+        }
+
+        .el-dialog__footer {
+          margin-top: 20px;
+          text-align: center;
+        }
+      }
+
       /* tabs组件出现蓝色边框问题 */
       .el-tabs__active-bar {
         height: 0 !important;
@@ -1466,6 +1835,15 @@ export default {
         height: 34px;
         border: 0;
         border-radius: 2px;
+      }
+
+      .header-right-right .el-select .el-input--suffix .el-input__inner {
+        width: 150px;
+        height: 30px;
+      }
+
+      .el-select-dropdown__empty {
+        padding: 5px 0;
       }
 
       .el-input__icon {
@@ -1526,6 +1904,17 @@ export default {
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
+
+      .button-color {
+        color: rgba(255, 255, 255, .7);
+        background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+      }
+
+      .btn {
+        border: 1px solid #338ff5;
+        color: #fff;
+        background-color: transparent;
+      }
 
       .account-assets-box {
         background-color: $nightMainBgColor;
@@ -1615,14 +2004,6 @@ export default {
               > .out-box {
                 > .recharge-list {
                   border: 1px solid #338ff5;
-
-                  > .triangle {
-                    border-top: 1px solid transparent;
-                    border-bottom: 1px solid #338ff5;
-                    border-left: 1px solid #338ff5;
-                    background-color: #1c1f32;
-                    border-right: 1px solid transparent;
-                  }
 
                   > .recharge-content {
                     > .recharge-content-hint {
@@ -1792,6 +2173,21 @@ export default {
       color: $dayFontColor;
       background-color: $dayBgColor;
 
+      .warning-text {
+        color: #333;
+      }
+
+      .button-color {
+        color: rgba(255, 255, 255, .7);
+        background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+      }
+
+      .btn {
+        border: 1px solid #338ff5;
+        color: #333;
+        background-color: transparent;
+      }
+
       .account-assets-box {
         border: 1px solid rgba(38, 47, 56, .1);
         color: $dayFontColor;
@@ -1878,17 +2274,9 @@ export default {
               }
 
               > .out-box {
-                > .recharge-list {
+                .recharge-list {
                   border: 1px solid #338ff5;
                   background: #fff;
-
-                  > .triangle {
-                    border-top: 1px solid transparent;
-                    border-bottom: 1px solid #338ff5;
-                    border-left: 1px solid #338ff5;
-                    background-color: #fff;
-                    border-right: 1px solid transparent;
-                  }
 
                   > .recharge-content {
                     > .recharge-content-hint {

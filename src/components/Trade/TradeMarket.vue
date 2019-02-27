@@ -93,7 +93,8 @@ import {
   // getPartnerListAjax,
   toggleUserCollection,
   getCollectionList,
-  setSocketData
+  setSocketData,
+  getNestedData
 } from '../../utils/commonFunc'
 // import {socket} from '../../utils/tradingview/socket'
 import {
@@ -197,8 +198,13 @@ export default {
       }
       const data = await getTradeMarketDataAjax(params)
       if (!data) return false
-
-      const objData = JSON.parse(unzip(data.data.obj))
+      console.log(data)
+      let objList = getNestedData(data, 'data.obj')
+      let resultStr = ''
+      _.forEach(objList, (objItem) => {
+        resultStr += unzip(objItem)
+      })
+      const objData = JSON.parse(resultStr)
       let tickerList = _.cloneDeep(objData.tickerList)
       let plateList = []
       // 板块筛选

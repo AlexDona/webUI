@@ -7,8 +7,7 @@ import {
 } from './actions-types'
 import {
   getStoreWithJson,
-  getStore,
-  setStore
+  getStore
 } from '../../utils'
 import {
   getConfigAjax,
@@ -33,15 +32,15 @@ export default {
     let nowTimeStamp = new Date().getTime()
     let diffTime = Math.abs(nowTimeStamp - saveTimeStamp)
     let data
-    if (localCountry && diffTime < 86400000) {
+    const ONE_DAY = 86400000
+    if (localCountry && diffTime < ONE_DAY) {
       data = localCountry
       commit('SET_COUNTRY_AREA_LIST', data)
       return false
     } else {
       data = await getCountryList()
+      if (!data) return false
       commit('SET_COUNTRY_AREA_LIST', getNestedData(data, 'data'))
-      setStore('countryList', getNestedData(data, 'data'))
-      setStore('timeStamp', new Date().getTime())
       if (callback) {
         callback(data)
       }
@@ -50,6 +49,7 @@ export default {
   // 获取目标汇率
   async [GET_TRANSITION_RATE_ACTION] ({commit}, {params, activeConvertCurrencyObj}) {
     const data = await getTransitionCurrencyRateAjax(params)
+    if (!data) return false
     commit('CHANGE_CURRENCY_RATE_LIST', {
       currencyRateList: data.data,
       activeConvertCurrencyObj
@@ -57,10 +57,11 @@ export default {
   },
   // 获取语言列表信息
   async [GET_LANGUAGE_LIST_ACTION] ({commit, state}, self) {
-    console.log(state)
     const data = await getLanguageList()
+    if (!data) return false
     self.languageList = data.data
     const data1 = await getConfigAjax()
+    if (!data1) return false
     let configInfo = getNestedData(data1, 'data')
     console.log(configInfo, self.languageList)
     changeLanguage(getStore('language') || configInfo.defaultLanguage, self, commit)
@@ -75,6 +76,7 @@ export default {
     }
     const data1 = await getFooterInfo1(params)
     const data2 = await getFooterInfo2(params)
+    if (!data1 || !data2) return false
     let footerInfo1 = getNestedData(data1, 'data')
     let footerInfo2 = getNestedData(data2, 'data')
     commit('SET_FOOTER_INFO', {

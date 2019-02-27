@@ -227,6 +227,7 @@ export default {
         language: this.language
       }
       const data = await getAllNewsTypeList(params)
+      if (!data) return false
       this.newsTypeList = getNestedData(data, 'data') || []
     },
     // 获取新闻公告列表
@@ -239,6 +240,7 @@ export default {
         newsTypeId: this.newsTypeId
       }
       const data = await getNewsNoticeList(params)
+      if (!data) return false
       const targetData = getNestedData(data, 'data')
       this.noticeList = getNestedData(targetData, 'list') || []
       this.pageNum = getNestedData(targetData, 'pageNum')

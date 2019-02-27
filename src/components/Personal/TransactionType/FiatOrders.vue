@@ -221,6 +221,7 @@ export default {
   // props,
   data () {
     return {
+      tabPosition: 'top', //  面板标签方向状态
       activeName: 'TRADING',
       // 1.0 商家订单筛选下拉框数组--交易类型
       activatedMerchantsOrdersTraderStyleList: '', // 选中的筛选项
@@ -393,9 +394,15 @@ export default {
         // 结束时间
         endTime: this.endTime,
         // 类型
-        tradeType: this.activatedMerchantsOrdersTraderStyleList,
+        // tradeType: this.activatedMerchantsOrdersTraderStyleList,
         pageNum: this.legalTradePageNum,
         pageSize: this.legalTradePageSize
+      }
+      // 20190218 增加委单和其他状态交易类型字段判断 委托订单用entrustType字段其他用tradeType字段
+      if (activeName == 'ENTRUSTED') {
+        params.entrustType = this.activatedMerchantsOrdersTraderStyleList
+      } else {
+        params.tradeType = this.activatedMerchantsOrdersTraderStyleList
       }
       if (activeName == 'ENTRUSTED') {
         const data = await getOTCEntrustingOrders(params)

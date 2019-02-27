@@ -223,6 +223,7 @@ export default {
     },
     async getConfig () {
       const data = await getConfigAjax()
+      if (!data) return false
       this.usersetTimeInterval = getNestedData(data, 'data.notInputPayPasswdTime')
     },
     // 设置用户交易密码时长

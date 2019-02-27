@@ -17,7 +17,7 @@
             :key="index"
             @click="changeCurrentCurrency(item.id)"
           >
-            <span>{{item.name}} {{item.shortName}} </span>
+            <span>{{item.name}} （{{item.shortName}}）</span>
           </li>
         </ul>
       </div>
@@ -25,8 +25,10 @@
         <div
           class="inner-box"
         >
-          <h1>
-            {{currencyInfo.name}} {{currencyInfo.shortName}}
+          <h1
+            v-show="currencyInfo.shortName"
+          >
+            {{currencyInfo.name}} （{{currencyInfo.shortName}}）
           </h1>
           <div
             class="information"
@@ -91,6 +93,7 @@ export default {
           break
       }
       const data = await getCurrencyInfoList({language})
+      if (!data) return false
       console.log(data)
       this.currencyList = getNestedData(data, 'data')
       if (this.currencyList.length) {
@@ -107,6 +110,7 @@ export default {
       let currencyId = this.currencyId || getNestedData(this.currencyList, '[0].id')
       if (currencyId) {
         const data = await getCurrencyDetails(this.currencyId || getNestedData(this.currencyList, '[0].id'))
+        if (!data) return false
         this.currencyInfo = getNestedData(data, 'data')
       }
     }
@@ -137,7 +141,8 @@ export default {
     > .inner-box {
       display: flex;
       width: 100%;
-      margin-left: 10px;//
+      margin-left: 10px;
+
       > .left {
         width: 180px;
         height: 720px;
@@ -152,16 +157,37 @@ export default {
 
         > .list {
           width: 180px;
-          height: 100%;
-          padding: 0 2px;
+          height: 690px;
           overflow-y: auto;
-          text-align: center;
+          text-align: left;
+
+          &::-webkit-scrollbar {
+            width: 4px;
+          }
+
+          &::-webkit-scrollbar-track-piece {
+            background-color: #2a343e;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: #4a5662;
+          }
+
+          &::-webkit-scrollbar-button {
+            display: none;
+            background-color: #fff;
+          }
 
           > .currency-item {
             box-sizing: border-box;
-            width: 176px;
+            width: 100%;
             height: 30px;
+            padding: 0 0 0 10px;
+            overflow: hidden;
             line-height: 30px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
 
             &.active {
               color: #338ff5;
@@ -250,6 +276,24 @@ export default {
               &.active {
                 background: rgba(190, 217, 248, 1);
               }
+            }
+
+            &::-webkit-scrollbar {
+              width: 2px;
+            }
+
+            &::-webkit-scrollbar-track-piece {
+              background-color: #b7c3d0;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              border-radius: 2px;
+              background-color: #7e94ab;
+            }
+
+            &::-webkit-scrollbar-button {
+              display: none;
+              background-color: #fff;
             }
           }
         }

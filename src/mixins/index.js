@@ -1,4 +1,4 @@
-import {keep2Num, scientificToNumber} from '../utils'
+import {keep2Num, keep8Num, scientificToNumber} from '../utils'
 import {jumpToOtherPageForFooter, formatCount} from '../utils/commonFunc'
 
 let mixin = {
@@ -17,6 +17,9 @@ let mixin = {
     },
     $keep2Num (num) {
       return keep2Num(num)
+    },
+    $keep8Num (num) {
+      return keep8Num(num)
     },
     $scientificToNumber (num) {
       return scientificToNumber(num)

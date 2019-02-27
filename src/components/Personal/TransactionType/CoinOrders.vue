@@ -892,8 +892,7 @@ export default {
 
         .el-tabs__item {
           &:hover {
-            border-left: none !important;
-            color: #fff !important;
+            color: #0079fe !important;
             background-color: transparent !important;
           }
         }

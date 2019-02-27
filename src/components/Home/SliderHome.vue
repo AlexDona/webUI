@@ -68,7 +68,8 @@ export default {
         language: this.language
       }
       const data = await getBanner(params)
-      this.sliderListAjax = getNestedData(data, 'data')
+      if (!data) return false
+      this.sliderListAjax = getNestedData(data, 'data') || []
       let sliderList = []
       this.pages = sliderList
       this.renderSlider()
@@ -79,7 +80,7 @@ export default {
     },
     renderSlider () {
       let bigUrl = getNestedData(this.sliderListAjax, '[0].bigUrl')
-      console.log(bigUrl)
+      console.log(bigUrl, this.sliderListAjax)
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
       let sliderList = []
       this.sliderListAjax.forEach((item) => {
@@ -155,7 +156,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      // 'bannerActive',
+      bannerActive: state => state.home.bannerActive,
       language: state => state.common.language
     })
   },

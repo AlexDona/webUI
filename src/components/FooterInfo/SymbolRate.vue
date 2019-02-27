@@ -20,6 +20,7 @@
               >
                 <el-table
                   :data="symbolRateList"
+                  :empty-text="$t('M.comm_no_data')"
                   class="symbol-rate-table"
                 >
                   <!-- 交易对 -->
@@ -56,6 +57,7 @@
                 name="rateOfCurrency"
               >
                 <el-table
+                  :empty-text="$t('M.comm_no_data')"
                   :data="currencyRateList"
                   class="currency-rate-table"
                 >
@@ -151,10 +153,12 @@ export default {
   methods: {
     async getCurrencyRate () {
       const DATA = await getCurrencyRate()
+      if (!DATA) return false
       this.currencyRateList = getNestedData(DATA, 'data') || []
     },
     async getSymbolRateData () {
       const DATA = await getSymbolRate()
+      if (!DATA) return false
       this.symbolRateList = getNestedData(DATA, 'data') || []
     }
   },

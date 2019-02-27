@@ -209,7 +209,7 @@
                   v-model="step3PhoneMsgCode"
                   @keydown="setErrorMsg(3,'')"
                   @keyup="step3AutoLogin(step3PhoneMsgCode)"
-                  @blur="checkoutInputFormat(3,checkCode)"
+                  @blur="checkoutInputFormat(3,step3PhoneMsgCode)"
                 >
                 <CountDownButton
                   v-if="!isMobile"
@@ -238,7 +238,7 @@
                   v-model="step3EmailMsgCode"
                   @keydown="setErrorMsg(3,'')"
                   @keyup="step3AutoLogin(step3EmailMsgCode)"
-                  @blur="checkoutInputFormat(3,checkCode)"
+                  @blur="checkoutInputFormat(3,step3EmailMsgCode)"
                 >
                 <CountDownButton
                   v-if="!isMobile"
@@ -467,7 +467,7 @@
                     v-model="step3PhoneMsgCode"
                     @keydown="setErrorMsg(3,'')"
                     @keyup="step3AutoLogin(step3PhoneMsgCode)"
-                    @blur="checkoutInputFormat(3,checkCode)"
+                    @blur="checkoutInputFormat(3,step3PhoneMsgCode)"
                   >
                   <CountDownButton
                     v-if="isMobile"
@@ -499,7 +499,7 @@
                     v-model="step3EmailMsgCode"
                     @keyup="step3AutoLogin(step3EmailMsgCode)"
                     @keydown="setErrorMsg(3,'')"
-                    @blur="checkoutInputFormat(3,checkCode)"
+                    @blur="checkoutInputFormat(3,step3EmailMsgCode)"
                   >
                   <CountDownButton
                     v-if="isMobile"
@@ -662,6 +662,7 @@ import {
   mapMutations,
   mapState
 } from 'vuex'
+import Vue from 'vue'
 Vue.use(VueClipboard)
 export default {
   components: {
@@ -1024,7 +1025,6 @@ export default {
       if (!this.loginIpEquals && this.firstLogin) {
         // 谷歌验证
         if (this.isBindGoogle) {
-          console.log(1)
           if (!this.step3GoogleMsgCode) {
             this.$message({
               type: 'error',
@@ -1033,17 +1033,20 @@ export default {
             return false
           }
         }
-        if (this.isBindEmail && !this.step3EmailMsgCode) {
-          this.$message({
-            type: 'error',
-            message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
-          })
-          return false
-        }
-        if (this.isBindPhone && !this.step3PhoneMsgCode) {
+
+        if (!this.isBindGoogle && this.isBindPhone && !this.step3PhoneMsgCode) {
+          console.log(1)
           this.$message({
             type: 'error',
             message: this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code') // '请输入手机验证码'
+          })
+          return false
+        }
+
+        if (!this.isBindGoogle && !this.isBindPhone && this.isBindEmail && !this.step3EmailMsgCode) {
+          this.$message({
+            type: 'error',
+            message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
           })
           return false
         }

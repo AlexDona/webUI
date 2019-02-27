@@ -126,7 +126,7 @@
                   />
                 </el-form-item>
                 <!--邮箱未认证-->
-                <span v-elsee></span>
+                <span v-else></span>
                 <!--谷歌已认证-->
                 <el-form-item
                   v-if="securityCenter.isGoogleEnable"
@@ -375,16 +375,10 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await checkCurrencyAddress(param)
-      if (!(returnAjaxMsg(data, this))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        // 验证通过调用验证方式接口
-        await this.getSecurityCenter()
-      }
+      this.fullscreenLoading = false
+      if (!data) return false
+      // 验证通过调用验证方式接口
+      await this.getSecurityCenter()
     },
     /**
      * 安全中心
@@ -422,7 +416,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await addNewWithdrawalAddress(param)
-      if (!(returnAjaxMsg(data, this))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false

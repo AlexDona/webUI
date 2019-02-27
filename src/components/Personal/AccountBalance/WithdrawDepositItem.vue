@@ -30,6 +30,7 @@
             {{ $t('M.comm_mention_money') }}{{ $t('M.comm_site') }}
           </p>
           <el-select
+            placeholder=""
             v-model="activeWithdrawDepositAddress"
             :no-data-text="$t('M.comm_no_data')"
             filterable
@@ -255,7 +256,7 @@ export default {
     > .triangle {
       position: absolute;
       top: -7px;
-      right: 113px;
+      right: 118px;
       width: 12px;
       height: 12px;
       -ms-transform: rotate(135deg);
@@ -266,7 +267,7 @@ export default {
     }
 
     > .triangle-one {
-      right: 55px;
+      right: 70px;
     }
 
     > .mention {
@@ -397,7 +398,7 @@ export default {
 
       > .text-info-mention {
         position: relative;
-        top: -20px;
+        top: -15px;
         padding-left: 15px;
 
         &.need-tag-top {
@@ -410,7 +411,7 @@ export default {
         }
 
         > .mention-button {
-          margin-top: 41px;
+          margin-top: 30px;
 
           > .submit-but {
             width: 80px;
@@ -581,6 +582,9 @@ export default {
       }
 
       > .triangle {
+        position: absolute;
+        top: -7px;
+        right: 63px;
         border-top: 1px solid transparent;
         border-bottom: 1px solid #338ff5;
         border-left: 1px solid #338ff5;

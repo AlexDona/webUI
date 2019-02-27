@@ -88,11 +88,6 @@ const routes = [
     component: OpenVIP
   },
   {
-    path: '/TradeCenter',
-    name: 'TradeCenter',
-    component: TradeCenter
-  },
-  {
     // 银行卡设置
     path: '/AddBankCard',
     name: 'AddBankCard',

@@ -1230,7 +1230,7 @@ export default {
         }
 
         .el-dialog__title {
-          color: #fff;
+          color: #7d90ac;
         }
 
         .el-select {

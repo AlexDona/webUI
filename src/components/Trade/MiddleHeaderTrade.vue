@@ -17,7 +17,7 @@
           <span>{{middleTopData.area}}</span>
         </div>
         <div class="bottom font-size12">
-          <span>{{middleTopData.sellname}}</span>
+          <span>{{(middleTopData.sellname||' ').replace('+',' ')}}</span>
         </div>
       </div>
       <!--最新价-->
@@ -99,7 +99,7 @@
         <div class="bottom">
             <span
               class="font-size14 theme-color"
-              v-show="middleTopData.vol24hour"
+              v-show="$formatCount(middleTopData.vol24hour)!='NaN'"
             >
               {{$formatCount(middleTopData.vol24hour)}}
             </span>

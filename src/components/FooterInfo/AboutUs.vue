@@ -50,6 +50,7 @@ export default {
         language: this.language
       }
       const data = await getAboutUsDataAjax(params)
+      if (!data) return false
       this.aboutData = getNestedData(data, 'data[0]') || {content: ''}
     }
   },
