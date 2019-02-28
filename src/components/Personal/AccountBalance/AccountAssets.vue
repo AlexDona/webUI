@@ -560,6 +560,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import ChargeMoneyItem from './ChargeMoneyItem'
 import WithdrawDepositItem from './WithdrawDepositItem'
+// setStore getStoreWithJson
 import {
   formatNumberInput,
   amendPrecision,
@@ -1018,9 +1019,7 @@ export default {
       let data
       let params = {
         pageNum: this.currentPageForMyEntrust,
-        pageSize: '10000',
-        shortName: this.searchKeyWord, // 搜索关键字
-        selectType: this.currentState // all：所有币种 not_all：有资产币种
+        pageSize: '10000'
       }
       switch (this.currentState) {
         case 'all':
@@ -1064,7 +1063,6 @@ export default {
       // 获取币种列表
       console.log(this.withdrawStorageMap)
     },
-
     // 根据币种id查询提币地址
     async queryWithdrawalAddressList () {
       this.activeWithdrawDepositAddress = ''

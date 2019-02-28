@@ -564,7 +564,6 @@ export default {
           }
 
           .error-info {
-            height: 20px;
             line-height: 20px;
             color: #d45858;
           }
