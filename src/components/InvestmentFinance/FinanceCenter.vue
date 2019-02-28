@@ -245,6 +245,7 @@
                   <!-- 确定 -->
                   <el-button
                     type="primary"
+                    :disabled="isSureDisable"
                     @click="dialogSuer"
                   >
                     {{$t('M.comm_affirm')}}
@@ -667,8 +668,10 @@ export default {
         }
       ],
       interestRateValue: '',
-      // 存币详情确定按钮是否禁用
+      // 交易密码确定按钮是否禁用
       isDisable: false,
+      // 存币详情确定按钮是否禁用
+      isSureDisable: false,
       // 输入交易框是否弹出
       isShowPasswordDialog: false,
       // 交易密码
@@ -697,7 +700,7 @@ export default {
       'FINANCE_LINE_RENDER_TIME_LIST',
       'FINANCE_LINE_RENDER_PRICE_LIST',
       'FINANCE_LINE_STATUS',
-      'PASSWORDACCOINT'
+      'CHANGE_PASSWORD_USEABLE'
     ]),
     // 将返回来的天数转换成日期
     getDate (n) {
@@ -752,23 +755,28 @@ export default {
       this.dialogVisible = false
     },
     // 点击确定按钮存币详情模态框关闭
-    dialogSuer () {
+    async dialogSuer () {
+      // 禁用确定按钮
+      this.isSureDisable = true
+      // 添加全局loading
+      this.fullscreenLoading = true
+      // 判断输入密码框是否显示
+      await this.REFRESH_USER_INFO_ACTION()
+      this.fullscreenLoading = false
+      // 解除确定按钮的禁用
+      this.isSureDisable = false
       // 关闭模态框
       this.dialogVisible = false
-      // 判断输入密码框是否显示
-      if (this.isShowPasswordDialog) {
-        return false
-      } else {
-        this.REFRESH_USER_INFO_ACTION()
-        if (!this.isLockedPayPassword) {
-          // 设置交易密码弹窗为显示
-          this.isShowPasswordDialog = true
-          // 让交易密码为空的提示隐藏
-          this.isShowErrorTips = false
-          // 输入密码input框清空
-          this.passwords = ''
-        }
-      }
+      // 交易密码是否被锁定
+      let isLockedPassword = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isLockedPassword)
+      if (this.isLockedPayPassword) return false
+      // 设置交易密码弹窗为显示
+      this.isShowPasswordDialog = true
+      // 让交易密码为空的提示隐藏
+      this.isShowErrorTips = false
+      // 输入密码input框清空
+      this.passwords = ''
     },
     // 改写存币数量只能输入小数点后两位20190103该写
     investNumLimit (ref, pointLength) {
@@ -856,10 +864,14 @@ export default {
     // },
     // 理财记录模态框显示
     async clickGetInvestEarnings () {
+      // 禁用确定按钮
+      this.isSureDisable = true
       const data = await getFinancialRecord({
         financialManagementId: this.selectedInvestTypeId,
         number: this.$refs.investAmountRef.value
       })
+      // 禁用确定按钮
+      this.isSureDisable = false
       if (!data) return false
       this.formLabelAlign = getNestedData(data, 'data')
       this.$refs.changeAlignNum.value = this.formLabelAlign.number
@@ -1019,7 +1031,8 @@ export default {
       language: state => state.common.language,
       isLockedPayPassword: state => state.common.isLockedPayPassword,
       status: state => state.finance.status,
-      clientWidth: state => state.common.clientWidth
+      clientWidth: state => state.common.clientWidth,
+      loginStep1Info: state => state.user.loginStep1Info
     }),
     screenWidth () {
       return this.clientWidth
