@@ -459,8 +459,7 @@ import {
 // 引入全局变量和方法
 import {
   mapMutations,
-  mapState,
-  mapActions
+  mapState
 } from 'vuex'
 export default {
   components: {
@@ -583,11 +582,7 @@ export default {
   methods: {
     ...mapMutations([
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-      'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
-      'CHANGE_PASSWORD_USEABLE'
-    ]),
-    ...mapActions([
-      'REFRESH_USER_INFO_ACTION'
+      'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS'
     ]),
     // 同时处理最大订单数(0=不限制)input框限制
     positiveIntegerNumRegexpInputLimit (ref) {
@@ -706,12 +701,6 @@ export default {
     },
     // 5.0 点击发布广告弹出输入交易密码框
     async showPasswordDialog () {
-      // 用户交易密码是否锁定判断
-      await this.REFRESH_USER_INFO_ACTION()
-      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-      if (this.isLockedPayPassword) return false
-      //
       // 非空及数据范围准确性验证
       // 单价
       if (!this.$refs.price.value) {
@@ -1034,10 +1023,7 @@ export default {
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme,
-      configInfo: state => state.common.footerInfo.configInfo,
-      // 交易密码是否被锁定
-      isLockedPayPassword: state => state.common.isLockedPayPassword,
-      loginStep1Info: state => state.user.loginStep1Info
+      configInfo: state => state.common.footerInfo.configInfo
     })
   },
   watch: {}

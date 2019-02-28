@@ -19,7 +19,7 @@
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          <!--修改交易密码-->
+          <!--重置交易密码-->
           {{ $t('M.user_security_set_reset_pwd2') }}
         </span>
         <span

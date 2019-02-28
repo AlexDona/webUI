@@ -873,7 +873,7 @@ export default {
           this.notVerifyDialogVisible = true
           return false
         }
-        // 用户交易密码是否锁定判断
+        //
         await this.REFRESH_USER_INFO_ACTION()
         let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
         this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
@@ -1014,6 +1014,11 @@ export default {
         this.$goToPage('/TransactionPassword')
         return false
       }
+      // let isPaypasswordLocked = getNestedData(data, 'data.payPasswordRemainCount') ? false : true
+      // console.log(isPaypasswordLocked)
+      // this.CHANGE_PASSWORD_USEABLE()
+      // 账号被锁定禁止操作
+      // if (this.isLockedPayPassword) return false
 
       let params = {
         tradeId: this.middleTopData.partnerTradeId + '',
