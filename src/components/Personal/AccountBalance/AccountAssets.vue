@@ -201,8 +201,9 @@
                   </div>
                   <!--操作-->
                   <div class="table-td display-flex text-align-r font-size12 title-width title-width-la">
+                    <!--.isRecharge === 'true'-->
                     <div
-                      v-if="withdrawDepositList[index].isRecharge === 'true'"
+                      v-if="(withdrawStorageMap.get(assetItem.coinId)).isRecharge ==='true'"
                       class="table-charge-money flex1 cursor-pointer"
                       @click.prevent="showRechargeBox(assetItem.coinId, assetItem.coinName, index)"
                     >
@@ -220,7 +221,7 @@
 
                     <!--提币-->
                     <div
-                      v-if="withdrawDepositList[index].isWithdraw === 'true'"
+                      v-if="(withdrawStorageMap.get(assetItem.coinId)).isWithdraw ==='true'"
                       class="table-mention-money flex1 cursor-pointer"
                       @click.prevent="changeWithdrawBoxByCoin(assetItem.coinId, assetItem.coinName, index)"
                     >
@@ -561,7 +562,8 @@ import ChargeMoneyItem from './ChargeMoneyItem'
 import WithdrawDepositItem from './WithdrawDepositItem'
 import {
   formatNumberInput,
-  amendPrecision
+  amendPrecision,
+  setStore
 } from '../../../utils'
 import {
   assetCurrenciesList,
@@ -581,7 +583,8 @@ import {
 } from '../../../utils/commonFunc'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -653,6 +656,9 @@ export default {
       minRechargeAmount: '', // 最小提币数量
       successCount: '', // 确认次数
       currentIndex: '', // 提币清空数据当前索引
+      // 我的资产
+      withdrawStorageMap: new Map(),
+      withdrawStorage: [],
       end: '' // 占位
     }
   },
@@ -671,13 +677,17 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
+    ]),
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
       'SET_JUMP_STATUS',
       'SET_JUMP_SYMBOL',
       'CHANGE_ACTIVE_TRADE_AREA',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'SET_NEW_WITHDRAW_ADDRESS'
+      'SET_NEW_WITHDRAW_ADDRESS',
+      'CHANGE_PASSWORD_USEABLE'
     ]),
     // 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
@@ -1045,15 +1055,26 @@ export default {
           provideWithdrawDepositIsShow: false
         })
         // 返回数据
-        // let detailData = data.data.data
         let detailData = getNestedData(data, 'data')
         this.totalSumBTC = detailData.totalSum
         this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
+        _.forEach(this.withdrawDepositList, (item) => {
+          this.withdrawStorageMap.set(item.coinId, item)
+        })
+        console.log(this.withdrawStorageMap, this.withdrawStorageMap.get('267243422920736768').isRecharge)
         this.totalPageForMyEntrust = getNestedData(detailData, 'userCoinWalletVOPageInfo.pages') - 0
         // console.log('我的资产币种列表')
         console.log(this.withdrawDepositList)
+        this.getAllWithdraw()
       }
     },
+    getAllWithdraw () {
+      // 缓存币种列表
+      setStore('withdrawStorage', this.withdrawDepositList)
+      // 获取币种列表
+      console.log(this.withdrawStorageMap)
+    },
+
     // 根据币种id查询提币地址
     async queryWithdrawalAddressList () {
       this.activeWithdrawDepositAddress = ''
@@ -1217,6 +1238,11 @@ export default {
       } else {
         this.isShowWithdrawDialog = true
       }
+      // 判断是否交易密码锁定
+      this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
     },
     confirm () {
       this.$goToPage('/TransactionPassword')
@@ -1303,6 +1329,7 @@ export default {
       theme: state => state.common.theme,
       language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      loginStep1Info: state => state.user.loginStep1Info,
       uid: state => state.user.loginStep1Info.userInfo.showId,
       activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
@@ -1317,6 +1344,8 @@ export default {
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
     }),
+    // 交易密码是否被锁定
+    isLockedPayPassword: state => state.common.isLockedPayPassword,
     // 提现手续费输入input ref
     feeInputRef () {
       return this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef
