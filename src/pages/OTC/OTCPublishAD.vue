@@ -809,10 +809,10 @@ export default {
         data = await addModifyPublishADOrder(param)
       }
       // 返回数据正确的逻辑
+      this.publishADTradePwdDialogStatus = false
       // console.log(data)
       if (!data) return false
       if (data) {
-        this.publishADTradePwdDialogStatus = false
         // 改变标识状态为不是跳转来的
         this.ADManageJumpOrderStatus = 1
         // 清空数据
