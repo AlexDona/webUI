@@ -19,6 +19,7 @@ import {
   CHANGE_SYMBOL_CHANGED_STATUS,
   SET_WINDOW_WIDTH,
   SET_NOTICE_ID,
+  PASSWORDACCOINT,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
@@ -160,5 +161,8 @@ export default {
   },
   [SET_NOTICE_ID] (state, noticeId) {
     state.newsItemId = noticeId
+  },
+  [PASSWORDACCOINT] (state, data) {
+    state.passwordsAccount = data
   }
 }

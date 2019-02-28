@@ -94,7 +94,8 @@ const state = {
   // 全局loading
   isAjaxReady: false,
   clientWidth: 0,
-  newsItemId: ''
+  newsItemId: '',
+  passwordsAccount: 0 // 交易密码剩余次数
 }
 
 export default {

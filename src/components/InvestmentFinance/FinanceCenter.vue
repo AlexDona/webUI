@@ -562,7 +562,7 @@ import {
   cancelInvestment,
   getFinancialRecord
 } from '../../utils/api/investmentFinance'
-import {getPushTotalByCoinId} from '../../utils/api/personal'
+import {getPushTotalByCoinId, userRefreshUser} from '../../utils/api/personal'
 import {argumentBusinessApply} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {
@@ -692,7 +692,8 @@ export default {
     ...mapMutations([
       'FINANCE_LINE_RENDER_TIME_LIST',
       'FINANCE_LINE_RENDER_PRICE_LIST',
-      'FINANCE_LINE_STATUS'
+      'FINANCE_LINE_STATUS',
+      'REFRESH_USER_INFO_ACTION'
     ]),
     // 将返回来的天数转换成日期
     getDate (n) {
@@ -731,6 +732,20 @@ export default {
         this.isShowErrorTips = false
       }
     },
+    async checkPasswordAccoun () {
+      let data = await userRefreshUser()
+      if (!data) return false
+      console.log(getNestedData(data, 'data.payPasswordRemainCount'))
+      this.REFRESH_USER_INFO_ACTION(getNestedData(data, 'data.payPasswordRemainCount'))
+      if (getNestedData(data, 'data.payPasswordRemainCount')) {
+        // 设置交易密码弹窗为显示
+        this.isShowPasswordDialog = true
+        // 让交易密码为空的提示隐藏
+        this.isShowErrorTips = false
+        // 输入密码input框清空
+        this.passwords = ''
+      }
+    },
     // 提交交易密码
     async submitPassword () {
       if (this.passwords && !this.isShowErrorTips) {
@@ -740,6 +755,20 @@ export default {
         this.clickImmediateInvestment()
       } else {
         this.isShowErrorTips = true
+      }
+    },
+    // 点击取消按钮模态框关闭
+    dialogCancel () {
+      this.dialogVisible = false
+    },
+    // 点击确定按钮模态框关闭
+    dialogSuer () {
+      this.dialogVisible = false
+      // 判断输入密码框是否显示
+      if (this.isShowPasswordDialog) {
+        return false
+      } else {
+        this.checkPasswordAccoun()
       }
     },
     // 改写存币数量只能输入小数点后两位20190103该写
@@ -802,25 +831,6 @@ export default {
       } else {
         this.$goToPage('/login')
         return false
-      }
-    },
-    // 点击取消按钮模态框关闭
-    dialogCancel () {
-      this.dialogVisible = false
-    },
-    // 点击确定按钮模态框关闭
-    dialogSuer () {
-      this.dialogVisible = false
-      // 判断输入密码框是否显示
-      if (this.isShowPasswordDialog) {
-        return false
-      } else {
-        // 设置交易密码弹窗为显示
-        this.isShowPasswordDialog = true
-        // 让交易密码为空的提示隐藏
-        this.isShowErrorTips = false
-        // 输入密码input框清空
-        this.passwords = ''
       }
     },
     // 模态框数字发生变化时需要执行的方法
