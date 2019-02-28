@@ -493,18 +493,17 @@ export default {
     },
     // 是否需要交易密码
     async checkISNeedPayPassowd () {
-      // 判断是否交易密码锁定
-      await this.REFRESH_USER_INFO_ACTION()
-      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-      if (this.isLockedPayPassword) return false
       await this.reflashIsNeedPayPassword()
       let goOnStatus = 0
       goOnStatus = (this.checkoutInputFormat(0, this.buyUID) && this.checkoutInputFormat(1, this.count) && this.checkoutInputFormat(2, this.price)) ? 1 : 0
-
       if (goOnStatus) {
         if (this.isNeedPayPassword) {
           this.payType = 'push'
+          // 判断是否交易密码锁定
+          await this.REFRESH_USER_INFO_ACTION()
+          let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+          this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+          if (this.isLockedPayPassword) return false
           this.isShowPayPasswordDialog = true
         } else {
           this.submitPushAssets()

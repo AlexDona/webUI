@@ -1224,13 +1224,12 @@ export default {
       if (!this.userInfo.userInfo.payPassword) {
         this.dialogVisible = true
       } else {
+        this.REFRESH_USER_INFO_ACTION()
+        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+        if (this.isLockedPayPassword) return false
         this.isShowWithdrawDialog = true
       }
-      // 判断是否交易密码锁定
-      this.REFRESH_USER_INFO_ACTION()
-      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-      if (this.isLockedPayPassword) return false
     },
     confirm () {
       this.$goToPage('/TransactionPassword')
