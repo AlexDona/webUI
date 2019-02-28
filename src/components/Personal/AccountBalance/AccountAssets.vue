@@ -560,6 +560,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import ChargeMoneyItem from './ChargeMoneyItem'
 import WithdrawDepositItem from './WithdrawDepositItem'
+// setStore getStoreWithJson
 import {
   formatNumberInput,
   amendPrecision,
@@ -1015,10 +1016,6 @@ export default {
       }
       sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
-    // 调取后台接口 搜索关键字模糊查询
-    // statusSearch () {
-    //   this.getAssetCurrenciesList()
-    // },
     /**
      * 刚进页面时候 个人资产列表展示
      */
@@ -1027,9 +1024,7 @@ export default {
       let data
       let params = {
         pageNum: this.currentPageForMyEntrust,
-        pageSize: '10000',
-        shortName: this.searchKeyWord, // 搜索关键字
-        selectType: this.currentState // all：所有币种 not_all：有资产币种
+        pageSize: '10000'
       }
       switch (this.currentState) {
         case 'all':
@@ -1062,7 +1057,6 @@ export default {
           this.withdrawStorageMap.set(item.coinId, item)
         })
         console.log(this.withdrawStorageMap, this.withdrawStorageMap.get('267243422920736768').isRecharge)
-        this.totalPageForMyEntrust = getNestedData(detailData, 'userCoinWalletVOPageInfo.pages') - 0
         // console.log('我的资产币种列表')
         console.log(this.withdrawDepositList)
         this.getAllWithdraw()
@@ -1074,7 +1068,6 @@ export default {
       // 获取币种列表
       console.log(this.withdrawStorageMap)
     },
-
     // 根据币种id查询提币地址
     async queryWithdrawalAddressList () {
       this.activeWithdrawDepositAddress = ''
