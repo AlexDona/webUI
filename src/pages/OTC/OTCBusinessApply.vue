@@ -109,7 +109,7 @@
             <p>{{$t('M. otc_merchant_videoKode')}}：</p>
             <p>{{$t('M.otc_merchant_detailOne')}}</p>
             <p>{{$t('M.otc_merchant_detailTwo')}}</p>
-            <p>{{$t('M.otc_merchant_applyLimit')}}<span>{{successTimes}}</span>{{$t('M.otc_ci')}}。②{{$t('M.otc_merchant_account')}}<span>{{coinName}}</span>{{$t('M.comm_count')}}{{$t('M.otc_xu')}}≥<span>{{count}}</span></p>
+            <p>{{$t('M.otc_merchant_applyLimit')}}<span>{{$scientificToNumber(successTimes)}}</span>{{$t('M.otc_ci')}}。②{{$t('M.otc_merchant_account')}}<span>{{coinName}}</span>{{$t('M.comm_count')}}{{$t('M.otc_xu')}}≥<span>{{$scientificToNumber(count)}}</span></p>
             <h4 class="title">
               {{$t('M.otc_merchant_step2')}}
             </h4>
@@ -117,7 +117,7 @@
             <h4 class="title">
               {{$t('M.otc_merchant_step3')}}
             </h4>
-            <p>{{$t('M.otc_merchant_datailFive')}}{{count}} {{coinName}}{{$t('M.otc_merchant_datailSix')}}。</p>
+            <p>{{$t('M.otc_merchant_datailFive')}}{{$scientificToNumber(count)}} {{coinName}}{{$t('M.otc_merchant_datailSix')}}。</p>
             <h4 class="title">
               {{$t('M.otc_merchant_step4')}}
             </h4>

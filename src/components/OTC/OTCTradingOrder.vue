@@ -252,7 +252,7 @@
                   <p class="bankMoneyInfo">
                     <!-- 转账金额 -->
                     <span>{{$t('M.otc_tradingorder_transformAcconu')}}:</span>
-                    <span>{{item.symbol}}{{item.payAmount}}</span>
+                    <span>{{item.symbol}}{{$scientificToNumber(item.payAmount)}}</span>
                   </p>
                   <p class="bankMoneyInfo">
                     <span>
@@ -475,7 +475,7 @@
                   <p class="bankMoneyInfo">
                     <!-- 转账金额 -->
                     <span>
-                      {{$t('M.otc_tradingorder_transformAcconu')}}: </span><span>{{item.symbol}}{{item.payAmount}}
+                      {{$t('M.otc_tradingorder_transformAcconu')}}: </span><span>{{item.symbol}}{{$scientificToNumber(item.payAmount)}}
                     </span>
                   </p>
                   <p class="bankMoneyInfo">
