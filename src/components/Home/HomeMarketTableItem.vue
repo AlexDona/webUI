@@ -52,7 +52,7 @@
                     vertical-align: middle;
                     display:inline-block;
                     margin:14px 0;"
-                  :src="s.row.image"/>
+                  :src="$http2https(s.row.image)"/>
               </div>
               <div class="right"
                    style="height:30px;
@@ -220,7 +220,7 @@
         <el-table-column
           prop="tendency"
           :label="$t('M.home_market_price_tendency')"
-          width="140px"
+          width="130px"
         >
           <template slot-scope="s">
             <EchartsLineCommon
@@ -232,7 +232,7 @@
         <el-table-column
           prop="collect"
           label=" "
-          width="20px"
+          width="30px"
         >
           <template slot-scope="s">
             <!--非自选区-->
@@ -302,11 +302,13 @@ export default {
   created () {
     console.log(this.item)
     this.more = this.item.more
+    console.log(this.item, this.more)
   },
   mounted () {
   },
   activated () {},
-  update () {},
+  updated () {
+  },
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
@@ -388,7 +390,7 @@ export default {
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
     }),
     isGetMore () {
-      return this.more
+      return this.more && this.item.more
     }
   },
   watch: {
@@ -566,6 +568,8 @@ export default {
       .el-table {
         .el-table__row {
           td {
+            padding: 0;
+
             div {
               height: 50px;
 

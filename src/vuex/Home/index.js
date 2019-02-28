@@ -17,7 +17,8 @@ const state = {
   symbolMap: new Map(), // 交易对map映射 key： 交易对名称 value： 交易对json
   symbolJSON: {},
   noticeCloseVisible: true,
-  end: ''// 占位
+  // 首页新闻列表
+  noticeList: []
 }
 
 export default {

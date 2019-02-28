@@ -818,9 +818,6 @@ export default {
         await this.REFRESH_USER_INFO_ACTION()
         await this.getAccountPaymentTerm()
       }
-    },
-    paymentTerm (newVal) {
-      console.log(newVal)
     }
   }
 }

@@ -75,7 +75,7 @@
                 </div>
                 <!--冻结数量-->
                 <div
-                  class="title-width title-position"
+                  class="title-width title-position padding-l7"
                 >
                   {{ $t('M.user_assets_sum2') }}
                   <div class="icon-caret">
@@ -97,7 +97,7 @@
                 </div>
                 <!--可用数量-->
                 <div
-                  class="title-width-header title-position"
+                  class="title-width-header title-position padding-l7"
                 >
                   {{ $t('M.user_assets_sum3') }}
                   <div class="icon-caret-order">
@@ -188,10 +188,9 @@
                     class="table-td text-align-r title-width1"
                   >
                     <div
-                      class="title-width-right"
                       v-if="assetItem.btcValue > 0"
                     >
-                      {{ $scientificToNumber($keep8Num(assetItem.btcValue)) }} ≈ {{ $scientificToNumber($keep2Num(assetItem.btcValue) * BTC2CNYRate) }} {{ activeConvertCurrencyObj.shortName }}
+                      {{ $scientificToNumber($keep8Num(assetItem.btcValue)) }} ≈ {{ $scientificToNumber($keep2Num((assetItem.btcValue) * BTC2CNYRate)) }} {{ activeConvertCurrencyObj.shortName }}
                     </div>
                     <div
                       class="title-width-right"
@@ -202,8 +201,9 @@
                   </div>
                   <!--操作-->
                   <div class="table-td display-flex text-align-r font-size12 title-width title-width-la">
+                    <!--.isRecharge === 'true'-->
                     <div
-                      v-if="withdrawDepositList[index].isRecharge === 'true'"
+                      v-if="(withdrawStorageMap.get(assetItem.coinId)).isRecharge ==='true'"
                       class="table-charge-money flex1 cursor-pointer"
                       @click.prevent="showRechargeBox(assetItem.coinId, assetItem.coinName, index)"
                     >
@@ -221,7 +221,7 @@
 
                     <!--提币-->
                     <div
-                      v-if="withdrawDepositList[index].isWithdraw === 'true'"
+                      v-if="(withdrawStorageMap.get(assetItem.coinId)).isWithdraw ==='true'"
                       class="table-mention-money flex1 cursor-pointer"
                       @click.prevent="changeWithdrawBoxByCoin(assetItem.coinId, assetItem.coinName, index)"
                     >
@@ -253,14 +253,6 @@
                           v-show="currencyTradingList.length"
                         >
                         </span>
-                        <!--<p-->
-                        <!--class="transaction-list text-align-c"-->
-                        <!--v-show="OTCCenterHasCurrentCoin"-->
-                        <!--@click="jumpToOTCCenter(assetItem.coinId)"-->
-                        <!--&gt;-->
-                        <!--&lt;!&ndash; otc 交易&ndash;&gt;-->
-                        <!--{{$t('M.comm_otc_center')}}-->
-                        <!--</p>-->
                         <p
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
@@ -568,9 +560,11 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import ChargeMoneyItem from './ChargeMoneyItem'
 import WithdrawDepositItem from './WithdrawDepositItem'
+// setStore getStoreWithJson
 import {
   formatNumberInput,
-  amendPrecision
+  amendPrecision,
+  setStore
 } from '../../../utils'
 import {
   assetCurrenciesList,
@@ -590,7 +584,8 @@ import {
 } from '../../../utils/commonFunc'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -662,6 +657,9 @@ export default {
       minRechargeAmount: '', // 最小提币数量
       successCount: '', // 确认次数
       currentIndex: '', // 提币清空数据当前索引
+      // 我的资产
+      withdrawStorageMap: new Map(),
+      withdrawStorage: [],
       end: '' // 占位
     }
   },
@@ -680,13 +678,17 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
+    ]),
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
       'SET_JUMP_STATUS',
       'SET_JUMP_SYMBOL',
       'CHANGE_ACTIVE_TRADE_AREA',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'SET_NEW_WITHDRAW_ADDRESS'
+      'SET_NEW_WITHDRAW_ADDRESS',
+      'CHANGE_PASSWORD_USEABLE'
     ]),
     // 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
@@ -1014,10 +1016,6 @@ export default {
       }
       sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
-    // 调取后台接口 搜索关键字模糊查询
-    // statusSearch () {
-    //   this.getAssetCurrenciesList()
-    // },
     /**
      * 刚进页面时候 个人资产列表展示
      */
@@ -1026,9 +1024,7 @@ export default {
       let data
       let params = {
         pageNum: this.currentPageForMyEntrust,
-        pageSize: '10000',
-        shortName: this.searchKeyWord, // 搜索关键字
-        selectType: this.currentState // all：所有币种 not_all：有资产币种
+        pageSize: '10000'
       }
       switch (this.currentState) {
         case 'all':
@@ -1054,20 +1050,24 @@ export default {
           provideWithdrawDepositIsShow: false
         })
         // 返回数据
-        // let detailData = data.data.data
         let detailData = getNestedData(data, 'data')
         this.totalSumBTC = detailData.totalSum
         this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
-        this.totalPageForMyEntrust = getNestedData(detailData, 'userCoinWalletVOPageInfo.pages') - 0
+        _.forEach(this.withdrawDepositList, (item) => {
+          this.withdrawStorageMap.set(item.coinId, item)
+        })
+        console.log(this.withdrawStorageMap, this.withdrawStorageMap.get('267243422920736768').isRecharge)
         // console.log('我的资产币种列表')
         console.log(this.withdrawDepositList)
+        this.getAllWithdraw()
       }
     },
-    // // 分页
-    // changeCurrentPage (pageNum) {
-    //   this.currentPageForMyEntrust = pageNum
-    //   this.getAssetCurrenciesList()
-    // },
+    getAllWithdraw () {
+      // 缓存币种列表
+      setStore('withdrawStorage', this.withdrawDepositList)
+      // 获取币种列表
+      console.log(this.withdrawStorageMap)
+    },
     // 根据币种id查询提币地址
     async queryWithdrawalAddressList () {
       this.activeWithdrawDepositAddress = ''
@@ -1231,6 +1231,11 @@ export default {
       } else {
         this.isShowWithdrawDialog = true
       }
+      // 判断是否交易密码锁定
+      this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
     },
     confirm () {
       this.$goToPage('/TransactionPassword')
@@ -1317,6 +1322,7 @@ export default {
       theme: state => state.common.theme,
       language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      loginStep1Info: state => state.user.loginStep1Info,
       uid: state => state.user.loginStep1Info.userInfo.showId,
       activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
@@ -1331,6 +1337,8 @@ export default {
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
     }),
+    // 交易密码是否被锁定
+    isLockedPayPassword: state => state.common.isLockedPayPassword,
     // 提现手续费输入input ref
     feeInputRef () {
       return this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef
@@ -1383,9 +1391,6 @@ export default {
         console.log(newVal)
         this.getAssetCurrenciesList()
       }
-    },
-    activeWithdrawDepositAddress (newVal) {
-      console.log(newVal)
     }
   }
 }
@@ -1447,12 +1452,16 @@ export default {
                 .icon-caret {
                   position: absolute;
                   top: 0;
-                  right: 102px;
+                  right: 90px;
                 }
               }
 
+              .padding-l7 {
+                padding-left: 7px;
+              }
+
               .title-width1 {
-                width: 175px;
+                width: 200px;
               }
 
               .title-width-last {
@@ -1465,10 +1474,6 @@ export default {
 
               .title-width-header {
                 width: 140px;
-              }
-
-              .title-width-right {
-                margin-right: 10px;
               }
 
               .error-info {
@@ -1493,7 +1498,8 @@ export default {
 
               .flex-asset {
                 position: relative;
-                text-align: center;
+                padding-right: 15px;
+                text-align: right;
               }
 
               .active {
@@ -1504,7 +1510,7 @@ export default {
               .icon-caret-order {
                 position: absolute;
                 top: 0;
-                right: 46px;
+                right: 15px;
 
                 .caret-text {
                   position: absolute;
@@ -1522,7 +1528,7 @@ export default {
               .icon-caret-order {
                 position: absolute;
                 top: 0;
-                right: 90px;
+                right: 77px;
               }
 
               > .table-tr {
@@ -1740,7 +1746,7 @@ export default {
             position: absolute;
             z-index: 2;
             top: 10px;
-            left: 56px;
+            left: 48px;
             width: 135px;
 
             > .triangle-border {

@@ -146,18 +146,6 @@ export default {
     // }
   },
   watch: {
-    footerInfo (newVal) {
-      console.log(newVal)
-    },
-    language (newVal) {
-      console.log(newVal)
-    },
-    isChineseLanguage (newVal) {
-      console.log(newVal)
-    },
-    isWXBrowser (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>

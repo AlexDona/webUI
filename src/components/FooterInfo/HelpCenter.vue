@@ -69,9 +69,6 @@ export default {
     })
   },
   watch: {
-    isNeedApp (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>
@@ -80,7 +77,7 @@ export default {
 
   .help-box {
     > .inner-box {
-      padding-top: 66px;
+      padding-top: 50px;
 
       > .search-box {
         height: 250px;
