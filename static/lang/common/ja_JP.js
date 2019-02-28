@@ -185,5 +185,7 @@ export const common = {
   'common_footer_privacy_policy': 'プライバシーポリシー',
   'common_footer_legal_notice': '法律ステートメント',
   // 在线客服
-  'common_onlineText': 'オンラインサービス'
+  'common_onlineText': 'オンラインサービス',
+  'common_paypassword_locked': '取引パスワードエラー件数は制限を超えるなら取引2時間を凍結。',
+  'common_no_processing': 'まだ処理しない。'
 }

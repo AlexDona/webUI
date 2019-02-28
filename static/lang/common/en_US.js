@@ -191,5 +191,7 @@ export const common = {
   'common_footer_privacy_policy': 'Privacy Terms',
   'common_footer_legal_notice': 'Legal Statement',
   // 在线客服
-  'common_onlineText': 'Online Service'
+  'common_onlineText': 'Online Service',
+  'common_paypassword_locked': 'Trading password error times exceed limit, trading will freeze 2 hours.',
+  'common_no_processing': 'Not processed yet'
 }

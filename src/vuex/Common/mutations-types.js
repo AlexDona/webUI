@@ -27,4 +27,4 @@ export const SET_WINDOW_WIDTH = 'SET_WINDOW_WIDTH'
 // 设置全局消息id
 export const SET_NOTICE_ID = 'SET_NOTICE_ID'
 // 获取交易密码剩余次数
-export const PASSWORDACCOINT = 'PASSWORDACCOINT'
+export const CHANGE_PASSWORD_USEABLE = 'CHANGE_PASSWORD_USEABLE'
