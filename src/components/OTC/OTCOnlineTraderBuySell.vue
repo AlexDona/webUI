@@ -385,7 +385,8 @@ import {
 } from '../../utils/commonFunc'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -489,7 +490,11 @@ export default {
     ...mapMutations([
       // 0.1 改变全局锚点状态方法
       'CHANGE_OTC_ANCHOR_STATUS',
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_PASSWORD_USEABLE'
+    ]),
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
     ]),
     // 0.3 充币按钮跳转
     chargeMoney () {
@@ -507,6 +512,13 @@ export default {
     },
     // 2.0 显示输入密码框
     async showPayPasswordDialog (tradeType) {
+      // 用户交易密码是否锁定判断
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      console.log(isPaypasswordLocked)
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
+      //
       this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
       switch (tradeType) {
         // 在线买
@@ -813,7 +825,10 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       configInfo: state => state.common.footerInfo.configInfo,
-      anchorStatus: state => state.OTC.anchorStatus // anchorStatus锚点状态：在全局先定义false，当用户购买或者出售时候改为true
+      anchorStatus: state => state.OTC.anchorStatus, // anchorStatus锚点状态：在全局先定义false，当用户购买或者出售时候改为true
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword,
+      loginStep1Info: state => state.user.loginStep1Info
     }),
     windowHeight () {
       return window.innerHeight
