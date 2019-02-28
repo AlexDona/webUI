@@ -562,12 +562,13 @@ import {
   cancelInvestment,
   getFinancialRecord
 } from '../../utils/api/investmentFinance'
-import {getPushTotalByCoinId, userRefreshUser} from '../../utils/api/personal'
+import {getPushTotalByCoinId} from '../../utils/api/personal'
 import {argumentBusinessApply} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {
   mapState,
-  mapMutations
+  mapMutations,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -689,11 +690,14 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
+    ]),
     ...mapMutations([
       'FINANCE_LINE_RENDER_TIME_LIST',
       'FINANCE_LINE_RENDER_PRICE_LIST',
       'FINANCE_LINE_STATUS',
-      'REFRESH_USER_INFO_ACTION'
+      'PASSWORDACCOINT'
     ]),
     // 将返回来的天数转换成日期
     getDate (n) {
@@ -732,20 +736,6 @@ export default {
         this.isShowErrorTips = false
       }
     },
-    async checkPasswordAccoun () {
-      let data = await userRefreshUser()
-      if (!data) return false
-      console.log(getNestedData(data, 'data.payPasswordRemainCount'))
-      this.REFRESH_USER_INFO_ACTION(getNestedData(data, 'data.payPasswordRemainCount'))
-      if (getNestedData(data, 'data.payPasswordRemainCount')) {
-        // 设置交易密码弹窗为显示
-        this.isShowPasswordDialog = true
-        // 让交易密码为空的提示隐藏
-        this.isShowErrorTips = false
-        // 输入密码input框清空
-        this.passwords = ''
-      }
-    },
     // 提交交易密码
     async submitPassword () {
       if (this.passwords && !this.isShowErrorTips) {
@@ -768,7 +758,15 @@ export default {
       if (this.isShowPasswordDialog) {
         return false
       } else {
-        this.checkPasswordAccoun()
+        this.REFRESH_USER_INFO_ACTION()
+        if (this.passwordsAccount) {
+          // 设置交易密码弹窗为显示
+          this.isShowPasswordDialog = true
+          // 让交易密码为空的提示隐藏
+          this.isShowErrorTips = false
+          // 输入密码input框清空
+          this.passwords = ''
+        }
       }
     },
     // 改写存币数量只能输入小数点后两位20190103该写
@@ -1018,6 +1016,7 @@ export default {
       financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList,
       // 获取当前语言
       language: state => state.common.language,
+      passwordsAccount: state => state.common.passwordsAccount,
       status: state => state.finance.status,
       clientWidth: state => state.common.clientWidth
     }),
