@@ -253,14 +253,14 @@
                           v-show="currencyTradingList.length"
                         >
                         </span>
-                        <!--<p-->
-                        <!--class="transaction-list text-align-c"-->
-                        <!--v-show="OTCCenterHasCurrentCoin"-->
-                        <!--@click="jumpToOTCCenter(assetItem.coinId)"-->
-                        <!--&gt;-->
-                        <!--&lt;!&ndash; otc 交易&ndash;&gt;-->
-                        <!--{{$t('M.comm_otc_center')}}-->
-                        <!--</p>-->
+                        <p
+                        class="transaction-list text-align-c"
+                        v-show="OTCCenterHasCurrentCoin"
+                        @click="jumpToOTCCenter(assetItem.coinId)"
+                        >
+                        <!-- otc 交易-->
+                        {{$t('M.comm_otc_center')}}
+                        </p>
                         <p
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
@@ -662,7 +662,8 @@ export default {
       minRechargeAmount: '', // 最小提币数量
       successCount: '', // 确认次数
       currentIndex: '', // 提币清空数据当前索引
-      end: '' // 占位
+      end: '', // 占位
+      OTCCenterHasCurrentCoin: false // 是否显示otc交易
     }
   },
   async created () {
@@ -688,6 +689,14 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'SET_NEW_WITHDRAW_ADDRESS'
     ]),
+    jumpToOTCCenter (id) {
+      console.log(id)
+      this.$route.push({
+        name: 'OTCCenter',
+        path: '/OTCCenter',
+        params: {coinId: id}
+      })
+    },
     // 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
       // console.log(this.currencyRateList, this.activeConvertCurrencyObj)

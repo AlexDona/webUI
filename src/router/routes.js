@@ -180,7 +180,7 @@ const routes = [
   {
     // OTC中心
     path: '/OTCCenter',
-    // name: 'OTCCenter',
+    name: 'OTCCenter',
     component: OTCCenter
   },
   {
