@@ -246,21 +246,23 @@
                       <div
                         class="type-transaction border-radius4"
                         v-show="tradingState&&index==current"
-                        v-if="currencyTradingList.length"
+                        v-if="currencyTradingList.length || OTCCenterHasCurrentCoin"
                       >
+                        <!--小三角-->
                         <span
                           class="triangle-border display-inline-block"
-                          v-show="currencyTradingList.length"
+                          v-show="currencyTradingList.length || OTCCenterHasCurrentCoin"
                         >
                         </span>
-                        <!--<p-->
-                        <!--class="transaction-list text-align-c"-->
-                        <!--v-show="OTCCenterHasCurrentCoin"-->
-                        <!--@click="jumpToOTCCenter(assetItem.coinId)"-->
-                        <!--&gt;-->
-                        <!--&lt;!&ndash; otc 交易&ndash;&gt;-->
-                        <!--{{$t('M.comm_otc_center')}}-->
-                        <!--</p>-->
+                        <!--个人资产跳转OTC 增加了上面两个OTCCenterHasCurrentCoin显示-->
+                        <p
+                          class="transaction-list text-align-c"
+                          v-show="OTCCenterHasCurrentCoin"
+                          @click="jumpToOTCCenter(assetItem.coinId)"
+                        >
+                          <!-- otc 交易-->
+                          {{$t('M.comm_otc_center')}}
+                        </p>
                         <p
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
@@ -270,7 +272,7 @@
                           {{ item.name }}
                         </p>
                       </div>
-                      <span v-else></span>
+                      <div v-else></div>
                     </div>
                   </div>
                 </div>
@@ -582,6 +584,10 @@ import {
   checkCurrencyAddress,
   currencyTransform
 } from '../../../utils/api/personal'
+// 个人资产跳转OTC
+import {
+  getOTCAvailableCurrency
+} from '../../../utils/api/OTC'
 import {
   returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
@@ -662,7 +668,11 @@ export default {
       minRechargeAmount: '', // 最小提币数量
       successCount: '', // 确认次数
       currentIndex: '', // 提币清空数据当前索引
-      end: '' // 占位
+      end: '', // 占位
+      // 个人资产跳转OTC
+      // 当前币种是否含有OTC交易
+      OTCCenterHasCurrentCoin: false,
+      OTCCoinList: [] // OTC可用币种列表
     }
   },
   async created () {
@@ -672,6 +682,8 @@ export default {
       // 汇率转换
       await this.currencyTransform()
     }
+    // 个人资产跳转OTC-otc可用币种查询
+    await this.getOTCAvailableCurrencyList()
   },
   mounted () {
     console.log(this.$refs)
@@ -983,6 +995,10 @@ export default {
     // 显示交易对跳转币种信息
     showSymbolJumpList (id, index) {
       this.currencyTradingId = id
+      // 个人资产跳转OTC-改写开始
+      console.log(id)
+      this.OTCCenterHasCurrentCoin = _.some(this.OTCCoinList, ['coinId', this.currencyTradingId])
+      // 个人资产跳转OTC-改写结束
       this.tradingState = true
       this.current = index
       this.getQueryTransactionInformation()
@@ -990,6 +1006,8 @@ export default {
     leave () {
       this.tradingState = false
       this.current = null
+      // 个人资产跳转OTC
+      this.OTCCenterHasCurrentCoin = false
     },
     // 清空内容信息
     emptyStatus () {
@@ -1308,6 +1326,23 @@ export default {
       } else {
         // 返回展示
         this.currencyTradingList = getNestedData(data, 'data.data.entrust') || []
+      }
+    },
+    // 个人资产跳转OTC
+    jumpToOTCCenter (coinId) {
+      console.log(coinId)
+      this.$router.push({
+        path: '/OTCCenter',
+        name: 'OTCCenter',
+        params: {coinId: coinId}
+      })
+    },
+    // otc可用币种查询
+    async getOTCAvailableCurrencyList () {
+      const data = await getOTCAvailableCurrency()
+      if (!data) return false
+      if (data.data) {
+        this.OTCCoinList = getNestedData(data, 'data')
       }
     }
   },
