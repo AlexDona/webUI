@@ -7,8 +7,5 @@ export default {
     const data = await userRefreshUser()
     if (!data) return false
     commit('SET_STEP1_INFO', getNestedData(data, 'data'))
-    console.log(data)
-    let isPaypasswordLocked = getNestedData(data, 'data.payPasswordRemainCount') ? false : true
-    commit('CHANGE_PASSWORD_USEABLE', isPaypasswordLocked)
   }
 }

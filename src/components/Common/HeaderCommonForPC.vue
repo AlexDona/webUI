@@ -440,7 +440,7 @@
         >
         <button
           class="border-radius4 cursor-pointer no-processing"
-          @click.prevent="isPayPasswordLocked = false"
+          @click.prevent="cancelReset"
         >
           <!-- 暂不处理 -->
           {{ $t('M.common_no_processing') }}
@@ -515,7 +515,7 @@ export default{
       styleTop: 30,
       topPadding: '0 30px',
       topBackgroundColor: 'rgba(0,0,0,0.7)',
-      isPayPasswordLocked: true
+      isPayPasswordLocked: false
     }
   },
   async created () {
@@ -550,7 +550,8 @@ export default{
       'GET_LANGUAGE_LIST_ACTION',
       'SET_PARTNER_INFO_ACTION',
       'REFRESH_USER_INFO_ACTION',
-      'GET_ALL_NOTICE_ACTION'
+      'GET_ALL_NOTICE_ACTION',
+      'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([
       // 修改语言
@@ -571,8 +572,13 @@ export default{
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'USER_LOGOUT',
       'CHANGE_REF_ACCOUNT_CREDITED_STATE',
-      'SET_NOTICE_ID'
+      'SET_NOTICE_ID',
+      'CHANGE_PASSWORD_USEABLE'
     ]),
+    cancelReset () {
+      this.isPayPasswordLocked = false
+      this.CHANGE_PASSWORD_USEABLE(false)
+    },
     jumpToNewsItem (noticeId) {
       console.log(this.$route)
       //  NewsAndNoticeItem
@@ -713,6 +719,7 @@ export default{
     resetPayPassword () {
       this.$goToPage('/TransactionPassword')
       this.isPayPasswordLocked = false
+      this.CHANGE_PASSWORD_USEABLE(false)
     },
     // 切换语言
     changeLanguage (e) {
@@ -785,7 +792,11 @@ export default{
   watch: {
     isLockedPayPassword (newVal) {
       console.log(newVal)
-      this.isPayPasswordLocked = newVal ? true : false
+      if (newVal) {
+        this.isPayPasswordLocked = true
+      } else {
+        this.CHANGE_PASSWORD_USEABLE(false)
+      }
     },
     defaultLanguage (newVal) {
       this.$i18n.locale = newVal
