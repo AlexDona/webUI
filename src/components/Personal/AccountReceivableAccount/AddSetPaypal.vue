@@ -302,7 +302,9 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       refAccountCenterStatus: state => state.personal.refAccountCenterStatus,
-      loginStep1Info: state => state.user.loginStep1Info
+      loginStep1Info: state => state.user.loginStep1Info,
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     }),
     windowHeight () {
       return window.innerHeight

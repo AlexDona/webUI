@@ -1136,7 +1136,7 @@ export default {
     /**
      * 点击提币按钮 验证
      * */
-    validateOfWithdraw (index) {
+    async validateOfWithdraw (index) {
       this.isShowWithdrawDialog = false
       console.log(index)
       if (this.isNeedTag) {
@@ -1224,13 +1224,12 @@ export default {
       if (!this.userInfo.userInfo.payPassword) {
         this.dialogVisible = true
       } else {
+        await this.REFRESH_USER_INFO_ACTION()
+        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+        if (this.isLockedPayPassword) return false
         this.isShowWithdrawDialog = true
       }
-      // 判断是否交易密码锁定
-      this.REFRESH_USER_INFO_ACTION()
-      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-      if (this.isLockedPayPassword) return false
     },
     confirm () {
       this.$goToPage('/TransactionPassword')
@@ -1248,6 +1247,7 @@ export default {
     },
     // 提交提币接口
     async stateSubmitAssets () {
+      console.log(1)
       let data
       let param = {
         msgCode: this.phoneCode, // 短信验证码
@@ -1262,8 +1262,9 @@ export default {
       }
       data = await statusSubmitWithdrawButton(param)
       console.log(data)
-      if (!data) return false
       this.isShowWithdrawDialog = false
+      if (!data) return false
+      // 判断是否交易密码锁定
       // 提币地址列表查询
       this.getAssetCurrenciesList()
       this.resetWithdrawFormContent(this.currentIndex)
