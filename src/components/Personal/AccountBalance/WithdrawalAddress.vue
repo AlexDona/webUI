@@ -558,13 +558,12 @@ export default {
 
           .send-code-btn {
             position: absolute;
-            top: 4px;
+            top: 3px;
             width: 91px;
             height: 34px;
           }
 
           .error-info {
-            height: 20px;
             line-height: 20px;
             color: #d45858;
           }

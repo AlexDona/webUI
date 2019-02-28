@@ -256,7 +256,7 @@ export default {
     > .triangle {
       position: absolute;
       top: -7px;
-      right: 118px;
+      right: 56px;
       width: 12px;
       height: 12px;
       -ms-transform: rotate(135deg);
@@ -264,10 +264,6 @@ export default {
       -webkit-transform: rotate(135deg);
       -o-transform: rotate(135deg);
       transform: rotate(135deg);
-    }
-
-    > .triangle-one {
-      right: 70px;
     }
 
     > .mention {
@@ -582,9 +578,6 @@ export default {
       }
 
       > .triangle {
-        position: absolute;
-        top: -7px;
-        right: 63px;
         border-top: 1px solid transparent;
         border-bottom: 1px solid #338ff5;
         border-left: 1px solid #338ff5;

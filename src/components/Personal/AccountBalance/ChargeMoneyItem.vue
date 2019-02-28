@@ -144,7 +144,7 @@ export default {
     > .triangle {
       position: absolute;
       top: -7px;
-      right: 122px;
+      right: 109px;
       width: 12px;
       height: 12px;
       -ms-transform: rotate(135deg);
@@ -466,7 +466,7 @@ export default {
       > .triangle {
         position: absolute;
         top: -7px;
-        right: 113px;
+        right: 102px;
         border-top: 1px solid transparent;
         border-bottom: 1px solid #338ff5;
         border-left: 1px solid #338ff5;
