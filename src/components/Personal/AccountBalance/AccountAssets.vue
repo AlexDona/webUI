@@ -1051,7 +1051,7 @@ export default {
         _.forEach(this.withdrawDepositList, (item) => {
           this.withdrawStorageMap.set(item.coinId, item)
         })
-        console.log(this.withdrawStorageMap, this.withdrawStorageMap.get('267243422920736768').isRecharge)
+        // console.log(this.withdrawStorageMap, this.withdrawStorageMap.get('267243422920736768').isRecharge)
         // console.log('我的资产币种列表')
         console.log(this.withdrawDepositList)
         this.getAllWithdraw()
