@@ -95,7 +95,8 @@ const state = {
   isAjaxReady: false,
   clientWidth: 0,
   newsItemId: '',
-  passwordsAccount: 0 // 交易密码剩余次数
+  // 交易密码是否被锁定
+  isLockedPayPassword: false
 }
 
 export default {

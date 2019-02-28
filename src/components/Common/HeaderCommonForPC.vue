@@ -422,6 +422,38 @@
             </span>
         </el-dialog>
       </div>
+      <!-- 交易密码锁定弹窗 -->
+      <el-dialog
+        :title="$t('M.otc_publishAD_sellpassword')"
+        :visible.sync="isPayPasswordLocked"
+        width="420px"
+        top="25vh"
+        class="pay-password-loaded-dialog"
+      >
+        <p class="font-size12 warning-text margin-top35 text-align-c">
+          <!--交易密码错误次数超限，交易冻结2小时。-->
+          {{ $t('M.common_paypassword_locked') }}
+        </p>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+        <button
+          class="border-radius4 cursor-pointer no-processing"
+          @click.prevent="isPayPasswordLocked = false"
+        >
+          <!-- 暂不处理 -->
+          {{ $t('M.common_no_processing') }}
+        </button>
+        <button
+          class="border-radius4 cursor-pointer"
+          @click.prevent="resetPayPassword"
+        >
+          <!--重置密码-->
+          {{ $t('M.user_transaction_reset')}}{{$t('M.comm_loginpassword')}}
+        </button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -482,7 +514,8 @@ export default{
       activityCenterSubNavStatus: false,
       styleTop: 30,
       topPadding: '0 30px',
-      topBackgroundColor: 'rgba(0,0,0,0.7)'
+      topBackgroundColor: 'rgba(0,0,0,0.7)',
+      isPayPasswordLocked: true
     }
   },
   async created () {
@@ -676,6 +709,11 @@ export default{
           break
       }
     },
+    // 重置交易密码
+    resetPayPassword () {
+      this.$goToPage('/TransactionPassword')
+      this.isPayPasswordLocked = false
+    },
     // 切换语言
     changeLanguage (e) {
       this.CHANGE_LANGUAGE(e)
@@ -736,13 +774,19 @@ export default{
       // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
       otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus,
       // 首页消息列表
-      homeNoticeList: state => state.home.noticeList
+      homeNoticeList: state => state.home.noticeList,
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     }),
     localPayPwdSet () {
       return getNestedData(this.userInfo, 'paypasswordSet')
     }
   },
   watch: {
+    isLockedPayPassword (newVal) {
+      console.log(newVal)
+      this.isPayPasswordLocked = newVal ? true : false
+    },
     defaultLanguage (newVal) {
       this.$i18n.locale = newVal
     },
@@ -1325,6 +1369,42 @@ export default{
   /deep/ {
     .el-dialog__wrapper {
       background-color: rgba(0, 0, 0, .7);
+    }
+
+    .pay-password-loaded-dialog {
+      > .el-dialog {
+        height: 220px;
+
+        > .el-dialog__body {
+          > p {
+            font-size: 14px;
+            color: $upColor;
+          }
+        }
+
+        .el-dialog__footer {
+          padding: 0;
+        }
+
+        .dialog-footer {
+          padding: 0;
+
+          > button {
+            width: 80px;
+            height: 34px;
+            margin-right: 20px;
+            border-radius: 4px;
+            color: #fff;
+            background: transparent linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+
+            &.no-processing {
+              border: 1px solid $mainColor;
+              color: $mainColor;
+              background: transparent;
+            }
+          }
+        }
+      }
     }
   }
 }

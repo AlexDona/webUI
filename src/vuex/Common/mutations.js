@@ -19,7 +19,7 @@ import {
   CHANGE_SYMBOL_CHANGED_STATUS,
   SET_WINDOW_WIDTH,
   SET_NOTICE_ID,
-  PASSWORDACCOINT,
+  CHANGE_PASSWORD_USEABLE,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
@@ -162,7 +162,7 @@ export default {
   [SET_NOTICE_ID] (state, noticeId) {
     state.newsItemId = noticeId
   },
-  [PASSWORDACCOINT] (state, data) {
-    state.passwordsAccount = data
+  [CHANGE_PASSWORD_USEABLE] (state, data) {
+    state.isLockedPayPassword = data
   }
 }

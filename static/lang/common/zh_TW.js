@@ -186,5 +186,7 @@ export const common = {
   'common_footer_privacy_policy': '隱私條款',
   'common_footer_legal_notice': '法律聲明',
   // 在线客服
-  'common_onlineText': '線上客服'
+  'common_onlineText': '線上客服',
+  'common_paypassword_locked': '交易密碼錯誤次數超限，交易凍結2小時。',
+  'common_no_processing': '暫不處理'
 }
