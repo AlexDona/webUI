@@ -1396,6 +1396,7 @@ export default{
         > .el-dialog__body {
           > p {
             font-size: 14px;
+            line-height: 35px;
             color: $upColor;
           }
         }
@@ -1408,7 +1409,6 @@ export default{
           padding: 0;
 
           > button {
-            width: 80px;
             height: 34px;
             margin-right: 20px;
             border-radius: 4px;
