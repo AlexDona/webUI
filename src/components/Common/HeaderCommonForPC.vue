@@ -36,8 +36,8 @@
             </li>
             <li
               class="nav-item"
-              @mouseenter="toggleShowSubNavBox('otc',1)"
-              @mouseleave="toggleShowSubNavBox('otc',0)"
+              @mouseenter="toggleBox('otc',true)"
+              @mouseleave="toggleBox('otc',false)"
             >
               <router-link to="/OTCCenter">
                 <!--<span>OTC交易</span>-->
@@ -101,8 +101,8 @@
             </li>
             <li
               class="nav-item"
-              @mouseenter="toggleShowSubNavBox('activity',1)"
-              @mouseleave="toggleShowSubNavBox('activity',0)"
+              @mouseenter="toggleBox('activity',true)"
+              @mouseleave="toggleBox('activity',false)"
             >
               <router-link to="/ActivityCenter">
                 <!--<span>活动中心</span>-->
@@ -132,11 +132,57 @@
         <!--注册登录-->
         <div class="right login">
           <ul class="ul-list">
+            <!--消息-->
+            <!--<li-->
+              <!--class="li-item notice-li"-->
+              <!--@mouseenter="toggleBox('notice',true)"-->
+              <!--@mouseleave="toggleBox('notice',false)"-->
+            <!--&gt;-->
+              <!--<button class="notice-btn">-->
+                <!--<IconFontCommon-->
+                  <!--class="font-size26"-->
+                  <!--icon-name="icon-xiaoxi"-->
+                <!--/>-->
+              <!--</button>-->
+              <!--<el-collapse-transition>-->
+                <!--<ul-->
+                  <!--class="notice-list"-->
+                  <!--v-show="showNoticeList"-->
+                  <!--:style="{-->
+                    <!--height: `${homeNoticeList.length*40}px`-->
+                  <!--}"-->
+                <!--&gt;-->
+                  <!--<li-->
+                    <!--class="notice-item"-->
+                    <!--v-for="noticeItem in homeNoticeList.length < 5 ? homeNoticeList : homeNoticeList.slice(0,5)"-->
+                    <!--:key="noticeItem.id"-->
+                    <!--:track-by="noticeItem.id"-->
+                  <!--&gt;-->
+                      <!--<a-->
+                        <!--class="cursor-pointer"-->
+                        <!--@click.stop="jumpToNewsItem(noticeItem.id)"-->
+                      <!--&gt;-->
+                        <!--{{noticeItem.title}}-->
+                      <!--</a>-->
+                  <!--</li>-->
+                  <!--<li-->
+                    <!--class="notice-item view-more"-->
+                    <!--v-show="homeNoticeList.length >= 5"-->
+                  <!--&gt;-->
+                    <!--&lt;!&ndash; 查看全部 &ndash;&gt;-->
+                    <!--<router-link-->
+                      <!--to="/NewsAndNoticeCenter"-->
+                      <!--class="view-more-link"-->
+                    <!--&gt;{{$t('M.investment_look_all')}}</router-link>-->
+                  <!--</li>-->
+                <!--</ul>-->
+              <!--</el-collapse-transition>-->
+            <!--</li>-->
             <li class="li-item setting-li">
               <!--设置（语言，换肤）-->
               <button
                 class="setting"
-                @click="toggleShowSettingBox(1)"
+                @click="toggleBox('setting',true)"
               >
                 <IconFontCommon
                   class="font-size26"
@@ -241,8 +287,8 @@
             <li class="li-item">
               <dl
                 class="lang-box"
-                @mouseenter="toggleShowLanguageBox(1)"
-                @mouseleave="toggleShowLanguageBox(0)"
+                @mouseenter="toggleBox('lang',true)"
+                @mouseleave="toggleBox('lang',false)"
               >
                 <dt
                   class="lang-selected"
@@ -313,7 +359,6 @@
           </p>
           <!-- 主题选择框 -->
           <el-radio-group
-            @on-change="changeTheme"
             v-model="activeTheme">
             <el-radio-button
               v-for="(item,index) in themeList"
@@ -377,6 +422,38 @@
             </span>
         </el-dialog>
       </div>
+      <!-- 交易密码锁定弹窗 -->
+      <el-dialog
+        :title="$t('M.otc_publishAD_sellpassword')"
+        :visible.sync="isPayPasswordLocked"
+        width="420px"
+        top="25vh"
+        class="pay-password-loaded-dialog"
+      >
+        <p class="font-size12 warning-text margin-top35 text-align-c">
+          <!--交易密码错误次数超限，交易冻结2小时。-->
+          {{ $t('M.common_paypassword_locked') }}
+        </p>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+        <button
+          class="border-radius4 cursor-pointer no-processing"
+          @click.prevent="cancelReset"
+        >
+          <!-- 暂不处理 -->
+          {{ $t('M.common_no_processing') }}
+        </button>
+        <button
+          class="border-radius4 cursor-pointer"
+          @click.prevent="resetPayPassword"
+        >
+          <!--重置密码-->
+          {{ $t('M.user_transaction_reset')}}{{$t('M.comm_loginpassword')}}
+        </button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -403,6 +480,8 @@ export default{
   data () {
     return {
       showApplyMerchantStatus: false, // 是否显示申请商家弹窗
+      // 是否显示小写列表
+      showNoticeList: false,
       // 语言选择中
       langSelecting: false,
       // 设置弹窗状态
@@ -435,7 +514,8 @@ export default{
       activityCenterSubNavStatus: false,
       styleTop: 30,
       topPadding: '0 30px',
-      topBackgroundColor: 'rgba(0,0,0,0.7)'
+      topBackgroundColor: 'rgba(0,0,0,0.7)',
+      isPayPasswordLocked: false
     }
   },
   async created () {
@@ -451,6 +531,7 @@ export default{
     await this.GET_LANGUAGE_LIST_ACTION(this)
     await this.SET_PARTNER_INFO_ACTION(this.language)
     await this.GET_COUNTRY_LIST_ACTION()
+    await this.GET_ALL_NOTICE_ACTION(this.language)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币
@@ -468,6 +549,8 @@ export default{
       'GET_TRANSITION_RATE_ACTION',
       'GET_LANGUAGE_LIST_ACTION',
       'SET_PARTNER_INFO_ACTION',
+      'REFRESH_USER_INFO_ACTION',
+      'GET_ALL_NOTICE_ACTION',
       'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([
@@ -488,8 +571,24 @@ export default{
       'CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'USER_LOGOUT',
-      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'SET_NOTICE_ID',
+      'CHANGE_PASSWORD_USEABLE'
     ]),
+    cancelReset () {
+      this.isPayPasswordLocked = false
+      this.CHANGE_PASSWORD_USEABLE(false)
+    },
+    jumpToNewsItem (noticeId) {
+      console.log(this.$route)
+      //  NewsAndNoticeItem
+      let currentRoute = this.$route.path
+      if (!currentRoute.startsWith('/NewsAndNoticeItem')) {
+        this.$goToPage(`/NewsAndNoticeItem/${noticeId}`)
+      } else {
+        this.SET_NOTICE_ID(noticeId)
+      }
+    },
     // 非商家禁止进入OTC导航页提示框--开始
     applyMerchant () {
       if (this.isLogin) {
@@ -538,6 +637,8 @@ export default{
           return false
         }
       })
+      console.log(params)
+      if (!params.shortName) return false
       await this.GET_TRANSITION_RATE_ACTION({
         params,
         activeConvertCurrencyObj: this.activeConvertCurrencyObj
@@ -597,9 +698,17 @@ export default{
       this.USER_LOGOUT()
       this.$goToPage('/home')
     },
-    // 显示状态切换（子导航）
-    toggleShowSubNavBox (item, status) {
-      switch (item) {
+    toggleBox (type, status) {
+      switch (type) {
+        case 'notice':
+          this.showNoticeList = status
+          break
+        case 'setting':
+          this.showSetting = status
+          break
+        case 'lang':
+          this.langSelecting = status
+          break
         case 'otc':
           this.otcSubNavStatus = status
           break
@@ -608,35 +717,28 @@ export default{
           break
       }
     },
-    // 显示状态切换 （设置）
-    toggleShowSettingBox (status) {
-      console.log(Boolean(status))
-      this.showSetting = Boolean(status)
-    },
-    // 显示状态切换 （语言）
-    toggleShowLanguageBox (status) {
-      this.langSelecting = Boolean(status)
+    // 重置交易密码
+    resetPayPassword () {
+      this.$goToPage('/TransactionPassword')
+      this.isPayPasswordLocked = false
+      this.CHANGE_PASSWORD_USEABLE(false)
     },
     // 切换语言
     changeLanguage (e) {
       this.CHANGE_LANGUAGE(e)
       this.$i18n.locale = e.shortName
     },
-    // 切换主题
-    changeTheme (e) {
-      console.log(e)
-    },
     // 更改设置
     async changeSetting () {
       // 主题设置
       this.CHANGE_THEME(this.activeTheme)
-      document.body.classList.remove('day')
-      document.body.classList.remove('night')
+      document.body.classList.remove('day', 'night')
       document.body.classList.add(this.activeTheme)
       // 汇率转换设置
       await this.changeActiveTransitionCurrency()
       this.CHANGE_CONVERT_CURRENCY(this.activeConvertCurrency)
-      this.toggleShowSettingBox(0)
+      this.toggleBox('setting', false)
+      this.CHANGE_PASSWORD_USEABLE(false)
     },
     // 查询某商户可用法币币种列表
     async getMerchantAvailableLegalTenderList () {
@@ -680,13 +782,28 @@ export default{
       $mainNightBgColor: state => state.common.mainColor.$mainNightBgColor,
       noticeCloseVisible: state => state.home.noticeCloseVisible,
       // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
-      otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus
+      otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus,
+      // 首页消息列表
+      homeNoticeList: state => state.home.noticeList,
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     }),
     localPayPwdSet () {
       return getNestedData(this.userInfo, 'paypasswordSet')
     }
   },
   watch: {
+    isLockedPayPassword (newVal) {
+      console.log(newVal)
+      if (newVal) {
+        this.isPayPasswordLocked = true
+      }
+    },
+    isPayPasswordLocked (newVal) {
+      if (!newVal) {
+        this.CHANGE_PASSWORD_USEABLE(false)
+      }
+    },
     defaultLanguage (newVal) {
       this.$i18n.locale = newVal
     },
@@ -732,8 +849,8 @@ export default{
 
     > .top {
       display: flex;
-      height: 66px;
-      line-height: 66px;
+      height: 50px;
+      line-height: 50px;
       transition: all .5s;
 
       > .left {
@@ -751,6 +868,7 @@ export default{
             padding: 0 2%;
             text-align: center;
             vertical-align: top;
+            white-space: nowrap;
             transition: all .5s;
 
             &:first-of-type {
@@ -826,7 +944,7 @@ export default{
             > .logo {
               display: inline-block;
               width: 100px;
-              height: 66px;
+              height: 50px;
 
               > .img {
                 width: 100%;
@@ -870,7 +988,7 @@ export default{
               > .login-info {
                 position: absolute;
                 z-index: 2;
-                top: 66px;
+                top: 50px;
                 right: -100px;
                 box-sizing: border-box;
                 width: 210px;
@@ -878,7 +996,7 @@ export default{
                 padding: 0 25px;
                 overflow: hidden;
                 text-align: center;
-                background-color: rgba(10, 27, 47, 1);
+                background-color: $mainContentNightBgColor;
 
                 > .sub-nav-user {
                   > .nav-vip {
@@ -932,6 +1050,64 @@ export default{
               padding: 0;
             }
 
+            /* 消息 */
+            &.notice-li {
+              position: relative;
+
+              > .notice-btn {
+                color: $mainColor;
+                cursor: pointer;
+              }
+
+              .notice-list {
+                position: absolute;
+                z-index: 2;
+                top: 50px;
+                left: -10px;
+                width: 300px;
+                max-height: 240px;
+                border-radius: 0 0 2px 2px;
+                overflow: hidden;
+                box-shadow: 0 1px 1px 0 rgb(32, 35, 55);
+
+                > .notice-item {
+                  box-sizing: border-box;
+                  height: 40px;
+                  padding: 0 14px;
+                  border-bottom: 1px solid #292c42;
+                  font-size: 12px;
+                  line-height: 40px;
+                  text-align: left;
+                  background-color: $mainContentNightBgColor;
+
+                  > a {
+                    display: block;
+                    height: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    color: $mainNightTitleColor;
+
+                    &:hover {
+                      color: $mainColor;
+                    }
+                  }
+
+                  &.view-more {
+                    background-color: #2c3047;
+                  }
+
+                  .view-more-link {
+                    display: inline-block;
+                    width: 100%;
+                    text-align: center;
+                    color: $mainColor;
+                    cursor: pointer;
+                  }
+                }
+              }
+            }
+
             /* 设置 */
             .setting {
               padding: 0;
@@ -972,7 +1148,7 @@ export default{
                 z-index: 2;
                 top: 64px;
                 left: 0;
-                background-color: #2a3242;
+                background-color: $mainContentNightBgColor;
 
                 > .lang-item {
                   display: block;
@@ -982,11 +1158,10 @@ export default{
                   line-height: 30px;
                   text-align: left;
                   color: #fff;
-                  transition: all 1s;
                   cursor: pointer;
 
                   &:hover {
-                    background-color: $mainColor;
+                    color: $mainColor;
                   }
 
                   > .icon {
@@ -1003,7 +1178,7 @@ export default{
     > .bottom {
       position: absolute;
       z-index: 1;
-      top: 66px;
+      top: 50px;
       width: 100%;
       height: 36px;
       background-color: $nightSubNavBgColor;
@@ -1077,16 +1252,45 @@ export default{
         > .right {
           > .ul-list {
             > .li-item {
+              /* 消息 */
+              &.notice-li {
+                .notice-list {
+                  box-shadow: 0 2px 10px 0 rgb(225, 232, 240);
+
+                  > .notice-item {
+                    border-bottom: 1px solid #e5eef8;
+                    background-color: $mainDayBgColor;
+
+                    > a {
+                      color: #7d90ac;
+
+                      &:hover {
+                        color: $mainColor;
+                      }
+                    }
+
+                    &.view-more {
+                      background-color: #f2f6fa;
+                    }
+
+                    .view-more-link {
+                      color: $mainColor;
+                    }
+                  }
+                }
+              }
+
               /* 语言选择 dl */
               > .lang-box {
                 > .lang-list {
                   background-color: #fff;
+                  box-shadow: 0 2px 10px 0 rgb(225, 232, 240);
 
                   > .lang-item {
                     color: #7d90ac;
 
                     &:hover {
-                      color: #fff;
+                      color: $mainColor;
                     }
                   }
                 }
@@ -1105,7 +1309,7 @@ export default{
 
                     > .nav-button {
                       border-radius: 4px;
-                      color: #338ff5;
+                      color: $mainColor;
                       background: rgba(51, 143, 245, .1);
                     }
                   }
@@ -1182,6 +1386,42 @@ export default{
   /deep/ {
     .el-dialog__wrapper {
       background-color: rgba(0, 0, 0, .7);
+    }
+
+    .pay-password-loaded-dialog {
+      > .el-dialog {
+        height: 220px;
+
+        > .el-dialog__body {
+          > p {
+            font-size: 14px;
+            color: $upColor;
+          }
+        }
+
+        .el-dialog__footer {
+          padding: 0;
+        }
+
+        .dialog-footer {
+          padding: 0;
+
+          > button {
+            width: 80px;
+            height: 34px;
+            margin-right: 20px;
+            border-radius: 4px;
+            color: #fff;
+            background: transparent linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+
+            &.no-processing {
+              border: 1px solid $mainColor;
+              color: $mainColor;
+              background: transparent;
+            }
+          }
+        }
+      }
     }
   }
 }

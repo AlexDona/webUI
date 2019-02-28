@@ -550,7 +550,7 @@ export default {
 @import "../../../static/css/scss/index";
 
 .otc-AD-manage-box {
-  margin-top: 66px;
+  margin-top: 50px;
   overflow: hidden;
 
   > .otc-AD-manage-content {

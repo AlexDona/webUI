@@ -402,9 +402,7 @@ export default {
       console.log(data)
       // 正确逻辑
       if (!data) return false
-      if (data.data) {
-        this.argumentContent = getNestedData(data, 'data[0].content')
-      }
+      this.argumentContent = getNestedData(data, 'data[0].content')
     },
     businessArgument () {
       this.businessAgreementDialogStatus = true
@@ -450,7 +448,7 @@ export default {
 @import "../../../static/css/scss/index";
 
 .otc-business-apply-box {
-  margin-top: 66px;
+  margin-top: 50px;
   overflow: hidden;
 
   > .business-apply-content {

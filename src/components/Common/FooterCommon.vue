@@ -183,7 +183,7 @@
           </dl>
           <dl class="right-dl">
             <dt class="title">
-              <!--说明-->
+              <!--条款-->
               {{$t('M.comm_clause')}}
             </dt>
             <dd

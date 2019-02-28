@@ -93,7 +93,10 @@ const state = {
   isSymbolChanged: false,
   // 全局loading
   isAjaxReady: false,
-  clientWidth: 0
+  clientWidth: 0,
+  newsItemId: '',
+  // 交易密码是否被锁定
+  isLockedPayPassword: false
 }
 
 export default {

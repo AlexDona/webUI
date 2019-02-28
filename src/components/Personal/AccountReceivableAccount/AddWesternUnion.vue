@@ -308,7 +308,7 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .add-western {
-    margin-top: 66px;
+    margin-top: 50px;
     overflow: hidden;
 
     > .add-western-main {

@@ -1,17 +1,8 @@
 <template>
-  <div
-    class="banner-box home"
-  >
-    <img
-      :src="bannerBackgroundImage"
-      :style="{
-        width:screenWidth*3+'px',
-        height:screenWidth/1.19+'px',
-        minWidth: '1366px',
-        minHeight: '383px'
-      }"
-    >
-    <SliderHome/>
+  <div class="banner-box home">
+    <img :src="bannerBackgroundImage" />
+    <!--<img src="../../assets/banner示例.png" />-->
+    <SliderHome class="slider-content"/>
   </div>
 </template>
 <script>
@@ -40,9 +31,18 @@ export default {
     }),
     screenWidth () {
       return this.clientWidth / 3
+    },
+    bannerImgHeight () {
+      return this.screenWidth * 0.7125
     }
   },
   watch: {
+    screenWidth (newVal) {
+      console.log(newVal)
+    },
+    bannerImgHeight (newVal) {
+      console.log(newVal)
+    }
   }
 }
 </script>
@@ -56,7 +56,48 @@ export default {
     transition: all 1s;
 
     > img {
-      /* width:100%; */
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /deep/ {
+      @media screen and (min-width: 1440px) and (max-width: 2560px) {
+        .slider-content {
+          margin-top: 540px;
+        }
+      }
+
+      @media screen and (max-width: 1440px) {
+        .slider-content {
+          margin-top: 400px;
+        }
+      }
+    }
+
+    @media screen and (min-width: 1440px) and (max-width: 2560px) {
+      > img {
+        height: 540px;
+      }
+    }
+
+    @media screen and(max-width: 1440px) {
+      > img {
+        height: 400px;
+      }
+    }
+  }
+
+  @media screen and (min-width: 1440px) and (max-width: 2560px) {
+    .banner-box {
+      height: 720px;
+    }
+  }
+
+  @media screen and (max-width: 1440px) {
+    .banner-box {
+      height: 580px;
     }
   }
 </style>
