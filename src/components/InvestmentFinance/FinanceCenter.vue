@@ -1679,6 +1679,16 @@ export default {
               }
             }
           }
+
+          .explainBox {
+            .el-dialog {
+              > .el-dialog__body {
+                .plainText {
+                  color: #666;
+                }
+              }
+            }
+          }
         }
 
         .finance-inner-box {
