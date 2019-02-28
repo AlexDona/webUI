@@ -578,6 +578,7 @@ export default{
     cancelReset () {
       this.isPayPasswordLocked = false
       this.CHANGE_PASSWORD_USEABLE(false)
+      this.userLoginOut()
     },
     jumpToNewsItem (noticeId) {
       console.log(this.$route)
