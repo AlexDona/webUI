@@ -154,7 +154,7 @@
                 >
                   <li
                     class="notice-item"
-                    v-for="noticeItem in homeNoticeList.length < 5? homeNoticeList : homeNoticeList.slice(0,5)"
+                    v-for="noticeItem in homeNoticeList.length < 5 ? homeNoticeList : homeNoticeList.slice(0,5)"
                     :key="noticeItem.id"
                     :track-by="noticeItem.id"
                   >
@@ -498,6 +498,7 @@ export default{
     await this.GET_LANGUAGE_LIST_ACTION(this)
     await this.SET_PARTNER_INFO_ACTION(this.language)
     await this.GET_COUNTRY_LIST_ACTION()
+    await this.GET_ALL_NOTICE_ACTION(this.language)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币
@@ -515,7 +516,8 @@ export default{
       'GET_TRANSITION_RATE_ACTION',
       'GET_LANGUAGE_LIST_ACTION',
       'SET_PARTNER_INFO_ACTION',
-      'REFRESH_USER_INFO_ACTION'
+      'REFRESH_USER_INFO_ACTION',
+      'GET_ALL_NOTICE_ACTION'
     ]),
     ...mapMutations([
       // 修改语言
@@ -998,6 +1000,7 @@ export default{
 
               .notice-list {
                 position: absolute;
+                z-index: 2;
                 top: 50px;
                 left: -10px;
                 width: 300px;
