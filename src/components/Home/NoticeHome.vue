@@ -44,8 +44,7 @@ import {
 } from '../../utils/commonFunc'
 import {
   mapState,
-  mapMutations,
-  mapActions
+  mapMutations
 } from 'vuex'
 
 export default {
@@ -62,23 +61,13 @@ export default {
     }
   },
   async created () {
-    this.noticeList = [
-    ]
-    if (this.language) {
-      // await this.getNewsNoticeList()
-      await this.GET_ALL_NOTICE_ACTION(this.language)
-      this.noticeList = [...this.homeNoticeList]
-      this.timer = setInterval(this.autoPlay, 4000)
-    }
+    this.noticeList = []
   },
   mounted () {},
   activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapActions([
-      'GET_ALL_NOTICE_ACTION'
-    ]),
     ...mapMutations([
       'CHANGE_NEWS_DETAIL_JUMP_ID',
       'CHANGE_NOTICE_VISIBLE'
@@ -122,6 +111,11 @@ export default {
       if (newVal) {
         await this.getNewsNoticeList()
       }
+    },
+    homeNoticeList (newVal) {
+      console.log(newVal)
+      this.noticeList = [...this.homeNoticeList]
+      this.timer = setInterval(this.autoPlay, 4000)
     }
   }
 }

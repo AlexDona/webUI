@@ -195,6 +195,7 @@
               :label="$t('M.user_invite_login_name')"
             >
               <template slot-scope = "s">
+                <!--登录名显示前三后三-->
                 <div>
                   {{ s.row.userName.substring(0,3)}}*****{{ s.row.userName.substring(8,11)}}
                 </div>
@@ -215,17 +216,18 @@
               width="100"
             >
               <template slot-scope = "s">
+                <!--字段为空 空-->
                 <div v-if="!s.row.realname"></div>
+                <!--姓名为两位时 隐藏最后一位-->
                 <div v-else-if="s.row.realname.length === 2 ">
                   {{ s.row.realname.substring(0,1)}}*
                 </div>
+                <!--姓名为三位时 隐藏最后一位-->
                 <div v-else-if="s.row.realname.length === 3">
                   {{ s.row.realname.substring(0,2)}}*
                 </div>
-                <div v-else-if="s.row.realname.length === 44">
-                  {{ s.row.realname.substring(0,2)}}*
-                </div>
-                <div v-else>
+                <!--姓名为四位时或者大于四 隐藏最后两位-->
+                <div v-else-if="s.row.realname.length === 4 || s.row.realname.length > 4">
                   {{ s.row.realname.substring(0,2)}}**
                 </div>
               </template>

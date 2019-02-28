@@ -154,15 +154,16 @@
                 >
                   <li
                     class="notice-item"
-                    v-for="noticeItem in homeNoticeList.length < 5? homeNoticeList : homeNoticeList.slice(0,5)"
+                    v-for="noticeItem in homeNoticeList.length < 5 ? homeNoticeList : homeNoticeList.slice(0,5)"
                     :key="noticeItem.id"
                     :track-by="noticeItem.id"
                   >
-                      <router-link
-                        :to="`NewsAndNoticeItem/${noticeItem.id}`"
+                      <a
+                        class="cursor-pointer"
+                        @click.stop="jumpToNewsItem(noticeItem.id)"
                       >
                         {{noticeItem.title}}
-                      </router-link>
+                      </a>
                   </li>
                   <li
                     class="notice-item view-more"
@@ -497,6 +498,7 @@ export default{
     await this.GET_LANGUAGE_LIST_ACTION(this)
     await this.SET_PARTNER_INFO_ACTION(this.language)
     await this.GET_COUNTRY_LIST_ACTION()
+    await this.GET_ALL_NOTICE_ACTION(this.language)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币
@@ -514,7 +516,8 @@ export default{
       'GET_TRANSITION_RATE_ACTION',
       'GET_LANGUAGE_LIST_ACTION',
       'SET_PARTNER_INFO_ACTION',
-      'REFRESH_USER_INFO_ACTION'
+      'REFRESH_USER_INFO_ACTION',
+      'GET_ALL_NOTICE_ACTION'
     ]),
     ...mapMutations([
       // 修改语言
@@ -534,8 +537,19 @@ export default{
       'CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'USER_LOGOUT',
-      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'SET_NOTICE_ID'
     ]),
+    jumpToNewsItem (noticeId) {
+      console.log(this.$route)
+      //  NewsAndNoticeItem
+      let currentRoute = this.$route.path
+      if (!currentRoute.startsWith('/NewsAndNoticeItem')) {
+        this.$goToPage(`/NewsAndNoticeItem/${noticeId}`)
+      } else {
+        this.SET_NOTICE_ID(noticeId)
+      }
+    },
     // 非商家禁止进入OTC导航页提示框--开始
     applyMerchant () {
       if (this.isLogin) {
@@ -986,6 +1000,7 @@ export default{
 
               .notice-list {
                 position: absolute;
+                z-index: 2;
                 top: 50px;
                 left: -10px;
                 width: 300px;

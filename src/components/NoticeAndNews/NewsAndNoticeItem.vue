@@ -188,7 +188,8 @@ export default {
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme,
-      newsTypeActiveName: state => state.footerInfo.newsTypeActiveName
+      newsTypeActiveName: state => state.footerInfo.newsTypeActiveName,
+      newsItemId: state => state.common.newsItemId
     })
   },
   watch: {
@@ -196,6 +197,11 @@ export default {
       await this.getAllNewsTypeList()
       await this.getAllTypeListNewsList()
       await this.changeNewDetailByLanguage()
+    },
+    newsItemId (newVal) {
+      if (newVal) {
+        this.getDetailInfo(newVal)
+      }
     }
   }
 }

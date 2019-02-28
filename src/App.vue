@@ -95,7 +95,8 @@ export default {
         path === '/login' ||
         path === '/register' ||
         path === '/downloadApp' ||
-        path === '/InvitationRegister'
+        path === '/InvitationRegister' ||
+        path === '/ForgetPassword'
       ) ? 0 : 1
       // let isLoginOrRigister = path === '/login' || path === '/register'
       // document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width, initial-scale=0.3, minimum-scale=${isLoginOrRigister ? '0.3' : '0.1'}, maximum-scale=${isLoginOrRigister ? '0.3' : '1'}, user-scalable=${isLoginOrRigister ? 'no' : 'yes'}`)

@@ -112,7 +112,6 @@
   </div>
 </template>
 <script>
-import Footer from './NoticeHome'
 import EchartsLineCommon from '../Common/EchartsLineCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import HomeMarketTableItem from '../Home/HomeMarketTableItem'
@@ -145,7 +144,6 @@ import {
 export default {
   components: {
     IconFontCommon,
-    Footer,
     EchartsLineCommon,
     HomeMarketTableItem
   },
@@ -272,6 +270,7 @@ export default {
           dataStr += unzip(dataObj)
         })
         this.areasFromAPI = JSON.parse(dataStr) || []
+        console.log(this.areasFromAPI)
         this.platesMap.set(plateId, this.areasFromAPI)
         let newPlates = {
           ...storePlates,
@@ -291,21 +290,22 @@ export default {
       if (NOW - SYMBOL_AGE < this.FIVE_MINUTES * 100 && localSymbolLength) {
         symbolJSON = localSymbolJSON
       } else {
-        if (this.plates.length == 1) return false
-        let symbolsData = await getAllSymbolsAJAX({
-          i18n: this.language
-        })
-        if (!symbolsData) return false
-        let symbolsObjs = getNestedData(symbolsData, 'data.obj')
-        console.log(symbolsObjs)
-        let symbolsStr = ''
-        _.forEach(symbolsObjs, (symbolObj) => {
-          symbolsStr += unzip(symbolObj)
-        })
-        if (!symbolsStr) return false
-        let symbolsSJONFromBackEnd = JSON.parse(symbolsStr)
-        symbolJSON = symbolsSJONFromBackEnd
-        setStore('symbolJSONAge', new Date().getTime())
+        if (this.plates.length != 1) {
+          let symbolsData = await getAllSymbolsAJAX({
+            i18n: this.language
+          })
+          if (!symbolsData) return false
+          let symbolsObjs = getNestedData(symbolsData, 'data.obj')
+          console.log(symbolsObjs)
+          let symbolsStr = ''
+          _.forEach(symbolsObjs, (symbolObj) => {
+            symbolsStr += unzip(symbolObj)
+          })
+          if (!symbolsStr) return false
+          let symbolsSJONFromBackEnd = JSON.parse(symbolsStr)
+          symbolJSON = symbolsSJONFromBackEnd
+          setStore('symbolJSONAge', new Date().getTime())
+        }
       }
 
       for (let k in symbolJSON) {
