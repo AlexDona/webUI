@@ -245,8 +245,7 @@
                       {{ $t('M.comm_deal') }}
                       <div
                         class="type-transaction border-radius4"
-                        v-show="tradingState&&index==current"
-                        v-if="currencyTradingList.length || OTCCenterHasCurrentCoin"
+                        v-if="(currencyTradingList.length || OTCCenterHasCurrentCoin) && tradingState && index === current"
                       >
                         <!--小三角-->
                         <span
@@ -1775,7 +1774,7 @@ export default {
             position: absolute;
             z-index: 2;
             top: 10px;
-            left: 56px;
+            left: 48px;
             width: 135px;
 
             > .triangle-border {

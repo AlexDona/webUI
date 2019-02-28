@@ -697,7 +697,6 @@ export default {
 
             .plainText {
               margin-top: 40px;
-              line-height: 24px;
             }
           }
         }
