@@ -127,7 +127,8 @@ import {
 } from '../../../utils/api/personal'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -163,7 +164,11 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'CHANGE_PASSWORD_USEABLE'
+    ]),
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
     ]),
     // 点击返回上个页面
     returnSuperior () {
@@ -235,6 +240,11 @@ export default {
           bankType: 'PAYPAL', // type
           id: this.id
         }
+        // 判断是否交易密码锁定
+        await this.REFRESH_USER_INFO_ACTION()
+        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+        if (this.isLockedPayPassword) return false
         // 整页loading
         this.fullscreenLoading = true
         data = await statusCardSettings(param)
