@@ -430,7 +430,8 @@ import {
 } from '../../utils'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {},
@@ -564,7 +565,11 @@ export default {
     ...mapMutations([
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_PASSWORD_USEABLE'
+    ]),
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
     ]),
     // 0.1 判断卖出量和买入量是否为零
     checkValue (name) {
@@ -834,6 +839,12 @@ export default {
     },
     //  8.0 点击发布出售或者发布购买弹出输入交易密码框
     async showPasswordDialog () {
+      // 用户交易密码是否锁定判断
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
+      //
       this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
       switch (this.publishStyle) {
         case 'buy':
@@ -945,7 +956,10 @@ export default {
       configInfo: state => state.common.footerInfo.configInfo,
       theme: state => state.common.theme,
       // 当前选中语言
-      language: state => state.common.language
+      language: state => state.common.language,
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword,
+      loginStep1Info: state => state.user.loginStep1Info
     })
   },
   watch: {}

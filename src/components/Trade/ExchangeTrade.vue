@@ -873,7 +873,7 @@ export default {
           this.notVerifyDialogVisible = true
           return false
         }
-        //
+        // 用户交易密码是否锁定判断
         await this.REFRESH_USER_INFO_ACTION()
         let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
         this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
