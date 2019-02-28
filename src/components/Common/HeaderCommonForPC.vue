@@ -637,8 +637,6 @@ export default{
           return false
         }
       })
-      console.log(params)
-      if (!params.shortName) return false
       await this.GET_TRANSITION_RATE_ACTION({
         params,
         activeConvertCurrencyObj: this.activeConvertCurrencyObj
@@ -738,7 +736,6 @@ export default{
       await this.changeActiveTransitionCurrency()
       this.CHANGE_CONVERT_CURRENCY(this.activeConvertCurrency)
       this.toggleBox('setting', false)
-      this.CHANGE_PASSWORD_USEABLE(false)
     },
     // 查询某商户可用法币币种列表
     async getMerchantAvailableLegalTenderList () {
@@ -797,10 +794,7 @@ export default{
       console.log(newVal)
       if (newVal) {
         this.isPayPasswordLocked = true
-      }
-    },
-    isPayPasswordLocked (newVal) {
-      if (!newVal) {
+      } else {
         this.CHANGE_PASSWORD_USEABLE(false)
       }
     },

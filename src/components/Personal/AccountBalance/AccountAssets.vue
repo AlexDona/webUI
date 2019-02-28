@@ -861,7 +861,6 @@ export default {
       this.accountCount = targetCount > 0 ? targetCount : 0
       // 判断是输入时还是手续费 判断错误提示
       if (val === 'rechargeType') {
-        // console.log(this.withdrawCountVModel)
         // console.log(this.$refs.withdrawCount[index].value)
       } else if (val === 'serviceType') {
         // 获取输入手续费
@@ -872,12 +871,8 @@ export default {
     checkUserInputAvailable (data) {
       let {index} = data
       // 获取ref中input值
-      // this[ref] = this.$refs[ref].value
-      // 获取输入数量
-      // this.withdrawCountVModel = this.$refs.withdrawCount[index].value
       // console.log(this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value)
       this.withdrawCountVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value
-      // console.log(this.withdrawCountVModel)
       // console.log(this.withdrawDepositList[index].total)
       if (this.withdrawCountVModel - 0 > this.withdrawDepositList[index].total - 0) {
         this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = this.withdrawDepositList[index].total - 0
