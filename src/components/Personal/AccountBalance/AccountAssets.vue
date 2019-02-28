@@ -1330,10 +1330,11 @@ export default {
       // 实名认证
       realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth'),
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword,
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
     }),
-    // 交易密码是否被锁定
-    isLockedPayPassword: state => state.common.isLockedPayPassword,
+
     // 提现手续费输入input ref
     feeInputRef () {
       return this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef
