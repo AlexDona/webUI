@@ -747,19 +747,20 @@ export default {
         this.isShowErrorTips = true
       }
     },
-    // 点击取消按钮模态框关闭
+    // 点击取消按钮存币详情模态框关闭
     dialogCancel () {
       this.dialogVisible = false
     },
-    // 点击确定按钮模态框关闭
+    // 点击确定按钮存币详情模态框关闭
     dialogSuer () {
+      // 关闭模态框
       this.dialogVisible = false
       // 判断输入密码框是否显示
       if (this.isShowPasswordDialog) {
         return false
       } else {
         this.REFRESH_USER_INFO_ACTION()
-        if (this.passwordsAccount) {
+        if (!this.isLockedPayPassword) {
           // 设置交易密码弹窗为显示
           this.isShowPasswordDialog = true
           // 让交易密码为空的提示隐藏
@@ -1016,7 +1017,7 @@ export default {
       financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList,
       // 获取当前语言
       language: state => state.common.language,
-      passwordsAccount: state => state.common.passwordsAccount,
+      isLockedPayPassword: state => state.common.isLockedPayPassword,
       status: state => state.finance.status,
       clientWidth: state => state.common.clientWidth
     }),
