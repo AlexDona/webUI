@@ -38,30 +38,60 @@
               v-show="isSetting"
             >
               <ul class="inner-box">
-                <li
-                  v-for="(item,index) in frequencyList"
-                  :key="index"
-                  :class="{
-                    'active': item.value == activeFrequency
-                  }"
-                >
-                  <label>
-                    <input
-                      type="radio"
-                      @change="changeActiveFrequency"
-                      name="password-frequency"
-                      :checked="item.value == validatedActiveFrequency"
-                      :value="item.value"
-                    />
-                    <span v-if="item.value=='userset'">{{usersetTimeInterval}}</span> {{$t(item.label)}}
-                    <span
-                      class="button"
-                      :class="{
-                      'active': item.value == validatedActiveFrequency
+                <li>
+                  {{$t('M.user_pay_pwd_never')}}
+                  <span
+                    class="button"
+                    @click="changeActiveFrequency('never')"
+                    :class="{
+                      'active': validatedActiveFrequency == 'never'
                     }"
-                    ></span>
-                  </label>
+                  ></span>
                 </li>
+                <li>
+                  {{usersetTimeInterval}} {{$t('M.user_pay_pwd_user_set')}}
+                  <span
+                    class="button"
+                    @click="changeActiveFrequency('userset')"
+                    :class="{
+                      'active': validatedActiveFrequency == 'userset'
+                    }"
+                  ></span>
+                </li>
+                <li>
+                  {{$t('M.user_pay_pwd_every')}}
+                  <span
+                    class="button"
+                    @click="changeActiveFrequency('everytime')"
+                    :class="{
+                      'active': validatedActiveFrequency == 'everytime'
+                    }"
+                  ></span>
+                </li>
+                <!--<li-->
+                  <!--v-for="(item,index) in frequencyList"-->
+                  <!--:key="index"-->
+                  <!--:class="{-->
+                    <!--'active': item.value == activeFrequency-->
+                  <!--}"-->
+                <!--&gt;-->
+                  <!--<label>-->
+                    <!--<input-->
+                      <!--type="radio"-->
+                      <!--@change="changeActiveFrequency"-->
+                      <!--name="password-frequency"-->
+                      <!--:checked="item.value == validatedActiveFrequency"-->
+                      <!--:value="item.value"-->
+                    <!--/>-->
+                    <!--<span v-if="item.value=='userset'">{{usersetTimeInterval}}</span> {{$t(item.label)}}-->
+                    <!--<span-->
+                      <!--class="button"-->
+                      <!--:class="{-->
+                      <!--'active': item.value == validatedActiveFrequency-->
+                    <!--}"-->
+                    <!--&gt;</span>-->
+                  <!--</label>-->
+                <!--</li>-->
               </ul>
             </div>
           </el-collapse-transition>
@@ -191,9 +221,10 @@ export default {
       this.isCheckPayPassword = false
       this.payPassword = ''
     },
-    async changeActiveFrequency (e) {
+    async changeActiveFrequency (val) {
+      if (val === this.validatedActiveFrequency) return false
       this.isSuccessChanged = false
-      let newVal = e.target.value
+      let newVal = val
       this.oldFrequency = this.activeFrequency
       this.activeFrequency = newVal
       this.params = {
@@ -349,6 +380,20 @@ export default {
                 font-size: 12px;
                 line-height: 50px;
                 background: rgba(40, 48, 73, 1);
+
+                .button {
+                  float: right;
+                  display: inline-block;
+                  width: 40px;
+                  height: 20px;
+                  margin: 15px auto;
+                  background: url(../../../assets/user/wrong.png) no-repeat center center;
+                  cursor: pointer;
+
+                  &.active {
+                    background: url(../../../assets/user/yes.png) no-repeat center center;
+                  }
+                }
 
                 > label {
                   position: relative;
