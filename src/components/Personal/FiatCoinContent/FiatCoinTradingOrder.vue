@@ -1026,13 +1026,13 @@ export default {
           tradePassword: this.tradePassword // 交易密码
         })
         console.log(data)
+        // 1关闭交易密码框
+        this.dialogVisible1 = false
         // 正确逻辑
         if (!data) return false
         // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
         // 付款成功后，根据返回的状态再渲染
         // 付款成功后逻辑
-        // 1关闭交易密码框
-        this.dialogVisible1 = false
         this.errpwd = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框
         // 2再次调用接口刷新列表
@@ -1077,13 +1077,13 @@ export default {
         tradePassword: this.tradePassword // 交易密码
       })
       console.log(data)
+      // 1关闭交易密码框
+      this.dialogVisible2 = false
       // 正确逻辑
       if (!data) return false
       // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
       // 付款成功后，根据返回的状态再渲染
       // 付款成功后逻辑
-      // 1关闭交易密码框
-      this.dialogVisible2 = false
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
       // 2再次调用接口刷新列表
@@ -1133,9 +1133,9 @@ export default {
         tradePassword: this.tradePassword // 交易密码
       })
       console.log(data)
+      this.dialogVisible3 = false
       // 正确逻辑
       if (!data) return false
-      this.dialogVisible3 = false
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
       // 2再次调用接口刷新列表

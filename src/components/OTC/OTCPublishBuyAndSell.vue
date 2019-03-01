@@ -932,10 +932,10 @@ export default {
       }
       const data = await addOTCPutUpOrders(param)
       // 返回数据正确的逻辑
+      // 关闭交易密码框
+      this.publishOrderTradePwdDialogStatus = false
       if (!data) return false
       if (data) {
-        // 关闭交易密码框
-        this.publishOrderTradePwdDialogStatus = false
         // 清空表单数据
         this.clearInputData()
         // 下单成功跳转到首页挂单列表去

@@ -874,10 +874,10 @@ export default {
       // console.log(this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value)
       this.withdrawCountVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value
       // console.log(this.withdrawDepositList[index].total)
-      if (this.withdrawCountVModel - 0 > this.withdrawDepositList[index].total - 0) {
-        this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = this.withdrawDepositList[index].total - 0
-        this.withdrawCountVModel = this.withdrawDepositList[index].total - 0
-      }
+      // if (this.withdrawCountVModel - 0 > this.withdrawDepositList[index].total - 0) {
+      //   this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = this.withdrawDepositList[index].total - 0
+      //   this.withdrawCountVModel = this.withdrawDepositList[index].total - 0
+      // }
       let targetCount = amendPrecision(this.withdrawCountVModel, this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value, '-')
       // console.log(targetCount)
       this.accountCount = targetCount > 0 ? targetCount : 0
@@ -1136,7 +1136,11 @@ export default {
     /**
      * 点击提币按钮 验证
      * */
-    validateOfWithdraw (index) {
+    async validateOfWithdraw (index) {
+      // await this.REFRESH_USER_INFO_ACTION()
+      // let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      // this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      // if (this.isLockedPayPassword) return false
       this.isShowWithdrawDialog = false
       console.log(index)
       if (this.isNeedTag) {
@@ -1224,13 +1228,12 @@ export default {
       if (!this.userInfo.userInfo.payPassword) {
         this.dialogVisible = true
       } else {
+        await this.REFRESH_USER_INFO_ACTION()
+        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+        if (this.isLockedPayPassword) return false
         this.isShowWithdrawDialog = true
       }
-      // 判断是否交易密码锁定
-      this.REFRESH_USER_INFO_ACTION()
-      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-      if (this.isLockedPayPassword) return false
     },
     confirm () {
       this.$goToPage('/TransactionPassword')
@@ -1248,6 +1251,7 @@ export default {
     },
     // 提交提币接口
     async stateSubmitAssets () {
+      console.log(1)
       let data
       let param = {
         msgCode: this.phoneCode, // 短信验证码
@@ -1262,8 +1266,9 @@ export default {
       }
       data = await statusSubmitWithdrawButton(param)
       console.log(data)
-      if (!data) return false
       this.isShowWithdrawDialog = false
+      if (!data) return false
+      // 判断是否交易密码锁定
       // 提币地址列表查询
       this.getAssetCurrenciesList()
       this.resetWithdrawFormContent(this.currentIndex)
@@ -1334,7 +1339,6 @@ export default {
       isLockedPayPassword: state => state.common.isLockedPayPassword,
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
     }),
-
     // 提现手续费输入input ref
     feeInputRef () {
       return this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef
@@ -1473,7 +1477,6 @@ export default {
               }
 
               .error-info {
-                height: 20px;
                 line-height: 35px;
                 color: #d45858;
               }

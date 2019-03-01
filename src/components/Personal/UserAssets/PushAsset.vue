@@ -340,7 +340,7 @@
                     class="form-input-common border-radius2 padding-l15 box-sizing"
                     v-model="payPassword"
                     @keydown="setErrorMsg(3, '')"
-                    @blur="checkoutInputFormat(3, payPassword,1)"
+                    @blur="checkoutInputFormat(3, payPassword, 1)"
                     @keyup.enter="submitWithPayPassword"
                   >
                 </el-form-item>
@@ -493,18 +493,17 @@ export default {
     },
     // 是否需要交易密码
     async checkISNeedPayPassowd () {
-      // 判断是否交易密码锁定
-      await this.REFRESH_USER_INFO_ACTION()
-      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-      if (this.isLockedPayPassword) return false
       await this.reflashIsNeedPayPassword()
       let goOnStatus = 0
       goOnStatus = (this.checkoutInputFormat(0, this.buyUID) && this.checkoutInputFormat(1, this.count) && this.checkoutInputFormat(2, this.price)) ? 1 : 0
-
       if (goOnStatus) {
         if (this.isNeedPayPassword) {
           this.payType = 'push'
+          // 判断是否交易密码锁定
+          await this.REFRESH_USER_INFO_ACTION()
+          let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+          this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+          if (this.isLockedPayPassword) return false
           this.isShowPayPasswordDialog = true
         } else {
           this.submitPushAssets()
@@ -552,6 +551,13 @@ export default {
     },
     // 付款方式封装
     submitWithPayPassword () {
+      if (this.payPassword) {
+        this.isShowPayPasswordDialog = false
+      } else {
+        this.checkoutInputFormat(3, '', 1)
+        return false
+      }
+      // this.isShowPayPasswordDialog = false
       switch (this.payType) {
         case 'pay':
           this.payWithPassword()

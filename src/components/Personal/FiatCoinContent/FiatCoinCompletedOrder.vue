@@ -757,7 +757,8 @@ export default {
         }
 
         .el-table__expanded-cell {
-          border-bottom: 15px solid #fff !important;
+          /* border-bottom: 15px solid #fff !important; */
+          border-bottom: 15px solid #f4f4f4 !important;
           background-color: #fff;
 
           &:hover {

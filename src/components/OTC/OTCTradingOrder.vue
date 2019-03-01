@@ -1015,9 +1015,9 @@ export default {
         const data = await buyerPayForOrder(params)
         // console.log(data)
         // 正确逻辑
+        this.dialogVisibleConfirmPayment = false
         this.loading = false
         if (!data) return false
-        this.dialogVisibleConfirmPayment = false
         this.errPWD = ''
         this.tradePassword = ''
         // 2再次调用接口刷新列表
@@ -1055,9 +1055,9 @@ export default {
       params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
       const data = await sellerConfirmGetMoney(params)
       // 正确逻辑
+      this.dialogVisibleConfirmReceipt = false
       this.loading = false
       if (!data) return false
-      this.dialogVisibleConfirmReceipt = false
       this.errPWD = ''
       this.tradePassword = ''
       this.getOTCTradingOrdersList()
@@ -1114,9 +1114,9 @@ export default {
       const data = await sellerSendAppeal(params)
       // console.log(data)
       // 正确逻辑
+      this.dialogVisibleSubmitComplaint = false
       this.loading = false
       if (!data) return false
-      this.dialogVisibleSubmitComplaint = false
       this.errPWD = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
       this.appealTextAreaValue = '' // 清空申诉原因
