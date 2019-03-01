@@ -220,6 +220,7 @@ export default {
       this.$refs[`fileInput`].click()
     },
     getPicture (e) {
+      if (!e.target.files.length) return false
       lrz(e.target.files[0]).then(async res => {
         console.log(res)
         this.CHANGE_AJAX_READY_STATUS(true)
