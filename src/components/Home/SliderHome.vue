@@ -75,7 +75,7 @@ export default {
       this.renderSlider()
     },
     slide (data) {
-      let bigUrl = getNestedData(this.sliderListAjax[data.currentPage - 1], 'bigUrl')
+      let bigUrl = getNestedData(this.sliderListAjax[getNestedData(data, 'currentPage') || 0], 'bigUrl')
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
     },
     renderSlider () {
@@ -176,10 +176,6 @@ export default {
     /* margin:200px auto; */
     overflow: hidden;
     transition: all 4s;
-
-    &.active {
-      opacity: .2;
-    }
 
     /* opacity:.8; */
     .inner-box {

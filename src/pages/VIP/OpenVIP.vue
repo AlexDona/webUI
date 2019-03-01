@@ -381,7 +381,8 @@ export default {
       'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_PASSWORD_USEABLE'
     ]),
     // 获取用户应付金额
     async getVipUserPayCount () {
@@ -487,7 +488,7 @@ export default {
       this.errorEditorMsg = msg
     },
     // 确定提交
-    confirmSubmit () {
+    async confirmSubmit () {
       console.log(this.vipAction)
       if ((!this.vipName || !this.month) && this.vipAction !== 'update') {
         this.$message({
@@ -504,6 +505,11 @@ export default {
         return false
       }
       this.password = ''
+      // 用户交易密码是否锁定判断
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.userInfo, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
       this.dialogFormVisible = true
     },
     // 选择当前开通月数显示样式
@@ -570,6 +576,7 @@ export default {
         if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
+          this.dialogFormVisible = false
           return false
         } else {
           // 接口成功清除loading
@@ -659,7 +666,9 @@ export default {
       payPassword: state => state.user.loginStep1Info.userInfo.payPassword,
       activeSelectLevel: state => getStore('activeSelectLevel') || state.user.vip.activeSelectLevel,
       // vip操作
-      vipAction: state => getStore('vipAction') || state.user.vip.vipAction
+      vipAction: state => getStore('vipAction') || state.user.vip.vipAction,
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     }),
     filteredData () {
       console.log(this.vipPriceInfo1)

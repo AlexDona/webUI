@@ -784,10 +784,10 @@ export default {
           break
       }
       // 返回数据正确的逻辑
+      this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
       console.log(data)
       if (!data) return false
       if (data) {
-        this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
         this.clearInput(this.onlineTraderStatus) // 清空数据
         this.querySelectedOrdersDetails()
         this.queryUserTradeFeeAndCoinInfo()
