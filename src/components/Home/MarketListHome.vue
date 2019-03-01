@@ -459,7 +459,9 @@ export default {
       _.forEach(this.areas, area => {
         _.forEach(area.content, symbol => {
           console.log(symbol)
-          this.socketParamsStr += `${symbol.id}@`
+          if (symbol) {
+            this.socketParamsStr += `${symbol.id}@`
+          }
         })
       })
       _.forEach(this.collectArea.content, symbol => {

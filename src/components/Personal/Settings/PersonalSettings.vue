@@ -183,14 +183,15 @@ export default {
     ]),
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'CHANGE_PASSWORD_USEABLE'
     ]),
     cancelSetting () {
       this.activeFrequency = this.oldFrequency
       this.isCheckPayPassword = false
       this.payPassword = ''
     },
-    changeActiveFrequency (e) {
+    async changeActiveFrequency (e) {
       this.isSuccessChanged = false
       let newVal = e.target.value
       this.oldFrequency = this.activeFrequency
@@ -207,6 +208,10 @@ export default {
       } else {
         // 安全等级： 高 => 低'
         this.isSuccessChanged = false
+        await this.REFRESH_USER_INFO_ACTION()
+        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+        if (this.isLockedPayPassword) return false
         this.isCheckPayPassword = true
       }
     },
@@ -232,6 +237,7 @@ export default {
       if (!data) {
         this.activeFrequency = this.oldFrequency
         this.isSuccessChanged = false
+        this.isCheckPayPassword = false
         return false
       } else {
         this.isSuccessChanged = true
@@ -259,7 +265,10 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       notInputPayPasswdTime: state => state.user.loginStep1Info.notInputPayPasswdTime,
-      UserPayPassword: state => state.user.loginStep1Info.userInfo.payPassword
+      UserPayPassword: state => state.user.loginStep1Info.userInfo.payPassword,
+      loginStep1Info: state => state.user.loginStep1Info,
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     })
   },
   watch: {
