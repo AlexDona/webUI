@@ -104,6 +104,7 @@
           v-model="searchKeyWord"
           :placeholder="$t('M.comm_search')"
           @keyup.native="searchFromMarketList"
+          @change="searchFromMarketList"
         >
           <i slot="suffix" class="el-input__icon el-icon-search"></i>
         </el-input>
