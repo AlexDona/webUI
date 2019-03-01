@@ -340,7 +340,7 @@
                     class="form-input-common border-radius2 padding-l15 box-sizing"
                     v-model="payPassword"
                     @keydown="setErrorMsg(3, '')"
-                    @blur="checkoutInputFormat(3, payPassword,1)"
+                    @blur="checkoutInputFormat(3, payPassword, 1)"
                     @keyup.enter="submitWithPayPassword"
                   >
                 </el-form-item>
@@ -551,7 +551,13 @@ export default {
     },
     // 付款方式封装
     submitWithPayPassword () {
-      this.isShowPayPasswordDialog = false
+      if (this.payPassword) {
+        this.isShowPayPasswordDialog = false
+      } else {
+        this.checkoutInputFormat(3, '', 1)
+        return false
+      }
+      // this.isShowPayPasswordDialog = false
       switch (this.payType) {
         case 'pay':
           this.payWithPassword()
