@@ -936,6 +936,10 @@ export default {
           color: #000 !important;
         }
 
+        .el-dialog__body {
+          color: #666 !important;
+        }
+
         .el-input__inner {
           border: 1px solid rgba(236, 241, 248, 1);
           background: rgba(255, 255, 255, 1);
