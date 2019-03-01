@@ -309,7 +309,8 @@ import {phoneNumRegexpInput} from '../../../utils'
 import {checkUserExist} from '../../../utils/api/user'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -366,7 +367,11 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
       'CHANGE_REF_SECURITY_CENTER_INFO',
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_PASSWORD_USEABLE'
+    ]),
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
     ]),
     phoneNumRegexpInput (ref) {
       let target = this.$refs[ref]
@@ -731,6 +736,11 @@ export default {
           newCode: this.amendDataPhone.newPhoneCode, // 新手机验证码
           payPassword: this.amendDataPhone.transactionPassword // 交易密码
         }
+        // 判断是否交易密码锁定
+        await this.REFRESH_USER_INFO_ACTION()
+        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+        if (this.isLockedPayPassword) return false
         data = await changeMobilePhone(param)
         if (!(returnAjaxMsg(data, this, 1))) {
           return false
@@ -777,7 +787,10 @@ export default {
       countryAreaList: state => state.common.countryAreaList,
       disabledOfOldPhoneBtn: state => state.user.disabledOfOldPhoneBtn,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      loginStep1Info: state => state.user.loginStep1Info,
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     }),
     windowHeight () {
       return window.innerHeight

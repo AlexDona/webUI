@@ -222,6 +222,7 @@ export default {
       this.$refs[`fileInput`].click()
     },
     getPicture (e) {
+      if (!e.target.files.length) return false
       lrz(e.target.files[0]).then(async res => {
         this.CHANGE_AJAX_READY_STATUS(true)
         const {base64, file, fileLen} = res
