@@ -551,6 +551,7 @@ export default {
     },
     // 付款方式封装
     submitWithPayPassword () {
+      this.isShowPayPasswordDialog = false
       switch (this.payType) {
         case 'pay':
           this.payWithPassword()
