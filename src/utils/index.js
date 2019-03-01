@@ -455,7 +455,7 @@ export const scientificToNumber = number => {
  * @returns {string}
  */
 export const unzip = b64Data => {
-  console.log(b64Data)
+  // console.log(b64Data)
   if (!b64Data) return false
   var strData = atob(b64Data)
   // Convert binary string to character-number array

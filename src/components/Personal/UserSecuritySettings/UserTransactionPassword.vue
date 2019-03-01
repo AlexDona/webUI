@@ -19,8 +19,8 @@
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          <!--修改交易密码-->
-          {{ $t('M.user_modification_trade_pwd') }}
+          <!--重置交易密码-->
+          {{ $t('M.user_security_set_reset_pwd2') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -634,7 +634,7 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .transaction-password {
-    margin-top: 66px;
+    margin-top: 50px;
     overflow: hidden;
 
     > .transaction-password-main {

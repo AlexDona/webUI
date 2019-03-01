@@ -351,9 +351,6 @@ export default {
     }
   },
   watch: {
-    isEmailExist (newVal) {
-      console.log(newVal)
-    }
   },
   destroyed () {
     // 离开本组件清除定时器
@@ -367,7 +364,7 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .set-email {
-    margin-top: 66px;
+    margin-top: 50px;
     overflow: hidden;
 
     > .set-email-main {

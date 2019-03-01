@@ -670,6 +670,7 @@ export default {
       this.$refs[`fileInput${index}`].click()
     },
     getPicture (e) {
+      if (!e.target.files.length) return false
       console.dir(e.target.id)
       const INPUT_ID = e.target.id
       this.CHANGE_AJAX_READY_STATUS(true)
@@ -980,18 +981,6 @@ export default {
     })
   },
   watch: {
-    countryAreaList (newVal) {
-      console.log(newVal)
-      if (newVal) {
-        console.log(newVal)
-      }
-    },
-    userInfo (newVal) {
-      console.log(newVal)
-    },
-    language (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>

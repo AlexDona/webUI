@@ -4,7 +4,7 @@
     :style="{
      'min-height':windowHeight < 800,
      'height': windowHeight + 'px',
-     'margin-top':isMobile?'0':'66px'
+     'margin-top':isMobile?'0':'50px'
     }"
   >
     <keep-alive>
@@ -788,7 +788,8 @@ export default {
         !this.routerTo.startsWith('/register') &&
         !this.routerTo.startsWith('/login') &&
         !this.routerTo.startsWith('/ForgetPassword') &&
-        !this.routerTo.startsWith('/nofind404')
+        !this.routerTo.startsWith('/nofind404') &&
+        !this.routerTo.startsWith('/500')
       ) {
         this.$goToPage(this.routerTo)
       } else {

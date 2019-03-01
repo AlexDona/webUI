@@ -61,12 +61,7 @@ export default {
     }
   },
   async created () {
-    this.noticeList = [
-    ]
-    if (this.language) {
-      await this.getNewsNoticeList()
-      this.timer = setInterval(this.autoPlay, 4000)
-    }
+    this.noticeList = []
   },
   mounted () {},
   activated () {},
@@ -107,7 +102,8 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language,
-      noticeCloseVisible: state => state.home.noticeCloseVisible
+      noticeCloseVisible: state => state.home.noticeCloseVisible,
+      homeNoticeList: state => state.home.noticeList
     })
   },
   watch: {
@@ -115,6 +111,11 @@ export default {
       if (newVal) {
         await this.getNewsNoticeList()
       }
+    },
+    homeNoticeList (newVal) {
+      console.log(newVal)
+      this.noticeList = [...this.homeNoticeList]
+      this.timer = setInterval(this.autoPlay, 4000)
     }
   }
 }

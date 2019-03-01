@@ -765,7 +765,7 @@ export default {
 @import "../../../static/css/scss/index";
 
 .otc-report-form-statistics-box {
-  margin-top: 66px;
+  margin-top: 50px;
   overflow: hidden;
 
   > .report-form-statistics-content {

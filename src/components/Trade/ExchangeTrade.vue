@@ -643,7 +643,8 @@ export default {
       'CHANGE_FOOTER_ACTIVE_NAME',
       'SET_TARGET_EXCHANGE_DATA',
       'CHANGE_SYMBOL_CHANGED_STATUS',
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_PASSWORD_USEABLE'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -872,6 +873,12 @@ export default {
           this.notVerifyDialogVisible = true
           return false
         }
+        // 用户交易密码是否锁定判断
+        await this.REFRESH_USER_INFO_ACTION()
+        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+        if (this.isLockedPayPassword) return false
+        //
         this.entrustType = entrustType
         this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
         console.log(entrustType, matchType)
@@ -1007,6 +1014,7 @@ export default {
         this.$goToPage('/TransactionPassword')
         return false
       }
+
       let params = {
         tradeId: this.middleTopData.partnerTradeId + '',
         type: this.entrustType ? 'SELL' : 'BUY', // 委单类型
@@ -1165,7 +1173,9 @@ export default {
       // 是否通过高级认证
       advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
       // 实名认证
-      realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth')
+      realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth'),
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     }),
     isNeedErrorMsgForSellCount () {
       return this.marketExchange.sellCount > this.sellUserCoinWallet.total

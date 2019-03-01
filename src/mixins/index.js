@@ -1,5 +1,5 @@
 import {keep2Num, keep8Num, scientificToNumber} from '../utils'
-import {jumpToOtherPageForFooter, formatCount} from '../utils/commonFunc'
+import {jumpToOtherPageForFooter, formatCount, getNestedData, http2https} from '../utils/commonFunc'
 
 let mixin = {
   data () {
@@ -29,6 +29,12 @@ let mixin = {
     },
     $formatCount (num) {
       return formatCount(num)
+    },
+    $getNestedData (data, index) {
+      return getNestedData(data, index)
+    },
+    $http2https (str) {
+      return http2https(str)
     }
   }
 }

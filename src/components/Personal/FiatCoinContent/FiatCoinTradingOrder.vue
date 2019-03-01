@@ -797,11 +797,13 @@ import {timeFilter, formatSeconds} from '../../../utils'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
   // returnAjaxMsg,
-  changeCurrentPageForLegalTrader
+  changeCurrentPageForLegalTrader,
+  getNestedData
 } from '../../../utils/commonFunc'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -852,7 +854,11 @@ export default {
     ...mapMutations([
       'SET_LEGAL_TENDER_REFLASH_STATUS',
       'CHANGE_LEGAL_PAGE',
-      'CHANGE_RE_RENDER_TRADING_LIST_STATUS' // 更改重新渲染交易中订单列表状态
+      'CHANGE_RE_RENDER_TRADING_LIST_STATUS', // 更改重新渲染交易中订单列表状态,
+      'CHANGE_PASSWORD_USEABLE'
+    ]),
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
     ]),
     // 1.0 分页
     changeCurrentPage (e) {
@@ -984,7 +990,12 @@ export default {
       })
     },
     // 4.0 买家点击确认付款按钮 弹出交易密码框
-    confirmPayMoney (index) {
+    async confirmPayMoney (index) {
+      // 判断是否交易密码锁定
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
       if (!this.activePayModeList[index]) {
         this.$message({
           // 请选择支付方式
@@ -1015,13 +1026,13 @@ export default {
           tradePassword: this.tradePassword // 交易密码
         })
         console.log(data)
+        // 1关闭交易密码框
+        this.dialogVisible1 = false
         // 正确逻辑
         if (!data) return false
         // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
         // 付款成功后，根据返回的状态再渲染
         // 付款成功后逻辑
-        // 1关闭交易密码框
-        this.dialogVisible1 = false
         this.errpwd = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框
         // 2再次调用接口刷新列表
@@ -1047,7 +1058,12 @@ export default {
     //  console.log(e)
     // },
     // 8.0 卖家点击确认收款按钮
-    confirmGatherMoney (id) {
+    async confirmGatherMoney (id) {
+      // 判断是否交易密码锁定
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
       this.activedTradingOrderId = id
       // 弹出交易密码框
       this.dialogVisible2 = true
@@ -1061,13 +1077,13 @@ export default {
         tradePassword: this.tradePassword // 交易密码
       })
       console.log(data)
+      // 1关闭交易密码框
+      this.dialogVisible2 = false
       // 正确逻辑
       if (!data) return false
       // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
       // 付款成功后，根据返回的状态再渲染
       // 付款成功后逻辑
-      // 1关闭交易密码框
-      this.dialogVisible2 = false
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
       // 2再次调用接口刷新列表
@@ -1093,7 +1109,12 @@ export default {
       this.$set(this.showOrderAppeal, index, false)
     },
     // 12.0 卖家提交申诉按钮弹出交易密码框
-    sellerAppeal () {
+    async sellerAppeal () {
+      // 判断是否交易密码锁定
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
       if (!this.appealTextareaValue) {
         this.$message({
           // 请输入申诉原因
@@ -1112,9 +1133,9 @@ export default {
         tradePassword: this.tradePassword // 交易密码
       })
       console.log(data)
+      this.dialogVisible3 = false
       // 正确逻辑
       if (!data) return false
-      this.dialogVisible3 = false
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
       // 2再次调用接口刷新列表
@@ -1129,12 +1150,15 @@ export default {
       language: state => state.common.language,
       activeLanguage: state => state.common.activeLanguage,
       theme: state => state.common.theme,
+      loginStep1Info: state => state.user.loginStep1Info,
       // legalTraderTradingList: state => state.personal.legalTraderTradingList, // 从全局获得的交易中订单列表
       tradingOrderList: state => state.personal.legalTraderTradingList, // 从全局获得的交易中订单列表tradingOrderList
       legalTraderTradingReflashStatus: state => state.personal.legalTraderTradingReflashStatus,
       legalTradePageTotals: state => state.personal.legalTradePageTotals,
       legalTradePageNum: state => state.personal.legalTradePageNum,
-      reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus // 从全局获得的重新渲染交易中订单列表状态
+      reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus, // 从全局获得的重新渲染交易中订单列表状态
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     })
     // 从全局获得的交易中订单列表
     // tradingOrderList () {
@@ -1142,14 +1166,6 @@ export default {
     // }
   },
   watch: {
-    activeLanguage (newVal) {
-      console.log('当前选中语言')
-      console.log(newVal)
-    },
-    language (newVal) {
-      console.log('language')
-      console.log(newVal)
-    },
     // 监控交易中订单列表并调用倒计时逻辑方法
     tradingOrderList (newVal) {
       this.timerLogicMethod()
@@ -1172,9 +1188,6 @@ export default {
     //   this.accomplishSetInter()
     // }
     // },
-    legalTradePageTotals (newVal) {
-      console.log(newVal)
-    },
     activeName () {
       this.getOTCEntrustingOrdersRevocation(this.activeName)
     }

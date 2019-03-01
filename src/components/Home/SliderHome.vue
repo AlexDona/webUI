@@ -75,7 +75,7 @@ export default {
       this.renderSlider()
     },
     slide (data) {
-      let bigUrl = getNestedData(this.sliderListAjax[data.currentPage - 1], 'bigUrl')
+      let bigUrl = getNestedData(this.sliderListAjax[getNestedData(data, 'currentPage') || 0], 'bigUrl')
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
     },
     renderSlider () {
@@ -87,10 +87,10 @@ export default {
         let that = this
         sliderList.push({
           style: {
-            width: '2.3rem',
-            height: '1.2rem',
+            width: '200px',
+            height: '110px',
             borderRadius: '4px',
-            margin: '20px',
+            margin: '33px 16.25px',
             cursor: 'pointer',
             overflow: 'hidden'
           },
@@ -171,38 +171,31 @@ export default {
 <style scoped lang="scss" type="text/scss">
   .slider-box {
     position: absolute;
-    bottom: .2rem;
     width: 100%;
-
-    /* height:300px; */
 
     /* margin:200px auto; */
     overflow: hidden;
     transition: all 4s;
 
-    &.active {
-      opacity: .2;
-    }
-
     /* opacity:.8; */
     .inner-box {
-      width: 10rem;
-      height: 1.7rem;
+      width: 1130px;
+      height: 160px;
     }
   }
 
   /deep/ {
     /* 首页轮播图（不分主题） */
     .slider-pagination-bullet {
-      width: 10px;
-      height: 10px;
+      width: .2rem;
+      height: .04rem;
+      border-radius: 2px;
       background-color: rgba(255, 255, 255, .8);
       transition: all 1s;
     }
 
-    .slider-pagination-bullet-active {
-      width: 27px;
-      border-radius: 6px;
+    .slider-pagination {
+      text-align: right;
     }
   }
 </style>

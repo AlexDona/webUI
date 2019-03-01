@@ -41,6 +41,8 @@ export const finance = {
   'finance_capital': '本金',
   'finance_total_income': '預計總收益',
   // 二次確認彈框提示信息
-  'finance_tipsContentOne': '確定取回存幣?',
-  'finance_invest_number': '存幣數量不能為0'
+  'finance_tipsContentOne': '確定取消存幣?',
+  'finance_invest_number': '存幣數量不能為0',
+  'finance_invest_read': '閱讀',
+  'finance_invest_explain': '存幣說明'
 }

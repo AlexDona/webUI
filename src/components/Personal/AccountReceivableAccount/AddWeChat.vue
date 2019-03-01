@@ -169,7 +169,8 @@ import {
 import lrz from 'lrz'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -208,13 +209,18 @@ export default {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_REF_ACCOUNT_CREDITED_STATE',
-      'CHANGE_AJAX_READY_STATUS'
+      'CHANGE_AJAX_READY_STATUS',
+      'CHANGE_PASSWORD_USEABLE'
+    ]),
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
     ]),
     // 选择图片文件
     choosePicture () {
       this.$refs[`fileInput`].click()
     },
     getPicture (e) {
+      if (!e.target.files.length) return false
       lrz(e.target.files[0]).then(async res => {
         console.log(res)
         this.CHANGE_AJAX_READY_STATUS(true)
@@ -318,6 +324,11 @@ export default {
           payPassword: this.password, // 交易密码
           bankType: 'Wechat' // type
         }
+        // 判断是否交易密码锁定
+        await this.REFRESH_USER_INFO_ACTION()
+        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+        if (this.isLockedPayPassword) return false
         // 整页loading
         this.fullscreenLoading = true
         // console.log(this.dialogImageHandUrl1)
@@ -386,7 +397,10 @@ export default {
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
-      refAccountCenterStatus: state => state.personal.refAccountCenterStatus
+      loginStep1Info: state => state.user.loginStep1Info,
+      refAccountCenterStatus: state => state.personal.refAccountCenterStatus,
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     }),
     windowHeight () {
       return window.innerHeight
@@ -405,7 +419,7 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .add-chat {
-    margin-top: 66px;
+    margin-top: 50px;
     overflow: hidden;
 
     > .add-chat-main {

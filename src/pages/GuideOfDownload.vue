@@ -206,7 +206,7 @@ export default {
   .download-box {
     width: 100%;
     height: 100%;
-    margin-top: 66px;
+    margin-top: 50px;
     background: url(../assets/develop/download-bg.png) no-repeat center center;
     background-size: 100% 100%;
 

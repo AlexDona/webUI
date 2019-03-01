@@ -562,9 +562,6 @@ export default {
     }
   },
   watch: {
-    activeStepNumber (newVal) {
-      // console.log(newVal)
-    }
   }
 }
 </script>
@@ -573,7 +570,7 @@ export default {
 
 .froget-password-box {
   height: 100%;
-  margin-top: 66px;
+  margin-top: 50px;
   overflow: hidden;
   background: linear-gradient(150deg, rgba(30, 38, 54, 1), rgba(37, 75, 117, 1));
 
