@@ -187,5 +187,5 @@ export const common = {
   // 在线客服
   'common_onlineText': 'オンラインサービス',
   'common_paypassword_locked': '取引パスワードエラー件数は制限を超えるなら取引2時間を凍結。',
-  'common_no_processing': 'まだ処理しない。'
+  'common_no_processing': 'まだ処理しない'
 }
