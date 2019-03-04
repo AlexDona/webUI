@@ -37,12 +37,25 @@ export default {
         'isInvite': false,
         'mode': 'inner',
         'color': '#338ff5',
-        'pos_flag': 'crb',
+        'pos_flag': 'crm',
         'language': this.msgLanguage,
+        'css': {
+          'width': '50px',
+          'height': '50px',
+          'border-radius': '50%',
+          'line-height': '50px',
+          'text-align': 'center',
+          'right': '40px',
+          'padding': '5px'
+        },
+        'pop': {
+          'css': {
+          }
+        },
         'mobile': {
           'mode': 'inner',
           'color': '#338ff5',
-          'pos_flag': 'crb',
+          'pos_flag': 'crm',
           'language': ''
         }
       })
