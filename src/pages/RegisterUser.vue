@@ -518,10 +518,12 @@
             <div class="inner-box">
               <!--邀请码（没有可不填）-->
               <input
-                v-model="inviter"
                 type="text"
                 class="input "
-                :placeholder="$t('M.forgetPassword_hint5')"
+                ref="inviter"
+                :placeholder="$t('M.login_welcome_register_advertisement')"
+                @keyup="positiveIntegerNumRegexpInputLimit('inviter')"
+                @input="positiveIntegerNumRegexpInputLimit('inviter')"
                 :disabled="inviterDisabled"
               >
             </div>
@@ -752,14 +754,15 @@ export default {
     if (this.isLogin) {
       this.USER_LOGOUT()
     }
-    let params = this.$route.query.showId
-    if (params) {
-      this.inviter = params
-      this.inviterDisabled = true
-    }
   },
   mounted () {
     this.pcDragEvent()
+    let params = this.$route.query.showId
+    if (params) {
+      this.inviter = params
+      this.$refs['inviter'].value = params
+      this.inviterDisabled = true
+    }
   },
   activated () {},
   update () {},
