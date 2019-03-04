@@ -104,9 +104,9 @@
           enter-active-class = "animated fadeIn"
         >
           <div
-          class="inner-content email"
-          v-show="activeMethod"
-        >
+            class="inner-content email"
+            v-show="activeMethod"
+          >
             <div class="input">
               <div class="inner-box">
                 <!--中文国籍选择-->
@@ -184,8 +184,11 @@
                 type="text"
                 class="input image-validate"
                 :placeholder="$t(activeCodePlaceholder)"
-                v-model="checkCode"
+                ref="checkCode"
                 @keydown="setErrorMsg()"
+                @keyup="positiveIntegerNumRegexpInputLimit('checkCode')"
+                @input="positiveIntegerNumRegexpInputLimit('checkCode')"
+                maxlength="6"
                 @blur="checkoutInputFormat(3,checkCode)"
               >
               <span class="middle-line"></span>
@@ -239,10 +242,12 @@
              <!--邀请码-->
              <!--邀请码（没有可不填）-->
              <input
-               v-model="inviter"
                type="text"
                class="input "
+               ref="inviter"
                :placeholder="$t('M.login_welcome_register_advertisement')"
+               @keyup="positiveIntegerNumRegexpInputLimit('inviter')"
+               @input="positiveIntegerNumRegexpInputLimit('inviter')"
                :disabled="inviterDisabled"
              >
            </div>
@@ -460,8 +465,10 @@
                 type="text"
                 class="input image-validate"
                 :placeholder="$t(activeCodePlaceholder)"
-                v-model="checkCode"
+                ref="checkCode"
                 @keydown="setErrorMsg()"
+                @keyup="positiveIntegerNumRegexpInputLimit('checkCode')"
+                @input="positiveIntegerNumRegexpInputLimit('checkCode')"
                 @blur="checkoutInputFormat(3,checkCode)"
               >
               <span class="middle-line"></span>
@@ -678,7 +685,8 @@ import {
 } from '../utils/commonFunc'
 import {
   phoneNumRegexpInput,
-  emailNumRegexpInput
+  emailNumRegexpInput,
+  positiveIntegerNumRegexpInput
 } from '../utils'
 import {
   mapState,
@@ -764,6 +772,19 @@ export default {
       'USER_LOGOUT',
       'SET_COUNT_DOWN_RESET_STATUS'
     ]),
+    // 限制输入数字
+    positiveIntegerNumRegexpInputLimit (ref) {
+      let target = this.$refs[ref]
+      let targetStr = positiveIntegerNumRegexpInput(target)
+      switch (ref) {
+        case 'checkCode':
+          this.checkCode = targetStr
+          break
+        case 'inviter':
+          this.inviter = targetStr
+          break
+      }
+    },
     emailNumRegexpInput (ref) {
       let target = this.$refs[ref]
       this.emailNum = emailNumRegexpInput(target)
@@ -1043,6 +1064,7 @@ export default {
       this.password = ''
       this.repeatPassword = ''
       this.checkCode = ''
+      this.$refs['checkCode'].value = ''
       this.setErrorMsg()
       this.$refs[this.phoneRef].value = ''
       this.$refs[this.emailNumRef].value = ''
@@ -1152,7 +1174,7 @@ export default {
       width: 100%;
 
       &.pc-bg {
-        background: url('../assets/develop/login-bg.png') 25% 4%  no-repeat;
+        background: url('../assets/develop/login-bg.png') 25% 0 no-repeat;
       }
 
       /* background:url('../assets/develop/login-bg.png')  ; */
@@ -1172,7 +1194,7 @@ export default {
 
         > .title {
           position: absolute;
-          top: -20%;
+          top: -80px;
           left: 15%;
           min-width: 250px;
           height: 35px;
