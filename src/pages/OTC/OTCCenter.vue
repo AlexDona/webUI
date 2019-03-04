@@ -727,7 +727,7 @@ export default {
       if (data.data) {
         this.IWantToBuySellArr = getNestedData(data, 'data')
         if (this.IWantToBuySellArr.length) {
-          // console.log(this.IWantToBuySellArr)
+          console.log(this.IWantToBuySellArr)
           _.forEach(this.IWantToBuySellArr, (coin, coinIndex) => {
             if (coin.name == 'FBT') {
               this.IWantToBuySellArr.splice(coinIndex, 1)
@@ -735,25 +735,29 @@ export default {
               return false
             }
           })
-          // 个人中心跳转otc-开始
-          if (this.$route.params.coinId) {
-            let jumpCoinId = this.$route.params.coinId
-            if (jumpCoinId && this.IWantToBuySellArr.length) {
-              this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(jumpCoinId)
-              this.IWantToBuySellArr.forEach((item, index) => {
-                if (jumpCoinId == item.coinId) {
-                  this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(item.name)
-                  this.selectCurrencyNameStatus = index
-                  console.log(this.selectCurrencyNameStatus)
-                }
-              })
-            }
-          } else {
-            // 个人中心跳转otc-结束
-            this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
-            this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
-            // this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
-          }
+          // 周四删除以下2行
+          this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
+          this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
+          // 周四放开 此跳转功能代码
+          // // 个人中心跳转otc-开始
+          // if (this.$route.params.coinId) {
+          //   let jumpCoinId = this.$route.params.coinId
+          //   if (jumpCoinId && this.IWantToBuySellArr.length) {
+          //     this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(jumpCoinId)
+          //     this.IWantToBuySellArr.forEach((item, index) => {
+          //       if (jumpCoinId == item.coinId) {
+          //         this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(item.name)
+          //         this.selectCurrencyNameStatus = index
+          //         console.log(this.selectCurrencyNameStatus)
+          //       }
+          //     })
+          //   }
+          // } else {
+          //   // 个人中心跳转otc-结束
+          //   this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
+          //   this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
+          //   // this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
+          // }
         }
       }
     },
