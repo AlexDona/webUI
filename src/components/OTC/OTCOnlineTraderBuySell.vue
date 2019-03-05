@@ -2,14 +2,10 @@
   <div
     class="otc-online-trader-buy-sell-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{
-      height: windowHeight+'px'
-    }"
+    :style="{height: windowHeight+'px'}"
   >
     <!-- otc在线交易 摘单 页面 -->
-    <div
-      class="online-trader-buy-sell-content"
-    >
+    <div class="online-trader-buy-sell-content">
       <div class="online-trader">
         <!-- 交易左边 -->
         <div class="online-trader-left">
