@@ -293,7 +293,7 @@ const routes = [
   {
     // 活动中心
     path: '/ActivityCenter',
-    redirect: '/CurrencyApplication'
+    redirect: '/RankingListOfInvitation'
   },
   {
     // 上币申请

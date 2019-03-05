@@ -111,14 +111,14 @@
               <!--活动中心子导航-->
               <ul
                 class="sub-nav-list activity-center"
-                v-show="$route.path ==='/ActivityCenter'||$route.path ==='/CurrencyApplication'||$route.path==='/RankingListOfInvitation'"
+                v-show="$route.path ==='/ActivityCenter'||$route.path==='/RankingListOfInvitation'"
               >
-                <li class="sub-nav-item">
-                  <router-link to="/CurrencyApplication">
-                    <!--上币申请-->
-                    {{$t('M.actionCenter_coin_apply')}}
-                  </router-link>
-                </li>
+                <!--<li class="sub-nav-item">-->
+                  <!--<router-link to="/CurrencyApplication">-->
+                    <!--&lt;!&ndash;上币申请&ndash;&gt;-->
+                    <!--{{$t('M.actionCenter_coin_apply')}}-->
+                  <!--</router-link>-->
+                <!--</li>-->
                 <li class="sub-nav-item">
                   <router-link to="/RankingListOfInvitation">
                     <!--邀请排行-->
@@ -322,7 +322,6 @@
         v-show="
         $route.path.indexOf('OTC') != -1 ||
         $route.path === '/ActivityCenter' ||
-         $route.path === '/CurrencyApplication'||
          $route.path === '/RankingListOfInvitation'"
       >
       </div>

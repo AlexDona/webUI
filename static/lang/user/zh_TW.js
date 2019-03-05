@@ -45,8 +45,9 @@ export const user = {
   'login_tips1': '請輸入電話號/郵箱',
   'login_tips2': '請輸入密碼',
   'login_tips3': '忘記密碼',
-  'login_tips4': '免費註冊',
+  'login_tips4': '立即註冊',
   'login_tips5': '請輸入用戶名',
+  'login_tips7': '記住賬號',
   // #############忘記密碼#############
   // 'forgetPassword_findBack': '找回',
   'forgetPassword_verify_style1': '驗證手機',
