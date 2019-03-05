@@ -73,7 +73,7 @@ export const realNameInformation = (params) => get('user/center/userauth', param
  * push资产
  * */
 // push资产记录列表/push币种列表/默认余额total
-export const getPushAssetList = (params) => get('push/getPushList', params)
+export const getPushAssetList = (params) => handleRequest(() => get('push/getPushList', params))
 // push根据币种id获取可用余额
 export const getPushTotalByCoinId = (params) => get('push/getTotalByCoinId', params)
 // 交易区列表查询

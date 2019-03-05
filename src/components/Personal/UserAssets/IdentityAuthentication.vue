@@ -663,7 +663,8 @@ export default {
     ...mapMutations([
       'SET_USER_INFO_REFRESH_STATUS',
       'SET_STEP1_INFO',
-      'CHANGE_AJAX_READY_STATUS'
+      'CHANGE_AJAX_READY_STATUS',
+      'CHANGE_USER_REFRESH_SUCCESS'
     ]),
     // 选择图片文件
     choosePicture (index) {
@@ -976,21 +977,16 @@ export default {
       advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
       // 实名认证
       realname: state => state.user.loginStep1Info.userInfo.realname,
+      isUserRefreshSuccess: state => state.user.isUserRefreshSuccess,
       realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth')
     })
   },
   watch: {
-    countryAreaList (newVal) {
-      console.log(newVal)
+    isUserRefreshSuccess (newVal) {
       if (newVal) {
-        console.log(newVal)
+        this.authenticationIsStatus()
+        this.CHANGE_USER_REFRESH_SUCCESS(false)
       }
-    },
-    userInfo (newVal) {
-      console.log(newVal)
-    },
-    language (newVal) {
-      console.log(newVal)
     }
   }
 }

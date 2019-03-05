@@ -262,7 +262,6 @@ export const positiveIntegerNumRegexpInput = event => {
   event.value = finalVal
   return finalVal
 }
-
 /**
  * 邮箱账号输入限制
  * @param event：当前input DOM对象
