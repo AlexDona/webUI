@@ -779,7 +779,7 @@ export default {
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
       if (this.isLogin) {
-        if (this.$refs.investAmountRef.value > this.userCoinTotal) {
+        if (this.$refs.investAmountRef.value - this.userCoinTotal > 0) {
           this.isShow = true
         } else {
           this.isShow = false
