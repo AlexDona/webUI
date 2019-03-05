@@ -782,7 +782,7 @@ export default {
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
       if (this.isLogin) {
-        if (this.$refs.investAmountRef.value > this.userCoinTotal) {
+        if (this.$refs.investAmountRef.value - 0 > this.userCoinTotal - 0) {
           this.isShow = true
         } else {
           this.isShow = false
@@ -1508,6 +1508,7 @@ export default {
       }
 
       .el-dialog__header {
+        padding: 13px 20px;
         background: #20293c;
         box-shadow: 0 1px 2px 0 rgba(29, 33, 49, 1);
       }
@@ -1517,6 +1518,8 @@ export default {
       }
 
       .el-dialog__headerbtn {
+        top: 17px;
+
         .el-dialog__close {
           color: #fff;
         }
