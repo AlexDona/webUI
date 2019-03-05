@@ -83,9 +83,9 @@
             class="count-flex-input border-radius2 padding-lr15 box-sizing text-align-r"
             ref="countInputRef"
             @blur="checkUserInputAvailable
-('withdrawCount', index)"
-            @keyup="changeInputValue('countInputRef', index, pointLengthAccountCount, 'rechargeType')"
-            @input="changeInputValue('countInputRef', index, pointLengthAccountCount, 'rechargeType')"
+('withdrawCount', index, total)"
+            @keyup="changeInputValue('countInputRef', index, pointLengthAccountCount, 'rechargeType', coinId, total)"
+            @input="changeInputValue('countInputRef', index, pointLengthAccountCount, 'rechargeType', coinId, total)"
           >
           <p class="count-flex-text text-align-r">
             <span>
@@ -181,7 +181,9 @@ export default {
     // 提币地址初始值
     'originalActiveWithdrawDepositAddress',
     // 当前币种id
-    'coinId'
+    'coinId',
+    // 币种的可用总量
+    'total'
   ],
   data () {
     return {
@@ -208,10 +210,11 @@ export default {
         coinId
       })
     },
-    checkUserInputAvailable (ref, index) {
+    checkUserInputAvailable (ref, index, total) {
       this.$emit('checkUserInputAvailable', {
         ref,
-        index
+        index,
+        total
       })
     },
     validateOfWithdraw (index) {
@@ -219,12 +222,14 @@ export default {
         index
       })
     },
-    changeInputValue (ref, index, pointLengthAccountCount, val) {
+    changeInputValue (ref, index, pointLengthAccountCount, val, coinId, total) {
       this.$emit('changeInputValue', {
         ref,
         index,
         pointLengthAccountCount,
-        val
+        val,
+        coinId,
+        total
       })
     }
   },

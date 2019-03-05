@@ -310,6 +310,7 @@
                         :pointLengthAccountCount="pointLengthAccountCount"
                         :ref="`withdrawItemRef${index}`"
                         :coinId="assetItem.coinId"
+                        :total="assetItem.total"
                         @changeInputValue="changeInputValue"
                         @validateOfWithdraw="validateOfWithdraw"
                         @checkUserInputAvailable="checkUserInputAvailable"
@@ -865,7 +866,9 @@ export default {
       this.$goToPage('/TradeCenter')
     },
     // 修改input value 输入限制
-    changeInputValue ({ref, index, pointLengthAccountCount, val}) {
+    changeInputValue ({ref, index, pointLengthAccountCount, val, coinId, total}) {
+      console.log(coinId, total)
+      console.log(this.$refs[`withdrawItemRef${index}`][0])
       // 获取ref中input值
       // this[ref] = this.$refs[ref].value
       // 限制数量小数位位数
@@ -876,8 +879,15 @@ export default {
         this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value,
         '-'
       )
-      console.log(this.accountCount)
-      this.accountCount = targetCount > 0 ? targetCount : 0
+      if (targetCount > 0) {
+        if (targetCount < total - 0) {
+          this.accountCount = targetCount + ''
+        } else {
+          this.accountCount = total
+        }
+      } else {
+        this.accountCount = '0'
+      }
       // 判断是输入时还是手续费 判断错误提示
       if (val === 'rechargeType') {
         // console.log(this.$refs.withdrawCount[index].value)
@@ -888,15 +898,15 @@ export default {
     },
     // 失去焦点判断输入提币数量不能大于可用量 否则显示总可用量
     checkUserInputAvailable (data) {
-      let {index} = data
+      let {index, total} = data
       // 获取ref中input值
       // console.log(this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value)
       this.withdrawCountVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value
       // console.log(this.withdrawDepositList[index].total)
-      // if (this.withdrawCountVModel - 0 > this.withdrawDepositList[index].total - 0) {
-      //   this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = this.withdrawDepositList[index].total - 0
-      //   this.withdrawCountVModel = this.withdrawDepositList[index].total - 0
-      // }
+      if (this.withdrawCountVModel - 0 > total - 0) {
+        this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = total - 0
+        this.withdrawCountVModel = total - 0
+      }
       let targetCount = amendPrecision(this.withdrawCountVModel, this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value, '-')
       // console.log(targetCount)
       this.accountCount = targetCount > 0 ? targetCount : 0
