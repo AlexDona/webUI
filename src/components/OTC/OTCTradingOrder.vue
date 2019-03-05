@@ -758,7 +758,7 @@ import {
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
-import {mapState} from 'vuex'
+import {mapState, mapActions, mapMutations} from 'vuex'
 export default {
   components: {
     IconFontCommon //  字体图标组件
@@ -815,6 +815,12 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
+    ]),
+    ...mapMutations([
+      'CHANGE_PASSWORD_USEABLE'
+    ]),
     // 1.0 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
@@ -972,6 +978,12 @@ export default {
         })
         return false
       }
+      // 用户交易密码是否锁定判断
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
+      //
       this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
       console.log(this.isNeedPayPassword)
       if (this.buttonStatusArr[index] === true) {
@@ -1003,9 +1015,9 @@ export default {
         const data = await buyerPayForOrder(params)
         // console.log(data)
         // 正确逻辑
+        this.dialogVisibleConfirmPayment = false
         this.loading = false
         if (!data) return false
-        this.dialogVisibleConfirmPayment = false
         this.errPWD = ''
         this.tradePassword = ''
         // 2再次调用接口刷新列表
@@ -1015,6 +1027,12 @@ export default {
     // 8.0 卖家点击确认收款按钮
     async confirmGatherMoney (id) {
       this.checkedTradingOrderId = id
+      // 用户交易密码是否锁定判断
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
+      //
       this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
       if (this.isNeedPayPassword) {
         // 弹出交易密码框
@@ -1037,9 +1055,9 @@ export default {
       params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
       const data = await sellerConfirmGetMoney(params)
       // 正确逻辑
+      this.dialogVisibleConfirmReceipt = false
       this.loading = false
       if (!data) return false
-      this.dialogVisibleConfirmReceipt = false
       this.errPWD = ''
       this.tradePassword = ''
       this.getOTCTradingOrdersList()
@@ -1067,6 +1085,12 @@ export default {
         })
         return false
       }
+      // 用户交易密码是否锁定判断
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
+      //
       this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
       if (this.isNeedPayPassword) {
         this.dialogVisibleSubmitComplaint = true
@@ -1090,9 +1114,9 @@ export default {
       const data = await sellerSendAppeal(params)
       // console.log(data)
       // 正确逻辑
+      this.dialogVisibleSubmitComplaint = false
       this.loading = false
       if (!data) return false
-      this.dialogVisibleSubmitComplaint = false
       this.errPWD = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
       this.appealTextAreaValue = '' // 清空申诉原因
@@ -1107,7 +1131,10 @@ export default {
       language: state => state.common.language, // 当前选中语言
       activeLanguage: state => state.common.activeLanguage,
       isLogin: state => state.user.isLogin, // 是否登录
-      userInfo: state => state.user.loginStep1Info.userInfo // 用户详细信息
+      userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword,
+      loginStep1Info: state => state.user.loginStep1Info
     })
   },
   watch: {

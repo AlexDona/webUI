@@ -17,13 +17,13 @@ export const getMerchantCurrencyList = (params) => handleRequest(() => get('pers
 // 账单明细—个人资产综合查询
 export const getComprehensiveRecordsList = (params) => handleRequest(() => get('personal/queryColligate', params))
 // 提币
-export const statusSubmitWithdrawButton = (params) => handleRequest(() => post('addWithdraw', params), 1)
+export const statusSubmitWithdrawButton = (params) => handleRequest(() => post('addWithdraw', {...params, loading: true}), 1)
 // 新增用户提币地址
-export const addNewWithdrawalAddress = (params) => post('personal/addWithdrawAddress', params)
+export const addNewWithdrawalAddress = (params) => post('personal/addWithdrawAddress', {...params, loading: true})
 // 验证提币地址是否正确
 export const checkCurrencyAddress = (params) => handleRequest(() => get('personal/validateAddress', params))
 // 提币地址删除
-export const deleteUserWithdrawAddress = (params) => put('personal/deleteUserWithdrawAddress', params)
+export const deleteUserWithdrawAddress = (params) => put('personal/deleteUserWithdrawAddress', {...params, loading: true})
 // 查询充币地址
 export const inquireRechargeAddressList = params => handleRequest(() => get('personal/getRechargeAddress', {
   ...params,
@@ -39,34 +39,34 @@ export const userRefreshUser = params => handleRequest(() => get('user/refreshUs
  * 安全中心
  * */
 // 安全中心
-export const statusSecurityCenter = (params) => get('user/security/index', params)
+export const statusSecurityCenter = (params) => get('user/security/index', {...params, loading: true})
 // 绑定邮箱
-export const bindEmailAddress = (params) => postWithURLencoded('user/security/bindMail', params)
+export const bindEmailAddress = (params) => postWithURLencoded('user/security/bindMail', {...params, loading: true})
 // 绑定手机
-export const bindPhoneAddress = (params) => postWithURLencoded('user/security/bindPhone', params)
+export const bindPhoneAddress = (params) => postWithURLencoded('user/security/bindPhone', {...params, loading: true})
 // 解绑手机
-export const changeMobilePhone = (params) => postWithURLencoded('user/security/changePhone', params)
+export const changeMobilePhone = (params) => postWithURLencoded('user/security/changePhone', {...params, loading: true})
 // 绑定谷歌页面
-export const bindGoogleAddressPage = (params) => get('user/security/bindGoogle', params)
+export const bindGoogleAddressPage = (params) => get('user/security/bindGoogle', {...params, loading: true})
 // 绑定谷歌
-export const bindGoogleAddress = (params) => postWithURLencoded('user/security/bindGoogle', params)
+export const bindGoogleAddress = (params) => postWithURLencoded('user/security/bindGoogle', {...params, loading: true})
 // 解绑谷歌
-export const unbindCheckGoogle = (params) => postWithURLencoded('user/security/unBindGoogle', params)
+export const unbindCheckGoogle = (params) => postWithURLencoded('user/security/unBindGoogle', {...params, loading: true})
 // 设置交易密码
-export const setTransactionPassword = (params) => postWithURLencoded('user/security/payPassword', params)
+export const setTransactionPassword = (params) => postWithURLencoded('user/security/payPassword', {...params, loading: true})
 // 重置交易密码
-export const resetUpdatePayPassword = (params) => postWithURLencoded('user/security/updatePayPassword', params)
+export const resetUpdatePayPassword = (params) => postWithURLencoded('user/security/updatePayPassword', {...params, loading: true})
 // 修改登录密码
-export const modifyLoginPassword = (params) => postWithURLencoded('user/security/password', params)
+export const modifyLoginPassword = (params) => postWithURLencoded('user/security/password', {...params, loading: true})
 // 启用关闭手机邮箱验证
-export const enableTheClosing = (params) => postWithURLencoded('user/security/enable', params)
+export const enableTheClosing = (params) => postWithURLencoded('user/security/enable', {...params, loading: true})
 /**
  * 身份认证
  * */
 // 提交实名认证
-export const submitRealNameAuthentication = (params) => postWithURLencoded('user/center/realNameAuth', params)
+export const submitRealNameAuthentication = (params) => postWithURLencoded('user/center/realNameAuth', {...params, loading: true})
 // 提交高级认证
-export const submitSeniorCertification = (params) => postWithURLencoded('user/center/advancedAuth', params)
+export const submitSeniorCertification = (params) => postWithURLencoded('user/center/advancedAuth', {...params, loading: true})
 //  获取用户实名信息
 export const realNameInformation = (params) => get('user/center/userauth', params)
 /**
@@ -79,11 +79,11 @@ export const getPushTotalByCoinId = (params) => get('push/getTotalByCoinId', par
 // 交易区列表查询
 export const getEntrustSelectBox = (params) => get('queryEntrustSelectBox', params)
 // push资产提交
-export const pushAssetsSubmit = (params) => post('push/pushSub', params)
+export const pushAssetsSubmit = (params) => post('push/pushSub', {...params, loading: true})
 // push资产撤销
-export const revocationPushProperty = (params) => put('push/pushCancel', params)
+export const revocationPushProperty = (params) => put('push/pushCancel', {...params, loading: true})
 // push资产成交
-export const pushPropertyTransaction = (params) => put('push/pushPay', params)
+export const pushPropertyTransaction = (params) => put('push/pushPay', {...params, loading: true})
 /**
  * 邀请推广
  * */
@@ -95,7 +95,7 @@ export const getRecommendUserPromotionList = (params) => get('user/center/invite
  * 收款方式
  * */
 // 收款方式
-export const accountPaymentTerm = () => get('user/bank/', {})
+export const accountPaymentTerm = () => get('user/bank/', {loading: true})
 // 收款方式设置
 export const statusCardSettings = params => postWithURLencoded('user/bank/save', params)
 // 开启关闭收款方式设置
@@ -116,13 +116,13 @@ export const getQueryAllOrdersList = params => get('otcOrder/selectUserOrdersPag
 // 获取多个用户api信息
 export const multipleUserAPIInfo = params => get('userApi', params)
 // 添加用户api信息
-export const stateCreationApi = params => post('userApi', params)
+export const stateCreationApi = params => post('userApi', {...params, loading: true})
 //  获取秘钥
 export const accessAecretKeyInfo = params => get('userApi/secretKey', params)
 //  修改用户api信息
-export const modifyUserInformation = params => put('userApi', params)
+export const modifyUserInformation = params => put('userApi', {...params, loading: true})
 //   删除用户api信息
-export const deleteUserInformation = params => deleteMethod('userApi', params)
+export const deleteUserInformation = params => deleteMethod('userApi', {...params, loading: true})
 /**
  * VIP
  * */

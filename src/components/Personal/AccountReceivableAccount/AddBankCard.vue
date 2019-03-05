@@ -154,7 +154,8 @@ import {
 } from '../../../utils/api/personal'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -194,7 +195,11 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'CHANGE_PASSWORD_USEABLE'
+    ]),
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
     ]),
     // 点击返回上个页面
     returnSuperior () {
@@ -230,6 +235,11 @@ export default {
           bankType: 'Bankcard', // type
           id: this.id
         }
+        // 判断是否交易密码锁定
+        await this.REFRESH_USER_INFO_ACTION()
+        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+        if (this.isLockedPayPassword) return false
         data = await statusCardSettings(params)
         if (!(returnAjaxMsg(data, this, 1))) {
           return false
@@ -346,10 +356,13 @@ export default {
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
+      loginStep1Info: state => state.user.loginStep1Info,
       // 手机验证码
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
-      refsAccountCenterStatus: state => state.personal.refsAccountCenterStatus
+      refsAccountCenterStatus: state => state.personal.refsAccountCenterStatus,
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     }),
     windowHeight () {
       return window.innerHeight
@@ -368,7 +381,7 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
 
   .add-bank {
-    margin-top: 66px;
+    margin-top: 50px;
     overflow: hidden;
 
     > .add-bank-main {

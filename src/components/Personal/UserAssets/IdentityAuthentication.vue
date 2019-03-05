@@ -567,7 +567,8 @@ import {
 } from '../../../utils/commonFunc'
 import {
   idCardRegexpInputNum,
-  passportEntryRestrictions
+  passportEntryRestrictions,
+  identityCodeValid
 } from '../../../utils/index'
 import {
   mapState,
@@ -646,6 +647,7 @@ export default {
   },
   async created () {
     this.authenticationIsStatus()
+    console.log(identityCodeValid('410402199004235677'))
   },
   mounted () {
   },
@@ -671,6 +673,7 @@ export default {
       this.$refs[`fileInput${index}`].click()
     },
     getPicture (e) {
+      if (!e.target.files.length) return false
       console.dir(e.target.id)
       const INPUT_ID = e.target.id
       this.CHANGE_AJAX_READY_STATUS(true)
@@ -766,6 +769,7 @@ export default {
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
       console.log(type)
+
       switch (type) {
         // 请输入真实姓名
         case 0:
@@ -783,9 +787,16 @@ export default {
         case 1:
           switch (validateNumForUserInput('ID-card', targetNum)) {
             case 0:
-              this.setErrorMsg(1, '')
-              this.$forceUpdate()
-              return 1
+              // '请输入正确的证件号码'
+              if (!identityCodeValid(targetNum)) {
+                this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_real_certificate_cone'))
+                this.$forceUpdate()
+                return 0
+              } else {
+                this.setErrorMsg(1, '')
+                this.$forceUpdate()
+                return 1
+              }
             case 1:
               // 请输入证件号码
               this.setErrorMsg(1, this.$t('M.user_please_input20'))
@@ -793,7 +804,6 @@ export default {
               return 0
             // '请输入正确的证件号码'
             case 2:
-              console.log(1)
               this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_real_certificate_cone'))
               this.$forceUpdate()
               return 0

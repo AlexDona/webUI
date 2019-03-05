@@ -340,7 +340,7 @@
                     class="form-input-common border-radius2 padding-l15 box-sizing"
                     v-model="payPassword"
                     @keydown="setErrorMsg(3, '')"
-                    @blur="checkoutInputFormat(3, payPassword,1)"
+                    @blur="checkoutInputFormat(3, payPassword, 1)"
                     @keyup.enter="submitWithPayPassword"
                   >
                 </el-form-item>
@@ -404,7 +404,8 @@ import {
 } from '../../../utils/commonFunc'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -471,7 +472,11 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'SET_PUSH_BUTTON_STATUS'
+      'SET_PUSH_BUTTON_STATUS',
+      'CHANGE_PASSWORD_USEABLE'
+    ]),
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
     ]),
     // 1.时间格式化
     timeFormatting (date) {
@@ -491,10 +496,14 @@ export default {
       await this.reflashIsNeedPayPassword()
       let goOnStatus = 0
       goOnStatus = (this.checkoutInputFormat(0, this.buyUID) && this.checkoutInputFormat(1, this.count) && this.checkoutInputFormat(2, this.price)) ? 1 : 0
-
       if (goOnStatus) {
         if (this.isNeedPayPassword) {
           this.payType = 'push'
+          // 判断是否交易密码锁定
+          await this.REFRESH_USER_INFO_ACTION()
+          let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+          this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+          if (this.isLockedPayPassword) return false
           this.isShowPayPasswordDialog = true
         } else {
           this.submitPushAssets()
@@ -542,6 +551,13 @@ export default {
     },
     // 付款方式封装
     submitWithPayPassword () {
+      if (this.payPassword) {
+        this.isShowPayPasswordDialog = false
+      } else {
+        this.checkoutInputFormat(3, '', 1)
+        return false
+      }
+      // this.isShowPayPasswordDialog = false
       switch (this.payType) {
         case 'pay':
           this.payWithPassword()
@@ -711,6 +727,11 @@ export default {
       this.isShowPaymentDialog = false
       if (this.isNeedPayPassword) {
         this.payType = 'pay'
+        // 判断是否交易密码锁定
+        await this.REFRESH_USER_INFO_ACTION()
+        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+        if (this.isLockedPayPassword) return false
         this.isShowPayPasswordDialog = true
       } else {
         this.payWithPassword()
@@ -726,6 +747,7 @@ export default {
           id: this.pushUID // 列表id
         }
         params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
+
         data = await pushPropertyTransaction(params)
         if (!(returnAjaxMsg(data, this, 1))) {
           return false
@@ -744,7 +766,10 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
-      userCenterActiveName: state => state.personal.userCenterActiveName
+      loginStep1Info: state => state.user.loginStep1Info,
+      userCenterActiveName: state => state.personal.userCenterActiveName,
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     })
   },
   watch: {

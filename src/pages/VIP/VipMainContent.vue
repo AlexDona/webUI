@@ -204,7 +204,6 @@ export default {
       errorEditorMsg: '',
       showOpenTheVIPPage: true, // 开启vip页面默认
       vipShowDetailsPage: false, // 开启vip详情页面默认
-      password: '', // 开启vip详情页面默认
       vipPriceInfo1: [], // vip信息接收
       VipPriceInfoList: [],
       dialogFormVisible: false,

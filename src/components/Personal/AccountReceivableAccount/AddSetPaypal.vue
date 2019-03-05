@@ -127,7 +127,8 @@ import {
 } from '../../../utils/api/personal'
 import {
   mapMutations,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 export default {
   components: {
@@ -163,7 +164,11 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'CHANGE_PASSWORD_USEABLE'
+    ]),
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
     ]),
     // 点击返回上个页面
     returnSuperior () {
@@ -206,10 +211,15 @@ export default {
       this.errorShowStatusList[index] = msg
     },
     // 确认设置paypal账号
-    stateSubmitPaypal () {
-      this.stateSeniorCertification()
+    async stateSubmitPaypal () {
+      await this.stateSeniorCertification()
     },
     async stateSeniorCertification () {
+      // 判断是否交易密码锁定
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
       if (!this.PayPalAccount) {
         // 请输入paypal账号
         this.$message({
@@ -291,7 +301,10 @@ export default {
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
-      refAccountCenterStatus: state => state.personal.refAccountCenterStatus
+      refAccountCenterStatus: state => state.personal.refAccountCenterStatus,
+      loginStep1Info: state => state.user.loginStep1Info,
+      // 交易密码是否被锁定
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     }),
     windowHeight () {
       return window.innerHeight
@@ -310,7 +323,7 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .add-payment {
-    margin-top: 66px;
+    margin-top: 50px;
     overflow: hidden;
 
     > .add-payment-main {
