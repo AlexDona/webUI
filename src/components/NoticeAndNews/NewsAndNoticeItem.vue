@@ -164,6 +164,8 @@ export default {
     },
     // 获取全部type类型的前5条数据
     async getAllTypeListNewsList () {
+      console.log(this.newsTypeList)
+      this.detailAllNewsList = []
       this.CHANGE_AJAX_READY_STATUS(true)
       let params = {
         pageNum: 1,
@@ -172,7 +174,7 @@ export default {
       }
       for (let i = 0; i < this.newsTypeList.length; i++) {
         const item = this.newsTypeList[i]
-        params.newsTypeId = item.id - 0
+        params.newsTypeId = item.id
         const data = await getNewsNoticeList(params)
         if (!data) break
         const targetData = getNestedData(data, 'data.list')
