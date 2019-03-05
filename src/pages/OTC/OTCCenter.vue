@@ -737,14 +737,25 @@ export default {
               return false
             }
           })
-          this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
-          this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
-          this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
-          // 在得到可用币种之后再调用方法根据币种的第一项的币种id来渲染表格数据
-          // 2.0 otc可用法币查询：
-          // this.getMerchantAvailableLegalTenderList()
-          // 3.0 otc主页面查询挂单列表:
-          // this.getOTCPutUpOrdersList()
+          // 个人中心跳转otc-开始
+          if (this.$route.params.coinId) {
+            let jumpCoinId = this.$route.params.coinId
+            if (jumpCoinId && this.IWantToBuySellArr.length) {
+              this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(jumpCoinId)
+              this.IWantToBuySellArr.forEach((item, index) => {
+                if (jumpCoinId == item.coinId) {
+                  this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(item.name)
+                  this.selectCurrencyNameStatus = index
+                  console.log(this.selectCurrencyNameStatus)
+                }
+              })
+            }
+          } else {
+            // 个人中心跳转otc-结束
+            this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
+            this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
+            // this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
+          }
         }
       }
     },

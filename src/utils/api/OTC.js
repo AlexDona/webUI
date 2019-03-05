@@ -18,9 +18,11 @@ export const addOTCPutUpOrders = (params) => handleRequest(() => postWithURLenco
 // 7.0 添加otc挂单(仅商家可用)
 export const addOTCPutUpOrdersMerchantDedicated = (params) => handleRequest(() => postWithURLencoded('otcEntrust/addOtcEntrustForMerch', {...params, 'loading': true}), 1)
 // 8.0 otc摘单买入
-export const pickOrdersToBuy = (params) => handleRequest(() => postWithURLencoded('otcOrder/pickEntrustBuy', {...params, 'loading': true}), 1)
+// export const pickOrdersToBuy = (params) => handleRequest(() => postWithURLencoded('otcOrder/pickEntrustBuy', {...params, 'loading': true}), 1)
+export const pickOrdersToBuy = (params) => handleRequest(() => postWithURLencoded('otcOrder/pickEntrustBuy', params), 1)
 // 9.0 otc摘单卖出
-export const pickOrdersToSell = (params) => handleRequest(() => postWithURLencoded('otcOrder/pickEntrustSell', {...params, 'loading': true}), 1)
+// export const pickOrdersToSell = (params) => handleRequest(() => postWithURLencoded('otcOrder/pickEntrustSell', {...params, 'loading': true}), 1)
+export const pickOrdersToSell = (params) => handleRequest(() => postWithURLencoded('otcOrder/pickEntrustSell', params), 1)
 // 10 查询otc挂单详情-商家和普通用户通用
 export const querySelectedOrdersDetails = (params) => handleRequest(() => get('otcEntrust/selectUserEntrustDetail', {...params, 'loading': true}))
 // 11 查询otc挂单撤销

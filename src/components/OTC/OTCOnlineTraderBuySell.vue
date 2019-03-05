@@ -489,6 +489,7 @@ export default {
   methods: {
     ...mapMutations([
       // 0.1 改变全局锚点状态方法
+      'CHANGE_AJAX_READY_STATUS', // 改变接口返回loading状态
       'CHANGE_OTC_ANCHOR_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_PASSWORD_USEABLE'
@@ -762,6 +763,7 @@ export default {
         return false
       }
       // 判断是卖出还是买入分别调用不同的接口和传入不同的参数
+      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       let data
       // 卖
       switch (this.onlineTraderStatus) {
@@ -784,6 +786,7 @@ export default {
           break
       }
       // 返回数据正确的逻辑
+      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
       console.log(data)
       if (!data) return false
