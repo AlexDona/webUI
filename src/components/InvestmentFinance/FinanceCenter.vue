@@ -694,6 +694,7 @@ export default {
       'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([
+      'CHANGE_AJAX_READY_STATUS', // 改变接口返回loading状态
       'FINANCE_LINE_RENDER_TIME_LIST',
       'FINANCE_LINE_RENDER_PRICE_LIST',
       'FINANCE_LINE_STATUS',
@@ -720,11 +721,13 @@ export default {
     },
     // 商家申请界面用户协议
     async argumentBusinessApplyRequest () {
+      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       const data = await argumentBusinessApply({
         termsTypeIds: 13,
         language: this.language
       })
       // 正确逻辑
+      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       if (!data) return false
       if (data.data) {
         this.argumentContent = getNestedData(data, 'data[0].content')

@@ -38,11 +38,14 @@ export const sellerConfirmGetMoney = (params) => handleRequest(() => postWithURL
 // 16 otc交易中订单， otc卖家申诉
 export const sellerSendAppeal = (params) => handleRequest(() => postWithURLencoded('otcAppeal/applyOtcAppeal', params), 1)
 // 17 提交otc商家申请
-export const businessApply = (params) => handleRequest(() => postWithURLencoded('otcMerchApply/applyOTCMerch', {...params, 'loading': true}), 1)
+// export const businessApply = (params) => handleRequest(() => postWithURLencoded('otcMerchApply/applyOTCMerch', {...params, 'loading': true}), 1)
+export const businessApply = (params) => handleRequest(() => postWithURLencoded('otcMerchApply/applyOTCMerch', params), 1)
 // 18 首次进入otc商家申请页面
-export const firstEnterBusinessApply = (params) => handleRequest(() => get('otcMerchApply/getUserMerchInfo', {...params, 'loading': true}))
+// export const firstEnterBusinessApply = (params) => handleRequest(() => get('otcMerchApply/getUserMerchInfo', {...params, 'loading': true}))
+export const firstEnterBusinessApply = (params) => handleRequest(() => get('otcMerchApply/getUserMerchInfo', params))
 // 19 商家申请页面点击用户协议
-export const argumentBusinessApply = (params) => handleRequest(() => get('cms/terms/selectAll', {...params, 'loading': true}))
+// export const argumentBusinessApply = (params) => handleRequest(() => get('cms/terms/selectAll', {...params, 'loading': true}))
+export const argumentBusinessApply = (params) => handleRequest(() => get('cms/terms/selectAll', params))
 // 20 广告管理列表请求
 export const getOTCADManageApplyList = (params) => handleRequest(() => get('otcEntrust/selectMerchEntrustsPage', params))
 // 21 商家订单列表请求

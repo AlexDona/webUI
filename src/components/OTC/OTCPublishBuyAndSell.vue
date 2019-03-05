@@ -911,7 +911,7 @@ export default {
         maxCount: this.$refs.maxCount.value, // 单笔最大限额（CNY）
         remark: this.remarkText // 备注
       }
-      param = this.isNeedPayPassword ? { ...param, tradePassword: this.tradePassword } : param// 交易密码
+      param = this.isNeedPayPassword ? { ...param, tradePassword: this.tradePassword } : param // 交易密码
       switch (this.publishStyle) {
         case 'buy':
           param = {...param,

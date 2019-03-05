@@ -918,7 +918,6 @@ export default {
         // console.log(this.minPrice)
         // console.log(this.maxPrice)
         if (this.$refs.price.value - this.minPrice < 0 || this.$refs.price.value - this.maxPrice > 0) {
-          console.log('111111111111111')
           this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice
           this.priceErrorTipsBorder = true
           return false
