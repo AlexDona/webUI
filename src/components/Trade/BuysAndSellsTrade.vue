@@ -52,7 +52,7 @@
                 </span><span class="amount text-align-c">
                   <!--数量-->
                   {{ $t('M.comm_count') }}
-                  <span class="uppercase">（{{activeSymbol.sellsymbol}}）</span>
+                  <span class="uppercase">({{activeSymbol.sellsymbol}})</span>
                 </span><span class="total text-align-r">
                   <!--总计-->
                   {{ $t('M.comm_aggregate') }}
@@ -272,7 +272,7 @@ export default {
           display: inline-block;
           height: 100%;
           border-bottom: 2px solid $mainColor;
-          text-indent: 4px;
+          font-size: 14px;
           color: $mainColor;
         }
       }
@@ -285,10 +285,10 @@ export default {
         > button {
           width: 28px;
           height: 20px;
-          margin: 8px 8px 0 0;
-          background: url(../../assets/develop/middle.png) no-repeat center center;
+          margin: 8px 0 0;
+          background: url(../../assets/develop/middle.png) no-repeat center right;
           -webkit-background-size: 28px 20px;
-          background-size: 28px 20px;
+          background-size: 16px 12px;
           cursor: pointer;
         }
 
