@@ -112,11 +112,12 @@
             </dd>
             <dd
               class="dd-item"
+              @click="downloadCurrencyForm"
             >
-              <router-link to="/CurrencyApplication">
+              <!--<router-link to="/HelpCenter">-->
                 <!--上币申请-->
                 {{$t('M.actionCenter_coin_apply')}}
-              </router-link>
+              <!--</router-link>-->
             </dd>
             <dd
               class="dd-item"
@@ -232,6 +233,9 @@
             class="links-item"
             v-for="(item,index) in footerInfo2.blogrollList"
             :key="index"
+            :style="{
+              display: ((isShowLinkImage && item.logo) || (!isShowLinkImage && item.name.trim())) ? 'inline-block' : 'none'
+            }"
           >
             <a
               class="link-item"
@@ -241,7 +245,12 @@
               <img
                 :src="http2https(item.logo)"
                 target="_blank"
+                v-show="isShowLinkImage && item.logo"
               >
+              <span
+                v-show="!isShowLinkImage && item.name.trim()"
+                class="links-text"
+              >{{item.name}}</span>
             </a>
           </li>
         </ul>
@@ -304,7 +313,9 @@ export default {
       linkList: [], // 友情链接
       isloading: true,
       // 上币申请模板下载url
-      currencyApplicationURL: ''
+      currencyApplicationURL: '',
+      // 友情链接是否显示图片
+      isShowLinkImage: true
     }
   },
   async created () {
@@ -369,6 +380,8 @@ export default {
           this.isloading = false
           this.footerInfo1 = newVal.footerInfo1
           this.footerInfo2 = newVal.footerInfo2
+          console.log(this.footerInfo2)
+          this.isShowLinkImage = getNestedData(this.footerInfo2, 'flag') ? true : false
           this.shareList[0].ercodeSrc = getNestedData(this.footerInfo1, 'twitter')
           this.shareList[1].ercodeSrc = getNestedData(this.footerInfo1, 'facebook')
           this.weixinImage = getNestedData(this.footerInfo1, 'weixinImage')
@@ -527,6 +540,10 @@ export default {
             > .link-item {
               > img {
                 width: 100%;
+              }
+
+              > .links-text {
+                color: #338ff5;
               }
             }
           }
