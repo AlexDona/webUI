@@ -542,12 +542,9 @@ export default {
       let data = await getPushTotalByCoinId({
         coinId: e // 币种coinId
       })
-      if (!(returnAjaxMsg(data, this))) {
-        return false
-      } else {
-        // 点击资产币种下拉
-        this.currencyBalance = getNestedData(data, 'data.data.total')
-      }
+      if (!data) return false
+      // 点击资产币种下拉
+      this.currencyBalance = getNestedData(data, 'data.total')
     },
     // 付款方式封装
     submitWithPayPassword () {
