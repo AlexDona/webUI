@@ -562,8 +562,7 @@ export default {
       // console.log(data)
       // console.log(data.data.flag)
       if (!data) return false
-      let flagStatus
-      flagStatus = getNestedData(data, 'data.flag')
+      let flagStatus = getNestedData(data, 'data.flag')
       console.log(flagStatus)
       if (flagStatus === 'true') {
         this.userPutUpOrderStatus = true

@@ -636,47 +636,45 @@ export default {
       console.log('币种详情')
       console.log(data)
       if (!data) return false
-      if (data.data) {
-        // 返回数据正确的逻辑
-        // 1.0 可用币种列表
-        let availableCoinListData = getNestedData(data, 'data')
-        this.availableCoinList = getNestedData(availableCoinListData, 'coinlist')
-        this.availableCoinList.forEach(item => {
-          if (availableCoinListData.otcCoinQryResponse.coinId === item.coinId) {
-            this.activatedCoinId = item.coinId
-          }
-        })
-        this.activatedCoinName = getNestedData(availableCoinListData, 'otcCoinQryResponse.name')
-        // 2.0 法币种列表
-        this.availableCurrencyList = getNestedData(availableCoinListData, 'currencyList')
-        this.availableCurrencyList.forEach(item => {
-          if (availableCoinListData.otcCoinQryResponse.currencyName === item.shortName) {
-            this.activatedCurrencyId = item.id
-          }
-        })
-        this.activatedCurrencyName = getNestedData(availableCoinListData, 'otcCoinQryResponse.currencyName')
-        // 3.0 交易支付方式
-        this.payForListArr = getNestedData(availableCoinListData, 'userbankFlag')
-        // 最大可卖出量:可用资产
-        this.total = getNestedData(availableCoinListData, 'otcCoinQryResponse.total')
-        // 市价
-        this.marketPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.marketPrice')
-        // 最低价
-        this.minPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.minPrice')
-        console.log('最低价格' + this.minPrice)
-        // 最高价
-        this.maxPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxPrice')
-        console.log('最高价格' + this.maxPrice)
-        // 当前币种返回的保留小数点位数限制
-        this.pointLength = getNestedData(availableCoinListData, 'otcCoinQryResponse.unit')
-        // 下面这两个字段当URL中没id时候才用这个渲染页面
-        // 币种单笔最大限额
-        this.maxCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxCount')
-        this.$refs.maxCountValue.value = this.maxCount
-        // 币种单笔最小限额
-        this.minCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.minCount')
-        this.$refs.minCountValue.value = this.minCount
-      }
+      // 返回数据正确的逻辑
+      // 1.0 可用币种列表
+      let availableCoinListData = getNestedData(data, 'data')
+      this.availableCoinList = getNestedData(availableCoinListData, 'coinlist')
+      this.availableCoinList.forEach(item => {
+        if (availableCoinListData.otcCoinQryResponse.coinId === item.coinId) {
+          this.activatedCoinId = item.coinId
+        }
+      })
+      this.activatedCoinName = getNestedData(availableCoinListData, 'otcCoinQryResponse.name')
+      // 2.0 法币种列表
+      this.availableCurrencyList = getNestedData(availableCoinListData, 'currencyList')
+      this.availableCurrencyList.forEach(item => {
+        if (availableCoinListData.otcCoinQryResponse.currencyName === item.shortName) {
+          this.activatedCurrencyId = item.id
+        }
+      })
+      this.activatedCurrencyName = getNestedData(availableCoinListData, 'otcCoinQryResponse.currencyName')
+      // 3.0 交易支付方式
+      this.payForListArr = getNestedData(availableCoinListData, 'userbankFlag')
+      // 最大可卖出量:可用资产
+      this.total = getNestedData(availableCoinListData, 'otcCoinQryResponse.total')
+      // 市价
+      this.marketPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.marketPrice')
+      // 最低价
+      this.minPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.minPrice')
+      console.log('最低价格' + this.minPrice)
+      // 最高价
+      this.maxPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxPrice')
+      console.log('最高价格' + this.maxPrice)
+      // 当前币种返回的保留小数点位数限制
+      this.pointLength = getNestedData(availableCoinListData, 'otcCoinQryResponse.unit')
+      // 下面这两个字段当URL中没id时候才用这个渲染页面
+      // 币种单笔最大限额
+      this.maxCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxCount')
+      this.$refs.maxCountValue.value = this.maxCount
+      // 币种单笔最小限额
+      this.minCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.minCount')
+      this.$refs.minCountValue.value = this.minCount
     },
     // 2.0 改变发布广告 买卖 类型
     changeBuySellStyle (e) {
@@ -812,15 +810,13 @@ export default {
       this.publishADTradePwdDialogStatus = false
       // console.log(data)
       if (!data) return false
-      if (data) {
-        // 改变标识状态为不是跳转来的
-        this.ADManageJumpOrderStatus = 1
-        // 清空数据
-        this.clearMainData()
-        // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
-        this.$goToPage('/OTCCenter')
-      }
+      // 改变标识状态为不是跳转来的
+      this.ADManageJumpOrderStatus = 1
+      // 清空数据
+      this.clearMainData()
+      // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+      this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+      this.$goToPage('/OTCCenter')
     },
     // 7.0 交易密码框获得焦点
     tradePasswordFocus () {

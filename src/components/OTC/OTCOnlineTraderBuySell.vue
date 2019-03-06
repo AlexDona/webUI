@@ -743,16 +743,14 @@ export default {
       console.log(data)
       // 返回数据正确的逻辑:将返回的数据赋值到页面中
       if (!data) return false
-      if (data.data) {
-        let detailData = getNestedData(data, 'data')
-        this.coinName = getNestedData(detailData, 'name') // 最小交易量币种名字（单位）
-        this.pointLength = getNestedData(detailData, 'unit') // 每个币种返回的保留小数点位数限制
-        if (this.onlineTraderStatus === 'onlineBuy') {
-          this.rate = getNestedData(detailData, 'buyRate') // 费率
-        }
-        if (this.onlineTraderStatus === 'onlineSell') {
-          this.rate = getNestedData(detailData, 'sellRate') // 费率
-        }
+      let detailData = getNestedData(data, 'data')
+      this.coinName = getNestedData(detailData, 'name') // 最小交易量币种名字（单位）
+      this.pointLength = getNestedData(detailData, 'unit') // 每个币种返回的保留小数点位数限制
+      if (this.onlineTraderStatus === 'onlineBuy') {
+        this.rate = getNestedData(detailData, 'buyRate') // 费率
+      }
+      if (this.onlineTraderStatus === 'onlineSell') {
+        this.rate = getNestedData(detailData, 'sellRate') // 费率
       }
     },
     // 2018129封装提交摘单买入和卖出方法

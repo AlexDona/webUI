@@ -245,12 +245,10 @@
                       {{ $t('M.comm_deal') }}
                       <div
                         class="type-transaction border-radius4"
-                        v-show="tradingState&&index==current"
-                        v-if="currencyTradingList.length"
+                        v-if="tradingState && (index === current) && currencyTradingList"
                       >
                         <span
                           class="triangle-border display-inline-block"
-                          v-show="currencyTradingList.length"
                         >
                         </span>
                         <p
@@ -986,7 +984,7 @@ export default {
     },
     leave () {
       this.tradingState = false
-      this.current = null
+      this.current = 0
     },
     // 清空内容信息
     emptyStatus () {
@@ -1307,13 +1305,9 @@ export default {
       let data = await queryTransactionInformation({
         coinId: this.currencyTradingId // 币种coinId
       })
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.currencyTradingList = getNestedData(data, 'data.data.entrust') || []
-      }
+      if (!data) return false
+      // 返回展示
+      this.currencyTradingList = getNestedData(data, 'data.entrust')
     }
   },
   filter: {},
