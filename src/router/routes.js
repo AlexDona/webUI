@@ -180,6 +180,7 @@ const routes = [
   {
     // OTC中心
     path: '/OTCCenter',
+    // 周四放开 此name
     // name: 'OTCCenter',
     component: OTCCenter
   },

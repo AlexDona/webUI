@@ -152,6 +152,7 @@
         class="discounts-instruction-dialog"
         :title="$t('M.user_vip_text2')"
         :visible.sync="discountsInstructionStatus"
+        :close-on-click-modal="false"
         width="50%"
       >
         <div
@@ -165,6 +166,7 @@
         class="discounts-instruction-dialog"
         :title="$t('M.user_vip_text6')"
         :visible.sync="serviceAgreementStatus"
+        :close-on-click-modal="false"
         width="50%"
       >
         <div
@@ -636,12 +638,14 @@ export default {
       .el-dialog {
         top: 5%;
         width: 310px;
-        border-radius: 10px;
 
         .el-dialog__header {
           padding: 10px 20px;
-          border-radius: 5px 5px 0 0;
           background-color: #20293c;
+
+          .el-dialog__headerbtn {
+            margin-top: -6px;
+          }
         }
 
         .el-dialog__body {
@@ -686,18 +690,31 @@ export default {
 
       .content-main-content {
         .discounts-instruction-dialog {
+          background: rgba(0, 0, 0, .5);
+
           .el-dialog {
-            height: 800px;
-            overflow: auto;
+            position: relative;
           }
 
           .el-dialog__header {
-            text-align: center;
-            background-color: transparent;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+
+            .el-dialog__title {
+              color: #fff;
+            }
           }
 
-          .el-dialog__title {
-            color: #338ff5;
+          .el-dialog__body {
+            height: 700px;
+            overflow: auto;
+            color: #8494a6;
+
+            .html-content {
+              margin-top: 60px;
+            }
           }
         }
       }
@@ -911,11 +928,15 @@ export default {
 
       /deep/ {
         .el-dialog__header {
-          background: rgba(51, 143, 245, .1);
+          background: #eaf4fe;
         }
 
         .el-dialog__title {
-          color: #333;
+          color: #000 !important;
+        }
+
+        .el-dialog__body {
+          color: #666 !important;
         }
 
         .el-input__inner {

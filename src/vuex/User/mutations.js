@@ -10,7 +10,8 @@ import {
   USER_LOGOUT,
   CHANGE_CURRENT_VIP_LEVEL,
   CHANGE_VIP_PRICE_INFO_LIST,
-  CHANGE_RENEW_STATUS
+  CHANGE_RENEW_STATUS,
+  CHANGE_USER_REFRESH_SUCCESS
 } from './mutations-types.js'
 
 import {
@@ -108,5 +109,9 @@ export default {
   [CHANGE_RENEW_STATUS] (state, action) {
     state.vip.vipAction = action
     setStore('vipAction', action)
+  },
+  // 用户信息接口是否返回成功
+  [CHANGE_USER_REFRESH_SUCCESS] (state, data) {
+    state.isUserRefreshSuccess = data
   }
 }

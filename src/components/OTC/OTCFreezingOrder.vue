@@ -83,7 +83,7 @@
           </span>
           <!-- 总金额 -->
           <span class="item">
-            {{(item.price*item.pickCount).toFixed(2)}}({{item.currencyName}})
+            {{(item.price * item.pickCount).toFixed(2)}}({{item.currencyName}})
           </span>
           <!-- 下单时间 -->
           <span class="item">

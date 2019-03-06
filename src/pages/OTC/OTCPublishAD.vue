@@ -94,13 +94,13 @@
                   <span v-if="activatedBuySellStyle === 'SELL'">
                     {{$t('M.otc_seller_maximum')}}:
                     <span class="max-avail-sell">
-                      {{total ? total : '--'}}{{activatedCoinName}}
+                      {{total ? $scientificToNumber(total) : '--'}}{{activatedCoinName}}
                     </span>
                   </span>
                   <!-- 市价 -->
                   <span>{{$t('M.otc_market_price')}}:
                     <span class="market-price">
-                      {{marketPrice ? marketPrice : '--'}}{{activatedCurrencyName}}
+                      {{marketPrice ? $scientificToNumber(marketPrice) : '--'}}{{activatedCurrencyName}}
                     </span>
                   </span>
                 </p>

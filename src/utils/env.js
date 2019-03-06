@@ -76,6 +76,7 @@ const {
   xDomain,
   domain
 } = targetConfig
+console.log(domain)
 export {
   apiCommonUrl,
   socketUrl,
