@@ -104,7 +104,7 @@
                     v-show="publishStyle === 'sell'"
                     :class="{ sellGreen: publishStyle === 'sell' }"
                   >
-                    {{currentlyAvailable ? currentlyAvailable : '--'}}{{coinName}}
+                    {{currentlyAvailable ? $scientificToNumber(currentlyAvailable) : '--'}}{{coinName}}
                   </span>
                   <!-- 市价 -->
                   <span class="want-text">
@@ -113,7 +113,7 @@
                   <span
                     class="market-price buyOrange"
                   >
-                    {{marketPrice ? marketPrice : '--'}}{{CurrencyCoinsName}}
+                    {{marketPrice ? $scientificToNumber(marketPrice) : '--'}}{{CurrencyCoinsName}}
                   </span>
                   <el-button
                     type="primary"
@@ -285,14 +285,14 @@
                     class="predict-sum"
                     v-show="this.publishStyle === 'sell'"
                   >
-                    {{traderSumSELL}} {{CurrencyCoinsName}}
+                    {{$scientificToNumber(traderSumSELL)}} {{CurrencyCoinsName}}
                   </span>
                   <!-- 买 -->
                   <span
                     class="predict-sum"
                     v-show="this.publishStyle === 'buy'"
                   >
-                    {{traderSumBUY}} {{CurrencyCoinsName}}
+                    {{$scientificToNumber(traderSumBUY)}} {{CurrencyCoinsName}}
                   </span>
                   <span class="predict-text">
                     <!-- 手续费： -->
@@ -303,14 +303,14 @@
                     class="predict-sum"
                     v-show="this.publishStyle === 'sell'"
                   >
-                    {{serviceChargeSELL}} {{coinName}}
+                    {{$scientificToNumber(serviceChargeSELL)}} {{coinName}}
                   </span>
                   <!-- 买 -->
                   <span
                     class="predict-sum"
                     v-show="this.publishStyle === 'buy'"
                   >
-                    {{serviceChargeBUY}} {{coinName}}
+                    {{$scientificToNumber(serviceChargeBUY)}} {{coinName}}
                   </span>
                   <span class="rate-text">
                     <!-- 费率 -->
@@ -935,14 +935,12 @@ export default {
       // 关闭交易密码框
       this.publishOrderTradePwdDialogStatus = false
       if (!data) return false
-      if (data) {
-        // 清空表单数据
-        this.clearInputData()
-        // 下单成功跳转到首页挂单列表去
-        // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
-        this.$goToPage('/OTCCenter')
-      }
+      // 清空表单数据
+      this.clearInputData()
+      // 下单成功跳转到首页挂单列表去
+      // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+      this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+      this.$goToPage('/OTCCenter')
     },
     // 10.0 充币按钮跳转
     chargeMoney () {

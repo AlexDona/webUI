@@ -38,7 +38,8 @@ const state = {
     VipPriceInfoList: [],
     // vip操作： open、renew、update
     vipAction: ''
-  }
+  },
+  isUserRefreshSuccess: false
 }
 
 export default {

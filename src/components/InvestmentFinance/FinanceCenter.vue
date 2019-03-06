@@ -564,7 +564,7 @@ import {
 } from '../../utils/api/investmentFinance'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
 import {argumentBusinessApply} from '../../utils/api/OTC'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {getNestedData} from '../../utils/commonFunc'
 import {
   mapState,
   mapMutations,
@@ -796,12 +796,9 @@ export default {
       const data = await getPushTotalByCoinId({
         coinId: this.selectedCoinId
       })
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 重新掉一次币种接口刷新列表
-        this.userCoinTotal = getNestedData(data, 'data.data.total')
-      }
+      if (!data) return false
+      // 重新掉一次币种接口刷新列表
+      this.userCoinTotal = getNestedData(data, 'data.total')
     },
     // 点击立刻存币按钮执行
     getInvestEarnings () {

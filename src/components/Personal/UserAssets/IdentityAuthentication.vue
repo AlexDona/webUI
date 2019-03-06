@@ -567,7 +567,8 @@ import {
 } from '../../../utils/commonFunc'
 import {
   idCardRegexpInputNum,
-  passportEntryRestrictions
+  passportEntryRestrictions,
+  identityCodeValid
 } from '../../../utils/index'
 import {
   mapState,
@@ -641,11 +642,16 @@ export default {
         '', // 护照号码
         '' // 国籍
       ],
+      fileInput1: '',
+      fileInput2: '',
+      fileInput3: '',
       fullscreenLoading: false // 整页loading
     }
   },
   async created () {
-    this.authenticationIsStatus()
+    await this.authenticationIsStatus()
+    await this.getRealNameInformation()
+    console.log(identityCodeValid('410402199004235677'))
   },
   mounted () {
   },
@@ -663,7 +669,8 @@ export default {
     ...mapMutations([
       'SET_USER_INFO_REFRESH_STATUS',
       'SET_STEP1_INFO',
-      'CHANGE_AJAX_READY_STATUS'
+      'CHANGE_AJAX_READY_STATUS',
+      'CHANGE_USER_REFRESH_SUCCESS'
     ]),
     // 选择图片文件
     choosePicture (index) {
@@ -766,6 +773,7 @@ export default {
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
       console.log(type)
+
       switch (type) {
         // 请输入真实姓名
         case 0:
@@ -783,9 +791,16 @@ export default {
         case 1:
           switch (validateNumForUserInput('ID-card', targetNum)) {
             case 0:
-              this.setErrorMsg(1, '')
-              this.$forceUpdate()
-              return 1
+              // '请输入正确的证件号码'
+              if (!identityCodeValid(targetNum)) {
+                this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_real_certificate_cone'))
+                this.$forceUpdate()
+                return 0
+              } else {
+                this.setErrorMsg(1, '')
+                this.$forceUpdate()
+                return 1
+              }
             case 1:
               // 请输入证件号码
               this.setErrorMsg(1, this.$t('M.user_please_input20'))
@@ -793,7 +808,6 @@ export default {
               return 0
             // '请输入正确的证件号码'
             case 2:
-              console.log(1)
               this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_real_certificate_cone'))
               this.$forceUpdate()
               return 0
@@ -860,6 +874,8 @@ export default {
           await this.REFRESH_USER_INFO_ACTION()
           await this.getRealNameInformation()
           console.log(data)
+          this.realName = ''
+          this.identificationNumber = ''
         }
       }
     },
@@ -886,7 +902,8 @@ export default {
       }
     },
     // 重新提交审核
-    authenticationNoPass () {
+    async authenticationNoPass () {
+      await this.stateEmptyData()
       this.authenticationNotPass = false
       this.authenticationStatusFront = true
     },
@@ -944,20 +961,20 @@ export default {
         this.fullscreenLoading = false
         return false
       } else {
+        this.stateEmptyData()
         // 接口成功清除loading
         this.fullscreenLoading = false
         this.SET_USER_INFO_REFRESH_STATUS(true)
         await this.REFRESH_USER_INFO_ACTION()
         await this.getRealNameInformation()
         this.authenticationStatusFront = false
-        this.stateEmptyData()
       }
     },
     // 接口请求完成之后清空数据
     stateEmptyData () {
-      this.dialogImageFrontUrl = ''
-      this.dialogImageReverseSideUrl = ''
-      this.dialogImageHandUrl = ''
+      this.firstPictureSrc = require('../../../assets/user/card_positive.png')
+      this.secondPictureSrc = require('../../../assets/user/card_negative.png')
+      this.thirdPictureSrc = require('../../../assets/user/card_handheld.png')
     }
   },
   filter: {},
@@ -977,10 +994,18 @@ export default {
       advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
       // 实名认证
       realname: state => state.user.loginStep1Info.userInfo.realname,
+      isUserRefreshSuccess: state => state.user.isUserRefreshSuccess,
       realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth')
     })
   },
   watch: {
+    isUserRefreshSuccess (newVal) {
+      if (newVal) {
+        this.authenticationIsStatus()
+        this.CHANGE_USER_REFRESH_SUCCESS(false)
+        this.getRealNameInformation()
+      }
+    }
   }
 }
 </script>

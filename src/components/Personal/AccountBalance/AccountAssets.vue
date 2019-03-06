@@ -253,7 +253,6 @@
                           v-show="currencyTradingList.length || OTCCenterHasCurrentCoin"
                         >
                         </span>
-                        <!--个人资产跳转OTC 增加了上面两个OTCCenterHasCurrentCoin显示-->
                         <p
                           class="transaction-list text-align-c"
                           v-show="OTCCenterHasCurrentCoin"
@@ -261,6 +260,7 @@
                         >
                           <!-- otc 交易-->
                           {{$t('M.comm_otc_center')}}
+                          <!--个人资产跳转OTC 增加了上面两个OTCCenterHasCurrentCoin显示-->
                         </p>
                         <p
                           class="transaction-list text-align-c"
@@ -671,14 +671,14 @@ export default {
       minRechargeAmount: '', // 最小提币数量
       successCount: '', // 确认次数
       currentIndex: '', // 提币清空数据当前索引
-      // 我的资产
-      withdrawStorageMap: new Map(),
-      withdrawStorage: [],
       end: '', // 占位
       // 个人资产跳转OTC
       // 当前币种是否含有OTC交易
       OTCCenterHasCurrentCoin: false,
-      OTCCoinList: [] // OTC可用币种列表
+      OTCCoinList: [], // OTC可用币种列表
+      // 我的资产
+      withdrawStorageMap: new Map(),
+      withdrawStorage: []
     }
   },
   async created () {
@@ -1367,6 +1367,24 @@ export default {
         this.OTCCoinList = getNestedData(data, 'data')
       }
     }
+    // 周四放开 以下两个方法
+    // // 个人资产跳转OTC
+    // jumpToOTCCenter (coinId) {
+    //   console.log(coinId)
+    //   this.$router.push({
+    //     path: '/OTCCenter',
+    //     name: 'OTCCenter',
+    //     params: {coinId: coinId}
+    //   })
+    // },
+    // // otc可用币种查询
+    // async getOTCAvailableCurrencyList () {
+    //   const data = await getOTCAvailableCurrency()
+    //   if (!data) return false
+    //   if (data.data) {
+    //     this.OTCCoinList = getNestedData(data, 'data')
+    //   }
+    // }
   },
   filter: {},
   computed: {
