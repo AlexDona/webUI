@@ -496,8 +496,6 @@ export default {
           shortName: 'PAYPAL'
         }
       ],
-      // 下拉框中选中的支付方式
-      // activedPayWayBankinfoItem: this.$t('M.otc_index_Payment_method'),
       // 下拉框支付方式中选中的支付方式查询列表
       checkedPayType: '',
       // 我要购买出售币种数组
@@ -543,7 +541,7 @@ export default {
     ...mapMutations([
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
-      'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID',
+      // 'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID',
       'UPDATE_OTC_HOME_LIST_STATUS',
       // 改变全局锚点状态方法
       'CHANGE_OTC_ANCHOR_STATUS',
@@ -564,7 +562,7 @@ export default {
       if (!data) return false
       let flagStatus
       flagStatus = getNestedData(data, 'data.flag')
-      console.log(flagStatus)
+      // console.log(flagStatus)
       if (flagStatus === 'true') {
         this.userPutUpOrderStatus = true
       }
@@ -737,14 +735,29 @@ export default {
               return false
             }
           })
+          // 周四删除以下2行
           this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
           this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
-          this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
-          // 在得到可用币种之后再调用方法根据币种的第一项的币种id来渲染表格数据
-          // 2.0 otc可用法币查询：
-          // this.getMerchantAvailableLegalTenderList()
-          // 3.0 otc主页面查询挂单列表:
-          // this.getOTCPutUpOrdersList()
+          // 周四放开 此跳转功能代码
+          // // 个人中心跳转otc-开始
+          // if (this.$route.params.coinId) {
+          //   let jumpCoinId = this.$route.params.coinId
+          //   if (jumpCoinId && this.IWantToBuySellArr.length) {
+          //     this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(jumpCoinId)
+          //     this.IWantToBuySellArr.forEach((item, index) => {
+          //       if (jumpCoinId == item.coinId) {
+          //         this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(item.name)
+          //         this.selectCurrencyNameStatus = index
+          //         console.log(this.selectCurrencyNameStatus)
+          //       }
+          //     })
+          //   }
+          // } else {
+          //   // 个人中心跳转otc-结束
+          //   this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
+          //   this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
+          //   // this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
+          // }
         }
       }
     },
@@ -760,8 +773,6 @@ export default {
         // console.log(this.availableCurrencyId)
         this.checkedCurrencyId = getNestedData(this.availableCurrencyId[0], 'id')
         this.checkedCurrencyName = getNestedData(this.availableCurrencyId[0], 'shortName')
-        // 3.0 otc主页面查询挂单列表:
-        // this.getOTCPutUpOrdersList()
       }
     },
     //  3.0 刚进页面时候 otc主页面查询挂单列表
@@ -795,11 +806,6 @@ export default {
           // 改变全局 委托定单撤单后，更新首页挂单列表状态
           this.UPDATE_OTC_HOME_LIST_STATUS(false)
         }
-      } else {
-        // console.log('没有法币或者可以币种id')
-        // console.log(this.selectedOTCAvailableCurrencyCoinID)
-        // console.log(this.checkedCurrencyId)
-        return false
       }
     },
     //  4.0 选中我想购买和出售币种名称
@@ -809,7 +815,7 @@ export default {
       // console.log(index)
       this.selectCurrencyNameStatus = index
       this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name) // 币种名称
-      this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[index].partnerCoinId) // 商户币种id
+      // this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[index].partnerCoinId) // 商户币种id
       this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId) // 币种id
       // console.log(this.selectedOTCAvailableCurrencyName)
       // console.log('币种id：' + this.selectedOTCAvailableCurrencyCoinID)
@@ -853,7 +859,7 @@ export default {
       anchorStatus: state => state.OTC.anchorStatus, // OTC全局定义的锚点状态 默认为false
       publishOrderJumpTopStatus: state => state.OTC.publishOrderJumpTopStatus, // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态 默认为false
       selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
-      selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
+      // selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
       language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息

@@ -20,9 +20,9 @@ let targetConfig = {
 }
 
 const devTestConfig = {
-  apiCommonUrl: 'http://192.168.1.200:8888/',
-  socketUrl: 'ws://192.168.1.200:8087/market',
-  loginSocketUrl: 'ws://192.168.1.200:8888/qrcodeLogin/'
+  apiCommonUrl: 'http://192.168.2.200:8888/',
+  socketUrl: 'ws://192.168.2.200:8087/market',
+  loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/'
 }
 
 const dev210Config = {
@@ -76,6 +76,7 @@ const {
   xDomain,
   domain
 } = targetConfig
+console.log(domain)
 export {
   apiCommonUrl,
   socketUrl,
