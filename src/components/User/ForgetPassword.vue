@@ -71,7 +71,7 @@
                 <input
                   class="username-input"
                   type="text"
-                  v-model="username"
+                  v-model.trim="username"
                 />
               </span>
             </div>
@@ -88,8 +88,10 @@
                   <input
                     class="username-input image-validate"
                     type="text"
-                    v-model="userInputImageCode"
+                    ref="image_code"
+                    @input="validateImageCode"
                     @keyup="validateImageCode"
+                    maxlength="4"
                   />
                   <!--获取图片验证码-->
                   <span
@@ -162,7 +164,7 @@
                 <input
                   class="username-input validate-code-input"
                   type="text"
-                  v-model="phoneCode"
+                  v-model.trim="phoneCode"
                 />
                 <!--发送验证码按钮-->
                 <CountDownButton
@@ -197,7 +199,7 @@
                 <input
                   class="username-input validate-code-input"
                   type="text"
-                  v-model="emailCode"
+                  v-model.trim="emailCode"
                 />
                 <!--发送验证码按钮-->
                 <CountDownButton
@@ -219,7 +221,8 @@
                 <input
                   class="username-input"
                   type="text"
-                  v-model="googleCode"
+                  maxlength="6"
+                  v-model.trim="googleCode"
                 />
               </span>
             </div>
@@ -329,10 +332,14 @@ import {
   findPasswordStep2,
   findPasswordStep3
 } from '../../utils/api/user'
-import {phoneNumberFormat} from '../../utils'
+import {
+  phoneNumberFormat,
+  positiveIntegerNumRegexpInput
+} from '../../utils'
 import {
   sendPhoneOrEmailCodeAjax,
-  getNestedData
+  getNestedData,
+  requestWithLoading
 } from '../../utils/commonFunc'
 import {CHECKPASSWORD_REG} from '../../utils/regExp'
 import ImageValidate from '../Common/ImageValidateCommon'
@@ -396,7 +403,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_USER_BUTTON_STATUS'
+      'SET_USER_BUTTON_STATUS',
+      'CHANGE_AJAX_READY_STATUS'
     ]),
     // 改变时将改变的值赋给对应的value
     checkValue (type, e) {
@@ -452,7 +460,7 @@ export default {
         token: this.nextStepToken,
         newPassword: this.newPassword
       }
-      const data = await findPasswordStep3(params)
+      const data = await requestWithLoading(findPasswordStep3, params)
       if (!data) return false
       this.activeStepNumber = 4
       setTimeout(() => {
@@ -493,13 +501,16 @@ export default {
         mailCode: this.emailCode,
         googleCode: this.googleCode
       }
-      const data = await findPasswordStep2(params)
+      const data = await requestWithLoading(findPasswordStep2, params)
       if (!data) return false
       this.nextStepToken = getNestedData(data, 'data')
       this.activeStepNumber = 3
     },
     // 图片验证码验证
     validateImageCode () {
+      let targetStr = positiveIntegerNumRegexpInput(this.$refs['image_code'])
+      this.$refs['image_code'].value = targetStr
+      this.userInputImageCode = targetStr
       if (this.userInputImageCode == this.identifyCode) {
         this.confirmSuccess = true
       }
@@ -525,7 +536,7 @@ export default {
       let params = {
         userName: this.username
       }
-      const data = await findPasswordStep1(params)
+      const data = await requestWithLoading(findPasswordStep1, params)
       if (!data) return false
 
       this.userInfo = getNestedData(data, 'data')
