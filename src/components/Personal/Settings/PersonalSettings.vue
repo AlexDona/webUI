@@ -233,16 +233,17 @@ export default {
 
       this.isNeedPayPassword = (this.oldFrequency == 'everytime' ||
         (this.oldFrequency == 'userset' && newVal == 'never')) ? 1 : 0
+      console.log(this.isNeedPayPassword)
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
       // 安全等级： 低 => 高
       if (!this.isNeedPayPassword) {
         this.setUserInputPasswordFrequency(this.params)
       } else {
         // 安全等级： 高 => 低'
         this.isSuccessChanged = false
-        await this.REFRESH_USER_INFO_ACTION()
-        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-        if (this.isLockedPayPassword) return false
         this.isCheckPayPassword = true
       }
     },
