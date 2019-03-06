@@ -17,7 +17,7 @@
                   <img
                     src="../../assets/develop/shangjia.png"
                     class="merchants-icon"
-                    v-show="this.userType === 'MERCHANT'"
+                    v-if="this.userType === 'MERCHANT'"
                   >
                   <!-- 商户名称 -->
                   <span class="name">
@@ -28,17 +28,17 @@
                 <div class="shopper-statistics">
                   <!-- 成交次数 -->
                   <div class="trader-total">
-                    <p class="blue">{{successTimes}}</p>
+                    <p class="blue">{{$scientificToNumber(successTimes)}}</p>
                     <p class="text">{{$t('M.otc_index_tradeTimes')}}</p>
                   </div>
                   <!-- 失败次数 -->
                   <div class="failed">
-                    <p class="blue">{{failTimes}}</p>
+                    <p class="blue">{{$scientificToNumber(failTimes)}}</p>
                     <p class="text">{{$t('M.otc_index_failureTimes')}}</p>
                   </div>
                   <!-- 账户冻结次数 -->
                   <div class="freeze">
-                    <p class="blue">{{freezeTimes}}</p>
+                    <p class="blue">{{$scientificToNumber(freezeTimes)}}</p>
                     <p class="text">{{$t('M.otc_index_freezeTimes')}}</p>
                   </div>
                 </div>
@@ -79,7 +79,6 @@
               <div class="details-row">
                 <span class="details-tip">
                   <!-- 剩余可买/可卖： -->
-                  <!--{{$t('M.otc_index_reduceQuantity')}}：-->
                   {{onlineTraderStatus === 'onlineSell' ? $t('M.otc_index_reduceQuantitySell') : $t('M.otc_index_reduceQuantityBuy')}}：
                 </span>
                 <span class="details-data">
@@ -267,7 +266,7 @@
                   {{$t('M.comm_service_charge')}}：
                 </span>
                 <span class="service-data">
-                  {{serviceCharge}} {{coinName}}
+                  {{$scientificToNumber(serviceCharge)}} {{coinName}}
                 </span>
                 <!-- 费率 -->
                 <span>
@@ -284,7 +283,7 @@
                   {{$t('M.comm_service_charge')}}：
                 </span>
                 <span class="service-data-sell">
-                  {{serviceCharge}} {{coinName}}
+                  {{$scientificToNumber(serviceCharge)}} {{coinName}}
                 </span>
                 <!-- 费率 -->
                 <span>

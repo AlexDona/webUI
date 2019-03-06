@@ -20,9 +20,9 @@ let targetConfig = {
 }
 
 const devTestConfig = {
-  apiCommonUrl: 'http://192.168.1.200:8888/',
-  socketUrl: 'ws://192.168.1.200:8087/market',
-  loginSocketUrl: 'ws://192.168.1.200:8888/qrcodeLogin/'
+  apiCommonUrl: 'http://192.168.2.200:8888/',
+  socketUrl: 'ws://192.168.2.200:8087/market',
+  loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/'
 }
 
 const dev210Config = {
@@ -47,13 +47,13 @@ const newProdConfig = {
 switch (process.env.NODE_ENV) {
   case 'development':
     // 本地开发
-    // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
+    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
     // 210开发环境
     // targetConfig = {...dev210Config, xDomain: 'me.com'}
     // 生产环境
     // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     // 新生产环境
-    targetConfig = {...newProdConfig, xDomain: 'fubt.co'}
+    // targetConfig = {...newProdConfig, xDomain: 'fubt.co'}
     break
   // 210开发环境
   case 'development210':
@@ -76,6 +76,7 @@ const {
   xDomain,
   domain
 } = targetConfig
+console.log(domain)
 export {
   apiCommonUrl,
   socketUrl,

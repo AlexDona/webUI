@@ -60,3 +60,7 @@ export const CHINESE_REG = /[\u4e00-\u9fa5]/
  * IP校验
  */
 export const IP_REG = /^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/
+/**
+ * 只允许输入字母
+ */
+export const ALPHABET = /^[a-zA-Z]$/

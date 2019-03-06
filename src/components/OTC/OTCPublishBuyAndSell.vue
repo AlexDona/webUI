@@ -104,7 +104,7 @@
                     v-show="publishStyle === 'sell'"
                     :class="{ sellGreen: publishStyle === 'sell' }"
                   >
-                    {{currentlyAvailable ? currentlyAvailable : '--'}}{{coinName}}
+                    {{currentlyAvailable ? $scientificToNumber(currentlyAvailable) : '--'}}{{coinName}}
                   </span>
                   <!-- 市价 -->
                   <span class="want-text">
@@ -113,7 +113,7 @@
                   <span
                     class="market-price buyOrange"
                   >
-                    {{marketPrice ? marketPrice : '--'}}{{CurrencyCoinsName}}
+                    {{marketPrice ? $scientificToNumber(marketPrice) : '--'}}{{CurrencyCoinsName}}
                   </span>
                   <el-button
                     type="primary"
@@ -285,14 +285,14 @@
                     class="predict-sum"
                     v-show="this.publishStyle === 'sell'"
                   >
-                    {{traderSumSELL}} {{CurrencyCoinsName}}
+                    {{$scientificToNumber(traderSumSELL)}} {{CurrencyCoinsName}}
                   </span>
                   <!-- 买 -->
                   <span
                     class="predict-sum"
                     v-show="this.publishStyle === 'buy'"
                   >
-                    {{traderSumBUY}} {{CurrencyCoinsName}}
+                    {{$scientificToNumber(traderSumBUY)}} {{CurrencyCoinsName}}
                   </span>
                   <span class="predict-text">
                     <!-- 手续费： -->
@@ -303,14 +303,14 @@
                     class="predict-sum"
                     v-show="this.publishStyle === 'sell'"
                   >
-                    {{serviceChargeSELL}} {{coinName}}
+                    {{$scientificToNumber(serviceChargeSELL)}} {{coinName}}
                   </span>
                   <!-- 买 -->
                   <span
                     class="predict-sum"
                     v-show="this.publishStyle === 'buy'"
                   >
-                    {{serviceChargeBUY}} {{coinName}}
+                    {{$scientificToNumber(serviceChargeBUY)}} {{coinName}}
                   </span>
                   <span class="rate-text">
                     <!-- 费率 -->

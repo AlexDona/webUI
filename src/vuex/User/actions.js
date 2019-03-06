@@ -7,5 +7,7 @@ export default {
     const data = await userRefreshUser()
     if (!data) return false
     commit('SET_STEP1_INFO', getNestedData(data, 'data'))
+    // 接口回来了改变状态
+    commit('CHANGE_USER_REFRESH_SUCCESS', true)
   }
 }
