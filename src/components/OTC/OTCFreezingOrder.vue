@@ -83,7 +83,7 @@
           </span>
           <!-- 总金额 -->
           <span class="item">
-            {{(item.price * item.pickCount).toFixed(2)}}({{item.currencyName}})
+            {{$scientificToNumber((item.price * item.pickCount).toFixed(2))}}({{item.currencyName}})
           </span>
           <!-- 下单时间 -->
           <span class="item">
@@ -341,6 +341,7 @@ export default {
           border: 1px solid #485776;
           color: #a9bed4;
           background-color: $mainContentNightBgColor;
+          box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .freezing-table-body {

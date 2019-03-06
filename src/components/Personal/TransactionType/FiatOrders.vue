@@ -409,19 +409,17 @@ export default {
         // 接口成功清除loading
         this.fullscreenLoading = false
         if (!data) return false
-        if (data) {
-          let OTCEntrustingOrdersData = getNestedData(data, 'data')
-          // 返回数据正确的逻辑 重新渲染列表
-          this.SET_LEGAL_TENDER_LIST({
-            type: activeName,
-            data: OTCEntrustingOrdersData.list
-          })
-          console.log(data)
-          this.CHANGE_LEGAL_PAGE({
-            legalTradePageNum: OTCEntrustingOrdersData.pageNum,
-            legalTradePageTotals: OTCEntrustingOrdersData.pages
-          })
-        }
+        let OTCEntrustingOrdersData = getNestedData(data, 'data')
+        // 返回数据正确的逻辑 重新渲染列表
+        this.SET_LEGAL_TENDER_LIST({
+          type: activeName,
+          data: OTCEntrustingOrdersData.list
+        })
+        console.log(data)
+        this.CHANGE_LEGAL_PAGE({
+          legalTradePageNum: OTCEntrustingOrdersData.pageNum,
+          legalTradePageTotals: OTCEntrustingOrdersData.pages
+        })
       } else {
         getMerchantsOrdersList(params, (data) => {
           if (!(returnAjaxMsg(data, this, 0))) {

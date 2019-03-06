@@ -176,7 +176,7 @@ export default {
         display: inline-block;
         height: 100%;
         border-bottom: 2px solid $mainColor;
-        text-indent: 4px;
+        font-size: 14px;
         color: $mainColor;
       }
     }

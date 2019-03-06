@@ -245,26 +245,23 @@
                       {{ $t('M.comm_deal') }}
                       <div
                         class="type-transaction border-radius4"
-                        v-if="currencyTradingList.length && tradingState && index === current"
+                        v-if="(currencyTradingList.length || OTCCenterHasCurrentCoin) && tradingState && index === current"
                       >
-                        <!-- 周四将这句替换上面的那句 v-if="(currencyTradingList.length || OTCCenterHasCurrentCoin) && tradingState && index === current"-->
                         <!--小三角-->
                         <span
                           class="triangle-border display-inline-block"
-                          v-show="currencyTradingList.length"
+                          v-show="currencyTradingList.length || OTCCenterHasCurrentCoin"
                         >
-                          <!--周四将这句替换上面的那句 v-show="currencyTradingList.length || OTCCenterHasCurrentCoin"-->
                         </span>
-                        <!--周四放开 此显示OTC交易-->
-                        <!--<p-->
-                          <!--class="transaction-list text-align-c"-->
-                          <!--v-show="OTCCenterHasCurrentCoin"-->
-                          <!--@click="jumpToOTCCenter(assetItem.coinId)"-->
-                        <!--&gt;-->
-                          <!--&lt;!&ndash; otc 交易&ndash;&gt;-->
-                          <!--{{$t('M.comm_otc_center')}}-->
-                          <!--&lt;!&ndash;个人资产跳转OTC 增加了上面两个OTCCenterHasCurrentCoin显示&ndash;&gt;-->
-                        <!--</p>-->
+                        <p
+                          class="transaction-list text-align-c"
+                          v-show="OTCCenterHasCurrentCoin"
+                          @click="jumpToOTCCenter(assetItem.coinId)"
+                        >
+                          <!-- otc 交易-->
+                          {{$t('M.comm_otc_center')}}
+                          <!--个人资产跳转OTC 增加了上面两个OTCCenterHasCurrentCoin显示-->
+                        </p>
                         <p
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
@@ -313,6 +310,7 @@
                         :pointLengthAccountCount="pointLengthAccountCount"
                         :ref="`withdrawItemRef${index}`"
                         :coinId="assetItem.coinId"
+                        :total="assetItem.total"
                         @changeInputValue="changeInputValue"
                         @validateOfWithdraw="validateOfWithdraw"
                         @checkUserInputAvailable="checkUserInputAvailable"
@@ -588,11 +586,10 @@ import {
   checkCurrencyAddress,
   currencyTransform
 } from '../../../utils/api/personal'
-// 周四放开
-// // 个人资产跳转OTC
-// import {
-//   getOTCAvailableCurrency
-// } from '../../../utils/api/OTC'
+// 个人资产跳转OTC
+import {
+  getOTCAvailableCurrency
+} from '../../../utils/api/OTC'
 import {
   returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
@@ -675,11 +672,10 @@ export default {
       successCount: '', // 确认次数
       currentIndex: '', // 提币清空数据当前索引
       end: '', // 占位
-      // 周四放开以下四行
-      // // 个人资产跳转OTC
-      // // 当前币种是否含有OTC交易
-      // OTCCenterHasCurrentCoin: false,
-      // OTCCoinList: [], // OTC可用币种列表
+      // 个人资产跳转OTC
+      // 当前币种是否含有OTC交易
+      OTCCenterHasCurrentCoin: false,
+      OTCCoinList: [], // OTC可用币种列表
       // 我的资产
       withdrawStorageMap: new Map(),
       withdrawStorage: []
@@ -692,9 +688,8 @@ export default {
       // 汇率转换
       await this.currencyTransform()
     }
-    // 周四放开
-    // // 个人资产跳转OTC-otc可用币种查询
-    // await this.getOTCAvailableCurrencyList()
+    // 个人资产跳转OTC-otc可用币种查询
+    await this.getOTCAvailableCurrencyList()
   },
   mounted () {
     console.log(this.$refs)
@@ -871,7 +866,9 @@ export default {
       this.$goToPage('/TradeCenter')
     },
     // 修改input value 输入限制
-    changeInputValue ({ref, index, pointLengthAccountCount, val}) {
+    changeInputValue ({ref, index, pointLengthAccountCount, val, coinId, total}) {
+      console.log(coinId, total)
+      console.log(this.$refs[`withdrawItemRef${index}`][0])
       // 获取ref中input值
       // this[ref] = this.$refs[ref].value
       // 限制数量小数位位数
@@ -882,8 +879,15 @@ export default {
         this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value,
         '-'
       )
-      console.log(this.accountCount)
-      this.accountCount = targetCount > 0 ? targetCount : 0
+      if (targetCount > 0) {
+        if (targetCount < total - 0) {
+          this.accountCount = targetCount + ''
+        } else {
+          this.accountCount = total
+        }
+      } else {
+        this.accountCount = '0'
+      }
       // 判断是输入时还是手续费 判断错误提示
       if (val === 'rechargeType') {
         // console.log(this.$refs.withdrawCount[index].value)
@@ -894,15 +898,15 @@ export default {
     },
     // 失去焦点判断输入提币数量不能大于可用量 否则显示总可用量
     checkUserInputAvailable (data) {
-      let {index} = data
+      let {index, total} = data
       // 获取ref中input值
       // console.log(this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value)
       this.withdrawCountVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value
       // console.log(this.withdrawDepositList[index].total)
-      // if (this.withdrawCountVModel - 0 > this.withdrawDepositList[index].total - 0) {
-      //   this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = this.withdrawDepositList[index].total - 0
-      //   this.withdrawCountVModel = this.withdrawDepositList[index].total - 0
-      // }
+      if (this.withdrawCountVModel - 0 > total - 0) {
+        this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = total - 0
+        this.withdrawCountVModel = total - 0
+      }
       let targetCount = amendPrecision(this.withdrawCountVModel, this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value, '-')
       // console.log(targetCount)
       this.accountCount = targetCount > 0 ? targetCount : 0
@@ -1005,11 +1009,10 @@ export default {
     // 显示交易对跳转币种信息
     showSymbolJumpList (id, index) {
       this.currencyTradingId = id
-      // 周四放开
-      // // 个人资产跳转OTC-改写开始
-      // console.log(id)
-      // this.OTCCenterHasCurrentCoin = _.some(this.OTCCoinList, ['coinId', this.currencyTradingId])
-      // // 个人资产跳转OTC-改写结束
+      // 个人资产跳转OTC-改写开始
+      console.log(id)
+      this.OTCCenterHasCurrentCoin = _.some(this.OTCCoinList, ['coinId', this.currencyTradingId])
+      // 个人资产跳转OTC-改写结束
       this.tradingState = true
       this.current = index
       this.getQueryTransactionInformation()
@@ -1017,9 +1020,8 @@ export default {
     leave () {
       this.tradingState = false
       this.current = null
-      // 周四放开
-      // // 个人资产跳转OTC
-      // this.OTCCenterHasCurrentCoin = false
+      // 个人资产跳转OTC
+      this.OTCCenterHasCurrentCoin = false
     },
     // 清空内容信息
     emptyStatus () {
@@ -1346,6 +1348,23 @@ export default {
       } else {
         // 返回展示
         this.currencyTradingList = getNestedData(data, 'data.data.entrust') || []
+      }
+    },
+    // 个人资产跳转OTC
+    jumpToOTCCenter (coinId) {
+      console.log(coinId)
+      this.$router.push({
+        path: '/OTCCenter',
+        name: 'OTCCenter',
+        params: {coinId: coinId}
+      })
+    },
+    // otc可用币种查询
+    async getOTCAvailableCurrencyList () {
+      const data = await getOTCAvailableCurrency()
+      if (!data) return false
+      if (data.data) {
+        this.OTCCoinList = getNestedData(data, 'data')
       }
     }
     // 周四放开 以下两个方法

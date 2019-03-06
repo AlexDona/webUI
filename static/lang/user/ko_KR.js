@@ -46,6 +46,7 @@ export const user = {
   'login_tips3': '비밀번호 분실',
   'login_tips4': '무료 등록',
   'login_tips5': '사용자 이름을 입력하십시오',
+  'login_tips7': '계정 기억하기',
   // #############忘记密码#############
   'forgetPassword_verify_style1': '전화 인증',
   'forgetPassword_verify_style2': '모바일 인증 코드',
