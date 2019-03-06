@@ -245,13 +245,12 @@
                       {{ $t('M.comm_deal') }}
                       <div
                         class="type-transaction border-radius4"
-                        v-if="currencyTradingList.length && tradingState && index === current"
+                        v-if="tradingState && (index === current) && currencyTradingList"
                       >
                         <!-- 周四将这句替换上面的那句 v-if="(currencyTradingList.length || OTCCenterHasCurrentCoin) && tradingState && index === current"-->
                         <!--小三角-->
                         <span
                           class="triangle-border display-inline-block"
-                          v-show="currencyTradingList.length"
                         >
                           <!--周四将这句替换上面的那句 v-show="currencyTradingList.length || OTCCenterHasCurrentCoin"-->
                         </span>
@@ -1340,13 +1339,9 @@ export default {
       let data = await queryTransactionInformation({
         coinId: this.currencyTradingId // 币种coinId
       })
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.currencyTradingList = getNestedData(data, 'data.data.entrust') || []
-      }
+      if (!data) return false
+      // 返回展示
+      this.currencyTradingList = getNestedData(data, 'data.entrust')
     }
     // 周四放开 以下两个方法
     // // 个人资产跳转OTC

@@ -338,7 +338,7 @@ export default {
       if (!data) return false
       if (data.meta) {
         let detailMeta = getNestedData(data, 'meta')
-        if (detailMeta.success == true) {
+        if (detailMeta.success) {
           this.applyStatus = 2
           this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
         } else {
@@ -358,38 +358,37 @@ export default {
       const data = await firstEnterBusinessApply()
       console.log(' 首次点击商家申请请求数据')
       console.log(data)
-      // 正确逻辑
-      if (data) {
-        let getData = getNestedData(data, 'data')
-        // 返回数据正确的逻辑
-        this.successTimes = getNestedData(getData, 'successTimes')
-        this.coinName = getNestedData(getData, 'coinName')
-        this.count = getNestedData(getData, 'count')
-        this.downLoadUrl = http2https(getNestedData(getData, 'downLoadUrl'))
-        // 返回数据的状态 1 表示展示初次进入
-        if (getData.status == 1) {
-          this.applyStatus = 1
-          // 状态 2 表示审核正在进行中
-        } else if (getData.status == 2) {
-          this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
-          this.applyStatus = 2
-          // 状态 3 表示审核通过
-        } else {
-          this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
-          this.applyStatus = 3
-        }
-        // ren 增加非商家点击提示框申请按钮跳转到申请页面中的申请按钮部分功能
-        if (getData.status !== 3 && this.otcApplyJumpBottomStatus) {
-          // console.log('进入方法了' + this.otcApplyJumpBottomStatus)
-          this.scrollToTimerOne = setTimeout(() => {
-            window.scrollTo(0, 2000)
-          }, 100)
-          this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
-        }
-      } else {
+      if (!data) {
         // 刚进页面接口请求错误时候显示申请界面
         this.applyStatus = 1
         return false
+      }
+      // 正确逻辑
+      let getData = getNestedData(data, 'data')
+      // 返回数据正确的逻辑
+      this.successTimes = getNestedData(getData, 'successTimes')
+      this.coinName = getNestedData(getData, 'coinName')
+      this.count = getNestedData(getData, 'count')
+      this.downLoadUrl = http2https(getNestedData(getData, 'downLoadUrl'))
+      // 返回数据的状态 1 表示展示初次进入
+      if (getData.status == 1) {
+        this.applyStatus = 1
+        // 状态 2 表示审核正在进行中
+      } else if (getData.status == 2) {
+        this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
+        this.applyStatus = 2
+        // 状态 3 表示审核通过
+      } else {
+        this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
+        this.applyStatus = 3
+      }
+      // ren 增加非商家点击提示框申请按钮跳转到申请页面中的申请按钮部分功能
+      if (getData.status !== 3 && this.otcApplyJumpBottomStatus) {
+        // console.log('进入方法了' + this.otcApplyJumpBottomStatus)
+        this.scrollToTimerOne = setTimeout(() => {
+          window.scrollTo(0, 2000)
+        }, 100)
+        this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
       }
     },
     // 商家申请界面用户协议

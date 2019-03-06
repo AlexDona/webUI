@@ -425,11 +425,9 @@ export default {
       console.log(data)
       this.loading = false
       if (!data) return false
-      if (data.data) {
-        let ADData = getNestedData(data, 'data')
-        this.ADList = getNestedData(ADData, 'list')
-        this.totalPages = getNestedData(ADData, 'pages') - 0 // 分页
-      }
+      let ADData = getNestedData(data, 'data')
+      this.ADList = getNestedData(ADData, 'list')
+      this.totalPages = getNestedData(ADData, 'pages') - 0 // 分页
     },
     // 5.0
     changeSelectValue (type, targetValue) {
