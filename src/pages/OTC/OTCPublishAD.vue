@@ -612,20 +612,18 @@ export default {
       console.log(data)
       // 正确逻辑
       if (!data) return false
-      if (data.data) {
-        let detailsData = getNestedData(data, 'data')
-        this.activatedCoinId = getNestedData(detailsData, 'coinId') // 可用币种id
-        this.activatedCurrencyId = getNestedData(detailsData, 'currencyId') // 法币id
-        this.activatedBuySellStyle = getNestedData(detailsData, 'entrustType') // 挂单类型
-        this.$refs.limitRef.value = getNestedData(detailsData, 'limitOrderCount') // 同时处理最大订单数
-        this.limitOrderCount = this.$refs.limitRef.value
-        this.$refs.successRef.value = getNestedData(detailsData, 'successOrderCount') // 卖家必须成交过几次
-        this.successOrderCount = this.$refs.successRef.value
-        this.$refs.entrustCount.value = getNestedData(detailsData, 'entrustCount') // 挂单数量
-        this.price = getNestedData(detailsData, 'price') // 单价
-        this.$refs.price.value = this.price // 单价
-        this.getOTCCoinInfo()
-      }
+      let detailsData = getNestedData(data, 'data')
+      this.activatedCoinId = getNestedData(detailsData, 'coinId') // 可用币种id
+      this.activatedCurrencyId = getNestedData(detailsData, 'currencyId') // 法币id
+      this.activatedBuySellStyle = getNestedData(detailsData, 'entrustType') // 挂单类型
+      this.$refs.limitRef.value = getNestedData(detailsData, 'limitOrderCount') // 同时处理最大订单数
+      this.limitOrderCount = this.$refs.limitRef.value
+      this.$refs.successRef.value = getNestedData(detailsData, 'successOrderCount') // 卖家必须成交过几次
+      this.successOrderCount = this.$refs.successRef.value
+      this.$refs.entrustCount.value = getNestedData(detailsData, 'entrustCount') // 挂单数量
+      this.price = getNestedData(detailsData, 'price') // 单价
+      this.$refs.price.value = this.price // 单价
+      this.getOTCCoinInfo()
     },
     // 1.0 币种详情 : 商家和普通用户挂单页面请求币种详情渲染页面
     async getOTCCoinInfo () {
@@ -812,15 +810,13 @@ export default {
       this.publishADTradePwdDialogStatus = false
       // console.log(data)
       if (!data) return false
-      if (data) {
-        // 改变标识状态为不是跳转来的
-        this.ADManageJumpOrderStatus = 1
-        // 清空数据
-        this.clearMainData()
-        // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
-        this.$goToPage('/OTCCenter')
-      }
+      // 改变标识状态为不是跳转来的
+      this.ADManageJumpOrderStatus = 1
+      // 清空数据
+      this.clearMainData()
+      // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+      this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+      this.$goToPage('/OTCCenter')
     },
     // 7.0 交易密码框获得焦点
     tradePasswordFocus () {
