@@ -1147,7 +1147,7 @@ export default{
               > .lang-list {
                 position: absolute;
                 z-index: 2;
-                top: 64px;
+                top: 50px;
                 left: 0;
                 background-color: $mainContentNightBgColor;
 

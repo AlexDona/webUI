@@ -109,7 +109,7 @@
             <p>{{$t('M. otc_merchant_videoKode')}}：</p>
             <p>{{$t('M.otc_merchant_detailOne')}}</p>
             <p>{{$t('M.otc_merchant_detailTwo')}}</p>
-            <p>{{$t('M.otc_merchant_applyLimit')}}<span>{{successTimes}}</span>{{$t('M.otc_ci')}}。②{{$t('M.otc_merchant_account')}}<span>{{coinName}}</span>{{$t('M.comm_count')}}{{$t('M.otc_xu')}}≥<span>{{count}}</span></p>
+            <p>{{$t('M.otc_merchant_applyLimit')}}<span>{{$scientificToNumber(successTimes)}}</span>{{$t('M.otc_ci')}}。②{{$t('M.otc_merchant_account')}}<span>{{coinName}}</span>{{$t('M.comm_count')}}{{$t('M.otc_xu')}}≥<span>{{$scientificToNumber(count)}}</span></p>
             <h4 class="title">
               {{$t('M.otc_merchant_step2')}}
             </h4>
@@ -117,7 +117,7 @@
             <h4 class="title">
               {{$t('M.otc_merchant_step3')}}
             </h4>
-            <p>{{$t('M.otc_merchant_datailFive')}}{{count}} {{coinName}}{{$t('M.otc_merchant_datailSix')}}。</p>
+            <p>{{$t('M.otc_merchant_datailFive')}}{{$scientificToNumber(count)}} {{coinName}}{{$t('M.otc_merchant_datailSix')}}。</p>
             <h4 class="title">
               {{$t('M.otc_merchant_step4')}}
             </h4>
@@ -156,7 +156,7 @@
             :visible.sync="businessAgreementDialogStatus"
             width="50%"
           >
-            <div v-html="argumentContent"></div>
+            <div v-html="argumentContent" class="plainText"></div>
           </el-dialog>
         </div>
         <!-- 2.2.5 申请为商家按钮部分 -->
@@ -444,230 +444,261 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/OTC/OTCCenter.scss";
-@import "../../../static/css/scss/index";
+  @import "../../../static/css/scss/OTC/OTCCenter.scss";
+  @import "../../../static/css/scss/index";
 
-.otc-business-apply-box {
-  margin-top: 50px;
-  overflow: hidden;
+  .otc-business-apply-box {
+    margin-top: 50px;
+    overflow: hidden;
 
-  > .business-apply-content {
-    padding-top: 20px;
+    > .business-apply-content {
+      padding-top: 20px;
 
-    > .privilege {
-      width: 1150px;
-      margin: 107px auto 0;
+      > .privilege {
+        width: 1150px;
+        margin: 107px auto 0;
 
-      > .title {
-        text-align: center;
-        color: #fff;
-      }
-
-      > .content {
-        display: flex;
-        justify-content: space-around;
-
-        > .common {
-          position: relative;
-          width: 210px;
-          height: 250px;
-          margin-top: 120px;
+        > .title {
           text-align: center;
-
-          &::before {
-            position: absolute;
-            top: -25px;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 105px solid transparent;
-            content: "";
-            border-right: 105px solid transparent;
-          }
-
-          &::after {
-            position: absolute;
-            bottom: -25px;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 105px solid transparent;
-            content: "";
-            border-right: 105px solid transparent;
-          }
-
-          > .title {
-            width: 83px;
-            padding-bottom: 10px;
-            font-weight: 700;
-            color: #338ff5;
-          }
-
-          > .text {
-            margin-top: 60px;
-            line-height: 25px;
-          }
-
-          > .location-picture {
-            position: absolute;
-            top: -67px;
-            left: 75px;
-          }
+          color: #fff;
         }
-      }
-    }
-
-    > .approve {
-      width: 1150px;
-      margin: 70px auto;
-      margin-top: 107px;
-
-      > .title {
-        margin-top: 100px;
-        text-align: center;
-      }
-
-      > .number {
-        position: relative;
-        width: 1150px;
-        height: 52px;
-        margin-top: 70px;
-        line-height: 58px;
-        background: url(../../assets/develop/step.png) no-repeat center;
-
-        > .common {
-          font-size: 16px;
-        }
-
-        > .apply {
-          position: absolute;
-          top: 0;
-          left: 185px;
-        }
-
-        > .send-email {
-          position: absolute;
-          top: 0;
-          left: 430px;
-        }
-
-        > .submit-apply {
-          position: absolute;
-          top: 0;
-          left: 680px;
-        }
-
-        > .pass {
-          position: absolute;
-          top: 0;
-          left: 930px;
-        }
-      }
-
-      > .step {
-        width: 1150px;
-        height: 650px;
-        padding: 40px 0 0 238px;
-        margin-top: 70px;
-        font-size: 14px;
-        background: url(../../assets/develop/business-apply-bgm.png) no-repeat center;
 
         > .content {
-          width: 620px;
+          display: flex;
+          justify-content: space-around;
 
-          > p {
-            line-height: 25px;
-          }
+          > .common {
+            position: relative;
+            width: 210px;
+            height: 250px;
+            margin-top: 120px;
+            text-align: center;
 
-          > .title {
-            margin-top: 20px;
+            &::before {
+              position: absolute;
+              top: -25px;
+              left: 0;
+              width: 0;
+              height: 0;
+              border-left: 105px solid transparent;
+              content: "";
+              border-right: 105px solid transparent;
+            }
 
-            &:first-child {
-              margin-top: 20px;
+            &::after {
+              position: absolute;
+              bottom: -25px;
+              left: 0;
+              width: 0;
+              height: 0;
+              border-left: 105px solid transparent;
+              content: "";
+              border-right: 105px solid transparent;
+            }
+
+            > .title {
+              width: 83px;
+              padding-bottom: 10px;
+              font-weight: 700;
+              color: #338ff5;
+            }
+
+            > .text {
+              margin-top: 60px;
+              line-height: 25px;
+            }
+
+            > .location-picture {
+              position: absolute;
+              top: -67px;
+              left: 75px;
             }
           }
         }
       }
 
-      > .agree {
-        margin-top: 70px;
-        text-align: center;
-      }
+      > .approve {
+        width: 1150px;
+        margin: 70px auto;
+        margin-top: 107px;
 
-      > .submit {
-        margin-top: 20px;
-        text-align: center;
+        > .title {
+          margin-top: 100px;
+          text-align: center;
+        }
 
-        > .button {
-          width: 300px;
-          height: 50px;
-          border-radius: 5px;
+        > .number {
+          position: relative;
+          width: 1150px;
+          height: 52px;
+          margin-top: 70px;
+          line-height: 58px;
+          background: url(../../assets/develop/step.png) no-repeat center;
+
+          > .common {
+            font-size: 16px;
+          }
+
+          > .apply {
+            position: absolute;
+            top: 0;
+            left: 185px;
+          }
+
+          > .send-email {
+            position: absolute;
+            top: 0;
+            left: 430px;
+          }
+
+          > .submit-apply {
+            position: absolute;
+            top: 0;
+            left: 680px;
+          }
+
+          > .pass {
+            position: absolute;
+            top: 0;
+            left: 930px;
+          }
+        }
+
+        > .step {
+          width: 1150px;
+          height: 650px;
+          padding: 40px 0 0 238px;
+          margin-top: 70px;
+          font-size: 14px;
+          background: url(../../assets/develop/business-apply-bgm.png) no-repeat center;
+
+          > .content {
+            width: 620px;
+
+            > p {
+              line-height: 25px;
+            }
+
+            > .title {
+              margin-top: 20px;
+
+              &:first-child {
+                margin-top: 20px;
+              }
+            }
+          }
+        }
+
+        > .agree {
+          margin-top: 70px;
+          text-align: center;
+        }
+
+        > .submit {
+          margin-top: 20px;
+          text-align: center;
+
+          > .button {
+            width: 300px;
+            height: 50px;
+            border-radius: 5px;
+          }
         }
       }
     }
-  }
 
-  > .business-applying-content,
-  .business-apply-success-content {
-    width: 1150px;
-    padding-top: 20px;
-    margin: 70px auto;
-    text-align: center;
-    background-color: $mainNightBgColor;
-
-    > .picture {
-      margin-top: 80px;
-    }
-
-    > .text {
-      margin-top: 40px;
-      font-size: 18px;
-      color: #fff;
-
-      > .tip {
-        line-height: 30px;
-      }
-    }
-  }
-
-  > .business-apply-success-content {
-    > .text {
-      margin-top: 10px;
-    }
-  }
-
-  > .business-apply-blank {
-    width: 100%;
-    height: 918px;
-    background-color: $mainNightBgColor;
-  }
-
-  /deep/ {
-    .el-checkbox__inner {
-      border-radius: 6px;
-      background-color: #eee;
-
-      &::after {
-        border: 1px solid #1f2f47;
-        border-top: 0;
-        border-left: 0;
-      }
-    }
-
-    .el-dialog {
-      height: 800px;
-      overflow: auto;
-      line-height: 30px;
-      text-align: left;
-      background: #121824;
-    }
-
-    .el-dialog__header {
+    > .business-applying-content,
+    .business-apply-success-content {
+      width: 1150px;
+      padding-top: 20px;
+      margin: 70px auto;
       text-align: center;
+      background-color: $mainNightBgColor;
+
+      > .picture {
+        margin-top: 80px;
+      }
+
+      > .text {
+        margin-top: 40px;
+        font-size: 18px;
+        color: #fff;
+
+        > .tip {
+          line-height: 30px;
+        }
+      }
     }
 
-    .el-dialog__body {
-      color: #8494a6;
+    > .business-apply-success-content {
+      > .text {
+        margin-top: 10px;
+      }
+    }
+
+    > .business-apply-blank {
+      width: 100%;
+      height: 918px;
+      background-color: $mainNightBgColor;
+    }
+
+    /deep/ {
+      .el-checkbox__inner {
+        border-radius: 6px;
+        background-color: #eee;
+
+        &::after {
+          border: 1px solid #1f2f47;
+          border-top: 0;
+          border-left: 0;
+        }
+      }
+
+      .agree {
+        /* 遮罩层样式 */
+        .el-dialog__wrapper {
+          background: rgba(0, 0, 0, .5) !important;
+        }
+
+        .el-dialog {
+          position: relative;
+          width: 340px;
+          text-align: left;
+          background: #28334a !important;
+
+          .el-dialog__header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 20px;
+            text-align: left;
+            background: #20293c;
+            -webkit-box-shadow: 0 1px 2px 0 #1d2131;
+            box-shadow: 0 1px 2px 0 #1d2131;
+
+            .el-dialog__title {
+              color: #fff !important;
+            }
+
+            .el-dialog__headerbtn {
+              top: 15px;
+              right: 10px;
+            }
+          }
+
+          .el-dialog__body {
+            height: 700px;
+            padding: 15px 20px 10px 30px;
+            overflow: scroll;
+            font-size: 12px;
+
+            .plainText {
+              margin-top: 40px;
+            }
+          }
+        }
+      }
     }
 
     /* 申请商家提示框样式 */
@@ -740,256 +771,301 @@ export default {
         }
       }
     }
-  }
 
-  &.night {
-    overflow: hidden;
-    background-color: $mainNightBgColor;
-
-    > .business-apply-content {
+    &.night {
       overflow: hidden;
+      background-color: $mainNightBgColor;
 
-      > .privilege {
-        > .title {
-          color: #fff;
-        }
+      > .business-apply-content {
+        overflow: hidden;
 
-        > .content {
-          > .common {
-            background: #202740;
-
-            &::before {
-              border-bottom: 25px solid #202740;
-            }
-
-            &::after {
-              border-top: 25px solid #202740;
-            }
-
-            > .title {
-              border-bottom: 1px dashed rgba(51, 143, 245, .3);
-              font-weight: 700;
-              color: #338ff5;
-            }
-
-            > .text {
-              color: #fff;
-            }
-          }
-        }
-      }
-
-      > .approve {
-        > .title {
-          color: #fff;
-        }
-
-        > .number {
-          > .common {
+        > .privilege {
+          > .title {
             color: #fff;
           }
-        }
-
-        > .step {
-          color: #8f9ca6;
 
           > .content {
-            > .title {
-              color: #fff;
-            }
+            > .common {
+              background: #202740;
 
-            > .tips {
-              color: #4b5d6e;
+              &::before {
+                border-bottom: 25px solid #202740;
+              }
 
-              > .agree {
-                color: #d45858;
+              &::after {
+                border-top: 25px solid #202740;
+              }
+
+              > .title {
+                border-bottom: 1px dashed rgba(51, 143, 245, .3);
+                font-weight: 700;
+                color: #338ff5;
+              }
+
+              > .text {
+                color: #fff;
               }
             }
           }
         }
 
-        > .agree {
-          color: #fff;
-
-          .agreement {
-            color: #d45858;
-          }
-        }
-
-        > .submit {
-          > .button {
+        > .approve {
+          > .title {
             color: #fff;
-            background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
           }
-        }
-      }
-    }
 
-    /deep/ {
-      .el-checkbox__inner {
-        background-color: #eee;
-      }
-
-      .el-dialog__body {
-        color: #8494a6;
-      }
-
-      .el-dialog__title {
-        color: #338ff5;
-      }
-
-      .el-dialog {
-        background: #121824;
-
-        &::-webkit-scrollbar-button {
-          background-color: #292e42;
-        }
-
-        &::-webkit-scrollbar-track {
-          background: #292e42;
-        }
-
-        &::-webkit-scrollbar-thumb {
-          background: #1e2636;
-        }
-
-        &::-webkit-scrollbar-corner {
-          background: #292e42;
-        }
-      }
-    }
-  }
-
-  &.day {
-    overflow: hidden;
-    background-color: $mainDayBgColor;
-
-    > .business-apply-content {
-      > .privilege {
-        > .title {
-          color: #333;
-        }
-
-        > .content {
-          > .common {
-            background: #202740;
-
-            &::before {
-              border-bottom: 25px solid #202740;
-            }
-
-            &::after {
-              border-top: 25px solid #202740;
-            }
-
-            > .title {
-              border-bottom: 1px dashed rgba(51, 143, 245, .3);
-              font-weight: 700;
-              color: #338ff5;
-            }
-
-            > .text {
+          > .number {
+            > .common {
               color: #fff;
             }
           }
+
+          > .step {
+            color: #8f9ca6;
+
+            > .content {
+              > .title {
+                color: #fff;
+              }
+
+              > .tips {
+                color: #4b5d6e;
+
+                > .agree {
+                  color: #d45858;
+                }
+              }
+            }
+          }
+
+          > .agree {
+            color: #fff;
+
+            .agreement {
+              color: #d45858;
+            }
+          }
+
+          > .submit {
+            > .button {
+              color: #fff;
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+            }
+          }
         }
       }
 
-      > .approve {
-        > .title {
-          color: #333;
+      /deep/ {
+        .el-checkbox__inner {
+          background-color: #eee;
         }
 
-        > .number {
-          > .common {
+        .el-dialog__body {
+          color: #8494a6;
+        }
+
+        .el-dialog__title {
+          color: #338ff5;
+        }
+
+        .el-dialog {
+          background: #121824;
+
+          &::-webkit-scrollbar-button {
+            background-color: #292e42;
+          }
+
+          &::-webkit-scrollbar-track {
+            background: #292e42;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background: #1e2636;
+          }
+
+          &::-webkit-scrollbar-corner {
+            background: #292e42;
+          }
+        }
+      }
+    }
+
+    &.day {
+      overflow: hidden;
+      background-color: $mainDayBgColor;
+
+      > .business-apply-content {
+        > .privilege {
+          > .title {
             color: #333;
           }
-        }
-
-        > .step {
-          color: #8f9ca6;
 
           > .content {
-            > .title {
-              color: #fff;
-            }
+            > .common {
+              background: #202740;
 
-            > .tips {
-              color: #4b5d6e;
+              &::before {
+                border-bottom: 25px solid #202740;
+              }
 
-              > .agree {
-                color: #d45858;
+              &::after {
+                border-top: 25px solid #202740;
+              }
+
+              > .title {
+                border-bottom: 1px dashed rgba(51, 143, 245, .3);
+                font-weight: 700;
+                color: #338ff5;
+              }
+
+              > .text {
+                color: #fff;
               }
             }
           }
         }
 
-        > .agree {
-          color: #333;
-
-          .agreement {
-            color: #d45858;
-          }
-        }
-
-        > .submit {
-          > .button {
-            color: #fff;
-            background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-          }
-        }
-      }
-    }
-
-    /deep/ {
-      .el-dialog {
-        background: #fff;
-      }
-
-      /* 申请商家提示框样式 */
-      .apply-merchant-dialog {
-        .el-dialog {
-          background: #fff !important;
-
-          .el-dialog__header {
-            border-bottom: 1px solid #ecf1f8;
-            background: #fff !important;
+        > .approve {
+          > .title {
+            color: #333;
           }
 
-          .el-dialog__body {
-            .tips {
+          > .number {
+            > .common {
               color: #333;
             }
           }
 
-          .el-dialog__footer {
-            .el-button {
-              &:first-child {
-                border: 1px solid rgba(51, 143, 245, 1);
-                color: #338ff5;
-                background: #fff;
+          > .step {
+            color: #8f9ca6;
+
+            > .content {
+              > .title {
+                color: #fff;
+              }
+
+              > .tips {
+                color: #4b5d6e;
+
+                > .agree {
+                  color: #d45858;
+                }
+              }
+            }
+          }
+
+          > .agree {
+            color: #333;
+
+            .agreement {
+              color: #d45858;
+            }
+          }
+
+          > .submit {
+            > .button {
+              color: #fff;
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+            }
+          }
+        }
+      }
+
+      /deep/ {
+        .el-dialog {
+          background: #fff;
+        }
+
+        .agree {
+          /* 遮罩层样式 */
+          .el-dialog__wrapper {
+            background: rgba(0, 0, 0, .5) !important;
+          }
+
+          .el-dialog {
+            position: relative;
+            width: 340px;
+            text-align: left;
+            background: #fff !important;
+
+            .el-dialog__header {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              text-align: left;
+              background-color: #eaf4fe !important;
+              -webkit-box-shadow: 0 1px 2px 0 rgba(29, 33, 49, .1);
+              box-shadow: 0 1px 2px 0 rgba(29, 33, 49, .1);
+
+              .el-dialog__title {
+                color: #000 !important;
+              }
+
+              .el-dialog__headerbtn {
+                top: 15px;
+                right: 10px;
+              }
+            }
+
+            .el-dialog__body {
+              height: 700px;
+              padding: 15px 20px 10px 30px;
+              overflow: scroll;
+              font-size: 12px;
+              color: #666;
+
+              .plainText {
+                margin-top: 28px;
+              }
+            }
+          }
+        }
+
+        /* 申请商家提示框样式 */
+        .apply-merchant-dialog {
+          .el-dialog {
+            background: #fff !important;
+
+            .el-dialog__header {
+              border-bottom: 1px solid #ecf1f8;
+              background: #fff !important;
+            }
+
+            .el-dialog__body {
+              .tips {
+                color: #333;
+              }
+            }
+
+            .el-dialog__footer {
+              .el-button {
+                &:first-child {
+                  border: 1px solid rgba(51, 143, 245, 1);
+                  color: #338ff5;
+                  background: #fff;
+                }
               }
             }
           }
         }
       }
     }
+
+    .businessApplyModel {
+      color: #d45858;
+      cursor: pointer;
+    }
   }
 
-  .businessApplyModel {
-    color: #d45858;
-    cursor: pointer;
+  .black.otc-business-apply-box.day {
+    // 当为申请中和申请成功的页面时候，只有黑色主题颜色
+    background-color: $mainNightBgColor;
   }
-}
 
-.black.otc-business-apply-box.day {
-  // 当为申请中和申请成功的页面时候，只有黑色主题颜色
-  background-color: $mainNightBgColor;
-}
-
-/deep/ {
-  .el-dialog__title {
-    color: #338ff5;
+  /deep/ {
+    .el-dialog__title {
+      color: #338ff5;
+    }
   }
-}
 </style>
