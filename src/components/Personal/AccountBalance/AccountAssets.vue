@@ -1109,7 +1109,7 @@ export default {
       // 返回列表数据并渲染币种列表
       this.withdrawAddressList = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList')
       // console.log(this.withdrawAddressList)
-      this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address') || ''
+      this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address')
     },
     // select框自定义提币地址校验地址
     // 新增用户提币地址校验
@@ -1290,8 +1290,8 @@ export default {
         emailCode: this.emailCode, // 邮箱验证码
         googleCode: this.googleCode, // 谷歌验证码
         coinId: this.activeCoinId, // 币种ID
-        withdrawAddress: this.activeWithdrawDepositAddress,
-        remark: this.withdrawRemark, // 提币地址
+        withdrawAddress: this.activeWithdrawDepositAddress, // 提币地址
+        remark: this.withdrawRemark,
         networkFees: this.withdrawFeeVModel, // 手续费
         amount: this.withdrawCountVModel, // 提币数量
         payCode: this.password // 交易密码
