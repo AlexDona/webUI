@@ -413,6 +413,7 @@ export default {
     // 类型筛选（直接 间接）
     changeId (e) {
       this.currentPageForMyEntrust = 1
+      this.currentPageMyEntrust = 1
       console.log(e)
       this.generalizeOptionsList.forEach(item => {
         if (e === item.value) {
@@ -459,7 +460,8 @@ export default {
     async getRecommendUserPromotion () {
       let data = await getRecommendUserPromotionList({
         pageNumber: this.currentPageMyEntrust, // 页码
-        pageSize: this.pageSize // 条数
+        pageSize: this.pageSize, // 条数
+        type: this.generalizeValue // 类型
       })
       console.log(data)
       if (!returnAjaxMsg(data, this)) {
