@@ -270,7 +270,7 @@
         </div>
       </div>
       <!--奖励记录-->
-      <div class="award-record margin-top9 padding-top0">
+      <div class="award-record margin-top9 padding-top0 margin-bottom10">
         <header class="award-record-header line-height56">
           <span class="font-size16 header-color">
             <!--奖励记录-->
