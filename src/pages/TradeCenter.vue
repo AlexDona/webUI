@@ -109,8 +109,8 @@ export default {
       }
 
       > .left {
-        width: 300px;
-        max-width: 300px;
+        width: 320px;
+        max-width: 320px;
         font-size: 12px;
       }
 
@@ -120,7 +120,7 @@ export default {
       }
 
       > .right {
-        width: 300px;
+        width: 320px;
       }
 
       @media screen and (max-width: 1366px) {

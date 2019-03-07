@@ -40,7 +40,7 @@
                     {{item.bourseTrade.split('_').join('/')}}
                   </div><div class="td price">
                     <div class="top">
-                      {{$scientificToNumber(cutOutPointLength(item.boursePrice, 8))}}
+                      {{$scientificToNumber(cutOutPointLength(item.boursePrice, activeSymbol.priceExchange))}}
                     </div><!--货币转换-->
                     <div
                       class="bottom"
@@ -147,8 +147,12 @@ export default {
     })
   },
   watch: {
+    activeSymbol (newVal) {
+      console.log(newVal)
+    },
     activeSymbolId: {
       handler (newVal) {
+        console.log(newVal)
         if (newVal) {
           this.getGlobalMarket()
         }

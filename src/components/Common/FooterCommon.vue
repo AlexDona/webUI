@@ -234,7 +234,7 @@
             v-for="(item,index) in footerInfo2.blogrollList"
             :key="index"
             :style="{
-              display: ((isShowLinkImage && item.logo) || (!isShowLinkImage && item.name.trim())) ? 'inline-block' : 'none'
+              display: ((isShowLinkImage && item.logo) || (!isShowLinkImage && item.name)) ? 'inline-block' : 'none'
             }"
           >
             <a
@@ -248,7 +248,7 @@
                 v-show="isShowLinkImage && item.logo"
               >
               <span
-                v-show="!isShowLinkImage && item.name.trim()"
+                v-show="!isShowLinkImage && item.name"
                 class="links-text"
               >{{item.name}}</span>
             </a>
