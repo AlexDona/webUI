@@ -1102,7 +1102,7 @@ export default {
             > .errorLimitMin,
             .errorLimitMax {
               display: inline-block;
-              width: 212px;
+              width: 230px;
               font-size: 12px;
             }
           }

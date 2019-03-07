@@ -60,11 +60,11 @@ export default {
 
       span {
         display: inline-block;
-        height: 40px;
-        padding: 0 20px 0 30px;
+        height: 34px;
+        padding: 0 10px;
         border-radius: 14px;
-        font-size: 14px;
-        line-height: 40px;
+        font-size: 12px;
+        line-height: 34px;
         vertical-align: top;
       }
     }

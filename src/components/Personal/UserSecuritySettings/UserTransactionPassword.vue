@@ -672,6 +672,7 @@ export default {
 
         > .transaction-content-from {
           width: 500px;
+          padding-top: 30px;
           margin-left: 55px;
 
           .send-code-btn {
@@ -693,7 +694,7 @@ export default {
           .transaction-button {
             width: 215px;
             padding: 10px 0;
-            margin: 30px 0 50px 180px;
+            margin: 30px 0 50px 185px;
           }
 
           .prompt-message {
