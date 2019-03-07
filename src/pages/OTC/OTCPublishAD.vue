@@ -440,7 +440,8 @@
 // 引入接口
 import {
   formatNumberInput,
-  positiveIntegerNumRegexpInput
+  // positiveIntegerNumRegexpInput,
+  positiveIntegerNumRegexpInputNoZero
 } from '../../utils'
 import {
   querySelectedOrdersDetails,
@@ -592,15 +593,17 @@ export default {
     // 同时处理最大订单数(0=不限制)input框限制
     positiveIntegerNumRegexpInputLimit (ref) {
       let target = this.$refs[ref]
-      this.limitOrderCount = positiveIntegerNumRegexpInput(target)
-      // console.log(this.$refs.limitRef.value)
+      // this.limitOrderCount = positiveIntegerNumRegexpInput(target)
+      this.limitOrderCount = positiveIntegerNumRegexpInputNoZero(target)
+      console.log(this.$refs.limitRef.value)
       // console.log(this.limitOrderCount)
     },
     // 卖家必须成交过几次（0=不限制）input框限制
     positiveIntegerNumRegexpInputSuccess (ref) {
       let target = this.$refs[ref]
-      this.successOrderCount = positiveIntegerNumRegexpInput(target)
-      // console.log(this.$refs.successRef.value)
+      // this.successOrderCount = positiveIntegerNumRegexpInput(target)
+      this.successOrderCount = positiveIntegerNumRegexpInputNoZero(target)
+      console.log(this.$refs.successRef.value)
       // console.log(this.successOrderCount)
     },
     // 0.0 广告管理跳转过来 请求详情接口
@@ -807,7 +810,8 @@ export default {
         data = await addModifyPublishADOrder(param)
       }
       // 返回数据正确的逻辑
-      this.publishADTradePwdDialogStatus = false
+      this.publishADTradePwdDialogStatus = false // 关闭交易密码框
+      this.tradePassword = '' // 清空交易密码
       // console.log(data)
       if (!data) return false
       // 改变标识状态为不是跳转来的

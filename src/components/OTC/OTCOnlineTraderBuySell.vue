@@ -782,6 +782,7 @@ export default {
       }
       // 返回数据正确的逻辑
       this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
+      this.tradePassword = '' // 清空交易密码
       console.log(data)
       if (!data) return false
       if (data) {
