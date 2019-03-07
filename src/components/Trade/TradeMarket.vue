@@ -731,7 +731,6 @@ export default {
       /deep/ {
         .el-tabs__item {
           color: #a9bed4;
-          background-color: #394045;
         }
       }
     }
@@ -745,12 +744,6 @@ export default {
 
         > .content {
           background-color: $mainDayBgColor;
-        }
-      }
-
-      /deep/ {
-        .el-tabs__item {
-          background-color: #ebecec;
         }
       }
     }

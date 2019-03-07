@@ -96,7 +96,7 @@ export default {
       display: flex;
       box-sizing: border-box;
       width: 100%;
-      padding: 14px 0;
+      padding: 14px;
       margin: 0 auto;
 
       > div {

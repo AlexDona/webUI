@@ -112,12 +112,11 @@
             </dd>
             <dd
               class="dd-item"
-              @click="downloadCurrencyForm"
             >
-              <!--<router-link to="/HelpCenter">-->
+              <router-link to="/CurrencyApplication">
                 <!--上币申请-->
                 {{$t('M.actionCenter_coin_apply')}}
-              <!--</router-link>-->
+              </router-link>
             </dd>
             <dd
               class="dd-item"

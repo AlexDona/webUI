@@ -333,7 +333,7 @@ export default {
           > span {
             display: inline-block;
             box-sizing: border-box;
-            width: 98px;
+            width: 96px;
           }
         }
       }
@@ -400,6 +400,11 @@ export default {
     /* 币种列表 */
     > .coin-list {
       > .market-cate-wrap {
+        > .market-category {
+          border-top: 1px solid #e1e2e4;
+          border-bottom: 1px solid #e1e2e4;
+        }
+
         > .coin-item {
           > .coin-item {
             &:hover {
