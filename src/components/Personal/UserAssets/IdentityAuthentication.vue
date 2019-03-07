@@ -649,9 +649,8 @@ export default {
     }
   },
   async created () {
-    await this.authenticationIsStatus()
+    this.authenticationIsStatus()
     await this.getRealNameInformation()
-    console.log(identityCodeValid('410402199004235677'))
   },
   mounted () {
   },
@@ -757,7 +756,6 @@ export default {
         // 返回列表数据
         this.realNameInformationObj = getNestedData(data, 'data.data')
         this.statusRealNameInformation = getNestedData(data, 'data.data.authInfo')
-        this.authenticationIsStatus()
       }
     },
     // 检测身份证号
@@ -872,6 +870,7 @@ export default {
           // 接口成功清除loading
           this.fullscreenLoading = false
           await this.REFRESH_USER_INFO_ACTION()
+          this.authenticationIsStatus()
           await this.getRealNameInformation()
           console.log(data)
           this.realName = ''
@@ -962,12 +961,12 @@ export default {
         return false
       } else {
         this.stateEmptyData()
+        this.authenticationStatusFront = false
         // 接口成功清除loading
-        this.fullscreenLoading = false
         this.SET_USER_INFO_REFRESH_STATUS(true)
         await this.REFRESH_USER_INFO_ACTION()
         await this.getRealNameInformation()
-        this.authenticationStatusFront = false
+        this.fullscreenLoading = false
       }
     },
     // 接口请求完成之后清空数据
