@@ -334,6 +334,7 @@ export default {
             display: inline-block;
             box-sizing: border-box;
             width: 96px;
+            white-space: nowrap;
           }
         }
       }

@@ -16,7 +16,10 @@ const routerCreator = () => {
   })
   router.beforeEach((to, from, next) => {
     if (to.path === '/home') {
-      store.dispatch('GET_ALL_NOTICE_ACTION', store.state.common.language)
+      console.log(store.state.common.language)
+      if (store.state.common.language) {
+        store.dispatch('GET_ALL_NOTICE_ACTION', store.state.common.language)
+      }
     }
     if (from.path !== '/login' || from.path !== '/register') {
       store.commit('CHANGE_ROUTER_PATH', from.path)
