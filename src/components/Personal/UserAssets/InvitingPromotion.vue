@@ -270,7 +270,7 @@
         </div>
       </div>
       <!--奖励记录-->
-      <div class="award-record margin-top9 padding-top0">
+      <div class="award-record margin-top9 padding-top0 margin-bottom10">
         <header class="award-record-header line-height56">
           <span class="font-size16 header-color">
             <!--奖励记录-->
@@ -412,6 +412,8 @@ export default {
     },
     // 类型筛选（直接 间接）
     changeId (e) {
+      this.currentPageForMyEntrust = 1
+      this.currentPageMyEntrust = 1
       console.log(e)
       this.generalizeOptionsList.forEach(item => {
         if (e === item.value) {
@@ -456,7 +458,6 @@ export default {
     },
     // 推荐用户币种列表
     async getRecommendUserPromotion () {
-      // this.loading = true
       let data = await getRecommendUserPromotionList({
         pageNumber: this.currentPageMyEntrust, // 页码
         pageSize: this.pageSize, // 条数
@@ -470,14 +471,10 @@ export default {
       } else {
         // 接口失败清除局部loading
         this.partLoading = false
-        // let responseData = data.data.data
         let responseData = getNestedData(data, 'data.data')
         // 返回展示
-        // this.awardList = responseData.data.list
         this.awardList = getNestedData(responseData, 'data.list')
-        // this.coinName = responseData.coinName
         this.coinName = getNestedData(responseData, 'coinName')
-        // this.totalPageMyEntrust = responseData.data.pages - 0
         this.totalPageMyEntrust = getNestedData(responseData, 'data.pages') - 0
       }
     },

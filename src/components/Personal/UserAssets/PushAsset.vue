@@ -518,24 +518,19 @@ export default {
         pageNum: this.currentPageForMyEntrust, // 分页
         pageSize: this.pageSize // 页码
       })
-      if (!(returnAjaxMsg(data, this))) {
-        // 接口失败清除局部loading
-        this.partLoading = false
-        return false
-      } else {
-        // 接口成功清除局部loading
-        this.partLoading = false
-        // 返回push记录数据
-        this.pushRecordList = getNestedData(data, 'data.data.userPushVOPageInfo.list')
-        this.totalPageForMyEntrust = getNestedData(data, 'data.data.userPushVOPageInfo.pages') - 0
-        // 返回push币种信息列表
-        this.currencyValue = getNestedData(data, 'data.data.coinLists[0].coinId')
-        // 刷新列表默认币种
-        this.currencyBalance = getNestedData(data, 'data.data.total')
-        // 币种余额
-        this.pushPayCoinName = getNestedData(data, 'data.data.pushPayCoinName')
-        this.currencyList = getNestedData(data, 'data.data.coinLists')
-      }
+      // 清除局部loading
+      this.partLoading = false
+      if (!data) return false
+      // 返回push记录数据
+      this.pushRecordList = getNestedData(data, 'data.userPushVOPageInfo.list')
+      this.totalPageForMyEntrust = getNestedData(data, 'data.userPushVOPageInfo.pages') - 0
+      // 返回push币种信息列表
+      this.currencyValue = getNestedData(data, 'data.coinLists[0].coinId')
+      // 刷新列表默认币种
+      this.currencyBalance = getNestedData(data, 'data.total')
+      // 币种余额
+      this.pushPayCoinName = getNestedData(data, 'data.pushPayCoinName')
+      this.currencyList = getNestedData(data, 'data.coinLists')
     },
     // 4.选择push资产币种
     async toggleAssetsCurrencyId (e) {
