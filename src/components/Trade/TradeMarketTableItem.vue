@@ -86,7 +86,9 @@
             :key="innerIndex"
             @click=changeActiveSymbol(innerItem)
           >
-            <span>
+            <span
+              class="coin-name"
+            >
               <!--收藏按钮-->
               <!--自选区-->
               <span v-show="activeName==collectArea.areaId">
@@ -249,7 +251,7 @@ export default {
         }
 
         &.price {
-          margin-right: 12%;
+          margin-right: 20px;
           text-align: right;
         }
 
@@ -276,13 +278,6 @@ export default {
             &.el-icon-caret-bottom {
               bottom: -2px;
             }
-          }
-        }
-
-        @media screen and (max-width: 1920px) {
-          &.price {
-            margin-right: 5%;
-            text-align: right;
           }
         }
       }
@@ -321,15 +316,8 @@ export default {
 
       > .coin-item {
         > .coin-item {
-          display: flex;
-
-          /* border-bottom: 1px solid; */
           height: 30px;
-
-          /* margin-left: 16px; */
-
-          /* padding: 0 20px; */
-          padding: 0 3.5%;
+          padding: 0 10px;
           line-height: 30px;
 
           .click-button {
@@ -344,17 +332,8 @@ export default {
 
           > span {
             display: inline-block;
-            flex: 1;
-
-            &.price {
-              margin-right: 12%;
-            }
-
-            @media screen and (max-width: 1920px) {
-              &.price {
-                margin-right: 2%;
-              }
-            }
+            box-sizing: border-box;
+            width: 96px;
           }
         }
       }
@@ -421,6 +400,11 @@ export default {
     /* 币种列表 */
     > .coin-list {
       > .market-cate-wrap {
+        > .market-category {
+          border-top: 1px solid #e1e2e4;
+          border-bottom: 1px solid #e1e2e4;
+        }
+
         > .coin-item {
           > .coin-item {
             &:hover {

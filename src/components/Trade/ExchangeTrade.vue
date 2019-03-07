@@ -1312,7 +1312,7 @@ export default {
         display: flex;
         width: 100%;
         height: 100%;
-        padding: 22px 2.8%;
+        padding: 22px 14px;
 
         > .inner-box {
           flex: 1;
@@ -1640,6 +1640,10 @@ export default {
         /* 警告提示框背景色 */
         .el-dialog {
           background-color: #28334a;
+        }
+
+        .el-tabs__item {
+          font-size: 14px;
         }
 
         /* 警告提示框按钮 */

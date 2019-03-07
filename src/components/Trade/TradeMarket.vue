@@ -599,7 +599,7 @@ export default {
       > .title {
         display: flex;
         height: 34px;
-        padding: 0 4.5%;
+        padding: 0 20px;
         margin-bottom: 1px;
         line-height: 34px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
@@ -613,9 +613,9 @@ export default {
           > span {
             display: inline-block;
             height: 100%;
-            text-indent: 4px;
+            border-bottom: 2px solid $mainColor;
+            font-size: 14px;
             color: $mainColor;
-            //border-bottom: 2px solid $mainColor;
           }
         }
 
@@ -649,15 +649,25 @@ export default {
         height: 1584px;
         overflow: auto;
       }
+
+      @media screen and(max-width: 2560px) and (min-width: 1921px) {
+        > .content {
+          height: 1809px;
+        }
+      }
     }
 
     /deep/ {
       .el-input__inner {
-        width: 168px;
+        width: 100px;
         height: 20px;
         border: 1px solid #a9bed4;
         border-radius: 2px;
         background: transparent;
+      }
+
+      .el-tabs__nav-scroll {
+        padding-left: 6px;
       }
 
       .el-input__suffix {
@@ -672,8 +682,8 @@ export default {
       .el-tabs__item {
         /* width:70px; */
         height: 20px;
-        padding: 0 20px;
-        margin: 5px 20px;
+        padding: 0 6px;
+        margin: 5px 6px;
         line-height: 20px;
 
         &.is-active {
@@ -695,12 +705,12 @@ export default {
         .el-tabs__item {
           &.is-top {
             &:nth-child(2) {
-              padding-left: 4.5%;
+              padding-left: 10px;
             }
           }
 
           &:last-child {
-            padding-right: 4.5%;
+            padding-right: 10px;
           }
         }
       }
@@ -721,7 +731,6 @@ export default {
       /deep/ {
         .el-tabs__item {
           color: #a9bed4;
-          background-color: #394045;
         }
       }
     }
@@ -735,12 +744,6 @@ export default {
 
         > .content {
           background-color: $mainDayBgColor;
-        }
-      }
-
-      /deep/ {
-        .el-tabs__item {
-          background-color: #ebecec;
         }
       }
     }

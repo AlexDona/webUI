@@ -195,9 +195,8 @@
               :label="$t('M.user_invite_login_name')"
             >
               <template slot-scope = "s">
-                <!--登录名显示前三后三-->
                 <div>
-                  {{ s.row.userName.substring(0,3)}}*****{{ s.row.userName.substring(8,11)}}
+                  {{ s.row.userName }}
                 </div>
               </template>
             </el-table-column>
@@ -216,20 +215,21 @@
               width="100"
             >
               <template slot-scope = "s">
-                <!--字段为空 空-->
-                <div v-if="!s.row.realname"></div>
-                <!--姓名为两位时 隐藏最后一位-->
-                <div v-else-if="s.row.realname.length === 2 ">
-                  {{ s.row.realname.substring(0,1)}}*
+                <div>
+                  {{ s.row.realname }}
                 </div>
-                <!--姓名为三位时 隐藏最后一位-->
-                <div v-else-if="s.row.realname.length === 3">
-                  {{ s.row.realname.substring(0,2)}}*
-                </div>
-                <!--姓名为四位时或者大于四 隐藏最后两位-->
-                <div v-else-if="s.row.realname.length === 4 || s.row.realname.length > 4">
-                  {{ s.row.realname.substring(0,2)}}**
-                </div>
+                <!--&lt;!&ndash;姓名为两位时 隐藏最后一位&ndash;&gt;-->
+                <!--<div v-else-if="s.row.realname.length === 2 ">-->
+                  <!--{{ s.row.realname.substring(0,1)}}*-->
+                <!--</div>-->
+                <!--&lt;!&ndash;姓名为三位时 隐藏最后一位&ndash;&gt;-->
+                <!--<div v-else-if="s.row.realname.length === 3">-->
+                  <!--{{ s.row.realname.substring(0,2)}}*-->
+                <!--</div>-->
+                <!--&lt;!&ndash;姓名为四位时或者大于四 隐藏最后两位&ndash;&gt;-->
+                <!--<div v-else-if="s.row.realname.length === 4 || s.row.realname.length > 4">-->
+                  <!--{{ s.row.realname.substring(0,2)}}**-->
+                <!--</div>-->
               </template>
             </el-table-column>
             <!-- 高级认证 -->
@@ -262,6 +262,7 @@
             background
             v-show="activeName === 'current-entrust' && extensionList.length"
             layout="prev, pager, next"
+            :current-page="currentPageForMyEntrust"
             :page-count="totalPageForMyEntrust"
             @current-change="changeCurrentPage"
           >
@@ -269,7 +270,7 @@
         </div>
       </div>
       <!--奖励记录-->
-      <div class="award-record margin-top9 padding-top0">
+      <div class="award-record margin-top9 padding-top0 margin-bottom10">
         <header class="award-record-header line-height56">
           <span class="font-size16 header-color">
             <!--奖励记录-->
@@ -330,6 +331,7 @@
             background
             v-show="activeAwardList === 'current-awardList' && awardList.length"
             layout="prev, pager, next"
+            :current-page="currentPageMyEntrust"
             :page-count="totalPageMyEntrust"
             @current-change="changeCurrentPageAward"
           >
@@ -410,6 +412,8 @@ export default {
     },
     // 类型筛选（直接 间接）
     changeId (e) {
+      this.currentPageForMyEntrust = 1
+      this.currentPageMyEntrust = 1
       console.log(e)
       this.generalizeOptionsList.forEach(item => {
         if (e === item.value) {
@@ -426,7 +430,7 @@ export default {
       // this.loading = true
       let data = await userPromotionList({
         type: this.generalizeValue, // 筛选类型
-        currentPage: this.currentPageForMyEntrust, // 分页
+        pageNumber: this.currentPageForMyEntrust, // 分页
         pageSize: this.pageSize // 页码
       })
       console.log(data)
@@ -454,7 +458,6 @@ export default {
     },
     // 推荐用户币种列表
     async getRecommendUserPromotion () {
-      // this.loading = true
       let data = await getRecommendUserPromotionList({
         pageNumber: this.currentPageMyEntrust, // 页码
         pageSize: this.pageSize, // 条数
@@ -468,14 +471,10 @@ export default {
       } else {
         // 接口失败清除局部loading
         this.partLoading = false
-        // let responseData = data.data.data
         let responseData = getNestedData(data, 'data.data')
         // 返回展示
-        // this.awardList = responseData.data.list
         this.awardList = getNestedData(responseData, 'data.list')
-        // this.coinName = responseData.coinName
         this.coinName = getNestedData(responseData, 'coinName')
-        // this.totalPageMyEntrust = responseData.data.pages - 0
         this.totalPageMyEntrust = getNestedData(responseData, 'data.pages') - 0
       }
     },

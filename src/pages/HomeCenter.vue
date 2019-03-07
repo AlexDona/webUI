@@ -13,6 +13,7 @@
 import NoticeHome from '../components/Home/NoticeHome'
 import BannerHome from '../components/Home/BannerHome'
 import MarketListHome from '../components/Home/MarketListHome'
+import {xDomain} from '../utils/env'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -37,12 +38,25 @@ export default {
         'isInvite': false,
         'mode': 'inner',
         'color': '#338ff5',
-        'pos_flag': 'crb',
+        'pos_flag': 'crm',
         'language': this.msgLanguage,
+        'css': {
+          'width': '50px',
+          'height': '50px',
+          'border-radius': '50%',
+          'line-height': '50px',
+          'text-align': 'center',
+          'right': '40px',
+          'padding': '5px'
+        },
+        'pop': {
+          'css': {
+          }
+        },
         'mobile': {
           'mode': 'inner',
           'color': '#338ff5',
-          'pos_flag': 'crb',
+          'pos_flag': 'crm',
           'language': ''
         }
       })
@@ -65,7 +79,10 @@ export default {
           this.msgLanguage = 'zh-TW'
           break
       }
-      this.doAdd()
+
+      if (xDomain.startsWith('fubt')) {
+        this.doAdd()
+      }
     },
     addServiceForCustomer (a, h, c, b, f, g) {
       a['UdeskApiObject'] = f

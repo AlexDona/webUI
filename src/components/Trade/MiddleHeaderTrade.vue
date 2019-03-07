@@ -42,7 +42,7 @@
         </div>
       </div>
       <!--涨跌-->
-      <div class="item">
+      <div class="item rate">
         <div class="top font-size12">
           <span>
             <!--涨跌-->
@@ -99,7 +99,7 @@
         <div class="bottom">
             <span
               class="font-size14 theme-color"
-              v-show="$formatCount(middleTopData.vol24hour)!='NaN'"
+              v-show="String($formatCount(middleTopData.vol24hour))!='NaN'"
             >
               {{$formatCount(middleTopData.vol24hour)}}
             </span>
@@ -152,7 +152,7 @@ export default {
     height: 100%;
 
     .item {
-      flex: 1;
+      width: 120px;
       padding: 10px 0;
 
       > .top,
@@ -162,7 +162,7 @@ export default {
       }
 
       &.logo {
-        flex: .5;
+        width: 60px;
         text-align: center;
 
         > .logo {
@@ -171,13 +171,19 @@ export default {
       }
 
       &.symbol {
+        width: 140px;
+
         > .top {
           font-weight: 700;
         }
       }
 
       &.latest-price {
-        flex: 1.5;
+        width: 160px;
+      }
+
+      &.rate {
+        width: 100px;
       }
 
       > .bottom {

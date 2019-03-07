@@ -911,7 +911,7 @@ export default {
         maxCount: this.$refs.maxCount.value, // 单笔最大限额（CNY）
         remark: this.remarkText // 备注
       }
-      param = this.isNeedPayPassword ? { ...param, tradePassword: this.tradePassword } : param// 交易密码
+      param = this.isNeedPayPassword ? { ...param, tradePassword: this.tradePassword } : param // 交易密码
       switch (this.publishStyle) {
         case 'buy':
           param = {...param,
@@ -935,14 +935,12 @@ export default {
       // 关闭交易密码框
       this.publishOrderTradePwdDialogStatus = false
       if (!data) return false
-      if (data) {
-        // 清空表单数据
-        this.clearInputData()
-        // 下单成功跳转到首页挂单列表去
-        // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
-        this.$goToPage('/OTCCenter')
-      }
+      // 清空表单数据
+      this.clearInputData()
+      // 下单成功跳转到首页挂单列表去
+      // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+      this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+      this.$goToPage('/OTCCenter')
     },
     // 10.0 充币按钮跳转
     chargeMoney () {

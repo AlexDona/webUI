@@ -180,8 +180,7 @@ const routes = [
   {
     // OTC中心
     path: '/OTCCenter',
-    // 周四放开 此name
-    // name: 'OTCCenter',
+    name: 'OTCCenter',
     component: OTCCenter
   },
   {
@@ -294,7 +293,7 @@ const routes = [
   {
     // 活动中心
     path: '/ActivityCenter',
-    redirect: '/CurrencyApplication'
+    redirect: '/RankingListOfInvitation'
   },
   {
     // 上币申请

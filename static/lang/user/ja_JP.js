@@ -45,9 +45,10 @@ export const user = {
   'login_tips1': '電話番号/メールアドレスを入力してください',
   'login_tips2': 'パスワードを入力してください',
   'login_tips3': 'パスワードを忘れた',
-  'login_tips4': '無料登録',
+  'login_tips4': 'すぐ登録',
   'login_tips5': 'ユーザー名を入力してください',
   'login_tips6': '滑块验证',
+  'login_tips7': 'アカウントを覚え',
   // #############パスワードを忘れた#############
   // 'forgetPassword_findBack': '取得',
   'forgetPassword_verify_style1': '電話検証',
