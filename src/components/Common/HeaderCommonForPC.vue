@@ -111,14 +111,14 @@
               <!--活动中心子导航-->
               <ul
                 class="sub-nav-list activity-center"
-                v-show="$route.path ==='/ActivityCenter'||$route.path ==='/CurrencyApplication'||$route.path==='/RankingListOfInvitation'"
+                v-show="$route.path ==='/ActivityCenter'||$route.path==='/RankingListOfInvitation'"
               >
-                <li class="sub-nav-item">
-                  <router-link to="/CurrencyApplication">
-                    <!--上币申请-->
-                    {{$t('M.actionCenter_coin_apply')}}
-                  </router-link>
-                </li>
+                <!--<li class="sub-nav-item">-->
+                  <!--<router-link to="/CurrencyApplication">-->
+                    <!--&lt;!&ndash;上币申请&ndash;&gt;-->
+                    <!--{{$t('M.actionCenter_coin_apply')}}-->
+                  <!--</router-link>-->
+                <!--</li>-->
                 <li class="sub-nav-item">
                   <router-link to="/RankingListOfInvitation">
                     <!--邀请排行-->
@@ -133,51 +133,51 @@
         <div class="right login">
           <ul class="ul-list">
             <!--消息-->
-            <!--<li-->
-              <!--class="li-item notice-li"-->
-              <!--@mouseenter="toggleBox('notice',true)"-->
-              <!--@mouseleave="toggleBox('notice',false)"-->
-            <!--&gt;-->
-              <!--<button class="notice-btn">-->
-                <!--<IconFontCommon-->
-                  <!--class="font-size26"-->
-                  <!--icon-name="icon-xiaoxi"-->
-                <!--/>-->
-              <!--</button>-->
-              <!--<el-collapse-transition>-->
-                <!--<ul-->
-                  <!--class="notice-list"-->
-                  <!--v-show="showNoticeList"-->
-                  <!--:style="{-->
-                    <!--height: `${homeNoticeList.length*40}px`-->
-                  <!--}"-->
-                <!--&gt;-->
-                  <!--<li-->
-                    <!--class="notice-item"-->
-                    <!--v-for="noticeItem in homeNoticeList.length < 5 ? homeNoticeList : homeNoticeList.slice(0,5)"-->
-                    <!--:key="noticeItem.id"-->
-                    <!--:track-by="noticeItem.id"-->
-                  <!--&gt;-->
-                      <!--<a-->
-                        <!--class="cursor-pointer"-->
-                        <!--@click.stop="jumpToNewsItem(noticeItem.id)"-->
-                      <!--&gt;-->
-                        <!--{{noticeItem.title}}-->
-                      <!--</a>-->
-                  <!--</li>-->
-                  <!--<li-->
-                    <!--class="notice-item view-more"-->
-                    <!--v-show="homeNoticeList.length >= 5"-->
-                  <!--&gt;-->
-                    <!--&lt;!&ndash; 查看全部 &ndash;&gt;-->
-                    <!--<router-link-->
-                      <!--to="/NewsAndNoticeCenter"-->
-                      <!--class="view-more-link"-->
-                    <!--&gt;{{$t('M.investment_look_all')}}</router-link>-->
-                  <!--</li>-->
-                <!--</ul>-->
-              <!--</el-collapse-transition>-->
-            <!--</li>-->
+            <li
+              class="li-item notice-li"
+              @mouseenter="toggleBox('notice',true)"
+              @mouseleave="toggleBox('notice',false)"
+            >
+              <button class="notice-btn">
+                <IconFontCommon
+                  class="font-size26"
+                  icon-name="icon-xiaoxi"
+                />
+              </button>
+              <el-collapse-transition>
+                <ul
+                  class="notice-list"
+                  v-show="showNoticeList"
+                  :style="{
+                    height: `${homeNoticeList.length*40}px`
+                  }"
+                >
+                  <li
+                    class="notice-item"
+                    v-for="noticeItem in homeNoticeList.length < 5 ? homeNoticeList : homeNoticeList.slice(0,5)"
+                    :key="noticeItem.id"
+                    :track-by="noticeItem.id"
+                  >
+                      <a
+                        class="cursor-pointer"
+                        @click.stop="jumpToNewsItem(noticeItem.id)"
+                      >
+                        {{noticeItem.title}}
+                      </a>
+                  </li>
+                  <li
+                    class="notice-item view-more"
+                    v-show="homeNoticeList.length >= 5"
+                  >
+                    <!-- 查看全部 -->
+                    <router-link
+                      to="/NewsAndNoticeCenter"
+                      class="view-more-link"
+                    >{{$t('M.investment_look_all')}}</router-link>
+                  </li>
+                </ul>
+              </el-collapse-transition>
+            </li>
             <li class="li-item setting-li">
               <!--设置（语言，换肤）-->
               <button
@@ -322,7 +322,6 @@
         v-show="
         $route.path.indexOf('OTC') != -1 ||
         $route.path === '/ActivityCenter' ||
-         $route.path === '/CurrencyApplication'||
          $route.path === '/RankingListOfInvitation'"
       >
       </div>

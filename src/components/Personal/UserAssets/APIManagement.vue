@@ -988,7 +988,7 @@ export default {
         }
 
         > .extension-statistics-content {
-          min-height: 140px;
+          min-height: 230px;
 
           .compile {
             color: #338ff5;
@@ -1131,7 +1131,7 @@ export default {
 
       .el-table__empty-block {
         width: 100% !important;
-        min-height: 92px;
+        min-height: 165px;
       }
 
       /* 备注绑定IP部分样式修复 */

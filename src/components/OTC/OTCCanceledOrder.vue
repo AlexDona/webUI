@@ -177,14 +177,14 @@
           <div class="info-right">
             <!-- 超时未支付，订单取消 -->
             <p
-              class="text-info"
+              class="text-info text-blue"
               v-if="item.appeal == 'NO'"
             >
               {{$t('M.otc_overBuy_cancel')}}
             </p>
             <!-- 申诉判定，订单取消 -->
             <p
-              class="text-info"
+              class="text-info text-blue"
               v-if="item.appeal == 'YES'"
             >
               {{$t('M.otc_shesu_cancel')}}
@@ -413,6 +413,7 @@ export default {
           border: 1px solid #485776;
           color: #a9bed4;
           background-color: #1c1f32;
+          box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .canceled-table-body {

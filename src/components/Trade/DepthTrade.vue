@@ -79,7 +79,6 @@ export default {
             // }
           },
           formatter: (params) => {
-            console.log(this)
             // 委托价
             // 委托量
             return `
@@ -105,6 +104,27 @@ export default {
           axisLine: {
             lineStyle: {
               color: '#61688a'
+            }
+          }
+        },
+        axisLabel: {
+          margin: 2,
+          formatter: newNum => {
+            switch (this.language) {
+              case 'zh_CN':
+                if (newNum > 100000000) {
+                  newNum = `${this.$keep2Num(newNum / 100000000)}亿`
+                } else if (newNum > 10000) {
+                  newNum = `${this.$keep2Num(newNum / 10000)}万`
+                }
+                return newNum
+              default :
+                if (newNum > 1000000) {
+                  newNum = `${this.$keep2Num(newNum / 1000000)}M`
+                } else if (newNum > 1000) {
+                  newNum = `${this.$keep2Num(newNum / 1000)}K`
+                }
+                return newNum
             }
           }
         },
@@ -195,7 +215,8 @@ export default {
       depthDataByAjax: state => state.common.klineAjaxData.depthData,
       depthDataBySocket: state => state.common.socketData.depthData,
       theme: state => state.common.theme,
-      mainColor: state => state.common.mainColor
+      mainColor: state => state.common.mainColor,
+      language: state => state.common.language
     })
   },
   watch: {
@@ -222,7 +243,7 @@ export default {
     > .title {
       box-sizing: border-box;
       height: 34px;
-      padding: 0 2.1%;
+      padding: 0 14px;
 
       /* font-weight: 700; */
       margin-bottom: 1px;

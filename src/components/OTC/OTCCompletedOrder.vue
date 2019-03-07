@@ -233,7 +233,8 @@
             :label="$t('M.otc_canceled_total')"
           >
             <template slot-scope="s">
-              {{ (s.row.price * s.row.pickCount).toFixed(2)}}({{ s.row.currencyName }})
+              <!--{{ (s.row.price * s.row.pickCount).toFixed(2)}}({{ s.row.currencyName }})-->
+              {{ $scientificToNumber((s.row.price * s.row.pickCount).toFixed(2))}}({{ s.row.currencyName }})
             </template>
           </el-table-column>
           <!-- 下单时间 -->

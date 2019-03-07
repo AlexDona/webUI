@@ -581,7 +581,7 @@ export default {
 
   .billing-details {
     > .billing-details-main {
-      min-height: 650px;
+      min-height: 665px;
 
       .billing-details-content {
         > .tab-list {
@@ -846,7 +846,7 @@ export default {
 
       .el-date-editor {
         &.el-input__inner {
-          width: 230px;
+          width: 213px;
         }
 
         &.el-input {
@@ -864,6 +864,7 @@ export default {
         }
 
         .el-range__close-icon {
+          display: none;
           line-height: 25px;
         }
       }

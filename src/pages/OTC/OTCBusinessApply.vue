@@ -295,7 +295,8 @@ export default {
   methods: {
     ...mapMutations([
       // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
-      'CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS'
+      'CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS',
+      'CHANGE_AJAX_READY_STATUS' // 改变接口返回loading状态
     ]),
     // 下载商家申请资料模板
     downloadApplicationForm () {
@@ -330,14 +331,17 @@ export default {
     cancelApply () {
       this.showApplyMerchantStatus = false
     },
-    // 请求申请状态
+    // 提交otc商家申请-请求申请状态
     async getOTCBusinessApply () {
+      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       const data = await businessApply()
       // 返回数据正确的逻辑
       console.log(data)
+      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       if (!data) return false
       if (data.meta) {
         let detailMeta = getNestedData(data, 'meta')
+        console.log(typeof detailMeta.success)
         if (detailMeta.success == true) {
           this.applyStatus = 2
           this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
@@ -353,12 +357,14 @@ export default {
     },
     // 首次点击商家申请决定进入哪个界面
     async determineUser () {
+      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       // 刚进页面接口请求回来之前先展示缓冲界面
       this.applyStatus = 4
       const data = await firstEnterBusinessApply()
       console.log(' 首次点击商家申请请求数据')
       console.log(data)
       // 正确逻辑
+      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       if (data) {
         let getData = getNestedData(data, 'data')
         // 返回数据正确的逻辑
@@ -394,6 +400,7 @@ export default {
     },
     // 商家申请界面用户协议
     async argumentBusinessApplyRequest () {
+      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       const data = await argumentBusinessApply({
         termsTypeIds: 9,
         language: this.language
@@ -401,6 +408,7 @@ export default {
       console.log('商家申请界面用户协议')
       console.log(data)
       // 正确逻辑
+      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       if (!data) return false
       this.argumentContent = getNestedData(data, 'data[0].content')
     },

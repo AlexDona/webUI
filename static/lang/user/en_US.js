@@ -45,8 +45,9 @@ export const user = {
   'login_tips1': 'Enter phone number/email',
   'login_tips2': 'Please enter login password',
   'login_tips3': 'Forget password',
-  'login_tips4': 'No account? Register',
+  'login_tips4': 'Register now',
   'login_tips5': 'Please enter',
+  'login_tips7': 'Remember account',
   // #############忘记密码#############''forget password'
   // 'forgetPassword_findBack': 'Retrieve',
   'forgetPassword_verify_style1': 'verify phone',

@@ -1114,7 +1114,7 @@ export default {
         }
 
         > .wait-veritfy-back {
-          height: 400px;
+          height: 490px;
           padding-top: 130px;
 
           > .wait-veritfy {
