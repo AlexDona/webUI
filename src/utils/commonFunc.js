@@ -142,7 +142,9 @@ export const validateNumForUserInput = (type, targetNum) => {
 }
 // api 发送验证码（短信、邮箱）
 export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 0, callback) => {
+  store.commit('CHANGE_AJAX_READY_STATUS', true)
   const data = await sendMsgByPhoneOrEmial(type, params)
+  store.commit('CHANGE_AJAX_READY_STATUS', false)
   if (!returnAjaxMsg(data, that)) {
     return false
   } else {
@@ -413,4 +415,16 @@ export const handleRequest = async (request, noTip, errorTip) => {
 export const http2https = (str) => {
   if (!str) return false
   return str.startsWith('http://') ? str.replace('http://', 'https://') : str
+}
+/**
+ * 需要单独loading的接口，如 下单、登录、重置密码、注册等
+ * @param request
+ * @param params
+ * @returns {Promise<*>}
+ */
+export const requestWithLoading = async (request, params = {}) => {
+  store.commit('CHANGE_AJAX_READY_STATUS', true)
+  const data = await request(params)
+  store.commit('CHANGE_AJAX_READY_STATUS', false)
+  return data
 }
