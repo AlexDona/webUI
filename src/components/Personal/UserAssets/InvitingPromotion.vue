@@ -412,6 +412,7 @@ export default {
     },
     // 类型筛选（直接 间接）
     changeId (e) {
+      this.currentPageForMyEntrust = 1
       console.log(e)
       this.generalizeOptionsList.forEach(item => {
         if (e === item.value) {
@@ -456,11 +457,9 @@ export default {
     },
     // 推荐用户币种列表
     async getRecommendUserPromotion () {
-      // this.loading = true
       let data = await getRecommendUserPromotionList({
         pageNumber: this.currentPageMyEntrust, // 页码
-        pageSize: this.pageSize, // 条数
-        type: this.generalizeValue // 类型
+        pageSize: this.pageSize // 条数
       })
       console.log(data)
       if (!returnAjaxMsg(data, this)) {
@@ -470,14 +469,10 @@ export default {
       } else {
         // 接口失败清除局部loading
         this.partLoading = false
-        // let responseData = data.data.data
         let responseData = getNestedData(data, 'data.data')
         // 返回展示
-        // this.awardList = responseData.data.list
         this.awardList = getNestedData(responseData, 'data.list')
-        // this.coinName = responseData.coinName
         this.coinName = getNestedData(responseData, 'coinName')
-        // this.totalPageMyEntrust = responseData.data.pages - 0
         this.totalPageMyEntrust = getNestedData(responseData, 'data.pages') - 0
       }
     },
