@@ -19,7 +19,7 @@
                 {{ $t('M.comm_hello') }}
               </span>
               <span class="color">
-                {{ userName }}
+                {{ nickName }}
               </span>
             </p>
             <span class="display-inline-block margin-top9 text-color">
@@ -33,6 +33,7 @@
             <span
               v-if="realNameAuth !== 'y'"
               class="icon-user-info info-right display-inline-block text-align-c"
+              :title="$t('M.user_not_real_name')"
             >
               <IconFontCommon
                 class="font-size16 icon-color"
@@ -43,6 +44,7 @@
             <span
               v-else
               class="real-name info-right display-inline-block text-align-c"
+              :title="$t('M.user_by_real_name')"
             >
               <IconFontCommon
                 class="font-size16 icon-color"
@@ -53,6 +55,7 @@
             <span
               v-if="!email"
               class="icon-user-info info-right display-inline-block text-align-c"
+              :title="$t('M.user_not_email_enabled')"
             >
               <IconFontCommon
                 class="font-size16 icon-color"
@@ -63,6 +66,7 @@
             <span
               v-else
               class="real-name info-right display-inline-block text-align-c"
+              :title="$t('M.user_open_email_enabled')"
             >
               <IconFontCommon
                 class="font-size16 icon-color"
@@ -73,6 +77,7 @@
             <span
               v-if="phoneEnable === 'disable' || phoneEnable === ''"
               class="icon-user-info info-right display-inline-block text-align-c"
+              :title="$t('M.user_not_phone_enabled')"
             >
               <IconFontCommon
                 class="font-size20 icon-color"
@@ -83,6 +88,7 @@
             <span
               v-else
               class="real-name info-right display-inline-block text-align-c"
+              :title="$t('M.user_open_phone_enabled')"
             >
               <IconFontCommon
                 class="font-size20 icon-color"
@@ -93,6 +99,7 @@
             <span
               v-if="googleEnable === 'disable' || googleEnable === ''"
               class="icon-user-info display-inline-block text-align-c"
+              :title="$t('M.user_not_google_enabled')"
             >
               <IconFontCommon
                 class="font-size16 icon-color"
@@ -103,6 +110,7 @@
             <span
               v-else
               class="real-name display-inline-block text-align-c"
+              :title="$t('M.user_open_google_enabled')"
             >
               <IconFontCommon
                 class="font-size16 icon-color"
@@ -133,6 +141,7 @@
               <span
                 v-if="!level"
                 class="info-centre-right font-size12"
+                :title="$t('M.user_leave_vip')"
               >
                 VIP0
               </span>
@@ -140,6 +149,7 @@
               <span
                 v-else
                 class="info-centre-right font-size12"
+                :title="$t('M.user_look_vip')"
               >
                 {{ level }}
               </span>
@@ -288,7 +298,7 @@ export default {
       language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内存用户详细信息
-      userName: state => getNestedData(state, 'user.loginStep1Info.userInfo.userName'),
+      nickName: state => getNestedData(state, 'user.loginStep1Info.userInfo.nickName'),
       realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth'),
       showId: state => getNestedData(state, 'user.loginStep1Info.userInfo.showId'),
       email: state => getNestedData(state, 'user.loginStep1Info.userInfo.email'),

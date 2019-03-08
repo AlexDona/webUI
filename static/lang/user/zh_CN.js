@@ -45,8 +45,9 @@ export const user = {
   'login_tips1': '请输入电话号/邮箱',
   'login_tips2': '请输入密码',
   'login_tips3': '忘记密码',
-  'login_tips4': '免费注册',
+  'login_tips4': '立即注册',
   'login_tips5': '请输入用户名',
+  'login_tips7': '记住账号',
   // #############忘记密码#############
   'forgetPassword_verify_style1': '验证手机',
   'forgetPassword_verify_style2': '手机验证码',

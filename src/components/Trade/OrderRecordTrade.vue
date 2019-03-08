@@ -20,7 +20,7 @@
               <el-table
                 :data="orderRecordList"
                 :empty-text="$t('M.comm_no_data')"
-                height="574"
+                :height="screenWidth > 1920 ? '800': '574'"
               >
                 <!--时间-->
                 <el-table-column
@@ -78,6 +78,7 @@ export default {
     }
   },
   created () {
+    console.log(this.screenWidth)
   },
   mounted () {},
   activated () {},
@@ -99,10 +100,14 @@ export default {
       theme: state => state.common.theme,
       orderRecordListByAjax: state => state.common.klineAjaxData.tardeRecordList,
       orderRecordListBySocket: state => state.common.socketData.tardeRecordList,
+      clientWidth: state => state.common.clientWidth,
       activeSymbol: state => state.common.activeSymbol
     }),
     orderRecordList () {
       return (this.reflashCount < 1) ? this.orderRecordListByAjax : this.orderRecordListBySocket
+    },
+    screenWidth () {
+      return this.clientWidth
     }
   },
   watch: {
@@ -137,7 +142,7 @@ export default {
           display: inline-block;
           height: 100%;
           border-bottom: 2px solid $mainColor;
-          text-indent: 4px;
+          font-size: 14px;
           color: $mainColor;
         }
       }
@@ -152,6 +157,7 @@ export default {
         th {
           height: 26px;
           border-bottom: 1px solid rgba(50, 55, 87, 1);
+          font-size: 12px;
           line-height: 24px;
 
           &:nth-of-type(2) {

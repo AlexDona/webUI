@@ -643,16 +643,10 @@ export default {
       this.fullscreenLoading = true
       data = await getPushTotalByCoinId(param)
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        this.currencyAsset = getNestedData(data, 'data.data.total')
-        console.log(this.currencyAsset)
-      }
+      // 接口失败清除loading
+      this.fullscreenLoading = false
+      if (!data) return false
+      this.currencyAsset = getNestedData(data, 'data.total')
     }
   },
   filter: {},

@@ -1,0 +1,5 @@
+alias gs="git st"
+alias gb="git branch"
+alias gck="git checkout"
+alias ga="git add"
+alias gcm="git commit -m"

@@ -166,7 +166,7 @@
         </div>
       </div>
     </div>
-    <div class="withdrawal-address-main margin-top9">
+    <div class="withdrawal-address-main content-main margin-top9">
       <header class="address-list-header background-color border-radius2">
         <span class="header-content display-inline-block font-size16 cursor-pointer">
           <!--地址列表-->
@@ -541,8 +541,12 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .withdrawal-address {
+    > .content-main {
+      min-height: 300px !important;
+    }
+
     > .withdrawal-address-main {
-      min-height: 390px;
+      min-height: 350px;
       border-radius: 5px;
 
       > .withdrawal-header {
@@ -892,7 +896,7 @@ export default {
     /deep/ {
       .el-table__empty-block {
         width: 920px !important;
-        height: 255px;
+        height: 257px;
       }
 
       .el-input__inner {
@@ -902,7 +906,7 @@ export default {
       }
 
       .el-form-item {
-        margin-bottom: 33px;
+        margin-bottom: 20px;
       }
 
       .el-table--fit {

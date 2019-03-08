@@ -677,16 +677,18 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import '../../../static/css/scss/index';
+  $maxHeight1920-2560: 580px;
+  $defaultHeight: 355px;
 
   .kline-container {
     position: relative;
     width: 100%;
-    height: 355px;
+    height: $defaultHeight;
     overflow: hidden;
 
     #tv_chart_container {
       width: 100%;
-      height: 355px;
+      height: $defaultHeight;
 
       &.night {
         background-color: $mainContentNightBgColor;
@@ -704,7 +706,22 @@ export default {
       top: 0;
       right: 0;
       width: 101%;
-      height: 355px;
+      height: $defaultHeight;
+    }
+  }
+
+  @media screen and (max-width: 2560px) and (min-width: 1921px) {
+    .kline-container {
+      height: $maxHeight1920-2560;
+
+      #tv_chart_container {
+        height: $maxHeight1920-2560;
+      }
+
+      .loading-box,
+      .interval-loading-box {
+        height: $maxHeight1920-2560;
+      }
     }
   }
 </style>

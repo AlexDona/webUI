@@ -6,7 +6,7 @@
   >
     <div class="inner-box clearfloat">
       <!--左侧-->
-      <div class="left float-left">
+      <div class="left">
         <!--全球行情-->
         <GlobalMarket class="margin-bottom10"/>
         <!--买卖单-->
@@ -16,12 +16,12 @@
       </div>
       <!--中间-->
       <div
-        class="middle float-left"
+        class="middle"
         :class="{'day':theme == 'day','night':theme == 'night' }"
       >
         <MiddleHeader/>
         <!--k线-->
-          <KLine/>
+        <KLine/>
         <!--市价交易、限价交易-->
         <ExchangeBox/>
         <!--交易-->
@@ -31,7 +31,7 @@
         <Depth/>
       </div>
       <!--右侧-->
-      <div class="right float-left">
+      <div class="right">
         <!--市场-->
         <TradeMarketList/>
       </div>
@@ -89,20 +89,19 @@ export default {
   @import "../../static/css/scss/Trade/TradeCenter";
 
   .trade-box {
-    box-sizing: border-box;
     width: 100%;
-    min-width: 1366px;
     margin-top: 50px;
 
     > .inner-box {
-      display: block;
+      display: flex;
       box-sizing: border-box;
       width: 100%;
-      padding: 14px 1.5625%;
+      padding: 14px;
       margin: 0 auto;
 
       > div {
-        margin-right: .4166666666%;
+        box-sizing: border-box;
+        margin-right: 14px;
 
         &:last-of-type {
           margin-right: 0;
@@ -110,16 +109,28 @@ export default {
       }
 
       > .left {
-        width: 22.909561217%;
+        width: 320px;
+        max-width: 320px;
         font-size: 12px;
       }
 
       > .middle {
-        width: 53.260869565%;
+        flex: 1;
+        box-sizing: border-box;
       }
 
       > .right {
-        width: 22.909561217%;
+        width: 320px;
+      }
+
+      @media screen and (max-width: 1366px) {
+        > div {
+          margin-right: 6px;
+        }
+
+        > .middle {
+          width: 700px;
+        }
       }
     }
 
@@ -152,7 +163,7 @@ export default {
 
         .el-tabs__item {
           height: 34px;
-          font-size: 16px;
+          font-size: 14px;
           line-height: 34px;
 
           &.is-active {
@@ -161,7 +172,7 @@ export default {
         }
 
         .el-tabs__nav-scroll {
-          padding-left: 2.1%;
+          padding-left: 14px;
         }
 
         .el-tabs__header {

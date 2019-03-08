@@ -78,22 +78,12 @@
                 :isShow="!!errorShowStatusList[1]"
               />
             </div>
-            <div class="todos">
-              <router-link
-                to="/ForgetPassword"
-              >
-                <!-- 忘记密码? -->
-                {{$t('M.login_tips3')}}?
-              </router-link>
-              <!-- 忘记密码？ -->
-              <router-link
-                class="text-align-r"
-                to="/register"
-              >
-                <!-- 免费注册 -->
-                <!-- {{$t('M.login_free')}}{{$t('M.comm_register_time')}} -->
-                {{$t('M.login_tips4')}}
-              </router-link>
+            <!-- 记住账号 -->
+            <div class="remember-username">
+              <el-checkbox
+                v-model="isRememberUserName"
+                class="checkout"
+              ><span>{{$t('M.login_tips7')}}</span></el-checkbox>
             </div>
           </div>
         </div>
@@ -104,6 +94,24 @@
           <!-- 登录 -->
           {{$t('M.comm_login')}}
         </button>
+        <div class="todos">
+          <router-link
+            to="/ForgetPassword"
+          >
+            <!-- 忘记密码? -->
+            {{$t('M.login_tips3')}}
+          </router-link>
+          <span class="middle-line"></span>
+          <!-- 忘记密码？ -->
+          <router-link
+            class="text-align-r"
+            to="/register"
+          >
+            <!-- 免费注册 -->
+            <!-- {{$t('M.login_free')}}{{$t('M.comm_register_time')}} -->
+            {{$t('M.login_tips4')}}
+          </router-link>
+        </div>
         <!--异常登录（短信验证码）-->
         <!--滑块验证 : 验证-->
         <el-dialog
@@ -388,7 +396,7 @@
                 @blur="checkoutInputFormat(0,username)"
               />
             </div>
-            <div class="input-item">
+            <div class="input-item password">
               <!-- 请输入密码 -->
               <input
                 type="password"
@@ -400,6 +408,13 @@
                 @keyup.enter="loginForStep1"
                 @blur="checkoutInputFormat(1,password)"
               />
+            </div>
+            <!-- 记住账号 -->
+            <div class="remember-username">
+              <el-checkbox
+                v-model="isRememberUserName"
+                class="checkout"
+              ><span>{{$t('M.login_tips7')}}</span></el-checkbox>
             </div>
             <div class="input-item login-btn">
               <button
@@ -417,21 +432,22 @@
               {{ mobileErrorMsg }}
             </div>
             <div class="todos">
-              <router-link
-                class="jump-url"
-                to="/register"
-              >
-                <!-- 注册 -->
-                {{$t('M.comm_register_time')}}
-              </router-link>
-              <!-- 忘记密码？ -->
+              <!-- 忘记密码 -->
               <router-link
                 to="/ForgetPassword"
                 class="jump-url text-align-r"
               >
-                <!-- 忘记密码? -->
-                {{$t('M.login_forget')}}{{$t('M.comm_loginpassword')}}?
-              </router-link><!-- 免费注册 -->
+                <!-- 忘记密码 -->
+                {{$t('M.login_tips3')}}
+              </router-link>
+              <span class="middle-line"></span>
+              <router-link
+                class="jump-url"
+                to="/register"
+              >
+                <!-- 立即注册 -->
+                {{$t('M.login_tips4')}}
+              </router-link>
             </div>
           </div>
           <!--短信验证码、邮箱验证码、谷歌验证码 步骤3-->
@@ -644,7 +660,10 @@ import {
 } from '../utils/commonFunc'
 import {
   getUserAgent,
-  detectOS
+  detectOS,
+  setStore,
+  getStore,
+  removeStore
 } from '../utils'
 import socket from '../utils/datafeeds/socket'
 
@@ -722,7 +741,9 @@ export default {
       loginSliderStatus: false, // 登录页面滑块显示隐藏状态
       loginImageValidateStatus: false, // 登录PersonalCenter页面图片验证码显示隐藏状态
       step3DialogShowStatus: false, // 步骤3 登录状态
-      mobileErrorMsg: '' // 移动端错误信息
+      mobileErrorMsg: '', // 移动端错误信息
+      // 是否记住密码
+      isRememberUserName: false
     }
   },
   created () {
@@ -739,6 +760,7 @@ export default {
     this.ENTER_STEP1()
     this.refreshCode()
     this.clearInputValue()
+    this.getLocalUserName()
   },
   mounted () {
     $('body').on('mousemove', (e) => {
@@ -780,6 +802,15 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'USER_LOGIN'
     ]),
+    // 获取本地记录密码
+    getLocalUserName () {
+      let username = getStore('username')
+      this.isRememberUserName = Boolean(username)
+      console.log(username, this.isRememberUserName)
+      if (this.isRememberUserName) {
+        this.username = username
+      }
+    },
     // 登录成功操作
     userLoginSuccess (data) {
       this.USER_LOGIN(data)
@@ -915,6 +946,11 @@ export default {
       // 调用第一接口
       let params = new FormData()
       params.append('userName', this.username.toLowerCase())
+      this.isRememberUserName ? setStore('username', this.username.toLowerCase()) : removeStore('username')
+
+      if (this.isRememberUserName) {
+      } else {
+      }
       params.append('password', this.password)
       const data = await userLoginForStep1(params)
       if (!returnAjaxMsg(data, this, 0)) {
@@ -1286,7 +1322,7 @@ export default {
             margin-bottom: 30px;
 
             &.pwd {
-              margin-bottom: 15px;
+              margin-bottom: 0;
             }
 
             > .inner-box {
@@ -1320,21 +1356,24 @@ export default {
             }
           }
 
-          > .todos {
-            position: relative;
-            display: flex;
-            width: 290px;
-            height: 20px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            font-weight: 400;
-            font-size: 12px;
-            font-family: "MicrosoftYaHei";
-            color: rgba(47, 120, 202, 1);
+          > .remember-username {
+            margin: 0 0 10px;
+            color: $mainColor;
 
-            > a {
-              flex: 1;
-              color: #2f78ca;
+            /deep/ {
+              .el-checkbox__inner {
+                width: 12px;
+                height: 12px;
+                background-color: transparent;
+
+                &::after {
+                  border-color: $mainColor;
+                }
+              }
+
+              .el-checkbox__label {
+                font-size: 12px;
+              }
             }
           }
         }
@@ -1346,6 +1385,37 @@ export default {
           width: 100px;
           height: 100px;
           // background-color: pink;
+        }
+      }
+
+      > .todos {
+        width: 290px;
+        height: 20px;
+        margin: 20px 0;
+        overflow: hidden;
+        font-weight: 400;
+        font-size: 12px;
+        font-family: "MicrosoftYaHei";
+        text-align: center;
+        color: rgba(47, 120, 202, 1);
+
+        > a {
+          padding: 0 10px;
+          text-align: right;
+          color: $mainColor;
+
+          &:last-of-type {
+            text-align: left;
+          }
+        }
+
+        > .middle-line {
+          display: inline-block;
+          width: 1px;
+          height: 10px;
+          line-height: 10px;
+          vertical-align: middle;
+          background-color: $mainColor;
         }
       }
 
@@ -1688,6 +1758,36 @@ export default {
               background: linear-gradient(81deg, rgba(61, 152, 249, 1) 0%, rgba(71, 135, 255, 1) 100%);
               box-shadow: 1px 1px 8px 0 rgba(26, 42, 71, 1);
             }
+
+            &.password {
+              margin-bottom: 1rem;
+            }
+          }
+
+          > .remember-username {
+            margin-bottom: 2rem;
+            color: $mainColor;
+
+            /deep/ {
+              .el-checkbox__inner {
+                width: .6rem;
+                height: .6rem;
+                font-size: .8rem;
+                background-color: transparent;
+
+                &::after {
+                  top: -5px;
+                  width: .4rem;
+                  height: .5rem;
+                  border-color: $mainColor;
+                }
+              }
+
+              .el-checkbox__label {
+                font-size: .8rem;
+                vertical-align: middle;
+              }
+            }
           }
 
           > .error-msg {
@@ -1697,11 +1797,27 @@ export default {
           }
 
           > .todos {
-            display: flex;
+            text-align: center;
+
+            > a {
+              display: inline-block;
+              padding: 0 .2rem;
+              text-align: right;
+              vertical-align: middle;
+            }
+
+            > .middle-line {
+              display: inline-block;
+              width: 4px;
+              height: 1rem;
+              line-height: 10px;
+              vertical-align: middle;
+              background-color: $mainColor;
+            }
 
             > .jump-url {
-              flex: 1;
               font-size: 1rem;
+              text-align: left;
               color: rgba(47, 120, 202, 1);
             }
           }

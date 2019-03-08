@@ -2,14 +2,10 @@
   <div
     class="otc-online-trader-buy-sell-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{
-      height: windowHeight+'px'
-    }"
+    :style="{height: windowHeight+'px'}"
   >
     <!-- otc在线交易 摘单 页面 -->
-    <div
-      class="online-trader-buy-sell-content"
-    >
+    <div class="online-trader-buy-sell-content">
       <div class="online-trader">
         <!-- 交易左边 -->
         <div class="online-trader-left">
@@ -488,6 +484,7 @@ export default {
   methods: {
     ...mapMutations([
       // 0.1 改变全局锚点状态方法
+      'CHANGE_AJAX_READY_STATUS', // 改变接口返回loading状态
       'CHANGE_OTC_ANCHOR_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_PASSWORD_USEABLE'
@@ -759,6 +756,7 @@ export default {
         return false
       }
       // 判断是卖出还是买入分别调用不同的接口和传入不同的参数
+      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       let data
       // 卖
       switch (this.onlineTraderStatus) {
@@ -781,6 +779,7 @@ export default {
           break
       }
       // 返回数据正确的逻辑
+      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
       this.tradePassword = '' // 清空交易密码
       console.log(data)
