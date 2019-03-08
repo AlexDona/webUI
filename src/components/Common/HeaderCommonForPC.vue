@@ -527,7 +527,7 @@ export default{
       this.activeConvertCurrency = getStore('convertCurrency')
     }
     // 获取 语言列表
-    await this.GET_LANGUAGE_LIST_ACTION(this)
+    if (!await this.GET_LANGUAGE_LIST_ACTION(this)) return false
     await this.SET_PARTNER_INFO_ACTION(this.language)
     await this.GET_COUNTRY_LIST_ACTION()
     await this.GET_ALL_NOTICE_ACTION(this.language)

@@ -334,13 +334,11 @@ export default {
         // console.log(this.dialogImageHandUrl1)
         data = await statusCardSettings(param)
         // console.log(data)
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.successJump()
           this.stateEmptyData()
         }

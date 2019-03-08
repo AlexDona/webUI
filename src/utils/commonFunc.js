@@ -25,7 +25,6 @@ import {
 } from '../utils/api/home'
 import storeCreator from '../vuex'
 import {
-  removeStore,
   // getStore,
   // setStore,
   // getStoreWithJson,
@@ -56,7 +55,7 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
   const meta = data.data.meta
   if (meta) {
     if (!meta.success && !errorTip) {
-      if (meta.code !== 500) {
+      if (meta.code !== 500 && !store.state.user.isTokenDisable) {
         ElementUI.Message({
           type: 'error',
           // duration: 5000000,
@@ -66,9 +65,9 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
       // 登录失效
       switch (meta.code) {
         case 401:
-          removeStore('loginStep1Info')
-          that.$router.push({path: '/login'})
           store.commit('USER_LOGOUT')
+          store.commit('CHANGE_TOKEN_AVAILABILITY', true)
+          that.$router.push({path: '/login'})
           break
         case 500:
           that.$router.push({path: '/500'})
@@ -142,7 +141,9 @@ export const validateNumForUserInput = (type, targetNum) => {
 }
 // api 发送验证码（短信、邮箱）
 export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 0, callback) => {
+  store.commit('CHANGE_AJAX_READY_STATUS', true)
   const data = await sendMsgByPhoneOrEmial(type, params)
+  store.commit('CHANGE_AJAX_READY_STATUS', false)
   if (!returnAjaxMsg(data, that)) {
     return false
   } else {
@@ -413,4 +414,16 @@ export const handleRequest = async (request, noTip, errorTip) => {
 export const http2https = (str) => {
   if (!str) return false
   return str.startsWith('http://') ? str.replace('http://', 'https://') : str
+}
+/**
+ * 需要单独loading的接口，如 下单、登录、重置密码、注册等
+ * @param request
+ * @param params
+ * @returns {Promise<*>}
+ */
+export const requestWithLoading = async (request, params = {}) => {
+  store.commit('CHANGE_AJAX_READY_STATUS', true)
+  const data = await request(params)
+  store.commit('CHANGE_AJAX_READY_STATUS', false)
+  return data
 }

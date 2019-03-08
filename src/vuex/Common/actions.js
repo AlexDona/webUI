@@ -68,6 +68,7 @@ export default {
     commit('SET_FOOTER_INFO', {
       configInfo
     })
+    return true
   },
   // 设置用户信息
   async [SET_PARTNER_INFO_ACTION] ({commit, state}, language) {

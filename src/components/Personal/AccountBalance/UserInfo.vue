@@ -262,11 +262,8 @@ export default {
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        console.log(data)
-        if (data.data.data.coinPrice) {
-          // 获取汇率
-          this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
-        }
+        // 获取汇率
+        this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
       }
     },
     // Vip跳转
@@ -292,8 +289,6 @@ export default {
       // 返回数据
       // this.totalSumBTC = data.data.data.totalSum
       this.totalSumBTC = getNestedData(data, 'data.totalSum')
-      console.log(data.data.data)
-      console.log(this.totalSumBTC)
     }
   },
   filter: {},

@@ -934,6 +934,7 @@ export default {
       // 返回数据正确的逻辑
       // 关闭交易密码框
       this.publishOrderTradePwdDialogStatus = false
+      this.tradePassword = '' // 清空交易密码
       if (!data) return false
       // 清空表单数据
       this.clearInputData()
@@ -1100,7 +1101,7 @@ export default {
             > .errorLimitMin,
             .errorLimitMax {
               display: inline-block;
-              width: 212px;
+              width: 230px;
               font-size: 12px;
             }
           }

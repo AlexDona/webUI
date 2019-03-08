@@ -11,7 +11,8 @@ import {
   CHANGE_CURRENT_VIP_LEVEL,
   CHANGE_VIP_PRICE_INFO_LIST,
   CHANGE_RENEW_STATUS,
-  CHANGE_USER_REFRESH_SUCCESS
+  CHANGE_USER_REFRESH_SUCCESS,
+  CHANGE_TOKEN_AVAILABILITY
 } from './mutations-types.js'
 
 import {
@@ -95,6 +96,7 @@ export default {
     state.isLogin = false
     state.loginStep1Info = {}
     removeCookie('loginStep1Info')
+    removeCookie('token')
   },
   // 修改选中vip等级
   [CHANGE_CURRENT_VIP_LEVEL] (state, {activeSelectLevel}) {
@@ -113,5 +115,8 @@ export default {
   // 用户信息接口是否返回成功
   [CHANGE_USER_REFRESH_SUCCESS] (state, data) {
     state.isUserRefreshSuccess = data
+  },
+  [CHANGE_TOKEN_AVAILABILITY] (state, data) {
+    state.isTokenDisable = data
   }
 }

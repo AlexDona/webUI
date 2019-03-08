@@ -706,6 +706,7 @@ export default {
       let formData = new FormData()
       // console.log(res.file)
       formData.append('file', file)
+      console.log(formData)
       const data = await uploadImageAjax(formData)
       this.CHANGE_AJAX_READY_STATUS(false)
       if (!data) return false
@@ -849,7 +850,6 @@ export default {
       if (goOnStatus) {
         let data
         let param = {
-          nationCode: this.userInfo.country.chinese, // 国籍
           cardType: this.documentTypeValue, // 证件类型
           realname: this.realName, // 真实姓名
           // 证件号码
@@ -958,9 +958,9 @@ export default {
       this.fullscreenLoading = true
       data = await submitSeniorCertification(param)
       console.log(data)
+      // 接口返回清除loading
+      this.fullscreenLoading = false
       if (!(returnAjaxMsg(data, this, 1))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         return false
       } else {
         this.stateEmptyData()

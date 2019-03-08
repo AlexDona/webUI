@@ -295,7 +295,8 @@ export default {
       emailCode: '', // 邮箱验证
       googleCode: '', // 谷歌验证
       fullscreenLoading: false, // 整页loading
-      partLoading: false // 局部列表loading
+      partLoading: false, // 局部列表loading
+      pageSize: 10
     }
   },
   created () {

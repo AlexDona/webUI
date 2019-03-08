@@ -949,7 +949,7 @@ export default {
         this.investList = getNestedData(getData, 'userFinancialManagementRecord.list')
         // 收益记录列表
         this.userInterestRecord = getNestedData(getData, 'userInterestRecord.list')
-        if (this.investList.length == 0 || this.userInterestRecord.length == 0) {
+        if (!this.investList.length || !this.userInterestRecord.length) {
           // this.noData = '暂无数据'
           this.noData = this.$t('M.comm_no_data')
         } else {
