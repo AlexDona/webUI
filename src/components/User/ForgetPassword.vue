@@ -109,8 +109,9 @@
                     />
                   </span>
                   </div>
-                  <div class="slider-success"
-                       v-else
+                  <div
+                    class="slider-success"
+                    v-else
                   >
                   <i class="el-icon-circle-check font-size18"></i>
                   <!--验证成功-->
@@ -164,7 +165,10 @@
                 <input
                   class="username-input validate-code-input"
                   type="text"
-                  v-model.trim="phoneCode"
+                  ref="phone_code"
+                  maxlength="6"
+                  @input="userInputFormat('phone_code', 'phoneCode')"
+                  @keyup="userInputFormat('phone_code', 'phoneCode')"
                 />
                 <!--发送验证码按钮-->
                 <CountDownButton
@@ -199,7 +203,10 @@
                 <input
                   class="username-input validate-code-input"
                   type="text"
-                  v-model.trim="emailCode"
+                  ref="email_code"
+                  maxlength="6"
+                  @input="userInputFormat('email_code', 'emailCode')"
+                  @keyup="userInputFormat('email_code', 'emailCode')"
                 />
                 <!--发送验证码按钮-->
                 <CountDownButton
@@ -222,7 +229,9 @@
                   class="username-input"
                   type="text"
                   maxlength="6"
-                  v-model.trim="googleCode"
+                  ref="google_code"
+                  @input="userInputFormat('google_code', 'googleCode')"
+                  @keyup="userInputFormat('google_code', 'googleCode')"
                 />
               </span>
             </div>
@@ -300,7 +309,10 @@
           <div class="inner-box">
             <div class="success-box">
               <div class="left">
-                <IconFont class="icon-text" iconName="icon-dui1"/>
+                <IconFont
+                  class="icon-text"
+                  iconName="icon-dui1"
+                />
               </div>
               <div class="right">
                 <p class="success-msg">
@@ -506,11 +518,14 @@ export default {
       this.nextStepToken = getNestedData(data, 'data')
       this.activeStepNumber = 3
     },
+    userInputFormat (ref, vModel) {
+      let targetStr = positiveIntegerNumRegexpInput(this.$refs[ref])
+      this.$refs[ref].value = targetStr
+      this[vModel] = targetStr
+    },
     // 图片验证码验证
     validateImageCode () {
-      let targetStr = positiveIntegerNumRegexpInput(this.$refs['image_code'])
-      this.$refs['image_code'].value = targetStr
-      this.userInputImageCode = targetStr
+      this.userInputFormat('image_code', 'userInputImageCode')
       if (this.userInputImageCode == this.identifyCode) {
         this.confirmSuccess = true
       }
