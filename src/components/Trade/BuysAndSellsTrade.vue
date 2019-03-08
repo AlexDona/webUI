@@ -92,9 +92,9 @@
                       >
                         {{$scientificToNumber(item.price)}}
                       </span><span class="amount text-align-r">
-                        {{$scientificToNumber(item.amount)}}
+                        {{$scientificToNumber($cutOutPointLength(item.amount, activeSymbol.countExchange))}}
                       </span><span class="total text-align-r">
-                        {{$scientificToNumber(item.total)}}
+                        {{$scientificToNumber($cutOutPointLength(item.total, activeSymbol.priceExchange))}}
                       </span><!--宽度条--><i
                           class="color-sell-bg"
                           :style="`width:${item.amount/buysAndSellsList.sells.highestAmount*100}%`"
@@ -222,6 +222,9 @@ export default {
     }
   },
   watch: {
+    activeSymbol (newVal) {
+      console.log(newVal)
+    },
     activeSymbolId () {
       this.reflashCount = 0
     },

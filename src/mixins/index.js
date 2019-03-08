@@ -1,5 +1,15 @@
-import {keep2Num, keep8Num, scientificToNumber} from '../utils'
-import {jumpToOtherPageForFooter, formatCount, getNestedData, http2https} from '../utils/commonFunc'
+import {
+  keep2Num,
+  keep8Num,
+  scientificToNumber,
+  cutOutPointLength
+} from '../utils'
+import {
+  jumpToOtherPageForFooter,
+  formatCount,
+  getNestedData,
+  http2https
+} from '../utils/commonFunc'
 
 let mixin = {
   data () {
@@ -35,6 +45,9 @@ let mixin = {
     },
     $http2https (str) {
       return http2https(str)
+    },
+    $cutOutPointLength (num, pointLength) {
+      return cutOutPointLength(num, pointLength)
     }
   }
 }
