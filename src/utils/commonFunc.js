@@ -55,7 +55,7 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
   const meta = data.data.meta
   if (meta) {
     if (!meta.success && !errorTip) {
-      if (meta.code !== 500) {
+      if (meta.code !== 500 && !store.state.user.isTokenDisable) {
         ElementUI.Message({
           type: 'error',
           // duration: 5000000,
@@ -66,6 +66,7 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
       switch (meta.code) {
         case 401:
           store.commit('USER_LOGOUT')
+          store.commit('CHANGE_TOKEN_AVAILABILITY', true)
           that.$router.push({path: '/login'})
           break
         case 500:

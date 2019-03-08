@@ -39,7 +39,9 @@ const state = {
     // vip操作： open、renew、update
     vipAction: ''
   },
-  isUserRefreshSuccess: false
+  isUserRefreshSuccess: false,
+  // 登录是否失效
+  isTokenDisable: false
 }
 
 export default {

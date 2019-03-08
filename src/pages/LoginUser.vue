@@ -780,6 +780,7 @@ export default {
       $('body').off('mousemove')
       $('body').off('mouseup')
     })
+    this.CHANGE_TOKEN_AVAILABILITY(false)
   },
   activated () {
     // 清空input框值
@@ -796,7 +797,8 @@ export default {
       'SET_STEP1_INFO',
       'SET_USER_BUTTON_STATUS',
       'USER_LOGIN',
-      'CHANGE_AJAX_READY_STATUS'
+      'CHANGE_AJAX_READY_STATUS',
+      'CHANGE_TOKEN_AVAILABILITY'
     ]),
     // 获取本地记录密码
     getLocalUserName () {
