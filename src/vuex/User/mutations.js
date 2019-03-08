@@ -95,6 +95,7 @@ export default {
     state.isLogin = false
     state.loginStep1Info = {}
     removeCookie('loginStep1Info')
+    removeCookie('token')
   },
   // 修改选中vip等级
   [CHANGE_CURRENT_VIP_LEVEL] (state, {activeSelectLevel}) {

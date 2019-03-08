@@ -25,7 +25,6 @@ import {
 } from '../utils/api/home'
 import storeCreator from '../vuex'
 import {
-  removeStore,
   // getStore,
   // setStore,
   // getStoreWithJson,
@@ -66,9 +65,8 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
       // 登录失效
       switch (meta.code) {
         case 401:
-          removeStore('loginStep1Info')
-          that.$router.push({path: '/login'})
           store.commit('USER_LOGOUT')
+          that.$router.push({path: '/login'})
           break
         case 500:
           that.$router.push({path: '/500'})
