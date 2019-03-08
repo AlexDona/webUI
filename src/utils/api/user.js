@@ -51,7 +51,7 @@ export const findPasswordStep2 = params => handleRequest(() => postWithURLencode
 // 找回密码步骤3
 export const findPasswordStep3 = params => handleRequest(() => postWithURLencoded('user/forgetPassword3', params))
 // 二维码登录生成二维码
-export const getLoginErcode = () => get('user/qrcode')
+export const getLoginErcode = () => handleRequest(() => get('user/qrcode'))
 // 获取app下载地址
 export const getAppDownLoadUrlAjax = () => get('appDown')
 
