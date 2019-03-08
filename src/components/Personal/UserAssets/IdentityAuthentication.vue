@@ -974,6 +974,9 @@ export default {
       this.firstPictureSrc = require('../../../assets/user/card_positive.png')
       this.secondPictureSrc = require('../../../assets/user/card_negative.png')
       this.thirdPictureSrc = require('../../../assets/user/card_handheld.png')
+      this.isUploadImg1 = ''
+      this.isUploadImg2 = ''
+      this.isUploadImg3 = ''
     }
   },
   filter: {},
