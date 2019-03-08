@@ -364,10 +364,11 @@
                 v-else
               >
                 <input
-                  type="number"
                   class="input padding-l15 box-sizing"
                   v-model="phoneCode"
                   @focus="handleinput1"
+                  maxlength="6"
+                  @keydown.enter="killDefault"
                 >
                 <CountDownButton
                   class="send-code-btn cursor-pointer"
@@ -385,10 +386,11 @@
                 v-else
               >
                 <input
-                  type="number"
                   class="input padding-l15 box-sizing"
                   v-model="emailCode"
                   @focus="handleinput1"
+                  maxlength="6"
+                  @keydown.enter="killDefault"
                 >
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
@@ -405,10 +407,11 @@
                 v-else
               >
                 <input
-                  type="number"
                   class="input input-google border-radius2 padding-l15 box-sizing"
                   v-model="googleCode"
                   @focus="handleinput1"
+                  maxlength="6"
+                  @keydown.enter="killDefault"
                 />
               </el-form-item>
             </el-form>
@@ -451,10 +454,11 @@
                 v-show="openPhone"
               >
                 <input
-                  type="number"
                   class="input padding-l15 box-sizing"
                   v-model="phoneCode"
                   @focus="handleinput"
+                  maxlength="6"
+                  @keydown.enter="killDefault"
                 >
                 <CountDownButton
                   class="send-code-btn cursor-pointer"
@@ -470,10 +474,11 @@
                 v-show="openEmail"
               >
                 <input
-                  type="number"
                   class="input padding-l15 box-sizing"
                   v-model="emailCode"
                   @focus="handleinput"
+                  maxlength="6"
+                  @keydown.enter="killDefault"
                 >
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
@@ -489,10 +494,11 @@
                 v-show="openGoogle"
               >
                 <input
-                  type="number"
                   class="input input-google border-radius2 padding-l15 box-sizing"
                   v-model="googleCode"
                   @focus="handleinput"
+                  maxlength="6"
+                  @keydown.enter="killDefault"
                 />
               </el-form-item>
             </el-form>
@@ -710,6 +716,18 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'CHANGE_REF_SECURITY_CENTER_INFO'
     ]),
+    // 禁止回车事件
+    killDefault (event) {
+      console.log(event)
+      var evt = window.event || event
+      if (evt.keyCode == 13) {
+        if (evt.preventDefault) {
+          evt.preventDefault()
+        } else {
+          evt.returnValue = false
+        }
+      }
+    },
     // 1.时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -1109,7 +1127,7 @@ export default {
       > .security-setting-box {
         .send-code-btn {
           position: absolute;
-          top: 4px;
+          top: 3px;
           width: 96px;
           height: 34px;
         }
@@ -1380,7 +1398,6 @@ export default {
           }
 
           .error-msg {
-            height: 25px;
             line-height: 25px;
             color: rgb(212, 88, 88);
           }

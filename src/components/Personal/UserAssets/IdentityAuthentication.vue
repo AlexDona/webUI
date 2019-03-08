@@ -642,9 +642,6 @@ export default {
         '', // 护照号码
         '' // 国籍
       ],
-      fileInput1: '',
-      fileInput2: '',
-      fileInput3: '',
       fullscreenLoading: false // 整页loading
     }
   },
@@ -881,18 +878,24 @@ export default {
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (this.realNameAuth !== 'n' && this.advancedAuth === '') {
+      if (this.realNameAuth === 'y' && this.advancedAuth === '') {
         // 显示高级认证页面
         this.authenticationStatusFront = true
-      } else if (this.realNameAuth !== 'n') {
-        // 隐藏弹出框
-        // this.seniorAuthentication = false
-        // 隐藏高级认证页面
-        this.authenticationStatusFront = false
       }
+      // else if (this.realNameAuth !== 'n') {
+      //   // 隐藏弹出框
+      //   // this.seniorAuthentication = false
+      //   // 隐藏高级认证页面
+      //   this.authenticationStatusFront = false
+      // }
     },
     // 高级认证未通过被驳回
     authenticationIsStatus () {
+      if (this.advancedAuth === '' && this.realNameAuth === 'n') {
+        // 隐藏高级认证页面
+        this.authenticationStatusFront = false
+      }
+
       if (this.advancedAuth === 'notPass') {
         this.authenticationNotPass = true
         this.authenticationStatusFront = false
@@ -974,6 +977,9 @@ export default {
       this.firstPictureSrc = require('../../../assets/user/card_positive.png')
       this.secondPictureSrc = require('../../../assets/user/card_negative.png')
       this.thirdPictureSrc = require('../../../assets/user/card_handheld.png')
+      this.isUploadImg1 = ''
+      this.isUploadImg2 = ''
+      this.isUploadImg3 = ''
     }
   },
   filter: {},
@@ -1003,6 +1009,7 @@ export default {
         this.authenticationIsStatus()
         this.CHANGE_USER_REFRESH_SUCCESS(false)
         this.getRealNameInformation()
+        // this.stateEmptyData()
       }
     }
   }

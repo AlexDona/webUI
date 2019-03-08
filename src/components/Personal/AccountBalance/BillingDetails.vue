@@ -25,6 +25,7 @@
           </span>
             <el-select
               v-model="defaultCurrencyId"
+              filterable
               :placeholder="$t('M.comm_please_choose')"
               :no-data-text="$t('M.comm_no_data')"
             >
@@ -612,6 +613,7 @@ export default {
 
       > .header-content {
         width: 300px;
+        color: #338ff5;
       }
     }
 

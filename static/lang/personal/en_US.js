@@ -271,6 +271,7 @@ export const personal = {
   'user_coin_volume': 'Turnover',
   // 当前委托Commissioned by the current Current commission
   'user_coin_commissioned_current': 'Current entrust',
+  'user_enter_end_time': 'Please select the end time',
   // 历史委托Historical commission
   'user_coin_commissioned_history': 'History Entrust',
   // 成交明细Transaction details

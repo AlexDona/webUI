@@ -663,9 +663,17 @@ export default {
     },
     endDate () {
       if (this.startTime) {
-        if (this.startTime > this.endTime) {
+        if (this.startTime > this.endTime && this.endTime) {
           this.$message({ // message: '开始时间不能大于结束时间',
             message: this.$t('M.otc_time_limit'),
+            type: 'error'
+          })
+          return false
+        }
+        if (!this.endTime) {
+          this.$message({
+            // 请输入结束时间,
+            message: this.$t('M.user_enter_end_time'),
             type: 'error'
           })
           return false
@@ -776,7 +784,7 @@ export default {
     }
 
     .height500 {
-      height: 545px;
+      height: 665px;
     }
 
     /deep/ {

@@ -248,7 +248,8 @@ export default {
         border-bottom-left-radius: 5px;
 
         > .no-data {
-          line-height: 345px;
+          height: 431px;
+          line-height: 431px;
           text-align: center;
         }
 

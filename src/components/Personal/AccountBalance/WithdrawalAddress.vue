@@ -26,6 +26,7 @@
             >
               <el-select
                 v-model="currencyValue"
+                filterable
                 :no-data-text="$t('M.comm_no_data')"
               >
                 <el-option
@@ -47,6 +48,7 @@
                 v-model="withdrawalRemark"
                 @keydown="setErrorMsg(0, '')"
                 @blur="checkoutInputFormat(0, withdrawalRemark)"
+                maxlength="20"
               />
               <!--错误提示-->
               <ErrorBox
@@ -283,6 +285,7 @@ export default {
       withdrawalAddressList: [], // 提币地址列表
       operation: 'M.comm_delete', // 删除
       activeName: 'current-entrust',
+      pageSize: 10, // 每页条数
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
       dialogVisible: false, // 取消弹窗默认隐藏
@@ -540,12 +543,8 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .withdrawal-address {
-    > .content-main {
-      min-height: 300px !important;
-    }
-
     > .withdrawal-address-main {
-      min-height: 350px;
+      min-height: 352px;
       border-radius: 5px;
 
       > .withdrawal-header {
@@ -610,6 +609,10 @@ export default {
         height: 50px;
         padding: 0 25px;
         line-height: 50px;
+
+        > .header-content {
+          color: #338ff5;
+        }
       }
 
       .btn {
@@ -631,7 +634,7 @@ export default {
           box-shadow: 2px 0 2px rgba(20, 23, 37, 1);
 
           > .header-content {
-            color: rgba(255, 255, 255, .7);
+            color: #338ff5;
           }
         }
 

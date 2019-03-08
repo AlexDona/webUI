@@ -51,6 +51,7 @@
                 v-model="setPassword.nickname"
                 @keydown="setErrorMsg(0,'')"
                 @blur="checkoutInputFormat(0, setPassword.nickname)"
+                maxlength="10"
               />
               <!--错误提示-->
               <ErrorBox

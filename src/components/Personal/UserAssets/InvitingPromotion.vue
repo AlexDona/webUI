@@ -65,8 +65,8 @@
                   @mouseleave="showStatusCode(2)"
                 >
                   <IconFontCommon
-                    class="font-size12"
-                    iconName="icon-erweima1"
+                    class="font-size12 erweima1-code"
+                    iconName="icon-erweima2"
                   />
                   <!--二维码-->
                   {{ $t('M.comm_qr_code') }}
@@ -596,6 +596,10 @@ export default {
                   line-height: 26px;
                   text-align: center;
 
+                  > .erweima1-code {
+                    color: #338ff5;
+                  }
+
                   > .ercode {
                     position: absolute;
                     bottom: 35px;
@@ -628,7 +632,7 @@ export default {
 
       /* 推广统计 */
       > .extension-statistics {
-        min-height: 200px;
+        min-height: 280px;
 
         > .extension-statistics-header {
           display: flex;
@@ -650,7 +654,7 @@ export default {
 
       /* 奖励记录 */
       > .award-record {
-        min-height: 200px;
+        min-height: 280px;
 
         > .award-record-header {
           height: 56px;
@@ -685,6 +689,14 @@ export default {
       .cell,
       .el-table th div {
         padding-left: 18px;
+      }
+
+      .el-table__empty-block {
+        min-height: 140px;
+      }
+
+      .el-table__empty-text {
+        font-size: 12px;
       }
     }
 

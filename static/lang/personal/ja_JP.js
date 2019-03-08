@@ -271,6 +271,7 @@ export const personal = {
   'user_coin_volume': '売上高',
   // 現在の委託
   'user_coin_commissioned_current': '当前注文',
+  'user_enter_end_time': '終了時間を選択してください。',
   // 歴史の委託
   'user_coin_commissioned_history': '履歴注文',
   // 取引詳細

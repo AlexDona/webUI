@@ -21,6 +21,8 @@
             >
               <el-select
                 v-model="currencyValue"
+                filterable
+                :placeholder="$t('M.comm_please_choose')"
                 :no-data-text="$t('M.comm_no_data')"
                 @change="toggleAssetsCurrencyId"
               >
@@ -534,6 +536,7 @@ export default {
     },
     // 4.选择push资产币种
     async toggleAssetsCurrencyId (e) {
+      this.currencyValue
       let data = await getPushTotalByCoinId({
         coinId: e // 币种coinId
       })
@@ -788,11 +791,11 @@ export default {
   .push-assets {
     > .push-assets-main {
       > .push-assets-content-box {
-        min-height: 577px;
+        min-height: 500px;
 
         > .push-from-box {
           width: 400px;
-          min-height: 577px;
+          min-height: 500px;
           padding-top: 70px;
           margin: 0 auto;
 

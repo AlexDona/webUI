@@ -1441,8 +1441,8 @@ export default {
       }
 
       > .no-data {
-        height: 385px;
-        line-height: 385px;
+        height: 472px;
+        line-height: 472px;
         text-align: center;
       }
 
