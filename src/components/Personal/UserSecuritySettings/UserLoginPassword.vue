@@ -309,6 +309,7 @@ export default {
 
         > .login-content-from {
           width: 600px;
+          padding-top: 30px;
 
           .login-input {
             width: 220px;

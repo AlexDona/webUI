@@ -481,7 +481,7 @@ export default {
           // 返回冲提记录列表展示
           let detailData = getNestedData(data, 'data')
           // 充提记录
-          this.chargeRecordList = getNestedData(detailData, 'list') || []
+          this.chargeRecordList = getNestedData(detailData, 'list')
           this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
           break
         case 'other-records':

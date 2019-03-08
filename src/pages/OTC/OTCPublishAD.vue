@@ -440,7 +440,8 @@
 // 引入接口
 import {
   formatNumberInput,
-  positiveIntegerNumRegexpInput
+  // positiveIntegerNumRegexpInput,
+  positiveIntegerNumRegexpInputNoZero
 } from '../../utils'
 import {
   querySelectedOrdersDetails,
@@ -592,15 +593,17 @@ export default {
     // 同时处理最大订单数(0=不限制)input框限制
     positiveIntegerNumRegexpInputLimit (ref) {
       let target = this.$refs[ref]
-      this.limitOrderCount = positiveIntegerNumRegexpInput(target)
-      // console.log(this.$refs.limitRef.value)
+      // this.limitOrderCount = positiveIntegerNumRegexpInput(target)
+      this.limitOrderCount = positiveIntegerNumRegexpInputNoZero(target)
+      console.log(this.$refs.limitRef.value)
       // console.log(this.limitOrderCount)
     },
     // 卖家必须成交过几次（0=不限制）input框限制
     positiveIntegerNumRegexpInputSuccess (ref) {
       let target = this.$refs[ref]
-      this.successOrderCount = positiveIntegerNumRegexpInput(target)
-      // console.log(this.$refs.successRef.value)
+      // this.successOrderCount = positiveIntegerNumRegexpInput(target)
+      this.successOrderCount = positiveIntegerNumRegexpInputNoZero(target)
+      console.log(this.$refs.successRef.value)
       // console.log(this.successOrderCount)
     },
     // 0.0 广告管理跳转过来 请求详情接口
@@ -634,47 +637,45 @@ export default {
       console.log('币种详情')
       console.log(data)
       if (!data) return false
-      if (data.data) {
-        // 返回数据正确的逻辑
-        // 1.0 可用币种列表
-        let availableCoinListData = getNestedData(data, 'data')
-        this.availableCoinList = getNestedData(availableCoinListData, 'coinlist')
-        this.availableCoinList.forEach(item => {
-          if (availableCoinListData.otcCoinQryResponse.coinId === item.coinId) {
-            this.activatedCoinId = item.coinId
-          }
-        })
-        this.activatedCoinName = getNestedData(availableCoinListData, 'otcCoinQryResponse.name')
-        // 2.0 法币种列表
-        this.availableCurrencyList = getNestedData(availableCoinListData, 'currencyList')
-        this.availableCurrencyList.forEach(item => {
-          if (availableCoinListData.otcCoinQryResponse.currencyName === item.shortName) {
-            this.activatedCurrencyId = item.id
-          }
-        })
-        this.activatedCurrencyName = getNestedData(availableCoinListData, 'otcCoinQryResponse.currencyName')
-        // 3.0 交易支付方式
-        this.payForListArr = getNestedData(availableCoinListData, 'userbankFlag')
-        // 最大可卖出量:可用资产
-        this.total = getNestedData(availableCoinListData, 'otcCoinQryResponse.total')
-        // 市价
-        this.marketPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.marketPrice')
-        // 最低价
-        this.minPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.minPrice')
-        console.log('最低价格' + this.minPrice)
-        // 最高价
-        this.maxPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxPrice')
-        console.log('最高价格' + this.maxPrice)
-        // 当前币种返回的保留小数点位数限制
-        this.pointLength = getNestedData(availableCoinListData, 'otcCoinQryResponse.unit')
-        // 下面这两个字段当URL中没id时候才用这个渲染页面
-        // 币种单笔最大限额
-        this.maxCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxCount')
-        this.$refs.maxCountValue.value = this.maxCount
-        // 币种单笔最小限额
-        this.minCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.minCount')
-        this.$refs.minCountValue.value = this.minCount
-      }
+      // 返回数据正确的逻辑
+      // 1.0 可用币种列表
+      let availableCoinListData = getNestedData(data, 'data')
+      this.availableCoinList = getNestedData(availableCoinListData, 'coinlist')
+      this.availableCoinList.forEach(item => {
+        if (availableCoinListData.otcCoinQryResponse.coinId === item.coinId) {
+          this.activatedCoinId = item.coinId
+        }
+      })
+      this.activatedCoinName = getNestedData(availableCoinListData, 'otcCoinQryResponse.name')
+      // 2.0 法币种列表
+      this.availableCurrencyList = getNestedData(availableCoinListData, 'currencyList')
+      this.availableCurrencyList.forEach(item => {
+        if (availableCoinListData.otcCoinQryResponse.currencyName === item.shortName) {
+          this.activatedCurrencyId = item.id
+        }
+      })
+      this.activatedCurrencyName = getNestedData(availableCoinListData, 'otcCoinQryResponse.currencyName')
+      // 3.0 交易支付方式
+      this.payForListArr = getNestedData(availableCoinListData, 'userbankFlag')
+      // 最大可卖出量:可用资产
+      this.total = getNestedData(availableCoinListData, 'otcCoinQryResponse.total')
+      // 市价
+      this.marketPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.marketPrice')
+      // 最低价
+      this.minPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.minPrice')
+      console.log('最低价格' + this.minPrice)
+      // 最高价
+      this.maxPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxPrice')
+      console.log('最高价格' + this.maxPrice)
+      // 当前币种返回的保留小数点位数限制
+      this.pointLength = getNestedData(availableCoinListData, 'otcCoinQryResponse.unit')
+      // 下面这两个字段当URL中没id时候才用这个渲染页面
+      // 币种单笔最大限额
+      this.maxCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxCount')
+      this.$refs.maxCountValue.value = this.maxCount
+      // 币种单笔最小限额
+      this.minCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.minCount')
+      this.$refs.minCountValue.value = this.minCount
     },
     // 2.0 改变发布广告 买卖 类型
     changeBuySellStyle (e) {
@@ -807,7 +808,8 @@ export default {
         data = await addModifyPublishADOrder(param)
       }
       // 返回数据正确的逻辑
-      this.publishADTradePwdDialogStatus = false
+      this.publishADTradePwdDialogStatus = false // 关闭交易密码框
+      this.tradePassword = '' // 清空交易密码
       // console.log(data)
       if (!data) return false
       // 改变标识状态为不是跳转来的
