@@ -680,7 +680,7 @@ export default {
       lrz(e.target.files[0]).then(async res => {
         const {base64, file, fileLen} = res
         if (this.beforeAvatarUpload(fileLen)) return false
-        await this.uploadImg(file, INPUT_ID.substr(INPUT_ID.length - 1, 1) - 0)
+        if (!await this.uploadImg(file, INPUT_ID.substr(INPUT_ID.length - 1, 1) - 0)) return false
         switch (INPUT_ID) {
           case 'fileInput1':
             console.log(this.firstPictureSrc)
@@ -722,6 +722,7 @@ export default {
           break
       }
       console.log(this.dialogImageFrontUrl)
+      return true
     },
     // 判断图片大小限制
     beforeAvatarUpload (size) {
@@ -740,11 +741,7 @@ export default {
      *  刚进页面时候 获取用户实名信息
      */
     async getRealNameInformation () {
-      // 整页loading
-      this.fullscreenLoading = true
       let data = await realNameInformation()
-      // 接口失败清除loading
-      this.fullscreenLoading = false
       if (!data) return false
       // 返回列表数据
       this.realNameInformationObj = getNestedData(data, 'data')
@@ -884,7 +881,6 @@ export default {
         // 隐藏高级认证页面
         this.authenticationStatusFront = false
       }
-
       if (this.advancedAuth === 'notPass') {
         this.authenticationNotPass = true
         this.authenticationStatusFront = false

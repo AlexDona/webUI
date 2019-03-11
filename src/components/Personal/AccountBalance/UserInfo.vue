@@ -270,21 +270,12 @@ export default {
     /**
      * 刚进页面时候 个人资产列表展示
      */
-    async getAssetCurrenciesList (type) {
+    async getAssetCurrenciesList () {
       let data
       let params = {}
-      switch (type) {
-        case 'all':
-          params.selectType = 'all'
-          break
-        case 'no_all':
-          params.selectType = 'not_all'
-          break
-      }
       data = await assetCurrenciesList(params)
       if (!data) return false
       // 返回数据
-      // this.totalSumBTC = data.data.data.totalSum
       this.totalSumBTC = getNestedData(data, 'data.totalSum')
     }
   },
