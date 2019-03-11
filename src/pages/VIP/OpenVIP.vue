@@ -302,7 +302,7 @@ import {
 } from '../../utils/api/personal'
 import {getServiceProtocoDataAjax} from '../../utils/api/common'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -593,16 +593,11 @@ export default {
       console.log(data)
       // 整页loading
       this.fullscreenLoading = true
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        this.vipPriceInfo1 = getNestedData(data, 'data.data')
-        console.log(this.vipPriceInfo1)
-      }
+      // 接口失败清除loading
+      this.fullscreenLoading = false
+      if (!data) return false
+      this.vipPriceInfo1 = getNestedData(data, 'data')
+      console.log(this.vipPriceInfo1)
     },
     async getCurrencyApplicationDownloadUrl () {
       // 整页loading

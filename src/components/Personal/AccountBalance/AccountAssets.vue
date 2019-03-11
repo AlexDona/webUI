@@ -1355,9 +1355,7 @@ export default {
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency()
       if (!data) return false
-      if (data.data) {
-        this.OTCCoinList = getNestedData(data, 'data')
-      }
+      this.OTCCoinList = getNestedData(data, 'data') ? getNestedData(data, 'data') : []
     }
     // 周四放开 以下两个方法
     // // 个人资产跳转OTC
