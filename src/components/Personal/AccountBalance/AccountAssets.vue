@@ -590,7 +590,7 @@ import {
   getOTCAvailableCurrency
 } from '../../../utils/api/OTC'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter,
   getNestedData
@@ -719,17 +719,10 @@ export default {
       }
       const data = await currencyTransform(params)
       // console.log(data)
-      if (!returnAjaxMsg(data, this)) {
-        console.log(3)
-        return false
-      } else {
-        // console.log(data)
-        if (data.data.data.coinPrice) {
-          // 获取汇率
-          this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
-          // console.log(this.BTC2CNYRate)
-        }
-      }
+      if (!data) return false
+      // console.log(data)
+      // 获取汇率
+      this.BTC2CNYRate = getNestedData(data, 'data.coinPrice')
     },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
@@ -1053,7 +1046,6 @@ export default {
      */
     async getAssetCurrenciesList (type) {
       console.log(type)
-      let data
       let params = {
         pageNum: this.currentPageForMyEntrust,
         pageSize: '10000'
@@ -1067,41 +1059,33 @@ export default {
           break
       }
       this.localLoading = true
-      data = await assetCurrenciesList(params)
-      if (!data) {
-        // 接口失败清除loading
-        this.localLoading = false
-        return false
-      } else {
-        console.log(data)
-        // 接口成功清除loading
-        this.localLoading = false
-        // this.withdrawDepostMap.set(,{})
-        this.withdrawDepositList.push({
+      let data = await assetCurrenciesList(params)
+      // 接口失败清除loading
+      this.localLoading = false
+      if (!data) return false
+      this.withdrawDepositList.push({
+        allIsShow: false,
+        rechargeIsShow: false,
+        withdrawDepositIsShow: false,
+        provideWithdrawDepositIsShow: false
+      })
+      // 返回数据
+      let detailData = getNestedData(data, 'data')
+      this.totalSumBTC = detailData.totalSum
+      this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
+      _.forEach(this.withdrawDepositList, (item) => {
+        this.withdrawStorageMap.set(item.coinId, item)
+        this.withdrawDepostMap.set(item.coinId, {
           allIsShow: false,
           rechargeIsShow: false,
           withdrawDepositIsShow: false,
           provideWithdrawDepositIsShow: false
         })
-        console.log(this.withdrawDepositList)
-        // 返回数据
-        let detailData = getNestedData(data, 'data')
-        this.totalSumBTC = detailData.totalSum
-        this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
-        _.forEach(this.withdrawDepositList, (item) => {
-          this.withdrawStorageMap.set(item.coinId, item)
-          this.withdrawDepostMap.set(item.coinId, {
-            allIsShow: false,
-            rechargeIsShow: false,
-            withdrawDepositIsShow: false,
-            provideWithdrawDepositIsShow: false
-          })
-        })
-        // console.log(this.withdrawStorageMap, this.withdrawStorageMap.get('267243422920736768').isRecharge)
-        // console.log('我的资产币种列表')
-        console.log(this.withdrawDepostMap)
-        this.getAllWithdraw()
-      }
+      })
+      // console.log(this.withdrawStorageMap, this.withdrawStorageMap.get('267243422920736768').isRecharge)
+      // console.log('我的资产币种列表')
+      console.log(this.withdrawDepostMap)
+      this.getAllWithdraw()
     },
     getAllWithdraw () {
       // 缓存币种列表
