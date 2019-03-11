@@ -339,5 +339,14 @@ export const OTC = {
   'otc_apply_tips6': 'ヒント',
   // 发布订单错误提示
   'otc_publish_order_err_tips1': '発行する通貨を選択してください',
-  'otc_publish_order_err_tips2': '法的通貨タイプを選択してください'
+  'otc_publish_order_err_tips2': '法的通貨タイプを選択してください',
+  // otc发单最小最大限额
+  'otc_min': '最小',
+  'otc_max': '最大',
+  'otc_min_limit_not_empty': '単一の最小クォータは空にできません',
+  'otc_min_limit_not_low': '単一の最小クォータより低くてはいけません',
+  'otc_min_limit_not_more': '単一の最大クォータを超えてはいけません',
+  'otc_max_limit_not_empty': '単一最大クォータは空にできません',
+  'otc_max_limit_not_high': '単一最大クォータより大きくてはいけません',
+  'otc_max_limit_not_few': '単一の最小クォータより小さくてはいけません'
 }

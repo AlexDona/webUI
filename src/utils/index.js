@@ -262,6 +262,35 @@ export const positiveIntegerNumRegexpInput = event => {
   event.value = finalVal
   return finalVal
 }
+
+/**
+ * 只能输入正整数限制-首位为0时输入第二位干掉首位的20190307新增,并且只能输入三位正整数0~999
+ * @param event ： 当前input DOM 对象
+ */
+export const positiveIntegerNumRegexpInputNoZero = event => {
+  let i
+  let val = event.value
+  let finalVal = ''
+  let valArr = val.split('')
+  // 整理后
+  if (valArr[0] === '0') {
+    if (valArr.length == 1) {
+      finalVal = valArr[0]
+    } else {
+      for (i = 1; i <= valArr.length - 1; i++) {
+        finalVal += valArr[i]
+      }
+    }
+  } else {
+    _.forEach(valArr, (item, index) => {
+      if (((item - 0) || item === '0') && index < 3) {
+        finalVal += item
+      }
+    })
+  }
+  event.value = finalVal
+  return finalVal
+}
 /**
  * 邮箱账号输入限制
  * @param event：当前input DOM对象

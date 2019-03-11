@@ -580,6 +580,7 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
+      'CHANGE_AJAX_READY_STATUS' // 改变接口返回loading状态
     ]),
     // 分页
     changeCurrentPage (pageNum) {
@@ -688,6 +689,7 @@ export default {
     },
     // 报表统计的主页面
     async getOTCReportFormStatistics () {
+      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       let data = await getOTCReportFormStatisticsData({
         // 币种
         coinId: this.activatedTraderCoinId,
@@ -697,6 +699,7 @@ export default {
       // 提示信息
       console.log('报表统计的主页面资产信息')
       console.log(data)
+      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       if (!data) return false
       if (data.data) {
         let getData = getNestedData(data, 'data')
