@@ -235,7 +235,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
-  returnAjaxMsg, // 接口返回信息
+  // returnAjaxMsg, // 接口返回信息
   sendPhoneOrEmailCodeAjax,
   validateNumForUserInput,
   getSecurityCenter,
@@ -312,11 +312,8 @@ export default {
     // 取消用户设置密码弹窗
     async cancelPasswdDialog () {
       const data = await cancelPasswdDialog()
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.REFRESH_USER_INFO_ACTION(this)
-      }
+      if (!data) return false
+      this.REFRESH_USER_INFO_ACTION(this)
     },
     // 点击返回上个页面
     returnSuperior () {
@@ -432,14 +429,11 @@ export default {
           payPassword: this.setPassword.newPassword // 交易密码
         }
         data = await setTransactionPassword(params)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          return false
-        } else {
-          console.log(data)
-          this.stateEmptyData()
-          this.SET_USER_INFO_REFRESH_STATUS(true)
-          this.successJump()
-        }
+        if (!data) return false
+        console.log(data)
+        this.stateEmptyData()
+        this.SET_USER_INFO_REFRESH_STATUS(true)
+        this.successJump()
       }
     },
     // 接口请求完成之后清空数据
@@ -577,13 +571,10 @@ export default {
           googleCode: this.modifyPassword.googleCode // 谷歌验证码
         }
         data = await resetUpdatePayPassword(param)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          return false
-        } else {
-          this.successJump()
-          this.stateEmptyData()
-          this.SET_USER_INFO_REFRESH_STATUS(true)
-        }
+        if (!data) return false
+        this.successJump()
+        this.stateEmptyData()
+        this.SET_USER_INFO_REFRESH_STATUS(true)
       }
     },
     /**

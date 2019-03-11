@@ -143,7 +143,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
-  returnAjaxMsg, // 接口返回信息
+  // returnAjaxMsg, // 接口返回信息
   validateNumForUserInput,
   getAccountPaymentTerm,
   getNestedData
@@ -241,13 +241,10 @@ export default {
         this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
         if (this.isLockedPayPassword) return false
         data = await statusCardSettings(params)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          return false
-        } else {
-          this.successJump()
-          this.stateEmptyData()
-          console.log(data)
-        }
+        if (!data) return false
+        this.successJump()
+        this.stateEmptyData()
+        console.log(data)
       }
     },
     // 接口请求完成之后清空数据

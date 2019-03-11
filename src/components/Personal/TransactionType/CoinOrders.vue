@@ -469,7 +469,7 @@ import {
   getEntrustSelectBox
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   repealMyEntrustCommon,
   getNestedData
 } from '../../../utils/commonFunc'
@@ -537,19 +537,14 @@ export default {
       }
       this.partLoading = true
       const data = await getEntrustSelectBox(params)
-      if (!returnAjaxMsg(data, this)) {
-        // 接口失败清除局部loading
-        this.partLoading = false
-        return false
-      } else {
-        // 接口成功清除局部loading
-        this.partLoading = false
-        // console.log(data)
-        let detailData = getNestedData(data, 'data.data')
-        this.entrustSelectList = getNestedData(detailData, 'coinList')
-        this.typeList = getNestedData(detailData, 'typeList')
-        this.matchTypeList = getNestedData(detailData, 'matchTypeList')
-      }
+      // 接口失败清除局部loading
+      this.partLoading = false
+      if (!data) return false
+      // console.log(data)
+      let detailData = getNestedData(data, 'data')
+      this.entrustSelectList = getNestedData(detailData, 'coinList')
+      this.typeList = getNestedData(detailData, 'typeList')
+      this.matchTypeList = getNestedData(detailData, 'matchTypeList')
     },
     /**
      * 切换页码

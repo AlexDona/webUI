@@ -402,7 +402,7 @@ import {
   formatNumberInput
 } from '../../../utils/index'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../../utils/commonFunc'
@@ -648,16 +648,13 @@ export default {
 
       params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
       let data = await pushAssetsSubmit(params)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        await this.reflashIsNeedPayPassword()
-        this.isShowPayPasswordDialog = false
-        // push列表展示
-        this.getPushRecordList()
-        // 清空数据
-        this.emptyInputData()
-      }
+      if (!data) return false
+      await this.reflashIsNeedPayPassword()
+      this.isShowPayPasswordDialog = false
+      // push列表展示
+      this.getPushRecordList()
+      // 清空数据
+      this.emptyInputData()
     },
     // 分页
     changeCurrentPage (pageNum) {
@@ -694,11 +691,8 @@ export default {
       let data = await revocationPushProperty({
         id
       })
-      if (!(returnAjaxMsg(data, this))) {
-        return false
-      } else {
-        this.getPushRecordList()
-      }
+      if (!data) return false
+      this.getPushRecordList()
     },
     /**
      * 付款成交
@@ -746,15 +740,12 @@ export default {
         params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
 
         data = await pushPropertyTransaction(params)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          return false
-        } else {
-          await this.reflashIsNeedPayPassword()
-          this.isShowPayPasswordDialog = false
-          this.payPassword = ''
-          // 付款成功刷新列表
-          this.getPushRecordList()
-        }
+        if (!data) return false
+        await this.reflashIsNeedPayPassword()
+        this.isShowPayPasswordDialog = false
+        this.payPassword = ''
+        // 付款成功刷新列表
+        this.getPushRecordList()
       }
     }
   },

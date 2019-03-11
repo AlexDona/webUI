@@ -561,7 +561,7 @@ import {
   uploadImageAjax
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData,
   validateNumForUserInput // 用户输入验证
 } from '../../../utils/commonFunc'
@@ -740,21 +740,15 @@ export default {
      *  刚进页面时候 获取用户实名信息
      */
     async getRealNameInformation () {
-      let data = await realNameInformation()
       // 整页loading
       this.fullscreenLoading = true
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        // 返回列表数据
-        this.realNameInformationObj = getNestedData(data, 'data.data')
-        this.statusRealNameInformation = getNestedData(data, 'data.data.authInfo')
-      }
+      let data = await realNameInformation()
+      // 接口失败清除loading
+      this.fullscreenLoading = false
+      if (!data) return false
+      // 返回列表数据
+      this.realNameInformationObj = getNestedData(data, 'data')
+      this.statusRealNameInformation = getNestedData(data, 'data.authInfo')
     },
     // 检测身份证号
     idCardRegexpInputNum (ref) {
@@ -859,20 +853,15 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await submitRealNameAuthentication(param)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
-          return false
-        } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
-          await this.REFRESH_USER_INFO_ACTION()
-          this.authenticationIsStatus()
-          await this.getRealNameInformation()
-          console.log(data)
-          this.realName = ''
-          this.identificationNumber = ''
-        }
+        // 接口失败清除loading
+        this.fullscreenLoading = false
+        if (!data) return false
+        await this.REFRESH_USER_INFO_ACTION()
+        this.authenticationIsStatus()
+        await this.getRealNameInformation()
+        console.log(data)
+        this.realName = ''
+        this.identificationNumber = ''
       }
     },
     // 高级认证弹窗
@@ -960,17 +949,13 @@ export default {
       console.log(data)
       // 接口返回清除loading
       this.fullscreenLoading = false
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        this.stateEmptyData()
-        this.authenticationStatusFront = false
-        // 接口成功清除loading
-        this.SET_USER_INFO_REFRESH_STATUS(true)
-        await this.REFRESH_USER_INFO_ACTION()
-        await this.getRealNameInformation()
-        this.fullscreenLoading = false
-      }
+      if (!data) return false
+      this.stateEmptyData()
+      this.authenticationStatusFront = false
+      // 接口成功清除loading
+      this.SET_USER_INFO_REFRESH_STATUS(true)
+      await this.REFRESH_USER_INFO_ACTION()
+      await this.getRealNameInformation()
     },
     // 接口请求完成之后清空数据
     stateEmptyData () {

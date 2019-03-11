@@ -394,11 +394,9 @@ export default {
         params.month = this.month
       }
       const data = await getVipUserPayCount(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.needUserPayCount = getNestedData(data, 'data.data')
-      }
+      if (!data) return false
+      this.needUserPayCount = getNestedData(data, 'data')
+      console.log(this.needUserPayCount)
     },
     changeServiceAgreement (type) {
       switch (type) {
@@ -573,23 +571,17 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await buyVipPriceInfo(params)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
-          this.dialogFormVisible = false
-          return false
-        } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
-          this.dialogFormVisible = false
-          this.password = ''
-          this.REFRESH_USER_INFO_ACTION()
-          this.toggleAssetsCurrencyId()
-          console.log(data)
-          this.returnJumpTimer = setTimeout(() => {
-            this.$goToPage('/VipMainContent')
-          }, 3000)
-        }
+        // 接口失败清除loading
+        this.fullscreenLoading = false
+        this.dialogFormVisible = false
+        if (!data) return false
+        this.password = ''
+        this.REFRESH_USER_INFO_ACTION()
+        this.toggleAssetsCurrencyId()
+        console.log(data)
+        this.returnJumpTimer = setTimeout(() => {
+          this.$goToPage('/VipMainContent')
+        }, 3000)
       }
     },
     /**
@@ -613,25 +605,19 @@ export default {
       }
     },
     async getCurrencyApplicationDownloadUrl () {
+      // 整页loading
+      this.fullscreenLoading = true
       let data = await currencyApplicationDownloadUrl({
         key: 'VIP_COIN_NAME'
       })
-      console.log(data)
-      // 整页loading
-      this.fullscreenLoading = true
-      if (!(returnAjaxMsg(data, this))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        // 返回展示
-        // this.coinId = data.data.data.coinId
-        // 任修复报错问题
-        this.coinId = getNestedData(data, 'data.data.coinId')
-        this.toggleAssetsCurrencyId()
-      }
+      // 接口失败清除loading
+      this.fullscreenLoading = false
+      if (!data) return false
+      // 返回展示
+      // this.coinId = data.data.data.coinId
+      this.coinId = getNestedData(data, 'data.coinId')
+      // 任修复报错问题
+      this.toggleAssetsCurrencyId()
     },
     // 根据币种id获取可用余额
     async toggleAssetsCurrencyId () {
@@ -642,7 +628,6 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await getPushTotalByCoinId(param)
-      console.log(data)
       // 接口失败清除loading
       this.fullscreenLoading = false
       if (!data) return false

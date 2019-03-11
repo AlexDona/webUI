@@ -212,14 +212,10 @@ export const getSecurityCenter = async (that, params, callback) => {
  *  刷新收款方式状态
  */
 export const getAccountPaymentTerm = async (that) => {
-  console.log(store)
   const data = await accountPaymentTerm()
-  if (!(returnAjaxMsg(data, that))) {
-    return false
-  } else {
-    // 返回状态展示
-    that.paymentTerm = getNestedData(data, 'data.data')
-  }
+  if (!data) return false
+  // 返回状态展示
+  that.paymentTerm = getNestedData(data, 'data')
 }
 // 首页、币币交易切换收藏
 export const toggleUserCollection = async (type, tradeId) => {

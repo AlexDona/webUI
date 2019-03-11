@@ -221,7 +221,7 @@ import {
   currencyTransform
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData
 } from '../../../utils/commonFunc'
 // 字体图标
@@ -259,12 +259,9 @@ export default {
         shortName: this.activeConvertCurrencyObj.shortName
       }
       const data = await currencyTransform(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        // 获取汇率
-        this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
-      }
+      if (!data) return false
+      // 获取汇率
+      this.BTC2CNYRate = getNestedData(data, 'data.coinPrice')
     },
     // Vip跳转
     stateOpenVip () {

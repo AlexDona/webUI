@@ -1140,6 +1140,7 @@ export default {
       // 返回列表数据
       this.feeRangeOfWithdraw = getNestedData(data, 'data')
       this.withdrawalFee = getNestedData(data, 'data.minFees')
+      console.log(this.feeRangeOfWithdraw)
       this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value = this.withdrawalFee
       this.withdrawFeeVModel = this.withdrawalFee
     },
@@ -1161,7 +1162,6 @@ export default {
       // console.log(data.data.data.userRechargeAddress.tag)
       this.minRechargeAmount = getNestedData(data, 'data.userRechargeAddress.minRechargeAmount')
       this.successCount = getNestedData(data, 'data.userRechargeAddress.successCount')
-      return true
     },
     // 当前提币地址改变回调
     changeWithdrawAddress ({activeWithdrawDepositAddress}) {
@@ -1344,7 +1344,7 @@ export default {
       })
       if (!data) return false
       // 返回展示
-      this.currencyTradingList = getNestedData(data, 'data.entrust')
+      this.currencyTradingList = getNestedData(data, 'data.entrust') ? getNestedData(data, 'data.entrust') : []
     },
     // 个人资产跳转OTC
     jumpToOTCCenter (coinId) {

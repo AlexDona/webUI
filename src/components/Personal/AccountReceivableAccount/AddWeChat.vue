@@ -156,7 +156,7 @@
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getAccountPaymentTerm,
   getNestedData,
   http2https
@@ -336,12 +336,9 @@ export default {
         // console.log(data)
         // 接口失败清除loading
         this.fullscreenLoading = false
-        if (!(returnAjaxMsg(data, this, 1))) {
-          return false
-        } else {
-          this.successJump()
-          this.stateEmptyData()
-        }
+        if (!data) return false
+        this.successJump()
+        this.stateEmptyData()
       }
     },
     // 接口请求完成之后清空数据

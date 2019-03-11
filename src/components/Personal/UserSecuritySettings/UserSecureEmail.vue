@@ -313,12 +313,9 @@ export default {
           code: this.emailCode // 邮箱验证码
         }
         data = await bindEmailAddress(param)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          return false
-        } else {
-          this.stateEmptyData()
-          this.successJump()
-        }
+        if (!data) return false
+        this.stateEmptyData()
+        this.successJump()
       }
     },
     // 接口请求完成之后清空数据

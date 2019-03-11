@@ -653,7 +653,7 @@ import {
   enableTheClosing
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter,
   getNestedData
@@ -1053,21 +1053,16 @@ export default {
           break
       }
       data = await enableTheClosing(params)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        // 接口失败清除loading
-        this.loadingCircle.close()
-        return false
-      } else {
-        // 接口成功清除loading
-        this.loadingCircle.close()
-        await this.getSecurityCenter()
-        // 安全中心状态刷新
-        this.openTheValidation = false
-        this.closeValidation = false
-        this.emailCode = ''
-        this.phoneCode = ''
-        this.googleCode = ''
-      }
+      // 接口返回清除loading
+      this.loadingCircle.close()
+      if (!data) return false
+      await this.getSecurityCenter()
+      // 安全中心状态刷新
+      this.openTheValidation = false
+      this.closeValidation = false
+      this.emailCode = ''
+      this.phoneCode = ''
+      this.googleCode = ''
     },
     // 获取焦点清空数据
     handleinput () {

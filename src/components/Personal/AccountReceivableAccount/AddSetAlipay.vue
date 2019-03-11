@@ -157,7 +157,7 @@
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getAccountPaymentTerm,
   getNestedData,
   http2https
@@ -333,16 +333,11 @@ export default {
         this.fullscreenLoading = true
         data = await statusCardSettings(param)
         // console.log(data)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
-          return false
-        } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
-          this.successJump()
-          this.stateEmptyData()
-        }
+        // 接口失败清除loading
+        this.fullscreenLoading = false
+        if (!data) return false
+        this.successJump()
+        this.stateEmptyData()
       }
     },
     // 接口请求完成之后清空数据
