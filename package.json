@@ -14,7 +14,8 @@
     "clean": "rimraf dist",
     "build--test": "cross-env NODE_ENV=testing env_config=test node build/build.js",
     "build--dev": "cross-env NODE_ENV=development210 env_config=dev node build/build.js",
-    "build--prod": "cross-env NODE_ENV=production env_config=prod node build/build.js"
+    "build--prod": "cross-env NODE_ENV=production env_config=prod node build/build.js",
+    "dll": "node build/dll.js"
   },
   "dependencies": {
     "animate.css": "^3.7.0",
@@ -92,10 +93,8 @@
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
     "vue-clipboard2": "^0.2.0",
-    "vue-concise-slider": "3.3.0",
     "vue-lazyload": "^1.2.6",
     "vue-loader": "^13.3.0",
-    "vue-slider-component": "^2.7.6",
     "vue-style-loader": "^3.1.2",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
