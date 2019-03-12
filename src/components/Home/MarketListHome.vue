@@ -254,9 +254,7 @@ export default {
     },
     async getAllTradeAreas (plateId = this.activeName) {
       this.disabledStatus = true
-      let params = {
-        plateId
-      }
+      let params = { plateId }
 
       let now = new Date().getTime()
       let lastTime = getStore('platesAges')
@@ -270,6 +268,7 @@ export default {
         _.forEach(dataObjList, dataObj => {
           dataStr += unzip(dataObj)
         })
+        if (!dataStr) return false
         this.areasFromAPI = JSON.parse(dataStr) || []
         console.log(this.areasFromAPI)
         this.platesMap.set(plateId, this.areasFromAPI)
