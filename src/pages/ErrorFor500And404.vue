@@ -92,7 +92,7 @@ export default {
       text-align: center;
 
       > img {
-        margin: 100px auto;
+        margin: 200px 0 30px;
       }
 
       > p {
@@ -105,10 +105,11 @@ export default {
       > a {
         display: inline-block;
         width: 140px;
-        height: 44px;
+        height: 36px;
         margin: 40px auto;
         border-radius: 4px;
-        line-height: 44px;
+        font-size: 12px;
+        line-height: 36px;
         color: #fff;
         background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
       }

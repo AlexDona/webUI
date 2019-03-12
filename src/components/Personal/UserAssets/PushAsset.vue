@@ -21,6 +21,8 @@
             >
               <el-select
                 v-model="currencyValue"
+                filterable
+                :placeholder="$t('M.comm_please_choose')"
                 :no-data-text="$t('M.comm_no_data')"
                 @change="toggleAssetsCurrencyId"
               >
@@ -324,9 +326,10 @@
           <div class="shipping-address">
             <!--安全验证-->
             <el-dialog
-              :title="$t('M.user_security_safety') + $t('M.user_security_verify')"
+              :title="$t('M.comm_password')"
               :visible.sync="isShowPayPasswordDialog"
             >
+              <!--:title="$t('M.user_security_safety') + $t('M.user_security_verify')"-->
               <el-form
                 :label-position="labelPosition"
               >
@@ -339,9 +342,10 @@
                     autocomplete= "new-password"
                     class="form-input-common border-radius2 padding-l15 box-sizing"
                     v-model="payPassword"
-                    @keydown="setErrorMsg(3, '')"
-                    @blur="checkoutInputFormat(3, payPassword, 1)"
+                    @keydown="setErrorMsg(4, '')"
+                    @blur="checkoutInputFormat(4, payPassword, 1)"
                     @keyup.enter="submitWithPayPassword"
+                    @focus="setErrorMsg(4, '')"
                   >
                 </el-form-item>
               </el-form>
@@ -398,7 +402,7 @@ import {
   formatNumberInput
 } from '../../../utils/index'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../../utils/commonFunc'
@@ -534,6 +538,7 @@ export default {
     },
     // 4.选择push资产币种
     async toggleAssetsCurrencyId (e) {
+      this.currencyValue
       let data = await getPushTotalByCoinId({
         coinId: e // 币种coinId
       })
@@ -643,16 +648,13 @@ export default {
 
       params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
       let data = await pushAssetsSubmit(params)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        await this.reflashIsNeedPayPassword()
-        this.isShowPayPasswordDialog = false
-        // push列表展示
-        this.getPushRecordList()
-        // 清空数据
-        this.emptyInputData()
-      }
+      if (!data) return false
+      await this.reflashIsNeedPayPassword()
+      this.isShowPayPasswordDialog = false
+      // push列表展示
+      this.getPushRecordList()
+      // 清空数据
+      this.emptyInputData()
     },
     // 分页
     changeCurrentPage (pageNum) {
@@ -689,11 +691,8 @@ export default {
       let data = await revocationPushProperty({
         id
       })
-      if (!(returnAjaxMsg(data, this))) {
-        return false
-      } else {
-        this.getPushRecordList()
-      }
+      if (!data) return false
+      this.getPushRecordList()
     },
     /**
      * 付款成交
@@ -741,15 +740,12 @@ export default {
         params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
 
         data = await pushPropertyTransaction(params)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          return false
-        } else {
-          await this.reflashIsNeedPayPassword()
-          this.isShowPayPasswordDialog = false
-          this.payPassword = ''
-          // 付款成功刷新列表
-          this.getPushRecordList()
-        }
+        if (!data) return false
+        await this.reflashIsNeedPayPassword()
+        this.isShowPayPasswordDialog = false
+        this.payPassword = ''
+        // 付款成功刷新列表
+        this.getPushRecordList()
       }
     }
   },
@@ -761,7 +757,8 @@ export default {
       loginStep1Info: state => state.user.loginStep1Info,
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // 交易密码是否被锁定
-      isLockedPayPassword: state => state.common.isLockedPayPassword
+      isLockedPayPassword: state => state.common.isLockedPayPassword,
+      language: state => state.common.language // 当前选中语言
     })
   },
   watch: {
@@ -778,6 +775,15 @@ export default {
       if (!newVal && oldVal) {
         this.payPassword = ''
       }
+    },
+    // 切换语言清空错误提示
+    language (newVal) {
+      console.log(newVal)
+      this.errorShowStatusList[0] = ''
+      this.errorShowStatusList[1] = ''
+      this.errorShowStatusList[2] = ''
+      this.errorShowStatusList[3] = ''
+      this.errorShowStatusList[4] = ''
     }
   }
 }
@@ -788,11 +794,11 @@ export default {
   .push-assets {
     > .push-assets-main {
       > .push-assets-content-box {
-        min-height: 577px;
+        min-height: 500px;
 
         > .push-from-box {
           width: 400px;
-          min-height: 577px;
+          min-height: 500px;
           padding-top: 70px;
           margin: 0 auto;
 

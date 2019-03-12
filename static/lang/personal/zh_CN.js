@@ -276,6 +276,7 @@ export const personal = {
   'user_coin_volume': '成交额',
   // 当前委托Commissioned by the current
   'user_coin_commissioned_current': '当前委托',
+  'user_enter_end_time': '请选择结束时间',
   // 历史委托
   'user_coin_commissioned_history': '历史委托',
   // 成交明细

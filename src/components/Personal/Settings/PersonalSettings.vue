@@ -9,7 +9,7 @@
         {{$t('M.comm_set')}}
       </span>
     </header>
-    <div class="personal-setting-main min-height500 margin-top9">
+    <div class="personal-setting-main margin-top9">
       <div class="inner-box">
         <h3 class="title">
           <!-- 个人设置 -->
@@ -317,6 +317,7 @@ export default {
 
   .personal-setting {
     > .personal-setting-main {
+      min-height: 665px;
       font-size: 12px;
 
       > .inner-box {

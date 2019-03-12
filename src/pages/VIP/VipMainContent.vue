@@ -186,7 +186,7 @@ import {
   currencyApplicationDownloadUrl
 } from '../../utils/api/personal'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {getServiceProtocoDataAjax} from '../../utils/api/common'
@@ -289,46 +289,38 @@ export default {
       let data = await vipPriceInfo()
       console.log(data)
       // 整页loading
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        return false
-      } else {
-        this.VipPriceInfoList = []
-        // // 接口成功清除loading
-        // if (data.data.data) {
-        //   // 返回展示
-        //   this.vipPriceInfo1 = data.data.data
-        //   console.log(this.vipPriceInfo1[0].vipCoinName)
-        // }
-        // 任修复报错问题
-        // 接口成功清除loading
-        // this.vipPriceInfo1 = data.data.data
-        this.vipPriceInfo1 = getNestedData(data, 'data.data')
-        for (let i = 0; i < this.vipPriceInfo1.length - 1; i += 4) {
-          let item = this.vipPriceInfo1[i]
-          console.log(i)
-          this.VipPriceInfoList.push(item)
-        }
-        this.CHANGE_VIP_PRICE_INFO_LIST(this.VipPriceInfoList)
-        console.log(this.VipPriceInfoList)
+      if (!data) return false
+      this.VipPriceInfoList = []
+      // // 接口成功清除loading
+      // if (data.data.data) {
+      //   // 返回展示
+      //   this.vipPriceInfo1 = data.data.data
+      //   console.log(this.vipPriceInfo1[0].vipCoinName)
+      // }
+      // 任修复报错问题
+      // 接口成功清除loading
+      // this.vipPriceInfo1 = data.data.data
+      this.vipPriceInfo1 = getNestedData(data, 'data')
+      for (let i = 0; i < this.vipPriceInfo1.length - 1; i += 4) {
+        let item = this.vipPriceInfo1[i]
+        console.log(i)
+        this.VipPriceInfoList.push(item)
       }
+      this.CHANGE_VIP_PRICE_INFO_LIST(this.VipPriceInfoList)
+      console.log(this.VipPriceInfoList)
     },
     async getCurrencyApplicationDownloadUrl () {
       let data = await currencyApplicationDownloadUrl({
         key: 'VIP_COIN_NAME'
       })
       // 整页loading
-      if (!(returnAjaxMsg(data, this))) {
-        // 接口失败清除loading
-        return false
-      } else {
-        // 接口成功清除loading
-        // 返回展示
-        // this.coinId = data.data.data.coinId
-        // 任修复报错问题
-        this.coinId = getNestedData(data, 'data.data.coinId')
-        this.toggleAssetsCurrencyId()
-      }
+      if (!data) return false
+      // 接口成功清除loading
+      // 返回展示
+      // this.coinId = data.data.data.coinId
+      // 任修复报错问题
+      this.coinId = getNestedData(data, 'data.coinId')
+      this.toggleAssetsCurrencyId()
     },
     // 根据币种id获取可用余额
     async toggleAssetsCurrencyId () {

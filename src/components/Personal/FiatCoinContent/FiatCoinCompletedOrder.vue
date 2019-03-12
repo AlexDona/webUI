@@ -644,7 +644,8 @@ export default {
         }
 
         .el-table__empty-block {
-          min-height: 345px;
+          height: 431px;
+          min-height: 431px;
           background-color: #1c1f32;
         }
       }

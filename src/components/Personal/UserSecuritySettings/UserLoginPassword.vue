@@ -102,7 +102,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {modifyLoginPassword} from '../../../utils/api/personal'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   validateNumForUserInput
 } from '../../../utils/commonFunc'
 import {
@@ -223,12 +223,9 @@ export default {
           newPassword: this.newLoginPassword // 新登录密码
         }
         data = await modifyLoginPassword(param)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          return false
-        } else {
-          this.stateEmptyData()
-          this.successJump()
-        }
+        if (!data) return false
+        this.stateEmptyData()
+        this.successJump()
       }
     },
     // 接口请求完成之后清空数据
@@ -309,6 +306,7 @@ export default {
 
         > .login-content-from {
           width: 600px;
+          padding-top: 30px;
 
           .login-input {
             width: 220px;

@@ -71,7 +71,7 @@
                 <input
                   class="username-input"
                   type="text"
-                  v-model="username"
+                  v-model.trim="username"
                 />
               </span>
             </div>
@@ -88,8 +88,10 @@
                   <input
                     class="username-input image-validate"
                     type="text"
-                    v-model="userInputImageCode"
+                    ref="image_code"
+                    @input="validateImageCode"
                     @keyup="validateImageCode"
+                    maxlength="4"
                   />
                   <!--获取图片验证码-->
                   <span
@@ -107,8 +109,9 @@
                     />
                   </span>
                   </div>
-                  <div class="slider-success"
-                       v-else
+                  <div
+                    class="slider-success"
+                    v-else
                   >
                   <i class="el-icon-circle-check font-size18"></i>
                   <!--验证成功-->
@@ -162,7 +165,10 @@
                 <input
                   class="username-input validate-code-input"
                   type="text"
-                  v-model="phoneCode"
+                  ref="phone_code"
+                  maxlength="6"
+                  @input="userInputFormat('phone_code', 'phoneCode')"
+                  @keyup="userInputFormat('phone_code', 'phoneCode')"
                 />
                 <!--发送验证码按钮-->
                 <CountDownButton
@@ -197,7 +203,10 @@
                 <input
                   class="username-input validate-code-input"
                   type="text"
-                  v-model="emailCode"
+                  ref="email_code"
+                  maxlength="6"
+                  @input="userInputFormat('email_code', 'emailCode')"
+                  @keyup="userInputFormat('email_code', 'emailCode')"
                 />
                 <!--发送验证码按钮-->
                 <CountDownButton
@@ -219,7 +228,10 @@
                 <input
                   class="username-input"
                   type="text"
-                  v-model="googleCode"
+                  maxlength="6"
+                  ref="google_code"
+                  @input="userInputFormat('google_code', 'googleCode')"
+                  @keyup="userInputFormat('google_code', 'googleCode')"
                 />
               </span>
             </div>
@@ -297,7 +309,10 @@
           <div class="inner-box">
             <div class="success-box">
               <div class="left">
-                <IconFont class="icon-text" iconName="icon-dui1"/>
+                <IconFont
+                  class="icon-text"
+                  iconName="icon-dui1"
+                />
               </div>
               <div class="right">
                 <p class="success-msg">
@@ -329,10 +344,14 @@ import {
   findPasswordStep2,
   findPasswordStep3
 } from '../../utils/api/user'
-import {phoneNumberFormat} from '../../utils'
+import {
+  phoneNumberFormat,
+  positiveIntegerNumRegexpInput
+} from '../../utils'
 import {
   sendPhoneOrEmailCodeAjax,
-  getNestedData
+  getNestedData,
+  requestWithLoading
 } from '../../utils/commonFunc'
 import {CHECKPASSWORD_REG} from '../../utils/regExp'
 import ImageValidate from '../Common/ImageValidateCommon'
@@ -396,7 +415,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_USER_BUTTON_STATUS'
+      'SET_USER_BUTTON_STATUS',
+      'CHANGE_AJAX_READY_STATUS'
     ]),
     // 改变时将改变的值赋给对应的value
     checkValue (type, e) {
@@ -452,7 +472,7 @@ export default {
         token: this.nextStepToken,
         newPassword: this.newPassword
       }
-      const data = await findPasswordStep3(params)
+      const data = await requestWithLoading(findPasswordStep3, params)
       if (!data) return false
       this.activeStepNumber = 4
       setTimeout(() => {
@@ -493,13 +513,19 @@ export default {
         mailCode: this.emailCode,
         googleCode: this.googleCode
       }
-      const data = await findPasswordStep2(params)
+      const data = await requestWithLoading(findPasswordStep2, params)
       if (!data) return false
       this.nextStepToken = getNestedData(data, 'data')
       this.activeStepNumber = 3
     },
+    userInputFormat (ref, vModel) {
+      let targetStr = positiveIntegerNumRegexpInput(this.$refs[ref])
+      this.$refs[ref].value = targetStr
+      this[vModel] = targetStr
+    },
     // 图片验证码验证
     validateImageCode () {
+      this.userInputFormat('image_code', 'userInputImageCode')
       if (this.userInputImageCode == this.identifyCode) {
         this.confirmSuccess = true
       }
@@ -525,7 +551,7 @@ export default {
       let params = {
         userName: this.username
       }
-      const data = await findPasswordStep1(params)
+      const data = await requestWithLoading(findPasswordStep1, params)
       if (!data) return false
 
       this.userInfo = getNestedData(data, 'data')

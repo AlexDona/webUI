@@ -189,7 +189,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import Qrcode from '../../Common/Qrcode'
 import ErrorBox from '../../User/ErrorBox'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   validateNumForUserInput, // 用户输入验证
   getSecurityCenter,
   getNestedData
@@ -270,21 +270,16 @@ export default {
       let data
       let param = {}
       data = await bindGoogleAddressPage(param)
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // this.googleUserInformation = data.data.data
-        this.googleUserInformation = getNestedData(data, 'data.data')
-        // this.googleAccount = data.data.data.googleAccount
-        this.googleAccount = getNestedData(data, 'data.data.googleAccount')
-        // this.googleTheSecretKey = data.data.data.googleSecret
-        this.googleTheSecretKey = getNestedData(data, 'data.data.googleSecret')
-        // URI 进行编码
-        // this.googleTheSecretUrl = encodeURI(data.data.data.url)
-        this.googleTheSecretUrl = encodeURI(getNestedData(data, 'data.data.url'))
-        console.log(this.googleTheSecretUrl)
-      }
+      if (!data) return false
+      // this.googleUserInformation = data.data.data
+      this.googleUserInformation = getNestedData(data, 'data')
+      // this.googleAccount = data.data.data.googleAccount
+      this.googleAccount = getNestedData(data, 'data.googleAccount')
+      // this.googleTheSecretKey = data.data.data.googleSecret
+      this.googleTheSecretKey = getNestedData(data, 'data.googleSecret')
+      // URI 进行编码
+      // this.googleTheSecretUrl = encodeURI(data.data.data.url)
+      this.googleTheSecretUrl = encodeURI(getNestedData(data, 'data.url'))
     },
     // 确定提交绑定谷歌验证
     getGoogleStatusSubmit () {
@@ -315,12 +310,9 @@ export default {
         code: this.googleVerificationCode // 谷歌验证码
       }
       data = await bindGoogleAddress(param)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        this.successJump()
-        console.log(data)
-      }
+      if (!data) return false
+      this.successJump()
+      console.log(data)
     },
     // 确定解绑谷歌验证
     getGoogleStatusSubmitUnbind () {
@@ -348,13 +340,10 @@ export default {
         code: this.googleVerificationCode // 谷歌验证码
       }
       data = await unbindCheckGoogle(param)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        return false
-      } else {
-        console.log(data)
-        this.successJump()
-        this.googleVerificationCode = ''
-      }
+      if (!data) return false
+      console.log(data)
+      this.successJump()
+      this.googleVerificationCode = ''
     },
     // 谷歌绑定成功自动跳转
     successJump () {
