@@ -73,6 +73,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       template: 'index.html',
       hash: true,
       inject: true,
+      vendorJsName: bundleConfig.vendor.js,
       minify: {
         removeComments: true,
         collapseWhitespace: true,
