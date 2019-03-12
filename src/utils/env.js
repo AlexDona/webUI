@@ -26,9 +26,9 @@ const devTestConfig = {
 }
 
 const dev210Config = {
-  apiCommonUrl: 'http://192.168.1.210:8888/',
-  socketUrl: 'ws://192.168.1.134:8087/market',
-  loginSocketUrl: 'ws://192.168.1.210:8888/qrcodeLogin/'
+  apiCommonUrl: 'http://192.168.2.210:8888/',
+  socketUrl: 'ws://192.168.2.134:8087/market',
+  loginSocketUrl: 'ws://192.168.2.210:8888/qrcodeLogin/'
 }
 
 // eslint-disable-next-line
