@@ -398,7 +398,6 @@ export const fromApi = {
   'user-sms-fail': 'Send failed, server error',
   'user-sms-fail-often': 'Frequent texting',
   'user-sms-success': 'SMS sent successfully',
-  'user-sms-verification-code-out': 'Verification code timeout, please resend',
   'user-success-advanced-auth': 'Advanced certification succeeded',
   'user-success-realname-auth': 'User real name authentication succeeded',
   'user-validate-code-fail': 'The verification code is incorrect',
@@ -422,5 +421,11 @@ export const fromApi = {
   'user_pay_disable_state': 'The transaction password error of this account has been exceeded. Please try again after 2 hours',
   'user_pay_is_error': 'Transaction password error, you can also enter {} times, exceeding the limit will be frozen for 2 hours',
   'user_pay_password_not_setting': 'Please set the transaction password before the deposit investment',
-  'user_trade_password_incorrect': 'Account transaction password is incorrect'
+  'user_trade_password_incorrect': 'Account transaction password is incorrect',
+  'user-fail-password-repeat': 'The new password you set is the same as the old one. Please reset it!',
+  'financial_management_is_cancel': 'Deposit proceeds have been cancelled! Do not submit repeatedly!',
+  'user-pay-password-out': 'Transaction password cannot exceed 10 digits',
+  'coin_type_failure_0005': 'The currency of the invitation to sign up for the reward does not exist',
+  'user-sms-verification-code-out': 'SMS verification code timed out, please resend',
+  'user-email-verification-code-out': 'The mailbox verification code timed out, please resend'
 }

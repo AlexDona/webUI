@@ -398,7 +398,6 @@ export const fromApi = {
   'user-sms-fail': '發送失敗，伺服器錯誤',
   'user-sms-fail-often': '短信發送頻繁',
   'user-sms-success': '短信發送成功',
-  'user-sms-verification-code-out': '驗證碼超時，請重新發送',
   'user-success-advanced-auth': '高級認證成功',
   'user-success-realname-auth': '用戶實名認證成功',
   'user-validate-code-fail': '驗證碼不正確',
@@ -422,5 +421,11 @@ export const fromApi = {
   'user_pay_disable_state': '該帳號交易密碼錯誤超限已被禁止交易,請過2個小時之後重試',
   'user_pay_is_error': '交易密碼錯誤,您還可以輸入{}次,超限將被凍結2個小時',
   'user_pay_password_not_setting': '請先設置交易密碼後進行存幣投資',
-  'user_trade_password_incorrect': '帳戶交易密碼不正確'
+  'user_trade_password_incorrect': '帳戶交易密碼不正確',
+  'user-fail-password-repeat': '您設置的新密碼與舊密碼相同,請重新設置!',
+  'financial_management_is_cancel': '存幣收益已被取消!請勿重復提交！',
+  'user-pay-password-out': '交易密碼不能超過10位數',
+  'coin_type_failure_0005': '邀請註冊獎勵的幣種不存在',
+  'user-sms-verification-code-out': '短信驗證碼超時，請重新發送',
+  'user-email-verification-code-out': '郵箱驗證碼超時，請重新發送'
 }
