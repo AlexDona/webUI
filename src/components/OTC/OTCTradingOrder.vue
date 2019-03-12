@@ -1016,10 +1016,10 @@ export default {
         // console.log(data)
         // 正确逻辑
         this.dialogVisibleConfirmPayment = false
+        this.tradePassword = '' // 清空交易密码
         this.loading = false
         if (!data) return false
         this.errPWD = ''
-        this.tradePassword = ''
         // 2再次调用接口刷新列表
         this.getOTCTradingOrdersList()
       }
@@ -1056,10 +1056,10 @@ export default {
       const data = await sellerConfirmGetMoney(params)
       // 正确逻辑
       this.dialogVisibleConfirmReceipt = false
+      this.tradePassword = '' // 清空交易密码
       this.loading = false
       if (!data) return false
       this.errPWD = ''
-      this.tradePassword = ''
       this.getOTCTradingOrdersList()
     },
     // 10.0 点击订单申诉弹窗申诉框
@@ -1115,10 +1115,10 @@ export default {
       // console.log(data)
       // 正确逻辑
       this.dialogVisibleSubmitComplaint = false
+      this.tradePassword = '' // 清空交易密码
       this.loading = false
       if (!data) return false
       this.errPWD = '' // 清空密码错提示
-      this.tradePassword = '' // 清空密码框
       this.appealTextAreaValue = '' // 清空申诉原因
       // 再次调用接口刷新列表
       this.getOTCTradingOrdersList()

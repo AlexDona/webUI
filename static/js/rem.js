@@ -10,13 +10,14 @@ function getSize () {
   console.log(width)
   store.commit('SET_WINDOW_WIDTH', width)
   let isPC = IsPC()
-  if (width < 1050 || !isPC) {
+  if (!isPC) {
     store.commit('TOGGLE_PC_MOBILE', true)
     document.body.classList.add('mobile')
   } else {
     store.commit('TOGGLE_PC_MOBILE', false)
     document.body.classList.remove('mobile')
   }
+  console.log(store.state.user.isMobile)
   /* 640 100  320 50 */
   let fontSize = 100 / 1920 * width
   /* 设置fontsize */

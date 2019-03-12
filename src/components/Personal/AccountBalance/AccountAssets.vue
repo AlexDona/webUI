@@ -207,7 +207,7 @@
                       class="table-charge-money flex1 cursor-pointer"
                       @click.prevent="showRechargeBox(assetItem.coinId, assetItem.coinName, index)"
                     >
-                      <!--充币-->
+                      <!--充 币-->
                       {{ $t('M.comm_charge_money') }}
                     </div>
                     <div
@@ -282,8 +282,8 @@
                     <div class="out-box">
                       <!--充币内容-->
                       <ChargeMoneyItem
-                        v-if="withdrawDepositList[index].rechargeIsShow"
-                        :isShow="withdrawDepositList[index].rechargeIsShow"
+                        v-if="withdrawDepostMap.get(assetItem.coinId).rechargeIsShow"
+                        :isShow="withdrawDepostMap.get(assetItem.coinId).rechargeIsShow"
                         :currencyName="currencyName"
                         :minRechargeAmount="minRechargeAmount"
                         :successCount="successCount"
@@ -298,17 +298,17 @@
                       class="out-box"
                     >
                       <WithdrawDepositItem
-                        :isShow="withdrawDepositList[index].withdrawDepositIsShow"
+                        :isShow="withdrawDepostMap.get(assetItem.coinId).withdrawDepositIsShow"
                         :isNeedTag="isNeedTag"
                         :withdrawRemark="withdrawRemark"
                         :currencyName="currencyName"
                         :originalActiveWithdrawDepositAddress="originalActiveWithdrawDepositAddress"
                         :withdrawAddressList="withdrawAddressList"
                         :feeRangeOfWithdraw="feeRangeOfWithdraw"
-                        :index="index"
+                        :index="assetItem.coinId"
                         :accountCount="accountCount"
                         :pointLengthAccountCount="pointLengthAccountCount"
-                        :ref="`withdrawItemRef${index}`"
+                        :ref="`withdrawItemRef${assetItem.coinId}`"
                         :coinId="assetItem.coinId"
                         :total="assetItem.total"
                         @changeInputValue="changeInputValue"
@@ -570,7 +570,6 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import ChargeMoneyItem from './ChargeMoneyItem'
 import WithdrawDepositItem from './WithdrawDepositItem'
-// setStore getStoreWithJson
 import {
   formatNumberInput,
   amendPrecision,
@@ -591,7 +590,7 @@ import {
   getOTCAvailableCurrency
 } from '../../../utils/api/OTC'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter,
   getNestedData
@@ -624,6 +623,7 @@ export default {
       blueStyleValue: 0, // 排序估值默认样式
       BTC2CNYRate: '', // 转换汇率
       withdrawDepositList: [], // 我的资产全部币种列表
+      withdrawDepostMap: new Map(),
       chargeMoneyAddress: '', // 根据充币地址生成二维码条件
       withdrawalFee: '', // 自定义提币手续费
       feeRangeOfWithdraw: {}, // 提币手续费范围
@@ -719,17 +719,10 @@ export default {
       }
       const data = await currencyTransform(params)
       // console.log(data)
-      if (!returnAjaxMsg(data, this)) {
-        console.log(3)
-        return false
-      } else {
-        // console.log(data)
-        if (data.data.data.coinPrice) {
-          // 获取汇率
-          this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
-          // console.log(this.BTC2CNYRate)
-        }
-      }
+      if (!data) return false
+      // console.log(data)
+      // 获取汇率
+      this.BTC2CNYRate = getNestedData(data, 'data.coinPrice')
     },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
@@ -869,8 +862,6 @@ export default {
     changeInputValue ({ref, index, pointLengthAccountCount, val, coinId, total}) {
       console.log(coinId, total)
       console.log(this.$refs[`withdrawItemRef${index}`][0])
-      // 获取ref中input值
-      // this[ref] = this.$refs[ref].value
       // 限制数量小数位位数
       let target = this.$refs[`withdrawItemRef${index}`][0].$refs[ref]
       formatNumberInput(target, pointLengthAccountCount)
@@ -890,7 +881,6 @@ export default {
       }
       // 判断是输入时还是手续费 判断错误提示
       if (val === 'rechargeType') {
-        // console.log(this.$refs.withdrawCount[index].value)
       } else if (val === 'serviceType') {
         // 获取输入手续费
         this.withdrawFeeVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value
@@ -912,7 +902,7 @@ export default {
       this.accountCount = targetCount > 0 ? targetCount : 0
     },
     // 点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
-    async showRechargeBox (id, name, index) {
+    async showRechargeBox (id, name) {
       // 每行数据ID
       this.chargeMoneyAddressId = id
       // 每行数据币种名称
@@ -926,27 +916,31 @@ export default {
         // 公信宝类币种提币默认显示框
         item.provideWithdrawDepositIsShow = false
       })
-
-      if (!this.withdrawDepositList[index].rechargeIsShow) {
-        // 显示充值框
-        this.withdrawDepositList[index].rechargeIsShow = true
+      this.withdrawDepostMap.forEach((val, key) => {
+        console.log(val, key)
+        this.withdrawDepostMap.set(key, {
+          rechargeIsShow: false,
+          withdrawDepositIsShow: false,
+          provideWithdrawDepositIsShow: false
+        })
+      })
+      let item = this.withdrawDepostMap.get(id)
+      if (!item.rechargeIsShow) {
+        this.withdrawDepostMap.set(id, {...item, rechargeIsShow: true})
       } else {
         if (this.isNeedTag) {
-          // 隐藏普通币种提现框
-          this.withdrawDepositList[index].withdrawDepositIsShow = false
+          this.withdrawDepostMap.set(id, {...item, withdrawDepositIsShow: false})
         } else {
-          // 隐藏公信宝类币种提现框
-          this.withdrawDepositList[index].provideWithdrawDepositIsShow = false
+          this.withdrawDepostMap.set(id, {...item, provideWithdrawDepositIsShow: false})
         }
       }
-
       this.fillingCurrencyAddress()
     },
     // 重置提现表单内容
-    resetWithdrawFormContent (index) {
-      this.currentIndex = index
-      console.log(this.$refs[`withdrawItemRef${index}`][0])
-      this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = ''
+    resetWithdrawFormContent (id) {
+      this.currentIndex = id
+      console.log(this.$refs[`withdrawItemRef${id}`][0])
+      this.$refs[`withdrawItemRef${id}`][0].$refs.countInputRef.value = ''
       // 到账数量
       this.accountCount = ''
       // 提币地址
@@ -960,8 +954,9 @@ export default {
       this.$goToPage('/PersonalCenter')
       this.notVerifyDialogVisible = false
     },
-    // 点击提现按钮显示提币内容（带回币种id 币种名称 当前index）
-    async changeWithdrawBoxByCoin (id, name, index) {
+    // 点击提现按钮显示提币内容（带回币种id 币种名称）
+    async changeWithdrawBoxByCoin (id, name) {
+      console.log(id, name)
       if (!(this.realNameAuth === 'y')) {
         this.notVerifyDialogVisible = true
         return false
@@ -981,7 +976,7 @@ export default {
         return
       }
       // 提币数量
-      this.resetWithdrawFormContent(index)
+      this.resetWithdrawFormContent(id)
 
       // 当前币种id
       this.activeCoinId = id
@@ -991,19 +986,19 @@ export default {
       // 隐藏验证弹窗
       this.isShowWithdrawDialog = false
       // 循环列表 隐藏充值或提现框
-      this.withdrawDepositList.forEach((item) => {
-        item.rechargeIsShow = false
-        // 普通币种提币默认显示框
-        item.withdrawDepositIsShow = false
-        // 公信宝类币种提币默认显示框
-        item.provideWithdrawDepositIsShow = false
+      this.withdrawDepostMap.forEach((val, key) => {
+        console.log(val, key)
+        this.withdrawDepostMap.set(key, {
+          rechargeIsShow: false,
+          withdrawDepositIsShow: false,
+          provideWithdrawDepositIsShow: false
+        })
       })
-      this.withdrawDepositList[index].withdrawDepositIsShow = true
-
-      // 隐藏充值弹窗
-      this.withdrawDepositList[index].rechargeIsShow = false
+      let item = this.withdrawDepostMap.get(id)
+      this.withdrawDepostMap.set(id, {...item, withdrawDepositIsShow: true})
+      this.$forceUpdate()
       await this.queryWithdrawalAddressList()
-      await this.getWithdrawalInformation(index)
+      await this.getWithdrawalInformation(id)
       this.getSecurityCenter()
     },
     // 显示交易对跳转币种信息
@@ -1051,7 +1046,6 @@ export default {
      */
     async getAssetCurrenciesList (type) {
       console.log(type)
-      let data
       let params = {
         pageNum: this.currentPageForMyEntrust,
         pageSize: '10000'
@@ -1065,32 +1059,33 @@ export default {
           break
       }
       this.localLoading = true
-      data = await assetCurrenciesList(params)
-      if (!data) {
-        // 接口失败清除loading
-        this.localLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.localLoading = false
-        this.withdrawDepositList.push({
+      let data = await assetCurrenciesList(params)
+      // 接口失败清除loading
+      this.localLoading = false
+      if (!data) return false
+      this.withdrawDepositList.push({
+        allIsShow: false,
+        rechargeIsShow: false,
+        withdrawDepositIsShow: false,
+        provideWithdrawDepositIsShow: false
+      })
+      // 返回数据
+      let detailData = getNestedData(data, 'data')
+      this.totalSumBTC = detailData.totalSum
+      this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
+      _.forEach(this.withdrawDepositList, (item) => {
+        this.withdrawStorageMap.set(item.coinId, item)
+        this.withdrawDepostMap.set(item.coinId, {
           allIsShow: false,
           rechargeIsShow: false,
           withdrawDepositIsShow: false,
           provideWithdrawDepositIsShow: false
         })
-        // 返回数据
-        let detailData = getNestedData(data, 'data')
-        this.totalSumBTC = detailData.totalSum
-        this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
-        _.forEach(this.withdrawDepositList, (item) => {
-          this.withdrawStorageMap.set(item.coinId, item)
-        })
-        // console.log(this.withdrawStorageMap, this.withdrawStorageMap.get('267243422920736768').isRecharge)
-        // console.log('我的资产币种列表')
-        console.log(this.withdrawDepositList)
-        this.getAllWithdraw()
-      }
+      })
+      // console.log(this.withdrawStorageMap, this.withdrawStorageMap.get('267243422920736768').isRecharge)
+      // console.log('我的资产币种列表')
+      console.log(this.withdrawDepostMap)
+      this.getAllWithdraw()
     },
     getAllWithdraw () {
       // 缓存币种列表
@@ -1131,7 +1126,7 @@ export default {
     /**
      *  点击提币按钮时 获取提币信息（最大最小手续费）
      */
-    async getWithdrawalInformation (index) {
+    async getWithdrawalInformation (id) {
       let data = await withdrawalInformation({
         coinId: this.activeCoinId
       })
@@ -1140,7 +1135,7 @@ export default {
       // 返回列表数据
       this.feeRangeOfWithdraw = getNestedData(data, 'data')
       this.withdrawalFee = getNestedData(data, 'data.minFees')
-      this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value = this.withdrawalFee
+      this.$refs[`withdrawItemRef${id}`][0].$refs.feeInputRef.value = this.withdrawalFee
       this.withdrawFeeVModel = this.withdrawalFee
     },
     /**
@@ -1343,12 +1338,9 @@ export default {
         coinId: this.currencyTradingId // 币种coinId
       })
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.currencyTradingList = getNestedData(data, 'data.data.entrust') || []
-      }
+      if (!data) return false
+      this.currencyTradingList = getNestedData(data, 'data.entrust') || []
+      console.log(data.data)
     },
     // 个人资产跳转OTC
     jumpToOTCCenter (coinId) {
@@ -1363,9 +1355,7 @@ export default {
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency()
       if (!data) return false
-      if (data.data) {
-        this.OTCCoinList = getNestedData(data, 'data')
-      }
+      this.OTCCoinList = getNestedData(data, 'data') ? getNestedData(data, 'data') : []
     }
     // 周四放开 以下两个方法
     // // 个人资产跳转OTC

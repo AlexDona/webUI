@@ -585,12 +585,9 @@ export default {
           code: this.bindingDataPhone.bindingNewPhoneCode // 手机验证码
         }
         data = await bindPhoneAddress(param)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          return false
-        } else {
-          this.successJump()
-          // console.log(data)
-        }
+        if (!data) return false
+        this.successJump()
+        // console.log(data)
       }
     },
     // 检测用户名是否存在
@@ -742,12 +739,9 @@ export default {
         this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
         if (this.isLockedPayPassword) return false
         data = await changeMobilePhone(param)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          return false
-        } else {
-          this.stateEmptyData()
-          this.successJump()
-        }
+        if (!data) return false
+        this.stateEmptyData()
+        this.successJump()
       }
     },
     // 接口请求完成之后清空数据

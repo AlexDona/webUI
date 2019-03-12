@@ -65,8 +65,8 @@
                   @mouseleave="showStatusCode(2)"
                 >
                   <IconFontCommon
-                    class="font-size12"
-                    iconName="icon-erweima1"
+                    class="font-size12 erweima1-code"
+                    iconName="icon-erweima2"
                   />
                   <!--二维码-->
                   {{ $t('M.comm_qr_code') }}
@@ -353,7 +353,7 @@ import {
 } from '../../../utils/api/personal'
 import {domain} from '../../../utils/env'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
@@ -434,22 +434,15 @@ export default {
         pageSize: this.pageSize // 页码
       })
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除局部loading
-        this.partLoading = false
-        return false
-      } else {
-        // 接口成功清除局部loading
-        this.partLoading = false
-        // 返回展示
-        this.extensionList = getNestedData(data, 'data.data.page.list')
-        console.log(this.extensionList)
-        this.totalPageForMyEntrust = getNestedData(data, 'data.data.page.pages') - 0
-        this.totalPageMyNumber = getNestedData(data, 'data.data.page.total') - 0
-        // 已获得的佣金折合
-        this.totalSumBTC = getNestedData(data, 'data.data.btc')
-        console.log(this.totalSumBTC)
-      }
+      // 接口返回清除局部loading
+      this.partLoading = false
+      if (!data) return false
+      // 返回展示
+      this.extensionList = getNestedData(data, 'data.page.list')
+      this.totalPageForMyEntrust = getNestedData(data, 'data.page.pages') - 0
+      this.totalPageMyNumber = getNestedData(data, 'data.page.total') - 0
+      // 已获得的佣金折合
+      this.totalSumBTC = getNestedData(data, 'data.btc')
     },
     // 分页
     changeCurrentPage (pageNum) {
@@ -463,20 +456,14 @@ export default {
         pageSize: this.pageSize, // 条数
         type: this.generalizeValue // 类型
       })
-      console.log(data)
-      if (!returnAjaxMsg(data, this)) {
-        // 接口失败清除局部loading
-        this.partLoading = false
-        return false
-      } else {
-        // 接口失败清除局部loading
-        this.partLoading = false
-        let responseData = getNestedData(data, 'data.data')
-        // 返回展示
-        this.awardList = getNestedData(responseData, 'data.list')
-        this.coinName = getNestedData(responseData, 'coinName')
-        this.totalPageMyEntrust = getNestedData(responseData, 'data.pages') - 0
-      }
+      // 接口返回清除局部loading
+      this.partLoading = false
+      if (!data) return false
+      let responseData = getNestedData(data, 'data')
+      // 返回展示
+      this.awardList = getNestedData(responseData, 'data.list')
+      this.coinName = getNestedData(responseData, 'coinName')
+      this.totalPageMyEntrust = getNestedData(responseData, 'data.pages') - 0
     },
     // 分页
     async changeCurrentPageAward (pageNum) {
@@ -596,6 +583,10 @@ export default {
                   line-height: 26px;
                   text-align: center;
 
+                  > .erweima1-code {
+                    color: #338ff5;
+                  }
+
                   > .ercode {
                     position: absolute;
                     bottom: 35px;
@@ -628,7 +619,7 @@ export default {
 
       /* 推广统计 */
       > .extension-statistics {
-        min-height: 200px;
+        min-height: 280px;
 
         > .extension-statistics-header {
           display: flex;
@@ -650,7 +641,7 @@ export default {
 
       /* 奖励记录 */
       > .award-record {
-        min-height: 200px;
+        min-height: 280px;
 
         > .award-record-header {
           height: 56px;
@@ -685,6 +676,14 @@ export default {
       .cell,
       .el-table th div {
         padding-left: 18px;
+      }
+
+      .el-table__empty-block {
+        min-height: 140px;
+      }
+
+      .el-table__empty-text {
+        font-size: 12px;
       }
     }
 

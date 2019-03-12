@@ -747,11 +747,6 @@ export default {
     }
   },
   created () {
-    // let u = navigator.userAgent
-    // console.log(navigator.appVersion)
-    // console.log(u)
-    // const userAgentList = u.split(';')
-    // console.log(userAgentList)
     document.getElementsByTagName('body')[0].style.zoom = 1
     if (this.isLogin) {
       this.$goToPage('/home')
@@ -785,6 +780,7 @@ export default {
       $('body').off('mousemove')
       $('body').off('mouseup')
     })
+    this.CHANGE_TOKEN_AVAILABILITY(false)
   },
   activated () {
     // 清空input框值
@@ -800,7 +796,9 @@ export default {
       'SET_LOGIN_TYPE',
       'SET_STEP1_INFO',
       'SET_USER_BUTTON_STATUS',
-      'USER_LOGIN'
+      'USER_LOGIN',
+      'CHANGE_AJAX_READY_STATUS',
+      'CHANGE_TOKEN_AVAILABILITY'
     ]),
     // 获取本地记录密码
     getLocalUserName () {
@@ -834,47 +832,46 @@ export default {
     },
     // 刷新二维码
     async reflashErCode () {
+      this.CHANGE_AJAX_READY_STATUS(true)
       this.isScanSuccess = false
       if (this.socket) {
         this.socket.doClose()
       }
       const data = await getLoginErcode()
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.isErcodeTimeOut = false
-        console.log(data)
-        this.erCodeString = getNestedData(data, 'data.data.qrcode')
-        this.socket = new socket(this.url = loginSocketUrl + this.erCodeString)
-        this.socket.doOpen()
-        this.socket.on('open', () => {
-          clearInterval(this.ercodeTimer)
-          this.socket.send(this.erCodeString)
-          this.ercodeTimerCount = 60
-          this.ercodeTimer = setInterval(() => {
-            if (this.ercodeTimerCount > 0) {
-              this.ercodeTimerCount--
-            } else {
-              clearInterval(this.ercodeTimer)
-              this.isErcodeTimeOut = true
-            }
-          }, 1000)
-          this.socket.on('message', (data) => {
-            console.log(data)
-            let socketData = data
-            // 用户已扫码
-            if (socketData.scan === 'scaned') {
-              this.isScanSuccess = true
-            } else if (socketData.scan === 'canceled') {
-              this.backToScan()
-            }
-            // 登录成功
-            if (socketData.data && socketData.data.userInfo) {
-              this.userLoginSuccess(socketData.data)
-            }
-          })
+      if (!data) return false
+      this.isErcodeTimeOut = false
+      console.log(data)
+      this.erCodeString = getNestedData(data, 'data.qrcode')
+      this.socket = new socket(this.url = loginSocketUrl + this.erCodeString)
+      this.socket.doOpen()
+      this.socket.on('open', () => {
+        clearInterval(this.ercodeTimer)
+        this.socket.send(this.erCodeString)
+        this.ercodeTimerCount = 60
+        this.ercodeTimer = setInterval(() => {
+          if (this.ercodeTimerCount > 0) {
+            this.ercodeTimerCount--
+          } else {
+            clearInterval(this.ercodeTimer)
+            this.isErcodeTimeOut = true
+          }
+        }, 1000)
+        this.socket.on('message', (data) => {
+          console.log(data)
+          let socketData = data
+          // 用户已扫码
+          if (socketData.scan === 'scaned') {
+            this.isScanSuccess = true
+          } else if (socketData.scan === 'canceled') {
+            this.backToScan()
+          }
+          // 登录成功
+          if (socketData.data && socketData.data.userInfo) {
+            this.userLoginSuccess(socketData.data)
+          }
         })
-      }
+      })
+      this.CHANGE_AJAX_READY_STATUS(false)
     },
     // 切换登录方式
     toggleLoginType () {
@@ -1235,6 +1232,7 @@ export default {
 
   > .inner-box {
     &.pc-bg {
+      min-width: 1366px;
       background: url('../assets/develop/login-bg.png') 25% center  no-repeat;
     }
 

@@ -317,8 +317,8 @@ export default {
       }
 
       > .no-data {
-        height: 345px;
-        line-height: 345px;
+        height: 431px;
+        line-height: 431px;
         text-align: center;
       }
     }

@@ -25,6 +25,7 @@
           </span>
             <el-select
               v-model="defaultCurrencyId"
+              filterable
               :placeholder="$t('M.comm_please_choose')"
               :no-data-text="$t('M.comm_no_data')"
             >
@@ -481,7 +482,7 @@ export default {
           // 返回冲提记录列表展示
           let detailData = getNestedData(data, 'data')
           // 充提记录
-          this.chargeRecordList = getNestedData(detailData, 'list') || []
+          this.chargeRecordList = getNestedData(detailData, 'list')
           this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
           break
         case 'other-records':
@@ -612,6 +613,7 @@ export default {
 
       > .header-content {
         width: 300px;
+        color: #338ff5;
       }
     }
 

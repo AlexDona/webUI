@@ -773,7 +773,8 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
       'USER_LOGOUT',
-      'SET_COUNT_DOWN_RESET_STATUS'
+      'SET_COUNT_DOWN_RESET_STATUS',
+      'CHANGE_AJAX_READY_STATUS'
     ]),
     // 限制输入数字
     positiveIntegerNumRegexpInputLimit (ref) {
@@ -937,20 +938,14 @@ export default {
           regType: type
         }
         const data = await checkUserExist(params)
-        if (!returnAjaxMsg(data, this)) {
-          return false
-        }
+        return returnAjaxMsg(data, this) ? true : false
       } else {
         switch (type) {
           case 'phone':
-            if (this.checkoutInputFormat(0, userName)) {
-              return false
-            }
+            if (this.checkoutInputFormat(0, userName)) return false
             break
           case 'email':
-            if (this.checkoutInputFormat(1, userName)) {
-              return false
-            }
+            if (this.checkoutInputFormat(1, userName)) return false
             break
         }
       }
@@ -1109,6 +1104,7 @@ export default {
     },
     // 按下滑块函数
     async successCallback (params) {
+      this.CHANGE_AJAX_READY_STATUS(true)
       if (this.sliderFlag) {
         this.sliderFlag = false// 调用函数节流阀
         $('.handler').css({'left': this.maxwidth})
@@ -1122,8 +1118,9 @@ export default {
         $('.drag_bg').css({'width': 0})
         let type = !this.activeMethod ? 'phone' : 'email'
         let userName = !this.activeMethod ? this.phoneNum : this.transformedEmail
-        await this.checkUserExistAjax(type, userName)
+        if (!await this.checkUserExistAjax(type, userName)) return false
         await this.sendRegister(params)
+        this.CHANGE_AJAX_READY_STATUS(false)
       } // 验证成功函数
     }
   },
@@ -1177,6 +1174,7 @@ export default {
       width: 100%;
 
       &.pc-bg {
+        min-width: 1366px;
         background: url('../assets/develop/login-bg.png') 25% 0 no-repeat;
       }
 

@@ -276,6 +276,7 @@ export const personal = {
   'user_coin_volume': '매출액',
   // 当前委托Commissioned by the current
   'user_coin_commissioned_current': '현재 위임',
+  'user_enter_end_time': '끝날 시간을 선택하세요.',
   // 历史委托
   'user_coin_commissioned_history': '위임 역사',
   // 成交明细
