@@ -707,73 +707,73 @@ export default {
           }
         }
       }
-    }
 
-    /* 申请商家提示框样式 */
-    .apply-merchant-dialog {
-      /* 遮罩层样式 */
-      .el-dialog__wrapper {
-        background: rgba(0, 0, 0, .7) !important;
-      }
-
-      .el-dialog__header {
-        text-align: left;
-        background-color: #1d2131 !important;
-      }
-
-      .el-dialog {
-        width: 350px;
-        height: 207px;
-        border-radius: 4px;
-        background-color: #1c2237 !important;
+      /* 申请商家提示框样式 */
+      .apply-merchant-dialog {
+        /* 遮罩层样式 */
+        .el-dialog__wrapper {
+          background: rgba(0, 0, 0, .7) !important;
+        }
 
         .el-dialog__header {
-          padding: 3px 20px;
+          text-align: left;
+          background-color: #1d2131 !important;
+        }
+
+        .el-dialog {
+          width: 350px;
+          height: 207px;
           border-radius: 4px;
+          background-color: #1c2237 !important;
 
-          .el-dialog__title {
-            font-size: 16px;
-            color: #338ff5 !important;
-          }
+          .el-dialog__header {
+            padding: 3px 20px;
+            border-radius: 4px;
 
-          .el-dialog__headerbtn {
-            top: 15px;
-            right: 10px;
-          }
-        }
-
-        .el-dialog__body {
-          padding: 15px 20px 10px 30px;
-          font-size: 12px;
-
-          .tips {
-            height: 80px;
-            padding-top: 20px;
-            font-size: 14px;
-            color: #b8bdd0;
-
-            > .content {
-              line-height: 20px;
-            }
-          }
-        }
-
-        .el-dialog__footer {
-          padding: 0 20px 0 0;
-
-          .el-button {
-            width: 90px;
-            padding: 7px 20px;
-            border: 0;
-
-            &:first-child {
-              border: 1px solid rgba(51, 143, 245, 1);
-              color: #338ff5;
-              background: #1c2237;
+            .el-dialog__title {
+              font-size: 16px;
+              color: #338ff5 !important;
             }
 
-            &:last-child {
-              padding: 8px 21px;
+            .el-dialog__headerbtn {
+              top: 15px;
+              right: 10px;
+            }
+          }
+
+          .el-dialog__body {
+            padding: 15px 20px 10px 30px;
+            font-size: 12px;
+
+            .tips {
+              height: 80px;
+              padding-top: 20px;
+              font-size: 14px;
+              color: #b8bdd0;
+
+              > .content {
+                line-height: 20px;
+              }
+            }
+          }
+
+          .el-dialog__footer {
+            padding: 0 20px 0 0;
+
+            .el-button {
+              width: 90px;
+              padding: 7px 20px;
+              border: 0;
+
+              &:first-child {
+                border: 1px solid rgba(51, 143, 245, 1);
+                color: #338ff5;
+                background: #1c2237;
+              }
+
+              &:last-child {
+                padding: 8px 21px;
+              }
             }
           }
         }
