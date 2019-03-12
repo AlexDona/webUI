@@ -1174,6 +1174,7 @@ export default {
       width: 100%;
 
       &.pc-bg {
+        min-width: 1366px;
         background: url('../assets/develop/login-bg.png') 25% 0 no-repeat;
       }
 

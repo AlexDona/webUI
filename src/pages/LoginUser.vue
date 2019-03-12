@@ -1232,6 +1232,7 @@ export default {
 
   > .inner-box {
     &.pc-bg {
+      min-width: 1366px;
       background: url('../assets/develop/login-bg.png') 25% center  no-repeat;
     }
 
