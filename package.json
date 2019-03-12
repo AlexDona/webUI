@@ -25,7 +25,8 @@
     "vue": "^2.5.2",
     "vue-i18n": "^8.8.2",
     "vue-router": "^3.0.1",
-    "vuex": "^3.1.0"
+    "vuex": "^3.1.0",
+    "axios": "^0.18.0"
   },
   "devDependencies": {
     "@chenfengyuan/vue-qrcode": "^1.0.0",
@@ -95,6 +96,7 @@
     "vue-clipboard2": "^0.2.0",
     "vue-concise-slider": "3.3.0",
     "vue-loader": "^13.3.0",
+    "vue-slider-component": "^3.0.8",
     "vue-style-loader": "^3.1.2",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
