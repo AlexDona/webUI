@@ -264,7 +264,7 @@ export const positiveIntegerNumRegexpInput = event => {
 }
 
 /**
- * 只能输入正整数限制-首位为0时输入第二位干掉首位的20190307新增
+ * 只能输入正整数限制-首位为0时输入第二位干掉首位的20190307新增,并且只能输入三位正整数0~999
  * @param event ： 当前input DOM 对象
  */
 export const positiveIntegerNumRegexpInputNoZero = event => {
@@ -282,8 +282,8 @@ export const positiveIntegerNumRegexpInputNoZero = event => {
       }
     }
   } else {
-    _.forEach(valArr, (item) => {
-      if (((item - 0) || item === '0')) {
+    _.forEach(valArr, (item, index) => {
+      if (((item - 0) || item === '0') && index < 3) {
         finalVal += item
       }
     })

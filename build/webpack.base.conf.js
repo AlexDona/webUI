@@ -5,6 +5,7 @@ const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 const webpack = require('webpack')
 require('babel-polyfill')
+const manifest = require('../vendor-manifest.json')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -43,6 +44,9 @@ module.exports = {
   },
   // 添加代码
   plugins: [
+    new webpack.DllReferencePlugin({
+      manifest
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
