@@ -238,14 +238,14 @@ export default {
       'CHANGE_COLLECT_SYMBOL',
       'CHANGE_SYMBOL_MAP',
       'CHANGE_ACTIVE_TRADE_AREA',
-      'CHANGE_AJAX_READY_STATUS'
+      'CHANGE_AJAX_READY_STATUS',
+      'RESET_SYMBOL_MAP'
     ]),
     async initPlatesAndAreas () {
       await this.getPlates()
       if (!this.plates.length) return false
       this.activeName = getNestedData(this.plates[0], 'id')
       console.log(this.plates)
-      // await this.getTradeAreas({})
       await this.getAllTradeAreas()
     },
     getMoreAreas () {
@@ -286,10 +286,12 @@ export default {
       const NOW = new Date().getTime()
       let symbolJSON
       let localSymbolJSON = getStoreWithJson('symbolJSON') || {}
+      console.log(localSymbolJSON)
       let localSymbolLength = Object.keys(localSymbolJSON).length
       if (NOW - SYMBOL_AGE < this.FIVE_MINUTES * 100 && localSymbolLength) {
         symbolJSON = localSymbolJSON
       } else {
+        this.RESET_SYMBOL_MAP()
         if (this.plates.length != 1) {
           let symbolsData = await getAllSymbolsAJAX({
             i18n: this.language
@@ -305,15 +307,8 @@ export default {
           let symbolsSJONFromBackEnd = JSON.parse(symbolsStr)
           symbolJSON = symbolsSJONFromBackEnd
           setStore('symbolJSONAge', new Date().getTime())
+          console.log(symbolJSON)
         }
-      }
-
-      for (let k in symbolJSON) {
-        console.log(symbolJSON[k])
-        this.CHANGE_SYMBOL_MAP({
-          key: symbolJSON[k].id,
-          val: symbolJSON[k]
-        })
       }
       _.forEach(this.areasFromAPI, (area, areaIndex) => {
         this.areasIndexMap.set(area.area, areaIndex)
@@ -443,7 +438,6 @@ export default {
         collectSymbol
       })
       let newContent = []
-      console.log(this.symbolMap.get('topcbtc'))
       _.forEach(collectSymbol, outItem => {
         if (this.symbolMap.get(outItem)) {
           newContent.push(this.symbolMap.get(outItem))
@@ -490,7 +484,7 @@ export default {
             buyCoinName, // 'BTC'、'FBT'
             tradeName // rdnbtc、 fucfbt
           } = newData
-          console.log(tradeName, newData)
+          console.log(tradeName, newData, this.symbolMap)
           this.updateSymbol(buyCoinName, tradeName, newData)
           this.CHANGE_SYMBOL_MAP({
             key: tradeName,
