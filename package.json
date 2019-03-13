@@ -18,10 +18,10 @@
     "dll": "node build/dll.js"
   },
   "dependencies": {
-    "element-ui": "2.4.0",
+    "element-ui": "2.4.11",
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
-    "vue": "^2.5.2",
+    "vue": "2.5.2",
     "vue-i18n": "^8.8.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.1.0",
@@ -98,7 +98,7 @@
     "vue-clipboard2": "^0.2.0",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.1.2",
-    "vue-template-compiler": "^2.5.2",
+    "vue-template-compiler": "2.5.2",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.11.2",
     "webpack-merge": "^4.1.0"
