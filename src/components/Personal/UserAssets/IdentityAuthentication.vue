@@ -561,7 +561,7 @@ import {
   uploadImageAjax
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData,
   validateNumForUserInput // 用户输入验证
 } from '../../../utils/commonFunc'
@@ -642,9 +642,6 @@ export default {
         '', // 护照号码
         '' // 国籍
       ],
-      fileInput1: '',
-      fileInput2: '',
-      fileInput3: '',
       fullscreenLoading: false // 整页loading
     }
   },
@@ -683,7 +680,7 @@ export default {
       lrz(e.target.files[0]).then(async res => {
         const {base64, file, fileLen} = res
         if (this.beforeAvatarUpload(fileLen)) return false
-        await this.uploadImg(file, INPUT_ID.substr(INPUT_ID.length - 1, 1) - 0)
+        if (!await this.uploadImg(file, INPUT_ID.substr(INPUT_ID.length - 1, 1) - 0)) return false
         switch (INPUT_ID) {
           case 'fileInput1':
             console.log(this.firstPictureSrc)
@@ -709,6 +706,7 @@ export default {
       let formData = new FormData()
       // console.log(res.file)
       formData.append('file', file)
+      console.log(formData)
       const data = await uploadImageAjax(formData)
       this.CHANGE_AJAX_READY_STATUS(false)
       if (!data) return false
@@ -724,6 +722,7 @@ export default {
           break
       }
       console.log(this.dialogImageFrontUrl)
+      return true
     },
     // 判断图片大小限制
     beforeAvatarUpload (size) {
@@ -743,20 +742,10 @@ export default {
      */
     async getRealNameInformation () {
       let data = await realNameInformation()
-      // 整页loading
-      this.fullscreenLoading = true
-      console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        // 返回列表数据
-        this.realNameInformationObj = getNestedData(data, 'data.data')
-        this.statusRealNameInformation = getNestedData(data, 'data.data.authInfo')
-      }
+      if (!data) return false
+      // 返回列表数据
+      this.realNameInformationObj = getNestedData(data, 'data')
+      this.statusRealNameInformation = getNestedData(data, 'data.authInfo')
     },
     // 检测身份证号
     idCardRegexpInputNum (ref) {
@@ -852,7 +841,6 @@ export default {
       if (goOnStatus) {
         let data
         let param = {
-          nationCode: this.userInfo.country.chinese, // 国籍
           cardType: this.documentTypeValue, // 证件类型
           realname: this.realName, // 真实姓名
           // 证件号码
@@ -862,37 +850,37 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await submitRealNameAuthentication(param)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
-          return false
-        } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
-          await this.REFRESH_USER_INFO_ACTION()
-          this.authenticationIsStatus()
-          await this.getRealNameInformation()
-          console.log(data)
-          this.realName = ''
-          this.identificationNumber = ''
-        }
+        // 接口失败清除loading
+        this.fullscreenLoading = false
+        if (!data) return false
+        await this.REFRESH_USER_INFO_ACTION()
+        this.authenticationIsStatus()
+        await this.getRealNameInformation()
+        console.log(data)
+        this.realName = ''
+        this.identificationNumber = ''
       }
     },
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (this.realNameAuth !== 'n' && this.advancedAuth === '') {
+      if (this.realNameAuth === 'y' && this.advancedAuth === '') {
         // 显示高级认证页面
         this.authenticationStatusFront = true
-      } else if (this.realNameAuth !== 'n') {
-        // 隐藏弹出框
-        // this.seniorAuthentication = false
-        // 隐藏高级认证页面
-        this.authenticationStatusFront = false
       }
+      // else if (this.realNameAuth !== 'n') {
+      //   // 隐藏弹出框
+      //   // this.seniorAuthentication = false
+      //   // 隐藏高级认证页面
+      //   this.authenticationStatusFront = false
+      // }
     },
     // 高级认证未通过被驳回
     authenticationIsStatus () {
+      if (this.advancedAuth === '' && this.realNameAuth === 'n') {
+        // 隐藏高级认证页面
+        this.authenticationStatusFront = false
+      }
       if (this.advancedAuth === 'notPass') {
         this.authenticationNotPass = true
         this.authenticationStatusFront = false
@@ -955,19 +943,15 @@ export default {
       this.fullscreenLoading = true
       data = await submitSeniorCertification(param)
       console.log(data)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        this.stateEmptyData()
-        this.authenticationStatusFront = false
-        // 接口成功清除loading
-        this.SET_USER_INFO_REFRESH_STATUS(true)
-        await this.REFRESH_USER_INFO_ACTION()
-        await this.getRealNameInformation()
-        this.fullscreenLoading = false
-      }
+      // 接口返回清除loading
+      this.fullscreenLoading = false
+      if (!data) return false
+      this.stateEmptyData()
+      this.authenticationStatusFront = false
+      // 接口成功清除loading
+      this.SET_USER_INFO_REFRESH_STATUS(true)
+      await this.REFRESH_USER_INFO_ACTION()
+      await this.getRealNameInformation()
     },
     // 接口请求完成之后清空数据
     stateEmptyData () {
@@ -1006,6 +990,7 @@ export default {
         this.authenticationIsStatus()
         this.CHANGE_USER_REFRESH_SUCCESS(false)
         this.getRealNameInformation()
+        // this.stateEmptyData()
       }
     }
   }

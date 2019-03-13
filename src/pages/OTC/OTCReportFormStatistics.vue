@@ -701,29 +701,27 @@ export default {
       console.log(data)
       this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       if (!data) return false
-      if (data.data) {
-        let getData = getNestedData(data, 'data')
-        // 法币总资产
-        this.totalAssets = getNestedData(getData, 'totalAssets')
-        // 币种总资产
-        this.total = getNestedData(getData, 'total')
-        // 当天交易
-        this.buyDayMap = getNestedData(getData, 'buyDayMap')
-        // 购买历史交易赋值
-        this.buyHistoryMap = getNestedData(getData, 'buyHistoryMap')
-        // 购买本月赋值
-        this.buyMonthMap = getNestedData(getData, 'buyMonthMap')
-        // 购买本周赋值
-        this.buyWeekMap = getNestedData(getData, 'buyWeekMap')
-        // 出售当天赋值
-        this.sellDayMap = getNestedData(getData, 'sellDayMap')
-        // 出售历史赋值
-        this.sellHistoryMap = getNestedData(getData, 'sellHistoryMap')
-        // 出售当月赋值
-        this.sellMonthMap = getNestedData(getData, 'sellMonthMap')
-        // 出售本周赋值
-        this.sellWeekMap = getNestedData(getData, 'sellWeekMap')
-      }
+      let getData = getNestedData(data, 'data')
+      // 法币总资产
+      this.totalAssets = getNestedData(getData, 'totalAssets')
+      // 币种总资产
+      this.total = getNestedData(getData, 'total')
+      // 当天交易
+      this.buyDayMap = getNestedData(getData, 'buyDayMap')
+      // 购买历史交易赋值
+      this.buyHistoryMap = getNestedData(getData, 'buyHistoryMap')
+      // 购买本月赋值
+      this.buyMonthMap = getNestedData(getData, 'buyMonthMap')
+      // 购买本周赋值
+      this.buyWeekMap = getNestedData(getData, 'buyWeekMap')
+      // 出售当天赋值
+      this.sellDayMap = getNestedData(getData, 'sellDayMap')
+      // 出售历史赋值
+      this.sellHistoryMap = getNestedData(getData, 'sellHistoryMap')
+      // 出售当月赋值
+      this.sellMonthMap = getNestedData(getData, 'sellMonthMap')
+      // 出售本周赋值
+      this.sellWeekMap = getNestedData(getData, 'sellWeekMap')
     },
     // 页面加载时请求接口渲染订单详情列表
     async getOTCEntrustingOrdersRevocation () {

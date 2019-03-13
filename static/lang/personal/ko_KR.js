@@ -42,6 +42,7 @@ export const personal = {
   'user_assets_sum2': '동결 수량',
   'user_assets_sum3': '사용 가능한 수량',
   'user_assets_sum4': '해당 통화 금액수',
+  'assets_locked_position': '창고를 잠그다',
   'user_assets_Transaction_History': '청구 내역',
   'user_assets_withdrawal_hint2': '사용자 자금 보안을 위해 플랫폼이 동전 처리 작업을 확인하기 위해 전화 할 수 있습니다. 응답에주의하십시오.',
   'user_assets_withdrawal_hint3': '허용 인출을 통해 재충전 확인 후;',
@@ -276,6 +277,7 @@ export const personal = {
   'user_coin_volume': '매출액',
   // 当前委托Commissioned by the current
   'user_coin_commissioned_current': '현재 위임',
+  'user_enter_end_time': '끝날 시간을 선택하세요.',
   // 历史委托
   'user_coin_commissioned_history': '위임 역사',
   // 成交明细

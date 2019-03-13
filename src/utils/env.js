@@ -33,13 +33,6 @@ const dev210Config = {
 
 // eslint-disable-next-line
 const prodConfig = {
-  apiCommonUrl: 'https://api.new.bzu.com/', // 全局接口 commonURL
-  socketUrl: 'wss://ws.bzu.com/market', // 行情 socket
-  loginSocketUrl: 'wss://api.new.bzu.com/qrcodeLogin/' // 扫码登录 socket
-}
-
-// eslint-disable-next-line
-const newProdConfig = {
   apiCommonUrl: 'https://s.fubt.co/', // 全局接口 commonURL
   socketUrl: 'wss://market.fubt.co/market', // 行情 socket
   loginSocketUrl: 'wss://s.fubt.co/qrcodeLogin/' // 扫码登录 socket
@@ -52,8 +45,8 @@ switch (process.env.NODE_ENV) {
     // targetConfig = {...dev210Config, xDomain: 'me.com'}
     // 生产环境
     // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
-    // 新生产环境
-    // targetConfig = {...newProdConfig, xDomain: 'fubt.co'}
+    // 生产环境
+    targetConfig = {...prodConfig, xDomain: 'fubt.co'}
     break
   // 210开发环境
   case 'development210':
@@ -65,7 +58,7 @@ switch (process.env.NODE_ENV) {
     break
   // 生产环境
   case 'production':
-    targetConfig = {...targetConfig, ...newProdConfig}
+    targetConfig = {...targetConfig, ...prodConfig}
     break
 }
 

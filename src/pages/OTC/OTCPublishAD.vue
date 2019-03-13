@@ -597,7 +597,6 @@ export default {
       // this.limitOrderCount = positiveIntegerNumRegexpInput(target)
       this.limitOrderCount = positiveIntegerNumRegexpInputNoZero(target)
       console.log(this.$refs.limitRef.value)
-      console.log(this.limitOrderCount)
     },
     // 2.0 卖家必须成交过几次（0=不限制）input框限制
     positiveIntegerNumRegexpInputSuccess (ref) {
@@ -605,7 +604,6 @@ export default {
       // this.successOrderCount = positiveIntegerNumRegexpInput(target)
       this.successOrderCount = positiveIntegerNumRegexpInputNoZero(target)
       console.log(this.$refs.successRef.value)
-      console.log(this.successOrderCount)
     },
     // 3.0 广告管理跳转过来 请求详情接口
     async getOTCSelectedOrdersDetails () {
@@ -1063,8 +1061,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index";
 
-/* input框中placeholder字体设置 */
-input::-webkit-input-placeholder {
+input::-webkit-input-placeholder { /* input框中placeholder字体设置 */
   font-size: 12px;
   color: #aab2bd;
 }

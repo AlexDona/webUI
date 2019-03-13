@@ -26,6 +26,7 @@
             >
               <el-select
                 v-model="currencyValue"
+                filterable
                 :no-data-text="$t('M.comm_no_data')"
               >
                 <el-option
@@ -47,6 +48,7 @@
                 v-model="withdrawalRemark"
                 @keydown="setErrorMsg(0, '')"
                 @blur="checkoutInputFormat(0, withdrawalRemark)"
+                maxlength="20"
               />
               <!--错误提示-->
               <ErrorBox
@@ -250,7 +252,7 @@ import {
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter,
   validateNumForUserInput,
@@ -283,6 +285,7 @@ export default {
       withdrawalAddressList: [], // 提币地址列表
       operation: 'M.comm_delete', // 删除
       activeName: 'current-entrust',
+      pageSize: 10, // 每页条数
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
       dialogVisible: false, // 取消弹窗默认隐藏
@@ -416,17 +419,12 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await addNewWithdrawalAddress(param)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        this.getWithdrawalAddressList()
-        this.resetFormContent()
-        this.mentionMoneyConfirm = false
-      }
+      // 接口失败清除loading
+      this.fullscreenLoading = false
+      if (!data) return false
+      this.getWithdrawalAddressList()
+      this.resetFormContent()
+      this.mentionMoneyConfirm = false
     },
     /**
      *  刚进页面时候 提币地址列表查询
@@ -441,21 +439,18 @@ export default {
       let data = await inquireWithdrawalAddressList(params)
       this.partLoading = false
       // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回列表数据
-        let detailData = getNestedData(data, 'data.data')
-        this.currencyList = getNestedData(detailData, 'canWithdrawPartnerCoinList')
-        // 对ID名称进行赋值
-        this.currencyValue = this.paramOfJumpToAddWithdrawAdress || getNestedData(detailData, 'canWithdrawPartnerCoinList[0].coinId')
-        this.SET_NEW_WITHDRAW_ADDRESS('')
-        // 对币种名称列表进行赋值
-        this.withdrawalAddressList = getNestedData(detailData, 'UserWithdrawAddressPage.list')
-        this.totalPageForMyEntrust = getNestedData(detailData, 'UserWithdrawAddressPage.pages') - 0
-        // console.log(this.currencyList)
-        // console.log(this.withdrawalAddressList)
-      }
+      if (!data) return false
+      // 返回列表数据
+      let detailData = getNestedData(data, 'data')
+      this.currencyList = getNestedData(detailData, 'canWithdrawPartnerCoinList')
+      // 对ID名称进行赋值
+      this.currencyValue = this.paramOfJumpToAddWithdrawAdress || getNestedData(detailData, 'canWithdrawPartnerCoinList[0].coinId')
+      this.SET_NEW_WITHDRAW_ADDRESS('')
+      // 对币种名称列表进行赋值
+      this.withdrawalAddressList = getNestedData(detailData, 'UserWithdrawAddressPage.list')
+      this.totalPageForMyEntrust = getNestedData(detailData, 'UserWithdrawAddressPage.pages') - 0
+      // console.log(this.currencyList)
+      // console.log(this.withdrawalAddressList)
     },
     // 删除提币地址
     cancelId (id) {
@@ -477,16 +472,11 @@ export default {
         id: this.deleteWithdrawalId // 列表id
       }
       data = await deleteUserWithdrawAddress(param)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        // 接口失败清除局部loading
-        this.partLoading = false
-        return false
-      } else {
-        // 接口成功清除局部loading
-        this.partLoading = false
-        this.getWithdrawalAddressList()
-        this.resetFormContent()
-      }
+      // 接口清除局部loading
+      this.partLoading = false
+      if (!data) return false
+      this.getWithdrawalAddressList()
+      this.resetFormContent()
     },
     // 接口请求完成之后清空数据
     resetFormContent () {
@@ -540,12 +530,8 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .withdrawal-address {
-    > .content-main {
-      min-height: 300px !important;
-    }
-
     > .withdrawal-address-main {
-      min-height: 350px;
+      min-height: 352px;
       border-radius: 5px;
 
       > .withdrawal-header {
@@ -610,6 +596,10 @@ export default {
         height: 50px;
         padding: 0 25px;
         line-height: 50px;
+
+        > .header-content {
+          color: #338ff5;
+        }
       }
 
       .btn {
@@ -631,7 +621,7 @@ export default {
           box-shadow: 2px 0 2px rgba(20, 23, 37, 1);
 
           > .header-content {
-            color: rgba(255, 255, 255, .7);
+            color: #338ff5;
           }
         }
 

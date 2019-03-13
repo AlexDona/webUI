@@ -45,22 +45,13 @@ export const userLoginForStep2 = params => handleRequest(() => postWithURLencode
 // 退出登录
 export const userLoginOut = () => handleRequest(() => postWithURLencoded('user/logout'), {'loading': true})
 // 找回密码步骤1
-export const findPasswordStep1 = params => handleRequest(() => postWithURLencoded('user/forgetPassword1', {
-  ...params,
-  'loading': true
-}))
+export const findPasswordStep1 = params => handleRequest(() => postWithURLencoded('user/forgetPassword1', params))
 // 找回密码步骤2
-export const findPasswordStep2 = params => handleRequest(() => postWithURLencoded('user/forgetPassword2', {
-  ...params,
-  'loading': true
-}))
+export const findPasswordStep2 = params => handleRequest(() => postWithURLencoded('user/forgetPassword2', params))
 // 找回密码步骤3
-export const findPasswordStep3 = params => handleRequest(() => postWithURLencoded('user/forgetPassword3', {
-  ...params,
-  'loading': true
-}))
+export const findPasswordStep3 = params => handleRequest(() => postWithURLencoded('user/forgetPassword3', params))
 // 二维码登录生成二维码
-export const getLoginErcode = () => get('user/qrcode')
+export const getLoginErcode = () => handleRequest(() => get('user/qrcode'))
 // 获取app下载地址
 export const getAppDownLoadUrlAjax = () => get('appDown')
 

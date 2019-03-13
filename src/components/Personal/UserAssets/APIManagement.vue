@@ -459,7 +459,7 @@ import {
   deleteUserInformation
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter,
   getNestedData
@@ -526,17 +526,12 @@ export default {
       let data = await multipleUserAPIInfo({})
       // console.log('获取多个用户api信息')
       // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除局部loading
-        this.partLoading = false
-        return false
-      } else {
-        // 接口成功清除局部loading
-        this.partLoading = false
-        // 返回展示渲染挨批列表
-        this.extensionList = getNestedData(data, 'data.data')
-        // console.log(this.extensionList)
-      }
+      // 接口返回清除局部loading
+      this.partLoading = false
+      if (!data) return false
+      // 返回展示渲染挨批列表
+      this.extensionList = getNestedData(data, 'data')
+      // console.log(this.extensionList)
     },
     // 点击创建
     stateEstablishApiButton () {
@@ -634,32 +629,27 @@ export default {
     },
     //  获取秘钥
     async getAccessAecretKey () {
+      // 整页loading
+      this.fullscreenLoading = true
       let data = await accessAecretKeyInfo({
         phoneCode: this.phoneCode, // 手机验证码
         emailCode: this.emailCode, // 邮箱验证码
         googleCode: this.googleCode // 谷歌验证码
       })
-      // 整页loading
-      this.fullscreenLoading = true
       // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        // 默认API确认弹窗
-        this.APIMoneyConfirm = false
-        // 默认创建之后弹出二次挨批创建信息框
-        this.apiSecondaryConfirmation = true
-        // 对api秘钥进行赋值
-        let detailData = getNestedData(data, 'data.data')
-        this.accessKey = getNestedData(detailData, 'accessKey')
-        this.secretKey = getNestedData(detailData, 'secretKey')
-        // 创建api
-        this.statusCreationApi()
-      }
+      // 接口返回清除loading
+      this.fullscreenLoading = false
+      if (!data) return false
+      // 默认API确认弹窗
+      this.APIMoneyConfirm = false
+      // 默认创建之后弹出二次挨批创建信息框
+      this.apiSecondaryConfirmation = true
+      // 对api秘钥进行赋值
+      let detailData = getNestedData(data, 'data')
+      this.accessKey = getNestedData(detailData, 'accessKey')
+      this.secretKey = getNestedData(detailData, 'secretKey')
+      // 创建api
+      this.statusCreationApi()
     },
     // 二次确认框创建api完成
     stateSubmitAffirm () {
@@ -668,30 +658,23 @@ export default {
     },
     // 调用创建api接口并向后台传参
     async statusCreationApi () {
+      // 整页loading
+      this.fullscreenLoading = true
       let data = await stateCreationApi({
         remark: this.remark, // 备注
         ip: this.bindingIpAddress, // ip地址
         accessKey: this.accessKey, // token
         secretKey: this.secretKey // sk私钥
       })
-      // 整页loading
-      this.fullscreenLoading = true
       // console.log(data)
-      if (!(returnAjaxMsg(data, this, 1))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        // 返回展示
-        // console.log(data)
-        // 默认创建之后弹出二次挨批创建信息框 关闭
-        // this.apiSecondaryConfirmation = false
-        // 调用查询接口重新渲染
-        this.getMultipleUserAPIInfo()
-        this.clearUserInputMsg()
-      }
+      // 接口返回清除loading
+      this.fullscreenLoading = false
+      if (!data) return false
+      // 默认创建之后弹出二次挨批创建信息框 关闭
+      // this.apiSecondaryConfirmation = false
+      // 调用查询接口重新渲染
+      this.getMultipleUserAPIInfo()
+      this.clearUserInputMsg()
     },
     clearUserInputMsg () {
       // 清空备注和IP
@@ -742,28 +725,23 @@ export default {
         goOnStatus = 0
       }
       if (goOnStatus) {
+        // 整页loading
+        this.fullscreenLoading = true
         let data = await modifyUserInformation({
           id: this.userId, // 用户userId
           remark: this.apiRemark, // 编辑用户备注
           ip: this.ipAddress // 编辑用户ip
         })
-        // 整页loading
-        this.fullscreenLoading = true
         // console.log(data)
-        if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
-          return false
-        } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
-          // 调用查询接口编辑完成之后重新赋值渲染
-          this.getMultipleUserAPIInfo()
-          // 清空数据
-          this.stateEmptyData()
-          // 编辑用户api弹窗 关闭
-          this.compileUserApi = false
-        }
+        // 接口失败清除loading
+        this.fullscreenLoading = false
+        if (!data) return false
+        // 调用查询接口编辑完成之后重新赋值渲染
+        this.getMultipleUserAPIInfo()
+        // 清空数据
+        this.stateEmptyData()
+        // 编辑用户api弹窗 关闭
+        this.compileUserApi = false
       }
     },
     // 接口请求完成之后清空数据
@@ -785,23 +763,18 @@ export default {
     },
     //  删除记录
     async deleteUserApi () {
+      // 整页loading
+      this.fullscreenLoading = true
       let data = await deleteUserInformation({
         id: this.userId
       })
-      // 整页loading
-      this.fullscreenLoading = true
       // console.log(data)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        // 返回展示
-        this.getMultipleUserAPIInfo()
-        this.dialogVisible = false
-      }
+      // 接口失败清除loading
+      this.fullscreenLoading = false
+      if (!data) return false
+      // 返回展示
+      this.getMultipleUserAPIInfo()
+      this.dialogVisible = false
     },
     /**
      * 安全中心

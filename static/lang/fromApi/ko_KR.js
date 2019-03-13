@@ -398,7 +398,6 @@ export const fromApi = {
   'user-sms-fail': '발송 실패, 서버 오류',
   'user-sms-fail-often': '메시지 전송 빈번',
   'user-sms-success': '메시지 발송 성공.',
-  'user-sms-verification-code-out': '인증 번호 유효 시간 초과, 다시 발송하세요',
   'user-success-advanced-auth': '고급 인증 성공',
   'user-success-realname-auth': '사용자 실명 인증이 성공.',
   'user-validate-code-fail': '인증 번호 정확하지 않습니다',
@@ -422,5 +421,11 @@ export const fromApi = {
   'user_pay_disable_state': '이 계정의 거래 비밀번호가 잘못되어 거래가 금지되었습니다. 2시간 후에 다시 시도해 주십시오',
   'user_pay_is_error': '거래 비밀번호가 잘못되었습니다. {}를 2시간 이상 사용할 수 있습니다',
   'user_pay_password_not_setting': '먼저 거래 비밀 번호를 설치한 후에 돈을 예금하고 투자하세요',
-  'user_trade_password_incorrect': '계정 거래 비밀번호 잘못되었습니다.'
+  'user_trade_password_incorrect': '계정 거래 비밀번호 잘못되었습니다.',
+  'user-fail-password-repeat': '설정 한 새 암호는 이전 암호와 동일합니다. 재설정하십시오!',
+  'financial_management_is_cancel': '입금액이 취소되었습니다! 다시 제출하지 마십시오!',
+  'user-pay-password-out': '거래 비밀번호는 10 자리를 초과 할 수 없습니다.',
+  'coin_type_failure_0005': '보상에 가입하라는 초대장의 통화가 존재하지 않습니다.',
+  'user-sms-verification-code-out': 'SMS 인증 코드 시간이 초과되었습니다. 다시 보내주십시오.',
+  'user-email-verification-code-out': '사서함 인증 코드가 시간 초과되었습니다. 다시 보내주십시오.'
 }

@@ -467,7 +467,7 @@
 <script>
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
-  returnAjaxMsg,
+  // returnAjaxMsg,
   getNestedData
 } from '../../../utils/commonFunc'
 import {
@@ -774,18 +774,13 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       data = await openAndCloseModeSetting(params)
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.loadingCircle.close()
-        return false
-      } else {
-        // 接口成功清除loading
-        this.loadingCircle.close()
-        // 安全中心状态刷新
-        this.getAccountPaymentTerm()
-        this.openCollectionMode = false // 开启收款方式
-        this.closeCollectionMode = false // 关闭收款方式
-      }
+      // 接口失败清除loading
+      this.loadingCircle.close()
+      if (!data) return false
+      // 安全中心状态刷新
+      this.getAccountPaymentTerm()
+      this.openCollectionMode = false // 开启收款方式
+      this.closeCollectionMode = false // 关闭收款方式
     },
     // 收款方式
     async getAccountPaymentTerm () {
@@ -793,13 +788,9 @@ export default {
       this.fullscreenLoading = true
       let data = await accountPaymentTerm()
       this.fullscreenLoading = false
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        // 返回状态展示
-        this.paymentTerm = getNestedData(data, 'data.data')
-        console.log(data)
-      }
+      if (!data) return false
+      // 返回状态展示
+      this.paymentTerm = getNestedData(data, 'data')
     }
   },
   filter: {},

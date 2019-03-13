@@ -949,7 +949,7 @@ export default {
         this.investList = getNestedData(getData, 'userFinancialManagementRecord.list')
         // 收益记录列表
         this.userInterestRecord = getNestedData(getData, 'userInterestRecord.list')
-        if (this.investList.length == 0 || this.userInterestRecord.length == 0) {
+        if (!this.investList.length || !this.userInterestRecord.length) {
           // this.noData = '暂无数据'
           this.noData = this.$t('M.comm_no_data')
         } else {
@@ -1042,427 +1042,715 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  /* 公共scss样式 */
-  @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
+/* 公共scss样式 */
+@import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
 
-  @media screen and (min-width: 768px) and (max-width: 1336px) {
-    .banner-title {
-      position: absolute;
-      top: 50%;
-      right: 25%;
-      width: 400px;
-      font-size: 40px;
-      text-align: center;
-      color: #fff;
-    }
-  }
+.finance-box {
+  width: 100%;
+  min-width: 1300px;
+  margin-top: 50px;
 
-  @media screen and (min-width: 1337px) and (max-width: 1920px) {
-    .banner-title {
-      position: absolute;
-      top: 50%;
-      right: 29%;
-      width: 400px;
-      font-size: 40px;
-      text-align: center;
-      color: #fff;
-    }
-  }
-
-  @media screen and (min-width: 1921px) and (max-width: 2560px) {
-    .banner-title {
-      position: absolute;
-      top: 50%;
-      right: 32%;
-      width: 400px;
-      font-size: 40px;
-      text-align: center;
-      color: #fff;
-    }
-  }
-
-  .finance-box {
+  > .banner-box {
+    position: relative;
     width: 100%;
-    min-width: 1300px;
-    margin-top: 50px;
+    margin: 0 auto;
 
-    > .banner-box {
-      position: relative;
+    img {
       width: 100%;
+    }
+  }
+
+  > .inner-box {
+    display: flex;
+    width: 100%;
+
+    > .finance-inner {
+      width: 1100px;
       margin: 0 auto;
 
-      img {
-        width: 100%;
-      }
-    }
+      > .kline-container {
+        padding: 100px 145px 0;
 
-    > .inner-box {
-      display: flex;
-      width: 100%;
+        > .finance-form-header {
+          display: flex;
+          width: 100%;
 
-      > .finance-inner {
-        width: 1100px;
-        margin: 0 auto;
-
-        > .kline-container {
-          padding: 100px 145px 0;
-
-          > .finance-form-header {
+          > .newestPrice {
             display: flex;
-            width: 100%;
+            flex: 1;
+            align-items: center;
+            height: 48px;
 
-            > .newestPrice {
-              display: flex;
+            > li {
               flex: 1;
-              align-items: center;
-              height: 48px;
+              text-align: center;
+              color: #a9bed4;
+              border-right: 1px solid #1b2231;
 
-              > li {
-                flex: 1;
-                text-align: center;
-                color: #a9bed4;
-                border-right: 1px solid #1b2231;
+              > p {
+                font-weight: bolder;
+                font-size: 16px;
 
-                > p {
-                  font-weight: bolder;
-                  font-size: 16px;
-
-                  > span {
-                    font-size: 14px;
-                  }
+                > span {
+                  font-size: 14px;
                 }
+              }
 
-                &:last-child {
-                  border: none;
+              &:last-child {
+                border: none;
+              }
+            }
+          }
+        }
+      }
+
+      .finance-inner-box {
+        display: flex;
+        justify-content: space-between;
+
+        > .left {
+          width: 516px;
+          color: #a9bed4;
+
+          > .nav-header {
+            > .balance {
+              display: flex;
+              padding-top: 10px;
+              line-height: 30px;
+
+              > div {
+                height: 24px;
+                font-weight: 600;
+                font-size: 24px;
+                color: #7cb8fa;
+                -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg, rgba(124, 184, 250, 0), rgba(124, 184, 250, .2) 200%);
+
+                > span {
+                  font-size: 12px;
                 }
+              }
+            }
+          }
+
+          .left-body {
+            padding-top: 58px;
+
+            > label {
+              display: flex;
+              margin: 32px 0;
+              line-height: 50px;
+
+              > .label-title {
+                display: inline-block;
+                width: 120px;
+              }
+
+              > .invest-amount {
+                display: flex;
+                justify-content: space-between;
+                width: 400px;
+                height: 48px;
+                padding: 13px 11px;
+                border: 1px solid rgba(169, 190, 212, 1);
+                border-radius: 2px;
+                line-height: 24px;
+
+                > input {
+                  width: 380px;
+                  vertical-align: center;
+                  color: #fff;
+                }
+              }
+
+              .submitBtn {
+                > button {
+                  width: 400px;
+                  height: 50px;
+                  margin-left: 117px;
+                  border-radius: 4px;
+                  text-align: center;
+                  color: #fff;
+                  background: -webkit-linear-gradient(45deg, #2b396e, #2a5082);
+                }
+              }
+            }
+
+            .investExplain {
+              font-size: 12px;
+              line-height: 0;
+              text-align: right;
+
+              span:hover {
+                cursor: pointer;
               }
             }
           }
         }
 
-        .finance-inner-box {
-          display: flex;
-          justify-content: space-between;
+        > .right {
+          width: 482px;
+          color: #a9bed4;
 
-          > .left {
-            width: 516px;
-            color: #a9bed4;
+          > .pieCharts-box {
+            display: flex;
 
-            > .nav-header {
-              > .balance {
-                display: flex;
-                padding-top: 10px;
+            > .right-infor {
+              width: 245px;
+              padding-top: 100px;
+              overflow: hidden;
+
+              > div {
+                margin-bottom: 30px;
                 line-height: 30px;
 
-                > div {
-                  height: 24px;
-                  font-weight: 600;
-                  font-size: 24px;
-                  color: #7cb8fa;
-                  -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg, rgba(124, 184, 250, 0), rgba(124, 184, 250, .2) 200%);
+                > p {
+                  font-size: 12px;
 
                   > span {
-                    font-size: 12px;
+                    font-weight: bolder;
+                    font-size: 22px;
                   }
                 }
               }
             }
 
-            .left-body {
-              padding-top: 58px;
+            > .pieCharts {
+              width: 282px;
+              padding-top: 50px;
+              margin-right: 50px;
+            }
+          }
+        }
+      }
 
-              > label {
-                display: flex;
-                margin: 32px 0;
-                line-height: 50px;
+      > .invest-list {
+        margin: 96px 0 200px;
 
-                > .label-title {
-                  display: inline-block;
-                  width: 120px;
-                }
+        > .invest-list-body {
+          position: relative;
 
-                > .invest-amount {
-                  display: flex;
-                  justify-content: space-between;
-                  width: 400px;
-                  height: 48px;
-                  padding: 13px 11px;
-                  border: 1px solid rgba(169, 190, 212, 1);
-                  border-radius: 2px;
-                  line-height: 24px;
+          > .showAll {
+            position: absolute;
+            z-index: 10;
+            top: 7px;
+            right: 0;
+          }
 
-                  > input {
-                    width: 380px;
-                    vertical-align: center;
-                    color: #fff;
-                  }
-                }
+          .finance-tips-box {
+            position: absolute;
+            z-index: 10;
+            top: 55px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            line-height: 200px;
+            text-align: center;
 
-                .submitBtn {
-                  > button {
-                    width: 400px;
-                    height: 50px;
-                    margin-left: 117px;
-                    border-radius: 4px;
-                    text-align: center;
-                    color: #fff;
-                    background: -webkit-linear-gradient(45deg, #2b396e, #2a5082);
-                  }
-                }
+            > a {
+              color: #338ff5;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /deep/ {
+    .finance-form-header {
+      .el-input__inner {
+        width: 168px;
+        height: 40px;
+        border: 1px solid #338ff5;
+        border-radius: 2px;
+        font-size: 15px;
+        color: #338ff5;
+        background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
+        box-shadow: 0 2px 2px rgba(13, 17, 25, 1);
+      }
+    }
+
+    .el-tabs__active-bar {
+      background: none !important;
+    }
+
+    .el-tabs__nav {
+      width: 300px;
+      padding: 0 0 0 26px;
+      font-weight: bold;
+      color: rgba(97, 116, 153, 1);
+      background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
+    }
+
+    .el-tabs__nav-wrap {
+      &::after {
+        height: 0;
+        content: "";
+      }
+    }
+
+    .el-tabs__item {
+      font-size: 16px;
+      color: #617499;
+
+      &.is-active {
+        color: #fff;
+      }
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    .el-tabs__header {
+      margin-bottom: 0;
+    }
+
+    .finance-inner-box {
+      .left {
+        .left-body {
+          .el-input__inner {
+            width: 400px;
+            height: 50px;
+            border: 1px solid #464e5f;
+            border-radius: 2px;
+            background: #1e2636;
+          }
+        }
+      }
+
+      .dialogStyle {
+        .el-input__inner {
+          width: 250px !important;
+          height: 38px !important;
+          border: none !important;
+          line-height: 38px;
+          background: transparent !important;
+        }
+
+        .el-input {
+          width: 240px;
+        }
+
+        .invest-amount {
+          display: flex;
+          justify-content: space-between;
+          width: 280px;
+          height: 38px;
+          padding-right: 5px;
+          border-radius: 5px;
+          background: #20273d;
+
+          &:focus {
+            border: 1px solid #ccc;
+          }
+        }
+
+        .el-button {
+          width: 110px;
+          height: 40px;
+          border: 1px solid #338ff5;
+          border-radius: 4px;
+          color: #fff;
+          background: none;
+        }
+
+        .el-dialog__footer {
+          text-align: center;
+        }
+
+        .el-button--primary {
+          margin-left: 40px;
+          border: none;
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+      }
+
+      .passwordDialog {
+        .password {
+          box-sizing: border-box;
+          width: 300px;
+          height: 36px;
+          padding: 0 10px;
+          border: 1px solid #485776;
+          color: #fff;
+          background-color: #1a2233;
+        }
+
+        .errorTips {
+          line-height: 36px;
+          color: #d45858;
+        }
+
+        .el-button.el-button--primary {
+          width: 300px;
+          height: 36px;
+          border: 0;
+          line-height: 0;
+          background: linear-gradient(81deg, #2b396e 0%, #2a5082 100%);
+        }
+      }
+
+      .el-dialog__wrapper {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .5);
+      }
+    }
+
+    .invest-list-body {
+      .el-table {
+        font-size: 12px;
+        color: #a9bed4;
+        background: #1c1f32;
+        box-shadow: 0 4px 6px rgba(25, 30, 40, .5);
+
+        th {
+          border-top: 1px solid #a9bed4;
+          color: #617499;
+          background: #1c1f32;
+          box-shadow: 0 4px 6px rgba(25, 30, 40, .5);
+
+          &.is-leaf {
+            &:first-of-type {
+              border-bottom-left-radius: 4px;
+            }
+
+            &:last-of-type {
+              border-bottom-right-radius: 4px;
+            }
+          }
+        }
+
+        tr {
+          background: transparent;
+        }
+
+        td {
+          background: transparent;
+        }
+      }
+
+      .el-table--enable-row-hover {
+        .el-table__body {
+          tr {
+            &:hover {
+              > td {
+                background: #1e2636;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .el-table__body-wrapper {
+      min-height: 480px;
+    }
+
+    .el-table__header {
+      margin-bottom: 10px;
+    }
+
+    .el-table th {
+      padding: 8px 0;
+    }
+
+    .el-button {
+      border: none;
+    }
+
+    .el-table__empty-block {
+      height: 480px;
+      line-height: 480px;
+    }
+
+    .el-dialog {
+      background: #28334a;
+    }
+
+    .el-dialog__header {
+      padding: 13px 20px;
+      background: #20293c;
+      box-shadow: 0 1px 2px 0 rgba(29, 33, 49, 1);
+    }
+
+    .el-dialog__title {
+      color: #fff;
+    }
+
+    .el-dialog__headerbtn {
+      top: 17px;
+
+      .el-dialog__close {
+        color: #fff;
+      }
+    }
+
+    .dialogStyle {
+      .el-dialog__body {
+        height: 380px;
+        overflow: auto;
+      }
+    }
+
+    .explainBox {
+      .el-dialog {
+        > .el-dialog__body {
+          height: 700px;
+          padding: 0;
+          overflow: scroll;
+
+          .plainText {
+            padding: 30px 20px;
+            color: #8ba0ca;
+          }
+        }
+      }
+    }
+
+    .el-dialog__body {
+      color: #8c99b4 !important;
+    }
+
+    .el-form-item__label {
+      color: #8c99b4 !important;
+    }
+  }
+
+  &.night {
+    > .banner-box {
+      background: #272b41;
+    }
+
+    > .inner-box {
+      background-color: $nightInnerBoxBg;
+    }
+
+    /deep/ {
+      .invest-list-body {
+        .el-table {
+          th {
+            &.is-leaf {
+              border-bottom: 1px solid #1d2531;
+
+              &:first-of-type {
+                border-bottom-left-radius: 4px;
               }
 
-              .investExplain {
-                font-size: 12px;
-                line-height: 0;
-                text-align: right;
-
-                span:hover {
-                  cursor: pointer;
-                }
+              &:nth-last-of-type(2) {
+                border-bottom-right-radius: 4px;
               }
             }
           }
 
-          > .right {
-            width: 482px;
-            color: #a9bed4;
+          td {
+            border-bottom: 1px solid #1d2531;
+          }
+        }
+      }
 
-            > .pieCharts-box {
-              display: flex;
+      .el-table__header {
+        box-shadow: 4px 0 4px 4px rgba(25, 30, 40, 1);
+      }
 
-              > .right-infor {
-                width: 245px;
-                padding-top: 100px;
-                overflow: hidden;
+      > .inner-box {
+        > .finance-inner {
+          > .invest-list {
+            > .invest-list-body {
+              .finance-tips-box {
+                color: #617499;
 
-                > div {
-                  margin-bottom: 30px;
-                  line-height: 30px;
+                /* background-color: #121824; */
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
-                  > p {
-                    font-size: 12px;
+  &.day {
+    > .banner-box {
+      background: #fff;
+    }
 
-                    > span {
-                      font-weight: bolder;
-                      font-size: 22px;
+    /deep/ {
+      .inner-box {
+        .finance-inner {
+          .kline-container {
+            .finance-form-header {
+              .el-input__inner {
+                background: #fff !important;
+                box-shadow: inset 1px 0 3px rgba(51, 143, 245, 1);
+              }
+
+              .newestPrice {
+                display: flex;
+                flex: 1;
+                height: 48px;
+
+                .newestPriceColor {
+                  color: #000;
+                }
+
+                li {
+                  border-right: 1px solid rgba(30, 38, 54, .3);
+                  color: #666;
+
+                  p {
+                    font-size: 16px;
+
+                    &:last-child {
+                      border: none;
+                    }
+
+                    span {
+                      font-size: 14px;
                     }
                   }
                 }
               }
+            }
+          }
 
-              > .pieCharts {
+          .finance-inner-box {
+            .left {
+              color: #666;
+
+              .nav-header {
+                .balance {
+                  color: #666;
+
+                  div {
+                    color: #338ff5;
+                  }
+                }
+              }
+
+              .left-body {
+                .invest-amount {
+                  input {
+                    width: 380px;
+                    vertical-align: center;
+                    color: #666;
+                  }
+                }
+
+                > label {
+                  > .invest-amount {
+                    > input {
+                      color: #666;
+                    }
+                  }
+                }
+              }
+            }
+
+            .right {
+              .pieCharts {
                 width: 282px;
                 padding-top: 50px;
-                margin-right: 50px;
+              }
+            }
+          }
+
+          .invest-list {
+            > .invest-list-body {
+              .finance-tips-box {
+                background-color: #fff;
               }
             }
           }
         }
 
-        > .invest-list {
-          margin: 96px 0 200px;
-
-          > .invest-list-body {
-            position: relative;
-
-            > .showAll {
-              position: absolute;
-              z-index: 10;
-              top: 7px;
-              right: 0;
-            }
-
-            .finance-tips-box {
-              position: absolute;
-              z-index: 10;
-              top: 55px;
-              left: 0;
-              width: 100%;
-              height: 100%;
-              line-height: 200px;
-              text-align: center;
-
-              > a {
-                color: #338ff5;
+        .explainBox {
+          .el-dialog {
+            > .el-dialog__body {
+              .plainText {
+                color: #666;
               }
             }
           }
         }
-      }
-    }
-
-    /deep/ {
-      .finance-form-header {
-        .el-input__inner {
-          width: 168px;
-          height: 40px;
-          border: 1px solid #338ff5;
-          border-radius: 2px;
-          font-size: 15px;
-          color: #338ff5;
-          background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
-          box-shadow: 0 2px 2px rgba(13, 17, 25, 1);
-        }
-      }
-
-      .el-tabs__active-bar {
-        background: none !important;
-      }
-
-      .el-tabs__nav {
-        width: 300px;
-        padding: 0 0 0 26px;
-        font-weight: bold;
-        color: rgba(97, 116, 153, 1);
-        background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
-      }
-
-      .el-tabs__nav-wrap {
-        &::after {
-          height: 0;
-          content: "";
-        }
-      }
-
-      .el-tabs__item {
-        font-size: 16px;
-        color: #617499;
-
-        &.is-active {
-          color: #fff;
-        }
-
-        &:hover {
-          color: #fff;
-        }
-      }
-
-      .el-tabs__header {
-        margin-bottom: 0;
       }
 
       .finance-inner-box {
         .left {
           .left-body {
             .el-input__inner {
-              width: 400px;
-              height: 50px;
-              border: 1px solid #464e5f;
-              border-radius: 2px;
-              background: #1e2636;
+              border: 1px solid #338ff5;
+              background: #eaf4fe;
             }
           }
         }
 
         .dialogStyle {
-          .el-input__inner {
-            width: 250px !important;
-            height: 38px !important;
-            border: none !important;
-            line-height: 38px;
-            background: transparent !important;
-          }
-
-          .el-input {
-            width: 240px;
-          }
-
           .invest-amount {
-            display: flex;
-            justify-content: space-between;
-            width: 280px;
-            height: 38px;
-            padding-right: 5px;
-            border-radius: 5px;
-            background: #20273d;
-
-            &:focus {
-              border: 1px solid #ccc;
-            }
+            border: 1px solid rgba(236, 241, 248, 1);
+            background: #fff;
           }
 
           .el-button {
-            width: 110px;
-            height: 40px;
-            border: 1px solid #338ff5;
-            border-radius: 4px;
-            color: #fff;
-            background: none;
-          }
-
-          .el-dialog__footer {
-            text-align: center;
+            color: #338ff5;
           }
 
           .el-button--primary {
-            margin-left: 40px;
-            border: none;
-            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            color: #fff;
+          }
+
+          .saveTime {
+            color: #333;
           }
         }
 
         .passwordDialog {
           .password {
-            box-sizing: border-box;
-            width: 300px;
-            height: 36px;
-            padding: 0 10px;
-            border: 1px solid #485776;
-            color: #fff;
-            background-color: #1a2233;
-          }
-
-          .errorTips {
-            line-height: 36px;
-            color: #d45858;
-          }
-
-          .el-button.el-button--primary {
-            width: 300px;
-            height: 36px;
-            border: 0;
-            line-height: 0;
-            background: linear-gradient(81deg, #2b396e 0%, #2a5082 100%);
+            border: 1px solid #ecf1f8;
+            color: #333;
+            background-color: #fff;
           }
         }
+      }
 
-        .el-dialog__wrapper {
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, .5);
-        }
+      .el-table__header {
+        margin-top: 2px;
+        box-shadow: 0 0 4px rgba(51, 143, 245, .5);
       }
 
       .invest-list-body {
         .el-table {
-          font-size: 12px;
-          color: #a9bed4;
-          background: #1c1f32;
-          box-shadow: 0 4px 6px rgba(25, 30, 40, .5);
+          color: #666;
+          background: transparent;
+          box-shadow: 0 0 0 rgba(25, 30, 40, .5);
+
+          td {
+            border-top: 1px solid #fff;
+            border-bottom: 1px solid rgba(169, 190, 212, .2);
+            box-shadow: none;
+          }
 
           th {
-            border-top: 1px solid #a9bed4;
+            border-top: 1px solid rgba(234, 244, 254, 1);
+            border-bottom: 1px solid rgba(234, 244, 254, 1);
             color: #617499;
-            background: #1c1f32;
-            box-shadow: 0 4px 6px rgba(25, 30, 40, .5);
+            background: #eaf4fe;
+            box-shadow: 0 0 0 rgba(25, 30, 40, .5);
 
             &.is-leaf {
+              border-top: 1px solid #fff;
+              border-bottom: 1px solid rgba(169, 190, 212, .2);
+              box-shadow: none;
+
               &:first-of-type {
+                border-left: 1px solid rgba(51, 143, 245, .1);
                 border-bottom-left-radius: 4px;
               }
 
-              &:last-of-type {
+              &:nth-last-of-type(2) {
                 border-bottom-right-radius: 4px;
+                border-right: 1px solid rgba(51, 143, 245, .1);
               }
             }
-          }
-
-          tr {
-            background: transparent;
-          }
-
-          td {
-            background: transparent;
           }
         }
 
@@ -1471,484 +1759,196 @@ export default {
             tr {
               &:hover {
                 > td {
-                  background: #1e2636;
+                  background: #eaf4fe;
                 }
               }
             }
           }
         }
+
+        .el-tabs__nav {
+          width: 300px;
+          padding: 9px 0 9px 26px;
+          font-weight: bold;
+          color: #617499;
+          background: linear-gradient(90deg, rgba(51, 143, 245, .8), transparent);
+        }
       }
 
-      .el-table__body-wrapper {
-        min-height: 480px;
+      .invest {
+        color: #338ff5;
+        background: linear-gradient(90deg, rgba(51, 143, 245, .8), transparent);
       }
 
-      .el-table__header {
-        margin-bottom: 10px;
-      }
-
-      .el-table th {
-        padding: 8px 0;
-      }
-
-      .el-button {
-        border: none;
-      }
-
-      .el-table__empty-block {
-        height: 480px;
-        line-height: 480px;
+      .el-tabs__item {
+        &.is-active {
+          color: #338ff5;
+        }
       }
 
       .el-dialog {
-        background: #28334a;
-      }
-
-      .el-dialog__header {
-        padding: 13px 20px;
-        background: #20293c;
-        box-shadow: 0 1px 2px 0 rgba(29, 33, 49, 1);
-      }
-
-      .el-dialog__title {
-        color: #fff;
-      }
-
-      .el-dialog__headerbtn {
-        top: 17px;
-
-        .el-dialog__close {
-          color: #fff;
-        }
-      }
-
-      .dialogStyle {
-        .el-dialog__body {
-          height: 380px;
-          overflow: auto;
-        }
-      }
-
-      .explainBox {
-        .el-dialog {
-          > .el-dialog__body {
-            height: 700px;
-            padding: 0;
-            overflow: scroll;
-
-            .plainText {
-              padding: 30px 20px;
-              color: #8ba0ca;
-            }
-          }
-        }
-      }
-
-      .el-dialog__body {
-        color: #8c99b4 !important;
-      }
-
-      .el-form-item__label {
-        color: #8c99b4 !important;
-      }
-    }
-
-    &.night {
-      > .banner-box {
-        background: #272b41;
-      }
-
-      > .inner-box {
-        background-color: $nightInnerBoxBg;
-      }
-
-      /deep/ {
-        .invest-list-body {
-          .el-table {
-            th {
-              &.is-leaf {
-                border-bottom: 1px solid #1d2531;
-
-                &:first-of-type {
-                  border-bottom-left-radius: 4px;
-                }
-
-                &:nth-last-of-type(2) {
-                  border-bottom-right-radius: 4px;
-                }
-              }
-            }
-
-            td {
-              border-bottom: 1px solid #1d2531;
-            }
-          }
-        }
-
-        .el-table__header {
-          box-shadow: 4px 0 4px 4px rgba(25, 30, 40, 1);
-        }
-
-        > .inner-box {
-          > .finance-inner {
-            > .invest-list {
-              > .invest-list-body {
-                .finance-tips-box {
-                  color: #617499;
-
-                  /* background-color: #121824; */
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.day {
-      > .banner-box {
         background: #fff;
       }
 
-      /deep/ {
-        .inner-box {
-          .finance-inner {
-            .kline-container {
-              .finance-form-header {
-                .el-input__inner {
-                  background: #fff !important;
-                  box-shadow: inset 1px 0 3px rgba(51, 143, 245, 1);
-                }
-
-                .newestPrice {
-                  display: flex;
-                  flex: 1;
-                  height: 48px;
-
-                  .newestPriceColor {
-                    color: #000;
-                  }
-
-                  li {
-                    border-right: 1px solid rgba(30, 38, 54, .3);
-                    color: #666;
-
-                    p {
-                      font-size: 16px;
-
-                      &:last-child {
-                        border: none;
-                      }
-
-                      span {
-                        font-size: 14px;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-
-            .finance-inner-box {
-              .left {
-                color: #666;
-
-                .nav-header {
-                  .balance {
-                    color: #666;
-
-                    div {
-                      color: #338ff5;
-                    }
-                  }
-                }
-
-                .left-body {
-                  .invest-amount {
-                    input {
-                      width: 380px;
-                      vertical-align: center;
-                      color: #666;
-                    }
-                  }
-
-                  > label {
-                    > .invest-amount {
-                      > input {
-                        color: #666;
-                      }
-                    }
-                  }
-                }
-              }
-
-              .right {
-                .pieCharts {
-                  width: 282px;
-                  padding-top: 50px;
-                }
-              }
-            }
-
-            .invest-list {
-              > .invest-list-body {
-                .finance-tips-box {
-                  background-color: #fff;
-                }
-              }
-            }
-          }
-
-          .explainBox {
-            .el-dialog {
-              > .el-dialog__body {
-                .plainText {
-                  color: #666;
-                }
-              }
-            }
-          }
-        }
-
-        .finance-inner-box {
-          .left {
-            .left-body {
-              .el-input__inner {
-                border: 1px solid #338ff5;
-                background: #eaf4fe;
-              }
-            }
-          }
-
-          .dialogStyle {
-            .invest-amount {
-              border: 1px solid rgba(236, 241, 248, 1);
-              background: #fff;
-            }
-
-            .el-button {
-              color: #338ff5;
-            }
-
-            .el-button--primary {
-              color: #fff;
-            }
-
-            .saveTime {
-              color: #333;
-            }
-          }
-
-          .passwordDialog {
-            .password {
-              border: 1px solid #ecf1f8;
-              color: #333;
-              background-color: #fff;
-            }
-          }
-        }
-
-        .el-table__header {
-          margin-top: 2px;
-          box-shadow: 0 0 4px rgba(51, 143, 245, .5);
-        }
-
-        .invest-list-body {
-          .el-table {
-            color: #666;
-            background: transparent;
-            box-shadow: 0 0 0 rgba(25, 30, 40, .5);
-
-            td {
-              border-top: 1px solid #fff;
-              border-bottom: 1px solid rgba(169, 190, 212, .2);
-              box-shadow: none;
-            }
-
-            th {
-              border-top: 1px solid rgba(234, 244, 254, 1);
-              border-bottom: 1px solid rgba(234, 244, 254, 1);
-              color: #617499;
-              background: #eaf4fe;
-              box-shadow: 0 0 0 rgba(25, 30, 40, .5);
-
-              &.is-leaf {
-                border-top: 1px solid #fff;
-                border-bottom: 1px solid rgba(169, 190, 212, .2);
-                box-shadow: none;
-
-                &:first-of-type {
-                  border-left: 1px solid rgba(51, 143, 245, .1);
-                  border-bottom-left-radius: 4px;
-                }
-
-                &:nth-last-of-type(2) {
-                  border-bottom-right-radius: 4px;
-                  border-right: 1px solid rgba(51, 143, 245, .1);
-                }
-              }
-            }
-          }
-
-          .el-table--enable-row-hover {
-            .el-table__body {
-              tr {
-                &:hover {
-                  > td {
-                    background: #eaf4fe;
-                  }
-                }
-              }
-            }
-          }
-
-          .el-tabs__nav {
-            width: 300px;
-            padding: 9px 0 9px 26px;
-            font-weight: bold;
-            color: #617499;
-            background: linear-gradient(90deg, rgba(51, 143, 245, .8), transparent);
-          }
-        }
-
-        .invest {
-          color: #338ff5;
-          background: linear-gradient(90deg, rgba(51, 143, 245, .8), transparent);
-        }
-
-        .el-tabs__item {
-          &.is-active {
-            color: #338ff5;
-          }
-        }
-
-        .el-dialog {
-          background: #fff;
-        }
-
-        .el-dialog__header {
-          background: #eaf4fe;
-          box-shadow: 0 1px 2px 0 rgba(29, 33, 49, .1);
-        }
-
-        .el-dialog__title {
-          color: #333;
-        }
-
-        .el-dialog__headerbtn {
-          .el-dialog__close {
-            color: #333;
-          }
-        }
+      .el-dialog__header {
+        background: #eaf4fe;
+        box-shadow: 0 1px 2px 0 rgba(29, 33, 49, .1);
       }
 
-      .black {
+      .el-dialog__title {
         color: #333;
       }
+
+      .el-dialog__headerbtn {
+        .el-dialog__close {
+          color: #333;
+        }
+      }
     }
 
-    .cancelBtn {
-      cursor: pointer;
-    }
-
-    .blue {
-      font-size: 12px;
-      color: #338ff5;
-    }
-
-    .green {
-      color: #008069;
-    }
-
-    .red {
-      color: #d45858;
-    }
-
-    .text-indent {
-      text-indent: 10px;
-    }
-
-    .red2 {
-      color: #b73c36;
-    }
-
-    .saveTime {
-      color: #fff;
-    }
-
-    .nav-header {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: #fff;
-    }
-
-    .invest {
-      width: 130px;
-      padding: 10px 0 10px 26px;
-      font-size: 16px;
-      color: #fff;
-      background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
-    }
-
-    .totalTipsPositon {
-      margin: -20px 0 -20px 115px;
-      color: #d45858;
+    .black {
+      color: #333;
     }
   }
 
-  .dividend-tips {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin-top: 10px;
-    border-radius: 50%;
-    line-height: 16px;
-    text-align: center;
-    color: #fff;
-    background: #338ff5;
+  .cancelBtn {
     cursor: pointer;
   }
 
-  .el-select-dropdown {
-    left: 169px !important;
-    min-width: 408px !important;
+  .blue {
+    font-size: 12px;
+    color: #338ff5;
   }
 
-  .show-dividend-time-list {
-    > ul {
-      min-width: 300px;
-      margin-left: 60px;
-      border-left: 4px solid #338ff5;
-      font-weight: 600;
-      color: #fff;
+  .green {
+    color: #008069;
+  }
 
-      > li {
-        position: relative;
-        padding-left: 5px;
-        margin-bottom: 20px;
-        font-size: 10px;
-        line-height: 12px;
+  .red {
+    color: #d45858;
+  }
 
-        span:nth-child(1) {
-          padding: 0 0 0 10px;
-        }
+  .text-indent {
+    text-indent: 10px;
+  }
 
-        span:nth-child(2) {
-          padding-right: 10px;
-        }
+  .red2 {
+    color: #b73c36;
+  }
 
-        &::before {
-          position: absolute;
-          top: 0;
-          left: -8px;
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          background: #338ff5;
-          content: '';
-        }
+  .saveTime {
+    color: #fff;
+  }
+
+  .nav-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #fff;
+  }
+
+  .invest {
+    width: 130px;
+    padding: 10px 0 10px 26px;
+    font-size: 16px;
+    color: #fff;
+    background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
+  }
+
+  .totalTipsPositon {
+    margin: -20px 0 -20px 115px;
+    color: #d45858;
+  }
+}
+
+.dividend-tips {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-top: 10px;
+  border-radius: 50%;
+  line-height: 16px;
+  text-align: center;
+  color: #fff;
+  background: #338ff5;
+  cursor: pointer;
+}
+
+.el-select-dropdown {
+  left: 169px !important;
+  min-width: 408px !important;
+}
+
+.show-dividend-time-list {
+  > ul {
+    min-width: 300px;
+    margin-left: 60px;
+    border-left: 4px solid #338ff5;
+    font-weight: 600;
+    color: #fff;
+
+    > li {
+      position: relative;
+      padding-left: 5px;
+      margin-bottom: 20px;
+      font-size: 10px;
+      line-height: 12px;
+
+      span:nth-child(1) {
+        padding: 0 0 0 10px;
+      }
+
+      span:nth-child(2) {
+        padding-right: 10px;
+      }
+
+      &::before {
+        position: absolute;
+        top: 0;
+        left: -8px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #338ff5;
+        content: '';
       }
     }
   }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1336px) {
+  .banner-title {
+    position: absolute;
+    top: 50%;
+    right: 25%;
+    width: 400px;
+    font-size: 40px;
+    text-align: center;
+    color: #fff;
+  }
+}
+
+@media screen and (min-width: 1337px) and (max-width: 1920px) {
+  .banner-title {
+    position: absolute;
+    top: 50%;
+    right: 29%;
+    width: 400px;
+    font-size: 40px;
+    text-align: center;
+    color: #fff;
+  }
+}
+
+@media screen and (min-width: 1921px) and (max-width: 2560px) {
+  .banner-title {
+    position: absolute;
+    top: 50%;
+    right: 32%;
+    width: 400px;
+    font-size: 40px;
+    text-align: center;
+    color: #fff;
+  }
+}
 </style>

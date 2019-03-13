@@ -42,6 +42,7 @@ export const personal = {
   'user_assets_sum2': '冻结数量',
   'user_assets_sum3': '可用数量',
   'user_assets_sum4': '资产估值',
+  'assets_locked_position': '锁仓',
   'user_assets_Transaction_History': '充提记录',
   'user_assets_withdrawal_hint2': '为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；',
   'user_assets_withdrawal_hint3': '充值经过1个确认后，才允许提现；',
@@ -276,6 +277,7 @@ export const personal = {
   'user_coin_volume': '成交额',
   // 当前委托Commissioned by the current
   'user_coin_commissioned_current': '当前委托',
+  'user_enter_end_time': '请选择结束时间',
   // 历史委托
   'user_coin_commissioned_history': '历史委托',
   // 成交明细

@@ -398,7 +398,6 @@ export const fromApi = {
   'user-sms-fail': '送信失敗、サーバーエラー',
   'user-sms-fail-often': 'メールの送信がひんぱんだ',
   'user-sms-success': 'SMSが正常に送信された',
-  'user-sms-verification-code-out': 'タイムアウトを検証して、再送してください',
   'user-success-advanced-auth': '高度な認証が成功しました',
   'user-success-realname-auth': 'ユーザーの実名認証に成功しました',
   'user-validate-code-fail': 'コードが正しくないことを検証する',
@@ -422,5 +421,11 @@ export const fromApi = {
   'user_pay_disable_state': 'このアカウント取引はパスワードエラーの制限が禁止されたので、2時間後に再テストしてください',
   'user_pay_is_error': '取引パスワードのエラー、あなたは{}を入力することができて、期限を2时间冻结します',
   'user_pay_password_not_setting': '取引パスワードを設定して、あらかじめ積立金投資を行ってください',
-  'user_trade_password_incorrect': 'アカウントのトランザクションパスワードが間違っています'
+  'user_trade_password_incorrect': 'アカウントのトランザクションパスワードが間違っています',
+  'user-fail-password-repeat': '設定した新しいパスワードは古いパスワードと同じです。再設定してください。',
+  'financial_management_is_cancel': '入金がキャンセルされました！再度送信しないでください。',
+  'user-pay-password-out': 'トランザクションパスワードは10桁を超えてはいけません',
+  'coin_type_failure_0005': '登録報酬の通貨の請求は存在しません',
+  'user-sms-verification-code-out': 'SMS確認コードがタイムアウトしました。再送信してください',
+  'user-email-verification-code-out': 'メールボックス確認コードがタイムアウトしました。再送信してください'
 }

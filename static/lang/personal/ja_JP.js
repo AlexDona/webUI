@@ -42,6 +42,7 @@ export const personal = {
   'user_assets_sum2': 'フリーズの数',
   'user_assets_sum3': '利用可能な量',
   'user_assets_sum4': '資産評価',
+  'assets_locked_position': '戸を閉める',
   'user_assets_Transaction_History': '入金記録',
   'user_assets_withdrawal_hint2': 'ユーザーの資金を確保するために、プラットフォームはコインハンドリング作業を電話で確認する場合がありますので、その答えに注意してください。',
   'user_assets_withdrawal_hint3': '再充電が1で確認された後、引き出しが許可されます。',
@@ -271,6 +272,7 @@ export const personal = {
   'user_coin_volume': '売上高',
   // 現在の委託
   'user_coin_commissioned_current': '当前注文',
+  'user_enter_end_time': '終了時間を選択してください。',
   // 歴史の委託
   'user_coin_commissioned_history': '履歴注文',
   // 取引詳細

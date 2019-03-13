@@ -42,6 +42,7 @@ export const personal = {
   'user_assets_sum2': 'Frozen Balance',
   'user_assets_sum3': 'Available Balance',
   'user_assets_sum4': 'Estimated Value',
+  'assets_locked_position': 'locked position',
   'user_assets_Transaction_History': 'Transaction History',
   // eslint-disable-next-line
   'user_assets_withdrawal_hint2': `In order to secure the user's funds, the platform may confirm your coin handling operation by phone, please pay attention to the answer;`,
@@ -271,6 +272,7 @@ export const personal = {
   'user_coin_volume': 'Turnover',
   // 当前委托Commissioned by the current Current commission
   'user_coin_commissioned_current': 'Current entrust',
+  'user_enter_end_time': 'Please select the end time',
   // 历史委托Historical commission
   'user_coin_commissioned_history': 'History Entrust',
   // 成交明细Transaction details
