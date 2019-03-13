@@ -42,6 +42,7 @@ export const personal = {
   'user_assets_sum2': 'Frozen Balance',
   'user_assets_sum3': 'Available Balance',
   'user_assets_sum4': 'Estimated Value',
+  'assets_locked_position': 'locked position',
   'user_assets_Transaction_History': 'Transaction History',
   // eslint-disable-next-line
   'user_assets_withdrawal_hint2': `In order to secure the user's funds, the platform may confirm your coin handling operation by phone, please pay attention to the answer;`,

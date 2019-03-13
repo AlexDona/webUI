@@ -67,12 +67,6 @@
                 >
                   {{ $t('M.comm_currency') }}
                 </div>
-                <!--总数量-->
-                <div
-                  class="title-width"
-                >
-                  {{ $t('M.user_assets_sum1') }}
-                </div>
                 <!--冻结数量-->
                 <div
                   class="title-width title-position padding-l7"
@@ -117,6 +111,12 @@
                     </i>
                   </div>
                 </div>
+                <!--锁仓-->
+                <div
+                  class="title-width locked-position"
+                >
+                  {{ $t('M.assets_locked_position') }}
+                </div>
                 <!--资产估值(BTC)-->
                 <div
                   class="flex-asset title-width1"
@@ -156,15 +156,6 @@
                   <div class="table-td title-width">
                     {{ assetItem.coinName }}
                   </div>
-                  <!--总数量-->
-                  <div class="table-td title-width">
-                    <span v-if="assetItem.sum > 0">
-                      {{ $scientificToNumber($keep8Num(assetItem.sum - 0)) }}
-                    </span>
-                    <span v-else>
-                      0.00000000
-                    </span>
-                  </div>
                   <!--冻结数量-->
                   <div class="table-td title-width">
                     <span v-if="assetItem.frozen > 0">
@@ -178,6 +169,15 @@
                   <div class="table-td title-width-header">
                     <span v-if="assetItem.total > 0">
                       {{ $scientificToNumber($keep8Num(assetItem.total - 0)) }}
+                    </span>
+                    <span v-else>
+                      0.00000000
+                    </span>
+                  </div>
+                  <!--锁仓-->
+                  <div class="table-td title-width">
+                    <span v-if="assetItem.wareHouse > 0">
+                      {{ $scientificToNumber($keep8Num(assetItem.wareHouse - 0)) }}
                     </span>
                     <span v-else>
                       0.00000000
@@ -1506,6 +1506,10 @@ export default {
                 width: 150px;
               }
 
+              .locked-position {
+                padding-left: 5px;
+              }
+
               .title-position {
                 position: relative;
 
@@ -1517,7 +1521,7 @@ export default {
               }
 
               .padding-l7 {
-                padding-left: 7px;
+                padding-left: 4px;
               }
 
               .title-width1 {
