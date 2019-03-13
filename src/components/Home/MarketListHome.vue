@@ -207,7 +207,7 @@ export default {
       symbolsIndexMap: new Map(),
       areasFromAPI: [],
       platesMap: new Map(),
-      FIVE_MINUTES: 5 * 60 * 1000,
+      ONE_MINUTES: 60 * 1000,
       MAX_AREAS_LENGTH: 2,
       MAX_SYMBOLS_LENGTH: 10,
       timer: null,
@@ -261,7 +261,7 @@ export default {
       let storePlates = getStoreWithJson('plates') || {}
       console.log(storePlates, plateId, storePlates.hasOwnProperty(plateId))
       let data
-      if (now - lastTime > this.FIVE_MINUTES || !storePlates.hasOwnProperty(plateId)) {
+      if (now - lastTime > this.ONE_MINUTES || !storePlates.hasOwnProperty(plateId)) {
         data = await getAllTradeAreasAJAX(params)
         let dataObjList = getNestedData(data, 'data.obj')
         let dataStr = ''
@@ -288,7 +288,7 @@ export default {
       let localSymbolJSON = getStoreWithJson('symbolJSON') || {}
       console.log(localSymbolJSON)
       let localSymbolLength = Object.keys(localSymbolJSON).length
-      if (NOW - SYMBOL_AGE < this.FIVE_MINUTES * 100 && localSymbolLength) {
+      if (NOW - SYMBOL_AGE < this.ONE_MINUTES && localSymbolLength) {
         symbolJSON = localSymbolJSON
       } else {
         this.RESET_SYMBOL_MAP()
@@ -563,7 +563,7 @@ export default {
       this.getAllTradeAreas()
       let now = new Date().getTime()
       let lastTime = getStore('platesAges')
-      if (now - lastTime < this.FIVE_MINUTES) {
+      if (now - lastTime < this.ONE_MINUTES) {
         this.CHANGE_AJAX_READY_STATUS(true)
         this.timer = setTimeout(() => {
           this.CHANGE_AJAX_READY_STATUS(false)
