@@ -42,6 +42,7 @@ export const personal = {
   'user_assets_sum2': '凍結數量',
   'user_assets_sum3': '可用數量',
   'user_assets_sum4': '資產估值',
+  'assets_locked_position': '鎖倉',
   'user_assets_Transaction_History': '充提記錄',
   'user_assets_withdrawal_hint2': '為了用戶資金安全，平臺可能會電話確認您的提幣操作，請註意接聽；',
   'user_assets_withdrawal_hint3': '充值經過1個確認後，才允許提現；',

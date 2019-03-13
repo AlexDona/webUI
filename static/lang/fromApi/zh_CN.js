@@ -398,7 +398,6 @@ export const fromApi = {
   'user-sms-fail': '发送失败，服务器错误',
   'user-sms-fail-often': '短信发送频繁',
   'user-sms-success': '短信发送成功',
-  'user-sms-verification-code-out': '验证码超时，请重新发送',
   'user-success-advanced-auth': '高级认证成功',
   'user-success-realname-auth': '用户实名认证成功',
   'user-validate-code-fail': '验证码不正确',
@@ -422,5 +421,11 @@ export const fromApi = {
   'user_pay_disable_state': '该账号交易密码错误超限已被禁止交易,请过2个小时之后重试',
   'user_pay_is_error': '交易密码错误,您还可以输入{}次,超限将被冻结2个小时',
   'user_pay_password_not_setting': '请先设置交易密码后进行存币投资',
-  'user_trade_password_incorrect': '账户交易密码不正确'
+  'user_trade_password_incorrect': '账户交易密码不正确',
+  'user-fail-password-repeat': '您设置的新密码与旧密码相同,请重新设置!',
+  'financial_management_is_cancel': '存币收益已被取消!请勿重复提交！',
+  'user-pay-password-out': '交易密码不能超过10位数',
+  'coin_type_failure_0005': '邀请注册奖励的币种不存在',
+  'user-sms-verification-code-out': '短信验证码超时，请重新发送',
+  'user-email-verification-code-out': '邮箱验证码超时，请重新发送'
 }
