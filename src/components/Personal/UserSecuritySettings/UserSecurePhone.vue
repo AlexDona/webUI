@@ -64,8 +64,9 @@
                     </span>
                   </span>
                   <span style=" float: right;
+                    font-size: 13px;
                     color: #8492a6;
-                    font-size: 13px;"
+                    "
                   >{{ item.nationCode }}
                   </span>
                 </el-option>
@@ -211,8 +212,9 @@
                     </span>
                   </span>
                   <span style=" float: right;
+                    font-size: 13px;
                     color: #8492a6;
-                    font-size: 13px;"
+                    "
                   >{{ item.nationCode }}
                   </span>
                 </el-option>

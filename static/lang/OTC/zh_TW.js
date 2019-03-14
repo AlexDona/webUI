@@ -338,5 +338,14 @@ export const OTC = {
   'otc_apply_tips6': '申請提示',
   // 发布订单错误提示
   'otc_publish_order_err_tips1': '請選擇要發布的幣種',
-  'otc_publish_order_err_tips2': '請選擇法幣類型'
+  'otc_publish_order_err_tips2': '請選擇法幣類型',
+  // otc發單最小最大限額
+  'otc_min': '最小',
+  'otc_max': '最大',
+  'otc_min_limit_not_empty': '單筆最小限額不能為空',
+  'otc_min_limit_not_low': '單筆最小限額不能低於',
+  'otc_min_limit_not_more': '不能大於單筆最大限額',
+  'otc_max_limit_not_empty': '單筆最大限額不能為空',
+  'otc_max_limit_not_high': '單筆最大限額不能高於',
+  'otc_max_limit_not_few': '不能小於單筆最小限額'
 }

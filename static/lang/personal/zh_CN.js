@@ -257,6 +257,7 @@ export const personal = {
   'user_push_revocation': '撤销',
   'user_push_count': 'Push数量不能大于余额',
   'user_push_forbid': '禁止自我PUSH',
+  'user_push_amount': 'PUSH金额',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单

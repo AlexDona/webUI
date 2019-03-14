@@ -4,7 +4,8 @@ import {
   CHANGE_COLLECT_SYMBOL,
   CHANGE_SYMBOL_MAP,
   CHANGE_NOTICE_VISIBLE,
-  SET_HOME_NOTICE_LIST
+  SET_HOME_NOTICE_LIST,
+  RESET_SYMBOL_MAP
 } from './mutations-types.js'
 import Vue from 'vue'
 import {setStore} from '../../utils'
@@ -42,6 +43,12 @@ export default {
       setStore('symbolJSON', state.symbolJSON)
     }
     console.log(state.symbolMap)
+  },
+  [RESET_SYMBOL_MAP] (state) {
+    state.symbolMap = new Map()
+    console.log(state.symbolMap)
+    state.symbolJSON = {}
+    setStore('symbolJSON', {})
   },
   [CHANGE_NOTICE_VISIBLE] (state, data) {
     state.noticeCloseVisible = data

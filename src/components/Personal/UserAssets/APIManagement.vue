@@ -852,7 +852,6 @@ export default {
       }
 
       .error-msg {
-        height: 20px;
         line-height: 20px;
         color: #d45858;
       }

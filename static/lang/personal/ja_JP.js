@@ -252,6 +252,7 @@ export const personal = {
   'user_push_revocation': 'キャンセル',
   'user_push_count': 'プッシュの数は天びんの数より大きくすることはできません',
   'user_push_forbid': '自己PUSHを禁止する',
+  'user_push_amount': 'PUS H金額',
   // PUSHレコード
   // #####################私の取引#####################
   // トークン注文

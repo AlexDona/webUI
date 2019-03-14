@@ -252,6 +252,7 @@ export const personal = {
   'user_push_revocation': 'Cancel',
   'user_push_count': 'The number of Push cannot be greater than the balance',
   'user_push_forbid': 'Prohibit self PUSH',
+  'user_push_amount': 'PUSH the amount',
   // PUSH记录PUSH record
   // #####################我的交易#####################My transaction
   // 币币订单Coin order

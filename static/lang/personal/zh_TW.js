@@ -257,6 +257,7 @@ export const personal = {
   'user_push_revocation': '撤銷',
   'user_push_count': 'Push數量不能大於余額',
   'user_push_forbid': '禁止自我PUSH',
+  'user_push_amount': 'PUSH金額',
   // PUSH記錄
   // #####################我的交易#####################
   // 幣幣訂單

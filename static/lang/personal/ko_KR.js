@@ -257,6 +257,7 @@ export const personal = {
   'user_push_revocation': '취소',
   'user_push_count': 'Push 횟수는 잔액보다 클 수 없습니다.',
   'user_push_forbid': '체 PUSH 금지',
+  'user_push_amount': 'PUSH 금액',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单

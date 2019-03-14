@@ -242,7 +242,6 @@
                     class="user-info font-size14"
                     v-if="language === 'zh_CN' || language === 'zh_TW'"
                   >
-                    <!-- {{ innerUserInfo.country }} -->
                     {{ userInfo.country.chinese }}
                   </span>
                   <span
@@ -257,7 +256,6 @@
                   <span class="info-type font-size12">
                     {{ $t('M.comm_name') }}：
                   </span>
-                  <!--<span v-if="statusRealNameInformation.realname == null"></span>-->
                   <span
                     class="user-info font-size14"
                   >
@@ -270,9 +268,6 @@
                     {{ $t('M.comm_credentials_number') }}：
                   </span>
                   <span class="user-info font-size14">
-                    <!--{{ innerUserInfo.cardNo.substring(0,4)}}-->
-                    <!--****-->
-                    <!--{{ userInfoRefresh.cardNo.substring(14,18)}}-->
                      {{ innerUserInfo.cardNo}}
                   </span>
                 </p>
@@ -285,14 +280,12 @@
                     v-if="statusRealNameInformation.cardType == 1"
                     class="user-info font-size14"
                   >
-                    <!--{{ statusRealNameInformation.cardType }}-->
                     {{ $t('M.user_ID_card') }}
                   </span>
                   <span
                     v-else
                     class="user-info font-size14"
                   >
-                    <!--{{ statusRealNameInformation.cardType }}-->
                     {{ $t('M.user_passport') }}
                   </span>
                 </p>
@@ -339,10 +332,10 @@
                         <img
                           class="cursor-pointer"
                           :src="firstPictureSrc"
-                          v-show="isChinese"
+                          v-if="statusRealNameInformation.cardType == 1"
                         >
                         <img
-                          v-show="!isChinese"
+                          v-else
                           class="default-picture cursor-pointer"
                           :src="passportPositiveImg"
                         >
@@ -378,12 +371,12 @@
                         <img
                           class="cursor-pointer"
                           :src="secondPictureSrc"
-                          v-show="isChinese"
+                          v-if="statusRealNameInformation.cardType == 1"
                         >
                         <img
-                          v-show="!isChinese"
                           class="default-picture cursor-pointer"
                           :src="passportOppositeImg"
+                          v-else
                         >
                       </div>
                     </div>
@@ -400,31 +393,31 @@
                 <div class="upload">
                   <!-- 上传手持身份证 -->
                   <div class="default-center">
-                   <div class="img">
-                     <input
-                       @change="getPicture"
-                       type="file"
-                       id="fileInput3"
-                       ref="fileInput3"
-                       class="upload-input"
-                       accept="image/jpeg,image/jpg,image/png,image/bmp"
-                     />
-                     <div
-                       class="picture"
-                       @click="choosePicture(3)"
-                     >
-                       <img
-                         class="cursor-pointer"
-                         :src="thirdPictureSrc"
-                         v-show="isChinese"
-                       >
-                       <img
-                         v-show="!isChinese"
-                         class="default-picture cursor-pointer"
-                         :src="passportHandImg"
-                       >
-                     </div>
-                   </div>
+                    <div class="img">
+                      <input
+                        @change="getPicture"
+                        type="file"
+                        id="fileInput3"
+                        ref="fileInput3"
+                        class="upload-input"
+                        accept="image/jpeg,image/jpg,image/png,image/bmp"
+                      />
+                      <div
+                        class="picture"
+                        @click="choosePicture(3)"
+                      >
+                        <img
+                          class="cursor-pointer"
+                          :src="thirdPictureSrc"
+                          v-if="statusRealNameInformation.cardType == 1"
+                        >
+                        <img
+                          class="default-picture cursor-pointer"
+                          :src="passportHandImg"
+                          v-else
+                        >
+                      </div>
+                    </div>
                   </div>
                   <button
                     type="primary"
@@ -570,9 +563,9 @@ import {
   passportEntryRestrictions,
   identityCodeValid
 } from '../../../utils/index'
+// mapGetters
 import {
   mapState,
-  mapGetters,
   mapActions,
   mapMutations
 } from 'vuex'
@@ -618,7 +611,7 @@ export default {
       thirdPictureSrc: require('../../../assets/user/card_handheld.png'), // 手持
       thirdPictureSrcShow: true, // 显示手持身份证
       // 护照默认图片
-      passportPositiveImg: require('../../../assets/user/passport-positive.png'), // 正面
+      passportPositiveImg: require('../../../assets/user/passport-positive.jpg'), // 正面
       passportOppositeImg: require('../../../assets/user/passport-opposite.png'), // 反面
       passportHandImg: require('../../../assets/user/hand.png'), // 手持
       // 是否上传身份证正面
@@ -942,22 +935,27 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await submitSeniorCertification(param)
-      console.log(data)
-      // 接口返回清除loading
-      this.fullscreenLoading = false
       if (!data) return false
       this.stateEmptyData()
       this.authenticationStatusFront = false
-      // 接口成功清除loading
       this.SET_USER_INFO_REFRESH_STATUS(true)
       await this.REFRESH_USER_INFO_ACTION()
       await this.getRealNameInformation()
+      // 接口返回清除loading
+      this.fullscreenLoading = false
     },
     // 接口请求完成之后清空数据
     stateEmptyData () {
-      this.firstPictureSrc = require('../../../assets/user/card_positive.png')
-      this.secondPictureSrc = require('../../../assets/user/card_negative.png')
-      this.thirdPictureSrc = require('../../../assets/user/card_handheld.png')
+      // 证件类型为1 是身份证 2是护照
+      if (this.statusRealNameInformation.cardType == 1) {
+        this.firstPictureSrc = require('../../../assets/user/card_positive.png')
+        this.secondPictureSrc = require('../../../assets/user/card_negative.png')
+        this.thirdPictureSrc = require('../../../assets/user/card_handheld.png')
+      } else {
+        this.passportPositiveImg = require('../../../assets/user/passport-positive.jpg')
+        this.passportOppositeImg = require('../../../assets/user/passport-opposite.png')
+        this.passportHandImg = require('../../../assets/user/hand.png')
+      }
       this.isUploadImg1 = ''
       this.isUploadImg2 = ''
       this.isUploadImg3 = ''
@@ -965,9 +963,9 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapGetters({
-      'isChinese': 'isChineseLanguage'
-    }),
+    // ...mapGetters({
+    //   'isChinese': 'isChineseLanguage'
+    // }),
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme,
@@ -990,7 +988,6 @@ export default {
         this.authenticationIsStatus()
         this.CHANGE_USER_REFRESH_SUCCESS(false)
         this.getRealNameInformation()
-        // this.stateEmptyData()
       }
     }
   }

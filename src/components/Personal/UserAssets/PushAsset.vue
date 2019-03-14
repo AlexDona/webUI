@@ -98,6 +98,12 @@
                 :isShow="!!errorShowStatusList[2]"
               />
             </el-form-item>
+            <div
+              class="amount-style font-size12"
+              v-show="sumState"
+            >
+              {{ $t('M.user_push_amount') }}：{{ grossAmount }} {{ pushPayCoinName }}
+            </div>
             <button
               class="form-button-common border-radius4 cursor-pointer"
               @click.prevent="checkISNeedPayPassowd"
@@ -326,10 +332,9 @@
           <div class="shipping-address">
             <!--安全验证-->
             <el-dialog
-              :title="$t('M.comm_password')"
+              :title="$t('M.user_security_safety') + $t('M.user_security_verify')"
               :visible.sync="isShowPayPasswordDialog"
             >
-              <!--:title="$t('M.user_security_safety') + $t('M.user_security_verify')"-->
               <el-form
                 :label-position="labelPosition"
               >
@@ -342,10 +347,9 @@
                     autocomplete= "new-password"
                     class="form-input-common border-radius2 padding-l15 box-sizing"
                     v-model="payPassword"
-                    @keydown="setErrorMsg(4, '')"
-                    @blur="checkoutInputFormat(4, payPassword, 1)"
+                    @keydown="setErrorMsg(3, '')"
+                    @blur="checkoutInputFormat(3, payPassword, 1)"
                     @keyup.enter="submitWithPayPassword"
-                    @focus="setErrorMsg(4, '')"
                   >
                 </el-form-item>
               </el-form>
@@ -399,10 +403,10 @@ import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   timeFilter,
-  formatNumberInput
+  formatNumberInput,
+  pushAssetInputRestriction
 } from '../../../utils/index'
 import {
-  // returnAjaxMsg,
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../../utils/commonFunc'
@@ -433,6 +437,8 @@ export default {
       buyUID: '', // 买方UID
       count: '', // 数量
       price: '', // 价格
+      sumState: false, // 默认数量x价格=金额状态显示为false
+      grossAmount: '', // 数量x价格=金额
       payPassword: '', // 交易密码
       phoneCode: '', // 手机验证码
       emailCode: '', // 邮箱验证码
@@ -492,8 +498,21 @@ export default {
         this.$refs.count.value = this.currencyBalance
       }
       this[ref] = this.$refs[ref].value
+      let target = this.$refs[ref]
+      // 限制输入多个0，以及整数首位是0
+      pushAssetInputRestriction(target)
       // 限制数量小数位位数
       formatNumberInput(this.$refs[ref], pointLength)
+      // 判断数量和价格是否为空为空则不显示 不为空显示
+      if (this.$refs.count.value == '' || this.$refs.price.value == '') {
+        this.sumState = false
+      } else if (this.$refs.count.value !== '' || this.$refs.price.value !== '') {
+        this.sumState = true
+        this.grossAmount = this.$keep8Num(this.$refs.count.value * this.$refs.price.value)
+        this.grossAmount = this.$keep8Num(this.$refs.price.value * this.$refs.count.value)
+        let a = this.grossAmount
+        console.log(this.$scientificToNumber(a))
+      }
     },
     // 是否需要交易密码
     async checkISNeedPayPassowd () {
@@ -757,8 +776,7 @@ export default {
       loginStep1Info: state => state.user.loginStep1Info,
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // 交易密码是否被锁定
-      isLockedPayPassword: state => state.common.isLockedPayPassword,
-      language: state => state.common.language // 当前选中语言
+      isLockedPayPassword: state => state.common.isLockedPayPassword
     })
   },
   watch: {
@@ -775,15 +793,6 @@ export default {
       if (!newVal && oldVal) {
         this.payPassword = ''
       }
-    },
-    // 切换语言清空错误提示
-    language (newVal) {
-      console.log(newVal)
-      this.errorShowStatusList[0] = ''
-      this.errorShowStatusList[1] = ''
-      this.errorShowStatusList[2] = ''
-      this.errorShowStatusList[3] = ''
-      this.errorShowStatusList[4] = ''
     }
   }
 }
@@ -794,12 +803,12 @@ export default {
   .push-assets {
     > .push-assets-main {
       > .push-assets-content-box {
-        min-height: 500px;
+        min-height: 448px;
 
         > .push-from-box {
           width: 400px;
-          min-height: 500px;
-          padding-top: 70px;
+          min-height: 443px;
+          padding-top: 47px;
           margin: 0 auto;
 
           .form-input-common,
@@ -811,7 +820,12 @@ export default {
           }
 
           .form-button-common {
-            margin: 0 0 50px 95px;
+            margin: 0 0 40px 95px;
+          }
+
+          .amount-style {
+            padding: 0 0 10px 95px;
+            color: #338ff5;
           }
         }
       }
@@ -864,7 +878,7 @@ export default {
       }
 
       .el-form-item {
-        margin-bottom: 25px;
+        margin-bottom: 20px;
       }
 
       .el-form-item__label {

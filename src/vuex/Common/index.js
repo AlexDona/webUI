@@ -9,7 +9,7 @@ const state = {
   countryAreaList: [], // 国家列表（国家码）
   defaultLanguage: 'en_US',
   // 国际化语言
-  language: getStore('language') || this.defaultLanguage,
+  language: getStore('language') || 'en_US',
   activeLanguage: '',
   mainColor: {
     $mainNightBgColor: '#1c1f32',
