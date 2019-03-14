@@ -264,6 +264,35 @@ export const positiveIntegerNumRegexpInput = event => {
 }
 
 /**
+ * 只能输入正整数限制-首位为0时输入第二位干掉首位的20190307新增,并且只能输入三位正整数0~999
+ * @param event ： 当前input DOM 对象
+ */
+export const positiveIntegerNumRegexpInputNoZero = event => {
+  let i
+  let val = event.value
+  let finalVal = ''
+  let valArr = val.split('')
+  // 整理后
+  if (valArr[0] === '0') {
+    if (valArr.length == 1) {
+      finalVal = valArr[0]
+    } else {
+      for (i = 1; i <= valArr.length - 1; i++) {
+        finalVal += valArr[i]
+      }
+    }
+  } else {
+    _.forEach(valArr, (item, index) => {
+      if (((item - 0) || item === '0') && index < 3) {
+        finalVal += item
+      }
+    })
+  }
+  event.value = finalVal
+  return finalVal
+}
+
+/**
  * 小数：只能输入小数点前一个0，整数限制不可输入多个0
  * 输入限制-首位可为0(只针对小数)，如果首位为0后面为整数，干掉首位的0，显示整数位，
  * @param event ： 当前input DOM 对象
