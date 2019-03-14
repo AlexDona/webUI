@@ -132,7 +132,6 @@ import {
 } from '../../utils/commonFunc'
 import {
   getPlatesAJAX,
-  getTradeAreaAJAX,
   getAllTradeAreasAJAX,
   getAllSymbolsAJAX
   // getCollectionListAjax
@@ -304,11 +303,20 @@ export default {
             symbolsStr += unzip(symbolObj)
           })
           if (!symbolsStr) return false
+          console.log(symbolsStr)
           let symbolsSJONFromBackEnd = JSON.parse(symbolsStr)
+          console.log(symbolsSJONFromBackEnd)
           symbolJSON = symbolsSJONFromBackEnd
           setStore('symbolJSONAge', new Date().getTime())
           console.log(symbolJSON)
         }
+      }
+      for (let k in symbolJSON) {
+        console.log(symbolJSON[k])
+        this.CHANGE_SYMBOL_MAP({
+          key: symbolJSON[k].id,
+          val: symbolJSON[k]
+        })
       }
       _.forEach(this.areasFromAPI, (area, areaIndex) => {
         this.areasIndexMap.set(area.area, areaIndex)
@@ -365,65 +373,6 @@ export default {
           return false
         }
       })
-    },
-    async getTradeAreas ({plateId = this.activeName, more = false, areaId = ''}) {
-      this.disabledStatus = true
-      console.log('点击了查看更多')
-      let params = {
-        plateId,
-        more
-      }
-      if (areaId) params.areaId = areaId
-      const data = await getTradeAreaAJAX(params)
-      console.log(data)
-      if (!data) {
-        this.moreBtnShowStatus = false
-        return false
-      }
-      console.log(data)
-      let areas = JSON.parse(unzip(getNestedData(data, 'data.obj')))
-      console.log(areas)
-      // 交易区查看更多
-      if (!areaId) {
-        console.log(areas)
-        this.areas = more ? this.areas.concat(areas) : areas
-        this.moreBtnShowStatus = getNestedData(data, 'data.more')
-        console.log(areas, this.areas)
-      }
-      // 交易对查看更多
-      if (more && areaId) {
-        console.log(areas)
-        let areaIndex = this.areas.findIndex(val => val.id === areaId)
-        console.log(areaIndex)
-        let partOfContent = this.areas[areaIndex].content
-        this.areas[areaIndex].content = partOfContent.concat(areas)
-      }
-      console.log(this.moreBtnShowStatus)
-      _.forEach(this.areas, (area, areaIndex) => {
-        console.log(area)
-        this.areasIndexMap.set(area.area, areaIndex)
-        this.symbolsIndexMap.set(areaIndex, new Map())
-        _.forEach(area.content, (symbol, symbolIndex) => {
-          this.symbolsIndexMap.get(areaIndex).set(symbol.id, symbolIndex)
-          this.CHANGE_SYMBOL_MAP({
-            key: symbol.id,
-            val: symbol
-          })
-        })
-      })
-      this.activeIndex = 0
-      let collectSymbol = {}
-      if (!this.isLogin) {
-        collectSymbol = JSON.parse(getStore('collectSymbol')) || {}
-      } else {
-        await this.getCollectionList(collectSymbol)
-      }
-      console.log(collectSymbol)
-      this.setCollectData(collectSymbol)
-      // more
-      this.setSymbolsForSocket()
-      console.log(this.symbolsIndexMap)
-      this.disabledStatus = false
     },
     // 获取板块信息
     async getPlates () {
