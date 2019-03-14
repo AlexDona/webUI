@@ -541,10 +541,13 @@ export default {
         this.searchArea.content = []
       }
     },
-    // 切换收藏
-    async toggleCollect (data) {
+    resetCoolectAndSearchAreaLang () {
       this.collectArea.area = this.$t('M.home_market_district')
       this.searchArea.area = this.$t('M.home_market_field_search')
+    },
+    // 切换收藏
+    async toggleCollect (data) {
+      this.resetCoolectAndSearchAreaLang()
       let {id, status, row} = data
       status = Boolean(status)
       this.$set(this.collectStatusList, id, status)
@@ -610,8 +613,7 @@ export default {
       this.setSymbolsForSocket()
     },
     async language (newVal) {
-      this.collectArea.area = this.$t('M.home_market_district')
-      this.searchArea.area = this.$t('M.home_market_field_search')
+      this.resetCoolectAndSearchAreaLang()
       if (newVal) {
         await this.initPlatesAndAreas()
       }
