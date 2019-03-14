@@ -628,7 +628,6 @@ export default {
         > .withdrawal-address-content {
           > .withdrawal-address-box {
             .error-info {
-              height: 20px;
               line-height: 20px;
               color: #d45858;
             }

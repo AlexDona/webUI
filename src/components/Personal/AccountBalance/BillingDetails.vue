@@ -173,6 +173,23 @@
                     <div>{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
                   </template>
                 </el-table-column>
+                <!--提币地址-->
+                <el-table-column
+                  :label="$t('M.comm_mention_money') + $t('M.comm_site')"
+                  v-if="withdrawSite"
+                  width="120"
+                >
+                  <template slot-scope = "s">
+                    <el-tooltip placement="bottom-start">
+                      <div slot="content">
+                        {{ s.row.withdrawAddress }}
+                      </div>
+                      <div class="white-space">
+                        {{ s.row.withdrawAddress }}
+                      </div>
+                    </el-tooltip>
+                  </template>
+                </el-table-column>
                 <!--数量-->
                 <el-table-column
                   :label="$t('M.comm_count')"
@@ -375,6 +392,8 @@ export default {
           label: 'M.comm_mention_money'
         }
       ], // 默认类型
+      // 提现记录显示提币地址
+      withdrawSite: true,
       // 其他记录
       otherRecordsList: [],
       otherRecordPageNumbers: 1, // 其他记录页码
@@ -455,6 +474,14 @@ export default {
          FINANCIAL_INCOME：理财收入
          INVITATION_REWARD：邀请有礼 */
     async getChargeMentionList (entrustType1) {
+      console.log(this.currencyTypeValue)
+      // 判断是否显示提币地址 充币不显示，提币或者为空显示
+      if (this.currencyTypeValue === 'RECHARGE') {
+        this.withdrawSite = false
+      } else {
+        this.withdrawSite = true
+      }
+      console.log(this.withdrawSite)
       const entrustType = entrustType1 || 'current-entrust'
       this.chargeRecordList = []
       this.otherRecordsList = []
@@ -482,7 +509,7 @@ export default {
           // 返回冲提记录列表展示
           let detailData = getNestedData(data, 'data')
           // 充提记录
-          this.chargeRecordList = getNestedData(detailData, 'list')
+          this.chargeRecordList = getNestedData(detailData, 'list') || []
           this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
           break
         case 'other-records':
@@ -583,6 +610,12 @@ export default {
   .billing-details {
     > .billing-details-main {
       min-height: 665px;
+
+      .white-space {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
       .billing-details-content {
         > .tab-list {
@@ -848,7 +881,7 @@ export default {
 
       .el-date-editor {
         &.el-input__inner {
-          width: 213px;
+          width: 205px;
         }
 
         &.el-input {

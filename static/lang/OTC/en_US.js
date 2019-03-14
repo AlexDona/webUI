@@ -349,5 +349,14 @@ export const OTC = {
   'otc_apply_tips6': 'Tips',
   // 发布订单错误提示
   'otc_publish_order_err_tips1': 'Please select the currency to be published',
-  'otc_publish_order_err_tips2': 'Please select the legal currency type'
+  'otc_publish_order_err_tips2': 'Please select the legal currency type',
+  // otc发单最小最大限额
+  'otc_min': 'minimum',
+  'otc_max': 'maximum',
+  'otc_min_limit_not_empty': 'single minimum limit cannot be empty',
+  'otc_min_limit_not_low': 'single minimum limit cannot be less than',
+  'otc_min_limit_not_more': 'cannot exceed single maximum limit',
+  'otc_max_limit_not_empty': 'single maximum limit cannot be empty',
+  'otc_max_limit_not_high': 'single maximum limit cannot be higher than',
+  'otc_max_limit_not_few': 'cannot be less than single minimum limit'
 }

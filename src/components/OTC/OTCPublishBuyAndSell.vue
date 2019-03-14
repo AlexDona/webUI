@@ -208,13 +208,14 @@
                   <!-- 单笔最小限额 -->
                   <input
                     type="text"
-                    :placeholder="$t('M.otc_publishAD_minlimitMoney') + this.backReturnCurrentMinCount"
+                    :placeholder="$t('M.otc_min') + this.backReturnCurrentMinCount"
                     class="sell-sum"
                     :class="{ redBorderRightNone: minCountErrorTipsBorder }"
                     ref="minCount"
-                    @keyup="changeInputValue('minCount', moneyPointLength)"
-                    @input="changeInputValue('minCount', moneyPointLength)"
+                    @keyup="changeInputValueMin('minCount', moneyPointLength)"
+                    @input="changeInputValueMin('minCount', moneyPointLength)"
                     onpaste="return false"
+                    @blur="loseFocus(1)"
                   >
                   <span
                     class="monad"
@@ -226,13 +227,14 @@
                   <!-- 单笔最大限额 -->
                   <input
                     type="text"
-                    :placeholder="$t('M.otc_publishAD_maxlimitMoney') + this.backReturnCurrentMaxCount"
+                    :placeholder="$t('M.otc_max') + this.backReturnCurrentMaxCount"
                     class="sell-sum max-sell-sum"
                     :class="{ redBorderRightNone: maxCountErrorTipsBorder }"
                     ref="maxCount"
-                    @keyup="changeInputValue('maxCount', moneyPointLength)"
-                    @input="changeInputValue('maxCount', moneyPointLength)"
+                    @keyup="changeInputValueMax('maxCount', moneyPointLength)"
+                    @input="changeInputValueMax('maxCount', moneyPointLength)"
                     onpaste="return false"
+                    @blur="loseFocus(2)"
                   >
                   <span
                     class="monad"
@@ -566,7 +568,8 @@ export default {
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_PASSWORD_USEABLE'
+      'CHANGE_PASSWORD_USEABLE',
+      'CHANGE_AJAX_READY_STATUS' // 改变接口返回loading状态
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -621,7 +624,7 @@ export default {
         this.backReturnCurrentMaxCount = getNestedData(detailsData, 'otcCoinQryResponse.maxCount')
         // console.log(this.backReturnCurrentMaxCount)
         this.$refs.maxCount.value = this.backReturnCurrentMaxCount
-        console.log(this.$refs.maxCount.value)
+        // console.log(this.$refs.maxCount.value)
         // 币种 最小 交易限额minCount
         this.backReturnCurrentMinCount = getNestedData(detailsData, 'otcCoinQryResponse.minCount')
         this.$refs.minCount.value = this.backReturnCurrentMinCount
@@ -663,9 +666,8 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'date')
     },
-    //  6.0 点击 购买 和 出售 按钮切换
+    // 6.0 点击 购买 和 出售 按钮切换
     toggleBuySellButton (index) {
-      // switch改写
       switch (index) {
         case 1:
           this.publishStyle = 'sell'
@@ -678,7 +680,7 @@ export default {
       this.clearInputData()
       this.getOTCCoinInfo()
     },
-    //  7.0 清空input框数据
+    // 7.0 清空input框数据
     clearInputData () {
       this.$refs.entrustCountSell.value = ''
       this.$refs.entrustCountBuy.value = ''
@@ -708,13 +710,13 @@ export default {
       this.errorTipsLimitMax = ''
       this.maxCountErrorTipsBorder = false
     },
-    // 卖出量和买入量input 获得焦点
+    // 8.0 卖出量和买入量input 获得焦点
     countInputFocus () {
       this.errorTipsSum = ''
       this.entrustCountErrorTipsBorder = false
       this.entrustCountBuySellErrorTipsBorder = false
     },
-    //  8.0 修改input value
+    // 9.0 修改input value
     changeInputValue (ref, pointLength) {
       this[ref] = this.$refs[ref].value
       // console.dir(this.$refs[ref])
@@ -789,55 +791,89 @@ export default {
           this.priceBuySellErrorTipsBorder = false
         }
       }
-      // 单笔成交限额验证
-      // 最小
+    },
+    // 10.0 单笔最小限额单独验证
+    changeInputValueMin (ref, pointLength) {
+      this[ref] = this.$refs[ref].value
+      let target = this.$refs[ref]
+      // 限制输入数字和位数
+      formatNumberInput(target, pointLength)
+      // 输入验证-开始简化代码
       if (this.$refs.minCount.value - this.backReturnCurrentMinCount < 0) {
-        // 输入值不能小于最小限额
-        this.errorTipsLimitMin = this.$t('M.otc_publishAD_inputminLimit')
+        // 单笔最小限额不能低于
+        // this.errorTipsLimitMin = '单笔最小限额不能低于' + this.backReturnCurrentMinCount
+        this.errorTipsLimitMin = this.$t('M.otc_min_limit_not_low') + this.backReturnCurrentMinCount
         this.minCountErrorTipsBorder = true
-        return false
+      } else if (this.$refs.minCount.value - this.$refs.maxCount.value > 0) {
+        // 不能大于单笔最大限额
+        // this.errorTipsLimitMin = '不能大于单笔最大限额'
+        this.errorTipsLimitMin = this.$t('M.otc_min_limit_not_more')
+        this.minCountErrorTipsBorder = true
+      } else if (this.$refs.minCount.value - this.backReturnCurrentMaxCount > 0) {
+        // 不能大于单笔最大限额
+        // this.errorTipsLimitMin = '不能大于单笔最大限额'
+        this.errorTipsLimitMin = this.$t('M.otc_min_limit_not_more')
+        this.minCountErrorTipsBorder = true
       } else {
         this.errorTipsLimitMin = ''
         this.minCountErrorTipsBorder = false
       }
-      if (this.$refs.minCount.value - this.$refs.maxCount.value > 0) {
-        // 输入值不能大于最大限额
-        this.errorTipsLimitMin = this.$t('M.otc_publishAD_inputmaxLimit')
-        this.minCountErrorTipsBorder = true
-        return false
-      } else {
-        this.errorTipsLimitMin = ''
-        this.minCountErrorTipsBorder = false
-      }
-      if (this.$refs.minCount.value - this.$refs.maxCount.value < 0) {
+      if (this.$refs.minCount.value - this.$refs.maxCount.value <= 0 && this.$refs.minCount.value - this.backReturnCurrentMinCount >= 0 && this.$refs.minCount.value - this.backReturnCurrentMaxCount <= 0 && this.$refs.maxCount.value - this.$refs.minCount.value >= 0 && this.$refs.maxCount.value - this.backReturnCurrentMinCount >= 0 && this.$refs.maxCount.value - this.backReturnCurrentMaxCount <= 0) {
         this.errorTipsLimitMax = ''
         this.maxCountErrorTipsBorder = false
       }
-      // 最大
+    },
+    // 11.0 单笔最大限额单独验证
+    changeInputValueMax (ref, pointLength) {
+      this[ref] = this.$refs[ref].value
+      let target = this.$refs[ref]
+      // 限制输入数字和位数
+      formatNumberInput(target, pointLength)
+      // 输入验证
       if (this.$refs.maxCount.value - this.backReturnCurrentMaxCount > 0) {
-        // 输入值不能大于最大限额
-        this.errorTipsLimitMax = this.$t('M.otc_publishAD_inputmaxLimit')
+        // 单笔最大限额不能高于
+        // this.errorTipsLimitMax = '单笔最大限额不能高于' + this.backReturnCurrentMaxCount
+        this.errorTipsLimitMax = this.$t('M.otc_max_limit_not_high') + this.backReturnCurrentMaxCount
         this.maxCountErrorTipsBorder = true
-        return false
+      } else if (this.$refs.maxCount.value - this.$refs.minCount.value < 0) {
+        // 不能小于单笔最小限额
+        // this.errorTipsLimitMax = '不能小于单笔最小限额'
+        this.errorTipsLimitMax = this.$t('M.otc_max_limit_not_few')
+        this.maxCountErrorTipsBorder = true
+      } else if (this.$refs.maxCount.value - this.backReturnCurrentMinCount < 0) {
+        // 不能小于单笔最小限额
+        // this.errorTipsLimitMax = '不能小于单笔最小限额'
+        this.errorTipsLimitMax = this.$t('M.otc_max_limit_not_few')
+        this.maxCountErrorTipsBorder = true
       } else {
         this.errorTipsLimitMax = ''
         this.maxCountErrorTipsBorder = false
       }
-      if (this.$refs.maxCount.value - this.$refs.minCount.value < 0) {
-        // 输入值不能小于最小限额
-        this.errorTipsLimitMax = this.$t('M.otc_publishAD_inputminLimit')
-        this.maxCountErrorTipsBorder = true
-        return false
-      } else {
-        this.errorTipsLimitMax = ''
-        this.maxCountErrorTipsBorder = false
-      }
-      if (this.$refs.maxCount.value - this.$refs.minCount.value > 0) {
+      if (this.$refs.maxCount.value - this.$refs.minCount.value >= 0 && this.$refs.maxCount.value - this.backReturnCurrentMinCount >= 0 && this.$refs.maxCount.value - this.backReturnCurrentMaxCount <= 0 && this.$refs.minCount.value - this.$refs.maxCount.value <= 0 && this.$refs.minCount.value - this.backReturnCurrentMinCount >= 0 && this.$refs.minCount.value - this.backReturnCurrentMaxCount <= 0) {
         this.errorTipsLimitMin = ''
         this.minCountErrorTipsBorder = false
       }
     },
-    //  8.0 点击发布出售或者发布购买弹出输入交易密码框
+    // 12.0 单笔最小最大限额失去焦点事件
+    loseFocus (sum) {
+      switch (sum) {
+        case 1:
+          if (!this.$refs.minCount.value) {
+            // this.errorTipsLimitMin = '单笔最小限额不能为空！'
+            this.errorTipsLimitMin = this.$t('M.otc_min_limit_not_empty')
+            this.minCountErrorTipsBorder = true
+          }
+          break
+        case 2:
+          if (!this.$refs.maxCount.value) {
+            // this.errorTipsLimitMax = '单笔最大限额不能为空！'
+            this.errorTipsLimitMax = this.$t('M.otc_max_limit_not_empty')
+            this.maxCountErrorTipsBorder = true
+          }
+          break
+      }
+    },
+    //  13.0 点击发布出售或者发布购买弹出输入交易密码框
     async showPasswordDialog () {
       // 用户交易密码是否锁定判断
       await this.REFRESH_USER_INFO_ACTION()
@@ -887,17 +923,30 @@ export default {
       if (this.errorTipsPrice || this.errorTipsLimitMin || this.errorTipsLimitMax) {
         return false
       }
+      // 20190308增加单笔最小、最大成交限额必输验证
+      if (!this.$refs.minCount.value) {
+        // this.errorTipsLimitMin = '单笔最小限额不能为空！'
+        this.errorTipsLimitMin = this.$t('M.otc_min_limit_not_empty')
+        this.minCountErrorTipsBorder = true
+        return false
+      }
+      if (!this.$refs.maxCount.value) {
+        // this.errorTipsLimitMax = '单笔最大限额不能为空！'
+        this.errorTipsLimitMax = this.$t('M.otc_max_limit_not_empty')
+        this.maxCountErrorTipsBorder = true
+        return false
+      }
       if (this.isNeedPayPassword) {
         this.publishOrderTradePwdDialogStatus = true
       } else {
         this.publishOTCEntryOrders()
       }
     },
-    // 交易密码框获得焦点清空错误提示信息
+    // 14.0 交易密码框获得焦点清空错误提示信息
     tradePasswordFocus () {
       this.errorPWd = ''
     },
-    // 9.0 点击输入密码框中的提交按钮
+    // 15.0 点击输入密码框中的提交按钮
     async publishOTCEntryOrders () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
@@ -911,7 +960,7 @@ export default {
         maxCount: this.$refs.maxCount.value, // 单笔最大限额（CNY）
         remark: this.remarkText // 备注
       }
-      param = this.isNeedPayPassword ? { ...param, tradePassword: this.tradePassword } : param // 交易密码
+      param = this.isNeedPayPassword ? { ...param, tradePassword: this.tradePassword } : param// 交易密码
       switch (this.publishStyle) {
         case 'buy':
           param = {...param,
@@ -930,20 +979,24 @@ export default {
             }}
           break
       }
+      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       const data = await addOTCPutUpOrders(param)
       // 返回数据正确的逻辑
+      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       // 关闭交易密码框
       this.publishOrderTradePwdDialogStatus = false
       this.tradePassword = '' // 清空交易密码
       if (!data) return false
-      // 清空表单数据
-      this.clearInputData()
-      // 下单成功跳转到首页挂单列表去
-      // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-      this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
-      this.$goToPage('/OTCCenter')
+      if (data) {
+        // 清空表单数据
+        this.clearInputData()
+        // 下单成功跳转到首页挂单列表去
+        // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+        this.$goToPage('/OTCCenter')
+      }
     },
-    // 10.0 充币按钮跳转
+    // 16.0 充币按钮跳转
     chargeMoney () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
       this.$goToPage('/PersonalCenter')

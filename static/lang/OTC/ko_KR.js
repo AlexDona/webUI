@@ -339,5 +339,14 @@ export const OTC = {
   'otc_apply_tips6': '따뜻한 힌트.',
   // 发布订单错误提示
   'otc_publish_order_err_tips1': '게시 할 통화를 선택하십시오.',
-  'otc_publish_order_err_tips2': '유효한 통화 유형을 선택하십시오.'
+  'otc_publish_order_err_tips2': '유효한 통화 유형을 선택하십시오.',
+  // otc发单最小最大限额
+  'otc_min': '최소',
+  'otc_max': '최대',
+  'otc_min_limit_not_empty': '최소 한도는 비워 둘 수 없습니다.',
+  'otc_min_limit_not_low': '단일 최소 한도는',
+  'otc_min_limit_not_more': '최대 단일 제한보다 클 수 없습니다.',
+  'otc_max_limit_not_empty': '최대 한도는 비워 둘 수 없습니다.',
+  'otc_max_limit_not_high': '최대 한도는 다음보다 클 수 없습니다.',
+  'otc_max_limit_not_few': '단일 최소값보다 작을 수 없습니다.'
 }

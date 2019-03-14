@@ -705,10 +705,12 @@ export default {
     },
     // 5.0 查询otc挂单详情-商家和普通用户通用
     async querySelectedOrdersDetails () {
+      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       const data = await querySelectedOrdersDetails({
         entrustId: this.entryOrdersID
       })
       // 正确逻辑
+      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       // console.log('otc挂单详情')
       // console.log(data)
       if (!data) return false
@@ -732,12 +734,14 @@ export default {
     },
     // 6.0 查询用户交易币种手续费率以及币种详情
     async queryUserTradeFeeAndCoinInfo () {
+      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       const data = await queryUserTradeFeeAndCoinInfo({
         coinId: this.partnerCoinId // 商户币种id
       })
       console.log('用户交易币种手续费率以及币种详情11')
       console.log(data)
       // 返回数据正确的逻辑:将返回的数据赋值到页面中
+      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       if (!data) return false
       let detailData = getNestedData(data, 'data')
       this.coinName = getNestedData(detailData, 'name') // 最小交易量币种名字（单位）
