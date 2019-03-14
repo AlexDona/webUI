@@ -180,14 +180,16 @@
                   width="120"
                 >
                   <template slot-scope = "s">
-                    <el-tooltip placement="bottom-start">
-                      <div slot="content">
-                        {{ s.row.withdrawAddress }}
-                      </div>
-                      <div class="white-space">
-                        {{ s.row.withdrawAddress }}
-                      </div>
-                    </el-tooltip>
+                    <div
+                      :title="s.row.withdrawAddress"
+                      class="white-space"
+                      v-clipboard:copy="s.row.withdrawAddress"
+                      v-clipboard:success="onCopy"
+                      v-clipboard:error="onError"
+                    >
+                      {{s.row.withdrawAddress}}
+                    </div>
+
                   </template>
                 </el-table-column>
                 <!--数量-->
@@ -435,6 +437,25 @@ export default {
     this.changeTime()
   },
   methods: {
+    //  点击复制
+    onCopy (e) {
+      // 已拷贝
+      // let msg = '已拷贝'
+      let msg = this.$t('M.comm_have_been_copied')
+      this.$message({
+        type: 'success',
+        message: msg
+      })
+    },
+    onError (e) {
+      // 拷贝失败，请稍后重试
+      // let msg = '拷贝失败，请稍后重试'
+      let msg = this.$t('M.comm_copies_failure')
+      this.$message({
+        type: 'success',
+        message: msg
+      })
+    },
     // tab 切换
     async coinMoneyOrders (e) {
       this.startTime = [
