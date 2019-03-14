@@ -115,11 +115,11 @@
       ],
       "src/**/*.vue": [
         "eslint",
-        "stylelint",
+        "stylelint --fix",
         "git add"
       ],
       "static/css/**/*.css": [
-        "stylelint",
+        "stylelint --fix",
         "git add"
       ]
     },
