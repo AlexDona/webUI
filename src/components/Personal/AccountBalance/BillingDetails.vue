@@ -176,7 +176,7 @@
                 <!--提币地址-->
                 <el-table-column
                   :label="$t('M.comm_mention_money') + $t('M.comm_site')"
-                  v-show="withdrawSite"
+                  v-if="withdrawSite"
                   width="120"
                 >
                   <template slot-scope = "s">
@@ -474,6 +474,14 @@ export default {
          FINANCIAL_INCOME：理财收入
          INVITATION_REWARD：邀请有礼 */
     async getChargeMentionList (entrustType1) {
+      console.log(this.currencyTypeValue)
+      // 判断是否显示提币地址 充币不显示，提币或者为空显示
+      if (this.currencyTypeValue === 'RECHARGE') {
+        this.withdrawSite = false
+      } else {
+        this.withdrawSite = true
+      }
+      console.log(this.withdrawSite)
       const entrustType = entrustType1 || 'current-entrust'
       this.chargeRecordList = []
       this.otherRecordsList = []
