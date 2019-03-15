@@ -197,5 +197,19 @@ export default {
     .slider-pagination {
       text-align: right;
     }
+
+    @media screen and (min-width: 2560px) {
+      .slider-pagination-bullet {
+        width: .15rem;
+        height: .02rem;
+      }
+    }
+
+    @media screen and (max-width: 1919px) {
+      .slider-pagination-bullet {
+        width: .2rem;
+        height: .03rem;
+      }
+    }
   }
 </style>
