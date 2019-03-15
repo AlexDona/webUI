@@ -265,7 +265,7 @@
                </span>
                <a
                  class="main-color"
-                 @click.prevent="$footerJump('/ServiceAndProtocol','UserProtocol')"
+                 @click.prevent="jumpToUserAgreement"
                >
                  <!--《用户协议》-->
                  {{ $t('M.forgetPassword_hint7') }}
@@ -351,7 +351,7 @@
                 >
                   <el-option
                     v-for="item in countryAreaList"
-                    :key="item.nationCode"
+                    :key="item.english"
                     :label="item.nationCode"
                     :value="item.nationCode"
                   >
@@ -544,7 +544,7 @@
                </span>
                 <a
                   class="main-color"
-                  @click.prevent="$footerJump('/ServiceAndProtocol','UserProtocol')"
+                  @click.prevent="jumpToUserAgreement"
                 >
                   <!--《用户协议》-->
                   {{ $t('M.forgetPassword_hint7') }}
@@ -780,8 +780,19 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'USER_LOGOUT',
       'SET_COUNT_DOWN_RESET_STATUS',
-      'CHANGE_AJAX_READY_STATUS'
+      'CHANGE_AJAX_READY_STATUS',
+      'CHANGE_FOOTER_ACTIVE_NAME'
     ]),
+    jumpToUserAgreement () {
+      let routeData = this.$router.resolve({
+        path: '/ServiceAndProtocol'
+      })
+      this.CHANGE_FOOTER_ACTIVE_NAME({
+        type: '/ServiceAndProtocol',
+        activeName: 'UserProtocol'
+      })
+      window.open(routeData.href, '_blank')
+    },
     // 限制输入数字
     positiveIntegerNumRegexpInputLimit (ref) {
       let target = this.$refs[ref]
@@ -1070,8 +1081,13 @@ export default {
       this.checkCode = ''
       this.$refs['checkCode'].value = ''
       this.setErrorMsg()
-      this.$refs[this.phoneRef].value = ''
-      this.$refs[this.emailNumRef].value = ''
+      if (!this.isMobile) {
+        this.$refs[this.phoneRef].value = ''
+        this.$refs[this.emailNumRef].value = ''
+      } else {
+        this.$refs[this.mobilePhoneRef].value = ''
+        this.$refs[this.emailNumRef].value = ''
+      }
     },
     /**
      * 滑块验证
