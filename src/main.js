@@ -31,7 +31,6 @@ import {
   TableColumn,
   DatePicker,
   Popover,
-  Tooltip,
   Breadcrumb,
   BreadcrumbItem,
   Form,
@@ -79,7 +78,6 @@ Vue.use(Pagination)
   .use(TableColumn)
   .use(DatePicker)
   .use(Popover)
-  .use(Tooltip)
   .use(Breadcrumb)
   .use(BreadcrumbItem)
   .use(Form)

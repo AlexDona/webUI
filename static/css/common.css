@@ -234,36 +234,6 @@
   z-index: 2300 !important;
 }
 
-/* 商家图标鼠标放上去显示的样式 */
-.night .el-tooltip__popper {
-  padding: 7px 10px;
-}
-
-.night .el-tooltip__popper.is-dark {
-  color: black;
-  background: #fff;
-}
-
-.night .el-tooltip__popper .popper__arrow,
-.night .el-tooltip__popper .popper__arrow::after {
-  border-bottom-color: #fff !important;
-}
-
-/* 商家图标鼠标放上去显示的样式 */
-.day .el-tooltip__popper {
-  padding: 7px 10px;
-}
-
-.day .el-tooltip__popper.is-dark {
-  color: #fff;
-  background: black;
-}
-
-.day .el-tooltip__popper .popper__arrow,
-.day .el-tooltip__popper .popper__arrow::after {
-  border-bottom-color: black !important;
-}
-
 /* 添加日期时间组件全局样式 */
 
 .night .el-date-table td.disabled div {

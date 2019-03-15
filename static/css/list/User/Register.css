@@ -8,15 +8,13 @@
   color: #8b9197;
 }
 
-.register-box .el-checkbox__input.is-checked + .el-checkbox__label {
+.register-box .el-checkbox__input.is-checked + .el-checkbox__label,
+.register-box .el-checkbox__input.is-checked + .el-checkbox__label span {
   color: #338ff5;
 }
 
-.register-box .el-checkbox__input.is-checked + .el-checkbox__label span {
-  color: #8b9197;
-}
-
 .register-box .el-checkbox__inner {
+  border-color: #8b9197;
   background-color: transparent;
 }
 
