@@ -331,7 +331,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import '../../../static/css/scss/index.scss';
 
   .slider-box {
@@ -456,7 +456,7 @@ export default {
     }
   }
 </style>
-<style scope lang="scss">
+<style scope lang="scss" type="text/scss">
   .container {
     width: 100%;
     overflow: hidden;
