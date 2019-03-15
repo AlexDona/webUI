@@ -198,15 +198,12 @@
               class="text-info"
               v-show="item.appeal == 'YES'"
             >
-              <el-tooltip
-                effect="dark"
-                :content="item.handleSuggest"
-                placement="bottom-start"
+              <span
+                class="reason-content cursor-pointer"
+                :title="item.handleSuggest"
               >
-                <span class="reason-content">
-                  {{$t('M.otc_order_reason')}}：{{item.handleSuggest}}
-                </span>
-              </el-tooltip>
+                {{$t('M.otc_order_reason')}}：{{item.handleSuggest}}
+              </span>
             </p>
           </div>
         </div>

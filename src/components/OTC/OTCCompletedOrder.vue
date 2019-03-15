@@ -157,15 +157,12 @@
                       class="order-info-right"
                       v-show="s.row.appeal == 'YES'"
                     >
-                      <el-tooltip
-                        effect="dark"
-                        :content="s.row.handleSuggest"
-                        placement="bottom-start"
+                      <span
+                        class="reason-content cursor-pointer"
+                        :title="s.row.handleSuggest"
                       >
-                        <span class="reason-content">
-                          {{$t('M.otc_order_reason')}}：{{s.row.handleSuggest}}
-                        </span>
-                      </el-tooltip>
+                        {{$t('M.otc_order_reason')}}：{{s.row.handleSuggest}}
+                      </span>
                     </p>
                   </div>
                 </div>

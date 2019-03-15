@@ -128,18 +128,12 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    <!-- 如果是商家显示商家图标：认证商家:MERCHANT-->
-                    <el-tooltip
-                      effect="dark"
-                      :content="$t('M.otc_merchant')"
-                      placement="bottom-start"
+                    <img
+                      src="../../assets/develop/shangjia.png"
+                      class="merchant-icon"
+                      v-show="s.row.userType === 'MERCHANT'"
+                      :title="$t('M.otc_merchant')"
                     >
-                      <img
-                        src="../../assets/develop/shangjia.png"
-                        class="merchant-icon"
-                        v-show="s.row.userType === 'MERCHANT'"
-                      >
-                    </el-tooltip>
                     {{s.row.userName}}
                   </div>
                 </template>
@@ -230,20 +224,17 @@
                 </template>
               </el-table-column>
               <!-- 备注 -->
-              <el-table-column
-                :label="$t('M.comm_remark')"
-                width="100"
-              >
+                <el-table-column
+                  :label="$t('M.comm_remark')"
+                  width="100"
+                >
                 <template slot-scope = "s">
-                  <el-tooltip
-                    effect="dark"
-                    :content="s.row.remark"
-                    placement="bottom-start"
+                  <span
+                    class="remark-tips"
+                    :title="s.row.remark"
                   >
-                    <span class="remark-tips">
-                      {{s.row.remark}}
-                    </span>
-                  </el-tooltip>
+                    {{s.row.remark}}
+                  </span>
                 </template>
               </el-table-column>
               <!-- 操作 -->
