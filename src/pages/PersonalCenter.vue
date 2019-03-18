@@ -325,7 +325,6 @@ export default {
     // tab面板切换
     async statusSwitchPanel (tab) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(tab.name)
-      console.log(tab.name)
       this.showNoPosswdAndNoVerifyNotice()
     },
     confirm (val) {
