@@ -113,7 +113,7 @@
                 </div>
                 <!--锁仓-->
                 <div
-                  class="title-width locked-position"
+                  class="title-width padding-l15"
                 >
                   {{ $t('M.assets_locked_position') }}
                 </div>
@@ -121,20 +121,26 @@
                 <div
                   class="flex-asset title-width1"
                 >
-                  {{ $t('M.user_assets_sum4') }}(BTC)
+                  {{ $t('M.user_assets_sum4') }}
+                  <span v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                    (USD)
+                  </span>
+                  <span v-else>
+                    (CNY)
+                  </span>
                   <div class="icon-caret">
                     <!--升序-->
                     <i
                       class="el-icon-caret-bottom caret-text cursor-pointer"
                       :class="{active: blueStyleValue == 1}"
-                      @click.prevent="assetsSorting('up', 'btcValue')"
+                      @click.prevent="assetsSorting('up', 'cnyValue')"
                     >
                     </i>
                     <!--降序-->
                     <i
                       class="el-icon-caret-top caret-text-order cursor-pointer"
                       :class="{active: blueStyleValue == 2}"
-                      @click.prevent="assetsSorting('down', 'btcValue')"
+                      @click.prevent="assetsSorting('down', 'cnyValue')"
                     >
                     </i>
                   </div>
@@ -175,7 +181,7 @@
                     </span>
                   </div>
                   <!--锁仓-->
-                  <div class="table-td title-width">
+                  <div class="table-td title-width locked-position">
                     <span v-if="assetItem.wareHouse > 0">
                       {{ $scientificToNumber($keep8Num(assetItem.wareHouse - 0)) }}
                     </span>
@@ -188,15 +194,22 @@
                     class="table-td text-align-r title-width1"
                   >
                     <div
-                      v-if="assetItem.btcValue > 0"
+                      v-if="assetItem.cnyValue > 0"
+                      style="padding-right: 10px;"
                     >
-                      {{ $scientificToNumber($keep8Num(assetItem.btcValue)) }} ≈ {{ $scientificToNumber($keep2Num((assetItem.btcValue) * BTC2CNYRate)) }} {{ activeConvertCurrencyObj.shortName }}
+                      <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                        {{ $scientificToNumber($keep8Num(assetItem.cnyValue * BTC2CNYRate)) }} USDT
+                      </div>
+                      <div v-else>
+                        {{ $scientificToNumber($keep8Num(assetItem.cnyValue)) }} CNY
+                      </div>
                     </div>
                     <div
                       class="title-width-right"
+                      style="padding-right: 10px;"
                       v-else
                     >
-                      0.00000000 ≈ 0.00 {{activeConvertCurrencyObj.shortName}}
+                      0.00000000 {{activeConvertCurrencyObj.shortName}}
                     </div>
                   </div>
                   <!--操作-->
@@ -324,7 +337,7 @@
               </div>
               <!--提币验证-->
               <el-dialog
-                :title="$t('M.comm_mention_money') + $t('M.comm_site')"
+                :title="$t('M.user_security_safety') + $t('M.user_security_verify')"
                 :visible.sync="isShowWithdrawDialog"
               >
                 <el-form
@@ -684,7 +697,7 @@ export default {
   async created () {
     // 刚进页面时候 个人资产列表展示
     this.getAssetCurrenciesList()
-    if (this.currencyRateList.BTC) {
+    if (this.currencyRateList.USDT) {
       // 汇率转换
       await this.currencyTransform()
     }
@@ -712,15 +725,12 @@ export default {
     ]),
     // 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
-      // console.log(this.currencyRateList, this.activeConvertCurrencyObj)
       const params = {
-        coinName: 'BTC',
+        coinName: 'FBT',
         shortName: this.activeConvertCurrencyObj.shortName
       }
       const data = await currencyTransform(params)
-      // console.log(data)
       if (!data) return false
-      // console.log(data)
       // 获取汇率
       this.BTC2CNYRate = getNestedData(data, 'data.coinPrice')
     },
@@ -730,7 +740,7 @@ export default {
     },
     // 资产估值升序降序
     assetsSorting (type, val) {
-      // type 冻结(frozen) 可用(total) 资产估值(btcValue)
+      // type 冻结(frozen) 可用(total) 资产估值(cnyValue)
       // val 升序(order) 降序(invertedOrder)
       console.log(type, val)
       switch (type) {
@@ -858,34 +868,7 @@ export default {
       })
       this.$goToPage('/TradeCenter')
     },
-    // 修改input value 输入限制
-    changeInputValue ({ref, index, pointLengthAccountCount, val, coinId, total}) {
-      console.log(coinId, total)
-      console.log(this.$refs[`withdrawItemRef${index}`][0])
-      // 限制数量小数位位数
-      let target = this.$refs[`withdrawItemRef${index}`][0].$refs[ref]
-      formatNumberInput(target, pointLengthAccountCount)
-      let targetCount = amendPrecision(
-        this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value,
-        this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value,
-        '-'
-      )
-      if (targetCount > 0) {
-        if (targetCount < total - 0) {
-          this.accountCount = targetCount + ''
-        } else {
-          this.accountCount = total
-        }
-      } else {
-        this.accountCount = '0'
-      }
-      // 判断是输入时还是手续费 判断错误提示
-      if (val === 'rechargeType') {
-      } else if (val === 'serviceType') {
-        // 获取输入手续费
-        this.withdrawFeeVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value
-      }
-    },
+
     // 失去焦点判断输入提币数量不能大于可用量 否则显示总可用量
     checkUserInputAvailable (data) {
       let {index, total} = data
@@ -898,8 +881,38 @@ export default {
         this.withdrawCountVModel = total - 0
       }
       let targetCount = amendPrecision(this.withdrawCountVModel, this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value, '-')
-      // console.log(targetCount)
+      console.log(targetCount)
       this.accountCount = targetCount > 0 ? targetCount : 0
+    },
+    // 修改input value 输入限制
+    changeInputValue ({ref, index, pointLengthAccountCount, val, coinId, total}) {
+      console.log(coinId, total)
+      console.log(this.$refs[`withdrawItemRef${index}`][0])
+      // 判断是输入时还是手续费 判断错误提示
+      if (val === 'rechargeType') {
+      } else if (val === 'serviceType') {
+        // 获取输入手续费
+        this.withdrawFeeVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value
+        this.withdrawCountVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value
+      }
+      // 限制数量小数位位数
+      let target = this.$refs[`withdrawItemRef${index}`][0].$refs[ref]
+      formatNumberInput(target, pointLengthAccountCount)
+      let targetCount = amendPrecision(
+        this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value,
+        this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value,
+        '-'
+      )
+      console.log(this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value, this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value, targetCount)
+      if (targetCount > 0) {
+        if (targetCount < total - 0) {
+          this.accountCount = targetCount + ''
+        } else {
+          this.accountCount = total
+        }
+      } else {
+        this.accountCount = '0'
+      }
     },
     // 点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
     async showRechargeBox (id, name) {
@@ -1167,6 +1180,10 @@ export default {
      * 点击提币按钮 验证
      * */
     async validateOfWithdraw (index) {
+      this.phoneCode = '' // 短信验证码
+      this.emailCode = '' // 邮箱验证码
+      this.googleCode = '' // 谷歌验证码
+      this.password = '' // 交易密码
       // await this.REFRESH_USER_INFO_ACTION()
       // let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
       // this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
@@ -1431,7 +1448,7 @@ export default {
   },
   watch: {
     async activeConvertCurrencyObj () {
-      if (this.currencyRateList.BTC) {
+      if (this.currencyRateList.USDT) {
         // 汇率转换
         await this.currencyTransform()
       }
@@ -1503,11 +1520,11 @@ export default {
               width: 100%;
 
               .title-width {
-                width: 150px;
+                width: 160px;
               }
 
               .locked-position {
-                padding-left: 5px;
+                padding-left: 10px;
               }
 
               .title-position {
@@ -1516,7 +1533,7 @@ export default {
                 .icon-caret {
                   position: absolute;
                   top: 0;
-                  right: 90px;
+                  right: 100px;
                 }
               }
 
@@ -1525,7 +1542,7 @@ export default {
               }
 
               .title-width1 {
-                width: 200px;
+                width: 155px;
               }
 
               .title-width-last {
@@ -1537,7 +1554,7 @@ export default {
               }
 
               .title-width-header {
-                width: 140px;
+                width: 150px;
               }
 
               .error-info {
@@ -1591,7 +1608,7 @@ export default {
               .icon-caret-order {
                 position: absolute;
                 top: 0;
-                right: 77px;
+                right: 90px;
               }
 
               > .table-tr {
@@ -1934,12 +1951,12 @@ export default {
       }
 
       .el-dialog__body {
-        padding: 25px 27px 0;
+        padding: 15px 27px 0;
         line-height: 25px;
       }
 
       .el-form-item {
-        height: 85px;
+        height: 75px;
         margin-bottom: 0;
       }
 

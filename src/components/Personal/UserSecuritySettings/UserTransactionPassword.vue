@@ -51,6 +51,8 @@
                 v-model="setPassword.nickname"
                 @keydown="setErrorMsg(0,'')"
                 @blur="checkoutInputFormat(0, setPassword.nickname)"
+                @input="setPassword.nickname=setPassword.nickname.replace(/\s+/g,'')"
+                @keyup="setPassword.nickname=setPassword.nickname.replace(/\s+/g,'')"
                 maxlength="10"
               />
               <!--错误提示-->
@@ -108,6 +110,10 @@
             v-else
             label-width="120px"
           >
+            <header class="header-title">
+              <!--*为了您的资金安全,重置交易密码后24小时内将不可提币 -->
+              *{{ $t('M.user_transaction_info') }}
+            </header>
             <!--交易密码-->
             <el-form-item
               :label="$t('M.comm_password') + '：'"
@@ -664,8 +670,13 @@ export default {
 
         > .transaction-content-from {
           width: 500px;
-          padding-top: 30px;
           margin-left: 55px;
+
+          .header-title {
+            height: 32px;
+            margin-bottom: 30px;
+            line-height: 32px;
+          }
 
           .send-code-btn {
             width: 90px;
@@ -761,6 +772,10 @@ export default {
           }
 
           > .transaction-content-from {
+            .header-title {
+              color: #3e79d6;
+            }
+
             .send-code-btn {
               color: #fff;
               background-color: #338ff5;
@@ -831,7 +846,7 @@ export default {
         background: rgba(255, 255, 255, 1);
         box-shadow: 0 0 4px rgba(235, 240, 248, 1);
 
-        > .login-password-header {
+        > .transaction-password-header {
           border-bottom: 1px solid rgba(57, 66, 77, .1);
 
           > .header-content-left {
@@ -850,6 +865,10 @@ export default {
           }
 
           > .transaction-content-from {
+            .header-title {
+              color: #3e79d6;
+            }
+
             .send-code-btn {
               color: #fff;
               background-color: #338ff5;

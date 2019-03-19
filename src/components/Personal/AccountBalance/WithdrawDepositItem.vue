@@ -62,8 +62,8 @@
             type="text"
             class="flex-input border-radius2 padding-l15 box-sizing"
             ref="feeInputRef"
-            @keyup="changeInputValue('feeInputRef', index, pointLengthAccountCount, 'serviceType')"
-            @input="changeInputValue('feeInputRef', index, pointLengthAccountCount, 'serviceType')"
+            @keyup="changeInputValue('feeInputRef', index, pointLengthAccountCount, 'serviceType', coinId, total)"
+            @input="changeInputValue('feeInputRef', index, pointLengthAccountCount, 'serviceType', coinId, total)"
           >
           <span class="service-charge display-inline-block text-align-r">
             {{feeRangeOfWithdraw.minFees}}
