@@ -13,6 +13,7 @@
       :sliderinit="sliderinit"
       class="inner-box"
       @slide='slide'
+      @tap="onTap"
     >
     </Slider>
   </div>
@@ -42,9 +43,9 @@ export default {
         tracking: false,
         thresholdDistance: 100, // 滑动距离阈值判定
         thresholdTime: 300, // 滑动时间阈值判定
-        loop: true, // 无限循环
+        loop: false, // 无限循环
         autoplay: 3000, // 自动播放:时间[ms]
-        infinite: 8
+        infinite: 0
       },
       sliderListAjax: []
     }
@@ -53,6 +54,10 @@ export default {
   },
   mounted () {
     // console.log(this.$refs)
+    // console.log($('.slider-pagination-bullet'))
+    $('.slider-pagination-bullet').on('click', (e) => {
+      console.log(e)
+    })
   },
   activated () {},
   update () {},
@@ -72,9 +77,16 @@ export default {
       this.sliderListAjax = getNestedData(data, 'data') || []
       let sliderList = []
       this.pages = sliderList
+      // console.log(this.pages)
+      this.sliderinit.loop = this.sliderListAjax.length > 5 ? true : false
+      this.sliderListAjax.length > 5 ? this.$refs.slider.$emit('autoplayStart', 1000) : this.$refs.slider.$emit('autoplayStop')
       this.renderSlider()
     },
+    onTap (data) {
+      console.log(data)
+    },
     slide (data) {
+      console.log(data)
       let bigUrl = getNestedData(this.sliderListAjax[getNestedData(data, 'currentPage') || 0], 'bigUrl')
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
     },

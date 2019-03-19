@@ -33,9 +33,9 @@ const dev210Config = {
 
 // eslint-disable-next-line
 const prodConfig = {
-  apiCommonUrl: 'https://s.fubt.co/', // 全局接口 commonURL
-  socketUrl: 'wss://market.fubt.co/market', // 行情 socket
-  loginSocketUrl: 'wss://s.fubt.co/qrcodeLogin/' // 扫码登录 socket
+  apiCommonUrl: 'http://api.coin67.cn/', // 全局接口 commonURL
+  socketUrl: 'ws://market.coin67.cn/', // 行情 socket
+  loginSocketUrl: 'ws://api.coin67.cn/qrcodeLogin/' // 扫码登录 socket
 }
 switch (process.env.NODE_ENV) {
   case 'development':

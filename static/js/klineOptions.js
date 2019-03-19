@@ -49,14 +49,21 @@ export const disabledFeatures = [
   // 'context_menus',
   'go_to_date',
   'compare_symbol',
-  'border_around_the_chart',
   'timezone_menu',
   'volume_force_overlay', // 成交量上移
   'move_logo_to_main_pane', //
   'timeframes_toolbar', // 底部栏时间
   'header_undo_redo',
   'header_chart_type',
-  'header_screenshot'
+  'header_screenshot',
+  'left_toolbar',
+  'header_settings',
+  'header_indicators',
+  'header_saveload',
+  'header_resolutions',
+  'legend_context_menu',
+  'show_hide_button_in_legend',
+  'snapshot_trading_drawings'
   // 'header_settings'
   // 'widget_logo',
 ]
