@@ -13,7 +13,6 @@
       :sliderinit="sliderinit"
       class="inner-box"
       @slide='slide'
-      @tap="onTap"
     >
     </Slider>
   </div>
@@ -53,11 +52,6 @@ export default {
   async created () {
   },
   mounted () {
-    // console.log(this.$refs)
-    console.log($('.slider-pagination-bullet'))
-    // $('.slider-pagination-bullet').on('click', (e) => {
-    //   console.log(e)
-    // })
   },
   activated () {},
   update () {},
@@ -77,23 +71,17 @@ export default {
       this.sliderListAjax = getNestedData(data, 'data') || []
       let sliderList = []
       this.pages = sliderList
-      // console.log(this.pages)
       this.sliderinit.loop = this.sliderListAjax.length > 5 ? true : false
+      this.sliderinit.infinite = this.sliderListAjax.length > 5 ? 4 : 0
       this.sliderListAjax.length > 5 ? this.$refs.slider.$emit('autoplayStart', 1000) : this.$refs.slider.$emit('autoplayStop')
       this.renderSlider()
-      console.log(document.querySelectorAll('.slider-pagination-bullet'))
-    },
-    onTap (data) {
-      console.log(data)
     },
     slide (data) {
-      console.log(data)
       let bigUrl = getNestedData(this.sliderListAjax[getNestedData(data, 'currentPage') || 0], 'bigUrl')
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
     },
     renderSlider () {
       let bigUrl = getNestedData(this.sliderListAjax, '[0].bigUrl')
-      console.log(bigUrl, this.sliderListAjax)
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
       let sliderList = []
       this.sliderListAjax.forEach((item) => {
@@ -117,7 +105,6 @@ export default {
               }
             },
             mounted () {
-              // console.log(that)
               $('.slider-pagination-bullet').on('click', (e) => {
                 setTimeout(() => {
                   let sliderPaginationList = $('.slider-pagination-bullet')
@@ -131,11 +118,6 @@ export default {
                     }
                   }
                 }, 100)
-
-                // sliderPaginationList.forEach((sliderPaginationItem, index) => {
-                //   console.log(sliderPaginationItem)
-                //   // if(sliderPaginationItem.classLIst)
-                // })
               })
             },
             methods: {
@@ -144,14 +126,10 @@ export default {
                 'CHANGE_BANNER_BACKGROUND'
               ]),
               mouseOver (e) {
-                const URL = getNestedData(e, 'target.attributes.background.value')
                 this.CHANGE_BANNER_ACTIVE(true)
-                console.log(URL)
-                // this.CHANGE_BANNER_BACKGROUND(URL)
               },
               mouseLeave () {
                 this.CHANGE_BANNER_ACTIVE(false)
-                // this.CHANGE_BANNER_BACKGROUND(this.bannerDefaultBackground)
               }
             },
             computed: {
