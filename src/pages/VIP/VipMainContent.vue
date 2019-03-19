@@ -64,23 +64,21 @@
                   {{ $t('M.user_vip_immediately_opened') }}
                 </span>
               </button>
-              <el-tooltip
-                class="item"
-                effect="dark"
-                :content="`${vipMaxAge} 到期`"
-                placement="bottom-end"
+              <span
+                class="click-btn cursor-pointer"
+                :title="`${vipMaxAge} 到期`"
                 v-else-if="activeStatus==item.id"
               >
-              <button
-                class="click-btn cursor-pointer"
-                @click.prevent="openOrRenewVIP(`${item.id}`, 'renew')"
-              >
-                <!--立即续费-->
-                <span>
-                  {{ $t('M.user_vip_text7') }}
-                </span>
-              </button>
-              </el-tooltip>
+                <button
+                  class="click-btn click-color cursor-pointer"
+                  @click.prevent="openOrRenewVIP(`${item.id}`, 'renew')"
+                >
+                  <!--立即续费-->
+                  <span>
+                    {{ $t('M.user_vip_text7') }}
+                  </span>
+                </button>
+              </span>
               <button
                 class="click-btn cursor-pointer"
                 @click.prevent="openOrRenewVIP(`${item.id}`, 'update')"
@@ -469,9 +467,11 @@ export default {
               text-align: center;
 
               > .click-btn {
+                display: inline-block;
                 width: 180px;
                 height: 40px;
                 margin-top: 35px;
+                line-height: 40px;
                 transform: skew(-15deg);
               }
             }
@@ -765,6 +765,10 @@ export default {
                     > .click-btn {
                       color: #fff;
                       background: #338ff5;
+
+                      > .click-color {
+                        color: #fff;
+                      }
                     }
                   }
                 }
@@ -791,6 +795,10 @@ export default {
                 > .click-btn {
                   color: #fff;
                   background: linear-gradient(0deg, rgba(26, 29, 47, 1) 0%, rgba(45, 54, 81, 1) 100%);
+
+                  > .click-color {
+                    color: #fff;
+                  }
                 }
               }
             }
@@ -972,6 +980,10 @@ export default {
                     > .click-btn {
                       color: #fff;
                       background: #338ff5;
+
+                      > .click-color {
+                        color: #fff;
+                      }
                     }
                   }
                 }
@@ -998,6 +1010,10 @@ export default {
                 > .click-btn {
                   color: #fff;
                   background: #99b4d1;
+
+                  > .click-color {
+                    color: #fff;
+                  }
                 }
               }
             }

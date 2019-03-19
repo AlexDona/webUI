@@ -688,6 +688,7 @@ export default {
       this.payPassword = ''
       this.count = ''
       this.price = ''
+      this.sumState = false
     },
     /**
      * 取消push

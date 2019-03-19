@@ -206,7 +206,7 @@
               width="180"
             >
               <template slot-scope = "s">
-                <div>{{ timeFormatting(s.row.regTime) }}</div>
+                <div>{{ s.row.regTime }}</div>
               </template>
             </el-table-column>
             <!-- 姓名 -->
@@ -218,18 +218,6 @@
                 <div>
                   {{ s.row.realname }}
                 </div>
-                <!--&lt;!&ndash;姓名为两位时 隐藏最后一位&ndash;&gt;-->
-                <!--<div v-else-if="s.row.realname.length === 2 ">-->
-                  <!--{{ s.row.realname.substring(0,1)}}*-->
-                <!--</div>-->
-                <!--&lt;!&ndash;姓名为三位时 隐藏最后一位&ndash;&gt;-->
-                <!--<div v-else-if="s.row.realname.length === 3">-->
-                  <!--{{ s.row.realname.substring(0,2)}}*-->
-                <!--</div>-->
-                <!--&lt;!&ndash;姓名为四位时或者大于四 隐藏最后两位&ndash;&gt;-->
-                <!--<div v-else-if="s.row.realname.length === 4 || s.row.realname.length > 4">-->
-                  <!--{{ s.row.realname.substring(0,2)}}**-->
-                <!--</div>-->
               </template>
             </el-table-column>
             <!-- 高级认证 -->
