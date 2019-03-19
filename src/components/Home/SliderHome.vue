@@ -54,10 +54,10 @@ export default {
   },
   mounted () {
     // console.log(this.$refs)
-    // console.log($('.slider-pagination-bullet'))
-    $('.slider-pagination-bullet').on('click', (e) => {
-      console.log(e)
-    })
+    console.log($('.slider-pagination-bullet'))
+    // $('.slider-pagination-bullet').on('click', (e) => {
+    //   console.log(e)
+    // })
   },
   activated () {},
   update () {},
@@ -81,6 +81,7 @@ export default {
       this.sliderinit.loop = this.sliderListAjax.length > 5 ? true : false
       this.sliderListAjax.length > 5 ? this.$refs.slider.$emit('autoplayStart', 1000) : this.$refs.slider.$emit('autoplayStop')
       this.renderSlider()
+      console.log(document.querySelectorAll('.slider-pagination-bullet'))
     },
     onTap (data) {
       console.log(data)
@@ -117,6 +118,25 @@ export default {
             },
             mounted () {
               // console.log(that)
+              $('.slider-pagination-bullet').on('click', (e) => {
+                setTimeout(() => {
+                  let sliderPaginationList = $('.slider-pagination-bullet')
+                  for (let i = 0; i < sliderPaginationList.length; i++) {
+                    let sliderPaginationItem = sliderPaginationList[i]
+                    let arr = [...sliderPaginationItem.classList]
+                    if (arr.indexOf('slider-pagination-bullet-active') != -1) {
+                      let bigUrl = getNestedData(that.sliderListAjax[i], 'bigUrl')
+                      that.CHANGE_BANNER_BACKGROUND(bigUrl)
+                      break
+                    }
+                  }
+                }, 100)
+
+                // sliderPaginationList.forEach((sliderPaginationItem, index) => {
+                //   console.log(sliderPaginationItem)
+                //   // if(sliderPaginationItem.classLIst)
+                // })
+              })
             },
             methods: {
               ...mapMutations([
