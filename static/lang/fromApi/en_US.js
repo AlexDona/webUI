@@ -430,5 +430,7 @@ export const fromApi = {
   'user_pay_disable_state': 'The transaction password error of this account has been exceeded. Please try again after 2 hours',
   'user_pay_is_error': 'Transaction password error, you can also enter {} times, exceeding the limit will be frozen for 2 hours',
   'user_pay_password_not_setting': 'Please set the transaction password before the deposit investment',
-  'user_trade_password_incorrect': 'Account transaction password is incorrect'
+  'user_trade_password_incorrect': 'Account transaction password is incorrect',
+  'otc_failure_0092': 'The current order receipt has not timed out and the buyer cannot appeal',
+  'otc_picture_no_null': 'Please upload at least one image'
 }

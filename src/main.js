@@ -41,7 +41,8 @@ import {
   Progress,
   Loading,
   MessageBox,
-  Message
+  Message,
+  Upload
 } from 'element-ui'
 import 'animate.css'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -87,6 +88,7 @@ Vue.use(Pagination)
   .use(Icon)
   .use(Progress)
   .use(Loading.directive)
+  .use(Upload)
 
 Vue.use(Vuex)
 Vue.use(VueI18n)
