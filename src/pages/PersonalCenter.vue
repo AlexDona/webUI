@@ -365,7 +365,7 @@ export default {
 
     > .personal-center-main {
       width: 1150px;
-      min-height: 1350px;
+      min-height: 715px;
       margin: 60px auto;
 
       .dialog-warning {

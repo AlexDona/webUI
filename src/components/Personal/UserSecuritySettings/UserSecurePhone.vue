@@ -1027,6 +1027,10 @@ export default {
           border: none;
           background-color: #338ff5;
         }
+
+        .el-form-item__label {
+          color: rgba(255, 255, 255, .7);
+        }
       }
     }
 
@@ -1102,6 +1106,10 @@ export default {
         .el-input-group__append {
           border: none;
           background-color: #338ff5;
+        }
+
+        .el-form-item__label {
+          color: #7d90ac;
         }
       }
     }

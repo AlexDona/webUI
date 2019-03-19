@@ -104,6 +104,7 @@
               type="datetime"
               :placeholder="$t('M.comm_select') + $t('M.comm_data')"
               @change="startDate"
+              :picker-options="pickerOptionsTime"
             >
             </el-date-picker>
             <span class="middle-line"> - </span>
@@ -114,6 +115,7 @@
               type="datetime"
               :placeholder="$t('M.comm_select') + $t('M.comm_data')"
               @change="endDate"
+              :picker-options="pickerOptionsTime"
             >
             </el-date-picker>
           </div>
@@ -486,6 +488,7 @@ export default {
       activeMake: 'make-detail', // 成交明细
       startTime: '', // 开始时间
       endTime: '', // 结束时间
+      pickerOptionsTime: {}, // 时间限制
       currentEntrustList: [], // 我的委托订单
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
@@ -512,6 +515,7 @@ export default {
   async created () {
     await this.getEntrustSelectBox()
     await this.commissionList('current-entrust')
+    this.endDate()
   },
   mounted () {},
   activated () {},
@@ -655,6 +659,11 @@ export default {
           return false
         }
       }
+      this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
+        disabledDate: (time) => {
+          return time.getTime() > Date.now() + (1 * 24 * 3600 * 1000) - 8.64e7
+        }
+      })
     },
     endDate () {
       if (this.startTime) {
@@ -674,6 +683,11 @@ export default {
           return false
         }
       }
+      this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
+        disabledDate: (time) => {
+          return time.getTime() > Date.now() + (1 * 24 * 3600 * 1000) - 8.64e7
+        }
+      })
     },
     // 数据清空
     emptyData () {
@@ -701,6 +715,12 @@ export default {
     })
   },
   watch: {
+    endDate () {
+      this.endDate()
+    },
+    startDate () {
+      this.startDate()
+    },
     startTime (newVal) {
       if (!newVal) {
         this.startTime = ''
