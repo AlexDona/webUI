@@ -511,9 +511,9 @@ export default {
     // 自选区搜索
     searchFilterCollectArea () {
       let newCollectArea = _.cloneDeep(this.collectArea)
-      console.log(newCollectArea)
+      // console.log(newCollectArea)
       _.forEach(newCollectArea.plateList, plateItem => {
-        console.log(plateItem)
+        // console.log(plateItem)
         plateItem.content = []
       })
       this.setSearchFilterList(0, this.collectArea.plateList, [], newCollectArea)

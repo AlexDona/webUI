@@ -7,7 +7,9 @@ yarn-error.log*
 /test/unit/coverage/
 /test/e2e/reports/
 selenium-debug.log
-
+/vendor-manifest.json
+/bundle-config.json
+/static/dll.vendor*
 # Editor directories and files
 .idea
 .vscode
