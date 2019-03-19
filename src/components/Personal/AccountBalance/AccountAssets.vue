@@ -198,7 +198,7 @@
                       style="padding-right: 10px;"
                     >
                       <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                        {{ $scientificToNumber($keep8Num(assetItem.cnyValue * BTC2CNYRate)) }} USDT
+                        {{ $scientificToNumber($keep8Num(assetItem.cnyValue * BTC2CNYRate)) }} USD
                       </div>
                       <div v-else>
                         {{ $scientificToNumber($keep8Num(assetItem.cnyValue)) }} CNY
@@ -1333,6 +1333,7 @@ export default {
     jumpToOtherTab ({target, coinId}) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
       // 指定要跳转到的coinId
+      console.log(target, coinId, this.activeCoinId)
       if (coinId) {
         this.SET_NEW_WITHDRAW_ADDRESS(coinId)
       }
