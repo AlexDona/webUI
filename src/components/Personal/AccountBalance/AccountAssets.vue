@@ -201,7 +201,7 @@
                         {{ $scientificToNumber($keep8Num(assetItem.cnyValue * BTC2CNYRate)) }} USD
                       </div>
                       <div v-else>
-                        {{ $scientificToNumber($keep8Num(assetItem.cnyValue)) }} CNY
+                        {{ $scientificToNumber($keep2Num(assetItem.cnyValue)) }} CNY
                       </div>
                     </div>
                     <div
@@ -366,7 +366,6 @@
                   <span
                     v-show="!securityCenter.isPhoneEnable"
                   >
-
                   </span>
                   <!--邮箱已认证-->
                   <!--邮箱验证-->
@@ -419,6 +418,7 @@
                       autocomplete= "new-password"
                       class="content-input input-google padding-l15 box-sizing"
                       v-model="password"
+                      @focus="emptyStatus"
                     >
                   </el-form-item>
                 </el-form>
@@ -1291,6 +1291,8 @@ export default {
         // 请输入验证码
         this.errorMessage = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
         return false
+      } else if (this.password == '') {
+        this.errorMessage = this.$t('M.comm_please_enter') + this.$t('M.comm_password')
       } else {
         this.errorMessage = ''
         this.stateSubmitAssets()
