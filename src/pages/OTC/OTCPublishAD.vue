@@ -308,24 +308,14 @@
               <div>
                 <!-- 同时处理最大订单数(0=不限制) -->
                 {{$t('M.otc_publishAD_maxOrder')}}（0={{$t('M.otc_publishAD_noLimit')}}）
-                <span class="question-mark cursor-pointer">
-                  <el-tooltip
-                    class="item"
-                    effect="dark"
-                    placement="bottom-start"
-                  >
-                    <div slot="content">
-                      <!-- 设置该限制，可以避免大量订单同时涌进，导致处理不过来的情况，比如当您设定为 2 时，最多只会有 2 笔订单可同时向您下单，
-                      <br/>
-                      其余卖家会看到「广告主处理订单已达上限，请稍候再试」，待您处理完后才允许下一笔订单进入 -->
-                      {{$t('M.otc_publishAD_setDiscript')}}<br/>
-                      {{$t('M.otc_publishAD_setDiscriptTwo')}}
-                    </div>
-                    <IconFontCommon
-                      class="font-size12"
-                      iconName="icon-wenhao"
-                    />
-                  </el-tooltip>
+                <span
+                  class="question-mark cursor-pointer"
+                  :title="$t('M.otc_publishAD_setDiscript') + $t('M.otc_publishAD_setDiscriptTwo')"
+                >
+                  <IconFontCommon
+                    class="font-size12"
+                    iconName="icon-wenhao"
+                  />
                 </span>
               </div>
               <div>

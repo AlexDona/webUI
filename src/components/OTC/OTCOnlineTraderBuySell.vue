@@ -567,10 +567,10 @@ export default {
       // 计算金额
       // 买
       if (this.onlineTraderStatus === 'onlineBuy') {
+        this.$refs.buyPrice.value = this.$refs.buyCount.value * this.price
+        // 修复截取小数点后几位
+        this.$refs.buyPrice.value = cutOutPointLength(this.$refs.buyPrice.value, 2)
         if (this.$refs.buyCount.value) {
-          this.$refs.buyPrice.value = this.$refs.buyCount.value * this.price
-          // 修复截取小数点后几位
-          this.$refs.buyPrice.value = cutOutPointLength(this.$refs.buyPrice.value, 2)
           // 手续费
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
           // 修复截取小数点后几位
@@ -601,14 +601,15 @@ export default {
         } else {
           this.numberTips = ''
           this.errorWarningBorder = false
+          this.$refs.buyPrice.value = ''
         }
       }
       // 卖
       if (this.onlineTraderStatus === 'onlineSell') {
+        this.$refs.sellPrice.value = this.$refs.sellCount.value * this.price
+        // 修复截取小数点后几位
+        this.$refs.sellPrice.value = cutOutPointLength(this.$refs.sellPrice.value, 2)
         if (this.$refs.sellCount.value) {
-          this.$refs.sellPrice.value = this.$refs.sellCount.value * this.price
-          // 修复截取小数点后几位
-          this.$refs.sellPrice.value = cutOutPointLength(this.$refs.sellPrice.value, 2)
           // 手续费
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
           // 修复截取小数点后几位
@@ -635,6 +636,7 @@ export default {
         } else {
           this.numberTips = ''
           this.errorWarningBorder = false
+          this.$refs.sellPrice.value = ''
         }
       }
     },
@@ -647,10 +649,10 @@ export default {
       formatNumberInput(target, pointLength)
       // 计算卖出量/买入量
       if (this.onlineTraderStatus === 'onlineBuy') {
+        this.$refs.buyCount.value = this.$refs.buyPrice.value / this.price
+        // 修复截取小数点后几位
+        this.$refs.buyCount.value = cutOutPointLength(this.$refs.buyCount.value, this.pointLength)
         if (this.$refs.buyPrice.value) {
-          this.$refs.buyCount.value = this.$refs.buyPrice.value / this.price
-          // 修复截取小数点后几位
-          this.$refs.buyCount.value = cutOutPointLength(this.$refs.buyCount.value, this.pointLength)
           // 手续费
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
           // 修复截取小数点后几位
@@ -672,13 +674,14 @@ export default {
         } else {
           this.moneyTips = ''
           this.errorWarningBorder = false
+          this.$refs.buyCount.value = ''
         }
       }
       if (this.onlineTraderStatus === 'onlineSell') {
+        this.$refs.sellCount.value = this.$refs.sellPrice.value / this.price
+        // 修复截取小数点后几位
+        this.$refs.sellCount.value = cutOutPointLength(this.$refs.sellCount.value, this.pointLength)
         if (this.$refs.sellPrice.value) {
-          this.$refs.sellCount.value = this.$refs.sellPrice.value / this.price
-          // 修复截取小数点后几位
-          this.$refs.sellCount.value = cutOutPointLength(this.$refs.sellCount.value, this.pointLength)
           // 手续费
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
           // 修复截取小数点后几位
@@ -700,6 +703,7 @@ export default {
         } else {
           this.moneyTips = ''
           this.errorWarningBorder = false
+          this.$refs.sellCount.value = ''
         }
       }
     },

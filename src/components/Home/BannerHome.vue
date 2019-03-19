@@ -1,6 +1,13 @@
 <template>
-  <div class="banner-box home">
-    <img :src="bannerBackgroundImage" />
+  <div
+    class="banner-box home"
+  >
+    <div
+      class="img"
+      :style="{
+        background: `url(${bannerBackgroundImage}) center center/cover no-repeat`
+      }"
+    ></div>
     <!--<img src="../../assets/banner示例.png" />-->
     <SliderHome class="slider-content"/>
   </div>
@@ -55,15 +62,16 @@ export default {
     background-size: 100% 100%;
     transition: all 1s;
 
-    > img {
+    > .img {
       position: absolute;
       top: 0;
       left: 50%;
+      width: 100%;
       transform: translateX(-50%);
     }
 
     /deep/ {
-      @media screen and (min-width: 1440px) and (max-width: 2560px) {
+      @media screen and (min-width: 1440px) {
         .slider-content {
           margin-top: 540px;
         }
@@ -76,20 +84,20 @@ export default {
       }
     }
 
-    @media screen and (min-width: 1440px) and (max-width: 2560px) {
-      > img {
+    @media screen and (min-width: 1440px) {
+      > .img {
         height: 540px;
       }
     }
 
     @media screen and(max-width: 1440px) {
-      > img {
+      > .img {
         height: 400px;
       }
     }
   }
 
-  @media screen and (min-width: 1440px) and (max-width: 2560px) {
+  @media screen and (min-width: 1440px) {
     .banner-box {
       height: 720px;
     }

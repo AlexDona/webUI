@@ -107,6 +107,7 @@ export const personal = {
   // 'user_senior_hint2': 'Click refresh',
   'user_senior_hint3': 'Please open it in your browser and upgrade your browser to the latest version, not certified users.',
   'user_senior_hint4': 'please click here',
+  'user_senior_hint5': 'Upload photo size cannot exceed 10M',
   // 收款账户
   'user_account_credited': 'Accounts receivable',
   'user_account_warm_prompt': 'Tips',
@@ -215,6 +216,7 @@ export const personal = {
   'user_transaction_repetition': 'repeat',
   'user_transaction_reset': 'Reset',
   'user_transaction_text': '6-bit pure number',
+  'user_transaction_info': 'For the security of your funds, you cannot withdraw  within 24 hours after resetting the transaction password.',
   // 登录密码login password
   'user_security_login_raw': 'Old ',
   'user_security_login_new': 'New',
