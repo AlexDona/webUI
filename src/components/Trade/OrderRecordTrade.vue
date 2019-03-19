@@ -164,11 +164,30 @@ export default {
             > .cell {
               text-align: center;
             }
+
+            @media screen and (max-width: 1366px) {
+              > .cell {
+                padding: 0;
+              }
+            }
+          }
+
+          &:nth-of-type(1) {
+            .cell {
+              padding: 0 0 0 10%;
+            }
           }
 
           &:nth-of-type(3) {
             .cell {
+              padding: 0 10% 0 0;
               text-align: right;
+            }
+
+            @media screen and (max-width: 1366px) {
+              .cell {
+                padding: 0 5% 0 0;
+              }
             }
           }
         }
@@ -176,18 +195,6 @@ export default {
         .cell {
           height: 22px;
           white-space: nowrap;
-        }
-
-        @media screen and (max-width: 1920px) {
-          .cell {
-            padding: 0 6%;
-          }
-        }
-
-        @media screen and (min-width: 1920px) {
-          .cell {
-            padding: 0 14%;
-          }
         }
       }
 
@@ -209,7 +216,13 @@ export default {
         td {
           &:nth-of-type(2) {
             > .cell {
-              padding: 0 35% 0 0;
+              padding: 0 15% 0 0;
+            }
+          }
+
+          &:nth-of-type(1) {
+            > .cell {
+              padding: 0 0 0 10%;
             }
           }
         }

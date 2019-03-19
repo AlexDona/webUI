@@ -37,14 +37,14 @@
           <ul class="newestPrice">
             <li>
               <p class="newestPriceColor">
-                {{newestPrice}}<span>USDT</span>
+                {{newestPrice}}<span>{{convertCurrency}}</span>
               </p>
               <!-- 最新价钱 -->
               <span>{{$t('M.finance_newestPrice')}}</span>
             </li>
             <li>
               <p class="green">
-                {{dayAmountIncrease}}<span>USDT</span>
+                {{dayAmountIncrease}}<span>{{convertCurrency}}</span>
               </p>
               <!-- 当日涨幅 -->
               <span>{{$t('M.finance_date')}}{{$t('M.finance_increase')}}</span>
@@ -298,7 +298,7 @@
                   {{$t('M.finance_invest_estimatedValue')}}
                   <p class="green">
                     <span>{{isLogin ? InvestmentValue : '--'}}</span>
-                    USDT
+                    {{convertCurrency}}
                   </p>
                 </div>
                 <!-- 历史收益 -->
@@ -306,7 +306,7 @@
                   {{$t('M.finance_history')}}{{$t('M.finance_earnings')}}
                   <p class="red2">
                     <span>{{isLogin ? getMoneyValue : '--'}}</span>
-                    USDT
+                    {{convertCurrency}}
                   </p>
                 </div>
             </div>
@@ -678,14 +678,17 @@ export default {
       // 是否显示存币说明框
       isShowInvestExplain: false,
       // 存币说明富文本
-      argumentContent: ''
+      argumentContent: '',
+      // 折算货币
+      convertCurrency: localStorage.convertCurrency
     }
   },
   created () {
     // 页面创建完成请求币种接口
     this.getFinancialManagementList()
   },
-  mounted () {},
+  mounted () {
+  },
   activated () {},
   update () {},
   beforeRouteUpdate () {},
@@ -902,7 +905,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
         coinId: this.selectedCoinId,
-        coinName: this.selectedCoinName
+        coinName: this.selectedCoinName,
+        currency: this.convertCurrency
       })
       this.fullscreenLoading = false
       // 返回数据正确的逻辑
@@ -910,11 +914,6 @@ export default {
       let getData = getNestedData(data, 'data')
       // 设置可用币种数组
       this.traderCoinList = getNestedData(getData, 'idNameDtoList')
-      // this.traderCoinList.forEach(item => {
-      //   if (getData.idNameDtoList.id == item.id) {
-      //     this.selectedCoinId = item.id
-      //   }
-      // })
       // 设置每次返回回来的币种id
       this.selectedCoinId = getNestedData(getData, 'tickerPriceResult.coinId')
       // 设置每次返回地币种名称
@@ -1025,13 +1024,20 @@ export default {
       isLockedPayPassword: state => state.common.isLockedPayPassword,
       status: state => state.finance.status,
       clientWidth: state => state.common.clientWidth,
-      loginStep1Info: state => state.user.loginStep1Info
+      loginStep1Info: state => state.user.loginStep1Info,
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj // 目标货币
     }),
     screenWidth () {
       return this.clientWidth
     }
   },
   watch: {
+    activeConvertCurrencyObj (newVal, oldVal) {
+      if (getNestedData(oldVal, 'shortName')) {
+        this.convertCurrency = newVal.shortName
+        this.getFinancialManagementList()
+      }
+    },
     language (newVal) {
       this.getFinancialManagementList()
     }

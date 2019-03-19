@@ -98,9 +98,9 @@
                 :editable="false"
                 :clearable="false"
                 range-separator="~"
+                @change="changeTime"
                 :start-placeholder="$t('M.otc_no1')"
                 :end-placeholder="$t('M.otc_no2')"
-                value-format = "yyyy-MM-dd HH:mm:ss"
                 :default-time="['00:00:00', '23:59:59']"
                 :picker-options="pickerOptionsTime"
               >
@@ -118,13 +118,12 @@
                 v-model="startTime"
                 type="datetimerange"
                 align="right"
-                range-separator="~"
-                @change="changeTime"
                 :editable="false"
                 :clearable="false"
+                range-separator="~"
+                @change="changeTime"
                 :start-placeholder="$t('M.otc_no1')"
                 :end-placeholder="$t('M.otc_no2')"
-                value-format = "yyyy-MM-dd HH:mm:ss"
                 :default-time="['00:00:00', '23:59:59']"
                 :picker-options="pickerOptionsTime"
               >
@@ -182,14 +181,13 @@
                   <template slot-scope = "s">
                     <div
                       :title="s.row.withdrawAddress"
-                      class="white-space"
+                      class="white-space cursor-pointer"
                       v-clipboard:copy="s.row.withdrawAddress"
                       v-clipboard:success="onCopy"
                       v-clipboard:error="onError"
                     >
                       {{s.row.withdrawAddress}}
                     </div>
-
                   </template>
                 </el-table-column>
                 <!--数量-->
@@ -228,7 +226,6 @@
               </el-table>
             </div>
           </div>
-
         </el-tab-pane>
         <!--综合记录-->
         <el-tab-pane
@@ -369,6 +366,7 @@ export default {
       seconds: new Date().getSeconds(),
       pickerOptionsTime: {},
       chargeRecordList: [], // 充提记录列表
+      addressRecordList: [], // 充提记录列表
       activeName: 'current-entrust', // 充提记录
       recordPageNumber: 1, // 充提记录页码
       recordTotalPageNumber: 1, // 充提记录总页数
@@ -396,6 +394,7 @@ export default {
       ], // 默认类型
       // 提现记录显示提币地址
       withdrawSite: true,
+      addressShowId: true, // 提币地址显示状态
       // 其他记录
       otherRecordsList: [],
       otherRecordPageNumbers: 1, // 其他记录页码
@@ -531,6 +530,7 @@ export default {
           let detailData = getNestedData(data, 'data')
           // 充提记录
           this.chargeRecordList = getNestedData(detailData, 'list') || []
+          this.addressRecordList = getNestedData(detailData, 'list') || []
           this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
           break
         case 'other-records':
@@ -571,18 +571,28 @@ export default {
           break
       }
     },
+    // 显示提币地址
+    showStatusCode (index, val) {
+      if (val == 1) {
+        // 显示提币地址
+        this.addressShowId = true
+      } else {
+        // 隐藏提币地址
+        this.addressShowId = false
+      }
+    },
+    // 时间格式化
+    timeFormatting (date) {
+      return timeFilter(date, 'normal')
+    },
     // 结束时间赋值
     changeTime () {
       this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
         disabledDate: (time) => {
-          // let curDate = (new Date()).getTime()
-          // let three = 92 * 24 * 3600 * 1000
-          // let threeMonths = curDate - three
-          // return time.getTime() > Date.now() + (1 * 24 * 60 * 60 * 1000) || time.getTime() < threeMonths
           let curDate = (new Date()).getTime()
           let three = 90 * 24 * 3600 * 1000
           let threeMonths = curDate - three
-          return time.getTime() > Date.now() || time.getTime() < threeMonths
+          return time.getTime() > Date.now() + ((1 * 24 * 3600 * 1000) - (this.hours + this.minutes + this.seconds)) || time.getTime() < threeMonths
         }
       })
     }
@@ -617,6 +627,7 @@ export default {
         new Date()
       ]
       this.changeTime()
+      this.getChargeMentionList()
       if (newVal === 'billing-details') {
         this.getChargeMentionList()
         this.inquireCurrencyList()

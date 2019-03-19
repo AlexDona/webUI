@@ -177,31 +177,37 @@
             {{ $t('M.user_assets_current_total') }}
           </p>
           <p class="asset-info margin-top9">
-            <span class="info-color font-size16">
-              {{ $keep8Num(totalSumBTC) }}
-            </span>
-            <span class="info-color font-size12">
-              BTC
-            </span>
             <span
               class="info-color"
             >
-              <!--或-->
-               {{ $t('M.user_assets_or') }}
-              <span
+              <div
                 class="info-color font-size16"
                 v-if="this.totalSumBTC > 0"
               >
-               {{ $keep2Num($scientificToNumber(this.totalSumBTC) * BTC2CNYRate) }}
-              </span>
+                <span v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                  {{ $keep8Num($scientificToNumber(this.totalSumBTC * BTC2CNYRate)) }}
+                </span>
+                <span v-else>
+                  {{ $keep8Num($scientificToNumber(this.totalSumBTC)) }}
+                </span>
+                <span
+                  class="info-color font-size12"
+                  v-if="activeConvertCurrencyObj.shortName !== 'CNY'"
+                >
+                  USD
+                </span>
+                <span
+                  class="info-color font-size12"
+                  v-else
+                >
+                  CNY
+                </span>
+              </div>
               <span
                 v-else
                 class="info-color font-size16"
               >
-               0.00
-              </span>
-              <span class="info-color font-size12">
-                {{ activeConvertCurrencyObj.shortName }}
+               0.00000000 {{ activeConvertCurrencyObj.shortName }}
               </span>
             </span>
           </p>
@@ -255,13 +261,15 @@ export default {
   methods: {
     async currencyTransform () {
       const params = {
-        coinName: 'BTC',
+        coinName: 'FBT',
         shortName: this.activeConvertCurrencyObj.shortName
       }
       const data = await currencyTransform(params)
       if (!data) return false
       // 获取汇率
       this.BTC2CNYRate = getNestedData(data, 'data.coinPrice')
+      console.log(this.currencyRateList, this.activeConvertCurrencyObj, this.BTC2CNYRate, this.activeConvertCurrencyObj.shortName, (this.totalSumBTC / this.BTC2CNYRate))
+      console.log(this.totalSumBTC / this.BTC2CNYRate)
     },
     // Vip跳转
     stateOpenVip () {

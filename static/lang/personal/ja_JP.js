@@ -106,6 +106,7 @@ export const personal = {
   // 'user_senior_hint2': '更新をクリック',
   'user_senior_hint3': '電話で認証できないユーザー,',
   'user_senior_hint4': 'ここをクリックしてください。',
+  'user_senior_hint5': 'アップロード写真サイズは10Mを超えない',
   // 入金口座
   'user_account_credited': 'コレクションアカウント',
   'user_account_warm_prompt': 'ヒント',
@@ -214,6 +215,7 @@ export const personal = {
   'user_transaction_repetition': '繰り返し',
   'user_transaction_reset': 'リセット',
   'user_transaction_text': '6数字だけ',
+  'user_transaction_info': 'あなたの資金の安全のために、パスワードをリセットした後24時間以内に出金できません。',
   // ログインパスワード'
   'user_security_login_raw': 'オリジナル',
   'user_security_login_new': '新しい',

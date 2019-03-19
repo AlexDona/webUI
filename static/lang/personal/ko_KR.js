@@ -219,6 +219,7 @@ export const personal = {
   'user_transaction_repetition': '반복',
   'user_transaction_reset': '재설정',
   'user_transaction_text': '6자리 수자',
+  'user_transaction_info': '당신 의 자금 안전 을 위해 거래 암호 를 초기화하 고 24시간 내에 화폐 를 제기할 수 없습니다',
   // 登录密码
   'user_security_login_raw': '기존',
   'user_security_login_new': '새로운',
