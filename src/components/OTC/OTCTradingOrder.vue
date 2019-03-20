@@ -582,7 +582,9 @@
               <!-- 1.文本域部分 -->
               <div class="appeal-textarea">
                 <!-- 申诉原因 -->
-                <span class="appeal-reason">*{{$t('M.otc_complaint_appeal_reason')}}</span>
+                <span class="appeal-reason">
+                  <span class="star">*</span>{{$t('M.otc_complaint_appeal_reason')}}
+                </span>
                 <el-input
                   type="textarea"
                   maxlength="30"
@@ -593,7 +595,9 @@
               <!--2. 申诉图片部分-->
               <div class="appeal-picture">
                 <!--上传图片-->
-                <div class="upload-title">*{{$t('M.otc_upload_picture1')}}</div>
+                <div class="upload-title">
+                  <span class="star">*</span>{{$t('M.otc_upload_picture1')}}
+                </div>
                 <div class="upload-content">
                   <el-upload
                     :action="uploadUrl"
@@ -1548,6 +1552,10 @@ export default {
             > .appeal-button {
               flex: 1;
               padding-top: 100px;
+            }
+
+            .star {
+              color: #e8554f;
             }
           }
         }
