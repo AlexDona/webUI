@@ -1636,13 +1636,13 @@ export default {
 
     .el-textarea {
       /* width: 540px; */
-      width: 160px;
+      width: 180px;
     }
 
     .el-textarea__inner {
       height: 90px;
       resize: none;
-      font-size: 14px;
+      font-size: 12px;
     }
 
     .bank-info-picture {
@@ -1915,7 +1915,7 @@ export default {
         height: 90px;
         border: 1px solid #7587a5;
         resize: none;
-        font-size: 14px;
+        font-size: 12px;
         color: #9da5b3;
         background-color: #1e2636;
       }
@@ -2219,7 +2219,7 @@ export default {
         height: 90px;
         border: 1px solid #7587a5;
         resize: none;
-        font-size: 14px;
+        font-size: 12px;
         color: #7d90ac;
         background-color: #fff;
       }

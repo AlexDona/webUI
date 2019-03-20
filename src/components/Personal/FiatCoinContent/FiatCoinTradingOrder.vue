@@ -1711,7 +1711,8 @@ export default {
       .el-textarea__inner {
         height: 90px;
         resize: none;
-        font-size: 14px;
+        font-size: 12px;
+        color: #9da5b3;
       }
 
       /* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */
