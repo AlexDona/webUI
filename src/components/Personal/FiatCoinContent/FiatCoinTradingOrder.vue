@@ -928,7 +928,7 @@ export default {
           isJPG = true
           break
       }
-      let isLt1M = file.size / 1024 / 1024 < 1
+      let isLt1M = file.size / 1024 / 1024 < 2
       if (!isJPG) {
         this.$message({
           // message: '上传图片只能是 jpeg/jpg/png/bmp 格式!',
@@ -938,7 +938,7 @@ export default {
       }
       if (!isLt1M) {
         this.$message({
-          // message: '上传图片大小不能超过 1M!',
+          // message: '上传图片大小不能超过 2M!',
           message: this.$t('M.otc_upload_picture4'),
           type: 'error'
         })

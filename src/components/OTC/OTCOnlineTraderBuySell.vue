@@ -147,18 +147,12 @@
                       <span class="want-text">
                         {{onlineTraderStatus === 'onlineSell' ? $t('M.otc_index_sellMount') : $t('M.otc_index_buyMount')}}
                       </span>
+                      <!--可用余额-->
                       <span
-                        class="charge-money"
+                        class="charge-money font-size12"
                         v-show="onlineTraderStatus === 'onlineSell'"
                       >
-                        <el-button
-                          type="primary"
-                          size="mini"
-                          @click="chargeMoney"
-                        >
-                          <!-- 充币 -->
-                          {{$t('M.comm_charge_money')}}
-                        </el-button>
+                        {{$t('M.otc_available_balance')}}:{{$scientificToNumber(sellTotal)}}
                       </span>
                     </div>
                     <!-- input框部分 -->
@@ -456,7 +450,8 @@ export default {
       // 当前金额小数点限制位数
       moneyPointLength: 2,
       // 是否需要交易密码
-      isNeedPayPassword: true
+      isNeedPayPassword: true,
+      sellTotal: '' // 用户资产可用余额20190320增加新字段展示
     }
   },
   async created () {
@@ -492,11 +487,6 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
-    // 0.3 充币按钮跳转
-    chargeMoney () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
-      this.$goToPage('/PersonalCenter')
-    },
     // 0.4 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]
@@ -733,6 +723,7 @@ export default {
         this.minCount = getNestedData(detailsData, 'minCount') // 单笔最小限额
         this.userType = getNestedData(detailsData, 'userType') // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
         this.currencyName = getNestedData(detailsData, 'currencyName') // 当前摘单的法币币种
+        this.sellTotal = getNestedData(detailsData, 'sellTotal') // 用户资产可用余额
         this.queryUserTradeFeeAndCoinInfo()
       }
     },
@@ -1212,6 +1203,10 @@ export default {
                 > .want-text {
                   color: #3e79d6;
                 }
+
+                > .charge-money {
+                  color: #a9bed4;
+                }
               }
 
               .sell-buy-input {
@@ -1394,6 +1389,10 @@ export default {
               .want {
                 > .want-text {
                   color: #3e79d6;
+                }
+
+                > .charge-money {
+                  color: #7d90ac;
                 }
               }
 

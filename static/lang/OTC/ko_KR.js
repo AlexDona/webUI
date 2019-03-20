@@ -351,7 +351,7 @@ export const OTC = {
   'otc_upload_picture1': '이미지 업로드',
   'otc_upload_picture2': '하나 이상의 이미지를 업로드하십시오.',
   'otc_upload_picture3': '이미지 업로드는 jpeg / jpg / png / bmp 형식에서만 가능합니다!',
-  'otc_upload_picture4': '업로드 이미지 크기는 1M을 초과 할 수 없습니다!',
+  'otc_upload_picture4': '업로드 이미지 크기는 2M을 초과 할 수 없습니다!',
   'otc_upload_picture5': '이미지를 업로드하지 못했습니다. 다시 시도하십시오!',
   'otc_upload_picture6': '3 장 이상의 사진을 업로드하십시오!',
   'otc_available_balance': '사용 가능한 잔액',
