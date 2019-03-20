@@ -579,13 +579,13 @@ export default {
           }
 
           .form-button {
-            margin: 10px 0 0 91px;
+            margin: 10px 0 0 136px;
           }
 
           /deep/ {
             .el-form .el-form-item {
               .el-form-item__label {
-                width: 70px !important;
+                width: 115px !important;
               }
             }
           }

@@ -209,7 +209,12 @@
                       style="padding-right: 10px;"
                       v-else
                     >
-                      0.00000000 {{activeConvertCurrencyObj.shortName}}
+                      <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                        0.00000000 USD
+                      </div>
+                      <div v-else>
+                        0.00 CNY
+                      </div>
                     </div>
                   </div>
                   <!--操作-->
