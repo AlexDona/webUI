@@ -430,5 +430,7 @@ export const fromApi = {
   'user_pay_disable_state': '이 계정의 거래 비밀번호가 잘못되어 거래가 금지되었습니다. 2시간 후에 다시 시도해 주십시오',
   'user_pay_is_error': '거래 비밀번호가 잘못되었습니다. {}를 2시간 이상 사용할 수 있습니다',
   'user_pay_password_not_setting': '먼저 거래 비밀 번호를 설치한 후에 돈을 예금하고 투자하세요',
-  'user_trade_password_incorrect': '계정 거래 비밀번호 잘못되었습니다.'
+  'user_trade_password_incorrect': '계정 거래 비밀번호 잘못되었습니다.',
+  'otc_failure_0092': '현재 주문 영수증에 시간이 초과되지 않아 구매자가 이의를 제기 할 수 없습니다.',
+  'otc_picture_no_null': '하나 이상의 이미지를 업로드하십시오.'
 }

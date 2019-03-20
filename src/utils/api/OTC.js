@@ -40,7 +40,9 @@ export const buyerPayForOrder = (params) => handleRequest(() => postWithURLencod
 // 15 otc交易中订单， otc卖家确认收款
 export const sellerConfirmGetMoney = (params) => handleRequest(() => postWithURLencoded('otcOrder/confirmReceiveForOrder', params), 1)
 // 16 otc交易中订单， otc卖家申诉
-export const sellerSendAppeal = (params) => handleRequest(() => postWithURLencoded('otcAppeal/applyOtcAppeal', params), 1)
+export const sellerSendAppeal = (params) => handleRequest(() => postWithURLencoded('otcAppeal/sellerApplyOtcAppeal', params), 1)
+// 16 otc交易中订单， otc买家申诉
+export const buyerSendAppeal = (params) => handleRequest(() => postWithURLencoded('otcAppeal/buyerApplyOtcAppeal', params), 1)
 // 17 提交otc商家申请
 // export const businessApply = (params) => handleRequest(() => postWithURLencoded('otcMerchApply/applyOTCMerch', {...params, 'loading': true}), 1)
 export const businessApply = (params) => handleRequest(() => postWithURLencoded('otcMerchApply/applyOTCMerch', params), 1)

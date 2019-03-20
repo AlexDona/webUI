@@ -17,8 +17,9 @@
         <!-- 订单列表 ：1.0 买单 -->
         <div
           class="order"
-          v-if="item.orderType === 'BUY'"
+          v-if="!showOrderAppeal[index] && item.orderType === 'BUY'"
         >
+          <!--v-if="item.orderType === 'BUY'"-->
           <!-- 1.1 表头 -->
           <div class="order-list-head">
             <!-- 买卖家 -->
@@ -333,6 +334,15 @@
               <!-- 已提交确认付款 -->
                 <p class="action-tips submitted-confirm-payment">
                   {{$t('M.otc_confirmed_receipts')}}
+                  <el-button
+                    size="mini"
+                    class="buy-appeal-order"
+                    @click="orderAppeal(item.id, index, item.orderType)"
+                    v-show="buyerAppealButtonStatus[index]"
+                  >
+                    <!-- 订单申诉 -->
+                    {{$t('M.otc_complaint')}}
+                  </el-button>
                 </p>
                 <p class="action-tips">
                   <!-- 注意！请联系卖家确认收款并确认订单，如果卖家{{item.completeTerm/3600}}小时内未确认订单，系统自动成交。 -->
@@ -518,6 +528,7 @@
                     type="primary"
                     size="mini"
                     @click="confirmGatherMoney(item.id)"
+                    :disabled="sellerTimeOutDisabled[index]"
                   >
                     <!-- 确认收款 -->
                     {{$t('M.otc_trading_collectionconfirmation')}}
@@ -525,7 +536,7 @@
                   <el-button
                     size="mini"
                     class="appeal-order"
-                    @click="orderAppeal(item.id, index)"
+                    @click="orderAppeal(item.id, index, item.orderType)"
                   >
                     <!-- 订单申诉 -->
                     {{$t('M.otc_complaint')}}
@@ -544,10 +555,11 @@
                     />
                   </span>
                   <span class="remaining-time">
-                    <span v-if="accomplishOrderTimeArr[index]">
+                    <span v-if="accomplishOrderTimeArr[index] > 0">
                       {{BIHTimeFormatting(accomplishOrderTimeArr[index])}}
                     </span>
-                    <span v-else>--</span>
+                    <span v-else>00ˋ00′00″</span>
+                    <!--<span v-else>&#45;&#45;</span>-->
                   </span>
                 </p>
               </div>
@@ -567,7 +579,7 @@
           <!-- 申诉表身体 -->
           <div class="appeal-body">
             <div class="appeal-body-content">
-              <!-- 文本域部分 -->
+              <!-- 1.文本域部分 -->
               <div class="appeal-textarea">
                 <!-- 申诉原因 -->
                 <span class="appeal-reason">*{{$t('M.otc_complaint_appeal_reason')}}</span>
@@ -578,12 +590,42 @@
                 >
                 </el-input>
               </div>
-              <!-- 按钮部分 -->
+              <!--2. 申诉图片部分-->
+              <div class="appeal-picture">
+                <!--上传图片-->
+                <div class="upload-title">*{{$t('M.otc_upload_picture1')}}</div>
+                <div class="upload-content">
+                  <el-upload
+                    :action="uploadUrl"
+                    :headers="{
+                      'token':token,
+                      'x-domain':xDomain
+                    }"
+                    list-type="picture-card"
+                    :on-preview="handlePictureCardPreview"
+                    :on-remove="handleRemove"
+                    :on-success="handleAvatarSuccess"
+                    :on-error="imgUploadError"
+                    :before-upload="beforeAvatarUpload"
+                    :limit="3"
+                    :on-exceed="handleExceed"
+                    :file-list="fileList"
+                  >
+                    <i class="el-icon-plus"></i>
+                  </el-upload>
+                  <el-dialog
+                    :visible.sync="dialogVisiblePicture"
+                  >
+                    <img width="100%" :src="dialogImageUrl">
+                  </el-dialog>
+                </div>
+              </div>
+              <!-- 3. 按钮部分 -->
               <div class="appeal-button">
                 <el-button
                   type="primary"
                   size="mini"
-                  @click="sellerAppeal"
+                  @click="sellerAppeal(item.id, index, item.orderType)"
                 >
                   <!-- 提交申诉 -->
                   {{$t('M.otc_complaint_submit')}}
@@ -748,13 +790,14 @@ import {
   buyerPayForOrder,
   sellerConfirmGetMoney,
   sellerSendAppeal,
+  buyerSendAppeal,
   cancelUserOtcOrder,
   completeUserOtcOrder
 } from '../../utils/api/OTC'
-import {timeFilter, formatSeconds} from '../../utils'
+import {timeFilter, formatSeconds, getCookie} from '../../utils'
+import {apiCommonUrl, xDomain} from '../../utils/env.js'
 import IconFontCommon from '../Common/IconFontCommon'
 import {
-  // returnAjaxMsg,
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
@@ -801,7 +844,21 @@ export default {
       accomplishOrdersTimer: null, // 自动成交倒计时
       pageSize: 5, // ，每页显示几条数据
       // 是否输入
-      isNeedPayPassword: true
+      isNeedPayPassword: true,
+      // 申诉上传图片
+      orderTypeParam: '', // 订单类型参数
+      token: getCookie('token'), // 获取token
+      uploadUrl: apiCommonUrl + 'uploadfile', // 上传图片地址
+      xDomain: xDomain, // 获取xDomain
+      picture1: '', // 上传申诉的第1张图片
+      picture2: '', // 上传申诉的第2张图片
+      picture3: '', // 上传申诉的第3张图片
+      dialogImageUrl: '', // 图片预览
+      dialogVisiblePicture: false, // 预览图片弹出框状态
+      fileList: [], // 绑定的上传的文件列表
+      uploadFileList: [], // 自定义的上传的文件列表
+      buyerAppealButtonStatus: [], // 买家申诉按钮显示状态
+      sellerTimeOutDisabled: [] // 卖家超时禁用确认收款按钮
     }
   },
   created () {
@@ -821,6 +878,85 @@ export default {
     ...mapMutations([
       'CHANGE_PASSWORD_USEABLE'
     ]),
+    // 申诉上传图片
+    // 1.0 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
+    // 文件上传之前调用做一些拦截限制
+    beforeAvatarUpload (file) {
+      // console.log('上传文件之前的钩子')
+      // console.log(file)
+      let isJPG = false
+      switch (file.type) {
+        case 'image/jpeg':
+          isJPG = true
+          break
+        case 'image/jpg':
+          isJPG = true
+          break
+        case 'image/png':
+          isJPG = true
+          break
+        case 'image/bmp':
+          isJPG = true
+          break
+      }
+      let isLt1M = file.size / 1024 / 1024 < 1
+      if (!isJPG) {
+        this.$message({
+          // message: '上传图片只能是 jpeg/jpg/png/bmp 格式!',
+          message: this.$t('M.otc_upload_picture3'),
+          type: 'error'
+        })
+      }
+      if (!isLt1M) {
+        this.$message({
+          // message: '上传图片大小不能超过 1M!',
+          message: this.$t('M.otc_upload_picture4'),
+          type: 'error'
+        })
+      }
+      return isJPG && isLt1M
+    },
+    // 2.0 点击文件列表中已上传的文件时的钩子--预览图片时调用
+    handlePictureCardPreview (file) {
+      // console.log('预览图片时调用')
+      // console.log(file)
+      this.dialogImageUrl = file.url
+      this.dialogVisiblePicture = true
+    },
+    // 3.0 文件列表移除文件时的钩子
+    handleRemove (file, fileList) {
+      // console.log('文件列表移除文件时的钩子')
+      // console.log(file, fileList)
+      this.uploadFileList = fileList
+    },
+    // 4.0 文件上传成功时的钩子
+    handleAvatarSuccess (res, file, fileList) {
+      // console.log('文件上传成功')
+      // console.log(res, file, fileList)
+      this.uploadFileList = fileList
+    },
+    // 5.0 文件上传失败时的钩子
+    imgUploadError (file, fileList) {
+      // console.log('文件上传失败时')
+      // console.log(file, fileList)
+      this.$message({
+        // message: '上传图片失败,请重试！',
+        message: this.$t('M.otc_upload_picture5'),
+        type: 'error'
+      })
+      this.uploadFileList = fileList
+    },
+    // 6.0 文件超出个数限制时的钩子
+    handleExceed (files, fileList) {
+      // console.log('文件超出个数限制时')
+      // console.log(files. fileList)
+      this.$message({
+        // message: '上传图片不能超过3张!',
+        message: this.$t('M.otc_upload_picture6'),
+        type: 'error'
+      })
+      this.uploadFileList = fileList
+    },
     // 1.0 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
@@ -856,11 +992,21 @@ export default {
       clearInterval(this.accomplishOrdersTimer)
       this.accomplishOrdersTimer = setInterval(() => {
         // 循环自动成交倒计时数组
+        // this.accomplishOrderTimeArr.forEach((item, index) => {
+        //   this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
+        //   console.log(this.accomplishOrderTimeArr[index])
+        //   if (!(this.accomplishOrderTimeArr[index] > 0)) {
+        //     // this.cancelCompleteUserOtcOrder(2)
+        //   }
+        // })
         this.accomplishOrderTimeArr.forEach((item, index) => {
-          this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
-          // console.log(this.accomplishOrderTimeArr[index])
-          if (!(this.accomplishOrderTimeArr[index] > 0)) {
-            this.cancelCompleteUserOtcOrder(2)
+          if (this.accomplishOrderTimeArr[index] > 0) {
+            this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
+            console.log(this.accomplishOrderTimeArr[index])
+            this.$set(this.sellerTimeOutDisabled, index, false) // 卖家超时禁用确认收款按钮-未超时可点击
+          } else {
+            this.$set(this.buyerAppealButtonStatus, index, true) // 卖家超时未付款显示买家申诉订单按钮
+            this.$set(this.sellerTimeOutDisabled, index, true) // 卖家超时禁用确认收款按钮
           }
         })
       }, 1000)
@@ -891,7 +1037,7 @@ export default {
       this.accomplishOrderTimeArr = []
       console.log('当前页：' + this.currentPage)
       const data = await getOTCOrdersThreeDay({
-        status: 'TRADING', // 状态 (交易中 TRADING )
+        status: 'TRADING',
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
@@ -903,8 +1049,6 @@ export default {
       if (data.data) {
         let detailsData = getNestedData(data, 'data')
         this.tradingOrderList = getNestedData(detailsData, 'list')
-        // console.log('交易中订单')
-        // console.log(this.tradingOrderList)
         // 分页
         this.totalPages = getNestedData(detailsData, 'pages') - 0
         // 循环数组
@@ -916,11 +1060,11 @@ export default {
           if (item.status === 'PICKED') {
             this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
             this.accomplishOrderTimeArr[index] = 10000000 // completeRestTime毫秒单位
+            // 自动成交倒计时数组集
           } else if (item.status === 'PAYED') {
             this.cancelOrderTimeArr[index] = 10000000 // cancelRestTime毫秒单位
             this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
           }
-          // 自动成交倒计时数组集
         })
         if (this.tradingOrderList.length) {
           // 调用自动取消倒计时方法
@@ -1016,10 +1160,10 @@ export default {
         // console.log(data)
         // 正确逻辑
         this.dialogVisibleConfirmPayment = false
-        this.tradePassword = '' // 清空交易密码
         this.loading = false
-        if (!data) return false
         this.errPWD = ''
+        this.tradePassword = ''
+        if (!data) return false
         // 2再次调用接口刷新列表
         this.getOTCTradingOrdersList()
       }
@@ -1056,27 +1200,35 @@ export default {
       const data = await sellerConfirmGetMoney(params)
       // 正确逻辑
       this.dialogVisibleConfirmReceipt = false
-      this.tradePassword = '' // 清空交易密码
       this.loading = false
-      if (!data) return false
       this.errPWD = ''
+      this.tradePassword = ''
+      if (!data) return false
       this.getOTCTradingOrdersList()
     },
     // 10.0 点击订单申诉弹窗申诉框
-    orderAppeal (id, index) {
+    orderAppeal (id, index, orderType) {
+      console.log(orderType)
       // console.log(id)
-      // this.showOrderAppeal[index] = true
+      this.showOrderAppeal.forEach((item, index) => {
+        this.$set(this.showOrderAppeal, index, false)
+      })
       this.$set(this.showOrderAppeal, index, true)
       this.checkedTradingOrderId = id
-      // console.log(this.checkedTradingOrderId)
+      this.uploadFileList = [] // 清空上传图片数组
+      this.appealTextAreaValue = '' // 清空申诉原因
     },
     // 11.0 取消订单申诉按钮
     cancelOrderAppeal (index) {
-      // this.showOrderAppeal = false
       this.$set(this.showOrderAppeal, index, false)
+      this.uploadFileList = [] // 清空上传图片数组
+      this.appealTextAreaValue = '' // 清空申诉原因
     },
     // 12.0 卖家提交申诉按钮弹出交易密码框
-    async sellerAppeal () {
+    async sellerAppeal (id, index, orderType) {
+      console.log(orderType)
+      this.orderTypeParam = orderType
+      // 申诉原因验证
       if (!this.appealTextAreaValue) {
         this.$message({
           // 请输入申诉原因
@@ -1085,12 +1237,29 @@ export default {
         })
         return false
       }
+      // 申诉图片验证
+      if (!this.uploadFileList.length) {
+        this.$message({
+          // message: '请至少上传一张图片！',
+          message: this.$t('M.otc_upload_picture2'),
+          type: 'error'
+        })
+        return false
+      } else {
+        // 申诉图片赋值
+        this.uploadFileList.forEach((item, index) => {
+          // console.log(item)
+          this[`picture${index + 1}`] = item.response.data.fileUrl
+          // console.log(this[`picture${index + 1}`])
+        })
+      }
+      this.checkedTradingOrderId = id
+      console.log(this.checkedTradingOrderId)
       // 用户交易密码是否锁定判断
       await this.REFRESH_USER_INFO_ACTION()
       let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
       this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
       if (this.isLockedPayPassword) return false
-      //
       this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
       if (this.isNeedPayPassword) {
         this.dialogVisibleSubmitComplaint = true
@@ -1100,6 +1269,7 @@ export default {
     },
     // 13.0 卖家提交申诉按钮
     async sellerSubmitAppeal () {
+      console.log(this.orderTypeParam)
       if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
         this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
@@ -1108,18 +1278,29 @@ export default {
       this.loading = true
       let params = {
         orderId: this.checkedTradingOrderId, // 订单id
-        reason: this.appealTextAreaValue // 申诉原因
+        reason: this.appealTextAreaValue, // 申诉原因
+        picture1: this.picture1,
+        picture2: this.picture2,
+        picture3: this.picture3
       }
       params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
-      const data = await sellerSendAppeal(params)
-      // console.log(data)
+      let data
+      if (this.orderTypeParam === 'BUY') {
+        console.log('BUY')
+        data = await buyerSendAppeal(params)
+      }
+      if (this.orderTypeParam === 'SELL') {
+        console.log('SELL')
+        data = await sellerSendAppeal(params)
+      }
+      console.log(data)
       // 正确逻辑
       this.dialogVisibleSubmitComplaint = false
-      this.tradePassword = '' // 清空交易密码
       this.loading = false
-      if (!data) return false
       this.errPWD = '' // 清空密码错提示
+      this.tradePassword = '' // 清空密码框
       this.appealTextAreaValue = '' // 清空申诉原因
+      if (!data) return false
       // 再次调用接口刷新列表
       this.getOTCTradingOrdersList()
     }
@@ -1137,16 +1318,7 @@ export default {
       loginStep1Info: state => state.user.loginStep1Info
     })
   },
-  watch: {
-    // activeLanguage (newVal) {
-    //   console.log('当前选中语言')
-    //   console.log(newVal)
-    // },
-    // language (newVal) {
-    //   console.log('language')
-    //   console.log(newVal)
-    // }
-  },
+  watch: {},
   destroyed () {
     // 离开本组件清除定时器
     clearInterval(this.cancelOrdersTimer)
@@ -1344,11 +1516,11 @@ export default {
         > .appeal-body {
           > .appeal-body-content {
             display: flex;
-            flex: 3;
+            flex: 4;
 
             > .appeal-textarea {
               display: flex;
-              flex: 2;
+              flex: 1;
               justify-content: flex-start;
               margin: 15px 0 0 20px;
 
@@ -1357,9 +1529,25 @@ export default {
               }
             }
 
+            > .appeal-picture {
+              flex: 2;
+              padding-top: 10px;
+
+              > .upload-title {
+                display: inline-block;
+                vertical-align: top;
+                color: #338ff5;
+              }
+
+              > .upload-content {
+                display: inline-block;
+                margin-left: 10px;
+              }
+            }
+
             > .appeal-button {
               flex: 1;
-              padding-top: 80px;
+              padding-top: 100px;
             }
           }
         }
@@ -1381,6 +1569,33 @@ export default {
   }
 
   /deep/ {
+    .appeal {
+      .appeal-body {
+        .appeal-body-content {
+          .appeal-picture {
+            .el-upload--picture-card {
+              width: 80px;
+              height: 80px;
+              margin-top: 25px;
+              line-height: 85px;
+            }
+
+            .el-upload--picture-card i {
+              font-size: 20px;
+            }
+
+            .el-upload-list--picture-card {
+              .el-upload-list__item {
+                width: 80px;
+                height: 80px;
+                margin-top: 25px;
+              }
+            }
+          }
+        }
+      }
+    }
+
     .el-input__icon {
       line-height: 26px;
     }
@@ -1411,7 +1626,8 @@ export default {
     }
 
     .el-textarea {
-      width: 540px;
+      /* width: 540px; */
+      width: 160px;
     }
 
     .el-textarea__inner {
@@ -1557,6 +1773,12 @@ export default {
 
                 > .submitted-confirm-payment {
                   color: #5e95ec;
+
+                  > .buy-appeal-order {
+                    margin-left: 20px;
+                    color: #409eff;
+                    background-color: #cdd9ee;
+                  }
                 }
 
                 > .action-explain {
@@ -1677,7 +1899,7 @@ export default {
       }
 
       .el-textarea {
-        width: 540px;
+        /* width: 540px; */
       }
 
       .el-textarea__inner {
@@ -1842,6 +2064,12 @@ export default {
 
                 > .submitted-confirm-payment {
                   color: #5e95ec;
+
+                  > .buy-appeal-order {
+                    margin-left: 20px;
+                    color: #8094bb;
+                    background-color: #cdd9ee;
+                  }
                 }
 
                 > .action-explain {
@@ -1975,7 +2203,7 @@ export default {
       }
 
       .el-textarea {
-        width: 540px;
+        /* width: 540px; */
       }
 
       .el-textarea__inner {

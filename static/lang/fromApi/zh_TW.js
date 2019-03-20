@@ -430,5 +430,7 @@ export const fromApi = {
   'user_pay_disable_state': '該帳號交易密碼錯誤超限已被禁止交易,請過2個小時之後重試',
   'user_pay_is_error': '交易密碼錯誤,您還可以輸入{}次,超限將被凍結2個小時',
   'user_pay_password_not_setting': '請先設置交易密碼後進行存幣投資',
-  'user_trade_password_incorrect': '帳戶交易密碼不正確'
+  'user_trade_password_incorrect': '帳戶交易密碼不正確',
+  'otc_failure_0092': '當前訂單收款未超時，買方不能申訴',
+  'otc_picture_no_null': '請至少上傳壹張圖片'
 }

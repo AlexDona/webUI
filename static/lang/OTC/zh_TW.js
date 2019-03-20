@@ -144,8 +144,6 @@ export const OTC = {
   // 'otc_yes': '是',
   'otc_no': '否',
   // 'otc_dataTime': '此功能為測試階段，開放時間為',
-  'otc_warm_prompt0': '註意！請聯系賣家確認收款並確認訂單，如果賣家',
-  'otc_warm_prompt00': '小時內未確認訂單，系統自動成交。',
   // 'otc_warm_prompt1': '後未手動轉賬並點擊“確認付款”，您的訂單將自動取消，若上述情況當日累計出現3次，您的賬戶將被凍結！',
   // 'otc_warm_prompt2': '註意！',
   // #############訂單申訴##########',
@@ -347,5 +345,15 @@ export const OTC = {
   'otc_min_limit_not_more': '不能大於單筆最大限額',
   'otc_max_limit_not_empty': '單筆最大限額不能為空',
   'otc_max_limit_not_high': '單筆最大限額不能高於',
-  'otc_max_limit_not_few': '不能小於單筆最小限額'
+  'otc_max_limit_not_few': '不能小於單筆最小限額',
+  // 增加买家申诉功能
+  'otc_upload_picture1': '上傳圖片',
+  'otc_upload_picture2': '請至少上傳壹張圖片',
+  'otc_upload_picture3': '上傳圖片只能是 jpeg/jpg/png/bmp 格式!',
+  'otc_upload_picture4': '上傳圖片大小不能超過 1M!',
+  'otc_upload_picture5': '上傳圖片失敗,請重試！',
+  'otc_upload_picture6': '上傳圖片不能超過3張!',
+  'otc_available_balance': '可用余額',
+  'otc_warm_prompt0': '註意！請聯系賣家確認收款並確認訂單，如果賣家',
+  'otc_warm_prompt00': '小時內未確認訂單，系統自動成交。'
 }
