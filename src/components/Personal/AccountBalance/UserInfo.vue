@@ -185,7 +185,7 @@
                 v-if="this.totalSumBTC > 0"
               >
                 <p v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                  {{ $scientificToNumber($keep8Num(this.totalSumBTC * BTC2CNYRate)) }} <span class="font-size12">USD</span>
+                  {{ $scientificToNumber($keep2Num(this.totalSumBTC * BTC2CNYRate)) }} <span class="font-size12">USD</span>
                 </p>
                 <p v-else>
                   {{ $scientificToNumber($keep2Num(this.totalSumBTC)) }} <span class="font-size12">CNY</span>
@@ -196,7 +196,7 @@
                   class="info-color font-size12"
                   v-if="activeConvertCurrencyObj.shortName !== 'CNY'"
                 >
-                  0.00000000 <span class="font-size12">USD</span>
+                  0.00 <span class="font-size12">USD</span>
                 </p>
                 <p
                   class="info-color font-size12"

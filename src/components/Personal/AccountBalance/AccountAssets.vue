@@ -198,7 +198,7 @@
                       style="padding-right: 10px;"
                     >
                       <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                        {{ $scientificToNumber($keep8Num(assetItem.cnyValue * BTC2CNYRate)) }} USD
+                        {{ $scientificToNumber($keep2Num(assetItem.cnyValue * BTC2CNYRate)) }} USD
                       </div>
                       <div v-else>
                         {{ $scientificToNumber($keep2Num(assetItem.cnyValue)) }} CNY
@@ -210,7 +210,7 @@
                       v-else
                     >
                       <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                        0.00000000 USD
+                        0.00 USD
                       </div>
                       <div v-else>
                         0.00 CNY
