@@ -582,7 +582,9 @@
               <!-- 1.文本域部分 -->
               <div class="appeal-textarea">
                 <!-- 申诉原因 -->
-                <span class="appeal-reason">*{{$t('M.otc_complaint_appeal_reason')}}</span>
+                <span class="appeal-reason">
+                  <span class="star">*</span>{{$t('M.otc_complaint_appeal_reason')}}
+                </span>
                 <el-input
                   type="textarea"
                   maxlength="30"
@@ -593,7 +595,9 @@
               <!--2. 申诉图片部分-->
               <div class="appeal-picture">
                 <!--上传图片-->
-                <div class="upload-title">*{{$t('M.otc_upload_picture1')}}</div>
+                <div class="upload-title">
+                  <span class="star">*</span>{{$t('M.otc_upload_picture1')}}
+                </div>
                 <div class="upload-content">
                   <el-upload
                     :action="uploadUrl"
@@ -899,7 +903,7 @@ export default {
           isJPG = true
           break
       }
-      let isLt1M = file.size / 1024 / 1024 < 1
+      let isLt1M = file.size / 1024 / 1024 < 2
       if (!isJPG) {
         this.$message({
           // message: '上传图片只能是 jpeg/jpg/png/bmp 格式!',
@@ -1549,6 +1553,10 @@ export default {
               flex: 1;
               padding-top: 100px;
             }
+
+            .star {
+              color: #e8554f;
+            }
           }
         }
       }
@@ -1578,6 +1586,7 @@ export default {
               height: 80px;
               margin-top: 25px;
               line-height: 85px;
+              background-color: transparent;
             }
 
             .el-upload--picture-card i {
@@ -1627,13 +1636,13 @@ export default {
 
     .el-textarea {
       /* width: 540px; */
-      width: 160px;
+      width: 180px;
     }
 
     .el-textarea__inner {
       height: 90px;
       resize: none;
-      font-size: 14px;
+      font-size: 12px;
     }
 
     .bank-info-picture {
@@ -1906,7 +1915,7 @@ export default {
         height: 90px;
         border: 1px solid #7587a5;
         resize: none;
-        font-size: 14px;
+        font-size: 12px;
         color: #9da5b3;
         background-color: #1e2636;
       }
@@ -2210,7 +2219,7 @@ export default {
         height: 90px;
         border: 1px solid #7587a5;
         resize: none;
-        font-size: 14px;
+        font-size: 12px;
         color: #7d90ac;
         background-color: #fff;
       }

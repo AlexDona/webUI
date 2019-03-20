@@ -12,7 +12,7 @@
         :key="index"
       >
         <!-- 订单列表 ：1.0 买单 -->
-        <div class="order" v-if="item.orderType === 'BUY'">
+        <div class="order" v-if="!showOrderAppeal[index] && item.orderType === 'BUY'">
           <!-- 1.1 表头 -->
           <div class="order-list-head">
             <!-- 买卖家 -->
@@ -625,7 +625,7 @@
               <div class="appeal-textarea">
                 <span class="appeal-reason">
                   <!--申诉原因-->
-                  *{{$t('M.otc_complaint_appeal_reason')}}
+                  <span class="star">*</span>{{$t('M.otc_complaint_appeal_reason')}}
                 </span>
                 <el-input
                   type="textarea"
@@ -637,7 +637,9 @@
               <!--2. 申诉图片部分-->
               <div class="appeal-picture">
                 <!--上传图片-->
-                <div class="upload-title">*{{$t('M.otc_upload_picture1')}}</div>
+                <div class="upload-title">
+                  <span class="star">*</span>{{$t('M.otc_upload_picture1')}}
+                </div>
                 <div class="upload-content">
                   <el-upload
                     :action="uploadUrl"
@@ -928,7 +930,7 @@ export default {
           isJPG = true
           break
       }
-      let isLt1M = file.size / 1024 / 1024 < 1
+      let isLt1M = file.size / 1024 / 1024 < 2
       if (!isJPG) {
         this.$message({
           // message: '上传图片只能是 jpeg/jpg/png/bmp 格式!',
@@ -938,7 +940,7 @@ export default {
       }
       if (!isLt1M) {
         this.$message({
-          // message: '上传图片大小不能超过 1M!',
+          // message: '上传图片大小不能超过 2M!',
           message: this.$t('M.otc_upload_picture4'),
           type: 'error'
         })
@@ -1623,6 +1625,10 @@ export default {
                 flex: 1;
                 padding-top: 80px;
               }
+
+              .star {
+                color: #e8554f;
+              }
             }
           }
         }
@@ -1651,6 +1657,7 @@ export default {
                 height: 80px;
                 margin-top: 25px;
                 line-height: 85px;
+                background-color: transparent;
               }
 
               .el-upload--picture-card i {
@@ -1704,7 +1711,8 @@ export default {
       .el-textarea__inner {
         height: 90px;
         resize: none;
-        font-size: 14px;
+        font-size: 12px;
+        color: #9da5b3;
       }
 
       /* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */

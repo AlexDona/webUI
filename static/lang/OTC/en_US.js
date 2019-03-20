@@ -358,13 +358,13 @@ export const OTC = {
   'otc_max_limit_not_high': 'single maximum limit cannot be higher than',
   'otc_max_limit_not_few': 'cannot be less than single minimum limit',
   // 增加买家申诉功能
-  'otc_upload_picture1': 'upload image',
-  'otc_upload_picture2': 'Please upload at least one image',
-  'otc_upload_picture3': 'Uploading images can only be in jpeg/jpg/png/bmp format!',
-  'otc_upload_picture4': 'Upload image size can not exceed 1M!',
+  'otc_upload_picture1': 'Upload image',
+  'otc_upload_picture2': 'Upload at least one picture',
+  'otc_upload_picture3': 'UUpload images can only be in jpeg/jpg/png/bmp format!',
+  'otc_upload_picture4': 'Upload image size cannot exceed 2M!',
   'otc_upload_picture5': 'Uploading image failed, please try again!',
-  'otc_upload_picture6': 'Upload more than 3 pictures!',
+  'otc_upload_picture6': "Upload images can't exceed 3!",
   'otc_available_balance': 'Available Balance',
-  'otc_warm_prompt0': 'Note! Please contact the seller to confirm the receipt and  the order, if the seller not confirmed order within ',
-  'otc_warm_prompt00': ' hour，the system automatically completed the trade.'
+  'otc_warm_prompt0': 'Attention! Please contact the seller to confirm the payment, if the seller ',
+  'otc_warm_prompt00': ' within the hour cannot confirm order, you can file a complaint.'
 }

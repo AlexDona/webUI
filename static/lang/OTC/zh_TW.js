@@ -350,7 +350,7 @@ export const OTC = {
   'otc_upload_picture1': '上傳圖片',
   'otc_upload_picture2': '請至少上傳壹張圖片',
   'otc_upload_picture3': '上傳圖片只能是 jpeg/jpg/png/bmp 格式!',
-  'otc_upload_picture4': '上傳圖片大小不能超過 1M!',
+  'otc_upload_picture4': '上傳圖片大小不能超過 2M!',
   'otc_upload_picture5': '上傳圖片失敗,請重試！',
   'otc_upload_picture6': '上傳圖片不能超過3張!',
   'otc_available_balance': '可用余額',
