@@ -176,41 +176,37 @@
             <!--当前资产总估值-->
             {{ $t('M.user_assets_current_total') }}
           </p>
-          <p class="asset-info margin-top9">
-            <span
+          <div class="asset-info margin-top9">
+            <div
               class="info-color"
             >
               <div
                 class="info-color font-size16"
                 v-if="this.totalSumBTC > 0"
               >
-                <span v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                  {{ $keep8Num($scientificToNumber(this.totalSumBTC * BTC2CNYRate)) }}
-                </span>
-                <span v-else>
-                  {{ $keep8Num($scientificToNumber(this.totalSumBTC)) }}
-                </span>
-                <span
+                <p v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                  {{ $scientificToNumber($keep8Num(this.totalSumBTC * BTC2CNYRate)) }} <span class="font-size12">USD</span>
+                </p>
+                <p v-else>
+                  {{ $scientificToNumber($keep2Num(this.totalSumBTC)) }} <span class="font-size12">CNY</span>
+                </p>
+              </div>
+              <div v-else>
+                <p
                   class="info-color font-size12"
                   v-if="activeConvertCurrencyObj.shortName !== 'CNY'"
                 >
-                  USD
-                </span>
-                <span
+                  0.00000000 <span class="font-size12">USD</span>
+                </p>
+                <p
                   class="info-color font-size12"
                   v-else
                 >
-                  CNY
-                </span>
+                  0.00  <span class="font-size12">CNY</span>
+                </p>
               </div>
-              <span
-                v-else
-                class="info-color font-size16"
-              >
-               0.00000000 {{ activeConvertCurrencyObj.shortName }}
-              </span>
-            </span>
-          </p>
+            </div>
+          </div>
           <p class="asset-color margin-top9 font-size12">
             （{{ $t('M.user_assets_attention') }}）
           </p>
