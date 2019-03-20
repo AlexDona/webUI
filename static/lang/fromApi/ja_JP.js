@@ -431,6 +431,6 @@ export const fromApi = {
   'user_pay_is_error': '取引パスワードのエラー、あなたは{}を入力することができて、期限を2时间冻结します',
   'user_pay_password_not_setting': '取引パスワードを設定して、あらかじめ積立金投資を行ってください',
   'user_trade_password_incorrect': 'アカウントのトランザクションパスワードが間違っています',
-  'otc_failure_0092': '現在の注文受領はタイムアウトしておらず、買い手は控訴できません',
-  'otc_picture_no_null': '少なくとも1つの画像をアップロードしてください'
+  'otc_failure_0092': '現在の注文受付はタイムアウトしていません、購入者は上訴できません',
+  'otc_picture_no_null': '少なくとも1枚の写真をアップロードしてください'
 }

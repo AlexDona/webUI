@@ -12,7 +12,7 @@
         :key="index"
       >
         <!-- 订单列表 ：1.0 买单 -->
-        <div class="order" v-if="item.orderType === 'BUY'">
+        <div class="order" v-if="!showOrderAppeal[index] && item.orderType === 'BUY'">
           <!-- 1.1 表头 -->
           <div class="order-list-head">
             <!-- 买卖家 -->
@@ -1651,6 +1651,7 @@ export default {
                 height: 80px;
                 margin-top: 25px;
                 line-height: 85px;
+                background-color: transparent;
               }
 
               .el-upload--picture-card i {
