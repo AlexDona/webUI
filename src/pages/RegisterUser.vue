@@ -986,7 +986,7 @@ export default {
           if (!this.checkoutInputFormat(type, this.emailNum)) {
             return false
           }
-          params.email = this.transformedEmail
+          params.email = this.emailNum
           params.nationCode = this.activeCountryCodeWithEmail
           break
       }
@@ -1025,7 +1025,7 @@ export default {
       }
       console.log(goOnStatus)
       if (goOnStatus) {
-        let userName = this.activeMethod ? this.transformedEmail : this.phoneNum
+        let userName = this.activeMethod ? this.emailNum : this.phoneNum
         let countryCode = this.activeMethod ? this.activeCountryCodeWithEmail : this.activeCountryCodeWithPhone
         this.registerParams = {
           userName: userName,
@@ -1139,7 +1139,7 @@ export default {
         $('.handler').css({'left': 0})
         $('.drag_bg').css({'width': 0})
         let type = !this.activeMethod ? 'phone' : 'email'
-        let userName = !this.activeMethod ? this.phoneNum : this.transformedEmail
+        let userName = !this.activeMethod ? this.phoneNum : this.emailNum
         if (!await this.checkUserExistAjax(type, userName)) return false
         await this.sendRegister(params)
         this.CHANGE_AJAX_READY_STATUS(false)
@@ -1167,9 +1167,6 @@ export default {
     windowHeight () {
       console.log(window.innerHeight)
       return window.innerHeight + 300
-    },
-    transformedEmail () {
-      return this.emailNum.toLowerCase()
     }
   },
   watch: {
