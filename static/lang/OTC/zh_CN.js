@@ -350,7 +350,7 @@ export const OTC = {
   'otc_upload_picture1': '上传图片',
   'otc_upload_picture2': '请至少上传一张图片',
   'otc_upload_picture3': '上传图片只能是 jpeg/jpg/png/bmp 格式!',
-  'otc_upload_picture4': '上传图片大小不能超过 1M!',
+  'otc_upload_picture4': '上传图片大小不能超过 2M!',
   'otc_upload_picture5': '上传图片失败,请重试！',
   'otc_upload_picture6': '上传图片不能超过3张!',
   'otc_available_balance': '可用余额',

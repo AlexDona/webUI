@@ -899,7 +899,7 @@ export default {
           isJPG = true
           break
       }
-      let isLt1M = file.size / 1024 / 1024 < 1
+      let isLt1M = file.size / 1024 / 1024 < 2
       if (!isJPG) {
         this.$message({
           // message: '上传图片只能是 jpeg/jpg/png/bmp 格式!',
@@ -1578,6 +1578,7 @@ export default {
               height: 80px;
               margin-top: 25px;
               line-height: 85px;
+              background-color: transparent;
             }
 
             .el-upload--picture-card i {

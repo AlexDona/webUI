@@ -351,7 +351,7 @@ export const OTC = {
   'otc_upload_picture1': '画像のアップロード',
   'otc_upload_picture2': '少なくとも1枚の写真をアップロードしてください',
   'otc_upload_picture3': 'アップロード画像はjpeg / jpg / png / bmpフォーマットのみです！',
-  'otc_upload_picture4': 'アップロード画像のサイズは1Mを超えてはいけません！',
+  'otc_upload_picture4': 'アップロード画像のサイズは2Mを超えてはいけません！',
   'otc_upload_picture5': '画像のアップロードに失敗しました、もう一度やり直してください。',
   'otc_upload_picture6': 'アップロード画像は3を超えてはいけません！',
   'otc_available_balance': '利用可能残高',

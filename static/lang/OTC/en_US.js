@@ -361,7 +361,7 @@ export const OTC = {
   'otc_upload_picture1': 'upload image',
   'otc_upload_picture2': 'Please upload at least one image',
   'otc_upload_picture3': 'Uploading images can only be in jpeg/jpg/png/bmp format!',
-  'otc_upload_picture4': 'Upload image size can not exceed 1M!',
+  'otc_upload_picture4': 'Upload image size can not exceed 2M!',
   'otc_upload_picture5': 'Uploading image failed, please try again!',
   'otc_upload_picture6': 'Upload more than 3 pictures!',
   'otc_available_balance': 'Available Balance',
