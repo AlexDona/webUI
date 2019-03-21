@@ -71,7 +71,9 @@
                 <div
                   class="title-width title-position padding-l7"
                 >
-                  {{ $t('M.user_assets_sum2') }}
+                  <div style="float: left;">
+                    {{ $t('M.user_assets_sum2') }}
+                  </div>
                   <div class="icon-caret">
                     <!--升序-->
                     <i
@@ -93,7 +95,9 @@
                 <div
                   class="title-width-header title-position padding-l7"
                 >
-                  {{ $t('M.user_assets_sum3') }}
+                  <div style="float: left;">
+                    {{ $t('M.user_assets_sum3') }}
+                  </div>
                   <div class="icon-caret-order">
                     <!--升序-->
                     <i
@@ -1536,12 +1540,10 @@ export default {
               }
 
               .title-position {
-                position: relative;
-
                 .icon-caret {
-                  position: absolute;
-                  top: 0;
-                  right: 100px;
+                  position: relative;
+                  right: 0;
+                  float: left;
                 }
               }
 
@@ -1596,9 +1598,9 @@ export default {
 
               .icon-caret,
               .icon-caret-order {
-                position: absolute;
-                top: 0;
-                right: 15px;
+                position: relative;
+                right: 0;
+                float: right;
 
                 .caret-text {
                   position: absolute;
@@ -1614,9 +1616,9 @@ export default {
               }
 
               .icon-caret-order {
-                position: absolute;
-                top: 0;
-                right: 90px;
+                position: relative;
+                right: 0;
+                float: left;
               }
 
               > .table-tr {
@@ -1762,7 +1764,7 @@ export default {
                         > .text-info-mention {
                           position: relative;
                           top: -15px;
-                          padding-left: 15px;
+                          padding: 15px 0 0 15px;
 
                           &.need-tag-top {
                             top: -45px;
