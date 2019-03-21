@@ -1304,9 +1304,11 @@ export default {
       this.errPWD = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
       this.appealTextAreaValue = '' // 清空申诉原因
-      if (!data) return false
       // 再次调用接口刷新列表
       this.getOTCTradingOrdersList()
+      if (!data) return false
+      // 再次调用接口刷新列表
+      // this.getOTCTradingOrdersList()
     }
   },
   filter: {},

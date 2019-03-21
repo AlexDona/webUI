@@ -1311,10 +1311,11 @@ export default {
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
       // 正确逻辑
+      // 2再次调用接口刷新列表
+      this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       if (!data) return false
       // 2再次调用接口刷新列表
-      // this.getOTCTradingOrdersList()
-      this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
+      // this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
     }
   },
   filter: {},
