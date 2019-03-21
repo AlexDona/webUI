@@ -46,6 +46,7 @@ export default {
         autoplay: 3000, // 自动播放:时间[ms]
         infinite: 0
       },
+      AUTO_START_LIMIT: 5,
       sliderListAjax: []
     }
   },
@@ -71,9 +72,9 @@ export default {
       this.sliderListAjax = getNestedData(data, 'data') || []
       let sliderList = []
       this.pages = sliderList
-      this.sliderinit.loop = this.sliderListAjax.length > 5 ? true : false
-      this.sliderinit.infinite = this.sliderListAjax.length > 5 ? 4 : 0
-      this.sliderListAjax.length > 5 ? this.$refs.slider.$emit('autoplayStart', 1000) : this.$refs.slider.$emit('autoplayStop')
+      this.sliderinit.loop = this.sliderListAjax.length >= this.AUTO_START_LIMIT ? true : false
+      this.sliderinit.infinite = this.sliderListAjax.length >= this.AUTO_START_LIMIT ? 4 : 0
+      this.sliderListAjax.length >= this.AUTO_START_LIMIT ? this.$refs.slider.$emit('autoplayStart', 1000) : this.$refs.slider.$emit('autoplayStop')
       this.renderSlider()
     },
     slide (data) {
@@ -143,7 +144,7 @@ export default {
             watch: {
               bannerActive (newVal) {
                 // console.log(newVal)
-                newVal || that.sliderListAjax.length < 5 ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
+                newVal || that.sliderListAjax.length < that.AUTO_START_LIMIT ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
               }
             },
             template: `<a
