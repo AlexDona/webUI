@@ -151,9 +151,16 @@ export default {
       const data = await getKlineDataAjax(params)
       if (!data) return false
       this.isAllowDrag = true
-      let klineData = getNestedData(data, 'data.obj')
-      klineData = JSON.parse(unzip(klineData))
+      let klineDataList = getNestedData(data, 'data.obj')
+      let klineDataStr = ''
+      _.forEach(klineDataList, (klineData) => {
+        klineDataStr += unzip(klineData)
+      })
+
+      if (!klineDataStr) return false
+      let klineData = JSON.parse(klineDataStr)
       let klineList = getNestedData(klineData, 'klineList')
+      console.log(klineData, klineList)
       if (klineList) {
         this.KlineNum = klineData.num
         let list = []
@@ -211,7 +218,7 @@ export default {
       _.forEach(objList, objItem => {
         resultStr += unzip(objItem)
       })
-      console.log(resultStr)
+      // console.log(resultStr)
       if (!resultStr) return false
       let activeSymbolData = JSON.parse(resultStr)
       let {
@@ -294,6 +301,7 @@ export default {
     },
     init (options) {
       if (!this.widget) {
+        console.log(1)
         this.widget = new TvWidget({
           symbol: options.symbol,
           interval: options.interval,
@@ -303,6 +311,11 @@ export default {
           library_path: '/static/tradeview/charting_library/',
           disabled_features: disabledFeatures,
           enabled_features: [
+            'dont_show_boolean_study_arguments',
+            'hide_last_na_study_output',
+            'move_logo_to_main_pane',
+            'same_data_requery',
+            'side_toolbar_in_fullscreen_mode',
             'hide_left_toolbar_by_default' // 隐藏左侧边栏
           ],
           timezone: 'Asia/Shanghai',
@@ -318,6 +331,7 @@ export default {
           custom_css_url: '../../../../static/tradeview/klineTheme.css'
         })
         this.widget.onChartReady(() => {
+          console.log(2)
           const _self = this
           // let chart = getNestedData(_self, 'widget.chart()')
           let chart
@@ -378,7 +392,12 @@ export default {
           this.widget.chart().crossHairMoved(async (e) => {
             const currentTime = e.time * 1000
             const ticker = `${this.symbol}-${this.interval}`
-            const limitTime = getNestedData(this.cacheData[ticker], '[50].time')
+            const limitTime = getNestedData(this.cacheData[ticker], '[700].time') ||
+            getNestedData(this.cacheData[ticker], '[600].time') ||
+            getNestedData(this.cacheData[ticker], '[500].time') ||
+            getNestedData(this.cacheData[ticker], '[400].time') ||
+            getNestedData(this.cacheData[ticker], '[300].time') ||
+            getNestedData(this.cacheData[ticker], '[200].time')
 
             const timeDiff = currentTime - limitTime
             if (timeDiff < 0 && this.KlineNum > 1 && this.isAllowDrag) {
@@ -411,6 +430,7 @@ export default {
     },
     // 时间区间格式转换
     transformInterval (interval) {
+      console.log(interval)
       let newInterval
       switch (interval) {
         case '1':
@@ -529,7 +549,7 @@ export default {
         const self = this
         this.getBarTimer = setTimeout(function () {
           self.getBars(symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback)
-        }, 1)
+        }, 100)
       }
     },
     // 请求socket

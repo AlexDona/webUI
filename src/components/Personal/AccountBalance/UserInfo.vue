@@ -176,14 +176,8 @@
             <!--当前资产总估值-->
             {{ $t('M.user_assets_current_total') }}
           </p>
-          <p class="asset-info margin-top9">
-            <span class="info-color font-size16">
-              {{ $keep8Num(totalSumBTC) }}
-            </span>
-            <span class="info-color font-size12">
-              BTC
-            </span>
-            <span
+          <div class="asset-info margin-top9">
+            <div
               class="info-color"
             >
               <!--或-->
@@ -192,19 +186,29 @@
                 class="info-color font-size16"
                 v-if="this.totalSumBTC > 0"
               >
-               {{ $keep2Num($scientificToNumber(this.totalSumBTC) * BTC2CNYRate) }}
-              </span>
-              <span
-                v-else
-                class="info-color font-size16"
-              >
-               0.00
-              </span>
-              <span class="info-color font-size12">
-                {{ activeConvertCurrencyObj.shortName }}
-              </span>
-            </span>
-          </p>
+                <p v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                  {{ $scientificToNumber($keep2Num(this.totalSumBTC * BTC2CNYRate)) }} <span class="font-size12">USD</span>
+                </p>
+                <p v-else>
+                  {{ $scientificToNumber($keep2Num(this.totalSumBTC)) }} <span class="font-size12">CNY</span>
+                </p>
+              </div>
+              <div v-else>
+                <p
+                  class="info-color font-size12"
+                  v-if="activeConvertCurrencyObj.shortName !== 'CNY'"
+                >
+                  0.00 <span class="font-size12">USD</span>
+                </p>
+                <p
+                  class="info-color font-size12"
+                  v-else
+                >
+                  0.00  <span class="font-size12">CNY</span>
+                </p>
+              </div>
+            </div>
+          </div>
           <p class="asset-color margin-top9 font-size12">
             （{{ $t('M.user_assets_attention') }}）
           </p>

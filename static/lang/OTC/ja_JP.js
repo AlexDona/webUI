@@ -144,8 +144,6 @@ export const OTC = {
   // 'otc_yes': 'はい',
   'otc_no': 'いいえ',
   // 'otc_dataTime': 'この機能はテスト段階にあり、オープン時間は',
-  'otc_warm_prompt0': '注意！レシートを確認して注文を確認するには、売り手に連絡してください',
-  'otc_warm_prompt00': '1時間以内に注文が確認されず、システムによって自動的に取引が完了しました。',
   // 'otc_warm_prompt1': '上記の状況が3回発生した場合、お客様のアカウントはフリーズされます。',
   // 'otc_warm_prompt2': '注意！',
   // #############注文控訴##########',
@@ -348,5 +346,15 @@ export const OTC = {
   'otc_min_limit_not_more': '単一の最大クォータを超えてはいけません',
   'otc_max_limit_not_empty': '単一最大クォータは空にできません',
   'otc_max_limit_not_high': '単一最大クォータより大きくてはいけません',
-  'otc_max_limit_not_few': '単一の最小クォータより小さくてはいけません'
+  'otc_max_limit_not_few': '単一の最小クォータより小さくてはいけません',
+  // 增加买家申诉功能
+  'otc_upload_picture1': '写真アップロード',
+  'otc_upload_picture2': '少なくとも1枚の写真をアップロードしてください',
+  'otc_upload_picture3': 'アップロード写真はjpeg/jpg/png/bmpフォーマットのみです！',
+  'otc_upload_picture4': 'アップロード写真のサイズは2Mを超えてはいけません！',
+  'otc_upload_picture5': '写真のアップロードに失敗しました、もう一度やり直してください。',
+  'otc_upload_picture6': 'アップロード写真は3枚を超えてはいけません！',
+  'otc_available_balance': '利用可能残高',
+  'otc_warm_prompt0': '注意！ 売り手の場合、支払いを確認するために売り手に連絡してください。',
+  'otc_warm_prompt00': '注文は～時間以内に確認されていません、苦情を申し立てることができます。'
 }

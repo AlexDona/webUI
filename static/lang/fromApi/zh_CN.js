@@ -277,6 +277,8 @@ export const fromApi = {
   'otc_failure_0089': 'otc上架单不是取消状态',
   'otc_failure_0090': '该账号已被禁止交易otc，请咨询客服',
   'otc_failure_0091': '普通用户不能进行otc挂单，请先申请为商家',
+  'otc_failure_0092': '当前订单收款未超时，买方不能申诉',
+  'otc_picture_no_null': '请至少上传一张图片',
   'OTC_SELL': 'OTC卖出',
   'otc_success_0001': '撤销成功',
   'otc_success_0002': '出售成功',
@@ -327,6 +329,7 @@ export const fromApi = {
   'recharge_withdraw_failure_0043': '提币总量超过当日上限',
   'recharge_withdraw_failure_0044': '获取VIP等级信息异常',
   'recharge_withdraw_failure_0045': '获取商户币种信息异常',
+  'recharge_withdraw_failure_0046': '重置密码之后24小时之内禁止提币!',
   'recharge_withdraw_msg_status_0001': '等待提现',
   'recharge_withdraw_msg_status_0002': '锁定',
   'recharge_withdraw_msg_status_0003': '提现成功',
@@ -430,5 +433,6 @@ export const fromApi = {
   'user_pay_disable_state': '该账号交易密码错误超限已被禁止交易,请过2个小时之后重试',
   'user_pay_is_error': '交易密码错误,您还可以输入{}次,超限将被冻结2个小时',
   'user_pay_password_not_setting': '请先设置交易密码后进行存币投资',
-  'user_trade_password_incorrect': '账户交易密码不正确'
+  'user_trade_password_incorrect': '账户交易密码不正确',
+  'otc_failure_0093': '该订单已申诉，请联系客服'
 }

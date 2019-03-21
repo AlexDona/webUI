@@ -151,8 +151,6 @@ export const OTC = {
   // 'otc_yes': 'Yes',
   'otc_no': 'no',
   // 'otc_dataTime': 'This feature is in the test phase and the open time is',
-  'otc_warm_prompt0': 'Note! Please contact the seller to confirm the receipt and  the order, if the seller not confirmed order within ',
-  'otc_warm_prompt00': ' hour，the system automatically completed the trade.',
   // 'otc_warm_prompt1': 'After you have not manually transferred and clicked “Confirm Payment”, your order will be cancelled automatically. If the above situation occurs 3 times in total, your account will be frozen!',
   // 'otc_warm_prompt2': 'note!',
   // #############订单申诉##########Order appeal
@@ -358,5 +356,15 @@ export const OTC = {
   'otc_min_limit_not_more': 'cannot exceed single maximum limit',
   'otc_max_limit_not_empty': 'single maximum limit cannot be empty',
   'otc_max_limit_not_high': 'single maximum limit cannot be higher than',
-  'otc_max_limit_not_few': 'cannot be less than single minimum limit'
+  'otc_max_limit_not_few': 'cannot be less than single minimum limit',
+  // 增加买家申诉功能
+  'otc_upload_picture1': 'Upload image',
+  'otc_upload_picture2': 'Upload at least one picture',
+  'otc_upload_picture3': 'UUpload images can only be in jpeg/jpg/png/bmp format!',
+  'otc_upload_picture4': 'Upload image size cannot exceed 2M!',
+  'otc_upload_picture5': 'Uploading image failed, please try again!',
+  'otc_upload_picture6': "Upload images can't exceed 3!",
+  'otc_available_balance': 'Available Balance',
+  'otc_warm_prompt0': 'Attention! Please contact the seller to confirm the payment, if the seller ',
+  'otc_warm_prompt00': ' within the hour cannot confirm order, you can file a complaint.'
 }

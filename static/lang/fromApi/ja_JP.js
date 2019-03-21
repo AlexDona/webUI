@@ -277,6 +277,8 @@ export const fromApi = {
   'otc_failure_0089': 'OTCリストはキャンセルされません',
   'otc_failure_0090': 'このアカウントは取引が禁止になってOTC、サービスへお問い合わせ下さい',
   'otc_failure_0091': '貨幣IDが空になってはならない',
+  'otc_failure_0092': '現在の注文受領はタイムアウトしておらず、買い手は控訴できません',
+  'otc_picture_no_null': '少なくとも1つの画像をアップロードしてください',
   'OTC_SELL': 'OTC販売',
   'otc_success_0001': 'キャンセルの成功',
   'otc_success_0002': '売り物に成功する',
@@ -327,6 +329,7 @@ export const fromApi = {
   'recharge_withdraw_failure_0043': '集められたコインの総量が当日の制限を超えています',
   'recharge_withdraw_failure_0044': '異常なVIPレベル情報の取得',
   'recharge_withdraw_failure_0045': '異常な通貨情報の入手',
+  'recharge_withdraw_failure_0046': 'パスワード再設定後24時間以内にコインを引き出すことは禁止されています。',
   'recharge_withdraw_msg_status_0001': '撤退を待っている',
   'recharge_withdraw_msg_status_0002': 'ロックオン',
   'recharge_withdraw_msg_status_0003': '現金引き出しの成功',
@@ -371,8 +374,8 @@ export const fromApi = {
   'user-fail-google-code': 'Google認証コードのエラー',
   'user-fail-inviter-notexist': '推薦者は存在しません',
   'user-fail-login-disable': 'アカウントは無効です',
-  'user-fail-login-lock': 'アカウントがロックされましたので、2時間かけてお試し下さい',
-  'user-fail-login-password': 'ユーザー名またはパスワードに誤りがある場合、再試行回数{}',
+  'user-fail-login-lock': 'アカウントは2時間ロックされています',
+  'user-fail-login-password': 'ユーザー名またはパスワードが正しくありません。残りの再試行{}',
   'user-fail-mail-binded': '郵便ポストは既に結び付けられた',
   'user-fail-not-realname': '最初の本名の証明をしてください',
   'user-fail-oldpassword-error': '元のパスワードが間違っています',
@@ -430,5 +433,5 @@ export const fromApi = {
   'user_pay_disable_state': 'このアカウント取引はパスワードエラーの制限が禁止されたので、2時間後に再テストしてください',
   'user_pay_is_error': '取引パスワードのエラー、あなたは{}を入力することができて、期限を2时间冻结します',
   'user_pay_password_not_setting': '取引パスワードを設定して、あらかじめ積立金投資を行ってください',
-  'user_trade_password_incorrect': 'アカウントのトランザクションパスワードが間違っています'
+  'otc_failure_0093': '申し立てが上訴されました。カスタマーサービスにご連絡ください。'
 }

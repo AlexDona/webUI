@@ -952,8 +952,8 @@ export default {
       }
       // 调用第一接口
       let params = new FormData()
-      params.append('userName', this.username.toLowerCase())
-      this.isRememberUserName ? setStore('username', this.username.toLowerCase()) : removeStore('username')
+      params.append('userName', this.username)
+      this.isRememberUserName ? setStore('username', this.username) : removeStore('username')
 
       if (this.isRememberUserName) {
       } else {

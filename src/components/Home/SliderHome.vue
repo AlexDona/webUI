@@ -42,17 +42,17 @@ export default {
         tracking: false,
         thresholdDistance: 100, // 滑动距离阈值判定
         thresholdTime: 300, // 滑动时间阈值判定
-        loop: true, // 无限循环
+        loop: false, // 无限循环
         autoplay: 3000, // 自动播放:时间[ms]
-        infinite: 8
+        infinite: 0
       },
+      AUTO_START_LIMIT: 5,
       sliderListAjax: []
     }
   },
   async created () {
   },
   mounted () {
-    // console.log(this.$refs)
   },
   activated () {},
   update () {},
@@ -72,15 +72,19 @@ export default {
       this.sliderListAjax = getNestedData(data, 'data') || []
       let sliderList = []
       this.pages = sliderList
+      this.sliderinit.loop = this.sliderListAjax.length >= this.AUTO_START_LIMIT ? true : false
+      this.sliderinit.infinite = this.sliderListAjax.length >= this.AUTO_START_LIMIT ? 4 : 0
+      this.sliderListAjax.length >= this.AUTO_START_LIMIT ? this.$refs.slider.$emit('autoplayStart', 1000) : this.$refs.slider.$emit('autoplayStop')
       this.renderSlider()
     },
     slide (data) {
-      let bigUrl = getNestedData(this.sliderListAjax[getNestedData(data, 'currentPage') || 0], 'bigUrl')
+      // console.log(data.currentPage)
+      let currentIndex = data.currentPage == this.sliderListAjax.length ? 0 : data.currentPage
+      let bigUrl = getNestedData(this.sliderListAjax[currentIndex], 'bigUrl')
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
     },
     renderSlider () {
       let bigUrl = getNestedData(this.sliderListAjax, '[0].bigUrl')
-      console.log(bigUrl, this.sliderListAjax)
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
       let sliderList = []
       this.sliderListAjax.forEach((item) => {
@@ -104,7 +108,20 @@ export default {
               }
             },
             mounted () {
-              // console.log(that)
+              $('.slider-pagination-bullet').on('click', (e) => {
+                setTimeout(() => {
+                  let sliderPaginationList = $('.slider-pagination-bullet')
+                  for (let i = 0; i < sliderPaginationList.length; i++) {
+                    let sliderPaginationItem = sliderPaginationList[i]
+                    let arr = [...sliderPaginationItem.classList]
+                    if (arr.indexOf('slider-pagination-bullet-active') != -1) {
+                      let bigUrl = getNestedData(that.sliderListAjax[i], 'bigUrl')
+                      that.CHANGE_BANNER_BACKGROUND(bigUrl)
+                      break
+                    }
+                  }
+                }, 100)
+              })
             },
             methods: {
               ...mapMutations([
@@ -112,14 +129,10 @@ export default {
                 'CHANGE_BANNER_BACKGROUND'
               ]),
               mouseOver (e) {
-                const URL = getNestedData(e, 'target.attributes.background.value')
                 this.CHANGE_BANNER_ACTIVE(true)
-                console.log(URL)
-                // this.CHANGE_BANNER_BACKGROUND(URL)
               },
               mouseLeave () {
                 this.CHANGE_BANNER_ACTIVE(false)
-                // this.CHANGE_BANNER_BACKGROUND(this.bannerDefaultBackground)
               }
             },
             computed: {
@@ -131,8 +144,7 @@ export default {
             watch: {
               bannerActive (newVal) {
                 // console.log(newVal)
-                // console.log(this.$refs)
-                newVal ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
+                newVal || that.sliderListAjax.length < that.AUTO_START_LIMIT ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
               }
             },
             template: `<a

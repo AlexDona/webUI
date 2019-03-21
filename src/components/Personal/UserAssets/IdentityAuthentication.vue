@@ -183,7 +183,7 @@
       </div>
     </div>
     <!--高级认证-->
-    <div class="advanced-certification-main identity-background margin-top9"
+    <div class="advanced-certification-main identity-background margin-top9 margin-bottom10"
     >
       <div
         class="advanced-main-header"
@@ -1181,7 +1181,7 @@ export default {
           .submit-information {
             width: 200px;
             height: 34px;
-            margin: 90px auto 83px;
+            margin: 60px auto 70px;
             border-radius: 4px;
             line-height: 34px;
           }

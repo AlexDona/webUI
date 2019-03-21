@@ -297,22 +297,22 @@ export default {
           })
           if (!symbolsData) return false
           let symbolsObjs = getNestedData(symbolsData, 'data.obj')
-          console.log(symbolsObjs)
+          // console.log(symbolsObjs)
           let symbolsStr = ''
           _.forEach(symbolsObjs, (symbolObj) => {
             symbolsStr += unzip(symbolObj)
           })
           if (!symbolsStr) return false
-          console.log(symbolsStr)
+          // console.log(symbolsStr)
           let symbolsSJONFromBackEnd = JSON.parse(symbolsStr)
-          console.log(symbolsSJONFromBackEnd)
+          // console.log(symbolsSJONFromBackEnd)
           symbolJSON = symbolsSJONFromBackEnd
           setStore('symbolJSONAge', new Date().getTime())
           console.log(symbolJSON)
         }
       }
       for (let k in symbolJSON) {
-        console.log(symbolJSON[k])
+        // console.log(symbolJSON[k])
         this.CHANGE_SYMBOL_MAP({
           key: symbolJSON[k].id,
           val: symbolJSON[k]
@@ -433,15 +433,15 @@ export default {
             buyCoinName, // 'BTC'、'FBT'
             tradeName // rdnbtc、 fucfbt
           } = newData
-          console.log(tradeName, newData, this.symbolMap)
+          // console.log(tradeName, newData, this.symbolMap)
           this.updateSymbol(buyCoinName, tradeName, newData)
           this.CHANGE_SYMBOL_MAP({
             key: tradeName,
             val: {...this.symbolMap.get(tradeName), ...newData}
           })
-          let symbol = getStoreWithJson('symbolJSON')
-          console.log(symbol)
-          console.log(symbol[tradeName])
+          // let symbol = getStoreWithJson('symbolJSON')
+          // console.log(symbol)
+          // console.log(symbol[tradeName])
           this.setCollectionAndSearchContent(this.searchArea.content, newData)
           this.setCollectionAndSearchContent(this.collectArea.content, newData)
         }

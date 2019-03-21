@@ -144,8 +144,6 @@ export const OTC = {
   // 'otc_yes': '예',
   'otc_no': '아니요',
   // 'otc_dataTime': '이 기능은 테스트 단계이며 열릴 시간은',
-  'otc_warm_prompt0': '주의! 판매자에게 수금되였는지 확인하고 주문을 확인하십시오，만일',
-  'otc_warm_prompt00': '시간 내에 주문이 확인되지 않으면 시스템이 자동으로 거래 취소합니다.',
   // 'otc_warm_prompt1': "후 수동적으로 발금 및 “수금확인” 클릭하지않으면 주문이 자동적으로 취소 되며 이런 상황이 3번 나타나면 고객님의 계좌가 동결됩니다!",
   // 'otc_warm_prompt2': '주의!',
   // #############订单申诉##########',
@@ -348,5 +346,15 @@ export const OTC = {
   'otc_min_limit_not_more': '최대 단일 제한보다 클 수 없습니다.',
   'otc_max_limit_not_empty': '최대 한도는 비워 둘 수 없습니다.',
   'otc_max_limit_not_high': '최대 한도는 다음보다 클 수 없습니다.',
-  'otc_max_limit_not_few': '단일 최소값보다 작을 수 없습니다.'
+  'otc_max_limit_not_few': '단일 최소값보다 작을 수 없습니다.',
+  // 增加买家申诉功能
+  'otc_upload_picture1': '이미지 업로드',
+  'otc_upload_picture2': '하나 이상의 이미지를 업로드하십시오.',
+  'otc_upload_picture3': '이미지 업로드는 jpeg / jpg / png / bmp 형식에서만 가능합니다!',
+  'otc_upload_picture4': '업로드 이미지 크기는 2M을 초과 할 수 없습니다!',
+  'otc_upload_picture5': '이미지를 업로드하지 못했습니다. 다시 시도하십시오!',
+  'otc_upload_picture6': '3 장 이상의 사진을 업로드하십시오!',
+  'otc_available_balance': '사용 가능한 잔액',
+  'otc_warm_prompt0': '주의! 판매자에게 수금되였는지 확인하고 주문을 확인하십시오，만일',
+  'otc_warm_prompt00': '시간 내에 주문이 확인되지 않으면 시스템이 자동으로 거래 취소합니다.'
 }
