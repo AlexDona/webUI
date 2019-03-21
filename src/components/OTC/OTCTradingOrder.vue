@@ -338,7 +338,7 @@
                     size="mini"
                     class="buy-appeal-order"
                     @click="orderAppeal(item.id, index, item.orderType)"
-                    v-show="buyerAppealButtonStatus[index]"
+                    v-if="buyerAppealButtonStatus[index]"
                   >
                     <!-- 订单申诉 -->
                     {{$t('M.otc_complaint')}}
@@ -1006,7 +1006,7 @@ export default {
         this.accomplishOrderTimeArr.forEach((item, index) => {
           if (this.accomplishOrderTimeArr[index] > 0) {
             this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
-            console.log(this.accomplishOrderTimeArr[index])
+            // console.log(this.accomplishOrderTimeArr[index])
             this.$set(this.sellerTimeOutDisabled, index, false) // 卖家超时禁用确认收款按钮-未超时可点击
           } else {
             this.$set(this.buyerAppealButtonStatus, index, true) // 卖家超时未付款显示买家申诉订单按钮
