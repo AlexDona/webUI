@@ -277,6 +277,8 @@ export const fromApi = {
   'otc_failure_0089': 'otc上架單不是取消狀態',
   'otc_failure_0090': '該帳號已被禁止交易OTC，請諮詢客服',
   'otc_failure_0091': '普通用戶不能進行otc掛單,請先申請為商家',
+  'otc_failure_0092': '當前訂單收款未超時，買方不能申訴',
+  'otc_picture_no_null': '請至少上傳一張圖片',
   'OTC_SELL': 'OTC賣出',
   'otc_success_0001': '撤銷成功',
   'otc_success_0002': '出售成功',
@@ -327,6 +329,7 @@ export const fromApi = {
   'recharge_withdraw_failure_0043': '提幣總量超過當日上限',
   'recharge_withdraw_failure_0044': '獲取VIP等級資訊異常',
   'recharge_withdraw_failure_0045': '獲取商戶幣種資訊異常',
+  'recharge_withdraw_failure_0046': '重置密碼之後25小時之內禁止提幣!',
   'recharge_withdraw_msg_status_0001': '等待提現',
   'recharge_withdraw_msg_status_0002': '鎖定',
   'recharge_withdraw_msg_status_0003': '提現成功',
@@ -371,7 +374,7 @@ export const fromApi = {
   'user-fail-google-code': '穀歌驗證碼錯誤',
   'user-fail-inviter-notexist': '推薦人不存在',
   'user-fail-login-disable': '帳戶被禁用',
-  'user-fail-login-lock': '賬號已被鎖定，請兩小時後重試',
+  'user-fail-login-lock': '帳號被鎖定3小時',
   'user-fail-login-password': '用戶名或密碼錯誤,剩餘重試次數{}',
   'user-fail-mail-binded': '郵箱已被綁定',
   'user-fail-not-realname': '請先實名認證',
@@ -379,7 +382,7 @@ export const fromApi = {
   'user-fail-partnernotfound': '商戶不存在',
   'user-fail-password': '用戶名或密碼錯誤',
   'user-fail-password-blank': '密碼不能為空',
-  'user-fail-password-repeat': '您設置的新密碼與舊密碼相同,請重新設置',
+  'user-fail-password-repeat': '您設置的新密碼與舊密碼相同,請重新設置!',
   'user-fail-password-thin': '密碼強度太弱',
   'user-fail-passwword-eq-paypassword': '交易密碼與登錄密碼一致，請重新設置',
   'user-fail-paypassword-error': '支付密碼錯誤',
@@ -430,7 +433,5 @@ export const fromApi = {
   'user_pay_disable_state': '該帳號交易密碼錯誤超限已被禁止交易,請過2個小時之後重試',
   'user_pay_is_error': '交易密碼錯誤,您還可以輸入{}次,超限將被凍結2個小時',
   'user_pay_password_not_setting': '請先設置交易密碼後進行存幣投資',
-  'user_trade_password_incorrect': '帳戶交易密碼不正確',
-  'otc_failure_0092': '當前訂單收款未超時，買方不能申訴',
-  'otc_picture_no_null': '請至少上傳壹張圖片'
+  'user_trade_password_incorrect': '帳戶交易密碼不正確'
 }

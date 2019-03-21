@@ -42,7 +42,7 @@ export default {
       state.symbolJSON[key] = val
       setStore('symbolJSON', state.symbolJSON)
     }
-    console.log(state.symbolMap)
+    // console.log(state.symbolMap)
   },
   [RESET_SYMBOL_MAP] (state) {
     state.symbolMap = new Map()
