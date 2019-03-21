@@ -585,12 +585,17 @@
                 <span class="appeal-reason">
                   <span class="star">*</span>{{$t('M.otc_complaint_appeal_reason')}}
                 </span>
-                <el-input
-                  type="textarea"
+                <!--<el-input-->
+                  <!--type="textarea"-->
+                  <!--maxlength="30"-->
+                  <!--v-model="appealTextAreaValue"-->
+                <!--&gt;-->
+                <!--</el-input>-->
+                <textarea
+                  class="appeal-textarea-text font-size12"
                   maxlength="30"
                   v-model="appealTextAreaValue"
-                >
-                </el-input>
+                ></textarea>
               </div>
               <!--2. 申诉图片部分-->
               <div class="appeal-picture">
@@ -1533,6 +1538,17 @@ export default {
               > .appeal-reason {
                 margin-right: 10px;
               }
+
+              > .appeal-textarea-text {
+                box-sizing: border-box;
+                width: 180px;
+                height: 90px;
+                padding: 8px;
+                border: 1px solid #7587a5;
+                border-radius: 4px;
+                outline-color: transparent;
+                line-height: 16px;
+              }
             }
 
             > .appeal-picture {
@@ -1824,6 +1840,11 @@ export default {
               > .appeal-textarea {
                 > .appeal-reason {
                   color: #338ff5;
+                }
+
+                > .appeal-textarea-text {
+                  color: #9da5b3;
+                  background-color: #1e2636;
                 }
               }
 
@@ -2118,6 +2139,11 @@ export default {
               > .appeal-textarea {
                 > .appeal-reason {
                   color: #338ff5;
+                }
+
+                > .appeal-textarea-text {
+                  color: #7d90ac;
+                  background-color: #fff;
                 }
               }
 
