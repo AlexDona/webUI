@@ -358,7 +358,7 @@
                     size="mini"
                     class="buy-appeal-order"
                     @click="orderAppeal(item.id, index, item.orderType)"
-                    v-show="buyerAppealButtonStatus[index]"
+                    v-if="buyerAppealButtonStatus[index]"
                   >
                     <!-- 订单申诉 -->
                     {{$t('M.otc_complaint')}}
