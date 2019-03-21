@@ -127,7 +127,7 @@
                 >
                   {{ $t('M.user_assets_sum4') }}
                   <span v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                    (USD)
+                    ({{ activeConvertCurrencyObj.shortName }})
                   </span>
                   <span v-else>
                     (CNY)
@@ -201,7 +201,7 @@
                       v-if="assetItem.cnyValue > 0"
                     >
                       <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                        {{ $scientificToNumber($keep2Num(assetItem.cnyValue * BTC2CNYRate)) }} USD
+                        {{ $scientificToNumber($keep2Num(assetItem.cnyValue * BTC2CNYRate)) }} {{ activeConvertCurrencyObj.shortName }}
                       </div>
                       <div v-else>
                         {{ $scientificToNumber($keep2Num(assetItem.cnyValue)) }} CNY
@@ -212,7 +212,7 @@
                       v-else
                     >
                       <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                        0.00 USD
+                        0.00 {{ activeConvertCurrencyObj.shortName }}
                       </div>
                       <div v-else>
                         0.00 CNY
