@@ -277,6 +277,8 @@ export const fromApi = {
   'otc_failure_0089': 'otc 상권은 취소 상태 가 아니다',
   'otc_failure_0090': '계좌가 거래 금지되었습니다OTC. 고객 서비스에 문의하십시오.',
   'otc_failure_0091': '보통사용자는 otc 주문서를 접수할수 없습니다. 우선 상가로 신청하십시오',
+  'otc_failure_0092': '현재 주문 영수증에 시간이 초과되지 않아 구매자가 이의를 제기 할 수 없습니다.',
+  'otc_picture_no_null': '하나 이상의 이미지를 업로드하십시오.',
   'OTC_SELL': 'OTC 매도',
   'otc_success_0001': '취소 완료',
   'otc_success_0002': '매도 완료.',
@@ -327,6 +329,7 @@ export const fromApi = {
   'recharge_withdraw_failure_0043': '제기 된 동전의 총 금액이 당일 한도를 초과합니다.',
   'recharge_withdraw_failure_0044': '비정상적인 VIP 레벨 정보 얻기',
   'recharge_withdraw_failure_0045': '비정상적인 통화 정보 얻기',
+  'recharge_withdraw_failure_0046': '비밀번호를 재설정 한 후 24 시간 이내에 동전을 인출하는 것은 금지되어 있습니다!',
   'recharge_withdraw_msg_status_0001': '출금 대기',
   'recharge_withdraw_msg_status_0002': '잠금',
   'recharge_withdraw_msg_status_0003': '출금 성공',
@@ -371,8 +374,8 @@ export const fromApi = {
   'user-fail-google-code': '구글 인증 코드 오류',
   'user-fail-inviter-notexist': '추천자 존재하지 않습니다.',
   'user-fail-login-disable': '계정 정지되었습니다.',
-  'user-fail-login-lock': '계정이 잠겼습니다. 2시간 후에 다시 시도해 주십시오.',
-  'user-fail-login-password': '사용자 ID 또는 비밀번호 틀립니다. 잔여 시도 횟수 {}',
+  'user-fail-login-lock': '계정이 2 시간 동안 잠겼습니다.',
+  'user-fail-login-password': '잘못된 사용자 이름 또는 비밀번호, 남은 재시도 횟수 {}',
   'user-fail-mail-binded': '이메일 이미 연동되었습니다',
   'user-fail-not-realname': '먼저 실명 인증 하세요',
   'user-fail-oldpassword-error': '원 비밀번호 잘못되었습니다.',
@@ -430,5 +433,6 @@ export const fromApi = {
   'user_pay_disable_state': '이 계정의 거래 비밀번호가 잘못되어 거래가 금지되었습니다. 2시간 후에 다시 시도해 주십시오',
   'user_pay_is_error': '거래 비밀번호가 잘못되었습니다. {}를 2시간 이상 사용할 수 있습니다',
   'user_pay_password_not_setting': '먼저 거래 비밀 번호를 설치한 후에 돈을 예금하고 투자하세요',
-  'user_trade_password_incorrect': '계정 거래 비밀번호 잘못되었습니다.'
+  'user_trade_password_incorrect': '계정 거래 비밀번호 잘못되었습니다.',
+  'otc_failure_0093': '주문에 대한 이의가 제기되었으므로 고객 서비스에 문의하십시오. '
 }

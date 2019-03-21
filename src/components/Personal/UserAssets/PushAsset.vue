@@ -537,6 +537,8 @@ export default {
      * 刚进页面时候 push列表展示
      */
     async getPushRecordList () {
+      // 开启局部loading
+      this.partLoading = true
       let data = await getPushAssetList({
         pageNum: this.currentPageForMyEntrust, // 分页
         pageSize: this.pageSize // 页码

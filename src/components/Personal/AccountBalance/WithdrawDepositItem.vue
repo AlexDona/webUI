@@ -122,16 +122,25 @@
           {{ $t('M.user_assets_withdrawal_hint1') }}：
         </p>
         <!--为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；-->
-        <p class="prompt-message">
+        <p
+          class="prompt-message cursor-pointer"
+          :title="$t('M.user_assets_withdrawal_hint2')"
+        >
           * {{ $t('M.user_assets_withdrawal_hint2') }}
         </p>
         <!--充值经过1个确认后，才允许提现；-->
-        <p class="prompt-message">
+        <p
+          class="prompt-message cursor-pointer"
+          :title="$t('M.user_assets_withdrawal_hint3')"
+        >
           * <span>{{ currencyName }}</span>
           {{ $t('M.user_assets_withdrawal_hint3') }}
         </p>
         <!--可提现金额≤账户可用资产-未确认的数字资产。-->
-        <p class="prompt-message">
+        <p
+          class="prompt-message cursor-pointer"
+          :title="$t('M.user_assets_withdrawal_hint4')"
+        >
           * {{ $t('M.user_assets_withdrawal_hint4') }}
         </p>
         <p class="mention-button">
@@ -261,7 +270,7 @@ export default {
     > .triangle {
       position: absolute;
       top: -7px;
-      right: 56px;
+      right: 60px;
       width: 12px;
       height: 12px;
       -ms-transform: rotate(135deg);
@@ -400,7 +409,7 @@ export default {
       > .text-info-mention {
         position: relative;
         top: -15px;
-        padding-left: 15px;
+        padding: 15px 0 0 15px;
 
         &.need-tag-top {
           top: -45px;
@@ -408,11 +417,15 @@ export default {
 
         > .currency-rule,
         > .prompt-message {
+          width: 260px;
+          overflow: hidden;
           line-height: 25px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         > .mention-button {
-          margin-top: 30px;
+          margin-top: 20px;
 
           > .submit-but {
             width: 80px;

@@ -71,7 +71,9 @@
                 <div
                   class="title-width title-position padding-l7"
                 >
-                  {{ $t('M.user_assets_sum2') }}
+                  <div style="float: left;">
+                    {{ $t('M.user_assets_sum2') }}
+                  </div>
                   <div class="icon-caret">
                     <!--升序-->
                     <i
@@ -93,7 +95,9 @@
                 <div
                   class="title-width-header title-position padding-l7"
                 >
-                  {{ $t('M.user_assets_sum3') }}
+                  <div style="float: left;">
+                    {{ $t('M.user_assets_sum3') }}
+                  </div>
                   <div class="icon-caret-order">
                     <!--升序-->
                     <i
@@ -190,13 +194,23 @@
                     <div
                       v-if="assetItem.btcValue > 0"
                     >
-                      {{ $scientificToNumber($keep8Num(assetItem.btcValue)) }} ≈ {{ $scientificToNumber($keep2Num((assetItem.btcValue) * BTC2CNYRate)) }} {{ activeConvertCurrencyObj.shortName }}
+                      <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                        {{ $scientificToNumber($keep2Num(assetItem.cnyValue * BTC2CNYRate)) }} USD
+                      </div>
+                      <div v-else>
+                        {{ $scientificToNumber($keep2Num(assetItem.cnyValue)) }} CNY
+                      </div>
                     </div>
                     <div
                       class="title-width-right"
                       v-else
                     >
-                      0.00000000 ≈ 0.00 {{activeConvertCurrencyObj.shortName}}
+                      <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                        0.00 USD
+                      </div>
+                      <div v-else>
+                        0.00 CNY
+                      </div>
                     </div>
                   </div>
                   <!--操作-->
@@ -353,7 +367,6 @@
                   <span
                     v-show="!securityCenter.isPhoneEnable"
                   >
-
                   </span>
                   <!--邮箱已认证-->
                   <!--邮箱验证-->
@@ -406,6 +419,7 @@
                       autocomplete= "new-password"
                       class="content-input input-google padding-l15 box-sizing"
                       v-model="password"
+                      @focus="emptyStatus"
                     >
                   </el-form-item>
                 </el-form>
@@ -1274,6 +1288,8 @@ export default {
         // 请输入验证码
         this.errorMessage = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
         return false
+      } else if (this.password == '') {
+        this.errorMessage = this.$t('M.comm_please_enter') + this.$t('M.comm_password')
       } else {
         this.errorMessage = ''
         this.stateSubmitAssets()
@@ -1316,6 +1332,7 @@ export default {
     jumpToOtherTab ({target, coinId}) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
       // 指定要跳转到的coinId
+      console.log(target, coinId, this.activeCoinId)
       if (coinId) {
         this.SET_NEW_WITHDRAW_ADDRESS(coinId)
       }
@@ -1511,12 +1528,10 @@ export default {
               }
 
               .title-position {
-                position: relative;
-
                 .icon-caret {
-                  position: absolute;
-                  top: 0;
-                  right: 90px;
+                  position: relative;
+                  right: 0;
+                  float: left;
                 }
               }
 
@@ -1571,9 +1586,9 @@ export default {
 
               .icon-caret,
               .icon-caret-order {
-                position: absolute;
-                top: 0;
-                right: 15px;
+                position: relative;
+                right: 0;
+                float: right;
 
                 .caret-text {
                   position: absolute;
@@ -1589,9 +1604,9 @@ export default {
               }
 
               .icon-caret-order {
-                position: absolute;
-                top: 0;
-                right: 77px;
+                position: relative;
+                right: 0;
+                float: left;
               }
 
               > .table-tr {
@@ -1737,7 +1752,7 @@ export default {
                         > .text-info-mention {
                           position: relative;
                           top: -15px;
-                          padding-left: 15px;
+                          padding: 15px 0 0 15px;
 
                           &.need-tag-top {
                             top: -45px;

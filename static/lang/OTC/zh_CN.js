@@ -144,8 +144,6 @@ export const OTC = {
   // 'otc_yes': '是',
   'otc_no': '否',
   // 'otc_dataTime': '此功能为测试阶段，开放时间为',
-  'otc_warm_prompt0': '注意！请联系卖家确认收款并确认订单，如果卖家',
-  'otc_warm_prompt00': '小时内未确认订单，系统自动成交。',
   // 'otc_warm_prompt1': '后未手动转账并点击“确认付款”，您的订单将自动取消，若上述情况当日累计出现3次，您的账户将被冻结！',
   // 'otc_warm_prompt2': '注意！',
   // #############订单申诉##########',
@@ -347,5 +345,15 @@ export const OTC = {
   'otc_min_limit_not_more': '不能大于单笔最大限额',
   'otc_max_limit_not_empty': '单笔最大限额不能为空',
   'otc_max_limit_not_high': '单笔最大限额不能高于',
-  'otc_max_limit_not_few': '不能小于单笔最小限额'
+  'otc_max_limit_not_few': '不能小于单笔最小限额',
+  // 增加买家申诉功能
+  'otc_upload_picture1': '上传图片',
+  'otc_upload_picture2': '请至少上传一张图片',
+  'otc_upload_picture3': '上传图片只能是 jpeg/jpg/png/bmp 格式!',
+  'otc_upload_picture4': '上传图片大小不能超过 2M!',
+  'otc_upload_picture5': '上传图片失败,请重试！',
+  'otc_upload_picture6': '上传图片不能超过3张!',
+  'otc_available_balance': '可用余额',
+  'otc_warm_prompt0': '注意！请联系卖家确认收款，如果卖家',
+  'otc_warm_prompt00': '小时内未确认订单，你可以提出申诉。'
 }
