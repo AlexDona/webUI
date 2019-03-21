@@ -180,7 +180,9 @@
             <div
               class="info-color"
             >
-              <div
+              <!--或-->
+               {{ $t('M.user_assets_or') }}
+              <span
                 class="info-color font-size16"
                 v-if="this.totalSumBTC > 0"
               >
@@ -257,15 +259,13 @@ export default {
   methods: {
     async currencyTransform () {
       const params = {
-        coinName: 'FBT',
+        coinName: 'BTC',
         shortName: this.activeConvertCurrencyObj.shortName
       }
       const data = await currencyTransform(params)
       if (!data) return false
       // 获取汇率
       this.BTC2CNYRate = getNestedData(data, 'data.coinPrice')
-      console.log(this.currencyRateList, this.activeConvertCurrencyObj, this.BTC2CNYRate, this.activeConvertCurrencyObj.shortName, (this.totalSumBTC / this.BTC2CNYRate))
-      console.log(this.totalSumBTC / this.BTC2CNYRate)
     },
     // Vip跳转
     stateOpenVip () {

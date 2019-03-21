@@ -494,7 +494,7 @@ export default {
     },
     // 3.修改input value  输入限制
     formatUserInput (ref, pointLength) {
-      if (this.count > this.currencyBalance) {
+      if (this.$refs.count.value - 0 > this.currencyBalance - 0) {
         this.$refs.count.value = this.currencyBalance
       }
       this[ref] = this.$refs[ref].value
