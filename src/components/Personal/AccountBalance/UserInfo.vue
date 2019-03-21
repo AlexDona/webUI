@@ -182,7 +182,7 @@
             >
               <!--或-->
                {{ $t('M.user_assets_or') }}
-              <span
+              <div
                 class="info-color font-size16"
                 v-if="this.totalSumBTC > 0"
               >
