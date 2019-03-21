@@ -192,7 +192,7 @@
                     class="table-td text-align-r title-width1"
                   >
                     <div
-                      v-if="assetItem.btcValue > 0"
+                      v-if="assetItem.cnyValue > 0"
                     >
                       <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
                         {{ $scientificToNumber($keep2Num(assetItem.cnyValue * BTC2CNYRate)) }} USD
@@ -728,7 +728,7 @@ export default {
     async currencyTransform () {
       // console.log(this.currencyRateList, this.activeConvertCurrencyObj)
       const params = {
-        coinName: 'BTC',
+        coinName: 'FBT',
         shortName: this.activeConvertCurrencyObj.shortName
       }
       const data = await currencyTransform(params)

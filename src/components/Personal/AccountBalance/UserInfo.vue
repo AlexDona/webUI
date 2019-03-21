@@ -180,8 +180,6 @@
             <div
               class="info-color"
             >
-              <!--或-->
-               {{ $t('M.user_assets_or') }}
               <div
                 class="info-color font-size16"
                 v-if="this.totalSumBTC > 0"
@@ -259,7 +257,7 @@ export default {
   methods: {
     async currencyTransform () {
       const params = {
-        coinName: 'BTC',
+        coinName: 'FBT',
         shortName: this.activeConvertCurrencyObj.shortName
       }
       const data = await currencyTransform(params)
