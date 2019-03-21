@@ -180,14 +180,12 @@
             <div
               class="info-color"
             >
-              <!--或-->
-               {{ $t('M.user_assets_or') }}
               <div
                 class="info-color font-size16"
                 v-if="this.totalSumBTC > 0"
               >
                 <p v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                  {{ $scientificToNumber($keep2Num(this.totalSumBTC * BTC2CNYRate)) }} <span class="font-size12">USD</span>
+                  {{ $scientificToNumber($keep2Num(this.totalSumBTC * BTC2CNYRate)) }} <span class="font-size12">{{ activeConvertCurrencyObj.shortName }}</span>
                 </p>
                 <p v-else>
                   {{ $scientificToNumber($keep2Num(this.totalSumBTC)) }} <span class="font-size12">CNY</span>
@@ -198,7 +196,7 @@
                   class="info-color font-size12"
                   v-if="activeConvertCurrencyObj.shortName !== 'CNY'"
                 >
-                  0.00 <span class="font-size12">USD</span>
+                  0.00 <span class="font-size12">{{ activeConvertCurrencyObj.shortName }}</span>
                 </p>
                 <p
                   class="info-color font-size12"
@@ -259,7 +257,7 @@ export default {
   methods: {
     async currencyTransform () {
       const params = {
-        coinName: 'BTC',
+        coinName: 'FBT',
         shortName: this.activeConvertCurrencyObj.shortName
       }
       const data = await currencyTransform(params)

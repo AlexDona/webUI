@@ -125,7 +125,13 @@
                 <div
                   class="flex-asset title-width1"
                 >
-                  {{ $t('M.user_assets_sum4') }}(BTC)
+                  {{ $t('M.user_assets_sum4') }}
+                  <span v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                    ({{ activeConvertCurrencyObj.shortName }})
+                  </span>
+                  <span v-else>
+                    (CNY)
+                  </span>
                   <div class="icon-caret">
                     <!--升序-->
                     <i
@@ -192,10 +198,10 @@
                     class="table-td text-align-r title-width1"
                   >
                     <div
-                      v-if="assetItem.btcValue > 0"
+                      v-if="assetItem.cnyValue > 0"
                     >
                       <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                        {{ $scientificToNumber($keep2Num(assetItem.cnyValue * BTC2CNYRate)) }} USD
+                        {{ $scientificToNumber($keep2Num(assetItem.cnyValue * BTC2CNYRate)) }} {{ activeConvertCurrencyObj.shortName }}
                       </div>
                       <div v-else>
                         {{ $scientificToNumber($keep2Num(assetItem.cnyValue)) }} CNY
@@ -206,7 +212,7 @@
                       v-else
                     >
                       <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                        0.00 USD
+                        0.00 {{ activeConvertCurrencyObj.shortName }}
                       </div>
                       <div v-else>
                         0.00 CNY
@@ -728,7 +734,7 @@ export default {
     async currencyTransform () {
       // console.log(this.currencyRateList, this.activeConvertCurrencyObj)
       const params = {
-        coinName: 'BTC',
+        coinName: 'FBT',
         shortName: this.activeConvertCurrencyObj.shortName
       }
       const data = await currencyTransform(params)
