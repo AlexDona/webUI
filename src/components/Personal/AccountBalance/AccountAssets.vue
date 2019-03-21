@@ -125,7 +125,13 @@
                 <div
                   class="flex-asset title-width1"
                 >
-                  {{ $t('M.user_assets_sum4') }}(BTC)
+                  {{ $t('M.user_assets_sum4') }}
+                  <span v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                    (USD)
+                  </span>
+                  <span v-else>
+                    (CNY)
+                  </span>
                   <div class="icon-caret">
                     <!--升序-->
                     <i
