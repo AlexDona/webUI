@@ -329,7 +329,7 @@ export const fromApi = {
   'recharge_withdraw_failure_0043': '提幣總量超過當日上限',
   'recharge_withdraw_failure_0044': '獲取VIP等級資訊異常',
   'recharge_withdraw_failure_0045': '獲取商戶幣種資訊異常',
-  'recharge_withdraw_failure_0046': '重置密碼之後25小時之內禁止提幣!',
+  'recharge_withdraw_failure_0046': '重置密碼之後24小時之內禁止提幣!',
   'recharge_withdraw_msg_status_0001': '等待提現',
   'recharge_withdraw_msg_status_0002': '鎖定',
   'recharge_withdraw_msg_status_0003': '提現成功',

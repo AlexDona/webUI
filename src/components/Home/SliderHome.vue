@@ -143,8 +143,7 @@ export default {
             watch: {
               bannerActive (newVal) {
                 // console.log(newVal)
-                // console.log(this.$refs)
-                newVal ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
+                newVal || that.sliderListAjax.length < 5 ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
               }
             },
             template: `<a
