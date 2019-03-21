@@ -433,5 +433,6 @@ export const fromApi = {
   'user_pay_disable_state': '该账号交易密码错误超限已被禁止交易,请过2个小时之后重试',
   'user_pay_is_error': '交易密码错误,您还可以输入{}次,超限将被冻结2个小时',
   'user_pay_password_not_setting': '请先设置交易密码后进行存币投资',
-  'user_trade_password_incorrect': '账户交易密码不正确'
+  'user_trade_password_incorrect': '账户交易密码不正确',
+  'otc_failure_0093': '该订单已申诉，请联系客服'
 }

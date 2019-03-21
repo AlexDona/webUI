@@ -433,5 +433,5 @@ export const fromApi = {
   'user_pay_disable_state': 'このアカウント取引はパスワードエラーの制限が禁止されたので、2時間後に再テストしてください',
   'user_pay_is_error': '取引パスワードのエラー、あなたは{}を入力することができて、期限を2时间冻结します',
   'user_pay_password_not_setting': '取引パスワードを設定して、あらかじめ積立金投資を行ってください',
-  'user_trade_password_incorrect': 'アカウントのトランザクションパスワードが間違っています'
+  'otc_failure_0093': '申し立てが上訴されました。カスタマーサービスにご連絡ください。'
 }
