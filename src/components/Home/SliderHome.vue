@@ -77,7 +77,9 @@ export default {
       this.renderSlider()
     },
     slide (data) {
-      let bigUrl = getNestedData(this.sliderListAjax[getNestedData(data, 'currentPage') || 0], 'bigUrl')
+      // console.log(data.currentPage)
+      let currentIndex = data.currentPage == this.sliderListAjax.length ? 0 : data.currentPage
+      let bigUrl = getNestedData(this.sliderListAjax[currentIndex], 'bigUrl')
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
     },
     renderSlider () {
