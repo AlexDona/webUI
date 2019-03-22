@@ -29,6 +29,8 @@ export const personal = {
   'user_not_google_enabled': '구글 인증 없음',
   'user_leave_vip': 'VIP 열기',
   'user_look_vip': '업그레이드 VIP 보기',
+  'user_payPassword_switch': '거래 비밀번호 검증 잠시 닫기',
+  'user_payPassword': '거래 비밀번호를 잊어버릴까요?',
   // 'user_asset_valuation': '자산 평가',
   'user_assets_suspended': '충전 일시 중지, 지갑 유지 관리',
   'user_assets_pause_mention': '코인 출금 일시 중지',

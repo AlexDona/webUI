@@ -29,6 +29,8 @@ export const personal = {
   'user_not_google_enabled': '未开启谷歌验证',
   'user_leave_vip': '前往开启VIP',
   'user_look_vip': '查看或升级VIP',
+  'user_payPassword_switch': '暂时关闭交易密码验证',
+  'user_payPassword': '忘记交易密码？',
   // 'user_asset_valuation': '资产估值',
   'user_assets_suspended': '充值暂停，钱包维护中',
   'user_assets_pause_mention': '暂停提币',

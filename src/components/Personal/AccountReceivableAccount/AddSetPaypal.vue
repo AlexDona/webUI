@@ -90,22 +90,30 @@
                 :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
-            <button
-              v-if="paymentTerm.isPaypalBind"
-              class="payment-button border-radius4 cursor-pointer"
-              @click.prevent="stateSubmitPaypal"
-            >
-              <!--确认设置-->
-              {{ $t('M.user_bind_paypal_confirm_set') }}
-            </button>
-            <button
-              v-else
-              class="payment-button border-radius4 cursor-pointer"
-              @click.prevent="stateSubmitPaypal"
-            >
-              <!--确认修改-->
-              {{ $t('M.user_modification_confirm_amend') }}
-            </button>
+            <div style="width: 430px;">
+              <button
+                v-if="paymentTerm.isPaypalBind"
+                class="payment-button border-radius4 cursor-pointer"
+                @click.prevent="stateSubmitPaypal"
+              >
+                <!--确认设置-->
+                {{ $t('M.user_bind_paypal_confirm_set') }}
+              </button>
+              <button
+                v-else
+                class="payment-button border-radius4 cursor-pointer"
+                @click.prevent="stateSubmitPaypal"
+              >
+                <!--确认修改-->
+                {{ $t('M.user_modification_confirm_amend') }}
+              </button>
+              <p
+                class="font-size12 cursor-pointer text-align-r hint-color"
+                @click.prevent="payPasswordState"
+              >
+                {{ $t('M.user_payPassword') }}
+              </p>
+            </div>
           </el-form>
         </div>
       </div>
@@ -170,6 +178,10 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    // 点击跳转到重置交易密码
+    payPasswordState () {
+      this.$goToPage('/TransactionPassword')
+    },
     // 点击返回上个页面
     returnSuperior () {
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
@@ -355,7 +367,6 @@ export default {
 
         > .payment-content-from {
           width: 800px;
-          margin-left: 55px;
 
           .payment-input {
             width: 220px;
@@ -371,9 +382,9 @@ export default {
           }
 
           .payment-button {
-            width: 235px;
+            width: 237px;
             padding: 10px 0;
-            margin: 30px 0 50px 188px;
+            margin: 5px 0 10px 188px;
             text-align: center;
           }
         }
