@@ -594,7 +594,7 @@
                 <textarea
                   class="appeal-textarea-text font-size12"
                   maxlength="30"
-                  v-model="appealTextAreaValue"
+                  v-model.trim="appealTextAreaValue"
                 ></textarea>
               </div>
               <!--2. 申诉图片部分-->
