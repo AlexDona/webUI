@@ -270,6 +270,7 @@
                 <p v-if="isShowErrorTips" class="errorTips">{{$t('M.otc_publishAD_pleaseInput') + $t('M.comm_password') }}</p>
                 <span slot="footer" class="dialog-footer">
                   <el-button type="primary" @click="submitPassword"  :disabled="isDisable">{{$t('M.comm_confirm')}}</el-button>
+                  <router-link to="/TransactionPassword" append class="blue forgetPass" tag="div">{{$t('M.user_payPassword')}}</router-link>
                 </span>
               </el-dialog>
               <!--存币说明-->
@@ -988,7 +989,6 @@ export default {
     },
     // 交易类型改变时执行
     electedInvestTypeDisc (e) {
-      console.log(e)
       this.selectedInvestTypeId = e
       _.forEach(this.traderCoinList, item => {
         if (item.id === e) {
@@ -1382,6 +1382,14 @@ export default {
           background-color: #1a2233;
         }
 
+        .el-dialog__body {
+          padding: 30px 20px 5px;
+        }
+
+        .el-dialog__footer {
+          overflow: hidden;
+        }
+
         .errorTips {
           line-height: 36px;
           color: #d45858;
@@ -1393,6 +1401,14 @@ export default {
           border: 0;
           line-height: 0;
           background: linear-gradient(81deg, #2b396e 0%, #2a5082 100%);
+        }
+
+        .forgetPass {
+          margin: 15px 0 0;
+        }
+
+        .forgetPass:hover {
+          cursor: pointer;
         }
       }
 
