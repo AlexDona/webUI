@@ -627,12 +627,17 @@
                   <!--申诉原因-->
                   <span class="star">*</span>{{$t('M.otc_complaint_appeal_reason')}}
                 </span>
-                <el-input
-                  type="textarea"
+                <!--<el-input-->
+                  <!--type="textarea"-->
+                  <!--maxlength="30"-->
+                  <!--v-model="appealTextAreaValue"-->
+                <!--&gt;-->
+                <!--</el-input>-->
+                <textarea
+                  class="appeal-textarea-text font-size12"
                   maxlength="30"
-                  v-model="appealTextareaValue"
-                >
-                </el-input>
+                  v-model.trim="appealTextAreaValue"
+                ></textarea>
               </div>
               <!--2. 申诉图片部分-->
               <div class="appeal-picture">
@@ -851,7 +856,7 @@ export default {
       dialogVisible1: false, // 确认付款交易密码框
       dialogVisible2: false, // 确认收款交易密码框
       dialogVisible3: false, // 提交申诉交易密码框
-      appealTextareaValue: '', // 订单申诉原因文本域内容
+      appealTextAreaValue: '', // 订单申诉原因文本域内容
       activitedPayStyle: '', //  选中的支付方式
       activitedPayStyleId: '', //  选中的支付方式id-往后台传送的参数
       // tradingOrderList: [], // 交易中订单列表
@@ -1259,7 +1264,7 @@ export default {
       this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
       if (this.isLockedPayPassword) return false
       // 申诉原因验证
-      if (!this.appealTextareaValue) {
+      if (!this.appealTextAreaValue) {
         this.$message({
           // 请输入申诉原因
           message: this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_complaint_appeal_reason'),
@@ -1291,7 +1296,7 @@ export default {
       console.log(this.orderTypeParam)
       let params = {
         orderId: this.activedTradingOrderId, // 订单id
-        reason: this.appealTextareaValue, // 申诉原因
+        reason: this.appealTextAreaValue, // 申诉原因
         tradePassword: this.tradePassword, // 交易密码
         picture1: this.picture1,
         picture2: this.picture2,
@@ -1310,6 +1315,7 @@ export default {
       this.dialogVisible3 = false
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
+      this.appealTextAreaValue = '' // 清空申诉原因
       // 正确逻辑
       // 2再次调用接口刷新列表
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
@@ -1604,6 +1610,17 @@ export default {
                   margin-right: 10px;
                   color: #338ff5;
                 }
+
+                > .appeal-textarea-text {
+                  box-sizing: border-box;
+                  width: 160px;
+                  height: 90px;
+                  padding: 8px;
+                  border: 1px solid #7587a5;
+                  border-radius: 4px;
+                  outline-color: transparent;
+                  line-height: 16px;
+                }
               }
 
               > .appeal-picture {
@@ -1790,6 +1807,11 @@ export default {
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
+
+      .appeal-textarea-text {
+        color: #9da5b3;
+        background-color: #1e2636;
+      }
 
       > .fiat-trading-order-content {
         .button {
@@ -2005,6 +2027,11 @@ export default {
                 > .appeal-textarea {
                   > .appeal-reason {
                     color: #338ff5;
+                  }
+
+                  > .appeal-textarea-text {
+                    color: #7d90ac;
+                    background-color: #fff;
                   }
                 }
               }

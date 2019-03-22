@@ -64,7 +64,7 @@
             </el-form-item>
             <!--数量-->
             <el-form-item
-              :label="$t('M.comm_count')"
+              :label="'PUSH' + $t('M.comm_count')"
             >
               <input
                 class="form-input-common border-radius2 padding-l15"
@@ -82,7 +82,7 @@
             </el-form-item>
             <!--价格-->
             <el-form-item
-              :label="$t('M.comm_price_metre')"
+              :label="'PUSH' + $t('M.otc_index_UnitPrice')"
             >
               <input
                 class="form-input-common border-radius2 padding-l15"
@@ -138,6 +138,7 @@
             <!--类型-->
             <el-table-column
               :label="$t('M.comm_type')"
+              width="100"
             >
               <template slot-scope="s">
                 <div>{{ s.row.type }}</div>
@@ -156,6 +157,7 @@
             <!--对方UID-->
             <el-table-column
               :label="$t('M.user_push_opposite_side') + ' UID'"
+              width="110"
             >
               <template slot-scope="s">
                 <div
@@ -205,7 +207,7 @@
             <!--时间-->
             <el-table-column
               :label="$t('M.comm_time')"
-              width="180"
+              width="160"
             >
               <template slot-scope="s">
                 <div>{{ timeFormatting(s.row.createTime) }}</div>
@@ -214,6 +216,7 @@
             <!--状态-->
             <el-table-column
               :label="$t('M.comm_state')"
+              width="130"
             >
               <template slot-scope="s">
                 <div v-if="s.row.state === 'PUSH_DEAL'">
@@ -233,6 +236,7 @@
             <!--操作-->
             <el-table-column
               :label="$t('M.comm_operation')"
+              width="100"
             >
               <template slot-scope="s">
                 <div
@@ -346,6 +350,7 @@
                     type="password"
                     autocomplete= "new-password"
                     class="form-input-common border-radius2 padding-l15 box-sizing"
+                    @focus="handleinput"
                     v-model="payPassword"
                     @keydown="setErrorMsg(3, '')"
                     @blur="checkoutInputFormat(3, payPassword, 1)"
@@ -364,6 +369,13 @@
                 slot="footer"
                 class="dialog-footer"
               >
+                <p
+                  class="font-size12 cursor-pointer text-align-l hint-color"
+                  @click.prevent="payPasswordState('setting')"
+                >
+                  <!--暂时关闭交易密码校验-->
+                  {{ $t('M.user_payPassword_switch') }}
+                </p>
                 <el-button
                   type="primary"
                   @click.prevent="submitWithPayPassword"
@@ -371,6 +383,13 @@
                   <!--确 定-->
                   {{ $t('M.comm_confirm') }}
                 </el-button>
+                <p
+                  class="font-size12 cursor-pointer text-align-r hint-color"
+                  @click.prevent="payPasswordState('patPassword')"
+                >
+                  <!--忘记密码-->
+                  {{ $t('M.user_payPassword') }}
+                </p>
               </div>
             </el-dialog>
           </div>
@@ -483,11 +502,27 @@ export default {
   methods: {
     ...mapMutations([
       'SET_PUSH_BUTTON_STATUS',
-      'CHANGE_PASSWORD_USEABLE'
+      'CHANGE_PASSWORD_USEABLE',
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    // 点击跳转到重置交易密码
+    payPasswordState (type) {
+      switch (type) {
+        case 'setting':
+          this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+          this.$goToPage('/PersonalCenter')
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
+          this.isShowPayPasswordDialog = false
+          break
+        case 'patPassword':
+          this.$goToPage('/TransactionPassword')
+          break
+      }
+    },
     // 1.时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -681,6 +716,9 @@ export default {
     changeCurrentPage (pageNum) {
       this.currentPageForMyEntrust = pageNum
       this.getPushRecordList()
+    },
+    handleinput () {
+      this.payPassword = ''
     },
     // 清空数据
     emptyInputData () {
@@ -1013,6 +1051,7 @@ export default {
         .el-button {
           width: 270px;
           height: 36px;
+          margin: 10px 0;
           border: 0;
           line-height: 0;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);

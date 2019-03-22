@@ -447,6 +447,12 @@
                     <!--确 定-->
                     {{ $t('M.comm_confirm') }}
                   </el-button>
+                  <span
+                    class="font-size12 tops-password tops-verify cursor-pointer"
+                    @click.prevent="payPasswordState"
+                  >
+                    {{ $t('M.user_payPassword') }}
+                  </span>
                 </div>
               </el-dialog>
               <!--设置交易密码-->
@@ -730,6 +736,10 @@ export default {
       'SET_NEW_WITHDRAW_ADDRESS',
       'CHANGE_PASSWORD_USEABLE'
     ]),
+    // 点击跳转到重置交易密码
+    payPasswordState () {
+      this.$goToPage('/TransactionPassword')
+    },
     // 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
       // console.log(this.currencyRateList, this.activeConvertCurrencyObj)
@@ -1525,6 +1535,16 @@ export default {
             > .table-body {
               width: 100%;
 
+              .tops-verify {
+                color: #3e79d6;
+              }
+
+              .tops-password {
+                float: right;
+                display: inline-block;
+                line-height: 30px;
+              }
+
               .title-width {
                 width: 150px;
               }
@@ -1770,8 +1790,6 @@ export default {
                           }
 
                           > .mention-button {
-                            margin-top: 30px;
-
                             > .submit-but {
                               width: 80px;
                               height: 34px;
@@ -1816,7 +1834,7 @@ export default {
                 z-index: 999;
                 top: 3px;
                 right: 2px;
-                width: 95px;
+                width: 96px;
                 height: 34px;
               }
             }
@@ -1888,6 +1906,10 @@ export default {
     }
 
     /deep/ {
+      .el-dialog__headerbtn {
+        top: 11px;
+      }
+
       .warning {
         .el-dialog {
           width: 350px;
@@ -1948,9 +1970,9 @@ export default {
       }
 
       .el-dialog__header {
-        height: 50px;
-        padding: 10px 20px;
-        border-radius: 5px;
+        height: 40px;
+        padding: 5px 20px;
+        border-radius: 5px 5px 0 0;
         line-height: 30px;
       }
 
@@ -1984,7 +2006,7 @@ export default {
       }
 
       .el-dialog__footer {
-        padding: 0 27px 25px;
+        padding: 0 27px 40px;
         text-align: left;
       }
 

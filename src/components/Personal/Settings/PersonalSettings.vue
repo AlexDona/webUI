@@ -137,6 +137,11 @@
             <!--取 消-->
             {{ $t('M.comm_cancel') }}
           </button>
+          <!-- 忘记交易密码 -->
+          <p
+            class="forget-password text-align-r margin-top9"
+            @click="$goToPage('/TransactionPassword')"
+          >{{$t('M.user_payPassword')}}</p>
         </span>
       </el-dialog>
     </div>
@@ -460,6 +465,12 @@ export default {
       .el-dialog__footer {
         padding: 0 27px 25px;
         text-align: left;
+
+        .forget-password {
+          font-size: 12px;
+          color: $mainColor;
+          cursor: pointer;
+        }
       }
 
       .button-color {
