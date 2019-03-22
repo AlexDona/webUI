@@ -704,12 +704,12 @@
               {{$t('M.otc_submit')}}
             </el-button>
             <!--忘记交易密码？-->
-              <div
-                class="forget-pwd-tip font-size12 cursor-pointer"
-                @click.prevent="forgetPwdJump"
-              >
-                {{$t('M.user_payPassword')}}
-              </div>
+            <div
+              class="forget-pwd-tip font-size12 cursor-pointer"
+              @click.prevent="forgetPwdJump"
+            >
+              {{$t('M.user_payPassword')}}
+            </div>
           </span>
         </el-dialog>
       </div>

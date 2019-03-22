@@ -734,17 +734,32 @@
               {{errpwd}}
             </div>
           </div>
+          <!--暂时关闭交易密码验证-->
+          <div
+            class="close-pwd-tip font-size12 cursor-pointer"
+            @click.prevent="closePwdJump"
+          >
+            {{$t('M.user_payPassword_switch')}}
+          </div>
           <span
             slot="footer"
-            class="dialog-footer">
-              <button
-                class="button"
-                type="primary"
-                @click="submitButton1"
-              >
-                <!--提 交-->
-                {{$t('M.comm_sub_time')}}
-              </button>
+            class="dialog-footer"
+          >
+            <button
+              class="button"
+              type="primary"
+              @click="submitButton1"
+            >
+              <!--提 交-->
+              {{$t('M.comm_sub_time')}}
+            </button>
+            <!--忘记交易密码？-->
+            <div
+              class="forget-pwd-tip font-size12 cursor-pointer"
+              @click.prevent="forgetPwdJump"
+            >
+              {{$t('M.user_payPassword')}}
+            </div>
           </span>
         </el-dialog>
       </div>
@@ -772,17 +787,32 @@
               {{errpwd}}
             </div>
           </div>
+          <!--暂时关闭交易密码验证-->
+          <div
+            class="close-pwd-tip font-size12 cursor-pointer"
+            @click.prevent="closePwdJump"
+          >
+            {{$t('M.user_payPassword_switch')}}
+          </div>
           <span
             slot="footer"
-            class="dialog-footer">
-              <button
-                class="button"
-                type="primary"
-                @click="submitButton2"
-              >
-                <!--提 交-->
-                {{$t('M.comm_sub_time')}}
-              </button>
+            class="dialog-footer"
+          >
+            <button
+              class="button"
+              type="primary"
+              @click="submitButton2"
+            >
+              <!--提 交-->
+              {{$t('M.comm_sub_time')}}
+            </button>
+            <!--忘记交易密码？-->
+            <div
+              class="forget-pwd-tip font-size12 cursor-pointer"
+              @click.prevent="forgetPwdJump"
+            >
+              {{$t('M.user_payPassword')}}
+            </div>
           </span>
         </el-dialog>
       </div>
@@ -807,17 +837,32 @@
             <!-- 错误提示 -->
             <div class="tips">{{errpwd}}</div>
           </div>
+          <!--暂时关闭交易密码验证-->
+          <div
+            class="close-pwd-tip font-size12 cursor-pointer"
+            @click.prevent="closePwdJump"
+          >
+            {{$t('M.user_payPassword_switch')}}
+          </div>
           <span
             slot="footer"
-            class="dialog-footer">
-              <button
-                class="button"
-                type="primary"
-                @click="submitsellerAppeal"
-              >
-                <!--提 交-->
-                {{$t('M.comm_sub_time')}}
-              </button>
+            class="dialog-footer"
+          >
+            <button
+              class="button"
+              type="primary"
+              @click="submitsellerAppeal"
+            >
+              <!--提 交-->
+              {{$t('M.comm_sub_time')}}
+            </button>
+            <!--忘记交易密码？-->
+            <div
+              class="forget-pwd-tip font-size12 cursor-pointer"
+              @click.prevent="forgetPwdJump"
+            >
+              {{$t('M.user_payPassword')}}
+            </div>
           </span>
         </el-dialog>
       </div>
@@ -839,7 +884,8 @@ import {apiCommonUrl, xDomain} from '../../../utils/env.js'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
   changeCurrentPageForLegalTrader,
-  getNestedData
+  getNestedData,
+  isNeedPayPasswordAjax
 } from '../../../utils/commonFunc'
 import {
   mapMutations,
@@ -899,6 +945,8 @@ export default {
   created () {
     // 1.0 请求交易中订单列表
     // this.getOTCTradingOrdersList()
+    // 2刚进页面调用接口刷新列表
+    this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
   },
   mounted () {},
   activated () {},
@@ -909,7 +957,9 @@ export default {
       'SET_LEGAL_TENDER_REFLASH_STATUS',
       'CHANGE_LEGAL_PAGE',
       'CHANGE_RE_RENDER_TRADING_LIST_STATUS', // 更改重新渲染交易中订单列表状态,
-      'CHANGE_PASSWORD_USEABLE'
+      'CHANGE_PASSWORD_USEABLE',
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -1131,11 +1181,6 @@ export default {
     },
     // 4.0 买家点击确认付款按钮 弹出交易密码框
     async confirmPayMoney (index) {
-      // 判断是否交易密码锁定
-      await this.REFRESH_USER_INFO_ACTION()
-      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-      if (this.isLockedPayPassword) return false
       if (!this.activePayModeList[index]) {
         this.$message({
           // 请选择支付方式
@@ -1144,9 +1189,19 @@ export default {
         })
         return false
       }
+      // 判断是否交易密码锁定
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
       if (this.buttonStatusArr[index] === true) {
-        // 弹出交易密码框
-        this.dialogVisible1 = true
+        if (this.isNeedPayPassword) {
+          // 弹出交易密码框
+          this.dialogVisible1 = true
+        } else {
+          this.submitButton1()
+        }
       }
     },
     // 5.0 买家点击确认付款按钮 点击交易密码框中的提交按钮--交易密码狂获得焦点
@@ -1155,7 +1210,7 @@ export default {
     },
     // 6.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
     async submitButton1 () {
-      if (!this.tradePassword) {
+      if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.comm_password')
         return false
@@ -1199,19 +1254,30 @@ export default {
     // },
     // 8.0 卖家点击确认收款按钮
     async confirmGatherMoney (id) {
+      this.activedTradingOrderId = id
       // 判断是否交易密码锁定
       await this.REFRESH_USER_INFO_ACTION()
       let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
       this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
       if (this.isLockedPayPassword) return false
-      this.activedTradingOrderId = id
       // 弹出交易密码框
-      this.dialogVisible2 = true
       // console.log(id)
       console.log(this.activedTradingOrderId)
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+      if (this.isNeedPayPassword) {
+        // 弹出交易密码框
+        this.dialogVisible2 = true
+      } else {
+        this.submitButton2()
+      }
     },
     // 9.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
     async submitButton2 () {
+      if (this.isNeedPayPassword && !this.tradePassword) {
+        this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
+        return false
+      }
+      this.loading = true
       const data = await sellerConfirmGetMoney({
         orderId: this.activedTradingOrderId, // 订单id
         tradePassword: this.tradePassword // 交易密码
@@ -1234,6 +1300,7 @@ export default {
       // 2再次调用接口刷新列表
       // this.getOTCTradingOrdersList()
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
+      this.loading = false
     },
     // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index, orderType) {
@@ -1257,12 +1324,8 @@ export default {
     // 12.0 卖家提交申诉按钮弹出交易密码框
     async sellerAppeal (id, index, orderType) {
       console.log(orderType)
+      this.tradePassword = '' // 清空密码框
       this.orderTypeParam = orderType
-      // 判断是否交易密码锁定
-      await this.REFRESH_USER_INFO_ACTION()
-      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-      if (this.isLockedPayPassword) return false
       // 申诉原因验证
       if (!this.appealTextAreaValue) {
         this.$message({
@@ -1289,11 +1352,26 @@ export default {
         })
       }
       this.activedTradingOrderId = id
-      this.dialogVisible3 = true
+      // 判断是否交易密码锁定
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+      if (this.isNeedPayPassword) {
+        this.dialogVisible3 = true
+      } else {
+        this.submitsellerAppeal()
+      }
     },
     // 13.0 卖家提交申诉按钮
     async submitsellerAppeal () {
       console.log(this.orderTypeParam)
+      if (this.isNeedPayPassword && !this.tradePassword) {
+        // 请输入交易密码
+        this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
+        return false
+      }
       let params = {
         orderId: this.activedTradingOrderId, // 订单id
         reason: this.appealTextAreaValue, // 申诉原因
@@ -1322,6 +1400,16 @@ export default {
       if (!data) return false
       // 2再次调用接口刷新列表
       // this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
+    },
+    // 忘记密码跳转
+    forgetPwdJump () {
+      this.$goToPage('/TransactionPassword')
+    },
+    // 暂时关闭交易密码验证跳转
+    closePwdJump () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+      this.$goToPage('/PersonalCenter')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
   filter: {},
@@ -1745,7 +1833,7 @@ export default {
       .password-dialog {
         .el-dialog {
           width: 350px;
-          height: 207px;
+          height: 240px;
           border-radius: 4px;
         }
 
@@ -1785,11 +1873,22 @@ export default {
             padding-top: 5px;
             font-size: 12px;
           }
+
+          .close-pwd-tip {
+            margin-top: 5px;
+            color: #338ff5;
+          }
         }
 
         .el-dialog__footer {
           padding: 0;
           text-align: center;
+
+          .forget-pwd-tip {
+            padding: 8px 20px 0 0;
+            text-align: right;
+            color: #338ff5;
+          }
         }
 
         .el-button--primary {
