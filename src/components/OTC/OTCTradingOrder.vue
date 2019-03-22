@@ -674,7 +674,6 @@
             <input
               type="password"
               autocomplete="new-password"
-              :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
@@ -682,20 +681,35 @@
               onpaste="return false"
             >
           </div>
+          <!-- 错误提示 -->
           <div class="error-info">
-            <!-- 错误提示 -->
             <div class="tips">{{errPWD}}</div>
+          </div>
+          <!--暂时关闭交易密码验证-->
+          <div
+            class="close-pwd-tip font-size12 cursor-pointer"
+            @click.prevent="closePwdJump"
+          >
+            {{$t('M.user_payPassword_switch')}}
           </div>
           <span
             slot="footer"
-            class="dialog-footer">
-              <el-button
-                type="primary"
-                @click="submitConfirmPayment"
+            class="dialog-footer"
+          >
+            <!-- 提 交 -->
+            <el-button
+              type="primary"
+              @click="submitConfirmPayment"
+            >
+              {{$t('M.otc_submit')}}
+            </el-button>
+            <!--忘记交易密码？-->
+              <div
+                class="forget-pwd-tip font-size12 cursor-pointer"
+                @click.prevent="forgetPwdJump"
               >
-                <!-- 提 交 -->
-                {{$t('M.otc_submit')}}
-              </el-button>
+                {{$t('M.user_payPassword')}}
+              </div>
           </span>
         </el-dialog>
       </div>
@@ -713,7 +727,6 @@
             <input
               type="password"
               autocomplete="new-password"
-              :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
@@ -721,20 +734,35 @@
               onpaste="return false"
             >
           </div>
+          <!-- 错误提示 -->
           <div class="error-info">
-            <!-- 错误提示 -->
             <div class="tips">{{errPWD}}</div>
+          </div>
+          <!--暂时关闭交易密码验证-->
+          <div
+            class="close-pwd-tip font-size12 cursor-pointer"
+            @click.prevent="closePwdJump"
+          >
+            {{$t('M.user_payPassword_switch')}}
           </div>
           <span
             slot="footer"
-            class="dialog-footer">
-              <el-button
-                type="primary"
-                @click="submitConfirmGathering"
-              >
-                <!-- 提 交 -->
-                 {{$t('M.otc_submit')}}
-              </el-button>
+            class="dialog-footer"
+          >
+            <!-- 提 交 -->
+            <el-button
+              type="primary"
+              @click="submitConfirmGathering"
+            >
+              {{$t('M.otc_submit')}}
+            </el-button>
+            <!--忘记交易密码？-->
+            <div
+              class="forget-pwd-tip font-size12 cursor-pointer"
+              @click.prevent="forgetPwdJump"
+            >
+              {{$t('M.user_payPassword')}}
+            </div>
           </span>
         </el-dialog>
       </div>
@@ -749,11 +777,10 @@
         >
           <!-- 请输入交易密码 -->
           <div class="input">
-          <!-- 交易密码 -->
+            <!-- 交易密码 -->
             <input
               type="password"
               autocomplete="new-password"
-              :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
@@ -761,20 +788,35 @@
               onpaste="return false"
             >
           </div>
+          <!-- 错误提示 -->
           <div class="error-info">
-            <!-- 错误提示 -->
             <div class="tips">{{errPWD}}</div>
+          </div>
+          <!--暂时关闭交易密码验证-->
+          <div
+            class="close-pwd-tip font-size12 cursor-pointer"
+            @click.prevent="closePwdJump"
+          >
+            {{$t('M.user_payPassword_switch')}}
           </div>
           <span
             slot="footer"
-            class="dialog-footer">
-              <el-button
-                type="primary"
-                @click="sellerSubmitAppeal"
-              >
-                <!-- 提 交 -->
-                  {{$t('M.otc_submit')}}
-              </el-button>
+            class="dialog-footer"
+          >
+            <!-- 提 交 -->
+            <el-button
+              type="primary"
+              @click="sellerSubmitAppeal"
+            >
+              {{$t('M.otc_submit')}}
+            </el-button>
+            <!--忘记交易密码？-->
+            <div
+              class="forget-pwd-tip font-size12 cursor-pointer"
+              @click.prevent="forgetPwdJump"
+            >
+              {{$t('M.user_payPassword')}}
+            </div>
           </span>
         </el-dialog>
       </div>
@@ -885,7 +927,9 @@ export default {
       'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([
-      'CHANGE_PASSWORD_USEABLE'
+      'CHANGE_PASSWORD_USEABLE',
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     // 申诉上传图片
     // 1.0 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
@@ -1314,6 +1358,16 @@ export default {
       if (!data) return false
       // 再次调用接口刷新列表
       // this.getOTCTradingOrdersList()
+    },
+    // 忘记密码跳转
+    forgetPwdJump () {
+      this.$goToPage('/TransactionPassword')
+    },
+    // 暂时关闭交易密码验证跳转
+    closePwdJump () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+      this.$goToPage('/PersonalCenter')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
   filter: {},
@@ -1672,7 +1726,7 @@ export default {
     .password-dialog {
       .el-dialog {
         width: 350px;
-        height: 207px;
+        height: 240px;
         border-radius: 4px;
       }
 
@@ -1712,11 +1766,22 @@ export default {
           padding-top: 5px;
           font-size: 12px;
         }
+
+        .close-pwd-tip {
+          margin-top: 5px;
+          color: #338ff5;
+        }
       }
 
       .el-dialog__footer {
         padding: 0;
         text-align: center;
+
+        .forget-pwd-tip {
+          padding: 8px 20px 0 0;
+          text-align: right;
+          color: #338ff5;
+        }
       }
 
       .el-button {
@@ -1961,7 +2026,7 @@ export default {
       .password-dialog {
         .el-dialog {
           width: 350px;
-          height: 207px;
+          height: 240px;
           border-radius: 4px;
           background: #28334a;
 
@@ -2270,7 +2335,7 @@ export default {
       .password-dialog {
         .el-dialog {
           width: 350px;
-          height: 207px;
+          height: 240px;
           border-radius: 4px;
           background: #fff;
         }
