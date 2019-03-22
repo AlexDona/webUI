@@ -62,8 +62,8 @@ export const personal = {
   'user_address_withdrawal': '非法地址',
   // 账单明细
   // 'user_billing_attention': '充提',
-  'otc_user_trade': 'otc交易',
-  'otc_fee': 'otc手续费',
+  'otc_user_trade': 'OTC交易',
+  'otc_fee': 'OTC手续费',
   'ctc_trade': '币币交易',
   'ctc_fee': '币币手续费',
   'financial_expenditure': '理财支出',
