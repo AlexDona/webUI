@@ -934,7 +934,7 @@ export default {
                   this.errorMsg.market.buy.amount = ''
                 }
                 params.count = this.getRefValue(this.marketBuyAmountInputRef)
-                if (this.buyUserCoinWallet.total < params.count) {
+                if (this.buyUserCoinWallet.total - params.count < 0) {
                   this.errorMsg.market.buy.amount = this.$t('M.trade_exchange_currency_available')
                   return false
                 }
@@ -963,7 +963,7 @@ export default {
                   this.errorMsg.limit.sell.amount = ''
                 }
                 console.log((this.sellUserCoinWallet.total), params.count)
-                if (this.sellUserCoinWallet.total < (params.count)) {
+                if (this.sellUserCoinWallet.total - params.count < 0) {
                   // 可用币种数量不足
                   this.errorMsg.limit.sell.price = this.$t('M.trade_exchange_currency_available')
                   return false
@@ -980,7 +980,7 @@ export default {
                 } else {
                   this.errorMsg.market.sell.amount = ''
                 }
-                if (this.sellUserCoinWallet.total < (params.count)) {
+                if (this.sellUserCoinWallet.total - params.count < 0) {
                   // 可用币种数量不足
                   this.errorMsg.market.sell.count = this.$t('M.trade_exchange_currency_available')
                   return false

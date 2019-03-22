@@ -414,6 +414,7 @@ export default {
         pageSize: this.pageSize,
         tradeId: this.middleTopData.partnerTradeId
       }
+      if (!getNestedData(params, 'tradeId')) return false
       const data = await getMyEntrust(params)
       if (!data) return false
       this.currentEntrustList = getNestedData(data, 'data.list') || []
