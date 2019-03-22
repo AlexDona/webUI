@@ -270,8 +270,9 @@
         <!--错误提示-->
         <div
           class = "error-msg font-size12"
+          v-show = "errorEditorMsg"
         >
-          <span v-show = "errorEditorMsg">
+          <span>
             {{ errorEditorMsg }}
           </span>
         </div>
@@ -286,6 +287,11 @@
             <!--确 定-->
             {{ $t('M.comm_confirm') }}
           </el-button>
+          <!-- 忘记交易密码 -->
+          <p
+            class="forget-password text-align-r margin-top9"
+            @click="$goToPage('/TransactionPassword')"
+          >{{$t('M.user_payPassword')}}</p>
         </div>
       </el-dialog>
     </div>
@@ -960,6 +966,17 @@ export default {
 
         .el-dialog__title {
           color: #fff;
+        }
+
+        .el-dialog__footer {
+          padding-top: 0;
+          text-align: left;
+
+          .forget-password {
+            font-size: 12px;
+            color: $mainColor;
+            cursor: pointer;
+          }
         }
       }
 

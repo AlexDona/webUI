@@ -44,14 +44,14 @@
                 </div>
                 <div class="right item">
                   <a
-                    @click.stop="jumpToPersonalCenter"
+                    @click.stop="jumpToPersonalCenter('assets')"
                     :style="{'cursor': 'pointer'}"
                   >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
                   </a>
                   <a
-                    @click.stop="jumpToPersonalCenter"
+                    @click.stop="jumpToPersonalCenter('assets')"
                     :style="{'cursor': 'pointer'}"
                   >
                     <!--提币-->
@@ -155,14 +155,14 @@
                 </div>
                 <div class="right item">
                   <a
-                    @click="jumpToPersonalCenter"
+                    @click="jumpToPersonalCenter('assets')"
                     :style="{'cursor': 'pointer'}"
                   >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
                   </a>
                   <a
-                    @click="jumpToPersonalCenter"
+                    @click="jumpToPersonalCenter('assets')"
                     :style="{'cursor': 'pointer'}"
                   >
                     <!--提币-->
@@ -443,7 +443,13 @@
         <span
           slot="footer"
           class="dialog-footer footer"
-        ><!--确 定 取 消-->
+        >
+          <!--暂时关闭交易密码校验-->
+          <p
+            class="forget-password text-align-l margin-bottom10 margin-top9"
+            @click="jumpToPersonalCenter('personal-setting')"
+          >{{$t('M.user_payPassword_switch')}}</p>
+          <!--确 定 取 消-->
           <button
             class="button-color border-radius4 cursor-pointer"
             @click.prevent="addEntrust"
@@ -458,6 +464,11 @@
             <!--取 消-->
             {{ $t('M.comm_cancel') }}
           </button>
+          <!-- 忘记交易密码 -->
+          <p
+            class="forget-password text-align-r margin-top9"
+            @click="$goToPage('/TransactionPassword')"
+          >{{$t('M.user_payPassword')}}</p>
         </span>
       </el-dialog>
     </div>
@@ -655,8 +666,8 @@ export default {
       this.$goToPage('/PersonalCenter')
       this.notVerifyDialogVisible = false
     },
-    jumpToPersonalCenter () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
+    jumpToPersonalCenter (target) {
+      this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
       this.$goToPage('/PersonalCenter')
     },
     changeSliderDisabled () {
@@ -1544,7 +1555,7 @@ export default {
       }
 
       .el-dialog__body {
-        padding: 25px 27px;
+        padding: 25px 27px 0;
         line-height: 25px;
       }
 
@@ -1560,6 +1571,12 @@ export default {
       .el-dialog__footer {
         padding: 0 27px 25px;
         text-align: left;
+
+        .forget-password {
+          font-size: 12px;
+          color: $mainColor;
+          cursor: pointer;
+        }
       }
 
       .button-color {
