@@ -476,7 +476,9 @@ export default {
       data = await getMerchantCurrencyList(param)
       if (!data) return false
       this.currencyList = getNestedData(data, 'data')
-      this.defaultCurrencyId = getNestedData(data, 'data')[0] ? getNestedData(data, 'data')[0].id : ''
+      console.log(getNestedData(data, 'data')[0])
+      this.defaultCurrencyId = getNestedData(data, 'data')[0] ? this.assetJumpStatementDetails || getNestedData(data, 'data')[0].id : ''
+      console.log(this.defaultCurrencyId)
     },
     // 搜索按钮
     stateSearchButton (entrustType) {
@@ -602,7 +604,9 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
-      userCenterActiveName: state => state.personal.userCenterActiveName
+      userCenterActiveName: state => state.personal.userCenterActiveName,
+      assetJumpStatementDetails: state => state.personal.assetJumpStatementDetails, // 跳转到的账单明细
+      assetJumpStatementDetailsType: state => state.personal.assetJumpStatementDetailsType // 我的资产跳转到账单明细提币携带提币类型
     })
   },
   watch: {
@@ -616,6 +620,11 @@ export default {
       if (!newVal) {
         this.endTime = ''
       }
+    },
+    // 我的资产跳转账单明细状态类型提币或者充值
+    assetJumpStatementDetailsType (newVal) {
+      console.log(newVal)
+      this.currencyTypeValue = this.assetJumpStatementDetailsType
     },
     userCenterActiveName (newVal) {
       this.startTime = [

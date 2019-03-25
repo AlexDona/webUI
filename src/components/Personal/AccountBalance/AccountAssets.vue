@@ -137,14 +137,14 @@
                     <i
                       class="el-icon-caret-bottom caret-text cursor-pointer"
                       :class="{active: blueStyleValue == 1}"
-                      @click.prevent="assetsSorting('up', 'btcValue')"
+                      @click.prevent="assetsSorting('up', 'cnyValue')"
                     >
                     </i>
                     <!--降序-->
                     <i
                       class="el-icon-caret-top caret-text-order cursor-pointer"
                       :class="{active: blueStyleValue == 2}"
-                      @click.prevent="assetsSorting('down', 'btcValue')"
+                      @click.prevent="assetsSorting('down', 'cnyValue')"
                     >
                     </i>
                   </div>
@@ -307,6 +307,7 @@
                         :currencyName="currencyName"
                         :minRechargeAmount="minRechargeAmount"
                         :successCount="successCount"
+                        :coinId="assetItem.coinId"
                         :chargeMoneyAddress="chargeMoneyAddress"
                         :isNeedTag="isNeedTag"
                         :rechargeNoteInfo="rechargeNoteInfo"
@@ -729,6 +730,8 @@ export default {
       'CHANGE_ACTIVE_TRADE_AREA',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'SET_NEW_WITHDRAW_ADDRESS',
+      'SET_NEW_WITHDRAW_RECORD',
+      'SET_NEW_WITHDRAW_RECORD_STATUS',
       'CHANGE_PASSWORD_USEABLE'
     ]),
     // 点击跳转到重置交易密码
@@ -1192,6 +1195,10 @@ export default {
      * 点击提币按钮 验证
      * */
     async validateOfWithdraw (index) {
+      this.phoneCode = '' // 短信验证码
+      this.emailCode = '' // 邮箱验证码
+      this.googleCode = '' // 谷歌验证码
+      this.password = '' // 交易密码
       // await this.REFRESH_USER_INFO_ACTION()
       // let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
       // this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
@@ -1343,13 +1350,21 @@ export default {
       this.accountCount = ''
       this.activeWithdrawDepositAddress = ''
     },
-    jumpToOtherTab ({target, coinId}) {
+    jumpToOtherTab ({target, coinId, index}) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
+      // 判断点击的类型1 充值 2 提币
+      if (index == 1) {
+        this.SET_NEW_WITHDRAW_RECORD_STATUS('RECHARGE')
+      } else {
+        this.SET_NEW_WITHDRAW_RECORD_STATUS('WITHDRAW')
+      }
       // 指定要跳转到的coinId
-      console.log(target, coinId, this.activeCoinId)
+      console.log(coinId)
       if (coinId) {
         this.SET_NEW_WITHDRAW_ADDRESS(coinId)
       }
+      // 指定跳转的币种Id
+      this.SET_NEW_WITHDRAW_RECORD(coinId)
     },
     /**
      * 安全中心

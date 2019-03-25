@@ -1826,6 +1826,7 @@ export default {
         .el-button {
           float: right;
           padding: 2px 6px;
+          margin-right: 5px;
         }
       }
 

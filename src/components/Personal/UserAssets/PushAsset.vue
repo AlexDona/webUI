@@ -25,6 +25,7 @@
                 :placeholder="$t('M.comm_please_choose')"
                 :no-data-text="$t('M.comm_no_data')"
                 @change="toggleAssetsCurrencyId"
+                :disabled="currencyValueStatus"
               >
                 <el-option
                   v-for="(item, index) in currencyList"
@@ -481,6 +482,7 @@ export default {
       pushRecordList: [], // push列表记录
       currentPageForMyEntrust: 1, // 当前页码
       totalPageForMyEntrust: 1, // 当前总页数
+      currencyValueStatus: true, // 币种列表状态
       pointLength: 4, // 保留小数位后四位
       errorMsg: '', // 错误提示
       partLoading: false, // 局部列表loading
@@ -529,7 +531,7 @@ export default {
     },
     // 3.修改input value  输入限制
     formatUserInput (ref, pointLength) {
-      if (this.$refs.count.value - 0 > this.currencyBalance - 0) {
+      if (this.$refs.count.value - this.currencyBalance > 0) {
         this.$refs.count.value = this.currencyBalance
       }
       this[ref] = this.$refs[ref].value
@@ -591,6 +593,8 @@ export default {
       // 币种余额
       this.pushPayCoinName = getNestedData(data, 'data.pushPayCoinName')
       this.currencyList = getNestedData(data, 'data.coinLists')
+      // 接口回来之后把select状态改为可用
+      this.currencyValueStatus = false
     },
     // 4.选择push资产币种
     async toggleAssetsCurrencyId (e) {
@@ -914,8 +918,9 @@ export default {
       }
 
       .el-input__inner {
-        height: 36px;
+        height: 36px !important;
         border-radius: 2px;
+        font-size: 14px;
       }
 
       .el-form-item {
