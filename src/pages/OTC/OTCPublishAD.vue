@@ -387,16 +387,31 @@
                 <!-- 错误提示 -->
                 <div class="tips err">{{errorInfoPassword}}</div>
               </div>
+              <!--暂时关闭交易密码验证-->
+              <div
+                class="close-pwd-tip font-size12 cursor-pointer"
+                @click.prevent="closePwdJump"
+              >
+                {{$t('M.user_payPassword_switch')}}
+              </div>
               <span
                 slot="footer"
-                class="dialog-footer">
-                  <el-button
-                    type="primary"
-                    @click="publishADSubmitButton"
-                  >
-                  <!-- 提交 -->
-                    {{$t('M.comm_sub_time')}}
-                  </el-button>
+                class="dialog-footer"
+              >
+                <!-- 提交 -->
+                <el-button
+                  type="primary"
+                  @click="publishADSubmitButton"
+                >
+                  {{$t('M.comm_sub_time')}}
+                </el-button>
+                <!--忘记交易密码？-->
+                <div
+                  class="forget-pwd-tip font-size12 cursor-pointer"
+                  @click.prevent="forgetPwdJump"
+                >
+                  {{$t('M.user_payPassword')}}
+                </div>
               </span>
             </el-dialog>
           </div>
@@ -576,7 +591,9 @@ export default {
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
       'CHANGE_PASSWORD_USEABLE',
-      'CHANGE_AJAX_READY_STATUS' // 改变接口返回loading状态
+      'CHANGE_AJAX_READY_STATUS', // 改变接口返回loading状态
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -1032,6 +1049,16 @@ export default {
         this.errorInfoMinCount = ''
         this.minCountErrorTipsBorder = false
       }
+    },
+    // 忘记密码跳转
+    forgetPwdJump () {
+      this.$goToPage('/TransactionPassword')
+    },
+    // 暂时关闭交易密码验证跳转
+    closePwdJump () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+      this.$goToPage('/PersonalCenter')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
   filter: {},
@@ -1347,7 +1374,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     .password-dialog {
       .el-dialog {
         width: 350px;
-        height: 207px;
+        height: 240px;
         border-radius: 4px;
       }
 
@@ -1387,11 +1414,22 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
           padding-top: 5px;
           font-size: 12px;
         }
+
+        .close-pwd-tip {
+          margin-top: 5px;
+          color: #338ff5;
+        }
       }
 
       .el-dialog__footer {
         padding: 0;
         text-align: center;
+
+        .forget-pwd-tip {
+          padding: 8px 20px 0 0;
+          text-align: right;
+          color: #338ff5;
+        }
       }
 
       .el-button {

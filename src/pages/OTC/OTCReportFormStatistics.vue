@@ -505,7 +505,7 @@ import {
   getOTCReportFormStatisticsData
 } from '../../utils/api/OTC'
 import IconFontCommon from '../../components/Common/IconFontCommon'
-import {timeFilter} from '../../utils'
+import {timeFilter, cutOutPointLength} from '../../utils'
 import {
   // returnAjaxMsg,
   getNestedData
@@ -561,7 +561,9 @@ export default {
       // 出售本月交易
       sellMonthMap: {},
       // 出售本周交易
-      sellWeekMap: {}
+      sellWeekMap: {},
+      // 当前法币币种保留小数点位数限制
+      pointLength: 2
     }
   },
   async created () {
@@ -704,6 +706,8 @@ export default {
       let getData = getNestedData(data, 'data')
       // 法币总资产
       this.totalAssets = getNestedData(getData, 'totalAssets')
+      // 法币保留两个小数限制
+      this.totalAssets = cutOutPointLength(this.totalAssets, this.pointLength)
       // 币种总资产
       this.total = getNestedData(getData, 'total')
       // 当天交易

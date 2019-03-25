@@ -29,7 +29,7 @@ export const personal = {
   'user_not_google_enabled': 'Unabled Google verification',
   'user_leave_vip': 'Open VIP',
   'user_look_vip': 'Check or upgrade VIP',
-  'user_payPassword_switch': 'close trading password  verify  temporary',
+  'user_payPassword_switch': 'Close trading password verify temporary',
   'user_payPassword': 'Forget password?',
   // 'user_asset_valuation': 'Asset valuation',
   'user_assets_suspended': 'Recharge pause, wallet maintenance',
