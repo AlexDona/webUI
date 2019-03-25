@@ -411,11 +411,6 @@
                       @focus="emptyStatus"
                     >
                   </el-form-item>
-                  <!--谷歌未认证-->
-                  <span
-                    v-show="!securityCenter.isGoogleEnable"
-                  >
-                  </span>
                   <!--交易密码-->
                   <el-form-item
                     :label="$t('M.comm_password')"
@@ -1313,12 +1308,11 @@ export default {
     },
     // 提交提币接口
     async stateSubmitAssets () {
-      console.log(1)
       let data
-      let param = {
-        msgCode: this.phoneCode, // 短信验证码
-        emailCode: this.emailCode, // 邮箱验证码
-        googleCode: this.googleCode, // 谷歌验证码
+      let params = {
+        // msgCode: this.phoneCode, // 短信验证码
+        // emailCode: this.emailCode, // 邮箱验证码
+        // googleCode: this.googleCode, // 谷歌验证码
         coinId: this.activeCoinId, // 币种ID
         withdrawAddress: this.activeWithdrawDepositAddress,
         remark: this.withdrawRemark, // 提币地址
@@ -1326,7 +1320,11 @@ export default {
         amount: this.withdrawCountVModel, // 提币数量
         payCode: this.password // 交易密码
       }
-      data = await statusSubmitWithdrawButton(param)
+      const {isPhoneEnable, isMailEnable, isGoogleEnable} = this.securityCenter
+      if (isPhoneEnable) params.msgCode = this.phoneCode
+      if (isMailEnable) params.emailCode = this.emailCode
+      if (isGoogleEnable) params.googleCode = this.googleCode
+      data = await statusSubmitWithdrawButton(params)
       console.log(data)
       this.isShowWithdrawDialog = false
       if (!data) return false
