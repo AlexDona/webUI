@@ -7,7 +7,7 @@ import {handleRequest} from '../commonFunc'
 // 我的资产币种列表
 export const assetCurrenciesList = params => handleRequest(() => get('personal/getUserFinanceList', params))
 // 提币地址列表查询
-export const inquireWithdrawalAddressList = params => handleRequest(() => get('personal/getWithdrawAddress', params))
+export const inquireWithdrawalAddressList = params => handleRequest(() => get('personal/getWithdrawAddress', {...params, loading: true}))
 // 根据币种id查询提币地址
 export const inquireWithdrawalAddressId = params => handleRequest(() => get('personal/getCoinWithdrawAddress', {...params, loading: true}))
 // 账单明细—冲提记录

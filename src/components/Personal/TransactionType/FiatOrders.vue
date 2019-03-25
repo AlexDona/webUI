@@ -567,6 +567,9 @@ export default {
 
     /deep/ {
       /* 覆盖Elenent样式 */
+      .el-input__icon {
+        line-height: 0;
+      }
 
       /* 点击切换时背景色和字体颜色 */
       .el-tabs__item {

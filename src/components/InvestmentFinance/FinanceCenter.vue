@@ -262,9 +262,10 @@
               >
                 <input
                   v-model="passwords"
-                  @input="deleteErrorTips"
                   type="password"
                   class="password"
+                  @input="deleteErrorTips"
+                  @blur="submitPassword"
                   @keyup.enter="submitPassword"
                 >
                 <p v-if="isShowErrorTips" class="errorTips">{{$t('M.otc_publishAD_pleaseInput') + $t('M.comm_password') }}</p>
@@ -916,7 +917,7 @@ export default {
       // 设置可用币种数组
       this.traderCoinList = getNestedData(getData, 'idNameDtoList')
       // 设置每次返回回来的币种id
-      this.selectedCoinId = getNestedData(getData, 'tickerPriceResult.coinId')
+      this.selectedCoinId = getNestedData(getData, 'tickerPriceResult.coinId') ? getNestedData(getData, 'tickerPriceResult.coinId') : ''
       // 设置每次返回地币种名称
       this.selectedCoinName = getNestedData(getData, 'tickerPriceResult.coinName')
       // 最新价钱

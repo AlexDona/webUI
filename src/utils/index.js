@@ -354,7 +354,6 @@ export const emailNumRegexpInput = event => {
   event.value = finalVal
   return finalVal
 }
-
 /**
  * 身份证 证件号码输入限制
  * @param event：当前input DOM对象

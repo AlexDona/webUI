@@ -47,7 +47,7 @@
           </el-select>
           <span
             class="new-address cursor-pointer address-bg"
-            @click.prevent="jumpToOtherTab('mention-address',coinId)"
+            @click.prevent="jumpToOtherTab('mention-address', coinId)"
           >
             <!--新增-->
             {{ $t('M.comm_newly_increased') }}
@@ -153,7 +153,7 @@
           </button>
           <span
             class="float-right cursor-pointer"
-            @click.prevent="jumpToOtherTab('billing-details')"
+            @click.prevent="jumpToOtherTab('billing-details', coinId, 2)"
           >
             <!--提币记录-->
             {{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}
@@ -213,10 +213,11 @@ export default {
         activeWithdrawDepositAddress: this.activeWithdrawDepositAddress
       })
     },
-    jumpToOtherTab (target, coinId) {
+    jumpToOtherTab (target, coinId, index) {
       this.$emit('jumpToOtherTab', {
         target,
-        coinId
+        coinId,
+        index
       })
     },
     checkUserInputAvailable (ref, index, total) {

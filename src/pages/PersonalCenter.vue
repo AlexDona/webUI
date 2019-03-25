@@ -307,7 +307,9 @@ export default {
     ]),
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'SET_STEP1_INFO'
+      'SET_STEP1_INFO',
+      'SET_NEW_WITHDRAW_RECORD_STATUS',
+      'SET_NEW_WITHDRAW_RECORD'
     ]),
     // 显示未设置交易密码弹窗
     showNoPasswdNotice () {
@@ -325,6 +327,10 @@ export default {
     // tab面板切换
     async statusSwitchPanel (tab) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(tab.name)
+      if (tab.name === 'billing-details') {
+        this.SET_NEW_WITHDRAW_RECORD('')
+        this.SET_NEW_WITHDRAW_RECORD_STATUS('')
+      }
       this.showNoPosswdAndNoVerifyNotice()
     },
     confirm (val) {
