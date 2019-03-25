@@ -223,20 +223,20 @@ export default {
   },
   watch: {
     activeSymbol (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     activeSymbolId () {
       this.reflashCount = 0
     },
     buysAndSellsList (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     buysAndSellsListByAjax (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     buysAndSellsListBySocket: {
       handler (newVal) {
-        console.log(newVal)
+        // console.log(newVal)
         if (!this.reflashCount && newVal) {
           this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
           this.reflashCount += 1
@@ -245,7 +245,7 @@ export default {
       deep: true
     },
     reflashCount (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     }
   }
 }
