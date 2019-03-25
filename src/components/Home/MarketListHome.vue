@@ -50,7 +50,7 @@
               >
                 <div
                   class="inner-item-box"
-                  v-if="(area.content.length && area.id !== searchAreaId)||( area.id == searchAreaId && searchKeyWord!=='')"
+                  v-if="(area.content.filter(item => item.visible).length && area.id !== searchAreaId)||( area.id == searchAreaId && searchKeyWord!=='')"
                   :style="'height:'+(50*(moreBtnShowStatus ? (area.content.length + 1) : area.content.length || 1)+102)+'px'"
                   :class="{
                   'force-height': !(area.id == searchAreaId || area.id == collectAreaId),
@@ -244,7 +244,7 @@ export default {
       await this.getPlates()
       if (!this.plates.length) return false
       this.activeName = getNestedData(this.plates[0], 'id')
-      console.log(this.plates)
+      // console.log(this.plates)
       await this.getAllTradeAreas()
     },
     getMoreAreas () {
@@ -258,7 +258,7 @@ export default {
       let now = new Date().getTime()
       let lastTime = getStore('platesAges')
       let storePlates = getStoreWithJson('plates') || {}
-      console.log(storePlates, plateId, storePlates.hasOwnProperty(plateId))
+      // console.log(storePlates, plateId, storePlates.hasOwnProperty(plateId))
       let data
       if (now - lastTime > this.ONE_MINUTES || !storePlates.hasOwnProperty(plateId)) {
         data = await getAllTradeAreasAJAX(params)
@@ -285,7 +285,7 @@ export default {
       const NOW = new Date().getTime()
       let symbolJSON
       let localSymbolJSON = getStoreWithJson('symbolJSON') || {}
-      console.log(localSymbolJSON)
+      // console.log(localSymbolJSON)
       let localSymbolLength = Object.keys(localSymbolJSON).length
       if (NOW - SYMBOL_AGE < this.ONE_MINUTES && localSymbolLength) {
         symbolJSON = localSymbolJSON
@@ -379,7 +379,7 @@ export default {
       const data = await getPlatesAJAX({i18n: this.language})
       if (!data) return false
       this.plates = JSON.parse(unzip(getNestedData(data, 'data'))) || []
-      console.log(this.plates)
+      // console.log(this.plates)
     },
     setCollectData (collectSymbol) {
       this.CHANGE_COLLECT_SYMBOL({
