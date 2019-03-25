@@ -637,7 +637,7 @@ export default {
   async created () {
     if (this.isLogin) {
       await this.REFRESH_USER_INFO_ACTION()
-      console.log(this.REFRESH_USER_INFO_ACTION)
+      // console.log(this.REFRESH_USER_INFO_ACTION)
     }
   },
   mounted () {
@@ -671,10 +671,10 @@ export default {
       this.$goToPage('/PersonalCenter')
     },
     changeSliderDisabled () {
-      console.log(this.buyUserCoinWallet.total)
+      // console.log(this.buyUserCoinWallet.total)
       this.slider.isbuySliderBarDisabled = !this.buyUserCoinWallet.total ? 1 : 0
       this.slider.isSellSliderBarDisabled = !this.sellUserCoinWallet.total ? 1 : 0
-      console.log(this.slider)
+      // console.log(this.slider)
     },
     // 获取用户对应交易对资产
     async getUserAssetOfActiveSymbol (targetPriceOfBuy, targetPriceOfSell) {
@@ -767,7 +767,7 @@ export default {
         case 'limit-buy':
           // this.limitExchange.transformBuyPrice = this.$scientificToNumber(this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum))
           this.limitExchange.transformBuyPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
-          console.log(this.limitExchange.transformBuyPrice)
+          // console.log(this.limitExchange.transformBuyPrice)
           break
         case 'limit-sell':
           this.limitExchange.transformSellPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
@@ -850,7 +850,7 @@ export default {
         sellPrice: this.limitExchange.sellPrice,
         sellCount: this.limitExchange.sellCount
       })
-      console.log(this.limitExchangeOfState)
+      // console.log(this.limitExchangeOfState)
       this.SET_TARGET_EXCHANGE_DATA({
         type: 'market',
         buyAmount: this.marketExchange.buyAmount,
@@ -892,7 +892,7 @@ export default {
         //
         this.entrustType = entrustType
         this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
-        console.log(entrustType, matchType)
+        // console.log(entrustType, matchType)
         let next = false
         let params = {}
         switch (entrustType) {
@@ -934,7 +934,7 @@ export default {
                   this.errorMsg.market.buy.amount = ''
                 }
                 params.count = this.getRefValue(this.marketBuyAmountInputRef)
-                if (this.buyUserCoinWallet.total < params.count) {
+                if (this.buyUserCoinWallet.total - params.count < 0) {
                   this.errorMsg.market.buy.amount = this.$t('M.trade_exchange_currency_available')
                   return false
                 }
@@ -963,7 +963,7 @@ export default {
                   this.errorMsg.limit.sell.amount = ''
                 }
                 console.log((this.sellUserCoinWallet.total), params.count)
-                if (this.sellUserCoinWallet.total < (params.count)) {
+                if (this.sellUserCoinWallet.total - params.count < 0) {
                   // 可用币种数量不足
                   this.errorMsg.limit.sell.price = this.$t('M.trade_exchange_currency_available')
                   return false
@@ -971,16 +971,16 @@ export default {
                 next = true
                 break
               case 'MARKET':
-                console.log(1)
+                // console.log(1)
                 params.count = this.getRefValue(this.marketSellCountInputRef)
                 this.marketExchange.sellCount = params.count
                 if (!this.marketExchange.sellCount) {
-                  this.errorMsg.market.sell.amount = '请输入卖出量'
+                  this.errorMsg.market.sell.amount = this.$t('M.trade_empty_sell_count')
                   return false
                 } else {
                   this.errorMsg.market.sell.amount = ''
                 }
-                if (this.sellUserCoinWallet.total < (params.count)) {
+                if (this.sellUserCoinWallet.total - params.count < 0) {
                   // 可用币种数量不足
                   this.errorMsg.market.sell.count = this.$t('M.trade_exchange_currency_available')
                   return false
@@ -1049,7 +1049,7 @@ export default {
             case 'LIMIT':
               params.price = this.getRefValue(this.limitBuyPriceInputRef)
               params.count = this.getRefValue(this.limitBuyCountInputRef)
-              console.log(params)
+              // console.log(params)
               break
             case 'MARKET':
               params.count = this.getRefValue(this.marketBuyAmountInputRef)
@@ -1062,7 +1062,7 @@ export default {
             case 'LIMIT':
               params.price = this.getRefValue(this.limitSellPriceInputRef)
               params.count = this.getRefValue(this.limitSellCountInputRef)
-              console.log(params)
+              // console.log(params)
               break
             case 'MARKET':
               params.count = this.getRefValue(this.marketSellCountInputRef)
@@ -1161,7 +1161,7 @@ export default {
       this.isUserChangePrice = true
     },
     dragCallback ({target, newVal}) {
-      console.log(target)
+      // console.log(target)
       this.isUserChangePrice = false
       this.sliderBarValueChange({target, newVal})
     }
@@ -1219,7 +1219,7 @@ export default {
     'limitExchange.buyPrice' (newVal) {
     },
     isSymbolChanged (newVal) {
-      console.log(this.matchType)
+      // console.log(this.matchType)
       switch (this.matchType) {
         case 'LIMIT':
           this.$refs[this.limitBuyCountInputRef].value = ''
@@ -1234,7 +1234,7 @@ export default {
           this.marketExchange.buyAmount = 0
           break
       }
-      console.log(newVal)
+      // console.log(newVal)
       if (newVal) {
         this.CHANGE_SYMBOL_CHANGED_STATUS(false)
       }
@@ -1272,12 +1272,12 @@ export default {
       }
     },
     async middleTopData (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       let targetPriceOfBuy = newVal.buy || newVal.kai
       let targetPriceOfSell = newVal.sell || newVal.kai
       // 首次打开设置价格
       if (!this.reflashCount) {
-        console.log(newVal.last)
+        // console.log(newVal.last)
         if (newVal.last) {
           this.reflashCount++
         }

@@ -58,8 +58,8 @@ export default {
     ajaxData,
     type
   }) {
-    console.log(ajaxData)
-    console.log(type, ajaxData, socketData)
+    // console.log(ajaxData)
+    // console.log(type, ajaxData, socketData)
     switch (type) {
       case 'ajax':
         if (ajaxData.depthData) {
@@ -74,7 +74,7 @@ export default {
       case 'socket':
         if (socketData) {
           state.socketData.depthData = getNestedData(socketData, 'depthData')
-          console.log(socketData.buyAndSellData)
+          // console.log(socketData.buyAndSellData)
           if (socketData.buyAndSellData) {
             state.socketData.buyAndSellData = getNestedData(socketData, 'buyAndSellData')
           }
@@ -89,7 +89,7 @@ export default {
   },
   // 更改当前选中交易对
   [CHANGE_ACTIVE_SYMBOL] (state, {activeSymbol, previousSymbol}) {
-    console.log(activeSymbol)
+    // console.log(activeSymbol)
     if (activeSymbol) {
       state.activeSymbol = activeSymbol
       setStore('activeSymbol', activeSymbol)
@@ -157,7 +157,7 @@ export default {
   },
   [SET_WINDOW_WIDTH] (state, width) {
     state.clientWidth = width
-    console.log(state.clientWidth)
+    // console.log(state.clientWidth)
   },
   [SET_NOTICE_ID] (state, noticeId) {
     state.newsItemId = noticeId

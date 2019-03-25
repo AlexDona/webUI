@@ -7,7 +7,9 @@ import {
   CHANGE_LEGAL_PAGE,
   // 更改重新渲染交易中订单列表状态
   CHANGE_RE_RENDER_TRADING_LIST_STATUS,
-  SET_NEW_WITHDRAW_ADDRESS
+  SET_NEW_WITHDRAW_ADDRESS,
+  SET_NEW_WITHDRAW_RECORD_STATUS,
+  SET_NEW_WITHDRAW_RECORD
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -84,5 +86,13 @@ export default {
   // 我的资产跳转到提币地址携带提币参数
   [SET_NEW_WITHDRAW_ADDRESS] (state, data) {
     state.paramOfJumpToAddWithdrawAdress = data
+  },
+  // 我的资产跳转到账单明细提币携带参数
+  [SET_NEW_WITHDRAW_RECORD] (state, data) {
+    state.assetJumpStatementDetails = data
+  },
+  // 我的资产跳转到账单明细提币携带提币充值类型
+  [SET_NEW_WITHDRAW_RECORD_STATUS] (state, data) {
+    state.assetJumpStatementDetailsType = data
   }
 }

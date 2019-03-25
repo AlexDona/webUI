@@ -99,14 +99,21 @@ export default {
       isAllowDrag: true, // 是否允许拖拽
       defaultButton: null, // 默认buttonDom
       // 当前交易
-      currentInterval: ''
+      currentInterval: '',
+      // K线请求历史数据开始时间
+      firstRangeStartDate: '',
+      secondRangeStartDate: '',
+      barsRenderTime: 0,
+      prevCacheList: [],
+      currentCacheList: [],
+      LIMIT_BARS_RENDER_TIME: 20
     }
   },
   beforeCreate () {
   },
   async created () {
     // this.widget = null
-    console.log(this.socket)
+    // console.log(this.socket)
     this.socket.doOpen()
     // 获取默认交易对
     await this.getDefaultSymbol()
@@ -137,8 +144,9 @@ export default {
     },
     // 接口获取K线数据
     async getKlineByAjax (tradeName, KlineType, KlineNum = 0, KlineStep = 'STEP5') {
+      console.log(KlineType, this.interval)
       this.isAllowDrag = false
-      console.log(tradeName)
+      // console.log(tradeName)
       if (tradeName) {
         tradeName = tradeName.toLowerCase()
       }
@@ -160,7 +168,7 @@ export default {
       if (!klineDataStr) return false
       let klineData = JSON.parse(klineDataStr)
       let klineList = getNestedData(klineData, 'klineList')
-      console.log(klineData, klineList)
+      // console.log(klineData, klineList)
       if (klineList) {
         this.KlineNum = klineData.num
         let list = []
@@ -181,7 +189,7 @@ export default {
             this.lastTime = getNestedData(list[list.length - 1], 'time')
             break
           default:
-            console.log(klineData)
+            // console.log(klineData)
             let reflashList = []
             klineList.forEach(item => {
               reflashList.push({
@@ -211,7 +219,7 @@ export default {
       }
       params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
-      console.log(data)
+      // console.log(data)
       if (!data) return false
       let resultStr = ''
       let objList = getNestedData(data, 'data.obj')
@@ -227,7 +235,7 @@ export default {
         tradeList, // 交易记录
         tickerList // 行情交易区列表
       } = activeSymbolData
-      console.log(activeSymbolData)
+      // console.log(activeSymbolData)
       if (depthList && depthList.depthData.sells.list) {
         depthList.depthData.sells.list.reverse()
       }
@@ -269,14 +277,14 @@ export default {
     // 获取初始交易对
     async getDefaultSymbol () {
       let storeSymbol = getStoreWithJson('activeSymbol') || {}
-      console.log(storeSymbol)
+      // console.log(storeSymbol)
       let activeSymbol
       if (!getNestedData(storeSymbol, 'id')) {
         let data = await getDefaultSymbol()
         if (!data) return false
 
         const obj = getNestedData(data, 'data')
-        console.log(obj)
+        // console.log(obj)
         const id = (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName'))
         if (!id) return false
         activeSymbol = {
@@ -301,7 +309,6 @@ export default {
     },
     init (options) {
       if (!this.widget) {
-        console.log(1)
         this.widget = new TvWidget({
           symbol: options.symbol,
           interval: options.interval,
@@ -331,11 +338,11 @@ export default {
           custom_css_url: '../../../../static/tradeview/klineTheme.css'
         })
         this.widget.onChartReady(() => {
-          console.log(2)
+          // console.log(2)
           const _self = this
           // let chart = getNestedData(_self, 'widget.chart()')
           let chart
-          console.log(_self.widget.chart)
+          // console.log(_self.widget.chart)
           if (_self.widget && _self.widget.chart) {
             chart = _self.widget.chart()
           }
@@ -349,7 +356,7 @@ export default {
           chart.onIntervalChanged().subscribe(null, function (interval, obj) {
             _self.widget.changingInterval = false
           })
-          console.log(this.klineInitCount)
+          // console.log(this.klineInitCount)
           if (!this.klineInitCount) {
             btnList.forEach(function (item, index) {
               let button = _self.widget.createButton({
@@ -369,9 +376,9 @@ export default {
                     chart.setChartType(chartType)
                   }
                   _self.updateSelectedIntervalButton(button)
-                  console.log(chart.resolution(), item.resolution)
+                  // console.log(chart.resolution(), item.resolution)
                   if (_self.currentInterval == item.resolution) {
-                    console.log(item.resolution)
+                    // console.log(item.resolution)
                     _self.intervalLoading = false
                   }
                   _self.currentInterval = item.resolution
@@ -389,7 +396,7 @@ export default {
           this.widget.chart().createStudy('Moving Average', false, true, [60, 'close', 0], null, {'Plot.color': '#89226e'})
 
           // K线图指针移动回调
-          this.widget.chart().crossHairMoved(async (e) => {
+          this.widget.chart().crossHairMoved(_.throttle(async (e) => {
             const currentTime = e.time * 1000
             const ticker = `${this.symbol}-${this.interval}`
             const limitTime = getNestedData(this.cacheData[ticker], '[700].time') ||
@@ -402,12 +409,12 @@ export default {
             const timeDiff = currentTime - limitTime
             if (timeDiff < 0 && this.KlineNum > 1 && this.isAllowDrag) {
               let interval = this.transformInterval(this.interval)
-              this.getKlineByAjax(this.symbol, interval, this.KlineNum - 1)
+              await this.getKlineByAjax(this.symbol, interval, this.KlineNum - 1)
             }
-          })
+          }, 5000))
         })
         this.symbol = options.symbol
-        console.log(this.symbol)
+        // console.log(this.symbol)
         this.interval = options.interval
       }
     },
@@ -417,10 +424,11 @@ export default {
     },
     // 切换时间间隔
     updateSelectedIntervalButton (button) {
-      console.dir(button)
+      // console.dir(button)
       this.widget.selectedIntervalButton && this.widget.selectedIntervalButton.removeClass('selected')
       button.addClass('selected')
       this.widget.selectedIntervalButton = button
+      // const ticker = `${this.symbol}-${this.interval}`
     },
     unSubscribe (interval) {
       let newInterval = this.transformInterval(interval)
@@ -461,17 +469,17 @@ export default {
       return newInterval
     },
     onMessage (data) {
-      console.log(data)
+      this.barsRenderTime = this.LIMIT_BARS_RENDER_TIME - 2
       // const {symbol} = data
       // if (this.activeSymbol.id !== symbol) return false
       switch (data.tradeType) {
         case 'KLINE':
-          console.log(data.data[0])
+          // console.log(data.data[0])
           // console.log(' >> sub:', data.type)
           const klineData = data.data[0]
-          console.log(klineData.close)
+          // console.log(klineData.close)
           const ticker = `${this.symbol}-${this.interval}`
-          console.log(klineData.time)
+          // console.log(klineData.time)
           const barsData = {
             time: klineData.time - 0,
             open: klineData.open,
@@ -493,11 +501,11 @@ export default {
           break
         // 买卖单
         case 'DEPTH':
-          console.log(data)
+          // console.log(data)
           // console.log(symbol, this.activeSymbol.id)
 
           const depthData = getNestedData(data, 'data')
-          console.log(depthData)
+          // console.log(depthData)
           if (depthData.sells && depthData.sells.list) {
             depthData.sells.list.reverse()
           }
@@ -505,18 +513,19 @@ export default {
           break
         // 深度图
         case 'DEPTHRENDER':
-          console.log(data)
+          // console.log(data)
           this.socketData.depthData = getNestedData(data, 'data')
           break
         case 'TRADE':
           this.socketData.tardeRecordList = getNestedData(data, 'data')
           break
         case 'TICKER':
-          console.log(data)
+          // console.log(data)
           this.socketData.tradeMarkeContentItem = getNestedData(data, 'data')
           break
         case 'USERORDER':
-          console.log(data)
+          // console.log(data)
+          this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           break
       }
@@ -526,6 +535,17 @@ export default {
       })
     },
     getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
+      // const fromTime = this.cacheData[ticker][this.cacheData[ticker].length - 20].time / 1000
+      // const toTime = this.cacheData[ticker][this.cacheData[ticker].length - 1].time / 1000
+      // if (rangeStartDate && rangeEndDate) {
+      //   this.widget.chart().setVisibleRange({
+      //     from: rangeStartDate,
+      //     to: rangeEndDate
+      //   }, () => {})
+      // }
+
+      this.barsRenderTime += 1
+      console.log(rangeStartDate, rangeEndDate, this.firstRangeStartDate, this.secondRangeStartDate)
       if (resolution && this.interval && (this.interval != resolution)) {
         this.unSubscribe(this.interval)
         this.interval = resolution
@@ -535,15 +555,28 @@ export default {
         this.subscribeSocketData(this.symbol, newInterval)
       }
       const ticker = `${this.symbol}-${this.interval}`
+
+      if (this.barsRenderTime % 2 == 0) {
+        this.prevCacheList = this.cacheData[ticker] || []
+      } else {
+        this.currentCacheList = this.cacheData[ticker] || []
+      }
+      let newBars = []
+
       if (this.cacheData[ticker] && this.cacheData[ticker].length) {
         // console.log(this.cacheData[ticker])
         this.isLoading = false
-        const newBars = []
         this.cacheData[ticker].forEach(item => {
           newBars.push(item)
         })
         if (onLoadedCallback) {
-          onLoadedCallback(newBars)
+          console.log(this.barsRenderTime, this.prevCacheList[0], this.currentCacheList[0])
+          if (this.barsRenderTime > this.LIMIT_BARS_RENDER_TIME && this.prevCacheList[0] === this.currentCacheList[0]) {
+            console.log('noData')
+            onLoadedCallback([])
+          } else {
+            onLoadedCallback(newBars)
+          }
         }
       } else {
         const self = this
@@ -554,7 +587,7 @@ export default {
     },
     // 请求socket
     getKlineDataBySocket (type, symbol, newInterval) {
-      console.log(newInterval)
+      // console.log(newInterval)
       if (newInterval) {
         // k线
         this.socket.send({
@@ -613,7 +646,6 @@ export default {
     },
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min15') {
-      console.log(symbol)
       this.getKlineByAjax(symbol, interval, this.KlineNum)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
@@ -646,7 +678,7 @@ export default {
       }
     },
     KlineNum (newVal, oldVal) {
-      console.log(newVal, oldVal)
+      // console.log(newVal, oldVal)
     },
     theme () {
       // 更新K线主题
@@ -691,6 +723,7 @@ export default {
     },
     interval () {
       this.KlineNum = 0
+      this.barsRenderTime = 0
     }
   }
 }

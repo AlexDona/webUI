@@ -178,7 +178,7 @@ export default {
           })
         })
       })
-      console.log(newPlateList)
+      // console.log(newPlateList)
       this.$set(this.collectArea, 'plateList', newPlateList)
     },
     setActiveIndex (area) {
@@ -198,7 +198,7 @@ export default {
       }
       const data = await getTradeMarketDataAjax(params)
       if (!data) return false
-      console.log(data)
+      // console.log(data)
       let objList = getNestedData(data, 'data.obj')
       let resultStr = ''
       _.forEach(objList, (objItem) => {
@@ -254,7 +254,7 @@ export default {
     },
     // 设置 当前交易区
     changeActiveSymbol ({activeSymbol, previousSymbol}) {
-      console.log(activeSymbol)
+      // console.log(activeSymbol)
       this.CHANGE_ACTIVE_SYMBOL({
         activeSymbol,
         previousSymbol
@@ -358,10 +358,10 @@ export default {
         row,
         plateId
       } = data
-      console.log(data)
+      // console.log(data)
       status = Boolean(status)
       // this.$set(this.collectStatusList, id, status)
-      console.log(plateId, this.collectArea)
+      // console.log(plateId, this.collectArea)
       if (status) {
         //  添加收藏
         this.CHANGE_COLLECT_SYMBOL({
@@ -370,7 +370,7 @@ export default {
         })
         // this.collectArea.plateList[plateIndex].content.push(row)
         _.forEach(this.collectArea.plateList, (plateItem, plateIndex) => {
-          console.log(plateItem)
+          // console.log(plateItem)
           if (plateItem.plateId == plateId) {
             let isExist = plateItem.content.some(item => item.id == id)
             if (!isExist) {
@@ -388,7 +388,7 @@ export default {
           collectSymbol: id
         })
         _.forEach(this.collectArea.plateList, (plateItem, plateIndex) => {
-          console.log(plateItem)
+          // console.log(plateItem)
           if (plateItem.plateId == plateId) {
             let newList = plateItem.content.filter(item => item.id !== id)
             this.$set(this.collectArea.plateList[plateIndex], 'content', newList)
@@ -415,7 +415,7 @@ export default {
     },
     // 切换tab
     changeTab (e) {
-      console.log(e)
+      // console.log(e)
       let {
         index
       } = e
@@ -441,14 +441,14 @@ export default {
     // 设置当前交易区交易对字符串
     setActiveTabSymbolStr () {
       let activeTabSymbolStr = ''
-      console.log(this.activeIndex)
+      // console.log(this.activeIndex)
       switch (this.activeIndex) {
         // 自选区
         case 1:
-          console.log(this.collectArea)
+          // console.log(this.collectArea)
           _.forEach(this.collectArea.plateList, (plateItem) => {
             _.forEach(plateItem.content, (contentItem) => {
-              console.log(contentItem.id)
+              // console.log(contentItem.id)
               if (contentItem.id) {
                 activeTabSymbolStr += `${contentItem.id}@`
               }
@@ -457,11 +457,11 @@ export default {
           break
         // 非自选区
         default:
-          console.log(this.filterMarketList[this.activeIndex - 2])
+          // console.log(this.filterMarketList[this.activeIndex - 2])
           if (this.filterMarketList[this.activeIndex - 2]) {
             _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, (plateItem) => {
               _.forEach(plateItem.content, (contentItem) => {
-                console.log(contentItem.id)
+                // console.log(contentItem.id)
                 if (contentItem.id) {
                   activeTabSymbolStr += `${contentItem.id}@`
                 }
@@ -471,11 +471,11 @@ export default {
           break
       }
       activeTabSymbolStr = this.middleTopData.id ? `${this.middleTopData.id}@${activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)}` : `${activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)}`
-      console.log(activeTabSymbolStr)
+      // console.log(activeTabSymbolStr)
       this.CHANGE_ACTIVE_TAB_ID({
         activeTabSymbolStr
       })
-      console.log(this.activeTabSymbolStr)
+      // console.log(this.activeTabSymbolStr)
     }
   },
   filter: {},

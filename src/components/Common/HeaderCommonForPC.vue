@@ -519,7 +519,7 @@ export default{
   },
   async created () {
     // f5刷新页面刷新用户信息列表
-    console.log(this.$route)
+    // console.log(this.$route)
     if (this.isLogin && this.$route.path !== '/PersonalCenter') {
       this.refreshUserInfo()
     }
@@ -580,7 +580,7 @@ export default{
       this.userLoginOut()
     },
     jumpToNewsItem (noticeId) {
-      console.log(this.$route)
+      // console.log(this.$route)
       //  NewsAndNoticeItem
       let currentRoute = this.$route.path
       if (!currentRoute.startsWith('/NewsAndNoticeItem')) {
@@ -631,13 +631,13 @@ export default{
       }
       this.convertCurrencyList.forEach((item) => {
         if (item.shortName === params.shortName) {
-          console.log(item.shortName)
+          // console.log(item.shortName)
           setStore('convertCurrency', item.shortName)
           this.activeConvertCurrencyObj = item
           return false
         }
       })
-      console.log(params)
+      // console.log(params)
       if (!params.shortName) return false
       await this.GET_TRANSITION_RATE_ACTION({
         params,
@@ -658,7 +658,7 @@ export default{
     },
     // 用户跳转到指定页面
     async stateReturnSuperior (val) {
-      console.log(this.localPayPwdSet)
+      // console.log(this.localPayPwdSet)
       await this.REFRESH_USER_INFO_ACTION()
       if (this.localPayPwdSet || this.userInfo.payPassword) {
         switch (val) {
@@ -759,7 +759,7 @@ export default{
         } else {
           newTitle = `${this.title}`
         }
-        console.log(newTitle)
+        // console.log(newTitle)
         document.querySelector('title').innerText = newTitle
       } else {
         setTimeout(this.setNewTitle, 1000)
@@ -794,7 +794,7 @@ export default{
   },
   watch: {
     isLockedPayPassword (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       if (newVal) {
         this.isPayPasswordLocked = true
       }
