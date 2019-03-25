@@ -291,7 +291,7 @@ export default {
         symbolJSON = localSymbolJSON
       } else {
         this.RESET_SYMBOL_MAP()
-        if (this.plates.length != 1) {
+        if (this.plates.length !== 1) {
           let symbolsData = await getAllSymbolsAJAX({
             i18n: this.language
           })

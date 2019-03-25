@@ -170,9 +170,9 @@
                type="text"
                class="input"
                :placeholder="$t('M.user_security_email') + $t('M.comm_site')"
-               :ref="emailNumRef"
-               @keyup="emailNumRegexpInput(emailNumRef)"
-               @input="emailNumRegexpInput(emailNumRef)"
+               v-model="emailNum"
+               @keydown="setErrorMsg()"
+               @blur="checkoutInputFormat(1,emailNum)"
              >
            </div>
           </div>
@@ -454,9 +454,9 @@
                   type="text"
                   class="input"
                   :placeholder="$t('M.user_security_email') + $t('M.comm_site')"
-                  :ref="emailNumRef"
-                  @keyup="emailNumRegexpInput(emailNumRef)"
-                  @input="emailNumRegexpInput(emailNumRef)"
+                  v-model="emailNum"
+                  @keydown="setErrorMsg()"
+                  @blur="checkoutInputFormat(1,emailNum)"
                 >
               </div>
             </div>
@@ -693,7 +693,6 @@ import {
 } from '../utils/commonFunc'
 import {
   phoneNumRegexpInput,
-  emailNumRegexpInput,
   positiveIntegerNumRegexpInput
 } from '../utils'
 import {
@@ -806,10 +805,6 @@ export default {
           break
       }
     },
-    emailNumRegexpInput (ref) {
-      let target = this.$refs[ref]
-      this.emailNum = emailNumRegexpInput(target)
-    },
     phoneNumRegexpInput (ref) {
       let target = this.$refs[ref]
       this.phoneNum = phoneNumRegexpInput(target)
@@ -863,6 +858,7 @@ export default {
           break
         // 邮箱验证
         case 1:
+          console.log(validateNumForUserInput('email', targetNum))
           switch (validateNumForUserInput('email', targetNum)) {
             case 0:
               this.setErrorMsg()
@@ -874,8 +870,8 @@ export default {
               this.$forceUpdate()
               return 0
             case 2:
-              // 请输入正确的邮箱地址
-              this.setErrorMsg(this.$t('M.login_please_input4'))
+              // 邮箱格式不正确
+              this.setErrorMsg(this.$t('M.user-fail-reg-mail'))
               this.$forceUpdate()
               return 0
           }
@@ -1083,10 +1079,10 @@ export default {
       this.setErrorMsg()
       if (!this.isMobile) {
         this.$refs[this.phoneRef].value = ''
-        this.$refs[this.emailNumRef].value = ''
+        // this.$refs[this.emailNumRef].value = ''
       } else {
         this.$refs[this.mobilePhoneRef].value = ''
-        this.$refs[this.emailNumRef].value = ''
+        // this.$refs[this.emailNumRef].value = ''
       }
     },
     /**
@@ -1252,6 +1248,7 @@ export default {
             width: 600px;
 
             > .inner-box {
+              position: relative;
               display: inline-block;
               width: 290px;
               height: 40px;

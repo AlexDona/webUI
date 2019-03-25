@@ -64,3 +64,5 @@ export const IP_REG = /^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/
  * 只允许输入字母
  */
 export const ALPHABET = /^[a-zA-Z]$/
+
+export const EMAILADDRESS_REG = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z]{2,8}$/
