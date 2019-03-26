@@ -445,10 +445,11 @@
           class="dialog-footer footer"
         >
           <!--暂时关闭交易密码校验-->
-          <p
+          <span
             class="forget-password text-align-l margin-bottom10 margin-top9"
             @click="jumpToPersonalCenter('personal-setting')"
-          >{{$t('M.user_payPassword_switch')}}</p>
+          >{{$t('M.user_payPassword_switch')}}</span>
+          <br/>
           <!--确 定 取 消-->
           <button
             class="button-color border-radius4 cursor-pointer"
@@ -465,10 +466,11 @@
             {{ $t('M.comm_cancel') }}
           </button>
           <!-- 忘记交易密码 -->
-          <p
-            class="forget-password text-align-r margin-top9"
+          <span
+            class="forget-password text-align-r margin-top9 float-right"
             @click="$goToPage('/TransactionPassword')"
-          >{{$t('M.user_payPassword')}}</p>
+          >{{$t('M.user_payPassword')}}</span>
+          <br/>
         </span>
       </el-dialog>
     </div>
@@ -1569,10 +1571,11 @@ export default {
       }
 
       .el-dialog__footer {
-        padding: 0 27px 25px;
+        padding: 0 27px 40px;
         text-align: left;
 
         .forget-password {
+          display: inline-block;
           font-size: 12px;
           color: $mainColor;
           cursor: pointer;

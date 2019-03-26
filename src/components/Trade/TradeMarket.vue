@@ -43,6 +43,7 @@
                   :name="collectArea.area"
                 >
                   <TradeMarketTableItem
+                    :searchKeyWord="searchKeyWord"
                     :sortBy="sortBy"
                     :plateList="searchFilterCollectArea.plateList"
                     :collectSymbol="collectSymbol"
@@ -70,6 +71,7 @@
                     :list="filterMarketList"
                     @sortByUser="sortByUser"
                     @changeActiveSymbol="changeActiveSymbol"
+                    :searchKeyWord="searchKeyWord"
                   />
                 </el-tab-pane>
               </el-tabs>
