@@ -108,7 +108,7 @@
                 {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
               </button>
               <p
-                class="font-size12 cursor-pointer text-align-r hint-color"
+                class="font-size12 cursor-pointer text-align-r hint-color float-right"
                 @click.prevent="payPasswordState"
               >
                 {{ $t('M.user_payPassword') }}

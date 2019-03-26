@@ -132,12 +132,12 @@
                 <!--确认修改-->
                 {{ $t('M.user_modification_confirm_amend') }}
               </button>
-              <p
-                class="font-size12 cursor-pointer text-align-r hint-color"
+              <span
+                class="font-size12 cursor-pointer text-align-r hint-color float-right"
                 @click.prevent="payPasswordState"
               >
                 {{ $t('M.user_payPassword') }}
-              </p>
+              </span>
             </div>
           </el-form>
         </div>

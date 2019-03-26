@@ -332,12 +332,12 @@
               </div>
             </div>
             <!--暂时关闭交易密码验证-->
-            <div
-              class="close-pwd-tip font-size12 cursor-pointer"
+            <span
+              class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
               @click.prevent="closePwdJump"
             >
               {{$t('M.user_payPassword_switch')}}
-            </div>
+            </span>
             <span
               slot="footer"
               class="dialog-footer"
@@ -350,11 +350,13 @@
                 {{$t('M.otc_submit')}}
               </el-button>
               <!--忘记交易密码？-->
-              <div
-                class="forget-pwd-tip font-size12 cursor-pointer"
-                @click.prevent="forgetPwdJump"
-              >
+              <div class="text-align-r">
+                <span
+                  class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                  @click.prevent="forgetPwdJump"
+                >
                 {{$t('M.user_payPassword')}}
+              </span>
               </div>
             </span>
           </el-dialog>
@@ -841,6 +843,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language, // 当前选中语言
       theme: state => state.common.theme,
       configInfo: state => state.common.footerInfo.configInfo,
       anchorStatus: state => state.OTC.anchorStatus, // anchorStatus锚点状态：在全局先定义false，当用户购买或者出售时候改为true
@@ -852,7 +855,12 @@ export default {
       return window.innerHeight
     }
   },
-  watch: {}
+  watch: {
+    language (newVal) {
+      console.log(newVal)
+      this.tradePasswordTips = ''
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -1155,7 +1163,6 @@ export default {
 
           .forget-pwd-tip {
             padding: 8px 20px 0 0;
-            text-align: right;
             color: #338ff5;
           }
         }

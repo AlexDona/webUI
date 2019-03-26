@@ -28,6 +28,7 @@
               filterable
               :placeholder="$t('M.comm_please_choose')"
               :no-data-text="$t('M.comm_no_data')"
+              :disabled="currencyValueStatus"
             >
               <el-option
                 :placeholder="$t('M.comm_please_choose')"
@@ -96,7 +97,6 @@
                 type="datetimerange"
                 align="right"
                 :editable="false"
-                :clearable="false"
                 range-separator="~"
                 @change="changeTime"
                 :start-placeholder="$t('M.otc_no1')"
@@ -344,7 +344,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 import {
   statusRushedToRecordList,
   getMerchantCurrencyList,
@@ -370,6 +370,7 @@ export default {
       activeName: 'current-entrust', // 充提记录
       recordPageNumber: 1, // 充提记录页码
       recordTotalPageNumber: 1, // 充提记录总页数
+      currencyValueStatus: true, // 币种列表状态
       // 开始时间
       startTime: [],
       endTime: '', // 结束时间
@@ -431,11 +432,15 @@ export default {
     }
   },
   async created () {
-    await this.inquireCurrencyList()
+    // await this.inquireCurrencyList()
     await this.getChargeMentionList('current-entrust')
     this.changeTime()
+    console.log(this.assetJumpStateDefaultCurrency)
   },
   methods: {
+    ...mapMutations([
+      'SET_NEW_WITHDRAW_RECORD'
+    ]),
     //  点击复制
     onCopy (e) {
       // 已拷贝
@@ -457,28 +462,38 @@ export default {
     },
     // tab 切换
     async coinMoneyOrders (e) {
-      this.startTime = [
-        new Date(
-          this.year,
-          this.month,
-          this.date, 0, 0, 0
-        ),
-        new Date()
-      ]
+      if (this.activeName === 'current-entrust') {
+        this.startTime = ''
+      } else {
+        this.startTime = [
+          new Date(
+            this.year,
+            this.month,
+            this.date, 0, 0, 0
+          ),
+          new Date()
+        ]
+      }
       await this.inquireCurrencyList(e.name)
       this.getChargeMentionList(e.name)
     },
     // 获取商户币种列表
-    async inquireCurrencyList () {
+    async inquireCurrencyList (entrustType) {
+      // this.SET_NEW_WITHDRAW_RECORD('')
       let data
       let param = {
       }
       data = await getMerchantCurrencyList(param)
       if (!data) return false
       this.currencyList = getNestedData(data, 'data')
-      console.log(getNestedData(data, 'data')[0])
-      this.defaultCurrencyId = getNestedData(data, 'data')[0] ? this.assetJumpStatementDetails || getNestedData(data, 'data')[0].id : ''
-      console.log(this.defaultCurrencyId)
+      if (this.defaultCurrencyId === '') {
+        this.defaultCurrencyId = getNestedData(data, 'data')[0] ? getNestedData(data, 'data')[0].id : ''
+      } else {
+        this.defaultCurrencyId = getNestedData(data, 'data')[0] ? this.assetJumpStatementDetails || getNestedData(data, 'data')[0].id : ''
+      }
+      // 接口回来之后把select状态改为可用
+      this.currencyValueStatus = false
+      this.getChargeMentionList(entrustType)
     },
     // 搜索按钮
     stateSearchButton (entrustType) {
@@ -621,24 +636,28 @@ export default {
         this.endTime = ''
       }
     },
+    assetJumpStatementDetails () {
+      this.defaultCurrencyId = this.assetJumpStatementDetails
+    },
     // 我的资产跳转账单明细状态类型提币或者充值
-    assetJumpStatementDetailsType (newVal) {
-      console.log(newVal)
+    assetJumpStatementDetailsType () {
       this.currencyTypeValue = this.assetJumpStatementDetailsType
     },
     userCenterActiveName (newVal) {
-      this.startTime = [
-        new Date(
-          this.year,
-          this.month,
-          this.date, 0, 0, 0
-        ),
-        new Date()
-      ]
+      if (this.activeName === 'current-entrust') {
+        this.startTime = ''
+      } else {
+        this.startTime = [
+          new Date(
+            this.year,
+            this.month,
+            this.date, 0, 0, 0
+          ),
+          new Date()
+        ]
+      }
       this.changeTime()
-      this.getChargeMentionList()
       if (newVal === 'billing-details') {
-        this.getChargeMentionList()
         this.inquireCurrencyList()
       }
     }
@@ -915,14 +934,18 @@ export default {
     /deep/ {
       .el-input__inner {
         width: 110px;
-        height: 30px;
+        height: 30px !important;
         border: 0;
         font-size: 12px;
       }
 
+      .el-date-editor .el-range__close-icon {
+        width: 16px;
+      }
+
       .el-date-editor {
         &.el-input__inner {
-          width: 205px;
+          width: 225px;
         }
 
         &.el-input {
@@ -936,11 +959,6 @@ export default {
         }
 
         .el-range__icon {
-          line-height: 25px;
-        }
-
-        .el-range__close-icon {
-          display: none;
           line-height: 25px;
         }
       }
