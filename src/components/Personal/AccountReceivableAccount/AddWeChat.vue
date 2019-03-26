@@ -147,7 +147,7 @@
                 {{ $t('M.user_modification_confirm_amend') }}
               </button>
               <p
-                class="font-size12 cursor-pointer text-align-r hint-color"
+                class="font-size12 cursor-pointer text-align-r hint-color float-right"
                 @click.prevent="payPasswordState"
               >
                 {{ $t('M.user_payPassword') }}

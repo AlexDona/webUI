@@ -339,6 +339,7 @@
             <el-dialog
               :title="$t('M.user_security_safety') + $t('M.user_security_verify')"
               :visible.sync="isShowPayPasswordDialog"
+              :close-on-click-modal="false"
             >
               <el-form
                 :label-position="labelPosition"
@@ -643,7 +644,10 @@ export default {
      * 5.提交push
      */
     // 检测输入格式
-    checkoutInputFormat (type, targetNum, dialogPayPassword) {
+    checkoutInputFormat (type, targetNum) {
+      if (!this.isShowPayPasswordDialog) {
+        this.setErrorMsg(3, '')
+      }
       console.log(type)
       switch (type) {
         // 买方UID
@@ -1037,6 +1041,7 @@ export default {
         .el-button {
           width: 270px;
           height: 36px;
+          margin-left: 20px;
           border: 0;
           line-height: 0;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
