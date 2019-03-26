@@ -265,14 +265,33 @@
                   type="password"
                   class="password"
                   @input="deleteErrorTips"
-                  @blur="submitPassword"
                   @keyup.enter="submitPassword"
                 >
-                <p v-if="isShowErrorTips" class="errorTips">{{$t('M.otc_publishAD_pleaseInput') + $t('M.comm_password') }}</p>
-                <span slot="footer" class="dialog-footer">
-                  <el-button type="primary" @click="submitPassword"  :disabled="isDisable">{{$t('M.comm_confirm')}}</el-button>
-                  <router-link to="/TransactionPassword" append class="blue forgetPass" tag="div">{{$t('M.user_payPassword')}}</router-link>
-                </span>
+                <p
+                  v-if="isShowErrorTips"
+                  class="errorTips"
+                >
+                  {{$t('M.otc_publishAD_pleaseInput') + $t('M.comm_password') }}
+                </p>
+                <div
+                  slot="footer"
+                  class="dialog-footer"
+                >
+                  <el-button
+                    type="primary"
+                    @click="submitPassword"
+                    :disabled="isDisable"
+                  >
+                    {{$t('M.comm_confirm')}}
+                  </el-button>
+                  <router-link
+                    to="/TransactionPassword"
+                    append
+                    class="blue forgetPass"
+                    >
+                    {{$t('M.user_payPassword')}}
+                  </router-link>
+                </div>
               </el-dialog>
               <!--存币说明-->
               <el-dialog
@@ -1399,13 +1418,10 @@ export default {
         .el-button.el-button--primary {
           width: 300px;
           height: 36px;
+          margin-bottom: 15px;
           border: 0;
           line-height: 0;
           background: linear-gradient(81deg, #2b396e 0%, #2a5082 100%);
-        }
-
-        .forgetPass {
-          margin: 15px 0 0;
         }
 
         .forgetPass:hover {
