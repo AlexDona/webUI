@@ -388,12 +388,12 @@
                 <div class="tips err">{{errorInfoPassword}}</div>
               </div>
               <!--暂时关闭交易密码验证-->
-              <div
-                class="close-pwd-tip font-size12 cursor-pointer"
+              <span
+                class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
                 @click.prevent="closePwdJump"
               >
                 {{$t('M.user_payPassword_switch')}}
-              </div>
+              </span>
               <span
                 slot="footer"
                 class="dialog-footer"
@@ -406,11 +406,13 @@
                   {{$t('M.comm_sub_time')}}
                 </el-button>
                 <!--忘记交易密码？-->
-                <div
-                  class="forget-pwd-tip font-size12 cursor-pointer"
-                  @click.prevent="forgetPwdJump"
-                >
+                <div class="text-align-r">
+                  <span
+                    class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                    @click.prevent="forgetPwdJump"
+                  >
                   {{$t('M.user_payPassword')}}
+                </span>
                 </div>
               </span>
             </el-dialog>
@@ -1427,7 +1429,6 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
         .forget-pwd-tip {
           padding: 8px 20px 0 0;
-          text-align: right;
           color: #338ff5;
         }
       }
