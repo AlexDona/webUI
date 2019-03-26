@@ -843,6 +843,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language, // 当前选中语言
       theme: state => state.common.theme,
       configInfo: state => state.common.footerInfo.configInfo,
       anchorStatus: state => state.OTC.anchorStatus, // anchorStatus锚点状态：在全局先定义false，当用户购买或者出售时候改为true
@@ -854,7 +855,12 @@ export default {
       return window.innerHeight
     }
   },
-  watch: {}
+  watch: {
+    language (newVal) {
+      console.log(newVal)
+      this.tradePasswordTips = ''
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

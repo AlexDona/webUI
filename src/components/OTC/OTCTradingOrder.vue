@@ -700,6 +700,7 @@
             <el-button
               type="primary"
               @click="submitConfirmPayment"
+              :disabled="confirmPaymentStatus"
             >
               {{$t('M.otc_submit')}}
             </el-button>
@@ -755,6 +756,7 @@
             <el-button
               type="primary"
               @click="submitConfirmGathering"
+              :disabled="confirmGatheringStatus"
             >
               {{$t('M.otc_submit')}}
             </el-button>
@@ -811,6 +813,7 @@
             <el-button
               type="primary"
               @click="sellerSubmitAppeal"
+              :disabled="submitAppealStatus"
             >
               {{$t('M.otc_submit')}}
             </el-button>
@@ -866,6 +869,9 @@ export default {
   // props,
   data () {
     return {
+      confirmPaymentStatus: false, // 确认付款交易密码框提交按钮禁用状态
+      confirmGatheringStatus: false, // 确认收款交易密码框提交按钮禁用状态
+      submitAppealStatus: false, // 提交申诉交易密码框提交按钮禁用状态
       loading: false, // loading
       // 分页
       currentPage: 1, // 当前页码
@@ -1209,6 +1215,7 @@ export default {
         this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       } else {
+        this.confirmPaymentStatus = true // 禁用确认付款交易密码框提交按钮
         this.loading = true
         let params = {
           orderId: this.checkedTradingOrderId, // 订单id
@@ -1218,6 +1225,7 @@ export default {
         const data = await buyerPayForOrder(params)
         // console.log(data)
         // 正确逻辑
+        this.confirmPaymentStatus = false // 开启确认付款交易密码框提交按钮
         this.dialogVisibleConfirmPayment = false
         this.loading = false
         this.errPWD = ''
@@ -1250,6 +1258,7 @@ export default {
         this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
+      this.confirmGatheringStatus = true // 禁用确认收款交易密码框提交按钮
       this.loading = true
       let params = {
         orderId: this.checkedTradingOrderId // 订单id
@@ -1258,6 +1267,7 @@ export default {
       params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
       const data = await sellerConfirmGetMoney(params)
       // 正确逻辑
+      this.confirmGatheringStatus = false // 开启确认收款交易密码框提交按钮
       this.dialogVisibleConfirmReceipt = false
       this.loading = false
       this.errPWD = ''
@@ -1334,6 +1344,7 @@ export default {
         this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
+      this.submitAppealStatus = true // 禁用提交申诉交易密码框提交按钮
       this.loading = true
       let params = {
         orderId: this.checkedTradingOrderId, // 订单id
@@ -1354,6 +1365,7 @@ export default {
       }
       console.log(data)
       // 正确逻辑
+      this.submitAppealStatus = false // 开启提交申诉交易密码框提交按钮
       this.dialogVisibleSubmitComplaint = false
       this.loading = false
       this.errPWD = '' // 清空密码错提示
@@ -1389,7 +1401,11 @@ export default {
       loginStep1Info: state => state.user.loginStep1Info
     })
   },
-  watch: {},
+  watch: {
+    language (newVal) {
+      this.errPWD = '' // 切换语言清空交易密码框错误提示
+    }
+  },
   destroyed () {
     // 离开本组件清除定时器
     clearInterval(this.cancelOrdersTimer)

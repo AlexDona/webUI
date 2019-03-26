@@ -750,6 +750,7 @@
               class="button"
               type="primary"
               @click="submitButton1"
+              :disabled="confirmPaymentStatus"
             >
               <!--提 交-->
               {{$t('M.comm_sub_time')}}
@@ -807,6 +808,7 @@
               class="button"
               type="primary"
               @click="submitButton2"
+              :disabled="confirmGatheringStatus"
             >
               <!--提 交-->
               {{$t('M.comm_sub_time')}}
@@ -861,6 +863,7 @@
               class="button"
               type="primary"
               @click="submitsellerAppeal"
+              :disabled="submitAppealStatus"
             >
               <!--提 交-->
               {{$t('M.comm_sub_time')}}
@@ -910,6 +913,9 @@ export default {
   // props,
   data () {
     return {
+      confirmPaymentStatus: false, // 确认付款交易密码框提交按钮禁用状态
+      confirmGatheringStatus: false, // 确认收款交易密码框提交按钮禁用状态
+      submitAppealStatus: false, // 提交申诉交易密码框提交按钮禁用状态
       dialogVisible1: false, // 确认付款交易密码框
       dialogVisible2: false, // 确认收款交易密码框
       dialogVisible3: false, // 提交申诉交易密码框
@@ -1226,12 +1232,14 @@ export default {
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.comm_password')
         return false
       } else {
+        this.confirmPaymentStatus = true // 禁用确认付款交易密码框提交按钮
         const data = await buyerPayForOrder({
           orderId: this.activedTradingOrderId, // 订单id
           payId: this.activitedPayStyleId, // 支付账户id
           tradePassword: this.tradePassword // 交易密码
         })
         console.log(data)
+        this.confirmPaymentStatus = false // 开启确认付款交易密码框提交按钮
         // 1关闭交易密码框
         this.dialogVisible1 = false
         // 正确逻辑
@@ -1288,12 +1296,14 @@ export default {
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
+      this.confirmGatheringStatus = true // 禁用确认收款交易密码框提交按钮
       this.loading = true
       const data = await sellerConfirmGetMoney({
         orderId: this.activedTradingOrderId, // 订单id
         tradePassword: this.tradePassword // 交易密码
       })
       console.log(data)
+      this.confirmGatheringStatus = false // 开启确认收款交易密码框提交按钮
       // 1关闭交易密码框
       this.dialogVisible2 = false
       // 正确逻辑
@@ -1383,6 +1393,7 @@ export default {
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
+      this.submitAppealStatus = true // 禁用提交申诉交易密码框提交按钮
       let params = {
         orderId: this.activedTradingOrderId, // 订单id
         reason: this.appealTextAreaValue, // 申诉原因
@@ -1401,6 +1412,7 @@ export default {
         data = await sellerSendAppeal(params)
       }
       console.log(data)
+      this.submitAppealStatus = false // 开启提交申诉交易密码框提交按钮
       this.dialogVisible3 = false
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
@@ -1495,6 +1507,10 @@ export default {
         padding: 8px 20px;
         border: 0;
         border-radius: 5px;
+
+        &:disabled {
+          cursor: not-allowed;
+        }
       }
 
       > .order-list {

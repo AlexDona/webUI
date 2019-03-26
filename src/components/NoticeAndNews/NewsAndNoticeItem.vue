@@ -397,6 +397,13 @@ export default {
                 margin-bottom: 40px;
                 text-align: center;
               }
+
+              > .content {
+                text-align: justify;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                word-break: keep-all;
+              }
             }
           }
 
