@@ -1359,7 +1359,7 @@ export default {
         this.SET_NEW_WITHDRAW_RECORD_STATUS('WITHDRAW')
       }
       // 指定要跳转到的coinId
-      console.log(coinId)
+      console.log(coinId, this.activeCoinId)
       if (coinId) {
         this.SET_NEW_WITHDRAW_ADDRESS(coinId)
       }
