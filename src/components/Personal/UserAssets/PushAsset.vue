@@ -73,7 +73,6 @@
                 @keydown="setErrorMsg(1, '')"
                 @blur="checkoutInputFormat(1, count)"
                 @keyup="formatUserInput('count', pointLength)"
-                @input="formatUserInput('count', pointLength)"
               />
               <!--错误提示-->
               <ErrorBox
@@ -548,12 +547,26 @@ export default {
         this.sumState = true
         this.grossAmount = this.$keep8Num(this.$refs.count.value * this.$refs.price.value)
         this.grossAmount = this.$keep8Num(this.$refs.price.value * this.$refs.count.value)
-        let a = this.grossAmount
-        console.log(this.$scientificToNumber(a))
       }
     },
     // 是否需要交易密码
     async checkISNeedPayPassowd () {
+      if (this.$refs.count.value === '0') {
+        // PUSH数量为零提示数量不能为0
+        this.$message({
+          message: this.$t('M.user_push_amount_count'),
+          type: 'error'
+        })
+        return false
+      }
+      if (this.$refs.price.value === '0') {
+        // PUSH单价为零提示单价不能为0
+        this.$message({
+          message: this.$t('M.user_push_amount_price'),
+          type: 'error'
+        })
+        return false
+      }
       await this.reflashIsNeedPayPassword()
       let goOnStatus = 0
       goOnStatus = (this.checkoutInputFormat(0, this.buyUID) && this.checkoutInputFormat(1, this.count) && this.checkoutInputFormat(2, this.price)) ? 1 : 0
@@ -599,7 +612,7 @@ export default {
     },
     // 4.选择push资产币种
     async toggleAssetsCurrencyId (e) {
-      this.currencyValue
+      this.emptyInputData()
       let data = await getPushTotalByCoinId({
         coinId: e // 币种coinId
       })

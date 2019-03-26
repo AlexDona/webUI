@@ -69,6 +69,9 @@ export const personal = {
   'financial_income': '財テク収入',
   'invitation_reward': '有礼を招く',
   'comprehensive_records': '総合記録',
+  'comprehensive_user': '一般ユーザーのチャージ',
+  'comprehensive_manual': 'システムのチャージ',
+  'comprehensive_manual1': 'ソースを充填する',
   // 提币地址''コインアドレス'
   // 'user_address_empty': 'コインアドレスは空欄にできません',
   // 提币列表''コインリスト'
@@ -257,6 +260,8 @@ export const personal = {
   'user_push_count': 'プッシュの数は天びんの数より大きくすることはできません',
   'user_push_forbid': '自己PUSHを禁止する',
   'user_push_amount': 'PUS H金額',
+  'user_push_amount_count': 'PUS Hの数は0になることができません',
+  'user_push_amount_price': 'PUS H単価は0ではありません',
   // PUSHレコード
   // #####################私の取引#####################
   // トークン注文

@@ -309,8 +309,7 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'SET_STEP1_INFO',
       'SET_NEW_WITHDRAW_RECORD_STATUS',
-      'SET_NEW_WITHDRAW_RECORD',
-      'SET_NEW_CURRENCY_DEFAULT'
+      'SET_NEW_WITHDRAW_RECORD'
     ]),
     // 显示未设置交易密码弹窗
     showNoPasswdNotice () {
@@ -352,8 +351,7 @@ export default {
       userInfo: state => state.user.loginStep1Info,
       payPassword: state => state.user.loginStep1Info.userInfo.payPassword,
       realname: state => state.user.loginStep1Info.userInfo.realname,
-      token: state => state.user.loginStep1Info.token,
-      assetJumpStateDefaultCurrency: state => state.personal.assetJumpStateDefaultCurrency // 我的资产跳转账单明细币种默认第一个
+      token: state => state.user.loginStep1Info.token
     })
   },
   watch: {

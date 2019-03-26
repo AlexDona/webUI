@@ -176,7 +176,7 @@
                 <el-table-column
                   :label="$t('M.comm_mention_money') + $t('M.comm_site')"
                   v-if="withdrawSite"
-                  width="120"
+                  width="125"
                 >
                   <template slot-scope = "s">
                     <div
@@ -187,6 +187,32 @@
                       v-clipboard:error="onError"
                     >
                       {{s.row.withdrawAddress}}
+                    </div>
+                  </template>
+                </el-table-column>
+                <!--充值类型 USER("USER", "普通用户充值"), MANUAL("MANUAL", "手工充值")-->
+                <el-table-column
+                  :label="$t('M.comprehensive_manual1')"
+                  v-if="rechargeSite"
+                  width="125"
+                >
+                  <template slot-scope = "s">
+                    <!--系统充值-->
+                    <div
+                      v-if="s.row.rechargeType === 'MANUAL'"
+                    >
+                      {{ $t('M.comprehensive_manual')}}
+                    </div>
+                    <!--充值地址-->
+                    <div
+                      v-else
+                      :title="s.row.rechargeAddress"
+                      class="white-space cursor-pointer"
+                      v-clipboard:copy="s.row.rechargeAddress"
+                      v-clipboard:success="onCopy"
+                      v-clipboard:error="onError"
+                    >
+                      {{s.row.rechargeAddress}}
                     </div>
                   </template>
                 </el-table-column>
@@ -204,14 +230,6 @@
                 >
                   <template slot-scope = "s">
                     <div>{{ s.row.createTime }}</div>
-                  </template>
-                </el-table-column>
-                <!--更新时间-->
-                <el-table-column
-                  :label="$t('M.comm_update') + $t('M.comm_time')"
-                >
-                  <template slot-scope = "s">
-                    <div>{{ s.row.updateTime }}</div>
                   </template>
                 </el-table-column>
                 <!--状态-->
@@ -394,7 +412,9 @@ export default {
         }
       ], // 默认类型
       // 提现记录显示提币地址
-      withdrawSite: true,
+      withdrawSite: false,
+      // 提现记录显示充值来源
+      rechargeSite: false,
       addressShowId: true, // 提币地址显示状态
       // 其他记录
       otherRecordsList: [],
@@ -432,10 +452,8 @@ export default {
     }
   },
   async created () {
-    // await this.inquireCurrencyList()
     await this.getChargeMentionList('current-entrust')
     this.changeTime()
-    console.log(this.assetJumpStateDefaultCurrency)
   },
   methods: {
     ...mapMutations([
@@ -444,7 +462,6 @@ export default {
     //  点击复制
     onCopy (e) {
       // 已拷贝
-      // let msg = '已拷贝'
       let msg = this.$t('M.comm_have_been_copied')
       this.$message({
         type: 'success',
@@ -453,7 +470,6 @@ export default {
     },
     onError (e) {
       // 拷贝失败，请稍后重试
-      // let msg = '拷贝失败，请稍后重试'
       let msg = this.$t('M.comm_copies_failure')
       this.$message({
         type: 'success',
@@ -479,7 +495,6 @@ export default {
     },
     // 获取商户币种列表
     async inquireCurrencyList (entrustType) {
-      // this.SET_NEW_WITHDRAW_RECORD('')
       let data
       let param = {
       }
@@ -513,10 +528,14 @@ export default {
     async getChargeMentionList (entrustType1) {
       console.log(this.currencyTypeValue)
       // 判断是否显示提币地址 充币不显示，提币或者为空显示
-      if (this.currencyTypeValue === 'RECHARGE') {
-        this.withdrawSite = false
-      } else {
+      if (this.currencyTypeValue === 'WITHDRAW') {
         this.withdrawSite = true
+        this.rechargeSite = false
+      } else if (this.currencyTypeValue === '') {
+        this.withdrawSite = false
+        this.rechargeSite = false
+      } else {
+        this.rechargeSite = true
       }
       console.log(this.withdrawSite)
       const entrustType = entrustType1 || 'current-entrust'
@@ -545,6 +564,7 @@ export default {
           if (!data) return false
           // 返回冲提记录列表展示
           let detailData = getNestedData(data, 'data')
+          console.log(detailData)
           // 充提记录
           this.chargeRecordList = getNestedData(detailData, 'list') || []
           this.addressRecordList = getNestedData(detailData, 'list') || []
@@ -626,7 +646,6 @@ export default {
   },
   watch: {
     startTime (newVal) {
-      // console.log(newVal)
       if (!newVal) {
         this.startTime = ''
       }

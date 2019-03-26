@@ -70,6 +70,9 @@ export const personal = {
   'financial_income': '理財收入',
   'invitation_reward': '邀請有禮',
   'comprehensive_records': '綜合記錄',
+  'comprehensive_user': '普通用戶充值',
+  'comprehensive_manual': '系統充值',
+  'comprehensive_manual1': '充值來源',
   // 提幣地址
   // 'user_address_empty': '提幣地址不能為空',
   'user_address_labels': '地址標簽',
@@ -261,6 +264,8 @@ export const personal = {
   'user_push_count': 'Push數量不能大於余額',
   'user_push_forbid': '禁止自我PUSH',
   'user_push_amount': 'PUSH金額',
+  'user_push_amount_count': 'PUSH數量不能為0',
+  'user_push_amount_price': 'PUSH單價不能為0',
   // PUSH記錄
   // #####################我的交易#####################
   // 幣幣訂單

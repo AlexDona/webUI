@@ -715,6 +715,7 @@
         <el-dialog
           :title="$t('M.comm_password')"
           :visible.sync="dialogVisible1"
+          :close-on-click-modal="false"
           top="25vh"
           width="470"
         >
@@ -771,6 +772,7 @@
         <el-dialog
           :title="$t('M.comm_password')"
           :visible.sync="dialogVisible2"
+          :close-on-click-modal="false"
           top="25vh"
           width="470"
         >
@@ -780,6 +782,7 @@
               type="password"
               class="password-input"
               v-model="tradePassword"
+              @focus="passWordFocus"
             >
           </div>
           <div class="error-info">
@@ -826,6 +829,7 @@
         <el-dialog
           :title="$t('M.comm_password')"
           :visible.sync="dialogVisible3"
+          :close-on-click-modal="false"
           top="25vh"
           width="470"
         >
@@ -835,11 +839,12 @@
               type="password"
               class="password-input"
               v-model="tradePassword"
+              @focus="passWordFocus"
             >
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">{{errpwd}}</div>
+            <div class="tips">{{ errpwd }}</div>
           </div>
           <!--暂时关闭交易密码验证-->
           <span
@@ -1444,6 +1449,9 @@ export default {
     // 监控交易中订单列表并调用倒计时逻辑方法
     tradingOrderList (newVal) {
       this.timerLogicMethod()
+    },
+    language () {
+      this.errpwd = '' // 清空密码错提示
     },
     // tradingOrderList (newVal) {
     //   console.log(newVal)
