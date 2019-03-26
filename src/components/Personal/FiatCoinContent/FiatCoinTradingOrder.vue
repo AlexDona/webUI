@@ -1499,6 +1499,10 @@ export default {
         padding: 8px 20px;
         border: 0;
         border-radius: 5px;
+
+        &:disabled {
+          cursor: not-allowed;
+        }
       }
 
       > .order-list {
