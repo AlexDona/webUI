@@ -40,6 +40,7 @@
                 :item="collectArea"
                 :collectSymbol="collectSymbol"
                 @toggleCollect="toggleCollect"
+                :searchKeyWord="searchKeyWord"
               />
               <div
                 class="tab-item"
@@ -67,6 +68,7 @@
                     :activeName="activeName"
                     @toggleCollect="toggleCollect"
                     @getMoreSymbols="getMoreSymbols"
+                    :searchKeyWord="searchKeyWord"
                   />
                 </div>
               </div>
