@@ -129,59 +129,6 @@
               <div class="err">{{ errorInfoPrice }}</div>
             </div>
           </div>
-          <!-- 交易方式 -->
-          <div class="common trade-way">
-            <div class="left display-inline-block">
-              <!-- 交易方式 -->
-                <p class="tips font-size12">
-                  <span class="must-fill-star">*&nbsp;</span>{{$t("M.otc_publishAD_selltype")}}
-                </p>
-            </div>
-            <div class="right display-inline-block">
-              <el-checkbox-group
-                v-model="activatedPayTypes"
-                @change='changePayTypes'
-              >
-                <!-- 支付宝 -->
-                <el-checkbox
-                  label="Alipay"
-                  v-show="payForListArr[0] === '1'"
-                >
-                  {{$t('M.comm_alipay')}}
-                </el-checkbox>
-                <!-- 微信 -->
-                <el-checkbox
-                  label="Wechat"
-                  v-show="payForListArr[1] === '1'"
-                >
-                  {{$t('M.comm_weixin')}}
-                </el-checkbox>
-                <!-- 银行卡 -->
-                <el-checkbox
-                  label="Bankcard"
-                  v-show="payForListArr[2] === '1'"
-                >
-                  {{$t('M.comm_bank')}}
-                </el-checkbox>
-                <!-- 西联 -->
-                <el-checkbox
-                  label="WestUnion"
-                  v-show="payForListArr[3] === '1'"
-                >
-                  {{$t('M.comm_xilian')}}
-                </el-checkbox>
-                <!-- PAYPAL -->
-                <el-checkbox
-                  label="PAYPAL"
-                  v-show="payForListArr[4] === '1'"
-                >
-                  PAYPAL
-                </el-checkbox>
-              </el-checkbox-group>
-              <!-- 错误提示信息 -->
-              <div class="err">{{errorInfoTradeWay}}</div>
-            </div>
-          </div>
           <!-- 数量与限额 -->
           <div class="common sum-limit">
             <div class="left display-inline-block">
@@ -273,6 +220,59 @@
               </div>
             </div>
           </div>
+          <!-- 交易方式 -->
+          <div class="common trade-way">
+            <div class="left display-inline-block">
+              <!-- 交易方式 -->
+              <p class="tips font-size12">
+                <span class="must-fill-star">*&nbsp;</span>{{$t("M.otc_publishAD_selltype")}}
+              </p>
+            </div>
+            <div class="right display-inline-block">
+              <el-checkbox-group
+                v-model="activatedPayTypes"
+                @change='changePayTypes'
+              >
+                <!-- 支付宝 -->
+                <el-checkbox
+                  label="Alipay"
+                  v-show="payForListArr[0] === '1'"
+                >
+                  {{$t('M.comm_alipay')}}
+                </el-checkbox>
+                <!-- 微信 -->
+                <el-checkbox
+                  label="Wechat"
+                  v-show="payForListArr[1] === '1'"
+                >
+                  {{$t('M.comm_weixin')}}
+                </el-checkbox>
+                <!-- 银行卡 -->
+                <el-checkbox
+                  label="Bankcard"
+                  v-show="payForListArr[2] === '1'"
+                >
+                  {{$t('M.comm_bank')}}
+                </el-checkbox>
+                <!-- 西联 -->
+                <el-checkbox
+                  label="WestUnion"
+                  v-show="payForListArr[3] === '1'"
+                >
+                  {{$t('M.comm_xilian')}}
+                </el-checkbox>
+                <!-- PAYPAL -->
+                <el-checkbox
+                  label="PAYPAL"
+                  v-show="payForListArr[4] === '1'"
+                >
+                  PAYPAL
+                </el-checkbox>
+              </el-checkbox-group>
+              <!-- 错误提示信息 -->
+              <div class="err">{{errorInfoTradeWay}}</div>
+            </div>
+          </div>
           <!-- 备注 -->
           <div class="common remark">
             <div class="left display-inline-block">
@@ -349,6 +349,53 @@
                 <div class="err">{{errorInfoSuccessOrderCount}}</div>
               </div>
             </div>
+          </div>
+          <!--增加显示交易额和手续费-->
+          <div class="fee-detail">
+            <span class="predict-text">
+              <!-- 预计交易额： -->
+              {{$t('M.otc_expected_value')}}：
+            </span>
+            <!-- 卖 -->
+            <span
+              class="predict-sum"
+              v-show="this.activatedBuySellStyle === 'SELL'"
+            >
+              {{$scientificToNumber(publishSumSELL)}} {{activatedCurrencyName}}
+            </span>
+            <!-- 买 -->
+            <span
+              class="predict-sum"
+              v-show="this.activatedBuySellStyle === 'BUY'"
+            >
+              {{$scientificToNumber(publishSumBUY)}} {{activatedCurrencyName}}
+            </span>
+            <span class="predict-text">
+              <!-- 手续费： -->
+              {{$t('M.comm_service_charge')}}：
+            </span>
+            <!-- 卖 -->
+            <span
+              class="predict-sum"
+              v-show="this.activatedBuySellStyle === 'SELL'"
+            >
+              {{$scientificToNumber(serviceChargeSELL)}} {{activatedCoinName}}
+            </span>
+            <!-- 买 -->
+            <span
+              class="predict-sum"
+              v-show="this.activatedBuySellStyle === 'BUY'"
+            >
+              {{$scientificToNumber(serviceChargeBUY)}} {{activatedCoinName}}
+            </span>
+            <span class="rate-text">
+              <!-- 费率 -->
+              ( {{$t('M.otc_index_rate')}}
+              <span class="rate">
+                {{rate * 100}}%
+              </span>
+              )
+            </span>
           </div>
           <!-- 提交按钮 -->
           <div class="button">
@@ -448,7 +495,9 @@
 import {
   formatNumberInput,
   // positiveIntegerNumRegexpInput,
-  positiveIntegerNumRegexpInputNoZero
+  positiveIntegerNumRegexpInputNoZero,
+  amendPrecision,
+  cutOutPointLength
 } from '../../utils'
 import {
   querySelectedOrdersDetails,
@@ -560,7 +609,16 @@ export default {
       entrustCountErrorTipsBorder: false, // 交易数量错误提示框
       minCountErrorTipsBorder: false, // 单笔最小限额错误提示框
       maxCountErrorTipsBorder: false, // 单笔最大限额错误提示框
-      isNeedPayPassword: true
+      isNeedPayPassword: true,
+      rate: '', // 费率
+      // 手续费：卖
+      serviceChargeSELL: 0,
+      // 手续费：买
+      serviceChargeBUY: 0,
+      // 预计交易额：卖
+      publishSumSELL: 0,
+      // 预计交易额 :买
+      publishSumBUY: 0
     }
   },
   created () {
@@ -603,14 +661,12 @@ export default {
     // 1.0 同时处理最大订单数(0=不限制)input框限制
     positiveIntegerNumRegexpInputLimit (ref) {
       let target = this.$refs[ref]
-      // this.limitOrderCount = positiveIntegerNumRegexpInput(target)
       this.limitOrderCount = positiveIntegerNumRegexpInputNoZero(target)
       console.log(this.$refs.limitRef.value)
     },
     // 2.0 卖家必须成交过几次（0=不限制）input框限制
     positiveIntegerNumRegexpInputSuccess (ref) {
       let target = this.$refs[ref]
-      // this.successOrderCount = positiveIntegerNumRegexpInput(target)
       this.successOrderCount = positiveIntegerNumRegexpInputNoZero(target)
       console.log(this.$refs.successRef.value)
     },
@@ -620,7 +676,7 @@ export default {
       const data = await querySelectedOrdersDetails({
         entrustId: this.messageId
       })
-      // console.log('广告管理跳转过来挂单详情')
+      console.log('广告管理跳转过来挂单详情')
       console.log(data)
       // 正确逻辑
       this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
@@ -688,6 +744,13 @@ export default {
       // 币种单笔最小限额
       this.minCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.minCount')
       this.$refs.minCountValue.value = this.minCount
+      // 费率
+      if (this.activatedBuySellStyle === 'SELL') {
+        this.rate = getNestedData(availableCoinListData, 'otcCoinQryResponse.sellRate')
+      }
+      if (this.activatedBuySellStyle === 'BUY') {
+        this.rate = getNestedData(availableCoinListData, 'otcCoinQryResponse.buyRate')
+      }
     },
     // 5.0 改变发布广告 买卖 类型
     changeBuySellStyle (e) {
@@ -909,6 +972,11 @@ export default {
       // 清空单笔最小最大限额错误提示
       this.errorInfoMinCount = ''
       this.errorInfoMaxCount = ''
+      // 清空买卖预计交易额和手续费
+      this.publishSumSELL = 0
+      this.publishSumBUY = 0
+      this.serviceChargeSELL = 0
+      this.serviceChargeBUY = 0
     },
     // 输入限制
     formatInput (ref, pointLength) {
@@ -942,6 +1010,23 @@ export default {
         this.errorInfoPrice = ''
         this.priceErrorTipsBorder = false
       }
+      // 增加显示预计交易额和手续费
+      if (this.$refs.entrustCount.value) {
+        // 交易额
+        // 卖
+        this.publishSumSELL = amendPrecision(this.$refs.price.value, this.$refs.entrustCount.value, '*')
+        this.publishSumSELL = cutOutPointLength(this.publishSumSELL, 2)
+        // 买
+        this.publishSumBUY = amendPrecision(this.$refs.price.value, this.$refs.entrustCount.value, '*')
+        this.publishSumBUY = cutOutPointLength(this.publishSumBUY, 2)
+        // 手续费
+        // 卖
+        this.serviceChargeSELL = amendPrecision(this.$refs.entrustCount.value, this.rate, '*')
+        this.serviceChargeSELL = cutOutPointLength(this.serviceChargeSELL, this.pointLength)
+        // 买
+        this.serviceChargeBUY = amendPrecision(this.$refs.entrustCount.value, this.rate, '*')
+        this.serviceChargeBUY = cutOutPointLength(this.serviceChargeBUY, this.pointLength)
+      }
     },
     // 16.0 校验用户输入的 交易数量：键盘弹起事件
     changeEntrustCountValue (ref, pointLength) {
@@ -962,16 +1047,27 @@ export default {
           return false
         }
       }
+      // 增加显示预计交易额和手续费
+      if (this.$refs.price.value) {
+        // 交易额
+        // 卖
+        this.publishSumSELL = amendPrecision(this.$refs.price.value, this.$refs.entrustCount.value, '*')
+        this.publishSumSELL = cutOutPointLength(this.publishSumSELL, 2)
+        // 买
+        this.publishSumBUY = amendPrecision(this.$refs.price.value, this.$refs.entrustCount.value, '*')
+        this.publishSumBUY = cutOutPointLength(this.publishSumBUY, 2)
+        // 手续费
+        // 卖
+        this.serviceChargeSELL = amendPrecision(this.$refs.entrustCount.value, this.rate, '*')
+        this.serviceChargeSELL = cutOutPointLength(this.serviceChargeSELL, this.pointLength)
+        // 买
+        this.serviceChargeBUY = amendPrecision(this.$refs.entrustCount.value, this.rate, '*')
+        this.serviceChargeBUY = cutOutPointLength(this.serviceChargeBUY, this.pointLength)
+      }
     },
     // 17.0 校验单笔最小限额
     changeMinCountInputValue (ref, pointLength) {
-      // console.log('大' + this.$refs.maxCountValue.value)
-      // console.log('小' + this.$refs.minCountValue.value)
-      // console.log('后台大' + this.maxCount)
-      // console.log('后台小' + this.minCount)
-      // console.log('--------------------------------')
       this[ref] = this.$refs[ref].value
-      // console.log(this[ref])
       // console.log(this.minCountValue)
       // console.log(this.$refs.minCountValue.value)
       let target = this.$refs[ref]
@@ -1016,13 +1112,7 @@ export default {
     },
     // 20.0 校验单笔最大限额
     changeMaxCountInputValue (ref, pointLength) {
-      // console.log('大' + this.$refs.maxCountValue.value)
-      // console.log('小' + this.$refs.minCountValue.value)
-      // console.log('后台大' + this.maxCount)
-      // console.log('后台小' + this.minCount)
-      // console.log('--------------------------------')
       this[ref] = this.$refs[ref].value
-      // console.log(this[ref])
       // console.log(this.maxCountValue)
       // console.log(this.$refs.maxCountValue.value)
       let target = this.$refs[ref]
@@ -1294,6 +1384,27 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             .num-success {
               margin-top: 15px;
             }
+          }
+        }
+
+        > .fee-detail {
+          padding: 10px 0 0 115px;
+          font-size: 12px;
+
+          .predict-text {
+            color: #9fa7b2;
+          }
+
+          .predict-sum {
+            color: #30c296;
+          }
+
+          .rate-text {
+            color: #9fa7b2;
+          }
+
+          .rate {
+            color: #ca5040;
           }
         }
 
