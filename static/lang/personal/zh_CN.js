@@ -70,6 +70,9 @@ export const personal = {
   'financial_income': '理财收入',
   'invitation_reward': '邀请有礼',
   'comprehensive_records': '综合记录',
+  'comprehensive_user': '普通用户充值',
+  'comprehensive_manual': '系统充值',
+  'comprehensive_manual1': '充值来源',
   // 提币地址
   // 'user_address_empty': '提币地址不能为空',
   'user_address_labels': '地址标签',
@@ -261,6 +264,8 @@ export const personal = {
   'user_push_count': 'Push数量不能大于余额',
   'user_push_forbid': '禁止自我PUSH',
   'user_push_amount': 'PUSH金额',
+  'user_push_amount_count': 'PUSH数量不能为0',
+  'user_push_amount_price': 'PUSH单价不能为0',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单

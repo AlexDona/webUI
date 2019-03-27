@@ -70,6 +70,9 @@ export const personal = {
   'financial_income': '재테크 수입',
   'invitation_reward': '초대 선물',
   'comprehensive_records': '종합 기록',
+  'comprehensive_user': '일반 사용자 충전',
+  'comprehensive_manual': '시스템 충전',
+  'comprehensive_manual1': '공급원',
   // 提币地址
   // 'user_address_empty': '동전 주소는 비워 둘 수 없습니다',
   'user_address_labels': '주소 태그',
@@ -261,6 +264,8 @@ export const personal = {
   'user_push_count': 'Push 횟수는 잔액보다 클 수 없습니다.',
   'user_push_forbid': '체 PUSH 금지',
   'user_push_amount': 'PUSH 금액',
+  'user_push_amount_count': 'PUSH 수가 0 이 안 돼요.',
+  'user_push_amount_price': 'PUSH 단가 0 은 안 된다',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单

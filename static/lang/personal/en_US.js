@@ -70,6 +70,9 @@ export const personal = {
   'financial_income': 'Financial income',
   'invitation_reward': 'Invitation giveaway',
   'comprehensive_records': 'Comprehensive records',
+  'comprehensive_user': 'Ordinary recharge',
+  'comprehensive_manual': 'System recharge',
+  'comprehensive_manual1': 'Source recharge',
   // 提币地址Coin address
   // 'user_address_empty': 'The coin address cannot be empty',
   // 提币列表Coin list
@@ -257,6 +260,8 @@ export const personal = {
   'user_push_count': 'The number of Push cannot be greater than the balance',
   'user_push_forbid': 'Prohibit self PUSH',
   'user_push_amount': 'PUSH the amount',
+  'user_push_amount_count': 'PUSH quantity cannot be 0',
+  'user_push_amount_price': 'PUSH unit price cannot be 0',
   // PUSH记录PUSH record
   // #####################我的交易#####################My transaction
   // 币币订单Coin order
