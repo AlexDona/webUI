@@ -1350,6 +1350,7 @@ export default {
       this.accountCount = ''
       this.activeWithdrawDepositAddress = ''
     },
+    // 跳转到账单明细参数传递
     jumpToOtherTab ({target, coinId, index}) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
       // 判断点击的类型1 充值 2 提币

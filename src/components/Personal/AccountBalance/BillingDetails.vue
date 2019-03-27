@@ -194,7 +194,7 @@
                 <el-table-column
                   :label="$t('M.comprehensive_manual1')"
                   v-if="rechargeSite"
-                  width="125"
+                  width="130"
                 >
                   <template slot-scope = "s">
                     <!--系统充值-->
@@ -415,7 +415,6 @@ export default {
       withdrawSite: false,
       // 提现记录默认隐藏充值来源 true显示 false隐藏
       rechargeSite: false,
-      addressShowId: true, // 提币地址显示状态
       // 其他记录
       otherRecordsList: [],
       otherRecordPageNumbers: 1, // 其他记录页码
@@ -452,13 +451,28 @@ export default {
     }
   },
   async created () {
-    await this.getChargeMentionList('current-entrust')
+    await this.inquireCurrencyList('current-entrust')
     this.changeTime()
   },
   methods: {
     ...mapMutations([
       'SET_NEW_WITHDRAW_RECORD'
     ]),
+    // 时间格式化
+    timeFormatting (date) {
+      return timeFilter(date, 'normal')
+    },
+    // 时间赋值
+    changeTime () {
+      this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
+        disabledDate: (time) => {
+          let curDate = (new Date()).getTime()
+          let three = 90 * 24 * 3600 * 1000
+          let threeMonths = curDate - three
+          return time.getTime() > Date.now() + ((1 * 24 * 3600 * 1000) - (this.hours + this.minutes + this.seconds)) || time.getTime() < threeMonths
+        }
+      })
+    },
     //  点击复制
     onCopy (e) {
       // 已拷贝
@@ -480,7 +494,8 @@ export default {
     async coinMoneyOrders (e) {
       if (this.activeName === 'current-entrust') {
         this.startTime = ''
-      } else {
+      }
+      if (this.activeName === 'other-records') {
         this.startTime = [
           new Date(
             this.year,
@@ -500,14 +515,18 @@ export default {
       data = await getMerchantCurrencyList(param)
       if (!data) return false
       this.currencyList = getNestedData(data, 'data')
-      if (this.defaultCurrencyId === '') {
+      // 判断全局币种id是否为空 如果为空 把币种第一项赋值给defaultCurrencyId
+      // 如果不为空则把全局我的资产带回的币种id赋值给defaultCurrencyId 进行展示
+      if (this.assetJumpStatementDetails === '') {
         this.defaultCurrencyId = getNestedData(data, 'data')[0] ? getNestedData(data, 'data')[0].id : ''
       } else {
         this.defaultCurrencyId = getNestedData(data, 'data')[0] ? this.assetJumpStatementDetails || getNestedData(data, 'data')[0].id : ''
       }
+      // 对充提类型进行赋值
+      this.currencyTypeValue = this.assetJumpStatementDetailsType
+      this.getChargeMentionList(entrustType)
       // 接口回来之后把select状态改为可用
       this.currencyValueStatus = false
-      this.getChargeMentionList(entrustType)
     },
     // 搜索按钮
     stateSearchButton (entrustType) {
@@ -551,7 +570,7 @@ export default {
       }
       let data
       let data1
-      console.log(entrustType)
+      // console.log(entrustType)
       switch (entrustType) {
         case 'current-entrust':
           params.currentPage = this.recordPageNumber
@@ -607,31 +626,6 @@ export default {
           this.getChargeMentionList(entrustType)
           break
       }
-    },
-    // 显示提币地址
-    showStatusCode (index, val) {
-      if (val == 1) {
-        // 显示提币地址
-        this.addressShowId = true
-      } else {
-        // 隐藏提币地址
-        this.addressShowId = false
-      }
-    },
-    // 时间格式化
-    timeFormatting (date) {
-      return timeFilter(date, 'normal')
-    },
-    // 结束时间赋值
-    changeTime () {
-      this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
-        disabledDate: (time) => {
-          let curDate = (new Date()).getTime()
-          let three = 90 * 24 * 3600 * 1000
-          let threeMonths = curDate - three
-          return time.getTime() > Date.now() + ((1 * 24 * 3600 * 1000) - (this.hours + this.minutes + this.seconds)) || time.getTime() < threeMonths
-        }
-      })
     }
   },
   filter: {},
@@ -645,41 +639,25 @@ export default {
     })
   },
   watch: {
-    startTime (newVal) {
-      if (!newVal) {
-        this.startTime = ''
-      }
-    },
-    endTime (newVal) {
-      if (!newVal) {
-        this.endTime = ''
-      }
-    },
-    assetJumpStatementDetails () {
-      this.defaultCurrencyId = this.assetJumpStatementDetails
-    },
-    // 我的资产跳转账单明细状态类型提币或者充值
-    assetJumpStatementDetailsType () {
-      this.currencyTypeValue = this.assetJumpStatementDetailsType
-    },
-    userCenterActiveName (newVal) {
-      if (this.activeName === 'current-entrust') {
-        this.startTime = ''
-      } else {
-        this.startTime = [
-          new Date(
-            this.year,
-            this.month,
-            this.date, 0, 0, 0
-          ),
-          new Date()
-        ]
-      }
-      this.changeTime()
-      if (newVal === 'billing-details') {
-        this.inquireCurrencyList()
-      }
-    }
+    // userInfo (newVal) {
+    //   console.log(newVal)
+    // },
+    // startTime (newVal) {
+    //   console.log(newVal)
+    //   if (!newVal) {
+    //     this.startTime = ''
+    //   }
+    // },
+    // endTime (newVal) {
+    //   console.log(newVal)
+    //   if (!newVal) {
+    //     this.endTime = ''
+    //   }
+    // },
+    // userCenterActiveName (newVal) {
+    //   console.log(newVal)
+    //   this.changeTime()
+    // }
   }
 }
 </script>
@@ -960,6 +938,7 @@ export default {
 
       .el-date-editor .el-range__close-icon {
         width: 16px;
+        line-height: 25px;
       }
 
       .el-date-editor {

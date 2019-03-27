@@ -32,7 +32,7 @@
             :label = "$t('M.user_asset_title2')"
             name = "billing-details"
           >
-            <BillingDetails/>
+            <BillingDetails v-if="userCenterActiveName ==='billing-details'"/>
           </el-tab-pane>
           <!--提币地址-->
           <el-tab-pane
@@ -327,8 +327,11 @@ export default {
     // tab面板切换
     async statusSwitchPanel (tab) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(tab.name)
+      // 判断当前模块为账单明细
       if (tab.name === 'billing-details') {
+        // 清空全局币种id 在billingDetails组件中重新赋值
         this.SET_NEW_WITHDRAW_RECORD('')
+        // 清空全局充提类型
         this.SET_NEW_WITHDRAW_RECORD_STATUS('')
       }
       this.showNoPosswdAndNoVerifyNotice()
@@ -356,6 +359,7 @@ export default {
   },
   watch: {
     userCenterActiveName (e) {
+      console.log(e)
       this.currentUserCenterActiveName = e
       this.REFRESH_USER_INFO_ACTION()
     }
