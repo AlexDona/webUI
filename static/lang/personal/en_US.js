@@ -70,7 +70,7 @@ export const personal = {
   'financial_income': 'Financial income',
   'invitation_reward': 'Invitation giveaway',
   'comprehensive_records': 'Comprehensive records',
-  'comprehensive_user': 'Ordinary user recharge',
+  'comprehensive_user': 'Ordinary recharge',
   'comprehensive_manual': 'System recharge',
   'comprehensive_manual1': 'Source recharge',
   // 提币地址Coin address

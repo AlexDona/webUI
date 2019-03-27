@@ -411,9 +411,9 @@ export default {
           label: 'M.comm_mention_money'
         }
       ], // 默认类型
-      // 提现记录显示提币地址
+      // 提现记录默认隐藏提币地址 true显示 false隐藏
       withdrawSite: false,
-      // 提现记录显示充值来源
+      // 提现记录默认隐藏充值来源 true显示 false隐藏
       rechargeSite: false,
       addressShowId: true, // 提币地址显示状态
       // 其他记录
@@ -491,7 +491,6 @@ export default {
         ]
       }
       await this.inquireCurrencyList(e.name)
-      this.getChargeMentionList(e.name)
     },
     // 获取商户币种列表
     async inquireCurrencyList (entrustType) {
@@ -536,6 +535,7 @@ export default {
         this.rechargeSite = false
       } else {
         this.rechargeSite = true
+        this.withdrawSite = false
       }
       console.log(this.withdrawSite)
       const entrustType = entrustType1 || 'current-entrust'
