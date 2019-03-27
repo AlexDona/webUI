@@ -292,7 +292,7 @@
               <!-- 付款前 -->
               <div
                 class="right-content"
-                v-if="item.status == 'PICKED'"
+                v-if="item.status == 'PICKED' && item.orderType === 'BUY'"
               >
                 <!-- 等待付款确认付款按钮 -->
                 <p class="action-tips">
@@ -329,7 +329,7 @@
               <!-- 付款后 -->
               <div
                 class="right-content"
-                v-if="item.status == 'PAYED'"
+                v-if="item.status == 'PAYED' && item.orderType === 'BUY'"
               >
               <!-- 已提交确认付款 -->
                 <p class="action-tips submitted-confirm-payment">
@@ -501,7 +501,7 @@
               <!-- 付款前 -->
               <div
                 class="right-content"
-                v-if="item.status == 'PICKED'"
+                v-if="item.status == 'PICKED' && item.orderType === 'SELL'"
               >
                 <p class="action-explain">
                   <el-button
@@ -521,7 +521,7 @@
               <!-- 付款后 -->
               <div
                 class="right-content"
-                v-if="item.status == 'PAYED'"
+                v-if="item.status == 'PAYED' && item.orderType === 'SELL'"
               >
                 <p class="action-explain">
                   <el-button
@@ -555,11 +555,10 @@
                     />
                   </span>
                   <span class="remaining-time">
-                    <span v-if="accomplishOrderTimeArr[index] > 0">
+                    <span v-if="accomplishOrderTimeArr[index] - 0 > 0">
                       {{BIHTimeFormatting(accomplishOrderTimeArr[index])}}
                     </span>
                     <span v-else>00ˋ00′00″</span>
-                    <!--<span v-else>&#45;&#45;</span>-->
                   </span>
                 </p>
               </div>
@@ -1039,14 +1038,10 @@ export default {
     cancelSetInter () {
       clearInterval(this.cancelOrdersTimer)
       this.cancelOrdersTimer = setInterval(() => {
-        // console.log(this.cancelOrderTimeArr)
         // 循环自动取消倒计时时间数组
         this.cancelOrderTimeArr.forEach((item, index) => {
-          // console.log(item)
           this.$set(this.cancelOrderTimeArr, index, this.cancelOrderTimeArr[index] - 1000)
-          // console.log(this.cancelOrderTimeArr[index])
-          // console.log(typeof (this.cancelOrderTimeArr[index]))
-          if (this.cancelOrderTimeArr[index] < 0 || this.cancelOrderTimeArr[index] == 0) {
+          if (item - 0 < 0 || item == 0) {
             this.cancelCompleteUserOtcOrder(1)
           }
         })
@@ -1057,18 +1052,11 @@ export default {
       clearInterval(this.accomplishOrdersTimer)
       this.accomplishOrdersTimer = setInterval(() => {
         // 循环自动成交倒计时数组
-        // this.accomplishOrderTimeArr.forEach((item, index) => {
-        //   this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
-        //   console.log(this.accomplishOrderTimeArr[index])
-        //   if (!(this.accomplishOrderTimeArr[index] > 0)) {
-        //     // this.cancelCompleteUserOtcOrder(2)
-        //   }
-        // })
         this.accomplishOrderTimeArr.forEach((item, index) => {
-          if (this.accomplishOrderTimeArr[index] > 0) {
+          if (item - 0 > 0) {
             this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
-            // console.log(this.accomplishOrderTimeArr[index])
             this.$set(this.sellerTimeOutDisabled, index, false) // 卖家超时禁用确认收款按钮-未超时可点击
+            this.$set(this.buyerAppealButtonStatus, index, false) // 卖家未超时付款隐藏买家申诉订单按钮
           } else {
             this.$set(this.buyerAppealButtonStatus, index, true) // 卖家超时未付款显示买家申诉订单按钮
             this.$set(this.sellerTimeOutDisabled, index, true) // 卖家超时禁用确认收款按钮
@@ -1100,7 +1088,7 @@ export default {
       this.activeBankType = [] // 清空选中的支付方式所展示的付款账户和账号
       this.cancelOrderTimeArr = []
       this.accomplishOrderTimeArr = []
-      console.log('当前页：' + this.currentPage)
+      this.buyerAppealButtonStatus = [] // 清空买家申诉按钮
       const data = await getOTCOrdersThreeDay({
         status: 'TRADING',
         pageNum: this.currentPage,
@@ -1118,17 +1106,18 @@ export default {
         this.totalPages = getNestedData(detailsData, 'pages') - 0
         // 循环数组
         this.tradingOrderList.forEach((item, index) => {
-          // console.log(item)
           this.buttonStatusArr[index] = false
           this.showOrderAppeal[index] = false
           // 自动取消订单倒计时数组集
           if (item.status === 'PICKED') {
-            this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
+            this.cancelOrderTimeArr[index] = item.cancelRestTime - 0 // cancelRestTime毫秒单位
             this.accomplishOrderTimeArr[index] = 10000000 // completeRestTime毫秒单位
             // 自动成交倒计时数组集
           } else if (item.status === 'PAYED') {
             this.cancelOrderTimeArr[index] = 10000000 // cancelRestTime毫秒单位
-            this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
+            this.accomplishOrderTimeArr[index] = item.completeRestTime - 0 // completeRestTime毫秒单位
+            console.log(this.accomplishOrderTimeArr[index])
+            console.log(typeof this.accomplishOrderTimeArr[index])
           }
         })
         if (this.tradingOrderList.length) {
@@ -1144,17 +1133,11 @@ export default {
     },
     // 3.0 改变交易方式
     changeUserBankInfo (index) {
-      // console.log('第' + index + '条数据')
-      // console.log('选中的订单id')
-      // console.log(this.tradingOrderList[index].id)
-      // console.log(this.activePayModeList[index])
       this.checkedTradingOrderId = this.tradingOrderList[index].id
       this.tradingOrderList[index].userBankList.forEach((item) => {
         if (item.id == this.activePayModeList[index]) {
           this.checkedPayAccountArr[index] = item.cardNo
-          // console.log('选中的付款账号：' + this.checkedPayAccountArr[index])
           this.activeBankFidList[index] = item.id
-          // console.log('选中的支付方式id' + this.activeBankFidList[index])
           this.checkedPayStyleId = this.activeBankFidList[index]
           // 省
           this.activeBankProv[index] = item.prov
@@ -1168,11 +1151,8 @@ export default {
           this.activeBankDetailAddress[index] = item.address
           // 支付类型
           this.activeBankType[index] = item.bankType
-          // console.log('支付类型：' + this.activeBankType[index])
           // 支付码
           this.activeBankCode[index] = item.qrcode
-          // console.log('支付码')
-          // console.log(this.activeBankCode[index])
         }
         this.buttonStatusArr[index] = true
       })
@@ -1223,16 +1203,14 @@ export default {
         }
         params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
         const data = await buyerPayForOrder(params)
-        // console.log(data)
         // 正确逻辑
+        this.getOTCTradingOrdersList() // 调用接口刷新列表-20190327新增
         this.confirmPaymentStatus = false // 开启确认付款交易密码框提交按钮
         this.dialogVisibleConfirmPayment = false
         this.loading = false
         this.errPWD = ''
         this.tradePassword = ''
         if (!data) return false
-        // 2再次调用接口刷新列表
-        this.getOTCTradingOrdersList()
       }
     },
     // 8.0 卖家点击确认收款按钮
@@ -1267,6 +1245,7 @@ export default {
       params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
       const data = await sellerConfirmGetMoney(params)
       // 正确逻辑
+      this.getOTCTradingOrdersList() // 刷新列表-20190327新增
       this.confirmGatheringStatus = false // 开启确认收款交易密码框提交按钮
       this.dialogVisibleConfirmReceipt = false
       this.loading = false
@@ -1317,9 +1296,7 @@ export default {
       } else {
         // 申诉图片赋值
         this.uploadFileList.forEach((item, index) => {
-          // console.log(item)
           this[`picture${index + 1}`] = item.response.data.fileUrl
-          // console.log(this[`picture${index + 1}`])
         })
       }
       this.checkedTradingOrderId = id
@@ -1374,8 +1351,6 @@ export default {
       // 再次调用接口刷新列表
       this.getOTCTradingOrdersList()
       if (!data) return false
-      // 再次调用接口刷新列表
-      // this.getOTCTradingOrdersList()
     },
     // 忘记密码跳转
     forgetPwdJump () {
