@@ -64,16 +64,17 @@
                 />
                 <!-- 货币类型 -->
                 <el-select
+                  :disabled="currencyCoinSelectStatus"
                   v-model="checkedCurrencyId"
                   @change="changeCurrencyId"
                   :placeholder="$t('M.otc_index_currency_type')"
                   :no-data-text="$t('M.comm_no_data')"
                 >
                   <el-option
-                    v-for="(item,index) in availableCurrencyId"
+                    v-for="(item, index) in availableCurrencyId"
                     :key="index"
-                    :value="item.id"
                     :label="language === 'zh_CN'? item.name : item.shortName"
+                    :value="item.id"
                   >
                   </el-option>
                 </el-select>
@@ -431,6 +432,7 @@ export default {
   },
   data () {
     return {
+      currencyCoinSelectStatus: true, // 货币类型法币可用状态
       // 用户是否可以发单状态
       userPutUpOrderStatus: false,
       // 订单tabs面板切换禁用状态
@@ -751,6 +753,7 @@ export default {
     },
     //  2.0 otc可用法币查询
     async getMerchantAvailableLegalTenderList () {
+      this.currencyCoinSelectStatus = true // 禁用货币类型select框
       const data = await getMerchantAvailableLegalTender({})
       // console.log('otc法币查询列表')
       // console.log(data)
@@ -761,6 +764,7 @@ export default {
         // console.log(this.availableCurrencyId)
         this.checkedCurrencyId = getNestedData(this.availableCurrencyId[0], 'id')
         this.checkedCurrencyName = getNestedData(this.availableCurrencyId[0], 'shortName')
+        this.currencyCoinSelectStatus = false // 开启货币类型select框
       }
     },
     //  3.0 刚进页面时候 otc主页面查询挂单列表
@@ -819,12 +823,9 @@ export default {
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
       this.currentPage = 1
-      console.log(this.currentPage)
       this.checkedCurrencyId = e
-      // console.log(this.checkedCurrencyId)
       this.availableCurrencyId.forEach(item => {
         if (e === item.id) {
-          // console.log(item.shortName)
           this.checkedCurrencyName = item.shortName
         }
       })
