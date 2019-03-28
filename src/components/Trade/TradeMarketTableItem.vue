@@ -83,7 +83,7 @@
               'cursor-pointer': !clickDalay
             }"
             v-for="(innerItem,innerIndex) in item.content"
-            v-if="(activeName==collectArea.area) || (!innerItem.visible&&searchKeyWord) || (innerItem.visible&&!searchKeyWord)"
+            v-if="(activeName==collectArea.area) || innerItem.visible || (!innerItem.visible&&searchKeyWord)"
             :key="innerIndex"
             @click=changeActiveSymbol(innerItem)
           >
