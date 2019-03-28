@@ -727,6 +727,7 @@ export default {
     },
     async reflashIsNeedPayPassword () {
       this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+      this.getPushRecordList()
       console.log(this.isNeedPayPassword)
     },
     // 提交push资产
