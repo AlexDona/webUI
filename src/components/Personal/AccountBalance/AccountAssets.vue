@@ -63,13 +63,13 @@
               <div class="table-title-th display-flex margin20 font-size12">
                 <!--币种-->
                 <div
-                  class="title-width"
+                  class="flex1"
                 >
                   {{ $t('M.comm_currency') }}
                 </div>
                 <!--冻结数量-->
                 <div
-                  class="title-width title-position padding-l7"
+                  class="flex1 title-position"
                 >
                   <div style="float: left;">
                     {{ $t('M.user_assets_sum2') }}
@@ -93,7 +93,7 @@
                 </div>
                 <!--可用数量-->
                 <div
-                  class="title-width-header title-position padding-l7"
+                  class="flex1 title-position"
                 >
                   <div style="float: left;">
                     {{ $t('M.user_assets_sum3') }}
@@ -117,22 +117,27 @@
                 </div>
                 <!--锁仓-->
                 <div
-                  class="title-width locked-position"
+                  class="flex1"
                 >
                   {{ $t('M.assets_locked_position') }}
                 </div>
-                <!--资产估值(BTC)-->
+                <!--资产估值()-->
                 <div
-                  class="flex-asset title-width1"
+                  class="flex-asset flex1"
                 >
-                  {{ $t('M.user_assets_sum4') }}
-                  <span v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                  <div class="float-left">
+                    <span v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
                     ({{ activeConvertCurrencyObj.shortName }})
                   </span>
-                  <span v-else>
+                    <span v-else>
                     (CNY)
                   </span>
-                  <div class="icon-caret">
+                    <div style="float: left;">
+                      {{ $t('M.user_assets_sum4') }}
+                    </div>
+                  </div>
+
+                  <div class="icon-caret-order">
                     <!--升序-->
                     <i
                       class="el-icon-caret-bottom caret-text cursor-pointer"
@@ -151,7 +156,7 @@
                 </div>
                 <!--操作-->
                 <div
-                  class="text-align-c title-width title-width-last"
+                  class="text-align-r title-width title-width-last"
                 >
                   {{ $t('M.comm_operation') }}
                 </div>
@@ -161,13 +166,13 @@
                 v-for="(assetItem, index) in (isShowAllCurrency?filteredData1:filteredData2)"
                 :key="index"
               >
-                <div class="table-box display-flex title-width">
+                <div class="table-box display-flex flex1">
                   <!--币种-->
                   <div class="table-td title-width">
                     {{ assetItem.coinName }}
                   </div>
                   <!--冻结数量-->
-                  <div class="table-td title-width">
+                  <div class="table-td flex1">
                     <span v-if="assetItem.frozen > 0">
                       {{ $scientificToNumber($keep8Num(assetItem.frozen - 0)) }}
                     </span>
@@ -176,7 +181,7 @@
                     </span>
                   </div>
                   <!--可用数量-->
-                  <div class="table-td title-width-header">
+                  <div class="table-td flex1">
                     <span v-if="assetItem.total > 0">
                       {{ $scientificToNumber($keep8Num(assetItem.total - 0)) }}
                     </span>
@@ -185,7 +190,7 @@
                     </span>
                   </div>
                   <!--锁仓-->
-                  <div class="table-td title-width">
+                  <div class="table-td flex1">
                     <span v-if="assetItem.wareHouse > 0">
                       {{ $scientificToNumber($keep8Num(assetItem.wareHouse - 0)) }}
                     </span>
@@ -195,7 +200,7 @@
                   </div>
                   <!--资产估值-->
                   <div
-                    class="table-td text-align-r title-width1"
+                    class="table-td flex1"
                   >
                     <div
                       v-if="assetItem.cnyValue > 0"
@@ -1563,10 +1568,6 @@ export default {
                 width: 150px;
               }
 
-              .locked-position {
-                padding-left: 5px;
-              }
-
               .title-position {
                 .icon-caret {
                   position: relative;
@@ -1584,7 +1585,7 @@ export default {
               }
 
               .title-width-last {
-                margin-left: 20px;
+                margin-right: 10px;
               }
 
               .title-width-la {
@@ -1616,8 +1617,6 @@ export default {
 
               .flex-asset {
                 position: relative;
-                padding-right: 15px;
-                text-align: right;
               }
 
               .active {
