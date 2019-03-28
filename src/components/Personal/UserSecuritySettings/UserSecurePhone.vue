@@ -143,13 +143,21 @@
             <div class="prompt-message">
               <div v-show="errorMsg">{{ errorMsg }}</div>
             </div>
-            <button
-              class="phone-button border-radius4 cursor-pointer"
-              @click.prevent="getStatusSubmit"
-            >
-              <!--确认绑定-->
-              {{ $t('M.comm_affirm') }}{{ $t('M.user_security_binding') }}
-            </button>
+            <div style="width: 405px;">
+              <button
+                class="phone-button border-radius4 cursor-pointer"
+                @click.prevent="getStatusSubmit"
+              >
+                <!--确认绑定-->
+                {{ $t('M.comm_affirm') }}{{ $t('M.user_security_binding') }}
+              </button>
+              <span
+                class="font-size12 cursor-pointer text-align-r hint-color float-right"
+                @click.prevent="payPasswordState"
+              >
+              {{ $t('M.user_payPassword') }}
+            </span>
+            </div>
           </el-form>
           <!--换绑手机-->
           <el-form
@@ -277,13 +285,21 @@
                 :isShow="!!tieErrorShowStatusList[3]"
               />
             </el-form-item>
-            <button
-              class="phone-button border-radius4 cursor-pointer"
-              @click.prevent="stateTieStatusSubmit"
-            >
-              <!--确认换绑-->
-              {{ $t('M.comm_affirm') }}{{ $t('M.user_security_in_tie') }}
-            </button>
+            <div style="width: 405px;">
+              <button
+                class="phone-button border-radius4 cursor-pointer"
+                @click.prevent="stateTieStatusSubmit"
+              >
+                <!--确认换绑-->
+                {{ $t('M.comm_affirm') }}{{ $t('M.user_security_in_tie') }}
+              </button>
+              <span
+                class="font-size12 cursor-pointer text-align-r hint-color float-right"
+                @click.prevent="payPasswordState"
+              >
+                {{ $t('M.user_payPassword') }}
+              </span>
+            </div>
           </el-form>
         </div>
       </div>
@@ -375,6 +391,10 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    // 点击跳转到重置交易密码
+    payPasswordState () {
+      this.$goToPage('/TransactionPassword')
+    },
     phoneNumRegexpInput (ref) {
       let target = this.$refs[ref]
       this.amendDataPhone.newPhoneAccounts = phoneNumRegexpInput(target)
@@ -887,7 +907,7 @@ export default {
           .phone-button {
             width: 220px;
             padding: 10px 0;
-            margin: 30px 0 50px 177px;
+            margin: 10px 0 10px 180px;
           }
 
           .prompt-message {

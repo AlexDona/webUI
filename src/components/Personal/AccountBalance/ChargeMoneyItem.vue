@@ -55,7 +55,7 @@
       </p>
       <p
         class="code-list text-align-r float-right cursor-pointer font-size12"
-        @click.prevent="jumpToOtherTab('billing-details')"
+        @click.prevent="jumpToOtherTab('billing-details', coinId, 1)"
       >
         <!--充值记录-->
         {{ $t('M.comm_charge_recharge') }}{{ $t('M.comm_record') }}
@@ -89,7 +89,9 @@ export default {
     // 确认数
     'successCount',
     // 最小充币数量
-    'minRechargeAmount'
+    'minRechargeAmount',
+    // 当前币种id
+    'coinId'
   ],
   data () {
     return {}
@@ -103,9 +105,12 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     // 跳转到其他页面
-    jumpToOtherTab (target) {
+    jumpToOtherTab (target, coinId, index) {
+      console.log(coinId)
       this.$emit('jumpToOtherTab', {
-        target
+        target,
+        coinId,
+        index
       })
     },
     //  点击复制

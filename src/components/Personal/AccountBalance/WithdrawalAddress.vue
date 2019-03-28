@@ -28,6 +28,7 @@
                 v-model="currencyValue"
                 filterable
                 :no-data-text="$t('M.comm_no_data')"
+                :disabled="currencyValueStatus"
               >
                 <el-option
                   :placeholder="$t('M.comm_please_choose')"
@@ -242,7 +243,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-
 import {
   inquireWithdrawalAddressList,
   addNewWithdrawalAddress,
@@ -294,6 +294,7 @@ export default {
       phoneCode: '', // 手机验证
       emailCode: '', // 邮箱验证
       googleCode: '', // 谷歌验证
+      currencyValueStatus: true, // 币种列表状态
       fullscreenLoading: false, // 整页loading
       partLoading: false // 局部列表loading
     }
@@ -449,6 +450,8 @@ export default {
       // 对币种名称列表进行赋值
       this.withdrawalAddressList = getNestedData(detailData, 'UserWithdrawAddressPage.list')
       this.totalPageForMyEntrust = getNestedData(detailData, 'UserWithdrawAddressPage.pages') - 0
+      // 接口回来之后吧select状态改为可用
+      this.currencyValueStatus = false
       // console.log(this.currencyList)
       // console.log(this.withdrawalAddressList)
     },
@@ -889,8 +892,9 @@ export default {
 
       .el-input__inner {
         width: 130px;
-        height: 34px;
+        height: 34px !important;
         border: 0;
+        font-size: 14px;
       }
 
       .el-form-item {

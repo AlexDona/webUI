@@ -292,7 +292,7 @@
               <!-- 付款前 -->
               <div
                 class="right-content"
-                v-if="item.status == 'PICKED'"
+                v-if="item.status == 'PICKED' && item.orderType === 'BUY'"
               >
                 <!-- 等待付款确认付款按钮 -->
                 <p class="action-tips">
@@ -329,7 +329,7 @@
               <!-- 付款后 -->
               <div
                 class="right-content"
-                v-if="item.status == 'PAYED'"
+                v-if="item.status == 'PAYED' && item.orderType === 'BUY'"
               >
               <!-- 已提交确认付款 -->
                 <p class="action-tips submitted-confirm-payment">
@@ -501,7 +501,7 @@
               <!-- 付款前 -->
               <div
                 class="right-content"
-                v-if="item.status == 'PICKED'"
+                v-if="item.status == 'PICKED' && item.orderType === 'SELL'"
               >
                 <p class="action-explain">
                   <el-button
@@ -521,7 +521,7 @@
               <!-- 付款后 -->
               <div
                 class="right-content"
-                v-if="item.status == 'PAYED'"
+                v-if="item.status == 'PAYED' && item.orderType === 'SELL'"
               >
                 <p class="action-explain">
                   <el-button
@@ -555,11 +555,10 @@
                     />
                   </span>
                   <span class="remaining-time">
-                    <span v-if="accomplishOrderTimeArr[index] > 0">
+                    <span v-if="accomplishOrderTimeArr[index] - 0 > 0">
                       {{BIHTimeFormatting(accomplishOrderTimeArr[index])}}
                     </span>
                     <span v-else>00ˋ00′00″</span>
-                    <!--<span v-else>&#45;&#45;</span>-->
                   </span>
                 </p>
               </div>
@@ -594,7 +593,7 @@
                 <textarea
                   class="appeal-textarea-text font-size12"
                   maxlength="30"
-                  v-model="appealTextAreaValue"
+                  v-model.trim="appealTextAreaValue"
                 ></textarea>
               </div>
               <!--2. 申诉图片部分-->
@@ -674,7 +673,6 @@
             <input
               type="password"
               autocomplete="new-password"
-              :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
@@ -682,20 +680,38 @@
               onpaste="return false"
             >
           </div>
+          <!-- 错误提示 -->
           <div class="error-info">
-            <!-- 错误提示 -->
             <div class="tips">{{errPWD}}</div>
           </div>
+          <!--暂时关闭交易密码验证-->
+          <span
+            class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+            @click.prevent="closePwdJump"
+          >
+            {{$t('M.user_payPassword_switch')}}
+          </span>
           <span
             slot="footer"
-            class="dialog-footer">
-              <el-button
-                type="primary"
-                @click="submitConfirmPayment"
+            class="dialog-footer"
+          >
+            <!-- 提 交 -->
+            <el-button
+              type="primary"
+              @click="submitConfirmPayment"
+              :disabled="confirmPaymentStatus"
+            >
+              {{$t('M.otc_submit')}}
+            </el-button>
+            <!--忘记交易密码？-->
+            <div class="text-align-r">
+              <span
+                class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                @click.prevent="forgetPwdJump"
               >
-                <!-- 提 交 -->
-                {{$t('M.otc_submit')}}
-              </el-button>
+              {{$t('M.user_payPassword')}}
+            </span>
+            </div>
           </span>
         </el-dialog>
       </div>
@@ -713,7 +729,6 @@
             <input
               type="password"
               autocomplete="new-password"
-              :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
@@ -721,20 +736,38 @@
               onpaste="return false"
             >
           </div>
+          <!-- 错误提示 -->
           <div class="error-info">
-            <!-- 错误提示 -->
             <div class="tips">{{errPWD}}</div>
           </div>
+          <!--暂时关闭交易密码验证-->
+          <span
+            class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+            @click.prevent="closePwdJump"
+          >
+            {{$t('M.user_payPassword_switch')}}
+          </span>
           <span
             slot="footer"
-            class="dialog-footer">
-              <el-button
-                type="primary"
-                @click="submitConfirmGathering"
+            class="dialog-footer"
+          >
+            <!-- 提 交 -->
+            <el-button
+              type="primary"
+              @click="submitConfirmGathering"
+              :disabled="confirmGatheringStatus"
+            >
+              {{$t('M.otc_submit')}}
+            </el-button>
+            <!--忘记交易密码？-->
+            <div class="text-align-r">
+              <span
+                class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                @click.prevent="forgetPwdJump"
               >
-                <!-- 提 交 -->
-                 {{$t('M.otc_submit')}}
-              </el-button>
+              {{$t('M.user_payPassword')}}
+            </span>
+            </div>
           </span>
         </el-dialog>
       </div>
@@ -749,11 +782,10 @@
         >
           <!-- 请输入交易密码 -->
           <div class="input">
-          <!-- 交易密码 -->
+            <!-- 交易密码 -->
             <input
               type="password"
               autocomplete="new-password"
-              :placeholder="$t('M.otc_publishAD_sellpassword')"
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
@@ -761,20 +793,38 @@
               onpaste="return false"
             >
           </div>
+          <!-- 错误提示 -->
           <div class="error-info">
-            <!-- 错误提示 -->
             <div class="tips">{{errPWD}}</div>
           </div>
+          <!--暂时关闭交易密码验证-->
+          <span
+            class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+            @click.prevent="closePwdJump"
+          >
+            {{$t('M.user_payPassword_switch')}}
+          </span>
           <span
             slot="footer"
-            class="dialog-footer">
-              <el-button
-                type="primary"
-                @click="sellerSubmitAppeal"
+            class="dialog-footer"
+          >
+            <!-- 提 交 -->
+            <el-button
+              type="primary"
+              @click="sellerSubmitAppeal"
+              :disabled="submitAppealStatus"
+            >
+              {{$t('M.otc_submit')}}
+            </el-button>
+            <!--忘记交易密码？-->
+            <div class="text-align-r">
+              <span
+                class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                @click.prevent="forgetPwdJump"
               >
-                <!-- 提 交 -->
-                  {{$t('M.otc_submit')}}
-              </el-button>
+              {{$t('M.user_payPassword')}}
+            </span>
+            </div>
           </span>
         </el-dialog>
       </div>
@@ -818,6 +868,9 @@ export default {
   // props,
   data () {
     return {
+      confirmPaymentStatus: false, // 确认付款交易密码框提交按钮禁用状态
+      confirmGatheringStatus: false, // 确认收款交易密码框提交按钮禁用状态
+      submitAppealStatus: false, // 提交申诉交易密码框提交按钮禁用状态
       loading: false, // loading
       // 分页
       currentPage: 1, // 当前页码
@@ -885,7 +938,9 @@ export default {
       'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([
-      'CHANGE_PASSWORD_USEABLE'
+      'CHANGE_PASSWORD_USEABLE',
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     // 申诉上传图片
     // 1.0 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
@@ -983,14 +1038,10 @@ export default {
     cancelSetInter () {
       clearInterval(this.cancelOrdersTimer)
       this.cancelOrdersTimer = setInterval(() => {
-        // console.log(this.cancelOrderTimeArr)
         // 循环自动取消倒计时时间数组
         this.cancelOrderTimeArr.forEach((item, index) => {
-          // console.log(item)
           this.$set(this.cancelOrderTimeArr, index, this.cancelOrderTimeArr[index] - 1000)
-          // console.log(this.cancelOrderTimeArr[index])
-          // console.log(typeof (this.cancelOrderTimeArr[index]))
-          if (this.cancelOrderTimeArr[index] < 0 || this.cancelOrderTimeArr[index] == 0) {
+          if (item - 0 < 0 || item == 0) {
             this.cancelCompleteUserOtcOrder(1)
           }
         })
@@ -1001,18 +1052,11 @@ export default {
       clearInterval(this.accomplishOrdersTimer)
       this.accomplishOrdersTimer = setInterval(() => {
         // 循环自动成交倒计时数组
-        // this.accomplishOrderTimeArr.forEach((item, index) => {
-        //   this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
-        //   console.log(this.accomplishOrderTimeArr[index])
-        //   if (!(this.accomplishOrderTimeArr[index] > 0)) {
-        //     // this.cancelCompleteUserOtcOrder(2)
-        //   }
-        // })
         this.accomplishOrderTimeArr.forEach((item, index) => {
-          if (this.accomplishOrderTimeArr[index] > 0) {
+          if (item - 0 > 0) {
             this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
-            // console.log(this.accomplishOrderTimeArr[index])
             this.$set(this.sellerTimeOutDisabled, index, false) // 卖家超时禁用确认收款按钮-未超时可点击
+            this.$set(this.buyerAppealButtonStatus, index, false) // 卖家未超时付款隐藏买家申诉订单按钮
           } else {
             this.$set(this.buyerAppealButtonStatus, index, true) // 卖家超时未付款显示买家申诉订单按钮
             this.$set(this.sellerTimeOutDisabled, index, true) // 卖家超时禁用确认收款按钮
@@ -1044,7 +1088,7 @@ export default {
       this.activeBankType = [] // 清空选中的支付方式所展示的付款账户和账号
       this.cancelOrderTimeArr = []
       this.accomplishOrderTimeArr = []
-      console.log('当前页：' + this.currentPage)
+      this.buyerAppealButtonStatus = [] // 清空买家申诉按钮
       const data = await getOTCOrdersThreeDay({
         status: 'TRADING',
         pageNum: this.currentPage,
@@ -1062,17 +1106,18 @@ export default {
         this.totalPages = getNestedData(detailsData, 'pages') - 0
         // 循环数组
         this.tradingOrderList.forEach((item, index) => {
-          // console.log(item)
           this.buttonStatusArr[index] = false
           this.showOrderAppeal[index] = false
           // 自动取消订单倒计时数组集
           if (item.status === 'PICKED') {
-            this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
+            this.cancelOrderTimeArr[index] = item.cancelRestTime - 0 // cancelRestTime毫秒单位
             this.accomplishOrderTimeArr[index] = 10000000 // completeRestTime毫秒单位
             // 自动成交倒计时数组集
           } else if (item.status === 'PAYED') {
             this.cancelOrderTimeArr[index] = 10000000 // cancelRestTime毫秒单位
-            this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
+            this.accomplishOrderTimeArr[index] = item.completeRestTime - 0 // completeRestTime毫秒单位
+            console.log(this.accomplishOrderTimeArr[index])
+            console.log(typeof this.accomplishOrderTimeArr[index])
           }
         })
         if (this.tradingOrderList.length) {
@@ -1088,17 +1133,11 @@ export default {
     },
     // 3.0 改变交易方式
     changeUserBankInfo (index) {
-      // console.log('第' + index + '条数据')
-      // console.log('选中的订单id')
-      // console.log(this.tradingOrderList[index].id)
-      // console.log(this.activePayModeList[index])
       this.checkedTradingOrderId = this.tradingOrderList[index].id
       this.tradingOrderList[index].userBankList.forEach((item) => {
         if (item.id == this.activePayModeList[index]) {
           this.checkedPayAccountArr[index] = item.cardNo
-          // console.log('选中的付款账号：' + this.checkedPayAccountArr[index])
           this.activeBankFidList[index] = item.id
-          // console.log('选中的支付方式id' + this.activeBankFidList[index])
           this.checkedPayStyleId = this.activeBankFidList[index]
           // 省
           this.activeBankProv[index] = item.prov
@@ -1112,11 +1151,8 @@ export default {
           this.activeBankDetailAddress[index] = item.address
           // 支付类型
           this.activeBankType[index] = item.bankType
-          // console.log('支付类型：' + this.activeBankType[index])
           // 支付码
           this.activeBankCode[index] = item.qrcode
-          // console.log('支付码')
-          // console.log(this.activeBankCode[index])
         }
         this.buttonStatusArr[index] = true
       })
@@ -1159,6 +1195,7 @@ export default {
         this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       } else {
+        this.confirmPaymentStatus = true // 禁用确认付款交易密码框提交按钮
         this.loading = true
         let params = {
           orderId: this.checkedTradingOrderId, // 订单id
@@ -1166,15 +1203,14 @@ export default {
         }
         params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
         const data = await buyerPayForOrder(params)
-        // console.log(data)
         // 正确逻辑
+        this.getOTCTradingOrdersList() // 调用接口刷新列表-20190327新增
+        this.confirmPaymentStatus = false // 开启确认付款交易密码框提交按钮
         this.dialogVisibleConfirmPayment = false
         this.loading = false
         this.errPWD = ''
         this.tradePassword = ''
         if (!data) return false
-        // 2再次调用接口刷新列表
-        this.getOTCTradingOrdersList()
       }
     },
     // 8.0 卖家点击确认收款按钮
@@ -1200,6 +1236,7 @@ export default {
         this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
+      this.confirmGatheringStatus = true // 禁用确认收款交易密码框提交按钮
       this.loading = true
       let params = {
         orderId: this.checkedTradingOrderId // 订单id
@@ -1208,6 +1245,8 @@ export default {
       params = this.isNeedPayPassword ? {...params, tradePassword: this.tradePassword} : params
       const data = await sellerConfirmGetMoney(params)
       // 正确逻辑
+      this.getOTCTradingOrdersList() // 刷新列表-20190327新增
+      this.confirmGatheringStatus = false // 开启确认收款交易密码框提交按钮
       this.dialogVisibleConfirmReceipt = false
       this.loading = false
       this.errPWD = ''
@@ -1257,9 +1296,7 @@ export default {
       } else {
         // 申诉图片赋值
         this.uploadFileList.forEach((item, index) => {
-          // console.log(item)
           this[`picture${index + 1}`] = item.response.data.fileUrl
-          // console.log(this[`picture${index + 1}`])
         })
       }
       this.checkedTradingOrderId = id
@@ -1284,6 +1321,7 @@ export default {
         this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
+      this.submitAppealStatus = true // 禁用提交申诉交易密码框提交按钮
       this.loading = true
       let params = {
         orderId: this.checkedTradingOrderId, // 订单id
@@ -1304,6 +1342,7 @@ export default {
       }
       console.log(data)
       // 正确逻辑
+      this.submitAppealStatus = false // 开启提交申诉交易密码框提交按钮
       this.dialogVisibleSubmitComplaint = false
       this.loading = false
       this.errPWD = '' // 清空密码错提示
@@ -1312,8 +1351,16 @@ export default {
       // 再次调用接口刷新列表
       this.getOTCTradingOrdersList()
       if (!data) return false
-      // 再次调用接口刷新列表
-      // this.getOTCTradingOrdersList()
+    },
+    // 忘记密码跳转
+    forgetPwdJump () {
+      this.$goToPage('/TransactionPassword')
+    },
+    // 暂时关闭交易密码验证跳转
+    closePwdJump () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+      this.$goToPage('/PersonalCenter')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
   filter: {},
@@ -1329,7 +1376,11 @@ export default {
       loginStep1Info: state => state.user.loginStep1Info
     })
   },
-  watch: {},
+  watch: {
+    language (newVal) {
+      this.errPWD = '' // 切换语言清空交易密码框错误提示
+    }
+  },
   destroyed () {
     // 离开本组件清除定时器
     clearInterval(this.cancelOrdersTimer)
@@ -1672,7 +1723,7 @@ export default {
     .password-dialog {
       .el-dialog {
         width: 350px;
-        height: 207px;
+        height: 240px;
         border-radius: 4px;
       }
 
@@ -1712,11 +1763,21 @@ export default {
           padding-top: 5px;
           font-size: 12px;
         }
+
+        .close-pwd-tip {
+          margin-top: 5px;
+          color: #338ff5;
+        }
       }
 
       .el-dialog__footer {
         padding: 0;
         text-align: center;
+
+        .forget-pwd-tip {
+          padding: 8px 20px 0 0;
+          color: #338ff5;
+        }
       }
 
       .el-button {
@@ -1961,7 +2022,7 @@ export default {
       .password-dialog {
         .el-dialog {
           width: 350px;
-          height: 207px;
+          height: 240px;
           border-radius: 4px;
           background: #28334a;
 
@@ -2270,7 +2331,7 @@ export default {
       .password-dialog {
         .el-dialog {
           width: 350px;
-          height: 207px;
+          height: 240px;
           border-radius: 4px;
           background: #fff;
         }

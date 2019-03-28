@@ -32,7 +32,6 @@ import {
 } from './index'
 import {
   PHONE_REG,
-  EMAIL_REG,
   ID_REG,
   PWD_REG,
   ALIPAY_REG,
@@ -41,7 +40,8 @@ import {
   TPED_REG,
   URL_REG,
   WITHDRAWAL_REG,
-  CHINESE_REG
+  CHINESE_REG,
+  EMAILADDRESS_REG
 } from './regExp'
 const store = storeCreator()
 // 请求接口后正确或者错误的提示提示信息：
@@ -99,7 +99,7 @@ export const validateNumForUserInput = (type, targetNum) => {
       validateType = PHONE_REG
       break
     case 'email':
-      validateType = EMAIL_REG
+      validateType = EMAILADDRESS_REG
       break
     case 'ID-card':
       validateType = ID_REG
@@ -129,7 +129,7 @@ export const validateNumForUserInput = (type, targetNum) => {
       validateType = CHINESE_REG
       break
   }
-
+  console.log(type, targetNum)
   if (!targetNum) {
     returnNum = 1
   } else if (!validateType.test(targetNum)) {

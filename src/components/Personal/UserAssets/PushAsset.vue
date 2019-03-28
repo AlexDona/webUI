@@ -12,9 +12,9 @@
           </span>
         </header>
       </div>
-      <div class="push-assets-content-box padding-left15 margin-top9">
+      <div class="push-assets-content-box margin-top9">
         <div class="push-from-box">
-          <el-form label-width="95px">
+          <el-form label-width="125px">
             <!--资产-->
             <el-form-item
               :label="$t('M.comm_property')"
@@ -25,6 +25,7 @@
                 :placeholder="$t('M.comm_please_choose')"
                 :no-data-text="$t('M.comm_no_data')"
                 @change="toggleAssetsCurrencyId"
+                :disabled="currencyValueStatus"
               >
                 <el-option
                   v-for="(item, index) in currencyList"
@@ -64,7 +65,7 @@
             </el-form-item>
             <!--数量-->
             <el-form-item
-              :label="$t('M.comm_count')"
+              :label="'PUSH' + $t('M.comm_count')"
             >
               <input
                 class="form-input-common border-radius2 padding-l15"
@@ -72,7 +73,6 @@
                 @keydown="setErrorMsg(1, '')"
                 @blur="checkoutInputFormat(1, count)"
                 @keyup="formatUserInput('count', pointLength)"
-                @input="formatUserInput('count', pointLength)"
               />
               <!--错误提示-->
               <ErrorBox
@@ -82,7 +82,7 @@
             </el-form-item>
             <!--价格-->
             <el-form-item
-              :label="$t('M.comm_price_metre')"
+              :label="'PUSH' + $t('M.otc_index_UnitPrice')"
             >
               <input
                 class="form-input-common border-radius2 padding-l15"
@@ -138,6 +138,7 @@
             <!--类型-->
             <el-table-column
               :label="$t('M.comm_type')"
+              width="100"
             >
               <template slot-scope="s">
                 <div>{{ s.row.type }}</div>
@@ -156,6 +157,7 @@
             <!--对方UID-->
             <el-table-column
               :label="$t('M.user_push_opposite_side') + ' UID'"
+              width="110"
             >
               <template slot-scope="s">
                 <div
@@ -205,7 +207,7 @@
             <!--时间-->
             <el-table-column
               :label="$t('M.comm_time')"
-              width="180"
+              width="160"
             >
               <template slot-scope="s">
                 <div>{{ timeFormatting(s.row.createTime) }}</div>
@@ -214,6 +216,7 @@
             <!--状态-->
             <el-table-column
               :label="$t('M.comm_state')"
+              width="130"
             >
               <template slot-scope="s">
                 <div v-if="s.row.state === 'PUSH_DEAL'">
@@ -233,6 +236,7 @@
             <!--操作-->
             <el-table-column
               :label="$t('M.comm_operation')"
+              width="100"
             >
               <template slot-scope="s">
                 <div
@@ -334,6 +338,7 @@
             <el-dialog
               :title="$t('M.user_security_safety') + $t('M.user_security_verify')"
               :visible.sync="isShowPayPasswordDialog"
+              :close-on-click-modal="false"
             >
               <el-form
                 :label-position="labelPosition"
@@ -346,20 +351,28 @@
                     type="password"
                     autocomplete= "new-password"
                     class="form-input-common border-radius2 padding-l15 box-sizing"
+                    @focus="handleinput"
                     v-model="payPassword"
+                    @keydown.enter="killDefault"
                     @keydown="setErrorMsg(3, '')"
                     @blur="checkoutInputFormat(3, payPassword, 1)"
-                    @keyup.enter="submitWithPayPassword"
                   >
                 </el-form-item>
               </el-form>
               <!--错误提示-->
               <div
                 class="error-msg font-size12"
-                v-show="errorShowStatusList[4]"
+                v-show="errorShowStatusList[3]"
               >
-                {{ errorShowStatusList[4] }}
+                {{ errorShowStatusList[3] }}
               </div>
+              <span
+                class="font-size12 cursor-pointer text-align-l hint-color display-inline-block margin-top9"
+                @click.prevent="payPasswordState('setting')"
+              >
+                <!--暂时关闭交易密码校验-->
+                {{ $t('M.user_payPassword_switch') }}
+              </span>
               <div
                 slot="footer"
                 class="dialog-footer"
@@ -371,6 +384,13 @@
                   <!--确 定-->
                   {{ $t('M.comm_confirm') }}
                 </el-button>
+                <span
+                  class="font-size12 cursor-pointer text-align-r hint-color"
+                  @click.prevent="payPasswordState('patPassword')"
+                >
+                  <!--忘记密码-->
+                  {{ $t('M.user_payPassword') }}
+                </span>
               </div>
             </el-dialog>
           </div>
@@ -462,6 +482,7 @@ export default {
       pushRecordList: [], // push列表记录
       currentPageForMyEntrust: 1, // 当前页码
       totalPageForMyEntrust: 1, // 当前总页数
+      currencyValueStatus: true, // 币种列表状态
       pointLength: 4, // 保留小数位后四位
       errorMsg: '', // 错误提示
       partLoading: false, // 局部列表loading
@@ -483,18 +504,34 @@ export default {
   methods: {
     ...mapMutations([
       'SET_PUSH_BUTTON_STATUS',
-      'CHANGE_PASSWORD_USEABLE'
+      'CHANGE_PASSWORD_USEABLE',
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    // 点击跳转到重置交易密码
+    payPasswordState (type) {
+      switch (type) {
+        case 'setting':
+          this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+          this.$goToPage('/PersonalCenter')
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
+          this.isShowPayPasswordDialog = false
+          break
+        case 'patPassword':
+          this.$goToPage('/TransactionPassword')
+          break
+      }
+    },
     // 1.时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
     // 3.修改input value  输入限制
     formatUserInput (ref, pointLength) {
-      if (this.$refs.count.value - 0 > this.currencyBalance - 0) {
+      if (this.$refs.count.value - this.currencyBalance > 0) {
         this.$refs.count.value = this.currencyBalance
       }
       this[ref] = this.$refs[ref].value
@@ -510,12 +547,26 @@ export default {
         this.sumState = true
         this.grossAmount = this.$keep8Num(this.$refs.count.value * this.$refs.price.value)
         this.grossAmount = this.$keep8Num(this.$refs.price.value * this.$refs.count.value)
-        let a = this.grossAmount
-        console.log(this.$scientificToNumber(a))
       }
     },
     // 是否需要交易密码
     async checkISNeedPayPassowd () {
+      if (this.$refs.count.value === '0') {
+        // PUSH数量为零提示数量不能为0
+        this.$message({
+          message: this.$t('M.user_push_amount_count'),
+          type: 'error'
+        })
+        return false
+      }
+      if (this.$refs.price.value === '0') {
+        // PUSH单价为零提示单价不能为0
+        this.$message({
+          message: this.$t('M.user_push_amount_price'),
+          type: 'error'
+        })
+        return false
+      }
       await this.reflashIsNeedPayPassword()
       let goOnStatus = 0
       goOnStatus = (this.checkoutInputFormat(0, this.buyUID) && this.checkoutInputFormat(1, this.count) && this.checkoutInputFormat(2, this.price)) ? 1 : 0
@@ -556,16 +607,33 @@ export default {
       // 币种余额
       this.pushPayCoinName = getNestedData(data, 'data.pushPayCoinName')
       this.currencyList = getNestedData(data, 'data.coinLists')
+      // 接口回来之后把select状态改为可用
+      this.currencyValueStatus = false
     },
     // 4.选择push资产币种
     async toggleAssetsCurrencyId (e) {
-      this.currencyValue
+      this.emptyInputData()
       let data = await getPushTotalByCoinId({
         coinId: e // 币种coinId
       })
       if (!data) return false
       // 点击资产币种下拉
       this.currencyBalance = getNestedData(data, 'data.total')
+    },
+    handleinput () {
+      this.setErrorMsg(3, '')
+    },
+    // 禁止回车事件
+    killDefault (event) {
+      console.log(event)
+      var evt = window.event || event
+      if (evt.keyCode == 13) {
+        if (evt.preventDefault) {
+          evt.preventDefault()
+        } else {
+          evt.returnValue = false
+        }
+      }
     },
     // 付款方式封装
     submitWithPayPassword () {
@@ -589,7 +657,10 @@ export default {
      * 5.提交push
      */
     // 检测输入格式
-    checkoutInputFormat (type, targetNum, dialogPayPassword) {
+    checkoutInputFormat (type, targetNum) {
+      if (!this.isShowPayPasswordDialog) {
+        this.setErrorMsg(3, '')
+      }
       console.log(type)
       switch (type) {
         // 买方UID
@@ -639,12 +710,12 @@ export default {
         case 3:
           if (!targetNum) {
             // 请输入交易密码
-            this.setErrorMsg(!dialogPayPassword ? 3 : 4, this.$t('M.user_push_input_pwd'))
+            this.setErrorMsg(3, this.$t('M.user_push_input_pwd'))
             console.log(this.errorShowStatusList)
             this.$forceUpdate()
             return 0
           } else {
-            this.setErrorMsg(!dialogPayPassword ? 3 : 4, '')
+            this.setErrorMsg(3, '')
             this.$forceUpdate()
             return 1
           }
@@ -656,6 +727,7 @@ export default {
     },
     async reflashIsNeedPayPassword () {
       this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+      this.getPushRecordList()
       console.log(this.isNeedPayPassword)
     },
     // 提交push资产
@@ -812,7 +884,7 @@ export default {
           width: 400px;
           min-height: 443px;
           padding-top: 47px;
-          margin: 0 auto;
+          margin: 0 250px;
 
           .form-input-common,
           .form-button-common,
@@ -823,11 +895,11 @@ export default {
           }
 
           .form-button-common {
-            margin: 0 0 40px 95px;
+            margin: 0 0 40px 125px;
           }
 
           .amount-style {
-            padding: 0 0 10px 95px;
+            padding: 0 0 10px 125px;
             color: #338ff5;
           }
         }
@@ -849,7 +921,6 @@ export default {
           }
 
           .error-msg {
-            height: 30px;
             line-height: 30px;
             color: rgb(212, 88, 88);
           }
@@ -876,8 +947,9 @@ export default {
       }
 
       .el-input__inner {
-        height: 36px;
+        height: 36px !important;
         border-radius: 2px;
+        font-size: 14px;
       }
 
       .el-form-item {
@@ -885,7 +957,7 @@ export default {
       }
 
       .el-form-item__label {
-        width: 95px !important;
+        width: 125px !important;
         color: #a9bed4;
       }
 
@@ -980,13 +1052,10 @@ export default {
           top: 13px;
         }
 
-        .el-dialog__footer {
-          text-align: center;
-        }
-
         .el-button {
           width: 270px;
           height: 36px;
+          margin-left: 20px;
           border: 0;
           line-height: 0;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
@@ -994,6 +1063,10 @@ export default {
       }
 
       .shipping-address {
+        .dialog-footer {
+          margin-right: 5px;
+        }
+
         .el-dialog {
           width: 320px;
         }
@@ -1006,13 +1079,10 @@ export default {
           margin-bottom: 0;
         }
 
-        .el-dialog__footer {
-          text-align: center;
-        }
-
         .el-button {
           width: 270px;
           height: 36px;
+          margin: 10px 0;
           border: 0;
           line-height: 0;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);

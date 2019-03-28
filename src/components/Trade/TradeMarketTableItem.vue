@@ -83,6 +83,7 @@
               'cursor-pointer': !clickDalay
             }"
             v-for="(innerItem,innerIndex) in item.content"
+            v-if="(activeName==collectArea.area) || innerItem.visible || (!innerItem.visible&&searchKeyWord)"
             :key="innerIndex"
             @click=changeActiveSymbol(innerItem)
           >
@@ -91,7 +92,7 @@
             >
               <!--收藏按钮-->
               <!--自选区-->
-              <span v-show="activeName==collectArea.areaId">
+              <span v-show="activeName==collectArea.area">
                 <i
                   class="click-button cursor-pointer"
                   @click.stop="toggleCollect(innerItem.id,0,innerItem,item.plateId)"
@@ -102,7 +103,7 @@
                 </i>
               </span>
               <!--非自选区-->
-              <span v-show="activeName!=collectArea.areaId">
+              <span v-show="activeName!=collectArea.area">
                 <i
                   class="click-button cursor-pointer"
                   v-show="!collectSymbol[innerItem.id]"
@@ -169,7 +170,8 @@ export default {
     'collectSymbol',
     'activeName',
     'collectArea',
-    'list'
+    'list',
+    'searchKeyWord'
   ],
   data () {
     return {

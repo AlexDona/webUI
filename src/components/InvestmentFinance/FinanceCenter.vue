@@ -262,15 +262,36 @@
               >
                 <input
                   v-model="passwords"
-                  @input="deleteErrorTips"
                   type="password"
                   class="password"
+                  @input="deleteErrorTips"
                   @keyup.enter="submitPassword"
                 >
-                <p v-if="isShowErrorTips" class="errorTips">{{$t('M.otc_publishAD_pleaseInput') + $t('M.comm_password') }}</p>
-                <span slot="footer" class="dialog-footer">
-                  <el-button type="primary" @click="submitPassword"  :disabled="isDisable">{{$t('M.comm_confirm')}}</el-button>
-                </span>
+                <p
+                  v-if="isShowErrorTips"
+                  class="errorTips"
+                >
+                  {{$t('M.otc_publishAD_pleaseInput') + $t('M.comm_password') }}
+                </p>
+                <div
+                  slot="footer"
+                  class="dialog-footer"
+                >
+                  <el-button
+                    type="primary"
+                    @click="submitPassword"
+                    :disabled="isDisable"
+                  >
+                    {{$t('M.comm_confirm')}}
+                  </el-button>
+                  <router-link
+                    to="/TransactionPassword"
+                    append
+                    class="blue forgetPass"
+                    >
+                    {{$t('M.user_payPassword')}}
+                  </router-link>
+                </div>
               </el-dialog>
               <!--存币说明-->
               <el-dialog
@@ -915,7 +936,7 @@ export default {
       // 设置可用币种数组
       this.traderCoinList = getNestedData(getData, 'idNameDtoList')
       // 设置每次返回回来的币种id
-      this.selectedCoinId = getNestedData(getData, 'tickerPriceResult.coinId')
+      this.selectedCoinId = getNestedData(getData, 'tickerPriceResult.coinId') ? getNestedData(getData, 'tickerPriceResult.coinId') : ''
       // 设置每次返回地币种名称
       this.selectedCoinName = getNestedData(getData, 'tickerPriceResult.coinName')
       // 最新价钱
@@ -988,7 +1009,6 @@ export default {
     },
     // 交易类型改变时执行
     electedInvestTypeDisc (e) {
-      console.log(e)
       this.selectedInvestTypeId = e
       _.forEach(this.traderCoinList, item => {
         if (item.id === e) {
@@ -1382,6 +1402,14 @@ export default {
           background-color: #1a2233;
         }
 
+        .el-dialog__body {
+          padding: 30px 20px 5px;
+        }
+
+        .el-dialog__footer {
+          overflow: hidden;
+        }
+
         .errorTips {
           line-height: 36px;
           color: #d45858;
@@ -1390,9 +1418,14 @@ export default {
         .el-button.el-button--primary {
           width: 300px;
           height: 36px;
+          margin-bottom: 15px;
           border: 0;
           line-height: 0;
           background: linear-gradient(81deg, #2b396e 0%, #2a5082 100%);
+        }
+
+        .forgetPass:hover {
+          cursor: pointer;
         }
       }
 

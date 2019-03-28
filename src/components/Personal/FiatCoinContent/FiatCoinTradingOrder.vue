@@ -314,7 +314,7 @@
               <!-- 付款前 -->
               <div
                 class="right-content"
-                v-if="item.status == 'PICKED'"
+                v-if="item.status == 'PICKED' && item.orderType === 'BUY'"
               >
                 <!-- 等待付款确认付款按钮 -->
                 <p class="action-tips">
@@ -349,7 +349,7 @@
               <!-- 付款后 -->
               <div
                 class="right-content"
-                v-if="item.status == 'PAYED'"
+                v-if="item.status == 'PAYED' && item.orderType === 'BUY'"
               >
                 <p class="action-tips submitted-confirm-payment">
                   <!--已提交确认付款-->
@@ -407,7 +407,6 @@
             <!-- 2.2.1 表左侧 -->
             <div class="order-list-body-left">
               <div class="logo">
-                <!-- src="../../assets/develop/bi.png" -->
                 <img
                   :src="item.coinUrl"
                   width="30"
@@ -542,7 +541,7 @@
               <!-- 付款前 -->
               <div
                 class="right-content"
-                v-if="item.status == 'PICKED'"
+                v-if="item.status == 'PICKED' && item.orderType === 'SELL'"
               >
                 <p class="action-explain">
                   <el-button
@@ -562,7 +561,7 @@
               <!-- 付款后 -->
               <div
                 class="right-content"
-                v-if="item.status == 'PAYED'"
+                v-if="item.status == 'PAYED' && item.orderType === 'SELL'"
               >
                 <p class="action-explain">
                   <el-button
@@ -597,11 +596,10 @@
                     />
                   </span>
                   <span class="remaining-time">
-                    <span v-if="accomplishOrderTimeArr[index] > 0">
+                    <span v-if="accomplishOrderTimeArr[index] - 0 > 0">
                       {{BIHTimeFormatting(accomplishOrderTimeArr[index])}}
                     </span>
                     <span v-else>00ˋ00′00″</span>
-                    <!--<span v-else>&#45;&#45;</span>-->
                   </span>
                 </p>
               </div>
@@ -627,12 +625,11 @@
                   <!--申诉原因-->
                   <span class="star">*</span>{{$t('M.otc_complaint_appeal_reason')}}
                 </span>
-                <el-input
-                  type="textarea"
+                <textarea
+                  class="appeal-textarea-text font-size12"
                   maxlength="30"
-                  v-model="appealTextareaValue"
-                >
-                </el-input>
+                  v-model.trim="appealTextAreaValue"
+                ></textarea>
               </div>
               <!--2. 申诉图片部分-->
               <div class="appeal-picture">
@@ -710,6 +707,7 @@
         <el-dialog
           :title="$t('M.comm_password')"
           :visible.sync="dialogVisible1"
+          :close-on-click-modal="false"
           top="25vh"
           width="470"
         >
@@ -729,17 +727,35 @@
               {{errpwd}}
             </div>
           </div>
+          <!--暂时关闭交易密码验证-->
+          <span
+            class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+            @click.prevent="closePwdJump"
+          >
+            {{$t('M.user_payPassword_switch')}}
+          </span>
           <span
             slot="footer"
-            class="dialog-footer">
-              <button
-                class="button"
-                type="primary"
-                @click="submitButton1"
+            class="dialog-footer"
+          >
+            <button
+              class="button"
+              type="primary"
+              @click="submitButton1"
+              :disabled="confirmPaymentStatus"
+            >
+              <!--提 交-->
+              {{$t('M.comm_sub_time')}}
+            </button>
+            <!--忘记交易密码？-->
+            <div class="text-align-r">
+              <span
+                class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                @click.prevent="forgetPwdJump"
               >
-                <!--提 交-->
-                {{$t('M.comm_sub_time')}}
-              </button>
+              {{$t('M.user_payPassword')}}
+            </span>
+            </div>
           </span>
         </el-dialog>
       </div>
@@ -749,6 +765,7 @@
         <el-dialog
           :title="$t('M.comm_password')"
           :visible.sync="dialogVisible2"
+          :close-on-click-modal="false"
           top="25vh"
           width="470"
         >
@@ -758,6 +775,7 @@
               type="password"
               class="password-input"
               v-model="tradePassword"
+              @focus="passWordFocus"
             >
           </div>
           <div class="error-info">
@@ -767,17 +785,35 @@
               {{errpwd}}
             </div>
           </div>
+          <!--暂时关闭交易密码验证-->
+          <span
+            class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+            @click.prevent="closePwdJump"
+          >
+            {{$t('M.user_payPassword_switch')}}
+          </span>
           <span
             slot="footer"
-            class="dialog-footer">
-              <button
-                class="button"
-                type="primary"
-                @click="submitButton2"
+            class="dialog-footer"
+          >
+            <button
+              class="button"
+              type="primary"
+              @click="submitButton2"
+              :disabled="confirmGatheringStatus"
+            >
+              <!--提 交-->
+              {{$t('M.comm_sub_time')}}
+            </button>
+            <!--忘记交易密码？-->
+            <div class="text-align-r">
+              <span
+                class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                @click.prevent="forgetPwdJump"
               >
-                <!--提 交-->
-                {{$t('M.comm_sub_time')}}
-              </button>
+              {{$t('M.user_payPassword')}}
+            </span>
+            </div>
           </span>
         </el-dialog>
       </div>
@@ -787,6 +823,7 @@
         <el-dialog
           :title="$t('M.comm_password')"
           :visible.sync="dialogVisible3"
+          :close-on-click-modal="false"
           top="25vh"
           width="470"
         >
@@ -796,23 +833,42 @@
               type="password"
               class="password-input"
               v-model="tradePassword"
+              @focus="passWordFocus"
             >
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">{{errpwd}}</div>
+            <div class="tips">{{ errpwd }}</div>
           </div>
+          <!--暂时关闭交易密码验证-->
+          <span
+            class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+            @click.prevent="closePwdJump"
+          >
+            {{$t('M.user_payPassword_switch')}}
+          </span>
           <span
             slot="footer"
-            class="dialog-footer">
-              <button
-                class="button"
-                type="primary"
-                @click="submitsellerAppeal"
+            class="dialog-footer"
+          >
+            <button
+              class="button"
+              type="primary"
+              @click="submitsellerAppeal"
+              :disabled="submitAppealStatus"
+            >
+              <!--提 交-->
+              {{$t('M.comm_sub_time')}}
+            </button>
+            <!--忘记交易密码？-->
+            <div class="text-align-r">
+              <span
+                class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                @click.prevent="forgetPwdJump"
               >
-                <!--提 交-->
-                {{$t('M.comm_sub_time')}}
-              </button>
+              {{$t('M.user_payPassword')}}
+            </span>
+            </div>
           </span>
         </el-dialog>
       </div>
@@ -834,7 +890,8 @@ import {apiCommonUrl, xDomain} from '../../../utils/env.js'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
   changeCurrentPageForLegalTrader,
-  getNestedData
+  getNestedData,
+  isNeedPayPasswordAjax
 } from '../../../utils/commonFunc'
 import {
   mapMutations,
@@ -848,10 +905,13 @@ export default {
   // props,
   data () {
     return {
+      confirmPaymentStatus: false, // 确认付款交易密码框提交按钮禁用状态
+      confirmGatheringStatus: false, // 确认收款交易密码框提交按钮禁用状态
+      submitAppealStatus: false, // 提交申诉交易密码框提交按钮禁用状态
       dialogVisible1: false, // 确认付款交易密码框
       dialogVisible2: false, // 确认收款交易密码框
       dialogVisible3: false, // 提交申诉交易密码框
-      appealTextareaValue: '', // 订单申诉原因文本域内容
+      appealTextAreaValue: '', // 订单申诉原因文本域内容
       activitedPayStyle: '', //  选中的支付方式
       activitedPayStyleId: '', //  选中的支付方式id-往后台传送的参数
       // tradingOrderList: [], // 交易中订单列表
@@ -894,6 +954,8 @@ export default {
   created () {
     // 1.0 请求交易中订单列表
     // this.getOTCTradingOrdersList()
+    // 2刚进页面调用接口刷新列表
+    this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
   },
   mounted () {},
   activated () {},
@@ -904,7 +966,9 @@ export default {
       'SET_LEGAL_TENDER_REFLASH_STATUS',
       'CHANGE_LEGAL_PAGE',
       'CHANGE_RE_RENDER_TRADING_LIST_STATUS', // 更改重新渲染交易中订单列表状态,
-      'CHANGE_PASSWORD_USEABLE'
+      'CHANGE_PASSWORD_USEABLE',
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -1005,14 +1069,10 @@ export default {
     cancelSetInter () {
       clearInterval(this.cancelOrdersTimer)
       this.cancelOrdersTimer = setInterval(() => {
-        // console.log(this.cancelOrderTimeArr)
         // 循环自动取消倒计时时间数组
         this.cancelOrderTimeArr.forEach((item, index) => {
-          // console.log(item)
           this.$set(this.cancelOrderTimeArr, index, this.cancelOrderTimeArr[index] - 1000)
-          // console.log(this.cancelOrderTimeArr[index])
-          // console.log(typeof (this.cancelOrderTimeArr[index]))
-          if (this.cancelOrderTimeArr[index] < 0 || this.cancelOrderTimeArr[index] == 0) {
+          if (item - 0 < 0 || item == 0) {
             this.cancelCompleteUserOtcOrder(1)
           }
         })
@@ -1022,17 +1082,11 @@ export default {
     accomplishSetInter () {
       clearInterval(this.accomplishOrdersTimer)
       this.accomplishOrdersTimer = setInterval(() => {
-        // this.accomplishOrderTimeArr.forEach((item, index) => {
-        //   this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
-        //   if (!(this.accomplishOrderTimeArr[index] > 0)) {
-        //     this.cancelCompleteUserOtcOrder(2)
-        //   }
-        // })
         this.accomplishOrderTimeArr.forEach((item, index) => {
-          if (this.accomplishOrderTimeArr[index] > 0) {
+          if (item - 0 > 0) {
             this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
-            // console.log(this.accomplishOrderTimeArr[index])
             this.$set(this.sellerTimeOutDisabled, index, false) // 卖家超时禁用确认收款按钮-未超时可点击
+            this.$set(this.buyerAppealButtonStatus, index, false) // 卖家未超时付款隐藏买家申诉订单按钮
           } else {
             this.$set(this.buyerAppealButtonStatus, index, true) // 卖家超时未付款显示买家申诉订单按钮
             this.$set(this.sellerTimeOutDisabled, index, true) // 卖家超时禁用确认收款按钮
@@ -1049,16 +1103,13 @@ export default {
         console.log('撤销（过期 买家 未付款）')
         if (!data) return false
         // 返回数据正确的逻辑：重新渲染列表
-        // this.getOTCTradingOrdersList()
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
       if (val === 2) {
         data = await completeUserOtcOrder()
         console.log('成交（过期 卖家 未收款）')
-        // console.log(data)
         if (!data) return false
         // 返回数据正确的逻辑：重新渲染列表
-        // this.getOTCTradingOrdersList()
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
     },
@@ -1067,18 +1118,19 @@ export default {
       this.activePayModeList = [] // 清空支付方式数组：防止换页码之后之前选中的在此页面付款方式也被选中的问题
       this.cancelOrderTimeArr = []
       this.accomplishOrderTimeArr = []
+      this.buyerAppealButtonStatus = [] // 清空买家申诉按钮
       // 循环数组
       this.tradingOrderList.forEach((item, index) => {
         this.buttonStatusArr[index] = false
         this.showOrderAppeal[index] = false
         // 自动取消订单倒计时数组集
         if (item.status === 'PICKED') {
-          this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
+          this.cancelOrderTimeArr[index] = item.cancelRestTime - 0 // cancelRestTime毫秒单位
           this.accomplishOrderTimeArr[index] = 10000000 // completeRestTime毫秒单位
         } else if (item.status === 'PAYED') {
           // 自动成交倒计时数组集
           this.cancelOrderTimeArr[index] = 10000000 // cancelRestTime毫秒单位
-          this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
+          this.accomplishOrderTimeArr[index] = item.completeRestTime - 0 // completeRestTime毫秒单位
         }
       })
       if (this.tradingOrderList.length) {
@@ -1091,17 +1143,11 @@ export default {
     },
     // 3.0 改变交易方式
     changeUserBankInfo (index) {
-      console.log('第' + index + '条数据')
-      console.log(index)
-      console.log('选中订单的订单号')
-      console.log(this.tradingOrderList[index].id)
       this.activedTradingOrderId = this.tradingOrderList[index].id
       this.tradingOrderList[index].userBankList.forEach((item) => {
         if (item.id == this.activePayModeList[index]) {
           this.activedPayAccountArr[index] = item.cardNo
-          console.log('选中的付款账号：' + this.activedPayAccountArr[index])
           this.activeBankFidList[index] = item.id
-          console.log('选中的支付方式id' + this.activeBankFidList[index])
           this.activitedPayStyleId = this.activeBankFidList[index]
           // 省
           this.activeBankProv[index] = item.prov
@@ -1115,22 +1161,14 @@ export default {
           this.activeBankDetailAddress[index] = item.address
           // 支付类型
           this.activeBankType[index] = item.bankType
-          console.log('支付类型：' + this.activeBankType[index])
           // 支付码
           this.activeBankCode[index] = item.qrcode
-          console.log('支付码')
-          console.log(this.activeBankCode[index])
         }
         this.buttonStatusArr[index] = true
       })
     },
     // 4.0 买家点击确认付款按钮 弹出交易密码框
     async confirmPayMoney (index) {
-      // 判断是否交易密码锁定
-      await this.REFRESH_USER_INFO_ACTION()
-      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-      if (this.isLockedPayPassword) return false
       if (!this.activePayModeList[index]) {
         this.$message({
           // 请选择支付方式
@@ -1139,9 +1177,19 @@ export default {
         })
         return false
       }
+      // 判断是否交易密码锁定
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
       if (this.buttonStatusArr[index] === true) {
-        // 弹出交易密码框
-        this.dialogVisible1 = true
+        if (this.isNeedPayPassword) {
+          // 弹出交易密码框
+          this.dialogVisible1 = true
+        } else {
+          this.submitButton1()
+        }
       }
     },
     // 5.0 买家点击确认付款按钮 点击交易密码框中的提交按钮--交易密码狂获得焦点
@@ -1150,34 +1198,27 @@ export default {
     },
     // 6.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
     async submitButton1 () {
-      if (!this.tradePassword) {
+      if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.comm_password')
         return false
       } else {
+        this.confirmPaymentStatus = true // 禁用确认付款交易密码框提交按钮
         const data = await buyerPayForOrder({
           orderId: this.activedTradingOrderId, // 订单id
           payId: this.activitedPayStyleId, // 支付账户id
           tradePassword: this.tradePassword // 交易密码
         })
-        console.log(data)
+        // console.log(data)
+        this.confirmPaymentStatus = false // 开启确认付款交易密码框提交按钮
         // 1关闭交易密码框
         this.dialogVisible1 = false
         // 正确逻辑
+        // 2再次调用接口刷新列表
+        this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
         if (!data) return false
-        // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
-        // 付款成功后，根据返回的状态再渲染
-        // 付款成功后逻辑
         this.errpwd = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框
-        // 2再次调用接口刷新列表
-        // this.SET_LEGAL_TENDER_REFLASH_STATUS({
-        //   type: 'TRADING',
-        //   status: true
-        // })
-        // 2再次调用接口刷新列表
-        // this.getOTCTradingOrdersList()
-        this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
     },
     // 7.0 卖家在买家付款前点击确认收款按钮的提示事件
@@ -1188,47 +1229,48 @@ export default {
         type: 'error'
       })
     },
-    // 交易密码框错误提示
-    // tradePasswordLeave (e) {
-    //  console.log(e)
-    // },
     // 8.0 卖家点击确认收款按钮
     async confirmGatherMoney (id) {
+      this.activedTradingOrderId = id
       // 判断是否交易密码锁定
       await this.REFRESH_USER_INFO_ACTION()
       let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
       this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
       if (this.isLockedPayPassword) return false
-      this.activedTradingOrderId = id
       // 弹出交易密码框
-      this.dialogVisible2 = true
       // console.log(id)
       console.log(this.activedTradingOrderId)
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+      if (this.isNeedPayPassword) {
+        // 弹出交易密码框
+        this.dialogVisible2 = true
+      } else {
+        this.submitButton2()
+      }
     },
     // 9.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
     async submitButton2 () {
+      if (this.isNeedPayPassword && !this.tradePassword) {
+        this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
+        return false
+      }
+      this.confirmGatheringStatus = true // 禁用确认收款交易密码框提交按钮
+      this.loading = true
       const data = await sellerConfirmGetMoney({
         orderId: this.activedTradingOrderId, // 订单id
         tradePassword: this.tradePassword // 交易密码
       })
       console.log(data)
+      this.confirmGatheringStatus = false // 开启确认收款交易密码框提交按钮
       // 1关闭交易密码框
       this.dialogVisible2 = false
       // 正确逻辑
+      // 2再次调用接口刷新列表
+      this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       if (!data) return false
-      // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
-      // 付款成功后，根据返回的状态再渲染
-      // 付款成功后逻辑
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
-      // 2再次调用接口刷新列表
-      // this.SET_LEGAL_TENDER_REFLASH_STATUS({
-      //   type: 'TRADING',
-      //   status: true
-      // })
-      // 2再次调用接口刷新列表
-      // this.getOTCTradingOrdersList()
-      this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
+      this.loading = false
     },
     // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index, orderType) {
@@ -1252,14 +1294,10 @@ export default {
     // 12.0 卖家提交申诉按钮弹出交易密码框
     async sellerAppeal (id, index, orderType) {
       console.log(orderType)
+      this.tradePassword = '' // 清空密码框
       this.orderTypeParam = orderType
-      // 判断是否交易密码锁定
-      await this.REFRESH_USER_INFO_ACTION()
-      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-      if (this.isLockedPayPassword) return false
       // 申诉原因验证
-      if (!this.appealTextareaValue) {
+      if (!this.appealTextAreaValue) {
         this.$message({
           // 请输入申诉原因
           message: this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_complaint_appeal_reason'),
@@ -1278,20 +1316,34 @@ export default {
       } else {
         // 申诉图片赋值
         this.uploadFileList.forEach((item, index) => {
-          // console.log(item)
           this[`picture${index + 1}`] = item.response.data.fileUrl
-          // console.log(this[`picture${index + 1}`])
         })
       }
       this.activedTradingOrderId = id
-      this.dialogVisible3 = true
+      // 判断是否交易密码锁定
+      await this.REFRESH_USER_INFO_ACTION()
+      let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+      this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+      if (this.isLockedPayPassword) return false
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+      if (this.isNeedPayPassword) {
+        this.dialogVisible3 = true
+      } else {
+        this.submitsellerAppeal()
+      }
     },
     // 13.0 卖家提交申诉按钮
     async submitsellerAppeal () {
       console.log(this.orderTypeParam)
+      if (this.isNeedPayPassword && !this.tradePassword) {
+        // 请输入交易密码
+        this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
+        return false
+      }
+      this.submitAppealStatus = true // 禁用提交申诉交易密码框提交按钮
       let params = {
         orderId: this.activedTradingOrderId, // 订单id
-        reason: this.appealTextareaValue, // 申诉原因
+        reason: this.appealTextAreaValue, // 申诉原因
         tradePassword: this.tradePassword, // 交易密码
         picture1: this.picture1,
         picture2: this.picture2,
@@ -1299,23 +1351,31 @@ export default {
       }
       let data
       if (this.orderTypeParam === 'BUY') {
-        console.log('BUY')
         data = await buyerSendAppeal(params)
       }
       if (this.orderTypeParam === 'SELL') {
-        console.log('SELL')
         data = await sellerSendAppeal(params)
       }
       console.log(data)
+      this.submitAppealStatus = false // 开启提交申诉交易密码框提交按钮
       this.dialogVisible3 = false
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
+      this.appealTextAreaValue = '' // 清空申诉原因
       // 正确逻辑
       // 2再次调用接口刷新列表
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       if (!data) return false
-      // 2再次调用接口刷新列表
-      // this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
+    },
+    // 忘记密码跳转
+    forgetPwdJump () {
+      this.$goToPage('/TransactionPassword')
+    },
+    // 暂时关闭交易密码验证跳转
+    closePwdJump () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+      this.$goToPage('/PersonalCenter')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
   filter: {},
@@ -1344,6 +1404,9 @@ export default {
     // 监控交易中订单列表并调用倒计时逻辑方法
     tradingOrderList (newVal) {
       this.timerLogicMethod()
+    },
+    language () {
+      this.errpwd = '' // 清空密码错提示
     },
     // tradingOrderList (newVal) {
     //   console.log(newVal)
@@ -1387,6 +1450,10 @@ export default {
         padding: 8px 20px;
         border: 0;
         border-radius: 5px;
+
+        &:disabled {
+          cursor: not-allowed;
+        }
       }
 
       > .order-list {
@@ -1604,6 +1671,17 @@ export default {
                   margin-right: 10px;
                   color: #338ff5;
                 }
+
+                > .appeal-textarea-text {
+                  box-sizing: border-box;
+                  width: 160px;
+                  height: 90px;
+                  padding: 8px;
+                  border: 1px solid #7587a5;
+                  border-radius: 4px;
+                  outline-color: transparent;
+                  line-height: 16px;
+                }
               }
 
               > .appeal-picture {
@@ -1721,6 +1799,7 @@ export default {
         .el-button {
           float: right;
           padding: 2px 6px;
+          margin-right: 5px;
         }
       }
 
@@ -1728,7 +1807,7 @@ export default {
       .password-dialog {
         .el-dialog {
           width: 350px;
-          height: 207px;
+          height: 240px;
           border-radius: 4px;
         }
 
@@ -1768,11 +1847,21 @@ export default {
             padding-top: 5px;
             font-size: 12px;
           }
+
+          .close-pwd-tip {
+            margin-top: 5px;
+            color: #338ff5;
+          }
         }
 
         .el-dialog__footer {
           padding: 0;
           text-align: center;
+
+          .forget-pwd-tip {
+            padding: 8px 20px 0 0;
+            color: #338ff5;
+          }
         }
 
         .el-button--primary {
@@ -1790,6 +1879,11 @@ export default {
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
+
+      .appeal-textarea-text {
+        color: #9da5b3;
+        background-color: #1e2636;
+      }
 
       > .fiat-trading-order-content {
         .button {
@@ -2005,6 +2099,11 @@ export default {
                 > .appeal-textarea {
                   > .appeal-reason {
                     color: #338ff5;
+                  }
+
+                  > .appeal-textarea-text {
+                    color: #7d90ac;
+                    background-color: #fff;
                   }
                 }
               }

@@ -72,6 +72,9 @@
                 v-model="setPassword.newPassword"
                 @keydown="setErrorMsg(1,'')"
                 @blur="checkoutInputFormat(1, setPassword.newPassword)"
+                @input="setPassword.newPassword=setPassword.newPassword.replace(/[^\d]/g,'')"
+                @keyup="setPassword.newPassword=setPassword.newPassword.replace(/[^\d]/g,'')"
+                maxlength="6"
               />
               <!--错误提示-->
               <ErrorBox
@@ -90,6 +93,9 @@
                 v-model="setPassword.confirmPassword"
                 @keydown="setErrorMsg(2,'')"
                 @blur="checkoutInputFormat(2, setPassword.confirmPassword)"
+                @input="setPassword.confirmPassword=setPassword.confirmPassword.replace(/[^\d]/g,'')"
+                @keyup="setPassword.confirmPassword=setPassword.confirmPassword.replace(/[^\d]/g,'')"
+                maxlength="6"
               />
               <!--错误提示-->
               <ErrorBox
@@ -125,6 +131,9 @@
                 v-model="modifyPassword.transactionPassword"
                 @keydown="tieErrorMsg(0,'')"
                 @blur="tieCheckoutInputFormat(0, modifyPassword.transactionPassword)"
+                @input="modifyPassword.transactionPassword=modifyPassword.transactionPassword.replace(/[^\d]/g,'')"
+                @keyup="modifyPassword.transactionPassword=modifyPassword.transactionPassword.replace(/[^\d]/g,'')"
+                maxlength="6"
               />
               <!--错误提示-->
               <ErrorBox
@@ -143,6 +152,9 @@
                 v-model="modifyPassword.resetTransactionPassword"
                 @keydown="tieErrorMsg(1,'')"
                 @blur="tieCheckoutInputFormat(1, modifyPassword.resetTransactionPassword)"
+                @input="modifyPassword.resetTransactionPassword=modifyPassword.resetTransactionPassword.replace(/[^\d]/g,'')"
+                @keyup="modifyPassword.resetTransactionPassword=modifyPassword.resetTransactionPassword.replace(/[^\d]/g,'')"
+                maxlength="6"
               />
               <!--错误提示-->
               <ErrorBox

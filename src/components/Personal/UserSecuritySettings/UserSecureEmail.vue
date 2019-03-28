@@ -36,11 +36,9 @@
               <input
                 class="email-input border-radius2 padding-l15 box-sizing"
                 v-model="emailAccounts"
-                @keydown="resetIsEmailExist"
                 @focus="resetIsEmailExist"
-                :ref="emailNumRef"
-                @keyup="emailNumRegexpInput(emailNumRef)"
-                @input="emailNumRegexpInput(emailNumRef)"
+                @keydown="setErrorMsg(0, '')"
+                @blur="checkoutInputFormat(0, emailAccounts)"
               />
               <!--错误提示-->
               <ErrorBox
@@ -95,7 +93,6 @@ import {
   validateNumForUserInput, // 用户输入验证
   sendPhoneOrEmailCodeAjax
 } from '../../../utils/commonFunc'
-import {emailNumRegexpInput} from '../../../utils'
 import {bindEmailAddress} from '../../../utils/api/personal'
 import {checkUserExist} from '../../../utils/api/user'
 import {
@@ -110,7 +107,6 @@ export default {
   },
   data () {
     return {
-      emailNumRef: 'email-num-ref',
       emailAccounts: '', // 邮箱账号
       emailCode: '', // 邮箱验证码
       successCountDown: 1, // 成功倒计时
@@ -133,11 +129,6 @@ export default {
       'CHANGE_REF_SECURITY_CENTER_INFO',
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
-    // 邮箱验证
-    emailNumRegexpInput (ref) {
-      let target = this.$refs[ref]
-      this.emailAccounts = emailNumRegexpInput(target)
-    },
     // 点击返回上个页面
     returnSuperior () {
       this.CHANGE_REF_SECURITY_CENTER_INFO(true)
@@ -276,7 +267,9 @@ export default {
     },
     // 确定绑定按钮
     confirmBindingBailSubmit () {
-      this.confirmBindingBail()
+      if (this.checkoutInputFormat(0, this.emailAccounts)) {
+        this.confirmBindingBail()
+      }
     },
     // 确定绑定接口
     async confirmBindingBail () {

@@ -29,6 +29,8 @@ export const personal = {
   'user_not_google_enabled': 'Googleの認証オフ',
   'user_leave_vip': 'オープンVIP',
   'user_look_vip': 'チェック或はアップグレードVIP',
+  'user_payPassword_switch': 'しばらくクーロズ取引パスワード認証',
+  'user_payPassword': '取引パスワード忘れた?',
   // 'user_asset_valuation': '資産評価',
   'user_assets_suspended': '充電休止、ウォレットのメンテナンス',
   'user_assets_pause_mention': 'コインを一時停止する',
@@ -44,7 +46,7 @@ export const personal = {
   'user_assets_sum4': '資産評価',
   'assets_locked_position': '戸を閉める',
   'user_assets_Transaction_History': '入金記録',
-  'user_assets_withdrawal_hint2': 'ユーザーの資金を確保するために、プラットフォームはコインハンドリング作業を電話で確認する場合がありますので、その答えに注意してください。',
+  'user_assets_withdrawal_hint2': 'ユーザーの資金を確保するために、プラットフォームは電話であなたのコイン操作の操作を確認することがあります、答えに注意を払ってください。',
   'user_assets_withdrawal_hint3': '再充電が1で確認された後、引き出しが許可されます。',
   'user_assets_withdrawal_hint4': '現金引き出し額≤使用可能資産 - 未確認のデジタル資産。',
   'user_assets_withdrawal_hint5': '手数料<最低引き出し手数料、再入力してください',
@@ -59,14 +61,17 @@ export const personal = {
   'user_assets_attention': '注：総資産見積もりは参考値です。個々の資金を参照してください。',
   // 账单明细''請求の詳細'
   // 'user_billing_attention': '充電',
-  'otc_user_trade': 'otc取引',
-  'otc_fee': 'otc手数料',
+  'otc_user_trade': 'OTC取引',
+  'otc_fee': 'OTC手数料',
   'ctc_trade': 'トークン取引',
   'ctc_fee': 'トークン手数料',
   'financial_expenditure': '財テク支出',
   'financial_income': '財テク収入',
   'invitation_reward': '有礼を招く',
   'comprehensive_records': '総合記録',
+  'comprehensive_user': '一般ユーザーのチャージ',
+  'comprehensive_manual': 'システムのチャージ',
+  'comprehensive_manual1': 'ソースを充填する',
   // 提币地址''コインアドレス'
   // 'user_address_empty': 'コインアドレスは空欄にできません',
   // 提币列表''コインリスト'
@@ -111,7 +116,7 @@ export const personal = {
   'user_account_credited': 'コレクションアカウント',
   'user_account_warm_prompt': 'ヒント',
   'user_account_text': ' お取引の際には、有効なお支払い方法がバイヤーに表示されますが、5種類は設定できますが、3種類まで有効です。',
-  'user_account_text1': '高級認証を终えた上で、otcの入金口座を设置',
+  'user_account_text1': '高級認証を终えた上で、OTCの入金口座を设置',
   'user_account_text2': 'AlipayアップロードのQRコードメソッド：Alipay Home> Money>画像の保存を開き、携帯電話のアルバムのレシートコードをアップロードします。',
   'user_account_payment_term': 'コレクションメソッド',
   'user_account_bank_transfer': 'Bank card',
@@ -255,6 +260,8 @@ export const personal = {
   'user_push_count': 'プッシュの数は天びんの数より大きくすることはできません',
   'user_push_forbid': '自己PUSHを禁止する',
   'user_push_amount': 'PUS H金額',
+  'user_push_amount_count': 'PUS Hの数は0になることができません',
+  'user_push_amount_price': 'PUS H単価は0ではありません',
   // PUSHレコード
   // #####################私の取引#####################
   // トークン注文
