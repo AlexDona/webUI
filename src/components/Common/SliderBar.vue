@@ -226,7 +226,7 @@ export default {
     setNewRateByUserLimitBuy (newPrice, newCount) {
       let rate
       let currentAmount = newCount * newPrice
-      rate = this.buyTotal < currentAmount ? 100 : this.$scientificToNumber((currentAmount / this.buyTotal) * 100)
+      rate = this.buyTotal - currentAmount < 0 ? 100 : this.$scientificToNumber((currentAmount / this.buyTotal) * 100)
       console.log(rate)
       // 买单价
       this.setValue('limitBuySliderValue', cutOutPointLength(rate, 2))
@@ -234,7 +234,7 @@ export default {
     setNewRateByUserMarket (type, newAmount) {
       let total = type == 'buy' ? this.buyTotal : this.sellTotal
       if (total) {
-        let rate = newAmount < total ? this.$scientificToNumber((newAmount / total) * 100) : 100
+        let rate = newAmount - total < 0 ? this.$scientificToNumber((newAmount / total) * 100) : 100
         switch (type) {
           case 'buy':
             this.setValue('marketBuySliderValue', cutOutPointLength(rate, 2))
@@ -290,7 +290,7 @@ export default {
     // 用户设置限价卖数量
     limitSellCount (newVal) {
       if (this.sellTotal) {
-        let rate = newVal < this.sellTotal ? this.$scientificToNumber((newVal / this.sellTotal) * 100) : 100
+        let rate = newVal - this.sellTotal < 0 ? this.$scientificToNumber((newVal / this.sellTotal) * 100) : 100
         console.log(rate)
         this.setValue('limitSellSliderValue', cutOutPointLength(rate, 2))
       }

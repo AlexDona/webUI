@@ -306,3 +306,8 @@
 .el-time-spinner__item:hover:not(.disabled):not(.active) {
   background: rgba(28, 31, 50, .3);
 }
+
+/* 全局字体颜色 */
+.hint-color {
+  color: #338ff5;
+}

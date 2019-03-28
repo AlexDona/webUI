@@ -51,7 +51,7 @@ export default {
 
       .triangle {
         display: inline-block;
-        margin-top: -14px;
+        margin-top: -22px;
         margin-right: -6px;
         border: 8px solid transparent;
         vertical-align: middle;

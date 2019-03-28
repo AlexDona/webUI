@@ -130,22 +130,30 @@
                 :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
-            <button
-              v-if="paymentTerm.isAlipayBind"
-              class="account-button border-radius4"
-              @click.prevent="submitSettings"
-            >
-              <!--确认设置-->
-              {{ $t('M.user_bind_Alipay_set_confirm') }}
-            </button>
-            <button
-              v-else
-              class="account-button border-radius4"
-              @click.prevent="submitSettings"
-            >
-              <!--确认修改-->
-              {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
-            </button>
+            <div style="width: 380px;">
+              <button
+                v-if="paymentTerm.isAlipayBind"
+                class="account-button border-radius4"
+                @click.prevent="submitSettings"
+              >
+                <!--确认设置-->
+                {{ $t('M.user_bind_Alipay_set_confirm') }}
+              </button>
+              <button
+                v-else
+                class="account-button border-radius4"
+                @click.prevent="submitSettings"
+              >
+                <!--确认修改-->
+                {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
+              </button>
+              <p
+                class="font-size12 cursor-pointer text-align-r hint-color float-right"
+                @click.prevent="payPasswordState"
+              >
+                {{ $t('M.user_payPassword') }}
+              </p>
+            </div>
           </el-form>
         </div>
       </div>
@@ -217,6 +225,10 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    // 点击跳转到重置交易密码
+    payPasswordState () {
+      this.$goToPage('/TransactionPassword')
+    },
     // 选择图片文件
     choosePicture () {
       this.$refs[`fileInput`].click()
@@ -494,7 +506,7 @@ export default {
           .account-button {
             width: 237px;
             padding: 10px 0;
-            margin: 30px 0 50px 140px;
+            margin: 5px 0 10px 140px;
           }
         }
       }

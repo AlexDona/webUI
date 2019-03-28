@@ -138,7 +138,7 @@ export const common = {
   'comm_all': '전부',
   'comm_alipay': 'Alipay',
   'comm_weixin': 'Wechat',
-  'comm_bank': '은행카드',
+  'comm_bank': 'Bank card',
   'comm_xilian': 'western union',
   // 'comm_agreement': '협의',
   // 'comm_and': '및',

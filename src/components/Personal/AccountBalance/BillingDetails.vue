@@ -28,6 +28,7 @@
               filterable
               :placeholder="$t('M.comm_please_choose')"
               :no-data-text="$t('M.comm_no_data')"
+              :disabled="currencyValueStatus"
             >
               <el-option
                 :placeholder="$t('M.comm_please_choose')"
@@ -96,7 +97,6 @@
                 type="datetimerange"
                 align="right"
                 :editable="false"
-                :clearable="false"
                 range-separator="~"
                 @change="changeTime"
                 :start-placeholder="$t('M.otc_no1')"
@@ -176,7 +176,7 @@
                 <el-table-column
                   :label="$t('M.comm_mention_money') + $t('M.comm_site')"
                   v-if="withdrawSite"
-                  width="120"
+                  width="125"
                 >
                   <template slot-scope = "s">
                     <div
@@ -187,6 +187,32 @@
                       v-clipboard:error="onError"
                     >
                       {{s.row.withdrawAddress}}
+                    </div>
+                  </template>
+                </el-table-column>
+                <!--充值类型 USER("USER", "普通用户充值"), MANUAL("MANUAL", "手工充值")-->
+                <el-table-column
+                  :label="$t('M.comprehensive_manual1')"
+                  v-if="rechargeSite"
+                  width="130"
+                >
+                  <template slot-scope = "s">
+                    <!--系统充值-->
+                    <div
+                      v-if="s.row.rechargeType === 'MANUAL'"
+                    >
+                      {{ $t('M.comprehensive_manual')}}
+                    </div>
+                    <!--充值地址-->
+                    <div
+                      v-else
+                      :title="s.row.rechargeAddress"
+                      class="white-space cursor-pointer"
+                      v-clipboard:copy="s.row.rechargeAddress"
+                      v-clipboard:success="onCopy"
+                      v-clipboard:error="onError"
+                    >
+                      {{s.row.rechargeAddress}}
                     </div>
                   </template>
                 </el-table-column>
@@ -204,14 +230,6 @@
                 >
                   <template slot-scope = "s">
                     <div>{{ s.row.createTime }}</div>
-                  </template>
-                </el-table-column>
-                <!--更新时间-->
-                <el-table-column
-                  :label="$t('M.comm_update') + $t('M.comm_time')"
-                >
-                  <template slot-scope = "s">
-                    <div>{{ s.row.updateTime }}</div>
                   </template>
                 </el-table-column>
                 <!--状态-->
@@ -344,7 +362,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 import {
   statusRushedToRecordList,
   getMerchantCurrencyList,
@@ -370,6 +388,7 @@ export default {
       activeName: 'current-entrust', // 充提记录
       recordPageNumber: 1, // 充提记录页码
       recordTotalPageNumber: 1, // 充提记录总页数
+      currencyValueStatus: true, // 币种列表状态
       // 开始时间
       startTime: [],
       endTime: '', // 结束时间
@@ -392,9 +411,10 @@ export default {
           label: 'M.comm_mention_money'
         }
       ], // 默认类型
-      // 提现记录显示提币地址
-      withdrawSite: true,
-      addressShowId: true, // 提币地址显示状态
+      // 提现记录默认隐藏提币地址 true显示 false隐藏
+      withdrawSite: false,
+      // 提现记录默认隐藏充值来源 true显示 false隐藏
+      rechargeSite: false,
       // 其他记录
       otherRecordsList: [],
       otherRecordPageNumbers: 1, // 其他记录页码
@@ -431,15 +451,31 @@ export default {
     }
   },
   async created () {
-    await this.inquireCurrencyList()
-    await this.getChargeMentionList('current-entrust')
+    await this.inquireCurrencyList('current-entrust')
     this.changeTime()
   },
   methods: {
+    ...mapMutations([
+      'SET_NEW_WITHDRAW_RECORD'
+    ]),
+    // 时间格式化
+    timeFormatting (date) {
+      return timeFilter(date, 'normal')
+    },
+    // 时间赋值
+    changeTime () {
+      this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
+        disabledDate: (time) => {
+          let curDate = (new Date()).getTime()
+          let three = 90 * 24 * 3600 * 1000
+          let threeMonths = curDate - three
+          return time.getTime() > Date.now() + ((1 * 24 * 3600 * 1000) - (this.hours + this.minutes + this.seconds)) || time.getTime() < threeMonths
+        }
+      })
+    },
     //  点击复制
     onCopy (e) {
       // 已拷贝
-      // let msg = '已拷贝'
       let msg = this.$t('M.comm_have_been_copied')
       this.$message({
         type: 'success',
@@ -448,7 +484,6 @@ export default {
     },
     onError (e) {
       // 拷贝失败，请稍后重试
-      // let msg = '拷贝失败，请稍后重试'
       let msg = this.$t('M.comm_copies_failure')
       this.$message({
         type: 'success',
@@ -457,26 +492,41 @@ export default {
     },
     // tab 切换
     async coinMoneyOrders (e) {
-      this.startTime = [
-        new Date(
-          this.year,
-          this.month,
-          this.date, 0, 0, 0
-        ),
-        new Date()
-      ]
+      if (this.activeName === 'current-entrust') {
+        this.startTime = ''
+      }
+      if (this.activeName === 'other-records') {
+        this.startTime = [
+          new Date(
+            this.year,
+            this.month,
+            this.date, 0, 0, 0
+          ),
+          new Date()
+        ]
+      }
       await this.inquireCurrencyList(e.name)
-      this.getChargeMentionList(e.name)
     },
     // 获取商户币种列表
-    async inquireCurrencyList () {
+    async inquireCurrencyList (entrustType) {
       let data
       let param = {
       }
       data = await getMerchantCurrencyList(param)
       if (!data) return false
       this.currencyList = getNestedData(data, 'data')
-      this.defaultCurrencyId = getNestedData(data, 'data')[0] ? getNestedData(data, 'data')[0].id : ''
+      // 判断全局币种id是否为空 如果为空 把币种第一项赋值给defaultCurrencyId
+      // 如果不为空则把全局我的资产带回的币种id赋值给defaultCurrencyId 进行展示
+      if (this.assetJumpStatementDetails === '') {
+        this.defaultCurrencyId = getNestedData(data, 'data')[0] ? getNestedData(data, 'data')[0].id : ''
+      } else {
+        this.defaultCurrencyId = getNestedData(data, 'data')[0] ? this.assetJumpStatementDetails || getNestedData(data, 'data')[0].id : ''
+      }
+      // 对充提类型进行赋值
+      this.currencyTypeValue = this.assetJumpStatementDetailsType
+      this.getChargeMentionList(entrustType)
+      // 接口回来之后把select状态改为可用
+      this.currencyValueStatus = false
     },
     // 搜索按钮
     stateSearchButton (entrustType) {
@@ -496,10 +546,15 @@ export default {
     async getChargeMentionList (entrustType1) {
       console.log(this.currencyTypeValue)
       // 判断是否显示提币地址 充币不显示，提币或者为空显示
-      if (this.currencyTypeValue === 'RECHARGE') {
-        this.withdrawSite = false
-      } else {
+      if (this.currencyTypeValue === 'WITHDRAW') {
         this.withdrawSite = true
+        this.rechargeSite = false
+      } else if (this.currencyTypeValue === '') {
+        this.withdrawSite = false
+        this.rechargeSite = false
+      } else {
+        this.rechargeSite = true
+        this.withdrawSite = false
       }
       console.log(this.withdrawSite)
       const entrustType = entrustType1 || 'current-entrust'
@@ -515,7 +570,7 @@ export default {
       }
       let data
       let data1
-      console.log(entrustType)
+      // console.log(entrustType)
       switch (entrustType) {
         case 'current-entrust':
           params.currentPage = this.recordPageNumber
@@ -528,6 +583,7 @@ export default {
           if (!data) return false
           // 返回冲提记录列表展示
           let detailData = getNestedData(data, 'data')
+          console.log(detailData)
           // 充提记录
           this.chargeRecordList = getNestedData(detailData, 'list') || []
           this.addressRecordList = getNestedData(detailData, 'list') || []
@@ -570,31 +626,6 @@ export default {
           this.getChargeMentionList(entrustType)
           break
       }
-    },
-    // 显示提币地址
-    showStatusCode (index, val) {
-      if (val == 1) {
-        // 显示提币地址
-        this.addressShowId = true
-      } else {
-        // 隐藏提币地址
-        this.addressShowId = false
-      }
-    },
-    // 时间格式化
-    timeFormatting (date) {
-      return timeFilter(date, 'normal')
-    },
-    // 结束时间赋值
-    changeTime () {
-      this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
-        disabledDate: (time) => {
-          let curDate = (new Date()).getTime()
-          let three = 90 * 24 * 3600 * 1000
-          let threeMonths = curDate - three
-          return time.getTime() > Date.now() + ((1 * 24 * 3600 * 1000) - (this.hours + this.minutes + this.seconds)) || time.getTime() < threeMonths
-        }
-      })
     }
   },
   filter: {},
@@ -602,37 +633,31 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
-      userCenterActiveName: state => state.personal.userCenterActiveName
+      userCenterActiveName: state => state.personal.userCenterActiveName,
+      assetJumpStatementDetails: state => state.personal.assetJumpStatementDetails, // 跳转到的账单明细
+      assetJumpStatementDetailsType: state => state.personal.assetJumpStatementDetailsType // 我的资产跳转到账单明细提币携带提币类型
     })
   },
   watch: {
-    startTime (newVal) {
-      // console.log(newVal)
-      if (!newVal) {
-        this.startTime = ''
-      }
-    },
-    endTime (newVal) {
-      if (!newVal) {
-        this.endTime = ''
-      }
-    },
-    userCenterActiveName (newVal) {
-      this.startTime = [
-        new Date(
-          this.year,
-          this.month,
-          this.date, 0, 0, 0
-        ),
-        new Date()
-      ]
-      this.changeTime()
-      this.getChargeMentionList()
-      if (newVal === 'billing-details') {
-        this.getChargeMentionList()
-        this.inquireCurrencyList()
-      }
-    }
+    // userInfo (newVal) {
+    //   console.log(newVal)
+    // },
+    // startTime (newVal) {
+    //   console.log(newVal)
+    //   if (!newVal) {
+    //     this.startTime = ''
+    //   }
+    // },
+    // endTime (newVal) {
+    //   console.log(newVal)
+    //   if (!newVal) {
+    //     this.endTime = ''
+    //   }
+    // },
+    // userCenterActiveName (newVal) {
+    //   console.log(newVal)
+    //   this.changeTime()
+    // }
   }
 }
 </script>
@@ -906,14 +931,19 @@ export default {
     /deep/ {
       .el-input__inner {
         width: 110px;
-        height: 30px;
+        height: 30px !important;
         border: 0;
         font-size: 12px;
       }
 
+      .el-date-editor .el-range__close-icon {
+        width: 16px;
+        line-height: 25px;
+      }
+
       .el-date-editor {
         &.el-input__inner {
-          width: 205px;
+          width: 225px;
         }
 
         &.el-input {
@@ -927,11 +957,6 @@ export default {
         }
 
         .el-range__icon {
-          line-height: 25px;
-        }
-
-        .el-range__close-icon {
-          display: none;
           line-height: 25px;
         }
       }

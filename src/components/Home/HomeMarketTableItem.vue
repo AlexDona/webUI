@@ -32,7 +32,7 @@
         :class="{
           'has-data': item.content.length
         }"
-        :data="item.content"
+        :data="item.id==collectAreaId || searchKeyWord ? item.content: item.content.filter(item=>item.visible)"
         @row-click="changeActiveSymbol"
         :height="isGetMore ? 548: 598"
       >
@@ -42,16 +42,18 @@
           width="120px"
         >
           <template slot-scope="s">
-            <div style="padding-left:14px;
+            <div style="
               display:flex;
+              box-sizing: border-box;
               width: 132px !important;
-              box-sizing: border-box;">
+              padding-left:14px;">
               <div class="left" style="border-radius: 50%;">
                 <img
-                  style="width:22px;
-                    vertical-align: middle;
+                  style="
                     display:inline-block;
-                    margin:14px 0;"
+                    width:22px;
+                    margin:14px 0;
+                    vertical-align: middle;"
                   :src="$http2https(s.row.image)"/>
               </div>
               <div class="right"
@@ -92,9 +94,10 @@
         >
           <template slot-scope="s">
             <div
-              style=" padding-left:10px;
+              style="
                 width:160px;
                 height:30px;
+                padding-left:10px;
                 margin:10px auto; ">
               <div class="top"
                    style="height:15px;
@@ -134,11 +137,12 @@
         >
           <template slot-scope="s">
             <div
-              style=" padding-left:10px;
-                height:30px;
+              style="
                 width:140px;
-                line-height: 30px;
-                margin:10px auto; ">
+                height:30px;
+                padding-left:10px;
+                margin:10px auto;
+                line-height: 30px; ">
               {{$scientificToNumber(s.row.high)}}
             </div>
           </template>
@@ -155,8 +159,8 @@
               style=" width:140px;
                 height:30px;
                 padding-left:12px;
-                line-height: 30px;
-                margin:10px auto; ">
+                margin:10px auto;
+                line-height: 30px; ">
               {{$scientificToNumber(s.row.low)}}
             </div>
           </template>
@@ -172,10 +176,10 @@
             <div
               v-show="String($formatCount(s.row.vol24hour))!='NaN'"
               style=" width: 120px;
-                padding-left:10px;
                 height:30px;
-                line-height: 30px;
-                margin:10px auto; ">
+                padding-left:10px;
+                margin:10px auto;
+                line-height: 30px; ">
               {{$formatCount(s.row.vol24hour)}}
             </div>
           </template>
@@ -190,10 +194,10 @@
           <template slot-scope="s">
             <div
               style=" width:74px;
-                padding-left:8px;
                 height:30px;
-                line-height: 30px;
+                padding-left:8px;
                 margin:10px auto;
+                line-height: 30px;
                 white-space:nowrap; "
             >
               <span

@@ -123,7 +123,7 @@
             >
               <!--API文档-->
               <a
-                href="https://github.com/bizuyun/API/wiki"
+                href="https://github.com/bizuyun/API"
                 target="_blank"
               >
                 {{$t('M.comm_api_doc')}}

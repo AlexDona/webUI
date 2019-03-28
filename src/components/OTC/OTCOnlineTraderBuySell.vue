@@ -315,28 +315,33 @@
           >
             <!-- 请输入交易密码 -->
             <div class="input">
-              <!--2018129封装提交摘单买入和卖出方法-->
               <input
                 type="password"
                 autocomplete="new-password"
-                :placeholder="$t('M.otc_publishAD_sellpassword')"
                 class="password-input"
                 v-model="tradePassword"
                 @focus="tradePasswordFocus"
                 @keyup.enter="pickOrdersToBuyOrSell"
                 onpaste="return false"
               >
-              <!--2018129封装提交摘单买入和卖出方法-->
             </div>
+            <!-- 错误提示 -->
             <div class="error-info">
-              <!-- 错误提示 -->
-              <div class="tips">{{tradePasswordTips}}</div>
+              <div class="tips">
+                {{tradePasswordTips}}
+              </div>
             </div>
+            <!--暂时关闭交易密码验证-->
+            <span
+              class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+              @click.prevent="closePwdJump"
+            >
+              {{$t('M.user_payPassword_switch')}}
+            </span>
             <span
               slot="footer"
               class="dialog-footer"
             >
-              <!--2018129封装提交摘单买入和卖出方法-->
               <el-button
                 type="primary"
                 @click="pickOrdersToBuyOrSell"
@@ -344,7 +349,15 @@
                 <!-- 提交 -->
                 {{$t('M.otc_submit')}}
               </el-button>
-              <!--2018129封装提交摘单买入和卖出方法-->
+              <!--忘记交易密码？-->
+              <div class="text-align-r">
+                <span
+                  class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                  @click.prevent="forgetPwdJump"
+                >
+                {{$t('M.user_payPassword')}}
+              </span>
+              </div>
             </span>
           </el-dialog>
         </div>
@@ -482,7 +495,8 @@ export default {
       'CHANGE_AJAX_READY_STATUS', // 改变接口返回loading状态
       'CHANGE_OTC_ANCHOR_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_PASSWORD_USEABLE'
+      'CHANGE_PASSWORD_USEABLE',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -814,11 +828,22 @@ export default {
           this.$refs.sellPrice.value = ''
           break
       }
+    },
+    // 忘记密码跳转
+    forgetPwdJump () {
+      this.$goToPage('/TransactionPassword')
+    },
+    // 暂时关闭交易密码验证跳转
+    closePwdJump () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+      this.$goToPage('/PersonalCenter')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language, // 当前选中语言
       theme: state => state.common.theme,
       configInfo: state => state.common.footerInfo.configInfo,
       anchorStatus: state => state.OTC.anchorStatus, // anchorStatus锚点状态：在全局先定义false，当用户购买或者出售时候改为true
@@ -830,7 +855,12 @@ export default {
       return window.innerHeight
     }
   },
-  watch: {}
+  watch: {
+    language (newVal) {
+      console.log(newVal)
+      this.tradePasswordTips = ''
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -1075,7 +1105,7 @@ export default {
     .password-dialog {
       .el-dialog {
         width: 350px;
-        height: 207px;
+        height: 240px;
         border-radius: 4px;
 
         .el-dialog__header {
@@ -1115,9 +1145,9 @@ export default {
             font-size: 12px;
           }
 
-          .el-dialog__footer {
-            padding: 0;
-            text-align: center;
+          .close-pwd-tip {
+            margin-top: 5px;
+            color: #338ff5;
           }
 
           .el-button {
@@ -1130,6 +1160,11 @@ export default {
         .el-dialog__footer {
           padding: 0;
           text-align: center;
+
+          .forget-pwd-tip {
+            padding: 8px 20px 0 0;
+            color: #338ff5;
+          }
         }
 
         .el-button {

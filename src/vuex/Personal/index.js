@@ -38,7 +38,11 @@ const state = {
   // 法币订单状态变化
   legalTraderOrderStatus: false,
   // 跳转到新增提币地址的参数
-  paramOfJumpToAddWithdrawAdress: ''
+  paramOfJumpToAddWithdrawAdress: '',
+  // 我的资产跳转账单明细
+  assetJumpStatementDetails: '',
+  // 我的资产跳转账单明细状态类型提币或者充值
+  assetJumpStatementDetailsType: ''
 }
 
 export default {

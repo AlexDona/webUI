@@ -29,6 +29,8 @@ export const personal = {
   'user_not_google_enabled': 'Unabled Google verification',
   'user_leave_vip': 'Open VIP',
   'user_look_vip': 'Check or upgrade VIP',
+  'user_payPassword_switch': 'Close trading password verify temporary',
+  'user_payPassword': 'Forget password?',
   // 'user_asset_valuation': 'Asset valuation',
   'user_assets_suspended': 'Recharge pause, wallet maintenance',
   'user_assets_pause_mention': 'Suspend the coin',
@@ -45,9 +47,9 @@ export const personal = {
   'assets_locked_position': 'locked position',
   'user_assets_Transaction_History': 'Transaction History',
   // eslint-disable-next-line
-  'user_assets_withdrawal_hint2': `In order to secure the user's funds, the platform may confirm your coin handling operation by phone, please pay attention to the answer;`,
+  'user_assets_withdrawal_hint2': `For the safety of user funds, the platform may call to confirm your withdrawal ,  pay attention to answer;`,
   'user_assets_withdrawal_hint3': 'After the recharge is confirmed by one, the withdrawal is allowed;',
-  'user_assets_withdrawal_hint4': 'Cash withdrawal amount ≤ account available assets - unconfirmed digital assets.',
+  'user_assets_withdrawal_hint4': 'withdraw assets≤ Available  assets - unrecognized assets.',
   'user_assets_withdrawal_hint5': 'Handling fee <minimum withdrawal fee, please re-enter',
   'user_assets_withdrawal_hint6': 'Fees>Maximum withdrawal fee, please re-enter',
   'user_assets_withdrawal_hint7': 'Enter amount  must be greater than the handling fee. Please input again',
@@ -68,6 +70,9 @@ export const personal = {
   'financial_income': 'Financial income',
   'invitation_reward': 'Invitation giveaway',
   'comprehensive_records': 'Comprehensive records',
+  'comprehensive_user': 'Ordinary recharge',
+  'comprehensive_manual': 'System recharge',
+  'comprehensive_manual1': 'Source recharge',
   // 提币地址Coin address
   // 'user_address_empty': 'The coin address cannot be empty',
   // 提币列表Coin list
@@ -255,6 +260,8 @@ export const personal = {
   'user_push_count': 'The number of Push cannot be greater than the balance',
   'user_push_forbid': 'Prohibit self PUSH',
   'user_push_amount': 'PUSH the amount',
+  'user_push_amount_count': 'PUSH quantity cannot be 0',
+  'user_push_amount_price': 'PUSH unit price cannot be 0',
   // PUSH记录PUSH record
   // #####################我的交易#####################My transaction
   // 币币订单Coin order

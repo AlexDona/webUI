@@ -78,7 +78,7 @@ export default {
     }
   },
   created () {
-    console.log(this.screenWidth)
+    // console.log(this.screenWidth)
   },
   mounted () {},
   activated () {},
@@ -116,8 +116,8 @@ export default {
     },
     orderRecordListBySocket (newVal) {
       if (newVal) {
-        console.log(this.reflashCount)
-        console.log(newVal)
+        // console.log(this.reflashCount)
+        // console.log(newVal)
         this.reflashCount++
       }
     }

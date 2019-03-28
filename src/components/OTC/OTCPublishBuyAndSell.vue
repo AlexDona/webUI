@@ -368,9 +368,17 @@
                     <!-- 错误提示 -->
                     <div class="tips">{{errorPWd}}</div>
                   </div>
+                  <!--暂时关闭交易密码验证-->
+                  <span
+                    class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+                    @click.prevent="closePwdJump"
+                  >
+                    {{$t('M.user_payPassword_switch')}}
+                  </span>
                   <span
                     slot="footer"
-                    class="dialog-footer">
+                    class="dialog-footer"
+                  >
                       <el-button
                         type="primary"
                         @click="publishOTCEntryOrders"
@@ -378,6 +386,15 @@
                         <!-- 提 交 -->
                         {{$t('M.comm_sub_time')}}
                       </el-button>
+                    <!--忘记交易密码？-->
+                    <div class="text-align-r">
+                      <span
+                        class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                        @click.prevent="forgetPwdJump"
+                      >
+                      {{$t('M.user_payPassword')}}
+                    </span>
+                    </div>
                   </span>
                 </el-dialog>
               </div>
@@ -569,7 +586,8 @@ export default {
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_PASSWORD_USEABLE',
-      'CHANGE_AJAX_READY_STATUS' // 改变接口返回loading状态
+      'CHANGE_AJAX_READY_STATUS', // 改变接口返回loading状态
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -1000,6 +1018,16 @@ export default {
     chargeMoney () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
       this.$goToPage('/PersonalCenter')
+    },
+    // 忘记密码跳转
+    forgetPwdJump () {
+      this.$goToPage('/TransactionPassword')
+    },
+    // 暂时关闭交易密码验证跳转
+    closePwdJump () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+      this.$goToPage('/PersonalCenter')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
   filter: {},
@@ -1254,7 +1282,7 @@ export default {
     .password-dialog {
       .el-dialog {
         width: 350px;
-        height: 207px;
+        height: 240px;
         border-radius: 4px;
       }
 
@@ -1294,11 +1322,21 @@ export default {
           padding-top: 5px;
           font-size: 12px;
         }
+
+        .close-pwd-tip {
+          margin-top: 5px;
+          color: #338ff5;
+        }
       }
 
       .el-dialog__footer {
         padding: 0;
         text-align: center;
+
+        .forget-pwd-tip {
+          padding: 8px 20px 0 0;
+          color: #338ff5;
+        }
       }
 
       .el-button {

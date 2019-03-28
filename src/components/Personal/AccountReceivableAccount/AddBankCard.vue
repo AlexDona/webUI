@@ -115,22 +115,30 @@
                 :isShow="!!errorShowStatusList[3]"
               />
             </el-form-item>
-            <button
-              v-if="paymentTerm.isBankBind"
-              class="bank-button border-radius4 cursor-pointer"
-              @click.prevent="statusTetBankCard"
-            >
-              <!--确认设置-->
-              {{ $t('M.user_bind_paypal_confirm_set') }}
-            </button>
-            <button
-              v-else
-              class="bank-button border-radius4 cursor-pointer"
-              @click.prevent="statusTetBankCard"
-            >
-              <!--确认修改-->
-              {{ $t('M.user_modification_confirm_amend') }}
-            </button>
+            <div style="width: 380px;">
+              <button
+                v-if="paymentTerm.isBankBind"
+                class="bank-button border-radius4 cursor-pointer"
+                @click.prevent="statusTetBankCard"
+              >
+                <!--确认设置-->
+                {{ $t('M.user_bind_paypal_confirm_set') }}
+              </button>
+              <button
+                v-else
+                class="bank-button border-radius4 cursor-pointer"
+                @click.prevent="statusTetBankCard"
+              >
+                <!--确认修改-->
+                {{ $t('M.user_modification_confirm_amend') }}
+              </button>
+              <span
+                class="font-size12 cursor-pointer text-align-r hint-color float-right"
+                @click.prevent="payPasswordState"
+              >
+                {{ $t('M.user_payPassword') }}
+              </span>
+            </div>
           </el-form>
         </div>
       </div>
@@ -201,6 +209,10 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    // 点击跳转到重置交易密码
+    payPasswordState () {
+      this.$goToPage('/TransactionPassword')
+    },
     // 点击返回上个页面
     returnSuperior () {
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
@@ -426,7 +438,7 @@ export default {
           .bank-button {
             width: 237px;
             padding: 10px 0;
-            margin: 30px 0 50px 140px;
+            margin: 5px 0 10px 140px;
           }
         }
       }

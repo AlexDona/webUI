@@ -29,6 +29,8 @@ export const personal = {
   'user_not_google_enabled': '未開啟谷歌驗證',
   'user_leave_vip': '前往開啟VIP',
   'user_look_vip': '查看或升級VIP',
+  'user_payPassword_switch': '暫時關閉交易密碼驗證',
+  'user_payPassword': '忘記交易密碼？',
   // 'user_asset_valuation': '資產估值',
   'user_assets_suspended': '充值暫停，錢包維護中',
   'user_assets_pause_mention': '暫停提幣',
@@ -60,14 +62,17 @@ export const personal = {
   'user_address_withdrawal': '非法地址',
   // 賬單明細
   // 'user_billing_attention': '充提',
-  'otc_user_trade': 'otc交易',
-  'otc_fee': 'otc手續費',
+  'otc_user_trade': 'OTC交易',
+  'otc_fee': 'OTC手續費',
   'ctc_trade': '幣幣交易',
   'ctc_fee': '幣幣手續費',
   'financial_expenditure': '理財支出',
   'financial_income': '理財收入',
   'invitation_reward': '邀請有禮',
   'comprehensive_records': '綜合記錄',
+  'comprehensive_user': '普通用戶充值',
+  'comprehensive_manual': '系統充值',
+  'comprehensive_manual1': '充值來源',
   // 提幣地址
   // 'user_address_empty': '提幣地址不能為空',
   'user_address_labels': '地址標簽',
@@ -259,6 +264,8 @@ export const personal = {
   'user_push_count': 'Push數量不能大於余額',
   'user_push_forbid': '禁止自我PUSH',
   'user_push_amount': 'PUSH金額',
+  'user_push_amount_count': 'PUSH數量不能為0',
+  'user_push_amount_price': 'PUSH單價不能為0',
   // PUSH記錄
   // #####################我的交易#####################
   // 幣幣訂單

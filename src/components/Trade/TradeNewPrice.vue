@@ -7,6 +7,7 @@
           down:middleTopData.chg<0
         }"
       >{{$scientificToNumber(middleTopData.last)}}</span>
+      <span v-show="activeConvertCurrencyObj.symbol&&currencyRateList[middleTopData.area]">≈ {{activeConvertCurrencyObj.symbol}}{{$keep2Num((currencyRateList[middleTopData.area]-0)*(middleTopData.last-0))}}</span>
       <IconFontCommon
         v-show="middleTopData.chg<0"
         iconName="icon-down"
@@ -40,7 +41,9 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      middleTopData: state => state.trade.middleTopData
+      middleTopData: state => state.trade.middleTopData,
+      currencyRateList: state => state.common.currencyRateList, // 折算货币列表
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj // 目标货币
     })
   },
   watch: {

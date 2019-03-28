@@ -29,6 +29,8 @@ export const personal = {
   'user_not_google_enabled': '구글 인증 없음',
   'user_leave_vip': 'VIP 열기',
   'user_look_vip': '업그레이드 VIP 보기',
+  'user_payPassword_switch': '거래 비밀번호 검증 잠시 닫기',
+  'user_payPassword': '거래 비밀번호를 잊어버릴까요?',
   // 'user_asset_valuation': '자산 평가',
   'user_assets_suspended': '충전 일시 중지, 지갑 유지 관리',
   'user_assets_pause_mention': '코인 출금 일시 중지',
@@ -60,14 +62,17 @@ export const personal = {
   'user_address_withdrawal': '틀린 주소',
   // 账单明细
   // 'user_billing_attention': '입금 혹은 출금',
-  'otc_user_trade': 'otc 거래',
-  'otc_fee': 'otc 수수료',
+  'otc_user_trade': 'OTC 거래',
+  'otc_fee': 'OTC 수수료',
   'ctc_trade': '화폐거래',
   'ctc_fee': '화폐거래 수수료',
   'financial_expenditure': '재테크 지출',
   'financial_income': '재테크 수입',
   'invitation_reward': '초대 선물',
   'comprehensive_records': '종합 기록',
+  'comprehensive_user': '일반 사용자 충전',
+  'comprehensive_manual': '시스템 충전',
+  'comprehensive_manual1': '공급원',
   // 提币地址
   // 'user_address_empty': '동전 주소는 비워 둘 수 없습니다',
   'user_address_labels': '주소 태그',
@@ -259,6 +264,8 @@ export const personal = {
   'user_push_count': 'Push 횟수는 잔액보다 클 수 없습니다.',
   'user_push_forbid': '체 PUSH 금지',
   'user_push_amount': 'PUSH 금액',
+  'user_push_amount_count': 'PUSH 수가 0 이 안 돼요.',
+  'user_push_amount_price': 'PUSH 단가 0 은 안 된다',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单

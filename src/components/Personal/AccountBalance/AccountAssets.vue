@@ -63,13 +63,13 @@
               <div class="table-title-th display-flex margin20 font-size12">
                 <!--币种-->
                 <div
-                  class="title-width"
+                  class="flex1"
                 >
                   {{ $t('M.comm_currency') }}
                 </div>
                 <!--冻结数量-->
                 <div
-                  class="title-width title-position padding-l7"
+                  class="flex1 title-position"
                 >
                   <div style="float: left;">
                     {{ $t('M.user_assets_sum2') }}
@@ -93,7 +93,7 @@
                 </div>
                 <!--可用数量-->
                 <div
-                  class="title-width-header title-position padding-l7"
+                  class="flex1 title-position"
                 >
                   <div style="float: left;">
                     {{ $t('M.user_assets_sum3') }}
@@ -117,41 +117,46 @@
                 </div>
                 <!--锁仓-->
                 <div
-                  class="title-width locked-position"
+                  class="flex1"
                 >
                   {{ $t('M.assets_locked_position') }}
                 </div>
-                <!--资产估值(BTC)-->
+                <!--资产估值()-->
                 <div
-                  class="flex-asset title-width1"
+                  class="flex-asset flex1"
                 >
-                  {{ $t('M.user_assets_sum4') }}
-                  <span v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                  <div class="float-left">
+                    <span v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
                     ({{ activeConvertCurrencyObj.shortName }})
                   </span>
-                  <span v-else>
+                    <span v-else>
                     (CNY)
                   </span>
-                  <div class="icon-caret">
+                    <div style="float: left;">
+                      {{ $t('M.user_assets_sum4') }}
+                    </div>
+                  </div>
+
+                  <div class="icon-caret-order">
                     <!--升序-->
                     <i
                       class="el-icon-caret-bottom caret-text cursor-pointer"
                       :class="{active: blueStyleValue == 1}"
-                      @click.prevent="assetsSorting('up', 'btcValue')"
+                      @click.prevent="assetsSorting('up', 'cnyValue')"
                     >
                     </i>
                     <!--降序-->
                     <i
                       class="el-icon-caret-top caret-text-order cursor-pointer"
                       :class="{active: blueStyleValue == 2}"
-                      @click.prevent="assetsSorting('down', 'btcValue')"
+                      @click.prevent="assetsSorting('down', 'cnyValue')"
                     >
                     </i>
                   </div>
                 </div>
                 <!--操作-->
                 <div
-                  class="text-align-c title-width title-width-last"
+                  class="text-align-r title-width title-width-last"
                 >
                   {{ $t('M.comm_operation') }}
                 </div>
@@ -161,13 +166,13 @@
                 v-for="(assetItem, index) in (isShowAllCurrency?filteredData1:filteredData2)"
                 :key="index"
               >
-                <div class="table-box display-flex title-width">
+                <div class="table-box display-flex flex1">
                   <!--币种-->
                   <div class="table-td title-width">
                     {{ assetItem.coinName }}
                   </div>
                   <!--冻结数量-->
-                  <div class="table-td title-width">
+                  <div class="table-td flex1">
                     <span v-if="assetItem.frozen > 0">
                       {{ $scientificToNumber($keep8Num(assetItem.frozen - 0)) }}
                     </span>
@@ -176,7 +181,7 @@
                     </span>
                   </div>
                   <!--可用数量-->
-                  <div class="table-td title-width-header">
+                  <div class="table-td flex1">
                     <span v-if="assetItem.total > 0">
                       {{ $scientificToNumber($keep8Num(assetItem.total - 0)) }}
                     </span>
@@ -185,7 +190,7 @@
                     </span>
                   </div>
                   <!--锁仓-->
-                  <div class="table-td title-width">
+                  <div class="table-td flex1">
                     <span v-if="assetItem.wareHouse > 0">
                       {{ $scientificToNumber($keep8Num(assetItem.wareHouse - 0)) }}
                     </span>
@@ -195,7 +200,7 @@
                   </div>
                   <!--资产估值-->
                   <div
-                    class="table-td text-align-r title-width1"
+                    class="table-td flex1"
                   >
                     <div
                       v-if="assetItem.cnyValue > 0"
@@ -307,6 +312,7 @@
                         :currencyName="currencyName"
                         :minRechargeAmount="minRechargeAmount"
                         :successCount="successCount"
+                        :coinId="assetItem.coinId"
                         :chargeMoneyAddress="chargeMoneyAddress"
                         :isNeedTag="isNeedTag"
                         :rechargeNoteInfo="rechargeNoteInfo"
@@ -442,6 +448,12 @@
                     <!--确 定-->
                     {{ $t('M.comm_confirm') }}
                   </el-button>
+                  <span
+                    class="font-size12 tops-password tops-verify cursor-pointer"
+                    @click.prevent="payPasswordState"
+                  >
+                    {{ $t('M.user_payPassword') }}
+                  </span>
                 </div>
               </el-dialog>
               <!--设置交易密码-->
@@ -723,8 +735,14 @@ export default {
       'CHANGE_ACTIVE_TRADE_AREA',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'SET_NEW_WITHDRAW_ADDRESS',
+      'SET_NEW_WITHDRAW_RECORD',
+      'SET_NEW_WITHDRAW_RECORD_STATUS',
       'CHANGE_PASSWORD_USEABLE'
     ]),
+    // 点击跳转到重置交易密码
+    payPasswordState () {
+      this.$goToPage('/TransactionPassword')
+    },
     // 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
       // console.log(this.currencyRateList, this.activeConvertCurrencyObj)
@@ -1182,6 +1200,10 @@ export default {
      * 点击提币按钮 验证
      * */
     async validateOfWithdraw (index) {
+      this.phoneCode = '' // 短信验证码
+      this.emailCode = '' // 邮箱验证码
+      this.googleCode = '' // 谷歌验证码
+      this.password = '' // 交易密码
       // await this.REFRESH_USER_INFO_ACTION()
       // let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
       // this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
@@ -1333,13 +1355,22 @@ export default {
       this.accountCount = ''
       this.activeWithdrawDepositAddress = ''
     },
-    jumpToOtherTab ({target, coinId}) {
+    // 跳转到账单明细参数传递
+    jumpToOtherTab ({target, coinId, index}) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
+      // 判断点击的类型1 充值 2 提币
+      if (index == 1) {
+        this.SET_NEW_WITHDRAW_RECORD_STATUS('RECHARGE')
+      } else {
+        this.SET_NEW_WITHDRAW_RECORD_STATUS('WITHDRAW')
+      }
       // 指定要跳转到的coinId
-      console.log(target, coinId, this.activeCoinId)
+      console.log(coinId, this.activeCoinId)
       if (coinId) {
         this.SET_NEW_WITHDRAW_ADDRESS(coinId)
       }
+      // 指定跳转的币种Id
+      this.SET_NEW_WITHDRAW_RECORD(coinId)
     },
     /**
      * 安全中心
@@ -1523,12 +1554,18 @@ export default {
             > .table-body {
               width: 100%;
 
-              .title-width {
-                width: 150px;
+              .tops-verify {
+                color: #3e79d6;
               }
 
-              .locked-position {
-                padding-left: 5px;
+              .tops-password {
+                float: right;
+                display: inline-block;
+                line-height: 30px;
+              }
+
+              .title-width {
+                width: 150px;
               }
 
               .title-position {
@@ -1548,7 +1585,7 @@ export default {
               }
 
               .title-width-last {
-                margin-left: 20px;
+                margin-right: 10px;
               }
 
               .title-width-la {
@@ -1580,8 +1617,6 @@ export default {
 
               .flex-asset {
                 position: relative;
-                padding-right: 15px;
-                text-align: right;
               }
 
               .active {
@@ -1768,8 +1803,6 @@ export default {
                           }
 
                           > .mention-button {
-                            margin-top: 30px;
-
                             > .submit-but {
                               width: 80px;
                               height: 34px;
@@ -1814,7 +1847,7 @@ export default {
                 z-index: 999;
                 top: 3px;
                 right: 2px;
-                width: 95px;
+                width: 96px;
                 height: 34px;
               }
             }
@@ -1886,6 +1919,10 @@ export default {
     }
 
     /deep/ {
+      .el-dialog__headerbtn {
+        top: 11px;
+      }
+
       .warning {
         .el-dialog {
           width: 350px;
@@ -1946,9 +1983,9 @@ export default {
       }
 
       .el-dialog__header {
-        height: 50px;
-        padding: 10px 20px;
-        border-radius: 5px;
+        height: 40px;
+        padding: 5px 20px;
+        border-radius: 5px 5px 0 0;
         line-height: 30px;
       }
 
@@ -1982,7 +2019,7 @@ export default {
       }
 
       .el-dialog__footer {
-        padding: 0 27px 25px;
+        padding: 0 27px 40px;
         text-align: left;
       }
 
