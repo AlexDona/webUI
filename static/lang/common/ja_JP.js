@@ -138,6 +138,7 @@ export const common = {
   'comm_weixin': 'WeChat',
   'comm_bank': 'Bank card',
   'comm_xilian': 'Western Union',
+  'comm_PAYPAL': 'PAYPAL',
   // 'comm_agreement': '契約',
   // 'comm_and': 'と',
   'comm_offering': '販売',

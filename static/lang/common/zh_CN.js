@@ -139,6 +139,7 @@ export const common = {
   'comm_weixin': '微信',
   'comm_bank': '银行卡',
   'comm_xilian': '西联汇款',
+  'comm_PAYPAL': 'PAYPAL',
   // 'comm_agreement': '协议',
   // 'comm_and': '与',
   'comm_offering': '出售',

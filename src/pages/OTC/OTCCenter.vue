@@ -486,7 +486,7 @@ export default {
         },
         {
           id: 'PAYPAL',
-          shortName: 'PAYPAL'
+          shortName: 'M.comm_PAYPAL' // PAYPAL
         }
       ],
       // 下拉框支付方式中选中的支付方式查询列表
