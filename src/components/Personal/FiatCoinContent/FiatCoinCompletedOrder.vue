@@ -169,7 +169,7 @@
                       v-if="s.row.appeal == 'NO' && s.row.confirmTime == ''"
                     >
                     <!-- 申诉判定，订单完成 -->
-                      <span class="confirm-time">{{$t('M.otc_tradeOver_complate')}}</span>
+                      <span class="confirm-time">{{$t('M.otc_decide_complate')}}</span>
                     </p>
                     <p class="order-info-right">
                       <!-- 付款确认时间： -->

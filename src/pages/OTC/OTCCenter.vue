@@ -184,32 +184,32 @@
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-zhifubao1"
-                      v-show="s.row.payTypes[0] === '1'"
+                      v-if="s.row.payTypes[0] === '1'"
                     />
                     <!-- 2微信 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-weixin1"
-                      v-show="s.row.payTypes[1] === '1'"
+                      v-if="s.row.payTypes[1] === '1'"
                     />
                     <!-- 3银行卡 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-yinhangqia"
-                      v-show="s.row.payTypes[2] === '1'"
+                      v-if="s.row.payTypes[2] === '1'"
                     />
                     <!-- 4西联汇款 -->
-                    <span v-show="s.row.payTypes[3] == '1'">
+                    <span v-show="s.row.payTypes[3] === '1'">
                       <img
                         src="../../assets/user/xilian.png"
                         class="xilian"
                       >
                     </span>
-                    <!--  5PAYPAL -->
+                    <!-- 5PAYPAL -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-paypal"
-                      v-show="s.row.payTypes[4] === '1'"
+                      v-if="s.row.payTypes[4] === '1'"
                     />
                   </div>
                 </template>
