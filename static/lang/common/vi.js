@@ -159,5 +159,3 @@ export const common = {
   'common_paypassword_locked': 'Mật khẩu sai quá giới hạn, đóng băng 2 tiếng',
   'common_no_processing': 'Không thể xử lý'
 }
-
-

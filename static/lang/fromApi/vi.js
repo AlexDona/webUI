@@ -431,5 +431,8 @@ export const fromApi = {
   'user_pay_password_not_setting': 'Vui lòng đặt mật khẩu giao dịch sau đó gửi tiền vào đầu tư',
   'user_trade_password_incorrect': 'Mật khẩu giao dịch của tài khoản không chính xác',
   'otc_failure_0092': 'Chưa quá thời gian nhận tiền đơn hàng, bên mua không thể kháng nghị',
-  'otc_picture_no_null': 'Vui lòng tải lên ít nhất 1 tấm hình'
+  'otc_picture_no_null': 'Vui lòng tải lên ít nhất 1 tấm hình',
+  'otc_failure_0093': 'Đơn hàng đã được kháng cáo, vui lòng liên hệ với dịch vụ khách hàng',
+  'recharge_withdraw_failure_0046': 'Cấm rút tiền trong vòng 24 giờ sau khi đặt lại mật khẩu!',
+  'financial_management_is_cancel': 'Số tiền ký gửi đã bị hủy! Vui lòng không gửi lại!'
 }
