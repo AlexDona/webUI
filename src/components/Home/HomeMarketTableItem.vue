@@ -123,7 +123,7 @@
                   line-height: 15px;"
                 v-show="currencyRateList[s.row.area]&&activeConvertCurrencyObj"
               >
-                ≈ {{activeConvertCurrencyObj.symbol}}{{$keep2Num((currencyRateList[s.row.area]-0)*(s.row.last-0))}}
+                ≈ {{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum((currencyRateList[s.row.area]-0)*(s.row.last-0), s.row.legalCurrencyDecimal)}}
               </div>
             </div>
           </template>

@@ -31,6 +31,9 @@ let mixin = {
     $keep8Num (num) {
       return keep8Num(num)
     },
+    $keepCurrentNum (num, pointLength) {
+      return (num - 0).toFixed(pointLength) - 0
+    },
     $scientificToNumber (num) {
       return scientificToNumber(num)
     },
