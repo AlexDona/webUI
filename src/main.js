@@ -10,6 +10,7 @@ import lang from 'element-ui/lib/locale/'
 import VueI18n from 'vue-i18n'
 import VueClipboard from 'vue-clipboard2'
 import Vuex from 'vuex'
+import FastClick from 'fastclick'
 // eslint-disable-next-line
 import $ from 'jquery'
 // eslint-disable-next-line
@@ -125,7 +126,7 @@ let vm = new Vue({
   i18n,
   render: h => h(App)
 }).$mount('#app', true)
-
+FastClick.attach(document.body)
 Vue.use({
   vm
 })
