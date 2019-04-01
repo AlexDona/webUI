@@ -8,12 +8,8 @@
     }"
   >
     <keep-alive>
-      <HeaderCommonForPC
-        v-if="!isMobile"
-      />
-      <HeaderCommonForMobile
-        v-else
-      />
+      <HeaderCommonForPC v-if="!isMobile"/>
+      <HeaderCommonForMobile v-else/>
     </keep-alive>
 
     <div
@@ -49,7 +45,7 @@
                   type="text"
                   v-model.trim="username"
                   :placeholder="$t('M.login_tips1')"
-                  @keydown="setErrorMsg(0,'')"
+                  @keydown="setErrorMsg(0)"
                   @keyup.enter="loginForStep1"
                   @blur="checkoutInputFormat(0,username)"
                 >
@@ -68,7 +64,7 @@
                   autocomplete= "new-password"
                   v-model="password"
                   :placeholder="$t('M.login_tips2')"
-                  @keydown="setErrorMsg(1,'')"
+                  @keydown="setErrorMsg(1)"
                   @keyup.enter="loginForStep1"
                   @blur="checkoutInputFormat(1,password)"
                 />
@@ -215,7 +211,7 @@
                   class="input phone-validate"
                   :placeholder="$t('M.comm_note') + $t('M.comm_code')"
                   v-model="step3PhoneMsgCode"
-                  @keydown="setErrorMsg(3,'')"
+                  @keydown="setErrorMsg(3)"
                   @keyup="step3AutoLogin(step3PhoneMsgCode)"
                   @blur="checkoutInputFormat(3,step3PhoneMsgCode)"
                 >
@@ -244,7 +240,7 @@
                   class="input email-validate"
                   :placeholder="$t('M.comm_emailbox') + $t('M.comm_code')"
                   v-model="step3EmailMsgCode"
-                  @keydown="setErrorMsg(3,'')"
+                  @keydown="setErrorMsg(3)"
                   @keyup="step3AutoLogin(step3EmailMsgCode)"
                   @blur="checkoutInputFormat(3,step3EmailMsgCode)"
                 >
@@ -391,7 +387,7 @@
                 type="text"
                 v-model.trim="username"
                 :placeholder="$t('M.comm_please_enter') + $t('M.comm_emailbox')+ '/'+ $t('M.login_telNum')"
-                @focus="setMobileErrorMsg('')"
+                @focus="setMobileErrorMsg()"
                 @keyup.enter="loginForStep1"
                 @blur="checkoutInputFormat(0,username)"
               />
@@ -404,7 +400,7 @@
                 autocomplete= "new-password"
                 :placeholder="$t('M.comm_please_enter') + $t('M.comm_loginpassword')"
                 v-model.trim="password"
-                @focus="setErrorMsg('')"
+                @focus="setMobileErrorMsg()"
                 @keyup.enter="loginForStep1"
                 @blur="checkoutInputFormat(1,password)"
               />
@@ -427,7 +423,7 @@
             </div>
             <div
               class="error-msg"
-              v-show="setMobileErrorMsg"
+              v-show="mobileErrorMsg"
             >
               {{ mobileErrorMsg }}
             </div>
@@ -514,7 +510,7 @@
                     :placeholder="$t('M.comm_emailbox') + $t('M.comm_code')"
                     v-model="step3EmailMsgCode"
                     @keyup="step3AutoLogin(step3EmailMsgCode)"
-                    @keydown="setErrorMsg(3,'')"
+                    @keydown="setErrorMsg(3)"
                     @blur="checkoutInputFormat(3,step3EmailMsgCode)"
                   >
                   <CountDownButton
@@ -885,18 +881,19 @@ export default {
     // 切换登录方式
     toggleLoginType () {
       this.isErCodeLogin = !this.isErCodeLogin
-      if (this.isErCodeLogin) {
-        this.reflashErCode()
-      }
+      if (this.isErCodeLogin) this.reflashErCode()
+      this.setErrorMsg(0)
+      this.setErrorMsg(1)
     },
     // 设置错误信息（mobile）
-    setMobileErrorMsg (msg) {
+    setMobileErrorMsg (msg = '') {
       this.mobileErrorMsg = msg
+      console.log(this.mobileErrorMsg)
     },
     // 设置错误信息(PC)
-    setErrorMsg (index, msg) {
+    setErrorMsg (index, msg = '') {
       this.errorShowStatusList[index] = msg
-      this.mobileErrorMsg = msg
+      this.setMobileErrorMsg(msg)
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -909,7 +906,7 @@ export default {
             return 0
           } else {
             console.log(1)
-            this.setErrorMsg(0, '')
+            this.setErrorMsg(0)
             this.$forceUpdate()
             return 1
           }
@@ -921,7 +918,7 @@ export default {
             return 0
           } else {
             console.log(1)
-            this.setErrorMsg(1, '')
+            this.setErrorMsg(1)
             this.$forceUpdate()
             return 1
           }
@@ -954,9 +951,6 @@ export default {
       params.append('userName', this.username)
       this.isRememberUserName ? setStore('username', this.username) : removeStore('username')
 
-      if (this.isRememberUserName) {
-      } else {
-      }
       params.append('password', this.password)
       const data = await userLoginForStep1(params)
       if (!returnAjaxMsg(data, this, 0)) {
