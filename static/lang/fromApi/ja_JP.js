@@ -435,5 +435,5 @@ export const fromApi = {
   'user_pay_password_not_setting': '取引パスワードを設定して、あらかじめ積立金投資を行ってください',
   'otc_failure_0093': '申し立てが上訴されました。カスタマーサービスにご連絡ください。',
   'entrust_failure_0028': '取引ペア超過購入可能{}',
-  'entrust_failure_0029': '取引は売却する権利がありません'
+  'entrust_failure_0029': 'プロジェクトは現在販売を禁止されています'
 }

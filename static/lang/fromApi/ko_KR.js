@@ -436,5 +436,5 @@ export const fromApi = {
   'user_trade_password_incorrect': '계정 거래 비밀번호 잘못되었습니다.',
   'otc_failure_0093': '주문에 대한 이의가 제기되었으므로 고객 서비스에 문의하십시오. ',
   'entrust_failure_0028': '초과 거래 쌍 구매 가능 {}',
-  'entrust_failure_0029': '거래에는 판매 할 권리가 없습니다.'
+  'entrust_failure_0029': '프로젝트는 현재 판매 금지'
 }
