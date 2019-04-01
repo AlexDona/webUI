@@ -56,7 +56,7 @@
                   />
                 </el-tab-pane>
                 <el-tab-pane
-                  :label="$t(outItem.area)"
+                  :label="outItem.area"
                   :name="outItem.area"
                   v-for="(outItem,outIndex) in searchFilterMarketList"
                   :key="outIndex"

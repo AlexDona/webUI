@@ -726,7 +726,7 @@ export default {
       beginClientX: 0, /* 距离屏幕左端距离 */
       mouseMoveStatus: false, /* 触发拖动状态  判断 */
       maxwidth: 340, /* 拖动最大宽度，依据滑块宽度算出来的 */
-      confirmWords: this.$t('M.login_verifyTips'), /* 滑块文字 */
+      confirmWords: 'M.login_verifyTips', /* 滑块文字 */
       confirmSuccess: false, /* 验证成功判断 */
       sliderFlag: true, // 滑块调用节流阀
       dragStatus: true, // 拖动标记
@@ -748,7 +748,6 @@ export default {
   },
   created () {
     document.getElementsByTagName('body')[0].style.zoom = 1
-    console.log(this.$router)
     if (this.isLogin) {
       this.$goToPage('/home')
     }

@@ -199,7 +199,7 @@
                       v-show="s.row.payTypes[2] === '1'"
                     />
                     <!-- 4西联汇款 -->
-                    <span v-show="s.row.payTypes[3] == '1'">
+                    <span v-show="s.row.payTypes[3] === '1'">
                       <img
                         src="../../assets/user/xilian.png"
                         class="xilian"
@@ -284,13 +284,6 @@
         class="otc-order-manage"
         id="orderView"
       >
-        <!-- 查询更多 -->
-          <span
-            class="more"
-            @click="queryMoreOrder"
-          >
-            {{$t('M.otc_transaction_inquiries_more')}}
-          </span>
         <el-tabs
           :tab-position = "tabPosition"
           @tab-click = "toggleTabPane"
@@ -323,7 +316,7 @@
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-show="activeName === 'second'"
+                v-if="activeName === 'second'"
               >
               </i>
               <IconFontCommon
@@ -342,7 +335,7 @@
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-show="activeName === 'third'"
+                v-if="activeName === 'third'"
               >
               </i>
               <IconFontCommon
@@ -361,7 +354,7 @@
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-show="activeName === 'fourth'"
+                v-if="activeName === 'fourth'"
               >
               </i>
               <IconFontCommon
@@ -380,7 +373,7 @@
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-show="activeName === 'fifth'">
+                v-if="activeName === 'fifth'">
               </i>
               <IconFontCommon
                 iconName="icon-daohang2"
@@ -391,6 +384,13 @@
             <OTCEntrustOrder ref = "entrust"/>
           </el-tab-pane>
         </el-tabs>
+        <!-- 查询更多 -->
+        <span
+          class="more"
+          @click="queryMoreOrder"
+        >
+            {{$t('M.otc_transaction_inquiries_more')}}
+          </span>
       </div>
     </div>
   </div>
