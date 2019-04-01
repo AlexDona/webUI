@@ -434,5 +434,7 @@ export const fromApi = {
   'user_pay_is_error': 'Transaction password error, you can also enter {} times, exceeding the limit will be frozen for 2 hours',
   'user_pay_password_not_setting': 'Please set the transaction password before the deposit investment',
   'user_trade_password_incorrect': 'Account transaction password is incorrect',
-  'otc_failure_0093': 'The order has been appealed, please contact customer service'
+  'otc_failure_0093': 'The order has been appealed, please contact customer service',
+  'entrust_failure_0028': '  Exceeded transaction pair purchaseable{}',
+  'entrust_failure_0029': ' The deal has no right to sell'
 }

@@ -434,5 +434,7 @@ export const fromApi = {
   'user_pay_is_error': '交易密碼錯誤,您還可以輸入{}次,超限將被凍結2個小時',
   'user_pay_password_not_setting': '請先設置交易密碼後進行存幣投資',
   'user_trade_password_incorrect': '帳戶交易密碼不正確',
-  'otc_failure_0093': '該訂單已申訴，請聯繫客服'
+  'otc_failure_0093': '該訂單已申訴，請聯繫客服',
+  'entrust_failure_0028': ' 超出交易對可購買數量{}',
+  'entrust_failure_0029': '該交易對無權賣出'
 }
