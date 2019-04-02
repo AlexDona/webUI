@@ -434,5 +434,7 @@ export const fromApi = {
   'user_pay_is_error': '交易密码错误,您还可以输入{}次,超限将被冻结2个小时',
   'user_pay_password_not_setting': '请先设置交易密码后进行存币投资',
   'user_trade_password_incorrect': '账户交易密码不正确',
-  'otc_failure_0093': '该订单已申诉，请联系客服'
+  'otc_failure_0093': '该订单已申诉，请联系客服',
+  'entrust_failure_0028': '超出交易对可购买数量{}',
+  'entrust_failure_0029': '该项目当前禁止卖出'
 }
