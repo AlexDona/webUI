@@ -56,7 +56,8 @@ let mixin = {
   },
   computed: {
     ...mapGetters({
-      '$isNeedLimitExchange_G': 'isNeedLimitExchange_G'
+      '$isNeedLimitExchange_G': 'isNeedLimitExchange_G',
+      '$isNeedYST_G_X': 'isNeedYST'
     }),
     ...mapState({
       // 交易对是否改变

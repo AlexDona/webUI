@@ -638,6 +638,10 @@ export default {
     }
   },
   async created () {
+    if (!this.$isNeedYST_G_X) {
+      this.activeName = 'limit-price'
+      this.toggleMatchType()
+    }
     if (this.isLogin) {
       await this.REFRESH_USER_INFO_ACTION()
       // console.log(this.REFRESH_USER_INFO_ACTION)

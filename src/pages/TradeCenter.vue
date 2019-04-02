@@ -32,7 +32,7 @@
       </div>
       <!--右侧-->
       <div class="right">
-        <Activity/>
+        <Activity v-if="$isNeedYST_G_X"/>
         <!--市场-->
         <TradeMarketList/>
       </div>

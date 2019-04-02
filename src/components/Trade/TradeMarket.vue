@@ -28,6 +28,9 @@
       <el-collapse-transition>
         <div
           class="content"
+          :class="{
+            'needTime':$isNeedYST_G_X
+          }"
           v-show="contentShowStatus"
         >
           <div
@@ -648,8 +651,12 @@ export default {
 
       /* 表格内容 */
       > .content {
-        height: 1381px;
+        height: 1584px;
         overflow: auto;
+
+        &.needTime {
+          height: 1381px !important;
+        }
       }
 
       @media screen and(max-width: 2560px) and (min-width: 1921px) {
