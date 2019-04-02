@@ -145,7 +145,7 @@ export const timeFilter = (date, methods) => {
 }
 // 交易中订单倒计时国际标准时分秒 (09ˋ40′32″)
 export const formatSeconds = date => {
-  let secondTime = parseInt(date / 1000)// 秒
+  let secondTime = parseInt(date / 1000)
   let minuteTime = 0 // 分
   let hourTime = 0 // 小时
   if (secondTime > 60) { // 如果秒数大于60，将秒数转换成整数
@@ -170,8 +170,9 @@ export const formatSeconds = date => {
   }
   return result
 }
-
+// 币币交易活动倒计时
 export const formatSecondsActivity = date => {
+  // 得到秒值 1s = 1000ms
   let secondTime = parseInt(date / 1000)// 秒
   let minuteTime = 0 // 分
   let hourTime = 0 // 小时
