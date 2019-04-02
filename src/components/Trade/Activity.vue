@@ -48,13 +48,13 @@ export default {
   // props,
   data () {
     return {
-      'serveTimes': this.serverTime,
-      'beforeHours': 0,
-      'beforeMin': 0,
-      'beforeSec': 0,
-      'afterHours': 0,
-      'afterMin': 0,
-      'afterSec': 0,
+      serveTimes: this.serverTime,
+      beforeHours: 0,
+      beforeMin: 0,
+      beforeSec: 0,
+      afterHours: 0,
+      afterMin: 0,
+      afterSec: 0,
       cancelOrdersTimer: null,
       cancelOrdersTimerd: null,
       currentNextCountDown: 0,
@@ -62,46 +62,21 @@ export default {
     }
   },
   created () {
-    // console.log(new Date().getTime())
+    console.log(this.isShowServerPort)
   },
   mounted () {},
   activated () {},
   updated () {},
   beforeRouteUpdate () {},
   beforeDestroy () {},
-  destroyed () {},
+  destroyed () {
+    clearInterval(this.cancelOrdersTimer)
+    clearInterval(this.cancelOrdersTimerd)
+  },
   methods: {
     BIHTimeFormatting (date) {
       return formatSecondsActivity(date)
     }
-    // timeFormatting (date) {
-    //   if (this.serverTime >= 0) {
-    //     setInterval(function () {
-    //       date--
-    //       let arr = formatSeconds(date).split('')
-    //       _.forEach(arr, (item) => {
-    //         if (item && item - 0 > 0) {
-    //           this.beforeHours = arr[0] + arr[1]
-    //           this.beforeMin = arr[2] + arr[3] + arr[4]
-    //           this.beforeSec = arr[5] + arr[6] + arr[7]
-    //         }
-    //       })
-    //     }, 1000)
-    //     console.log(this.beforeHours, this.beforeMin, this.beforeSec)
-    //   } else {
-    //     setInterval(function () {
-    //       date--
-    //       let arr = formatSeconds(date).split('')
-    //       _.forEach(arr, (item) => {
-    //         if (item && item - 0 > 0) {
-    //           this.afterHours = arr[0] + arr[1]
-    //           this.afterMin = arr[2] + arr[3] + arr[4]
-    //           this.afterSec = arr[5] + arr[6] + arr[7]
-    //         }
-    //       })
-    //     }, 1000)
-    //   }
-    // }
   },
   filter: {},
   computed: {
@@ -129,29 +104,43 @@ export default {
         this.cancelOrdersTimer = setInterval(() => {
           this.serveTimes = this.serveTimes - 1000
           this.BIHTimeFormatting(this.serveTimes)
-          console.log(this.BIHTimeFormatting(this.serveTimes))
           let time = this.BIHTimeFormatting(this.serveTimes)
-          console.log(time)
-          time.split('-')
-          this.beforeHours = time.split('-')[0]
-          this.beforeMin = time.split('-')[1]
-          this.beforeSec = time.split('-')[2]
+          let timeArray = time.split('-')
+          console.log(timeArray)
+          switch (timeArray.length) {
+            // 有时,分、秒
+            case 4:
+              this.beforeHours = timeArray[0].length < 2 ? `0${timeArray[0]}` : timeArray[0]
+              this.beforeMin = timeArray[1].length < 2 ? `0${timeArray[1]}` : timeArray[1]
+              this.beforeSec = timeArray[2].length < 2 ? `0${timeArray[2]}` : timeArray[2]
+              break
+            // 只有秒
+            case 3:
+              this.beforeMin = timeArray[0].length < 2 ? `0${timeArray[0]}` : timeArray[0]
+              this.beforeSec = timeArray[1].length < 2 ? `0${timeArray[1]}` : timeArray[1]
+              break
+            case 2:
+              this.beforeMin = '00'
+              this.beforeSec = timeArray[0].length < 2 ? `0${timeArray[0]}` : timeArray[0]
+              if (timeArray[0] === '0') {
+                clearInterval(this.cancelOrdersTimer)
+              }
+              break
+          }
+          // this.beforeHours = timeArray[0]
+          // this.beforeMin = timeArray[1]
+          // this.beforeSec = timeArray[2]
         }, 1000)
       }
     },
     nextCountDown (newVal, oldVal) {
-      console.log(newVal)
       clearInterval(this.cancelOrdersTimerd)
       if (this.serverTime - 0 < 0 && newVal !== oldVal) {
         this.currentNextCountDown = newVal
         // this.timeFormatting(newVal)
         this.cancelOrdersTimerd = setInterval(() => {
           this.currentNextCountDown = this.currentNextCountDown - 1000
-          this.BIHTimeFormatting(this.currentNextCountDown)
-          console.log(this.BIHTimeFormatting(this.currentNextCountDown))
           let time = this.BIHTimeFormatting(this.currentNextCountDown)
-          time.split('-')
-          console.log(time.split('-'))
           // this.afterHours = time.split('-')[0]
           let timeArray = time.split('-')
           console.log(timeArray)
@@ -165,7 +154,7 @@ export default {
             case 2:
               this.afterMin = '00'
               this.afterSec = timeArray[0].length < 2 ? `0${timeArray[0]}` : timeArray[0]
-              if (timeArray[0] == '0') {
+              if (timeArray[0] === '0') {
                 clearInterval(this.cancelOrdersTimerd)
                 this.localShow = false
               }
@@ -207,10 +196,10 @@ export default {
         }
 
         .tips {
-          width: 100px;
           height: 30px;
-          margin-right: -15px;
-          border-radius: 15px;
+          padding: 0 5px 0 8px;
+          border-bottom-left-radius: 15px;
+          border-top-left-radius: 15px;
           line-height: 30px;
           text-align: center;
           background: #d45858;
