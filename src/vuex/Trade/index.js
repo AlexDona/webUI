@@ -34,6 +34,13 @@ const state = {
   marketExchange: {
     buyCount: 0,
     sellCount: 0
+  },
+  // 获取服务器是否展示活动页面
+  serverData: {
+    serverTime: '',
+    nextCountDown: '',
+    // 是否显示活动页面
+    isShowServerPort: false
   }
 }
 
