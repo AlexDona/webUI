@@ -862,8 +862,8 @@ export default {
     },
     // 获取 ref value
     // 切换撮合类型
-    toggleMatchType (e) {
-      switch (e.name) {
+    toggleMatchType () {
+      switch (this.activeName) {
         case 'market-price':
           this.matchType = 'MARKET'
           this.$refs[this.limitBuyCountInputRef].value = ''
@@ -895,9 +895,11 @@ export default {
         //
         this.entrustType = entrustType
         this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+        console.log(this.isNeedPayPassowrd)
         // console.log(entrustType, matchType)
         let next = false
         let params = {}
+        console.log(entrustType, this.matchType)
         switch (entrustType) {
           // 买入
           case 0:
@@ -995,6 +997,7 @@ export default {
             }
             break
         }
+        console.log(next)
         if (!next) {
           return false
         }
@@ -1209,6 +1212,7 @@ export default {
       // console.log(newVal)
       console.log(newVal, this.$isLimitShow_S_X)
       this.activeName = newVal ? 'limit-price' : 'market-price'
+      this.toggleMatchType()
     },
     matchType (newVal) {
       this.setSiderBarValue('limit', {
