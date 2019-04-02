@@ -955,7 +955,6 @@ export default {
           case 1:
             switch (this.matchType) {
               case 'LIMIT':
-                if (!this.$isNeedLimitExchange_G) return false
                 params.price = this.getRefValue(this.limitSellPriceInputRef)
                 params.count = this.getRefValue(this.limitSellCountInputRef)
                 this.limitExchange.sellCount = params.count
