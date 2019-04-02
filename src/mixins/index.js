@@ -60,7 +60,7 @@ let mixin = {
       '$isNeedYST_G_X': 'isNeedYST'
     }),
     ...mapState({
-      // 交易对是否改变
+      // 交易对是否改变l
       $isSymbolChanged_X: state => state.common.isSymbolChanged,
       // 是否显示限价交易
       $isLimitShow_S_X: state => state.trade.serverData.isLimitShow,
