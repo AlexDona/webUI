@@ -2,7 +2,7 @@
   <div
     class="activity-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-if = "isShow"
+    v-if = "isShow && $isNeedYST_G_X && $isNeedYST_G_X - 0 > 0"
   >
     <div class="inner-box">
       <header>
@@ -49,7 +49,6 @@ export default {
   data () {
     return {
       'serveTimes': this.serverTime,
-      'isShow': this.isShowServerPort,
       'beforeHours': 0,
       'beforeMin': 0,
       'beforeSec': 0,
@@ -58,7 +57,8 @@ export default {
       'afterSec': 0,
       cancelOrdersTimer: null,
       cancelOrdersTimerd: null,
-      currentNextCountDown: 0
+      currentNextCountDown: 0,
+      localShow: true
     }
   },
   created () {
@@ -111,7 +111,10 @@ export default {
       isShowServerPort: state => state.trade.serverData.isShowServerPort,
       nextCountDown: state => state.trade.serverData.nextCountDown,
       serverTime: state => state.trade.serverData.serverTime
-    })
+    }),
+    isShow () {
+      return this.isShowServerPort && this.localShow
+    }
   },
   watch: {
     $middleTopData_S_X (newVal) {
@@ -150,13 +153,26 @@ export default {
           time.split('-')
           console.log(time.split('-'))
           // this.afterHours = time.split('-')[0]
-          this.afterMin = time.split('-')[0]
-          this.afterSec = time.split('-')[1]
+          let timeArray = time.split('-')
+          console.log(timeArray)
+          switch (timeArray.length) {
+            // 分、秒
+            case 3:
+              this.afterMin = timeArray[0].length < 2 ? `0${timeArray[0]}` : timeArray[0]
+              this.afterSec = timeArray[1].length < 2 ? `0${timeArray[1]}` : timeArray[1]
+              break
+            // 只有秒
+            case 2:
+              this.afterMin = '00'
+              this.afterSec = timeArray[0].length < 2 ? `0${timeArray[0]}` : timeArray[0]
+              if (timeArray[0] == '0') {
+                clearInterval(this.cancelOrdersTimerd)
+                this.localShow = false
+              }
+              break
+          }
         }, 1000)
       }
-    },
-    isShowServerPort (newVal, oldVal) {
-      this.isShow = newVal
     }
   }
 }
