@@ -55,6 +55,7 @@ export const personal = {
   'user_assets_withdrawal_hint7': 'Enter amount  must be greater than the handling fee. Please input again',
   'user_assets_withdrawal_hint8': 'Input amount must be less than the maximum limit, please re-enter',
   'user_assets_withdrawal_hint9': 'Input amount must be greater than the minimum limit, please re-enter',
+  'user_assets_withdrawal_hint10': 'The {} Coin only supports the OMNI type. It is temporarily unavailable to use other types of coins. Please understand!',
   'user_assets_no_transaction_password': 'You have not set transaction password, please set the transaction password.',
   'user_assets_grade_membership': 'Ratings',
   'user_assets_or': 'or',

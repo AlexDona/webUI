@@ -1,6 +1,6 @@
 import mutations from './mutations'
 import actions from './actions'
-// import getters from './getters'
+import getters from './getters'
 // import {getStoreWithJson} from '../../utils'
 // Vue.use(Vuex)
 
@@ -34,12 +34,21 @@ const state = {
   marketExchange: {
     buyCount: 0,
     sellCount: 0
+  },
+  // 获取服务器是否展示活动页面
+  serverData: {
+    serverTime: '',
+    nextCountDown: '',
+    // 是否显示活动页面
+    isShowServerPort: false,
+    // 是否显示限价交易
+    isLimitShow: false
   }
 }
 
 export default {
   state,
-  // getters,
+  getters,
   actions,
   mutations
 }

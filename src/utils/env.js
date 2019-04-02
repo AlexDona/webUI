@@ -21,7 +21,7 @@ let targetConfig = {
 
 const devTestConfig = {
   apiCommonUrl: 'http://192.168.2.200:8888/',
-  socketUrl: 'ws://192.168.2.200:8087/market',
+  socketUrl: 'ws://192.168.0.52:8087/market',
   loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/'
 }
 
@@ -46,7 +46,7 @@ switch (process.env.NODE_ENV) {
     // 生产环境
     // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     // 生产环境
-    // targetConfig = {...prodConfig, xDomain: 'fubt.co'}
+    // targetConfig = {...prodConfig, xDomain: 'fubt.com'}
     break
   // 210开发环境
   case 'development210':
