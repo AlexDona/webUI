@@ -1207,8 +1207,8 @@ export default {
   watch: {
     $isNeedLimitExchange_G (newVal) {
       // console.log(newVal)
-      // console.log(this.$isLimitShow_S_X)
-      this.activeName = newVal || !this.$isLimitShow_S_X ? 'limit-price' : 'market-price'
+      console.log(newVal, this.$isLimitShow_S_X)
+      this.activeName = newVal ? 'limit-price' : 'market-price'
     },
     matchType (newVal) {
       this.setSiderBarValue('limit', {
