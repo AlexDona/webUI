@@ -29,7 +29,7 @@
         <div
           class="content"
           :class="{
-            'needTime':$isNeedYST_G_X
+            'needTime':$isNeedYST_G_X && $isShowServerPort_S_X
           }"
           v-show="contentShowStatus"
         >

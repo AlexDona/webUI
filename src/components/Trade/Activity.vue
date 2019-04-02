@@ -49,7 +49,7 @@ export default {
   data () {
     return {
       'serveTimes': this.serverTime,
-      'isShow': true,
+      'isShow': this.isShowServerPort,
       'beforeHours': 0,
       'beforeMin': 0,
       'beforeSec': 0,
@@ -114,7 +114,13 @@ export default {
     })
   },
   watch: {
+    $middleTopData_S_X (newVal) {
+      console.log(newVal)
+      // clearInterval(this.cancelOrdersTimer)
+      // clearInterval(this.cancelOrdersTimerd)
+    },
     serverTime (newVal, oldVal) {
+      clearInterval(this.cancelOrdersTimer)
       if (newVal - 0 >= 0 && newVal !== oldVal) {
         this.serveTimes = newVal
         this.cancelOrdersTimer = setInterval(() => {
@@ -131,6 +137,8 @@ export default {
       }
     },
     nextCountDown (newVal, oldVal) {
+      console.log(newVal)
+      clearInterval(this.cancelOrdersTimerd)
       if (this.serverTime - 0 < 0 && newVal !== oldVal) {
         this.currentNextCountDown = newVal
         // this.timeFormatting(newVal)

@@ -57,8 +57,8 @@ export const trade = {
   'trade_bili': 'Conversion ratio',
   'trade_singleLimit': 'Single limit',
   'trade_people': 'people',
-  'trade_data': 'day',
-  'trade_hours': 'Time',
-  'trade_seconds': 'Minute',
-  'trade_limit': 'second'
+  'trade_data': 'D',
+  'trade_hours': 'H',
+  'trade_seconds': 'M',
+  'trade_limit': 's'
 }

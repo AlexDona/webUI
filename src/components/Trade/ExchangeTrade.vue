@@ -870,6 +870,7 @@ export default {
       switch (this.activeName) {
         case 'market-price':
           this.matchType = 'MARKET'
+          if (!this.$isNeedLimitExchange_G) return false
           this.$refs[this.limitBuyCountInputRef].value = ''
           this.limitExchange.buyCount = 0
           this.$refs[this.limitSellCountInputRef].value = ''
@@ -954,7 +955,7 @@ export default {
           case 1:
             switch (this.matchType) {
               case 'LIMIT':
-
+                if (!this.$isNeedLimitExchange_G) return false
                 params.price = this.getRefValue(this.limitSellPriceInputRef)
                 params.count = this.getRefValue(this.limitSellCountInputRef)
                 this.limitExchange.sellCount = params.count
