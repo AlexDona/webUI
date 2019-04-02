@@ -54,6 +54,7 @@ export const personal = {
   'user_assets_withdrawal_hint7': '数量は手数料よりも大きいので、入力してください。',
   'user_assets_withdrawal_hint8': '入力数量最大限度より小さくし、再入力してください',
   'user_assets_withdrawal_hint9': '入力数量最小限度より大きくし、再入力してください',
+  'user_assets_withdrawal_hint10': '{}コインはOMNIタイプのみをサポートしており、他のタイプのコインを使用することは一時的に利用できません。',
   'user_assets_no_transaction_password': '取引パスワードを設定していない場合は、まず取引パスワードを設定してください。',
   'user_assets_grade_membership': '会員レベル',
   'user_assets_or': 'または',

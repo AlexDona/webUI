@@ -54,6 +54,7 @@ export const personal = {
   'user_assets_withdrawal_hint7': '输入数量必须大于手续费，请重新输入',
   'user_assets_withdrawal_hint8': '输入数量必须小于最大限额，请重新输入',
   'user_assets_withdrawal_hint9': '输入数量必须大于最小限额，请重新输入',
+  'user_assets_withdrawal_hint10': '{}充币仅支持OMNI类型，使用其他类型的充币暂时无法上账，请您谅解！',
   'user_assets_no_transaction_password': '您还未设置交易密码请先设置交易密码再进行提币',
   'user_assets_grade_membership': '会员等级',
   'user_assets_or': '或',
