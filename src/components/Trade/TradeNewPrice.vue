@@ -7,7 +7,7 @@
           down:middleTopData.chg<0
         }"
       >{{$scientificToNumber(middleTopData.last)}}</span>
-      <span v-show="activeConvertCurrencyObj.symbol&&currencyRateList[middleTopData.area]">≈ {{activeConvertCurrencyObj.symbol}}{{$keep2Num((currencyRateList[middleTopData.area]-0)*(middleTopData.last-0))}}</span>
+      <span v-show="activeConvertCurrencyObj.symbol&&currencyRateList[middleTopData.area]">≈ {{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum((currencyRateList[middleTopData.area]-0)*(middleTopData.last-0), middleTopData.legalCurrencyDecimal)}}</span>
       <IconFontCommon
         v-show="middleTopData.chg<0"
         iconName="icon-down"

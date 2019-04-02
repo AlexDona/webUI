@@ -75,7 +75,7 @@
                     class="rate-changer"
                     v-show="activeConvertCurrencyObj&&(limitExchange.transformBuyPrice-0)"
                   >
-                    ≈{{activeConvertCurrencyObj.symbol}}{{limitExchange.transformBuyPrice}}
+                    ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformBuyPrice,middleTopData.legalCurrencyDecimal)}}
                   </div>
                   <span
                     class="error-box"
@@ -186,7 +186,7 @@
                     class="rate-changer"
                     v-show="activeConvertCurrencyObj&&(limitExchange.transformSellPrice-0)"
                   >
-                    ≈{{activeConvertCurrencyObj.symbol}}{{limitExchange.transformSellPrice}}
+                    ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformSellPrice, middleTopData.legalCurrencyDecimal)}}
                   </div>
                   <span
                     class="error-box"
