@@ -871,16 +871,16 @@ export default {
         case 'market-price':
           this.matchType = 'MARKET'
           if (!this.$isNeedLimitExchange_G) return false
-          this.$refs[this.limitBuyCountInputRef].value = ''
+          this.setRefValue(this.limitBuyCountInputRef)
           this.limitExchange.buyCount = 0
-          this.$refs[this.limitSellCountInputRef].value = ''
+          this.setRefValue(this.limitSellCountInputRef)
           this.limitExchange.sellCount = 0
           break
         case 'limit-price':
           this.matchType = 'LIMIT'
-          this.$refs[this.marketBuyAmountInputRef].value = ''
+          this.setRefValue(this.marketBuyAmountInputRef)
           this.marketExchange.sellCount = 0
-          this.$refs[this.marketSellCountInputRef].value = ''
+          this.setRefValue(this.marketSellCountInputRef)
           this.marketExchange.buyAmount = 0
           break
       }
@@ -1016,6 +1016,9 @@ export default {
         this.$goToPage('/login')
       }
     },
+    setRefValue (ref, value = '') {
+      if (this.$refs[ref]) this.$refs[ref].value = value
+    },
     // 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]
@@ -1092,7 +1095,7 @@ export default {
       targetPriceOfBuy = this.$scientificToNumber(targetPriceOfBuy)
       targetPriceOfSell = this.$scientificToNumber(targetPriceOfSell)
       if (this.$refs[this.limitBuyPriceInputRef]) {
-        this.$refs[this.limitBuyPriceInputRef].value = targetPriceOfBuy
+        this.setRefValue(this.limitBuyPriceInputRef, targetPriceOfBuy)
         this.limitExchange.buyPrice = targetPriceOfBuy
         const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, this.activeSymbol.priceExchange)
         this.setTransformPrice('limit-buy', newBuyPrice)
@@ -1101,7 +1104,7 @@ export default {
         }
       }
       if (this.$refs[this.limitSellPriceInputRef]) {
-        this.$refs[this.limitSellPriceInputRef].value = targetPriceOfSell
+        this.setRefValue(this.limitSellPriceInputRef, targetPriceOfSell)
         this.limitExchange.sellPrice = targetPriceOfSell
         const newSellPrice = this.formatInput(this.limitSellPriceInputRef, this.activeSymbol.priceExchange)
         this.setTransformPrice('limit-sell', newSellPrice)
@@ -1237,15 +1240,15 @@ export default {
       switch (this.matchType) {
         case 'LIMIT':
           if (!this.$isNeedLimitExchange_G) return false
-          this.$refs[this.limitBuyCountInputRef].value = ''
+          this.setRefValue(this.limitBuyCountInputRef)
           this.limitExchange.buyCount = 0
-          this.$refs[this.limitSellCountInputRef].value = ''
+          this.setRefValue(this.limitSellCountInputRef)
           this.limitExchange.sellCount = 0
           break
         case 'MARKET':
-          this.$refs[this.marketBuyAmountInputRef].value = ''
+          this.setRefValue(this.marketBuyAmountInputRef)
           this.marketExchange.sellCount = 0
-          this.$refs[this.marketSellCountInputRef].value = ''
+          this.setRefValue(this.marketSellCountInputRef)
           this.marketExchange.buyAmount = 0
           break
       }

@@ -589,11 +589,12 @@ export default {
             onLoadedCallback(newBars)
           }
         }
+        clearTimeout(this.getBarTimer)
       } else {
         const self = this
         this.getBarTimer = setTimeout(function () {
           self.getBars(symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback)
-        }, 100)
+        }, 1000)
       }
     },
     // 请求socket
