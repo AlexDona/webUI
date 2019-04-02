@@ -30,6 +30,10 @@
         </span>
       </div>
       <div class="recharge-content-title font-size12 margin-top9 float-left">
+        <!--20190402 我的资产添加USDT 类型区分文本-->
+        <p v-if="coinId == '501762327108911104'">
+          * {{ $t('M.user_assets_withdrawal_hint10').format([currencyName, currencyName]) }}
+        </p>
         <!--转账时请务必备注（否则后果自负）：UID-->
         <p v-if="isNeedTag == 'true'">
           * {{ $t('M.user_assets_recharge_hint0').format([currencyName,currencyName]) }}{{rechargeNoteInfo}}
