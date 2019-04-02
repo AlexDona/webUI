@@ -552,7 +552,7 @@ export default {
   data () {
     return {
       notVerifyDialogVisible: false, // 实名认证弹窗显示与隐藏
-      activeName: 'limit-price',
+      activeName: this.$isNeedLimitExchange_G ? 'limit-price' : 'market-price',
       // 限价交易 买入价input ref name
       limitBuyPriceInputRef: 'limitBuyPriceInput',
       // 限价交易 买入量input ref name
