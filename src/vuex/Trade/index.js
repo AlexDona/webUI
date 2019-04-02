@@ -40,7 +40,9 @@ const state = {
     serverTime: '',
     nextCountDown: '',
     // 是否显示活动页面
-    isShowServerPort: false
+    isShowServerPort: false,
+    // 是否显示限价交易
+    isLimitShow: false
   }
 }
 

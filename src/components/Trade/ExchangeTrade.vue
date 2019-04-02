@@ -26,7 +26,7 @@
         <el-tab-pane
           :label="$t('M.trade_exchange_price_deal')"
           name="limit-price"
-          v-if="$isNeedLimitExchange_G"
+          v-if="$isNeedLimitExchange_G || !$isLimitShow_S_X"
         >
           <div
             class="content-box limit"
@@ -1207,7 +1207,8 @@ export default {
   watch: {
     $isNeedLimitExchange_G (newVal) {
       // console.log(newVal)
-      this.activeName = newVal ? 'limit-price' : 'market-price'
+      // console.log(this.$isLimitShow_S_X)
+      this.activeName = newVal || !this.$isLimitShow_S_X ? 'limit-price' : 'market-price'
     },
     matchType (newVal) {
       this.setSiderBarValue('limit', {

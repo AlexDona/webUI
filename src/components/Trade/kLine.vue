@@ -531,10 +531,12 @@ export default {
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           break
         case 'DATE':
+          console.log(data)
           this.GET_SERVER_DATA({
             'serverTime': data.data.countDown,
             'isShowServerPort': data.data.isShow,
-            'nextCountDown': data.data.nextCountDown
+            'nextCountDown': data.data.nextCountDown,
+            'isLimitShow': data.data.isLimitShow
           })
           break
       }
