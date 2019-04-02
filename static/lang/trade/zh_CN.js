@@ -45,5 +45,19 @@ export const trade = {
   'trade_empty_buy_count': '请输入买入量',
   'trade_empty_sell_count': '请输入卖出量',
   'trade_empty_buy_price': '请输入买入价',
-  'trade_empty_sell_price': '请输入卖出价'
+  'trade_empty_sell_price': '请输入卖出价',
+  'trade_start': '即将开始',
+  'trade_going': '正在进行',
+  'trade_startOne': '第1轮',
+  'trade_thired': '共3轮',
+  'trade_langstart': '距离开始',
+  'trade_langEnd': '距离结束',
+  'trade_currentAccount': '本轮数量',
+  'trade_bili': '兑换比例',
+  'trade_singleLimit': '单人限额',
+  'trade_people': '人',
+  'trade_data': '天',
+  'trade_hours': '时',
+  'trade_seconds': '分',
+  'trade_limit': '秒'
 }

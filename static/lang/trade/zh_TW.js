@@ -45,5 +45,19 @@ export const trade = {
   'trade_empty_buy_count': '請輸入買入量',
   'trade_empty_sell_count': '請輸入賣出量',
   'trade_empty_buy_price': '請輸入買入價',
-  'trade_empty_sell_price': '請輸入賣出價'
+  'trade_empty_sell_price': '請輸入賣出價',
+  'trade_start': '即將開始',
+  'trade_going': '正在進行',
+  'trade_startOne': '第1輪',
+  'trade_thired': '共3輪',
+  'trade_langstart': '距離開始',
+  'trade_langEnd': '距離結束',
+  'trade_currentAccount': '本輪數量',
+  'trade_bili': '兌換比例',
+  'trade_singleLimit': '單人限額',
+  'trade_people': '人',
+  'trade_data': '天',
+  'trade_hours': '時',
+  'trade_seconds': '分',
+  'trade_limit': '秒'
 }
