@@ -56,7 +56,9 @@ export default {
   [CHANGE_SOCKET_AND_AJAX_DATA] (state, {
     socketData,
     ajaxData,
-    type
+    type,
+    serverTime,
+    isShowServerPort
   }) {
     // console.log(ajaxData)
     // console.log(type, ajaxData, socketData)

@@ -54,6 +54,7 @@ export const personal = {
   'user_assets_withdrawal_hint7': '輸入數量必須大於手續費，請重新輸入',
   'user_assets_withdrawal_hint8': '輸入數量必須小於最大限額，請重新輸入',
   'user_assets_withdrawal_hint9': '輸入數量必須大於最小限額，請重新輸入',
+  'user_assets_withdrawal_hint10': '{}充幣僅支持OMNI類型，使用其他類型的充幣暫時無法上賬，請您諒解！',
   'user_assets_no_transaction_password': '您還未設置交易密碼請先設置交易密碼再進行提幣',
   'user_assets_grade_membership': '會員等級',
   'user_assets_or': '或',

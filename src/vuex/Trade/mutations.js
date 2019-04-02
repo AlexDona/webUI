@@ -6,7 +6,8 @@ import {
   SET_JUMP_STATUS,
   SET_JUMP_SYMBOL,
   SET_IS_KLINE_DATA_READY,
-  SET_TARGET_EXCHANGE_DATA
+  SET_TARGET_EXCHANGE_DATA,
+  GET_SERVER_DATA
 } from './mutations-types.js'
 
 // import {setStore} from '../../utils'
@@ -65,5 +66,13 @@ export default {
         break
     }
     // console.log(state.limitExchange, state.marketExchange)
+  },
+  // 获取服务器时间数据
+  [GET_SERVER_DATA] (state, data) {
+    let {serverTime, isShowServerPort, nextCountDown, isLimitShow} = data
+    state.serverData.serverTime = serverTime
+    state.serverData.isShowServerPort = isShowServerPort
+    state.serverData.nextCountDown = nextCountDown
+    state.serverData.isLimitShow = isLimitShow
   }
 }
