@@ -10,6 +10,10 @@ import {
   getNestedData,
   http2https
 } from '../utils/commonFunc'
+import {
+  mapGetters,
+  mapState
+} from 'vuex'
 
 let mixin = {
   data () {
@@ -49,6 +53,15 @@ let mixin = {
     $cutOutPointLength (num, pointLength) {
       return cutOutPointLength(num, pointLength)
     }
+  },
+  computed: {
+    ...mapGetters({
+      '$isNeedLimitExchange_G': 'isNeedLimitExchange_G'
+    }),
+    ...mapState({
+      // 交易对是否改变
+      $isSymbolChanged_X: state => state.common.isSymbolChanged
+    })
   }
 }
 export default mixin

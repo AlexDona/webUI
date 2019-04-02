@@ -26,6 +26,7 @@
         <el-tab-pane
           :label="$t('M.trade_exchange_price_deal')"
           name="limit-price"
+          v-if="$isNeedLimitExchange_G"
         >
           <div
             class="content-box limit"
@@ -115,7 +116,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
-                  v-if="!isSymbolChanged && activeName === 'limit-price'"
+                  v-if="!$isSymbolChanged_X && activeName === 'limit-price'"
                 />
                 <div class="volume-rate">
                   <div class="item">
@@ -223,7 +224,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
-                  v-if="!isSymbolChanged"
+                  v-if="!$isSymbolChanged_X"
                 />
                 <!--预计交易额 手续费-->
                 <div class="volume-rate">
@@ -325,7 +326,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
-                  v-if="!isSymbolChanged"
+                  v-if="!$isSymbolChanged_X"
                 />
                 <div class="submit">
                   <el-button
@@ -405,7 +406,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
-                  v-if="!isSymbolChanged"
+                  v-if="!$isSymbolChanged_X"
                 />
                 <div class="submit">
                   <el-button
@@ -1180,8 +1181,6 @@ export default {
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       middleTopData: state => state.trade.middleTopData,
-      // 交易对是否改变
-      isSymbolChanged: state => state.common.isSymbolChanged,
       limitExchangeOfState: state => state.trade.limitExchange,
       // 是否通过高级认证
       advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
@@ -1206,6 +1205,10 @@ export default {
     }
   },
   watch: {
+    $isNeedLimitExchange_G (newVal) {
+      // console.log(newVal)
+      this.activeName = newVal ? 'limit-price' : 'market-price'
+    },
     matchType (newVal) {
       this.setSiderBarValue('limit', {
         buyPrice: 0,
@@ -1220,10 +1223,10 @@ export default {
     },
     'limitExchange.buyPrice' (newVal) {
     },
-    isSymbolChanged (newVal) {
-      // console.log(this.matchType)
+    $isSymbolChanged_X (newVal) {
       switch (this.matchType) {
         case 'LIMIT':
+          if (!this.$isNeedLimitExchange_G) return false
           this.$refs[this.limitBuyCountInputRef].value = ''
           this.limitExchange.buyCount = 0
           this.$refs[this.limitSellCountInputRef].value = ''
@@ -1237,9 +1240,7 @@ export default {
           break
       }
       // console.log(newVal)
-      if (newVal) {
-        this.CHANGE_SYMBOL_CHANGED_STATUS(false)
-      }
+      if (newVal) this.CHANGE_SYMBOL_CHANGED_STATUS(false)
     },
     language () {
       this.errorMsg.limit.buy.price = ''
@@ -1257,9 +1258,7 @@ export default {
       }
     },
     async refreshEntrustStatus (newVal) {
-      if (newVal) {
-        await this.getUserAssetOfActiveSymbol()
-      }
+      if (newVal) await this.getUserAssetOfActiveSymbol()
     },
     activeConvertCurrencyObj () {
       this.setBuyAndSellPrice(this.getRefValue(this.limitBuyPriceInputRef), this.getRefValue(this.limitSellPriceInputRef))
@@ -1269,9 +1268,7 @@ export default {
     },
     // 用户手动设置价格
     activePriceItem (newVal) {
-      if (newVal) {
-        this.setBuyAndSellPrice(newVal)
-      }
+      if (newVal) this.setBuyAndSellPrice(newVal)
     },
     async middleTopData (newVal) {
       // console.log(newVal)
@@ -1280,9 +1277,7 @@ export default {
       // 首次打开设置价格
       if (!this.reflashCount) {
         // console.log(newVal.last)
-        if (newVal.last) {
-          this.reflashCount++
-        }
+        if (newVal.last) this.reflashCount++
         if (this.isLogin) {
           await this.getUserAssetOfActiveSymbol(targetPriceOfSell, targetPriceOfBuy)
         } else {

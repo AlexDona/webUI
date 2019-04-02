@@ -1,6 +1,6 @@
 import mutations from './mutations'
 import actions from './actions'
-// import getters from './getters'
+import getters from './getters'
 // import {getStoreWithJson} from '../../utils'
 // Vue.use(Vuex)
 
@@ -39,7 +39,7 @@ const state = {
 
 export default {
   state,
-  // getters,
+  getters,
   actions,
   mutations
 }
