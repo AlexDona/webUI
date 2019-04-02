@@ -60,7 +60,9 @@ let mixin = {
     }),
     ...mapState({
       // 交易对是否改变
-      $isSymbolChanged_X: state => state.common.isSymbolChanged
+      $isSymbolChanged_X: state => state.common.isSymbolChanged,
+      // 是否显示限价交易
+      $isLimitShow_S_X: state => state.trade.serverData.isLimitShow
     })
   }
 }

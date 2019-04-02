@@ -69,9 +69,10 @@ export default {
   },
   // 获取服务器时间数据
   [GET_SERVER_DATA] (state, data) {
-    let {serverTime, isShowServerPort, nextCountDown} = data
+    let {serverTime, isShowServerPort, nextCountDown, isLimitShow} = data
     state.serverData.serverTime = serverTime
     state.serverData.isShowServerPort = isShowServerPort
     state.serverData.nextCountDown = nextCountDown
+    state.serverData.isLimitShow = isLimitShow
   }
 }
