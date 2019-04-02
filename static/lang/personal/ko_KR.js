@@ -54,6 +54,7 @@ export const personal = {
   'user_assets_withdrawal_hint7': '입력 횟수는 처리 수수료보다 커야합니다. 다시 입력하십시오.',
   'user_assets_withdrawal_hint8': '입력수량 최대치보다 작아야함,재입력 필요',
   'user_assets_withdrawal_hint9': '입력수량 최소치보다 커야함 ,재 입력하세요',
+  'user_assets_withdrawal_hint10': '{} 코인은 OMNI 유형 만 지원합니다. 일시적으로 다른 종류의 코인을 사용할 수 없습니다. 이해하십시오!',
   'user_assets_no_transaction_password': '거래 비밀번호를 설정하지 않았습니다. 먼저 거래 비밀번호를 설정하여 동전을 실행하십시오.',
   'user_assets_grade_membership': '회원 등급',
   'user_assets_or': '또는',

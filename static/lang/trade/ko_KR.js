@@ -45,5 +45,19 @@ export const trade = {
   'trade_empty_buy_count': '구매 금액을 입력하십시오',
   'trade_empty_sell_count': '판매 금액을 입력하십시오',
   'trade_empty_buy_price': '입찰 가격을 입력하십시오',
-  'trade_empty_sell_price': '제안 가격을 입력하십시오'
+  'trade_empty_sell_price': '제안 가격을 입력하십시오',
+  'trade_start': '곧 방문 할 예정',
+  'trade_going': '진행 중',
+  'trade_startOne': '1 라운드',
+  'trade_thired': '총 3 라운드',
+  'trade_langstart': '거리 시작',
+  'trade_langEnd': '거리 끝',
+  'trade_currentAccount': '라운드 횟수',
+  'trade_bili': '환율',
+  'trade_singleLimit': '단일 한도',
+  'trade_people': '사람',
+  'trade_data': '일',
+  'trade_hours': '시간',
+  'trade_seconds': '분',
+  'trade_limit': '초'
 }
