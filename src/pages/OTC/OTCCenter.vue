@@ -284,6 +284,31 @@
         class="otc-order-manage"
         id="orderView"
       >
+        <!--交易中订单右箭头-->
+        <div class="trading-order-right-arrow">
+          <i
+            class="el-icon-caret-right font-size20"
+            v-if="activeName === 'first'"
+          >
+          </i>
+        </div>
+        <!--交易中订单图标沙漏-->
+        <div
+          class="trading-order-sand-clock cursor-pointer"
+          @click="toggleTradingOrder"
+        >
+          <IconFontCommon
+            v-if="activeName === 'first'"
+            iconName="icon-shalou"
+            style="color: #fff;"
+          />
+          <IconFontCommon
+            v-else
+            iconName="icon-shalou"
+            style="color: #4f85da;"
+          />
+        </div>
+        <!--订单管理tab栏-->
         <el-tabs
           :tab-position = "tabPosition"
           @tab-click = "toggleTabPane"
@@ -293,8 +318,9 @@
           <el-tab-pane
             name = "first"
             :disabled="isDisabled"
+            :label="$t('M.otc_trading')"
           >
-            <span slot="label">
+            <!--<span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
                 v-if="activeName === 'first'"
@@ -303,9 +329,9 @@
               <IconFontCommon
                 iconName="icon-shalou"
               />
-              <!-- 交易中订单 -->
+                交易中订单
               {{$t('M.otc_trading')}}
-            </span>
+            </span>-->
             <OTCTradingOrder v-if="activeName === 'first'"/>
           </el-tab-pane>
           <!-- 2.2.2 已完成订单 -->
@@ -542,6 +568,14 @@ export default {
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
+    // 点击交易中订单图标沙漏跳转到交易中订单
+    toggleTradingOrder () {
+      if (!this.isLogin) {
+        this.$goToPage('/login')
+        return false
+      }
+      this.activeName = 'first'
+    },
     // 刷新个人信息
     reflashUserInfo () {
       this.REFRESH_USER_INFO_ACTION()
@@ -971,6 +1005,20 @@ export default {
     > .otc-order-manage {
       position: relative;
       margin-top: 50px;
+
+      .trading-order-right-arrow {
+        position: absolute;
+        top: 33px;
+        left: 82px;
+        color: #338ff5;
+      }
+
+      .trading-order-sand-clock {
+        position: absolute;
+        z-index: 11;
+        top: 0;
+        left: 0;
+      }
 
       > .more {
         position: absolute;
