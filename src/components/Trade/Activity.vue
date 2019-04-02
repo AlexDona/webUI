@@ -57,7 +57,8 @@ export default {
       'afterMin': 0,
       'afterSec': 0,
       cancelOrdersTimer: null,
-      cancelOrdersTimerd: null
+      cancelOrdersTimerd: null,
+      currentNextCountDown: 0
     }
   },
   created () {
@@ -131,17 +132,18 @@ export default {
     },
     nextCountDown (newVal, oldVal) {
       if (this.serverTime - 0 < 0 && newVal !== oldVal) {
+        this.currentNextCountDown = newVal
         // this.timeFormatting(newVal)
         this.cancelOrdersTimerd = setInterval(() => {
-          this.nextCountDown = this.nextCountDown - 1000
-          this.BIHTimeFormatting(this.nextCountDown)
-          console.log(this.BIHTimeFormatting(this.nextCountDown))
-          let time = this.BIHTimeFormatting(this.nextCountDown)
+          this.currentNextCountDown = this.currentNextCountDown - 1000
+          this.BIHTimeFormatting(this.currentNextCountDown)
+          console.log(this.BIHTimeFormatting(this.currentNextCountDown))
+          let time = this.BIHTimeFormatting(this.currentNextCountDown)
           time.split('-')
           console.log(time.split('-'))
-          this.afterHours = time.split('-')[0]
-          this.afterMin = time.split('-')[1]
-          this.afterSec = time.split('-')[2]
+          // this.afterHours = time.split('-')[0]
+          this.afterMin = time.split('-')[0]
+          this.afterSec = time.split('-')[1]
         }, 1000)
       }
     },
