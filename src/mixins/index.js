@@ -66,7 +66,8 @@ let mixin = {
       $isLimitShow_S_X: state => state.trade.serverData.isLimitShow,
       $middleTopData_S_X: state => state.trade.middleTopData,
       $serverTime_S_X: state => state.trade.serverData.serverTime,
-      $isShowServerPort_S_X: state => state.trade.serverData.isShowServerPort
+      $isShowServerPort_S_X: state => state.trade.serverData.isShowServerPort,
+      $isServerEnd_S_X: state => state.trade.isActivityEnd
     })
   }
 }

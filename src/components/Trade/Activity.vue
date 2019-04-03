@@ -31,7 +31,10 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import {
+  mapState,
+  mapMutations
+} from 'vuex'
 import {formatSecondsActivity} from '../../utils'
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
@@ -60,6 +63,9 @@ export default {
   },
   mounted () {},
   methods: {
+    ...mapMutations([
+      'CHANGE_ACTIVITY_STATUS'
+    ]),
     countDownTimeBar (times, hour, minute, second, type) {
       if (this[times] === '0') {
         type === 'before' ? clearInterval(this.beforeActivityTimer) : clearInterval(this.afterActivityTimer)
@@ -89,6 +95,7 @@ export default {
             } else {
               clearInterval(this.afterActivityTimer)
               this.localShow = false
+              this.CHANGE_ACTIVITY_STATUS(true)
             }
           }
           break

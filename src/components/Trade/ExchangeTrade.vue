@@ -26,7 +26,7 @@
         <el-tab-pane
           :label="$t('M.trade_exchange_price_deal')"
           name="limit-price"
-          v-if="$isNeedLimitExchange_G_X || !$isLimitShow_S_X"
+          v-if="$isNeedLimitExchange_G_X || !$isLimitShow_S_X || $isServerEnd_S_X"
         >
           <div
             class="content-box limit"
