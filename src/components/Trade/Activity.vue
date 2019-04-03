@@ -50,9 +50,7 @@ export default {
       afterActivityTimer: null,
       currentNextCountDown: 0,
       // 是否展示活动框
-      localShow: true,
-      // 活动内容是否切换
-      changeContent: true
+      localShow: true
     }
   },
   created () {
@@ -116,9 +114,6 @@ export default {
     }),
     isShow () {
       return this.isShowServerPort && this.localShow
-    },
-    isChangeContent () {
-      return this.serverTime > 0 && this.changeContent
     }
   },
   watch: {
