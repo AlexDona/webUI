@@ -8,6 +8,6 @@ export default {
   },
   // 是否显示YST
   isNeedYST () {
-    return xDomain === 'fubt.co' || xDomain === 'fubt.com' || xDomain === 'fubt.top' || xDomain === 'new.test.com'
+    return xDomain === 'fubt.co' || xDomain === 'fubt.com' || xDomain === 'fubt.top' || xDomain === 'new.test.com' || xDomain === 'new.bzu.com'
   }
 }
