@@ -284,6 +284,31 @@
         class="otc-order-manage"
         id="orderView"
       >
+        <!--交易中订单右箭头-->
+        <div class="trading-order-right-arrow">
+          <i
+            class="el-icon-caret-right font-size20"
+            v-if="activeName === 'first'"
+          >
+          </i>
+        </div>
+        <!--交易中订单图标沙漏-->
+        <div
+          class="trading-order-sand-clock cursor-pointer"
+          @click="toggleTradingOrder"
+        >
+          <IconFontCommon
+            v-if="activeName === 'first'"
+            iconName="icon-shalou"
+            style="color: #fff;"
+          />
+          <IconFontCommon
+            v-else
+            iconName="icon-shalou"
+            style="color: #4f85da;"
+          />
+        </div>
+        <!--订单管理tab栏-->
         <el-tabs
           :tab-position = "tabPosition"
           @tab-click = "toggleTabPane"
@@ -293,20 +318,21 @@
           <el-tab-pane
             name = "first"
             :disabled="isDisabled"
+            :label="$t('M.otc_trading')"
           >
-            <span slot="label">
+            <!--<span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-show="activeName === 'first'"
+                v-if="activeName === 'first'"
               >
               </i>
               <IconFontCommon
                 iconName="icon-shalou"
               />
-              <!-- 交易中订单 -->
+                交易中订单
               {{$t('M.otc_trading')}}
-            </span>
-            <OTCTradingOrder ref = "trading"/>
+            </span>-->
+            <OTCTradingOrder v-if="activeName === 'first'"/>
           </el-tab-pane>
           <!-- 2.2.2 已完成订单 -->
           <el-tab-pane
@@ -325,7 +351,7 @@
               <!-- 已完成订单 -->
               {{$t('M.otc_stocks')}}
             </span>
-            <OTCCompletedOrder ref = "complete"/>
+            <OTCCompletedOrder v-if="activeName === 'second'"/>
           </el-tab-pane>
           <!-- 2.2.3 已取消订单 -->
           <el-tab-pane
@@ -344,7 +370,7 @@
               <!-- 已取消订单 -->
               {{$t('M.otc_canceled')}}
             </span>
-            <OTCCanceledOrder ref = "canceled"/>
+            <OTCCanceledOrder v-if="activeName === 'third'"/>
           </el-tab-pane>
           <!-- 2.2.4 冻结中订单 -->
           <el-tab-pane
@@ -363,7 +389,7 @@
               <!-- 冻结中订单 -->
               {{$t('M.otc_freezingOrder')}}
             </span>
-            <OTCFreezingOrder ref = "freezing"/>
+            <OTCFreezingOrder v-if="activeName === 'fourth'"/>
           </el-tab-pane>
           <!-- 2.2.5 委托订单 -->
           <el-tab-pane
@@ -373,7 +399,8 @@
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-if="activeName === 'fifth'">
+                v-if="activeName === 'fifth'"
+              >
               </i>
               <IconFontCommon
                 iconName="icon-daohang2"
@@ -381,7 +408,7 @@
               <!-- 委托订单 -->
               {{$t('M.otc_entrust')}}
             </span>
-            <OTCEntrustOrder ref = "entrust"/>
+            <OTCEntrustOrder v-if="activeName === 'fifth'"/>
           </el-tab-pane>
         </el-tabs>
         <!-- 查询更多 -->
@@ -534,7 +561,6 @@ export default {
     ...mapMutations([
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
-      // 'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID',
       'UPDATE_OTC_HOME_LIST_STATUS',
       // 改变全局锚点状态方法
       'CHANGE_OTC_ANCHOR_STATUS',
@@ -542,6 +568,14 @@ export default {
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
+    // 点击交易中订单图标沙漏跳转到交易中订单
+    toggleTradingOrder () {
+      if (!this.isLogin) {
+        this.$goToPage('/login')
+        return false
+      }
+      this.activeName = 'first'
+    },
     // 刷新个人信息
     reflashUserInfo () {
       this.REFRESH_USER_INFO_ACTION()
@@ -562,6 +596,7 @@ export default {
     },
     // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {
+      console.log(this.activeName)
       // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
       this.isDisabled = true
       this.isDisabledTimer = setTimeout(() => {
@@ -571,27 +606,6 @@ export default {
       if (!this.isLogin) {
         this.$goToPage('/login')
         return false
-      } else {
-        if (this.activeName === 'first') {
-          // console.log('调交易中订单')
-          this.$refs.trading.getOTCTradingOrdersList() // 调用子组件交易中订单的方法
-        }
-        if (this.activeName === 'second') {
-          // console.log('调已完成订单')
-          this.$refs.complete.getOTCCompletedOrdersList() // 调用子组件已完成订单的方法
-        }
-        if (this.activeName === 'third') {
-          // console.log('调已取消订单')
-          this.$refs.canceled.getOTCCanceledOrdersList() // 调用子组件已取消订单的方法
-        }
-        if (this.activeName === 'fourth') {
-          // console.log('调冻结中订单')
-          this.$refs.freezing.getOTCFreezingOrdersList() // 调用子组件冻结中订单的方法
-        }
-        if (this.activeName === 'fifth') {
-          // console.log('调委托订单')
-          this.$refs.entrust.getOTCEntrustingOrdersList() // 调用子组件委托订单的方法
-        }
       }
     },
     // 0.2 点击发布订单按钮跳转到发布订单页面
@@ -728,7 +742,6 @@ export default {
               return false
             }
           })
-          // 周四放开 此跳转功能代码
           // 个人中心跳转otc-开始
           if (this.$route.params.coinId) {
             let jumpCoinId = this.$route.params.coinId
@@ -746,7 +759,6 @@ export default {
             // 个人中心跳转otc-结束
             this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
             this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
-            // this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
           }
         }
       }
@@ -807,10 +819,7 @@ export default {
       // console.log(index)
       this.selectCurrencyNameStatus = index
       this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name) // 币种名称
-      // this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[index].partnerCoinId) // 商户币种id
       this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId) // 币种id
-      // console.log(this.selectedOTCAvailableCurrencyName)
-      // console.log('币种id：' + this.selectedOTCAvailableCurrencyCoinID)
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
@@ -996,6 +1005,20 @@ export default {
     > .otc-order-manage {
       position: relative;
       margin-top: 50px;
+
+      .trading-order-right-arrow {
+        position: absolute;
+        top: 33px;
+        left: 82px;
+        color: #338ff5;
+      }
+
+      .trading-order-sand-clock {
+        position: absolute;
+        z-index: 11;
+        top: 0;
+        left: 0;
+      }
 
       > .more {
         position: absolute;

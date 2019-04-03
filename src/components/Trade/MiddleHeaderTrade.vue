@@ -134,6 +134,9 @@ export default {
     })
   },
   watch: {
+    middleTopData (newVal) {
+      console.log(newVal)
+    }
   }
 }
 </script>

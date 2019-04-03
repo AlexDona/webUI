@@ -45,5 +45,19 @@ export const trade = {
   'trade_empty_buy_count': '購入金額を入力してください',
   'trade_empty_sell_count': '販売金額を入力してください',
   'trade_empty_buy_price': '入札価格を入力してください',
-  'trade_empty_sell_price': '提示価格を入力してください'
+  'trade_empty_sell_price': '提示価格を入力してください',
+  'trade_start': 'もうすぐ始め',
+  'trade_going': '進行中',
+  'trade_startOne': '第１ランド',
+  'trade_thired': '合計3ラウンド',
+  'trade_langstart': '最初から時間',
+  'trade_langEnd': '最終から時間',
+  'trade_currentAccount': 'このラウンド量',
+  'trade_bili': '引換比率',
+  'trade_singleLimit': '個人リミット',
+  'trade_people': '人',
+  'trade_data': '日',
+  'trade_hours': '時',
+  'trade_seconds': '分',
+  'trade_limit': '秒'
 }

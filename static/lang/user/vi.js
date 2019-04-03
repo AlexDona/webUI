@@ -85,5 +85,7 @@ export const user = {
   'user_login_scan_success': 'Quét mã thành công',
   'user_login_phone_confirm_login': 'Vui lòng xác nhận trên điện thoại',
   'user_login_return_QR': 'Quay lại đăng nhập bằng mã QR',
-  'user_down_install': 'Lập tức cài đặt'
+  'user_down_install': 'Lập tức cài đặt',
+  'user_payPassword_switch': 'Tạm thời tắt mật khẩu giao dịch',
+  'user_payPassword': 'Quên mật khẩu giao dịch'
 }

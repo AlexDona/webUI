@@ -1807,7 +1807,6 @@ export default {
 
         .el-tabs__nav {
           width: 300px;
-          padding: 9px 0 9px 26px;
           font-weight: bold;
           color: #617499;
           background: linear-gradient(90deg, rgba(51, 143, 245, .8), transparent);

@@ -26,6 +26,7 @@
         <el-tab-pane
           :label="$t('M.trade_exchange_price_deal')"
           name="limit-price"
+          v-if="$isNeedLimitExchange_G || !$isLimitShow_S_X"
         >
           <div
             class="content-box limit"
@@ -115,7 +116,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
-                  v-if="!isSymbolChanged && activeName === 'limit-price'"
+                  v-if="!$isSymbolChanged_X && activeName === 'limit-price'"
                 />
                 <div class="volume-rate">
                   <div class="item">
@@ -223,7 +224,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
-                  v-if="!isSymbolChanged"
+                  v-if="!$isSymbolChanged_X"
                 />
                 <!--预计交易额 手续费-->
                 <div class="volume-rate">
@@ -325,7 +326,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
-                  v-if="!isSymbolChanged"
+                  v-if="!$isSymbolChanged_X"
                 />
                 <div class="submit">
                   <el-button
@@ -405,7 +406,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
-                  v-if="!isSymbolChanged"
+                  v-if="!$isSymbolChanged_X"
                 />
                 <div class="submit">
                   <el-button
@@ -551,7 +552,7 @@ export default {
   data () {
     return {
       notVerifyDialogVisible: false, // 实名认证弹窗显示与隐藏
-      activeName: 'limit-price',
+      activeName: this.$isNeedLimitExchange_G ? 'limit-price' : 'market-price',
       // 限价交易 买入价input ref name
       limitBuyPriceInputRef: 'limitBuyPriceInput',
       // 限价交易 买入量input ref name
@@ -637,6 +638,10 @@ export default {
     }
   },
   async created () {
+    if (!this.$isNeedYST_G_X) {
+      this.activeName = 'limit-price'
+      this.toggleMatchType()
+    }
     if (this.isLogin) {
       await this.REFRESH_USER_INFO_ACTION()
       // console.log(this.REFRESH_USER_INFO_ACTION)
@@ -861,20 +866,21 @@ export default {
     },
     // 获取 ref value
     // 切换撮合类型
-    toggleMatchType (e) {
-      switch (e.name) {
+    toggleMatchType () {
+      switch (this.activeName) {
         case 'market-price':
           this.matchType = 'MARKET'
-          this.$refs[this.limitBuyCountInputRef].value = ''
+          if (!this.$isNeedLimitExchange_G) return false
+          this.setRefValue(this.limitBuyCountInputRef)
           this.limitExchange.buyCount = 0
-          this.$refs[this.limitSellCountInputRef].value = ''
+          this.setRefValue(this.limitSellCountInputRef)
           this.limitExchange.sellCount = 0
           break
         case 'limit-price':
           this.matchType = 'LIMIT'
-          this.$refs[this.marketBuyAmountInputRef].value = ''
+          this.setRefValue(this.marketBuyAmountInputRef)
           this.marketExchange.sellCount = 0
-          this.$refs[this.marketSellCountInputRef].value = ''
+          this.setRefValue(this.marketSellCountInputRef)
           this.marketExchange.buyAmount = 0
           break
       }
@@ -894,9 +900,11 @@ export default {
         //
         this.entrustType = entrustType
         this.isNeedPayPassowrd = await isNeedPayPasswordAjax(this)
+        console.log(this.isNeedPayPassowrd)
         // console.log(entrustType, matchType)
         let next = false
         let params = {}
+        console.log(entrustType, this.matchType)
         switch (entrustType) {
           // 买入
           case 0:
@@ -947,7 +955,6 @@ export default {
           case 1:
             switch (this.matchType) {
               case 'LIMIT':
-
                 params.price = this.getRefValue(this.limitSellPriceInputRef)
                 params.count = this.getRefValue(this.limitSellCountInputRef)
                 this.limitExchange.sellCount = params.count
@@ -994,6 +1001,7 @@ export default {
             }
             break
         }
+        console.log(next)
         if (!next) {
           return false
         }
@@ -1006,6 +1014,9 @@ export default {
       } else {
         this.$goToPage('/login')
       }
+    },
+    setRefValue (ref, value = '') {
+      if (this.$refs[ref]) this.$refs[ref].value = value
     },
     // 输入限制
     formatInput (ref, pointLength) {
@@ -1083,7 +1094,7 @@ export default {
       targetPriceOfBuy = this.$scientificToNumber(targetPriceOfBuy)
       targetPriceOfSell = this.$scientificToNumber(targetPriceOfSell)
       if (this.$refs[this.limitBuyPriceInputRef]) {
-        this.$refs[this.limitBuyPriceInputRef].value = targetPriceOfBuy
+        this.setRefValue(this.limitBuyPriceInputRef, targetPriceOfBuy)
         this.limitExchange.buyPrice = targetPriceOfBuy
         const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, this.activeSymbol.priceExchange)
         this.setTransformPrice('limit-buy', newBuyPrice)
@@ -1092,7 +1103,7 @@ export default {
         }
       }
       if (this.$refs[this.limitSellPriceInputRef]) {
-        this.$refs[this.limitSellPriceInputRef].value = targetPriceOfSell
+        this.setRefValue(this.limitSellPriceInputRef, targetPriceOfSell)
         this.limitExchange.sellPrice = targetPriceOfSell
         const newSellPrice = this.formatInput(this.limitSellPriceInputRef, this.activeSymbol.priceExchange)
         this.setTransformPrice('limit-sell', newSellPrice)
@@ -1180,8 +1191,6 @@ export default {
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       middleTopData: state => state.trade.middleTopData,
-      // 交易对是否改变
-      isSymbolChanged: state => state.common.isSymbolChanged,
       limitExchangeOfState: state => state.trade.limitExchange,
       // 是否通过高级认证
       advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
@@ -1206,6 +1215,12 @@ export default {
     }
   },
   watch: {
+    $isNeedLimitExchange_G (newVal) {
+      // console.log(newVal)
+      console.log(newVal, this.$isLimitShow_S_X)
+      this.activeName = newVal ? 'limit-price' : 'market-price'
+      this.toggleMatchType()
+    },
     matchType (newVal) {
       this.setSiderBarValue('limit', {
         buyPrice: 0,
@@ -1220,26 +1235,24 @@ export default {
     },
     'limitExchange.buyPrice' (newVal) {
     },
-    isSymbolChanged (newVal) {
-      // console.log(this.matchType)
+    $isSymbolChanged_X (newVal) {
       switch (this.matchType) {
         case 'LIMIT':
-          this.$refs[this.limitBuyCountInputRef].value = ''
+          if (!this.$isNeedLimitExchange_G) return false
+          this.setRefValue(this.limitBuyCountInputRef)
           this.limitExchange.buyCount = 0
-          this.$refs[this.limitSellCountInputRef].value = ''
+          this.setRefValue(this.limitSellCountInputRef)
           this.limitExchange.sellCount = 0
           break
         case 'MARKET':
-          this.$refs[this.marketBuyAmountInputRef].value = ''
+          this.setRefValue(this.marketBuyAmountInputRef)
           this.marketExchange.sellCount = 0
-          this.$refs[this.marketSellCountInputRef].value = ''
+          this.setRefValue(this.marketSellCountInputRef)
           this.marketExchange.buyAmount = 0
           break
       }
       // console.log(newVal)
-      if (newVal) {
-        this.CHANGE_SYMBOL_CHANGED_STATUS(false)
-      }
+      if (newVal) this.CHANGE_SYMBOL_CHANGED_STATUS(false)
     },
     language () {
       this.errorMsg.limit.buy.price = ''
@@ -1257,9 +1270,7 @@ export default {
       }
     },
     async refreshEntrustStatus (newVal) {
-      if (newVal) {
-        await this.getUserAssetOfActiveSymbol()
-      }
+      if (newVal) await this.getUserAssetOfActiveSymbol()
     },
     activeConvertCurrencyObj () {
       this.setBuyAndSellPrice(this.getRefValue(this.limitBuyPriceInputRef), this.getRefValue(this.limitSellPriceInputRef))
@@ -1269,9 +1280,7 @@ export default {
     },
     // 用户手动设置价格
     activePriceItem (newVal) {
-      if (newVal) {
-        this.setBuyAndSellPrice(newVal)
-      }
+      if (newVal) this.setBuyAndSellPrice(newVal)
     },
     async middleTopData (newVal) {
       // console.log(newVal)
@@ -1280,9 +1289,7 @@ export default {
       // 首次打开设置价格
       if (!this.reflashCount) {
         // console.log(newVal.last)
-        if (newVal.last) {
-          this.reflashCount++
-        }
+        if (newVal.last) this.reflashCount++
         if (this.isLogin) {
           await this.getUserAssetOfActiveSymbol(targetPriceOfSell, targetPriceOfBuy)
         } else {

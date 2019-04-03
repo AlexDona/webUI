@@ -290,5 +290,10 @@ export const OTC = {
   'otc_min_limit_not_more': 'Không thể lớn hơn hạn mức lớn nhất của đơn hàng',
   'otc_max_limit_not_empty': 'Hạn mức lớn nhất của đơn không được bỏ trống',
   'otc_max_limit_not_high': 'Hạn mức lớn nhất của đơn không được lớn hơn',
-  'otc_max_limit_not_few': 'Không thể nhỏ hơn hạn mức nhỏ nhất của đơn hàng'
+  'otc_max_limit_not_few': 'Không thể nhỏ hơn hạn mức nhỏ nhất của đơn hàng',
+  'comm_alipay': 'Alipay',
+  'comm_weixin': 'Wechat',
+  'comm_bank': 'Bank card',
+  'comm_xilian': 'western union',
+  'comm_PAYPAL': 'PAYPAL'
 }

@@ -18,7 +18,7 @@
           <el-collapse-transition>
             <div v-show="contentShowStatus">
               <el-table
-                :data="orderRecordList"
+                :data="newOrderRecordList"
                 :empty-text="$t('M.comm_no_data')"
                 :height="screenWidth > 1920 ? '800': '574'"
               >
@@ -106,18 +106,28 @@ export default {
     orderRecordList () {
       return (this.reflashCount < 1) ? this.orderRecordListByAjax : this.orderRecordListBySocket
     },
+    newOrderRecordList () {
+      let newArr = _.cloneDeep(this.orderRecordList)
+      newArr.unshift()
+      newArr.pop()
+      console.log(newArr)
+      return newArr
+    },
     screenWidth () {
       return this.clientWidth
     }
   },
   watch: {
+    orderRecordListByAjax (newVal) {
+      console.log(newVal)
+    },
     activeSymbol () {
       this.reflashCount = 0
     },
     orderRecordListBySocket (newVal) {
       if (newVal) {
         // console.log(this.reflashCount)
-        // console.log(newVal)
+        console.log(newVal)
         this.reflashCount++
       }
     }

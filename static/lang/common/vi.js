@@ -157,5 +157,6 @@ export const common = {
   'common_footer_legal_notice': 'Thông báo pháp luật',
   'common_onlineText': 'Chăm sóc khách hàng đang online',
   'common_paypassword_locked': 'Mật khẩu sai quá giới hạn, đóng băng 2 tiếng',
-  'common_no_processing': 'Không thể xử lý'
+  'common_no_processing': 'Không thể xử lý',
+  'comm_PAYPAL': 'PAYPAL'
 }

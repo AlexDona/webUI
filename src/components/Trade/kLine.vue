@@ -137,7 +137,8 @@ export default {
       'CHANGE_SOCKET_AND_AJAX_DATA',
       'SET_IS_KLINE_DATA_READY',
       'SET_MIDDLE_TOP_DATA',
-      'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
+      'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
+      'GET_SERVER_DATA'
     ]),
     changeIsKlineDataReady (status) {
       this.SET_IS_KLINE_DATA_READY(status)
@@ -470,14 +471,15 @@ export default {
     },
     onMessage (data) {
       this.barsRenderTime = this.LIMIT_BARS_RENDER_TIME - 2
-      // const {symbol} = data
+      // const { countDown, isShow } = data.data
+      console.log(data)
       // if (this.activeSymbol.id !== symbol) return false
       switch (data.tradeType) {
         case 'KLINE':
           // console.log(data.data[0])
           // console.log(' >> sub:', data.type)
           const klineData = data.data[0]
-          // console.log(klineData.close)
+          // console.log(klineData)
           const ticker = `${this.symbol}-${this.interval}`
           // console.log(klineData.time)
           const barsData = {
@@ -528,6 +530,15 @@ export default {
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           break
+        case 'DATE':
+          console.log(data)
+          this.GET_SERVER_DATA({
+            'serverTime': data.data.countDown,
+            'isShowServerPort': data.data.isShow,
+            'nextCountDown': data.data.nextCountDown,
+            'isLimitShow': data.data.isLimitShow
+          })
+          break
       }
       this.CHANGE_SOCKET_AND_AJAX_DATA({
         'socketData': this.socketData,
@@ -569,13 +580,14 @@ export default {
         this.cacheData[ticker].forEach(item => {
           newBars.push(item)
         })
+        console.log(newBars)
         if (onLoadedCallback) {
           console.log(this.barsRenderTime, this.prevCacheList[0], this.currentCacheList[0])
           if (this.barsRenderTime > this.LIMIT_BARS_RENDER_TIME && this.prevCacheList[0] === this.currentCacheList[0]) {
             console.log('noData')
             onLoadedCallback([])
           } else {
-            onLoadedCallback(newBars)
+            onLoadedCallback(newBars.length < 5 ? [] : newBars)
           }
         }
         clearTimeout(this.getBarTimer)
@@ -645,6 +657,16 @@ export default {
         })
       }
     },
+    // 获取服务器时间
+    getServerTime (type, symbol) {
+      if (symbol) {
+        this.socket.send({
+          'tag': type,
+          'content': `market.${symbol}.date9`,
+          'id': 'pc'
+        })
+      }
+    },
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min15') {
       this.getKlineByAjax(symbol, interval, this.KlineNum)
@@ -653,6 +675,7 @@ export default {
       this.getBuyAndSellBySocket('SUB', symbol)
       this.getDepthDataBySocket('SUB', symbol)
       this.getTradeRecordBySocket('SUB', symbol)
+      this.getServerTime('REQ', symbol)
     }
   },
   filter: {},
