@@ -46,7 +46,7 @@ switch (process.env.NODE_ENV) {
     // 生产环境
     // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     // 生产环境
-    // targetConfig = {...prodConfig, xDomain: 'fubt.com'}
+    targetConfig = {...prodConfig, xDomain: 'fubt.com'}
     break
   // 210开发环境
   case 'development210':
