@@ -26,7 +26,6 @@
         <el-tab-pane
           :label="$t('M.trade_exchange_price_deal')"
           name="limit-price"
-          v-if="$isNeedLimitExchange_G || !$isLimitShow_S_X"
         >
           <div
             class="content-box limit"
@@ -224,7 +223,7 @@
                   @dragStart="dragStart"
                   @dragEnd="dragEnd"
                   @dragCallback="dragCallback"
-                  v-if="!$isSymbolChanged_X"
+                  v-if="!$isSymbolChanged_X && activeName === 'limit-price'"
                 />
                 <!--预计交易额 手续费-->
                 <div class="volume-rate">
@@ -552,7 +551,7 @@ export default {
   data () {
     return {
       notVerifyDialogVisible: false, // 实名认证弹窗显示与隐藏
-      activeName: this.$isNeedLimitExchange_G ? 'limit-price' : 'market-price',
+      activeName: this.$isNeedLimitExchange_G_X ? 'limit-price' : 'market-price',
       // 限价交易 买入价input ref name
       limitBuyPriceInputRef: 'limitBuyPriceInput',
       // 限价交易 买入量input ref name
@@ -638,7 +637,7 @@ export default {
     }
   },
   async created () {
-    if (!this.$isNeedYST_G_X) {
+    if (!this.$isNeedLimitExchange_G_X || !this.$isNeedYST_G_X) {
       this.activeName = 'limit-price'
       this.toggleMatchType()
     }
@@ -870,7 +869,6 @@ export default {
       switch (this.activeName) {
         case 'market-price':
           this.matchType = 'MARKET'
-          if (!this.$isNeedLimitExchange_G) return false
           this.setRefValue(this.limitBuyCountInputRef)
           this.limitExchange.buyCount = 0
           this.setRefValue(this.limitSellCountInputRef)
@@ -1215,7 +1213,7 @@ export default {
     }
   },
   watch: {
-    $isNeedLimitExchange_G (newVal) {
+    $isNeedLimitExchange_G_X (newVal) {
       // console.log(newVal)
       console.log(newVal, this.$isLimitShow_S_X)
       this.activeName = newVal ? 'limit-price' : 'market-price'
@@ -1238,7 +1236,6 @@ export default {
     $isSymbolChanged_X (newVal) {
       switch (this.matchType) {
         case 'LIMIT':
-          if (!this.$isNeedLimitExchange_G) return false
           this.setRefValue(this.limitBuyCountInputRef)
           this.limitExchange.buyCount = 0
           this.setRefValue(this.limitSellCountInputRef)
