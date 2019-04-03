@@ -43,7 +43,9 @@ const state = {
     isShowServerPort: false,
     // 是否显示限价交易
     isLimitShow: false
-  }
+  },
+  // 活动是否结束
+  isActivityEnd: false
 }
 
 export default {

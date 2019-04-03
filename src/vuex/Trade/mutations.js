@@ -7,7 +7,8 @@ import {
   SET_JUMP_SYMBOL,
   SET_IS_KLINE_DATA_READY,
   SET_TARGET_EXCHANGE_DATA,
-  GET_SERVER_DATA
+  GET_SERVER_DATA,
+  CHANGE_ACTIVITY_STATUS
 } from './mutations-types.js'
 
 // import {setStore} from '../../utils'
@@ -74,5 +75,8 @@ export default {
     state.serverData.isShowServerPort = isShowServerPort
     state.serverData.nextCountDown = nextCountDown
     state.serverData.isLimitShow = isLimitShow
+  },
+  [CHANGE_ACTIVITY_STATUS] (state, status) {
+    state.isActivityEnd = status
   }
 }
