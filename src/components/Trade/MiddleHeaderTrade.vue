@@ -155,8 +155,7 @@ export default {
     height: 100%;
 
     .item {
-      width: 120px;
-      padding: 10px 0;
+      padding: 10px 20px;
 
       > .top,
       > .bottom {
@@ -174,19 +173,9 @@ export default {
       }
 
       &.symbol {
-        width: 140px;
-
         > .top {
           font-weight: 700;
         }
-      }
-
-      &.latest-price {
-        width: 160px;
-      }
-
-      &.rate {
-        width: 100px;
       }
 
       > .bottom {
