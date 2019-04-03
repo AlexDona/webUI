@@ -332,6 +332,10 @@ export default {
           if (this.symbolMap.get(symbol.id)) {
             this.areasFromAPI[areaIndex].content[symbolIndex] = this.symbolMap.get(symbol.id)
           }
+          this.CHANGE_SYMBOL_MAP({
+            key: symbol.id,
+            val: this.areasFromAPI[areaIndex].content[symbolIndex]
+          })
         })
       })
       let newAreas = [...this.areasFromAPI]
@@ -393,6 +397,7 @@ export default {
       })
       let newContent = []
       _.forEach(collectSymbol, outItem => {
+        // console.log(this.symbolMap, outItem)
         if (this.symbolMap.get(outItem)) {
           newContent.push(this.symbolMap.get(outItem))
         }
@@ -494,6 +499,7 @@ export default {
     async getCollectionList (collectSymbol) {
       await getCollectionList(data => {
         _.forEach(data.data, item => {
+          console.log(item)
           collectSymbol[item.content] = item.content
         })
       })
