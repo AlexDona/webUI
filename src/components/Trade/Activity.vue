@@ -11,25 +11,17 @@
           <p><strong>YST( {{$t('M.trade_startOne')}}/{{$t('M.trade_thired')}} )</strong></p>
         </h2>
         <div class="tips">
-          {{serverTime >= 0 ? $t('M.trade_start'): $t('M.trade_going')}}</div>
+          {{ isChangeContent ? $t('M.trade_start'): $t('M.trade_going')}}</div>
       </header>
-      <!--显示服务器时间并倒计时-->
-      <!--{{serverTime >= 0 ? timeFormatting(serverTime): timeFormatting(nextCountDown)}}-->
     </div>
     <div class="body">
-      <p v-if="serverTime >= 0">
-        {{serverTime >= 0 ? $t('M.trade_langstart') : $t('M.trade_langEnd')}}:
+      <!--显示服务器时间并倒计时-->
+      <p>
+        {{isChangeContent ? $t('M.trade_langstart') : $t('M.trade_langEnd')}}:
         <span>0 </span>{{$t('M.trade_data')}}
-        <span>{{beforeHours}} </span>{{$t('M.trade_hours')}}
-        <span>{{beforeMin}} </span>{{$t('M.trade_seconds')}}
-        <span>{{beforeSec}} </span>{{$t('M.trade_limit')}}
-      </p>
-      <p v-else>
-        {{serverTime >= 0 ? $t('M.trade_langstart') : $t('M.trade_langEnd')}}:
-        <span>0 </span>{{$t('M.trade_data')}}
-        <span>{{afterHours}} </span>{{$t('M.trade_hours')}}
-        <span>{{afterMin}} </span>{{$t('M.trade_seconds')}}
-        <span>{{afterSec}} </span>{{$t('M.trade_limit')}}
+        <span>{{isChangeContent ? beforeHours : 0 }} </span>{{$t('M.trade_hours')}}
+        <span>{{isChangeContent ? beforeMin : afterMin}} </span>{{$t('M.trade_seconds')}}
+        <span>{{isChangeContent ? beforeSec : afterSec}} </span>{{$t('M.trade_limit')}}
       </p>
       <p>{{$t('M.trade_currentAccount')}}: 1,300,000 YST</p>
       <p>{{$t('M.trade_bili')}}: 1 YST = 0.09 USDT</p>
@@ -48,35 +40,65 @@ export default {
   // props,
   data () {
     return {
-      serveTimes: this.serverTime,
+      serveTimes: 0,
       beforeHours: 0,
       beforeMin: 0,
       beforeSec: 0,
-      afterHours: 0,
       afterMin: 0,
       afterSec: 0,
-      cancelOrdersTimer: null,
-      cancelOrdersTimerd: null,
+      beforeActivityTimer: null,
+      afterActivityTimer: null,
       currentNextCountDown: 0,
-      localShow: true
+      // 是否展示活动框
+      localShow: true,
+      // 活动内容是否切换
+      changeContent: true
     }
   },
   created () {
     console.log(this.isShowServerPort)
   },
   mounted () {},
+  methods: {
+    countDownTimeBar (times, hour, minute, second, type) {
+      console.log(this[times] - 1000, this[hour], this[minute], this[second], type)
+      let arr = formatSecondsActivity(this[times]).split('-')
+      switch (arr.length) {
+        case 4:
+          if (hour) {
+            this[hour] = arr[0].length < 2 ? `0${arr[0]}` : arr[0]
+            this[minute] = arr[1].length < 2 ? `0${arr[1]}` : arr[1]
+            this[second] = arr[2].length < 2 ? `0${arr[2]}` : arr[2]
+          }
+          break
+        case 3:
+          this[minute] = arr[0].length < 2 ? `0${arr[0]}` : arr[0]
+          this[second] = arr[1].length < 2 ? `0${arr[1]}` : arr[1]
+          break
+        case 2:
+          this[minute] = '00'
+          this[second] = arr[0].length < 2 ? `0${arr[0]}` : arr[0]
+          console.log(arr[0])
+          if (arr[0] === '0') {
+            if (type === 'before') {
+              clearInterval(this.beforeActivityTimer)
+              this.changeContent = false
+            } else {
+              clearInterval(this.afterActivityTimer)
+              this.localShow = false
+            }
+          }
+          break
+      }
+    }
+  },
   activated () {},
   updated () {},
   beforeRouteUpdate () {},
   beforeDestroy () {},
   destroyed () {
-    clearInterval(this.cancelOrdersTimer)
-    clearInterval(this.cancelOrdersTimerd)
-  },
-  methods: {
-    BIHTimeFormatting (date) {
-      return formatSecondsActivity(date)
-    }
+    clearInterval(this.beforeActivityTimer)
+    clearInterval(this.afterActivityTimer)
   },
   filter: {},
   computed: {
@@ -84,82 +106,49 @@ export default {
       theme: state => state.common.theme,
       serverData: state => state.trade.serverData,
       isShowServerPort: state => state.trade.serverData.isShowServerPort,
+      // 9点到九点半的时间
       nextCountDown: state => state.trade.serverData.nextCountDown,
+      // 当前时间到9点的时间
       serverTime: state => state.trade.serverData.serverTime
     }),
     isShow () {
       return this.isShowServerPort && this.localShow
+    },
+    isChangeContent () {
+      return this.serverTime > 0 && this.changeContent
     }
   },
   watch: {
     $middleTopData_S_X (newVal) {
       console.log(newVal)
-      // clearInterval(this.cancelOrdersTimer)
-      // clearInterval(this.cancelOrdersTimerd)
     },
     serverTime (newVal, oldVal) {
-      clearInterval(this.cancelOrdersTimer)
+      clearInterval(this.beforeActivityTimer)
       if (newVal - 0 >= 0 && newVal !== oldVal) {
         this.serveTimes = newVal
-        this.cancelOrdersTimer = setInterval(() => {
+        this.beforeActivityTimer = setInterval(() => {
           this.serveTimes = this.serveTimes - 1000
-          this.BIHTimeFormatting(this.serveTimes)
-          let time = this.BIHTimeFormatting(this.serveTimes)
-          let timeArray = time.split('-')
-          console.log(timeArray)
-          switch (timeArray.length) {
-            // 有时,分、秒
-            case 4:
-              this.beforeHours = timeArray[0].length < 2 ? `0${timeArray[0]}` : timeArray[0]
-              this.beforeMin = timeArray[1].length < 2 ? `0${timeArray[1]}` : timeArray[1]
-              this.beforeSec = timeArray[2].length < 2 ? `0${timeArray[2]}` : timeArray[2]
-              break
-            // 只有秒
-            case 3:
-              this.beforeMin = timeArray[0].length < 2 ? `0${timeArray[0]}` : timeArray[0]
-              this.beforeSec = timeArray[1].length < 2 ? `0${timeArray[1]}` : timeArray[1]
-              break
-            case 2:
-              this.beforeMin = '00'
-              this.beforeSec = timeArray[0].length < 2 ? `0${timeArray[0]}` : timeArray[0]
-              if (timeArray[0] === '0') {
-                clearInterval(this.cancelOrdersTimer)
-              }
-              break
-          }
-          // this.beforeHours = timeArray[0]
-          // this.beforeMin = timeArray[1]
-          // this.beforeSec = timeArray[2]
+          this.countDownTimeBar('serveTimes', 'beforeHours', 'beforeMin', 'beforeSec', 'before')
+        }, 1000)
+      }
+    },
+    changeContent (newVal) {
+      if (!newVal) {
+        clearInterval(this.afterActivityTimer)
+        this.afterActivityTimer = setInterval(() => {
+          this.currentNextCountDown = this.currentNextCountDown - 1000
+          this.countDownTimeBar('currentNextCountDown', '', 'afterMin', 'afterSec', 'after')
         }, 1000)
       }
     },
     nextCountDown (newVal, oldVal) {
-      clearInterval(this.cancelOrdersTimerd)
+      clearInterval(this.afterActivityTimer)
       if (this.serverTime - 0 < 0 && newVal !== oldVal) {
         this.currentNextCountDown = newVal
         // this.timeFormatting(newVal)
-        this.cancelOrdersTimerd = setInterval(() => {
+        this.afterActivityTimer = setInterval(() => {
           this.currentNextCountDown = this.currentNextCountDown - 1000
-          let time = this.BIHTimeFormatting(this.currentNextCountDown)
-          // this.afterHours = time.split('-')[0]
-          let timeArray = time.split('-')
-          console.log(timeArray)
-          switch (timeArray.length) {
-            // 分、秒
-            case 3:
-              this.afterMin = timeArray[0].length < 2 ? `0${timeArray[0]}` : timeArray[0]
-              this.afterSec = timeArray[1].length < 2 ? `0${timeArray[1]}` : timeArray[1]
-              break
-            // 只有秒
-            case 2:
-              this.afterMin = '00'
-              this.afterSec = timeArray[0].length < 2 ? `0${timeArray[0]}` : timeArray[0]
-              if (timeArray[0] === '0') {
-                clearInterval(this.cancelOrdersTimerd)
-                this.localShow = false
-              }
-              break
-          }
+          this.countDownTimeBar('currentNextCountDown', '', 'afterMin', 'afterSec', 'after')
         }, 1000)
       }
     }
