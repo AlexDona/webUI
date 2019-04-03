@@ -208,7 +208,7 @@ export default {
       symbolsIndexMap: new Map(),
       areasFromAPI: [],
       platesMap: new Map(),
-      ONE_MINUTES: 60 * 1000,
+      ONE_MINUTES: 2 * 1000,
       MAX_AREAS_LENGTH: 2,
       MAX_SYMBOLS_LENGTH: 10,
       timer: null,
@@ -321,6 +321,7 @@ export default {
           val: symbolJSON[k]
         })
       }
+      this.RESET_SYMBOL_MAP()
       _.forEach(this.areasFromAPI, (area, areaIndex) => {
         this.areasIndexMap.set(area.area, areaIndex)
         this.symbolsIndexMap.set(areaIndex, new Map())
@@ -328,7 +329,7 @@ export default {
         // console.log(this.areasFromAPI[areaIndex])
         _.forEach(area.content, (symbol, symbolIndex) => {
           this.symbolsIndexMap.get(areaIndex).set(symbol.id, symbolIndex)
-          // console.log(symbol.id, this.symbolMap)
+          console.log(symbol.id, this.symbolMap)
           if (this.symbolMap.get(symbol.id)) {
             this.areasFromAPI[areaIndex].content[symbolIndex] = this.symbolMap.get(symbol.id)
           }
@@ -338,6 +339,7 @@ export default {
           })
         })
       })
+      console.log(this.areasFromAPI)
       let newAreas = [...this.areasFromAPI]
       // console.log(newAreas)
       _.forEach(this.areasFromAPI, (area, areaIndex) => {
