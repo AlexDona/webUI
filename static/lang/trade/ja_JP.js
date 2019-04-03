@@ -48,7 +48,7 @@ export const trade = {
   'trade_empty_sell_price': '提示価格を入力してください',
   'trade_start': 'もうすぐ始め',
   'trade_going': '進行中',
-  'trade_startOne': '第１ランド',
+  'trade_startOne': '第2ランド',
   'trade_thired': '合計3ラウンド',
   'trade_langstart': '最初から時間',
   'trade_langEnd': '最終から時間',

@@ -48,7 +48,7 @@ export const trade = {
   'trade_empty_sell_price': '제안 가격을 입력하십시오',
   'trade_start': '곧 방문 할 예정',
   'trade_going': '진행 중',
-  'trade_startOne': '1 라운드',
+  'trade_startOne': '2 라운드',
   'trade_thired': '총 3 라운드',
   'trade_langstart': '거리 시작',
   'trade_langEnd': '거리 끝',
