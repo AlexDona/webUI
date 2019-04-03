@@ -56,7 +56,7 @@ let mixin = {
   },
   computed: {
     ...mapGetters({
-      '$isNeedLimitExchange_G': 'isNeedLimitExchange_G',
+      '$isNeedLimitExchange_G_X': 'isNeedLimitExchange_G',
       '$isNeedYST_G_X': 'isNeedYST'
     }),
     ...mapState({
