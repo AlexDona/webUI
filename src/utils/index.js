@@ -145,10 +145,11 @@ export const timeFilter = (date, methods) => {
 }
 // 交易中订单倒计时国际标准时分秒 (09ˋ40′32″)
 export const formatSeconds = date => {
+  // 获取总秒数
   let secondTime = parseInt(date / 1000)
   let minuteTime = 0 // 分
   let hourTime = 0 // 小时
-  if (secondTime > 60) { // 如果秒数大于60，将秒数转换成整数
+  if (secondTime >= 60) { // 如果秒数大于60，将秒数转换成整数
     // 获取分钟，除以60取整数，得到整数分钟
     minuteTime = parseInt(secondTime / 60)
     // 获取秒数，秒数取佘，得到整数秒数

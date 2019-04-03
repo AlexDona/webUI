@@ -479,7 +479,7 @@ export default {
           // console.log(data.data[0])
           // console.log(' >> sub:', data.type)
           const klineData = data.data[0]
-          // console.log(klineData)
+          // console.log(klineData.close)
           const ticker = `${this.symbol}-${this.interval}`
           // console.log(klineData.time)
           const barsData = {
@@ -580,14 +580,13 @@ export default {
         this.cacheData[ticker].forEach(item => {
           newBars.push(item)
         })
-        console.log(newBars)
         if (onLoadedCallback) {
           console.log(this.barsRenderTime, this.prevCacheList[0], this.currentCacheList[0])
           if (this.barsRenderTime > this.LIMIT_BARS_RENDER_TIME && this.prevCacheList[0] === this.currentCacheList[0]) {
             console.log('noData')
             onLoadedCallback([])
           } else {
-            onLoadedCallback(newBars.length < 5 ? [] : newBars)
+            onLoadedCallback(newBars)
           }
         }
         clearTimeout(this.getBarTimer)
