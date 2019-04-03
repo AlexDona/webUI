@@ -321,7 +321,7 @@ export default {
           val: symbolJSON[k]
         })
       }
-      this.RESET_SYMBOL_MAP()
+      // this.RESET_SYMBOL_MAP()
       _.forEach(this.areasFromAPI, (area, areaIndex) => {
         this.areasIndexMap.set(area.area, areaIndex)
         this.symbolsIndexMap.set(areaIndex, new Map())
@@ -522,7 +522,7 @@ export default {
         area.content = []
       })
       this.moreBtnShowStatus = false
-      this.getAllTradeAreas()
+      await this.getAllTradeAreas()
       let now = new Date().getTime()
       let lastTime = getStore('platesAges')
       if (now - lastTime < this.ONE_MINUTES) {
