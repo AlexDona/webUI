@@ -11,20 +11,20 @@
           <p><strong>YST( {{$t('M.trade_startOne')}}/{{$t('M.trade_thired')}} )</strong></p>
         </h2>
         <div class="tips">
-          {{ isChangeContent ? $t('M.trade_start'): $t('M.trade_going')}}</div>
+          {{ serverTime > 0 ? $t('M.trade_start'): $t('M.trade_going')}}</div>
       </header>
     </div>
     <div class="body">
       <!--显示服务器时间并倒计时-->
       <p>
-        {{isChangeContent ? $t('M.trade_langstart') : $t('M.trade_langEnd')}}:
+        {{serverTime > 0 ? $t('M.trade_langstart') : $t('M.trade_langEnd')}}:
         <span>0 </span>{{$t('M.trade_data')}}
-        <span>{{isChangeContent ? beforeHours : 0 }} </span>{{$t('M.trade_hours')}}
-        <span>{{isChangeContent ? beforeMin : afterMin}} </span>{{$t('M.trade_seconds')}}
-        <span>{{isChangeContent ? beforeSec : afterSec}} </span>{{$t('M.trade_limit')}}
+        <span>{{serverTime > 0 ? beforeHours : 0 }} </span>{{$t('M.trade_hours')}}
+        <span>{{serverTime > 0 ? beforeMin : afterMin}} </span>{{$t('M.trade_seconds')}}
+        <span>{{serverTime > 0 ? beforeSec : afterSec}} </span>{{$t('M.trade_limit')}}
       </p>
-      <p>{{$t('M.trade_currentAccount')}}: 1,300,000 YST</p>
-      <p>{{$t('M.trade_bili')}}: 1 YST = 0.09 USDT</p>
+      <p>{{$t('M.trade_currentAccount')}}: 2,150,000 YST</p>
+      <p>{{$t('M.trade_bili')}}: 1 YST = 0.1 USDT</p>
       <p>{{$t('M.trade_singleLimit')}}: 1500 USDT/{{$t('M.trade_people')}}</p>
     </div>
   </div>
@@ -61,6 +61,9 @@ export default {
   mounted () {},
   methods: {
     countDownTimeBar (times, hour, minute, second, type) {
+      if (this[times] === '0') {
+        type === 'before' ? clearInterval(this.beforeActivityTimer) : clearInterval(this.afterActivityTimer)
+      }
       console.log(this[times] - 1000, this[hour], this[minute], this[second], type)
       let arr = formatSecondsActivity(this[times]).split('-')
       switch (arr.length) {
@@ -82,7 +85,7 @@ export default {
           if (arr[0] === '0') {
             if (type === 'before') {
               clearInterval(this.beforeActivityTimer)
-              this.changeContent = false
+              window.location.reload()
             } else {
               clearInterval(this.afterActivityTimer)
               this.localShow = false
@@ -129,15 +132,6 @@ export default {
         this.beforeActivityTimer = setInterval(() => {
           this.serveTimes = this.serveTimes - 1000
           this.countDownTimeBar('serveTimes', 'beforeHours', 'beforeMin', 'beforeSec', 'before')
-        }, 1000)
-      }
-    },
-    changeContent (newVal) {
-      if (!newVal) {
-        clearInterval(this.afterActivityTimer)
-        this.afterActivityTimer = setInterval(() => {
-          this.currentNextCountDown = this.currentNextCountDown - 1000
-          this.countDownTimeBar('currentNextCountDown', '', 'afterMin', 'afterSec', 'after')
         }, 1000)
       }
     },
