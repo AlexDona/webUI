@@ -44,7 +44,6 @@ class datafeeds {
           symbolInfo = Object.assign(this.defaultSymbol(), this.self.getSymbol())
         }
         symbolInfo.pricescale = pricescale
-        console.log(pricescale)
         resolve(symbolInfo)
       }, 1000)
     }).then(data => onSymbolResolvedCallback(data)).catch(err => onResolveErrorCallback(err))
@@ -60,7 +59,7 @@ class datafeeds {
    */
   getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onDataCallback, onErrorCallback) {
     const onLoadedCallback = data => {
-      data && data.length ? onDataCallback(data, { noData: true }) : onDataCallback([], { noData: true })
+      data && data.length ? onDataCallback(data, { noData: false }) : onDataCallback([], { noData: true })
     }
     this.self.getBars(symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback)
   }

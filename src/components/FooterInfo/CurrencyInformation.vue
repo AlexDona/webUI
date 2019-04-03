@@ -65,7 +65,9 @@ export default {
     await this.initInfoList()
   },
   mounted () {},
-  activated () {},
+  activated () {
+    console.log('test')
+  },
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -129,7 +131,7 @@ export default {
       await this.initInfoList()
     },
     serviceActiveName () {
-      this.getFootCurrencyInforDetail()
+      this.initInfoList()
     }
   }
 }

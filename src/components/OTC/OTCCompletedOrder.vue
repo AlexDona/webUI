@@ -139,7 +139,7 @@
                     >
                     <!-- 申诉判定，订单完成 -->
                       <span class="confirm-time">
-                        {{$t('M.otc_tradeOver_complate')}}
+                        {{$t('M.otc_decide_complate')}}
                       </span>
                     </p>
                     <p class="order-info-right">

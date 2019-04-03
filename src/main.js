@@ -10,6 +10,7 @@ import lang from 'element-ui/lib/locale/'
 import VueI18n from 'vue-i18n'
 import VueClipboard from 'vue-clipboard2'
 import Vuex from 'vuex'
+import FastClick from 'fastclick'
 // eslint-disable-next-line
 import $ from 'jquery'
 // eslint-disable-next-line
@@ -56,6 +57,7 @@ import enUS from 'element-ui/lib/locale/lang/en'
 import zhTW from 'element-ui/lib/locale/lang/zh-TW'
 import koKR from 'element-ui/lib/locale/lang/ko'
 import jaJP from 'element-ui/lib/locale/lang/ja'
+import vi from 'element-ui/lib/locale/lang/vi'
 
 Vue.prototype.$loading = Loading.service
 Vue.prototype.$msgbox = MessageBox
@@ -106,7 +108,8 @@ const i18n = new VueI18n({
     'en_US': {...enUS, ...require('../static/lang/en_US')},
     'zh_TW': {...zhTW, ...require('../static/lang/zh_TW')},
     'ko_KR': {...koKR, ...require('../static/lang/ko_KR')},
-    'ja_JP': {...jaJP, ...require('../static/lang/ja_JP')}
+    'ja_JP': {...jaJP, ...require('../static/lang/ja_JP')},
+    'yuenan': {...vi, ...require('../static/lang/vi')}
   }
 })
 lang.i18n((key, value) => i18n.t(key, value)) // element插件的多语言切换
@@ -123,7 +126,7 @@ let vm = new Vue({
   i18n,
   render: h => h(App)
 }).$mount('#app', true)
-
+FastClick.attach(document.body)
 Vue.use({
   vm
 })

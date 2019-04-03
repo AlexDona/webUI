@@ -463,7 +463,7 @@
               </el-table-column>
               <!-- 单价 -->
               <el-table-column
-                :label = "$t('M.otc_index_UnitPrice')"
+                :label= "$t('M.otc_index_UnitPrice')"
               >
                 <template slot-scope = "s">
                   <div>{{ $scientificToNumber(s.row.price) }}</div>
@@ -471,7 +471,7 @@
               </el-table-column>
               <!-- 总金额 -->
               <el-table-column
-                :label = "$t('M.otc_canceled_total ')"
+                :label="$t('M.otc_canceled_total')"
               >
                 <template slot-scope = "s">
                   <div>{{ $scientificToNumber(s.row.payAmount) }}</div>
