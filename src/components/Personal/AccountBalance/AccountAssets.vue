@@ -1995,7 +1995,7 @@ export default {
       }
 
       .el-form-item {
-        height: 85px;
+        height: 70px;
         margin-bottom: 0;
       }
 

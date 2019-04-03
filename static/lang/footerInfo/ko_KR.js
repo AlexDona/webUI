@@ -11,7 +11,7 @@ export const footerInfo = {
   'about_digital_terms_hint4': '사적정보 조항',
   'about_digital_terms_hint5': 'API문서',
   'about_digital_terms_hint6': '코인 자료',
-  'about_digital_terms_hint7': '돈세탁방지',
+  'about_digital_terms_hint7': 'AML',
   'about_digital_terms_hint8': 'OTC 서비스계약',
   'about_digital_terms_hint9': '회사 소개',
   // ##########################20181117-1145新增国际化################################

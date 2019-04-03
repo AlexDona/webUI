@@ -289,6 +289,7 @@ export default {
       let localSymbolJSON = getStoreWithJson('symbolJSON') || {}
       // console.log(localSymbolJSON)
       let localSymbolLength = Object.keys(localSymbolJSON).length
+      console.log(localSymbolLength)
       if (NOW - SYMBOL_AGE < this.ONE_MINUTES && localSymbolLength) {
         symbolJSON = localSymbolJSON
       } else {
@@ -324,15 +325,17 @@ export default {
         this.areasIndexMap.set(area.area, areaIndex)
         this.symbolsIndexMap.set(areaIndex, new Map())
         this.newContentMap.set(area.area, area.content)
+        // console.log(this.areasFromAPI[areaIndex])
         _.forEach(area.content, (symbol, symbolIndex) => {
           this.symbolsIndexMap.get(areaIndex).set(symbol.id, symbolIndex)
-          this.CHANGE_SYMBOL_MAP({
-            key: symbol.id,
-            val: symbol
-          })
+          // console.log(symbol.id, this.symbolMap)
+          if (this.symbolMap.get(symbol.id)) {
+            this.areasFromAPI[areaIndex].content[symbolIndex] = this.symbolMap.get(symbol.id)
+          }
         })
       })
       let newAreas = [...this.areasFromAPI]
+      // console.log(newAreas)
       _.forEach(this.areasFromAPI, (area, areaIndex) => {
         console.log(area)
         if (area.content.length > this.MAX_SYMBOLS_LENGTH) {
@@ -504,7 +507,7 @@ export default {
       })
     },
     // 切换板块
-    changeTab (e) {
+    async changeTab (e) {
       this.searchFromMarketList()
       _.forEach(this.areas, area => {
         console.log(area)
@@ -519,7 +522,7 @@ export default {
         this.timer = setTimeout(() => {
           this.CHANGE_AJAX_READY_STATUS(false)
           clearTimeout(this.timer)
-        }, 800)
+        }, 500)
       }
       // this.getTradeAreas({})
     },

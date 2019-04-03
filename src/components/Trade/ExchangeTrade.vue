@@ -76,7 +76,7 @@
                     class="rate-changer"
                     v-show="activeConvertCurrencyObj&&(limitExchange.transformBuyPrice-0)"
                   >
-                    ≈{{activeConvertCurrencyObj.symbol}}{{limitExchange.transformBuyPrice}}
+                    ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformBuyPrice,middleTopData.legalCurrencyDecimal)}}
                   </div>
                   <span
                     class="error-box"
@@ -187,7 +187,7 @@
                     class="rate-changer"
                     v-show="activeConvertCurrencyObj&&(limitExchange.transformSellPrice-0)"
                   >
-                    ≈{{activeConvertCurrencyObj.symbol}}{{limitExchange.transformSellPrice}}
+                    ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformSellPrice, middleTopData.legalCurrencyDecimal)}}
                   </div>
                   <span
                     class="error-box"
@@ -552,7 +552,7 @@ export default {
   data () {
     return {
       notVerifyDialogVisible: false, // 实名认证弹窗显示与隐藏
-      activeName: this.$isNeedLimitExchange_G_X ? 'limit-price' : 'market-price',
+      activeName: 'limit-price',
       // 限价交易 买入价input ref name
       limitBuyPriceInputRef: 'limitBuyPriceInput',
       // 限价交易 买入量input ref name
@@ -638,8 +638,9 @@ export default {
     }
   },
   async created () {
-    if (!this.$isNeedLimitExchange_G_X || !this.$isNeedYST_G_X) {
-      this.activeName = 'limit-price'
+    console.log(this.$isNeedLimitExchange_G_X, this.$isNeedYST_G_X, this.$isServerEnd_S_X)
+    if (this.$isNeedLimitExchange_G_X && this.$isNeedYST_G_X && this.$isServerEnd_S_X) {
+      this.activeName = 'market-price'
       this.toggleMatchType()
     }
     if (this.isLogin) {

@@ -351,20 +351,16 @@
                     type="password"
                     autocomplete= "new-password"
                     class="form-input-common border-radius2 padding-l15 box-sizing"
-                    @focus="handleinput"
                     v-model="payPassword"
                     @keydown.enter="killDefault"
-                    @keydown="setErrorMsg(3, '')"
-                    @blur="checkoutInputFormat(3, payPassword, 1)"
+                    @focus="handleinput"
                   >
                 </el-form-item>
               </el-form>
-              <!--错误提示-->
               <div
-                class="error-msg font-size12"
-                v-show="errorShowStatusList[3]"
+                class = "error-msg font-size12"
               >
-                {{ errorShowStatusList[3] }}
+                <span v-show = "payPasswordErrorMsg">{{ payPasswordErrorMsg }}</span>
               </div>
               <span
                 class="font-size12 cursor-pointer text-align-l hint-color display-inline-block margin-top9"
@@ -443,12 +439,12 @@ export default {
   // props,
   data () {
     return {
+      labelPosition: 'top', // form表单label位置
       errorShowStatusList: [
         '', // 买方UID
         '', // 数量
         '', // 价格
-        '', // 交易密码
-        '' // 弹窗交易密码
+        '' // 交易密码
       ],
       currencyValue: '', // 币种
       currencyList: [], // push币种列表
@@ -460,9 +456,6 @@ export default {
       sumState: false, // 默认数量x价格=金额状态显示为false
       grossAmount: '', // 数量x价格=金额
       payPassword: '', // 交易密码
-      phoneCode: '', // 手机验证码
-      emailCode: '', // 邮箱验证码
-      googleCode: '', // 谷歌验证
       rollIn: 'M.user_push_shift', // 转入
       rollOut: 'M.user_push_roll', // 转出
       stateOffStocks: 'M.user_push_off_stocks', // 已完成
@@ -474,7 +467,6 @@ export default {
       pushPrice: '', // PUSH价格信息展示
       pushCount: '', // PUSH数量信息展示
       pushPaymentAmount: '', // 付款金额信息展示
-      labelPosition: 'top', // form表单label位置
       isShowPaymentDialog: false, // 付款二次确认弹窗默认隐藏
       isShowPayPasswordDialog: false, // 付款二次确认之后交易密码弹窗默认隐藏
       pushUID: '', // 每行数据ID
@@ -484,7 +476,7 @@ export default {
       totalPageForMyEntrust: 1, // 当前总页数
       currencyValueStatus: true, // 币种列表状态
       pointLength: 4, // 保留小数位后四位
-      errorMsg: '', // 错误提示
+      payPasswordErrorMsg: '', // 错误提示
       partLoading: false, // 局部列表loading
       isNeedPayPassword: false,
       // 付款类型： 'pay': 付款 'push': push
@@ -512,7 +504,10 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
-    // 点击跳转到重置交易密码
+    /**
+     * 1.静态方法封装
+     */
+    // 1.1点击跳转到重置交易密码
     payPasswordState (type) {
       switch (type) {
         case 'setting':
@@ -526,11 +521,26 @@ export default {
           break
       }
     },
-    // 1.时间格式化
+    // 1.2时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
-    // 3.修改input value  输入限制
+    // 1.3禁止回车事件
+    killDefault (event) {
+      // console.log(event)
+      var evt = window.event || event
+      if (evt.keyCode == 13) {
+        if (evt.preventDefault) {
+          evt.preventDefault()
+        } else {
+          evt.returnValue = false
+        }
+      }
+    },
+    /**
+     * 2.提交push value输入限制
+     */
+    // 2.1 value输入限制
     formatUserInput (ref, pointLength) {
       if (this.$refs.count.value - this.currencyBalance > 0) {
         this.$refs.count.value = this.currencyBalance
@@ -550,7 +560,108 @@ export default {
         this.grossAmount = this.$keep8Num(this.$refs.price.value * this.$refs.count.value)
       }
     },
-    // 是否需要交易密码
+    // 2.2 检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      switch (type) {
+        // 买方UID
+        case 0:
+          if (!targetNum) {
+            // 请输入买方UID
+            this.setErrorMsg(0, this.$t('M.user_push_input_buyer') + 'UID')
+            this.$forceUpdate()
+            return 0
+          } else if (this.buyUID === this.innerUserInfo.showId) {
+            // 禁止自我push
+            this.setErrorMsg(0, this.$t('M.user_push_forbid'))
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 数量
+        case 1:
+          if (!targetNum) {
+            // 请输入数量
+            this.setErrorMsg(1, this.$t('M.user_push_input_sum'))
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 价格
+        case 2:
+          if (!targetNum) {
+            // 请输入价格
+            this.setErrorMsg(2, this.$t('M.user_push_input_price'))
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(2, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 2.3 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList[index] = msg
+    },
+    // 2.4 清空交易密码提交push、付款
+    handleinput () {
+      this.payPasswordErrorMsg = ''
+    },
+    /**
+     * 3.push币种
+     */
+    // 3.1 Push 币种选择
+    async toggleAssetsCurrencyId (e) {
+      this.emptyInputData()
+      let data = await getPushTotalByCoinId({
+        coinId: e // 币种coinId
+      })
+      if (!data) return false
+      // 点击资产币种下拉
+      this.currencyBalance = getNestedData(data, 'data.total')
+    },
+    // 3.2 判断交易密码错误次数状态
+    async reflashIsNeedPayPassword () {
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+      console.log(this.isNeedPayPassword)
+    },
+    /**
+     * 4.Push资产提交push和付款逻辑
+     */
+    // Push资产点击
+    // 提交按钮弹出交易密码框，校验交易密码
+    // 第一步校验密码输入错误次数，如果密码错误则提示 ‘交易密码错误,您还可以输入n次,超限将被冻结2个小时’，并关闭交易密码弹窗
+    // 第二步校验密码正确通过之后，提交成功，并关闭交易密码弹窗
+    // 付款按钮
+    // 第一步调用根据id获取当前币种push信息接口，弹出push信息一级确认框，点击确认之后，弹出二级交易密码确认弹窗
+    // 第二步校验交易密码错误时次数，如果密码错误则提示 ‘交易密码错误,您还可以输入n次,超限将被冻结2个小时’，并关闭二级交易密码确认弹窗
+    // 第三步校验密码正确通过之后，付款成功，并关闭二级交易密码确认弹窗
+    // 4.1 付款按钮判断
+    submitWithPayPassword () {
+      if (this.payPassword === '') {
+        // 请输入交易密码
+        this.payPasswordErrorMsg = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
+        return false
+      } else {
+        switch (this.payType) {
+          case 'pay':
+            this.payWithPassword()
+            break
+          case 'push':
+            this.submitPushAssets()
+            break
+        }
+        this.isShowPayPasswordDialog = false
+      }
+    },
+    // 4.2 是否需要交易密码
     async checkISNeedPayPassowd () {
       if (this.$refs.count.value === '0') {
         // PUSH数量为零提示数量不能为0
@@ -580,13 +691,107 @@ export default {
           this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
           if (this.isLockedPayPassword) return false
           this.isShowPayPasswordDialog = true
+          this.handleinput()
         } else {
           this.submitPushAssets()
         }
       }
     },
+    // 4.3 提交push资产
+    async submitPushAssets () {
+      let params = {
+        coinId: this.currencyValue, // 币种id
+        uid: this.buyUID, // 买方id
+        count: this.count, // push数量
+        price: this.price // push价格
+      }
+      params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
+      let data = await pushAssetsSubmit(params)
+      if (!data) return false
+      await this.reflashIsNeedPayPassword()
+      this.isShowPayPasswordDialog = false
+      // push列表展示
+      this.getPushRecordList()
+      // 清空数据
+      this.emptyInputData()
+    },
     /**
-     * 刚进页面时候 push列表展示
+     * 5.付款成交
+     */
+    // 5.1 点击获取当前付款id
+    showPushInfo (id) {
+      this.isShowPaymentDialog = true
+      this.pushUID = id
+      this.pushRecordList.forEach((item) => {
+        if (item.id == id) {
+          // 用户付款时二次确认信息
+          this.pushAsset = item.coinName
+          this.pushPrice = item.price
+          this.pushCount = item.count
+          this.pushPaymentAmount = this.$scientificToNumber(item.amount)
+        }
+        return false
+      })
+    },
+    // 5.2 点击确认用户信息并弹出交易密码框
+    async showPayConfirmBox () {
+      this.handleinput()
+      await this.reflashIsNeedPayPassword()
+      this.isShowPaymentDialog = false
+      if (this.isNeedPayPassword) {
+        this.payType = 'pay'
+        // 判断是否交易密码锁定
+        await this.REFRESH_USER_INFO_ACTION()
+        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
+        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
+        if (this.isLockedPayPassword) return false
+        this.isShowPayPasswordDialog = true
+      } else {
+        this.payWithPassword()
+      }
+    },
+    // 5.3 确定付款（含交易密码）
+    async payWithPassword () {
+      let data
+      let params = {
+        id: this.pushUID // 列表id
+      }
+      params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
+
+      data = await pushPropertyTransaction(params)
+      if (!data) return false
+      await this.reflashIsNeedPayPassword()
+      this.isShowPayPasswordDialog = false
+      this.payPassword = ''
+      // 付款成功刷新列表
+      this.getPushRecordList()
+    },
+    /**
+     * 6.取消push
+     */
+    // 6.1 点击获取当前取消push id
+    confirmCancelPush (id) {
+      // 确定删除提币地址吗, 是否继续?
+      this.$confirm(this.$t('M.comm_sure_push'), {
+        // 取消
+        cancelButtonText: this.$t('M.comm_cancel'),
+        // 确定
+        confirmButtonText: this.$t('M.comm_confirm')
+      }).then(() => {
+        this.cancelPushAssets(id)
+      }).catch(() => {
+      })
+    },
+    // 6.2 确定撤销
+    async cancelPushAssets (id) {
+      let data = await revocationPushProperty({
+        id
+      })
+      if (!data) return false
+      this.getPushRecordList()
+    },
+    /**
+     * 7.刚进页面时候 push列表展示
      */
     async getPushRecordList () {
       // 开启局部loading
@@ -611,145 +816,7 @@ export default {
       // 接口回来之后把select状态改为可用
       this.currencyValueStatus = false
     },
-    // 4.选择push资产币种
-    async toggleAssetsCurrencyId (e) {
-      this.emptyInputData()
-      let data = await getPushTotalByCoinId({
-        coinId: e // 币种coinId
-      })
-      if (!data) return false
-      // 点击资产币种下拉
-      this.currencyBalance = getNestedData(data, 'data.total')
-    },
-    handleinput () {
-      this.setErrorMsg(3, '')
-    },
-    // 禁止回车事件
-    killDefault (event) {
-      console.log(event)
-      var evt = window.event || event
-      if (evt.keyCode == 13) {
-        if (evt.preventDefault) {
-          evt.preventDefault()
-        } else {
-          evt.returnValue = false
-        }
-      }
-    },
-    // 付款方式封装
-    submitWithPayPassword () {
-      if (this.payPassword) {
-        this.isShowPayPasswordDialog = false
-      } else {
-        this.checkoutInputFormat(3, '', 1)
-        return false
-      }
-      // this.isShowPayPasswordDialog = false
-      switch (this.payType) {
-        case 'pay':
-          this.payWithPassword()
-          break
-        case 'push':
-          this.submitPushAssets()
-          break
-      }
-    },
-    /**
-     * 5.提交push
-     */
-    // 检测输入格式
-    checkoutInputFormat (type, targetNum) {
-      if (!this.isShowPayPasswordDialog) {
-        this.setErrorMsg(3, '')
-      }
-      console.log(type)
-      switch (type) {
-        // 买方UID
-        case 0:
-          if (!targetNum) {
-            // 请输入买方UID
-            this.setErrorMsg(0, this.$t('M.user_push_input_buyer') + 'UID')
-            this.$forceUpdate()
-            return 0
-          } else if (this.buyUID === this.innerUserInfo.showId) {
-            // 禁止自我push
-            this.setErrorMsg(0, this.$t('M.user_push_forbid'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(0, '')
-            this.$forceUpdate()
-            return 1
-          }
-        // 数量
-        case 1:
-          console.log(targetNum)
-          if (!targetNum) {
-            // 请输入数量
-            this.setErrorMsg(1, this.$t('M.user_push_input_sum'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
-          }
-        // 价格
-        case 2:
-          console.log(targetNum)
-          if (!targetNum) {
-            // 请输入价格
-            this.setErrorMsg(2, this.$t('M.user_push_input_price'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(2, '')
-            this.$forceUpdate()
-            return 1
-          }
-        // 交易密码
-        case 3:
-          if (!targetNum) {
-            // 请输入交易密码
-            this.setErrorMsg(3, this.$t('M.user_push_input_pwd'))
-            console.log(this.errorShowStatusList)
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(3, '')
-            this.$forceUpdate()
-            return 1
-          }
-      }
-    },
-    // 设置错误信息
-    setErrorMsg (index, msg) {
-      this.errorShowStatusList[index] = msg
-    },
-    async reflashIsNeedPayPassword () {
-      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
-      console.log(this.isNeedPayPassword)
-    },
-    // 提交push资产
-    async submitPushAssets () {
-      let params = {
-        coinId: this.currencyValue, // 币种id
-        uid: this.buyUID, // 买方id
-        count: this.count, // push数量
-        price: this.price // push价格
-      }
-
-      params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
-      let data = await pushAssetsSubmit(params)
-      if (!data) return false
-      await this.reflashIsNeedPayPassword()
-      this.isShowPayPasswordDialog = false
-      // push列表展示
-      this.getPushRecordList()
-      // 清空数据
-      this.emptyInputData()
-    },
-    // 分页
+    // 7.1 分页
     changeCurrentPage (pageNum) {
       this.currentPageForMyEntrust = pageNum
       this.getPushRecordList()
@@ -763,84 +830,6 @@ export default {
       this.count = ''
       this.price = ''
       this.sumState = false
-    },
-    /**
-     * 取消push
-     */
-    // 点击获取当前取消push id
-    confirmCancelPush (id) {
-      // 确定删除提币地址吗, 是否继续?
-      this.$confirm(this.$t('M.comm_sure_push'), {
-        // 取消
-        cancelButtonText: this.$t('M.comm_cancel'),
-        // 确定
-        confirmButtonText: this.$t('M.comm_confirm')
-      }).then(() => {
-        this.cancelPushAssets(id)
-      }).catch(() => {
-      })
-    },
-    // 确定撤销
-    async cancelPushAssets (id) {
-      let data = await revocationPushProperty({
-        id
-      })
-      if (!data) return false
-      this.getPushRecordList()
-    },
-    /**
-     * 付款成交
-     */
-    // 点击获取当前付款id
-    showPushInfo (id) {
-      this.isShowPaymentDialog = true
-      this.pushUID = id
-      this.pushRecordList.forEach((item) => {
-        if (item.id == id) {
-          // 用户付款时二次确认信息
-          this.pushAsset = item.coinName
-          this.pushPrice = item.price
-          this.pushCount = item.count
-          this.pushPaymentAmount = this.$scientificToNumber(item.amount)
-        }
-        return false
-      })
-    },
-    // 点击确认用户信息并弹出交易密码框
-    async showPayConfirmBox () {
-      await this.reflashIsNeedPayPassword()
-      this.isShowPaymentDialog = false
-      if (this.isNeedPayPassword) {
-        this.payType = 'pay'
-        // 判断是否交易密码锁定
-        await this.REFRESH_USER_INFO_ACTION()
-        let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-        this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-        if (this.isLockedPayPassword) return false
-        this.isShowPayPasswordDialog = true
-      } else {
-        this.payWithPassword()
-      }
-    },
-    // 确定付款（含交易密码）
-    async payWithPassword () {
-      let goOnStatus = 0
-      goOnStatus = this.isNeedPayPassword ? (this.checkoutInputFormat(3, this.payPassword, 1) && this.payPassword ? 1 : 0) : 1
-      if (goOnStatus) {
-        let data
-        let params = {
-          id: this.pushUID // 列表id
-        }
-        params = this.isNeedPayPassword ? {...params, password: this.payPassword} : params
-
-        data = await pushPropertyTransaction(params)
-        if (!data) return false
-        await this.reflashIsNeedPayPassword()
-        this.isShowPayPasswordDialog = false
-        this.payPassword = ''
-        // 付款成功刷新列表
-        this.getPushRecordList()
-      }
     }
   },
   filter: {},
@@ -1072,7 +1061,9 @@ export default {
         }
 
         .el-dialog__header {
-          padding: 20px 25px 5px;
+          padding: 10px 25px;
+          border-radius: 5px 5px 0 0;
+          background: #20293c;
         }
 
         .el-form-item {
@@ -1086,6 +1077,10 @@ export default {
           border: 0;
           line-height: 0;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+
+        .el-dialog__headerbtn {
+          top: 13px;
         }
       }
 
@@ -1255,6 +1250,12 @@ export default {
         th.is-leaf {
           border-top: 0;
         }
+
+        .shipping-address {
+          .el-dialog__header {
+            background: #20293c;
+          }
+        }
       }
     }
 
@@ -1367,6 +1368,12 @@ export default {
           border-bottom: 1px solid #fff;
           color: #7d90ac;
           background-color: #fff;
+        }
+
+        .shipping-address {
+          .el-dialog__header {
+            background: #20293c;
+          }
         }
       }
     }
