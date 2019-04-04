@@ -38,7 +38,7 @@
           <span
             class="font-size12 theme-color"
             v-show="middleTopData.last&&activeConvertCurrencyObj.symbol&&currencyRateList[middleTopData.area]"
-          >≈ {{activeConvertCurrencyObj.symbol}}{{$keep2Num((currencyRateList[middleTopData.area]-0)*(middleTopData.last-0))}}</span>
+          >≈ {{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum((currencyRateList[middleTopData.area]-0)*(middleTopData.last-0), middleTopData.legalCurrencyDecimal)}}</span>
         </div>
       </div>
       <!--涨跌-->
@@ -155,8 +155,7 @@ export default {
     height: 100%;
 
     .item {
-      width: 120px;
-      padding: 10px 0;
+      padding: 10px 20px;
 
       > .top,
       > .bottom {
@@ -174,19 +173,9 @@ export default {
       }
 
       &.symbol {
-        width: 140px;
-
         > .top {
           font-weight: 700;
         }
-      }
-
-      &.latest-price {
-        width: 160px;
-      }
-
-      &.rate {
-        width: 100px;
       }
 
       > .bottom {

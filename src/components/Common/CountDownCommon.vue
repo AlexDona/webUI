@@ -6,7 +6,7 @@
     :status="status"
     @click.prevent="run"
   >
-    {{$t(text)}}
+    {{text}}
   </button>
 </template>
 <!--请严格按照如下书写书序-->

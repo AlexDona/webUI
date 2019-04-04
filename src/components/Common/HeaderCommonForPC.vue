@@ -514,7 +514,8 @@ export default{
       styleTop: 30,
       topPadding: '0 30px',
       topBackgroundColor: 'rgba(0,0,0,0.7)',
-      isPayPasswordLocked: false
+      isPayPasswordLocked: false,
+      isNoticeReady: false
     }
   },
   async created () {
@@ -531,6 +532,7 @@ export default{
     await this.SET_PARTNER_INFO_ACTION(this.language)
     await this.GET_COUNTRY_LIST_ACTION()
     await this.GET_ALL_NOTICE_ACTION(this.language)
+    this.isNoticeReady = true
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币
@@ -580,8 +582,7 @@ export default{
       this.userLoginOut()
     },
     jumpToNewsItem (noticeId) {
-      // console.log(this.$route)
-      //  NewsAndNoticeItem
+      if (!this.isNoticeReady) return false
       let currentRoute = this.$route.path
       if (!currentRoute.startsWith('/NewsAndNoticeItem')) {
         this.$goToPage(`/NewsAndNoticeItem/${noticeId}`)
@@ -808,7 +809,9 @@ export default{
       this.$i18n.locale = newVal
     },
     async language () {
-      await this.SET_PARTNER_INFO_ACTION(this.language)
+      this.SET_PARTNER_INFO_ACTION(this.language)
+      await this.GET_ALL_NOTICE_ACTION(this.language)
+      this.isNoticeReady = true
     },
     middleTopDataPrice () {
       this.setNewTitle('/TradeCenter')

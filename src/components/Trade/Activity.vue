@@ -31,7 +31,10 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState, mapMutations} from 'vuex'
+import {
+  mapState,
+  mapMutations
+} from 'vuex'
 import {formatSecondsActivity} from '../../utils'
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
@@ -94,6 +97,7 @@ export default {
             } else {
               clearInterval(this.afterActivityTimer)
               // this.localShow = false
+              this.CHANGE_ACTIVITY_STATUS(true)
             }
             this.REFRESH_CONTENT_STATUS(true)
           }

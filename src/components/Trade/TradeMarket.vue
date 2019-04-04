@@ -662,6 +662,10 @@ export default {
       @media screen and(max-width: 2560px) and (min-width: 1921px) {
         > .content {
           height: 1809px;
+
+          &.needTime {
+            height: 1606px !important;
+          }
         }
       }
     }
