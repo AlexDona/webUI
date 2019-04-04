@@ -41,13 +41,13 @@ switch (process.env.NODE_ENV) {
   case 'development':
     // 本地开发
     // 本地开发
-    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
+    // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
     // 210开发环境
     // targetConfig = {...dev210Config, xDomain: 'me.com'}
     // 生产环境
     // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     // 生产环境
-    // targetConfig = {...prodConfig, xDomain: 'fubt.com'}
+    targetConfig = {...prodConfig, xDomain: 'fubt.co'}
     break
   // 210开发环境
   case 'development210':
