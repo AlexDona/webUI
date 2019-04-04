@@ -400,6 +400,7 @@
           background
           v-show="pushRecordList.length"
           layout="prev, pager, next"
+          :current-page="currentPageForMyEntrust"
           :page-count="totalPageForMyEntrust"
           @current-change="changeCurrentPage"
         >
@@ -476,6 +477,7 @@ export default {
       pushRecordList: [], // push列表记录
       currentPageForMyEntrust: 1, // 当前页码
       totalPageForMyEntrust: 1, // 当前总页数
+      pageSize: 10, // 每页显示条数
       currencyValueStatus: true, // 币种列表状态
       pointLength: 4, // 保留小数位后四位
       payPasswordErrorMsg: '', // 错误提示
@@ -825,6 +827,7 @@ export default {
     changeCurrentPage (pageNum) {
       this.currentPageForMyEntrust = pageNum
       this.getPushRecordList()
+      console.log(pageNum)
     },
     // 清空数据
     emptyInputData () {
@@ -852,6 +855,7 @@ export default {
     async userCenterActiveName (newVal) {
       if (newVal === 'push-asset') {
         console.log(1)
+        this.currentPageForMyEntrust = 1
         await this.reflashIsNeedPayPassword()
         this.getPushRecordList()
         // 清空数据
