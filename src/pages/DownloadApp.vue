@@ -48,7 +48,7 @@
           ref="download"
           download="android"
           :style="{
-            display:none
+            display:'none'
           }"
         ></a>
       </div>
@@ -139,7 +139,7 @@ export default {
         this.language === 'zh_TW'
     },
     language () {
-      return (navigator.browserLanguage || navigator.language).split('-').join('_')
+      return (navigator.browserLanguage || navigator.language).startsWith('zh') ? 'zh_CN' : 'en_US'
     }
     // isWXBrowserStatus () {
     //   return isWXBrowser()
