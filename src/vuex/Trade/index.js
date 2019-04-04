@@ -45,9 +45,10 @@ const state = {
     isLimitShow: false
   },
   // 活动是否结束
-  isActivityEnd: false
+  isActivityEnd: false,
+  // 是否需要改变活动文案
+  isChangeContent: false
 }
-
 export default {
   state,
   getters,
