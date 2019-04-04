@@ -366,5 +366,6 @@ export const OTC = {
   'otc_upload_picture6': "Upload images can't exceed 3!",
   'otc_available_balance': 'Available Balance',
   'otc_warm_prompt0': 'Attention! Please contact the seller to confirm the payment, if the seller ',
-  'otc_warm_prompt00': ' within the hour cannot confirm order, you can file a complaint.'
+  'otc_warm_prompt00': ' within the hour cannot confirm order, you can file a complaint.',
+  'otc_upload_picture7': 'Upload pictures less than 5M'
 }

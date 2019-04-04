@@ -356,5 +356,6 @@ export const OTC = {
   'otc_upload_picture6': 'アップロード写真は3枚を超えてはいけません！',
   'otc_available_balance': '利用可能残高',
   'otc_warm_prompt0': '注意！ 売り手の場合、支払いを確認するために売り手に連絡してください。',
-  'otc_warm_prompt00': '注文は～時間以内に確認されていません、苦情を申し立てることができます。'
+  'otc_warm_prompt00': '注文は～時間以内に確認されていません、苦情を申し立てることができます。',
+  'otc_upload_picture7': '5M超えない写真をアップロード'
 }

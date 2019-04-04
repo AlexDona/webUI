@@ -356,5 +356,6 @@ export const OTC = {
   'otc_upload_picture6': '3 장 이상의 사진을 업로드하십시오!',
   'otc_available_balance': '사용 가능한 잔액',
   'otc_warm_prompt0': '주의! 판매자에게 수금되였는지 확인하고 주문을 확인하십시오，만일',
-  'otc_warm_prompt00': '시간 내에 주문이 확인되지 않으면 시스템이 자동으로 거래 취소합니다.'
+  'otc_warm_prompt00': '시간 내에 주문이 확인되지 않으면 시스템이 자동으로 거래 취소합니다.',
+  'otc_upload_picture7': '5M보다 작은 이미지를 업로드하십시오.'
 }

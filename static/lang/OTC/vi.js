@@ -295,5 +295,14 @@ export const OTC = {
   'comm_weixin': 'Wechat',
   'comm_bank': 'Bank card',
   'comm_xilian': 'western union',
-  'comm_PAYPAL': 'PAYPAL'
+  'comm_PAYPAL': 'PAYPAL',
+  // 增加买家申诉功能
+  'otc_upload_picture1': 'Tải ảnh',
+  'otc_upload_picture2': 'Tải ít nhất 1 ảnh',
+  'otc_upload_picture3': 'Tải ảnh dạng jpeg/jpg/png/bmp',
+  'otc_upload_picture4': 'Ảnh không quá 2M',
+  'otc_upload_picture5': 'Không tải được, thử lại!',
+  'otc_upload_picture6': 'Không quá 3 ảnh',
+  'otc_available_balance': 'Số dư',
+  'otc_upload_picture7': 'Tải ảnh dưới 5M'
 }
