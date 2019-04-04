@@ -639,7 +639,7 @@ export default {
   },
   async created () {
     console.log(this.$isNeedLimitExchange_G_X, this.$isNeedYST_G_X, this.$isServerEnd_S_X)
-    if (this.$isNeedLimitExchange_G_X && this.$isNeedYST_G_X && this.$isServerEnd_S_X) {
+    if (!this.isShowLimit) {
       this.activeName = 'market-price'
       this.toggleMatchType()
     }
