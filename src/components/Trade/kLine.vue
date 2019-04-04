@@ -138,7 +138,8 @@ export default {
       'SET_IS_KLINE_DATA_READY',
       'SET_MIDDLE_TOP_DATA',
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
-      'GET_SERVER_DATA'
+      'GET_SERVER_DATA',
+      'REFRESH_CONTENT_STATUS'
     ]),
     changeIsKlineDataReady (status) {
       this.SET_IS_KLINE_DATA_READY(status)
@@ -750,8 +751,10 @@ export default {
       this.barsRenderTime = 0
     },
     isChangeContent (newVla) {
+      console.log(newVla)
       if (newVla) {
         this.getServerTime('REQ', this.activeSymbol.id)
+        this.REFRESH_CONTENT_STATUS(false)
       }
     }
   }

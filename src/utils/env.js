@@ -21,7 +21,7 @@ let targetConfig = {
 
 const devTestConfig = {
   apiCommonUrl: 'http://192.168.2.200:8888/',
-  socketUrl: 'ws://192.168.2.200:8087/market',
+  socketUrl: 'ws://192.168.0.52:8087/market',
   loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/'
 }
 
@@ -39,6 +39,7 @@ const prodConfig = {
 }
 switch (process.env.NODE_ENV) {
   case 'development':
+    // 本地开发
     // 本地开发
     targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
     // 210开发环境
