@@ -8,19 +8,10 @@
   >
     <div class="binding-google-main margin25">
       <header class="binding-google-header personal-height60 line-height60 line-height70 margin25">
-        <span
-          v-if="!securityCenter.isGoogleBind"
-          class="header-content-left header-content font-size16 font-weight600"
-        >
+        <span class="header-content-left header-content font-size16 font-weight600">
           <!--绑定谷歌验证-->
-          {{ $t('M.user_bind_google_verify') }}
-        </span>
-        <span
-          v-else
-          class="header-content-left header-content font-size16 font-weight600"
-        >
+          {{ !securityCenter.isGoogleBind ? $t('M.user_bind_google_verify'): $t('M.user_security_unbundle') + $t('M.user_security_google') + $t('M.user_security_verify')}}
           <!--解绑谷歌验证-->
-          {{ $t('M.user_security_unbundle') }}{{ $t('M.user_security_google') }}{{ $t('M.user_security_verify') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"

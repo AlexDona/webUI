@@ -680,19 +680,11 @@ export default {
         })
         return false
       }
-      // if (this.buyUID === '') {
-      //   this.errorShowStatusList[0] = this.$t('M.user_push_input_buyer') + 'UID'
-      // } else if (this.$refs.count.value === '') {
-      //   this.errorShowStatusList[1] = this.$t('M.user_push_input_sum')
-      // } else if (this.$refs.price.value === '') {
-      //   this.errorShowStatusList[2] = this.$t('M.user_push_input_price')
-      // } else {
-      //   await this.reflashIsNeedPayPassword()
-      // }
       let goOnStatus = 0
       goOnStatus = (this.checkoutInputFormat(0, this.buyUID) && this.checkoutInputFormat(1, this.count) && this.checkoutInputFormat(2, this.price)) ? 1 : 0
       if (goOnStatus) {
         await this.reflashIsNeedPayPassword()
+
         if (this.isNeedPayPassword) {
           this.payType = 'push'
           // 判断是否交易密码锁定

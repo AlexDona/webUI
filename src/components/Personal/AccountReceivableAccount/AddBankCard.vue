@@ -173,12 +173,11 @@ export default {
   },
   data () {
     return {
-      realName: '', // 真实姓名
       bankName: '', // 银行名称
       bankCard: '', // 银行卡号
       branchAddress: '', // 支行地址
       password: '', // 交易密码
-      id: '', // ID
+      typePaymentId: '', // 支付类型ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
@@ -245,7 +244,7 @@ export default {
           address: this.branchAddress, // 开户地址
           payPassword: this.password, // 交易密码
           bankType: 'Bankcard', // type
-          id: this.id
+          id: this.typePaymentId
         }
         // 判断是否交易密码锁定
         await this.REFRESH_USER_INFO_ACTION()
@@ -345,7 +344,7 @@ export default {
       this.bankCard = cardNo
       // 修改时带回银行卡地址
       this.branchAddress = address
-      this.id = id
+      this.typePaymentId = id
     },
     // 成功自动跳转
     successJump () {

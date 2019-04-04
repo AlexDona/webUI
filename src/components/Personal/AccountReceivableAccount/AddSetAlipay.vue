@@ -133,7 +133,7 @@
             <div style="width: 380px;">
               <button
                 v-if="paymentTerm.isAlipayBind"
-                class="account-button border-radius4"
+                class="account-button border-radius4 cursor-pointer"
                 @click.prevent="submitSettings"
               >
                 <!--确认设置-->
@@ -141,7 +141,7 @@
               </button>
               <button
                 v-else
-                class="account-button border-radius4"
+                class="account-button border-radius4 cursor-pointer"
                 @click.prevent="submitSettings"
               >
                 <!--确认修改-->
@@ -194,12 +194,10 @@ export default {
       paymentTypeId: '', // 收款类型ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
-      paymentMethodList: {},
       errorShowStatusList: [
         '', // 支付宝账号
         '' // 交易密码
       ],
-      // loadingCircle: {} // 整页loading
       fullscreenLoading: false, // 整页loading
       // 添加支付宝成功后自动跳转定时器
       addAlipaySuccessJumpTimer: null,
@@ -229,48 +227,10 @@ export default {
     payPasswordState () {
       this.$goToPage('/TransactionPassword')
     },
-    // 选择图片文件
-    choosePicture () {
-      this.$refs[`fileInput`].click()
-    },
-    getPicture (e) {
-      if (!e.target.files.length) return false
-      lrz(e.target.files[0]).then(async res => {
-        this.CHANGE_AJAX_READY_STATUS(true)
-        const {base64, file, fileLen} = res
-        if (this.beforeAvatarUpload(fileLen)) return false
-        await this.uploadImg(file)
-        this.alipayImgUrl = base64
-      })
-    },
-    async uploadImg (file) {
-      let formData = new FormData()
-      formData.append('file', file)
-      const data = await uploadImageAjax(formData)
-      this.CHANGE_AJAX_READY_STATUS(false)
-      if (!data) return false
-      this.dialogImageHandUrl1 = getNestedData(data, 'data.fileUrl')
-    },
-    // 判断图片大小限制
-    beforeAvatarUpload (size) {
-      // 10M压缩后最大 尺寸
-      const COMPRESS_SIZE = 10485760
-      let isLt10M = false
-      if (size > COMPRESS_SIZE) {
-        this.CHANGE_AJAX_READY_STATUS(false)
-        // 上传头像图片大小不能超过 10M!
-        this.$message.error(this.$t('M.user_senior_hint5'))
-        isLt10M = true
-      }
-      return isLt10M
-    },
-    // 点击返回上个页面
-    returnSuperior () {
-      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
-      this.$goToPage('/PersonalCenter')
-    },
-    // 检测输入格式
+    /**
+     * 1.输入格式校验
+     */
+    // 1.01 检测输入格式
     checkoutInputFormat (type, targetNum) {
       // console.log(type)
       switch (type) {
@@ -300,11 +260,74 @@ export default {
           }
       }
     },
-    // 设置错误信息
+    // 1.02 设置错误信息
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
-    // 确认设置支付宝账号
+    /**
+     * 2.图片上传
+     */
+    // 2.01 选择图片文件
+    choosePicture () {
+      this.$refs[`fileInput`].click()
+    },
+    // 2.02 上传图片
+    async uploadImg (file) {
+      let formData = new FormData()
+      formData.append('file', file)
+      const data = await uploadImageAjax(formData)
+      this.CHANGE_AJAX_READY_STATUS(false)
+      if (!data) return false
+      this.dialogImageHandUrl1 = getNestedData(data, 'data.fileUrl')
+    },
+    // 2.03 判断图片大小限制
+    beforeAvatarUpload (size) {
+      // 10M压缩后最大 尺寸
+      const COMPRESS_SIZE = 10485760
+      let isLt10M = false
+      if (size > COMPRESS_SIZE) {
+        this.CHANGE_AJAX_READY_STATUS(false)
+        // 上传头像图片大小不能超过 10M!
+        this.$message.error(this.$t('M.user_senior_hint5'))
+        isLt10M = true
+      }
+      return isLt10M
+    },
+    // 2.04 图片base64压缩
+    getPicture (e) {
+      if (!e.target.files.length) return false
+      lrz(e.target.files[0]).then(async res => {
+        this.CHANGE_AJAX_READY_STATUS(true)
+        const {base64, file, fileLen} = res
+        if (this.beforeAvatarUpload(fileLen)) return false
+        await this.uploadImg(file)
+        this.alipayImgUrl = base64
+      })
+    },
+    /**
+     * 3.界面跳转点击返回上个页面
+     */
+    // 点击跳转
+    returnSuperior () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
+      this.$goToPage('/PersonalCenter')
+    },
+    // 成功自动跳转
+    successJump () {
+      this.addAlipaySuccessJumpTimer = setInterval(() => {
+        if (this.successCountDown === 0) {
+          this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
+          this.$goToPage('/PersonalCenter')
+        }
+        this.successCountDown--
+      }, 1000)
+    },
+    /**
+     * 4.确认设置支付宝
+     */
+    // 4.01 确认设置支付宝账号
     async submitSettings () {
       let goOnStatus = 0
       if (
@@ -352,12 +375,12 @@ export default {
         this.stateEmptyData()
       }
     },
-    // 接口请求完成之后清空数据
+    // 4.02 接口请求完成之后清空数据
     stateEmptyData () {
       this.alipayAccount = ''
       this.password = ''
     },
-    // 获取支付方式信息
+    // 4.03 获取支付方式信息
     async paymentMethodInformation () {
       let data
       let params = {
@@ -373,7 +396,6 @@ export default {
       const detailData = getNestedData(data, 'data')
       const {cardNo, qrcode, id} = detailData
       // 返回状态展示
-      this.paymentMethodList = detailData || []
       if (cardNo) {
         // 修改时带回支付宝号
         this.alipayAccount = cardNo
@@ -387,17 +409,6 @@ export default {
         // 修改时带回类id
         this.paymentTypeId = id
       }
-    },
-    // 成功自动跳转
-    successJump () {
-      this.addAlipaySuccessJumpTimer = setInterval(() => {
-        if (this.successCountDown === 0) {
-          this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
-          this.$goToPage('/PersonalCenter')
-        }
-        this.successCountDown--
-      }, 1000)
     }
   },
   filter: {},

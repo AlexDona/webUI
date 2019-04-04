@@ -313,6 +313,7 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'SET_NEW_WITHDRAW_ADDRESS'
     ]),
+    // 1.0提币输入格式校验
     checkoutInputFormat (type, targetNum) {
       // console.log(type)
       switch (type) {
@@ -347,7 +348,7 @@ export default {
           break
       }
     },
-    // 设置错误信息
+    // 1.1设置错误信息
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
@@ -355,7 +356,7 @@ export default {
     emptyStatus () {
       this.emptyErrorMsg = ''
     },
-    // 点击显示验证信息
+    // 2.0点击显示验证信息
     addAddress () {
       let goOnStatus = 0
       if (
@@ -371,7 +372,7 @@ export default {
         this.gitCheckCurrencyAddress()
       }
     },
-    // 新增用户提币地址校验
+    // 3.0新增用户提币地址校验
     async gitCheckCurrencyAddress () {
       let data
       let param = {
@@ -397,11 +398,11 @@ export default {
         }
       })
     },
-    // 点击新增用户提币地址确认按钮
+    // 4.0点击新增用户提币地址确认按钮
     submitMentionMoney () {
       this.stateSubmitAddAddress()
     },
-    // 新增用户提币地址接口
+    // 4.01新增用户提币地址接口
     async stateSubmitAddAddress () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
         // 请输入验证码
@@ -430,7 +431,7 @@ export default {
       this.mentionMoneyConfirm = false
     },
     /**
-     *  刚进页面时候 提币地址列表查询
+     *  5.刚进页面时候 提币地址列表查询
      */
     async getWithdrawalAddressList () {
       this.partLoading = true
@@ -457,7 +458,7 @@ export default {
       // console.log(this.currencyList)
       // console.log(this.withdrawalAddressList)
     },
-    // 删除提币地址
+    // 6.删除提币地址弹窗
     cancelId (id) {
       console.log(id)
       this.deleteWithdrawalId = id
@@ -470,7 +471,7 @@ export default {
       }).catch(() => {
       })
     },
-    // 确认删除提币地址
+    // 6.01确认删除提币地址
     async deleteWithdrawAddress () {
       let data
       let param = {
@@ -492,7 +493,7 @@ export default {
       this.emailCode = ''
       this.googleCode = ''
     },
-    // 发送验证码
+    // 7.发送验证码
     async sendPhoneOrEmailCode (loginType) {
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false

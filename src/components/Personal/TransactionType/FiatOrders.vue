@@ -299,8 +299,8 @@ export default {
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
       })
-      console.log('可用币种列表')
-      console.log(data)
+      // console.log('可用币种列表')
+      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data) {
@@ -310,8 +310,8 @@ export default {
     // 页面加载时 可用法币查询
     async getMerchantAvailableLegalTenderList () {
       const data = await getMerchantAvailableLegalTender()
-      console.log('可用法币')
-      console.log(data)
+      // console.log('可用法币')
+      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data) {
@@ -341,32 +341,6 @@ export default {
         legalTradePageNum: 1
       })
       this.getOTCEntrustingOrdersRevocation(activeName)
-      // console.log(activeName)
-      // // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
-      // let data = await getOTCMerchantsOrdersList({
-      //   // 页数
-      //   // pageNum: 0,
-      //   // 每页条数
-      //   // pageSize: 0,
-      //   // 币种
-      //   coinId: this.activatedMerchantsOrdersCoin,
-      //   // 法币
-      //   currencyId: this.activatedMerchantsOrdersCurrency,
-      //   // 状态
-      //   status: this.activatedMerchantsOrdersStatusList,
-      //   // 开始时间
-      //   startTime: this.startTime,
-      //   // 结束时间
-      //   endTime: this.endTime,
-      //   // 类型
-      //   tradeType: this.activatedMerchantsOrdersTraderStyleList
-      // })
-      // if (!(returnAjaxMsg(data, this, 0))) {
-      //   return false
-      // } else {
-      //   // 返回数据正确的逻辑 重新渲染列表
-      //   this.merchantsOrdersList = data.data.data.list
-      // }
     },
     resetCondition () {
       this.activatedMerchantsOrdersTraderStyleList = ''
@@ -379,7 +353,7 @@ export default {
     },
     // 页面加载时请求接口渲染列表
     async getOTCEntrustingOrdersRevocation (activeName) {
-      console.log(activeName)
+      // console.log(activeName)
       // 局部loading
       this.fullscreenLoading = true
       let params = {
@@ -415,7 +389,7 @@ export default {
           type: activeName,
           data: OTCEntrustingOrdersData.list
         })
-        console.log(data)
+        // console.log(data)
         this.CHANGE_LEGAL_PAGE({
           legalTradePageNum: OTCEntrustingOrdersData.pageNum,
           legalTradePageTotals: OTCEntrustingOrdersData.pages
@@ -437,7 +411,7 @@ export default {
             })
             // 刷新列表之后将重新渲染交易中订单列表状态改为false
             this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(false)
-            console.log(data)
+            // console.log(data)
             this.CHANGE_LEGAL_PAGE({
               legalTradePageNum: merchantsOrdersListData.pageNum,
               legalTradePageTotals: merchantsOrdersListData.pages
@@ -447,6 +421,7 @@ export default {
       }
     },
     // 时间选择器change事件：
+    // 开始时间
     startDate () {
       if (this.endTime) {
         if (this.startTime > this.endTime) {
@@ -458,6 +433,7 @@ export default {
         }
       }
     },
+    // 结束时间
     endDate () {
       if (this.startTime) {
         if (this.startTime > this.endTime) {

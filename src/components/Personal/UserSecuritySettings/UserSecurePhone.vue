@@ -8,19 +8,10 @@
   >
     <div class="set-phone-main margin25">
       <header class="set-phone-header personal-height60 line-height60 line-height70 margin25">
-        <span
-          v-if="!securityCenter.isPhoneBind"
-          class="header-content-left header-content font-size16 font-weight600"
-        >
+        <span class="header-content-left header-content font-size16 font-weight600">
           <!--绑定手机-->
-          {{ $t('M.user_security_binding') }}{{ $t('M.user_security_phone') }}
-        </span>
-        <span
-          v-else
-          class="header-content-left header-content font-size16 font-weight600"
-        >
+          {{ !securityCenter.isPhoneBind? $t('M.user_security_binding') + $t('M.user_security_phone') : $t('M.user_modify_phone')}}
           <!--修改手机-->
-          {{ $t('M.user_modify_phone') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"

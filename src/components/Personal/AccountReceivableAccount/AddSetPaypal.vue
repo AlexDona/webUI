@@ -39,9 +39,6 @@
         </span>
       </header>
       <div class="add-payment-content">
-        <!--<header class="payment-content-title">-->
-          <!--*paypal上传二维码方法：打开paypal首页>收钱>保存图片，将存在手机相册的收款码上传即可。-->
-        <!--</header>-->
         <div class="payment-content-from">
           <el-form
             label-width="190px"
@@ -61,9 +58,9 @@
               <el-input
                 type="textarea"
                 :autosize="{ minRows: 4, maxRows: 2}"
-                v-model="PayPalAccount"
+                v-model="payPalAccount"
                 @keydown="setErrorMsg(0, '')"
-                @blur="checkoutInputFormat(0, PayPalAccount)"
+                @blur="checkoutInputFormat(0, payPalAccount)"
               >
                 <!--错误提示-->
                 <ErrorBox
@@ -145,13 +142,12 @@ export default {
   },
   data () {
     return {
-      PayPalAccount: '', // paypal账号
+      payPalAccount: '', // paypal账号
       transactionPassword: '', // 交易密码
-      // bankType: 'paypal', // 类型
-      id: '', // ID
+      typePaymentId: '', // 支付类型ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
-      paymentMethodList: {},
+      // paymentMethodList: {},
       // loadingCircle: {}, // 整页loading
       fullscreenLoading: false, // 整页loading
       errorShowStatusList: [
@@ -178,17 +174,35 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
-    // 点击跳转到重置交易密码
+
+    /**
+     * 1.界面跳转
+     ***/
+    // 1.01 点击跳转到重置交易密码
     payPasswordState () {
       this.$goToPage('/TransactionPassword')
     },
-    // 点击返回上个页面
+    // 1.02 点击返回上个页面
     returnSuperior () {
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
       this.$goToPage('/PersonalCenter')
     },
-    // 检测输入格式
+    // 1.03 成功自动跳转
+    successJump () {
+      this.addPAYPALSuccessJumpTimer = setInterval(() => {
+        if (this.successCountDown === 0) {
+          this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
+          this.$goToPage('/PersonalCenter')
+        }
+        this.successCountDown--
+      }, 1000)
+    },
+    /**
+     * 2.输入格式校验
+     ***/
+    // 2.01 检测输入格式
     checkoutInputFormat (type, targetNum) {
       console.log(type)
       switch (type) {
@@ -218,21 +232,24 @@ export default {
           }
       }
     },
-    // 设置错误信息
+    // 2.02设置错误信息
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
-    // 确认设置paypal账号
+    /**
+     * 3.设置支付方式
+     ***/
+    // 3.01 确认设置paypal账号
     async stateSubmitPaypal () {
       await this.stateSeniorCertification()
     },
+    // 3.02 判断是否交易密码锁定
     async stateSeniorCertification () {
-      // 判断是否交易密码锁定
       await this.REFRESH_USER_INFO_ACTION()
       let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
       this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
       if (this.isLockedPayPassword) return false
-      if (!this.PayPalAccount) {
+      if (!this.payPalAccount) {
         // 请输入paypal账号
         this.$message({
           message: this.$t('M.user_bind_paypal_please_input'),
@@ -242,7 +259,7 @@ export default {
       }
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(0, this.PayPalAccount) &&
+        this.checkoutInputFormat(0, this.payPalAccount) &&
         this.checkoutInputFormat(1, this.transactionPassword)
       ) {
         goOnStatus = 1
@@ -252,10 +269,10 @@ export default {
       if (goOnStatus) {
         let data
         let param = {
-          cardNo: this.PayPalAccount, // paypal账号
+          cardNo: this.payPalAccount, // paypal账号
           payPassword: this.transactionPassword, // 交易密码
           bankType: 'PAYPAL', // type
-          id: this.id
+          id: this.typePaymentId
         }
         // 整页loading
         this.fullscreenLoading = true
@@ -268,12 +285,12 @@ export default {
         this.stateEmptyData()
       }
     },
-    // 接口请求完成之后清空数据
+    // 3.03 接口请求完成之后清空数据
     stateEmptyData () {
-      this.PayPalAccount = ''
+      this.payPalAccount = ''
       this.transactionPassword = ''
     },
-    // 获取支付方式信息
+    // 3.04 获取支付方式信息
     async paymentMethodInformation () {
       let data
       let params = {
@@ -284,22 +301,11 @@ export default {
       if (!data) return false
       // 返回状态展示
       let detailData = getNestedData(data, 'data')
-      this.paymentMethodList = detailData
+      // this.paymentMethodList = detailData
       const {id, cardNo} = detailData
       // 修改时带回paypal账号
-      this.PayPalAccount = cardNo
-      this.id = id
-    },
-    // 成功自动跳转
-    successJump () {
-      this.addPAYPALSuccessJumpTimer = setInterval(() => {
-        if (this.successCountDown === 0) {
-          this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
-          this.$goToPage('/PersonalCenter')
-        }
-        this.successCountDown--
-      }, 1000)
+      this.payPalAccount = cardNo
+      this.typePaymentId = id
     }
   },
   filter: {},

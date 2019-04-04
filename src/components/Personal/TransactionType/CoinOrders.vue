@@ -484,8 +484,8 @@ export default {
   data () {
     return {
       activeName: 'current-entrust', // 当前委托
-      activeHistory: 'history-entrust', // 历史委托
-      activeMake: 'make-detail', // 成交明细
+      // activeHistory: 'history-entrust', // 历史委托
+      // activeMake: 'make-detail', // 成交明细
       startTime: '', // 开始时间
       endTime: '', // 结束时间
       pickerOptionsTime: {}, // 时间限制
@@ -506,8 +506,8 @@ export default {
       activeMatchType: '', // 当前撮合类型
       activeSymbol: '', // 用户输入币种名称
       activeType: '', // 当前选中方向(类型)
-      cancellationOfOrder: false, // 撤销当前委单
-      cancelHistoricalOrder: false, // 删除历史订单
+      // cancellationOfOrder: false, // 撤销当前委单
+      // cancelHistoricalOrder: false, // 删除历史订单
       partLoading: true, // 局部列表loading
       end: '' // 占位
     }
@@ -522,19 +522,15 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 1.tab 切换
     coinMoneyOrders (tab) {
       this.emptyData()
-      console.log(tab.name)
+      // console.log(tab.name)
       this.partLoading = true
       this.commissionList(tab.name)
     },
-    // 查询列表
-    searchWithCondition (entrustType) {
-      this.partLoading = true
-      this.commissionList(entrustType)
-    },
     /**
-     * 交易区列表查询
+     * 2.交易区列表查询
      */
     async getEntrustSelectBox () {
       let params = {
@@ -550,51 +546,12 @@ export default {
       this.typeList = getNestedData(detailData, 'typeList')
       this.matchTypeList = getNestedData(detailData, 'matchTypeList')
     },
-    /**
-     * 切换页码
-     * @entrustType: 订单类型： 0：当前委托 1： 历史委托 2:  成交明细
-     */
-    changeCurrentPage (entrustType, pageNum) {
-      console.log(pageNum)
-      switch (entrustType) {
-        case 'current-entrust':
-          this.partLoading = true
-          this.currentPageForMyEntrust = pageNum
-          this.commissionList(entrustType)
-          break
-        case 'history-entrust':
-          this.partLoading = true
-          this.currentPageForHistoryEntrust = pageNum
-          this.commissionList(entrustType)
-          break
-        case 'make-detail':
-          this.partLoading = true
-          this.currentPageMakeDetailEntrust = pageNum
-          this.commissionList(entrustType)
-      }
+    // 2.01 查询列表
+    searchWithCondition (entrustType) {
+      this.partLoading = true
+      this.commissionList(entrustType)
     },
-    /**
-     *撤销委单
-     */
-    repealMyEntrust (id, version) {
-      console.log(id)
-      let params = {
-        id,
-        version
-      }
-      // 确定撤销委托单？  取消  确定
-      this.$confirm(this.$t('M.otc_revoke'), {
-        // 取消
-        cancelButtonText: this.$t('M.comm_cancel'),
-        // 确定
-        confirmButtonText: this.$t('M.comm_confirm')
-      }).then(() => {
-        repealMyEntrustCommon(params, () => {
-          this.commissionList()
-        })
-      }).catch(() => {
-      })
-    },
+    // 2.02 获取当前委托、历史委托、成交明细列表数据
     async commissionList (entrustType1) {
       const entrustType = entrustType1 || 'current-entrust'
       this.currentEntrustList = []
@@ -647,8 +604,54 @@ export default {
       }
     },
     /**
-     *时间选择器change事件
+     * 3.切换页码
+     * @entrustType: 订单类型： 0：当前委托 1： 历史委托 2:  成交明细
      */
+    changeCurrentPage (entrustType, pageNum) {
+      console.log(pageNum)
+      switch (entrustType) {
+        case 'current-entrust':
+          this.partLoading = true
+          this.currentPageForMyEntrust = pageNum
+          this.commissionList(entrustType)
+          break
+        case 'history-entrust':
+          this.partLoading = true
+          this.currentPageForHistoryEntrust = pageNum
+          this.commissionList(entrustType)
+          break
+        case 'make-detail':
+          this.partLoading = true
+          this.currentPageMakeDetailEntrust = pageNum
+          this.commissionList(entrustType)
+      }
+    },
+    /**
+     * 4.撤销委单
+     */
+    repealMyEntrust (id, version) {
+      console.log(id)
+      let params = {
+        id,
+        version
+      }
+      // 确定撤销委托单？  取消  确定
+      this.$confirm(this.$t('M.otc_revoke'), {
+        // 取消
+        cancelButtonText: this.$t('M.comm_cancel'),
+        // 确定
+        confirmButtonText: this.$t('M.comm_confirm')
+      }).then(() => {
+        repealMyEntrustCommon(params, () => {
+          this.commissionList()
+        })
+      }).catch(() => {
+      })
+    },
+    /**
+     * 5.时间选择器change事件
+     */
+    // 5.01 开始时间
     startDate () {
       if (this.endTime) {
         if (this.startTime > this.endTime) {
@@ -665,6 +668,7 @@ export default {
         }
       })
     },
+    // 5.02 结束时间
     endDate () {
       if (this.startTime) {
         if (this.startTime > this.endTime && this.endTime) {

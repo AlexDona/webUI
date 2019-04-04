@@ -115,23 +115,13 @@
           <div class="security-status text-align-r">
             <!-- 修复：将点击事件写在按钮上不要写在span上 -->
             <button
-              v-if="!securityCenter.isMailEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
-              @click.prevent="showStatusVerificationClose('email', 'enable')"
-            >
-              <span>
-                <!--开启验证-->
-                {{$t('M.user_security_on')}}
-              </span>
-            </button>
-            <button
-              v-else
-              class="security-verify border-radius2 font-size12 cursor-pointer"
-              @click.prevent="showStatusVerificationClose('email', 'disable')"
+              @click.prevent="showStatusVerificationClose('email', securityCenter.isMailEnable? 'disable':'enable')"
             >
               <span>
                 <!--关闭验证-->
-                {{ $t('M.user_security_off') }}
+                {{ securityCenter.isMailEnable? $t('M.user_security_off'): $t('M.user_security_on') }}
+                 <!--开启验证-->
               </span>
             </button>
             <button
@@ -172,36 +162,23 @@
           </div>
           <div class="security-status text-align-r">
             <button
-              v-if="!securityCenter.isPhoneEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
+              @click.prevent="showStatusVerificationClose('phone', securityCenter.isPhoneEnable? 'disable':'enable')"
             >
-              <span @click.prevent="showStatusVerificationClose('phone', 'enable')">
-                <!--开启验证-->
-                {{ $t('M.user_security_on') }}
-              </span>
-            </button>
-            <button
-              v-else
-              class="security-verify border-radius2 font-size12 cursor-pointer"
-            >
-              <span
-                @click.prevent="showStatusVerificationClose('phone', 'disable')"
-              >
+              <span>
                 <!--关闭验证-->
-                {{ $t('M.user_security_off') }}
+                {{ securityCenter.isPhoneEnable? $t('M.user_security_off'): $t('M.user_security_on') }}
+                <!--开启验证-->
               </span>
             </button>
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click.prevent="setShowStatusSecurity('phone')"
             >
-              <span v-if="!securityCenter.isPhoneBind">
+              <span>
                 <!--绑定-->
-                {{ $t('M.user_security_binding') }}
-              </span>
-              <span v-else>
+                {{ securityCenter.isPhoneBind? $t('M.comm_modification'): $t('M.user_security_binding')}}
                 <!--修改-->
-                {{ $t('M.comm_modification') }}
               </span>
             </button>
           </div>
@@ -233,36 +210,23 @@
           </div>
           <div class="security-status text-align-r">
             <button
-              v-if="!securityCenter.isGoogleEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
+              @click.prevent="showStatusVerificationClose('google', securityCenter.isGoogleEnable? 'disable':'enable')"
             >
-              <span @click.prevent="showStatusVerificationClose('google', 'enable')">
-                <!--开启验证-->
-                {{ $t('M.user_security_on') }}
-              </span>
-            </button>
-            <button
-              v-else
-              class="security-verify border-radius2 font-size12 cursor-pointer"
-            >
-              <span
-                @click.prevent="showStatusVerificationClose('google', 'disable')"
-              >
+              <span>
                 <!--关闭验证-->
-                 {{ $t('M.user_security_off') }}
+                {{ securityCenter.isGoogleEnable? $t('M.user_security_off'): $t('M.user_security_on') }}
+                <!--开启验证-->
               </span>
             </button>
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click.prevent="setShowStatusSecurity('google')"
             >
-              <span v-if="!securityCenter.isGoogleBind">
-                <!--绑定-->
-                {{ $t('M.user_security_binding') }}
-              </span>
-              <span v-else>
+              <span>
                 <!--解绑-->
-                {{ $t('M.user_security_unbundle') }}
+                {{ securityCenter.isGoogleBind? $t('M.user_security_unbundle') :$t('M.user_security_binding')}}
+                <!--绑定-->
               </span>
             </button>
           </div>
@@ -302,13 +266,10 @@
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click.prevent="setShowStatusSecurity('transaction-password')"
             >
-              <span v-if="!securityCenter.payPassword">
+              <span>
                 <!--设置-->
-                {{ $t('M.comm_set') }}
-              </span>
-              <span v-else>
+                {{ !securityCenter.payPassword? $t('M.comm_set') : $t('M.user_transaction_reset') }}
                 <!--重置-->
-                {{ $t('M.user_transaction_reset') }}
               </span>
             </button>
           </div>
@@ -457,7 +418,6 @@
                   class="input padding-l15 box-sizing"
                   v-model="phoneCode"
                   @focus="handleinput"
-                  maxlength="6"
                   @keydown.enter="killDefault"
                 >
                 <CountDownButton
@@ -477,7 +437,6 @@
                   class="input padding-l15 box-sizing"
                   v-model="emailCode"
                   @focus="handleinput"
-                  maxlength="6"
                   @keydown.enter="killDefault"
                 >
                   <CountDownButton
@@ -497,7 +456,6 @@
                   class="input input-google border-radius2 padding-l15 box-sizing"
                   v-model="googleCode"
                   @focus="handleinput"
-                  maxlength="6"
                   @keydown.enter="killDefault"
                 />
               </el-form-item>

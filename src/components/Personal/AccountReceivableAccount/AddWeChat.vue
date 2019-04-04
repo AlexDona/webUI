@@ -223,14 +223,38 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
-    // 点击跳转到重置交易密码
+    /**
+     * 1.界面跳转
+     **/
+    // 1.01 点击跳转到重置交易密码
     payPasswordState () {
       this.$goToPage('/TransactionPassword')
     },
-    // 选择图片文件
+    // 1.02 点击返回上个页面
+    returnSuperior () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
+      this.$goToPage('/PersonalCenter')
+    },
+    // 1.03 成功自动跳转
+    successJump () {
+      this.addWeChatSuccessJumpTimer = setInterval(() => {
+        if (this.successCountDown === 0) {
+          this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
+          this.$goToPage('/PersonalCenter')
+        }
+        this.successCountDown--
+      }, 1000)
+    },
+    /**
+     * 2.上传图片事件
+     **/
+    // 2.01 选择图片文件
     choosePicture () {
       this.$refs[`fileInput`].click()
     },
+    // 2.02 图片上传压缩
     getPicture (e) {
       if (!e.target.files.length) return false
       lrz(e.target.files[0]).then(async res => {
@@ -242,6 +266,7 @@ export default {
         this.wechatImgUrl = base64
       })
     },
+    // 2.03 上传图片
     async uploadImg (file) {
       let formData = new FormData()
       // console.log(res.file)
@@ -253,7 +278,7 @@ export default {
       this.dialogImageHandUrl1 = getNestedData(data, 'data.fileUrl')
       console.log(this.wechatImgUrl)
     },
-    // 判断图片大小限制
+    // 2.04 判断图片大小限制
     beforeAvatarUpload (size) {
       // 10M压缩后最大 尺寸
       const COMPRESS_SIZE = 10485760
@@ -266,13 +291,10 @@ export default {
       }
       return isLt10M
     },
-    // 点击返回上个页面
-    returnSuperior () {
-      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
-      this.$goToPage('/PersonalCenter')
-    },
-    // 检测输入格式
+    /**
+     * 3.格式验证
+     **/
+    // 3.01 检测输入格式
     checkoutInputFormat (type, targetNum) {
       console.log(type)
       switch (type) {
@@ -301,15 +323,18 @@ export default {
           }
       }
     },
-    // 设置错误信息
+    // 3.02 设置错误信息
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
-    // 确认设置按钮
+    /**
+     * 4.确认提交
+     **/
+    // 4.01 确认设置按钮
     stateSubmitWeChat () {
       this.stateSeniorCertification()
     },
-    // 确认设置接口
+    // 4.02 确认设置接口
     async stateSeniorCertification () {
       let goOnStatus = 0
       if (
@@ -353,12 +378,12 @@ export default {
         this.stateEmptyData()
       }
     },
-    // 接口请求完成之后清空数据
+    // 4.03 接口请求完成之后清空数据
     stateEmptyData () {
       this.cardNo = ''
       this.password = ''
     },
-    // 获取支付方式信息
+    // 4.04 获取支付方式信息
     async paymentMethodInformation () {
       let data
       let params = {
@@ -385,17 +410,6 @@ export default {
       if (id) {
         this.paymentTypeId = id
       }
-    },
-    // 成功自动跳转
-    successJump () {
-      this.addWeChatSuccessJumpTimer = setInterval(() => {
-        if (this.successCountDown === 0) {
-          this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
-          this.$goToPage('/PersonalCenter')
-        }
-        this.successCountDown--
-      }, 1000)
     }
   },
   filter: {},

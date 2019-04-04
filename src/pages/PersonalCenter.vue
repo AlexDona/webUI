@@ -288,7 +288,7 @@ export default {
       tabPosition: 'left', // 导航位置方向
       setPwdDialogVisible: false,
       notVerifyDialogVisible: false,
-      currentUserCenterActiveName: 'assets'
+      currentUserCenterActiveName: ''
       // isDisabled: false
     }
   },
