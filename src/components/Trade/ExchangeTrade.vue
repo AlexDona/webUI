@@ -1118,6 +1118,8 @@ export default {
       switch (target) {
         // 限价买
         case 'limit-buy':
+          console.log(this.getRefValue(this.limitBuyPriceInputRef))
+          if (!this.getRefValue(this.limitBuyPriceInputRef)) return false
           this.errorMsg.limit.buy.price = ''
           this.errorMsg.limit.buy.amount = ''
           if (this.buyUserCoinWallet.total) {
@@ -1174,7 +1176,7 @@ export default {
       this.isUserChangePrice = true
     },
     dragCallback ({target, newVal}) {
-      // console.log(target)
+      console.log(target, newVal)
       this.isUserChangePrice = false
       this.sliderBarValueChange({target, newVal})
     }
