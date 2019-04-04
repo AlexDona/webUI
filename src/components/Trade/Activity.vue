@@ -2,7 +2,7 @@
   <div
     class="activity-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-if = "isShow && $isNeedYST_G_X && $isNeedYST_G_X - 0 > 0"
+    v-if = "isShowServerPort && $isNeedYST_G_X && $isNeedYST_G_X - 0 > 0"
   >
     <div class="inner-box">
       <header>
@@ -23,15 +23,15 @@
         <span>{{serverTime > 0 ? beforeMin : afterMin}} </span>{{$t('M.trade_seconds')}}
         <span>{{serverTime > 0 ? beforeSec : afterSec}} </span>{{$t('M.trade_limit')}}
       </p>
-      <p>{{$t('M.trade_currentAccount')}}: 2,150,000 YST</p>
-      <p>{{$t('M.trade_bili')}}: 1 YST = 0.1 USDT</p>
+      <p>{{$t('M.trade_currentAccount')}}: 1,400,000 YST</p>
+      <p>{{$t('M.trade_bili')}}: 1 YST = 0.12 USDT</p>
       <p>{{$t('M.trade_singleLimit')}}: 1500 USDT/{{$t('M.trade_people')}}</p>
     </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 import {formatSecondsActivity} from '../../utils'
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
@@ -50,7 +50,7 @@ export default {
       afterActivityTimer: null,
       currentNextCountDown: 0,
       // 是否展示活动框
-      localShow: true,
+      // localShow: true,
       // 活动内容是否切换
       changeContent: true
     }
@@ -60,6 +60,10 @@ export default {
   },
   mounted () {},
   methods: {
+    ...mapMutations([
+      'CHANGE_ACTIVITY_STATUS',
+      'REFRESH_CONTENT_STATUS'
+    ]),
     countDownTimeBar (times, hour, minute, second, type) {
       if (this[times] === '0') {
         type === 'before' ? clearInterval(this.beforeActivityTimer) : clearInterval(this.afterActivityTimer)
@@ -85,11 +89,13 @@ export default {
           if (arr[0] === '0') {
             if (type === 'before') {
               clearInterval(this.beforeActivityTimer)
-              window.location.reload()
+              // 监控局部刷新
+              // this.REFRESH_CONTENT_STATUS(true)
             } else {
               clearInterval(this.afterActivityTimer)
-              this.localShow = false
+              // this.localShow = false
             }
+            this.REFRESH_CONTENT_STATUS(true)
           }
           break
       }
@@ -114,9 +120,9 @@ export default {
       // 当前时间到9点的时间
       serverTime: state => state.trade.serverData.serverTime
     }),
-    isShow () {
-      return this.isShowServerPort && this.localShow
-    },
+    // isShow () {
+    //   return this.isShowServerPort && this.localShow
+    // },
     isChangeContent () {
       return this.serverTime > 0 && this.changeContent
     }

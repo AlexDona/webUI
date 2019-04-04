@@ -690,6 +690,7 @@ export default {
       mainColor: state => state.common.mainColor,
       isJumpToTradeCenter: state => state.trade.isJumpToTradeCenter,
       jumpSymbol: state => state.trade.jumpSymbol,
+      isChangeContent: state => state.trade.isChangeContent,
       isLogin: state => state.user.isLogin,
       userId: state => state.user.loginStep1Info.userId
     })
@@ -747,6 +748,11 @@ export default {
     interval () {
       this.KlineNum = 0
       this.barsRenderTime = 0
+    },
+    isChangeContent (newVla) {
+      if (newVla) {
+        this.getServerTime('REQ', this.activeSymbol.id)
+      }
     }
   }
 }
