@@ -538,7 +538,7 @@ export default {
   .withdrawal-address {
     > .withdrawal-address-main {
       min-height: 352px;
-      border-radius: 5px;
+      border-radius: 5px 5px 0 0;
 
       > .withdrawal-header {
         margin-bottom: 2px;

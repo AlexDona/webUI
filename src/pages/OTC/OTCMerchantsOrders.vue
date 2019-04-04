@@ -160,7 +160,7 @@
             <!-- 交易日期 -->
             <el-table-column
               :label = "$t('M.otc_transaction_data')"
-              width="115px"
+              width="95px"
             >
               <template slot-scope = "s">
                 <div>{{timeFormatting(s.row.createTime)}}</div>
@@ -169,7 +169,7 @@
             <!-- 订单号 -->
             <el-table-column
               :label = "$t('M.otc_MerchantsOrders_orderNum')"
-              width="130"
+              width="129"
             >
               <template slot-scope = "s">
                 <div>{{s.row.orderSequence}}</div>
@@ -178,7 +178,7 @@
             <!-- 币种 -->
             <el-table-column
               :label = "$t('M.otc_Merchants_Orders_market')"
-              width="75"
+              width="80"
             >
               <template slot-scope = "s">
                 <div>{{s.row.coinName}}</div>
@@ -187,7 +187,7 @@
             <!-- 交易类型 -->
             <el-table-column
               :label = "$t('M.otc_type_ransaction')"
-              width="110"
+              width="90"
             >
               <template slot-scope = "s">
                 <div
@@ -210,6 +210,7 @@
             <!-- 状态 (未付款 PICKED 已付款 PAYED 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN) -->
             <el-table-column
               :label = "$t('M.otc_order_status')"
+              width="110"
             >
               <template slot-scope = "s">
                 <div v-show="s.row.status === 'PICKED'">
@@ -232,6 +233,7 @@
             <!-- 货币 -->
             <el-table-column
               :label = "$t('M.otc_MerchantsOrders_currecy')"
+              width="83"
             >
               <template slot-scope = "s">
                 <div>{{s.row.currencyName}}</div>
@@ -240,7 +242,7 @@
             <!-- 支付方式 -->
             <el-table-column
               :label = "$t('M.otc_index_Payment_method')"
-              width="106"
+              width="123"
             >
               <template slot-scope = "s">
                 <div>
@@ -315,6 +317,7 @@
             <!-- 申诉记录 -->
             <el-table-column
               :label = "$t('M.otc_record_complaint')"
+              width="134"
             >
               <template slot-scope = "s">
                 <div>
@@ -601,7 +604,7 @@ export default {
     overflow: hidden;
 
     > .otc-merchants-orders-content {
-      width: 1150px;
+      width: 1200px;
       padding-top: 50px;
       margin: 50px auto 10px;
 
@@ -622,7 +625,7 @@ export default {
           }
 
           > .status-input {
-            margin-right: 40px;
+            margin-right: 46px;
           }
 
           > .date-picker {
