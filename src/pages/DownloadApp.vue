@@ -48,7 +48,7 @@
           ref="download"
           download="android"
           :style="{
-            display:none
+            'display':'none'
           }"
         ></a>
       </div>
