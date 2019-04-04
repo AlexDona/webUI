@@ -26,7 +26,7 @@
         <el-tab-pane
           :label="$t('M.trade_exchange_price_deal')"
           name="limit-price"
-          v-if="$isNeedLimitExchange_G_X || !$isLimitShow_S_X || $isServerEnd_S_X"
+          v-if="isShowLimit"
         >
           <div
             class="content-box limit"
@@ -639,7 +639,7 @@ export default {
   },
   async created () {
     console.log(this.$isNeedLimitExchange_G_X, this.$isNeedYST_G_X, this.$isServerEnd_S_X)
-    if (this.$isNeedLimitExchange_G_X && this.$isNeedYST_G_X && this.$isServerEnd_S_X) {
+    if (!this.isShowLimit) {
       this.activeName = 'market-price'
       this.toggleMatchType()
     }
@@ -1118,6 +1118,8 @@ export default {
       switch (target) {
         // 限价买
         case 'limit-buy':
+          console.log(this.getRefValue(this.limitBuyPriceInputRef))
+          if (!this.getRefValue(this.limitBuyPriceInputRef)) return false
           this.errorMsg.limit.buy.price = ''
           this.errorMsg.limit.buy.amount = ''
           if (this.buyUserCoinWallet.total) {
@@ -1174,7 +1176,7 @@ export default {
       this.isUserChangePrice = true
     },
     dragCallback ({target, newVal}) {
-      // console.log(target)
+      console.log(target, newVal)
       this.isUserChangePrice = false
       this.sliderBarValueChange({target, newVal})
     }
@@ -1212,9 +1214,18 @@ export default {
     // 限价卖预计成交额
     limitSellAmount () {
       return this.$scientificToNumber(cutOutPointLength(this.$scientificToNumber(this.limitExchange.sellPrice * this.limitExchange.sellCount), 2))
+    },
+    isShowLimit () {
+      return this.$isNeedLimitExchange_G_X || !this.$isLimitShow_S_X || this.$isServerEnd_S_X
     }
   },
   watch: {
+    isShowLimit (newVal) {
+      if (!newVal) {
+        this.activeName = 'market-price'
+        this.toggleMatchType()
+      }
+    },
     $isNeedLimitExchange_G_X (newVal) {
       // console.log(newVal)
       console.log(newVal, this.$isLimitShow_S_X)

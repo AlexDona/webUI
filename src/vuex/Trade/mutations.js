@@ -8,7 +8,8 @@ import {
   SET_IS_KLINE_DATA_READY,
   SET_TARGET_EXCHANGE_DATA,
   GET_SERVER_DATA,
-  CHANGE_ACTIVITY_STATUS
+  CHANGE_ACTIVITY_STATUS,
+  REFRESH_CONTENT_STATUS
 } from './mutations-types.js'
 
 // import {setStore} from '../../utils'
@@ -78,5 +79,8 @@ export default {
   },
   [CHANGE_ACTIVITY_STATUS] (state, status) {
     state.isActivityEnd = status
+  },
+  [REFRESH_CONTENT_STATUS] (state, status) {
+    state.isChangeContent = status
   }
 }
