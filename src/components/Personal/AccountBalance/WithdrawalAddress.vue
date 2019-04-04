@@ -16,71 +16,73 @@
       </header>
       <div class="withdrawal-address-content padding-left15">
         <div class="withdrawal-address-box margin-top30">
-          <el-form
-            ref="form"
-            label-width="70px"
-          >
-            <!--币种-->
-            <el-form-item
-              :label="$t('M.comm_currency')"
+          <div class="main-form">
+            <el-form
+              ref="form"
+              label-width="70px"
             >
-              <el-select
-                v-model="currencyValue"
-                filterable
-                :no-data-text="$t('M.comm_no_data')"
-                :disabled="currencyValueStatus"
+              <!--币种-->
+              <el-form-item
+                :label="$t('M.comm_currency')"
               >
-                <el-option
-                  :placeholder="$t('M.comm_please_choose')"
-                  v-for="(item, index) in currencyList"
-                  :key="index"
-                  :label="item.name"
-                  :value="item.coinId"
+                <el-select
+                  v-model="currencyValue"
+                  filterable
+                  :no-data-text="$t('M.comm_no_data')"
+                  :disabled="currencyValueStatus"
                 >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <!--备注-->
-            <el-form-item
-              :label="$t('M.comm_remark')"
-            >
-              <input
-                class="form-input border-radius4 padding-left15"
-                v-model="withdrawalRemark"
-                @keydown="setErrorMsg(0, '')"
-                @blur="checkoutInputFormat(0, withdrawalRemark)"
-                maxlength="20"
-              />
-              <!--错误提示-->
-              <ErrorBox
-                :text="errorShowStatusList[0]"
-                :isShow="!!errorShowStatusList[0]"
-              />
-            </el-form-item>
-            <!--提币地址-->
-            <el-form-item
-              :label="$t('M.comm_mention_money') + $t('M.comm_site')"
-            >
-              <input
-                class="form-input border-radius4 padding-left15"
-                v-model="withdrawalAddress"
-                @keydown="setErrorMsg(1, '')"
-                @blur="checkoutInputFormat(1, withdrawalAddress)"
+                  <el-option
+                    :placeholder="$t('M.comm_please_choose')"
+                    v-for="(item, index) in currencyList"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.coinId"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <!--备注-->
+              <el-form-item
+                :label="$t('M.comm_remark')"
               >
-              <!--错误提示-->
-              <ErrorBox
-                :text="errorShowStatusList[1]"
-                :isShow="!!errorShowStatusList[1]"
-              />
-            </el-form-item>
-            <button
-              class="form-button border-radius4 cursor-pointer"
-              @click.prevent="addAddress"
-            >
-              <!--新增-->
-              {{ $t('M.comm_newly_increased') }}
-            </button>
-          </el-form>
+                <input
+                  class="form-input border-radius4 padding-left15"
+                  v-model="withdrawalRemark"
+                  @keydown="setErrorMsg(0, '')"
+                  @blur="checkoutInputFormat(0, withdrawalRemark)"
+                  maxlength="20"
+                />
+                <!--错误提示-->
+                <ErrorBox
+                  :text="errorShowStatusList[0]"
+                  :isShow="!!errorShowStatusList[0]"
+                />
+              </el-form-item>
+              <!--提币地址-->
+              <el-form-item
+                :label="$t('M.comm_mention_money') + $t('M.comm_site')"
+              >
+                <input
+                  class="form-input border-radius4 padding-left15"
+                  v-model="withdrawalAddress"
+                  @keydown="setErrorMsg(1, '')"
+                  @blur="checkoutInputFormat(1, withdrawalAddress)"
+                >
+                <!--错误提示-->
+                <ErrorBox
+                  :text="errorShowStatusList[1]"
+                  :isShow="!!errorShowStatusList[1]"
+                />
+              </el-form-item>
+              <button
+                class="form-button border-radius4 cursor-pointer"
+                @click.prevent="addAddress"
+              >
+                <!--新增-->
+                {{ $t('M.comm_newly_increased') }}
+              </button>
+            </el-form>
+          </div>
           <div class="withdrawal-dialog">
             <!--提币 手机验证 邮箱验证 谷歌验证-->
             <el-dialog
@@ -551,8 +553,8 @@ export default {
 
           .send-code-btn {
             position: absolute;
-            top: 3px;
-            width: 91px;
+            top: 4px;
+            width: 94px;
             height: 34px;
           }
 
@@ -586,9 +588,11 @@ export default {
           }
 
           /deep/ {
-            .el-form .el-form-item {
-              .el-form-item__label {
-                width: 115px !important;
+            .main-form {
+              .el-form .el-form-item {
+                .el-form-item__label {
+                  width: 115px !important;
+                }
               }
             }
           }
@@ -975,6 +979,7 @@ export default {
         }
 
         .el-form-item__label {
+          width: 150px !important;
           height: 30px;
           line-height: 30px;
         }

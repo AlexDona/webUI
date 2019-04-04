@@ -262,7 +262,7 @@
                       {{ $t('M.comm_mention_money') }}
                     </div>
                     <div
-                      class="table-deal flex1 cursor-pointer text-align-c"
+                      class="table-deal cursor-pointer trade-width text-align-c"
                       @mouseenter="showSymbolJumpList(assetItem.coinId, index)"
                       @mouseleave="leave()"
                     >
@@ -1585,6 +1585,7 @@ export default {
               }
 
               .title-width-last {
+                padding-right: 10px;
                 margin-right: 10px;
               }
 
@@ -1699,8 +1700,9 @@ export default {
                           }
 
                           > .code-copy {
-                            width: 89px;
+                            min-width: 90px;
                             height: 32px;
+                            padding: 0 5px;
                             border-radius: 0 2px 2px 0;
                             line-height: 32px;
                           }
@@ -1757,8 +1759,8 @@ export default {
                               position: absolute;
                               top: 38px;
                               right: 1px;
-                              width: 35px;
                               height: 34px;
+                              padding: 0 5px;
                               line-height: 34px;
                               text-align: center;
                             }
@@ -1861,7 +1863,7 @@ export default {
             position: absolute;
             z-index: 2;
             top: 10px;
-            left: 48px;
+            left: 65px;
             width: 135px;
 
             > .triangle-border {
@@ -1875,6 +1877,10 @@ export default {
               line-height: 30px;
             }
           }
+        }
+
+        .trade-width {
+          width: 60px !important;
         }
       }
     }

@@ -158,6 +158,7 @@
             <!-- 交易日期 -->
             <el-table-column
               :label = "$t('M.otc_transaction_data')"
+              width="115px"
             >
               <template slot-scope = "s">
                 <div>{{timeFormatting(s.row.createTime)}}</div>
@@ -175,6 +176,7 @@
             <!-- 币种 -->
             <el-table-column
               :label = "$t('M.otc_Merchants_Orders_market')"
+              width="75"
             >
               <template slot-scope = "s">
                 <div>{{s.row.coinName}}</div>
@@ -183,6 +185,7 @@
             <!-- 交易类型 -->
             <el-table-column
               :label = "$t('M.otc_type_ransaction')"
+              width="110"
             >
               <template slot-scope = "s">
                 <div

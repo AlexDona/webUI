@@ -176,7 +176,7 @@
                 <el-table-column
                   :label="$t('M.comm_mention_money') + $t('M.comm_site')"
                   v-if="withdrawSite"
-                  width="125"
+                  width="130"
                 >
                   <template slot-scope = "s">
                     <div
@@ -685,8 +685,9 @@ export default {
         line-height: 57px;
 
         .search-button {
-          width: 50px;
+          min-width: 50px;
           height: 30px;
+          padding: 0 5px;
           margin-top: 15px;
           line-height: 29px;
         }
