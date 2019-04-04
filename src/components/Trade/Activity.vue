@@ -51,11 +51,11 @@ export default {
       afterSec: 0,
       beforeActivityTimer: null,
       afterActivityTimer: null,
-      currentNextCountDown: 0,
+      currentNextCountDown: 0
       // 是否展示活动框
       // localShow: true,
       // 活动内容是否切换
-      changeContent: true
+      // changeContent: true
     }
   },
   created () {
@@ -123,13 +123,13 @@ export default {
       nextCountDown: state => state.trade.serverData.nextCountDown,
       // 当前时间到9点的时间
       serverTime: state => state.trade.serverData.serverTime
-    }),
+    })
     // isShow () {
     //   return this.isShowServerPort && this.localShow
     // },
-    isChangeContent () {
-      return this.serverTime > 0 && this.changeContent
-    }
+    // isChangeContent () {
+    //   return this.serverTime > 0 && this.changeContent
+    // }
   },
   watch: {
     $middleTopData_S_X (newVal) {
