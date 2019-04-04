@@ -87,15 +87,15 @@ export default {
       this.isNeedNotice = path === '/home' || path === '/' ? 1 : 0
       this.isNeedHeader = (
         path !== '/login' &&
-        path !== '/register' &&
+        !path.startsWith('/register') &&
         path !== '/downloadApp' &&
-        path !== '/InvitationRegister'
+        !path.startsWith('/invitationRegister')
       ) ? 1 : 0
       this.isNeedFooter = (
         path === '/login' ||
-        path === '/register' ||
+        path.startsWith('/register') ||
         path === '/downloadApp' ||
-        path === '/InvitationRegister' ||
+        path.startsWith('/invitationRegister') ||
         path === '/ForgetPassword'
       ) ? 0 : 1
       // let isLoginOrRigister = path === '/login' || path === '/register'

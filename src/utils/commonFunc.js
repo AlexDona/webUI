@@ -316,7 +316,9 @@ export const changeLanguage = (language, self, commit) => {
 }
 
 export const isNeedPayPasswordAjax = async (self) => {
+  store.commit('CHANGE_AJAX_READY_STATUS', true)
   const data = await isNeedPayPassowrd()
+  store.commit('CHANGE_AJAX_READY_STATUS', false)
   if (!returnAjaxMsg(data, self)) {
     return false
   } else {

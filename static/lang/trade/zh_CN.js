@@ -48,7 +48,7 @@ export const trade = {
   'trade_empty_sell_price': '请输入卖出价',
   'trade_start': '即将开始',
   'trade_going': '正在进行',
-  'trade_startOne': '第1轮',
+  'trade_startOne': '第2轮',
   'trade_thired': '共3轮',
   'trade_langstart': '距离开始',
   'trade_langEnd': '距离结束',
