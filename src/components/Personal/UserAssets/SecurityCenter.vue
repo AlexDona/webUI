@@ -1137,7 +1137,7 @@ export default {
         }
 
         .input {
-          width: 180px;
+          width: 175px;
           height: 34px;
         }
 

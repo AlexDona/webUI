@@ -867,7 +867,7 @@ export default {
           margin-left: 55px;
 
           .send-code-btn {
-            min-width: 90px;
+            width: 90px;
           }
 
           .input {

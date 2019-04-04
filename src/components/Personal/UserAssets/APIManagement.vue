@@ -132,7 +132,6 @@
             <!--创建时间-->
             <el-table-column
               :label="$t('M.comm_creation') + $t('M.comm_time')"
-              width="150"
             >
               <template slot-scope = "s">
                 <div>{{s.row.createTime}}</div>
@@ -141,7 +140,7 @@
             <!--备注-->
             <el-table-column
               :label="$t('M.comm_remark')"
-              width="90"
+              width="100"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.remark }}</div>
@@ -150,25 +149,34 @@
             <!--API访问秘钥-->
             <el-table-column
               :label="'API' + $t('M.user_api_text4')"
-              width="380"
+              width="225"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.accessKey }}</div>
+                <div
+                  class="ip-width"
+                  :title="s.row.accessKey"
+                >
+                  {{ s.row.accessKey }}
+                </div>
               </template>
             </el-table-column>
             <!--IP地址-->
             <el-table-column
-              :label="'IP ' + $t('M.comm_site')"
-              width="120"
+              :label="'IP' + $t('M.comm_site')"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.ip }}</div>
+                <div
+                  class="ip-width"
+                  :title="s.row.ip"
+                >
+                  {{ s.row.ip }}
+                </div>
               </template>
             </el-table-column>
             <!--状态-->
             <el-table-column
               :label="'IP ' + $t('M.comm_state')"
-              width="80"
+              width="100"
             >
               <template slot-scope = "s">
                 <div v-if="s.row.status == 'enable'">{{ $t(enable) }}</div>
@@ -178,7 +186,7 @@
             <!--操作-->
             <el-table-column
               :label="$t('M.comm_operation')"
-              width="110"
+              width="100"
             >
               <template slot-scope = "s">
                 <div
@@ -225,7 +233,7 @@
                 @focus="emptyAddStatus"
               >
               <CountDownButton
-                class="send-code-btn cursor-pointer"
+                class="send-code-btn cursor-pointer float-right"
                 :status="disabledOfPhoneBtn"
                 @run="sendPhoneOrEmailCode(0)"
                 v-if="APIMoneyConfirm"
@@ -246,7 +254,7 @@
                 @focus="emptyAddStatus"
               >
               <CountDownButton
-                class="send-code-btn cursor-pointer"
+                class="send-code-btn cursor-pointer float-right"
                 :status="disabledOfEmailBtn"
                 @run="sendPhoneOrEmailCode(1)"
                 v-if="APIMoneyConfirm"
@@ -842,8 +850,9 @@ export default {
         position: absolute;
         top: 4px;
         right: 1px;
-        width: 55px;
+        min-width: 55px;
         height: 33px;
+        padding: 0 5px;
         line-height: 33px;
       }
 
@@ -874,7 +883,7 @@ export default {
       }
 
       .input-google {
-        width: 300px;
+        width: 305px;
       }
 
       .text-bottom {
@@ -892,10 +901,12 @@ export default {
       }
 
       .send-code-btn {
+        position: absolute;
+        top: 3px;
+        right: 1px;
         width: 100px;
         height: 35px;
         padding: 0;
-        margin-left: -4px;
       }
 
       > .extension-info {
@@ -954,6 +965,7 @@ export default {
 
       > .extension-statistics {
         min-height: 200px;
+        margin-bottom: 20px;
 
         > .extension-statistics-header {
           height: 56px;
@@ -961,6 +973,12 @@ export default {
 
         > .extension-statistics-content {
           min-height: 230px;
+
+          .ip-width {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
 
           .compile {
             color: #338ff5;
@@ -1019,7 +1037,7 @@ export default {
 
         .el-dialog {
           top: 5%;
-          width: 380px;
+          width: 385px;
         }
 
         .el-dialog__body {
@@ -1144,7 +1162,7 @@ export default {
 
         .content-input {
           border: 1px solid rgba(72, 87, 118, 1);
-          border-radius: 3px;
+          border-radius: 3px 0 0 3px;
           color: #fff;
           background: rgba(26, 34, 51, 1);
 

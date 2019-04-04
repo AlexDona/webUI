@@ -138,7 +138,7 @@
             <!--类型-->
             <el-table-column
               :label="$t('M.comm_type')"
-              width="100"
+              width="95"
             >
               <template slot-scope="s">
                 <div>{{ s.row.type }}</div>
@@ -157,7 +157,7 @@
             <!--对方UID-->
             <el-table-column
               :label="$t('M.user_push_opposite_side') + ' UID'"
-              width="110"
+              width="130"
             >
               <template slot-scope="s">
                 <div
@@ -175,6 +175,7 @@
             <!--资产-->
             <el-table-column
               :label="$t('M.comm_property')"
+              width="70"
             >
               <template slot-scope="s">
                 <div>{{ s.row.coinName }}</div>
@@ -199,6 +200,7 @@
             <!--金额-->
             <el-table-column
               :label="$t('M.comm_money')"
+              width="90"
             >
               <template slot-scope="s">
                 <div>{{ $scientificToNumber(s.row.amount) }}</div>
@@ -216,7 +218,7 @@
             <!--状态-->
             <el-table-column
               :label="$t('M.comm_state')"
-              width="130"
+              width="135"
             >
               <template slot-scope="s">
                 <div v-if="s.row.state === 'PUSH_DEAL'">
@@ -236,7 +238,7 @@
             <!--操作-->
             <el-table-column
               :label="$t('M.comm_operation')"
-              width="100"
+              width="90"
             >
               <template slot-scope="s">
                 <div
@@ -630,7 +632,6 @@ export default {
     // 3.2 判断交易密码错误次数状态
     async reflashIsNeedPayPassword () {
       this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
-      console.log(this.isNeedPayPassword)
     },
     /**
      * 4.Push资产提交push和付款逻辑
@@ -679,10 +680,19 @@ export default {
         })
         return false
       }
-      await this.reflashIsNeedPayPassword()
+      // if (this.buyUID === '') {
+      //   this.errorShowStatusList[0] = this.$t('M.user_push_input_buyer') + 'UID'
+      // } else if (this.$refs.count.value === '') {
+      //   this.errorShowStatusList[1] = this.$t('M.user_push_input_sum')
+      // } else if (this.$refs.price.value === '') {
+      //   this.errorShowStatusList[2] = this.$t('M.user_push_input_price')
+      // } else {
+      //   await this.reflashIsNeedPayPassword()
+      // }
       let goOnStatus = 0
       goOnStatus = (this.checkoutInputFormat(0, this.buyUID) && this.checkoutInputFormat(1, this.count) && this.checkoutInputFormat(2, this.price)) ? 1 : 0
       if (goOnStatus) {
+        await this.reflashIsNeedPayPassword()
         if (this.isNeedPayPassword) {
           this.payType = 'push'
           // 判断是否交易密码锁定
@@ -794,6 +804,9 @@ export default {
      * 7.刚进页面时候 push列表展示
      */
     async getPushRecordList () {
+      this.errorShowStatusList[0] = ''
+      this.errorShowStatusList[1] = ''
+      this.errorShowStatusList[2] = ''
       // 开启局部loading
       this.partLoading = true
       let data = await getPushAssetList({

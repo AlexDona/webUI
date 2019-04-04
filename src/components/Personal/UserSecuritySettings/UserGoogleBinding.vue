@@ -479,8 +479,8 @@ export default {
             .code-copy {
               position: relative;
               display: inline-block;
-              width: 54px;
               height: 26px;
+              padding: 0 6px;
               margin-left: 15px;
               line-height: 26px;
               text-align: center;
