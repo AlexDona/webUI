@@ -49,7 +49,7 @@ export const trade = {
   'trade_empty_sell_price': 'Please enter the offer price',
   'trade_start': 'About to start',
   'trade_going': 'In progress',
-  'trade_startOne': 'Round 2',
+  'trade_startOne': 'Round 3',
   'trade_thired': '3 rounds in total',
   'trade_langstart': 'Distance start',
   'trade_langEnd': 'End of distance',
