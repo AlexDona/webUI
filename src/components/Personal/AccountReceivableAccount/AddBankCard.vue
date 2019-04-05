@@ -11,18 +11,11 @@
     >
       <header class="add-bank-header personal-height60 line-height60 line-height70 margin25">
         <span
-          v-if="paymentTerm.isBankBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--设置银行卡-->
-          {{ $t('M.user_bind_Bank_set') }}
-        </span>
-        <span
-          v-else
-          class="header-content-left header-content font-size16 font-weight600"
-        >
+          {{ paymentTerm.isBankBind? $t('M.user_bind_Bank_set'): $t('M.comm_modification')+ $t('M.user_account_bank') }}
           <!--修改银行卡-->
-          {{ $t('M.comm_modification') }}{{ $t('M.user_account_bank') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -117,20 +110,12 @@
             </el-form-item>
             <div style="width: 380px;">
               <button
-                v-if="paymentTerm.isBankBind"
                 class="bank-button border-radius4 cursor-pointer"
                 @click.prevent="statusTetBankCard"
               >
                 <!--确认设置-->
-                {{ $t('M.user_bind_paypal_confirm_set') }}
-              </button>
-              <button
-                v-else
-                class="bank-button border-radius4 cursor-pointer"
-                @click.prevent="statusTetBankCard"
-              >
+                {{ paymentTerm.isBankBind? $t('M.user_bind_paypal_confirm_set'): $t('M.user_modification_confirm_amend') }}
                 <!--确认修改-->
-                {{ $t('M.user_modification_confirm_amend') }}
               </button>
               <span
                 class="font-size12 cursor-pointer text-align-r hint-color float-right"

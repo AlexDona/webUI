@@ -13,18 +13,11 @@
     >
       <header class="add-chat-header personal-height60 line-height60 line-height70 margin25">
         <span
-          v-if="paymentTerm.isWeixinBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--设置微信账号-->
-          {{ $t('M.comm_set') }}{{ $t('M.user_account_weChat') }}{{ $t('M.user_account_number') }}
-        </span>
-        <span
-          v-else
-          class="header-content-left header-content font-size16 font-weight600"
-        >
+          {{ paymentTerm.isWeixinBind? $t('M.comm_set') + $t('M.user_account_weChat') + $t('M.user_account_number'): $t('M.user_bind_WeChat_verify') }}
           <!--修改微信账号-->
-          {{ $t('M.user_bind_WeChat_verify') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -131,20 +124,12 @@
             </el-form-item>
             <div style="width: 380px;">
               <button
-                v-if="paymentTerm.isWeixinBind"
                 class="chat-button border-radius4 cursor-pointer"
                 @click.prevent="stateSubmitWeChat"
               >
                 <!--确认设置-->
-                {{ $t('M.user_bind_Alipay_set_confirm') }}
-              </button>
-              <button
-                v-else
-                class="chat-button border-radius4 cursor-pointer"
-                @click.prevent="stateSubmitWeChat"
-              >
+                {{ paymentTerm.isWeixinBind? $t('M.user_bind_Alipay_set_confirm') : $t('M.user_modification_confirm_amend') }}
                 <!--确认修改-->
-                {{ $t('M.user_modification_confirm_amend') }}
               </button>
               <p
                 class="font-size12 cursor-pointer text-align-r hint-color float-right"

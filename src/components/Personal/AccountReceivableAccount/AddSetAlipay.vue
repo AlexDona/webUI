@@ -13,18 +13,11 @@
     >
       <header class="add-account-header personal-height60 line-height60 line-height70 margin25">
          <span
-           v-if="paymentTerm.isAlipayBind"
            class="header-content-left header-content font-size16 font-weight600"
          >
-          <!--设置账号-->
-           {{ $t('M.user_bind_Alipay_set_account') }}
-        </span>
-        <span
-          v-else
-          class="header-content-left header-content font-size16 font-weight600"
-        >
-          <!--修改账号-->
-          {{ $t('M.comm_modification')}}{{$t('M.user_account_alipay')}}{{$t('M.user_account_number')}}
+           <!--设置账号-->
+           {{ paymentTerm.isAlipayBind? $t('M.user_bind_Alipay_set_account'): $t('M.comm_modification') + $t('M.user_account_alipay') + $t('M.user_account_number') }}
+           <!--修改账号-->
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -132,20 +125,12 @@
             </el-form-item>
             <div style="width: 380px;">
               <button
-                v-if="paymentTerm.isAlipayBind"
                 class="account-button border-radius4 cursor-pointer"
                 @click.prevent="submitSettings"
               >
                 <!--确认设置-->
-                {{ $t('M.user_bind_Alipay_set_confirm') }}
-              </button>
-              <button
-                v-else
-                class="account-button border-radius4 cursor-pointer"
-                @click.prevent="submitSettings"
-              >
+                {{ paymentTerm.isAlipayBind? $t('M.user_bind_Alipay_set_confirm'): $t('M.comm_affirm') + $t('M.comm_modification') }}
                 <!--确认修改-->
-                {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
               </button>
               <p
                 class="font-size12 cursor-pointer text-align-r hint-color float-right"
