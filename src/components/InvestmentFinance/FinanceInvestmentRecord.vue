@@ -89,7 +89,7 @@
                   <el-table-column
                     prop="expectedTime"
                     width="150"
-                    :label="$t('M.finance_predict') + $t('M.finance_releaseTime')"
+                    :label="$t('M.finance_predict_send_time')"
                   >
                   </el-table-column>
                   <!-- 已发放收益-->

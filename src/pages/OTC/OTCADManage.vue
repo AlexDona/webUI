@@ -226,7 +226,7 @@
             <!-- 已完成数量 -->
             <el-table-column
               :label="$t('M.otc_enum_status_yiwancheng_sum')"
-              width="120px"
+              width="140px"
             >
               <template slot-scope="s">
                 <div>{{ $scientificToNumber(s.row.matchCount) }}</div>

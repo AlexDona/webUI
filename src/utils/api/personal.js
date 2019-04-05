@@ -32,6 +32,8 @@ export const withdrawalInformation = params => handleRequest(() => get('queryWit
 export const queryTransactionInformation = (params) => handleRequest(() => get('personal/getTradeUrl', params))
 // 刷新用户信息
 export const userRefreshUser = params => handleRequest(() => get('user/refreshUser', params))
+// 币币交易跳转到个人中心、我的资产提币校验
+export const getCoinRechargeWithdraw = (params) => handleRequest(() => get('queryCoinRechargeWithdraw', params))
 /**
  * 安全中心
  * */

@@ -26,7 +26,7 @@ export const trade = {
   'trade_global_market': 'Tình hình thế giới',
   'trade_time_share': 'Phân chia thời gian',
   'trade_latest_price': 'Giá mới nhất',
-  'trade_ups_and_downs': 'Tăng và giảm',
+  'trade_ups_and_downs': 'Tăng-giảm',
   'trade_highest': 'Cao nhất',
   'trade_minimum': 'Thấp nhấp',
   'trade_order_recent_deal': 'Thành giao gần gây',

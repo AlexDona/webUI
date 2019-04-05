@@ -1157,7 +1157,7 @@ export default{
                   display: block;
                   width: 100%;
                   height: 30px;
-                  padding: 0 20px 0 10px;
+                  padding: 0 10px;
                   line-height: 30px;
                   text-align: left;
                   color: #fff;

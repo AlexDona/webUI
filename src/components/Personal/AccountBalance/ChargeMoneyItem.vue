@@ -153,7 +153,7 @@ export default {
     > .triangle {
       position: absolute;
       top: -7px;
-      right: 115px;
+      right: 119px;
       width: 12px;
       height: 12px;
       -ms-transform: rotate(135deg);
@@ -206,8 +206,9 @@ export default {
         }
 
         > .code-copy {
-          width: 89px;
+          min-width: 90px;
           height: 32px;
+          padding: 0 5px;
           border-radius: 0 2px 2px 0;
           line-height: 32px;
         }
@@ -475,7 +476,7 @@ export default {
       > .triangle {
         position: absolute;
         top: -7px;
-        right: 102px;
+        right: 108px;
         border-top: 1px solid transparent;
         border-bottom: 1px solid #338ff5;
         border-left: 1px solid #338ff5;
