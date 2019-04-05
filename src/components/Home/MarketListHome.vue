@@ -483,19 +483,6 @@ export default {
         }
       })
     },
-    // 更改当前交易对
-    changeActiveSymbol (e) {
-      this.SET_JUMP_STATUS(true)
-      this.SET_JUMP_SYMBOL(e)
-      // 设置当前交易区
-      const id = e.areaId
-      const name = e.area
-      this.CHANGE_ACTIVE_TRADE_AREA({
-        id,
-        name
-      })
-      this.$goToPage('/TradeCenter')
-    },
     // 获取用户收藏列表
     async getCollectionList (collectSymbol) {
       await getCollectionList(data => {

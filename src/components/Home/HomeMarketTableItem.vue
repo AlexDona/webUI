@@ -337,16 +337,16 @@ export default {
       this.more = false
     },
     changeActiveSymbol (e) {
+      // console.log(e)
       this.SET_JUMP_STATUS(true)
       this.SET_JUMP_SYMBOL(e)
       // 设置当前交易区
-      const id = e.areaId
-      const name = e.area
+      const {areaId, name, id} = e
       this.CHANGE_ACTIVE_TRADE_AREA({
-        id,
+        id: areaId,
         name
       })
-      this.$goToPage('/TradeCenter')
+      this.$goToPage(`/TradeCenter/${id}`)
     },
     // 正面动画
     beforeEnter (el) {

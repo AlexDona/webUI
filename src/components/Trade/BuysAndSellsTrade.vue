@@ -48,15 +48,15 @@
                   index
                 </span><span class="price text-align-l">
                   <!--价格-->
-                  {{ $t('M.comm_price_metre') }}({{activeSymbol.area}})
+                  {{ $t('M.comm_price_metre') }}({{$middleTopData_S_X.area}})
                 </span><span class="amount text-align-c">
                   <!--数量-->
                   {{ $t('M.comm_count') }}
-                  <span class="uppercase">({{activeSymbol.sellsymbol}})</span>
+                  <span class="uppercase">({{$middleTopData_S_X.sellsymbol}})</span>
                 </span><span class="total text-align-r">
                   <!--总计-->
                   {{ $t('M.comm_aggregate') }}
-                  <span class="uppercase">({{activeSymbol.area}})</span>
+                  <span class="uppercase">({{$middleTopData_S_X.area}})</span>
                 </span>
               </dt>
             </dl>
@@ -92,9 +92,9 @@
                       >
                         {{$scientificToNumber(item.price)}}
                       </span><span class="amount text-align-r">
-                        {{$scientificToNumber($cutOutPointLength(item.amount, activeSymbol.countExchange))}}
+                        {{$scientificToNumber($cutOutPointLength(item.amount, $middleTopData_S_X.countExchange))}}
                       </span><span class="total text-align-r">
-                        {{$scientificToNumber($cutOutPointLength(item.total, activeSymbol.priceExchange))}}
+                        {{$scientificToNumber($cutOutPointLength(item.total, $middleTopData_S_X.priceExchange))}}
                       </span><!--宽度条--><i
                           class="color-sell-bg"
                           :style="`width:${item.amount/buysAndSellsList.sells.highestAmount*100}%`"
@@ -210,9 +210,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       buysAndSellsListByAjax: state => state.common.klineAjaxData.buyAndSellData,
-      buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData,
-      activeSymbol: state => state.common.activeSymbol,
-      activeSymbolId: state => state.common.activeSymbol.id
+      buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData
     }),
     buysAndSellsList () {
       return !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
@@ -222,11 +220,11 @@ export default {
     }
   },
   watch: {
-    activeSymbol (newVal) {
-      // console.log(newVal)
-    },
-    activeSymbolId () {
+    $activeSymbol_S_X () {
       this.reflashCount = 0
+    },
+    $middleTopData_S_X (newVal) {
+      console.log(newVal)
     },
     buysAndSellsList (newVal) {
       // console.log(newVal)

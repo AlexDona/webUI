@@ -68,6 +68,7 @@ let mixin = {
       // 是否显示限价交易
       $isLimitShow_S_X: state => state.trade.serverData.isLimitShow,
       $middleTopData_S_X: state => state.trade.middleTopData,
+      $activeSymbol_S_X: state => state.trade.middleTopData.id,
       $serverTime_S_X: state => state.trade.serverData.serverTime,
       $isShowServerPort_S_X: state => state.trade.serverData.isShowServerPort,
       $isServerEnd_S_X: state => state.trade.isActivityEnd
