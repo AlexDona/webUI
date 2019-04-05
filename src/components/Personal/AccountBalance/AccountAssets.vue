@@ -228,9 +228,9 @@
                   <div class="table-td display-flex text-align-r font-size12 title-width title-width-la">
                     <!--.isRecharge === 'true'-->
                     <div
-                      v-if="(withdrawStorageMap.get(assetItem.coinId)).isRecharge ==='true'"
+                      v-if="(withdrawStorageMap.get(assetItem.coinId)).isRecharge ==='true' && isRechargeState"
                       class="table-charge-money flex1 cursor-pointer"
-                      @click.prevent="showRechargeBox(assetItem.coinId, assetItem.coinName, index)"
+                      @click.prevent="showRechargeBox(assetItem.coinId, assetItem.coinName)"
                     >
                       <!--充 币-->
                       {{ $t('M.comm_charge_money') }}
@@ -246,9 +246,9 @@
 
                     <!--提币-->
                     <div
-                      v-if="(withdrawStorageMap.get(assetItem.coinId)).isWithdraw ==='true'"
+                      v-if="(withdrawStorageMap.get(assetItem.coinId)).isWithdraw ==='true' && isWithdrawState"
                       class="table-mention-money flex1 cursor-pointer"
-                      @click.prevent="changeWithdrawBoxByCoin(assetItem.coinId, assetItem.coinName, index)"
+                      @click.prevent="changeWithdrawBoxByCoin(assetItem.coinId, assetItem.coinName)"
                     >
                       <!--提币-->
                       {{ $t('M.comm_mention_money') }}
@@ -945,16 +945,22 @@ export default {
       this.isRechargeState = getNestedData(data.data, 'isRecharge')
       // 是否允许提币
       this.isWithdrawState = getNestedData(data.data, 'isWithdraw')
+      // 点击提币展示框中的提币按钮判断，当前币种是否在后台管理禁用
+      // 判断如果并且币种禁用并且则关闭提币弹框并提示暂停提币
+      let item = this.withdrawDepositMap.get(id)
+      if (!this.isWithdrawState) {
+        this.withdrawDepositMap.set(id, {...item, withdrawDepositIsShow: false})
+      }
     },
     // 5.0点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
     async showRechargeBox (id, name) {
-      console.log(id)
+      // console.log(id)
       // 校验是否充币
       await this.isRechargeWithdrawState(id)
       if (!this.isRechargeState) {
-        // 暂停提币
+        // 充值暂停，钱包维护中
         this.$message({
-          message: this.$t('M.user_assets_pause_mention'),
+          message: this.$t('M.user_assets_suspended'),
           type: 'error'
         })
         return false

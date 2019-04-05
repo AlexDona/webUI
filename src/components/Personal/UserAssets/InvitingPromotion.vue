@@ -244,18 +244,18 @@
                 <div>{{ s.row.inviter }}</div>
               </template>
             </el-table-column>
-            <!-- 状态 -->
-            <el-table-column
-              :label="$t('M.comm_state')"
-            >
-              <template slot-scope = "s">
-                <div>
-                  <!--已发放-->
-                  {{ s.row.status === 'enable' ? '已发放': '未发放'}}
-                  <!--未发放-->
-                </div>
-              </template>
-            </el-table-column>
+            <!--&lt;!&ndash; 状态 &ndash;&gt;-->
+            <!--<el-table-column-->
+              <!--:label="$t('M.comm_state')"-->
+            <!--&gt;-->
+              <!--<template slot-scope = "s">-->
+                <!--<div>-->
+                  <!--&lt;!&ndash;已发放&ndash;&gt;-->
+                  <!--{{ s.row.giveStatus === 'PUBLISH ' ? '已发放': '未发放'}}-->
+                  <!--&lt;!&ndash;未发放&ndash;&gt;-->
+                <!--</div>-->
+              <!--</template>-->
+            <!--</el-table-column>-->
           </el-table>
           <!--分页-->
           <el-pagination
@@ -427,7 +427,6 @@ export default {
     },
     // 直接推广 间接推广列表
     async getUserPromotionList () {
-      // this.loading = true
       let data = await userPromotionList({
         type: this.generalizeValue, // 筛选类型
         pageNumber: this.currentPageForMyEntrust, // 分页
