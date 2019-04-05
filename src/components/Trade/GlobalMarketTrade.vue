@@ -208,6 +208,7 @@ export default {
               display: inline-block;
               width: 16%;
               line-height: 38px;
+              white-space: nowrap;
 
               &.symbol {
                 width: 26%;
