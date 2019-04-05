@@ -32,7 +32,7 @@
       </div>
       <!--右侧-->
       <div class="right">
-        <Activity/>
+        <!--<Activity/>-->
         <!--市场-->
         <TradeMarketList/>
       </div>
@@ -49,7 +49,7 @@ import OrderRecord from '../components/Trade/OrderRecordTrade'
 import KLine from '../components/Trade/kLine'
 import MiddleHeader from '../components/Trade/MiddleHeaderTrade'
 import Depth from '../components/Trade/DepthTrade'
-import Activity from '../components/Trade/Activity'
+// import Activity from '../components/Trade/Activity'
 import {mapState} from 'vuex'
 
 export default {
@@ -62,8 +62,8 @@ export default {
     KLine, // k线
     OrderRecord, // 成交记录
     BuysAndSells, // 买卖单
-    GlobalMarket,
-    Activity
+    GlobalMarket
+    // Activity
   },
   // props,
   data () {

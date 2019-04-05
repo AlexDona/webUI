@@ -146,7 +146,7 @@ export default {
     },
     // 接口获取K线数据
     async getKlineByAjax (tradeName, KlineType, KlineNum = 0, KlineStep = 'STEP5') {
-      console.log(KlineType, this.interval)
+      // console.log(KlineType, this.interval)
       this.isAllowDrag = false
       // console.log(tradeName)
       if (tradeName) {
@@ -440,7 +440,7 @@ export default {
     },
     // 时间区间格式转换
     transformInterval (interval) {
-      console.log(interval)
+      // console.log(interval)
       let newInterval
       switch (interval) {
         case '1':
@@ -473,7 +473,7 @@ export default {
     onMessage (data) {
       this.barsRenderTime = this.LIMIT_BARS_RENDER_TIME - 2
       // const { countDown, isShow } = data.data
-      console.log(data)
+      // console.log(data)
       // if (this.activeSymbol.id !== symbol) return false
       switch (data.tradeType) {
         case 'KLINE':
@@ -532,7 +532,7 @@ export default {
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           break
         case 'DATE':
-          console.log(data)
+          // console.log(data)
           this.GET_SERVER_DATA({
             'serverTime': data.data.countDown,
             'isShowServerPort': data.data.isShow,
@@ -557,7 +557,7 @@ export default {
       // }
 
       this.barsRenderTime += 1
-      console.log(rangeStartDate, rangeEndDate, this.firstRangeStartDate, this.secondRangeStartDate)
+      // console.log(rangeStartDate, rangeEndDate, this.firstRangeStartDate, this.secondRangeStartDate)
       if (resolution && this.interval && (this.interval != resolution)) {
         this.unSubscribe(this.interval)
         this.interval = resolution
@@ -582,9 +582,9 @@ export default {
           newBars.push(item)
         })
         if (onLoadedCallback) {
-          console.log(this.barsRenderTime, this.prevCacheList[0], this.currentCacheList[0])
+          // console.log(this.barsRenderTime, this.prevCacheList[0], this.currentCacheList[0])
           if (this.barsRenderTime > this.LIMIT_BARS_RENDER_TIME && this.prevCacheList[0] === this.currentCacheList[0]) {
-            console.log('noData')
+            // console.log('noData')
             onLoadedCallback([])
           } else {
             onLoadedCallback(newBars)
@@ -751,7 +751,7 @@ export default {
       this.barsRenderTime = 0
     },
     isChangeContent (newVla) {
-      console.log(newVla)
+      // console.log(newVla)
       if (newVla) {
         this.getServerTime('REQ', this.activeSymbol.id)
         this.REFRESH_CONTENT_STATUS(false)
