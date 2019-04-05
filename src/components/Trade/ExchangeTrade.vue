@@ -26,7 +26,6 @@
         <el-tab-pane
           :label="$t('M.trade_exchange_price_deal')"
           name="limit-price"
-          v-if="isShowLimit"
         >
           <div
             class="content-box limit"
@@ -638,11 +637,6 @@ export default {
     }
   },
   async created () {
-    console.log(this.$isNeedLimitExchange_G_X, this.$isNeedYST_G_X, this.$isServerEnd_S_X)
-    if (!this.isShowLimit) {
-      this.activeName = 'market-price'
-      this.toggleMatchType()
-    }
     if (this.isLogin) {
       await this.REFRESH_USER_INFO_ACTION()
       // console.log(this.REFRESH_USER_INFO_ACTION)
@@ -1214,24 +1208,9 @@ export default {
     // 限价卖预计成交额
     limitSellAmount () {
       return this.$scientificToNumber(cutOutPointLength(this.$scientificToNumber(this.limitExchange.sellPrice * this.limitExchange.sellCount), 2))
-    },
-    isShowLimit () {
-      return this.$isNeedLimitExchange_G_X || !this.$isLimitShow_S_X || this.$isServerEnd_S_X
     }
   },
   watch: {
-    isShowLimit (newVal) {
-      if (!newVal) {
-        this.activeName = 'market-price'
-        this.toggleMatchType()
-      }
-    },
-    $isNeedLimitExchange_G_X (newVal) {
-      // console.log(newVal)
-      console.log(newVal, this.$isLimitShow_S_X)
-      this.activeName = newVal ? 'limit-price' : 'market-price'
-      this.toggleMatchType()
-    },
     matchType (newVal) {
       this.setSiderBarValue('limit', {
         buyPrice: 0,

@@ -675,7 +675,6 @@ export default {
       this.getBuyAndSellBySocket('SUB', symbol)
       this.getDepthDataBySocket('SUB', symbol)
       this.getTradeRecordBySocket('SUB', symbol)
-      this.getServerTime('REQ', symbol)
     }
   },
   filter: {},
@@ -753,7 +752,6 @@ export default {
     isChangeContent (newVla) {
       console.log(newVla)
       if (newVla) {
-        this.getServerTime('REQ', this.activeSymbol.id)
         this.REFRESH_CONTENT_STATUS(false)
       }
     }
