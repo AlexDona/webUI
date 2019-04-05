@@ -106,7 +106,7 @@
               </span>
               ，{{$t('M.otc_merchant_content_one')}}。
             </p>
-            <p>{{$t('M. otc_merchant_videoKode')}}：</p>
+            <p>{{$t('M.otc_merchant_videoKode')}}：</p>
             <p>{{$t('M.otc_merchant_detailOne')}}</p>
             <p>{{$t('M.otc_merchant_detailTwo')}}</p>
             <p>{{$t('M.otc_merchant_applyLimit')}}<span>{{$scientificToNumber(successTimes)}}</span>{{$t('M.otc_ci')}}。②{{$t('M.otc_merchant_account')}}<span>{{coinName}}</span>{{$t('M.comm_count')}}{{$t('M.otc_xu')}}≥<span>{{$scientificToNumber(count)}}</span></p>
