@@ -419,7 +419,6 @@ import {
   pushPropertyTransaction
 } from '../../../utils/api/personal'
 import ErrorBox from '../../User/ErrorBox'
-import CountDownButton from '../../Common/CountDownCommon'
 import {
   timeFilter,
   formatNumberInput,
@@ -436,8 +435,7 @@ import {
 } from 'vuex'
 export default {
   components: {
-    ErrorBox, // 错误提示接口
-    CountDownButton // 短信倒计时
+    ErrorBox // 错误提示接口
   },
   // props,
   data () {

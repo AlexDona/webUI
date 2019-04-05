@@ -20,7 +20,8 @@ let targetConfig = {
 }
 
 const devTestConfig = {
-  apiCommonUrl: 'http://192.168.2.200:8888/',
+  // apiCommonUrl: 'http://192.168.2.200:8888/',
+  apiCommonUrl: 'http://192.168.0.52:22224/',
   socketUrl: 'ws://192.168.2.200:8087/market',
   loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/'
 }

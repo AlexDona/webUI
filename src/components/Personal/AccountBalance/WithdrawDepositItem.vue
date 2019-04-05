@@ -146,7 +146,7 @@
         <p class="mention-button">
           <button
             class="font-size12 submit-but border-radius4 cursor-pointer"
-            @click.prevent="validateOfWithdraw(index)"
+            @click.prevent="validateOfWithdraw(coinId)"
           >
             <!--提币-->
             {{ $t('M.comm_mention_money') }}
@@ -227,9 +227,9 @@ export default {
         total
       })
     },
-    validateOfWithdraw (index) {
+    validateOfWithdraw (coinId) {
       this.$emit('validateOfWithdraw', {
-        index
+        coinId
       })
     },
     changeInputValue (ref, index, pointLengthAccountCount, val, coinId, total) {

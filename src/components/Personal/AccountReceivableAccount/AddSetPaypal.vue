@@ -13,18 +13,11 @@
     >
       <header class="add-payment-header personal-height60 line-height60 line-height70 margin25">
          <span
-           v-if="paymentTerm.isPaypalBind"
            class="header-content-left header-content font-size16 font-weight600"
          >
-          <!--设置paypal-->
-            {{ $t('M.user_bind_paypal_set') }}
-        </span>
-        <span
-          v-else
-          class="header-content-left header-content font-size16 font-weight600"
-        >
-          <!--修改paypal-->
-          {{ $t('M.comm_modification') }}PAYPAL
+           <!--设置paypal-->
+           {{ paymentTerm.isPaypalBind? $t('M.user_bind_paypal_set'): $t('M.comm_modification') + 'PAYPAL' }}
+           <!--修改paypal-->
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -89,20 +82,12 @@
             </el-form-item>
             <div style="width: 430px;">
               <button
-                v-if="paymentTerm.isPaypalBind"
                 class="payment-button border-radius4 cursor-pointer"
                 @click.prevent="stateSubmitPaypal"
               >
                 <!--确认设置-->
-                {{ $t('M.user_bind_paypal_confirm_set') }}
-              </button>
-              <button
-                v-else
-                class="payment-button border-radius4 cursor-pointer"
-                @click.prevent="stateSubmitPaypal"
-              >
+                {{ paymentTerm.isPaypalBind? $t('M.user_bind_paypal_set'): $t('M.comm_affirm') + $t('M.comm_modification') }}
                 <!--确认修改-->
-                {{ $t('M.user_modification_confirm_amend') }}
               </button>
               <p
                 class="font-size12 cursor-pointer text-align-r hint-color float-right"

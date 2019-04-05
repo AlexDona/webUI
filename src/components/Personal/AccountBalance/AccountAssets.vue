@@ -610,7 +610,8 @@ import {
   queryTransactionInformation,
   inquireWithdrawalAddressId,
   checkCurrencyAddress,
-  currencyTransform
+  currencyTransform,
+  getCoinRechargeWithdraw
 } from '../../../utils/api/personal'
 // 个人资产跳转OTC
 import {
@@ -685,7 +686,9 @@ export default {
       activeCurrency: {}, // 当前选中币种
       totalSumBTC: '', // 资产总估值BTC
       isRecharge: '', // 是否允许充币
+      isRechargeState: true, // 是否允许充币(作用于前后台同时进行充币或者禁用)
       isWithdraw: '', // 是否允许提币
+      isWithdrawState: true, // 是否允许提币(作用于前后台同时进行充币或者禁用)
       currencyTradingId: '', // 根据Id跳转到对应交易信息
       id: '', // 币种ID
       sellName: '', // 币种名称
@@ -930,8 +933,32 @@ export default {
       let targetCount = amendPrecision(this.withdrawCountVModel, this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value, '-')
       this.accountCount = targetCount > 0 ? targetCount : 0
     },
+    // 充提币校验是否禁用
+    async isRechargeWithdrawState (id) {
+      let data
+      let params = {
+        coinId: id// 列表id
+      }
+      data = await getCoinRechargeWithdraw(params)
+      if (!data) return false
+      // 是否允许充币
+      this.isRechargeState = getNestedData(data.data, 'isRecharge')
+      // 是否允许提币
+      this.isWithdrawState = getNestedData(data.data, 'isWithdraw')
+    },
     // 5.0点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
     async showRechargeBox (id, name) {
+      console.log(id)
+      // 校验是否充币
+      await this.isRechargeWithdrawState(id)
+      if (!this.isRechargeState) {
+        // 暂停提币
+        this.$message({
+          message: this.$t('M.user_assets_pause_mention'),
+          type: 'error'
+        })
+        return false
+      }
       // 每行数据ID
       this.chargeMoneyAddressId = id
       // 每行数据币种名称
@@ -1006,7 +1033,6 @@ export default {
       }
       // 提币数量
       this.resetWithdrawFormContent(id)
-
       // 当前币种id
       this.activeCoinId = id
       this.currencyName = name
@@ -1184,13 +1210,14 @@ export default {
     /**
      * 13.点击提币按钮 验证
      * */
-    async validateOfWithdraw (index) {
+    async validateOfWithdraw (id) {
+      console.log(id)
       this.phoneCode = '' // 短信验证码
       this.emailCode = '' // 邮箱验证码
       this.googleCode = '' // 谷歌验证码
       this.password = '' // 交易密码
       this.isShowWithdrawDialog = false
-      console.log(index)
+      // console.log(index)
       if (this.isNeedTag) {
         if (!this.withdrawRemark) {
           // 请输入备注
@@ -1216,7 +1243,6 @@ export default {
         })
         return false
       }
-
       if (!this.withdrawCountVModel) {
         // 请输入提币数量
         this.$message({
@@ -1233,7 +1259,7 @@ export default {
         })
         return false
       }
-      console.log(this.accountCount)
+      // console.log(this.accountCount)
       if (this.withdrawFeeVModel - this.feeRangeOfWithdraw.minFees < 0) {
         // 判断输入手续费小于最小提现手续费
         this.$message({
@@ -1249,7 +1275,7 @@ export default {
         })
         return false
       }
-      console.log(this.withdrawFeeVModel, this.feeRangeOfWithdraw)
+      // console.log(this.withdrawFeeVModel, this.feeRangeOfWithdraw)
       if (this.withdrawCountVModel - this.feeRangeOfWithdraw.maxWithdraw > 0) {
         // 大于最大限额
         this.$message({
@@ -1273,8 +1299,18 @@ export default {
         })
         return false
       }
+      // console.log(this.isWithdrawState)
+      // 校验是否提币
+      await this.isRechargeWithdrawState(id.coinId)
       if (!this.userInfo.userInfo.payPassword) {
         this.dialogVisible = true
+      } else if (!this.isWithdrawState) {
+        // 暂停提币
+        this.$message({
+          message: this.$t('M.user_assets_pause_mention'),
+          type: 'error'
+        })
+        return false
       } else {
         await this.REFRESH_USER_INFO_ACTION()
         let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true

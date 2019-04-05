@@ -13,18 +13,11 @@
     >
       <header class="add-western-header personal-height60 line-height60 line-height70 margin25">
         <span
-          v-if="paymentTerm.isXilianBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--设置西联汇款-->
-          {{ $t('M.user_bind_xilain') }}
-        </span>
-        <span
-          v-else
-          class="header-content-left header-content font-size16 font-weight600"
-        >
+          {{ paymentTerm.isXilianBind? $t('M.user_bind_xilain'): $t('M.comm_modification') + $t('M.user_account_western_union') }}
           <!--修改西联汇款-->
-          {{ $t('M.comm_modification') }}{{ $t('M.user_account_western_union') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -92,20 +85,11 @@
             </el-form-item>
             <div style="width: 400px;">
               <button
-                v-if="paymentTerm.isXilianBind"
                 class="western-button border-radius4 cursor-pointer"
                 @click.prevent="stateSubmitWesternUnion"
               >
                 <!--确认设置-->
-                {{ $t('M.comm_affirm') }}{{ $t('M.comm_set') }}
-              </button>
-              <button
-                v-else
-                class="western-button border-radius4 cursor-pointer"
-                @click.prevent="stateSubmitWesternUnion"
-              >
-                <!--确认修改-->
-                {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
+                {{ paymentTerm.isXilianBind? $t('M.comm_affirm') + $t('M.comm_modification'): $t('M.comm_affirm') + $t('M.comm_modification')}}                            <!--确认修改-->
               </button>
               <p
                 class="font-size12 cursor-pointer text-align-r hint-color float-right"

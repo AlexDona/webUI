@@ -244,6 +244,18 @@
                 <div>{{ s.row.inviter }}</div>
               </template>
             </el-table-column>
+            <!-- 状态 -->
+            <el-table-column
+              :label="$t('M.comm_state')"
+            >
+              <template slot-scope = "s">
+                <div>
+                  <!--已发放-->
+                  {{ s.row.status === 'enable' ? '已发放': '未发放'}}
+                  <!--未发放-->
+                </div>
+              </template>
+            </el-table-column>
           </el-table>
           <!--分页-->
           <el-pagination
