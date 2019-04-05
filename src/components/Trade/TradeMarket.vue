@@ -17,13 +17,16 @@
             {{ $t('M.trade_market_bazaar') }}
           </span>
         </span>
-        <span class="right">
-          <el-input
-            class="search-box"
-            suffix-icon="el-icon-search"
-            v-model="searchKeyWord"
-          ></el-input>
-        </span>
+        <div class="right">
+          <div class="search-box">
+            <input
+              ref="search-input"
+              @change="changeSearchKeyWord"
+              @input="changeSearchKeyWord"
+            />
+            <i class="el-icon-search"></i>
+          </div>
+        </div>
       </div>
       <el-collapse-transition>
         <div
@@ -153,6 +156,10 @@ export default {
       'SET_MIDDLE_TOP_DATA',
       'CHANGE_SYMBOL_CHANGED_STATUS'
     ]),
+    changeSearchKeyWord () {
+      let value = this.$refs['search-input'].value
+      this.searchKeyWord = value
+    },
     // 获取用户收藏列表
     async getCollectionList (collectSymbol) {
       await getCollectionList(data => {
@@ -629,6 +636,23 @@ export default {
           flex: 1;
           text-align: right;
 
+          > .search-box {
+            display: inline-block;
+            width: 100px;
+            height: 20px;
+            border: 1px solid #fff;
+            line-height: 0;
+            text-align: left;
+
+            > input {
+              box-sizing: border-box;
+              width: 70px;
+              height: 100%;
+              padding: 0 0 0 10px;
+              color: #fff;
+            }
+          }
+
           > button {
             width: 28px;
             height: 20px;
@@ -753,6 +777,16 @@ export default {
         > .title {
           color: $dayMainTitleColor;
           background-color: $mainDayBgColor;
+
+          > .right {
+            > .search-box {
+              border: 1px solid $mainNightTitleColor;
+
+              > input {
+                color: $dayMainTitleColor;
+              }
+            }
+          }
         }
 
         > .content {
