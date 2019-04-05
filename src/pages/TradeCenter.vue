@@ -32,7 +32,7 @@
       </div>
       <!--右侧-->
       <div class="right">
-        <Activity/>
+        <!--<Activity/>-->
         <!--市场-->
         <TradeMarketList/>
       </div>
