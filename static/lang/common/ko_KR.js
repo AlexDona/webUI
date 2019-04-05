@@ -100,6 +100,7 @@ export const common = {
   'comm_view_more': '더보기',
   'comm_sure_delete': 'API주소 삭제 확인하시나요?',
   'comm_sure_push': 'PUSH기록 철수 확인하시나요?',
+  'comm_sure_withdraw': '삭제 취소 기록 확정?',
   'comm_qr_code': 'QR코드',
   'comm_have_been_copied': '복제 완료',
   'comm_copies_failure': '복제실패，잠시후 재시도 부탁드립니다.',

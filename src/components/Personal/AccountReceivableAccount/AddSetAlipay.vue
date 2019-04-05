@@ -16,7 +16,7 @@
            class="header-content-left header-content font-size16 font-weight600"
          >
            <!--设置账号-->
-           {{ paymentTerm.isAlipayBind? $t('M.user_bind_Alipay_set_account'): $t('M.comm_modification') + $t('M.user_account_alipay') + $t('M.user_account_number') }}
+           {{ paymentTerm.isAlipayBind? $t('M.comm_set') + $t('M.user_account_alipay') + $t('M.user_account_number') : $t('M.comm_modification') + $t('M.user_account_alipay') + $t('M.user_account_number') }}
            <!--修改账号-->
         </span>
         <span

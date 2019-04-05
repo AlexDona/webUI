@@ -241,6 +241,22 @@
                     <div>{{ $t(`M.${s.row.i18nStatusName}`)}}</div>
                   </template>
                 </el-table-column>
+                <!--操作-->
+                <!--<el-table-column-->
+                  <!--:label="$t('M.comm_operation')"-->
+                  <!--v-if="withdrawSite"-->
+                <!--&gt;-->
+                  <!--<template slot-scope = "s">-->
+                    <!--<div-->
+                      <!--class="cursor-pointer state-status"-->
+                      <!--@click.prevent="confirmCancelWithdraw(s.row.id)"-->
+                      <!--:id="s.row.id"-->
+                    <!--&gt;-->
+                      <!--&lt;!&ndash;撤销&ndash;&gt;-->
+                      <!--{{ $t('M.user_push_revocation') }}-->
+                    <!--</div>-->
+                  <!--</template>-->
+                <!--</el-table-column>-->
               </el-table>
             </div>
           </div>
@@ -509,6 +525,31 @@ export default {
       await this.inquireCurrencyList(e.name)
     },
     /**
+     * 撤销提币记录
+     */
+    // confirmCancelWithdraw (id) {
+    //   // 确定删撤销提现记录?
+    //   this.$confirm(this.$t('M.comm_sure_withdraw'), {
+    //     // 取消
+    //     cancelButtonText: this.$t('M.comm_cancel'),
+    //     // 确定
+    //     confirmButtonText: this.$t('M.comm_confirm')
+    //   }).then(() => {
+    //     this.cancelWithdrawal(id)
+    //   }).catch(() => {
+    //   })
+    // },
+    // // 确认撤销提现
+    // cancelWithdrawal (id) {
+    //   console.log(id)
+    //   // 取消提现接口
+    //   // let data = await revocationPushProperty({
+    //   //   id
+    //   // })
+    //   // 调用刷新提币列表接口
+    //   // this.getChargeMentionList()
+    // },
+    /**
      * 2.获取商户币种列表
      */
     async inquireCurrencyList (entrustType) {
@@ -652,6 +693,10 @@ export default {
   .billing-details {
     > .billing-details-main {
       min-height: 665px;
+
+      .state-status {
+        color: $mainColor;
+      }
 
       .white-space {
         overflow: hidden;

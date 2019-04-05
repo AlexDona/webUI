@@ -475,7 +475,7 @@ export default {
       pushRecordList: [], // push列表记录
       currentPageForMyEntrust: 1, // 当前页码
       totalPageForMyEntrust: 1, // 当前总页数
-      pageSize: 10, // 每页显示条数
+      // pageSize: 10, // 每页显示条数
       currencyValueStatus: true, // 币种列表状态
       pointLength: 4, // 保留小数位后四位
       payPasswordErrorMsg: '', // 错误提示
