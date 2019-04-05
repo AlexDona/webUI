@@ -367,6 +367,7 @@
                   type="date"
                   value-format="yyyy-MM-dd"
                   @change="startTime"
+                  :picker-options="pickerOptions"
                 >
                 </el-date-picker>
                 <span class="date-short-line">-</span>
@@ -377,6 +378,7 @@
                   value-format="yyyy-MM-dd"
                   type="date"
                   @change="endTime"
+                  :picker-options="pickerOptions"
                 >
                 </el-date-picker>
               </span>
@@ -563,7 +565,13 @@ export default {
       // 出售本周交易
       sellWeekMap: {},
       // 当前法币币种保留小数点位数限制
-      pointLength: 2
+      pointLength: 2,
+      // 日期插件增加日期限制:只能选择当天及当前以前的日期
+      pickerOptions: {
+        disabledDate (time) {
+          return time.getTime() > Date.now() - 8.64e6 // 如果没有后面的-8.64e6就是不可以选择今天的
+        }
+      }
     }
   },
   async created () {
