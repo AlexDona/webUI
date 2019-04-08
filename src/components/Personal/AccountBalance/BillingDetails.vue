@@ -253,7 +253,7 @@
                       :id="s.row.id"
                     >
                       <!--撤销-->
-                      {{ s.row.status === 'USER_CANCEL' || s.row.status === 'CANCEL'? '': $t('M.user_push_revocation') }}
+                      {{ s.row.status === 'WAIT-WITHDRAW'? $t('M.user_push_revocation') : ''}}
                     </div>
                   </template>
                 </el-table-column>
