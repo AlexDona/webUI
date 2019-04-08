@@ -492,6 +492,8 @@ export default {
             depthData.sells.list.reverse()
           }
           this.socketData.buyAndSellData = depthData
+          this.socketData = {...this.socketData, symbol: data.symbol}
+          // console.log(this.socketData)
           break
         // 深度图
         case 'DEPTHRENDER':
@@ -664,7 +666,6 @@ export default {
       theme: state => state.common.theme,
       language: state => state.common.language,
       activeSymbol: state => state.common.activeSymbol,
-      activeSymbolId: state => state.common.activeSymbol.id,
       activeTradeArea: state => state.common.activeTradeArea,
       activeTabSymbolStr: state => state.trade.activeTabSymbolStr,
       mainColor: state => state.common.mainColor,

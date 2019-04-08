@@ -292,7 +292,7 @@ export default {
       if (NOW - SYMBOL_AGE < this.ONE_MINUTES && localSymbolLength) {
         symbolJSON = localSymbolJSON
       } else {
-        this.RESET_SYMBOL_MAP()
+        // this.RESET_SYMBOL_MAP()
         if (this.plates.length !== 1) {
           let symbolsData = await getAllSymbolsAJAX({
             i18n: this.language

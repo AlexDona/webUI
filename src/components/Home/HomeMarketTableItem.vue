@@ -1,7 +1,7 @@
 <template>
   <div
     class="table-item-box"
-    v-show="item.content.length||searchKeyWord"
+    v-show="item.content.length || (searchKeyWord&&item.id == searchAreaId)"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div

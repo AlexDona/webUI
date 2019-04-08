@@ -210,13 +210,17 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       buysAndSellsListByAjax: state => state.common.klineAjaxData.buyAndSellData,
-      buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData
+      buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData,
+      socketSymbol: state => state.common.socketData.symbol
     }),
     buysAndSellsList () {
-      return !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
+      return !this.isSameSymbol || !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
     },
     sellsListLength () {
       return (getNestedData(this.buysAndSellsList, 'sells.list') || []).length
+    },
+    isSameSymbol () {
+      return this.socketSymbol === this.$middleTopData_S_X.id
     }
   },
   watch: {
@@ -234,8 +238,8 @@ export default {
     },
     buysAndSellsListBySocket: {
       handler (newVal) {
-        // console.log(newVal)
-        if (!this.reflashCount && newVal) {
+        // console.log(this.isSameSymbol, newVal)
+        if (this.isSameSymbol && !this.reflashCount && newVal) {
           this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
           this.reflashCount += 1
         }

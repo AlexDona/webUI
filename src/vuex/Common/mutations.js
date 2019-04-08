@@ -55,9 +55,7 @@ export default {
   [CHANGE_SOCKET_AND_AJAX_DATA] (state, {
     socketData,
     ajaxData,
-    type,
-    serverTime,
-    isShowServerPort
+    type
   }) {
     // console.log(ajaxData)
     // console.log(type, ajaxData, socketData)
@@ -74,6 +72,7 @@ export default {
         break
       case 'socket':
         if (socketData) {
+          state.socketData.symbol = socketData.symbol
           state.socketData.depthData = getNestedData(socketData, 'depthData')
           // console.log(socketData.buyAndSellData)
           if (socketData.buyAndSellData) {
