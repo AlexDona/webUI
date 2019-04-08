@@ -139,7 +139,8 @@ export default {
       'SET_MIDDLE_TOP_DATA',
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
       'GET_SERVER_DATA',
-      'REFRESH_CONTENT_STATUS'
+      'REFRESH_CONTENT_STATUS',
+      'RETURN_SYMBOL_DATA'
     ]),
     changeIsKlineDataReady (status) {
       this.SET_IS_KLINE_DATA_READY(status)
@@ -222,6 +223,7 @@ export default {
       params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
       // console.log(data)
+      this.RETURN_SYMBOL_DATA(true)
       if (!data) return false
       let resultStr = ''
       let objList = getNestedData(data, 'data.obj')
@@ -567,7 +569,6 @@ export default {
         this.subscribeSocketData(this.symbol, newInterval)
       }
       const ticker = `${this.symbol}-${this.interval}`
-
       if (this.barsRenderTime % 2 == 0) {
         this.prevCacheList = this.cacheData[ticker] || []
       } else {
@@ -733,6 +734,7 @@ export default {
       this.getTradeMarketBySocket('SUB', newVal)
     },
     symbol (newVal, oldVal) {
+      console.log(newVal)
       if (oldVal) {
         this.resolutions.forEach((item) => {
           this.getKlineDataBySocket('CANCEL', oldVal, item)

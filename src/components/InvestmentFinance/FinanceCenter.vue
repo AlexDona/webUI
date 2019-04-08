@@ -1884,7 +1884,7 @@ export default {
   }
 
   .invest {
-    padding: 10px 0 10px 26px;
+    padding: 10px 20px 10px 26px;
     font-size: 16px;
     color: #fff;
     background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);

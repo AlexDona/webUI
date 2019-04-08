@@ -721,7 +721,7 @@ export default {
     await this.getOTCAvailableCurrencyList()
   },
   mounted () {
-    console.log(this.$refs)
+    console.log(this.$route.params)
   },
   activated () {},
   update () {},
