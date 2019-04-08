@@ -265,7 +265,7 @@ const routes = [
   },
   // 币币交易
   {
-    path: '/TradeCenter',
+    path: '/TradeCenter/:tradeId',
     name: 'TradeCenter',
     component: TradeCenter
   },

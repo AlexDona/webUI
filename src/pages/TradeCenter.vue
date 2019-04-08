@@ -84,7 +84,11 @@ export default {
       theme: state => state.common.theme
     })
   },
-  watch: {}
+  watch: {
+    $route () {
+
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

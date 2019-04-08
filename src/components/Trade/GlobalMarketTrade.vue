@@ -23,7 +23,7 @@
               <div class="thead">
                 <!-- 交易所 交易对 交易价 成交量 -->
                 <div class="tr">
-                  <div class="th width20">{{ $t('M.common_exchange') }}</div><div class="th symbol">{{ $t('M.common_counterparty') }}</div><div class="th price">{{ $t('M.common_transaction_price') }}</div><div class="th count">{{ $t('M.common_trading_volume') }}({{activeSymbol.sellsymbol}})</div>
+                  <div class="th width20">{{ $t('M.common_exchange') }}</div><div class="th symbol">{{ $t('M.common_counterparty') }}</div><div class="th price">{{ $t('M.common_transaction_price') }}</div><div class="th count">{{ $t('M.common_trading_volume') }}({{$middleTopData_S_X.sellsymbol}})</div>
                 </div>
               </div>
               <div
@@ -40,14 +40,14 @@
                     {{item.bourseTrade.split('_').join('/')}}
                   </div><div class="td price">
                     <div class="top">
-                      {{$scientificToNumber(cutOutPointLength(item.boursePrice, activeSymbol.priceExchange))}}
+                      {{$scientificToNumber(cutOutPointLength(item.boursePrice, $middleTopData_S_X.priceExchange))}}
                     </div><!--货币转换-->
                     <div
                       class="bottom"
-                      v-if="currencyRateList[activeSymbol.area]"
+                      v-if="currencyRateList[$middleTopData_S_X.area]"
                       :class="{
-                        'up':middleTopData.chg>0,
-                        'down':middleTopData.chg<0
+                        'up':$middleTopData_S_X.chg>0,
+                        'down':$middleTopData_S_X.chg<0
                       }"
                     >
                       ≈{{activeConvertCurrencyObj.symbol}}{{formatPrice(item.boursePrice)}}
@@ -61,10 +61,10 @@
                       <div
                         class="bottom"
                         :class="{
-                        'up':middleTopData.chg>0,
-                        'down':middleTopData.chg<0
+                        'up':$middleTopData_S_X.chg>0,
+                        'down':$middleTopData_S_X.chg<0
                       }"
-                        v-if="currencyRateList[activeSymbol.area]&&item.bourseCount"
+                        v-if="currencyRateList[$middleTopData_S_X.area]&&item.bourseCount"
                       >
                         ≈{{activeConvertCurrencyObj.symbol}}{{formatCount(item.bourseCount,item.boursePrice)}}
                       </div>
@@ -108,18 +108,18 @@ export default {
   methods: {
     // 交易价转换
     formatPrice (price) {
-      return this.$keep2Num((this.currencyRateList[this.activeSymbol.area] - 0) * price)
+      return this.$keep2Num((this.currencyRateList[this.$middleTopData_S_X.area] - 0) * price)
     },
     // 成交量格式化
     formatCount (targetNum, targetPrice) {
-      return this.$formatCount(targetPrice ? this.$keep2Num((this.currencyRateList[this.activeSymbol.area] - 0) * targetPrice * targetNum) : targetNum)
+      return this.$formatCount(targetPrice ? this.$keep2Num((this.currencyRateList[this.$middleTopData_S_X.area] - 0) * targetPrice * targetNum) : targetNum)
     },
     cutOutPointLength (num, pointLength) {
       return cutOutPointLength(num, pointLength)
     },
     // 获取全球行情
     async getGlobalMarket () {
-      let params = `${this.activeSymbol.sellsymbol}_${this.activeSymbol.area}`.toUpperCase()
+      let params = `${this.$middleTopData_S_X.sellsymbol}_${this.$middleTopData_S_X.area}`.toUpperCase()
       const symbol = params.split('_')[0]
       const area = params.split('_')[1]
       if (!symbol || !area) {
@@ -139,18 +139,15 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language,
-      middleTopData: state => state.trade.middleTopData,
-      activeSymbol: state => state.common.activeSymbol,
-      activeSymbolId: state => state.common.activeSymbol.id,
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
     })
   },
   watch: {
-    activeSymbol (newVal) {
+    $middleTopData_S_X (newVal) {
       console.log(newVal)
     },
-    activeSymbolId: {
+    $activeSymbol_S_X: {
       handler (newVal) {
         console.log(newVal)
         if (newVal) {

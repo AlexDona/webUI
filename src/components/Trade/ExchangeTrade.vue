@@ -26,7 +26,6 @@
         <el-tab-pane
           :label="$t('M.trade_exchange_price_deal')"
           name="limit-price"
-          v-if="isShowLimit"
         >
           <div
             class="content-box limit"
@@ -669,11 +668,6 @@ export default {
     }
   },
   async created () {
-    console.log(this.$isNeedLimitExchange_G_X, this.$isNeedYST_G_X, this.$isServerEnd_S_X)
-    if (!this.isShowLimit) {
-      this.activeName = 'market-price'
-      this.toggleMatchType()
-    }
     if (this.isLogin) {
       await this.REFRESH_USER_INFO_ACTION()
       // console.log(this.REFRESH_USER_INFO_ACTION)
@@ -834,12 +828,12 @@ export default {
     setTransformPrice (type, targetNum) {
       switch (type) {
         case 'limit-buy':
-          // this.limitExchange.transformBuyPrice = this.$scientificToNumber(this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum))
-          this.limitExchange.transformBuyPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
+          // this.limitExchange.transformBuyPrice = this.$scientificToNumber(this.$keep2Num(this.currencyRateList[this.$middleTopData_S_X.area] * targetNum))
+          this.limitExchange.transformBuyPrice = this.$keep2Num(this.currencyRateList[this.$middleTopData_S_X.area] * targetNum)
           // console.log(this.limitExchange.transformBuyPrice)
           break
         case 'limit-sell':
-          this.limitExchange.transformSellPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
+          this.limitExchange.transformSellPrice = this.$keep2Num(this.currencyRateList[this.$middleTopData_S_X.area] * targetNum)
           break
       }
     },
@@ -1157,7 +1151,7 @@ export default {
       if (this.$refs[this.limitBuyPriceInputRef]) {
         this.setRefValue(this.limitBuyPriceInputRef, targetPriceOfBuy)
         this.limitExchange.buyPrice = targetPriceOfBuy
-        const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, this.activeSymbol.priceExchange)
+        const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, this.$middleTopData_S_X.priceExchange)
         this.setTransformPrice('limit-buy', newBuyPrice)
         if (newBuyPrice) {
           this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / newBuyPrice).toFixed(this.middleTopData.priceExchange)
@@ -1166,7 +1160,7 @@ export default {
       if (this.$refs[this.limitSellPriceInputRef]) {
         this.setRefValue(this.limitSellPriceInputRef, targetPriceOfSell)
         this.limitExchange.sellPrice = targetPriceOfSell
-        const newSellPrice = this.formatInput(this.limitSellPriceInputRef, this.activeSymbol.priceExchange)
+        const newSellPrice = this.formatInput(this.limitSellPriceInputRef, this.$middleTopData_S_X.priceExchange)
         this.setTransformPrice('limit-sell', newSellPrice)
       }
     },
@@ -1248,7 +1242,6 @@ export default {
       theme: state => state.common.theme,
       refreshEntrustStatus: state => state.trade.refreshEntrustStatus,
       loginStep1Info: state => state.user.loginStep1Info,
-      activeSymbol: state => state.common.activeSymbol,
       isLogin: state => state.user.isLogin,
       activePriceItem: state => state.trade.activePriceItem,
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
@@ -1279,24 +1272,9 @@ export default {
     // 限价卖预计成交额
     limitSellAmount () {
       return this.$scientificToNumber(cutOutPointLength(this.$scientificToNumber(this.limitExchange.sellPrice * this.limitExchange.sellCount), 2))
-    },
-    isShowLimit () {
-      return this.$isNeedLimitExchange_G_X || !this.$isLimitShow_S_X || this.$isServerEnd_S_X
     }
   },
   watch: {
-    isShowLimit (newVal) {
-      if (!newVal) {
-        this.activeName = 'market-price'
-        this.toggleMatchType()
-      }
-    },
-    $isNeedLimitExchange_G_X (newVal) {
-      // console.log(newVal)
-      console.log(newVal, this.$isLimitShow_S_X)
-      this.activeName = newVal ? 'limit-price' : 'market-price'
-      this.toggleMatchType()
-    },
     matchType (newVal) {
       this.setSiderBarValue('limit', {
         buyPrice: 0,
@@ -1350,7 +1328,7 @@ export default {
     activeConvertCurrencyObj () {
       this.setBuyAndSellPrice(this.getRefValue(this.limitBuyPriceInputRef), this.getRefValue(this.limitSellPriceInputRef))
     },
-    activeSymbol () {
+    $activeSymbol_S_X () {
       this.reflashCount = 0
     },
     // 用户手动设置价格

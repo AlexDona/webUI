@@ -1891,7 +1891,7 @@ export default {
   }
 
   .totalTipsPositon {
-    margin: -20px 0 -20px 115px;
+    margin: -20px 0 -20px 134px;
     color: #d45858;
   }
 }
