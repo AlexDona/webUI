@@ -151,7 +151,6 @@ export default {
       'CHANGE_COLLECT_LIST',
       'CHANGE_COLLECT_SYMBOL',
       'CHANGE_SYMBOL_MAP',
-      'CHANGE_ACTIVE_SYMBOL',
       'CHANGE_ACTIVE_TAB_ID',
       'SET_MIDDLE_TOP_DATA',
       'CHANGE_SYMBOL_CHANGED_STATUS'
@@ -265,13 +264,16 @@ export default {
       this.setActiveTabSymbolStr()
     },
     // 设置 当前交易区
-    changeActiveSymbol ({activeSymbol, previousSymbol}) {
-      // console.log(activeSymbol)
-      this.CHANGE_ACTIVE_SYMBOL({
-        activeSymbol,
-        previousSymbol
-      })
+    changeActiveSymbol ({activeSymbol}) {
+      console.log(activeSymbol.id)
+      const {id} = activeSymbol
+      this.SET_MIDDLE_TOP_DATA(activeSymbol)
       this.CHANGE_SYMBOL_CHANGED_STATUS(true)
+      const TradeStr = '/TradeCenter/'
+      this.$goToPage(`${TradeStr}${id}`)
+      let {href} = window.location
+
+      window.location.href = `${href.split(TradeStr)[0]}${TradeStr}${id}`
     },
     // 排序
     sortByUser (data) {
@@ -499,10 +501,7 @@ export default {
       symbolMap: state => state.home.symbolMap, // 交易对map
       language: state => state.common.language,
       activeTradeArea: state => state.common.activeTradeArea,
-      activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
-      previousSymbol: state => state.common.previousSymbol,
       activeTabId: state => state.trade.activeTabId,
-      activeSymbolId: state => state.common.activeSymbol.id,
       collectSymbol: state => state.home.collectSymbol, // 收藏标记
       tradeMarkeContentItem: state => state.common.socketData.tradeMarkeContentItem,
       activeTabSymbolStr: state => state.trade.activeTabSymbolStr

@@ -73,7 +73,7 @@ const routes = [
   {
     // 个人中心
     path: '/PersonalCenter',
-    // name: 'PersonalCenter',
+    name: 'PersonalCenter',
     component: PersonalCenter
   },
   {
@@ -265,7 +265,7 @@ const routes = [
   },
   // 币币交易
   {
-    path: '/TradeCenter',
+    path: '/TradeCenter/:tradeId',
     name: 'TradeCenter',
     component: TradeCenter
   },

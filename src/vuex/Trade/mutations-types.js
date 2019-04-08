@@ -9,6 +9,8 @@ export const SET_IS_KLINE_DATA_READY = 'SET_IS_KLINE_DATA_READY' // 设置K线�
 export const SET_TARGET_EXCHANGE_DATA = 'SET_TARGET_EXCHANGE_DATA'
 // 获取服务器时间数据
 export const GET_SERVER_DATA = 'GET_SERVER_DATA'
+// 监控获取默认交易对信息接口是否返回
+export const RETURN_SYMBOL_DATA = 'RETURN_SYMBOL_DATA'
 // 活动是否结束
 export const CHANGE_ACTIVITY_STATUS = 'CHANGE_ACTIVITY_STATUS'
 // 活动是否正在进行

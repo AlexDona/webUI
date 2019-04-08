@@ -26,7 +26,6 @@
         <el-tab-pane
           :label="$t('M.trade_exchange_price_deal')"
           name="limit-price"
-          v-if="isShowLimit"
         >
           <div
             class="content-box limit"
@@ -44,20 +43,22 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <a
-                    @click.stop="jumpToPersonalCenter('assets')"
-                    :style="{'cursor': 'pointer'}"
+                  <button
+                    :class="{'gray':!buyIsRecharge}"
+                    :disabled="!buyIsRecharge"
+                    @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')"
                   >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </a>
-                  <a
-                    @click.stop="jumpToPersonalCenter('assets')"
-                    :style="{'cursor': 'pointer'}"
+                  </button>
+                  <button
+                    :class="{'gray':!buyIsWithdraw}"
+                    :disabled="!buyIsWithdraw"
+                    @click.stop="jumpToPersonalCenter('assets', 'buy', 'withdrawItemRef')"
                   >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
-                  </a>
+                  </button>
                 </div>
               </div>
               <div class="content">
@@ -155,20 +156,22 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <a
-                    @click="jumpToPersonalCenter('assets')"
-                    :style="{'cursor': 'pointer'}"
+                  <button
+                    @click="jumpToPersonalCenter('assets', 'sell', 'recharge')"
+                    :class="{'gray':!sellIsRecharge}"
+                    :disabled="!sellIsRecharge"
                   >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </a>
-                  <a
-                    @click="jumpToPersonalCenter('assets')"
-                    :style="{'cursor': 'pointer'}"
+                  </button>
+                  <button
+                    @click="jumpToPersonalCenter('assets', 'sell', 'withdrawItemRef')"
+                    :class="{'gray':!sellIsWithdraw}"
+                    :disabled="!sellIsWithdraw"
                   >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
-                  </a>
+                  </button>
                 </div>
               </div>
               <div class="content">
@@ -277,14 +280,22 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/PersonalCenter">
+                  <button
+                    @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')"
+                    :class="{'gray':!buyIsRecharge}"
+                    :disabled="!buyIsRecharge"
+                  >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </router-link>
-                  <router-link to="/PersonalCenter">
+                  </button>
+                  <button
+                    @click.stop="jumpToPersonalCenter('assets', 'buy', 'withdrawItemRef')"
+                    :class="{'gray':!buyIsWithdraw}"
+                    :disabled="!buyIsWithdraw"
+                  >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
-                  </router-link>
+                  </button>
                 </div>
               </div>
               <div class="content">
@@ -353,14 +364,22 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/PersonalCenter">
+                  <button
+                    @click="jumpToPersonalCenter('assets', 'sell', 'recharge')"
+                    :class="{'gray':!sellIsRecharge}"
+                    :disabled="!sellIsRecharge"
+                  >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </router-link>
-                  <router-link to="/PersonalCenter">
+                  </button>
+                  <button
+                    @click="jumpToPersonalCenter('assets', 'sell', 'withdrawItemRef')"
+                    :class="{'gray':!sellIsWithdraw}"
+                    :disabled="!sellIsWithdraw"
+                  >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
-                  </router-link>
+                  </button>
                 </div>
               </div>
               <div class="content">
@@ -533,6 +552,9 @@ import {
   getUserAssetOfActiveSymbol
 } from '../../utils/api/trade'
 import {
+  getCoinRechargeWithdraw
+} from '../../utils/api/personal'
+import {
   getNestedData,
   isNeedPayPasswordAjax,
   formatPointLength
@@ -551,6 +573,14 @@ export default {
   // props,
   data () {
     return {
+      // 买入是否允许充币
+      buyIsRecharge: false,
+      // 买入是否允许提币
+      buyIsWithdraw: false,
+      // 卖出是否允许充币
+      sellIsRecharge: false,
+      // 卖出是否允许提币
+      sellIsWithdraw: false,
       notVerifyDialogVisible: false, // 实名认证弹窗显示与隐藏
       activeName: 'limit-price',
       // 限价交易 买入价input ref name
@@ -638,11 +668,6 @@ export default {
     }
   },
   async created () {
-    console.log(this.$isNeedLimitExchange_G_X, this.$isNeedYST_G_X, this.$isServerEnd_S_X)
-    if (!this.isShowLimit) {
-      this.activeName = 'market-price'
-      this.toggleMatchType()
-    }
     if (this.isLogin) {
       await this.REFRESH_USER_INFO_ACTION()
       // console.log(this.REFRESH_USER_INFO_ACTION)
@@ -652,8 +677,7 @@ export default {
     // this.getRefValue(this.limitBuyPriceInputRef)
   },
   activated () {},
-  update () {
-  },
+  update () {},
   beforeRouteUpdate () {
   },
   methods: {
@@ -663,7 +687,8 @@ export default {
       'SET_TARGET_EXCHANGE_DATA',
       'CHANGE_SYMBOL_CHANGED_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_PASSWORD_USEABLE'
+      'CHANGE_PASSWORD_USEABLE',
+      'RETURN_SYMBOL_DATA'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -674,9 +699,39 @@ export default {
       this.$goToPage('/PersonalCenter')
       this.notVerifyDialogVisible = false
     },
-    jumpToPersonalCenter (target) {
+    // 决定是否能充提币
+    async isRechargeOrWithdraw (tradType) {
+      console.log(this.middleTopData)
+      const data = await getCoinRechargeWithdraw({
+        coinId: tradType === 'buy' ? this.middleTopData.buyCoinId : this.middleTopData.sellCoinId
+      })
+      if (!data) return false
+      if (tradType === 'buy') {
+        this.buyIsRecharge = getNestedData(data.data, 'isRecharge')
+        this.buyIsWithdraw = getNestedData(data.data, 'isWithdraw')
+      } else {
+        this.sellIsRecharge = getNestedData(data.data, 'isRecharge')
+        this.sellIsWithdraw = getNestedData(data.data, 'isWithdraw')
+      }
+    },
+    async jumpToPersonalCenter (target, tradType, type) {
+      console.log(type)
+      if (tradType) {
+        this.$router.push({
+          path: '/PersonalCenter',
+          name: 'PersonalCenter',
+          params: {
+            coinId: tradType === 'buy' ? this.middleTopData.buyCoinId : this.middleTopData.sellCoinId,
+            type: type
+          }
+        })
+      } else {
+        this.$router.push({
+          path: '/PersonalCenter',
+          name: 'PersonalCenter'
+        })
+      }
       this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
-      this.$goToPage('/PersonalCenter')
     },
     changeSliderDisabled () {
       // console.log(this.buyUserCoinWallet.total)
@@ -773,12 +828,12 @@ export default {
     setTransformPrice (type, targetNum) {
       switch (type) {
         case 'limit-buy':
-          // this.limitExchange.transformBuyPrice = this.$scientificToNumber(this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum))
-          this.limitExchange.transformBuyPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
+          // this.limitExchange.transformBuyPrice = this.$scientificToNumber(this.$keep2Num(this.currencyRateList[this.$middleTopData_S_X.area] * targetNum))
+          this.limitExchange.transformBuyPrice = this.$keep2Num(this.currencyRateList[this.$middleTopData_S_X.area] * targetNum)
           // console.log(this.limitExchange.transformBuyPrice)
           break
         case 'limit-sell':
-          this.limitExchange.transformSellPrice = this.$keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
+          this.limitExchange.transformSellPrice = this.$keep2Num(this.currencyRateList[this.$middleTopData_S_X.area] * targetNum)
           break
       }
     },
@@ -1096,7 +1151,7 @@ export default {
       if (this.$refs[this.limitBuyPriceInputRef]) {
         this.setRefValue(this.limitBuyPriceInputRef, targetPriceOfBuy)
         this.limitExchange.buyPrice = targetPriceOfBuy
-        const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, this.activeSymbol.priceExchange)
+        const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, this.$middleTopData_S_X.priceExchange)
         this.setTransformPrice('limit-buy', newBuyPrice)
         if (newBuyPrice) {
           this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / newBuyPrice).toFixed(this.middleTopData.priceExchange)
@@ -1105,7 +1160,7 @@ export default {
       if (this.$refs[this.limitSellPriceInputRef]) {
         this.setRefValue(this.limitSellPriceInputRef, targetPriceOfSell)
         this.limitExchange.sellPrice = targetPriceOfSell
-        const newSellPrice = this.formatInput(this.limitSellPriceInputRef, this.activeSymbol.priceExchange)
+        const newSellPrice = this.formatInput(this.limitSellPriceInputRef, this.$middleTopData_S_X.priceExchange)
         this.setTransformPrice('limit-sell', newSellPrice)
       }
     },
@@ -1187,7 +1242,6 @@ export default {
       theme: state => state.common.theme,
       refreshEntrustStatus: state => state.trade.refreshEntrustStatus,
       loginStep1Info: state => state.user.loginStep1Info,
-      activeSymbol: state => state.common.activeSymbol,
       isLogin: state => state.user.isLogin,
       activePriceItem: state => state.trade.activePriceItem,
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
@@ -1199,7 +1253,11 @@ export default {
       // 实名认证
       realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth'),
       // 交易密码是否被锁定
-      isLockedPayPassword: state => state.common.isLockedPayPassword
+      isLockedPayPassword: state => state.common.isLockedPayPassword,
+      // 获取当前交易对id
+      currentCoinId: state => state.trade.middleTopData.id,
+      isReturnSymbolData: state => state.trade.isReturnSymbolData
+
     }),
     isNeedErrorMsgForSellCount () {
       return this.marketExchange.sellCount > this.sellUserCoinWallet.total
@@ -1214,24 +1272,9 @@ export default {
     // 限价卖预计成交额
     limitSellAmount () {
       return this.$scientificToNumber(cutOutPointLength(this.$scientificToNumber(this.limitExchange.sellPrice * this.limitExchange.sellCount), 2))
-    },
-    isShowLimit () {
-      return this.$isNeedLimitExchange_G_X || !this.$isLimitShow_S_X || this.$isServerEnd_S_X
     }
   },
   watch: {
-    isShowLimit (newVal) {
-      if (!newVal) {
-        this.activeName = 'market-price'
-        this.toggleMatchType()
-      }
-    },
-    $isNeedLimitExchange_G_X (newVal) {
-      // console.log(newVal)
-      console.log(newVal, this.$isLimitShow_S_X)
-      this.activeName = newVal ? 'limit-price' : 'market-price'
-      this.toggleMatchType()
-    },
     matchType (newVal) {
       this.setSiderBarValue('limit', {
         buyPrice: 0,
@@ -1285,7 +1328,7 @@ export default {
     activeConvertCurrencyObj () {
       this.setBuyAndSellPrice(this.getRefValue(this.limitBuyPriceInputRef), this.getRefValue(this.limitSellPriceInputRef))
     },
-    activeSymbol () {
+    $activeSymbol_S_X () {
       this.reflashCount = 0
     },
     // 用户手动设置价格
@@ -1293,7 +1336,7 @@ export default {
       if (newVal) this.setBuyAndSellPrice(newVal)
     },
     async middleTopData (newVal) {
-      // console.log(newVal)
+      console.log(newVal)
       let targetPriceOfBuy = newVal.buy || newVal.kai
       let targetPriceOfSell = newVal.sell || newVal.kai
       // 首次打开设置价格
@@ -1305,6 +1348,18 @@ export default {
         } else {
           this.setBuyAndSellPrice(targetPriceOfSell, targetPriceOfBuy)
         }
+      }
+    },
+    currentCoinId (newVal) {
+      // 请求决定该交易对书否能重提币
+      this.isRechargeOrWithdraw('buy')
+      this.isRechargeOrWithdraw('sell')
+    },
+    isReturnSymbolData (newVal) {
+      if (newVal) {
+        this.isRechargeOrWithdraw('buy')
+        this.isRechargeOrWithdraw('sell')
+        this.RETURN_SYMBOL_DATA(false)
       }
     }
   }
@@ -1640,8 +1695,20 @@ export default {
                   display: inline-block;
                 }
 
-                > a {
+                > button {
                   color: $nightFontColor;
+
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+
+                .gray {
+                  color: gray;
+
+                  &:hover {
+                    cursor: not-allowed;
+                  }
                 }
               }
             }

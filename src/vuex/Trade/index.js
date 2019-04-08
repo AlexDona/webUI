@@ -15,6 +15,8 @@ const state = {
   activePriceItem: '',
   // 中部当前交易对选中数据
   middleTopData: {},
+  // 监控getActiveSymbolData是否返回
+  isReturnSymbolData: false,
   // 中部当前交易对选中socket数据
   middleTopSocketData: {},
   // 是否从其他页面跳转到币币交易页面

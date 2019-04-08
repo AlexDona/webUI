@@ -4,7 +4,6 @@ import {
   CHANGE_CONVERT_CURRENCY,
   CHANGE_SOCKET_REFRESH_STATUS,
   CHANGE_SOCKET_AND_AJAX_DATA,
-  CHANGE_ACTIVE_SYMBOL,
   CHANGE_ACTIVE_TRADE_AREA,
   CHANGE_CURRENCY_RATE_LIST,
   USER_ASSETS_LIST,
@@ -56,9 +55,7 @@ export default {
   [CHANGE_SOCKET_AND_AJAX_DATA] (state, {
     socketData,
     ajaxData,
-    type,
-    serverTime,
-    isShowServerPort
+    type
   }) {
     // console.log(ajaxData)
     // console.log(type, ajaxData, socketData)
@@ -75,6 +72,7 @@ export default {
         break
       case 'socket':
         if (socketData) {
+          state.socketData.symbol = socketData.symbol
           state.socketData.depthData = getNestedData(socketData, 'depthData')
           // console.log(socketData.buyAndSellData)
           if (socketData.buyAndSellData) {
@@ -87,17 +85,6 @@ export default {
           state.socketData.tradeMarkeContentItem = socketData.tradeMarkeContentItem
         }
         break
-    }
-  },
-  // 更改当前选中交易对
-  [CHANGE_ACTIVE_SYMBOL] (state, {activeSymbol, previousSymbol}) {
-    // console.log(activeSymbol)
-    if (activeSymbol) {
-      state.activeSymbol = activeSymbol
-      setStore('activeSymbol', activeSymbol)
-    }
-    if (previousSymbol) {
-      state.previousSymbol = previousSymbol
     }
   },
   [CHANGE_SYMBOL_CHANGED_STATUS] (state, status) {

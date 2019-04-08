@@ -49,8 +49,7 @@ import {
   // getCollectionList
 } from '../../utils/commonFunc'
 import {
-  unzip,
-  getStoreWithJson
+  unzip
 } from '../../utils'
 import {
   mapMutations,
@@ -75,7 +74,6 @@ export default {
       options: {
         // symbol: this.activeSymbol.sellsymbol + this.activeSymbol.area,
         symbol: 'ETCFBT',
-        previousSymbol: '', // 上一个交易对（取消用）
         interval: 1,
         // paneProperties: this.paneProperties
         paneProperties: {
@@ -115,10 +113,14 @@ export default {
     // this.widget = null
     // console.log(this.socket)
     this.socket.doOpen()
+  },
+  async mounted () {
+    const {tradeId} = this.$route.params
+    if (tradeId && tradeId !== 'default') {
+      await this.getActiveSymbolData(tradeId)
+    }
     // 获取默认交易对
     await this.getDefaultSymbol()
-  },
-  mounted () {
     this.initKLine(this.symbol)
   },
   activated () {
@@ -133,13 +135,13 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'CHANGE_ACTIVE_SYMBOL',
       'CHANGE_SOCKET_AND_AJAX_DATA',
       'SET_IS_KLINE_DATA_READY',
       'SET_MIDDLE_TOP_DATA',
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
       'GET_SERVER_DATA',
-      'REFRESH_CONTENT_STATUS'
+      'REFRESH_CONTENT_STATUS',
+      'RETURN_SYMBOL_DATA'
     ]),
     changeIsKlineDataReady (status) {
       this.SET_IS_KLINE_DATA_READY(status)
@@ -222,6 +224,7 @@ export default {
       params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
       // console.log(data)
+      this.RETURN_SYMBOL_DATA(true)
       if (!data) return false
       let resultStr = ''
       let objList = getNestedData(data, 'data.obj')
@@ -278,36 +281,14 @@ export default {
     },
     // 获取初始交易对
     async getDefaultSymbol () {
-      let storeSymbol = getStoreWithJson('activeSymbol') || {}
-      // console.log(storeSymbol)
       let activeSymbol
-      if (!getNestedData(storeSymbol, 'id')) {
-        let data = await getDefaultSymbol()
-        if (!data) return false
-
-        const obj = getNestedData(data, 'data')
-        // console.log(obj)
-        const id = (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName'))
-        if (!id) return false
-        activeSymbol = {
-          id: (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase(),
-          tradeId: getNestedData(obj, 'id'),
-          sellsymbol: getNestedData(obj, 'sellCoinName'), // 币种简称
-          sellname: getNestedData(obj, 'buyCoinName'), // 币种全程
-          area: getNestedData(obj, 'buyCoinName'), // 交易区
-          areaId: getNestedData(obj, 'tradeAreaId')
-        }
-      } else {
-        activeSymbol = storeSymbol
-      }
-
-      // 是否从其他页面跳转
-      this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
-      this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
-      this.symbol = getNestedData(this.activeSymbol, 'id')
-      if (this.isLogin) {
-        this.getUserOrderSocket('SUB', this.symbol)
-      }
+      let data = await getDefaultSymbol()
+      if (!data) return false
+      const obj = getNestedData(data, 'data')
+      activeSymbol = (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase()
+      const {tradeId} = this.$route.params
+      this.symbol = tradeId && tradeId !== 'default' ? tradeId : activeSymbol
+      if (this.isLogin) this.getUserOrderSocket('SUB', this.symbol)
     },
     init (options) {
       if (!this.widget) {
@@ -513,6 +494,8 @@ export default {
             depthData.sells.list.reverse()
           }
           this.socketData.buyAndSellData = depthData
+          this.socketData = {...this.socketData, symbol: data.symbol}
+          // console.log(this.socketData)
           break
         // 深度图
         case 'DEPTHRENDER':
@@ -567,7 +550,6 @@ export default {
         this.subscribeSocketData(this.symbol, newInterval)
       }
       const ticker = `${this.symbol}-${this.interval}`
-
       if (this.barsRenderTime % 2 == 0) {
         this.prevCacheList = this.cacheData[ticker] || []
       } else {
@@ -685,7 +667,6 @@ export default {
       theme: state => state.common.theme,
       language: state => state.common.language,
       activeSymbol: state => state.common.activeSymbol,
-      activeSymbolId: state => state.common.activeSymbol.id,
       activeTradeArea: state => state.common.activeTradeArea,
       activeTabSymbolStr: state => state.trade.activeTabSymbolStr,
       mainColor: state => state.common.mainColor,
@@ -719,7 +700,10 @@ export default {
         this.fullscreenLoading = false
       }, 1000)
     },
-    async activeSymbolId (newVal) {
+    $middleTopData_S_X (newVal) {
+      console.log(newVal)
+    },
+    async $activeSymbol_S_X (newVal) {
       this.changeIsKlineDataReady(false)
       this.initKLine(newVal)
       this.KlineNum = 0
@@ -733,6 +717,7 @@ export default {
       this.getTradeMarketBySocket('SUB', newVal)
     },
     symbol (newVal, oldVal) {
+      console.log(newVal)
       if (oldVal) {
         this.resolutions.forEach((item) => {
           this.getKlineDataBySocket('CANCEL', oldVal, item)

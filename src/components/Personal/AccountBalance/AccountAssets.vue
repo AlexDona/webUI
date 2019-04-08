@@ -721,7 +721,7 @@ export default {
     await this.getOTCAvailableCurrencyList()
   },
   mounted () {
-    console.log(this.$refs)
+    console.log(this.$route.params)
   },
   activated () {},
   update () {},
@@ -1470,7 +1470,7 @@ export default {
     },
     filteredData: function () {
       return this.withdrawDepositList.filter((item) => {
-        return item['coinName'].indexOf(this.searchKeyWord.toLocaleUpperCase()) !== -1
+        return item['coinName'].toLowerCase().indexOf(this.searchKeyWord.toLowerCase()) !== -1
       })
     },
     // 筛选币种为小于零的币种

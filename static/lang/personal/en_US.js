@@ -169,6 +169,8 @@ export const personal = {
   'user_invite_user_uid': 'User UID',
   'user_invite_login_name': 'log-in name',
   'user_invite_direct_referrer': 'Direct referrer UID',
+  'user_invite_issued': 'Released',
+  'user_invite_noIssued': 'Not release',
   // 奖励记录列表List of reward records
   'user_invite_award': 'Rewards',
   // 安全中心Security center

@@ -53,17 +53,17 @@
               <li class="th price">
                 <!--价格-->
                 {{ $t('M.comm_price_metre') }}
-                <span>（{{activeSymbol.area}}）</span>
+                <span>（{{middleTopData.area}}）</span>
               </li>
               <li class="th count">
                 <!--数量-->
                 {{ $t('M.comm_count') }}
-                <span>（{{activeSymbol.sellsymbol}}）</span>
+                <span>（{{middleTopData.sellsymbol}}）</span>
               </li>
               <li class="th entrust">
                 <!--委托金额-->
                 {{ $t('M.trade_coin_entrust_money1') }}
-                <span>（{{activeSymbol.area}}）</span>
+                <span>（{{middleTopData.area}}）</span>
               </li>
               <li class="th already">
                 <!--已成交-->
@@ -179,7 +179,7 @@
               <li class="th price">
                 <!--价格-->
                 {{ $t('M.comm_price_metre') }}
-                <span>（{{activeSymbol.area}}）</span>
+                <span>（{{middleTopData.area}}）</span>
               </li>
               <li class="th count">
                 <!--委托量-->
@@ -188,12 +188,12 @@
               <li class="th price">
                 <!--已成交量-->
                 {{ $t('M.trade_coin_has_traded_amount') }}
-                <span>（{{activeSymbol.sellsymbol}}）</span>
+                <span>（{{middleTopData.sellsymbol}}）</span>
               </li>
               <li class="th price">
                 <!--成交均价-->
                 {{ $t('M.common_average_price') }}
-                <span>（{{activeSymbol.area}}）</span>
+                <span>（{{middleTopData.area}}）</span>
               </li>
               <li class="th status">
                 <!--状态-->
@@ -429,7 +429,6 @@ export default {
       isLogin: state => state.user.isLogin,
       refreshEntrustStatus: state => state.trade.refreshEntrustStatus,
       userInfo: state => state.user.loginStep1Info,
-      activeSymbol: state => state.common.activeSymbol,
       middleTopData: state => state.trade.middleTopData
     })
   },

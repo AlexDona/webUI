@@ -29,7 +29,7 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/TradeCenter">
+              <router-link to="/TradeCenter/default">
                 <!--<span>币币交易</span>-->
                  <span>{{$t('M.comm_trade_center')}}</span>
               </router-link>
@@ -751,11 +751,11 @@ export default{
         await this.changeActiveTransitionCurrency()
       }
     },
-    setNewTitle (path) {
+    setNewTitle (path = '/TradeCenter') {
       let newTitle = ''
       let priceData = this.$scientificToNumber(this.middleTopData.last)
       if (this.title) {
-        if (path && path === '/TradeCenter' && priceData && this.middleTopData.sellsymbol && this.middleTopData.area) {
+        if (path && path.startsWith('/TradeCenter') && priceData && this.middleTopData.sellsymbol && this.middleTopData.area) {
           newTitle = `${priceData} ${this.middleTopData.sellsymbol}/${this.middleTopData.area} ${this.title}`
         } else {
           newTitle = `${this.title}`
@@ -814,7 +814,7 @@ export default{
       this.isNoticeReady = true
     },
     middleTopDataPrice () {
-      this.setNewTitle('/TradeCenter')
+      this.setNewTitle()
     },
     $route: {
       // val是改变之后的路由，oldVal是改变之前的val

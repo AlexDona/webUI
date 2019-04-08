@@ -292,7 +292,7 @@ export default {
       if (NOW - SYMBOL_AGE < this.ONE_MINUTES && localSymbolLength) {
         symbolJSON = localSymbolJSON
       } else {
-        this.RESET_SYMBOL_MAP()
+        // this.RESET_SYMBOL_MAP()
         if (this.plates.length !== 1) {
           let symbolsData = await getAllSymbolsAJAX({
             i18n: this.language
@@ -482,19 +482,6 @@ export default {
           )
         }
       })
-    },
-    // 更改当前交易对
-    changeActiveSymbol (e) {
-      this.SET_JUMP_STATUS(true)
-      this.SET_JUMP_SYMBOL(e)
-      // 设置当前交易区
-      const id = e.areaId
-      const name = e.area
-      this.CHANGE_ACTIVE_TRADE_AREA({
-        id,
-        name
-      })
-      this.$goToPage('/TradeCenter')
     },
     // 获取用户收藏列表
     async getCollectionList (collectSymbol) {

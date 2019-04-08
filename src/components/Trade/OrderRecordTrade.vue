@@ -34,7 +34,7 @@
                 </el-table-column>
                 <!--成交价-->
                 <el-table-column
-                  :label="$t('M.otc_MerchantsOrders_transaction_price') + ('('+ activeSymbol.area +')')"
+                  :label="$t('M.otc_MerchantsOrders_transaction_price') + ('('+ $middleTopData_S_X.area +')')"
                 >
                   <template slot-scope="s">
                     <span
@@ -49,7 +49,7 @@
                 </el-table-column>
                 <!--成交量-->
                 <el-table-column
-                  :label="$t('M.comm_trading_volume1') +('('+activeSymbol.sellsymbol+')')"
+                  :label="$t('M.comm_trading_volume1') +('('+$middleTopData_S_X.sellsymbol+')')"
                 >
                   <template slot-scope="s">
                     <span class="text-align-r font-size12">
@@ -100,8 +100,7 @@ export default {
       theme: state => state.common.theme,
       orderRecordListByAjax: state => state.common.klineAjaxData.tardeRecordList,
       orderRecordListBySocket: state => state.common.socketData.tardeRecordList,
-      clientWidth: state => state.common.clientWidth,
-      activeSymbol: state => state.common.activeSymbol
+      clientWidth: state => state.common.clientWidth
     }),
     orderRecordList () {
       return (this.reflashCount < 1) ? this.orderRecordListByAjax : this.orderRecordListBySocket
@@ -118,7 +117,7 @@ export default {
     }
   },
   watch: {
-    activeSymbol () {
+    $activeSymbol_S_X () {
       this.reflashCount = 0
     },
     orderRecordListBySocket (newVal) {
