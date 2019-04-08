@@ -181,7 +181,7 @@ export const OTC = {
   'otc_merchant_authentication': 'OTC商家契約',
   'otc_merchant_content_one': '要求に応じて申請データを記入してください',
   'otc_merchant_pleaseDowload': '1.ダウンロード',
-  'otc_merchant_videoKode': '2.記録ビデオ素材、要件は以下のとおりです：',
+  'otc_merchant_videoKode': '2.記録ビデオ素材、要件は以下のとおりです',
   'otc_merchant_detailOne': 'IDカードを持ってあなたの顔を記録し、録音中に音と画像をクリアに保ちます。',
   'otc_merchant_detailTwo': '記録しているときには、本人（名前）、ID番号（IDカード番号）、私の資金源は法的で信頼性があり、Bitcoinなどのデジタル資産を取引したいと思っています。すべてのリスクを負います。',
   'otc_merchant_applyLimit': '3.申請資格条件：1申請者はOTCをうまく取引する必要がある',
