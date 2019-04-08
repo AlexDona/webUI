@@ -73,7 +73,7 @@ const routes = [
   {
     // 个人中心
     path: '/PersonalCenter',
-    // name: 'PersonalCenter',
+    name: 'PersonalCenter',
     component: PersonalCenter
   },
   {
