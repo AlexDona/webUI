@@ -54,8 +54,31 @@
                 </span>
               </div>
             </div>
-            <!-- 支付方式、货比类型、发布订单按钮 -->
+            <!-- 国家列表、支付方式、货比类型、发布订单按钮 -->
             <div class="otc-publish-box">
+              <!-- 增加国家-国家列表-->
+              <!--进来网站默认显示中国国家和人民币法币-->
+              <span class="country-style">
+                <IconFontCommon
+                  class="country-style-icon"
+                  iconName="icon-guojia2"
+                />
+                <el-select
+                  v-model="checkedCountryId"
+                  @change="changeCountryId"
+                  :placeholder="$t('M.comm_please_choose')"
+                  :no-data-text="$t('M.comm_no_data')"
+                  :disabled="countrySelectStatus"
+                >
+                  <el-option
+                    v-for="(item, index) in countryInfoList"
+                    :key="index"
+                    :label="language === 'zh_CN' || language === 'zh_TW'? item.countryName : item.englishName"
+                    :value="item.id"
+                  >
+                  </el-option>
+                </el-select>
+              </span>
               <!-- 货币类型 -->
               <span class="currency-style">
                 <IconFontCommon
@@ -248,7 +271,7 @@
                     type="danger"
                     size="mini"
                     v-if="OTCBuySellStyle === 'onlineBuy'"
-                    @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId)"
+                    @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId,s.row.country)"
                   >
                     <!-- 购买 -->
                     {{$t('M.comm_buying')}}
@@ -257,7 +280,7 @@
                     type="success"
                     size="mini"
                     v-if="OTCBuySellStyle === 'onlineSell'"
-                    @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId)"
+                    @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId,s.row.country)"
                   >
                     <!-- 出售 -->
                    {{$t('M.comm_offering')}}
@@ -431,7 +454,9 @@ import {
   getOTCAvailableCurrency,
   getOTCPutUpOrders,
   getMerchantAvailableLegalTender,
-  getCommonPutUpOrderStatus
+  getCommonPutUpOrderStatus,
+  // 增加国家-
+  getCurrencyCountrys
 } from '../../utils/api/OTC'
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import OTCTradingOrder from '../../components/OTC/OTCTradingOrder'
@@ -440,7 +465,6 @@ import OTCCanceledOrder from '../../components/OTC/OTCCanceledOrder'
 import OTCFreezingOrder from '../../components/OTC/OTCFreezingOrder'
 import OTCEntrustOrder from '../../components/OTC/OTCEntrustOrder'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -520,12 +544,14 @@ export default {
       checkedPayType: '',
       // 我要购买出售币种数组
       IWantToBuySellArr: [],
-      isDisabledTimer: null // 面板切换防止频繁点击倒计时
+      isDisabledTimer: null, // 面板切换防止频繁点击倒计时
+      // 增加国家-国家列表
+      checkedCountryId: '', // 增加国家-选中国家id
+      countryInfoList: [], // 增加国家-国家列表
+      countrySelectStatus: true // 国家下拉选择框禁用状态
     }
   },
   async created () {
-    // 0.0 查询用户是否可以发单状态:不分登录前和登录后
-    await this.getUserPutUpOrderStatus()
     // 1.0 otc可用币种查询：我要购买/我要出售的币种列表
     await this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
@@ -534,8 +560,14 @@ export default {
     await this.getOTCPutUpOrdersList()
     // 4.0 用户登录了刷新用户个人信息
     if (this.isLogin) {
+      await this.REFRESH_USER_INFO_ACTION()
       this.reflashUserInfo() // 刷新用户信息
+      console.log('国家码：' + this.userInfo.country)
     }
+    // 5.0 增加国家-查询法币联动国家列表
+    await this.getCurrencyCountrysList()
+    // 6.0 查询用户是否可以发单状态:不分登录前和登录后
+    await this.getUserPutUpOrderStatus()
   },
   mounted () {
     // 如果是从购买和出售下单跳转过来的时候，页面加载打开到锚点位置：anchorStatus在全局先定义false，当用户购买或者出售时候改为true
@@ -568,6 +600,48 @@ export default {
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
+    // 增加国家-查询法币联动国家列表
+    async getCurrencyCountrysList () {
+      this.countrySelectStatus = true
+      const data = await getCurrencyCountrys()
+      // 返回数据正确的逻辑
+      console.log(data)
+      if (!data) return false
+      this.countryInfoList = getNestedData(data, 'data')
+      this.countrySelectStatus = false
+      // 给返回国家列表增加一项全部国家
+      let ALL = {
+        'countryId': '',
+        'countryName': '全部国家',
+        'createTime': null,
+        'englishName': 'All Country',
+        'id': '',
+        'language': '',
+        'languageName': '',
+        'name': '',
+        'partnerId': '',
+        'shortName': '',
+        'status': '',
+        'symbol': '',
+        'updateTime': '',
+        'version': 3
+      }
+      this.countryInfoList.unshift(ALL)
+      console.log(this.countryInfoList)
+    },
+    // 增加国家-切换国家
+    changeCountryId (e) {
+      console.log(e)
+      this.currentPage = 1 // 改变页码为第1页
+      this.checkedCountryId = e
+      this.availableCurrencyId.forEach(item => {
+        if (e == item.id) {
+          this.checkedCurrencyId = item.id
+        }
+      })
+      // 根据条件刷新列表
+      this.getOTCPutUpOrdersList()
+    },
     // 点击交易中订单图标沙漏跳转到交易中订单
     toggleTradingOrder () {
       if (!this.isLogin) {
@@ -609,7 +683,7 @@ export default {
       }
     },
     // 0.2 点击发布订单按钮跳转到发布订单页面
-    toPublishOrder () {
+    async toPublishOrder () {
       // 增加没有币种和法币点击按钮不跳转的验证
       if (!this.selectedOTCAvailableCurrencyCoinID) {
         // message: '请选择要发布的币种',
@@ -631,7 +705,7 @@ export default {
       if (!this.isLogin) {
         this.$goToPage('/login')
       } else {
-        this.reflashUserInfo() // 刷新用户信息
+        await this.REFRESH_USER_INFO_ACTION()
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
@@ -660,12 +734,14 @@ export default {
       }
     },
     // 0.3 点击 购买 或者 出售 按钮跳转到在线购买或者出售页面
-    toOnlineBuyOrSell (id, coinId, userId) {
+    async toOnlineBuyOrSell (id, coinId, userId, countryCode) {
       if (!this.isLogin) {
         this.$goToPage('/login')
       } else {
         // 刷新用户信息
-        this.reflashUserInfo()
+        await this.REFRESH_USER_INFO_ACTION()
+        console.log(countryCode, userId, this.userInfo)
+
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
@@ -689,6 +765,16 @@ export default {
           if (userId === this.userInfo.id) {
             this.$message({
               message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
+              type: 'error'
+            })
+            return false
+            // 增加个人用户信息中的国籍和选中的国家对比，
+            // 如果相同，可以摘单
+            // 不相同，不能摘单，给出提示
+          } else if (!(countryCode == this.userInfo.country)) {
+            this.$message({
+              // 根据您注册所在地的相关规定，无法进行此操作
+              message: this.$t('M.otc_failure_0094'),
               type: 'error'
             })
             return false
@@ -767,8 +853,8 @@ export default {
     async getMerchantAvailableLegalTenderList () {
       this.currencyCoinSelectStatus = true // 禁用货币类型select框
       const data = await getMerchantAvailableLegalTender({})
-      // console.log('otc法币查询列表')
-      // console.log(data)
+      console.log('otc法币查询列表')
+      console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
@@ -805,6 +891,7 @@ export default {
         if (data.data) {
           let orderListData = getNestedData(data, 'data')
           this.onlineBuySellTableList = getNestedData(orderListData, 'list')
+          // console.log(this.onlineBuySellTableList);
           // 分页
           this.totalPages = getNestedData(orderListData, 'pages') - 0
           // 改变全局 委托定单撤单后，更新首页挂单列表状态
@@ -831,6 +918,9 @@ export default {
     },
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
+      if (this.countryInfoList.length) {
+        this.checkedCountryId = this.countryInfoList[0].id // 增加国家-国家为所有国家
+      }
       this.currentPage = 1
       this.checkedCurrencyId = e
       this.availableCurrencyId.forEach(item => {
@@ -940,6 +1030,20 @@ export default {
               margin-right: 5px;
 
               > .currency-style-icon {
+                position: absolute;
+                z-index: 2;
+                top: 1px;
+                left: 10px;
+                width: 14px;
+                height: 14px;
+              }
+            }
+
+            > .country-style {
+              position: relative;
+              margin-right: 5px;
+
+              > .country-style-icon {
                 position: absolute;
                 z-index: 2;
                 top: 1px;
@@ -1183,6 +1287,12 @@ export default {
                   color: #fff;
                 }
               }
+
+              > .country-style {
+                > .country-style-icon {
+                  color: #fff;
+                }
+              }
             }
           }
 
@@ -1406,6 +1516,12 @@ export default {
 
               > .currency-style {
                 > .currency-style-icon {
+                  color: #338ff5;
+                }
+              }
+
+              > .country-style {
+                > .country-style-icon {
                   color: #338ff5;
                 }
               }

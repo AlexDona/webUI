@@ -436,5 +436,6 @@ export const fromApi = {
   'user_trade_password_incorrect': 'Account transaction password is incorrect',
   'otc_failure_0093': 'The order has been appealed, please contact customer service',
   'entrust_failure_0028': '  Exceeded transaction pair purchaseable{}',
-  'entrust_failure_0029': 'The project is currently banned from selling'
+  'entrust_failure_0029': 'The project is currently banned from selling',
+  'otc_failure_0094': 'According to the regulations of your registered location, this operation cannot be performed'
 }

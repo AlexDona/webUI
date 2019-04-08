@@ -436,5 +436,6 @@ export const fromApi = {
   'user_trade_password_incorrect': '帳戶交易密碼不正確',
   'otc_failure_0093': '該訂單已申訴，請聯繫客服',
   'entrust_failure_0028': ' 超出交易對可購買數量{}',
-  'entrust_failure_0029': '該項目當前禁止賣出'
+  'entrust_failure_0029': '該項目當前禁止賣出',
+  'otc_failure_0094': '根據您註冊所在地的相關規定，無法進行此操作'
 }
