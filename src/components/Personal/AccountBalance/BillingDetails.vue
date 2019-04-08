@@ -157,7 +157,6 @@
                 <!--币种-->
                 <el-table-column
                   :label="$t('M.comm_currency')"
-                  width="100"
                 >
                   <template slot-scope = "s">
                     <div>{{ s.row.coinName }}</div>
@@ -166,7 +165,6 @@
                 <!--类型-->
                 <el-table-column
                   :label="$t('M.comm_type')"
-                  width="110"
                 >
                   <template slot-scope = "s">
                     <div>{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
@@ -176,7 +174,7 @@
                 <el-table-column
                   :label="$t('M.comm_mention_money') + $t('M.comm_site')"
                   v-if="withdrawSite"
-                  width="130"
+                  width="150"
                 >
                   <template slot-scope = "s">
                     <div
@@ -194,7 +192,7 @@
                 <el-table-column
                   :label="$t('M.comprehensive_manual1')"
                   v-if="rechargeSite"
-                  width="130"
+                  width="140"
                 >
                   <template slot-scope = "s">
                     <!--系统充值-->
@@ -227,6 +225,7 @@
                 <!--提交时间-->
                 <el-table-column
                   :label="$t('M.comm_sub_time') + $t('M.comm_time')"
+                  width="150"
                 >
                   <template slot-scope = "s">
                     <div>{{ s.row.createTime }}</div>
@@ -236,27 +235,28 @@
                 <el-table-column
                   prop="address"
                   :label="$t('M.comm_state')"
+                  width="140"
                 >
                   <template slot-scope = "s">
                     <div>{{ $t(`M.${s.row.i18nStatusName}`)}}</div>
                   </template>
                 </el-table-column>
                 <!--操作-->
-                <!--<el-table-column-->
-                  <!--:label="$t('M.comm_operation')"-->
-                  <!--v-if="withdrawSite"-->
-                <!--&gt;-->
-                  <!--<template slot-scope = "s">-->
-                    <!--<div-->
-                      <!--class="cursor-pointer state-status"-->
-                      <!--@click.prevent="confirmCancelWithdraw(s.row.id)"-->
-                      <!--:id="s.row.id"-->
-                    <!--&gt;-->
-                      <!--&lt;!&ndash;撤销&ndash;&gt;-->
-                      <!--{{ $t('M.user_push_revocation') }}-->
-                    <!--</div>-->
-                  <!--</template>-->
-                <!--</el-table-column>-->
+                <el-table-column
+                  :label="$t('M.comm_operation')"
+                  v-if="withdrawSite"
+                >
+                  <template slot-scope = "s">
+                    <div
+                      class="cursor-pointer state-status"
+                      @click.prevent="confirmCancelWithdraw(s.row.id, s.row.version)"
+                      :id="s.row.id"
+                    >
+                      <!--撤销-->
+                      {{ s.row.status === 'USER_CANCEL' || s.row.status === 'CANCEL'? '': $t('M.user_push_revocation') }}
+                    </div>
+                  </template>
+                </el-table-column>
               </el-table>
             </div>
           </div>
@@ -382,7 +382,8 @@ import {mapState, mapMutations} from 'vuex'
 import {
   statusRushedToRecordList,
   getMerchantCurrencyList,
-  getComprehensiveRecordsList
+  getComprehensiveRecordsList,
+  deleteCancelWithdraw
 } from '../../../utils/api/personal'
 import {
   getNestedData
@@ -415,9 +416,6 @@ export default {
       // 全部 充币 提币
       currencyType: [
         {
-          value: '',
-          label: 'M.comm_all'
-        }, {
           value: 'RECHARGE',
           label: 'M.comm_charge_money'
         }, {
@@ -458,6 +456,7 @@ export default {
           label: 'M.invitation_reward'
         }
       ],
+      id: '',
       partLoading: false // 局部loading
     }
   },
@@ -527,28 +526,29 @@ export default {
     /**
      * 撤销提币记录
      */
-    // confirmCancelWithdraw (id) {
-    //   // 确定删撤销提现记录?
-    //   this.$confirm(this.$t('M.comm_sure_withdraw'), {
-    //     // 取消
-    //     cancelButtonText: this.$t('M.comm_cancel'),
-    //     // 确定
-    //     confirmButtonText: this.$t('M.comm_confirm')
-    //   }).then(() => {
-    //     this.cancelWithdrawal(id)
-    //   }).catch(() => {
-    //   })
-    // },
-    // // 确认撤销提现
-    // cancelWithdrawal (id) {
-    //   console.log(id)
-    //   // 取消提现接口
-    //   // let data = await revocationPushProperty({
-    //   //   id
-    //   // })
-    //   // 调用刷新提币列表接口
-    //   // this.getChargeMentionList()
-    // },
+    confirmCancelWithdraw (id, version) {
+      // 确定删撤销提现记录?
+      this.$confirm(this.$t('M.comm_sure_withdraw'), {
+        // 取消
+        cancelButtonText: this.$t('M.comm_cancel'),
+        // 确定
+        confirmButtonText: this.$t('M.comm_confirm')
+      }).then(() => {
+        this.cancelWithdrawal(id, version)
+      }).catch(() => {
+      })
+    },
+    // 确认撤销提现
+    async cancelWithdrawal (orderId, version) {
+      console.log(orderId, version)
+      let data = await deleteCancelWithdraw({
+        orderId,
+        version
+      })
+      if (!data) return false
+      // 调用刷新提币列表接口
+      this.getChargeMentionList()
+    },
     /**
      * 2.获取商户币种列表
      */
@@ -595,9 +595,6 @@ export default {
       // 判断是否显示提币地址 充币不显示，提币或者为空显示
       if (this.currencyTypeValue === 'WITHDRAW') {
         this.withdrawSite = true
-        this.rechargeSite = false
-      } else if (this.currencyTypeValue === '') {
-        this.withdrawSite = false
         this.rechargeSite = false
       } else {
         this.rechargeSite = true
