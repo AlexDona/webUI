@@ -43,20 +43,22 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <a
-                    @click.stop="jumpToPersonalCenter('assets')"
-                    :style="{'cursor': 'pointer'}"
+                  <button
+                    :class="{'gray':!buyIsRecharge}"
+                    :disabled="!buyIsRecharge"
+                    @click.stop="jumpToPersonalCenter('assets', 'buy')"
                   >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </a>
-                  <a
-                    @click.stop="jumpToPersonalCenter('assets')"
-                    :style="{'cursor': 'pointer'}"
+                  </button>
+                  <button
+                    :class="{'gray':!buyIsWithdraw}"
+                    :disabled="!buyIsWithdraw"
+                    @click.stop="jumpToPersonalCenter('assets', 'buy')"
                   >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
-                  </a>
+                  </button>
                 </div>
               </div>
               <div class="content">
@@ -154,20 +156,22 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <a
-                    @click="jumpToPersonalCenter('assets')"
-                    :style="{'cursor': 'pointer'}"
+                  <button
+                    @click="jumpToPersonalCenter('assets', 'sell')"
+                    :class="{'gray':!sellIsRecharge}"
+                    :disabled="!sellIsRecharge"
                   >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </a>
-                  <a
-                    @click="jumpToPersonalCenter('assets')"
-                    :style="{'cursor': 'pointer'}"
+                  </button>
+                  <button
+                    @click="jumpToPersonalCenter('assets', 'sell')"
+                    :class="{'gray':!sellIsWithdraw}"
+                    :disabled="!sellIsWithdraw"
                   >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
-                  </a>
+                  </button>
                 </div>
               </div>
               <div class="content">
@@ -276,14 +280,22 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/PersonalCenter">
+                  <button
+                    @click.stop="jumpToPersonalCenter('assets', 'buy')"
+                    :class="{'gray':!buyIsRecharge}"
+                    :disabled="!buyIsRecharge"
+                  >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </router-link>
-                  <router-link to="/PersonalCenter">
+                  </button>
+                  <button
+                    @click.stop="jumpToPersonalCenter('assets', 'buy')"
+                    :class="{'gray':!buyIsWithdraw}"
+                    :disabled="!buyIsWithdraw"
+                  >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
-                  </router-link>
+                  </button>
                 </div>
               </div>
               <div class="content">
@@ -352,14 +364,22 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/PersonalCenter">
+                  <button
+                    @click="jumpToPersonalCenter('assets', 'sell')"
+                    :class="{'gray':!sellIsRecharge}"
+                    :disabled="!sellIsRecharge"
+                  >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </router-link>
-                  <router-link to="/PersonalCenter">
+                  </button>
+                  <button
+                    @click="jumpToPersonalCenter('assets', 'sell')"
+                    :class="{'gray':!sellIsWithdraw}"
+                    :disabled="!sellIsWithdraw"
+                  >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
-                  </router-link>
+                  </button>
                 </div>
               </div>
               <div class="content">
@@ -532,6 +552,9 @@ import {
   getUserAssetOfActiveSymbol
 } from '../../utils/api/trade'
 import {
+  getCoinRechargeWithdraw
+} from '../../utils/api/personal'
+import {
   getNestedData,
   isNeedPayPasswordAjax,
   formatPointLength
@@ -550,6 +573,14 @@ export default {
   // props,
   data () {
     return {
+      // 买入是否允许充币
+      buyIsRecharge: false,
+      // 买入是否允许提币
+      buyIsWithdraw: false,
+      // 卖出是否允许充币
+      sellIsRecharge: false,
+      // 卖出是否允许提币
+      sellIsWithdraw: false,
       notVerifyDialogVisible: false, // 实名认证弹窗显示与隐藏
       activeName: 'limit-price',
       // 限价交易 买入价input ref name
@@ -668,9 +699,34 @@ export default {
       this.$goToPage('/PersonalCenter')
       this.notVerifyDialogVisible = false
     },
-    jumpToPersonalCenter (target) {
+    // 决定是否能充提币
+    async isRechargeOrWithdraw (tradType) {
+      const data = await getCoinRechargeWithdraw({
+        coinId: tradType === 'buy' ? this.middleTopData.buyCoinId : this.middleTopData.sellCoinId
+      })
+      if (!data) return false
+      if (tradType === 'buy') {
+        this.buyIsRecharge = getNestedData(data.data, 'isRecharge')
+        this.buyIsWithdraw = getNestedData(data.data, 'isWithdraw')
+      } else {
+        this.sellIsRecharge = getNestedData(data.data, 'isRecharge')
+        this.sellIsWithdraw = getNestedData(data.data, 'isWithdraw')
+      }
+    },
+    async jumpToPersonalCenter (target, tradType) {
+      if (tradType) {
+        this.$router.push({
+          path: '/PersonalCenter',
+          name: 'PersonalCenter',
+          params: {coinId: tradType === 'buy' ? this.middleTopData.buyCoinId : this.middleTopData.sellCoinId}
+        })
+      } else {
+        this.$router.push({
+          path: '/PersonalCenter',
+          name: 'PersonalCenter'
+        })
+      }
       this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
-      this.$goToPage('/PersonalCenter')
     },
     changeSliderDisabled () {
       // console.log(this.buyUserCoinWallet.total)
@@ -1192,7 +1248,10 @@ export default {
       // 实名认证
       realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth'),
       // 交易密码是否被锁定
-      isLockedPayPassword: state => state.common.isLockedPayPassword
+      isLockedPayPassword: state => state.common.isLockedPayPassword,
+      // 获取当前交易对id
+      currentCoinId: state => state.trade.middleTopData.id
+
     }),
     isNeedErrorMsgForSellCount () {
       return this.marketExchange.sellCount > this.sellUserCoinWallet.total
@@ -1271,7 +1330,7 @@ export default {
       if (newVal) this.setBuyAndSellPrice(newVal)
     },
     async middleTopData (newVal) {
-      // console.log(newVal)
+      console.log(newVal)
       let targetPriceOfBuy = newVal.buy || newVal.kai
       let targetPriceOfSell = newVal.sell || newVal.kai
       // 首次打开设置价格
@@ -1284,6 +1343,11 @@ export default {
           this.setBuyAndSellPrice(targetPriceOfSell, targetPriceOfBuy)
         }
       }
+    },
+    currentCoinId (newVal) {
+      // 请求决定该交易对书否能重提币
+      this.isRechargeOrWithdraw('buy')
+      this.isRechargeOrWithdraw('sell')
     }
   }
 }
@@ -1618,8 +1682,20 @@ export default {
                   display: inline-block;
                 }
 
-                > a {
+                > button {
                   color: $nightFontColor;
+
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+
+                .gray {
+                  color: gray;
+
+                  &:hover {
+                    cursor: not-allowed;
+                  }
                 }
               }
             }

@@ -141,6 +141,8 @@ export const personal = {
   'user_invite_user_uid': 'Người dùng uld',
   'user_invite_login_name': 'Tên đăng kí',
   'user_invite_direct_referrer': 'Trực tiếp giới thiệu',
+  'user_invite_issued': ' Đã phát',
+  'user_invite_noIssued': 'Chưa phát',
   'user_invite_award': 'Giải thưởng',
   'user_security_safety': 'An toàn',
   'user_security_email': 'Gmail',

@@ -212,7 +212,7 @@
             <!-- 姓名 -->
             <el-table-column
               :label="$t('M.comm_name')"
-              width="100"
+              width="90"
             >
               <template slot-scope = "s">
                 <div>
@@ -223,6 +223,7 @@
             <!-- 高级认证 -->
             <el-table-column
               :label="$t('M.user_senior_certification')"
+              width="150"
             >
               <template slot-scope = "s">
                 <div v-if="s.row.advancedAuth == 'waitVeritfy'">
@@ -245,17 +246,18 @@
               </template>
             </el-table-column>
             <!--&lt;!&ndash; 状态 &ndash;&gt;-->
-            <!--<el-table-column-->
-              <!--:label="$t('M.comm_state')"-->
-            <!--&gt;-->
-              <!--<template slot-scope = "s">-->
-                <!--<div>-->
-                  <!--&lt;!&ndash;已发放&ndash;&gt;-->
-                  <!--{{ s.row.giveStatus === 'PUBLISH ' ? '已发放': '未发放'}}-->
-                  <!--&lt;!&ndash;未发放&ndash;&gt;-->
-                <!--</div>-->
-              <!--</template>-->
-            <!--</el-table-column>-->
+            <el-table-column
+              :label="$t('M.comm_state')"
+            >
+              <template slot-scope = "s">
+                <div>
+                  <!--已发放-->
+                  <!--giveStatus 为PUBLISH则显示已发放为空则显示未发放 帅飞定义-->
+                  {{ s.row.giveStatus === 'PUBLISH' ? $t('M.user_invite_issued'): $t('M.user_invite_noIssued')}}
+                  <!--未发放-->
+                </div>
+              </template>
+            </el-table-column>
           </el-table>
           <!--分页-->
           <el-pagination

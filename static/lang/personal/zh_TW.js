@@ -171,6 +171,8 @@ export const personal = {
   'user_invite_user_uid': '用戶UID',
   'user_invite_login_name': '登錄名',
   'user_invite_direct_referrer': '直接推薦人UID',
+  'user_invite_issued': '已發放',
+  'user_invite_noIssued': '未發放',
   // 獎勵記錄列表
   'user_invite_award': '獎勵',
   // 安全中心

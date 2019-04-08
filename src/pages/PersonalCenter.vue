@@ -332,7 +332,7 @@ export default {
         // 清空全局币种id 在billingDetails组件中重新赋值
         this.SET_NEW_WITHDRAW_RECORD('')
         // 清空全局充提类型
-        this.SET_NEW_WITHDRAW_RECORD_STATUS('')
+        this.SET_NEW_WITHDRAW_RECORD_STATUS('RECHARGE')
       }
       this.showNoPosswdAndNoVerifyNotice()
     },
