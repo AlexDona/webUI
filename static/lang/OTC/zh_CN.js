@@ -356,5 +356,5 @@ export const OTC = {
   'otc_available_balance': '可用余额',
   'otc_warm_prompt0': '注意！请联系卖家确认收款，如果卖家',
   'otc_warm_prompt00': '小时内未确认订单，你可以提出申诉。',
-  'otc_upload_picture7': '请上传小于5M的图片'
+  'otc_upload_picture7': '请上传小于5M的图片',
 }
