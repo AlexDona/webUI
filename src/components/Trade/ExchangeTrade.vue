@@ -829,14 +829,15 @@ export default {
     },
     // 设置转换后的价格
     setTransformPrice (type, targetNum) {
+      const {area} = this.$middleTopData_S_X
       switch (type) {
         case 'limit-buy':
           // this.limitExchange.transformBuyPrice = this.$scientificToNumber(this.$keep2Num(this.currencyRateList[this.$middleTopData_S_X.area] * targetNum))
-          this.limitExchange.transformBuyPrice = this.$keep2Num(this.currencyRateList[this.$middleTopData_S_X.area] * targetNum)
+          this.limitExchange.transformBuyPrice = this.$keep2Num(this.currencyRateList[area] * targetNum)
           // console.log(this.limitExchange.transformBuyPrice)
           break
         case 'limit-sell':
-          this.limitExchange.transformSellPrice = this.$keep2Num(this.currencyRateList[this.$middleTopData_S_X.area] * targetNum)
+          this.limitExchange.transformSellPrice = this.$keep2Num(this.currencyRateList[area] * targetNum)
           break
       }
     },
@@ -846,6 +847,7 @@ export default {
     },
     // 数据联动
     autoChangeData (type) {
+      const {priceExchange} = this.$middleTopData_S_X
       this.clearErrorMsg(type)
       switch (type) {
         // 限价买
@@ -854,7 +856,7 @@ export default {
           this.limitExchange.buyCount = this.getRefValue(this.limitBuyCountInputRef)
           this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
           if (this.limitExchange.buyPrice) {
-            this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice).toFixed(this.$middleTopData_S_X.priceExchange)
+            this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice).toFixed(priceExchange)
           }
           break
         // 限价卖
@@ -1083,6 +1085,7 @@ export default {
     },
     // 新增委单
     async addEntrust () {
+      const {partnerTradeId} = this.$middleTopData_S_X
       if (!this.$isLogin_S_X) {
         this.$goToPage('/login')
         return false
@@ -1098,7 +1101,7 @@ export default {
       }
 
       let params = {
-        tradeId: this.$middleTopData_S_X.partnerTradeId + '',
+        tradeId: `${partnerTradeId}`,
         type: this.entrustType ? 'SELL' : 'BUY', // 委单类型
         matchType: this.matchType, // 撮合类型
         source: 'Web' // 来源
@@ -1151,24 +1154,27 @@ export default {
     setBuyAndSellPrice (targetPriceOfBuy, targetPriceOfSell = targetPriceOfBuy) {
       targetPriceOfBuy = this.$scientificToNumber(targetPriceOfBuy)
       targetPriceOfSell = this.$scientificToNumber(targetPriceOfSell)
+      const {priceExchange} = this.$middleTopData_S_X
       if (this.$refs[this.limitBuyPriceInputRef]) {
         this.setRefValue(this.limitBuyPriceInputRef, targetPriceOfBuy)
         this.limitExchange.buyPrice = targetPriceOfBuy
-        const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, this.$middleTopData_S_X.priceExchange)
+        console.log(this.$middleTopData_S_X)
+        const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, priceExchange)
         this.setTransformPrice('limit-buy', newBuyPrice)
         if (newBuyPrice) {
-          this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / newBuyPrice).toFixed(this.middleTopData.priceExchange)
+          this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / newBuyPrice).toFixed(priceExchange)
         }
       }
       if (this.$refs[this.limitSellPriceInputRef]) {
         this.setRefValue(this.limitSellPriceInputRef, targetPriceOfSell)
         this.limitExchange.sellPrice = targetPriceOfSell
-        const newSellPrice = this.formatInput(this.limitSellPriceInputRef, this.$middleTopData_S_X.priceExchange)
+        const newSellPrice = this.formatInput(this.limitSellPriceInputRef, priceExchange)
         this.setTransformPrice('limit-sell', newSellPrice)
       }
     },
     // sliderBar events:
     sliderBarValueChange ({newVal, target}) {
+      const {priceExchange, countExchange} = this.$middleTopData_S_X
       if (this.isUserChangePrice) {
         return false
       }
@@ -1183,7 +1189,7 @@ export default {
           if (this.buyUserCoinWallet.total) {
             // 设置买入量
             let count = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice) * newVal / 100
-            count = formatPointLength(count, this.$middleTopData_S_X.countExchange)
+            count = formatPointLength(count, countExchange)
 
             this.$refs[this.limitBuyCountInputRef].value = count
             this.limitExchange.buyCount = count
@@ -1193,7 +1199,7 @@ export default {
         case 'market-buy':
           if (this.buyUserCoinWallet.total) {
             let amount = this.buyUserCoinWallet.total * newVal / 100
-            amount = formatPointLength(amount, this.$middleTopData_S_X.priceExchange)
+            amount = formatPointLength(amount, priceExchange)
             this.$refs[this.marketBuyAmountInputRef].value = amount
             this.marketExchange.buyAmount = amount
           }
@@ -1211,10 +1217,11 @@ export default {
     },
     // 设置限价卖、市价卖 ref value
     setSellRefVal (total, newRate, targetRef, type) {
+      const {countExchange} = this.$middleTopData_S_X
       if (total) {
         // 设置卖出量
         let count = total * newRate / 100
-        count = formatPointLength(count, this.$middleTopData_S_X.countExchange)
+        count = formatPointLength(count, countExchange)
 
         this.$refs[targetRef].value = count
         switch (type) {
