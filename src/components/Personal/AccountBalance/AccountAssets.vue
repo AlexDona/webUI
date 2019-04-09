@@ -165,6 +165,7 @@
                 class="table-tr font-size12 padding-lr20"
                 v-for="(assetItem, index) in (isShowAllCurrency?filteredData1:filteredData2)"
                 :key="index"
+                :id= "assetItem.coinName"
               >
                 <div class="table-box display-flex flex1">
                   <!--币种-->
@@ -712,7 +713,6 @@ export default {
   },
   async created () {
     // 刚进页面时候 个人资产列表展示
-    this.getAssetCurrenciesList()
     if (this.currencyRateList.CNY) {
       // 汇率转换
       await this.currencyTransform()
@@ -720,10 +720,8 @@ export default {
     // 个人资产跳转OTC-otc可用币种查询
     await this.getOTCAvailableCurrencyList()
   },
-  mounted () {
-    console.log(this.$route.params)
-    // console.log(window.scrollTo)
-    // document.body.scrollTop = 2000
+  async mounted () {
+    await this.getAssetCurrenciesList()
   },
   activated () {},
   update () {},
@@ -1096,8 +1094,6 @@ export default {
       this.totalSumBTC = detailData.totalSum
       this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
       _.forEach(this.withdrawDepositList, (item, index) => {
-        console.log(item)
-        item.scrollTop = index * 50
         this.withdrawStorageMap.set(item.coinId, item)
         this.withdrawDepositMap.set(item.coinId, {
           allIsShow: false,
@@ -1108,34 +1104,26 @@ export default {
         // 币币带回充提类型
         let typeName = this.$route.params.type
         // 币币带回币种id
-        let coinId = Number(this.$route.params.coinId)
+        let coinId = this.$route.params.coinId
         // 从币币交易页面跳到我的资产带回参数，有充币 提现
         // 类型为充币在展开充币界面
-        if (coinId == item.coinId && typeName === 'recharge') {
-          this.withdrawDepositMap.set(item.coinId, {...item, rechargeIsShow: true})
-        }
-        // 类型为提现在展开提现界面
-        if (coinId == item.coinId && typeName === 'withdrawItemRef') {
-          console.log(item.scrollTop)
-          // window.scrollTo = item.scrollTop
-          console.log(window.scrollTo)
+        if (coinId === item.coinId && typeName) {
+          if (typeName === 'recharge') {
+            this.withdrawDepositMap.set(item.coinId, {...item, rechargeIsShow: true})
+          } else {
+            // 类型为提现在展开提现界面
+            this.withdrawDepositMap.set(item.coinId, {...item, withdrawDepositIsShow: true})
+          }
           this.$nextTick(() => {
-            document.documentElement.scrollTop = item.scrollTop
+            document.documentElement.scrollTop = (index - 1) * 50 + 347
           })
-          this.withdrawDepositMap.set(item.coinId, {...item, withdrawDepositIsShow: true})
         }
       })
-      console.log(this.withdrawDepositList, this.withdrawDepositMap)
       this.getAllWithdraw()
     },
     getAllWithdraw () {
       // 缓存币种列表
       setStore('withdrawStorage', this.withdrawDepositList)
-      // this.withdrawDepositMap.forEach((val, key) => {
-      //   console.log(val, key)
-      //   // this.withdrawObject = key
-      //   console.log(this.withdrawObject)
-      // })
       // 获取币种列表
       // console.log(this.withdrawDepositMap.set(key))
       console.log(this.withdrawStorageMap.key)
