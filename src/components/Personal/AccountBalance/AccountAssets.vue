@@ -1073,7 +1073,6 @@ export default {
      * 8.0刚进页面时候 个人资产列表展示
      */
     async getAssetCurrenciesList () {
-      // console.log(this.$route.params.type, this.$refs[`withdrawItemRef${coinId}`])
       let params = {
         pageNum: this.currentPageForMyEntrust,
         pageSize: '10000'
@@ -1108,11 +1107,30 @@ export default {
         // 从币币交易页面跳到我的资产带回参数，有充币 提现
         // 类型为充币在展开充币界面
         if (coinId === item.coinId && typeName) {
-          if (typeName === 'recharge') {
+          this.isRechargeWithdrawState(this.$route.params.coinId)
+          if (typeName === 'recharge' && this.isRechargeState) {
+            if (!this.isRechargeState) {
+              // 充值暂停，钱包维护中
+              this.$message({
+                message: this.$t('M.user_assets_suspended'),
+                type: 'error'
+              })
+              return false
+            }
             this.withdrawDepositMap.set(item.coinId, {...item, rechargeIsShow: true})
+            this.fillingCurrencyAddress(coinId)
           } else {
+            if (!this.isWithdrawState) {
+              // 暂停提币
+              this.$message({
+                message: this.$t('M.user_assets_pause_mention'),
+                type: 'error'
+              })
+              return false
+            }
             // 类型为提现在展开提现界面
             this.withdrawDepositMap.set(item.coinId, {...item, withdrawDepositIsShow: true})
+            this.getWithdrawalInformation('', coinId)
           }
           this.$nextTick(() => {
             document.documentElement.scrollTop = (index - 1) * 50 + 347
@@ -1160,26 +1178,27 @@ export default {
     /**
      *  11.点击提币按钮时 获取提币信息（最大最小手续费）
      */
-    async getWithdrawalInformation (id) {
+    async getWithdrawalInformation (id, coinId) {
       let data = await withdrawalInformation({
-        coinId: this.activeCoinId
+        coinId: coinId ? coinId : this.activeCoinId
       })
       console.log(data)
       if (!data) return false
       // 返回列表数据
       this.feeRangeOfWithdraw = getNestedData(data, 'data')
       this.withdrawalFee = getNestedData(data, 'data.minFees')
-      this.$refs[`withdrawItemRef${id}`][0].$refs.feeInputRef.value = this.withdrawalFee
+      if (id) {
+        this.$refs[`withdrawItemRef${id}`][0].$refs.feeInputRef.value = this.withdrawalFee
+      }
       this.withdrawFeeVModel = this.withdrawalFee
     },
     /**
      *  12.点击充币按钮时 查询充币地址查询
      */
-    async fillingCurrencyAddress () {
+    async fillingCurrencyAddress (id) {
       let data = await inquireRechargeAddressList({
-        coinId: this.chargeMoneyAddressId
+        coinId: id ? id : this.chargeMoneyAddressId
       })
-      console.log(data)
       if (!data) return false
       // 获取充币地址
       this.chargeMoneyAddress = getNestedData(data, 'data.userRechargeAddress.address')
