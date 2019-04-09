@@ -2,20 +2,12 @@
 <template>
   <div
     class="kline-container"
+    v-loading.lock="fullscreenLoading"
+    element-loading-background="rgb(28, 31, 50)"
   >
     <div
       id="tv_chart_container"
       :class="{'day':theme == 'day','night':theme == 'night' }"
-      :style="{
-        opacity: !fullscreenLoading ? 1:0
-      }"
-    >
-    </div>
-    <div
-      class="loading-box"
-      v-if="fullscreenLoading"
-      v-loading.lock="fullscreenLoading"
-      element-loading-background="rgb(28, 31, 50)"
     >
     </div>
     <div
@@ -49,7 +41,8 @@ import {
   // getCollectionList
 } from '../../utils/commonFunc'
 import {
-  unzip
+  unzip,
+  getStore
 } from '../../utils'
 import {
   mapMutations,
@@ -89,7 +82,7 @@ export default {
       socketData: {}, // socket 数据
       ajaxData: {}, // 接口请求数据
       resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week'],
-      fullscreenLoading: true,
+      fullscreenLoading: false,
       // 时间周期loading
       intervalLoading: false,
       loadingCount: 0, // loading 次数
@@ -276,17 +269,17 @@ export default {
       this.options.interval = '15'
       this.options.language = this.language
       this.init(this.options)
-      this.getBars()
     },
     // 获取初始交易对
     async getDefaultSymbol () {
+      let localSymbol = getStore('activeSymbol')
       let activeSymbol
       let data = await getDefaultSymbol()
       if (!data) return false
       const obj = getNestedData(data, 'data')
       activeSymbol = (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase()
       const {tradeId} = this.$route.params
-      this.symbol = tradeId && tradeId !== 'default' ? tradeId : activeSymbol
+      this.symbol = tradeId && tradeId !== 'default' ? tradeId : (localSymbol ? localSymbol : activeSymbol)
       this.RETURN_SYMBOL_DATA(true)
       if (this.isLogin) this.getUserOrderSocket('SUB', this.symbol)
     },

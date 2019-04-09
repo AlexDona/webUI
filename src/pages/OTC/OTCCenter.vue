@@ -1171,7 +1171,7 @@ export default {
 
     .otc-publish-box {
       .el-input {
-        width: 120px;
+        max-width: 140px;
       }
 
       .el-input__inner {

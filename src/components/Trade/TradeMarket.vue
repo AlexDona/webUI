@@ -265,8 +265,9 @@ export default {
     },
     // 设置 当前交易区
     changeActiveSymbol ({activeSymbol}) {
-      console.log(activeSymbol.id)
+      // console.log(activeSymbol.id)
       const {id} = activeSymbol
+      setStore('activeSymbol', id)
       this.SET_MIDDLE_TOP_DATA(activeSymbol)
       this.CHANGE_SYMBOL_CHANGED_STATUS(true)
       const TradeStr = '/TradeCenter/'
