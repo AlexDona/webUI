@@ -850,48 +850,15 @@ export default {
             "tradeStatus":"",
             "updateTime":"2018-09-19 17:21:05"
           */
-      /*
-          amount24h: 3.376161
-          area: "ETH"
-          areaId: "492663598368161792"
-          countExchange: 6
-          high: 7.1
-          hot: false
-          id: "btceth"
-          image: "http://fubt-3.oss-cn-hongkong.aliyuncs.com/dae9ad6c-b4e9-47ad-a655-bc24d05d698c"
-          kai: 0.02
-          low: 0.000001
-          plateId: "492663683579641856"
-          price: 0.1
-          priceExchange: 6
-          rose: 4
-          sellName: "比特币"
-          sellsymbol: "BTC"
-          tendency: Array(0)
-          tradeId: "492663376246210560"
-          volume: 116.21105 */
-      let activeSymbol = {
-        area: e.buyCoinName,
-        areaId: e.tradeAreaId,
-        countExchange: e.quantityDecimalPlace,
-        id: e.sellCoinName + e.buyCoinName,
-        priceExchange: e.priceDecimalPlace,
-        sellName: e.sellCoinName,
-        sellsymbol: e.sellCoinNickname,
-        tradeId: e.id
-      }
+      // }
       this.SET_JUMP_STATUS(true)
-      this.SET_JUMP_SYMBOL(activeSymbol)
-      console.log(this.activeSymbol)
       // 设置当前交易区
-      const id = e.tradeAreaId
-      const name = e.buyCoinName
-      console.log(e)
+      const id = (e.sellCoinName + e.buyCoinName).toLowerCase()
+      console.log(id)
       this.CHANGE_ACTIVE_TRADE_AREA({
-        id,
-        name
+        id
       })
-      this.$goToPage('/TradeCenter')
+      this.$goToPage(`/TradeCenter/${id}`)
     },
     // 4.0修改input value 输入限制
     changeInputValue ({ref, index, pointLengthAccountCount, val, coinId, total}) {
@@ -1105,8 +1072,8 @@ export default {
     /**
      * 8.0刚进页面时候 个人资产列表展示
      */
-    async getAssetCurrenciesList (type) {
-      console.log(type)
+    async getAssetCurrenciesList () {
+      // console.log(this.$route.params.type, this.$refs[`withdrawItemRef${coinId}`])
       let params = {
         pageNum: this.currentPageForMyEntrust,
         pageSize: '10000'
@@ -1134,16 +1101,34 @@ export default {
           withdrawDepositIsShow: false,
           provideWithdrawDepositIsShow: false
         })
+        // 币币带回充提类型
+        let typeName = this.$route.params.type
+        // 币币带回币种id
+        let coinId = Number(this.$route.params.coinId)
+        // 从币币交易页面跳到我的资产带回参数，有充币 提现
+        // 类型为充币在展开充币界面
+        if (coinId == item.coinId && typeName === 'recharge') {
+          this.withdrawDepositMap.set(item.coinId, {...item, rechargeIsShow: true})
+        }
+        // 类型为提现在展开提现界面
+        if (coinId == item.coinId && typeName === 'withdrawItemRef') {
+          this.withdrawDepositMap.set(item.coinId, {...item, withdrawDepositIsShow: true})
+        }
       })
-      // console.log('我的资产币种列表')
       console.log(this.withdrawDepositMap)
       this.getAllWithdraw()
     },
     getAllWithdraw () {
       // 缓存币种列表
       setStore('withdrawStorage', this.withdrawDepositList)
+      // this.withdrawDepositMap.forEach((val, key) => {
+      //   console.log(val, key)
+      //   // this.withdrawObject = key
+      //   console.log(this.withdrawObject)
+      // })
       // 获取币种列表
-      console.log(this.withdrawStorageMap)
+      // console.log(this.withdrawDepositMap.set(key))
+      console.log(this.withdrawStorageMap.key)
     },
     // 9.0根据币种id查询提币地址
     async queryWithdrawalAddressList () {
