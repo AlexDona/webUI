@@ -2,7 +2,7 @@
 <template>
   <div
     class="exchange-box trade"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box">
       <!--币种资料跳转-->
@@ -39,10 +39,10 @@
                     {{$t('M.comm_usable')}}:
                     <span v-show="!buyUserCoinWallet.total">--</span>
                     <span v-show="buyUserCoinWallet.total">{{$scientificToNumber(buyUserCoinWallet.total)}}</span>
-                    <span>{{middleTopData.area}}</span>
+                    <span>{{$middleTopData_S_X.area}}</span>
                   </span>
                 </div>
-                <div class="right item" v-if="isLogin">
+                <div class="right item" v-if="$isLogin_S_X">
                   <button
                     :class="{'gray':!buyIsRecharge}"
                     :disabled="!buyIsRecharge"
@@ -70,14 +70,14 @@
                     :ref="limitBuyPriceInputRef"
                     @keyup="autoChangeData('limit-buy')"
                     maxlength="14"
-                    @input="formatInput(limitBuyPriceInputRef,middleTopData.priceExchange)"
+                    @input="formatInput(limitBuyPriceInputRef,$middleTopData_S_X.priceExchange)"
                   >
-                  <span class="currency">{{middleTopData.area}}</span>
+                  <span class="currency">{{$middleTopData_S_X.area}}</span>
                   <div
                     class="rate-changer"
                     v-show="activeConvertCurrencyObj&&(limitExchange.transformBuyPrice-0)"
                   >
-                    ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformBuyPrice,middleTopData.legalCurrencyDecimal)}}
+                    ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformBuyPrice,$middleTopData_S_X.legalCurrencyDecimal)}}
                   </div>
                   <span
                     class="error-box"
@@ -98,10 +98,10 @@
                     :placeholder="$t('M.comm_buy') + $t('M.comm_quantity')"
                     :ref="limitBuyCountInputRef"
                     @keyup="autoChangeData('limit-buy')"
-                    @input="formatInput(limitBuyCountInputRef,middleTopData.countExchange)"
+                    @input="formatInput(limitBuyCountInputRef,$middleTopData_S_X.countExchange)"
                     onpaste="return false"
                   >
-                  <span class="currency">{{middleTopData.sellsymbol}}</span>
+                  <span class="currency">{{$middleTopData_S_X.sellsymbol}}</span>
                   <span
                     class="error-box"
                     v-show="errorMsg.limit.buy.amount"
@@ -128,7 +128,7 @@
                     <span
                       class="buy"
                       v-show="limitBuyAmount">{{limitBuyAmount}}</span>
-                    <span>{{middleTopData.area}}</span>
+                    <span>{{$middleTopData_S_X.area}}</span>
                   </div>
                 </div>
                 <div class="submit">
@@ -152,10 +152,10 @@
                     {{$t('M.comm_usable')}}:
                     <span v-show="!sellUserCoinWallet.total">--</span>
                     <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
-                    <span>{{middleTopData.sellsymbol}}</span>
+                    <span>{{$middleTopData_S_X.sellsymbol}}</span>
                   </span>
                 </div>
-                <div class="right item" v-if="isLogin">
+                <div class="right item" v-if="$isLogin_S_X">
                   <button
                     @click="jumpToPersonalCenter('assets', 'sell', 'recharge')"
                     :class="{'gray':!sellIsRecharge}"
@@ -183,14 +183,14 @@
                     :placeholder="$t('M.comm_sell') + $t('M.comm_price')"
                     :ref="limitSellPriceInputRef"
                     @keyup="autoChangeData('limit-sell')"
-                    @input="formatInput(limitSellPriceInputRef,middleTopData.priceExchange)"
+                    @input="formatInput(limitSellPriceInputRef,$middleTopData_S_X.priceExchange)"
                   >
-                  <span class="currency">{{middleTopData.area}}</span>
+                  <span class="currency">{{$middleTopData_S_X.area}}</span>
                   <div
                     class="rate-changer"
                     v-show="activeConvertCurrencyObj&&(limitExchange.transformSellPrice-0)"
                   >
-                    ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformSellPrice, middleTopData.legalCurrencyDecimal)}}
+                    ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformSellPrice, $middleTopData_S_X.legalCurrencyDecimal)}}
                   </div>
                   <span
                     class="error-box"
@@ -208,10 +208,10 @@
                     :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="limitSellCountInputRef"
                     @keyup="autoChangeData('limit-sell')"
-                    @input="formatInput(limitSellCountInputRef,middleTopData.countExchange)"
+                    @input="formatInput(limitSellCountInputRef,$middleTopData_S_X.countExchange)"
                     onpaste="return false"
                   >
-                  <span class="currency">{{middleTopData.sellsymbol}}</span>
+                  <span class="currency">{{$middleTopData_S_X.sellsymbol}}</span>
                   <span
                     class="error-box"
                     v-show="errorMsg.limit.sell.amount"
@@ -240,7 +240,7 @@
                       class="sell"
                       v-show="limitSellAmount"
                     >{{limitSellAmount}}</span>
-                    <span>{{middleTopData.area}}</span>
+                    <span>{{$middleTopData_S_X.area}}</span>
                   </div>
                 </div>
                 <div class="submit">
@@ -272,14 +272,14 @@
                   <span class="margin-left10 buy">
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
-                    <span v-show="!buyUserCoinWallet.total||!middleTopData.last">--</span>
-                    <span v-show="buyUserCoinWallet.total&&middleTopData.last">
+                    <span v-show="!buyUserCoinWallet.total||!$middleTopData_S_X.last">--</span>
+                    <span v-show="buyUserCoinWallet.total&&$middleTopData_S_X.last">
                       {{$scientificToNumber(buyUserCoinWallet.total)}}
                     </span>
-                    <span>{{middleTopData.area}}</span>
+                    <span>{{$middleTopData_S_X.area}}</span>
                   </span>
                 </div>
-                <div class="right item" v-if="isLogin">
+                <div class="right item" v-if="$isLogin_S_X">
                   <button
                     @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')"
                     :class="{'gray':!buyIsRecharge}"
@@ -305,7 +305,7 @@
                     <!--市场成交价-->
                     {{ $t('M.trade_exchange_market_price') }}
                   </div>
-                  <span class="currency">{{middleTopData.area}}</span>
+                  <span class="currency">{{$middleTopData_S_X.area}}</span>
                 </div>
                 <!-- 成交额 -->
                 <div class="input">
@@ -318,10 +318,10 @@
                     :placeholder="$t('M.user_coin_volume')"
                     :ref="marketBuyAmountInputRef"
                     @keyup="autoChangeData('market-buy')"
-                    @input="formatInput(marketBuyAmountInputRef,middleTopData.countExchange)"
+                    @input="formatInput(marketBuyAmountInputRef,$middleTopData_S_X.countExchange)"
                     onpaste="return false"
                   >
-                  <span class="currency">{{middleTopData.area}}</span>
+                  <span class="currency">{{$middleTopData_S_X.area}}</span>
                   <span
                     class="error-box"
                     v-show="errorMsg.market.buy.amount"
@@ -360,10 +360,10 @@
                     {{$t('M.comm_usable')}}:
                     <span v-show="!sellUserCoinWallet.total">--</span>
                     <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
-                    <span>{{middleTopData.sellsymbol}}</span>
+                    <span>{{$middleTopData_S_X.sellsymbol}}</span>
                   </span>
                 </div>
-                <div class="right item" v-if="isLogin">
+                <div class="right item" v-if="$isLogin_S_X">
                   <button
                     @click="jumpToPersonalCenter('assets', 'sell', 'recharge')"
                     :class="{'gray':!sellIsRecharge}"
@@ -389,7 +389,7 @@
                     <!--市场成交价-->
                     {{ $t('M.trade_exchange_market_price') }}
                   </div>
-                  <span class="currency">{{middleTopData.area}}</span>
+                  <span class="currency">{{$middleTopData_S_X.area}}</span>
                   <span
                     class="error-box"
                     v-show="errorMsg.market.sell.count"
@@ -406,10 +406,10 @@
                     :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="marketSellCountInputRef"
                     @keyup="autoChangeData('market-sell')"
-                    @input="formatInput(marketSellCountInputRef,middleTopData.countExchange)"
+                    @input="formatInput(marketSellCountInputRef,$middleTopData_S_X.countExchange)"
                     onpaste="return false"
                   >
-                  <span class="currency">{{middleTopData.sellsymbol}}</span>
+                  <span class="currency">{{$middleTopData_S_X.sellsymbol}}</span>
                   <span
                     class="error-box"
                     v-show="errorMsg.market.sell.amount"
@@ -668,7 +668,7 @@ export default {
     }
   },
   async created () {
-    if (this.isLogin) {
+    if (this.$isLogin_S_X) {
       await this.REFRESH_USER_INFO_ACTION()
       // console.log(this.REFRESH_USER_INFO_ACTION)
     }
@@ -702,7 +702,7 @@ export default {
     },
     // 决定是否能充提币
     async isRechargeOrWithdraw (tradType) {
-      const {buyCoinId, sellCoinId} = this.middleTopData
+      const {buyCoinId, sellCoinId} = this.$middleTopData_S_X
       if (!buyCoinId || !sellCoinId) return
       const data = await getCoinRechargeWithdraw({
         coinId: tradType === 'buy' ? buyCoinId : sellCoinId
@@ -717,12 +717,13 @@ export default {
       }
     },
     async jumpToPersonalCenter (target, tradType, type) {
+      const {buyCoinId, sellCoinId} = this.$middleTopData_S_X
       if (tradType) {
         this.$router.push({
           path: '/PersonalCenter',
           name: 'PersonalCenter',
           params: {
-            coinId: tradType === 'buy' ? this.middleTopData.buyCoinId : this.middleTopData.sellCoinId,
+            coinId: tradType === 'buy' ? buyCoinId : sellCoinId,
             type: type
           }
         })
@@ -742,8 +743,9 @@ export default {
     },
     // 获取用户对应交易对资产
     async getUserAssetOfActiveSymbol (targetPriceOfBuy, targetPriceOfSell) {
+      const {partnerTradeId} = this.$middleTopData_S_X
       const params = {
-        tradeId: this.middleTopData.partnerTradeId // 交易对id
+        tradeId: partnerTradeId // 交易对id
       }
       const data = await getUserAssetOfActiveSymbol(params)
       if (!data) return false
@@ -852,7 +854,7 @@ export default {
           this.limitExchange.buyCount = this.getRefValue(this.limitBuyCountInputRef)
           this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
           if (this.limitExchange.buyPrice) {
-            this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice).toFixed(this.middleTopData.priceExchange)
+            this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice).toFixed(this.$middleTopData_S_X.priceExchange)
           }
           break
         // 限价卖
@@ -943,7 +945,7 @@ export default {
     },
     // 交易密码
     async showPayPassword (entrustType, matchType) {
-      if (this.isLogin) {
+      if (this.$isLogin_S_X) {
         if (!(this.realNameAuth === 'y')) {
           this.notVerifyDialogVisible = true
           return false
@@ -1081,7 +1083,7 @@ export default {
     },
     // 新增委单
     async addEntrust () {
-      if (!this.isLogin) {
+      if (!this.$isLogin_S_X) {
         this.$goToPage('/login')
         return false
       }
@@ -1096,7 +1098,7 @@ export default {
       }
 
       let params = {
-        tradeId: this.middleTopData.partnerTradeId + '',
+        tradeId: this.$middleTopData_S_X.partnerTradeId + '',
         type: this.entrustType ? 'SELL' : 'BUY', // 委单类型
         matchType: this.matchType, // 撮合类型
         source: 'Web' // 来源
@@ -1181,7 +1183,7 @@ export default {
           if (this.buyUserCoinWallet.total) {
             // 设置买入量
             let count = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice) * newVal / 100
-            count = formatPointLength(count, this.middleTopData.countExchange)
+            count = formatPointLength(count, this.$middleTopData_S_X.countExchange)
 
             this.$refs[this.limitBuyCountInputRef].value = count
             this.limitExchange.buyCount = count
@@ -1191,7 +1193,7 @@ export default {
         case 'market-buy':
           if (this.buyUserCoinWallet.total) {
             let amount = this.buyUserCoinWallet.total * newVal / 100
-            amount = formatPointLength(amount, this.middleTopData.priceExchange)
+            amount = formatPointLength(amount, this.$middleTopData_S_X.priceExchange)
             this.$refs[this.marketBuyAmountInputRef].value = amount
             this.marketExchange.buyAmount = amount
           }
@@ -1212,7 +1214,7 @@ export default {
       if (total) {
         // 设置卖出量
         let count = total * newRate / 100
-        count = formatPointLength(count, this.middleTopData.countExchange)
+        count = formatPointLength(count, this.$middleTopData_S_X.countExchange)
 
         this.$refs[targetRef].value = count
         switch (type) {
@@ -1240,14 +1242,11 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme,
       refreshEntrustStatus: state => state.trade.refreshEntrustStatus,
       loginStep1Info: state => state.user.loginStep1Info,
-      isLogin: state => state.user.isLogin,
       activePriceItem: state => state.trade.activePriceItem,
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
-      middleTopData: state => state.trade.middleTopData,
       limitExchangeOfState: state => state.trade.limitExchange,
       // 是否通过高级认证
       advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
@@ -1339,7 +1338,7 @@ export default {
         this.CHANGE_ACTIVE_PRICE_ITEM(0)
       }
     },
-    async middleTopData (newVal) {
+    async $middleTopData_S_X (newVal) {
       console.log(newVal)
       let targetPriceOfBuy = newVal.buy || newVal.kai
       let targetPriceOfSell = newVal.sell || newVal.kai
@@ -1347,7 +1346,7 @@ export default {
       if (!this.reflashCount) {
         // console.log(newVal.last)
         if (newVal.last) this.reflashCount++
-        if (this.isLogin) {
+        if (this.$isLogin_S_X) {
           await this.getUserAssetOfActiveSymbol(targetPriceOfSell, targetPriceOfBuy)
         } else {
           this.setBuyAndSellPrice(targetPriceOfSell, targetPriceOfBuy)
@@ -1356,7 +1355,7 @@ export default {
     },
     async currentCoinId (newVal) {
       // 请求决定该交易对书否能重提币
-      if (this.isLogin) {
+      if (this.$isLogin_S_X) {
         this.isRechargeOrWithdraw('buy')
         this.isRechargeOrWithdraw('sell')
       }
@@ -1364,7 +1363,7 @@ export default {
     isReturnSymbolData (newVal) {
       if (newVal) {
         this.RETURN_SYMBOL_DATA(false)
-        if (!this.isLogin) return
+        if (!this.$isLogin_S_X) return
         this.isRechargeOrWithdraw('buy')
         this.isRechargeOrWithdraw('sell')
       }

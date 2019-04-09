@@ -63,6 +63,9 @@ let mixin = {
       '$isNeedYST_G_X': 'isNeedYST'
     }),
     ...mapState({
+      $theme_S_X: state => state.common.theme,
+      $language_S_X: state => state.common.language,
+      $isLogin_S_X: state => state.user.isLogin,
       // 交易对是否改变l
       $isSymbolChanged_X: state => state.common.isSymbolChanged,
       // 是否显示限价交易

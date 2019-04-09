@@ -7,7 +7,7 @@
   >
     <div
       id="tv_chart_container"
-      :class="{'day':theme == 'day','night':theme == 'night' }"
+      :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
     >
     </div>
     <div
@@ -212,7 +212,7 @@ export default {
     // 获取当前交易对socket数据
     async getActiveSymbolData (tradeName) {
       let params = {
-        i18n: this.language
+        i18n: this.$language_S_X
       }
       params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
@@ -265,10 +265,10 @@ export default {
       this.socket.on('message', this.onMessage)
       this.options.symbol = symbol
       this.options.areaId = this.activeTabId
-      this.options.paneProperties.background = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-      this.options.paneProperties.vertGridPropertiesColor = this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
+      this.options.paneProperties.background = this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
+      this.options.paneProperties.vertGridPropertiesColor = this.$theme_S_X === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
       this.options.interval = '15'
-      this.options.language = this.language
+      this.options.language = this.$language_S_X
       this.init(this.options)
     },
     // 获取初始交易对
@@ -282,7 +282,7 @@ export default {
       const {tradeId} = this.$route.params
       this.symbol = tradeId && tradeId !== 'default' ? tradeId : (localSymbol ? localSymbol : activeSymbol)
       this.RETURN_SYMBOL_DATA(true)
-      if (this.isLogin) this.getUserOrderSocket('SUB', this.symbol)
+      if (this.$isLogin_S_X) this.getUserOrderSocket('SUB', this.symbol)
     },
     init (options) {
       if (!this.widget) {
@@ -625,7 +625,7 @@ export default {
     },
     // 委单事实刷新标记
     getUserOrderSocket (type, symbol) {
-      if (this.isLogin) {
+      if (this.$isLogin_S_X) {
         this.socket.send({
           'tag': type,
           'content': `market.${symbol}.userorder.${this.userId}`,
@@ -658,23 +658,14 @@ export default {
   computed: {
     ...mapState({
       symbolMap: state => state.home.symbolMap, // 交易对map
-      theme: state => state.common.theme,
-      language: state => state.common.language,
-      activeSymbol: state => state.common.activeSymbol,
-      activeTradeArea: state => state.common.activeTradeArea,
       activeTabSymbolStr: state => state.trade.activeTabSymbolStr,
       mainColor: state => state.common.mainColor,
-      isJumpToTradeCenter: state => state.trade.isJumpToTradeCenter,
-      jumpSymbol: state => state.trade.jumpSymbol,
       isChangeContent: state => state.trade.isChangeContent,
-      isLogin: state => state.user.isLogin,
-      middleTopData: state => state.trade.middleTopData,
-      userId: state => state.user.loginStep1Info.userId,
-      isReturnSymbolData: state => state.trade.isReturnSymbolData
+      userId: state => state.user.loginStep1Info.userId
     })
   },
   watch: {
-    isLogin (newVal) {
+    $isLogin_S_X (newVal) {
       if (newVal) {
         this.getUserOrderSocket('SUB', newVal)
       }
@@ -682,15 +673,15 @@ export default {
     KlineNum (newVal, oldVal) {
       // console.log(newVal, oldVal)
     },
-    theme () {
+    $theme_S_X () {
       // 更新K线主题
       this.widget.applyOverrides({
-        'paneProperties.background': this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor,
-        'paneProperties.vertGridProperties.color': this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)', // 行分割线
-        'paneProperties.horzGridProperties.color': this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)' // 列分割线
+        'paneProperties.background': this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor,
+        'paneProperties.vertGridProperties.color': this.$theme_S_X === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)', // 行分割线
+        'paneProperties.horzGridProperties.color': this.$theme_S_X === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)' // 列分割线
       })
     },
-    language () {
+    $language_S_X () {
       this.initKLine(this.symbol)
       setTimeout(() => {
         this.fullscreenLoading = false
@@ -737,7 +728,7 @@ export default {
     isChangeContent (newVla) {
       // console.log(newVla)
       if (newVla) {
-        this.getServerTime('REQ', this.activeSymbol.id)
+        this.getServerTime('REQ', this.$activeSymbol_S_X)
         this.REFRESH_CONTENT_STATUS(false)
       }
     }
