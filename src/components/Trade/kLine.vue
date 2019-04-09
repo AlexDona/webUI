@@ -240,6 +240,7 @@ export default {
       const defaultTradeContent = getNestedData(defaultTrade, 'content[0]')
       if (defaultTradeContent) {
         this.SET_MIDDLE_TOP_DATA(defaultTradeContent)
+        this.RETURN_SYMBOL_DATA(true)
       }
       // 买卖单
       this.ajaxData.buyAndSellData = getNestedData(depthList, 'depthData')
@@ -667,6 +668,7 @@ export default {
       jumpSymbol: state => state.trade.jumpSymbol,
       isChangeContent: state => state.trade.isChangeContent,
       isLogin: state => state.user.isLogin,
+      middleTopData: state => state.trade.middleTopData,
       userId: state => state.user.loginStep1Info.userId,
       isReturnSymbolData: state => state.trade.isReturnSymbolData
     })
