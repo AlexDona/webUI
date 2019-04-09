@@ -688,7 +688,8 @@ export default {
       'CHANGE_SYMBOL_CHANGED_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_PASSWORD_USEABLE',
-      'RETURN_SYMBOL_DATA'
+      'RETURN_SYMBOL_DATA',
+      'CHANGE_ACTIVE_PRICE_ITEM'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -701,8 +702,10 @@ export default {
     },
     // 决定是否能充提币
     async isRechargeOrWithdraw (tradType) {
+      const {buyCoinId, sellCoinId} = this.middleTopData
+      if (!buyCoinId || !sellCoinId) return
       const data = await getCoinRechargeWithdraw({
-        coinId: tradType === 'buy' ? this.middleTopData.buyCoinId : this.middleTopData.sellCoinId
+        coinId: tradType === 'buy' ? buyCoinId : sellCoinId
       })
       if (!data) return false
       if (tradType === 'buy') {
@@ -1331,7 +1334,10 @@ export default {
     },
     // 用户手动设置价格
     activePriceItem (newVal) {
-      if (newVal) this.setBuyAndSellPrice(newVal)
+      if (newVal) {
+        this.setBuyAndSellPrice(newVal)
+        this.CHANGE_ACTIVE_PRICE_ITEM(0)
+      }
     },
     async middleTopData (newVal) {
       console.log(newVal)
