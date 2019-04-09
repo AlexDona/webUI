@@ -1,7 +1,7 @@
 <template>
   <div
     class="entrust-order-box trade"
-    :class="{'day':$isLogin_S_X == 'day','night':$isLogin_S_X == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box">
 
