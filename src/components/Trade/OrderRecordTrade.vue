@@ -2,7 +2,7 @@
   <!--最近成交记录-->
     <div
       class="order-record-box trade"
-      :class="{'day':theme == 'day','night':theme == 'night' }"
+      :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
     >
       <div class="inner-box">
         <div
@@ -20,7 +20,7 @@
               <el-table
                 :data="orderRecordList"
                 :empty-text="$t('M.comm_no_data')"
-                :height="screenWidth > 1920 ? '800': '574'"
+                :height="$clientWidth_S_X > 1920 ? '800': '574'"
               >
                 <!--时间-->
                 <el-table-column
@@ -78,7 +78,7 @@ export default {
     }
   },
   created () {
-    // console.log(this.screenWidth)
+    console.log(this.$clientWidth_S_X)
   },
   mounted () {},
   activated () {},
@@ -97,16 +97,11 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme,
       orderRecordListByAjax: state => state.common.klineAjaxData.tardeRecordList,
-      orderRecordListBySocket: state => state.common.socketData.tardeRecordList,
-      clientWidth: state => state.common.clientWidth
+      orderRecordListBySocket: state => state.common.socketData.tardeRecordList
     }),
     orderRecordList () {
       return (this.reflashCount < 1) ? this.orderRecordListByAjax : this.orderRecordListBySocket
-    },
-    screenWidth () {
-      return this.clientWidth
     }
   },
   watch: {

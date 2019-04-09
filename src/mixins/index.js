@@ -74,7 +74,8 @@ let mixin = {
       $activeSymbol_S_X: state => state.trade.middleTopData.id,
       $serverTime_S_X: state => state.trade.serverData.serverTime,
       $isShowServerPort_S_X: state => state.trade.serverData.isShowServerPort,
-      $isServerEnd_S_X: state => state.trade.isActivityEnd
+      $isServerEnd_S_X: state => state.trade.isActivityEnd,
+      $clientWidth_S_X: state => state.common.clientWidth
     })
   }
 }

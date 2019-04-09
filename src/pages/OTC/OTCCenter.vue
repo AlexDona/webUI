@@ -546,7 +546,7 @@ export default {
       IWantToBuySellArr: [],
       isDisabledTimer: null, // 面板切换防止频繁点击倒计时
       // 增加国家-国家列表
-      checkedCountryId: '', // 增加国家-选中国家id
+      checkedCountryId: null, // 增加国家-选中国家id
       countryInfoList: [], // 增加国家-国家列表
       countrySelectStatus: true // 国家下拉选择框禁用状态
     }
@@ -626,7 +626,8 @@ export default {
         'updateTime': '',
         'version': 3
       }
-      this.countryInfoList.unshift(ALL)
+      this.countryInfoList.push(ALL)
+      this.checkedCountryId = (this.countryInfoList.filter(item => item.shortName == 'CNY'))[0].id
       console.log(this.countryInfoList)
     },
     // 增加国家-切换国家

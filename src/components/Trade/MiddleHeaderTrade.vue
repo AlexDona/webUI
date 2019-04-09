@@ -1,23 +1,23 @@
 <template>
   <div
     class="middle-header-box trade"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box">
       <div class="item logo">
           <img
             class="logo"
-            :src="middleTopData.image"
+            :src="$middleTopData_S_X.image"
           >
       </div>
       <div class="item symbol">
         <div class="top">
-          <span>{{middleTopData.sellsymbol}}</span>
+          <span>{{$middleTopData_S_X.sellsymbol}}</span>
           /
-          <span>{{middleTopData.area}}</span>
+          <span>{{$middleTopData_S_X.area}}</span>
         </div>
         <div class="bottom font-size12">
-          <span>{{(middleTopData.sellname||' ').replace('+',' ')}}</span>
+          <span>{{($middleTopData_S_X.sellname||' ').replace('+',' ')}}</span>
         </div>
       </div>
       <!--最新价-->
@@ -31,14 +31,14 @@
           <span
             class="font-size14 font-weight700"
             :class="{
-              'up':middleTopData.chg>0,
-              'down':middleTopData.chg<0
+              'up':$middleTopData_S_X.chg>0,
+              'down':$middleTopData_S_X.chg<0
             }"
-          >{{$scientificToNumber(middleTopData.last)}}</span>
+          >{{$scientificToNumber($middleTopData_S_X.last)}}</span>
           <span
             class="font-size12 theme-color"
-            v-show="middleTopData.last&&activeConvertCurrencyObj.symbol&&currencyRateList[middleTopData.area]"
-          >≈ {{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum((currencyRateList[middleTopData.area]-0)*(middleTopData.last-0), middleTopData.legalCurrencyDecimal)}}</span>
+            v-show="$middleTopData_S_X.last&&activeConvertCurrencyObj.symbol&&currencyRateList[$middleTopData_S_X.area]"
+          >≈ {{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum((currencyRateList[$middleTopData_S_X.area]-0)*($middleTopData_S_X.last-0), $middleTopData_S_X.legalCurrencyDecimal)}}</span>
         </div>
       </div>
       <!--涨跌-->
@@ -53,10 +53,10 @@
           <span
             class="font-size14"
             :class="{
-              'up':middleTopData.chg>0,
-              'down':middleTopData.chg<0
+              'up':$middleTopData_S_X.chg>0,
+              'down':$middleTopData_S_X.chg<0
             }"
-          >{{$scientificToNumber(middleTopData.chg)}}%</span>
+          >{{$scientificToNumber($middleTopData_S_X.chg)}}%</span>
         </div>
       </div>
       <div class="item">
@@ -70,10 +70,10 @@
           <span
             class="font-size14"
             :class="{
-              'up':middleTopData.chg>0,
-              'down':middleTopData.chg<0
+              'up':$middleTopData_S_X.chg>0,
+              'down':$middleTopData_S_X.chg<0
             }"
-          >{{$scientificToNumber(middleTopData.high)}}</span>
+          >{{$scientificToNumber($middleTopData_S_X.high)}}</span>
         </div>
       </div>
       <div class="item">
@@ -86,7 +86,7 @@
         <div class="bottom">
           <span
             class="font-size14 theme-color"
-          >{{$scientificToNumber(middleTopData.low)}}</span>
+          >{{$scientificToNumber($middleTopData_S_X.low)}}</span>
         </div>
       </div>
       <div class="item">
@@ -99,9 +99,9 @@
         <div class="bottom">
             <span
               class="font-size14 theme-color"
-              v-show="String($formatCount(middleTopData.vol24hour))!='NaN'"
+              v-show="String($formatCount($middleTopData_S_X.vol24hour))!='NaN'"
             >
-              {{$formatCount(middleTopData.vol24hour)}}
+              {{$formatCount($middleTopData_S_X.vol24hour)}}
             </span>
         </div>
       </div>
@@ -127,16 +127,11 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme,
-      middleTopData: state => state.trade.middleTopData,
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj // 目标货币
     })
   },
   watch: {
-    middleTopData (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>
