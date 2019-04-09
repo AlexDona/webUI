@@ -2,7 +2,7 @@
   <!--币币交易-买卖单-->
   <div
     class="buys-and-sells-box trade"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div
       class="inner-box"
@@ -208,7 +208,6 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme,
       buysAndSellsListByAjax: state => state.common.klineAjaxData.buyAndSellData,
       buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData,
       socketSymbol: state => state.common.socketData.symbol
@@ -220,21 +219,13 @@ export default {
       return (getNestedData(this.buysAndSellsList, 'sells.list') || []).length
     },
     isSameSymbol () {
-      return this.socketSymbol === this.$middleTopData_S_X.id
+      const {id} = this.$middleTopData_S_X
+      return this.socketSymbol === id
     }
   },
   watch: {
     $activeSymbol_S_X () {
       this.reflashCount = 0
-    },
-    $middleTopData_S_X (newVal) {
-      console.log(newVal)
-    },
-    buysAndSellsList (newVal) {
-      // console.log(newVal)
-    },
-    buysAndSellsListByAjax (newVal) {
-      // console.log(newVal)
     },
     buysAndSellsListBySocket: {
       handler (newVal) {
@@ -245,9 +236,6 @@ export default {
         }
       },
       deep: true
-    },
-    reflashCount (newVal) {
-      // console.log(newVal)
     }
   }
 }
