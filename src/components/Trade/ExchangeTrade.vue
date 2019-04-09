@@ -701,8 +701,10 @@ export default {
     },
     // 决定是否能充提币
     async isRechargeOrWithdraw (tradType) {
+      const {buyCoinId, sellCoinId} = this.middleTopData
+      if (!buyCoinId || !sellCoinId) return
       const data = await getCoinRechargeWithdraw({
-        coinId: tradType === 'buy' ? this.middleTopData.buyCoinId : this.middleTopData.sellCoinId
+        coinId: tradType === 'buy' ? buyCoinId : sellCoinId
       })
       if (!data) return false
       if (tradType === 'buy') {
