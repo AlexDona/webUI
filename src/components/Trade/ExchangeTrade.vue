@@ -42,7 +42,7 @@
                     <span>{{middleTopData.area}}</span>
                   </span>
                 </div>
-                <div class="right item">
+                <div class="right item" v-if="isLogin">
                   <button
                     :class="{'gray':!buyIsRecharge}"
                     :disabled="!buyIsRecharge"
@@ -155,7 +155,7 @@
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
-                <div class="right item">
+                <div class="right item" v-if="isLogin">
                   <button
                     @click="jumpToPersonalCenter('assets', 'sell', 'recharge')"
                     :class="{'gray':!sellIsRecharge}"
@@ -279,7 +279,7 @@
                     <span>{{middleTopData.area}}</span>
                   </span>
                 </div>
-                <div class="right item">
+                <div class="right item" v-if="isLogin">
                   <button
                     @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')"
                     :class="{'gray':!buyIsRecharge}"
@@ -363,7 +363,7 @@
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
-                <div class="right item">
+                <div class="right item" v-if="isLogin">
                   <button
                     @click="jumpToPersonalCenter('assets', 'sell', 'recharge')"
                     :class="{'gray':!sellIsRecharge}"
@@ -701,7 +701,6 @@ export default {
     },
     // 决定是否能充提币
     async isRechargeOrWithdraw (tradType) {
-      console.log(this.middleTopData)
       const data = await getCoinRechargeWithdraw({
         coinId: tradType === 'buy' ? this.middleTopData.buyCoinId : this.middleTopData.sellCoinId
       })
@@ -715,7 +714,6 @@ export default {
       }
     },
     async jumpToPersonalCenter (target, tradType, type) {
-      console.log(type)
       if (tradType) {
         this.$router.push({
           path: '/PersonalCenter',
@@ -1350,16 +1348,19 @@ export default {
         }
       }
     },
-    currentCoinId (newVal) {
+    async currentCoinId (newVal) {
       // 请求决定该交易对书否能重提币
-      this.isRechargeOrWithdraw('buy')
-      this.isRechargeOrWithdraw('sell')
+      if (this.isLogin) {
+        this.isRechargeOrWithdraw('buy')
+        this.isRechargeOrWithdraw('sell')
+      }
     },
     isReturnSymbolData (newVal) {
       if (newVal) {
+        this.RETURN_SYMBOL_DATA(false)
+        if (!this.isLogin) return
         this.isRechargeOrWithdraw('buy')
         this.isRechargeOrWithdraw('sell')
-        this.RETURN_SYMBOL_DATA(false)
       }
     }
   }

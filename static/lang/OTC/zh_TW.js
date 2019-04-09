@@ -355,6 +355,6 @@ export const OTC = {
   'otc_upload_picture6': '上傳圖片不能超過3張!',
   'otc_available_balance': '可用余額',
   'otc_warm_prompt0': '註意！請聯系賣家確認收款並確認訂單，如果賣家',
-  'otc_warm_prompt00': '小時內未確認訂單，系統自動成交。',
-  'otc_upload_picture7': '請上傳小於5M的圖片'
+  'otc_warm_prompt00': '小時內未確認訂單，系統自動成交',
+  'otc_upload_picture7': '請上傳小於5M的圖片',
 }
