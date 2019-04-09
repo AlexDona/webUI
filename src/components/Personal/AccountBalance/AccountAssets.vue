@@ -722,6 +722,8 @@ export default {
   },
   mounted () {
     console.log(this.$route.params)
+    // console.log(window.scrollTo)
+    // document.body.scrollTop = 2000
   },
   activated () {},
   update () {},
@@ -1093,7 +1095,9 @@ export default {
       let detailData = getNestedData(data, 'data')
       this.totalSumBTC = detailData.totalSum
       this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
-      _.forEach(this.withdrawDepositList, (item) => {
+      _.forEach(this.withdrawDepositList, (item, index) => {
+        console.log(item)
+        item.scrollTop = index * 50
         this.withdrawStorageMap.set(item.coinId, item)
         this.withdrawDepositMap.set(item.coinId, {
           allIsShow: false,
@@ -1112,10 +1116,16 @@ export default {
         }
         // 类型为提现在展开提现界面
         if (coinId == item.coinId && typeName === 'withdrawItemRef') {
+          console.log(item.scrollTop)
+          // window.scrollTo = item.scrollTop
+          console.log(window.scrollTo)
+          this.$nextTick(() => {
+            document.documentElement.scrollTop = item.scrollTop
+          })
           this.withdrawDepositMap.set(item.coinId, {...item, withdrawDepositIsShow: true})
         }
       })
-      console.log(this.withdrawDepositMap)
+      console.log(this.withdrawDepositList, this.withdrawDepositMap)
       this.getAllWithdraw()
     },
     getAllWithdraw () {
