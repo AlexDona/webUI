@@ -1,7 +1,7 @@
 <template>
   <div
     class="demo-box"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box"></div>
   </div>

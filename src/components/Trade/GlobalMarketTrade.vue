@@ -1,7 +1,7 @@
 <template>
   <div
     class="global-market-box trade"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box">
       <div
@@ -108,25 +108,23 @@ export default {
   methods: {
     // 交易价转换
     formatPrice (price) {
-      return this.$keep2Num((this.currencyRateList[this.$middleTopData_S_X.area] - 0) * price)
+      const {area} = this.$middleTopData_S_X
+      return this.$keep2Num((this.currencyRateList[area] - 0) * price)
     },
     // 成交量格式化
     formatCount (targetNum, targetPrice) {
-      return this.$formatCount(targetPrice ? this.$keep2Num((this.currencyRateList[this.$middleTopData_S_X.area] - 0) * targetPrice * targetNum) : targetNum)
+      const {area} = this.$middleTopData_S_X
+      return this.$formatCount(targetPrice ? this.$keep2Num((this.currencyRateList[area] - 0) * targetPrice * targetNum) : targetNum)
     },
     cutOutPointLength (num, pointLength) {
       return cutOutPointLength(num, pointLength)
     },
     // 获取全球行情
     async getGlobalMarket () {
-      let params = `${this.$middleTopData_S_X.sellsymbol}_${this.$middleTopData_S_X.area}`.toUpperCase()
-      const symbol = params.split('_')[0]
-      const area = params.split('_')[1]
-      if (!symbol || !area) {
-        return false
-      }
-      const data = await getGlobalMarket(params)
-      if (!data) return false
+      const {sellsymbol, area} = this.$middleTopData_S_X
+      if (!sellsymbol || !area) return
+      const data = await getGlobalMarket(`${sellsymbol.toUpperCase()}_${area.toUpperCase()}`)
+      if (!data) return
       this.globalMarketList = getNestedData(data, 'data') || []
     },
     // 切换内容显示隐藏
@@ -137,16 +135,11 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme,
-      language: state => state.common.language,
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
     })
   },
   watch: {
-    $middleTopData_S_X (newVal) {
-      console.log(newVal)
-    },
     $activeSymbol_S_X: {
       handler (newVal) {
         console.log(newVal)

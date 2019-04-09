@@ -2,7 +2,7 @@
 <template>
   <div
     class="trade-box trade"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box clearfloat">
       <!--左侧-->
@@ -17,7 +17,7 @@
       <!--中间-->
       <div
         class="middle"
-        :class="{'day':theme == 'day','night':theme == 'night' }"
+        :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
       >
         <MiddleHeader/>
         <!--k线-->
@@ -81,7 +81,6 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
     })
   },
   watch: {
