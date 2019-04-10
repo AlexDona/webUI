@@ -362,6 +362,10 @@ export default {
       console.log(e)
       this.currentUserCenterActiveName = e
       this.REFRESH_USER_INFO_ACTION()
+      if (e !== 'assets') {
+        this.$route.params.type = ''
+        this.$route.params.coinId = ''
+      }
     }
   }
 }

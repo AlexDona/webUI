@@ -712,6 +712,7 @@ export default {
     }
   },
   async created () {
+    console.log(this.$route.params.type, this.$route.params.coinId)
     // 刚进页面时候 个人资产列表展示
     if (this.currencyRateList.CNY) {
       // 汇率转换
@@ -747,7 +748,6 @@ export default {
     },
     // 1.0 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
-      // console.log(this.currencyRateList, this.activeConvertCurrencyObj)
       const params = {
         coinName: 'FBT',
         shortName: this.activeConvertCurrencyObj.shortName
@@ -767,7 +767,6 @@ export default {
     assetsSorting (type, val) {
       // type 冻结(frozen) 可用(total) 资产估值(btcValue)
       // val 升序(order) 降序(invertedOrder)
-      // console.log(type, val)
       switch (type) {
         case 'up':
           this.blueStyleFrozen = 1
@@ -810,47 +809,6 @@ export default {
     // 3.0跳转当前交易对
     changeActiveSymbol (e) {
       console.log(e)
-      // changeActiveSymbol
-      /*
-        * {
-        "data":{
-        "entrust":[
-          {
-            "buyCoinId":"491719528745533440",
-            "buyCoinName":"USDT",
-            "buyCoinNickname":"USDT",
-            "buyFee":0.0000000000,
-            "buyStatus":"",
-            "createTime":"2018-09-19 15:51:32",
-            "forumId":"486108441757089792",
-            "id":"491999795670417408",
-            "isStop":"true",
-            "isTransaction":"true",
-            "maxCount":0.0000,
-            "maxPrice":0.0000000000,
-            "minCount":0.0000,
-            "minPrice":0.0000000000,
-            "modifier":"申",
-            "name":"BTC/USDT",
-            "openPrice":0.00000000,
-            "openTime":null,
-            "operable":"true",
-            "priceDecimalPlace":"6",
-            "quantityDecimalPlace":"6",
-            "sellCoinId":"486124940777488384",
-            "sellCoinName":"BTC",
-            "sellCoinNickname":"BTC",
-            "sellFee":0.0000000000,
-            "sellStatus":"",
-            "sort":0,
-            "status":"enabled",
-            "stopTime":null,
-            "tradeAreaId":"491998732594708480",
-            "tradeId":"491999715173335040",
-            "tradeStatus":"",
-            "updateTime":"2018-09-19 17:21:05"
-          */
-      // }
       this.SET_JUMP_STATUS(true)
       // 设置当前交易区
       const id = (e.sellCoinName + e.buyCoinName).toLowerCase()
@@ -908,6 +866,7 @@ export default {
       }
       data = await getCoinRechargeWithdraw(params)
       if (!data) return false
+      console.log(data)
       // 是否允许充币
       this.isRechargeState = getNestedData(data.data, 'isRecharge')
       // 是否允许提币
@@ -918,6 +877,17 @@ export default {
       if (!this.isWithdrawState) {
         this.withdrawDepositMap.set(id, {...item, withdrawDepositIsShow: false})
       }
+      // 判断充提类型和coinId是否存在，如果存在进行下一步
+      // 在判断当前币种是否允许充提 允许不执行，不允许关闭窗口不提示
+      if (this.$route.params.type && this.$route.params.coinId) {
+        if (!this.rechargeIsShow) {
+          this.withdrawDepositMap.set(id, {...item, rechargeIsShow: false})
+        }
+        if (!this.isWithdrawState) {
+          this.withdrawDepositMap.set(id, {...item, withdrawDepositIsShow: false})
+        }
+      }
+      console.log(this.isRechargeState, this.isWithdrawState)
     },
     // 5.0点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
     async showRechargeBox (id, name) {
@@ -1105,33 +1075,19 @@ export default {
         // 币币带回币种id
         let coinId = this.$route.params.coinId
         // 从币币交易页面跳到我的资产带回参数，有充币 提现
-        // 类型为充币在展开充币界面
         if (coinId === item.coinId && typeName) {
-          this.isRechargeWithdrawState(this.$route.params.coinId)
-          if (typeName === 'recharge' && this.isRechargeState) {
-            if (!this.isRechargeState) {
-              // 充值暂停，钱包维护中
-              this.$message({
-                message: this.$t('M.user_assets_suspended'),
-                type: 'error'
-              })
-              return false
-            }
+          this.isRechargeWithdrawState(coinId)
+          console.log(this.isRechargeState, this.isWithdrawState)
+          if (typeName === 'recharge') {
+            // 类型为充币在展开充币界面
             this.withdrawDepositMap.set(item.coinId, {...item, rechargeIsShow: true})
             this.fillingCurrencyAddress(coinId)
           } else {
-            if (!this.isWithdrawState) {
-              // 暂停提币
-              this.$message({
-                message: this.$t('M.user_assets_pause_mention'),
-                type: 'error'
-              })
-              return false
-            }
             // 类型为提现在展开提现界面
             this.withdrawDepositMap.set(item.coinId, {...item, withdrawDepositIsShow: true})
             this.getWithdrawalInformation('', coinId)
           }
+          // 跳转到对应位置
           this.$nextTick(() => {
             document.documentElement.scrollTop = (index - 1) * 50 + 347
           })
@@ -1506,6 +1462,7 @@ export default {
       console.log(this.filteredData2)
     },
     userCenterActiveName (newVal) {
+      console.log(newVal)
       if (newVal === 'assets') {
         console.log(newVal)
         this.getAssetCurrenciesList()
