@@ -201,12 +201,12 @@ export default {
               white-space: nowrap;
 
               &.symbol {
-                width: 26%;
+                width: 30%;
                 text-align: right;
               }
 
               &.price {
-                width: 26%;
+                width: 23%;
                 text-align: right;
               }
 
@@ -238,12 +238,12 @@ export default {
               white-space: nowrap;
 
               &.symbol {
-                width: 26%;
+                width: 30%;
                 text-align: right;
               }
 
               &.price {
-                width: 26%;
+                width: 23%;
                 text-align: right;
               }
 

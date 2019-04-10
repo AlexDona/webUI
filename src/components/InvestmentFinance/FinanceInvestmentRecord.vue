@@ -214,7 +214,6 @@
                   <el-table-column
                     prop="coinShortName"
                     :label="$t('M.finance_invest_coin1')"
-                    width="150"
                   >
                   </el-table-column>
                   <!-- 存币类型 prop="description" :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription"-->
@@ -229,7 +228,6 @@
                   <!-- 数量 -->
                   <el-table-column
                     prop="number"
-                    width="100"
                     :label="$t('M.comm_count')"
                   >
                   </el-table-column>
@@ -248,7 +246,6 @@
                   <!-- 发放时间 -->
                   <el-table-column
                     prop="createTime"
-                    width="150"
                     :label="$t('M.finance_releaseTime')"
                   >
                   </el-table-column>

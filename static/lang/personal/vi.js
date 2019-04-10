@@ -230,7 +230,7 @@ export const personal = {
   'user_coin_order6': 'Đã thành giao',
   'user_coin_order7': 'Đơn háng đồng tiền',
   'user_coin': 'Tiền tệ',
-  'user_coin_bring_together': 'Kết hợp',
+  'user_coin_bring_together': 'Kết',
   'user_coin_appoint_single': 'Đơn lẻ',
   'user_coin_appoint_single_stle': 'Loại hình đơn',
   'user_coin_rental': 'Tổng ngạch',

@@ -513,7 +513,7 @@ export default {
         }
 
         .trade-data {
-          width: 500px;
+          width: 535px;
         }
 
         .main-top-type {
@@ -525,7 +525,7 @@ export default {
           }
 
           .date-short-line {
-            margin: 0 25px;
+            margin: 0 8px;
           }
         }
 
@@ -573,12 +573,12 @@ export default {
       }
 
       .el-date-editor.el-input {
-        width: 130px;
+        width: 180px;
         height: 30px;
       }
 
       .el-date-editor .el-input__inner {
-        width: 136px;
+        width: 180px;
         height: 30px;
       }
 
@@ -588,7 +588,7 @@ export default {
 
       .main-top-type .el-button {
         width: 60px;
-        height: 34px;
+        height: 30px;
         padding: 0;
         margin-left: 77px;
         border: 0;

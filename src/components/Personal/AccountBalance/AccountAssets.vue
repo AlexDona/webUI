@@ -877,14 +877,20 @@ export default {
       if (!this.isWithdrawState) {
         this.withdrawDepositMap.set(id, {...item, withdrawDepositIsShow: false})
       }
-      // 判断充提类型和coinId是否存在，如果存在进行下一步
+      // 判断充提类型和coinId是否存在，并且等于当前id，如果存在并且等于进行下一步
       // 在判断当前币种是否允许充提 允许不执行，不允许关闭窗口不提示
-      if (this.$route.params.type && this.$route.params.coinId) {
-        if (!this.rechargeIsShow) {
-          this.withdrawDepositMap.set(id, {...item, rechargeIsShow: false})
-        }
-        if (!this.isWithdrawState) {
-          this.withdrawDepositMap.set(id, {...item, withdrawDepositIsShow: false})
+      if (this.$route.params.coinId === id && this.$route.params.type) {
+        switch (this.$route.params.type) {
+          case 'recharge':
+            if (!this.isRechargeState) {
+              this.withdrawDepositMap.set(id, {...item, rechargeIsShow: false})
+            }
+            break
+          case 'withdraw':
+            if (!this.isWithdrawState) {
+              this.withdrawDepositMap.set(id, {...item, withdrawDepositIsShow: false})
+            }
+            break
         }
       }
       console.log(this.isRechargeState, this.isWithdrawState)
@@ -1087,9 +1093,13 @@ export default {
             this.withdrawDepositMap.set(item.coinId, {...item, withdrawDepositIsShow: true})
             this.getWithdrawalInformation('', coinId)
           }
-          // 跳转到对应位置
+          // 跳转到对应位置 滚动类型
           this.$nextTick(() => {
-            document.documentElement.scrollTop = (index - 1) * 50 + 347
+            // document.documentElement.scrollTop = (index - 1) * 50 + 347
+            window.scroll({
+              top: (index - 1) * 50 + 347,
+              behavior: 'smooth'
+            })
           })
         }
       })

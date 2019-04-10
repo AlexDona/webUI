@@ -421,6 +421,7 @@
                   <el-table-column
                     prop="profit"
                     :label="$t('M.finance_paid_income')"
+                    width="140"
                   >
                   </el-table-column>
                   <el-table-column
@@ -528,7 +529,7 @@
                   <el-table-column
                     prop="coinShortName"
                     :label="$t('M.finance_invest_coin1')"
-                    width="150">
+                  >
                   </el-table-column>
                   <el-table-column
                     :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
@@ -541,7 +542,6 @@
                   <!-- 数量 -->
                   <el-table-column
                     prop="number"
-                    width="100"
                     :label="$t('M.comm_count')"
                   >
                   </el-table-column>
@@ -560,7 +560,6 @@
                   <!-- 发放时间 -->
                   <el-table-column
                     prop="createTime"
-                    width="150"
                     :label="$t('M.finance_releaseTime')"
                   >
                   </el-table-column>

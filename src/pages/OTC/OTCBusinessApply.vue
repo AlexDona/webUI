@@ -787,7 +787,6 @@ export default {
             padding: 0 20px 0 0;
 
             .el-button {
-              width: 90px;
               padding: 7px 20px;
               border: 0;
 

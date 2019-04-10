@@ -54,7 +54,7 @@
                   <button
                     :class="{'gray':!buyIsWithdraw}"
                     :disabled="!buyIsWithdraw"
-                    @click.stop="jumpToPersonalCenter('assets', 'buy', 'withdrawItemRef')"
+                    @click.stop="jumpToPersonalCenter('assets', 'buy', 'withdraw')"
                   >
                     <!--提币-->
                     {{ $t('M.comm_mention_money') }}
@@ -165,7 +165,7 @@
                     {{ $t('M.comm_charge_money') }}
                   </button>
                   <button
-                    @click="jumpToPersonalCenter('assets', 'sell', 'withdrawItemRef')"
+                    @click="jumpToPersonalCenter('assets', 'sell', 'withdraw')"
                     :class="{'gray':!sellIsWithdraw}"
                     :disabled="!sellIsWithdraw"
                   >
@@ -289,7 +289,7 @@
                     {{ $t('M.comm_charge_money') }}
                   </button>
                   <button
-                    @click.stop="jumpToPersonalCenter('assets', 'buy', 'withdrawItemRef')"
+                    @click.stop="jumpToPersonalCenter('assets', 'buy', 'withdraw')"
                     :class="{'gray':!buyIsWithdraw}"
                     :disabled="!buyIsWithdraw"
                   >
@@ -373,7 +373,7 @@
                     {{ $t('M.comm_charge_money') }}
                   </button>
                   <button
-                    @click="jumpToPersonalCenter('assets', 'sell', 'withdrawItemRef')"
+                    @click="jumpToPersonalCenter('assets', 'sell', 'withdraw')"
                     :class="{'gray':!sellIsWithdraw}"
                     :disabled="!sellIsWithdraw"
                   >

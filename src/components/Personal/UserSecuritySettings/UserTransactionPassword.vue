@@ -672,7 +672,7 @@ export default {
         }
 
         > .transaction-content-from {
-          width: 500px;
+          width: 575px;
           margin-left: 55px;
 
           .header-title {

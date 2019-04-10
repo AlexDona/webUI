@@ -155,7 +155,7 @@
                 <!--交易对-->
                 <el-table-column
                   :label="$t('M.comm_deal_pair')"
-                  width="70"
+                  width="75"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.tradeName }}</span>
@@ -174,7 +174,7 @@
                 <!--委单类型-->
                 <el-table-column
                   :label="$t('M.user_coin_appoint_single_stle')"
-                  width="80"
+                  width="85"
                 >
                   <template slot-scope="s">
                     <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -223,7 +223,7 @@
                 <!--状态-->
                 <el-table-column
                   :label="$t('M.comm_state')"
-                  width="60"
+                  width="55"
                 >
                   <template slot-scope="s">
                     <span>{{ $t(`M.${s.row.i18nStatusName}`) }}</span>
@@ -909,6 +909,16 @@ export default {
 
       /deep/ {
         /* 个人中心（黑色主题） */
+        .el-input__suffix {
+          top: 4px;
+          right: 1px;
+          height: 28px;
+          border-radius: 0 2px 2px 0;
+          line-height: 30px;
+          background: #2d3651;
+          -webkit-transition: all .3s;
+          transition: all .3s;
+        }
 
         /* tabs切换 */
         .el-tabs__item.is-active {
@@ -1009,6 +1019,16 @@ export default {
 
       /deep/ {
         /* 个人中心（白色主题） */
+        .el-input__suffix {
+          top: 4px;
+          right: 1px;
+          height: 28px;
+          border-radius: 0 2px 2px 0;
+          line-height: 30px;
+          background: #fff;
+          -webkit-transition: all .3s;
+          transition: all .3s;
+        }
 
         /* tabs切换 */
         .el-tabs__item.is-active {
