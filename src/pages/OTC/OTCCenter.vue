@@ -736,6 +736,7 @@ export default {
     },
     // 0.3 点击 购买 或者 出售 按钮跳转到在线购买或者出售页面
     async toOnlineBuyOrSell (id, coinId, userId, countryCode) {
+      const CHINA = ['853', '852', '886', '86']
       if (!this.isLogin) {
         this.$goToPage('/login')
       } else {
@@ -772,7 +773,7 @@ export default {
             // 增加个人用户信息中的国籍和选中的国家对比，
             // 如果相同，可以摘单
             // 不相同，不能摘单，给出提示
-          } else if (!(countryCode == this.userInfo.country)) {
+          } else if (!(CHINA.includes(countryCode) && CHINA.includes(this.userInfo.country)) && !(countryCode == this.userInfo.country)) {
             this.$message({
               // 根据您注册所在地的相关规定，无法进行此操作
               message: this.$t('M.otc_failure_0094'),
@@ -860,7 +861,7 @@ export default {
       if (!data) return false
       if (data.data) {
         this.availableCurrencyId = getNestedData(data, 'data')
-        // console.log(this.availableCurrencyId)
+        console.log(this.availableCurrencyId)
         this.checkedCurrencyId = getNestedData(this.availableCurrencyId[0], 'id')
         this.checkedCurrencyName = getNestedData(this.availableCurrencyId[0], 'shortName')
         this.currencyCoinSelectStatus = false // 开启货币类型select框
@@ -920,7 +921,7 @@ export default {
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
       if (this.countryInfoList.length) {
-        this.checkedCountryId = this.countryInfoList[0].id // 增加国家-国家为所有国家
+        this.checkedCountryId = this.countryInfoList[this.countryInfoList.length - 1].id // 增加国家-国家为所有国家
       }
       this.currentPage = 1
       this.checkedCurrencyId = e
