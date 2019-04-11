@@ -157,7 +157,6 @@
                 <!--币种-->
                 <el-table-column
                   :label="$t('M.comm_currency')"
-                  width="100"
                 >
                   <template slot-scope = "s">
                     <div>{{ s.row.coinName }}</div>
@@ -166,7 +165,6 @@
                 <!--类型-->
                 <el-table-column
                   :label="$t('M.comm_type')"
-                  width="110"
                 >
                   <template slot-scope = "s">
                     <div>{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
@@ -176,7 +174,7 @@
                 <el-table-column
                   :label="$t('M.comm_mention_money') + $t('M.comm_site')"
                   v-if="withdrawSite"
-                  width="125"
+                  width="150"
                 >
                   <template slot-scope = "s">
                     <div
@@ -194,7 +192,7 @@
                 <el-table-column
                   :label="$t('M.comprehensive_manual1')"
                   v-if="rechargeSite"
-                  width="130"
+                  width="140"
                 >
                   <template slot-scope = "s">
                     <!--系统充值-->
@@ -227,6 +225,7 @@
                 <!--提交时间-->
                 <el-table-column
                   :label="$t('M.comm_sub_time') + $t('M.comm_time')"
+                  width="150"
                 >
                   <template slot-scope = "s">
                     <div>{{ s.row.createTime }}</div>
@@ -236,9 +235,26 @@
                 <el-table-column
                   prop="address"
                   :label="$t('M.comm_state')"
+                  width="140"
                 >
                   <template slot-scope = "s">
                     <div>{{ $t(`M.${s.row.i18nStatusName}`)}}</div>
+                  </template>
+                </el-table-column>
+                <!--操作-->
+                <el-table-column
+                  :label="$t('M.comm_operation')"
+                  v-if="withdrawSite"
+                >
+                  <template slot-scope = "s">
+                    <div
+                      class="cursor-pointer state-status"
+                      @click.prevent="confirmCancelWithdraw(s.row.id, s.row.version)"
+                      :id="s.row.id"
+                    >
+                      <!--撤销-->
+                      {{ s.row.status === 'WAIT-WITHDRAW'? $t('M.user_push_revocation') : ''}}
+                    </div>
                   </template>
                 </el-table-column>
               </el-table>
@@ -366,7 +382,8 @@ import {mapState, mapMutations} from 'vuex'
 import {
   statusRushedToRecordList,
   getMerchantCurrencyList,
-  getComprehensiveRecordsList
+  getComprehensiveRecordsList,
+  deleteCancelWithdraw
 } from '../../../utils/api/personal'
 import {
   getNestedData
@@ -384,13 +401,11 @@ export default {
       seconds: new Date().getSeconds(),
       pickerOptionsTime: {},
       chargeRecordList: [], // 充提记录列表
-      addressRecordList: [], // 充提记录列表
       activeName: 'current-entrust', // 充提记录
       recordPageNumber: 1, // 充提记录页码
       recordTotalPageNumber: 1, // 充提记录总页数
       currencyValueStatus: true, // 币种列表状态
-      // 开始时间
-      startTime: [],
+      startTime: [], // 开始时间
       endTime: '', // 结束时间
       // 币种名称
       defaultCurrencyId: '', // 默认币种id
@@ -401,9 +416,6 @@ export default {
       // 全部 充币 提币
       currencyType: [
         {
-          value: '',
-          label: 'M.comm_all'
-        }, {
           value: 'RECHARGE',
           label: 'M.comm_charge_money'
         }, {
@@ -415,8 +427,7 @@ export default {
       withdrawSite: false,
       // 提现记录默认隐藏充值来源 true显示 false隐藏
       rechargeSite: false,
-      // 其他记录
-      otherRecordsList: [],
+      otherRecordsList: [], // 综合记录
       otherRecordPageNumbers: 1, // 其他记录页码
       totalPagesOtherRecords: 1, // 其他记录总页数
       otherRecordsValue: 'OTC_TRADE', // 其他记录类型
@@ -445,8 +456,7 @@ export default {
           label: 'M.invitation_reward'
         }
       ],
-      pickerOptionsStart: {},
-      pickerOptionsEnd: {},
+      id: '',
       partLoading: false // 局部loading
     }
   },
@@ -458,22 +468,14 @@ export default {
     ...mapMutations([
       'SET_NEW_WITHDRAW_RECORD'
     ]),
-    // 时间格式化
+    /**
+     * 1.静态方法封装
+     */
+    // 1.1 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
-    // 时间赋值
-    changeTime () {
-      this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
-        disabledDate: (time) => {
-          let curDate = (new Date()).getTime()
-          let three = 90 * 24 * 3600 * 1000
-          let threeMonths = curDate - three
-          return time.getTime() > Date.now() + ((1 * 24 * 3600 * 1000) - (this.hours + this.minutes + this.seconds)) || time.getTime() < threeMonths
-        }
-      })
-    },
-    //  点击复制
+    //  1.2 点击复制
     onCopy (e) {
       // 已拷贝
       let msg = this.$t('M.comm_have_been_copied')
@@ -490,7 +492,22 @@ export default {
         message: msg
       })
     },
-    // tab 切换
+    // 1.3 时间赋值
+    changeTime () {
+      console.log(1)
+      this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
+        disabledDate: (time) => {
+          let curDate = (new Date()).getTime()
+          let three = 90 * 24 * 3600 * 1000
+          let threeMonths = curDate - three
+          return time.getTime() > Date.now() || time.getTime() < threeMonths
+        }
+      })
+    },
+    /**
+     * 2.tab 切换赋值展示
+     */
+    // 2.1 tab 切换
     async coinMoneyOrders (e) {
       if (this.activeName === 'current-entrust') {
         this.startTime = ''
@@ -507,7 +524,35 @@ export default {
       }
       await this.inquireCurrencyList(e.name)
     },
-    // 获取商户币种列表
+    /**
+     * 撤销提币记录
+     */
+    confirmCancelWithdraw (id, version) {
+      // 确定删撤销提现记录?
+      this.$confirm(this.$t('M.comm_sure_withdraw'), {
+        // 取消
+        cancelButtonText: this.$t('M.comm_cancel'),
+        // 确定
+        confirmButtonText: this.$t('M.comm_confirm')
+      }).then(() => {
+        this.cancelWithdrawal(id, version)
+      }).catch(() => {
+      })
+    },
+    // 确认撤销提现
+    async cancelWithdrawal (orderId, version) {
+      console.log(orderId, version)
+      let data = await deleteCancelWithdraw({
+        orderId,
+        version
+      })
+      if (!data) return false
+      // 调用刷新提币列表接口
+      this.getChargeMentionList()
+    },
+    /**
+     * 2.获取商户币种列表
+     */
     async inquireCurrencyList (entrustType) {
       let data
       let param = {
@@ -528,7 +573,10 @@ export default {
       // 接口回来之后把select状态改为可用
       this.currencyValueStatus = false
     },
-    // 搜索按钮
+    /**
+     * 3.搜索按钮
+     */
+    // 3.1 点击搜索按钮
     stateSearchButton (entrustType) {
       this.recordPageNumber = 1
       this.otherRecordPageNumbers = 1
@@ -536,7 +584,7 @@ export default {
       this.getChargeMentionList(entrustType)
     },
     /**
-     * 刚进页面时候 冲提记录列表展示
+     * 4.刚进页面时候 冲提记录列表展示
      */
     /* 类型 OTC_TRADE：otc交易 OTC_FEE：otc手续费
          CTC_TRADE：币币交易 CTC_FEE：币币手续费
@@ -548,9 +596,6 @@ export default {
       // 判断是否显示提币地址 充币不显示，提币或者为空显示
       if (this.currencyTypeValue === 'WITHDRAW') {
         this.withdrawSite = true
-        this.rechargeSite = false
-      } else if (this.currencyTypeValue === '') {
-        this.withdrawSite = false
         this.rechargeSite = false
       } else {
         this.rechargeSite = true
@@ -586,7 +631,6 @@ export default {
           console.log(detailData)
           // 充提记录
           this.chargeRecordList = getNestedData(detailData, 'list') || []
-          this.addressRecordList = getNestedData(detailData, 'list') || []
           this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
           break
         case 'other-records':
@@ -607,7 +651,7 @@ export default {
       }
     },
     /**
-     * 切换页码
+     * 4.1切换页码
      * @entrustType: 记录类型： 0：充提记录 1： 其他记录
      */
     changeCurrentPage (entrustType, pageNum) {
@@ -638,27 +682,7 @@ export default {
       assetJumpStatementDetailsType: state => state.personal.assetJumpStatementDetailsType // 我的资产跳转到账单明细提币携带提币类型
     })
   },
-  watch: {
-    // userInfo (newVal) {
-    //   console.log(newVal)
-    // },
-    // startTime (newVal) {
-    //   console.log(newVal)
-    //   if (!newVal) {
-    //     this.startTime = ''
-    //   }
-    // },
-    // endTime (newVal) {
-    //   console.log(newVal)
-    //   if (!newVal) {
-    //     this.endTime = ''
-    //   }
-    // },
-    // userCenterActiveName (newVal) {
-    //   console.log(newVal)
-    //   this.changeTime()
-    // }
-  }
+  watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -667,6 +691,10 @@ export default {
   .billing-details {
     > .billing-details-main {
       min-height: 665px;
+
+      .state-status {
+        color: $mainColor;
+      }
 
       .white-space {
         overflow: hidden;
@@ -685,8 +713,9 @@ export default {
         line-height: 57px;
 
         .search-button {
-          width: 50px;
+          min-width: 50px;
           height: 30px;
+          padding: 0 5px;
           margin-top: 15px;
           line-height: 29px;
         }

@@ -230,7 +230,7 @@ export default {
       }
 
       .el-tabs__item {
-        width: 150px;
+        max-width: 165px;
         height: 34px;
         font-weight: 400;
         line-height: 34px;

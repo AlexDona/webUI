@@ -74,9 +74,9 @@
               </div>
             </div>
             <div class="left-body">
-              <label>
+              <div class="left-label">
                 <!-- 存币方案 -->
-                <span class="label-title">{{$t('M.finance_invest_style')}}:&nbsp;</span>
+                <span class="label-title display-inline-block text-align-r">{{$t('M.finance_invest_style')}}:&nbsp;</span>
                 <el-select
                   :placeholder="$t('M.comm_please_choose')"
                   :no-data-text="$t('M.comm_no_data')"
@@ -91,11 +91,11 @@
                   >
                   </el-option>
                 </el-select>
-              </label>
-              <label>
+              </div>
+              <div class="left-label">
                 <!-- 存币数量 -->
-                <span class="label-title">{{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;</span>
-                <div class='invest-amount'>
+                <span class="label-title display-inline-block text-align-r">{{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;</span>
+                <div class='invest-amount float-right'>
                   <!-- 请输入数量 -->
                   <input
                     type="text"
@@ -106,7 +106,7 @@
                   >
                   <strong>{{selectedCoinName}}</strong>
                 </div>
-              </label>
+              </div>
               <!-- 您存币的币种数量已超过该币种的总资产 -->
               <div
                 class="totalTipsPositon"
@@ -114,7 +114,7 @@
               >
                 {{$t('M.finance_errorTips')}}
               </div>
-              <label>
+              <div class="left-label">
                 <div class='submitBtn'>
                   <el-button
                     plain
@@ -124,7 +124,7 @@
                   {{$t('M.finance_at_once_save')}}
                   </el-button>
                 </div>
-              </label>
+              </div>
               <!--存币说明-->
               <div class="investExplain">
                 {{$t('M.finance_invest_read')}}
@@ -134,13 +134,13 @@
               <el-dialog
                 :title="$t('M.finance_save_moneydetail')"
                 :visible.sync="dialogVisible"
-                width="440px"
+                width="470px"
                 :close-on-click-modal="false"
                 class='dialogStyle'
               >
                 <el-form
                   label-position="right"
-                  label-width="90px"
+                  label-width="115px"
                   :model="formLabelAlign"
                 >
                   <!-- 存币时长 -->
@@ -391,6 +391,7 @@
                   <!-- 存币类型 -->
                   <el-table-column
                     :label="$t('M.finance_invest_style')"
+                    width="150"
                   >
                     <template slot-scope="s">
                       <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
@@ -420,6 +421,7 @@
                   <el-table-column
                     prop="profit"
                     :label="$t('M.finance_paid_income')"
+                    width="140"
                   >
                   </el-table-column>
                   <el-table-column
@@ -527,7 +529,7 @@
                   <el-table-column
                     prop="coinShortName"
                     :label="$t('M.finance_invest_coin1')"
-                    width="150">
+                  >
                   </el-table-column>
                   <el-table-column
                     :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
@@ -540,7 +542,6 @@
                   <!-- 数量 -->
                   <el-table-column
                     prop="number"
-                    width="100"
                     :label="$t('M.comm_count')"
                   >
                   </el-table-column>
@@ -559,7 +560,6 @@
                   <!-- 发放时间 -->
                   <el-table-column
                     prop="createTime"
-                    width="150"
                     :label="$t('M.finance_releaseTime')"
                   >
                   </el-table-column>
@@ -1135,7 +1135,6 @@ export default {
         justify-content: space-between;
 
         > .left {
-          width: 516px;
           color: #a9bed4;
 
           > .nav-header {
@@ -1161,14 +1160,12 @@ export default {
           .left-body {
             padding-top: 58px;
 
-            > label {
-              display: flex;
+            > .left-label {
               margin: 32px 0;
               line-height: 50px;
 
               > .label-title {
-                display: inline-block;
-                width: 120px;
+                width: 130px;
               }
 
               > .invest-amount {
@@ -1192,7 +1189,7 @@ export default {
                 > button {
                   width: 400px;
                   height: 50px;
-                  margin-left: 117px;
+                  margin-left: 134px;
                   border-radius: 4px;
                   text-align: center;
                   color: #fff;
@@ -1886,15 +1883,14 @@ export default {
   }
 
   .invest {
-    width: 130px;
-    padding: 10px 0 10px 26px;
+    padding: 10px 20px 10px 26px;
     font-size: 16px;
     color: #fff;
     background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
   }
 
   .totalTipsPositon {
-    margin: -20px 0 -20px 115px;
+    margin: -20px 0 -20px 134px;
     color: #d45858;
   }
 }

@@ -11,18 +11,11 @@
     >
       <header class="add-bank-header personal-height60 line-height60 line-height70 margin25">
         <span
-          v-if="paymentTerm.isBankBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--设置银行卡-->
-          {{ $t('M.user_bind_Bank_set') }}
-        </span>
-        <span
-          v-else
-          class="header-content-left header-content font-size16 font-weight600"
-        >
+          {{ paymentTerm.isBankBind? $t('M.user_bind_Bank_set'): $t('M.comm_modification')+ $t('M.user_account_bank') }}
           <!--修改银行卡-->
-          {{ $t('M.comm_modification') }}{{ $t('M.user_account_bank') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -117,20 +110,12 @@
             </el-form-item>
             <div style="width: 380px;">
               <button
-                v-if="paymentTerm.isBankBind"
                 class="bank-button border-radius4 cursor-pointer"
                 @click.prevent="statusTetBankCard"
               >
                 <!--确认设置-->
-                {{ $t('M.user_bind_paypal_confirm_set') }}
-              </button>
-              <button
-                v-else
-                class="bank-button border-radius4 cursor-pointer"
-                @click.prevent="statusTetBankCard"
-              >
+                {{ paymentTerm.isBankBind? $t('M.user_bind_paypal_confirm_set'): $t('M.user_modification_confirm_amend') }}
                 <!--确认修改-->
-                {{ $t('M.user_modification_confirm_amend') }}
               </button>
               <span
                 class="font-size12 cursor-pointer text-align-r hint-color float-right"
@@ -173,12 +158,11 @@ export default {
   },
   data () {
     return {
-      realName: '', // 真实姓名
       bankName: '', // 银行名称
       bankCard: '', // 银行卡号
       branchAddress: '', // 支行地址
       password: '', // 交易密码
-      id: '', // ID
+      typePaymentId: '', // 支付类型ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
@@ -245,7 +229,7 @@ export default {
           address: this.branchAddress, // 开户地址
           payPassword: this.password, // 交易密码
           bankType: 'Bankcard', // type
-          id: this.id
+          id: this.typePaymentId
         }
         // 判断是否交易密码锁定
         await this.REFRESH_USER_INFO_ACTION()
@@ -345,7 +329,7 @@ export default {
       this.bankCard = cardNo
       // 修改时带回银行卡地址
       this.branchAddress = address
-      this.id = id
+      this.typePaymentId = id
     },
     // 成功自动跳转
     successJump () {

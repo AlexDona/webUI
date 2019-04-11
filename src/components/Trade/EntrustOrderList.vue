@@ -1,14 +1,14 @@
 <template>
   <div
     class="entrust-order-box trade"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box">
 
       <!--查看更多委单记录-->
       <div
         class="view-more"
-        v-if="isLogin"
+        v-if="$isLogin_S_X"
       >
         <button
           class="cancel-all-entrust"
@@ -53,17 +53,17 @@
               <li class="th price">
                 <!--价格-->
                 {{ $t('M.comm_price_metre') }}
-                <span>（{{activeSymbol.area}}）</span>
+                <span>（{{$middleTopData_S_X.area}}）</span>
               </li>
               <li class="th count">
                 <!--数量-->
                 {{ $t('M.comm_count') }}
-                <span>（{{activeSymbol.sellsymbol}}）</span>
+                <span>（{{$middleTopData_S_X.sellsymbol}}）</span>
               </li>
               <li class="th entrust">
                 <!--委托金额-->
                 {{ $t('M.trade_coin_entrust_money1') }}
-                <span>（{{activeSymbol.area}}）</span>
+                <span>（{{$middleTopData_S_X.area}}）</span>
               </li>
               <li class="th already">
                 <!--已成交-->
@@ -82,7 +82,7 @@
               <!--未登录-->
               <div
                 class="not-login content"
-                v-if="!isLogin"
+                v-if="!$isLogin_S_X"
               >
                 <!--您还没有登录，请 登录 或 注册 后查看-->
                 {{ $t('M.trade_coin_text1') }} <router-link to="/login"> {{ $t('M.comm_login') }}</router-link> {{ $t('M.trade_coin_text2') }} <router-link to="/register">{{ $t('M.comm_register_time') }}</router-link> {{ $t('M.trade_coin_text3') }}
@@ -104,7 +104,7 @@
                   </li>
                   <!--方向 中文和繁体展示中文其他国家语言展示英语-->
                   <li class="td direction">
-                    <span v-if="language == 'zh_CN' || language == 'zh_TW'">{{item.typeName}}</span>
+                    <span v-if="$language_S_X == 'zh_CN' || $language_S_X == 'zh_TW'">{{item.typeName}}</span>
                     <span v-else>{{item.type}}</span>
                   </li>
                   <!--价格-->
@@ -153,7 +153,7 @@
           <!--分页-->
           <el-pagination
             background
-            v-show="activeName === 'current-entrust' && currentEntrustList.length && isLogin"
+            v-show="activeName === 'current-entrust' && currentEntrustList.length && $isLogin_S_X"
             layout="prev, pager, next"
             :page-count="totalPageForMyEntrust"
             @current-change="changeCurrentPage(0,$event)"
@@ -179,7 +179,7 @@
               <li class="th price">
                 <!--价格-->
                 {{ $t('M.comm_price_metre') }}
-                <span>（{{activeSymbol.area}}）</span>
+                <span>（{{$middleTopData_S_X.area}}）</span>
               </li>
               <li class="th count">
                 <!--委托量-->
@@ -188,12 +188,12 @@
               <li class="th price">
                 <!--已成交量-->
                 {{ $t('M.trade_coin_has_traded_amount') }}
-                <span>（{{activeSymbol.sellsymbol}}）</span>
+                <span>（{{$middleTopData_S_X.sellsymbol}}）</span>
               </li>
               <li class="th price">
                 <!--成交均价-->
                 {{ $t('M.common_average_price') }}
-                <span>（{{activeSymbol.area}}）</span>
+                <span>（{{$middleTopData_S_X.area}}）</span>
               </li>
               <li class="th status">
                 <!--状态-->
@@ -204,7 +204,7 @@
               <!--未登录-->
               <div
                 class="not-login content"
-                v-if="!isLogin"
+                v-if="!$isLogin_S_X"
               >
                 <!--您还没有登录，请 登录 或 注册 后查看-->
                 {{ $t('M.trade_coin_text1') }} <router-link to="/login"> {{ $t('M.comm_login') }}</router-link> {{ $t('M.trade_coin_text2') }} <router-link to="/register">{{ $t('M.comm_register_time') }}</router-link> {{ $t('M.trade_coin_text3') }}
@@ -225,7 +225,7 @@
                   </li>
                   <!--方向-->
                   <li class="td direction">
-                    <span v-if="language == 'zh_CN' || language == 'zh_TW'">{{item.typeName}}</span>
+                    <span v-if="$language_S_X == 'zh_CN' || $language_S_X == 'zh_TW'">{{item.typeName}}</span>
                     <span v-else>{{item.type}}</span>
                   </li>
                   <!--价格-->
@@ -265,7 +265,7 @@
         <!--分页-->
         <el-pagination
           background
-          v-show="activeName === 'history-entrust' && historyEntrustList.length && isLogin"
+          v-show="activeName === 'history-entrust' && historyEntrustList.length && $isLogin_S_X"
           layout="prev, pager, next"
           :page-count="totalPageForHistoryEntrust"
           @current-change="changeCurrentPage(1,$event)"
@@ -333,8 +333,9 @@ export default {
         cancelButtonText: this.$t('M.comm_cancel'), // 取消
         confirmButtonText: this.$t('M.comm_confirm') // 确定
       }).then(async () => {
+        const {partnerTradeId} = this.$middleTopData_S_X
         let params = {
-          tradeId: this.middleTopData.partnerTradeId
+          tradeId: partnerTradeId
         }
 
         const data = await cancelAllEntrustAjax(params)
@@ -344,7 +345,7 @@ export default {
       })
     },
     getEntrustData () {
-      if (!this.isLogin) return false
+      if (!this.$isLogin_S_X) return false
       switch (this.activeName) {
         case 'current-entrust':
           this.getMyCurrentEntrust()
@@ -397,10 +398,11 @@ export default {
     },
     // 获取历史委托
     async getHistoryEntrust () {
+      const {partnerTradeId} = this.$middleTopData_S_X
       let params = {
         currentPage: this.currentPageForHistoryEntrust,
         pageSize: this.pageSize,
-        tradeId: this.middleTopData.partnerTradeId
+        tradeId: partnerTradeId
       }
       const data = await getHistoryEntrust(params)
       if (!data) return false
@@ -409,10 +411,11 @@ export default {
     },
     // 获取我的当前委单
     async getMyCurrentEntrust () {
+      const {partnerTradeId} = this.$middleTopData_S_X
       let params = {
         currentPage: this.currentPageForMyEntrust,
         pageSize: this.pageSize,
-        tradeId: this.middleTopData.partnerTradeId
+        tradeId: partnerTradeId
       }
       if (!getNestedData(params, 'tradeId')) return false
       const data = await getMyEntrust(params)
@@ -424,13 +427,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme,
-      language: state => state.common.language,
-      isLogin: state => state.user.isLogin,
-      refreshEntrustStatus: state => state.trade.refreshEntrustStatus,
-      userInfo: state => state.user.loginStep1Info,
-      activeSymbol: state => state.common.activeSymbol,
-      middleTopData: state => state.trade.middleTopData
+      refreshEntrustStatus: state => state.trade.refreshEntrustStatus
     })
   },
   watch: {
@@ -443,7 +440,7 @@ export default {
         this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(false)
       }
     },
-    middleTopData () {
+    $middleTopData_S_X () {
       this.getEntrustData()
     }
   }

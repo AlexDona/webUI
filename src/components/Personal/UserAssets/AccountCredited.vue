@@ -53,34 +53,19 @@
             >
               <!--关闭-->
               <img
-                v-if="paymentTerm.isBnakEnable === 'disable'"
-                @click.prevent="statusOpenToClose('bank', 'enable')"
+                @click.prevent="statusOpenToClose('bank', paymentTerm.isBnakEnable === 'disable'? 'enable':'disable')"
                 class="switch-img cursor-pointer"
-                :src="closePictureSrc"
+                :src="paymentTerm.isBnakEnable === 'disable'? closePictureSrc:openPictureSrc"
               >
               <!--开启-->
-              <img
-                v-else
-                @click.prevent="statusOpenToClose('bank', 'disable')"
-                class="switch-img cursor-pointer"
-                :src="openPictureSrc"
+              <span
+                class="payment-state cursor-pointer"
+                @click.prevent="setShowStatusSecurity('bank')"
               >
-              <!--设置-->
-                <span
-                  v-if="paymentTerm.isBankBind"
-                  class="payment-state cursor-pointer"
-                  @click.prevent="setShowStatusSecurity('bank')"
-                >
-                  {{ $t('M.comm_set') }}
-                </span>
-              <!--修改-->
-                <span
-                  v-else
-                  class="payment-state cursor-pointer"
-                  @click.prevent="setShowStatusSecurity('bank')"
-                >
-                  {{ $t('M.comm_modification') }}
-                </span>
+                <!--设置-->
+                {{ paymentTerm.isBankBind? $t('M.comm_set'): $t('M.comm_modification')}}
+                <!--修改-->
+              </span>
             </div>
           </div>
           <!--微信-->
@@ -96,40 +81,25 @@
                 {{ $t('M.user_account_weChat') }}
               </span>
             </p>
-            <p
+            <div
               class="payment-right"
             >
               <!--关闭-->
               <img
-                v-if="paymentTerm.isWeixinEnable === 'disable'"
-                @click.prevent="statusOpenToClose('chat', 'enable')"
+                @click.prevent="statusOpenToClose('chat', paymentTerm.isWeixinEnable === 'disable'? 'enable':'disable')"
                 class="switch-img cursor-pointer"
-                :src="closePictureSrc"
+                :src="paymentTerm.isWeixinEnable === 'disable'? closePictureSrc:openPictureSrc"
               >
               <!--开启-->
-              <img
-                v-else
-                @click.prevent="statusOpenToClose('chat', 'disable')"
-                class="switch-img cursor-pointer"
-                :src="openPictureSrc"
+              <span
+                class="payment-state cursor-pointer"
+                @click.prevent="setShowStatusSecurity('weChat')"
               >
-              <!--设置-->
-                <span
-                  v-if="paymentTerm.isWeixinBind"
-                  class="payment-state cursor-pointer"
-                  @click.prevent="setShowStatusSecurity('weChat')"
-                >
-                  {{ $t('M.comm_set') }}
-                </span>
-              <!--修改-->
-                <span
-                  v-else
-                  class="payment-state cursor-pointer"
-                  @click.prevent="setShowStatusSecurity('weChat')"
-                >
-                   {{ $t('M.comm_modification') }}
-                </span>
-            </p>
+                <!--设置-->
+                {{ paymentTerm.isWeixinBind? $t('M.comm_set'): $t('M.comm_modification')}}
+                <!--修改-->
+              </span>
+            </div>
           </div>
           <!--支付宝-->
           <div class="payment-box">
@@ -144,40 +114,25 @@
                 {{ $t('M.user_account_alipay') }}
               </span>
             </p>
-            <p
+            <div
               class="payment-right"
             >
               <!--关闭-->
               <img
-                v-if="paymentTerm.isAlipayEnable === 'disable'"
-                @click.prevent="statusOpenToClose('alipay', 'enable')"
+                @click.prevent="statusOpenToClose('alipay', paymentTerm.isAlipayEnable === 'disable'? 'enable':'disable')"
                 class="switch-img cursor-pointer"
-                :src="closePictureSrc"
+                :src="paymentTerm.isAlipayEnable === 'disable'? closePictureSrc:openPictureSrc"
               >
               <!--开启-->
-              <img
-                v-else
-                @click.prevent="statusOpenToClose('alipay', 'disable')"
-                class="switch-img cursor-pointer"
-                :src="openPictureSrc"
+              <span
+                class="payment-state cursor-pointer"
+                @click.prevent="setShowStatusSecurity('alipay')"
               >
-              <!--设置-->
-                <span
-                  v-if="paymentTerm.isAlipayBind"
-                  class="payment-state cursor-pointer"
-                  @click.prevent="setShowStatusSecurity('alipay')"
-                >
-                  {{ $t('M.comm_set') }}
-                </span>
-              <!--修改-->
-                <span
-                  v-else
-                  class="payment-state cursor-pointer"
-                  @click.prevent="setShowStatusSecurity('alipay')"
-                >
-                  {{ $t('M.comm_modification') }}
-                </span>
-            </p>
+                <!--设置-->
+                {{ paymentTerm.isAlipayBind? $t('M.comm_set'): $t('M.comm_modification')}}
+                <!--修改-->
+              </span>
+            </div>
           </div>
           <!--PAYPAL-->
           <div class="payment-box">
@@ -192,40 +147,25 @@
                 {{ $t('M.user_account_paypal') }}
               </span>
             </p>
-            <p
+            <div
               class="payment-right"
             >
               <!--关闭-->
               <img
-                v-if="paymentTerm.isPaypalEnable === 'disable'"
-                @click.prevent="statusOpenToClose('paypal', 'enable')"
+                @click.prevent="statusOpenToClose('paypal', paymentTerm.isPaypalEnable === 'disable'? 'enable':'disable')"
                 class="switch-img cursor-pointer"
-                :src="closePictureSrc"
+                :src="paymentTerm.isPaypalEnable === 'disable'? closePictureSrc:openPictureSrc"
               >
               <!--开启-->
-              <img
-                v-else
-                @click.prevent="statusOpenToClose('paypal', 'disable')"
-                class="switch-img cursor-pointer"
-                :src="openPictureSrc"
+              <span
+                class="payment-state cursor-pointer"
+                @click.prevent="setShowStatusSecurity('paypal')"
               >
-              <!--设置-->
-                <span
-                  v-if="paymentTerm.isPaypalBind"
-                  class="payment-state cursor-pointer"
-                  @click.prevent="setShowStatusSecurity('paypal')"
-                >
-                  {{ $t('M.comm_set') }}
-                </span>
-              <!--修改-->
-                <span
-                  v-else
-                  class="payment-state cursor-pointer"
-                  @click.prevent="setShowStatusSecurity('paypal')"
-                >
-                  {{ $t('M.comm_modification') }}
-                </span>
-            </p>
+                <!--设置-->
+                {{ paymentTerm.isPaypalBind? $t('M.comm_set'): $t('M.comm_modification')}}
+                <!--修改-->
+              </span>
+            </div>
           </div>
           <!--西联汇款-->
           <div class="payment-box">
@@ -237,40 +177,25 @@
                 {{ $t('M.user_account_western_union') }}
               </span>
             </p>
-            <p
+            <div
               class="payment-right"
             >
               <!--关闭-->
               <img
-                v-if="paymentTerm.isXilianEnable === 'disable'"
-                @click.prevent="statusOpenToClose('western', 'enable')"
+                @click.prevent="statusOpenToClose('western', paymentTerm.isXilianEnable === 'disable'? 'enable':'disable')"
                 class="switch-img cursor-pointer"
-                :src="closePictureSrc"
+                :src="paymentTerm.isXilianEnable === 'disable'? closePictureSrc:openPictureSrc"
               >
               <!--开启-->
-              <img
-                v-else
-                @click.prevent="statusOpenToClose('western', 'disable')"
-                class="switch-img cursor-pointer"
-                :src="openPictureSrc"
+              <span
+                class="payment-state cursor-pointer"
+                @click.prevent="setShowStatusSecurity('westernUnion')"
               >
-              <!--设置-->
-                <span
-                  v-if="paymentTerm.isXilianBind"
-                  class="payment-state cursor-pointer"
-                  @click.prevent="setShowStatusSecurity('westernUnion')"
-                >
-                  {{ $t('M.comm_set') }}
-                </span>
-              <!--修改-->
-                <span
-                  v-else
-                  class="payment-state cursor-pointer"
-                  @click.prevent="setShowStatusSecurity('westernUnion')"
-                >
-                  {{ $t('M.comm_modification') }}
-                </span>
-            </p>
+                <!--设置-->
+                {{ paymentTerm.isXilianBind? $t('M.comm_set'): $t('M.comm_modification')}}
+                <!--修改-->
+              </span>
+            </div>
           </div>
           <!--开启二次确认弹框-->
           <el-dialog
@@ -486,11 +411,11 @@ export default {
   // props,
   data () {
     return {
-      bankState: false, // 银行卡状态的设置
-      weChat: false, // 微信状态的设置
-      alipay: false, // 支付宝状态的设置
-      paypal: false, // PAYPAL状态的设置
-      westernUnion: false, // 西联汇款状态的设置
+      // bankState: false, // 银行卡状态的设置
+      // weChat: false, // 微信状态的设置
+      // alipay: false, // 支付宝状态的设置
+      // paypal: false, // PAYPAL状态的设置
+      // westernUnion: false, // 西联汇款状态的设置
       closePictureSrc: require('../../../assets/user/wrong.png'), // 关闭
       openPictureSrc: require('../../../assets/user/yes.png'), // 开启
       centerModelWarning: false, // 未实名认证前弹框提示
@@ -540,7 +465,7 @@ export default {
       'CHANGE_REF_ACCOUNT_CREDITED_STATE',
       'SET_STEP1_INFO'
     ]),
-    // 点击去认证跳转到身份认证
+    // 1.点击去认证跳转到身份认证
     authenticationJump () {
       this.centerModelWarning = false
       if (!this.realUserInfo.payPassword) {
@@ -550,7 +475,7 @@ export default {
         this.$goToPage('/PersonalCenter')
       }
     },
-    // 路由跳转对应组件
+    // 2.路由跳转对应组件
     setShowStatusSecurity (val) {
       console.log(this.userInfo)
       // 判断是否通过高级认证
@@ -576,7 +501,7 @@ export default {
           break
       }
     },
-    // 确认开启关闭
+    // 3.确认开启关闭
     statusOpenToClose (paymentType, safeState) {
       // 把方法中定义的activeType、state在这里进行赋值 点击哪一个那当前的类型和状态传给后台
       this.activeType = paymentType
@@ -715,11 +640,11 @@ export default {
           break
       }
     },
-    // 确认关闭
+    // 4.确认关闭
     determineTheOpen () {
       this.confirmTransactionPassword(this.activeType, this.state)
     },
-    // 关闭开启收款方式
+    // 4.01 关闭开启收款方式
     async confirmTransactionPassword (type, state) {
       let data
       let params = {
@@ -782,7 +707,7 @@ export default {
       this.openCollectionMode = false // 开启收款方式
       this.closeCollectionMode = false // 关闭收款方式
     },
-    // 收款方式
+    // 5.收款方式
     async getAccountPaymentTerm () {
       // 整页loading
       this.fullscreenLoading = true

@@ -167,9 +167,12 @@ export const personal = {
   // プロモーション統計シート
   'user_invite_user_uid': 'ユーザUID',
   'user_invite_login_name': 'ログイン名',
-  'user_invite_direct_referrer': '直接の推奨UID',
+  'user_invite_direct_referrer': '直接の推奨',
+  'user_invite_issued': 'リリース',
+  'user_invite_noIssued': 'リリースない',
   // 奨励記録のリスト
   'user_invite_award': '奨励',
+  'user_invite_registration': '登録奨励金',
   // セキュリティセンター
   'user_security_safety': '安全性',
   'user_security_email': 'メール',

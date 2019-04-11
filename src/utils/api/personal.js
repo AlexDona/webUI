@@ -14,6 +14,8 @@ export const inquireWithdrawalAddressId = params => handleRequest(() => get('per
 export const statusRushedToRecordList = (params) => handleRequest(() => get('queryWithdrawRecording', params))
 // 账单明细—获取商户币种列表
 export const getMerchantCurrencyList = (params) => handleRequest(() => get('personal/queryPartnerCoinList', {...params, loading: true}))
+// 账单明细—提币记录撤销
+export const deleteCancelWithdraw = (params) => handleRequest(() => postWithURLencoded('/cancelWithdraw', {...params, loading: true}))
 // 账单明细—个人资产综合查询
 export const getComprehensiveRecordsList = (params) => handleRequest(() => get('personal/queryColligate', params))
 // 提币
@@ -32,6 +34,8 @@ export const withdrawalInformation = params => handleRequest(() => get('queryWit
 export const queryTransactionInformation = (params) => handleRequest(() => get('personal/getTradeUrl', params))
 // 刷新用户信息
 export const userRefreshUser = params => handleRequest(() => get('user/refreshUser', params))
+// 币币交易跳转到个人中心、我的资产提币校验
+export const getCoinRechargeWithdraw = (params) => handleRequest(() => get('queryCoinRechargeWithdraw', params))
 /**
  * 安全中心
  * */

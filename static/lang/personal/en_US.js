@@ -168,9 +168,12 @@ export const personal = {
   // 推广统计列表Promotion statistics list
   'user_invite_user_uid': 'User UID',
   'user_invite_login_name': 'log-in name',
-  'user_invite_direct_referrer': 'Direct referrer UID',
+  'user_invite_direct_referrer': 'Direct referrer',
+  'user_invite_issued': 'Released',
+  'user_invite_noIssued': 'Not release',
   // 奖励记录列表List of reward records
   'user_invite_award': 'Rewards',
+  'user_invite_registration': 'Register award',
   // 安全中心Security center
   'user_security_safety': 'Safety ',
   'user_security_email': 'Mailbox',

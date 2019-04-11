@@ -102,14 +102,13 @@
       <!--搜索框-->
       <!--请输入内容-->
       <div class="search-box">
-        <el-input
-          v-model="searchKeyWord"
+        <input
+          ref="search-btn"
           :placeholder="$t('M.comm_search')"
-          @keyup.native="searchFromMarketList"
+          @keyup="searchFromMarketList"
           @change="searchFromMarketList"
-        >
-          <i slot="suffix" class="el-input__icon el-icon-search"></i>
-        </el-input>
+        />
+        <i class="el-icon-search"></i>
       </div>
     </div>
   </div>
@@ -293,7 +292,7 @@ export default {
       if (NOW - SYMBOL_AGE < this.ONE_MINUTES && localSymbolLength) {
         symbolJSON = localSymbolJSON
       } else {
-        this.RESET_SYMBOL_MAP()
+        // this.RESET_SYMBOL_MAP()
         if (this.plates.length !== 1) {
           let symbolsData = await getAllSymbolsAJAX({
             i18n: this.language
@@ -484,19 +483,6 @@ export default {
         }
       })
     },
-    // 更改当前交易对
-    changeActiveSymbol (e) {
-      this.SET_JUMP_STATUS(true)
-      this.SET_JUMP_SYMBOL(e)
-      // 设置当前交易区
-      const id = e.areaId
-      const name = e.area
-      this.CHANGE_ACTIVE_TRADE_AREA({
-        id,
-        name
-      })
-      this.$goToPage('/TradeCenter')
-    },
     // 获取用户收藏列表
     async getCollectionList (collectSymbol) {
       await getCollectionList(data => {
@@ -536,6 +522,8 @@ export default {
     },
     // 搜索关键字e
     searchFromMarketList () {
+      console.log(this.$refs['search-btn'].value, this.searchKeyWord)
+      this.searchKeyWord = this.$refs['search-btn'].value
       let searchList = []
       this.searchArea.content = searchList
       if (this.searchKeyWord.trim() !== '') {
@@ -678,37 +666,32 @@ export default {
         width: 250px;
         height: 31px;
         border: 1px solid $mainColor;
+        border-radius: 14px;
         overflow: hidden;
 
+        > input {
+          width: 195px;
+          height: 100%;
+          padding: 0 14px;
+          color: #fff;
+        }
+
         /deep/ {
-          .el-input__inner {
-            width: 195px;
+          .el-icon-search {
+            position: absolute;
+            top: 50%;
+            right: 8px;
+            width: 50px;
+            height: 20px;
+            border-radius: 0 10px 10px 12px;
+            font-size: 14px;
+            line-height: 20px;
+            text-align: center;
+            color: #fff;
+            background: $mainColor;
+            transform: translateY(-50%);
           }
         }
-      }
-
-      &::before {
-        position: absolute;
-        top: 9px;
-        right: 0;
-        width: 70px;
-        height: 30px;
-        background-color: $mainColor;
-        content: '';
-
-        /* z-index: 1; */
-      }
-
-      &::after {
-        position: absolute;
-        z-index: 1;
-        top: 14px;
-        right: 69px;
-        width: 0;
-        height: 0;
-        border: 10px solid transparent;
-        content: '';
-        border-right: 10px solid $mainColor;
       }
 
       /* 列表主要内容 */
@@ -842,6 +825,14 @@ export default {
     &.day {
       color: $dayFontColor;
       background-color: $dayBgColor;
+
+      > .inner-box {
+        > .search-box {
+          > input {
+            color: $dayFontColor;
+          }
+        }
+      }
 
       /deep/ {
         .el-table--enable-row-hover {

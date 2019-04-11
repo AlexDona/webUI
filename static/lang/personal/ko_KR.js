@@ -170,9 +170,12 @@ export const personal = {
   // 推广统计列表
   'user_invite_user_uid': '사용자 UID',
   'user_invite_login_name': '로그인 이름',
-  'user_invite_direct_referrer': '직접 추천자 UID',
+  'user_invite_direct_referrer': '직접 추천자',
+  'user_invite_issued': '발급',
+  'user_invite_noIssued': '미지급',
   // 奖励记录列表
   'user_invite_award': '보상',
+  'user_invite_registration': '등록 장려',
   // 安全中心
   'user_security_safety': '보안',
   'user_security_email': '메일 주소',

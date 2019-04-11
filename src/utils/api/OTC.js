@@ -69,3 +69,5 @@ export const completeUserOtcOrder = (params) => handleRequest(() => post('otcOrd
 export const addModifyPublishADOrder = (params) => handleRequest(() => postWithURLencoded('otcEntrust/upShelfOtcEntrust', {...params, 'loading': true}), 1)
 // 27 校验otc普通用户是否能挂单
 export const getCommonPutUpOrderStatus = (params) => handleRequest(() => get('otcEntrust/otcCommonFlag', params))
+// 28  增加国家-查询法币联动国家列表
+export const getCurrencyCountrys = (params) => handleRequest(() => get('otcCOin/getCurrencyCountrys', params))

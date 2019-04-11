@@ -195,15 +195,14 @@ export default {
         list
       })
     },
-    changeActiveSymbol (activeSymbol, previousSymbol) {
+    changeActiveSymbol (activeSymbol) {
       if (this.clickDalay) {
         return false
       }
       console.log(this.isKlineDataReady)
       if (this.isKlineDataReady) {
         this.$emit('changeActiveSymbol', {
-          activeSymbol,
-          previousSymbol
+          activeSymbol
         })
       }
     },

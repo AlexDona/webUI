@@ -13,18 +13,11 @@
     >
       <header class="add-western-header personal-height60 line-height60 line-height70 margin25">
         <span
-          v-if="paymentTerm.isXilianBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--设置西联汇款-->
-          {{ $t('M.user_bind_xilain') }}
-        </span>
-        <span
-          v-else
-          class="header-content-left header-content font-size16 font-weight600"
-        >
+          {{ paymentTerm.isXilianBind? $t('M.user_bind_xilain'): $t('M.comm_modification') + $t('M.user_account_western_union') }}
           <!--修改西联汇款-->
-          {{ $t('M.comm_modification') }}{{ $t('M.user_account_western_union') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -92,20 +85,11 @@
             </el-form-item>
             <div style="width: 400px;">
               <button
-                v-if="paymentTerm.isXilianBind"
                 class="western-button border-radius4 cursor-pointer"
                 @click.prevent="stateSubmitWesternUnion"
               >
                 <!--确认设置-->
-                {{ $t('M.comm_affirm') }}{{ $t('M.comm_set') }}
-              </button>
-              <button
-                v-else
-                class="western-button border-radius4 cursor-pointer"
-                @click.prevent="stateSubmitWesternUnion"
-              >
-                <!--确认修改-->
-                {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
+                {{ paymentTerm.isXilianBind? $t('M.comm_affirm') + $t('M.comm_modification'): $t('M.comm_affirm') + $t('M.comm_modification')}}                            <!--确认修改-->
               </button>
               <p
                 class="font-size12 cursor-pointer text-align-r hint-color float-right"
@@ -147,8 +131,7 @@ export default {
     return {
       telegraphicTransferAddress: '', // 电汇地址
       transactionPassword: '', // 交易密码
-      // bankType: 'xilian', // type类型
-      id: '', // ID
+      typePaymentId: '', // 支付类型ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
@@ -177,17 +160,34 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
-    // 点击跳转到重置交易密码
+    /**
+     * 1.界面跳转
+     **/
+    // 1.01 点击跳转到重置交易密码
     payPasswordState () {
       this.$goToPage('/TransactionPassword')
     },
-    // 点击返回上个页面
+    // 1.02 点击返回上个页面
     returnSuperior () {
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
       this.$goToPage('/PersonalCenter')
     },
-    // 检测输入格式
+    // 1.03 成功自动跳转
+    successJump () {
+      this.addWesternUnionSuccessJumpTimer = setInterval(() => {
+        if (this.successCountDown === 0) {
+          this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
+          this.$goToPage('/PersonalCenter')
+        }
+        this.successCountDown--
+      }, 1000)
+    },
+    /**
+     * 2.输入格式校验
+     **/
+    // 2.01 检测输入格式
     checkoutInputFormat (type, targetNum) {
       console.log(type)
       switch (type) {
@@ -217,14 +217,18 @@ export default {
           }
       }
     },
-    // 设置错误信息
+    // 2.02 设置错误信息
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
-    // 确认设置西联汇款账号
+    /**
+     * 3.确认提交
+     **/
+    // 3.01 确认设置西联汇款账号
     stateSubmitWesternUnion () {
       this.stateSeniorCertification()
     },
+    // 3.02 确认设置提交
     async stateSeniorCertification () {
       if (!this.telegraphicTransferAddress) {
         // 请输入西联汇款账号
@@ -249,7 +253,7 @@ export default {
           address: this.telegraphicTransferAddress, // 西联汇款账号
           payPassword: this.transactionPassword, // 交易密码
           bankType: 'WestUnion', // type
-          id: this.id
+          id: this.typePaymentId
         }
         // 判断是否交易密码锁定
         await this.REFRESH_USER_INFO_ACTION()
@@ -267,11 +271,7 @@ export default {
         this.stateEmptyData()
       }
     },
-    // 接口请求完成之后清空数据
-    stateEmptyData () {
-      this.telegraphicTransferAddress = ''
-      this.transactionPassword = ''
-    },
+    // 3.03 获取西联信息
     async paymentMethodInformation () {
       let data
       let params = {
@@ -286,18 +286,12 @@ export default {
       const {address, id} = detailData
       // 修改时带回西联汇款账号
       this.telegraphicTransferAddress = address
-      this.id = id
+      this.typePaymentId = id
     },
-    // 成功自动跳转
-    successJump () {
-      this.addWesternUnionSuccessJumpTimer = setInterval(() => {
-        if (this.successCountDown === 0) {
-          this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
-          this.$goToPage('/PersonalCenter')
-        }
-        this.successCountDown--
-      }, 1000)
+    // 3.04 接口请求完成之后清空数据
+    stateEmptyData () {
+      this.telegraphicTransferAddress = ''
+      this.transactionPassword = ''
     }
   },
   filter: {},

@@ -165,6 +165,7 @@
                 class="table-tr font-size12 padding-lr20"
                 v-for="(assetItem, index) in (isShowAllCurrency?filteredData1:filteredData2)"
                 :key="index"
+                :id= "assetItem.coinName"
               >
                 <div class="table-box display-flex flex1">
                   <!--币种-->
@@ -206,7 +207,7 @@
                       v-if="assetItem.cnyValue > 0"
                     >
                       <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                        {{ $scientificToNumber($keep2Num(assetItem.cnyValue * BTC2CNYRate)) }} {{ activeConvertCurrencyObj.shortName }}
+                        {{ $scientificToNumber($keep2Num(assetItem.cnyValue * CNYRate)) }} {{ activeConvertCurrencyObj.shortName }}
                       </div>
                       <div v-else>
                         {{ $scientificToNumber($keep2Num(assetItem.cnyValue)) }} CNY
@@ -228,9 +229,9 @@
                   <div class="table-td display-flex text-align-r font-size12 title-width title-width-la">
                     <!--.isRecharge === 'true'-->
                     <div
-                      v-if="(withdrawStorageMap.get(assetItem.coinId)).isRecharge ==='true'"
+                      v-if="(withdrawStorageMap.get(assetItem.coinId)).isRecharge ==='true' && isRechargeState"
                       class="table-charge-money flex1 cursor-pointer"
-                      @click.prevent="showRechargeBox(assetItem.coinId, assetItem.coinName, index)"
+                      @click.prevent="showRechargeBox(assetItem.coinId, assetItem.coinName)"
                     >
                       <!--充 币-->
                       {{ $t('M.comm_charge_money') }}
@@ -246,9 +247,9 @@
 
                     <!--提币-->
                     <div
-                      v-if="(withdrawStorageMap.get(assetItem.coinId)).isWithdraw ==='true'"
+                      v-if="(withdrawStorageMap.get(assetItem.coinId)).isWithdraw ==='true' && isWithdrawState"
                       class="table-mention-money flex1 cursor-pointer"
-                      @click.prevent="changeWithdrawBoxByCoin(assetItem.coinId, assetItem.coinName, index)"
+                      @click.prevent="changeWithdrawBoxByCoin(assetItem.coinId, assetItem.coinName)"
                     >
                       <!--提币-->
                       {{ $t('M.comm_mention_money') }}
@@ -262,7 +263,7 @@
                       {{ $t('M.comm_mention_money') }}
                     </div>
                     <div
-                      class="table-deal flex1 cursor-pointer text-align-c"
+                      class="table-deal cursor-pointer trade-width text-align-c"
                       @mouseenter="showSymbolJumpList(assetItem.coinId, index)"
                       @mouseleave="leave()"
                     >
@@ -307,8 +308,8 @@
                     <div class="out-box">
                       <!--充币内容-->
                       <ChargeMoneyItem
-                        v-if="withdrawDepostMap.get(assetItem.coinId).rechargeIsShow"
-                        :isShow="withdrawDepostMap.get(assetItem.coinId).rechargeIsShow"
+                        v-if="withdrawDepositMap.get(assetItem.coinId).rechargeIsShow"
+                        :isShow="withdrawDepositMap.get(assetItem.coinId).rechargeIsShow"
                         :currencyName="currencyName"
                         :minRechargeAmount="minRechargeAmount"
                         :successCount="successCount"
@@ -324,7 +325,7 @@
                       class="out-box"
                     >
                       <WithdrawDepositItem
-                        :isShow="withdrawDepostMap.get(assetItem.coinId).withdrawDepositIsShow"
+                        :isShow="withdrawDepositMap.get(assetItem.coinId).withdrawDepositIsShow"
                         :isNeedTag="isNeedTag"
                         :withdrawRemark="withdrawRemark"
                         :currencyName="currencyName"
@@ -610,7 +611,8 @@ import {
   queryTransactionInformation,
   inquireWithdrawalAddressId,
   checkCurrencyAddress,
-  currencyTransform
+  currencyTransform,
+  getCoinRechargeWithdraw
 } from '../../../utils/api/personal'
 // 个人资产跳转OTC
 import {
@@ -638,8 +640,8 @@ export default {
   // props,
   data () {
     return {
-      notVerifyDialogVisible: false, // 实名/高级认证弹窗显示与隐藏
       labelPosition: 'top', // form表单label方向
+      notVerifyDialogVisible: false, // 实名/高级认证弹窗显示与隐藏
       errorMessage: '', // 提币验证错误提示
       isShowAllCurrency: true, // 隐藏币种// 显示所有/余额切换，
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
@@ -648,9 +650,9 @@ export default {
       blueStyleFrozen: 0, // 排序冻结默认样式
       blueStyleTotal: 0, // 排序可用默认样式
       blueStyleValue: 0, // 排序估值默认样式
-      BTC2CNYRate: '', // 转换汇率
+      CNYRate: '', // 转换汇率
       withdrawDepositList: [], // 我的资产全部币种列表
-      withdrawDepostMap: new Map(),
+      withdrawDepositMap: new Map(),
       chargeMoneyAddress: '', // 根据充币地址生成二维码条件
       withdrawalFee: '', // 自定义提币手续费
       feeRangeOfWithdraw: {}, // 提币手续费范围
@@ -660,7 +662,6 @@ export default {
       current: 0, // 交易对当前状态
       dialogVisible: false, // 新用户未设置交易密码提示框默认false
       currencyTradingList: [], // 根据coinId查询交易对信息
-      activeName: 'current-entrust', // 分页类型
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
       // 充值
@@ -686,7 +687,9 @@ export default {
       activeCurrency: {}, // 当前选中币种
       totalSumBTC: '', // 资产总估值BTC
       isRecharge: '', // 是否允许充币
+      isRechargeState: true, // 是否允许充币(作用于前后台同时进行充币或者禁用)
       isWithdraw: '', // 是否允许提币
+      isWithdrawState: true, // 是否允许提币(作用于前后台同时进行充币或者禁用)
       currencyTradingId: '', // 根据Id跳转到对应交易信息
       id: '', // 币种ID
       sellName: '', // 币种名称
@@ -709,17 +712,17 @@ export default {
     }
   },
   async created () {
+    console.log(this.$route.params.type, this.$route.params.coinId)
     // 刚进页面时候 个人资产列表展示
-    this.getAssetCurrenciesList()
-    if (this.currencyRateList.BTC) {
+    if (this.currencyRateList.CNY) {
       // 汇率转换
       await this.currencyTransform()
     }
     // 个人资产跳转OTC-otc可用币种查询
     await this.getOTCAvailableCurrencyList()
   },
-  mounted () {
-    console.log(this.$refs)
+  async mounted () {
+    await this.getAssetCurrenciesList()
   },
   activated () {},
   update () {},
@@ -743,9 +746,8 @@ export default {
     payPasswordState () {
       this.$goToPage('/TransactionPassword')
     },
-    // 汇率折算以及根据header切换显示对应资产换算
+    // 1.0 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
-      // console.log(this.currencyRateList, this.activeConvertCurrencyObj)
       const params = {
         coinName: 'FBT',
         shortName: this.activeConvertCurrencyObj.shortName
@@ -755,17 +757,16 @@ export default {
       if (!data) return false
       // console.log(data)
       // 获取汇率
-      this.BTC2CNYRate = getNestedData(data, 'data.coinPrice')
+      this.CNYRate = getNestedData(data, 'data.coinPrice')
     },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
       this.isShowAllCurrency = e == 'not_all' ? true : false
     },
-    // 资产估值升序降序
+    // 2.0资产估值升序降序
     assetsSorting (type, val) {
       // type 冻结(frozen) 可用(total) 资产估值(btcValue)
       // val 升序(order) 降序(invertedOrder)
-      console.log(type, val)
       switch (type) {
         case 'up':
           this.blueStyleFrozen = 1
@@ -805,93 +806,19 @@ export default {
       }
     },
 
-    // 跳转当前交易对
+    // 3.0跳转当前交易对
     changeActiveSymbol (e) {
       console.log(e)
-      // changeActiveSymbol
-      /*
-        * {
-        "data":{
-        "entrust":[
-          {
-            "buyCoinId":"491719528745533440",
-            "buyCoinName":"USDT",
-            "buyCoinNickname":"USDT",
-            "buyFee":0.0000000000,
-            "buyStatus":"",
-            "createTime":"2018-09-19 15:51:32",
-            "forumId":"486108441757089792",
-            "id":"491999795670417408",
-            "isStop":"true",
-            "isTransaction":"true",
-            "maxCount":0.0000,
-            "maxPrice":0.0000000000,
-            "minCount":0.0000,
-            "minPrice":0.0000000000,
-            "modifier":"申",
-            "name":"BTC/USDT",
-            "openPrice":0.00000000,
-            "openTime":null,
-            "operable":"true",
-            "priceDecimalPlace":"6",
-            "quantityDecimalPlace":"6",
-            "sellCoinId":"486124940777488384",
-            "sellCoinName":"BTC",
-            "sellCoinNickname":"BTC",
-            "sellFee":0.0000000000,
-            "sellStatus":"",
-            "sort":0,
-            "status":"enabled",
-            "stopTime":null,
-            "tradeAreaId":"491998732594708480",
-            "tradeId":"491999715173335040",
-            "tradeStatus":"",
-            "updateTime":"2018-09-19 17:21:05"
-          */
-      /*
-          amount24h: 3.376161
-          area: "ETH"
-          areaId: "492663598368161792"
-          countExchange: 6
-          high: 7.1
-          hot: false
-          id: "btceth"
-          image: "http://fubt-3.oss-cn-hongkong.aliyuncs.com/dae9ad6c-b4e9-47ad-a655-bc24d05d698c"
-          kai: 0.02
-          low: 0.000001
-          plateId: "492663683579641856"
-          price: 0.1
-          priceExchange: 6
-          rose: 4
-          sellName: "比特币"
-          sellsymbol: "BTC"
-          tendency: Array(0)
-          tradeId: "492663376246210560"
-          volume: 116.21105 */
-      let activeSymbol = {
-        area: e.buyCoinName,
-        areaId: e.tradeAreaId,
-        countExchange: e.quantityDecimalPlace,
-        id: e.sellCoinName + e.buyCoinName,
-        priceExchange: e.priceDecimalPlace,
-        sellName: e.sellCoinName,
-        sellsymbol: e.sellCoinNickname,
-        tradeId: e.id
-      }
       this.SET_JUMP_STATUS(true)
-      this.SET_JUMP_SYMBOL(activeSymbol)
-      console.log(this.activeSymbol)
       // 设置当前交易区
-      const id = e.tradeAreaId
-      const name = e.buyCoinName
-      console.log(e)
+      const id = (e.sellCoinName + e.buyCoinName).toLowerCase()
+      console.log(id)
       this.CHANGE_ACTIVE_TRADE_AREA({
-        id,
-        name
+        id
       })
-      this.$goToPage('/TradeCenter')
+      this.$goToPage(`/TradeCenter/${id}`)
     },
-    // 修改input value 输入限制
+    // 4.0修改input value 输入限制
     changeInputValue ({ref, index, pointLengthAccountCount, val, coinId, total}) {
       console.log(coinId, total)
       console.log(this.$refs[`withdrawItemRef${index}`][0])
@@ -919,23 +846,68 @@ export default {
         this.withdrawFeeVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value
       }
     },
-    // 失去焦点判断输入提币数量不能大于可用量 否则显示总可用量
+    // 4.01失去焦点判断输入提币数量不能大于可用量 否则显示总可用量
     checkUserInputAvailable (data) {
       let {index, total} = data
       // 获取ref中input值
-      // console.log(this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value)
       this.withdrawCountVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value
-      // console.log(this.withdrawDepositList[index].total)
       if (this.withdrawCountVModel - 0 > total - 0) {
         this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = total - 0
         this.withdrawCountVModel = total - 0
       }
       let targetCount = amendPrecision(this.withdrawCountVModel, this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value, '-')
-      // console.log(targetCount)
       this.accountCount = targetCount > 0 ? targetCount : 0
     },
-    // 点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
+    // 充提币校验是否禁用
+    async isRechargeWithdrawState (id) {
+      let data
+      let params = {
+        coinId: id// 列表id
+      }
+      data = await getCoinRechargeWithdraw(params)
+      if (!data) return false
+      console.log(data)
+      // 是否允许充币
+      this.isRechargeState = getNestedData(data.data, 'isRecharge')
+      // 是否允许提币
+      this.isWithdrawState = getNestedData(data.data, 'isWithdraw')
+      // 点击提币展示框中的提币按钮判断，当前币种是否在后台管理禁用
+      // 判断如果并且币种禁用并且则关闭提币弹框并提示暂停提币
+      let item = this.withdrawDepositMap.get(id)
+      if (!this.isWithdrawState) {
+        this.withdrawDepositMap.set(id, {...item, withdrawDepositIsShow: false})
+      }
+      // 判断充提类型和coinId是否存在，并且等于当前id，如果存在并且等于进行下一步
+      // 在判断当前币种是否允许充提 允许不执行，不允许关闭窗口不提示
+      if (this.$route.params.coinId === id && this.$route.params.type) {
+        switch (this.$route.params.type) {
+          case 'recharge':
+            if (!this.isRechargeState) {
+              this.withdrawDepositMap.set(id, {...item, rechargeIsShow: false})
+            }
+            break
+          case 'withdraw':
+            if (!this.isWithdrawState) {
+              this.withdrawDepositMap.set(id, {...item, withdrawDepositIsShow: false})
+            }
+            break
+        }
+      }
+      console.log(this.isRechargeState, this.isWithdrawState)
+    },
+    // 5.0点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
     async showRechargeBox (id, name) {
+      // console.log(id)
+      // 校验是否充币
+      await this.isRechargeWithdrawState(id)
+      if (!this.isRechargeState) {
+        // 充值暂停，钱包维护中
+        this.$message({
+          message: this.$t('M.user_assets_suspended'),
+          type: 'error'
+        })
+        return false
+      }
       // 每行数据ID
       this.chargeMoneyAddressId = id
       // 每行数据币种名称
@@ -949,30 +921,30 @@ export default {
         // 公信宝类币种提币默认显示框
         item.provideWithdrawDepositIsShow = false
       })
-      this.withdrawDepostMap.forEach((val, key) => {
+      this.withdrawDepositMap.forEach((val, key) => {
         console.log(val, key)
-        this.withdrawDepostMap.set(key, {
+        this.withdrawDepositMap.set(key, {
           rechargeIsShow: false,
           withdrawDepositIsShow: false,
           provideWithdrawDepositIsShow: false
         })
       })
-      let item = this.withdrawDepostMap.get(id)
+      let item = this.withdrawDepositMap.get(id)
       if (!item.rechargeIsShow) {
-        this.withdrawDepostMap.set(id, {...item, rechargeIsShow: true})
+        this.withdrawDepositMap.set(id, {...item, rechargeIsShow: true})
       } else {
         if (this.isNeedTag) {
-          this.withdrawDepostMap.set(id, {...item, withdrawDepositIsShow: false})
+          this.withdrawDepositMap.set(id, {...item, withdrawDepositIsShow: false})
         } else {
-          this.withdrawDepostMap.set(id, {...item, provideWithdrawDepositIsShow: false})
+          this.withdrawDepositMap.set(id, {...item, provideWithdrawDepositIsShow: false})
         }
       }
       this.fillingCurrencyAddress()
     },
-    // 重置提现表单内容
+    // 5.01重置提现表单内容
     resetWithdrawFormContent (id) {
       this.currentIndex = id
-      console.log(this.$refs[`withdrawItemRef${id}`][0])
+      // console.log(this.$refs[`withdrawItemRef${id}`][0])
       this.$refs[`withdrawItemRef${id}`][0].$refs.countInputRef.value = ''
       // 到账数量
       this.accountCount = ''
@@ -987,9 +959,9 @@ export default {
       this.$goToPage('/PersonalCenter')
       this.notVerifyDialogVisible = false
     },
-    // 点击提现按钮显示提币内容（带回币种id 币种名称）
+    // 6.0点击提现按钮显示提币内容（带回币种id 币种名称）
     async changeWithdrawBoxByCoin (id, name) {
-      console.log(id, name)
+      // console.log(id, name)
       if (!(this.realNameAuth === 'y')) {
         this.notVerifyDialogVisible = true
         return false
@@ -998,8 +970,8 @@ export default {
         this.notVerifyDialogVisible = true
         return false
       }
-      console.log(this.userInfo)
-      console.log(this.coinStatus)
+      // console.log(this.userInfo)
+      // console.log(this.coinStatus)
       if (this.coinStatus == 'disable') {
         // 该账号已被禁止提币，请咨询客服
         this.$message({
@@ -1010,7 +982,6 @@ export default {
       }
       // 提币数量
       this.resetWithdrawFormContent(id)
-
       // 当前币种id
       this.activeCoinId = id
       this.currencyName = name
@@ -1019,22 +990,22 @@ export default {
       // 隐藏验证弹窗
       this.isShowWithdrawDialog = false
       // 循环列表 隐藏充值或提现框
-      this.withdrawDepostMap.forEach((val, key) => {
+      this.withdrawDepositMap.forEach((val, key) => {
         console.log(val, key)
-        this.withdrawDepostMap.set(key, {
+        this.withdrawDepositMap.set(key, {
           rechargeIsShow: false,
           withdrawDepositIsShow: false,
           provideWithdrawDepositIsShow: false
         })
       })
-      let item = this.withdrawDepostMap.get(id)
-      this.withdrawDepostMap.set(id, {...item, withdrawDepositIsShow: true})
+      let item = this.withdrawDepositMap.get(id)
+      this.withdrawDepositMap.set(id, {...item, withdrawDepositIsShow: true})
       this.$forceUpdate()
       await this.queryWithdrawalAddressList()
       await this.getWithdrawalInformation(id)
       this.getSecurityCenter()
     },
-    // 显示交易对跳转币种信息
+    // 6.10显示交易对跳转币种信息
     showSymbolJumpList (id, index) {
       this.currencyTradingId = id
       // 个人资产跳转OTC-改写开始
@@ -1055,7 +1026,7 @@ export default {
     emptyStatus () {
       this.errorMessage = ''
     },
-    // 发送验证码
+    // 7.0发送验证码
     sendPhoneOrEmailCode (loginType) {
       console.log(this.disabledOfPhoneBtn, this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
@@ -1075,21 +1046,12 @@ export default {
       sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     /**
-     * 刚进页面时候 个人资产列表展示
+     * 8.0刚进页面时候 个人资产列表展示
      */
-    async getAssetCurrenciesList (type) {
-      console.log(type)
+    async getAssetCurrenciesList () {
       let params = {
         pageNum: this.currentPageForMyEntrust,
         pageSize: '10000'
-      }
-      switch (this.currentState) {
-        case 'all':
-          params.selectType = 'not_all'
-          break
-        case 'not_all':
-          params.selectType = 'all'
-          break
       }
       this.localLoading = true
       let data = await assetCurrenciesList(params)
@@ -1106,27 +1068,51 @@ export default {
       let detailData = getNestedData(data, 'data')
       this.totalSumBTC = detailData.totalSum
       this.withdrawDepositList = getNestedData(detailData, 'userCoinWalletVOPageInfo.list')
-      _.forEach(this.withdrawDepositList, (item) => {
+      _.forEach(this.withdrawDepositList, (item, index) => {
         this.withdrawStorageMap.set(item.coinId, item)
-        this.withdrawDepostMap.set(item.coinId, {
+        this.withdrawDepositMap.set(item.coinId, {
           allIsShow: false,
           rechargeIsShow: false,
           withdrawDepositIsShow: false,
           provideWithdrawDepositIsShow: false
         })
+        // 币币带回充提类型
+        let typeName = this.$route.params.type
+        // 币币带回币种id
+        let coinId = this.$route.params.coinId
+        // 从币币交易页面跳到我的资产带回参数，有充币 提现
+        if (coinId === item.coinId && typeName) {
+          this.isRechargeWithdrawState(coinId)
+          console.log(this.isRechargeState, this.isWithdrawState)
+          if (typeName === 'recharge') {
+            // 类型为充币在展开充币界面
+            this.withdrawDepositMap.set(item.coinId, {...item, rechargeIsShow: true})
+            this.fillingCurrencyAddress(coinId)
+          } else {
+            // 类型为提现在展开提现界面
+            this.withdrawDepositMap.set(item.coinId, {...item, withdrawDepositIsShow: true})
+            this.getWithdrawalInformation('', coinId)
+          }
+          // 跳转到对应位置 滚动类型
+          this.$nextTick(() => {
+            // document.documentElement.scrollTop = (index - 1) * 50 + 347
+            window.scroll({
+              top: (index - 1) * 50 + 347,
+              behavior: 'smooth'
+            })
+          })
+        }
       })
-      // console.log(this.withdrawStorageMap, this.withdrawStorageMap.get('267243422920736768').isRecharge)
-      // console.log('我的资产币种列表')
-      console.log(this.withdrawDepostMap)
       this.getAllWithdraw()
     },
     getAllWithdraw () {
       // 缓存币种列表
       setStore('withdrawStorage', this.withdrawDepositList)
       // 获取币种列表
-      console.log(this.withdrawStorageMap)
+      // console.log(this.withdrawDepositMap.set(key))
+      console.log(this.withdrawStorageMap.key)
     },
-    // 根据币种id查询提币地址
+    // 9.0根据币种id查询提币地址
     async queryWithdrawalAddressList () {
       this.activeWithdrawDepositAddress = ''
       this.withdrawAddressList = []
@@ -1139,11 +1125,10 @@ export default {
       this.isNeedTag = withdrawalAddressData.needTag
       // 返回列表数据并渲染币种列表
       this.withdrawAddressList = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList')
-      // console.log(this.withdrawAddressList)
       this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address') || ''
     },
     // select框自定义提币地址校验地址
-    // 新增用户提币地址校验
+    // 10 新增用户提币地址校验
     async checkCurrencyAddress () {
       let param = {
         coinId: this.activeCoinId, // 币种coinId
@@ -1157,28 +1142,29 @@ export default {
       this.getSecurityCenter()
     },
     /**
-     *  点击提币按钮时 获取提币信息（最大最小手续费）
+     *  11.点击提币按钮时 获取提币信息（最大最小手续费）
      */
-    async getWithdrawalInformation (id) {
+    async getWithdrawalInformation (id, coinId) {
       let data = await withdrawalInformation({
-        coinId: this.activeCoinId
+        coinId: coinId ? coinId : this.activeCoinId
       })
       console.log(data)
       if (!data) return false
       // 返回列表数据
       this.feeRangeOfWithdraw = getNestedData(data, 'data')
       this.withdrawalFee = getNestedData(data, 'data.minFees')
-      this.$refs[`withdrawItemRef${id}`][0].$refs.feeInputRef.value = this.withdrawalFee
+      if (id) {
+        this.$refs[`withdrawItemRef${id}`][0].$refs.feeInputRef.value = this.withdrawalFee
+      }
       this.withdrawFeeVModel = this.withdrawalFee
     },
     /**
-     *  点击充币按钮时 查询充币地址查询
+     *  12.点击充币按钮时 查询充币地址查询
      */
-    async fillingCurrencyAddress () {
+    async fillingCurrencyAddress (id) {
       let data = await inquireRechargeAddressList({
-        coinId: this.chargeMoneyAddressId
+        coinId: id ? id : this.chargeMoneyAddressId
       })
-      console.log(data)
       if (!data) return false
       // 获取充币地址
       this.chargeMoneyAddress = getNestedData(data, 'data.userRechargeAddress.address')
@@ -1186,7 +1172,6 @@ export default {
       this.isNeedTag = getNestedData(data, 'data.userRechargeAddress.needTag')
       // 获取充值备注信息 rechargeNoteInfo
       this.rechargeNoteInfo = getNestedData(data, 'data.userRechargeAddress.tag')
-      // console.log(data.data.data.userRechargeAddress.tag)
       this.minRechargeAmount = getNestedData(data, 'data.userRechargeAddress.minRechargeAmount')
       this.successCount = getNestedData(data, 'data.userRechargeAddress.successCount')
       return true
@@ -1197,19 +1182,16 @@ export default {
       this.checkCurrencyAddress()
     },
     /**
-     * 点击提币按钮 验证
+     * 13.点击提币按钮 验证
      * */
-    async validateOfWithdraw (index) {
+    async validateOfWithdraw (id) {
+      console.log(id)
       this.phoneCode = '' // 短信验证码
       this.emailCode = '' // 邮箱验证码
       this.googleCode = '' // 谷歌验证码
       this.password = '' // 交易密码
-      // await this.REFRESH_USER_INFO_ACTION()
-      // let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
-      // this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
-      // if (this.isLockedPayPassword) return false
       this.isShowWithdrawDialog = false
-      console.log(index)
+      // console.log(index)
       if (this.isNeedTag) {
         if (!this.withdrawRemark) {
           // 请输入备注
@@ -1235,7 +1217,6 @@ export default {
         })
         return false
       }
-
       if (!this.withdrawCountVModel) {
         // 请输入提币数量
         this.$message({
@@ -1252,7 +1233,7 @@ export default {
         })
         return false
       }
-      console.log(this.accountCount)
+      // console.log(this.accountCount)
       if (this.withdrawFeeVModel - this.feeRangeOfWithdraw.minFees < 0) {
         // 判断输入手续费小于最小提现手续费
         this.$message({
@@ -1268,7 +1249,7 @@ export default {
         })
         return false
       }
-      console.log(this.withdrawFeeVModel, this.feeRangeOfWithdraw)
+      // console.log(this.withdrawFeeVModel, this.feeRangeOfWithdraw)
       if (this.withdrawCountVModel - this.feeRangeOfWithdraw.maxWithdraw > 0) {
         // 大于最大限额
         this.$message({
@@ -1292,8 +1273,18 @@ export default {
         })
         return false
       }
+      // console.log(this.isWithdrawState)
+      // 校验是否提币
+      await this.isRechargeWithdrawState(id.coinId)
       if (!this.userInfo.userInfo.payPassword) {
         this.dialogVisible = true
+      } else if (!this.isWithdrawState) {
+        // 暂停提币
+        this.$message({
+          message: this.$t('M.user_assets_pause_mention'),
+          type: 'error'
+        })
+        return false
       } else {
         await this.REFRESH_USER_INFO_ACTION()
         let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
@@ -1318,7 +1309,7 @@ export default {
         this.stateSubmitAssets()
       }
     },
-    // 提交提币接口
+    // 14.提交提币接口
     async stateSubmitAssets () {
       let data
       let params = {
@@ -1355,7 +1346,7 @@ export default {
       this.accountCount = ''
       this.activeWithdrawDepositAddress = ''
     },
-    // 跳转到账单明细参数传递
+    // 15.跳转到账单明细参数传递
     jumpToOtherTab ({target, coinId, index}) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
       // 判断点击的类型1 充值 2 提币
@@ -1383,7 +1374,7 @@ export default {
       })
     },
     /**
-     * 根据coinid查询交易信息
+     * 16.根据coinid查询交易信息
      */
     async getQueryTransactionInformation () {
       let data = await queryTransactionInformation({
@@ -1409,24 +1400,6 @@ export default {
       if (!data) return false
       this.OTCCoinList = getNestedData(data, 'data') ? getNestedData(data, 'data') : []
     }
-    // 周四放开 以下两个方法
-    // // 个人资产跳转OTC
-    // jumpToOTCCenter (coinId) {
-    //   console.log(coinId)
-    //   this.$router.push({
-    //     path: '/OTCCenter',
-    //     name: 'OTCCenter',
-    //     params: {coinId: coinId}
-    //   })
-    // },
-    // // otc可用币种查询
-    // async getOTCAvailableCurrencyList () {
-    //   const data = await getOTCAvailableCurrency()
-    //   if (!data) return false
-    //   if (data.data) {
-    //     this.OTCCoinList = getNestedData(data, 'data')
-    //   }
-    // }
   },
   filter: {},
   computed: {
@@ -1465,7 +1438,7 @@ export default {
     },
     filteredData: function () {
       return this.withdrawDepositList.filter((item) => {
-        return item['coinName'].indexOf(this.searchKeyWord.toLocaleUpperCase()) !== -1
+        return item['coinName'].toLowerCase().indexOf(this.searchKeyWord.toLowerCase()) !== -1
       })
     },
     // 筛选币种为小于零的币种
@@ -1474,16 +1447,17 @@ export default {
         return item
       })
     },
-    // 开启关闭币种小于零的币种
+    // 开启关闭币种小于零的币种 总数量和锁仓
     filteredData2: function () {
       return this.filteredData.filter(function (item) {
-        return item.total > 0
+        console.log(item.sum, item.wareHouse, item)
+        return item.sum > 0 || item.wareHouse > 0
       })
     }
   },
   watch: {
     async activeConvertCurrencyObj () {
-      if (this.currencyRateList.BTC) {
+      if (this.currencyRateList.CNY) {
         // 汇率转换
         await this.currencyTransform()
       }
@@ -1499,6 +1473,7 @@ export default {
       console.log(this.filteredData2)
     },
     userCenterActiveName (newVal) {
+      console.log(newVal)
       if (newVal === 'assets') {
         console.log(newVal)
         this.getAssetCurrenciesList()
@@ -1585,6 +1560,7 @@ export default {
               }
 
               .title-width-last {
+                padding-right: 10px;
                 margin-right: 10px;
               }
 
@@ -1699,8 +1675,9 @@ export default {
                           }
 
                           > .code-copy {
-                            width: 89px;
+                            min-width: 90px;
                             height: 32px;
+                            padding: 0 5px;
                             border-radius: 0 2px 2px 0;
                             line-height: 32px;
                           }
@@ -1757,8 +1734,8 @@ export default {
                               position: absolute;
                               top: 38px;
                               right: 1px;
-                              width: 35px;
                               height: 34px;
+                              padding: 0 5px;
                               line-height: 34px;
                               text-align: center;
                             }
@@ -1861,7 +1838,7 @@ export default {
             position: absolute;
             z-index: 2;
             top: 10px;
-            left: 48px;
+            left: 65px;
             width: 135px;
 
             > .triangle-border {
@@ -1875,6 +1852,10 @@ export default {
               line-height: 30px;
             }
           }
+        }
+
+        .trade-width {
+          width: 60px !important;
         }
       }
     }

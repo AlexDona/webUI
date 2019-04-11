@@ -100,6 +100,7 @@ export const common = {
   'comm_view_more': '查看更多',
   'comm_sure_delete': '確定刪除API地址?',
   'comm_sure_push': '確定撤銷PUSH記錄?',
+  'comm_sure_withdraw': '確定刪撤銷提現記錄?',
   'comm_qr_code': '二維碼',
   'comm_have_been_copied': '已拷貝',
   'comm_copies_failure': '拷貝失敗，請稍後重試',

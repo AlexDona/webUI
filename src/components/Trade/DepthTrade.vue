@@ -2,8 +2,8 @@
   <div
     class="depth-box trade"
     :class="{
-      'day':theme == 'day',
-      'night':theme == 'night'
+      'day':$theme_S_X == 'day',
+      'night':$theme_S_X == 'night'
     }"
   >
     <div
@@ -110,7 +110,7 @@ export default {
         axisLabel: {
           margin: 2,
           formatter: newNum => {
-            switch (this.language) {
+            switch (this.$language_S_X) {
               case 'zh_CN':
                 if (newNum > 100000000) {
                   newNum = `${this.$keep2Num(newNum / 100000000)}亿`
@@ -189,10 +189,10 @@ export default {
     },
     // 重新设置 options
     resetOptions () {
-      this.options.tooltip.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-      this.options.tooltip.textStyle.color = this.theme === 'night' ? '#fff' : 'rgb(102,102,102)'
-      this.options.tooltip.borderColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-      this.options.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
+      this.options.tooltip.backgroundColor = this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
+      this.options.tooltip.textStyle.color = this.$theme_S_X === 'night' ? '#fff' : 'rgb(102,102,102)'
+      this.options.tooltip.borderColor = this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
+      this.options.backgroundColor = this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
     },
     setWatchData (newVal) {
       if (newVal) {
@@ -214,9 +214,7 @@ export default {
       socketData: state => state.common.socketData,
       depthDataByAjax: state => state.common.klineAjaxData.depthData,
       depthDataBySocket: state => state.common.socketData.depthData,
-      theme: state => state.common.theme,
-      mainColor: state => state.common.mainColor,
-      language: state => state.common.language
+      mainColor: state => state.common.mainColor
     })
   },
   watch: {
@@ -226,7 +224,7 @@ export default {
     depthDataBySocket (newVal) {
       this.setWatchData(newVal)
     },
-    theme () {
+    $theme_S_X () {
       this.resetOptions()
       this.resetChart(this.options)
     }

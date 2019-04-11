@@ -96,6 +96,7 @@ export const common = {
   'comm_view_more': 'more',
   'comm_sure_delete': 'Delete API address?',
   'comm_sure_push': 'Revoke the PUSH record?',
+  'comm_sure_withdraw': 'Determine to delete the withdrawal record?',
   'comm_qr_code': 'QR code',
   'comm_have_been_copied': 'Copied',
   'comm_copies_failure': 'Copy failed, try again',

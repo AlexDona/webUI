@@ -255,12 +255,11 @@ export default {
       limitSellCount: state => state.trade.limitExchange.sellCount,
       limitSellPrice: state => state.trade.limitExchange.sellPrice,
       marketSellCount: state => state.trade.marketExchange.sellCount,
-      marketBuyAmount: state => state.trade.marketExchange.buyAmount,
-      activeSymbol: state => state.common.activeSymbol
+      marketBuyAmount: state => state.trade.marketExchange.buyAmount
     })
   },
   watch: {
-    activeSymbol () {
+    $middleTopData_S_X () {
       this.setValue('limitSellSliderValue', 0)
       this.setValue('limitBuySliderValue', 0)
       this.setValue('marketBuySliderValue', 0)

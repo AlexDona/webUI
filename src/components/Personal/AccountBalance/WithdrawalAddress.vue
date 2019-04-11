@@ -16,71 +16,73 @@
       </header>
       <div class="withdrawal-address-content padding-left15">
         <div class="withdrawal-address-box margin-top30">
-          <el-form
-            ref="form"
-            label-width="70px"
-          >
-            <!--币种-->
-            <el-form-item
-              :label="$t('M.comm_currency')"
+          <div class="main-form">
+            <el-form
+              ref="form"
+              label-width="70px"
             >
-              <el-select
-                v-model="currencyValue"
-                filterable
-                :no-data-text="$t('M.comm_no_data')"
-                :disabled="currencyValueStatus"
+              <!--币种-->
+              <el-form-item
+                :label="$t('M.comm_currency')"
               >
-                <el-option
-                  :placeholder="$t('M.comm_please_choose')"
-                  v-for="(item, index) in currencyList"
-                  :key="index"
-                  :label="item.name"
-                  :value="item.coinId"
+                <el-select
+                  v-model="currencyValue"
+                  filterable
+                  :no-data-text="$t('M.comm_no_data')"
+                  :disabled="currencyValueStatus"
                 >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <!--备注-->
-            <el-form-item
-              :label="$t('M.comm_remark')"
-            >
-              <input
-                class="form-input border-radius4 padding-left15"
-                v-model="withdrawalRemark"
-                @keydown="setErrorMsg(0, '')"
-                @blur="checkoutInputFormat(0, withdrawalRemark)"
-                maxlength="20"
-              />
-              <!--错误提示-->
-              <ErrorBox
-                :text="errorShowStatusList[0]"
-                :isShow="!!errorShowStatusList[0]"
-              />
-            </el-form-item>
-            <!--提币地址-->
-            <el-form-item
-              :label="$t('M.comm_mention_money') + $t('M.comm_site')"
-            >
-              <input
-                class="form-input border-radius4 padding-left15"
-                v-model="withdrawalAddress"
-                @keydown="setErrorMsg(1, '')"
-                @blur="checkoutInputFormat(1, withdrawalAddress)"
+                  <el-option
+                    :placeholder="$t('M.comm_please_choose')"
+                    v-for="(item, index) in currencyList"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.coinId"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <!--备注-->
+              <el-form-item
+                :label="$t('M.comm_remark')"
               >
-              <!--错误提示-->
-              <ErrorBox
-                :text="errorShowStatusList[1]"
-                :isShow="!!errorShowStatusList[1]"
-              />
-            </el-form-item>
-            <button
-              class="form-button border-radius4 cursor-pointer"
-              @click.prevent="addAddress"
-            >
-              <!--新增-->
-              {{ $t('M.comm_newly_increased') }}
-            </button>
-          </el-form>
+                <input
+                  class="form-input border-radius4 padding-left15"
+                  v-model="withdrawalRemark"
+                  @keydown="setErrorMsg(0, '')"
+                  @blur="checkoutInputFormat(0, withdrawalRemark)"
+                  maxlength="20"
+                />
+                <!--错误提示-->
+                <ErrorBox
+                  :text="errorShowStatusList[0]"
+                  :isShow="!!errorShowStatusList[0]"
+                />
+              </el-form-item>
+              <!--提币地址-->
+              <el-form-item
+                :label="$t('M.comm_mention_money') + $t('M.comm_site')"
+              >
+                <input
+                  class="form-input border-radius4 padding-left15"
+                  v-model="withdrawalAddress"
+                  @keydown="setErrorMsg(1, '')"
+                  @blur="checkoutInputFormat(1, withdrawalAddress)"
+                >
+                <!--错误提示-->
+                <ErrorBox
+                  :text="errorShowStatusList[1]"
+                  :isShow="!!errorShowStatusList[1]"
+                />
+              </el-form-item>
+              <button
+                class="form-button border-radius4 cursor-pointer"
+                @click.prevent="addAddress"
+              >
+                <!--新增-->
+                {{ $t('M.comm_newly_increased') }}
+              </button>
+            </el-form>
+          </div>
           <div class="withdrawal-dialog">
             <!--提币 手机验证 邮箱验证 谷歌验证-->
             <el-dialog
@@ -311,6 +313,7 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'SET_NEW_WITHDRAW_ADDRESS'
     ]),
+    // 1.0提币输入格式校验
     checkoutInputFormat (type, targetNum) {
       // console.log(type)
       switch (type) {
@@ -345,7 +348,7 @@ export default {
           break
       }
     },
-    // 设置错误信息
+    // 1.1设置错误信息
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
@@ -353,7 +356,7 @@ export default {
     emptyStatus () {
       this.emptyErrorMsg = ''
     },
-    // 点击显示验证信息
+    // 2.0点击显示验证信息
     addAddress () {
       let goOnStatus = 0
       if (
@@ -369,7 +372,7 @@ export default {
         this.gitCheckCurrencyAddress()
       }
     },
-    // 新增用户提币地址校验
+    // 3.0新增用户提币地址校验
     async gitCheckCurrencyAddress () {
       let data
       let param = {
@@ -395,11 +398,11 @@ export default {
         }
       })
     },
-    // 点击新增用户提币地址确认按钮
+    // 4.0点击新增用户提币地址确认按钮
     submitMentionMoney () {
       this.stateSubmitAddAddress()
     },
-    // 新增用户提币地址接口
+    // 4.01新增用户提币地址接口
     async stateSubmitAddAddress () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
         // 请输入验证码
@@ -428,7 +431,7 @@ export default {
       this.mentionMoneyConfirm = false
     },
     /**
-     *  刚进页面时候 提币地址列表查询
+     *  5.刚进页面时候 提币地址列表查询
      */
     async getWithdrawalAddressList () {
       this.partLoading = true
@@ -455,7 +458,7 @@ export default {
       // console.log(this.currencyList)
       // console.log(this.withdrawalAddressList)
     },
-    // 删除提币地址
+    // 6.删除提币地址弹窗
     cancelId (id) {
       console.log(id)
       this.deleteWithdrawalId = id
@@ -468,7 +471,7 @@ export default {
       }).catch(() => {
       })
     },
-    // 确认删除提币地址
+    // 6.01确认删除提币地址
     async deleteWithdrawAddress () {
       let data
       let param = {
@@ -490,7 +493,7 @@ export default {
       this.emailCode = ''
       this.googleCode = ''
     },
-    // 发送验证码
+    // 7.发送验证码
     async sendPhoneOrEmailCode (loginType) {
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
@@ -535,7 +538,7 @@ export default {
   .withdrawal-address {
     > .withdrawal-address-main {
       min-height: 352px;
-      border-radius: 5px;
+      border-radius: 5px 5px 0 0;
 
       > .withdrawal-header {
         margin-bottom: 2px;
@@ -551,8 +554,8 @@ export default {
 
           .send-code-btn {
             position: absolute;
-            top: 3px;
-            width: 91px;
+            top: 4px;
+            width: 94px;
             height: 34px;
           }
 
@@ -586,9 +589,11 @@ export default {
           }
 
           /deep/ {
-            .el-form .el-form-item {
-              .el-form-item__label {
-                width: 115px !important;
+            .main-form {
+              .el-form .el-form-item {
+                .el-form-item__label {
+                  width: 115px !important;
+                }
               }
             }
           }
@@ -975,6 +980,7 @@ export default {
         }
 
         .el-form-item__label {
+          width: 150px !important;
           height: 30px;
           line-height: 30px;
         }

@@ -920,7 +920,9 @@ export default {
       fileList: [], // 绑定的上传的文件列表
       uploadFileList: [], // 自定义的上传的文件列表
       buyerAppealButtonStatus: [], // 买家申诉按钮显示状态
-      sellerTimeOutDisabled: [] // 卖家超时禁用确认收款按钮
+      sellerTimeOutDisabled: [], // 卖家超时禁用确认收款按钮
+      // 增加上传图片压缩功能
+      imgQuality: 0.4 // 压缩图片的质量
     }
   },
   created () {
@@ -945,9 +947,17 @@ export default {
     // 申诉上传图片
     // 1.0 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
     // 文件上传之前调用做一些拦截限制
+    // 增加上传图片压缩功能↓↓↓
+    dataURItoBlob (dataURI, type) {
+      let binary = atob(dataURI.split(',')[1])
+      let array = []
+      for (let i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i))
+      }
+      return new Blob([new Uint8Array(array)], {type: type})
+    },
     beforeAvatarUpload (file) {
-      // console.log('上传文件之前的钩子')
-      // console.log(file)
+      // 限制图片格式
       let isJPG = false
       switch (file.type) {
         case 'image/jpeg':
@@ -963,23 +973,52 @@ export default {
           isJPG = true
           break
       }
-      let isLt1M = file.size / 1024 / 1024 < 2
       if (!isJPG) {
+        // 上传图片只能是 jpeg/jpg/png/bmp 格式!
         this.$message({
-          // message: '上传图片只能是 jpeg/jpg/png/bmp 格式!',
           message: this.$t('M.otc_upload_picture3'),
           type: 'error'
         })
+        return isJPG
       }
-      if (!isLt1M) {
-        this.$message({
-          // message: '上传图片大小不能超过 1M!',
-          message: this.$t('M.otc_upload_picture4'),
-          type: 'error'
+      // 对图片进行压缩
+      const imgSize = file.size / 1024 / 1024
+      // console.log(imgSize)
+      // console.log(typeof imgSize)
+      if (imgSize > 0.5 && imgSize < 5) {
+        const _this = this
+        return new Promise(resolve => {
+          const reader = new FileReader()
+          const image = new Image()
+          image.onload = (imageEvent) => {
+            const canvas = document.createElement('canvas')
+            const context = canvas.getContext('2d')
+            const width = image.width * _this.imgQuality
+            const height = image.height * _this.imgQuality
+            canvas.width = width
+            canvas.height = height
+            // console.log(width)
+            // console.log(height)
+            context.clearRect(0, 0, width, height)
+            context.drawImage(image, 0, 0, width, height)
+            const dataUrl = canvas.toDataURL(file.type)
+            const blobData = _this.dataURItoBlob(dataUrl, file.type)
+            resolve(blobData)
+          }
+          reader.onload = (e) => { image.src = e.target.result }
+          reader.readAsDataURL(file)
         })
       }
-      return isJPG && isLt1M
+      if (imgSize > 5) {
+        this.$message({
+          // message: '请上传小于5M的图片',
+          message: this.$t('M.otc_upload_picture7'),
+          type: 'error'
+        })
+        return false
+      }
     },
+    // 增加上传图片压缩功能↑↑↑
     // 2.0 点击文件列表中已上传的文件时的钩子--预览图片时调用
     handlePictureCardPreview (file) {
       // console.log('预览图片时调用')
@@ -995,8 +1034,8 @@ export default {
     },
     // 4.0 文件上传成功时的钩子
     handleAvatarSuccess (res, file, fileList) {
-      // console.log('文件上传成功')
-      // console.log(res, file, fileList)
+      console.log('文件上传成功')
+      console.log(res, file, fileList)
       this.uploadFileList = fileList
     },
     // 5.0 文件上传失败时的钩子
@@ -1286,6 +1325,7 @@ export default {
         return false
       }
       // 申诉图片验证
+      console.log(this.uploadFileList.length)
       if (!this.uploadFileList.length) {
         this.$message({
           // message: '请至少上传一张图片！',
@@ -1293,12 +1333,13 @@ export default {
           type: 'error'
         })
         return false
-      } else {
-        // 申诉图片赋值
-        this.uploadFileList.forEach((item, index) => {
-          this[`picture${index + 1}`] = item.response.data.fileUrl
-        })
       }
+      // 申诉图片赋值
+      this.uploadFileList.forEach((item, index) => {
+        if (item.response) {
+          this[`picture${index + 1}`] = item.response.data.fileUrl
+        }
+      })
       this.checkedTradingOrderId = id
       console.log(this.checkedTradingOrderId)
       // 用户交易密码是否锁定判断
