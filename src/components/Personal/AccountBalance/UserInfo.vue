@@ -182,13 +182,13 @@
             >
               <div
                 class="info-color font-size16"
-                v-if="this.totalSumBTC > 0"
+                v-if="this.totalSumCNY > 0"
               >
                 <p v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                  {{ $scientificToNumber($keep2Num(this.totalSumBTC * BTC2CNYRate)) }} <span class="font-size12">{{ activeConvertCurrencyObj.shortName }}</span>
+                  {{ $scientificToNumber($keep2Num(this.totalSumCNY * CNYRate)) }} <span class="font-size12">{{ activeConvertCurrencyObj.shortName }}</span>
                 </p>
                 <p v-else>
-                  {{ $scientificToNumber($keep2Num(this.totalSumBTC)) }} <span class="font-size12">CNY</span>
+                  {{ $scientificToNumber($keep2Num(this.totalSumCNY)) }} <span class="font-size12">CNY</span>
                 </p>
               </div>
               <div v-else>
@@ -235,12 +235,10 @@ export default {
   // props,
   data () {
     return {
-      userInfoRefresh: {}, // 获取全局个人信息
       vipShowPictureSrc: require('../../../assets/user/vip.png'), // 开通VIP之后点亮图片
       vipShowDefaultSrc: require('../../../assets/user/default.png'), // 未开通VIP默认图片
-      discountRate: '无', // 自定义折扣率
-      totalSumBTC: '', // btc资产
-      BTC2CNYRate: '' // 转换汇率
+      totalSumCNY: '', // CNY资产
+      CNYRate: '' // 转换汇率
     }
   },
   async created () {
@@ -255,6 +253,7 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 1.0 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
       const params = {
         coinName: 'FBT',
@@ -263,14 +262,14 @@ export default {
       const data = await currencyTransform(params)
       if (!data) return false
       // 获取汇率
-      this.BTC2CNYRate = getNestedData(data, 'data.coinPrice')
+      this.CNYRate = getNestedData(data, 'data.coinPrice')
     },
     // Vip跳转
     stateOpenVip () {
       this.$goToPage('/VipMainContent')
     },
     /**
-     * 刚进页面时候 个人资产列表展示
+     * 2.0刚进页面时候 个人资产列表展示
      */
     async getAssetCurrenciesList () {
       let data
@@ -278,7 +277,7 @@ export default {
       data = await assetCurrenciesList(params)
       if (!data) return false
       // 返回数据
-      this.totalSumBTC = getNestedData(data, 'data.totalSum')
+      this.totalSumCNY = getNestedData(data, 'data.totalSum')
     }
   },
   filter: {},
@@ -309,13 +308,6 @@ export default {
     },
     currencyRateList () {
       console.log(this.currencyRateList)
-    },
-    totalSumBTC () {
-    },
-    // 任改动
-    userInfo (val) {
-      // console.log(88888888)
-      // console.log(val)
     }
   }
 }

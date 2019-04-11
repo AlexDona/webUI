@@ -123,21 +123,24 @@
             </div>
             <div class="promotion-number">
               <div class="promotion-info">
-                <p class="info-right">
-                  <span
+                <div class="info-right">
+                  <!--首先判断汇率名称是否为CNY 不是则不展示-->
+                  <p
                     class="info-left-color font-size30"
-                    v-if="totalSumBTC !== ''"
+                    v-if="activeConvertCurrencyObj.shortName !== 'CNY'"
                   >
-                    {{ totalSumBTC }}
-                  </span>
-                  <span
+                    <!--二次判断后台btc大于0展示cny * 当前汇率+法币单位 如果btc小于0则显示0.0000-->
+                    {{this.totalSumCNY > 0? $scientificToNumber(keep4Num(this.totalSumCNY * CNYRate)) : '0.0000'}}<span class="font-size12">{{ activeConvertCurrencyObj.shortName }}</span>
+                  </p>
+                  <!--如果等于cny 则直接显示后台返回cny折算-->
+                  <p
                     class="info-left-color font-size30"
                     v-else
                   >
-                    0.00
-                  </span>
-                  <span>BTC</span>
-                </p>
+                    <!--二次判断后台btc大于0展示cny * 当前汇率 如果btc小于0则显示0.0000-->
+                    {{this.totalSumCNY > 0? $scientificToNumber(keep4Num(this.totalSumCNY)) : '0.0000'}}<span class="font-size12">CNY</span>
+                  </p>
+                </div>
                 <span class="color-text font-size12 display-inline-block margin-top30">
                   <!--已获得的佣金预估-->
                   {{ $t('M.user_invite_have_obtained') }}
@@ -212,7 +215,7 @@
             <!-- 姓名 -->
             <el-table-column
               :label="$t('M.comm_name')"
-              width="100"
+              width="90"
             >
               <template slot-scope = "s">
                 <div>
@@ -223,6 +226,7 @@
             <!-- 高级认证 -->
             <el-table-column
               :label="$t('M.user_senior_certification')"
+              width="150"
             >
               <template slot-scope = "s">
                 <div v-if="s.row.advancedAuth == 'waitVeritfy'">
@@ -236,12 +240,25 @@
                 </div>
               </template>
             </el-table-column>
-            <!-- 直接推荐人UID -->
+            <!--当奖励类型为first时显示直接推荐UID 否则显示间接推荐UID -->
             <el-table-column
-              :label="$t('M.user_invite_direct_referrer')"
+              :label="generalizeValue === 'first'? $t('M.user_invite_direct_referrer') + 'UID' : $t('M.actionCenter_Indirect_recommend') + 'UID'"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.inviter }}</div>
+              </template>
+            </el-table-column>
+            <!--&lt;!&ndash; 状态 &ndash;&gt;-->
+            <el-table-column
+              :label="$t('M.comm_state')"
+            >
+              <template slot-scope = "s">
+                <div>
+                  <!--已发放-->
+                  <!--giveStatus 为PUBLISH则显示已发放为空则显示未发放 帅飞定义-->
+                  {{ s.row.giveStatus === 'PUBLISH' ? $t('M.user_invite_issued'): $t('M.user_invite_noIssued')}}
+                  <!--未发放-->
+                </div>
               </template>
             </el-table-column>
           </el-table>
@@ -279,16 +296,8 @@
             >
               <template slot-scope = "s">
                 <div>
-                  <!--邀请奖励-->
-                  <!--{{ $t('M.comm_user_invite') }}{{ $t('M.user_invite_award') }}-->
-                  <!-- 直接奖励-->
-                  <span v-if="generalizeValue==='first'">
-                    {{ $t('M.user_direct_reward') }}
-                  </span>
-                  <!--间接奖励-->
-                  <span v-else>
-                    {{ $t('M.user_indirect_reward') }}
-                  </span>
+                  <!-- 直接奖励 间接奖励 注册奖励-->
+                  {{ s.row.type === 'first'? $t('M.user_direct_reward'): (s.row.type === 'second'? $t('M.user_indirect_reward'): $t('M.user_invite_registration')) }}
                 </div>
               </template>
             </el-table-column>
@@ -337,7 +346,8 @@ import Qrcode from '../../Common/Qrcode'
 import VueClipboard from 'vue-clipboard2'
 import {
   userPromotionList,
-  getRecommendUserPromotionList
+  getRecommendUserPromotionList,
+  currencyTransform
 } from '../../../utils/api/personal'
 import {domain} from '../../../utils/env'
 import {
@@ -370,6 +380,7 @@ export default {
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
       totalPageMyNumber: '', // 条数
+      pageSize: 10, // 每页显示条数
       promoteLink: `${domain}/register?showId=`, // 推广链接
       ercodeIsShowId: false, // 二维码显示状态
       // 推广统计
@@ -379,13 +390,18 @@ export default {
       totalPageMyEntrust: 1, // 当前委托总页数
       // 奖励记录
       awardList: [],
-      totalSumBTC: '', // btc资产
-      BTC2CNYRate: '', // 转换汇率
+      totalSumCNY: '', // cny资产
+      CNYRate: '', // 转换汇率
       coinName: '', // 币种名称
       partLoading: false // 局部列表loading
     }
   },
-  async created () {},
+  async created () {
+    if (this.activeConvertCurrencyObj) {
+      // 汇率转换
+      await this.currencyTransform()
+    }
+  },
   mounted () {
     console.log(domain)
     this.getInverData()
@@ -394,6 +410,18 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 1.0 汇率折算以及根据header切换显示对应资产换算
+    async currencyTransform () {
+      const params = {
+        coinName: 'FBT',
+        shortName: this.activeConvertCurrencyObj.shortName
+      }
+      const data = await currencyTransform(params)
+      if (!data) return false
+      // 获取汇率
+      this.CNYRate = getNestedData(data, 'data.coinPrice')
+      console.log(this.totalSumCNY * this.CNYRate)
+    },
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -408,18 +436,16 @@ export default {
           this.generalizeValue = e
           // this.loading = true
           this.getUserPromotionList()
-          this.getRecommendUserPromotion()
           console.log(this.generalizeValue)
         }
       })
     },
     // 直接推广 间接推广列表
     async getUserPromotionList () {
-      // this.loading = true
       let data = await userPromotionList({
-        type: this.generalizeValue, // 筛选类型
-        pageNumber: this.currentPageForMyEntrust, // 分页
-        pageSize: this.pageSize // 页码
+        pageSize: this.pageSize, // 每页显示条数
+        pageNumber: this.currentPageForMyEntrust, // 当前页码
+        type: this.generalizeValue // 筛选类型
       })
       console.log(data)
       // 接口返回清除局部loading
@@ -430,7 +456,7 @@ export default {
       this.totalPageForMyEntrust = getNestedData(data, 'data.page.pages') - 0
       this.totalPageMyNumber = getNestedData(data, 'data.page.total') - 0
       // 已获得的佣金折合
-      this.totalSumBTC = getNestedData(data, 'data.btc')
+      this.totalSumCNY = getNestedData(data, 'data.btc')
     },
     // 分页
     changeCurrentPage (pageNum) {
@@ -440,9 +466,8 @@ export default {
     // 推荐用户币种列表
     async getRecommendUserPromotion () {
       let data = await getRecommendUserPromotionList({
-        pageNumber: this.currentPageMyEntrust, // 页码
-        pageSize: this.pageSize, // 条数
-        type: this.generalizeValue // 类型
+        pageSize: this.pageSize, // 每页显示条数
+        pageNumber: this.currentPageMyEntrust // 当前页码
       })
       // 接口返回清除局部loading
       this.partLoading = false
@@ -500,16 +525,15 @@ export default {
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
-      userCenterActiveName: state => state.personal.userCenterActiveName
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
+      currencyRateList: state => state.common.currencyRateList // 折算货币列表
     })
   },
   watch: {
-    userCenterActiveName (newVal) {
-      // console.log(newVal)
-      // console.log('invitation-promote')
-      if (newVal === 'invitation-promote') {
-        this.getInverData()
-      }
+    async activeConvertCurrencyObj () {
+      console.log(this.currencyRateList, this.activeConvertCurrencyObj)
+      // 汇率转换
+      await this.currencyTransform()
     }
   }
 }

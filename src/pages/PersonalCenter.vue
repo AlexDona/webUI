@@ -288,7 +288,7 @@ export default {
       tabPosition: 'left', // 导航位置方向
       setPwdDialogVisible: false,
       notVerifyDialogVisible: false,
-      currentUserCenterActiveName: 'assets'
+      currentUserCenterActiveName: ''
       // isDisabled: false
     }
   },
@@ -332,7 +332,7 @@ export default {
         // 清空全局币种id 在billingDetails组件中重新赋值
         this.SET_NEW_WITHDRAW_RECORD('')
         // 清空全局充提类型
-        this.SET_NEW_WITHDRAW_RECORD_STATUS('')
+        this.SET_NEW_WITHDRAW_RECORD_STATUS('RECHARGE')
       }
       this.showNoPosswdAndNoVerifyNotice()
     },
@@ -362,6 +362,10 @@ export default {
       console.log(e)
       this.currentUserCenterActiveName = e
       this.REFRESH_USER_INFO_ACTION()
+      if (e !== 'assets') {
+        this.$route.params.type = ''
+        this.$route.params.coinId = ''
+      }
     }
   }
 }

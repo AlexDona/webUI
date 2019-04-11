@@ -1,6 +1,7 @@
 import {
   keep2Num,
   keep8Num,
+  keep4Num,
   scientificToNumber,
   cutOutPointLength
 } from '../utils'
@@ -35,6 +36,9 @@ let mixin = {
     $keep8Num (num) {
       return keep8Num(num)
     },
+    keep4Num (num) {
+      return keep4Num(num)
+    },
     $keepCurrentNum (num, pointLength) {
       return (num - 0).toFixed(pointLength) - 0
     },
@@ -63,12 +67,18 @@ let mixin = {
       '$isNeedYST_G_X': 'isNeedYST'
     }),
     ...mapState({
+      $theme_S_X: state => state.common.theme,
+      $language_S_X: state => state.common.language,
+      $isLogin_S_X: state => state.user.isLogin,
       // 交易对是否改变l
       $isSymbolChanged_X: state => state.common.isSymbolChanged,
       // 是否显示限价交易
       $middleTopData_S_X: state => state.trade.middleTopData,
+      $activeSymbol_S_X: state => state.trade.middleTopData.id,
       $serverTime_S_X: state => state.trade.serverData.serverTime,
-      $isShowServerPort_S_X: state => state.trade.serverData.isShowServerPort
+      $isShowServerPort_S_X: state => state.trade.serverData.isShowServerPort,
+      $isServerEnd_S_X: state => state.trade.isActivityEnd,
+      $clientWidth_S_X: state => state.common.clientWidth
     })
   }
 }

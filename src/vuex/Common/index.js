@@ -76,6 +76,8 @@ const state = {
         highestAmount: ''
       }
     },
+    // 交易对名称
+    symbol: '',
     tardeRecordList: [], // 交易记录
     tradeMarkeContentItem: {} // 交易区单项
   },

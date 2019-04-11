@@ -8,19 +8,10 @@
   >
     <div class="transaction-password-main margin25">
       <header class="transaction-password-header personal-height60 line-height60 line-height70 margin25">
-        <span
-          v-if="!securityCenter.payPassword"
-          class="header-content-left header-content font-size16 font-weight600"
-        >
+        <span class="header-content-left header-content font-size16 font-weight600">
           <!--设置交易密码-->
-          {{ $t('M.comm_set') }}{{ $t('M.comm_password') }}
-        </span>
-        <span
-          v-else
-          class="header-content-left header-content font-size16 font-weight600"
-        >
+          {{ !securityCenter.payPassword? $t('M.comm_set') + $t('M.comm_password') : $t('M.user_security_set_reset_pwd2') }}
           <!--重置交易密码-->
-          {{ $t('M.user_security_set_reset_pwd2') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -681,7 +672,7 @@ export default {
         }
 
         > .transaction-content-from {
-          width: 500px;
+          width: 575px;
           margin-left: 55px;
 
           .header-title {

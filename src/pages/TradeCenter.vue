@@ -2,7 +2,7 @@
 <template>
   <div
     class="trade-box trade"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box clearfloat">
       <!--左侧-->
@@ -17,7 +17,7 @@
       <!--中间-->
       <div
         class="middle"
-        :class="{'day':theme == 'day','night':theme == 'night' }"
+        :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
       >
         <MiddleHeader/>
         <!--k线-->
@@ -49,7 +49,7 @@ import OrderRecord from '../components/Trade/OrderRecordTrade'
 import KLine from '../components/Trade/kLine'
 import MiddleHeader from '../components/Trade/MiddleHeaderTrade'
 import Depth from '../components/Trade/DepthTrade'
-import Activity from '../components/Trade/Activity'
+// import Activity from '../components/Trade/Activity'
 import {mapState} from 'vuex'
 
 export default {
@@ -62,8 +62,8 @@ export default {
     KLine, // k线
     OrderRecord, // 成交记录
     BuysAndSells, // 买卖单
-    GlobalMarket,
-    Activity
+    GlobalMarket
+    // Activity
   },
   // props,
   data () {
@@ -81,10 +81,13 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
     })
   },
-  watch: {}
+  watch: {
+    $route () {
+
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

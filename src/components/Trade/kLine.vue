@@ -2,20 +2,12 @@
 <template>
   <div
     class="kline-container"
+    v-loading.lock="fullscreenLoading"
+    element-loading-background="rgb(28, 31, 50)"
   >
     <div
       id="tv_chart_container"
-      :class="{'day':theme == 'day','night':theme == 'night' }"
-      :style="{
-        opacity: !fullscreenLoading ? 1:0
-      }"
-    >
-    </div>
-    <div
-      class="loading-box"
-      v-if="fullscreenLoading"
-      v-loading.lock="fullscreenLoading"
-      element-loading-background="rgb(28, 31, 50)"
+      :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
     >
     </div>
     <div
@@ -50,7 +42,7 @@ import {
 } from '../../utils/commonFunc'
 import {
   unzip,
-  getStoreWithJson
+  getStore
 } from '../../utils'
 import {
   mapMutations,
@@ -75,7 +67,6 @@ export default {
       options: {
         // symbol: this.activeSymbol.sellsymbol + this.activeSymbol.area,
         symbol: 'ETCFBT',
-        previousSymbol: '', // 上一个交易对（取消用）
         interval: 1,
         // paneProperties: this.paneProperties
         paneProperties: {
@@ -91,7 +82,7 @@ export default {
       socketData: {}, // socket 数据
       ajaxData: {}, // 接口请求数据
       resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week'],
-      fullscreenLoading: true,
+      fullscreenLoading: false,
       // 时间周期loading
       intervalLoading: false,
       loadingCount: 0, // loading 次数
@@ -115,10 +106,14 @@ export default {
     // this.widget = null
     // console.log(this.socket)
     this.socket.doOpen()
+  },
+  async mounted () {
+    const {tradeId} = this.$route.params
+    if (tradeId && tradeId !== 'default') {
+      await this.getActiveSymbolData(tradeId)
+    }
     // 获取默认交易对
     await this.getDefaultSymbol()
-  },
-  mounted () {
     this.initKLine(this.symbol)
   },
   activated () {
@@ -133,20 +128,20 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'CHANGE_ACTIVE_SYMBOL',
       'CHANGE_SOCKET_AND_AJAX_DATA',
       'SET_IS_KLINE_DATA_READY',
       'SET_MIDDLE_TOP_DATA',
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
       'GET_SERVER_DATA',
-      'REFRESH_CONTENT_STATUS'
+      'REFRESH_CONTENT_STATUS',
+      'RETURN_SYMBOL_DATA'
     ]),
     changeIsKlineDataReady (status) {
       this.SET_IS_KLINE_DATA_READY(status)
     },
     // 接口获取K线数据
     async getKlineByAjax (tradeName, KlineType, KlineNum = 0, KlineStep = 'STEP5') {
-      console.log(KlineType, this.interval)
+      // console.log(KlineType, this.interval)
       this.isAllowDrag = false
       // console.log(tradeName)
       if (tradeName) {
@@ -217,7 +212,7 @@ export default {
     // 获取当前交易对socket数据
     async getActiveSymbolData (tradeName) {
       let params = {
-        i18n: this.language
+        i18n: this.$language_S_X
       }
       params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
@@ -245,6 +240,7 @@ export default {
       const defaultTradeContent = getNestedData(defaultTrade, 'content[0]')
       if (defaultTradeContent) {
         this.SET_MIDDLE_TOP_DATA(defaultTradeContent)
+        this.RETURN_SYMBOL_DATA(true)
       }
       // 买卖单
       this.ajaxData.buyAndSellData = getNestedData(depthList, 'depthData')
@@ -269,45 +265,24 @@ export default {
       this.socket.on('message', this.onMessage)
       this.options.symbol = symbol
       this.options.areaId = this.activeTabId
-      this.options.paneProperties.background = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-      this.options.paneProperties.vertGridPropertiesColor = this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
+      this.options.paneProperties.background = this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
+      this.options.paneProperties.vertGridPropertiesColor = this.$theme_S_X === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
       this.options.interval = '15'
-      this.options.language = this.language
+      this.options.language = this.$language_S_X
       this.init(this.options)
-      this.getBars()
     },
     // 获取初始交易对
     async getDefaultSymbol () {
-      let storeSymbol = getStoreWithJson('activeSymbol') || {}
-      // console.log(storeSymbol)
+      let localSymbol = getStore('activeSymbol')
       let activeSymbol
-      if (!getNestedData(storeSymbol, 'id')) {
-        let data = await getDefaultSymbol()
-        if (!data) return false
-
-        const obj = getNestedData(data, 'data')
-        // console.log(obj)
-        const id = (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName'))
-        if (!id) return false
-        activeSymbol = {
-          id: (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase(),
-          tradeId: getNestedData(obj, 'id'),
-          sellsymbol: getNestedData(obj, 'sellCoinName'), // 币种简称
-          sellname: getNestedData(obj, 'buyCoinName'), // 币种全程
-          area: getNestedData(obj, 'buyCoinName'), // 交易区
-          areaId: getNestedData(obj, 'tradeAreaId')
-        }
-      } else {
-        activeSymbol = storeSymbol
-      }
-
-      // 是否从其他页面跳转
-      this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
-      this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
-      this.symbol = getNestedData(this.activeSymbol, 'id')
-      if (this.isLogin) {
-        this.getUserOrderSocket('SUB', this.symbol)
-      }
+      let data = await getDefaultSymbol()
+      if (!data) return false
+      const obj = getNestedData(data, 'data')
+      activeSymbol = (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase()
+      const {tradeId} = this.$route.params
+      this.symbol = tradeId && tradeId !== 'default' ? tradeId : (localSymbol ? localSymbol : activeSymbol)
+      this.RETURN_SYMBOL_DATA(true)
+      if (this.$isLogin_S_X) this.getUserOrderSocket('SUB', this.symbol)
     },
     init (options) {
       if (!this.widget) {
@@ -440,7 +415,7 @@ export default {
     },
     // 时间区间格式转换
     transformInterval (interval) {
-      console.log(interval)
+      // console.log(interval)
       let newInterval
       switch (interval) {
         case '1':
@@ -473,7 +448,7 @@ export default {
     onMessage (data) {
       this.barsRenderTime = this.LIMIT_BARS_RENDER_TIME - 2
       // const { countDown, isShow } = data.data
-      console.log(data)
+      // console.log(data)
       // if (this.activeSymbol.id !== symbol) return false
       switch (data.tradeType) {
         case 'KLINE':
@@ -513,6 +488,8 @@ export default {
             depthData.sells.list.reverse()
           }
           this.socketData.buyAndSellData = depthData
+          this.socketData = {...this.socketData, symbol: data.symbol}
+          // console.log(this.socketData)
           break
         // 深度图
         case 'DEPTHRENDER':
@@ -532,7 +509,7 @@ export default {
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           break
         case 'DATE':
-          console.log(data)
+          // console.log(data)
           this.GET_SERVER_DATA({
             'serverTime': data.data.countDown,
             'isShowServerPort': data.data.isShow,
@@ -557,7 +534,7 @@ export default {
       // }
 
       this.barsRenderTime += 1
-      console.log(rangeStartDate, rangeEndDate, this.firstRangeStartDate, this.secondRangeStartDate)
+      // console.log(rangeStartDate, rangeEndDate, this.firstRangeStartDate, this.secondRangeStartDate)
       if (resolution && this.interval && (this.interval != resolution)) {
         this.unSubscribe(this.interval)
         this.interval = resolution
@@ -567,7 +544,6 @@ export default {
         this.subscribeSocketData(this.symbol, newInterval)
       }
       const ticker = `${this.symbol}-${this.interval}`
-
       if (this.barsRenderTime % 2 == 0) {
         this.prevCacheList = this.cacheData[ticker] || []
       } else {
@@ -582,9 +558,9 @@ export default {
           newBars.push(item)
         })
         if (onLoadedCallback) {
-          console.log(this.barsRenderTime, this.prevCacheList[0], this.currentCacheList[0])
+          // console.log(this.barsRenderTime, this.prevCacheList[0], this.currentCacheList[0])
           if (this.barsRenderTime > this.LIMIT_BARS_RENDER_TIME && this.prevCacheList[0] === this.currentCacheList[0]) {
-            console.log('noData')
+            // console.log('noData')
             onLoadedCallback([])
           } else {
             onLoadedCallback(newBars)
@@ -649,7 +625,7 @@ export default {
     },
     // 委单事实刷新标记
     getUserOrderSocket (type, symbol) {
-      if (this.isLogin) {
+      if (this.$isLogin_S_X) {
         this.socket.send({
           'tag': type,
           'content': `market.${symbol}.userorder.${this.userId}`,
@@ -681,22 +657,14 @@ export default {
   computed: {
     ...mapState({
       symbolMap: state => state.home.symbolMap, // 交易对map
-      theme: state => state.common.theme,
-      language: state => state.common.language,
-      activeSymbol: state => state.common.activeSymbol,
-      activeSymbolId: state => state.common.activeSymbol.id,
-      activeTradeArea: state => state.common.activeTradeArea,
       activeTabSymbolStr: state => state.trade.activeTabSymbolStr,
       mainColor: state => state.common.mainColor,
-      isJumpToTradeCenter: state => state.trade.isJumpToTradeCenter,
-      jumpSymbol: state => state.trade.jumpSymbol,
       isChangeContent: state => state.trade.isChangeContent,
-      isLogin: state => state.user.isLogin,
       userId: state => state.user.loginStep1Info.userId
     })
   },
   watch: {
-    isLogin (newVal) {
+    $isLogin_S_X (newVal) {
       if (newVal) {
         this.getUserOrderSocket('SUB', newVal)
       }
@@ -704,21 +672,24 @@ export default {
     KlineNum (newVal, oldVal) {
       // console.log(newVal, oldVal)
     },
-    theme () {
+    $theme_S_X () {
       // 更新K线主题
       this.widget.applyOverrides({
-        'paneProperties.background': this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor,
-        'paneProperties.vertGridProperties.color': this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)', // 行分割线
-        'paneProperties.horzGridProperties.color': this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)' // 列分割线
+        'paneProperties.background': this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor,
+        'paneProperties.vertGridProperties.color': this.$theme_S_X === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)', // 行分割线
+        'paneProperties.horzGridProperties.color': this.$theme_S_X === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)' // 列分割线
       })
     },
-    language () {
+    $language_S_X () {
       this.initKLine(this.symbol)
       setTimeout(() => {
         this.fullscreenLoading = false
       }, 1000)
     },
-    async activeSymbolId (newVal) {
+    $middleTopData_S_X (newVal) {
+      console.log(newVal)
+    },
+    async $activeSymbol_S_X (newVal) {
       this.changeIsKlineDataReady(false)
       this.initKLine(newVal)
       this.KlineNum = 0
@@ -732,6 +703,7 @@ export default {
       this.getTradeMarketBySocket('SUB', newVal)
     },
     symbol (newVal, oldVal) {
+      console.log(newVal, oldVal)
       if (oldVal) {
         this.resolutions.forEach((item) => {
           this.getKlineDataBySocket('CANCEL', oldVal, item)
@@ -741,6 +713,9 @@ export default {
         this.getTradeRecordBySocket('CANCEL', oldVal)
         this.getUserOrderSocket('CANCEL', oldVal)
       }
+      // if (newVal) {
+      //   this.RETURN_SYMBOL_DATA(true)
+      // }
       this.getActiveSymbolData(newVal)
       this.subscribeSocketData(newVal)
       this.getUserOrderSocket('SUB', newVal)
@@ -750,7 +725,7 @@ export default {
       this.barsRenderTime = 0
     },
     isChangeContent (newVla) {
-      console.log(newVla)
+      // console.log(newVla)
       if (newVla) {
         this.REFRESH_CONTENT_STATUS(false)
       }

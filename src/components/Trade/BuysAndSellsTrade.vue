@@ -2,7 +2,7 @@
   <!--币币交易-买卖单-->
   <div
     class="buys-and-sells-box trade"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div
       class="inner-box"
@@ -48,15 +48,15 @@
                   index
                 </span><span class="price text-align-l">
                   <!--价格-->
-                  {{ $t('M.comm_price_metre') }}({{activeSymbol.area}})
+                  {{ $t('M.comm_price_metre') }}({{$middleTopData_S_X.area}})
                 </span><span class="amount text-align-c">
                   <!--数量-->
                   {{ $t('M.comm_count') }}
-                  <span class="uppercase">({{activeSymbol.sellsymbol}})</span>
+                  <span class="uppercase">({{$middleTopData_S_X.sellsymbol}})</span>
                 </span><span class="total text-align-r">
                   <!--总计-->
                   {{ $t('M.comm_aggregate') }}
-                  <span class="uppercase">({{activeSymbol.area}})</span>
+                  <span class="uppercase">({{$middleTopData_S_X.area}})</span>
                 </span>
               </dt>
             </dl>
@@ -92,9 +92,9 @@
                       >
                         {{$scientificToNumber(item.price)}}
                       </span><span class="amount text-align-r">
-                        {{$scientificToNumber($cutOutPointLength(item.amount, activeSymbol.countExchange))}}
+                        {{$scientificToNumber($cutOutPointLength(item.amount, $middleTopData_S_X.countExchange))}}
                       </span><span class="total text-align-r">
-                        {{$scientificToNumber($cutOutPointLength(item.total, activeSymbol.priceExchange))}}
+                        {{$scientificToNumber($cutOutPointLength(item.total, $middleTopData_S_X.priceExchange))}}
                       </span><!--宽度条--><i
                           class="color-sell-bg"
                           :style="`width:${item.amount/buysAndSellsList.sells.highestAmount*100}%`"
@@ -208,44 +208,34 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme,
       buysAndSellsListByAjax: state => state.common.klineAjaxData.buyAndSellData,
       buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData,
-      activeSymbol: state => state.common.activeSymbol,
-      activeSymbolId: state => state.common.activeSymbol.id
+      socketSymbol: state => state.common.socketData.symbol
     }),
     buysAndSellsList () {
-      return !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
+      return !this.isSameSymbol || !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
     },
     sellsListLength () {
       return (getNestedData(this.buysAndSellsList, 'sells.list') || []).length
+    },
+    isSameSymbol () {
+      const {id} = this.$middleTopData_S_X
+      return this.socketSymbol === id
     }
   },
   watch: {
-    activeSymbol (newVal) {
-      // console.log(newVal)
-    },
-    activeSymbolId () {
+    $activeSymbol_S_X () {
       this.reflashCount = 0
-    },
-    buysAndSellsList (newVal) {
-      // console.log(newVal)
-    },
-    buysAndSellsListByAjax (newVal) {
-      // console.log(newVal)
     },
     buysAndSellsListBySocket: {
       handler (newVal) {
-        // console.log(newVal)
-        if (!this.reflashCount && newVal) {
+        // console.log(this.isSameSymbol, newVal)
+        if (this.isSameSymbol && !this.reflashCount && newVal) {
           this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
           this.reflashCount += 1
         }
       },
       deep: true
-    },
-    reflashCount (newVal) {
-      // console.log(newVal)
     }
   }
 }

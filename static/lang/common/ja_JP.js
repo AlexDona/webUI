@@ -99,6 +99,7 @@ export const common = {
   'comm_view_more': 'もっと見る',
   'comm_sure_delete': 'APIアドレスを削除してもよろしいですか？',
   'comm_sure_push': 'プッシュレコードを取り消してもよろしいですか？',
+  'comm_sure_withdraw': '削除を確定して現在の記録を引き出しますか？',
   'comm_qr_code': 'QRコード',
   'comm_have_been_copied': 'コピーされた',
   'comm_copies_failure': 'コピーに失敗しました。後でやり直してください',

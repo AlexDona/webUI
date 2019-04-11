@@ -9,7 +9,8 @@ import {
   SET_TARGET_EXCHANGE_DATA,
   GET_SERVER_DATA,
   CHANGE_ACTIVITY_STATUS,
-  REFRESH_CONTENT_STATUS
+  REFRESH_CONTENT_STATUS,
+  RETURN_SYMBOL_DATA
 } from './mutations-types.js'
 
 // import {setStore} from '../../utils'
@@ -82,5 +83,8 @@ export default {
   },
   [REFRESH_CONTENT_STATUS] (state, status) {
     state.isChangeContent = status
+  },
+  [RETURN_SYMBOL_DATA] (state, data) {
+    state.isReturnSymbolData = data
   }
 }

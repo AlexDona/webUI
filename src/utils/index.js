@@ -469,6 +469,14 @@ export const keep8Num = number => {
   return (number - 0).toFixed(8) - 0
 }
 /**
+ * 截取4位小数
+ * @param number
+ * @returns {*}
+ */
+export const keep4Num = number => {
+  return (number - 0).toFixed(4) - 0
+}
+/**
  * 修正精度
  * @param num1
  * @param num2
