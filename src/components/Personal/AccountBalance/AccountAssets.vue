@@ -1447,10 +1447,10 @@ export default {
         return item
       })
     },
-    // 开启关闭币种小于零的币种
+    // 开启关闭币种小于零的币种 总数量和锁仓
     filteredData2: function () {
       return this.filteredData.filter(function (item) {
-        return item.total > 0
+        return (item.sum || item.wareHouse) > 0
       })
     }
   },
