@@ -1,6 +1,7 @@
 import {
   keep2Num,
   keep8Num,
+  keep4Num,
   scientificToNumber,
   cutOutPointLength
 } from '../utils'
@@ -34,6 +35,9 @@ let mixin = {
     },
     $keep8Num (num) {
       return keep8Num(num)
+    },
+    keep4Num (num) {
+      return keep4Num(num)
     },
     $keepCurrentNum (num, pointLength) {
       return (num - 0).toFixed(pointLength) - 0
