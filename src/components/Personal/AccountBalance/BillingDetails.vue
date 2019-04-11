@@ -494,12 +494,13 @@ export default {
     },
     // 1.3 时间赋值
     changeTime () {
+      console.log(1)
       this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
         disabledDate: (time) => {
           let curDate = (new Date()).getTime()
           let three = 90 * 24 * 3600 * 1000
           let threeMonths = curDate - three
-          return time.getTime() > Date.now() + ((1 * 24 * 3600 * 1000) - (this.hours + this.minutes + this.seconds)) || time.getTime() < threeMonths
+          return time.getTime() > Date.now() || time.getTime() < threeMonths
         }
       })
     },
