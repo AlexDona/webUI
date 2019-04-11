@@ -172,6 +172,7 @@ export const personal = {
   'user_invite_noIssued': 'リリースない',
   // 奨励記録のリスト
   'user_invite_award': '奨励',
+  'user_invite_registration': '登録奨励金',
   // セキュリティセンター
   'user_security_safety': '安全性',
   'user_security_email': 'メール',

@@ -175,6 +175,7 @@ export const personal = {
   'user_invite_noIssued': '미지급',
   // 奖励记录列表
   'user_invite_award': '보상',
+  'user_invite_registration': '등록 장려',
   // 安全中心
   'user_security_safety': '보안',
   'user_security_email': '메일 주소',

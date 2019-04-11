@@ -296,16 +296,8 @@
             >
               <template slot-scope = "s">
                 <div>
-                  <!--邀请奖励-->
-                  <!--{{ $t('M.comm_user_invite') }}{{ $t('M.user_invite_award') }}-->
-                  <!-- 直接奖励-->
-                  <span v-if="generalizeValue==='first'">
-                    {{ $t('M.user_direct_reward') }}
-                  </span>
-                  <!--间接奖励-->
-                  <span v-else>
-                    {{ $t('M.user_indirect_reward') }}
-                  </span>
+                  <!-- 直接奖励 间接奖励 注册奖励-->
+                  {{ s.row.type === 'first'? $t('M.user_direct_reward'): (s.row.type === 'second'? $t('M.user_indirect_reward'): $t('M.user_invite_registration')) }}
                 </div>
               </template>
             </el-table-column>
@@ -388,6 +380,7 @@ export default {
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
       totalPageMyNumber: '', // 条数
+      pageSize: 10, // 每页显示条数
       promoteLink: `${domain}/register?showId=`, // 推广链接
       ercodeIsShowId: false, // 二维码显示状态
       // 推广统计
@@ -443,7 +436,6 @@ export default {
           this.generalizeValue = e
           // this.loading = true
           this.getUserPromotionList()
-          this.getRecommendUserPromotion()
           console.log(this.generalizeValue)
         }
       })
@@ -451,9 +443,9 @@ export default {
     // 直接推广 间接推广列表
     async getUserPromotionList () {
       let data = await userPromotionList({
-        type: this.generalizeValue, // 筛选类型
-        pageNumber: this.currentPageForMyEntrust, // 分页
-        pageSize: this.pageSize // 页码
+        pageSize: this.pageSize, // 每页显示条数
+        pageNumber: this.currentPageForMyEntrust, // 当前页码
+        type: this.generalizeValue // 筛选类型
       })
       console.log(data)
       // 接口返回清除局部loading
@@ -474,9 +466,8 @@ export default {
     // 推荐用户币种列表
     async getRecommendUserPromotion () {
       let data = await getRecommendUserPromotionList({
-        pageNumber: this.currentPageMyEntrust, // 页码
-        pageSize: this.pageSize, // 条数
-        type: this.generalizeValue // 类型
+        pageSize: this.pageSize, // 每页显示条数
+        pageNumber: this.currentPageMyEntrust // 当前页码
       })
       // 接口返回清除局部loading
       this.partLoading = false

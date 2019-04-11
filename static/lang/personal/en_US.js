@@ -173,6 +173,7 @@ export const personal = {
   'user_invite_noIssued': 'Not release',
   // 奖励记录列表List of reward records
   'user_invite_award': 'Rewards',
+  'user_invite_registration': 'Register award',
   // 安全中心Security center
   'user_security_safety': 'Safety ',
   'user_security_email': 'Mailbox',
