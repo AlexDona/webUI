@@ -223,7 +223,6 @@ import {
   currencyTransform
 } from '../../../utils/api/personal'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../../utils/commonFunc'
 // 字体图标
@@ -300,14 +299,10 @@ export default {
   },
   watch: {
     async activeConvertCurrencyObj () {
-      console.log(this.activeConvertCurrencyObj)
       if (this.currencyRateList.BTC) {
         // 汇率转换
         await this.currencyTransform()
       }
-    },
-    currencyRateList () {
-      console.log(this.currencyRateList)
     }
   }
 }
