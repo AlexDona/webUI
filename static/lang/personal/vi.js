@@ -144,6 +144,7 @@ export const personal = {
   'user_invite_issued': ' Đã phát',
   'user_invite_noIssued': 'Chưa phát',
   'user_invite_award': 'Giải thưởng',
+  'user_invite_registration': 'Đă ký thưởng',
   'user_security_safety': 'An toàn',
   'user_security_email': 'Gmail',
   'user_security_phone': 'Điện thoại',

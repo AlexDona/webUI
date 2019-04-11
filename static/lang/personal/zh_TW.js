@@ -170,11 +170,12 @@ export const personal = {
   // 推廣統計列表
   'user_invite_user_uid': '用戶UID',
   'user_invite_login_name': '登錄名',
-  'user_invite_direct_referrer': '直接推薦人UID',
+  'user_invite_direct_referrer': '直接推薦D',
   'user_invite_issued': '已發放',
   'user_invite_noIssued': '未發放',
   // 獎勵記錄列表
   'user_invite_award': '獎勵',
+  'user_invite_registration': '註冊獎勵',
   // 安全中心
   'user_security_safety': '安全',
   'user_security_email': '郵箱',

@@ -55,9 +55,8 @@
               </div>
             </div>
             <!-- 国家列表、支付方式、货比类型、发布订单按钮 -->
+            <!--国家列表-默认显示中国国家和人民币法币-->
             <div class="otc-publish-box">
-              <!-- 增加国家-国家列表-->
-              <!--进来网站默认显示中国国家和人民币法币-->
               <span class="country-style">
                 <IconFontCommon
                   class="country-style-icon"
@@ -545,7 +544,7 @@ export default {
       // 我要购买出售币种数组
       IWantToBuySellArr: [],
       isDisabledTimer: null, // 面板切换防止频繁点击倒计时
-      // 增加国家-国家列表
+      // 增加国家列表
       checkedCountryId: null, // 增加国家-选中国家id
       countryInfoList: [], // 增加国家-国家列表
       countrySelectStatus: true // 国家下拉选择框禁用状态
@@ -562,7 +561,7 @@ export default {
     if (this.isLogin) {
       await this.REFRESH_USER_INFO_ACTION()
       this.reflashUserInfo() // 刷新用户信息
-      console.log('国家码：' + this.userInfo.country)
+      // console.log('国家码：' + this.userInfo.country)
     }
     // 5.0 增加国家-查询法币联动国家列表
     await this.getCurrencyCountrysList()
@@ -627,12 +626,11 @@ export default {
         'version': 3
       }
       this.countryInfoList.push(ALL)
+      // 默认选中中国
       this.checkedCountryId = (this.countryInfoList.filter(item => item.shortName == 'CNY'))[0].id
-      console.log(this.countryInfoList)
     },
     // 增加国家-切换国家
     changeCountryId (e) {
-      console.log(e)
       this.currentPage = 1 // 改变页码为第1页
       this.checkedCountryId = e
       this.availableCurrencyId.forEach(item => {
@@ -658,13 +656,9 @@ export default {
     // 查询用户是否可以发单状态
     async getUserPutUpOrderStatus () {
       const data = await getCommonPutUpOrderStatus()
-      // 返回数据正确的逻辑
-      // console.log(data)
-      // console.log(data.data.flag)
       if (!data) return false
       let flagStatus
       flagStatus = getNestedData(data, 'data.flag')
-      // console.log(flagStatus)
       if (flagStatus === 'true') {
         this.userPutUpOrderStatus = true
       }
@@ -742,8 +736,7 @@ export default {
       } else {
         // 刷新用户信息
         await this.REFRESH_USER_INFO_ACTION()
-        console.log(countryCode, userId, this.userInfo)
-
+        // console.log(countryCode, userId, this.userInfo)
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
@@ -770,9 +763,7 @@ export default {
               type: 'error'
             })
             return false
-            // 增加个人用户信息中的国籍和选中的国家对比，
-            // 如果相同，可以摘单
-            // 不相同，不能摘单，给出提示
+            // 增加个人用户信息中的国籍和选中的国家对比，如果相同，可以摘单，不相同，不能摘单，给出提示
           } else if (!(CHINA.includes(countryCode) && CHINA.includes(this.userInfo.country)) && !(countryCode == this.userInfo.country)) {
             this.$message({
               // 根据您注册所在地的相关规定，无法进行此操作
@@ -781,8 +772,8 @@ export default {
             })
             return false
           } else {
-            // console.log(id) // 挂单id
-            // console.log(coinId) // 币种id
+            // id - 挂单id
+            // coinId - 币种id
             this.$goToPage(`/OTCOnlineTraderBuySell/${this.OTCBuySellStyle}/${id}/${coinId}`)
           }
         }
