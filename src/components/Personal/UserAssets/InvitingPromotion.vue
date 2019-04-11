@@ -240,9 +240,9 @@
                 </div>
               </template>
             </el-table-column>
-            <!-- 直接推荐人UID -->
+            <!--当奖励类型为first时显示直接推荐UID 否则显示间接推荐UID -->
             <el-table-column
-              :label="$t('M.user_invite_direct_referrer')"
+              :label="generalizeValue === 'first'? $t('M.user_invite_direct_referrer') + 'UID' : $t('M.actionCenter_Indirect_recommend') + 'UID'"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.inviter }}</div>
