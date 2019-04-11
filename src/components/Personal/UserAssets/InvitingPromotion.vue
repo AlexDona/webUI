@@ -397,9 +397,9 @@ export default {
     }
   },
   async created () {
-    if (this.activeConvertCurrencyObj) {
+    if (this.currencyRateList.BTC) {
       // 汇率转换
-      await this.currencyTransform()
+      this.currencyTransform()
     }
   },
   mounted () {
@@ -531,9 +531,10 @@ export default {
   },
   watch: {
     async activeConvertCurrencyObj () {
-      console.log(this.currencyRateList, this.activeConvertCurrencyObj)
-      // 汇率转换
-      await this.currencyTransform()
+      if (this.currencyRateList.BTC) {
+        // 汇率转换
+        this.currencyTransform()
+      }
     }
   }
 }
