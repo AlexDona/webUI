@@ -24,6 +24,13 @@
         <KLine/>
         <!--市价交易、限价交易-->
         <ExchangeBox/>
+        <!-- 活动遮罩 -->
+        <div
+          class="mask"
+          v-if="$activityInfo_S_X.status=='coming' && partnerTradeId === tradeId"
+        >
+          <PREMask v-if="status=='coming'&& partnerTradeId === tradeId"/>
+        </div>
         <!--交易-->
         <!-- 委单列表 -->
         <EntrustOrder/>
@@ -32,7 +39,7 @@
       </div>
       <!--右侧-->
       <div class="right">
-        <!--<Activity/>-->
+        <Activity/>
         <!--市场-->
         <TradeMarketList/>
       </div>
@@ -49,7 +56,8 @@ import OrderRecord from '../components/Trade/OrderRecordTrade'
 import KLine from '../components/Trade/kLine'
 import MiddleHeader from '../components/Trade/MiddleHeaderTrade'
 import Depth from '../components/Trade/DepthTrade'
-// import Activity from '../components/Trade/Activity'
+import PREMask from '../components/Trade/PREMask'
+import Activity from '../components/Trade/PRE'
 import {mapState} from 'vuex'
 
 export default {
@@ -62,8 +70,9 @@ export default {
     KLine, // k线
     OrderRecord, // 成交记录
     BuysAndSells, // 买卖单
-    GlobalMarket
-    // Activity
+    GlobalMarket,
+    PREMask, // PRE活动遮罩
+    Activity
   },
   // props,
   data () {
@@ -81,7 +90,16 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-    })
+    }),
+    status () {
+      return this.$activityInfo_S_X.status
+    },
+    partnerTradeId () {
+      return this.$middleTopData_S_X.partnerTradeId
+    },
+    tradeId () {
+      return this.$activityInfo_S_X.tradeId
+    }
   },
   watch: {
     $route () {
@@ -121,8 +139,18 @@ export default {
       }
 
       > .middle {
+        position: relative;
         flex: 1;
         box-sizing: border-box;
+
+        > .mask {
+          position: absolute;
+          z-index: 2000;
+          top: 60px;
+          left: 0;
+          width: 100%;
+          height: 756px;
+        }
       }
 
       > .right {

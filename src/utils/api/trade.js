@@ -28,4 +28,6 @@ export const getTradeMarketDataAjax = params => handleRequest(() => get('market/
 // 获取K线接口
 export const getKlineDataAjax = params => handleRequest(() => get('market/kline', params))
 // 撤销所有委单
-export const cancelAllEntrustAjax = params => handleRequest(() => put('cancelEntrustBatch', {...params, 'loading': true}))
+export const cancelAllEntrustAjax = params => handleRequest(() => put('cancelEntrustBatch', params))
+// 获取PRE活动信息
+export const getPREInfoAJAX = () => handleRequest(() => get('pre/check'))

@@ -11,7 +11,5 @@ export const SET_TARGET_EXCHANGE_DATA = 'SET_TARGET_EXCHANGE_DATA'
 export const GET_SERVER_DATA = 'GET_SERVER_DATA'
 // 监控获取默认交易对信息接口是否返回
 export const RETURN_SYMBOL_DATA = 'RETURN_SYMBOL_DATA'
-// 活动是否结束
-export const CHANGE_ACTIVITY_STATUS = 'CHANGE_ACTIVITY_STATUS'
-// 活动是否正在进行
-export const REFRESH_CONTENT_STATUS = 'REFRESH_CONTENT_STATUS'
+// 设置PRE活动
+export const SET_PRE_INFO_M = 'SET_PRE_INFO_M'
