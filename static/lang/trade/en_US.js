@@ -58,5 +58,6 @@ export const trade = {
   'trade_singleLimit': 'Single limit',
   'trade_profile': 'Project profile',
   'trade_rules': 'Activity rules',
-  'trade_pre_desc': 'open right away,count down'
+  'trade_pre_desc': 'open right away,count down',
+  'trade_fee': 'trading fee'
 }

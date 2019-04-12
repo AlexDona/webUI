@@ -41,5 +41,6 @@ export const trade = {
   'trade_empty_sell_price': 'Vui lòng nhập giá bán',
   'trade_profile': 'Giới thiệu hạn mục',
   'trade_rules': 'Quy định của chương trình',
-  'trade_pre_desc': ' sắp mở bán, thời gian còn lại '
+  'trade_pre_desc': ' sắp mở bán, thời gian còn lại ',
+  'trade_fee': 'Phí Giao Dịch'
 }

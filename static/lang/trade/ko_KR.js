@@ -57,5 +57,6 @@ export const trade = {
   'trade_singleLimit': '단일 한도',
   'trade_profile': '프로젝트 소개',
   'trade_rules': '활동 규칙',
-  'trade_pre_desc': '곧 개봉, 아직 거리가 있습니다'
+  'trade_pre_desc': '곧 개봉, 아직 거리가 있습니다',
+  'trade_fee': '거래율'
 }

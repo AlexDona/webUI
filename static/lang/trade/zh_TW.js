@@ -57,5 +57,6 @@ export const trade = {
   'trade_singleLimit': '單人限額',
   'trade_profile': '項目簡介',
   'trade_rules': '項目規則',
-  'trade_pre_desc': '即將開盤，距離開始還有'
+  'trade_pre_desc': '即將開盤，距離開始還有',
+  'trade_fee': '交易費率'
 }

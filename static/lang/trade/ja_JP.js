@@ -57,5 +57,6 @@ export const trade = {
   'trade_singleLimit': '個人リミット',
   'trade_profile': 'プロジェクト概要',
   'trade_rules': '活動規則',
-  'trade_pre_desc': 'すぐオープン、カウントダウン'
+  'trade_pre_desc': 'すぐオープン、カウントダウン',
+  'trade_fee': '取引手数料'
 }

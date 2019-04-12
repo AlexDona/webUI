@@ -12,7 +12,7 @@
           @tab-click="changeTab"
         >
           <el-tab-pane
-            :label="plate.name.replace('+',' ')"
+            :label="plate.name.replace(/\+/g,' ')"
             :name="plate.id"
             v-for="plate in plates"
             :key="plate.name"
