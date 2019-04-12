@@ -15,7 +15,12 @@ import {
   // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
   CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS,
   // 设置otc币种里诶包
-  SET_OTC_COIN_LIST_M
+  SET_OTC_COIN_LIST_M,
+  // 改变otc主页国家列表筛选框选中的国家id
+  CHANGE_OTC_SELECTED_COUNTRY_ID,
+  // 改变otc主页法币列表筛选框选中的法币类型id
+  CHANGE_OTC_SELECTED_CURRENCY_ID
+
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -56,5 +61,13 @@ export default {
     state.OTCCoinList = OTCCoinList
     setStore('OTCCoinList', OTCCoinList)
     setStore('OTCCoinListTimeStamp', new Date().getTime())
+  },
+  // 改变otc主页国家列表筛选框选中的国家id
+  [CHANGE_OTC_SELECTED_COUNTRY_ID] (state, data) {
+    state.otcSelectedCountryId = data
+  },
+  // 改变otc主页法币列表筛选框选中的法币类型id
+  [CHANGE_OTC_SELECTED_CURRENCY_ID] (state, data) {
+    state.otcSelectedCurrencyId = data
   }
 }
