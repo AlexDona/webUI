@@ -17,7 +17,7 @@ export const common = {
   'comm_all_sold_out': 'Tất cả bán hết',
   'comm_affirm': 'Xác nhận',
   'comm_cancel': 'Hủy bỏ',
-  'comm_login': 'Đăng ký',
+  'comm_login': 'Đăng Nhập',
   'comm_retreat': 'Thoát khỏi',
   'comm_hello': 'Chào bạn',
   'comm_name': 'Họ tên',
