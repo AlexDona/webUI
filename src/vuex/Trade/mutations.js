@@ -8,9 +8,8 @@ import {
   SET_IS_KLINE_DATA_READY,
   SET_TARGET_EXCHANGE_DATA,
   GET_SERVER_DATA,
-  CHANGE_ACTIVITY_STATUS,
-  REFRESH_CONTENT_STATUS,
-  RETURN_SYMBOL_DATA
+  RETURN_SYMBOL_DATA,
+  SET_PRE_INFO_M
 } from './mutations-types.js'
 
 // import {setStore} from '../../utils'
@@ -78,13 +77,10 @@ export default {
     state.serverData.nextCountDown = nextCountDown
     state.serverData.isLimitShow = isLimitShow
   },
-  [CHANGE_ACTIVITY_STATUS] (state, status) {
-    state.isActivityEnd = status
-  },
-  [REFRESH_CONTENT_STATUS] (state, status) {
-    state.isChangeContent = status
-  },
   [RETURN_SYMBOL_DATA] (state, data) {
     state.isReturnSymbolData = data
+  },
+  [SET_PRE_INFO_M] (state, info) {
+    state.activity = {...state.activity, ...info}
   }
 }

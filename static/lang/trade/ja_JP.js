@@ -55,9 +55,7 @@ export const trade = {
   'trade_currentAccount': 'このラウンド量',
   'trade_bili': '引換比率',
   'trade_singleLimit': '個人リミット',
-  'trade_people': '人',
-  'trade_data': '日',
-  'trade_hours': '時',
-  'trade_seconds': '分',
-  'trade_limit': '秒'
+  'trade_profile': 'プロジェクト概要',
+  'trade_rules': '活動規則',
+  'trade_pre_desc': 'すぐオープン、カウントダウン'
 }

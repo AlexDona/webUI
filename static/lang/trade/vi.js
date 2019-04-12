@@ -38,5 +38,8 @@ export const trade = {
   'trade_empty_buy_count': 'Vui lòng nhập số lượng mua',
   'trade_empty_sell_count': 'Vui lòng nhâp số lượng bán',
   'trade_empty_buy_price': 'Vui lòng nhập giá mua',
-  'trade_empty_sell_price': 'Vui lòng nhập giá bán'
+  'trade_empty_sell_price': 'Vui lòng nhập giá bán',
+  'trade_profile': 'Giới thiệu hạn mục',
+  'trade_rules': 'Quy định của chương trình',
+  'trade_pre_desc': ' sắp mở bán, thời gian còn lại '
 }

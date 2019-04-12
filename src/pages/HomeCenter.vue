@@ -78,6 +78,8 @@ export default {
         case 'zh_TW':
           this.msgLanguage = 'zh-TW'
           break
+        default:
+          this.msgLanguage = 'en-us'
       }
 
       if (xDomain.startsWith('fubt')) {

@@ -1264,8 +1264,11 @@ export default {
       // 获取当前交易对id
       currentCoinId: state => state.trade.middleTopData.id,
       isReturnSymbolData: state => state.trade.isReturnSymbolData
-
     }),
+    // 是否允许限价交易
+    limitEntrustEnabled () {
+      return this.$activityInfo_S_X.limitEntrustEnabled
+    },
     isNeedErrorMsgForSellCount () {
       return this.marketExchange.sellCount > this.sellUserCoinWallet.total
     },
@@ -1282,6 +1285,14 @@ export default {
     }
   },
   watch: {
+    limitEntrustEnabled: {
+      handler (newVal) {
+        console.log(newVal)
+        this.activeName = newVal ? 'limit-price' : 'market-price'
+        this.toggleMatchType()
+      },
+      immediate: true
+    },
     matchType (newVal) {
       this.setSiderBarValue('limit', {
         buyPrice: 0,

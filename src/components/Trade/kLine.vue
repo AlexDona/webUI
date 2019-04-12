@@ -133,7 +133,6 @@ export default {
       'SET_MIDDLE_TOP_DATA',
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
       'GET_SERVER_DATA',
-      'REFRESH_CONTENT_STATUS',
       'RETURN_SYMBOL_DATA'
     ]),
     changeIsKlineDataReady (status) {
@@ -659,7 +658,6 @@ export default {
       symbolMap: state => state.home.symbolMap, // 交易对map
       activeTabSymbolStr: state => state.trade.activeTabSymbolStr,
       mainColor: state => state.common.mainColor,
-      isChangeContent: state => state.trade.isChangeContent,
       userId: state => state.user.loginStep1Info.userId
     })
   },
@@ -723,12 +721,6 @@ export default {
     interval () {
       this.KlineNum = 0
       this.barsRenderTime = 0
-    },
-    isChangeContent (newVla) {
-      // console.log(newVla)
-      if (newVla) {
-        this.REFRESH_CONTENT_STATUS(false)
-      }
     }
   }
 }
