@@ -49,6 +49,7 @@ export default {
     return {}
   },
   created () {
+    this.GET_PRE_INFO_A()
   },
   mounted () {
   },
