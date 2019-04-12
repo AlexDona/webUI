@@ -20,7 +20,11 @@ const state = {
   // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
   otcApplyJumpBottomStatus: false,
   // otc可用币种列表
-  OTCCoinList: []
+  OTCCoinList: [],
+  // otc主页国家列表筛选框选中的国家id
+  otcSelectedCountryId: '',
+  // otc主页法币列表筛选框选中的法币类型id
+  otcSelectedCurrencyId: ''
 }
 
 export default {
