@@ -524,16 +524,13 @@ export default{
     if (this.isLogin && this.$route.path !== '/PersonalCenter') {
       this.refreshUserInfo()
     }
-    if (getStore('convertCurrency')) {
-      this.activeConvertCurrency = getStore('convertCurrency')
-    }
+
     // 获取 语言列表
     if (!await this.GET_LANGUAGE_LIST_ACTION(this)) return false
     await this.SET_PARTNER_INFO_ACTION(this.language)
     await this.GET_COUNTRY_LIST_ACTION()
     await this.GET_ALL_NOTICE_ACTION(this.language)
     this.isNoticeReady = true
-    this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币
     await this.getMerchantAvailableLegalTenderList()
@@ -576,6 +573,12 @@ export default{
       'SET_NOTICE_ID',
       'CHANGE_PASSWORD_USEABLE'
     ]),
+    initSettings () {
+      if (getStore('convertCurrency')) {
+        this.activeConvertCurrency = getStore('convertCurrency')
+      }
+      this.activeTheme = this.theme
+    },
     cancelReset () {
       this.isPayPasswordLocked = false
       this.CHANGE_PASSWORD_USEABLE(false)
@@ -706,6 +709,7 @@ export default{
           break
         case 'setting':
           this.showSetting = status
+          this.initSettings()
           break
         case 'lang':
           this.langSelecting = status
@@ -752,11 +756,12 @@ export default{
       }
     },
     setNewTitle (path = '/TradeCenter') {
+      const {last, sellsymbol, area} = this.$middleTopData_S_X
       let newTitle = ''
-      let priceData = this.$scientificToNumber(this.middleTopData.last)
+      let priceData = this.$scientificToNumber(last)
       if (this.title) {
-        if (path && path.startsWith('/TradeCenter') && priceData && this.middleTopData.sellsymbol && this.middleTopData.area) {
-          newTitle = `${priceData} ${this.middleTopData.sellsymbol}/${this.middleTopData.area} ${this.title}`
+        if (path && path.startsWith('/TradeCenter') && priceData && sellsymbol && area) {
+          newTitle = `${priceData} ${sellsymbol}/${area} ${this.title}`
         } else {
           newTitle = `${this.title}`
         }
@@ -773,7 +778,6 @@ export default{
       language: state => state.common.language,
       defaultLanguage: state => state.common.defaultLanguage,
       isLogin: state => state.user.isLogin,
-      middleTopData: state => state.trade.middleTopData, // 当前交易对数据
       middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
       userInfo: state => state.user.loginStep1Info.userInfo,
       activeLanguage: state => state.common.activeLanguage,
