@@ -533,7 +533,7 @@ export default {
       // 当前币种返回的保留小数点位数限制
       pointLength: 4,
       // 当前金额小数点限制位数
-      moneyPointLength: 2,
+      moneyPointLength: 3,
       // 买入量卖出量错误提示框
       entrustCountErrorTipsBorder: false,
       // 买入量卖出量单位错误提示框
@@ -750,7 +750,7 @@ export default {
       // 交易额
       // 修复截取小数点后几位
       this.traderSumSELL = amendPrecision(this.$refs.entrustCountSell.value, this.$refs.priceSell.value, '*')
-      this.traderSumSELL = cutOutPointLength(this.traderSumSELL, 2)
+      this.traderSumSELL = cutOutPointLength(this.traderSumSELL, this.moneyPointLength)
       // 类型：买
       // 手续费
       // 修复截取小数点后几位
@@ -759,7 +759,7 @@ export default {
       // 交易额
       // 修复截取小数点后几位
       this.traderSumBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.$refs.priceBuy.value, '*')
-      this.traderSumBUY = cutOutPointLength(this.traderSumBUY, 2)
+      this.traderSumBUY = cutOutPointLength(this.traderSumBUY, this.moneyPointLength)
       let target = this.$refs[ref]
       // 限制输入数字和位数
       formatNumberInput(target, pointLength)

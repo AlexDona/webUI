@@ -604,7 +604,7 @@ export default {
       // 广告管理传过来的id
       messageId: this.$route.query.id, // 从广告管理点击修改跳转过来的订单id
       pointLength: 4, // 当前币种返回的保留小数点位数限制
-      moneyPointLength: 2, // 当前金额小数点限制位数
+      moneyPointLength: 3, // 当前金额小数点限制位数
       priceErrorTipsBorder: false, // 价格错误提示框
       entrustCountErrorTipsBorder: false, // 交易数量错误提示框
       minCountErrorTipsBorder: false, // 单笔最小限额错误提示框
@@ -1015,10 +1015,10 @@ export default {
         // 交易额
         // 卖
         this.publishSumSELL = amendPrecision(this.$refs.price.value, this.$refs.entrustCount.value, '*')
-        this.publishSumSELL = cutOutPointLength(this.publishSumSELL, 2)
+        this.publishSumSELL = cutOutPointLength(this.publishSumSELL, this.moneyPointLength)
         // 买
         this.publishSumBUY = amendPrecision(this.$refs.price.value, this.$refs.entrustCount.value, '*')
-        this.publishSumBUY = cutOutPointLength(this.publishSumBUY, 2)
+        this.publishSumBUY = cutOutPointLength(this.publishSumBUY, this.moneyPointLength)
         // 手续费
         // 卖
         this.serviceChargeSELL = amendPrecision(this.$refs.entrustCount.value, this.rate, '*')
@@ -1052,10 +1052,10 @@ export default {
         // 交易额
         // 卖
         this.publishSumSELL = amendPrecision(this.$refs.price.value, this.$refs.entrustCount.value, '*')
-        this.publishSumSELL = cutOutPointLength(this.publishSumSELL, 2)
+        this.publishSumSELL = cutOutPointLength(this.publishSumSELL, this.moneyPointLength)
         // 买
         this.publishSumBUY = amendPrecision(this.$refs.price.value, this.$refs.entrustCount.value, '*')
-        this.publishSumBUY = cutOutPointLength(this.publishSumBUY, 2)
+        this.publishSumBUY = cutOutPointLength(this.publishSumBUY, this.moneyPointLength)
         // 手续费
         // 卖
         this.serviceChargeSELL = amendPrecision(this.$refs.entrustCount.value, this.rate, '*')
