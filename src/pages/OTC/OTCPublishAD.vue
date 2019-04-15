@@ -103,6 +103,27 @@
                       {{marketPrice ? $scientificToNumber(marketPrice) : '--'}}{{activatedCurrencyName}}
                     </span>
                   </span>
+                  <!--20190415增加当前市场最低最高价-->
+                  <!--当前市场最低出售价-->
+                  <span
+                    v-if="activatedBuySellStyle === 'SELL'"
+                    class="current-price"
+                  >
+                    {{$t('M.otc_current-market-price-min')}}:
+                    <span class="price-data">
+                      {{currentMarketPriceMin ? $scientificToNumber(currentMarketPriceMin) : '--'}}{{activatedCurrencyName}}
+                    </span>
+                  </span>
+                  <!--当前市场最高收购价-->
+                  <span
+                    v-if="activatedBuySellStyle === 'BUY'"
+                    class="current-price"
+                  >
+                    {{$t('M.otc_current-market-price-max')}}:
+                    <span class="price-data">
+                      {{currentMarketPriceMax ? $scientificToNumber(currentMarketPriceMax) : '--'}}{{activatedCurrencyName}}
+                    </span>
+                  </span>
                 </p>
               </div>
               <!-- 定价设置 -->
@@ -618,7 +639,11 @@ export default {
       // 预计交易额：卖
       publishSumSELL: 0,
       // 预计交易额 :买
-      publishSumBUY: 0
+      publishSumBUY: 0,
+      // 当前市场最低出售价
+      currentMarketPriceMin: '',
+      // 当前市场最高收购价
+      currentMarketPriceMax: ''
     }
   },
   created () {
@@ -731,10 +756,10 @@ export default {
       this.marketPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.marketPrice')
       // 最低价
       this.minPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.minPrice')
-      console.log('最低价格' + this.minPrice)
+      // console.log('最低价格' + this.minPrice)
       // 最高价
       this.maxPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxPrice')
-      console.log('最高价格' + this.maxPrice)
+      // console.log('最高价格' + this.maxPrice)
       // 当前币种返回的保留小数点位数限制
       this.pointLength = getNestedData(availableCoinListData, 'otcCoinQryResponse.unit')
       // 下面这两个字段当URL中没id时候才用这个渲染页面
@@ -751,6 +776,10 @@ export default {
       if (this.activatedBuySellStyle === 'BUY') {
         this.rate = getNestedData(availableCoinListData, 'otcCoinQryResponse.buyRate')
       }
+      // 当前市场最低出售价
+      this.currentMarketPriceMin = getNestedData(availableCoinListData, 'minPrice')
+      // 当前市场最高收购价
+      this.currentMarketPriceMax = getNestedData(availableCoinListData, 'maxPrice')
     },
     // 5.0 改变发布广告 买卖 类型
     changeBuySellStyle (e) {
@@ -1291,6 +1320,14 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
                 text-align: center;
                 vertical-align: top;
               }
+            }
+          }
+
+          .current-price {
+            padding-left: 8px;
+
+            .price-data {
+              color: #e97345;
             }
           }
         }

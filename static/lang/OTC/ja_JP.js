@@ -357,5 +357,8 @@ export const OTC = {
   'otc_available_balance': '利用可能残高',
   'otc_warm_prompt0': '注意！ 売り手の場合、支払いを確認するために売り手に連絡してください。',
   'otc_warm_prompt00': '注文は～時間以内に確認されていません、苦情を申し立てることができます。',
-  'otc_upload_picture7': '5M超えない写真をアップロード'
+  'otc_upload_picture7': '5M超えない写真をアップロード',
+  // 增加当前市场最低出售价 当前市场最高收购价
+  'otc_current-market-price-min': '市場最低販売価',
+  'otc_current-market-price-max': '市場最高買付価'
 }
