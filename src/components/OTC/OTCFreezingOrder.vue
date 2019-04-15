@@ -83,7 +83,7 @@
           </span>
           <!-- 总金额 -->
           <span class="item">
-            {{$scientificToNumber((item.price * item.pickCount).toFixed(2))}}({{item.currencyName}})
+            {{$scientificToNumber(item.payAmount)}}({{item.currencyName}})
           </span>
           <!-- 下单时间 -->
           <span class="item">

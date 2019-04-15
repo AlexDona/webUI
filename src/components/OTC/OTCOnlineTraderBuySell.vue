@@ -461,7 +461,7 @@ export default {
       // 当前币种返回的保留小数点位数限制
       pointLength: 4,
       // 当前金额小数点限制位数
-      moneyPointLength: 2,
+      moneyPointLength: 3,
       // 是否需要交易密码
       isNeedPayPassword: true,
       sellTotal: '' // 用户资产可用余额20190320增加新字段展示
@@ -573,7 +573,7 @@ export default {
       if (this.onlineTraderStatus === 'onlineBuy') {
         this.$refs.buyPrice.value = this.$refs.buyCount.value * this.price
         // 修复截取小数点后几位
-        this.$refs.buyPrice.value = cutOutPointLength(this.$refs.buyPrice.value, 2)
+        this.$refs.buyPrice.value = cutOutPointLength(this.$refs.buyPrice.value, this.moneyPointLength)
         if (this.$refs.buyCount.value) {
           // 手续费
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
@@ -612,7 +612,7 @@ export default {
       if (this.onlineTraderStatus === 'onlineSell') {
         this.$refs.sellPrice.value = this.$refs.sellCount.value * this.price
         // 修复截取小数点后几位
-        this.$refs.sellPrice.value = cutOutPointLength(this.$refs.sellPrice.value, 2)
+        this.$refs.sellPrice.value = cutOutPointLength(this.$refs.sellPrice.value, this.moneyPointLength)
         if (this.$refs.sellCount.value) {
           // 手续费
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
