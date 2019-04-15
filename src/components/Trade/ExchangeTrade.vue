@@ -41,6 +41,8 @@
                     <span v-show="buyUserCoinWallet.total">{{$scientificToNumber(buyUserCoinWallet.total)}}</span>
                     <span>{{$middleTopData_S_X.area}}</span>
                   </span>
+                  <!-- 跳转交易费率 -->
+                  <JumpToFees @jumpToOtherPage="jumpToOtherPage"/>
                 </div>
                 <div
                   class="right item"
@@ -157,6 +159,8 @@
                     <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
                     <span>{{$middleTopData_S_X.sellsymbol}}</span>
                   </span>
+                  <!-- 跳转交易费率 -->
+                  <JumpToFees/>
                 </div>
                 <div class="right item" v-if="$isLogin_S_X">
                   <button
@@ -281,6 +285,8 @@
                     </span>
                     <span>{{$middleTopData_S_X.area}}</span>
                   </span>
+                  <!-- 跳转交易费率 -->
+                  <JumpToFees/>
                 </div>
                 <div class="right item" v-if="$isLogin_S_X">
                   <button
@@ -365,6 +371,8 @@
                     <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
                     <span>{{$middleTopData_S_X.sellsymbol}}</span>
                   </span>
+                  <!-- 跳转交易费率 -->
+                  <JumpToFees/>
                 </div>
                 <div class="right item" v-if="$isLogin_S_X">
                   <button
@@ -545,6 +553,7 @@
 <script>
 import IconFont from '../Common/IconFontCommon'
 import SliderBar from '../Common/SliderBar'
+import JumpToFees from './JumpToFee'
 import {
   formatNumberInput,
   getRefValue,
@@ -571,7 +580,8 @@ import {
 export default {
   components: {
     IconFont,
-    SliderBar
+    SliderBar,
+    JumpToFees
   },
   // props,
   data () {
@@ -1315,7 +1325,7 @@ export default {
         case 'LIMIT':
           this.setRefValue(this.limitBuyCountInputRef)
           this.limitExchange.buyCount = 0
-          this.setRefValue(this.limitSellCountInputRef)
+          this.setRefValue(this.limitSelCountInputRef)
           this.limitExchange.sellCount = 0
           break
         case 'MARKET':
@@ -1442,6 +1452,12 @@ export default {
 
               > .sell {
                 color: $downColor;
+              }
+
+              > .fees {
+                float: right;
+                text-align: right;
+                color: $mainColor !important;
               }
 
               > a {
