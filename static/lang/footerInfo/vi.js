@@ -50,7 +50,7 @@ export const footerInfo = {
   'rate_withdraw_rate': 'Tỷ suất phí đồng tiền',
   'rate_withdraw': 'Phí rút tiền',
   'rate_withdraw_min': 'Số tiền rút ít nhất',
-  'rate_withdraw_max': 'Số tiền rút nhiều nhất',
-  'rate_withdraw_amount': 'Số tiền rút mỗi ngày',
+  'rate_withdraw_max': 'Tối Đa Một lần Rút',
+  'rate_withdraw_amount': 'Lượng Rút Ngày',
   'rate_withdraw_times': 'Số lần rút tiền'
 }
