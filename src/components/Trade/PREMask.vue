@@ -98,6 +98,8 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @import '../../../static/css/scss/index';
+
   .mask-box {
     width: 100%;
     height: 100%;
@@ -106,22 +108,24 @@ export default {
       overflow: hidden;
 
       > .title {
-        margin: 150px auto 0;
+        margin: 13% auto 0;
         font-weight: 700;
         font-size: 28px;
+        font-family: pangmenzhengdao;
         text-align: center;
-        color: #d3a289;
+        color: $mainColor;
       }
 
       > .sub-title {
-        margin: 20px 0 50px;
+        margin: 3% 0 4%;
+        font-family: "Microsoft Himalaya";
         text-align: center;
         vertical-align: middle;
 
         > a {
           font-weight: 700;
           font-size: 14px;
-          color: #d3a289;
+          color: $mainColor;
         }
 
         > .split {
@@ -129,7 +133,13 @@ export default {
           width: 2px;
           height: 10px;
           margin: 0 20px;
-          background: #d3a289;
+          background: $mainColor;
+        }
+      }
+
+      @media screen and (min-width: 1921px) {
+        .sub-title {
+          margin: 3% 0;
         }
       }
 
@@ -137,7 +147,7 @@ export default {
         font-weight: 700;
         font-size: 14px;
         text-align: center;
-        color: #ccc;
+        color: #fff;
       }
 
       > .timer {
@@ -147,21 +157,22 @@ export default {
         > .inner-box {
           display: inline-block;
           font-weight: 700;
-          color: #d3a289;
+          color: $mainColor;
 
           > .time {
             display: inline-block;
             width: 39px;
             height: 42px;
             margin: 0 10px;
+            border: 1px solid $mainColor;
             border-radius: 3px;
             font-weight: 400;
             font-size: 20px;
             line-height: 42px;
             vertical-align: middle;
             text-shadow: 0 0 3px #000;
-            color: #666;
-            background-color: #d2a288;
+            color: #fff;
+            background-color: rgba(51, 143, 245, .23);
           }
         }
       }
