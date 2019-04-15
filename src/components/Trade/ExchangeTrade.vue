@@ -1454,7 +1454,7 @@ export default {
 
               > .fees {
                 float: right;
-                padding: 0 12px;
+                padding: 1px 12px;
                 text-align: right;
                 color: $mainColor !important;
               }

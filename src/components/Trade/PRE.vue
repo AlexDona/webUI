@@ -2,7 +2,7 @@
   <div
     class="activity-box"
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
-    v-if="$status_S_X=='coming'||($status_S_X=='ongoing'&&currentTime>1000)"
+    v-if="($status_S_X=='coming'||($status_S_X=='ongoing'&&currentTime>1000)) && $activityInfo_S_X.showCountDown"
   >
     <div class="inner-box">
       <header>
@@ -28,7 +28,7 @@
       <!-- 兑换比例-->
       <p>{{$t('M.trade_bili')}}: 1 {{$sellCoinName_S_X}} = {{$exchangeRatio_S_X}} {{$buyCoinName_S_X}}</p>
       <!-- 单人限额 -->
-      <p>{{$t('M.trade_singleLimit')}}: {{$exchangeRatio_S_X}} {{$buyCoinName_S_X}} / {{$isChineseLanguage_G_X?'人':'people'}}</p>
+      <p>{{$t('M.trade_singleLimit')}}: {{$limitAmount_S_X}} {{$buyCoinName_S_X}} / {{$isChineseLanguage_G_X?'人':'people'}}</p>
     </div>
   </div>
 </template>
