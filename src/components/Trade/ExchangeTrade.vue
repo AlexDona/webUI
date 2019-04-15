@@ -42,7 +42,10 @@
                     <span>{{$middleTopData_S_X.area}}</span>
                   </span>
                 </div>
-                <div class="right item" v-if="$isLogin_S_X">
+                <div
+                  class="right item"
+                  v-if="$isLogin_S_X"
+                >
                   <button
                     :class="{'gray':!buyIsRecharge}"
                     :disabled="!buyIsRecharge"
@@ -1288,7 +1291,7 @@ export default {
     limitEntrustEnabled: {
       handler (newVal) {
         console.log(newVal)
-        this.activeName = newVal ? 'limit-price' : 'market-price'
+        this.activeName = this.$middleTopData_S_X.partnerTradeId !== this.$activityInfo_S_X.tradeId || newVal ? 'limit-price' : 'market-price'
         this.toggleMatchType()
       },
       immediate: true
