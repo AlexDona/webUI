@@ -441,7 +441,7 @@
             >
               <template slot-scope="s">
                 <!--<span>{{ s.row.fees - 0 }}</span>-->
-                <span>{{ parseFloat($scientificToNumber(s.row.fees)) }}</span>
+                <span>{{ parseFloat($scientificToNumber(s.row.fees)) }} {{s.row.feeUnit}}</span>
               </template>
             </el-table-column>
           </el-table>

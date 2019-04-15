@@ -1,7 +1,6 @@
-/**
+.el-button/**
   HeaderCommon修改element通用样式（不分主题）
- */
-.nav-box.common .el-dialog__header,
+ */ .nav-box.common .el-dialog__header,
 .nav-box.common .el-dialog__body {
   padding: 0 40px;
 }
@@ -36,7 +35,6 @@
 }
 
 .nav-box.common .el-dialog__footer .el-button {
-  width: 100%;
   border: none;
   background: linear-gradient(to left, #2a5082, #2b396e);
 }
