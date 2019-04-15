@@ -1444,8 +1444,6 @@ export default {
             white-space: nowrap;
 
             > .item {
-              flex: 1;
-
               > .buy {
                 color: $upColor;
               }
@@ -1456,6 +1454,7 @@ export default {
 
               > .fees {
                 float: right;
+                padding: 0 12px;
                 text-align: right;
                 color: $mainColor !important;
               }
