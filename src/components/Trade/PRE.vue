@@ -6,7 +6,7 @@
   >
     <div class="inner-box">
       <header>
-        <h2>
+        <h2 :title="$projectName_S_X">
           {{$projectName_S_X}}
           <p><strong>{{$sellCoinName_S_X}} {{$stepDesc_S_X}}</strong></p>
         </h2>
@@ -112,6 +112,12 @@ export default {
         justify-content: space-between;
         font-size: 14px;
 
+        h2 {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
         p {
           font-size: 12px;
           color: #f5c033;
@@ -128,6 +134,7 @@ export default {
           border-top-left-radius: 15px;
           line-height: 30px;
           text-align: center;
+          white-space: nowrap;
           background: #d45858;
         }
       }
