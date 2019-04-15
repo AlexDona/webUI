@@ -36,7 +36,7 @@ export const OTC = {
   'otc_enum_status_yiwancheng_sum': 'Lượng hoàn thành',
   'otc_enum_status_yiquxiao': 'Đã hủy',
   'otc_enum_status_yidongjie': 'Đã đóng băng',
-  'otc_release_order': 'Phân phát đơn hàng',
+  'otc_release_order': 'Xác Nhận Đơn',
   'otc_choice_currency': 'Lựa chọn loại tiền',
   'otc_market_price': 'Giá thị trường',
   'otc_expected_value': 'Mức giao dịch dự tính',
