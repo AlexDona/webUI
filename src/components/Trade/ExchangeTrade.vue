@@ -26,6 +26,7 @@
         <el-tab-pane
           :label="$t('M.trade_exchange_price_deal')"
           name="limit-price"
+          v-if="isShowLimitPrice"
         >
           <div
             class="content-box limit"
@@ -688,6 +689,15 @@ export default {
   },
   mounted () {
     // this.getRefValue(this.limitBuyPriceInputRef)
+    setTimeout(() => {
+      const {partnerTradeId} = this.$middleTopData_S_X
+      const {tradeId, limitEntrustEnabled} = this.$activityInfo_S_X
+      if (partnerTradeId && partnerTradeId == tradeId && !limitEntrustEnabled) {
+        this.activeName = 'market-price'
+        this.toggleMatchType()
+      }
+      console.log(this.$middleTopData_S_X.partnerTradeId)
+    }, 2000)
   },
   activated () {},
   update () {},
@@ -1282,6 +1292,9 @@ export default {
     limitEntrustEnabled () {
       return this.$activityInfo_S_X.limitEntrustEnabled
     },
+    isShowLimitPrice () {
+      return this.limitEntrustEnabled || this.$middleTopData_S_X.partnerTradeId !== this.$activityInfo_S_X.tradeId
+    },
     isNeedErrorMsgForSellCount () {
       return this.marketExchange.sellCount > this.sellUserCoinWallet.total
     },
@@ -1298,13 +1311,29 @@ export default {
     }
   },
   watch: {
+    isShowLimitPrice (newVal) {
+      // console.log(newVal)
+      this.activeName = newVal ? 'limit-price' : 'market-price'
+      this.toggleMatchType()
+    },
     limitEntrustEnabled: {
       handler (newVal) {
-        console.log(newVal)
-        this.activeName = this.$middleTopData_S_X.partnerTradeId !== this.$activityInfo_S_X.tradeId || newVal ? 'limit-price' : 'market-price'
+        const {partnerTradeId} = this.$middleTopData_S_X
+        // const {tradeId} = this.$activityInfo_S_X
+        // console.log(partnerTradeId, tradeId)
+        if (!partnerTradeId) return
+        this.activeName = newVal ? 'limit-price' : 'market-price'
+        // console.log(newVal, this.activeName)
         this.toggleMatchType()
       },
       immediate: true
+    },
+    '$middleTopData_S_X.partnerTradeId' (newVal) {
+      const {tradeId, showCountDown} = this.$activityInfo_S_X
+      // console.log(tradeId, newVal)
+      if (!showCountDown) return
+      this.activeName = this.limitEntrustEnabled || newVal !== tradeId ? 'limit-price' : 'market-price'
+      this.toggleMatchType()
     },
     matchType (newVal) {
       this.setSiderBarValue('limit', {
@@ -1325,7 +1354,7 @@ export default {
         case 'LIMIT':
           this.setRefValue(this.limitBuyCountInputRef)
           this.limitExchange.buyCount = 0
-          this.setRefValue(this.limitSelCountInputRef)
+          this.setRefValue(this.limitSellCountInputRef)
           this.limitExchange.sellCount = 0
           break
         case 'MARKET':
@@ -1370,7 +1399,6 @@ export default {
       }
     },
     async $middleTopData_S_X (newVal) {
-      console.log(newVal)
       let targetPriceOfBuy = newVal.buy || newVal.kai
       let targetPriceOfSell = newVal.sell || newVal.kai
       // 首次打开设置价格

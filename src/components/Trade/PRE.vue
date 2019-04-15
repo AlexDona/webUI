@@ -73,9 +73,9 @@ export default {
   },
   watch: {
     async $middleTopData_S_X (newVal) {
-      const {partnerTradeId} = newVal
-      const {tradeId} = this.$activityInfo_S_X
-      if (partnerTradeId == tradeId) this.GET_PRE_INFO_A()
+      // const {partnerTradeId} = newVal
+      // const {tradeId} = this.$activityInfo_S_X
+      this.GET_PRE_INFO_A()
     },
     startTime (newVal) {
       if (newVal - 0 < 0) return

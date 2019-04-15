@@ -23,9 +23,12 @@
         <!--k线-->
         <KLine/>
         <!--市价交易、限价交易-->
-        <ExchangeBox v-if="$activityInfo_S_X.status!=='coming' || partnerTradeId !== tradeId"/>
-        <div class="placeholder"
-             v-if="isShowMask"></div>
+        <!--<ExchangeBox/>-->
+        <ExchangeBox v-if="!isShowMask"/>
+        <div
+          class="placeholder"
+          v-if="isShowMask"
+        ></div>
         <!-- 活动遮罩 -->
         <div
           class="mask"
@@ -107,14 +110,7 @@ export default {
       return (this.$activityInfo_S_X.status == 'coming' && this.partnerTradeId === this.tradeId) && this.$activityInfo_S_X.showCountDown
     }
   },
-  watch: {
-    $route () {
-
-    },
-    $activityInfo_S_X (newVal) {
-      console.log(newVal)
-    }
-  }
+  watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
