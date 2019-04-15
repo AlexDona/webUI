@@ -45,7 +45,7 @@ export const OTC = {
   // 'otc_sell_min': '売られた金額は、',
   // 'otc_point_max_total': '小数点は超えることはできません',
   // 'otc_point_place': 'ビット',
-  'otc_release_order': 'オーダーリリース',
+  'otc_release_order': '注文出す',
   'otc_choice_currency': '通貨を選択',
   'otc_market_price': '市場価格',
   'otc_expected_value': '見積もり取引額',
