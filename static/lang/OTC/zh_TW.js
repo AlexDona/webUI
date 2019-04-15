@@ -357,4 +357,7 @@ export const OTC = {
   'otc_warm_prompt0': '註意！請聯系賣家確認收款並確認訂單，如果賣家',
   'otc_warm_prompt00': '小時內未確認訂單，系統自動成交',
   'otc_upload_picture7': '請上傳小於5M的圖片',
+  // 增加当前市场最低出售价 当前市场最高收购价
+  'otc_current-market-price-min': '當前市場最低出售價',
+  'otc_current-market-price-max': '當前市場最高收購價'
 }

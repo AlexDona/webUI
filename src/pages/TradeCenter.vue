@@ -23,7 +23,8 @@
         <!--k线-->
         <KLine/>
         <!--市价交易、限价交易-->
-        <ExchangeBox/>
+        <ExchangeBox v-if="$activityInfo_S_X.status!=='coming' || partnerTradeId !== tradeId"/>
+        <div class="placeholder" v-if="$activityInfo_S_X.status=='coming' && partnerTradeId === tradeId"></div>
         <!-- 活动遮罩 -->
         <div
           class="mask"
@@ -104,6 +105,9 @@ export default {
   watch: {
     $route () {
 
+    },
+    $activityInfo_S_X (newVal) {
+      console.log(newVal)
     }
   }
 }
@@ -151,10 +155,23 @@ export default {
           width: 100%;
           height: 756px;
         }
+
+        > .placeholder {
+          height: 410px;
+          background-color: #1c1f32;
+        }
       }
 
       > .right {
         width: 320px;
+      }
+
+      @media screen and (max-width: 2560px) and (min-width: 1921px) {
+        > .middle {
+          > .mask {
+            height: 980px;
+          }
+        }
       }
 
       @media screen and (max-width: 1366px) {
@@ -164,6 +181,10 @@ export default {
 
         > .middle {
           width: 700px;
+
+          > .mask {
+            height: 756px;
+          }
         }
       }
     }

@@ -57,7 +57,7 @@ export const OTC = {
   // 'otc_alo_transaction': '최소 거래량',
   // 'otc_buy_empty': '구매 수량을 비워 둘 수 없습니다',
   // 'otc_seller_empty': '판매량 비워둘수 없습니다',
-  'otc_seller_maximum': '최대 판매 가능 금액',
+  'otc_seller_maximum': '최대 매도가능량',
   'otc_trading': '거래중 주문',
   'otc_buyer': '구매자',
   'otc_seller': '판매자',
@@ -357,5 +357,8 @@ export const OTC = {
   'otc_available_balance': '사용 가능한 잔액',
   'otc_warm_prompt0': '주의! 판매자에게 수금되였는지 확인하고 주문을 확인하십시오，만일',
   'otc_warm_prompt00': '시간 내에 주문이 확인되지 않으면 시스템이 자동으로 거래 취소합니다.',
-  'otc_upload_picture7': '5M보다 작은 이미지를 업로드하십시오.'
+  'otc_upload_picture7': '5M보다 작은 이미지를 업로드하십시오.',
+  // 增加当前市场最低出售价 当前市场最高收购价
+  'otc_current-market-price-min': '시장최저가',
+  'otc_current-market-price-max': '시장최고가'
 }

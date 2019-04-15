@@ -32,7 +32,7 @@
         <div
           class="content"
           :class="{
-            'needTime':$isNeedYST_G_X && $isShowServerPort_S_X
+            'needTime':$activityInfo_S_X.showCountDown
           }"
           v-show="contentShowStatus"
         >

@@ -1026,7 +1026,7 @@ export default {
         > .otc-filtrate-publish {
           display: flex;
           justify-content: space-between;
-          padding: 25px 20px 0;
+          padding: 25px 10px 0;
 
           > .otc-filtrate-box {
             display: flex;
@@ -1201,7 +1201,7 @@ export default {
 
     .otc-publish-box {
       .el-input {
-        width: 160px;
+        width: 150px;
       }
 
       .el-input__inner {
@@ -1212,12 +1212,12 @@ export default {
 
       .el-input--suffix {
         .el-input__inner {
-          padding: 2px 30px;
+          padding: 2px 28px;
         }
       }
 
       .el-button {
-        padding: 9px 16px;
+        padding: 9px 10px;
         border: 0;
       }
     }
