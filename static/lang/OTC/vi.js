@@ -40,7 +40,7 @@ export const OTC = {
   'otc_choice_currency': 'Lựa chọn loại tiền',
   'otc_market_price': 'Giá thị trường',
   'otc_expected_value': 'Mức giao dịch dự tính',
-  'otc_seller_maximum': 'Lượng lớn nhất có thể bán ra',
+  'otc_seller_maximum': 'Lượng Bán Cao Nhất',
   'otc_trading': 'Đang giao dịch',
   'otc_buyer': 'Bên mua',
   'otc_seller': 'Bên bán',
@@ -304,5 +304,8 @@ export const OTC = {
   'otc_upload_picture5': 'Không tải được, thử lại!',
   'otc_upload_picture6': 'Không quá 3 ảnh',
   'otc_available_balance': 'Số dư',
-  'otc_upload_picture7': 'Tải ảnh dưới 5M'
+  'otc_upload_picture7': 'Tải ảnh dưới 5M',
+  // 增加当前市场最低出售价 当前市场最高收购价
+  'otc_current-market-price-min': 'Giá Thấp Nhất',
+  'otc_current-market-price-max': 'Giá Cao Nhất '
 }
