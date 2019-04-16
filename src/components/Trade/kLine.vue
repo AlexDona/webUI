@@ -133,7 +133,8 @@ export default {
       'SET_MIDDLE_TOP_DATA',
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
       'GET_SERVER_DATA',
-      'RETURN_SYMBOL_DATA'
+      'RETURN_SYMBOL_DATA',
+      'SET_PRE_INFO_M'
     ]),
     changeIsKlineDataReady (status) {
       this.SET_IS_KLINE_DATA_READY(status)
@@ -507,14 +508,9 @@ export default {
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           break
-        case 'DATE':
+        case 'PRE':
           // console.log(data)
-          this.GET_SERVER_DATA({
-            'serverTime': data.data.countDown,
-            'isShowServerPort': data.data.isShow,
-            'nextCountDown': data.data.nextCountDown,
-            'isLimitShow': data.data.isLimitShow
-          })
+          this.SET_PRE_INFO_M(data.data)
           break
       }
       this.CHANGE_SOCKET_AND_AJAX_DATA({
@@ -632,15 +628,14 @@ export default {
         })
       }
     },
-    // 获取服务器时间
-    getServerTime (type, symbol) {
-      if (symbol) {
-        this.socket.send({
-          'tag': type,
-          'content': `market.${symbol}.date9`,
-          'id': 'pc'
-        })
-      }
+    // 获取PRE信息
+    getPREInfo () {
+      this.socket.send({
+        'tag': 'SUB',
+        'content': `market.910060.pre`,
+        'id': `pc`,
+        'domain': 'new.test.com'
+      })
     },
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min15') {
@@ -650,6 +645,7 @@ export default {
       this.getBuyAndSellBySocket('SUB', symbol)
       this.getDepthDataBySocket('SUB', symbol)
       this.getTradeRecordBySocket('SUB', symbol)
+      this.getPREInfo()
     }
   },
   filter: {},
