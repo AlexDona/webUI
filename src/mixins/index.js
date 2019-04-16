@@ -4,7 +4,8 @@ import {
   keep4Num,
   scientificToNumber,
   cutOutPointLength,
-  formatSeconds
+  formatSeconds,
+  setStore
 } from '../utils'
 import {
   jumpToOtherPageForFooter,
@@ -30,6 +31,9 @@ let mixin = {
       } else {
         this.$router.push({path: newRouterPath})
       }
+    },
+    $setStore (name, content) {
+      return setStore(name, content)
     },
     $keep2Num (num) {
       return keep2Num(num)

@@ -23,14 +23,18 @@
         <!--k线-->
         <KLine/>
         <!--市价交易、限价交易-->
-        <ExchangeBox v-if="$activityInfo_S_X.status!=='coming' || partnerTradeId !== tradeId"/>
-        <div class="placeholder" v-if="$activityInfo_S_X.status=='coming' && partnerTradeId === tradeId"></div>
+        <!--<ExchangeBox/>-->
+        <ExchangeBox v-if="!isShowMask"/>
+        <div
+          class="placeholder"
+          v-if="isShowMask"
+        ></div>
         <!-- 活动遮罩 -->
         <div
           class="mask"
-          v-if="$activityInfo_S_X.status=='coming' && partnerTradeId === tradeId"
+          v-if="isShowMask"
         >
-          <PREMask v-if="status=='coming'&& partnerTradeId === tradeId"/>
+          <PREMask v-if="status=='coming' && partnerTradeId === tradeId"/>
         </div>
         <!--交易-->
         <!-- 委单列表 -->
@@ -77,21 +81,22 @@ export default {
   },
   // props,
   data () {
-    return {
-
-    }
+    return {}
   },
   created () {
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  mounted () {
+  },
+  activated () {
+  },
+  update () {
+  },
+  beforeRouteUpdate () {
+  },
   methods: {},
   filter: {},
   computed: {
-    ...mapState({
-    }),
+    ...mapState({}),
     status () {
       return this.$activityInfo_S_X.status
     },
@@ -100,16 +105,12 @@ export default {
     },
     tradeId () {
       return this.$activityInfo_S_X.tradeId
+    },
+    isShowMask () {
+      return (this.$activityInfo_S_X.status == 'coming' && this.partnerTradeId === this.tradeId) && this.$activityInfo_S_X.showCountDown
     }
   },
-  watch: {
-    $route () {
-
-    },
-    $activityInfo_S_X (newVal) {
-      console.log(newVal)
-    }
-  }
+  watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

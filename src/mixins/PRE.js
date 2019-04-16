@@ -1,6 +1,7 @@
 import {
   mapGetters,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 
 let mixin = {
@@ -11,7 +12,11 @@ let mixin = {
       maskBg: require('../assets/develop/pre-bg.png')
     }
   },
-  methods: {},
+  methods: {
+    ...mapActions([
+      'GET_PRE_INFO_A'
+    ])
+  },
   computed: {
     ...mapGetters({}),
     ...mapState({
@@ -63,7 +68,10 @@ let mixin = {
       this.currentTime = newVal
       this.timer = setInterval(() => {
         this.currentTime -= 1000
-        if (this.currentTime < 1000) clearInterval(this.timer)
+        if (this.currentTime < 1000) {
+          this.GET_PRE_INFO_A()
+          clearInterval(this.timer)
+        }
       }, 1000)
     }
   }

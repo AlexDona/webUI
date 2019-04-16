@@ -1233,7 +1233,7 @@ export default{
             padding: 0 20px 0 0;
 
             .el-button {
-              min-width: 90px;
+              width: 123px;
               padding: 7px 20px;
               border: 0;
 
@@ -1244,7 +1244,7 @@ export default{
               }
 
               &:last-child {
-                padding: 8px 21px;
+                padding: 8px 14px;
               }
             }
           }
