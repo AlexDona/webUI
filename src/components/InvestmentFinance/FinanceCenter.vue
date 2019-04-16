@@ -548,13 +548,13 @@
                   <!-- 预计收益 -->
                   <el-table-column
                     prop="expectedEarning"
-                    :label="$t('M.finance_predict') + $t('M.finance_earnings')"
+                    :label="$t('M.finance_predict')  + $t('M.finance_earnings') + '(' + $t('M.finance_capital') + '/' + $t('M.finance_accrual') + ')'"
                   >
                   </el-table-column>
                   <!-- 发放收益 -->
                   <el-table-column
                     prop="interest"
-                    :label="$t('M.finance_grant') + $t('M.finance_earnings')"
+                    :label="$t('M.finance_grant') + $t('M.finance_earnings') + '(' + $t('M.finance_capital') + '/' + $t('M.finance_accrual') + ')'"
                   >
                   </el-table-column>
                   <!-- 发放时间 -->
