@@ -297,7 +297,8 @@ export default {
     await this.REFRESH_USER_INFO_ACTION()
     this.showNoPosswdAndNoVerifyNotice()
   },
-  mounted () {},
+  mounted () {
+  },
   activated () {},
   update () {},
   beforeRouteUpdate () {},
@@ -359,7 +360,10 @@ export default {
   },
   watch: {
     userCenterActiveName (e) {
-      console.log(e)
+      if (e !== 'assets') {
+        this.$route.params.coinId = ''
+        this.$route.params.type = ''
+      }
       this.currentUserCenterActiveName = e
       this.REFRESH_USER_INFO_ACTION()
       if (e !== 'assets') {

@@ -6,7 +6,6 @@ import routes from './routes'
 
 Vue.use(Router)
 const store = storeCreator()
-
 const routerCreator = () => {
   const router = new Router({
     // mode: 'history',

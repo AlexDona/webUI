@@ -225,7 +225,7 @@ export const personal = {
   'user_transaction_repetition': 'repeat',
   'user_transaction_reset': 'Reset',
   'user_transaction_text': '6-bit pure number',
-  'user_transaction_info': 'For the security of your funds, you cannot withdraw  within 24 hours after resetting the transaction password.',
+  'user_transaction_info': 'In order to ensure the security of funds, it is not possible to perform some sensitive operations within 24h after resetting the transaction password.',
   // 登录密码login password
   'user_security_login_raw': 'Old ',
   'user_security_login_new': 'New',
