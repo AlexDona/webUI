@@ -224,7 +224,7 @@ export const personal = {
   'user_transaction_repetition': '繰り返し',
   'user_transaction_reset': 'リセット',
   'user_transaction_text': '6数字だけ',
-  'user_transaction_info': 'あなたの資金の安全のために、パスワードをリセットした後24時間以内に出金できません。',
+  'user_transaction_info': 'あなたの資金の安全のために、そのようなコインやプッシュ資産を引き出すなどの慎重な操作は、トランザクションパスワードをリセットした後24時間以内にご利用いただけません。',
   // ログインパスワード'
   'user_security_login_raw': 'オリジナル',
   'user_security_login_new': '新しい',

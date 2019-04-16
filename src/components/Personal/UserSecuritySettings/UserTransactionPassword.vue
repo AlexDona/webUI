@@ -108,8 +108,11 @@
             label-width="120px"
           >
             <header class="header-title">
-              <!--*为了您的资金安全,重置交易密码后24小时内将不可提币 -->
-              *{{ $t('M.user_transaction_info') }}
+              <!--* 为了您的资金安全，重置交易密码后24小时内将不可进行提币、PUSH资产等敏感操作 -->
+              <span>*</span>&nbsp;
+              <p class="float-right" style="width: 98%;">
+              {{ $t('M.user_transaction_info') }}
+            </p>
             </header>
             <!--交易密码-->
             <el-form-item
@@ -678,7 +681,7 @@ export default {
           .header-title {
             height: 32px;
             margin-bottom: 30px;
-            line-height: 32px;
+            line-height: 20px;
           }
 
           .send-code-btn {
