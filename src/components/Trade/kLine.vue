@@ -212,9 +212,9 @@ export default {
     // 获取当前交易对socket数据
     async getActiveSymbolData (tradeName) {
       let params = {
-        i18n: this.$language_S_X
+        i18n: this.$language_S_X,
+        tradeName
       }
-      params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
       // console.log(data)
       if (!data) return false
@@ -697,7 +697,10 @@ export default {
       this.getTradeMarketBySocket('SUB', newVal)
     },
     symbol (newVal, oldVal) {
-      console.log(newVal, oldVal)
+      let symbol = newVal
+      if (newVal.startsWith('{')) {
+        symbol = JSON.parse(newVal).id
+      }
       if (oldVal) {
         this.resolutions.forEach((item) => {
           this.getKlineDataBySocket('CANCEL', oldVal, item)
@@ -710,9 +713,10 @@ export default {
       // if (newVal) {
       //   this.RETURN_SYMBOL_DATA(true)
       // }
-      this.getActiveSymbolData(newVal)
-      this.subscribeSocketData(newVal)
-      this.getUserOrderSocket('SUB', newVal)
+      // console.log(symbol)
+      this.getActiveSymbolData(symbol)
+      this.subscribeSocketData(symbol)
+      this.getUserOrderSocket('SUB', symbol)
     },
     interval () {
       this.KlineNum = 0
