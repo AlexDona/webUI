@@ -227,7 +227,10 @@
                         <span class="black">{{item.date}}</span>
                         <span class="blue">{{item.amount}}</span>
                         <span class='blue'>{{selectedCoinName}}</span>
-                        <span class="black">
+                        <span class="black" v-if="formLabelAlign.financialState === 'EQUAL_PRINCIPAL'">
+                          ({{$t('M.finance_capital') + '+' + $t('M.finance_accrual')}})
+                        </span>
+                        <span class="black" v-else>
                           ({{index == formLabelAlign.jsonTimeline.length - 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}})
                         </span>
                       </li>
@@ -468,6 +471,10 @@
                       <div v-show="s.row.state === 'UNAUTHENTICATION'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">未认证</span>
                         <span v-else>Unauthentication</span>
+                      </div>
+                      <div v-show="s.row.state === 'EQUAL_PRINCIPAL'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">本金+利息</span>
+                        <span v-else>Capital+Interest</span>
                       </div>
                     </template>
                   </el-table-column>
