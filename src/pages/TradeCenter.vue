@@ -27,14 +27,14 @@
         <ExchangeBox v-show="!isShowMask"/>
         <div
           class="placeholder"
-          v-if="isShowMask"
+          v-show="isShowMask"
         ></div>
         <!-- 活动遮罩 -->
         <div
           class="mask"
-          v-if="isShowMask"
+          v-show="isShowMask"
         >
-          <PREMask v-if="status=='coming' && partnerTradeId === tradeId"/>
+          <PREMask v-show="status=='coming' && partnerTradeId === tradeId"/>
         </div>
         <!--交易-->
         <!-- 委单列表 -->
