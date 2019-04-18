@@ -67,8 +67,8 @@ switch (process.env.NODE_ENV) {
     break
   // 生产环境
   case 'production':
-    // targetConfig = {...targetConfig, ...prodConfig}
-    targetConfig = {...targetConfig, ...newProdConfig}
+    targetConfig = {...targetConfig, ...prodConfig}
+    // targetConfig = {...targetConfig, ...newProdConfig}
     break
 }
 
