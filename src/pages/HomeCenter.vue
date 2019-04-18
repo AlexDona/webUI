@@ -7,8 +7,6 @@
     </keep-alive>
     <!--交易区-->
     <MarketListHome class="margin-1"/>
-    <router-link to="/home/PersonalCenter">个人中心</router-link>
-    <router-view></router-view>
   </div>
 </template>
 <script>
