@@ -44,5 +44,6 @@ export const finance = {
   'finance_tipsContentOne': '确定取消存币?',
   'finance_invest_number': '存币数量不能为0',
   'finance_invest_read': '阅读',
-  'finance_invest_explain': '存币说明'
+  'finance_invest_explain': '存币说明',
+  'finance_invest_interest': '等额本息'
 }

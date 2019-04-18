@@ -45,5 +45,6 @@ export const finance = {
   'finance_tipsContentOne': 'Determine to retrieve the deposit?',
   'finance_invest_number': 'The amount of deposit cannot be 0',
   'finance_invest_read': 'Reading',
-  'finance_invest_explain': 'Deposit introduction'
+  'finance_invest_explain': 'Deposit introduction',
+  'finance_invest_interest': 'Equivalent principal and interest'
 }

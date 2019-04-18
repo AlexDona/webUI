@@ -95,6 +95,7 @@
               v-model="documentTypeValue"
               :no-data-text="$t('M.comm_no_data')"
               :placeholder="$t('M.comm_please_choose') + $t('M.user_real_certificate_type')"
+              @change="cardType"
             >
               <el-option
                 v-for="(item, index) in documentTypeList"
@@ -796,7 +797,7 @@ export default {
         // 请输入证件号码
         case 2:
           if (!targetNum) {
-            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_real_certificate_cone'))
+            this.setErrorMsg(2, this.$t('M.user_please_input20'))
             this.$forceUpdate()
             return 0
           } else {
@@ -819,6 +820,11 @@ export default {
     // 设置错误信息
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
+    },
+    // 切换证件类型清空证件号码，以及错误信息
+    cardType (index) {
+      this.errorShowStatusList[index] = ''
+      this.identificationNumber = ''
     },
     // 提交实名认证
     async submitRealName () {
