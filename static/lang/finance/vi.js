@@ -43,5 +43,6 @@ export const finance = {
   'finance_tipsContentOne': 'Xác định hủy bỏ trữ tiền?',
   'finance_invest_number': 'Số lượng trữ đồng tiền không được là 0',
   'finance_invest_read': 'Đọc',
-  'finance_invest_explain': 'Giải thích trữ tiền'
+  'finance_invest_explain': 'Giải thích trữ tiền',
+  'finance_invest_interest': 'Phải là một bản tức'
 }
