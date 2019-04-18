@@ -1311,10 +1311,14 @@ export default {
     }
   },
   watch: {
+    'buyUserCoinWallet.total' (newVal) {
+      console.log(newVal)
+    },
     isShowLimitPrice (newVal) {
       // console.log(newVal)
       this.activeName = newVal ? 'limit-price' : 'market-price'
       this.toggleMatchType()
+      // this.REFRESH_USER_INFO_ACTION()
     },
     limitEntrustEnabled: {
       handler (newVal) {

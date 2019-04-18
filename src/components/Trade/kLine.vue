@@ -510,7 +510,7 @@ export default {
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           break
         case 'PRE':
-          // console.log(data)
+          console.log(data)
           this.SET_PRE_INFO_M(data.data)
           break
       }
