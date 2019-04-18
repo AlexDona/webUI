@@ -922,7 +922,6 @@ export default {
         item.provideWithdrawDepositIsShow = false
       })
       this.withdrawDepositMap.forEach((val, key) => {
-        console.log(val, key)
         this.withdrawDepositMap.set(key, {
           rechargeIsShow: false,
           withdrawDepositIsShow: false,
@@ -1028,7 +1027,6 @@ export default {
     },
     // 7.0发送验证码
     sendPhoneOrEmailCode (loginType) {
-      console.log(this.disabledOfPhoneBtn, this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }

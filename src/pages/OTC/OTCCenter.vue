@@ -597,7 +597,11 @@ export default {
       'CHANGE_OTC_ANCHOR_STATUS',
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      // 改变otc主页国家列表筛选框选中的国家id
+      'CHANGE_OTC_SELECTED_COUNTRY_ID',
+      // 改变otc主页法币列表筛选框选中的法币类型id
+      'CHANGE_OTC_SELECTED_CURRENCY_ID'
     ]),
     // 增加国家-查询法币联动国家列表
     async getCurrencyCountrysList () {
@@ -610,11 +614,11 @@ export default {
       this.countrySelectStatus = false
       // 给返回国家列表增加一项全部国家
       let ALL = {
-        'countryId': '',
+        'countryId': '1111111111111111',
         'countryName': '全部国家',
         'createTime': null,
         'englishName': 'All Country',
-        'id': '',
+        'id': '22222222222222',
         'language': '',
         'languageName': '',
         'name': '',
@@ -627,10 +631,17 @@ export default {
       }
       this.countryInfoList.push(ALL)
       // 默认选中中国
-      this.checkedCountryId = (this.countryInfoList.filter(item => item.shortName == 'CNY'))[0].id
+      // 第一次进来默认选中中国，切换之后跳出本页面，再返回本页面显示最后一次切换的国家
+      if (this.otcSelectedCountryId) {
+        this.checkedCountryId = this.otcSelectedCountryId
+      } else {
+        this.checkedCountryId = (this.countryInfoList.filter(item => item.shortName == 'CNY'))[0].id
+      }
     },
-    // 增加国家-切换国家
+    // 增加国家-切换国家列表
     changeCountryId (e) {
+      console.log(e)
+      this.CHANGE_OTC_SELECTED_COUNTRY_ID(e)
       this.currentPage = 1 // 改变页码为第1页
       this.checkedCountryId = e
       this.availableCurrencyId.forEach(item => {
@@ -638,6 +649,7 @@ export default {
           this.checkedCurrencyId = item.id
         }
       })
+      this.CHANGE_OTC_SELECTED_CURRENCY_ID(this.checkedCurrencyId)
       // 根据条件刷新列表
       this.getOTCPutUpOrdersList()
     },
@@ -844,17 +856,29 @@ export default {
     },
     //  2.0 otc可用法币查询
     async getMerchantAvailableLegalTenderList () {
+      console.log(1111111)
       this.currencyCoinSelectStatus = true // 禁用货币类型select框
       const data = await getMerchantAvailableLegalTender({})
       console.log('otc法币查询列表')
       console.log(data)
+      console.log(this.otcSelectedCurrencyId)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
         this.availableCurrencyId = getNestedData(data, 'data')
         console.log(this.availableCurrencyId)
-        this.checkedCurrencyId = getNestedData(this.availableCurrencyId[0], 'id')
-        this.checkedCurrencyName = getNestedData(this.availableCurrencyId[0], 'shortName')
+        // 第一次进来默认选中人民币，切换之后跳出本页面，再返回本页面显示最后一次切换的法币
+        if (this.otcSelectedCurrencyId) {
+          this.checkedCurrencyId = this.otcSelectedCurrencyId
+          this.availableCurrencyId.forEach(item => {
+            if (this.otcSelectedCurrencyId === item.id) {
+              this.checkedCurrencyName = item.shortName
+            }
+          })
+        } else {
+          this.checkedCurrencyId = getNestedData(this.availableCurrencyId[0], 'id')
+          this.checkedCurrencyName = getNestedData(this.availableCurrencyId[0], 'shortName')
+        }
         this.currencyCoinSelectStatus = false // 开启货币类型select框
       }
     },
@@ -911,9 +935,12 @@ export default {
     },
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
+      console.log(e)
+      this.CHANGE_OTC_SELECTED_CURRENCY_ID(e)
       if (this.countryInfoList.length) {
         this.checkedCountryId = this.countryInfoList[this.countryInfoList.length - 1].id // 增加国家-国家为所有国家
       }
+      this.CHANGE_OTC_SELECTED_COUNTRY_ID(this.checkedCountryId)
       this.currentPage = 1
       this.checkedCurrencyId = e
       this.availableCurrencyId.forEach(item => {
@@ -945,7 +972,9 @@ export default {
       language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
-      updateOTCHomeListStatus: state => state.OTC.updateOTCHomeListStatus // 委托定单撤单后，更新首页挂单列表状态
+      updateOTCHomeListStatus: state => state.OTC.updateOTCHomeListStatus, // 委托定单撤单后，更新首页挂单列表状态
+      otcSelectedCountryId: state => state.OTC.otcSelectedCountryId, // otc主页国家列表筛选框选中的国家id
+      otcSelectedCurrencyId: state => state.OTC.otcSelectedCurrencyId // otc主页法币列表筛选框选中的法币类型id
     })
   },
   watch: {
@@ -954,6 +983,14 @@ export default {
       if (newVal) {
         this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
       }
+    },
+    // otc主页国家列表筛选框选中的国家id
+    otcSelectedCountryId (newVal) {
+      console.log(newVal)
+    },
+    // otc主页法币列表筛选框选中的法
+    otcSelectedCurrencyId (newVal) {
+      console.log(newVal)
     }
   },
   destroyed () {
@@ -989,7 +1026,7 @@ export default {
         > .otc-filtrate-publish {
           display: flex;
           justify-content: space-between;
-          padding: 25px 20px 0;
+          padding: 25px 10px 0;
 
           > .otc-filtrate-box {
             display: flex;
@@ -1164,7 +1201,7 @@ export default {
 
     .otc-publish-box {
       .el-input {
-        max-width: 160px;
+        width: 150px;
       }
 
       .el-input__inner {
@@ -1175,12 +1212,12 @@ export default {
 
       .el-input--suffix {
         .el-input__inner {
-          padding: 2px 30px;
+          padding: 2px 28px;
         }
       }
 
       .el-button {
-        padding: 9px 16px;
+        padding: 9px 10px;
         border: 0;
       }
     }

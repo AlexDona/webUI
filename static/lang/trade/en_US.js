@@ -56,9 +56,8 @@ export const trade = {
   'trade_currentAccount': 'Number of rounds',
   'trade_bili': 'Conversion ratio',
   'trade_singleLimit': 'Single limit',
-  'trade_people': 'people',
-  'trade_data': 'D',
-  'trade_hours': 'H',
-  'trade_seconds': 'M',
-  'trade_limit': 's'
+  'trade_profile': 'Project profile',
+  'trade_rules': 'Activity rules',
+  'trade_pre_desc': 'open right away,count down',
+  'trade_fee': 'trading fee'
 }

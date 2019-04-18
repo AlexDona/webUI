@@ -367,5 +367,8 @@ export const OTC = {
   'otc_available_balance': 'Available Balance',
   'otc_warm_prompt0': 'Attention! Please contact the seller to confirm the payment, if the seller ',
   'otc_warm_prompt00': ' within the hour cannot confirm order, you can file a complaint.',
-  'otc_upload_picture7': 'Upload pictures less than 5M'
+  'otc_upload_picture7': 'Upload pictures less than 5M',
+  // 增加当前市场最低出售价 当前市场最高收购价
+  'otc_current-market-price-min': 'Lowest market price',
+  'otc_current-market-price-max': 'Highest market price'
 }

@@ -26,6 +26,7 @@
         <el-tab-pane
           :label="$t('M.trade_exchange_price_deal')"
           name="limit-price"
+          v-if="isShowLimitPrice"
         >
           <div
             class="content-box limit"
@@ -41,8 +42,13 @@
                     <span v-show="buyUserCoinWallet.total">{{$scientificToNumber(buyUserCoinWallet.total)}}</span>
                     <span>{{$middleTopData_S_X.area}}</span>
                   </span>
+                  <!-- 跳转交易费率 -->
+                  <JumpToFees @jumpToOtherPage="jumpToOtherPage"/>
                 </div>
-                <div class="right item" v-if="$isLogin_S_X">
+                <div
+                  class="right item"
+                  v-if="$isLogin_S_X"
+                >
                   <button
                     :class="{'gray':!buyIsRecharge}"
                     :disabled="!buyIsRecharge"
@@ -154,6 +160,8 @@
                     <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
                     <span>{{$middleTopData_S_X.sellsymbol}}</span>
                   </span>
+                  <!-- 跳转交易费率 -->
+                  <JumpToFees/>
                 </div>
                 <div class="right item" v-if="$isLogin_S_X">
                   <button
@@ -278,6 +286,8 @@
                     </span>
                     <span>{{$middleTopData_S_X.area}}</span>
                   </span>
+                  <!-- 跳转交易费率 -->
+                  <JumpToFees/>
                 </div>
                 <div class="right item" v-if="$isLogin_S_X">
                   <button
@@ -362,6 +372,8 @@
                     <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
                     <span>{{$middleTopData_S_X.sellsymbol}}</span>
                   </span>
+                  <!-- 跳转交易费率 -->
+                  <JumpToFees/>
                 </div>
                 <div class="right item" v-if="$isLogin_S_X">
                   <button
@@ -542,6 +554,7 @@
 <script>
 import IconFont from '../Common/IconFontCommon'
 import SliderBar from '../Common/SliderBar'
+import JumpToFees from './JumpToFee'
 import {
   formatNumberInput,
   getRefValue,
@@ -568,7 +581,8 @@ import {
 export default {
   components: {
     IconFont,
-    SliderBar
+    SliderBar,
+    JumpToFees
   },
   // props,
   data () {
@@ -675,6 +689,15 @@ export default {
   },
   mounted () {
     // this.getRefValue(this.limitBuyPriceInputRef)
+    setTimeout(() => {
+      const {partnerTradeId} = this.$middleTopData_S_X
+      const {tradeId, limitEntrustEnabled} = this.$activityInfo_S_X
+      if (partnerTradeId && partnerTradeId == tradeId && !limitEntrustEnabled) {
+        this.activeName = 'market-price'
+        this.toggleMatchType()
+      }
+      console.log(this.$middleTopData_S_X.partnerTradeId)
+    }, 2000)
   },
   activated () {},
   update () {},
@@ -1264,8 +1287,14 @@ export default {
       // 获取当前交易对id
       currentCoinId: state => state.trade.middleTopData.id,
       isReturnSymbolData: state => state.trade.isReturnSymbolData
-
     }),
+    // 是否允许限价交易
+    limitEntrustEnabled () {
+      return this.$activityInfo_S_X.limitEntrustEnabled
+    },
+    isShowLimitPrice () {
+      return this.limitEntrustEnabled || this.$middleTopData_S_X.partnerTradeId !== this.$activityInfo_S_X.tradeId
+    },
     isNeedErrorMsgForSellCount () {
       return this.marketExchange.sellCount > this.sellUserCoinWallet.total
     },
@@ -1282,6 +1311,30 @@ export default {
     }
   },
   watch: {
+    isShowLimitPrice (newVal) {
+      // console.log(newVal)
+      this.activeName = newVal ? 'limit-price' : 'market-price'
+      this.toggleMatchType()
+    },
+    limitEntrustEnabled: {
+      handler (newVal) {
+        const {partnerTradeId} = this.$middleTopData_S_X
+        // const {tradeId} = this.$activityInfo_S_X
+        // console.log(partnerTradeId, tradeId)
+        if (!partnerTradeId) return
+        this.activeName = newVal ? 'limit-price' : 'market-price'
+        // console.log(newVal, this.activeName)
+        this.toggleMatchType()
+      },
+      immediate: true
+    },
+    '$middleTopData_S_X.partnerTradeId' (newVal) {
+      const {tradeId, showCountDown} = this.$activityInfo_S_X
+      // console.log(tradeId, newVal)
+      if (!showCountDown) return
+      this.activeName = this.limitEntrustEnabled || newVal !== tradeId ? 'limit-price' : 'market-price'
+      this.toggleMatchType()
+    },
     matchType (newVal) {
       this.setSiderBarValue('limit', {
         buyPrice: 0,
@@ -1346,7 +1399,6 @@ export default {
       }
     },
     async $middleTopData_S_X (newVal) {
-      console.log(newVal)
       let targetPriceOfBuy = newVal.buy || newVal.kai
       let targetPriceOfSell = newVal.sell || newVal.kai
       // 首次打开设置价格
@@ -1420,14 +1472,19 @@ export default {
             white-space: nowrap;
 
             > .item {
-              flex: 1;
-
               > .buy {
                 color: $upColor;
               }
 
               > .sell {
                 color: $downColor;
+              }
+
+              > .fees {
+                float: right;
+                padding: 1px 12px;
+                text-align: right;
+                color: $mainColor !important;
               }
 
               > a {

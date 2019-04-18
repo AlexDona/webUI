@@ -227,7 +227,10 @@
                         <span class="black">{{item.date}}</span>
                         <span class="blue">{{item.amount}}</span>
                         <span class='blue'>{{selectedCoinName}}</span>
-                        <span class="black">
+                        <span class="black" v-if="formLabelAlign.financialState === 'EQUAL_PRINCIPAL'">
+                          ({{$t('M.finance_capital') + '+' + $t('M.finance_accrual')}})
+                        </span>
+                        <span class="black" v-else>
                           ({{index == formLabelAlign.jsonTimeline.length - 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}})
                         </span>
                       </li>
@@ -469,6 +472,10 @@
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">未认证</span>
                         <span v-else>Unauthentication</span>
                       </div>
+                      <div v-show="s.row.state === 'EQUAL_PRINCIPAL'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">本金+利息</span>
+                        <span v-else>Capital+Interest</span>
+                      </div>
                     </template>
                   </el-table-column>
                   <!-- 创建时间 -->
@@ -548,13 +555,13 @@
                   <!-- 预计收益 -->
                   <el-table-column
                     prop="expectedEarning"
-                    :label="$t('M.finance_predict') + $t('M.finance_earnings')"
+                    :label="$t('M.finance_predict')  + $t('M.finance_earnings') + '(' + $t('M.finance_capital') + '/' + $t('M.finance_accrual') + ')'"
                   >
                   </el-table-column>
                   <!-- 发放收益 -->
                   <el-table-column
                     prop="interest"
-                    :label="$t('M.finance_grant') + $t('M.finance_earnings')"
+                    :label="$t('M.finance_grant') + $t('M.finance_earnings') + '(' + $t('M.finance_capital') + '/' + $t('M.finance_accrual') + ')'"
                   >
                   </el-table-column>
                   <!-- 发放时间 -->
