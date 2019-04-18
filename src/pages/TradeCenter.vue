@@ -24,7 +24,7 @@
         <KLine/>
         <!--市价交易、限价交易-->
         <!--<ExchangeBox/>-->
-        <ExchangeBox v-if="!isShowMask"/>
+        <ExchangeBox v-show="!isShowMask"/>
         <div
           class="placeholder"
           v-if="isShowMask"
