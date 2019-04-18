@@ -39,6 +39,12 @@ const prodConfig = {
   socketUrl: 'wss://market.fubt.co/market', // 行情 socket
   loginSocketUrl: 'wss://s.fubt.co/qrcodeLogin/' // 扫码登录 socket
 }
+// eslint-disable-next-line
+const newProdConfig = {
+  apiCommonUrl: 'http://api.coin67.cn/', // 全局接口 commonURL
+  socketUrl: 'ws://market.coin67.cn/market', // 行情 socket
+  loginSocketUrl: 'ws://market.coin67.cn/qrcodeLogin/' // 扫码登录 socket
+}
 switch (process.env.NODE_ENV) {
   case 'development':
     // 本地开发
@@ -61,7 +67,8 @@ switch (process.env.NODE_ENV) {
     break
   // 生产环境
   case 'production':
-    targetConfig = {...targetConfig, ...prodConfig}
+    // targetConfig = {...targetConfig, ...prodConfig}
+    targetConfig = {...targetConfig, ...newProdConfig}
     break
 }
 
