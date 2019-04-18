@@ -24,6 +24,7 @@
 import {widget as TvWidget} from '../../../static/tradeview/charting_library/charting_library.min.js'
 import socket from '../../utils/datafeeds/socket'
 import datafeeds from '../../utils/datafeeds/datafees'
+import {xDomain} from '../../utils/env'
 import {
   overrides,
   disabledFeatures,
@@ -630,11 +631,13 @@ export default {
     },
     // 获取PRE信息
     getPREInfo () {
+      let uid = this.$isLogin_S_X ? this.showId : 0
+      console.log(uid, this.userInfo)
       this.socket.send({
         'tag': 'SUB',
-        'content': `market.910060.pre`,
+        'content': `market.${uid}.pre`,
         'id': `pc`,
-        'domain': 'new.test.com'
+        'domain': xDomain
       })
     },
     // 订阅消息
@@ -654,7 +657,9 @@ export default {
       symbolMap: state => state.home.symbolMap, // 交易对map
       activeTabSymbolStr: state => state.trade.activeTabSymbolStr,
       mainColor: state => state.common.mainColor,
-      userId: state => state.user.loginStep1Info.userId
+      userId: state => state.user.loginStep1Info.userId,
+      showId: state => state.user.loginStep1Info.userInfo.showId,
+      userInfo: state => state.user.loginStep1Info
     })
   },
   watch: {
