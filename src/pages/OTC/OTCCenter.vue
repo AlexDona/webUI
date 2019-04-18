@@ -239,6 +239,7 @@
               <!-- 限额 -->
               <el-table-column
                 :label="$t('M.otc_index_priceLimit')"
+                width="170"
               >
                 <template slot-scope = "s">
                   <div>
