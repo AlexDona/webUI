@@ -44,5 +44,6 @@ export const finance = {
   'finance_accrual': '金利',
   'finance_invest_number': '入金金額を0にすることはできません',
   'finance_invest_read': '閲読',
-  'finance_invest_explain': 'デポジット説明'
+  'finance_invest_explain': 'デポジット説明',
+  'finance_invest_interest': '定額の元利'
 }

@@ -44,5 +44,6 @@ export const finance = {
   'finance_tipsContentOne': '코인 꺼내기 조작 확인하나요?',
   'finance_invest_number': '입금액은 0이 될 수 없습니다.',
   'finance_invest_read': '읽다',
-  'finance_invest_explain': '예금에 대한 설명'
+  'finance_invest_explain': '예금에 대한 설명',
+  'finance_invest_interest': '등액 원금'
 }

@@ -204,7 +204,7 @@
                     <div class='invest-amount'>
                       <!-- 先息后本 -->
                       <el-input
-                        :value="$t('M.finance_xiAndben')"
+                        :value="formLabelAlign.financialState === 'EQUAL_PRINCIPAL'? $t('M.finance_invest_interest') : $t('M.finance_xiAndben')"
                         disabled
                       >
                       </el-input>
