@@ -23,7 +23,19 @@
         <!--k线-->
         <KLine/>
         <!--市价交易、限价交易-->
-        <ExchangeBox/>
+        <!--<ExchangeBox/>-->
+        <ExchangeBox v-if="!isShowMask"/>
+        <div
+          class="placeholder"
+          v-if="isShowMask"
+        ></div>
+        <!-- 活动遮罩 -->
+        <div
+          class="mask"
+          v-if="isShowMask"
+        >
+          <PREMask v-if="status=='coming' && partnerTradeId === tradeId"/>
+        </div>
         <!--交易-->
         <!-- 委单列表 -->
         <EntrustOrder/>
@@ -32,7 +44,7 @@
       </div>
       <!--右侧-->
       <div class="right">
-        <!--<Activity/>-->
+        <Activity/>
         <!--市场-->
         <TradeMarketList/>
       </div>
@@ -49,7 +61,8 @@ import OrderRecord from '../components/Trade/OrderRecordTrade'
 import KLine from '../components/Trade/kLine'
 import MiddleHeader from '../components/Trade/MiddleHeaderTrade'
 import Depth from '../components/Trade/DepthTrade'
-// import Activity from '../components/Trade/Activity'
+import PREMask from '../components/Trade/PREMask'
+import Activity from '../components/Trade/PRE'
 import {mapState} from 'vuex'
 
 export default {
@@ -62,32 +75,42 @@ export default {
     KLine, // k线
     OrderRecord, // 成交记录
     BuysAndSells, // 买卖单
-    GlobalMarket
-    // Activity
+    GlobalMarket,
+    PREMask, // PRE活动遮罩
+    Activity
   },
   // props,
   data () {
-    return {
-
-    }
+    return {}
   },
   created () {
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  mounted () {
+  },
+  activated () {
+  },
+  update () {
+  },
+  beforeRouteUpdate () {
+  },
   methods: {},
   filter: {},
   computed: {
-    ...mapState({
-    })
-  },
-  watch: {
-    $route () {
-
+    ...mapState({}),
+    status () {
+      return this.$activityInfo_S_X.status
+    },
+    partnerTradeId () {
+      return this.$middleTopData_S_X.partnerTradeId
+    },
+    tradeId () {
+      return this.$activityInfo_S_X.tradeId
+    },
+    isShowMask () {
+      return (this.$activityInfo_S_X.status == 'coming' && this.partnerTradeId === this.tradeId) && this.$activityInfo_S_X.showCountDown
     }
-  }
+  },
+  watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -121,12 +144,35 @@ export default {
       }
 
       > .middle {
+        position: relative;
         flex: 1;
         box-sizing: border-box;
+
+        > .mask {
+          position: absolute;
+          z-index: 2000;
+          top: 60px;
+          left: 0;
+          width: 100%;
+          height: 756px;
+        }
+
+        > .placeholder {
+          height: 410px;
+          background-color: #1c1f32;
+        }
       }
 
       > .right {
         width: 320px;
+      }
+
+      @media screen and (max-width: 2560px) and (min-width: 1921px) {
+        > .middle {
+          > .mask {
+            height: 980px;
+          }
+        }
       }
 
       @media screen and (max-width: 1366px) {
@@ -136,6 +182,10 @@ export default {
 
         > .middle {
           width: 700px;
+
+          > .mask {
+            height: 756px;
+          }
         }
       }
     }

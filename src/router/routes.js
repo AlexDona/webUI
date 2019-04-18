@@ -68,6 +68,12 @@ const routes = [
     // 首页
     path: '/home',
     name: 'HomeCenter',
+    children: [
+      {
+        path: 'PersonalCenter',
+        component: PersonalCenter
+      }
+    ],
     component: HomeCenter
   },
   {

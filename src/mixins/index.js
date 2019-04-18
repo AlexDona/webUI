@@ -3,7 +3,9 @@ import {
   keep8Num,
   keep4Num,
   scientificToNumber,
-  cutOutPointLength
+  cutOutPointLength,
+  formatSeconds,
+  setStore
 } from '../utils'
 import {
   jumpToOtherPageForFooter,
@@ -29,6 +31,9 @@ let mixin = {
       } else {
         this.$router.push({path: newRouterPath})
       }
+    },
+    $setStore (name, content) {
+      return setStore(name, content)
     },
     $keep2Num (num) {
       return keep2Num(num)
@@ -59,12 +64,16 @@ let mixin = {
     },
     $cutOutPointLength (num, pointLength) {
       return cutOutPointLength(num, pointLength)
+    },
+    $formatSeconds (date, type) {
+      return formatSeconds(date, type)
     }
   },
   computed: {
     ...mapGetters({
       '$isNeedLimitExchange_G_X': 'isNeedLimitExchange_G',
-      '$isNeedYST_G_X': 'isNeedYST'
+      '$isNeedYST_G_X': 'isNeedYST',
+      '$isChineseLanguage_G_X': 'isChineseLanguage'
     }),
     ...mapState({
       $theme_S_X: state => state.common.theme,
@@ -77,8 +86,8 @@ let mixin = {
       $activeSymbol_S_X: state => state.trade.middleTopData.id,
       $serverTime_S_X: state => state.trade.serverData.serverTime,
       $isShowServerPort_S_X: state => state.trade.serverData.isShowServerPort,
-      $isServerEnd_S_X: state => state.trade.isActivityEnd,
-      $clientWidth_S_X: state => state.common.clientWidth
+      $clientWidth_S_X: state => state.common.clientWidth,
+      $activityInfo_S_X: state => state.trade.activity
     })
   }
 }

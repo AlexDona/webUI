@@ -1071,7 +1071,7 @@ export default {
     },
     // 1.2 倒计时时间格式化-国际标准格式(09ˋ40′32″)
     BIHTimeFormatting (date) {
-      return formatSeconds(date)
+      return formatSeconds(date, 'OTC')
     },
     // 1.3 自动取消订单倒计时
     cancelSetInter () {

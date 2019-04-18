@@ -38,5 +38,18 @@ export const trade = {
   'trade_empty_buy_count': 'Vui lòng nhập số lượng mua',
   'trade_empty_sell_count': 'Vui lòng nhâp số lượng bán',
   'trade_empty_buy_price': 'Vui lòng nhập giá mua',
-  'trade_empty_sell_price': 'Vui lòng nhập giá bán'
+  'trade_empty_sell_price': 'Vui lòng nhập giá bán',
+  'trade_profile': 'Giới Thiệu Dự Án',
+  'trade_rules': 'Quy Tắc Dự Án',
+  'trade_pre_desc': 'Sắp Lên Sàn,Thời Gian Còn',
+  'trade_fee': 'Phí Giao Dịch',
+  'trade_start': 'Sắp Bắt Đầu',
+  'trade_going': 'Đang Tiến Hành',
+  'trade_startOne': 'Lượt 3',
+  'trade_thired': 'Tổng 3 Lượt',
+  'trade_langstart': 'Hạn Bắt Đầu',
+  'trade_langEnd': 'Hạn kết Thúc ',
+  'trade_currentAccount': 'lượng Lượt Này',
+  'trade_bili': 'Tỷ Giá',
+  'trade_singleLimit': 'Hạn Mức Mỗi Người'
 }

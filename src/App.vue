@@ -121,6 +121,7 @@ export default {
 </script>
 
 <style>
+  @import '../static/css/font-family/font.css';
 
   .body-container {
     height: 100%;

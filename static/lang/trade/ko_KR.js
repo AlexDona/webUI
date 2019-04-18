@@ -55,9 +55,8 @@ export const trade = {
   'trade_currentAccount': '라운드 횟수',
   'trade_bili': '환율',
   'trade_singleLimit': '단일 한도',
-  'trade_people': '사람',
-  'trade_data': '일',
-  'trade_hours': '시간',
-  'trade_seconds': '분',
-  'trade_limit': '초'
+  'trade_profile': '프로젝트 소개',
+  'trade_rules': '활동 규칙',
+  'trade_pre_desc': '곧 개봉, 아직 거리가 있습니다',
+  'trade_fee': '거래율'
 }

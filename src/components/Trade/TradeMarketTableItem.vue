@@ -71,7 +71,7 @@
         <div
           class="market-category"
         >
-          {{item.plateName.replace('+',' ')}}
+          {{item.plateName.replace(/\+/g,' ')}}
         </div>
         <dl
           class="coin-item "

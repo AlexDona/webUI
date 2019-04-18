@@ -7,6 +7,8 @@
     </keep-alive>
     <!--交易区-->
     <MarketListHome class="margin-1"/>
+    <router-link to="/home/PersonalCenter">个人中心</router-link>
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -78,6 +80,8 @@ export default {
         case 'zh_TW':
           this.msgLanguage = 'zh-TW'
           break
+        default:
+          this.msgLanguage = 'en-us'
       }
 
       if (xDomain.startsWith('fubt')) {

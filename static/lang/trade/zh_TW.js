@@ -55,9 +55,8 @@ export const trade = {
   'trade_currentAccount': '本輪數量',
   'trade_bili': '兌換比例',
   'trade_singleLimit': '單人限額',
-  'trade_people': '人',
-  'trade_data': '天',
-  'trade_hours': '時',
-  'trade_seconds': '分',
-  'trade_limit': '秒'
+  'trade_profile': '項目簡介',
+  'trade_rules': '項目規則',
+  'trade_pre_desc': '即將開盤，距離開始還有',
+  'trade_fee': '交易費率'
 }

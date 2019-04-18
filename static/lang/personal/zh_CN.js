@@ -228,7 +228,7 @@ export const personal = {
   'user_transaction_repetition': '重复',
   'user_transaction_reset': '重置',
   'user_transaction_text': '6位纯数字',
-  'user_transaction_info': '为了您的资金安全,重置交易密码后24小时内将不可提币',
+  'user_transaction_info': '为了您的资金安全，重置交易密码后24小时内将不可进行提币、PUSH资产等敏感操作',
   // 登录密码
   'user_security_login_raw': '原',
   'user_security_login_new': '新',

@@ -190,7 +190,7 @@ export const personal = {
   'user_transaction_repetition': 'Lặp lại',
   'user_transaction_reset': 'Tạo mới',
   'user_transaction_text': 'Kí tự 6 chữ số',
-  'user_transaction_info': 'Để bảo mật tài sản của bạn, không thể rút tiền trong 24h sau khi thiết lập mật khẩu.',
+  'user_transaction_info': 'Để bảo mật tiền của bạn, các hoạt động nhạy cảm như rút tiền và tài sản PUSH sẽ không khả dụng trong vòng 24 giờ sau khi đặt lại mật khẩu giao dịch.',
   'user_security_login_raw': 'Trước',
   'user_security_login_new': 'Mới',
   'user_security_former': 'Cũ',

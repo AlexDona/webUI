@@ -17,7 +17,7 @@
           <span>{{$middleTopData_S_X.area}}</span>
         </div>
         <div class="bottom font-size12">
-          <span>{{($middleTopData_S_X.sellname||' ').replace('+',' ')}}</span>
+          <span>{{($middleTopData_S_X.sellname||' ').replace(/\+/g,' ')}}</span>
         </div>
       </div>
       <!--最新价-->

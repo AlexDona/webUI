@@ -45,7 +45,7 @@ export const OTC = {
   // 'otc_sell_min': '売られた金額は、',
   // 'otc_point_max_total': '小数点は超えることはできません',
   // 'otc_point_place': 'ビット',
-  'otc_release_order': 'オーダーリリース',
+  'otc_release_order': '注文出す',
   'otc_choice_currency': '通貨を選択',
   'otc_market_price': '市場価格',
   'otc_expected_value': '見積もり取引額',
@@ -357,5 +357,8 @@ export const OTC = {
   'otc_available_balance': '利用可能残高',
   'otc_warm_prompt0': '注意！ 売り手の場合、支払いを確認するために売り手に連絡してください。',
   'otc_warm_prompt00': '注文は～時間以内に確認されていません、苦情を申し立てることができます。',
-  'otc_upload_picture7': '5M超えない写真をアップロード'
+  'otc_upload_picture7': '5M超えない写真をアップロード',
+  // 增加当前市场最低出售价 当前市场最高收购价
+  'otc_current-market-price-min': '市場最低販売価',
+  'otc_current-market-price-max': '市場最高買付価'
 }

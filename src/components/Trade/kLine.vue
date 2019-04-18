@@ -133,8 +133,8 @@ export default {
       'SET_MIDDLE_TOP_DATA',
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
       'GET_SERVER_DATA',
-      'REFRESH_CONTENT_STATUS',
-      'RETURN_SYMBOL_DATA'
+      'RETURN_SYMBOL_DATA',
+      'SET_PRE_INFO_M'
     ]),
     changeIsKlineDataReady (status) {
       this.SET_IS_KLINE_DATA_READY(status)
@@ -212,9 +212,9 @@ export default {
     // 获取当前交易对socket数据
     async getActiveSymbolData (tradeName) {
       let params = {
-        i18n: this.$language_S_X
+        i18n: this.$language_S_X,
+        tradeName
       }
-      params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
       // console.log(data)
       if (!data) return false
@@ -508,14 +508,9 @@ export default {
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           break
-        case 'DATE':
+        case 'PRE':
           // console.log(data)
-          this.GET_SERVER_DATA({
-            'serverTime': data.data.countDown,
-            'isShowServerPort': data.data.isShow,
-            'nextCountDown': data.data.nextCountDown,
-            'isLimitShow': data.data.isLimitShow
-          })
+          this.SET_PRE_INFO_M(data.data)
           break
       }
       this.CHANGE_SOCKET_AND_AJAX_DATA({
@@ -633,15 +628,14 @@ export default {
         })
       }
     },
-    // 获取服务器时间
-    getServerTime (type, symbol) {
-      if (symbol) {
-        this.socket.send({
-          'tag': type,
-          'content': `market.${symbol}.date9`,
-          'id': 'pc'
-        })
-      }
+    // 获取PRE信息
+    getPREInfo () {
+      this.socket.send({
+        'tag': 'SUB',
+        'content': `market.910060.pre`,
+        'id': `pc`,
+        'domain': 'new.test.com'
+      })
     },
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min15') {
@@ -651,6 +645,7 @@ export default {
       this.getBuyAndSellBySocket('SUB', symbol)
       this.getDepthDataBySocket('SUB', symbol)
       this.getTradeRecordBySocket('SUB', symbol)
+      this.getPREInfo()
     }
   },
   filter: {},
@@ -659,7 +654,6 @@ export default {
       symbolMap: state => state.home.symbolMap, // 交易对map
       activeTabSymbolStr: state => state.trade.activeTabSymbolStr,
       mainColor: state => state.common.mainColor,
-      isChangeContent: state => state.trade.isChangeContent,
       userId: state => state.user.loginStep1Info.userId
     })
   },
@@ -703,7 +697,10 @@ export default {
       this.getTradeMarketBySocket('SUB', newVal)
     },
     symbol (newVal, oldVal) {
-      console.log(newVal, oldVal)
+      let symbol = newVal
+      if (newVal.startsWith('{')) {
+        symbol = JSON.parse(newVal).id
+      }
       if (oldVal) {
         this.resolutions.forEach((item) => {
           this.getKlineDataBySocket('CANCEL', oldVal, item)
@@ -716,19 +713,14 @@ export default {
       // if (newVal) {
       //   this.RETURN_SYMBOL_DATA(true)
       // }
-      this.getActiveSymbolData(newVal)
-      this.subscribeSocketData(newVal)
-      this.getUserOrderSocket('SUB', newVal)
+      // console.log(symbol)
+      this.getActiveSymbolData(symbol)
+      this.subscribeSocketData(symbol)
+      this.getUserOrderSocket('SUB', symbol)
     },
     interval () {
       this.KlineNum = 0
       this.barsRenderTime = 0
-    },
-    isChangeContent (newVla) {
-      // console.log(newVla)
-      if (newVla) {
-        this.REFRESH_CONTENT_STATUS(false)
-      }
     }
   }
 }

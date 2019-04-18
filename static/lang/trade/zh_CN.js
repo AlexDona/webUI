@@ -55,9 +55,8 @@ export const trade = {
   'trade_currentAccount': '本轮数量',
   'trade_bili': '兑换比例',
   'trade_singleLimit': '单人限额',
-  'trade_people': '人',
-  'trade_data': '天',
-  'trade_hours': '时',
-  'trade_seconds': '分',
-  'trade_limit': '秒'
+  'trade_profile': '项目简介',
+  'trade_rules': '项目规则',
+  'trade_pre_desc': '即将开盘，距离开始还有',
+  'trade_fee': '交易费率'
 }
