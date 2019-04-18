@@ -21,7 +21,7 @@
         <span>{{days}}</span>{{$isChineseLanguage_G_X?'天':'Day'}}
         <span>{{hours}} </span>{{$isChineseLanguage_G_X?'时':'Hou'}}
         <span>{{minutes}} </span>{{$isChineseLanguage_G_X?'分':'Min'}}
-        <span>{{seconds}} </span>{{$isChineseLanguage_G_X?'分':'Sec'}}
+        <span>{{seconds}} </span>{{$isChineseLanguage_G_X?'秒':'Sec'}}
       </p>
       <!-- 发行量 -->
       <p>{{$t('M.trade_currentAccount')}}: {{$publishCount_S_X}} {{$sellCoinName_S_X}}</p>
@@ -54,7 +54,6 @@ export default {
   },
   methods: {
     ...mapActions([
-      'GET_PRE_INFO_A'
     ]),
     ...mapMutations([])
   },
@@ -83,7 +82,7 @@ export default {
         this.currentTime -= 1000
         if (this.currentTime < 1000) {
           clearInterval(this.timer)
-          this.GET_PRE_INFO_A()
+          // this.GET_PRE_INFO_A()
         }
       }, 1000)
     }
