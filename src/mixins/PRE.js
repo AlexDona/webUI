@@ -13,9 +13,7 @@ let mixin = {
     }
   },
   methods: {
-    ...mapActions([
-      'GET_PRE_INFO_A'
-    ])
+    ...mapActions([])
   },
   computed: {
     ...mapGetters({}),
@@ -69,7 +67,6 @@ let mixin = {
       this.timer = setInterval(() => {
         this.currentTime -= 1000
         if (this.currentTime < 1000) {
-          this.GET_PRE_INFO_A()
           clearInterval(this.timer)
         }
       }, 1000)
