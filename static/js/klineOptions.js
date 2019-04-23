@@ -45,7 +45,8 @@ export const disabledFeatures = [
   'main_series_scale_menu',
   'star_some_intervals_by_default',
   'datasource_copypaste',
-  'right_bar_stays_on_scroll',
+  // 缩放
+  // 'right_bar_stays_on_scroll',
   // 'chart_zoom', // 允许缩放图表
   // 'context_menus',
   'go_to_date',

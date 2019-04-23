@@ -11,7 +11,9 @@ export const getAllNewsTypeList = params => handleRequest(() => get('cms/newsTyp
 // 分页查询新闻公告
 export const getNewsNoticeList = params => handleRequest(() => get('newsBulletin/pageQuery', params))
 // 首页获取所有新闻列表
-export const getAllNewsNoticeListForHomePage = params => handleRequest(() => get('newsBulletin/all', params))
+export const getAllNewsNotices = params => handleRequest(() => get('newsBulletin/all', params))
+// 获取部分新闻列表
+export const getPartNewsNotices = params => handleRequest(() => get('newsBulletin/Carousel', params))
 // 获取新闻详情
 export const getNewsDetail = params => handleRequest(() => get(`newsBulletin/${params}`, {loading: true}))
 // 添加收藏
@@ -30,6 +32,9 @@ export const getPlatesAJAX = params => handleRequest(() => get('/market/getTrade
 // 根据板块id 获取定义的交易区信息
 export const getTradeAreaAJAX = params => handleRequest(() => get('market/plate/getInfo', params))
 
-export const getAllTradeAreasAJAX = params => handleRequest(() => get('market/plate/getAllInfo', {...params, loading: true}))
+export const getAllTradeAreasAJAX = params => handleRequest(() => get('market/plate/getAllInfo', {
+  ...params,
+  loading: true
+}))
 // 获取所有交易区
 export const getAllSymbolsAJAX = params => handleRequest(() => get('market/getTradeData', params))

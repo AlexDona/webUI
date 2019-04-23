@@ -38,7 +38,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import IconFont from '../Common/IconFontCommon'
-import {getAllNewsNoticeListForHomePage} from '../../utils/api/home'
+import {getPartNewsNotices} from '../../utils/api/home'
 import {
   getNestedData
 } from '../../utils/commonFunc'
@@ -62,6 +62,7 @@ export default {
   },
   async created () {
     this.noticeList = []
+    this.getNewsNoticeList()
   },
   mounted () {},
   activated () {},
@@ -78,12 +79,14 @@ export default {
     },
     // 获取新闻公告列表
     async getNewsNoticeList () {
+      clearInterval(this.timer)
       const params = {
         language: this.language
       }
-      const data = await getAllNewsNoticeListForHomePage(params)
+      const data = await getPartNewsNotices(params)
       if (!data) return false
       this.noticeList = getNestedData(data, 'data') || []
+      this.timer = setInterval(this.autoPlay, 4000)
     },
     // 关闭组件
     closeNotice () {
@@ -114,8 +117,7 @@ export default {
     },
     homeNoticeList (newVal) {
       console.log(newVal)
-      this.noticeList = [...this.homeNoticeList]
-      this.timer = setInterval(this.autoPlay, 4000)
+      // this.noticeList = [...this.homeNoticeList]
     }
   }
 }

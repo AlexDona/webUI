@@ -7,13 +7,9 @@
 // 后端专递headers
 let xDomainUrl = window.location.host.split(':')[0]
 xDomainUrl = xDomainUrl.startsWith('www') ? xDomainUrl.slice(4) : xDomainUrl
+console.log(window.location.href)
 // 项目域名
-let domainUrl = window.location.href.split('/')
-domainUrl.pop()
-domainUrl = domainUrl.join('/')
-if (!domainUrl.endsWith('#')) {
-  domainUrl += '#'
-}
+let domainUrl = `${window.location.href.split('#')[0]}/#/`
 let targetConfig = {
   domain: domainUrl,
   xDomain: xDomainUrl
@@ -50,13 +46,13 @@ switch (process.env.NODE_ENV) {
   case 'development':
     // 本地开发
     // 本地开发
-    // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
+    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
     // 210开发环境
     // targetConfig = {...dev210Config, xDomain: 'me.com'}
     // 生产环境
     // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     // 生产环境
-    targetConfig = {...prodConfig, xDomain: 'fubt.co'}
+    // targetConfig = {...prodConfig, xDomain: 'fubt.co'}
     // targetConfig = {...newProdConfig, xDomain: 'coin67.cn'}
     break
   // 210开发环境
