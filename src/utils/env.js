@@ -9,7 +9,7 @@ let xDomainUrl = window.location.host.split(':')[0]
 xDomainUrl = xDomainUrl.startsWith('www') ? xDomainUrl.slice(4) : xDomainUrl
 console.log(window.location.href)
 // 项目域名
-let domainUrl = `${window.location.href.split('#')[0]}/#/`
+let domainUrl = `${window.location.href.split('#')[0]}#`
 let targetConfig = {
   domain: domainUrl,
   xDomain: xDomainUrl
