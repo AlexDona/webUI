@@ -343,7 +343,7 @@
                 <!-- 注意 -->
                 <p class="action-tips">
                   <!--注意！计时结束前未手动转账并点击"确认付款"，您的订单将自动取消，若上述情况累计出现3次，您的账户将被冻结24小时。-->
-                  {{$t('M.otc_tradingorder_notice')}}
+                  {{$t('M.otc_tradingorder_notice1')}}{{configInfo.otcUnpaidTimes}}{{$t('M.otc_tradingorder_notice2')}}
                 </p>
               </div>
               <!-- 付款后 -->
@@ -1434,7 +1434,8 @@ export default {
       legalTradePageNum: state => state.personal.legalTradePageNum,
       reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus, // 从全局获得的重新渲染交易中订单列表状态
       // 交易密码是否被锁定
-      isLockedPayPassword: state => state.common.isLockedPayPassword
+      isLockedPayPassword: state => state.common.isLockedPayPassword,
+      configInfo: state => state.common.footerInfo.configInfo
     })
     // 从全局获得的交易中订单列表
     // tradingOrderList () {

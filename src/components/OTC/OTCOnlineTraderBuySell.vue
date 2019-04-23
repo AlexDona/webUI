@@ -291,7 +291,7 @@
                 <!-- 交易须知 -->
                 <h4 class="title">*{{$t('M.otc_index_tradeKnow')}}：</h4>
                 <p class="tip">
-                  1. {{$t('M.otc_index_tradeKnowDetail1')}}<span class="warning">3{{$t('M.otc_ci')}}</span>，{{$t('M.otc_index_tradeKnowDetail2')}}
+                  1. {{$t('M.otc_index_tradeKnowDetail1')}}<span class="warning">{{configInfo.otcUnpaidTimes}}{{$t('M.otc_ci')}}</span>，{{$t('M.otc_index_tradeKnowDetail2')}}
                 </p>
                 <p class="tip">
                   2. {{$t('M.otc_index_tradeKnowDetail3')}}
@@ -461,7 +461,7 @@ export default {
       // 当前币种返回的保留小数点位数限制
       pointLength: 4,
       // 当前金额小数点限制位数
-      moneyPointLength: 3,
+      moneyPointLength: 2, // 当前金额小数点限制位数-总金额和最低最高限额保留2位
       // 是否需要交易密码
       isNeedPayPassword: true,
       sellTotal: '' // 用户资产可用余额20190320增加新字段展示
