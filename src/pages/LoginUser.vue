@@ -905,7 +905,7 @@ export default {
             this.$forceUpdate()
             return 0
           } else {
-            console.log(1)
+            // console.log(1)
             this.setErrorMsg(0)
             this.$forceUpdate()
             return 1
@@ -952,6 +952,7 @@ export default {
       this.isRememberUserName ? setStore('username', this.username) : removeStore('username')
 
       params.append('password', this.password)
+      params.append('type', EMAIL_REG.test(this.username) ? 'email' : 'phone')
       const data = await userLoginForStep1(params)
       if (!returnAjaxMsg(data, this, 0)) {
         return false
