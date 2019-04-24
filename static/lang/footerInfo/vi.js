@@ -52,5 +52,7 @@ export const footerInfo = {
   'rate_withdraw_min': 'Số tiền rút ít nhất',
   'rate_withdraw_max': 'Tối Đa Một lần Rút',
   'rate_withdraw_amount': 'Lượng Rút Ngày',
-  'rate_withdraw_times': 'Số lần rút tiền'
+  'rate_withdraw_times': 'Số lần rút tiền',
+  'footer_service_email': 'Mail tư vấn',
+  'footer_complaint_email': 'Mail khiếu nại'
 }

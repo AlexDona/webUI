@@ -55,5 +55,7 @@ export const footerInfo = {
   'rate_withdraw_min': 'Maxmum per trade',
   'rate_withdraw_max': 'Daily limit',
   'rate_withdraw_amount': 'Daily times',
-  'rate_withdraw_times': 'Trade pair rate'
+  'rate_withdraw_times': 'Trade pair rate',
+  'footer_service_email': 'Service email',
+  'footer_complaint_email': 'Complaint email'
 }

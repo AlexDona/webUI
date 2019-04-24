@@ -55,5 +55,7 @@ export const footerInfo = {
   'rate_withdraw_min': '단필 최대 현금 인출',
   'rate_withdraw_max': '매일 현금 인출 한도',
   'rate_withdraw_amount': '매일 현금 인출 횟수',
-  'rate_withdraw_times': '거래 대 요율'
+  'rate_withdraw_times': '거래 대 요율',
+  'footer_service_email': '고객 서비스 사서함',
+  'footer_complaint_email': '불만 우편함'
 }

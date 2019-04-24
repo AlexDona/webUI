@@ -85,13 +85,21 @@
               </a>
             </li>
           </ul>
-          <!-- 版权 -->
+          <!-- 邮箱 -->
           <div class="email">
             <span
               class="email-content"
               v-if="configInfo['otcEmail']"
             >
-              EMAIL: {{configInfo['otcEmail']}}
+              {{$t('M.footer_service_email')}}: {{configInfo['otcEmail']}}
+            </span>
+            <br/>
+            <!-- 投诉邮箱 -->
+            <span
+              class="email-content"
+              v-if="configInfo['complaintEmail']"
+            >
+              {{$t('M.footer_complaint_email')}}: {{configInfo['complaintEmail']}}
             </span>
           </div>
         </div>
@@ -486,6 +494,7 @@ export default {
 
             > .email-content {
               font-size: 12px;
+              line-height: 25px;
               color: #cecece;
             }
           }

@@ -55,5 +55,7 @@ export const footerInfo = {
   'rate_withdraw_min': '单笔最小提现',
   'rate_withdraw_max': '单笔最大提现',
   'rate_withdraw_amount': '每日提现额度',
-  'rate_withdraw_times': '每日提现次数'
+  'rate_withdraw_times': '每日提现次数',
+  'footer_service_email': '客服邮箱',
+  'footer_complaint_email': '投诉邮箱'
 }

@@ -55,5 +55,7 @@ export const footerInfo = {
   'rate_withdraw_min': '毎回最大出金',
   'rate_withdraw_max': '毎日出金額',
   'rate_withdraw_amount': '毎日出金回',
-  'rate_withdraw_times': '取引ペア率'
+  'rate_withdraw_times': '取引ペア率',
+  'footer_service_email': 'コールメールポスト',
+  'footer_complaint_email': 'クレームメールボックス'
 }
