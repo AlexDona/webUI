@@ -44,7 +44,7 @@
             </li>
             <li>
               <p class="green">
-                {{dayAmountIncrease}}<span>{{convertCurrency}}</span>
+                {{dayAmountIncrease}}%
               </p>
               <!-- 当日涨幅 -->
               <span>{{$t('M.finance_date')}}{{$t('M.finance_increase')}}</span>
