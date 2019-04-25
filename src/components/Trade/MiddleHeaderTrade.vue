@@ -93,7 +93,7 @@
         <div class="top font-size12">
           <span>
             <!--24hr成交量-->
-            24H{{ $t('M.comm_trading_volume2') }}
+            {{ $t('M.comm_trading_volume3') }}
           </span>
         </div>
         <div class="bottom">

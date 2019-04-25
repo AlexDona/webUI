@@ -45,6 +45,7 @@ export const common = {
   'comm_quantity': '수량',
   'comm_trading_volume1': '거래 완료량',
   'comm_trading_volume2': '거래 완료량',
+  'comm_trading_volume3': '24H거래 완료량',
   'comm_type': '종류',
   'comm_money': '금액',
   'comm_property': '자산',

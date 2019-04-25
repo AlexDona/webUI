@@ -184,8 +184,8 @@
               class="dd-item"
               @click="$footerJump('/ServiceAndProtocol','AML')"
             >
-              <!--反洗钱-->
-              {{$t('M.comm_about')}}{{$t('M.about_digital_terms_hint7')}}
+              <!--关于反洗钱-->
+              {{$t('M.about_digital_terms_hint10')}}
             </dd>
           </dl>
           <dl class="right-dl">

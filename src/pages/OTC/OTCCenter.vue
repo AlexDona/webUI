@@ -1181,6 +1181,11 @@ export default {
   }
 
   /deep/ {
+    .el-table .cell,
+    .el-table th div {
+      padding: 0;
+    }
+
     .el-input__icon {
       line-height: 34px;
     }
