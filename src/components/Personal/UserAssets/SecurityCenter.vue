@@ -101,10 +101,7 @@
                 <!--安全邮箱-->
                 {{ $t('M.user_security_safety') }}{{ $t('M.user_security_email') }}
               </span>
-              <span
-                class="font-size12"
-                v-if="securityCenter.isMailEnable"
-              >{{innerUserInfo.email}}</span>
+              <span class="font-size12">{{innerUserInfo.email}}</span>
               <IconFontCommon
                 v-if="!securityCenter.isMailEnable"
                 class="font-size16"
@@ -153,10 +150,7 @@
                 <!--安全手机-->
                 {{ $t('M.user_security_safety') }}{{ $t('M.user_security_phone') }}
               </span>
-              <span
-                class="font-size12"
-                v-if="securityCenter.isPhoneBind"
-              >{{innerUserInfo.phone}}</span>
+              <span class="font-size12">{{innerUserInfo.phone}}</span>
               <IconFontCommon
                 v-if="!securityCenter.isPhoneBind"
                 class="font-size16"
