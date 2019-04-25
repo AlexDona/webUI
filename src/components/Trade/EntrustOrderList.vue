@@ -79,19 +79,10 @@
               </li>
             </ul>
             <div class="tbody">
-              <!--未登录-->
-              <div
-                class="not-login content"
-                v-if="!$isLogin_S_X"
-              >
-                <!--您还没有登录，请 登录 或 注册 后查看-->
-                {{ $t('M.trade_coin_text1') }} <router-link to="/login"> {{ $t('M.comm_login') }}</router-link> {{ $t('M.trade_coin_text2') }} <router-link to="/register">{{ $t('M.comm_register_time') }}</router-link> {{ $t('M.trade_coin_text3') }}
-
-              </div>
               <!--已登录-->
               <div
                 class="logined content"
-                v-else-if="currentEntrustList.length!=0"
+                v-if="currentEntrustList.length!=0"
               >
                 <ul
                   class="tr"
@@ -201,18 +192,10 @@
               </li>
             </ul>
             <div class="tbody">
-              <!--未登录-->
-              <div
-                class="not-login content"
-                v-if="!$isLogin_S_X"
-              >
-                <!--您还没有登录，请 登录 或 注册 后查看-->
-                {{ $t('M.trade_coin_text1') }} <router-link to="/login"> {{ $t('M.comm_login') }}</router-link> {{ $t('M.trade_coin_text2') }} <router-link to="/register">{{ $t('M.comm_register_time') }}</router-link> {{ $t('M.trade_coin_text3') }}
-              </div>
               <!--已登录-->
               <div
                 class="logined content"
-                v-else-if="historyEntrustList.length!=0"
+                v-if="historyEntrustList.length!=0"
               >
                 <ul
                   class="tr"

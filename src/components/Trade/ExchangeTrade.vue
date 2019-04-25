@@ -141,10 +141,17 @@
                   <el-button
                     class="submit-btn buy-btn"
                     @click="showPayPassword(0,'limit')"
+                    v-if="$isLogin_S_X"
                   >
                     <!--买入-->
                     {{ $t('M.comm_buy') }}
                   </el-button>
+                  <div
+                    class="submit-btn"
+                    v-else
+                  >
+                    <UnloginBtn class="buy unlogin-btn"/>
+                  </div>
                 </div>
               </div>
             </div>
@@ -163,7 +170,10 @@
                   <!-- 跳转交易费率 -->
                   <JumpToFees/>
                 </div>
-                <div class="right item" v-if="$isLogin_S_X">
+                <div
+                  class="right item"
+                  v-if="$isLogin_S_X"
+                >
                   <button
                     @click="jumpToPersonalCenter('assets', 'sell', 'recharge')"
                     :class="{'gray':!sellIsRecharge}"
@@ -255,10 +265,17 @@
                   <el-button
                     class="submit-btn sell-btn"
                     @click="showPayPassword(1,'limit')"
+                    v-if="$isLogin_S_X"
                   >
                     <!--卖出-->
                     {{ $t('M.comm_sell') }}
                   </el-button>
+                  <div
+                    class="submit-btn"
+                    v-else
+                  >
+                    <UnloginBtn class="sell unlogin-btn"/>
+                  </div>
                 </div>
               </div>
             </div>
@@ -353,10 +370,17 @@
                   <el-button
                     class="submit-btn buy-btn"
                     @click="showPayPassword(0,'market')"
+                    v-if="$isLogin_S_X"
                   >
                     <!--买入-->
                     {{ $t('M.comm_buy') }}
                   </el-button>
+                  <div
+                    class="submit-btn"
+                    v-else
+                  >
+                    <UnloginBtn class="buy unlogin-btn"/>
+                  </div>
                 </div>
               </div>
             </div>
@@ -443,10 +467,17 @@
                   <el-button
                     class="submit-btn sell-btn"
                     @click="showPayPassword(1,'market')"
+                    v-if="$isLogin_S_X"
                   >
                     <!--卖出-->
                     {{ $t('M.comm_sell') }}
                   </el-button>
+                  <div
+                    class="submit-btn"
+                    v-else
+                  >
+                    <UnloginBtn class="sell unlogin-btn"/>
+                  </div>
                 </div>
               </div>
             </div>
@@ -555,6 +586,7 @@
 import IconFont from '../Common/IconFontCommon'
 import SliderBar from '../Common/SliderBar'
 import JumpToFees from './JumpToFee'
+import UnloginBtn from './UnLoginBtn'
 import {
   formatNumberInput,
   getRefValue,
@@ -582,7 +614,8 @@ export default {
   components: {
     IconFont,
     SliderBar,
-    JumpToFees
+    JumpToFees,
+    UnloginBtn
   },
   // props,
   data () {
@@ -1277,7 +1310,6 @@ export default {
       activePriceItem: state => state.trade.activePriceItem,
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
-      limitExchangeOfState: state => state.trade.limitExchange,
       // 是否通过高级认证
       advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
       // 实名认证
@@ -1586,6 +1618,20 @@ export default {
 
                 &.right {
                   text-align: right;
+                }
+              }
+            }
+
+            > .submit {
+              .submit-btn {
+                /deep/ {
+                  .unlogin-btn {
+                    height: 38px;
+                    margin-top: 20px;
+                    border: 1px solid #a9bed4;
+                    border-radius: 4px;
+                    line-height: 38px;
+                  }
                 }
               }
             }
