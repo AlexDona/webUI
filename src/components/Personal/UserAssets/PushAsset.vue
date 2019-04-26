@@ -487,7 +487,7 @@ export default {
   },
   async created () {
     this.reflashIsNeedPayPassword()
-    this.getPushRecordList()
+    // this.getPushRecordList()
   },
   mounted () {
   },
