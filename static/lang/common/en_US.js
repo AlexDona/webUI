@@ -41,6 +41,7 @@ export const common = {
   'comm_quantity': 'Amount',
   'comm_trading_volume1': 'Amount',
   'comm_trading_volume2': 'Volume',
+  'comm_trading_volume3': '24H Volume',
   'comm_type': 'Type',
   'comm_money': 'Amount',
   'comm_property': 'Assets',

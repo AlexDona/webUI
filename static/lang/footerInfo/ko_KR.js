@@ -12,6 +12,7 @@ export const footerInfo = {
   'about_digital_terms_hint5': 'API문서',
   'about_digital_terms_hint6': '코인 자료',
   'about_digital_terms_hint7': 'AML',
+  'about_digital_terms_hint10': '정보AML',
   'about_digital_terms_hint8': 'OTC 서비스계약',
   'about_digital_terms_hint9': '회사 소개',
   // ##########################20181117-1145新增国际化################################

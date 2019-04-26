@@ -45,6 +45,7 @@ export const common = {
   'comm_quantity': '金額',
   'comm_trading_volume1': '取引金額',
   'comm_trading_volume2': '出来高',
+  'comm_trading_volume3': '24H 出来高',
   'comm_type': 'タイプ',
   'comm_money': '金額',
   'comm_property': '資産',
