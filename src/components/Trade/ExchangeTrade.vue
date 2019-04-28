@@ -57,14 +57,6 @@
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
                   </button>
-                  <button
-                    :class="{'gray':!buyIsWithdraw}"
-                    :disabled="!buyIsWithdraw"
-                    @click.stop="jumpToPersonalCenter('assets', 'buy', 'withdraw')"
-                  >
-                    <!--提币-->
-                    {{ $t('M.comm_mention_money') }}
-                  </button>
                 </div>
               </div>
               <div class="content">
@@ -171,14 +163,6 @@
                   >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </button>
-                  <button
-                    @click="jumpToPersonalCenter('assets', 'sell', 'withdraw')"
-                    :class="{'gray':!sellIsWithdraw}"
-                    :disabled="!sellIsWithdraw"
-                  >
-                    <!--提币-->
-                    {{ $t('M.comm_mention_money') }}
                   </button>
                 </div>
               </div>
@@ -298,14 +282,6 @@
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
                   </button>
-                  <button
-                    @click.stop="jumpToPersonalCenter('assets', 'buy', 'withdraw')"
-                    :class="{'gray':!buyIsWithdraw}"
-                    :disabled="!buyIsWithdraw"
-                  >
-                    <!--提币-->
-                    {{ $t('M.comm_mention_money') }}
-                  </button>
                 </div>
               </div>
               <div class="content">
@@ -383,14 +359,6 @@
                   >
                     <!--充币-->
                     {{ $t('M.comm_charge_money') }}
-                  </button>
-                  <button
-                    @click="jumpToPersonalCenter('assets', 'sell', 'withdraw')"
-                    :class="{'gray':!sellIsWithdraw}"
-                    :disabled="!sellIsWithdraw"
-                  >
-                    <!--提币-->
-                    {{ $t('M.comm_mention_money') }}
                   </button>
                 </div>
               </div>
