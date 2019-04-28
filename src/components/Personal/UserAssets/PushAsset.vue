@@ -191,10 +191,10 @@
             </el-table-column>
             <!--价格-->
             <el-table-column
-              :label="$t('M.comm_price_metre') + pushPayCoinName"
+              :label="$t('M.comm_price_metre')"
             >
               <template slot-scope="s">
-                <div>{{ $scientificToNumber(s.row.price) }}</div>
+                <div>{{ $scientificToNumber(s.row.price) }} {{s.row.payCoinName}}</div>
               </template>
             </el-table-column>
             <!--金额-->
