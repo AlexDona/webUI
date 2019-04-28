@@ -320,7 +320,8 @@ export const OTC = {
   // #################取引のリスト############
   'otc_tradingorder': 'スキャンコードの支払い',
   'otc_tradingorder_transformAcconu': '振込額',
-  'otc_tradingorder_notice': '注意！ 上記の状況が3回発生した場合、お客様のアカウントはフリーズしますので、カスタマーサービスにご連絡ください。',
+  'otc_tradingorder_notice1': '注意！上記の状況が',
+  'otc_tradingorder_notice2': '回発生した場合、お客様のアカウントはフリーズしますので、カスタマーサービスにご連絡ください。',
   'otc_tradingorder_autoCancel': '相手が1分以内に支払いを提出しない場合、注文は自動的にキャンセルされます。',
   'otc_tradingorder_orderExact': '注文が生成された後',
   'otc_index_inputSellAccount': '販売数量はゼロではいけません',

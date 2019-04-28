@@ -564,8 +564,6 @@ export default {
       sellMonthMap: {},
       // 出售本周交易
       sellWeekMap: {},
-      // 当前法币币种保留小数点位数限制
-      moneyPointLength: 3,
       // 日期插件增加日期限制:只能选择当天及当前以前的日期
       pickerOptions: {
         disabledDate (time) {

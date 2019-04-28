@@ -319,7 +319,8 @@ export const OTC = {
   // #################交易中列表############
   'otc_tradingorder': '掃碼支付',
   'otc_tradingorder_transformAcconu': '轉賬金額',
-  'otc_tradingorder_notice': '註意！計時結束前未手動轉賬並點擊"確認付款"，您的訂單將自動取消，若上述情況當日累計出現3次，您的賬戶將被凍結,請聯系客服。',
+  'otc_tradingorder_notice1': '註意！計時結束前未手動轉賬並點擊"確認付款"，您的訂單將自動取消，若上述情況當日累計出現',
+  'otc_tradingorder_notice2': '次，您的賬戶將被凍結,請聯系客服。',
   'otc_tradingorder_autoCancel': '分鐘內對方未提交付款，訂單將自動取消',
   'otc_tradingorder_orderExact': '訂單生成後',
   'otc_index_inputSellAccount': '賣出量不能為0',

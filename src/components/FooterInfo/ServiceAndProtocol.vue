@@ -49,7 +49,7 @@
                 />
               </div>
             </el-tab-pane>
-            <!--API文档-->
+            <!--反洗钱-->
             <el-tab-pane
               :label="$t('M.about_digital_terms_hint7')"
               name="AML"

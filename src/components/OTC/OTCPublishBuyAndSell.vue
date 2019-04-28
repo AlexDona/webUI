@@ -169,8 +169,8 @@
                     :class="{ redBorderRightNone: priceErrorTipsBorder }"
                     v-show="publishStyle === 'sell'"
                     ref="priceSell"
-                    @keyup="changeInputValue('priceSell', moneyPointLength)"
-                    @input="changeInputValue('priceSell', moneyPointLength)"
+                    @keyup="changeInputValue('priceSell', moneyPointLengthPrice)"
+                    @input="changeInputValue('priceSell', moneyPointLengthPrice)"
                     onpaste="return false"
                   >
                   <!-- 买入单价 -->
@@ -181,8 +181,8 @@
                     :class="{ redBorderRightNone: priceErrorTipsBorder }"
                     v-show="publishStyle === 'buy'"
                     ref="priceBuy"
-                    @keyup="changeInputValue('priceBuy', moneyPointLength)"
-                    @input="changeInputValue('priceBuy', moneyPointLength)"
+                    @keyup="changeInputValue('priceBuy', moneyPointLengthPrice)"
+                    @input="changeInputValue('priceBuy', moneyPointLengthPrice)"
                     onpaste="return false"
                   >
                   <span
@@ -533,7 +533,8 @@ export default {
       // 当前币种返回的保留小数点位数限制
       pointLength: 4,
       // 当前金额小数点限制位数
-      moneyPointLength: 3,
+      moneyPointLengthPrice: 3, // 当前金额小数点限制位数-单价保留3位
+      moneyPointLength: 2, // 当前金额小数点限制位数-总金额和最低最高限额保留2位
       // 买入量卖出量错误提示框
       entrustCountErrorTipsBorder: false,
       // 买入量卖出量单位错误提示框

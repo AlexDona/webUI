@@ -85,13 +85,21 @@
               </a>
             </li>
           </ul>
-          <!-- 版权 -->
+          <!-- 邮箱 -->
           <div class="email">
             <span
               class="email-content"
               v-if="configInfo['otcEmail']"
             >
-              EMAIL: {{configInfo['otcEmail']}}
+              {{$t('M.footer_service_email')}}: {{configInfo['otcEmail']}}
+            </span>
+            <br/>
+            <!-- 投诉邮箱 -->
+            <span
+              class="email-content"
+              v-if="configInfo['complaintEmail']"
+            >
+              {{$t('M.footer_complaint_email')}}: {{configInfo['complaintEmail']}}
             </span>
           </div>
         </div>
@@ -176,8 +184,8 @@
               class="dd-item"
               @click="$footerJump('/ServiceAndProtocol','AML')"
             >
-              <!--反洗钱-->
-              {{$t('M.comm_about')}}{{$t('M.about_digital_terms_hint7')}}
+              <!--关于反洗钱-->
+              {{$t('M.about_digital_terms_hint10')}}
             </dd>
           </dl>
           <dl class="right-dl">
@@ -486,6 +494,7 @@ export default {
 
             > .email-content {
               font-size: 12px;
+              line-height: 25px;
               color: #cecece;
             }
           }

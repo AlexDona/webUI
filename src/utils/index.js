@@ -175,8 +175,8 @@ export const formatSeconds = (date, type) => {
   switch (type) {
     case 'OTC':
       result = `${parseInt(secondTime)}″`
-      if (minuteTime > 0) result = `${parseInt(minuteTime)}'′'${result}`
-      if (hourTime > 0) result = `${parseInt(hourTime)}'ˋ'${result}`
+      if (minuteTime > 0) result = `${parseInt(minuteTime)}′${result}`
+      if (hourTime > 0) result = `${parseInt(hourTime)}ˋ${result}`
       break
     default:
       result = `${formatTime(dayTime)}_${formatTime(hourTime)}_${formatTime(minuteTime)}_${formatTime(secondTime)}`

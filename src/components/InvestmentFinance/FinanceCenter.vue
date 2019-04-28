@@ -44,10 +44,10 @@
             </li>
             <li>
               <p class="green">
-                {{dayAmountIncrease}}<span>{{convertCurrency}}</span>
+                {{dayAmountIncrease}}%
               </p>
               <!-- 当日涨幅 -->
-              <span>{{$t('M.finance_date')}}{{$t('M.finance_increase')}}</span>
+              <span>{{$t('M.finance_increase1')}}</span>
             </li>
             <li v-if='this.historyAmountIncrease'>
               <p class="red">{{historyAmountIncrease}}</p>
@@ -94,7 +94,7 @@
               </div>
               <div class="left-label">
                 <!-- 存币数量 -->
-                <span class="label-title display-inline-block text-align-r">{{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;</span>
+                <span class="label-title display-inline-block text-align-r">{{$t('M.finance_invest_count')}}:&nbsp;</span>
                 <div class='invest-amount float-right'>
                   <!-- 请输入数量 -->
                   <input
@@ -312,7 +312,7 @@
             <div class="nav-header">
               <!-- 我的存币 -->
               <div class="invest">
-                {{$t('M.finance_mine')}}{{$t('M.finance_invest')}}
+                {{$t('M.finance_mine_money')}}
               </div>
             </div>
             <div class="pieCharts-box">
@@ -327,7 +327,7 @@
                 </div>
                 <!-- 历史收益 -->
                 <div>
-                  {{$t('M.finance_history')}}{{$t('M.finance_earnings')}}
+                  {{$t('M.finance_history_earnings')}}
                   <p class="red2">
                     <span>{{isLogin ? getMoneyValue : '--'}}</span>
                     {{convertCurrency}}

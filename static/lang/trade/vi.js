@@ -28,7 +28,7 @@ export const trade = {
   'trade_latest_price': 'Giá mới nhất',
   'trade_ups_and_downs': 'Tăng-giảm',
   'trade_highest': 'Cao nhất',
-  'trade_minimum': 'Thấp nhấp',
+  'trade_minimum': 'Thấp nhất',
   'trade_order_recent_deal': 'Thành giao gần gây',
   'trade_market_bazaar': '',
   'trade_market_amount_increase': 'Thị trường',

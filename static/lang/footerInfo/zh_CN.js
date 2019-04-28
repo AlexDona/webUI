@@ -12,6 +12,7 @@ export const footerInfo = {
   'about_digital_terms_hint5': 'API文档',
   'about_digital_terms_hint6': '币种资料',
   'about_digital_terms_hint7': '反洗钱',
+  'about_digital_terms_hint10': '关于反洗钱',
   'about_digital_terms_hint8': 'OTC 服务协议',
   'about_digital_terms_hint9': '公司简介',
   // ##########################20181117-1145新增国际化################################
@@ -55,5 +56,7 @@ export const footerInfo = {
   'rate_withdraw_min': '单笔最小提现',
   'rate_withdraw_max': '单笔最大提现',
   'rate_withdraw_amount': '每日提现额度',
-  'rate_withdraw_times': '每日提现次数'
+  'rate_withdraw_times': '每日提现次数',
+  'footer_service_email': '客服邮箱',
+  'footer_complaint_email': '投诉邮箱'
 }

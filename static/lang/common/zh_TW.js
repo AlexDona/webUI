@@ -45,6 +45,7 @@ export const common = {
   'comm_quantity': '量',
   'comm_trading_volume1': '成交量',
   'comm_trading_volume2': '成交量',
+  'comm_trading_volume3': '24H成交量',
   'comm_type': '類型',
   'comm_money': '金額',
   'comm_property': '資產',

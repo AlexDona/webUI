@@ -43,8 +43,9 @@ export default {
   data () {
     return {
       searchKeyWord: '', // 搜索关键字
-      enSrc: 'https://doc.bzu.com/web/#/6?page_id=111',
-      chSrc: 'https://doc.bzu.com/web/#/8?page_id=142'
+      enSrc: `${this.showDocUrl}6?page_id=111`,
+      chSrc: `${this.showDocUrl}8?page_id=142`,
+      showDocUrl: 'https://doc.ops.coin78.com/web/#/'
     }
   },
   created () {
