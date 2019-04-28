@@ -103,7 +103,7 @@
               </span>
               <span class="font-size12">{{innerUserInfo.email}}</span>
               <IconFontCommon
-                v-if="!securityCenter.isMailEnable"
+                v-if="!securityCenter.isMailEnable || !securityCenter.isMailBind"
                 class="font-size16"
                 iconName="icon-wuuiconsuotanhao-copy"
               />
@@ -152,7 +152,7 @@
               </span>
               <span class="font-size12">{{innerUserInfo.phone}}</span>
               <IconFontCommon
-                v-if="!securityCenter.isPhoneBind"
+                v-if="!securityCenter.isPhoneBind || !securityCenter.isPhoneEnable"
                 class="font-size16"
                 iconName="icon-wuuiconsuotanhao-copy"
               />
@@ -200,7 +200,7 @@
                 {{ $t('M.user_security_google') }}{{ $t('M.user_security_verify') }}
               </span>
               <IconFontCommon
-                v-if="!securityCenter.isGoogleBind"
+                v-if="!securityCenter.isGoogleBind || ! securityCenter.isGoogleEnable"
                 class="font-size16"
                 iconName="icon-wuuiconsuotanhao-copy"
               />
@@ -721,6 +721,7 @@ export default {
           // 接口成功清除loading
           this.fullscreenLoading = false
           this.securityCenter = getNestedData(data, 'data.data')
+          console.log(this.securityCenter)
           this.securityLevel = getNestedData(data, 'data.data.person')
           switch (entrustType) {
             case 'logon-record':
