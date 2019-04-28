@@ -12,6 +12,7 @@ export const footerInfo = {
   'about_digital_terms_hint5': 'APIドキュメント',
   'about_digital_terms_hint6': '通貨情報',
   'about_digital_terms_hint7': 'AML',
+  'about_digital_terms_hint10': '私たちについてAML',
   'about_digital_terms_hint8': 'OTC サービス契約',
   'about_digital_terms_hint9': '会社紹介',
   // ##########################20181117-1145新增国际化################################
@@ -55,5 +56,7 @@ export const footerInfo = {
   'rate_withdraw_min': '毎回最大出金',
   'rate_withdraw_max': '毎日出金額',
   'rate_withdraw_amount': '毎日出金回',
-  'rate_withdraw_times': '取引ペア率'
+  'rate_withdraw_times': '取引ペア率',
+  'footer_service_email': 'コールメールポスト',
+  'footer_complaint_email': 'クレームメールボックス'
 }

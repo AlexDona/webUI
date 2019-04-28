@@ -12,6 +12,7 @@ export const footerInfo = {
   'about_digital_terms_hint5': 'API문서',
   'about_digital_terms_hint6': '코인 자료',
   'about_digital_terms_hint7': 'AML',
+  'about_digital_terms_hint10': '정보AML',
   'about_digital_terms_hint8': 'OTC 서비스계약',
   'about_digital_terms_hint9': '회사 소개',
   // ##########################20181117-1145新增国际化################################
@@ -55,5 +56,7 @@ export const footerInfo = {
   'rate_withdraw_min': '단필 최대 현금 인출',
   'rate_withdraw_max': '매일 현금 인출 한도',
   'rate_withdraw_amount': '매일 현금 인출 횟수',
-  'rate_withdraw_times': '거래 대 요율'
+  'rate_withdraw_times': '거래 대 요율',
+  'footer_service_email': '고객 서비스 사서함',
+  'footer_complaint_email': '불만 우편함'
 }
