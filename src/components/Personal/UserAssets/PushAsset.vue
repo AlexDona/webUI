@@ -487,7 +487,10 @@ export default {
   },
   async created () {
     this.reflashIsNeedPayPassword()
-    // this.getPushRecordList()
+    // console.log(this.userCenterActiveName)
+    if (this.userCenterActiveName === 'push-asset') {
+      this.getPushRecordList()
+    }
   },
   mounted () {
   },
@@ -825,7 +828,7 @@ export default {
     changeCurrentPage (pageNum) {
       this.currentPageForMyEntrust = pageNum
       this.getPushRecordList()
-      console.log(pageNum)
+      // console.log(pageNum)
     },
     // 清空数据
     emptyInputData () {
@@ -852,7 +855,6 @@ export default {
   watch: {
     async userCenterActiveName (newVal) {
       if (newVal === 'push-asset') {
-        console.log(1)
         this.currentPageForMyEntrust = 1
         await this.reflashIsNeedPayPassword()
         this.getPushRecordList()
