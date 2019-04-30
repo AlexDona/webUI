@@ -43,9 +43,7 @@ export default {
   data () {
     return {
       searchKeyWord: '', // 搜索关键字
-      enSrc: `${this.showDocUrl}6?page_id=111`,
-      chSrc: `${this.showDocUrl}8?page_id=142`,
-      showDocUrl: 'https://doc.ops.coin78.com/web/#/'
+      showDocUrl: 'https://doc.bzu.com/web/#/'
     }
   },
   created () {
@@ -67,7 +65,13 @@ export default {
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme
-    })
+    }),
+    enSrc () {
+      return `${this.showDocUrl}2?page_id=2`
+    },
+    chSrc () {
+      return `${this.showDocUrl}1?page_id=1`
+    }
   },
   watch: {
   }
