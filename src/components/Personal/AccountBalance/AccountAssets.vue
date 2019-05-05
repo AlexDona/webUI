@@ -1192,7 +1192,7 @@ export default {
       this.withdrawRemark = withdrawRemark
       // console.log(index)
       if (this.isNeedTag) {
-        if (!this.withdrawRemark) {
+        if (!this.withdrawRemark.trim()) {
           // 请输入备注
           this.$message({
             message: this.$t('M.comm_please_enter') + this.$t('M.comm_address_labels'),

@@ -12,7 +12,7 @@
     >
       <p class="mention-treasure">
         <!--地址标签-->
-        {{ $t('M.user_address_labels') }}
+        {{ $t('M.comm_address_labels') }}
         <!--（填写错误可能导致资产损失，请仔细核对）-->
         <span class="treasure-info font-size12">({{ $t('M.user_address_labels_prompt') }})</span>
       </p>
