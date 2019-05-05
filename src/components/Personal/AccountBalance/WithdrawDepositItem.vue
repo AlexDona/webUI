@@ -12,7 +12,7 @@
     >
       <p class="mention-treasure">
         <!--地址标签-->
-        {{ $t('M.user_address_labels') }}
+        {{ $t('M.comm_address_labels') }}
         <!--（填写错误可能导致资产损失，请仔细核对）-->
         <span class="treasure-info font-size12">({{ $t('M.user_address_labels_prompt') }})</span>
       </p>
@@ -146,7 +146,7 @@
         <p class="mention-button">
           <button
             class="font-size12 submit-but border-radius4 cursor-pointer"
-            @click.prevent="validateOfWithdraw(coinId)"
+            @click.prevent="validateOfWithdraw(coinId, withdrawRemark)"
           >
             <!--提币-->
             {{ $t('M.comm_mention_money') }}
@@ -173,8 +173,6 @@ export default {
     'isShow',
     // 是否需要备注(公信宝)
     'isNeedTag',
-    // 提币地址
-    'withdrawRemark',
     // 币种名称
     'currencyName',
     // 提币地址列表
@@ -197,7 +195,9 @@ export default {
   data () {
     return {
       //  当前提币地址
-      activeWithdrawDepositAddress: ''
+      activeWithdrawDepositAddress: '',
+      // 地址标签
+      withdrawRemark: ''
     }
   },
   created () {
@@ -227,9 +227,10 @@ export default {
         total
       })
     },
-    validateOfWithdraw (coinId) {
+    validateOfWithdraw (coinId, withdrawRemark) {
       this.$emit('validateOfWithdraw', {
-        coinId
+        coinId,
+        withdrawRemark
       })
     },
     changeInputValue (ref, index, pointLengthAccountCount, val, coinId, total) {

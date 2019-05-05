@@ -57,6 +57,7 @@ export const common = {
   'comm_creation': 'Create',
   'comm_update': 'Update',
   'comm_remark': 'Remark',
+  'comm_address_labels': 'Address labels',
   'comm_site': 'Address',
   'comm_list': 'List',
   'comm_operation': 'Operation',
