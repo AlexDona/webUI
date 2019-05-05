@@ -114,7 +114,6 @@ export default {
       'SET_COUNTRY_AREA_LIST',
       'USER_INFORMATION_REFRESH',
       'SET_USER_INFO_REFRESH_STATUS',
-      'SET_FOOTER_INFO',
       'SET_LOGO_URL'
     ]),
     // 显示状态切换 （语言）

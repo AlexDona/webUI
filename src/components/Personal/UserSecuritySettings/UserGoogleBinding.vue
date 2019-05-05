@@ -82,7 +82,6 @@
                 <Qrcode
                   class="ercode"
                   :value="googleTheSecretUrl"
-                  :options="{ size: 97 }"
                 >
                 </Qrcode>
               </div>
