@@ -1198,6 +1198,7 @@ export default {
             message: this.$t('M.comm_please_enter') + this.$t('M.comm_address_labels'),
             type: 'error'
           })
+          return
         }
       }
       // console.log(this.activeWithdrawDepositAddress)
