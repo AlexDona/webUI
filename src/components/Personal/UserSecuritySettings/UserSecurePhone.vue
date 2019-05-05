@@ -131,6 +131,30 @@
                 :isShow="!!errorShowStatusList[2]"
               />
             </el-form-item>
+            <!--邮箱验证码-->
+            <el-form-item
+              :label="this.$t('M.comm_emailbox') + $t('M.comm_code') + '：'"
+            >
+              <el-input
+                v-model="bindingDataPhone.bindingNewEmailCode"
+                @keydown="setErrorMsg(3, '')"
+                @blur="checkoutInputFormat(3, bindingDataPhone.bindingNewEmailCode)"
+              >
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfEmailBtn"
+                    @run="sendPhoneOrEmailCode(1)"
+                    v-if="this.$route.path === '/SecurePhone'"
+                  />
+                </template>
+              </el-input>
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[3]"
+                :isShow="!!errorShowStatusList[3]"
+              />
+            </el-form-item>
             <div class="prompt-message">
               <div v-show="errorMsg">{{ errorMsg }}</div>
             </div>
@@ -338,12 +362,14 @@ export default {
         bindingNewPhoneAccounts: '', // 手机号
         identifyCode: '', // 图片验证码
         userInputImageCode: '', // 用户输入的图片验证码
-        bindingNewPhoneCode: '' // 新手机验证码
+        bindingNewPhoneCode: '', // 新手机验证码
+        bindingNewEmailCode: '' // 邮箱验证码
       },
       errorShowStatusList: [
         '', // 手机号码
         '', // 图片验证码
-        '' // 短信验证码
+        '', // 短信验证码
+        '' // 邮箱验证码
       ],
       amendDataPhone: {
         newPhoneAccounts: '', // 手机号
@@ -561,6 +587,20 @@ export default {
             this.$forceUpdate()
             return 1
           }
+        // 邮箱验证码
+        case 3:
+          if (!targetNum) {
+            // console.log(type)
+            // 请输入邮箱验证码
+            this.setErrorMsg(3, this.$t('M.login_please_input2'))
+            this.$forceUpdate()
+            return 0
+          } else {
+            console.log(type)
+            this.setErrorMsg(3, '')
+            this.$forceUpdate()
+            return 1
+          }
       }
     },
     // 绑定手机设置错误信息
@@ -585,7 +625,8 @@ export default {
       if (
         this.checkoutInputFormat(0, this.bindingDataPhone.bindingNewPhoneAccounts) &&
         this.checkoutInputFormat(1, this.bindingDataPhone.userInputImageCode) &&
-        this.checkoutInputFormat(2, this.bindingDataPhone.bindingNewPhoneCode)
+        this.checkoutInputFormat(2, this.bindingDataPhone.bindingNewPhoneCode) &&
+        this.checkoutInputFormat(3, this.bindingDataPhone.bindingNewEmailCode)
       ) {
         goOnStatus = 1
       } else {
@@ -595,7 +636,8 @@ export default {
         let data
         let param = {
           phone: this.bindingDataPhone.bindingNewPhoneAccounts, // 手机号
-          code: this.bindingDataPhone.bindingNewPhoneCode // 手机验证码
+          phoneCode: this.bindingDataPhone.bindingNewPhoneCode, // 手机验证码
+          emailCode: this.bindingDataPhone.bindingNewEmailCode // 邮箱验证码
         }
         data = await bindPhoneAddress(param)
         if (!data) return false

@@ -46,9 +46,9 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
-            <!--验证码-->
+            <!--邮箱验证码-->
             <el-form-item
-              :label="$t('M.comm_code') + '：'"
+              :label="this.$t('M.comm_emailbox') + $t('M.comm_code') + '：'"
             >
               <el-input
                 v-model="emailCode"
@@ -68,6 +68,30 @@
               <ErrorBox
                 :text="errorShowStatusList[1]"
                 :isShow="!!errorShowStatusList[1]"
+              />
+            </el-form-item>
+            <!--手机验证码-->
+            <el-form-item
+              :label="$t('M.comm_note') + $t('M.comm_code') + '：'"
+            >
+              <el-input
+                v-model="phoneCode"
+                @keydown="setErrorMsg(2,'')"
+                @blur="checkoutInputFormat(2, phoneCode)"
+              >
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfPhoneBtn"
+                    @run="sendPhoneOrEmailCode(0)"
+                    v-if="this.$route.path === '/SecureEmail'"
+                  />
+                </template>
+              </el-input>
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[2]"
+                :isShow="!!errorShowStatusList[2]"
               />
             </el-form-item>
             <button
@@ -109,11 +133,13 @@ export default {
     return {
       emailAccounts: '', // 邮箱账号
       emailCode: '', // 邮箱验证码
+      phoneCode: '', // 手机验证码
       successCountDown: 1, // 成功倒计时
       isEmailExist: false, // 邮箱是否存在
       errorShowStatusList: [
         '', // 邮箱账号
-        '' // 验证码
+        '', // 邮箱验证码
+        '' // 手机验证码
       ],
       userSecureEmailSuccessJumpTimer: null // 安全邮箱设置成功自动跳转定时器
     }
@@ -186,6 +212,7 @@ export default {
           params.email = this.emailAccounts
           break
       }
+      console.log(params)
       await sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     /**
@@ -259,6 +286,18 @@ export default {
             this.$forceUpdate()
             return 1
           }
+        case 2:
+          if (!targetNum) {
+            // console.log(type)
+            // 请输入手机验证码
+            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code'))
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(2, '')
+            this.$forceUpdate()
+            return 1
+          }
       }
     },
     // 设置错误信息
@@ -293,6 +332,7 @@ export default {
       if (
         this.checkoutInputFormat(0, this.emailAccounts) &&
         this.checkoutInputFormat(1, this.emailCode) &&
+        this.checkoutInputFormat(2, this.phoneCode) &&
         !this.isEmailExist
       ) {
         goOnStatus = 1
@@ -303,7 +343,8 @@ export default {
         let data
         let param = {
           email: this.emailAccounts, // 邮箱账号
-          code: this.emailCode // 邮箱验证码
+          emailCode: this.emailCode, // 邮箱验证码
+          phoneCode: this.phoneCode // 手機验证码
         }
         data = await bindEmailAddress(param)
         if (!data) return false
