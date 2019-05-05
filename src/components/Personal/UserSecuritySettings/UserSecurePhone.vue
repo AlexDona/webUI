@@ -432,6 +432,7 @@ export default {
     },
     // 发送验证码
     async sendPhoneOrEmailCode (loginType, val, type) {
+      console.log(loginType, val, type)
       await this.checkUserExistAjax()
       if (!type && !val && !this.bindingDataPhone.bindingNewPhoneAccounts) {
         this.$message({
@@ -505,6 +506,7 @@ export default {
             break
           case 1:
             params.email = this.userInfoDetail.email
+            params.userId = this.userInfo.userId
             break
         }
       } else {
