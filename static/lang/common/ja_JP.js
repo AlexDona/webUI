@@ -60,6 +60,7 @@ export const common = {
   'comm_creation': '創建',
   'comm_update': '更新',
   'comm_remark': 'リマーク',
+  'comm_address_labels': 'アドレスラベル',
   'comm_site': 'アドレス',
   'comm_list': 'リスト',
   'comm_operation': '操作',
