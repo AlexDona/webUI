@@ -309,7 +309,7 @@ import {
   // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 export default {
   components: {
     IconFontCommon //  字体图标
@@ -384,6 +384,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
+    ]),
     // 1.0 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
@@ -513,7 +516,16 @@ export default {
       this.getOTCADManageList()
     },
     // 12.0 点击 修改 按钮钮触发的事件
-    modifyAD (id) {
+    async modifyAD (id) {
+      // 刷新用户个人信息
+      await this.REFRESH_USER_INFO_ACTION()
+      if (this.userInfo.otcEnable === 'disable') {
+        this.$message({
+          message: this.$t('M.otc_disable_account_tips'), // 该账号已被禁止交易OTC，请咨询客服
+          type: 'error'
+        })
+        return false
+      }
       this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), {
         confirmButtonText: this.$t('M.comm_confirm'), // 确定
         cancelButtonText: this.$t('M.comm_cancel') // 取消
@@ -534,6 +546,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       language: state => state.common.language, // 当前选中语言
       theme: state => state.common.theme // 主题颜色
     }),

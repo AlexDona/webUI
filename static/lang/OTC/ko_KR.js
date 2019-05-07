@@ -361,5 +361,7 @@ export const OTC = {
   'otc_upload_picture7': '5M보다 작은 이미지를 업로드하십시오.',
   // 增加当前市场最低出售价 当前市场最高收购价
   'otc_current-market-price-min': '시장최저가',
-  'otc_current-market-price-max': '시장최고가'
+  'otc_current-market-price-max': '시장최고가',
+  // otc 账号禁用不能交易提示
+  'otc_disable_account_tips': '계좌가 거래 금지되었습니다OTC. 고객 서비스에 문의하십시오.'
 }

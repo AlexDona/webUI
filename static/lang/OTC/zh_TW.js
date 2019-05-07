@@ -360,5 +360,7 @@ export const OTC = {
   'otc_upload_picture7': '請上傳小於5M的圖片',
   // 增加当前市场最低出售价 当前市场最高收购价
   'otc_current-market-price-min': '當前市場最低出售價',
-  'otc_current-market-price-max': '當前市場最高收購價'
+  'otc_current-market-price-max': '當前市場最高收購價',
+  // otc 账号禁用不能交易提示
+  'otc_disable_account_tips': '該帳號已被禁止交易OTC，請諮詢客服'
 }

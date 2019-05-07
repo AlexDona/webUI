@@ -371,5 +371,7 @@ export const OTC = {
   'otc_upload_picture7': 'Upload pictures less than 5M',
   // 增加当前市场最低出售价 当前市场最高收购价
   'otc_current-market-price-min': 'Lowest market price',
-  'otc_current-market-price-max': 'Highest market price'
+  'otc_current-market-price-max': 'Highest market price',
+  // otc 账号禁用不能交易提示
+  'otc_disable_account_tips': 'This account has been banned from trading OTC, please contact customer service'
 }

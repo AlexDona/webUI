@@ -360,5 +360,7 @@ export const OTC = {
   'otc_upload_picture7': '请上传小于5M的图片',
   // 增加当前市场最低出售价 当前市场最高收购价
   'otc_current-market-price-min': '当前市场最低出售价',
-  'otc_current-market-price-max': '当前市场最高收购价'
+  'otc_current-market-price-max': '当前市场最高收购价',
+  // otc 账号禁用不能交易提示
+  'otc_disable_account_tips': '该账号已被禁止交易OTC，请咨询客服'
 }
