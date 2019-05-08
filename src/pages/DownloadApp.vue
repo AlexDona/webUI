@@ -12,7 +12,9 @@
         display:'none'
       }"
     />
-    <div class="inner-box">
+    <div
+      class="inner-box"
+    >
       <div class="logo">
         <img
           :src="logoSrc"
@@ -20,28 +22,15 @@
       </div>
       <div class="content">
         <img
-          :src="zh_CNSrc"
+          :src="isChineseLanguage ? zh_CNSrc : en_USSrc"
           v-if="isChineseLanguage"
-        >
-        <img
-          :src="en_USSrc"
-          v-else
         >
         <button
           class="download-btn"
-          v-if="isChineseLanguage"
           @click="downloadApp"
         >
           <!-- 立即安装 -->
-          立即安装
-        </button>
-        <button
-          class="download-btn"
-          v-else
-          @click="downloadApp"
-        >
-          <!-- 立即安装 -->
-          Install
+          {{isChineseLanguage ? '立即安装' : 'Install' }}
         </button>
         <a
           :href="downloadUrl"
@@ -132,7 +121,7 @@ export default {
       iosUrl: state => state.footerInfo.downloadUrl.ios
     }),
     windowHeight () {
-      return window.innerHeight + 200
+      return window.innerHeight
     },
     isChineseLanguage () {
       return this.language === 'zh_CN' ||
@@ -151,19 +140,14 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   .download-box {
-    position: relative;
     width: 100%;
-    background: linear-gradient(150deg, #1e2636, #254b75);
 
     > .inner-box {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+      border: 1px solid transparent;
 
       > .logo {
-        width: 3rem;
-        height: 3rem;
-        margin: 3rem auto;
+        width: 6rem;
+        margin: 4rem auto 2rem;
         border-radius: 10px;
 
         > img {
@@ -174,17 +158,18 @@ export default {
 
       > .content {
         width: 100%;
-        height: 15rem;
         text-align: center;
 
         > img {
-          height: 100%;
+          display: block;
+          width: 60%;
+          margin: 0 auto;
         }
 
         > .download-btn {
           width: 10rem;
           height: 2rem;
-          margin: 2rem auto;
+          margin: 200px auto;
           border-radius: 40px;
           font-size: .8rem;
           line-height: 2rem;
