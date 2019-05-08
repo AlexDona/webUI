@@ -733,6 +733,12 @@ export default {
             type: 'error'
           })
           return false
+        } if (this.userInfo.otcEnable === 'disable') {
+          this.$message({
+            message: this.$t('M.otc_disable_account_tips'), // 该账号已被禁止交易OTC，请咨询客服
+            type: 'error'
+          })
+          return false
         } else {
           // this.OTCBuySellStyle 当前买卖类型
           // this.selectedOTCAvailableCurrencyCoinID 选中的可用币种id
@@ -766,6 +772,12 @@ export default {
         } else if (!(this.userInfo.advancedAuth === 'pass')) {
           this.$message({
             message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
+            type: 'error'
+          })
+          return false
+        } if (this.userInfo.otcEnable === 'disable') {
+          this.$message({
+            message: this.$t('M.otc_disable_account_tips'), // 该账号已被禁止交易OTC，请咨询客服
             type: 'error'
           })
           return false

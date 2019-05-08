@@ -177,6 +177,8 @@ export const personal = {
   'user_security_safety': '安全性',
   'user_security_email': 'メール',
   'user_security_phone': '携帯電話',
+  'user_security_phone1': '携帯電話登録',
+  'user_security_email1': 'メール登録',
   'user_security_google': 'Google',
   'user_security_password': 'パスワード',
   'user_security_verify': '確認',
@@ -380,5 +382,6 @@ export const personal = {
   'user_pay_pwd_every': 'トランザクションごとのトランザクションパスワードを確認する',
   'user_pay_pwd_user_set': '数時間以内に取引パスワードを無料で入力',
   'user_pay_pwd_never': 'トランザクションパスワードを入力しない',
-  'user_re_input_ip': 'ipフォーマットが正しくないので再入力してください'
+  'user_re_input_ip': 'ipフォーマットが正しくないので再入力してください',
+  'user_address_labels_prompt': '記入ミスは資産損失につながる可能性がある、よくチェックしてください'
 }
