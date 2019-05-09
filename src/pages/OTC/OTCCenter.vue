@@ -271,6 +271,7 @@
                     type="danger"
                     size="mini"
                     v-if="OTCBuySellStyle === 'onlineBuy'"
+                    :disabled="s.row.otcEnable==='disable'"
                     @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId,s.row.country)"
                   >
                     <!-- 购买 -->
@@ -280,6 +281,7 @@
                     type="success"
                     size="mini"
                     v-if="OTCBuySellStyle === 'onlineSell'"
+                    :disabled="s.row.otcEnable==='disable'"
                     @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId,s.row.country)"
                   >
                     <!-- 出售 -->
@@ -1244,6 +1246,18 @@ export default {
       .el-table {
         td {
           padding: 15px 0;
+        }
+
+        .el-table__body {
+          .el-button--danger.is-disabled {
+            border-color: #e4b1a7;
+            background-color: #e4b1a7;
+          }
+
+          .el-button--success.is-disabled {
+            border-color: #8ead9e;
+            background-color: #8ead9e;
+          }
         }
       }
 
