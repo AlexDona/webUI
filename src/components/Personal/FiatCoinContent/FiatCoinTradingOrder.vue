@@ -568,9 +568,9 @@
                     type="primary"
                     size="mini"
                     @click="confirmGatherMoney(item.id)"
-                    :disabled="sellerTimeOutDisabled[index]"
                     style="font-size: 12px;"
                   >
+                    <!--:disabled="sellerTimeOutDisabled[index]"20190508更改卖家超时仍可以收款-->
                     <!--确认收款-->
                     {{$t('M.otc_trading_collectionconfirmation')}}
                   </el-button>
@@ -948,7 +948,7 @@ export default {
       fileList: [], // 绑定的上传的文件列表
       uploadFileList: [], // 自定义的上传的文件列表
       buyerAppealButtonStatus: [], // 买家申诉按钮显示状态
-      sellerTimeOutDisabled: [], // 卖家超时禁用确认收款按钮
+      // sellerTimeOutDisabled: [], // 卖家超时禁用确认收款按钮 20190508更改卖家超时仍可以收款
       // 增加上传图片压缩功能
       imgQuality: 0.4 // 压缩图片的质量
     }
@@ -1124,11 +1124,11 @@ export default {
         this.accomplishOrderTimeArr.forEach((item, index) => {
           if (item - 0 > 0) {
             this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
-            this.$set(this.sellerTimeOutDisabled, index, false) // 卖家超时禁用确认收款按钮-未超时可点击
+            // this.$set(this.sellerTimeOutDisabled, index, false) // 卖家超时禁用确认收款按钮-未超时可点击 20190508更改卖家超时仍可以收款
             this.$set(this.buyerAppealButtonStatus, index, false) // 卖家未超时付款隐藏买家申诉订单按钮
           } else {
             this.$set(this.buyerAppealButtonStatus, index, true) // 卖家超时未付款显示买家申诉订单按钮
-            this.$set(this.sellerTimeOutDisabled, index, true) // 卖家超时禁用确认收款按钮
+            // this.$set(this.sellerTimeOutDisabled, index, true) // 卖家超时禁用确认收款按钮 20190508更改卖家超时仍可以收款
           }
         })
       }, 1000)
