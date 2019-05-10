@@ -138,6 +138,10 @@
                 :close-on-click-modal="false"
                 class='dialogStyle'
               >
+                <p
+                  class="red vdsTips"
+                  v-if="selectedCoinName === 'VDS'"
+                >{{$t('M.finance_vdsTips')}}</p>
                 <el-form
                   label-position="right"
                   label-width="115px"
@@ -1009,6 +1013,7 @@ export default {
       _.forEach(this.traderCoinList, item => {
         if (item.id === e) {
           this.selectedCoinName = item.name
+          console.log(this.selectedCoinName)
         }
       })
       // 改变币种重新请求接口
@@ -1349,6 +1354,13 @@ export default {
       }
 
       .dialogStyle {
+        .vdsTips {
+          padding: 0 30px;
+          margin-top: -10px;
+          font-size: 12px;
+          text-align: center;
+        }
+
         .el-input__inner {
           width: 250px !important;
           height: 38px !important;
