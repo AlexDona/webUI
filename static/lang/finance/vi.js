@@ -48,5 +48,6 @@ export const finance = {
   'finance_invest_number': 'Số lượng trữ đồng tiền không được là 0',
   'finance_invest_read': 'Đọc',
   'finance_invest_explain': 'Giải thích trữ tiền',
-  'finance_invest_interest': 'Phải là một bản tức'
+  'finance_invest_interest': 'Phải là một bản tức',
+  'finance_vdsTips': '*Do cơ chế phân phối và tính ngẫu nhiên của liên kết chính VDS, doanh thu khai thác không thể được xác định theo tỷ lệ cố định. Hệ thống mặc định mặc định là 0. Doanh thu khai thác cụ thể dựa vào thực tế.'
 }
