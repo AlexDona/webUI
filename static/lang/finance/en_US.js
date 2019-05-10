@@ -51,5 +51,5 @@ export const finance = {
   'finance_invest_read': 'Reading',
   'finance_invest_explain': 'Deposit introduction',
   'finance_invest_interest': 'Equivalent principal and interest',
-  'finance_vdsTips': '*Because of the distribution mechanism and randomness of VDS main chain, mining revenue can not be determined in a fixed proportion. The default setting of the system is 0, and the specific mining revenue is based on the actual situation.'
+  'finance_vdsTips': '*Due to the distribution mechanism and randomness of VDS main chain, the mining revenue cannot be determined in a fixed proportion.The default setting of the system is 0, and the actual mining income shall prevail'
 }
