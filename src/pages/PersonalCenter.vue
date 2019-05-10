@@ -346,7 +346,7 @@ export default {
         this.$goToPage('/TransactionPassword')
       } else {
         this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
-        this.$goToPage('/PersonalCenter')
+        this.currentUserCenterActiveName = 'identity-authentication'
         this.notVerifyDialogVisible = false
       }
     }
