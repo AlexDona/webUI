@@ -140,7 +140,7 @@
               >
                 <p
                   class="red vdsTips"
-                  v-if="selectedCoinName === 'VDS'"
+                  v-if="selectedCoinName === 'Vollar'"
                 >{{$t('M.finance_vdsTips')}}</p>
                 <el-form
                   label-position="right"
