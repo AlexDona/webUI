@@ -206,11 +206,8 @@
                     <div
                       v-if="assetItem.cnyValue > 0"
                     >
-                      <div v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
+                      <div>
                         {{ $scientificToNumber($keep2Num(assetItem.cnyValue * CNYRate)) }} {{ activeConvertCurrencyObj.shortName }}
-                      </div>
-                      <div v-else>
-                        {{ $scientificToNumber($keep2Num(assetItem.cnyValue)) }} CNY
                       </div>
                     </div>
                     <div
@@ -711,12 +708,11 @@ export default {
     }
   },
   async created () {
+    console.log(this.filteredData2)
     // console.log(this.$route.params.type, this.$route.params.coinId)
     // 刚进页面时候 个人资产列表展示
-    if (this.currencyRateList.CNY) {
-      // 汇率转换
-      await this.currencyTransform()
-    }
+    // 汇率转换
+    // await this.currencyTransform()
     // 个人资产跳转OTC-otc可用币种查询
     await this.getOTCAvailableCurrencyList()
   },
@@ -757,6 +753,7 @@ export default {
       // console.log(data)
       // 获取汇率
       this.CNYRate = getNestedData(data, 'data.coinPrice')
+      console.log(this.CNYRate)
     },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
@@ -1419,7 +1416,8 @@ export default {
       advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
       // 实名认证
       realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth'),
-      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币对象
+      activeConvertCurrency: state => state.common.activeConvertCurrency, // 目标货币对象
       // 交易密码是否被锁定
       isLockedPayPassword: state => state.common.isLockedPayPassword,
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
@@ -1457,14 +1455,12 @@ export default {
   },
   watch: {
     async activeConvertCurrencyObj () {
-      if (this.currencyRateList.CNY) {
-        // 汇率转换
-        await this.currencyTransform()
-      }
+      // 获取不同货币对人民币的折算汇率
+      await this.currencyTransform()
       // console.log(this.activeConvertCurrencyObj)
     },
     currencyRateList () {
-      // console.log(this.currencyRateList)
+      console.log(this.currencyRateList)
     },
     filteredData1 () {
       // console.log(this.filteredData1)
