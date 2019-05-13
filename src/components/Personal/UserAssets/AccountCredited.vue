@@ -182,7 +182,7 @@
             >
               <!--关闭-->
               <img
-                @click.prevent="statusOpenToClose('western', paymentTerm.isXilianEnable === 'disable'? 'enable':'disable')"
+                @click.prevent="C('western', paymentTerm.isXilianEnable === 'disable'? 'enable':'disable')"
                 class="switch-img cursor-pointer"
                 :src="paymentTerm.isXilianEnable === 'disable'? closePictureSrc:openPictureSrc"
               >
