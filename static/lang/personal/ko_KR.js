@@ -180,6 +180,8 @@ export const personal = {
   'user_security_safety': '보안',
   'user_security_email': '메일 주소',
   'user_security_phone': '전화',
+  'user_security_phone1': '전화등록',
+  'user_security_email1': '메일 주소등록',
   'user_security_google': 'Google',
   'user_security_password': '비밀번호',
   'user_security_verify': '인증',

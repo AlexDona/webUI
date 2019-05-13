@@ -178,6 +178,8 @@ export const personal = {
   'user_security_safety': 'Safety ',
   'user_security_email': 'Mailbox',
   'user_security_phone': 'Phone',
+  'user_security_phone1': 'Phone',
+  'user_security_email1': 'Mailbox',
   'user_security_google': 'Google ',
   'user_security_password': ' password',
   'user_security_verify': ' verification',

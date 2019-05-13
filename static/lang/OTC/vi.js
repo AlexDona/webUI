@@ -308,5 +308,7 @@ export const OTC = {
   'otc_upload_picture7': 'Tải ảnh dưới 5M',
   // 增加当前市场最低出售价 当前市场最高收购价
   'otc_current-market-price-min': 'Giá Thấp Nhất',
-  'otc_current-market-price-max': 'Giá Cao Nhất '
+  'otc_current-market-price-max': 'Giá Cao Nhất ',
+  // otc 账号禁用不能交易提示
+  'otc_disable_account_tips': 'khi tài khoản bị cấm giao dic OTC, vui lòng liên hệ phòng tư vấn'
 }
