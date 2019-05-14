@@ -36,7 +36,7 @@ export const finance = {
   'finance_loginTips': '아직 로그인 못했습니다,어서',
   'finance_or': '혹은',
   'finance_loginTipsTwo': '후 확인!',
-  'finance_interestRate': '이자률',
+  'finance_interestRate': '화율',
   'finance_xiAndben': '이자 우선,본금 다음',
   'finance_timeLong': '소용시간',
   'finance_leit': '까지',
@@ -44,10 +44,15 @@ export const finance = {
   'finance_accrual': '이자',
   'finance_capital': '본금',
   'finance_total_income': '예상 총 수익',
+  'finance_how_return': '어떻게',
+  'finance_return_plan': '환리 계획',
+  'finance_payment': '제1기',
+  'finance_return_rate': '환기',
   // 二次确认弹框提示信息
   'finance_tipsContentOne': '코인 꺼내기 조작 확인하나요?',
   'finance_invest_number': '입금액은 0이 될 수 없습니다.',
   'finance_invest_read': '읽다',
   'finance_invest_explain': '예금에 대한 설명',
-  'finance_invest_interest': '등액 원금'
+  'finance_invest_interest': '등액 원금',
+  'finance_vdsTips': '*VDS 본연의 분배 메커니즘과 임의성 때문에 채광 수익은 고정비율로 정할 수 없다.시스템 기본 설정 0, 구체적인 채광 수익은 실제 기준으로 합니다。'
 }
