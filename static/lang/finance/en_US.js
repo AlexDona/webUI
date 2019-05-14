@@ -45,6 +45,10 @@ export const finance = {
   'finance_accrual': 'Interest',
   'finance_capital': 'Capital',
   'finance_total_income': 'Income',
+  'finance_how_return': 'How to return',
+  'finance_return_plan': 'Remission plan',
+  'finance_payment': 'First issue',
+  'finance_return_rate': 'Return bonus',
   // 二次确认弹框提示信息Secondary confirmation
   'finance_tipsContentOne': 'Determine to retrieve the deposit?',
   'finance_invest_number': 'The amount of deposit cannot be 0',
