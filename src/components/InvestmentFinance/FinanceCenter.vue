@@ -134,27 +134,38 @@
               <el-dialog
                 :title="$t('M.finance_save_moneydetail')"
                 :visible.sync="dialogVisible"
-                width="470px"
+                width="500px"
                 :close-on-click-modal="false"
                 class='dialogStyle'
               >
+                <p
+                  class="red vdsTips"
+                  v-if="selectedCoinName === 'Vollar'"
+                >{{$t('M.finance_vdsTips')}}</p>
                 <el-form
                   label-position="right"
-                  label-width="115px"
+                  label-width="125px"
                   :model="formLabelAlign"
                 >
                   <!-- 存币时长 -->
                   <el-form-item
-                    :label="$t('M.finance_timeLong')"
-                    class='saveTime'
+                    :label="$t('M.finance_timeLong') + ':'"
                   >
-                    {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day ? formLabelAlign.day : 0)}}
+                    <div class='invest-amount'>
+                      <input
+                        class="saveTime text-indent"
+                        type='text'
+                        :value="getDate(-2) + $t('M.finance_leit') + getDate(formLabelAlign.day ? formLabelAlign.day : 0)"
+                        disabled
+                      >
                     <span class="blue">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
+                    </div>
+                    <!--{{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day ? formLabelAlign.day : 0)}}-->
                     <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
                   </el-form-item>
                   <!-- 存币数量 -->
                   <el-form-item
-                    :label="$t('M.comm_count')"
+                    :label="$t('M.comm_count') + ':'"
                   >
                     <div class='invest-amount'>
                       <!--<input-->
@@ -174,7 +185,7 @@
                   </el-form-item>
                   <!-- 利率 -->
                   <el-form-item
-                    :label="$t('M.news_year') + $t('M.finance_interestRate') + '(%)'"
+                    :label="$t('M.news_year') + $t('M.finance_interestRate') + '(%):'"
                   >
                     <div class='invest-amount'>
                       <el-input
@@ -186,7 +197,7 @@
                   </el-form-item>
                   <!-- 预计总收益 -->
                   <el-form-item
-                    :label="$t('M.finance_total_income')"
+                    :label="$t('M.finance_total_income') + ':'"
                   >
                     <div class='invest-amount'>
                       <el-input
@@ -197,12 +208,11 @@
                       <strong>{{selectedCoinName}}</strong>
                     </div>
                   </el-form-item>
-                  <!-- 收益发放 -->
+                  <!-- 怎么返 -->
                   <el-form-item
-                  :label="$t('M.finance_earnings') + $t('M.finance_grant')"
+                    :label="$t('M.finance_how_return') + ':'"
                   >
                     <div class='invest-amount'>
-                      <!-- 先息后本 -->
                       <el-input
                         v-if="formLabelAlign.financialState === 'EQUAL_PRINCIPAL'"
                         :value="$t('M.finance_invest_interest')"
@@ -227,6 +237,22 @@
                         disabled
                       >
                       </el-input>
+                    </div>
+                  </el-form-item>
+                  <!-- 返息计划 -->
+                  <el-form-item
+                  :label="$t('M.finance_return_plan') + ':'"
+                  >
+                    <div class='invest-amount'>
+                      <!-- 先息后本 -->
+                        <!--:value="formLabelAlign.financialState === 'EQUAL_PRINCIPAL'? $t('M.finance_invest_interest') : $t('M.finance_xiAndben')"-->
+                      <span>
+                        {{$t('M.finance_payment') + computedTime}}
+                        <strong class="blue">
+                          {{$t('M.finance_return_rate')}}
+                          {{formLabelAlign.jsonTimeline[0].amount ? (formLabelAlign.jsonTimeline[0].amount - 0).toFixed(6) : ''}}
+                        </strong>
+                      </span>
                       <span
                         class='dividend-tips'
                         @click="showDividendTime = !showDividendTime"
@@ -246,12 +272,37 @@
                         <span class="black">{{item.date}}</span>
                         <span class="blue">{{item.amount}}</span>
                         <span class='blue'>{{selectedCoinName}}</span>
-                        <span class="black" v-if="formLabelAlign.financialState === 'EQUAL_PRINCIPAL'">
-                          ({{$t('M.finance_capital') + '+' + $t('M.finance_accrual')}})
-                        </span>
-                        <span class="black" v-else>
-                          ({{index == formLabelAlign.jsonTimeline.length - 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}})
-                        </span>
+                        <div style="margin-top: 10px;">
+                          <div class="black" v-if="formLabelAlign.financialState === 'EQUAL_PRINCIPAL'">
+                            <span v-if="item.principal">
+                              {{$t('M.finance_capital')}}:
+                              <i class="blue">{{item.principal}}{{item.unit}}</i>
+                            </span>
+                            <span v-if="item.interest">
+                              {{$t('M.finance_accrual')}}:
+                              <i class="blue"> {{item.interest}}{{item.unit}}</i>
+                            </span>
+                          </div>
+                          <div class="black" v-else>
+                            <div v-if="index == formLabelAlign.jsonTimeline.length - 1">
+                               <span v-if="item.principal">
+                                {{$t('M.finance_capital')}}:
+                                <i class="blue">{{item.principal}}{{item.unit}}</i>
+                              </span>
+                              <span v-if="item.interest">
+                                {{$t('M.finance_accrual')}}:
+                                <i class="blue"> {{item.interest}}{{item.unit}}</i>
+                              </span>
+                            </div>
+                            <div v-else>
+                                <span v-if="item.interest">
+                                {{$t('M.finance_accrual')}}:
+                                <i class="blue"> {{item.interest}}{{item.unit}}</i>
+                              </span>
+                            </div>
+                            <!--({{index == formLabelAlign.jsonTimeline.length - 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}})-->
+                          </div>
+                        </div>
                       </li>
                     </ul>
                   </transition>
@@ -683,8 +734,16 @@ export default {
         // 总收益
         totalEarn: '',
         // 发放收益
-        dividend: ''
+        dividend: '',
+        jsonTimeline: [{
+          date: '',
+          amount: '',
+          unit: ''
+        }
+        ]
       },
+      // 存币详情时间
+      computedTime: '',
       // 收益时间列表隐藏
       showDividendTime: false,
       showDividendTimeList: [
@@ -916,8 +975,10 @@ export default {
         number: this.$refs.investAmountRef.value
       })
       if (!data) return false
-      this.formLabelAlign = getNestedData(data, 'data')
+      this.formLabelAlign = _.get(data, 'data')
       this.$refs.changeAlignNum.value = this.formLabelAlign.number
+      let newTimeArr = this.formLabelAlign.jsonTimeline[0].date.split(' ')[0].split('-')
+      this.computedTime = newTimeArr[0] + '/' + newTimeArr[1] + '/' + newTimeArr[2]
       this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
     },
     // 添加理财记录
@@ -1028,6 +1089,7 @@ export default {
       _.forEach(this.traderCoinList, item => {
         if (item.id === e) {
           this.selectedCoinName = item.name
+          console.log(this.selectedCoinName)
         }
       })
       // 改变币种重新请求接口
@@ -1368,11 +1430,27 @@ export default {
       }
 
       .dialogStyle {
+        .vdsTips {
+          padding: 0 30px;
+          margin-top: -10px;
+          font-size: 12px;
+          text-align: center;
+        }
+
+        .el-form-item__content {
+          color: #c0c4cc;
+        }
+
+        .el-form-item {
+          margin-bottom: 15px;
+        }
+
         .el-input__inner {
           width: 250px !important;
-          height: 38px !important;
+          height: 30px !important;
+          padding: 0;
           border: none !important;
-          line-height: 38px;
+          line-height: 30px;
           background: transparent !important;
         }
 
@@ -1383,11 +1461,10 @@ export default {
         .invest-amount {
           display: flex;
           justify-content: space-between;
-          width: 280px;
-          height: 38px;
+          width: 300px;
+          height: 40px;
           padding-right: 5px;
-          border-radius: 5px;
-          background: #20273d;
+          border-bottom: 1px solid #20273d;
 
           &:focus {
             border: 1px solid #ccc;
@@ -1571,7 +1648,7 @@ export default {
     }
 
     .el-dialog__body {
-      color: #8c99b4 !important;
+      color: #fff !important;
     }
 
     .el-form-item__label {
@@ -1889,16 +1966,12 @@ export default {
     color: #d45858;
   }
 
-  .text-indent {
-    text-indent: 10px;
-  }
-
   .red2 {
     color: #b73c36;
   }
 
   .saveTime {
-    color: #fff;
+    color: #c0c4cc;
   }
 
   .nav-header {
@@ -1942,7 +2015,7 @@ export default {
 .show-dividend-time-list {
   > ul {
     min-width: 300px;
-    margin-left: 60px;
+    margin-left: 110px;
     border-left: 4px solid #338ff5;
     font-weight: 600;
     color: #fff;
@@ -1956,10 +2029,6 @@ export default {
 
       span:nth-child(1) {
         padding: 0 0 0 10px;
-      }
-
-      span:nth-child(2) {
-        padding-right: 10px;
       }
 
       &::before {

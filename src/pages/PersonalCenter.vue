@@ -366,6 +366,7 @@ export default {
     userCenterActiveName (e) {
       console.log(e)
       this.$setStore('active-target', e)
+      this.currentUserCenterActiveName = e
       if (e !== 'assets') {
         this.$route.params.coinId = ''
         this.$route.params.type = ''

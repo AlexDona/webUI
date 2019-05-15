@@ -857,11 +857,11 @@ export default {
       switch (type) {
         case 'limit-buy':
           // this.limitExchange.transformBuyPrice = this.$scientificToNumber(this.$keep2Num(this.currencyRateList[this.$middleTopData_S_X.area] * targetNum))
-          this.limitExchange.transformBuyPrice = this.$keep2Num(this.currencyRateList[area] * targetNum)
+          this.limitExchange.transformBuyPrice = this.currencyRateList[area] * targetNum
           // console.log(this.limitExchange.transformBuyPrice)
           break
         case 'limit-sell':
-          this.limitExchange.transformSellPrice = this.$keep2Num(this.currencyRateList[area] * targetNum)
+          this.limitExchange.transformSellPrice = this.currencyRateList[area] * targetNum
           break
       }
     },
@@ -1403,6 +1403,7 @@ export default {
       }
     },
     async $middleTopData_S_X (newVal) {
+      console.log(newVal)
       let targetPriceOfBuy = newVal.buy || newVal.kai
       let targetPriceOfSell = newVal.sell || newVal.kai
       // 首次打开设置价格

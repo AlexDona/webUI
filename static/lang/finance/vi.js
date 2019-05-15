@@ -36,7 +36,7 @@ export const finance = {
   'finance_loginTips': 'Bạn chưa đăng nhập',
   'finance_or': 'Hoặc',
   'finance_loginTipsTwo': 'Sau đó tìm kiếm',
-  'finance_interestRate': 'Lãi suất',
+  'finance_interestRate': 'Hóa tỷ lệ',
   'finance_xiAndben': 'Trước là lãi sau là vốn',
   'finance_timeLong': 'Lợi nhuận',
   'finance_leit': 'Đến',
@@ -53,5 +53,6 @@ export const finance = {
   'finance_payment': 'Nhiêu',
   'finance_return_rate': 'Thời gian qua',
   'finance_invest_explain': 'Giải thích trữ tiền',
-  'finance_invest_interest': 'Phải là một bản tức'
+  'finance_invest_interest': 'Phải là một bản tức',
+  'finance_vdsTips': '*Do cơ chế phân phối và tính ngẫu nhiên của liên kết chính VDS, doanh thu khai thác không thể được xác định theo tỷ lệ cố định. Hệ thống mặc định mặc định là 0. Doanh thu khai thác cụ thể dựa vào thực tế.'
 }
