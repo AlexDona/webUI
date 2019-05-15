@@ -204,7 +204,26 @@
                     <div class='invest-amount'>
                       <!-- 先息后本 -->
                       <el-input
-                        :value="formLabelAlign.financialState === 'EQUAL_PRINCIPAL'? $t('M.finance_invest_interest') : $t('M.finance_xiAndben')"
+                        v-if="formLabelAlign.financialState === 'EQUAL_PRINCIPAL'"
+                        :value="$t('M.finance_invest_interest')"
+                        disabled
+                      >
+                      </el-input>
+                      <el-input
+                        v-if="formLabelAlign.financialState === 'CURRENT'"
+                        :value="$t('M.finance_return_data')"
+                        disabled
+                      >
+                      </el-input>
+                      <el-input
+                        v-if="formLabelAlign.financialState === 'REGULARMONTHLYRETURN'"
+                        :value="$t('M.REGULARMONTHLYRETURN')"
+                        disabled
+                      >
+                      </el-input>
+                      <el-input
+                        v-if="formLabelAlign.financialState === 'PERIODICAL'"
+                        :value="$t('M.PERIODICAL')"
                         disabled
                       >
                       </el-input>

@@ -47,6 +47,11 @@ export const finance = {
   'finance_tipsContentOne': 'Xác định hủy bỏ trữ tiền?',
   'finance_invest_number': 'Số lượng trữ đồng tiền không được là 0',
   'finance_invest_read': 'Đọc',
+  'finance_how_return': 'Làm sao qua',
+  'finance_return_plan': 'Kế hoạch trả lãi',
+  'finance_return_data': 'Lãi mỗi ngày',
+  'finance_payment': 'Nhiêu',
+  'finance_return_rate': 'Thời gian qua',
   'finance_invest_explain': 'Giải thích trữ tiền',
   'finance_invest_interest': 'Phải là một bản tức'
 }

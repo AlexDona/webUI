@@ -49,5 +49,11 @@ export const finance = {
   'finance_invest_number': '存币数量不能为0',
   'finance_invest_read': '阅读',
   'finance_invest_explain': '存币说明',
-  'finance_invest_interest': '等额本息'
+  'finance_invest_interest': '等额本息',
+  'finance_how_return': '怎么返',
+  'finance_payment': '首期',
+  'finance_return_rate': '返息',
+  'finance_return_data': '活期日返',
+  // vdsTis
+  'finance_vdsTips': '*由于VDS主链的分配机制与随机性，挖矿收益并不能以固定比例确定。系统默认设置为0，具体挖矿收益以实际为准。'
 }

@@ -49,5 +49,7 @@ export const finance = {
   'finance_invest_number': '入金金額を0にすることはできません',
   'finance_invest_read': '閲読',
   'finance_invest_explain': 'デポジット説明',
-  'finance_invest_interest': '定額の元利'
+  'finance_invest_interest': '定額の元利',
+  'finance_return_data': 'カレント日戻る',
+  'finance_vdsTips': '*VDS主チェーンの配信メカニズムが無作為であるため、鉱掘り収益は固定率では確定されない。システムはデフォルトでゼロに設定され、具体的に鉱掘り収益は実際を基準とする。'
 }
