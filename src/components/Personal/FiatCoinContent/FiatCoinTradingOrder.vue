@@ -121,9 +121,13 @@
                   </div>
                   <!-- 收款人 -->
                   <p class="bank-info">
-                    <span>
-                      <!--收款人-->
-                      {{$t('M.otc_payee')}}: {{item.sellName}}
+                    <span>{{$t('M.otc_payee')}}:
+                      <span v-if="activeBankType[index] === 'Bankcard' || activeBankType[index] === 'Alipay' ||  activeBankType[index] === 'Wechat'">
+                        {{checkedPayRealNameArr[index]}}
+                      </span>
+                      <span v-else>
+                        {{item.sellName}}
+                      </span>
                     </span>
                   </p>
                   <!-- 开户行 -->
@@ -917,6 +921,7 @@ export default {
       // tradingOrderList: [], // 交易中订单列表
       activedTradingOrderId: '', // 选中的订单id
       activedPayAccountArr: [], // 当前选中的订单中付款方式中的付款账号 ：为了解决支付宝和微信账号一样做的bug修复
+      checkedPayRealNameArr: [], // 当前选中的订单中付款方式中的收款人名字（支付宝、微信、银行卡用此字段，其他支付方式还是用sellName字段）
       // 支付方式
       activePayModeList: [], // 当前选中支付方式中的哪一个 -->为了解决支付宝和微信账号一样做的bug修复// 当前选中的支付方式的id
       activeBankFidList: [], // 当前选中支付方式的id
@@ -1182,10 +1187,12 @@ export default {
     },
     // 3.0 改变交易方式
     changeUserBankInfo (index) {
+      this.activeBankType = []
       this.activedTradingOrderId = this.tradingOrderList[index].id
       this.tradingOrderList[index].userBankList.forEach((item) => {
         if (item.id == this.activePayModeList[index]) {
           this.activedPayAccountArr[index] = item.cardNo
+          this.checkedPayRealNameArr[index] = item.realname
           this.activeBankFidList[index] = item.id
           this.activitedPayStyleId = this.activeBankFidList[index]
           // 省
