@@ -26,7 +26,7 @@ export const common = {
   'comm_currency': '코인종류',
   'comm_currency_name': '코인명칭',
   'comm_coin': '법적 화페',
-  'comm_count': '수량',
+  'comm_count': '얼마',
   'comm_balance': '잔액',
   'comm_price_metre': '가격',
   'comm_total_sum': '합계',

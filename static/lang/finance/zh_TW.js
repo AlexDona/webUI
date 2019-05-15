@@ -36,18 +36,24 @@ export const finance = {
   'finance_loginTips': '您還沒有登陸,請',
   'finance_or': '或者',
   'finance_loginTipsTwo': '之後查看!',
-  'finance_interestRate': '利率',
+  'finance_interestRate': '化率',
   'finance_xiAndben': '先息後本',
-  'finance_timeLong': '存幣時長',
+  'finance_timeLong': '存多久',
   'finance_leit': '至',
   'finance_day': '天',
   'finance_accrual': '利息',
   'finance_capital': '本金',
   'finance_total_income': '預計總收益',
+  'finance_how_return': '怎麼返',
+  'finance_payment': '首期',
+  'finance_return_rate': '返息',
+  'finance_return_plan': '返息计划',
   // 二次確認彈框提示信息
   'finance_tipsContentOne': '確定取消存幣?',
   'finance_invest_number': '存幣數量不能為0',
   'finance_invest_read': '閱讀',
   'finance_invest_explain': '存幣說明',
-  'finance_invest_interest': '等額本息'
+  'finance_return_data': '活期日返',
+  'finance_invest_interest': '等額本息',
+  'finance_vdsTips': '*由於VDS主鏈的分配機制與隨機性，挖礦收益並不能以固定比例確定。系統默認設置爲0，具體挖礦收益以實際爲準。'
 }

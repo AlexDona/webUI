@@ -43,7 +43,17 @@
             <el-form-item
               :label="$t('M.user_account_name')"
             >
-              <span class="chat-content-type">
+              <input
+                type="text"
+                :placeholder="innerUserInfo.realname"
+                v-model.trim="nameOfMerchantSet"
+                v-if="$isMerchant_X"
+                class="chat-input border-radius2"
+              >
+              <span
+                class="chat-content-type"
+                v-else
+              >
                 {{ innerUserInfo.realname }}
               </span>
             </el-form-item>
@@ -165,13 +175,17 @@ import {
   mapState,
   mapActions
 } from 'vuex'
+import mixins from '../../../mixins/user'
 export default {
+  mixins: [mixins],
   components: {
     ErrorBox, // 错误提示接口
     IconFontCommon // 字体图标
   },
   data () {
     return {
+      // 用户设置的微信名称
+      nameOfMerchantSet: '',
       cardNo: '', // 微信账号
       password: '', // 交易密码
       dialogImageHandUrl1: '', // 图片url
@@ -340,6 +354,7 @@ export default {
       if (goOnStatus) {
         let data
         let param = {
+          realname: this.$useMerchantSetName_X ? this.nameOfMerchantSet : this.innerUserInfo.realname, // 真实姓名
           token: this.userInfo.token,
           cardNo: this.cardNo, // 微信账号
           qrcode: this.dialogImageHandUrl1, // 二维码
@@ -378,7 +393,7 @@ export default {
       data = await modificationAccountPaymentTerm(params)
       if (!data) return false
       let detailData = getNestedData(data, 'data')
-      const {cardNo, qrcode, id} = detailData
+      const {cardNo, qrcode, id, realname} = detailData
       // 返回状态展示
       if (detailData) {
         this.paymentMethodList = detailData
@@ -395,6 +410,7 @@ export default {
       if (id) {
         this.paymentTypeId = id
       }
+      this.nameOfMerchantSet = realname
     }
   },
   filter: {},
