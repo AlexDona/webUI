@@ -86,7 +86,6 @@
                   <Qrcode
                     class="ercode"
                     :value="String(promoteLink + innerUserInfo.showId)"
-                    :options="{ size: 100 }"
                     v-show="ercodeIsShowId"
                   >
                   </Qrcode>

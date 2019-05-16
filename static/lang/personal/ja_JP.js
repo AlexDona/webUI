@@ -177,6 +177,8 @@ export const personal = {
   'user_security_safety': '安全性',
   'user_security_email': 'メール',
   'user_security_phone': '携帯電話',
+  'user_security_phone1': '携帯電話登録',
+  'user_security_email1': 'メール登録',
   'user_security_google': 'Google',
   'user_security_password': 'パスワード',
   'user_security_verify': '確認',

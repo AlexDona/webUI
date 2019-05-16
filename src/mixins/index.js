@@ -5,7 +5,9 @@ import {
   scientificToNumber,
   cutOutPointLength,
   formatSeconds,
-  setStore
+  setStore,
+  getStore,
+  getStoreWithJson
 } from '../utils'
 import {
   jumpToOtherPageForFooter,
@@ -34,6 +36,9 @@ let mixin = {
     },
     $setStore (name, content) {
       return setStore(name, content)
+    },
+    $getStore (name, type = 'string') {
+      return type == 'json' ? getStoreWithJson(name) : getStore(name)
     },
     $keep2Num (num) {
       return keep2Num(num)

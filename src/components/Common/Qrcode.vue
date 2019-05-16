@@ -1,10 +1,17 @@
 <!-- 二维码组件 -->
 <template>
   <Qrcode
+    :logoSrc="logoSrc"
     :class="className"
-    :value="value"
-    :options="options"
+    :text="value"
+    :logoScale="0.2"
+    :size="size"
+    :logoCornerRadius="0"
+    :logoMargin="3"
+    logoBackgroundColor="#fff"
     v-if="value"
+    colorLight="#fff"
+    :dotScale="0.999"
   />
 </template>
 <script>
@@ -12,10 +19,28 @@
 export default {
   components: {
     Qrcode: resolve => {
-      require([('@chenfengyuan/vue-qrcode')], resolve)
+      require([('vue-qr')], resolve)
     }
   },
-  props: ['className', 'value', 'options'],
+  props: {
+    className: {
+      type: String
+    },
+    value: {
+      type: String
+    },
+    options: {
+      type: Object
+    },
+    logoSrc: {
+      type: String,
+      default: ''
+    },
+    size: {
+      type: Number,
+      default: 170
+    }
+  },
   data () {
     return {}
   },

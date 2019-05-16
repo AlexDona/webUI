@@ -293,7 +293,11 @@ export default {
     }
   },
   async created () {
+    if (this.userCenterActiveName === 'assets' && this.$getStore('active-target')) {
+      this.CHANGE_USER_CENTER_ACTIVE_NAME(this.$getStore('active-target'))
+    }
     this.currentUserCenterActiveName = this.userCenterActiveName
+    this.$setStore('active-target', this.currentUserCenterActiveName)
     await this.REFRESH_USER_INFO_ACTION()
     this.showNoPosswdAndNoVerifyNotice()
   },
@@ -342,7 +346,7 @@ export default {
         this.$goToPage('/TransactionPassword')
       } else {
         this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
-        this.$goToPage('/PersonalCenter')
+        this.currentUserCenterActiveName = 'identity-authentication'
         this.notVerifyDialogVisible = false
       }
     }
@@ -360,11 +364,13 @@ export default {
   },
   watch: {
     userCenterActiveName (e) {
+      console.log(e)
+      this.$setStore('active-target', e)
+      this.currentUserCenterActiveName = e
       if (e !== 'assets') {
         this.$route.params.coinId = ''
         this.$route.params.type = ''
       }
-      this.currentUserCenterActiveName = e
       this.REFRESH_USER_INFO_ACTION()
       if (e !== 'assets') {
         this.$route.params.type = ''

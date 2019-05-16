@@ -5,7 +5,6 @@
   >
     <transition enter-active-class="animated fadeIn">
      <span v-show="isShow" class="err-box user" :text="text">
-        <div class="triangle"></div>
         <span>{{this.text}}</span>
       </span>
     </transition>
@@ -49,15 +48,6 @@ export default {
       border: 1px solid transparent;
       overflow: hidden;
 
-      .triangle {
-        display: inline-block;
-        margin-top: -8px;
-        margin-right: -6px;
-        border: 8px solid transparent;
-        vertical-align: middle;
-        transform: rotate(90deg);
-      }
-
       span {
         display: inline-block;
         height: 34px;
@@ -71,10 +61,6 @@ export default {
 
     &.night {
       .err-box {
-        > .triangle {
-          border-top-color: #17283d;
-        }
-
         > span {
           color: $mainColor;
           background-color: #17283d;
@@ -84,10 +70,6 @@ export default {
 
     &.day {
       .err-box {
-        > .triangle {
-          border-top-color: #ecf1f8;
-        }
-
         > span {
           border: 1px solid #ecf1f8;
           color: $mainColor;

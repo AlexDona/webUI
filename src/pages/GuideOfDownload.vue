@@ -33,6 +33,7 @@
                 <Qrcode
                   class="qrcode"
                   :value="qrcodeString"
+                  :logoSrc="logoSrc"
                 />
               </div>
             </transition>
@@ -139,10 +140,12 @@ export default {
       qrcodeString: `${domain}/downloadApp`,
       isOpen: true,
       downloadUrl: ''
+      // 二维码logo
+      // logoSrc: ''
     }
   },
   async created () {
-    console.log(this.isNeedIOS)
+    console.log(this.isNeedIOS, this.footerInfo)
     this.GET_APP_URL_ACTION()
   },
   mounted () {
@@ -191,13 +194,15 @@ export default {
       androidUrl: state => state.footerInfo.downloadUrl.android,
       iosUrl: state => state.footerInfo.downloadUrl.ios,
       iosIpaUrl: state => state.footerInfo.downloadUrl.iosIpa,
-      isMobile: state => state.user.isMobile
+      isMobile: state => state.user.isMobile,
+      logoSrc: state => state.common.footerInfo.footerInfo1.downLoadAppQrCodeLogo
     }),
     windowHeight () {
       return window.innerHeight
     }
   },
-  watch: {}
+  watch: {
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

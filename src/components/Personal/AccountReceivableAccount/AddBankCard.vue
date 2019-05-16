@@ -38,8 +38,18 @@
             <el-form-item
               :label="$t('M.user_account_name')"
             >
-              <span class="bank-content-name">
-                {{ innerUserInfo.realname }}
+              <input
+                type="text"
+                :placeholder="innerUserInfo.realname"
+                v-model.trim="nameOfMerchantSet"
+                v-if="$isMerchant_X"
+                class="bank-input border-radius2"
+              >
+              <span
+                class="bank-content-name"
+                v-else
+              >
+                {{ nameOfMerchantSet || innerUserInfo.realname }}
               </span>
             </el-form-item>
             <!--银行名称-->
@@ -130,7 +140,6 @@
     </div>
   </div>
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
@@ -150,7 +159,9 @@ import {
   mapState,
   mapActions
 } from 'vuex'
+import mixins from '../../../mixins/user'
 export default {
+  mixins: [mixins],
   components: {
     IconFontCommon, // 字体图标
     ErrorBox,
@@ -158,6 +169,8 @@ export default {
   },
   data () {
     return {
+      // 用户设置的银行卡名称
+      nameOfMerchantSet: '',
       bankName: '', // 银行名称
       bankCard: '', // 银行卡号
       branchAddress: '', // 支行地址
@@ -179,6 +192,7 @@ export default {
   async created () {
     await getAccountPaymentTerm(this)
     this.paymentMethodInformation()
+    // console.log(this.$userType_X)
   },
   mounted () {},
   activated () {},
@@ -223,7 +237,7 @@ export default {
         let data
         let params = {
           token: this.userInfo.token,
-          realname: this.innerUserInfo.realname, // 真实姓名
+          realname: this.$useMerchantSetName_X ? this.nameOfMerchantSet : this.innerUserInfo.realname, // 真实姓名
           bankName: this.bankName, // 银行卡名称
           cardNo: this.bankCard, // 银行卡号
           address: this.branchAddress, // 开户地址
@@ -322,7 +336,7 @@ export default {
       let detailData = getNestedData(data, 'data')
       // 返回状态展示
       this.paymentMethodList = detailData
-      const {bankName, cardNo, address, id} = detailData
+      const {bankName, cardNo, address, id, realname} = detailData
       // 修改时带回银行卡名称
       this.bankName = bankName
       // 修改时带回银行卡号
@@ -330,6 +344,7 @@ export default {
       // 修改时带回银行卡地址
       this.branchAddress = address
       this.typePaymentId = id
+      this.nameOfMerchantSet = realname
     },
     // 成功自动跳转
     successJump () {
