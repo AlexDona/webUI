@@ -26,7 +26,7 @@ export const common = {
   'comm_currency': 'Loại đồng tiền',
   'comm_currency_name': 'Tên gọi đồng tiền',
   'comm_coin': 'Tiền tệ',
-  'comm_count': 'Còn bao nhiêu',
+  'comm_count': 'Số lượng',
   'comm_balance': 'Số dư',
   'comm_price_metre': 'Giá',
   'comm_total_sum': 'Tổng',

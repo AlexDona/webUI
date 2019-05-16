@@ -131,7 +131,10 @@
                       </span>
                     </span>-->
                     <!--现在改为：都取userBankList中的realname-->
-                    <span>{{$t('M.otc_payee')}}:
+                    <span>
+                      <span v-if="activeBankType[index]">
+                        {{$t('M.otc_payee')}}:
+                      </span>
                       <span>
                         {{checkedPayRealNameArr[index]}}
                       </span>
@@ -1194,7 +1197,6 @@ export default {
     },
     // 3.0 改变交易方式
     changeUserBankInfo (index) {
-      this.activeBankType = []
       this.activedTradingOrderId = this.tradingOrderList[index].id
       this.tradingOrderList[index].userBankList.forEach((item) => {
         if (item.id == this.activePayModeList[index]) {

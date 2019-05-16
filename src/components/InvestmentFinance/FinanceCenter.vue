@@ -147,7 +147,7 @@
                   label-width="125px"
                   :model="formLabelAlign"
                 >
-                  <!-- 存币时长 -->
+                  <!-- 存多久 -->
                   <el-form-item
                     :label="$t('M.finance_timeLong') + ':'"
                   >
@@ -163,9 +163,9 @@
                     <!--{{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day ? formLabelAlign.day : 0)}}-->
                     <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
                   </el-form-item>
-                  <!-- 存币数量 -->
+                  <!-- 存多少 -->
                   <el-form-item
-                    :label="$t('M.comm_count') + ':'"
+                    :label="$t('M.finance_how_much') + ':'"
                   >
                     <div class='invest-amount'>
                       <!--<input-->

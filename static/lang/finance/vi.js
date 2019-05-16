@@ -39,6 +39,7 @@ export const finance = {
   'finance_interestRate': 'Hóa tỷ lệ',
   'finance_xiAndben': 'Trước là lãi sau là vốn',
   'finance_timeLong': 'Lợi nhuận',
+  'finance_how_much': 'Còn bao nhiêu',
   'finance_leit': 'Đến',
   'finance_day': 'Ngày',
   'finance_accrual': 'Tiền lãi',
