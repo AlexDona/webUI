@@ -38,7 +38,7 @@
             @click="toggleMethod(0)"
           >
             <!--手机注册-->
-            {{ $t('M.user_security_phone') }}{{ $t('M.comm_register_time') }}
+            {{ $t('M.user_security_phone1') }}
           </li>
           <li
             class="method-item cursor-pointer"
@@ -46,7 +46,7 @@
             @click="toggleMethod(1)"
           >
             <!--邮箱注册-->
-            {{ $t('M.user_security_email') }}{{ $t('M.comm_register_time') }}
+            {{ $t('M.user_security_email1') }}
           </li>
         </ul>
         <!--手机号注册-->

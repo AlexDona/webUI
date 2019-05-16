@@ -84,6 +84,9 @@ export default {
     '$route' (to, from) {
       console.log(to.path)
       let path = to.path
+      if (from.path === '/PersonalCenter') {
+        this.$setStore('active-target', 'assets')
+      }
       this.isNeedNotice = path === '/home' || path === '/' ? 1 : 0
       this.isNeedHeader = (
         path !== '/login' &&

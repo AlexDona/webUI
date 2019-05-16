@@ -44,8 +44,18 @@
             <el-form-item
               :label="$t('M.user_account_name')"
             >
-              <span class="account-content-type">
-                {{ innerUserInfo.realname }}
+              <input
+                type="text"
+                :placeholder="innerUserInfo.realname"
+                v-model.trim="nameOfMerchantSet"
+                v-if="$isMerchant_X"
+                class="account-input border-radius2"
+              >
+              <span
+                class="account-content-type"
+                v-else
+              >
+                {{ nameOfMerchantSet || innerUserInfo.realname }}
               </span>
             </el-form-item>
             <!--收款类型-->
@@ -166,13 +176,17 @@ import {
   mapState,
   mapActions
 } from 'vuex'
+import mixins from '../../../mixins/user'
 export default {
+  mixins: [mixins],
   components: {
     ErrorBox, // 错误提示接口
     IconFontCommon // 字体图标
   },
   data () {
     return {
+      // 用户设置的支付宝名称
+      nameOfMerchantSet: '',
       alipayAccount: '', // 支付宝账号
       password: '', // 交易密码
       dialogImageHandUrl1: '', // 图片url
@@ -335,6 +349,7 @@ export default {
       if (goOnStatus) {
         let data
         let param = {
+          realname: this.$useMerchantSetName_X ? this.nameOfMerchantSet : this.innerUserInfo.realname, // 真实姓名
           token: this.userInfo.token,
           cardNo: this.alipayAccount, // 支付宝账号
           qrcode: this.dialogImageHandUrl1, // 二维码
@@ -379,7 +394,7 @@ export default {
       // 接口成功清除loading
       this.fullscreenLoading = false
       const detailData = getNestedData(data, 'data')
-      const {cardNo, qrcode, id} = detailData
+      const {cardNo, qrcode, id, realname} = detailData
       // 返回状态展示
       if (cardNo) {
         // 修改时带回支付宝号
@@ -394,6 +409,7 @@ export default {
         // 修改时带回类id
         this.paymentTypeId = id
       }
+      this.nameOfMerchantSet = realname
     }
   },
   filter: {},

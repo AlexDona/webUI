@@ -53,7 +53,6 @@
         <Qrcode
           class="ercode"
           :value="chargeMoneyAddress"
-          :options="{ size: 100 }"
         >
         </Qrcode>
       </p>

@@ -26,12 +26,12 @@
     "vue": "2.5.2",
     "vue-concise-slider": "^2.4.8",
     "vue-i18n": "^8.8.2",
+    "vue-qr": "^2.1.0",
     "vue-router": "^3.0.1",
     "vue-slider-component": "^2.8.3",
     "vuex": "^3.1.0"
   },
   "devDependencies": {
-    "@chenfengyuan/vue-qrcode": "^1.0.0",
     "@commitlint/cli": "^7.2.1",
     "@commitlint/config-conventional": "^7.1.2",
     "animate.css": "^3.7.0",

@@ -148,6 +148,8 @@ export const personal = {
   'user_security_safety': 'An toàn',
   'user_security_email': 'Gmail',
   'user_security_phone': 'Điện thoại',
+  'user_security_phone1': 'Điện thoạiĐăng ký',
+  'user_security_email1': 'GmailĐăng ký',
   'user_security_google': 'Google',
   'user_security_password': 'Mật khẩu',
   'user_security_verify': 'Chứng thực',

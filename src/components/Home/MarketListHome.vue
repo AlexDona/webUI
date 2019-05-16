@@ -659,6 +659,21 @@ export default {
       width: 1130px;
       margin: 78px auto;
 
+      /* 头部背景 */
+      &::after {
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 0;
+        width: 1130px;
+        height: 46px;
+        background-image: url(../../assets/develop/tab-bg.png);
+        background-position: center center;
+        -webkit-background-size: 1130px 46px;
+        background-size: 1130px 46px;
+        content: '';
+      }
+
       > .search-box {
         position: absolute;
         top: 8px;
@@ -883,10 +898,11 @@ export default {
     /deep/ {
       .el-tabs__nav-scroll {
         height: 46px;
-        background-image: url(../../assets/develop/tab-bg.png);
-        background-position: center center;
-        -webkit-background-size: 1130px 46px;
-        background-size: 1130px 46px;
+      }
+
+      .el-tabs__header {
+        z-index: 2;
+        width: 504px;
       }
 
       .el-input__inner {

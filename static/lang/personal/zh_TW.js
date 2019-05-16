@@ -180,6 +180,8 @@ export const personal = {
   'user_security_safety': '安全',
   'user_security_email': '郵箱',
   'user_security_phone': '手機',
+  'user_security_phone1': '手机注册',
+  'user_security_email1': '邮箱注册',
   'user_security_google': '谷歌',
   'user_security_password': '密碼',
   'user_security_verify': '驗證',

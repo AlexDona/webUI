@@ -57,7 +57,7 @@
                 </li>
                 <li
                   class="sub-nav-item"
-                  @click="applyMerchant"
+                  @click="OTCAccountDisabledJudge"
                 >
                   <router-link to="/OTCPublishAD">
                     <!--发布广告-->
@@ -547,7 +547,6 @@ export default{
       'GET_TRANSITION_RATE_ACTION',
       'GET_LANGUAGE_LIST_ACTION',
       'SET_PARTNER_INFO_ACTION',
-      'REFRESH_USER_INFO_ACTION',
       'GET_ALL_NOTICE_ACTION',
       'REFRESH_USER_INFO_ACTION'
     ]),
@@ -596,6 +595,19 @@ export default{
     // 非商家禁止进入OTC导航页提示框--开始
     applyMerchant () {
       if (this.isLogin) {
+        if (!(this.userInfo.type === 'MERCHANT')) {
+          this.showApplyMerchantStatus = true
+          return false
+        }
+      }
+    },
+    // otc账户禁用交易判断逻辑：如果禁用了，且为普通用户身份，不弹出去申请的提示框
+    async OTCAccountDisabledJudge () {
+      if (this.isLogin) {
+        await this.REFRESH_USER_INFO_ACTION() // 刷新用户信息
+        if (this.userInfo.otcEnable === 'disable') {
+          return false
+        }
         if (!(this.userInfo.type === 'MERCHANT')) {
           this.showApplyMerchantStatus = true
           return false

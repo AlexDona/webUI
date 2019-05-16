@@ -513,7 +513,7 @@
           <Qrcode
             class="ercode"
             :value="String('http://192.168.1.87/isAppOverPage.html')"
-            :options="{ size: 140 }"
+            :size="140"
           >
           </Qrcode>
         </div>
