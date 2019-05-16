@@ -154,7 +154,7 @@ export const common = {
   'common_friendly_link': 'Link',
   'comm_currency': 'Currency',
   'comm_currency_name': 'Currency Name',
-  'comm_count': 'How much',
+  'comm_count': 'Amount',
   'common_footer_user_agreement': 'User Agreement',
   'common_footer_privacy_policy': 'Privacy Terms',
   'common_footer_legal_notice': 'Legal Statement',

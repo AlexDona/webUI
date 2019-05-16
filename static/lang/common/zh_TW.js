@@ -26,7 +26,7 @@ export const common = {
   'comm_currency': '幣種',
   'comm_currency_name': '幣種名稱',
   'comm_coin': '法幣',
-  'comm_count': '存多少',
+  'comm_count': '數量',
   'comm_balance': '余額',
   'comm_price_metre': '價格',
   'comm_total_sum': '總',
