@@ -287,7 +287,6 @@ export const fromApi = {
   'otc_failure_0092': '当前订单收款未超时，买方不能申诉',
   'otc_failure_0093': '该订单已申诉，请联系客服',
   'otc_failure_0094': '根据您注册所在地的相关规定，无法进行此操作',
-  'otc_failure_0095': '修改密码时间不超过24小时，不能进行该操作',
   'otc_picture_no_null': '请至少上传一张图片',
   'OTC_SELL': 'OTC卖出',
   'otc_success_0001': '撤销成功',
@@ -389,7 +388,6 @@ export const fromApi = {
   'user-fail-google-binded': '谷歌已绑定',
   'user-fail-google-code': '谷歌验证码错误',
   'user-fail-inviter-notexist': '推荐人不存在',
-  'user-fail-login-disable': '账户被禁用',
   'user-fail-login-lock': '账号被锁定2小时',
   'user-fail-login-password': '用户名或密码错误,剩余重试次数{}',
   'user-fail-mail-binded': '邮箱已被绑定',
@@ -448,7 +446,12 @@ export const fromApi = {
   'user_api_update_failure': '用户API修改失败',
   'user_cancel_withdraw_error': '订单状态不符,取消失败',
   'user_pay_disable_state': '该账号交易密码错误超限已被禁止交易,请过2个小时之后重试',
+  'user_trade_password_incorrect': '账户交易密码不正确',
   'user_pay_is_error': '交易密码错误,您还可以输入{}次,超限将被冻结2个小时',
-  'user_pay_password_not_setting': '请先设置交易密码后进行存币投资',
-  'user_trade_password_incorrect': '账户交易密码不正确'
+  'user_pay_password_not_setting': '用户未设置交易密码，请先设置交易密码',
+  'user-fail-login-disable': '当前账户禁止登录，详情请咨询客服! ',
+  'user-disable-trade': '当前账户禁止交易，详情请咨询客服! ',
+  'otc_failure_0096': '卖方账户资产异常，暂时不能进行该操作',
+  'otc_failure_0097': '当日OTC取消次数已超限，禁止交易',
+  'otc_failure_0095': '此订单暂不可交易'
 }

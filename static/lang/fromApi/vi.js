@@ -287,7 +287,6 @@ export const fromApi = {
   'otc_failure_0092': 'Biên nhận đơn đặt hàng hiện tại chưa hết hạn và người mua không thể kháng cáo',
   'otc_failure_0093': 'Đơn hàng đã được kháng cáo, vui lòng liên hệ với dịch vụ khách hàng',
   'otc_failure_0094': 'Không thể hoạt động theo quy định của nơi đăng ký của bạn',
-  'otc_failure_0095': 'Không được phép thay đổi mật khẩu trong hơn 24 giờ.',
   'otc_picture_no_null': 'Vui lòng tải lên ít nhất một hình ảnh',
   'OTC_SELL': 'OTC bán ra',
   'otc_success_0001': 'hủy bỏ thành công',
@@ -389,7 +388,6 @@ export const fromApi = {
   'user-fail-google-binded': 'google bị hủy',
   'user-fail-google-code': 'mã xác nhận google bị lỗi',
   'user-fail-inviter-notexist': 'giới thiệu người dùng không tồn tại',
-  'user-fail-login-disable': 'tài khoản đã bị khóa',
   'user-fail-login-lock': 'tài khoản bị khóa trong 2 tiếng',
   'user-fail-login-password': 'tên tài khoản hoặc mật mã bị sai, chỉ cần ()thử đăng nhập',
   'user-fail-mail-binded': 'email đã được gửi đi',
@@ -449,6 +447,11 @@ export const fromApi = {
   'user_cancel_withdraw_error': 'Tình trạng đơn hàng không khớp, hủy không thành công',
   'user_pay_disable_state': 'mật khẩu đăng nhập giao dịch sai quá số lần cho phép sẽ cấm thực hiện giao dịch, vui lòng đợi qua 2 tiếng để đăng nhập lại',
   'user_pay_is_error': 'tài khoản giao dịch sai mật khẩu, bạn có thể đăng nhập ()lần, vượt quá mức qui định sẽ bị đóng băng tài khoản 2 tiếng',
-  'user_pay_password_not_setting': 'vui lòng đặt mật khẩu giao dịch trước khi tiến hành đầu tư lên sàn',
-  'user_trade_password_incorrect': 'mật khẩu tài khoản giao dịch không đúng'
+  'user_trade_password_incorrect': 'mật khẩu tài khoản giao dịch không đúng',
+  'user_pay_password_not_setting': 'Chưa đặt mật khẩu giao dịch, Vui lòng đặt mật khẩu.',
+  'user-fail-login-disable': 'Tài khoản hiện tại bị cấm đăng nhập, Vui lòng liên hệ tư vấn!',
+  'user-disable-trade': 'Tài khoản hiện tại bị cấm giao dịch, vui lòng liên hệ tư vấn!',
+  'otc_failure_0096': 'Tài sản của người bán bất thường, không thể thực hiện thao tác này.',
+  'otc_failure_0097': 'Số lần hủy OTC trong ngày đã quá giới hạn, cấm giao dịch',
+  'otc_failure_0095': 'Lệnh này không có sẵn để giao dịch'
 }
