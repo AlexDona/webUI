@@ -287,7 +287,6 @@ export const fromApi = {
   'otc_failure_0092': '當前訂單收款未超時，買方不能申訴',
   'otc_failure_0093': '該訂單已申訴，請聯繫客服',
   'otc_failure_0094': '根據您註冊地的相關規定，無法進行操作',
-  'otc_failure_0095': '修改密碼不超過24小時不允許操作',
   'otc_picture_no_null': '請至少上傳一張圖片',
   'OTC_SELL': 'OTC賣出',
   'otc_success_0001': '撤銷成功',
@@ -389,7 +388,6 @@ export const fromApi = {
   'user-fail-google-binded': '穀歌已綁定',
   'user-fail-google-code': '穀歌驗證碼錯誤',
   'user-fail-inviter-notexist': '推薦人不存在',
-  'user-fail-login-disable': '帳戶被禁用',
   'user-fail-login-lock': '帳號被鎖定3小時',
   'user-fail-login-password': '用戶名或密碼錯誤,剩餘重試次數{}',
   'user-fail-mail-binded': '郵箱已被綁定',
@@ -449,6 +447,11 @@ export const fromApi = {
   'user_cancel_withdraw_error': '訂單狀態不符，取消失敗',
   'user_pay_disable_state': '該帳號交易密碼錯誤超限已被禁止交易,請過2個小時之後重試',
   'user_pay_is_error': '交易密碼錯誤,您還可以輸入{}次,超限將被凍結2個小時',
-  'user_pay_password_not_setting': '請先設置交易密碼後進行存幣投資',
-  'user_trade_password_incorrect': '帳戶交易密碼不正確'
+  'user_trade_password_incorrect': '帳戶交易密碼不正確',
+  'user_pay_password_not_setting': '用戶未設置交易密碼，請先設置交易密碼',
+  'user-fail-login-disable': '當前帳戶禁止登錄，詳情請諮詢客服! ',
+  'user-disable-trade': '當前帳戶禁止交易，詳情請諮詢客服! ',
+  'otc_failure_0096': '賣方帳戶資產異常，暫時不能進行該操作',
+  'otc_failure_0097': '當日OTC取消次數已超限，禁止交易',
+  'otc_failure_0095': '此訂單暫不可交易'
 }

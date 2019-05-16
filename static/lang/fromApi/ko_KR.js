@@ -287,7 +287,6 @@ export const fromApi = {
   'otc_failure_0092': '현재 주문 영수증에 시간이 초과되지 않아 구매자가 이의를 제기 할 수 없습니다.',
   'otc_failure_0093': '주문에 대한 이의가 제기되었으므로 고객 서비스에 문의하십시오.',
   'otc_failure_0094': '등록 장소의 규정에 따라 작동 할 수 없음',
-  'otc_failure_0095': '24 시간 이상 암호를 변경할 수 없습니다.',
   'otc_picture_no_null': '하나 이상의 이미지를 업로드하십시오.',
   'OTC_SELL': 'OTC 매도',
   'otc_success_0001': '취소 완료',
@@ -389,7 +388,6 @@ export const fromApi = {
   'user-fail-google-binded': '구글 이미 연동돼 있습니다.',
   'user-fail-google-code': '구글 인증 코드 오류',
   'user-fail-inviter-notexist': '추천자 존재하지 않습니다.',
-  'user-fail-login-disable': '계정 정지되었습니다.',
   'user-fail-login-lock': '계정이 2 시간 동안 잠겼습니다.',
   'user-fail-login-password': '잘못된 사용자 이름 또는 비밀번호, 남은 재시도 횟수 {}',
   'user-fail-mail-binded': '이메일 이미 연동되었습니다',
@@ -449,6 +447,11 @@ export const fromApi = {
   'user_cancel_withdraw_error': '주문 상태가 일치하지 않아 취소하지 못했습니다.',
   'user_pay_disable_state': '이 계정의 거래 비밀번호가 잘못되어 거래가 금지되었습니다. 2시간 후에 다시 시도해 주십시오',
   'user_pay_is_error': '거래 비밀번호가 잘못되었습니다. {}를 2시간 이상 사용할 수 있습니다',
-  'user_pay_password_not_setting': '먼저 거래 비밀 번호를 설치한 후에 돈을 예금하고 투자하세요',
-  'user_trade_password_incorrect': '계정 거래 비밀번호 잘못되었습니다.'
+  'user_trade_password_incorrect': '계정 거래 비밀번호 잘못되었습니다.',
+  'user_pay_password_not_setting': '사용자가 거래 비밀번호를 설정하지 않았습니다. 먼저 거래 비밀번호를 설정하십시오.',
+  'user-fail-login-disable': '당좌 계정은 로그인 할 수 없습니다. 자세한 내용은 고객 서비스에 문의하십시오!',
+  'user-disable-trade': '당좌 계좌는 거래가 금지되어 있으므로 자세한 내용은 고객 서비스 팀에 문의하십시오!',
+  'otc_failure_0096': '판매자의 계정 저작물이 비정상이고 작업을 일시적으로 수행 할 수 없습니다.',
+  'otc_failure_0097': '당일의 OTC 취소 건수가 한도를 초과하여 거래를 금지했습니다.',
+  'otc_failure_0095': '이 주문은 거래에 사용할 수 없습니다.'
 }

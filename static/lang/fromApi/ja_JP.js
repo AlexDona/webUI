@@ -287,7 +287,6 @@ export const fromApi = {
   'otc_failure_0092': '現在の注文受領はタイムアウトしておらず、買い手は控訴できません',
   'otc_failure_0093': '申し立てが上訴されました。カスタマーサービスにご連絡ください。',
   'otc_failure_0094': 'あなたの登録場所の規則に従って作動することが不可能',
-  'otc_failure_0095': '24時間を超えてパスワードを変更することは許可されていません。',
   'otc_picture_no_null': '少なくとも1つの画像をアップロードしてください',
   'OTC_SELL': 'OTC販売',
   'otc_success_0001': 'キャンセルの成功',
@@ -389,7 +388,6 @@ export const fromApi = {
   'user-fail-google-binded': 'Googleが縛っている',
   'user-fail-google-code': 'Google認証コードのエラー',
   'user-fail-inviter-notexist': '推薦者は存在しません',
-  'user-fail-login-disable': 'アカウントは無効です',
   'user-fail-login-lock': 'アカウントは2時間ロックされています',
   'user-fail-login-password': 'ユーザー名またはパスワードが正しくありません。残りの再試行{}',
   'user-fail-mail-binded': '郵便ポストは既に結び付けられた',
@@ -449,6 +447,11 @@ export const fromApi = {
   'user_cancel_withdraw_error': '注文のステータスが一致しません。キャンセルできませんでした',
   'user_pay_disable_state': 'このアカウント取引はパスワードエラーの制限が禁止されたので、2時間後に再テストしてください',
   'user_pay_is_error': '取引パスワードのエラー、あなたは{}を入力することができて、期限を2时间冻结します',
-  'user_pay_password_not_setting': '取引パスワードを設定して、あらかじめ積立金投資を行ってください',
-  'user_trade_password_incorrect': 'アカウントのトランザクションパスワードが間違っています'
+  'user_trade_password_incorrect': 'アカウントのトランザクションパスワードが間違っています',
+  'user_pay_password_not_setting': 'ユーザーが取引パスワードを設定しない。先ず取引パスワードを設定してください。',
+  'user-fail-login-disable': '現在アカウントログインを禁じられ、詳細カスタマーサービスに連絡してください！',
+  'user-disable-trade': '当座預金口座は取引が禁止されています。詳細についてはカスタマーサービスにお問い合わせください。',
+  'otc_failure_0096': '売り手のアカウント資産が異常であり、一時的に操作を実行できません。',
+  'otc_failure_0097': '当日のOTCキャンセル数が制限を超え、取引が禁止されています',
+  'otc_failure_0095': 'この注文は取引できません'
 }
