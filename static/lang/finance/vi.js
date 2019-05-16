@@ -49,6 +49,7 @@ export const finance = {
   'finance_invest_read': 'Đọc',
   'finance_how_return': 'Làm sao qua',
   'finance_return_plan': 'Kế hoạch trả lãi',
+  'finance_return_data': 'Lãi mỗi ngày',
   'finance_payment': 'Nhiêu',
   'finance_return_rate': 'Thời gian qua',
   'finance_invest_explain': 'Giải thích trữ tiền',
