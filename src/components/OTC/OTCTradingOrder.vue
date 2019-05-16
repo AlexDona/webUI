@@ -118,12 +118,19 @@
                   </div>
                   <!-- 收款人 -->
                   <p class="bank-info">
-                    <span>{{$t('M.otc_payee')}}:
+                    <!--银行卡，微信，支付宝取userBankList中的realname，其他都去外层的sellName-->
+                    <!--<span>{{$t('M.otc_payee')}}:
                       <span v-if="activeBankType[index] === 'Bankcard' || activeBankType[index] === 'Alipay' ||  activeBankType[index] === 'Wechat'">
                         {{checkedPayRealNameArr[index]}}
                       </span>
                       <span v-else>
                         {{item.sellName}}
+                      </span>
+                    </span>-->
+                    <!--现在改为：都取userBankList中的realname-->
+                    <span>{{$t('M.otc_payee')}}:
+                      <span>
+                        {{checkedPayRealNameArr[index]}}
                       </span>
                     </span>
                   </p>
