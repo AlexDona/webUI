@@ -49,7 +49,7 @@
                 class="bank-content-name"
                 v-else
               >
-                {{ innerUserInfo.realname }}
+                {{ nameOfMerchantSet || innerUserInfo.realname }}
               </span>
             </el-form-item>
             <!--银行名称-->
