@@ -39,6 +39,7 @@ export const finance = {
   'finance_interestRate': '化率',
   'finance_xiAndben': '先息后本',
   'finance_timeLong': '存多久',
+  'finance_how_much': '存多少',
   'finance_leit': '至',
   'finance_day': '天',
   'finance_accrual': '利息',

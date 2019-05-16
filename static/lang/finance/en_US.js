@@ -40,6 +40,7 @@ export const finance = {
   'finance_interestRate': 'rate',
   'finance_xiAndben': 'Interest before cost',
   'finance_timeLong': 'Time',
+  'finance_how_much': 'How much',
   'finance_leit': 'to',
   'finance_day': 'day',
   'finance_accrual': 'Interest',

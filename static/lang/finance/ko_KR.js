@@ -39,6 +39,7 @@ export const finance = {
   'finance_interestRate': '화율',
   'finance_xiAndben': '이자 우선,본금 다음',
   'finance_timeLong': '소용시간',
+  'finance_how_much': '얼마',
   'finance_leit': '까지',
   'finance_day': '일',
   'finance_accrual': '이자',

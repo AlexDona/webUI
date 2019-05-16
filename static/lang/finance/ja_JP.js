@@ -41,6 +41,7 @@ export const finance = {
   'finance_leit': 'から',
   'finance_day': 'デート',
   'finance_timeLong': 'タイム',
+  'finance_how_much': '存多少',
   'finance_interestRate': '金利',
   'finance_how_return': 'どう帰り',
   'finance_return_plan': 'りそく計画',
