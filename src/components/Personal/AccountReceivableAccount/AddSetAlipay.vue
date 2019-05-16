@@ -55,7 +55,7 @@
                 class="account-content-type"
                 v-else
               >
-                {{ innerUserInfo.realname }}
+                {{ nameOfMerchantSet || innerUserInfo.realname }}
               </span>
             </el-form-item>
             <!--收款类型-->
