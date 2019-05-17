@@ -712,7 +712,7 @@ export default {
     // console.log(this.$route.params.type, this.$route.params.coinId)
     // 刚进页面时候 个人资产列表展示
     // 汇率转换
-    // await this.currencyTransform()
+    await this.currencyTransform()
     // 个人资产跳转OTC-otc可用币种查询
     await this.getOTCAvailableCurrencyList()
   },
