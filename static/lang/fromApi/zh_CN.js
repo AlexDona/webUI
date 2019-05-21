@@ -455,6 +455,6 @@ export const fromApi = {
   'user_pay_is_error': '交易密码错误,您还可以输入{}次,超限将被冻结2个小时',
   'user_pay_password_not_setting': '用户未设置交易密码，请先设置交易密码。',
   'user_trade_password_incorrect': '账户交易密码不正确',
-  'entrust_failure_0030': '超过当前交易对单日最高涨幅{}，无法下单',
-  'entrust_failure_0031': '超过当前交易对单日最高跌幅{}，无法下单'
+  'entrust_failure_0030': '超过当前交易对单日最高涨幅{}%，无法下单',
+  'entrust_failure_0031': '超过当前交易对单日最高跌幅{}%，无法下单'
 }

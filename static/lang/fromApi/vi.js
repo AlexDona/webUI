@@ -454,6 +454,6 @@ export const fromApi = {
   'otc_failure_0096': 'Tài sản của người bán bất thường, không thể thực hiện thao tác này.',
   'otc_failure_0097': 'Số lần hủy OTC trong ngày đã quá giới hạn, cấm giao dịch',
   'otc_failure_0095': 'Lệnh này không có sẵn để giao dịch',
-  'entrust_failure_0030': 'Vượt mức tăng cao nhất của cặp giao dịch{}，không thể đặt lệnh',
-  'entrust_failure_0031': 'Vượt mức giảm cao nhất của cặp giao dịch{}，không thể đặt lệnh'
+  'entrust_failure_0030': 'Vượt mức tăng cao nhất của cặp giao dịch{}%，không thể đặt lệnh',
+  'entrust_failure_0031': 'Vượt mức giảm cao nhất của cặp giao dịch{}%，không thể đặt lệnh'
 }
