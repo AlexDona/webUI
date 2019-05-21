@@ -453,5 +453,7 @@ export const fromApi = {
   'user-disable-trade': 'This account is forbidden to trade, please contact customer service!',
   'otc_failure_0096': 'The seller\'s account asset is abnormal, and the operation cannot be performed temporarily.',
   'otc_failure_0097': 'Today\'s OTC cancellations have exceeded the limit, trading is prohibited',
-  'otc_failure_0095': 'This order is not available for trading'
+  'otc_failure_0095': 'This order is not available for trading',
+  'entrust_failure_0030': 'Exceeding the current trading pair highest rise{} in one day, can not  place orders',
+  'entrust_failure_0031': 'Exceeding the current trading pair lowest drop{} in one day, can not  place orders'
 }
