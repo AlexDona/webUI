@@ -551,7 +551,7 @@ ul {
           top: 106px;
           right: 0;
           width: 1027px;
-          height: 321px;
+          height: 290px;
           background: linear-gradient(250deg, rgba(45, 50, 78, 1) 80%, transparent 60%);
         }
       }
