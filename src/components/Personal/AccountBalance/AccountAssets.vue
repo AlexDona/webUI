@@ -326,6 +326,7 @@
                         :isNeedTag="isNeedTag"
                         :currencyName="currencyName"
                         :originalActiveWithdrawDepositAddress="originalActiveWithdrawDepositAddress"
+                        :originWithdrawRemark= "originWithdrawRemark"
                         :withdrawAddressList="withdrawAddressList"
                         :feeRangeOfWithdraw="feeRangeOfWithdraw"
                         :index="assetItem.coinId"
@@ -708,7 +709,7 @@ export default {
     }
   },
   async created () {
-    console.log(this.filteredData2)
+    // console.log(this.filteredData2)
     // console.log(this.$route.params.type, this.$route.params.coinId)
     // 刚进页面时候 个人资产列表展示
     // 汇率转换
@@ -743,17 +744,20 @@ export default {
     },
     // 1.0 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
+      const { shortName } = this.activeConvertCurrencyObj
+      if (!shortName) return
       const params = {
         coinName: 'FBT',
-        shortName: this.activeConvertCurrencyObj.shortName
+        shortName: shortName
       }
+      // console.log(params)
       const data = await currencyTransform(params)
       // console.log(data)
       if (!data) return false
       // console.log(data)
       // 获取汇率
       this.CNYRate = getNestedData(data, 'data.coinPrice')
-      console.log(this.CNYRate)
+      // console.log(this.CNYRate)
     },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
@@ -1119,7 +1123,10 @@ export default {
       this.isNeedTag = withdrawalAddressData.needTag
       // 返回列表数据并渲染币种列表
       this.withdrawAddressList = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList')
-      this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address') || ''
+      if (this.withdrawAddressList.length) {
+        this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address')
+        this.withdrawRemark = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].tag')
+      }
     },
     // select框自定义提币地址校验地址
     // 10 新增用户提币地址校验
@@ -1171,8 +1178,9 @@ export default {
       return true
     },
     // 当前提币地址改变回调
-    changeWithdrawAddress ({activeWithdrawDepositAddress}) {
+    changeWithdrawAddress ({activeWithdrawDepositAddress, activeWithdrawRemark}) {
       this.activeWithdrawDepositAddress = activeWithdrawDepositAddress
+      this.withdrawRemark = activeWithdrawRemark
       this.checkCurrencyAddress()
     },
     /**
@@ -1315,7 +1323,7 @@ export default {
         // googleCode: this.googleCode, // 谷歌验证码
         coinId: this.activeCoinId, // 币种ID
         withdrawAddress: this.activeWithdrawDepositAddress,
-        remark: this.withdrawRemark, // 提币地址
+        remark: this.withdrawRemark, // 地址标签
         networkFees: this.withdrawFeeVModel, // 手续费
         amount: this.withdrawCountVModel, // 提币数量
         payCode: this.password // 交易密码
@@ -1434,6 +1442,10 @@ export default {
     originalActiveWithdrawDepositAddress () {
       return this.activeWithdrawDepositAddress
     },
+    // 地址标签初始值
+    originWithdrawRemark () {
+      return this.withdrawRemark
+    },
     filteredData: function () {
       return this.withdrawDepositList.filter((item) => {
         return item['coinName'].toLowerCase().indexOf(this.searchKeyWord.toLowerCase()) !== -1
@@ -1460,7 +1472,7 @@ export default {
       // console.log(this.activeConvertCurrencyObj)
     },
     currencyRateList () {
-      console.log(this.currencyRateList)
+      // console.log(this.currencyRateList)
     },
     filteredData1 () {
       // console.log(this.filteredData1)
