@@ -411,15 +411,17 @@ export default {
   methods: {
     // 1.0 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
+      const { shortName } = this.activeConvertCurrencyObj
+      if (!shortName) return
       const params = {
         coinName: 'FBT',
-        shortName: this.activeConvertCurrencyObj.shortName
+        shortName: shortName
       }
       const data = await currencyTransform(params)
       if (!data) return false
       // 获取汇率
       this.CNYRate = getNestedData(data, 'data.coinPrice')
-      console.log(this.totalSumCNY * this.CNYRate)
+      // console.log(this.totalSumCNY * this.CNYRate)
     },
     // 时间格式化
     timeFormatting (date) {
