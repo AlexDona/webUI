@@ -1,11 +1,13 @@
 <template>
   <div class="container">
     <div class="banner">
-      <img class="fuc_center_bg" src="../assets/fuc/banner.png" />
-      <div class="fuc_coin">
-        <div class="fuc_header">FUCoin</div>
-        <div class="fuc_intro">简称FUC，是FUBT平台token的简称</div>
-        <button class="fuc_btn"><span class="fuc_btn_text">即刻拥有FUC ></span></button>
+      <div class="banner-content">
+        <img class="fuc_center_bg" src="../assets/fuc/banner.png" />
+        <div class="fuc_coin">
+          <div class="fuc_header">FUCoin</div>
+          <div class="fuc_intro">简称FUC，是FUBT平台token的简称</div>
+          <button class="fuc_btn"><span class="fuc_btn_text">即刻拥有FUC ></span></button>
+        </div>
       </div>
     </div>
 
@@ -32,7 +34,7 @@
         <div class="sub_fuc_content_1">
           <div class="sub_fuc_content_row1">
             <div class="sub_fuc_content_col1">回购周期</div>
-            <div class="sub_fuc_content_col2">{{this.dateStart}} 00:00—{{this.dateEnd}}  23:59（GMT+8）</div>
+            <div class="sub_fuc_content_col2 text-align-l">{{this.dateStart}} 00:00—{{this.dateEnd}}  23:59（GMT+8）</div>
           </div>
 
           <div class="sub_fuc_content_row1 sub_fuc_content_row2">
@@ -156,6 +158,7 @@
 
             <div class="pallet">
               <div class="logo"></div>
+              <div class="dot"></div>
               <div class="lines">
                 <transition name="bounce">
                   <div v-show= "this.line1" class="line1"></div>
@@ -218,17 +221,17 @@ export default {
   methods: {
     handleScroll () {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      if (this.$refs['fuc'].offsetTop && scrollTop >= this.$refs['fuc'].offsetTop - 500) {
+      if (this.$refs['fuc'].offsetTop && scrollTop >= this.$refs['fuc'].offsetTop - 800) {
         setTimeout(() => {
           this.line1 = 1
-        }, 500)
+        }, 300)
         setTimeout(() => {
           this.line2 = 1
-        }, 1500)
+        }, 500)
 
         setTimeout(() => {
           this.line3 = 1
-        }, 1500)
+        }, 500)
       } else if (scrollTop <= this.$refs['fuc'].offsetTop - 1200) {
         this.line1 = 0
         this.line2 = 0
@@ -262,6 +265,9 @@ export default {
       }
       return style
     }
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 
 }
@@ -310,45 +316,48 @@ ul {
   background: #272b41;
 
   .banner {
-    display: flex;
-    width: 100%;
-    min-width: 1366px;
-    padding-top: 40px;
-    padding-right: 250px;
-    padding-left: 250px;
-    background: #11112b;
+    .banner-content {
+      display: flex;
+      width: 100%;
+      min-width: 1366px;
+      padding-top: 40px;
+      padding-right: 250px;
+      padding-left: 250px;
+      margin: 0 auto;
+      background: #11112b;
 
-    .fuc_coin {
-      padding-left: 96px;
+      .fuc_coin {
+        padding-left: 96px;
 
-      .fuc_header {
-        padding-top: 126px;
-        font-weight: 400;
-        font-size: 53px;
-        text-shadow: -2px -2px 1px rgba(195, 178, 237, 1);
-        color: rgb(62, 19, 188);
-        background: linear-gradient(0deg, rgb(62, 19, 188) 0%, rgba(243, 240, 243, 1) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .fuc_intro {
-        padding-top: 30px;
-        padding-bottom: 30px;
-        font-size: 18px;
-        color: $color;
-      }
-
-      .fuc_btn {
-        padding: 15px 42px;
-        border: 1px solid rgba(133, 114, 244, 1);
-        border-radius: 5px;
-        cursor: pointer;
-
-        .fuc_btn_text {
+        .fuc_header {
+          padding-top: 126px;
           font-weight: 400;
-          font-size: $fontSize;
-          color: rgba(133, 114, 244, 1);
+          font-size: 53px;
+          text-shadow: -2px -2px 1px rgba(195, 178, 237, 1);
+          color: rgb(62, 19, 188);
+          background: linear-gradient(0deg, rgb(62, 19, 188) 0%, rgba(243, 240, 243, 1) 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .fuc_intro {
+          padding-top: 30px;
+          padding-bottom: 30px;
+          font-size: 18px;
+          color: $color;
+        }
+
+        .fuc_btn {
+          padding: 15px 42px;
+          border: 1px solid rgba(133, 114, 244, 1);
+          border-radius: 5px;
+          cursor: pointer;
+
+          .fuc_btn_text {
+            font-weight: 400;
+            font-size: $fontSize;
+            color: rgba(133, 114, 244, 1);
+          }
         }
       }
     }
@@ -356,7 +365,6 @@ ul {
 
   .sub-container {
     width: 100%;
-    min-width: 1366px;
     margin: 0 auto;
     text-align: center;
     color: $color;
@@ -391,15 +399,16 @@ ul {
 
     /* fuc介绍 */
     .sub_fuc_intro {
-      padding: 0 380px;
-      margin-top: 52px;
+      max-width: 1300px;
+      padding: 0 100px;
+      margin: 52px auto;
 
       .sub_fuc_content {
         padding: 54px 77px;
         margin-top: 29px;
         border-radius: 5px;
         background: url("../assets/fuc/fuc_introduce.png") center no-repeat;
-        background-size: 100% 100%;
+        background-size: cover;
 
         .sub_fuc_content_text {
           font-size: $fontSize;
@@ -409,7 +418,8 @@ ul {
 
       /* fuc回购计划 */
       .sub_fuc_content_1 {
-        margin-top: 29px;
+        max-width: 1300px;
+        margin: 29px auto;
         border: 1px solid rgba(67, 89, 124, 1);
         border-radius: 5px;
         background: rgba(28, 33, 53, 1);
@@ -499,6 +509,7 @@ ul {
               margin-top: 22px;
               line-height: 30px;
               text-align: left;
+              text-indent: -40px;
             }
           }
 
@@ -526,9 +537,10 @@ ul {
         .sub-price-content-col1 {
           z-index: 2;
           display: flex;
+          width: 92%;
           padding: 3% 10% 3% 20%;
           background: url("../assets/fuc/fuc_price_bg.png") center no-repeat;
-          background-size: 100% 100%;
+          background-size: cover;
 
           .sub-price-center {
             padding: 0 130px;
@@ -552,8 +564,8 @@ ul {
           z-index: 1;
           top: 106px;
           right: 0;
-          width: 1027px;
-          height: 290px;
+          width: 40%;
+          height: 80%;
           background: linear-gradient(250deg, rgba(45, 50, 78, 1) 80%, transparent 60%);
         }
       }
@@ -603,6 +615,7 @@ ul {
           }
 
           .pallet {
+            position: relative;
             width: 598px;
             height: 336px;
             margin-top: 72px;
@@ -613,8 +626,19 @@ ul {
               width: 145px;
               height: 141px;
               margin: 0 auto;
-              background: url("../assets/fuc/dot.png") center no-repeat, url("../assets/fuc/logo.png") center no-repeat;
+              background: url("../assets/fuc/logo.png") center no-repeat;
               animation: shaking 2s infinite;
+            }
+
+            .dot {
+              position: absolute;
+              top: 0;
+              left: 235px;
+              width: 123px;
+              height: 123px;
+              margin: 0 auto;
+              line-height: 141px;
+              background: url("../assets/fuc/dot.png") center no-repeat;
             }
 
             @keyframes shaking {
