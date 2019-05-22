@@ -65,8 +65,6 @@ export const user = {
   'forgetPassword_text1': '新密码设置成功！',
   'forgetPassword_text2': '请牢记您新设置的密码。',
   'forgetPassword_text3': '立即登录',
-  'forgetPassword_text4': '若该手机号无法使用请联系客服',
-  'forgetPassword_text5': '若该邮箱无法使用请联系客服',
   'forgetPassword_hint1': '8-20位字母、数字组合',
   // 'forgetPassword_hint2': '请再次输入',
   // 'forgetPassword_hint3': '相同的密码',

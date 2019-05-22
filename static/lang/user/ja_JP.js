@@ -66,8 +66,6 @@ export const user = {
   'forgetPassword_text1': 'ニューパスワード設定成功！',
   'forgetPassword_text2': 'ニューパスワードを覚えてください。',
   'forgetPassword_text3': '今すぐログイン',
-  'forgetPassword_text4': 'この電話は使用できないとサービスに連絡ください。',
-  'forgetPassword_text5': 'このメールは使用できないとサービスに連絡してください。',
   'forgetPassword_hint1': '8〜20文字、数字の組み合わせ',
   // 'forgetPassword_hint2': 'もう一度入力してください',
   // 'forgetPassword_hint3': '同じパスワード',

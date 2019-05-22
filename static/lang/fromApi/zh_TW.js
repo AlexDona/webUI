@@ -453,5 +453,7 @@ export const fromApi = {
   'user-disable-trade': '當前帳戶禁止交易，詳情請諮詢客服! ',
   'otc_failure_0096': '賣方帳戶資產異常，暫時不能進行該操作',
   'otc_failure_0097': '當日OTC取消次數已超限，禁止交易',
-  'otc_failure_0095': '此訂單暫不可交易'
+  'otc_failure_0095': '此訂單暫不可交易',
+  'entrust_failure_0030': '超過當前交易對單日最高漲幅{}%，無法下單',
+  'entrust_failure_0031': '超過當前交易對單日最高跌幅{}%，無法下單'
 }

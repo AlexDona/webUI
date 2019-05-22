@@ -1,3 +1,5 @@
+import personalCenterRoutes from './personal-center-routes'
+
 const HomeCenter = () => import('@/pages/HomeCenter')
 const PersonalCenter = () => import('@/pages/PersonalCenter')
 // 银行卡设置
@@ -59,6 +61,8 @@ const DownloadApp = () => import('@/pages/DownloadApp')
 const GuideOfDownload = () => import('@/pages/GuideOfDownload')
 const errorFor404And500 = () => import('@/pages/ErrorFor500And404')
 
+const FucCenter = () => import('@/pages/FucCenter')
+
 const routes = [
   {
     path: '/',
@@ -74,7 +78,8 @@ const routes = [
     // 个人中心
     path: '/PersonalCenter',
     name: 'PersonalCenter',
-    component: PersonalCenter
+    component: PersonalCenter,
+    children: personalCenterRoutes
   },
   {
     // VIP
@@ -294,6 +299,11 @@ const routes = [
     // 活动中心
     path: '/ActivityCenter',
     redirect: '/RankingListOfInvitation'
+  },
+  {
+    // Fuc生态
+    path: '/FucCenter',
+    component: FucCenter
   },
   {
     // 上币申请

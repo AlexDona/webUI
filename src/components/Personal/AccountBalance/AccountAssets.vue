@@ -709,7 +709,7 @@ export default {
     }
   },
   async created () {
-    console.log(this.filteredData2)
+    // console.log(this.filteredData2)
     // console.log(this.$route.params.type, this.$route.params.coinId)
     // 刚进页面时候 个人资产列表展示
     // 汇率转换
@@ -744,17 +744,20 @@ export default {
     },
     // 1.0 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
+      const { shortName } = this.activeConvertCurrencyObj
+      if (!shortName) return
       const params = {
         coinName: 'FBT',
-        shortName: this.activeConvertCurrencyObj.shortName
+        shortName: shortName
       }
+      // console.log(params)
       const data = await currencyTransform(params)
       // console.log(data)
       if (!data) return false
       // console.log(data)
       // 获取汇率
       this.CNYRate = getNestedData(data, 'data.coinPrice')
-      console.log(this.CNYRate)
+      // console.log(this.CNYRate)
     },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
@@ -1469,7 +1472,7 @@ export default {
       // console.log(this.activeConvertCurrencyObj)
     },
     currencyRateList () {
-      console.log(this.currencyRateList)
+      // console.log(this.currencyRateList)
     },
     filteredData1 () {
       // console.log(this.filteredData1)
