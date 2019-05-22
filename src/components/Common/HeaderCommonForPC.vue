@@ -127,6 +127,11 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item">
+              <router-link to="/FucCenter">
+                <span>FUC生态</span>
+              </router-link>
+            </li>
           </ul>
         </div>
         <!--注册登录-->
