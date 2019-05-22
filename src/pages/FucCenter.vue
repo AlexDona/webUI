@@ -314,6 +314,8 @@ ul {
     width: 100%;
     min-width: 1366px;
     padding-top: 40px;
+    padding-right: 250px;
+    padding-left: 250px;
     background: #11112b;
 
     .fuc_coin {
