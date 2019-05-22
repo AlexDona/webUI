@@ -65,8 +65,6 @@ export const user = {
   'forgetPassword_text1': '新密碼設置成功！',
   'forgetPassword_text2': '請牢記您新設置的密碼。',
   'forgetPassword_text3': '立即登錄',
-  'forgetPassword_text4': '若該手機號無法使用請聯系客服',
-  'forgetPassword_text5': '若該郵箱無法使用請聯系客服',
   'forgetPassword_hint1': '8-20位字母、數字組合',
   // 'forgetPassword_hint2': '請再次輸入',
   // 'forgetPassword_hint3': '相同的密碼',
