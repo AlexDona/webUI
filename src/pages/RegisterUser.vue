@@ -773,6 +773,7 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   destroyed () {
+    clearInterval(this.successJumpTimer)
   },
   methods: {
     ...mapMutations([
