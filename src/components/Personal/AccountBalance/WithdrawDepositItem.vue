@@ -187,6 +187,8 @@ export default {
     'pointLengthAccountCount',
     // 提币地址初始值
     'originalActiveWithdrawDepositAddress',
+    // 地址标签初始值
+    'originWithdrawRemark',
     // 当前币种id
     'coinId',
     // 币种的可用总量
@@ -200,17 +202,21 @@ export default {
       withdrawRemark: ''
     }
   },
-  created () {
-  },
+  created () {},
   mounted () {},
   activated () {},
   updated () {},
   beforeRouteUpdate () {},
   methods: {
     // 当前提币地址改变回调
-    changeWithdrawAddress () {
-      this.$emit('changeWithdrawAddress', {
-        activeWithdrawDepositAddress: this.activeWithdrawDepositAddress
+    changeWithdrawAddress (e) {
+      _.forEach(this.withdrawAddressList, item => {
+        if (item.address === e) {
+          this.$emit('changeWithdrawAddress', {
+            activeWithdrawDepositAddress: this.activeWithdrawDepositAddress,
+            activeWithdrawRemark: item.tag
+          })
+        }
       })
     },
     jumpToOtherTab (target, coinId, index) {
@@ -257,6 +263,9 @@ export default {
     // 初始提币地址赋值
     originalActiveWithdrawDepositAddress (newVal) {
       this.activeWithdrawDepositAddress = newVal
+    },
+    originWithdrawRemark (newVal) {
+      this.withdrawRemark = newVal
     }
   }
 }
