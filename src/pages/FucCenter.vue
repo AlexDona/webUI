@@ -19,7 +19,7 @@
           <p class="sub_fuc_content_text">FUCoin（富链，简称FUC）是FUBT平台token的简称。FUC恒定发行总量1亿，流通时间始于2017年6月。</p>
           <p class="sub_fuc_content_text">FUC依托于FUBT全球生态，是基于以太坊的去中心化数字资产，致力于构建行业产业发展及资源管理服务为一体的生态空间。</p>
           <p class="sub_fuc_content_text">为适应FUBT交易平台国际化发展要求，推动FUBT全球生态价值流通与提升，同时进一步回馈平台广大忠实用户，FUBT决定启动FUC年度回购销毁行动。</p>
-          <p class="sub_fuc_content_text"> 2019年度预计回购销毁FUC的数量为{{this.total}}，销毁完成后FUC的流通总量缩减为4900万，占原有发行规模的49%。</p>
+          <p class="sub_fuc_content_text"> 2019年度预计回购销毁FUC的数量为{{total}}，销毁完成后FUC的流通总量缩减为4900万，占原有发行规模的49%。</p>
         </div>
       </div>
 
@@ -54,17 +54,17 @@
 
                 <!--尾部tooltip-->
                 <div class="bar_bottom_tooltip">
-                  <div>{{this.total}}</div>
+                  <!-- <div>{{this.total}}</div>
                   <div class="bar_bottom_jiantou2">
                     <svg class="icon" aria-hidden="true">
                       <use xlink:href="#icon-jiantou2"></use>
                     </svg>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
               <div class="bar-text">
-                <div class="bar_text_left">{{this.count}}</div>
+                <div class="bar_text_left">{{this.count}} FUC</div>
                 <div class="bar_text_right">{{this.total}} FUC</div>
               </div>
 
@@ -252,8 +252,7 @@ export default {
 
     handleFuc () {
       this.$router.push({
-        path: '/TradeCenter/fucfbt',
-        name: 'TradeCenter'
+        path: '/TradeCenter/fucfbt'
       })
     },
 
@@ -473,6 +472,7 @@ ul {
 
               .bars_box {
                 width: 46px;
+                max-width: 100%;
                 height: 100%;
                 border-radius: 7px;
                 background: rgba(28, 33, 53, 1);
@@ -503,10 +503,10 @@ ul {
                 top: -48px;
                 right: -18px;
 
-                .bar_bottom_jiantou2 {
+                /* .bar_bottom_jiantou2 {
                   font-size: $fontSize;
                   color: rgba(124, 207, 228, 1);
-                }
+                } */
               }
             }
 
