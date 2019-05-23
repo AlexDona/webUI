@@ -670,6 +670,7 @@ ul {
           .sub_fuc_content_center1 {
             display: flex;
             align-items: center;
+            min-width: 176px;
           }
 
           .sub_fuc_content_col2 {
