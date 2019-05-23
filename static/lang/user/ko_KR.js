@@ -64,8 +64,6 @@ export const user = {
   'forgetPassword_text1': '새 비밀번호가 성공적으로 설정되었습니다! ',
   'forgetPassword_text2': '새로 설정 한 비밀번호를 기억하십시오. ',
   'forgetPassword_text3': '지금 로그인',
-  'forgetPassword_text4': '전화 번호를 사용할 수없는 경우 고객 지원팀에 문의하십시오',
-  'forgetPassword_text5': '사서함을 사용할 수없는 경우 고객 지원팀에 문의하십시오',
   'forgetPassword_hint1': '8-20 개의 영숫자 조합',
   // 'forgetPassword_hint2': '다시 입력하십시오',
   // 'forgetPassword_hint3': '같은 비밀번호',

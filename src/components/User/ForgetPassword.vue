@@ -150,7 +150,6 @@
               </span>
               <span class="label-content">
                 <span class="number">{{phoneNumberFormat(userInfo.phone)}}</span>
-                <span class="tips">{{$t(phoneNumTips)}}</span>
               </span>
             </div>
             <div
@@ -188,7 +187,6 @@
               </span>
               <span class="label-content">
                 <span class="number">{{phoneNumberFormat(userInfo.email)}}</span>
-                <span class="tips">{{$t(emailNumTips)}}</span>
               </span>
             </div>
             <div
@@ -396,13 +394,8 @@ export default {
       confirmPassword: '',
       // 验证成功判断
       confirmSuccess: false,
-      // 手机号提示信息 若该手机号无法使用请联系客服
-      phoneNumTips: 'M.forgetPassword_text4',
-      // 邮箱号提示信息 若该邮箱无法使用请联系客服
-      emailNumTips: 'M.forgetPassword_text5',
       // 下一步携带token
-      nextStepToken: '',
-      end: ''
+      nextStepToken: ''
     }
   },
   created () {

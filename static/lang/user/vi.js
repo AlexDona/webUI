@@ -59,8 +59,6 @@ export const user = {
   'forgetPassword_text1': 'Mật khẩu mới cài đặt thành công',
   'forgetPassword_text2': 'Vui lòng ghi nhớ mật khẩu mới của bạn',
   'forgetPassword_text3': 'Lập tức đăng nhập',
-  'forgetPassword_text4': 'Hiện tại số điện thoại không sử dụng được, vui lòng liên hệ bộ phận chăm sóc khách hàng',
-  'forgetPassword_text5': 'Hiện tại email không dùng được, vui lòng thử lại',
   'forgetPassword_hint1': 'Không được quá 8- 20 kí tự',
   'forgetPassword_hint4': 'Vui lòng thông qua xác nhận hình ảnh',
   'forgetPassword_hint5': 'Yêu cầu mã',
