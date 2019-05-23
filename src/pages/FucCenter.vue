@@ -1,11 +1,13 @@
 <template>
   <div class="container">
     <div class="banner">
-        <img class="fuc_center_bg" src="../assets/fuc/banner.png" />
-        <div class="fuc_coin">
-          <div class="fuc_header">FUCoin</div>
-          <div class="fuc_intro">简称FUC，是FUBT平台token的简称</div>
-          <button @click="handleFuc" class="fuc_btn"><span class="fuc_btn_text">即刻拥有FUC ></span></button>
+        <div class="banner-content">
+          <img class="fuc_center_bg" src="../assets/fuc/banner.png" />
+          <div class="fuc_coin">
+            <div class="fuc_header">FUCoin</div>
+            <div class="fuc_intro">简称FUC，是FUBT平台token的简称</div>
+            <button @click="handleFuc" class="fuc_btn"><span class="fuc_btn_text">即刻拥有FUC ></span></button>
+          </div>
         </div>
     </div>
 
@@ -338,7 +340,6 @@ ul {
   background: #272b41;
 
   .banner {
-    display: flex;
     width: 100%;
     min-width: 1366px;
     padding-top: 40px;
@@ -347,38 +348,44 @@ ul {
     margin: 0 auto;
     background: #11112b;
 
-    .fuc_coin {
-      flex: 1;
-      padding-left: 96px;
+    .banner-content {
+      display: flex;
+      width: 1300px;
+      margin: 0 auto;
 
-      .fuc_header {
-        padding-top: 126px;
-        font-weight: 400;
-        font-size: 53px;
-        text-shadow: -2px -2px 1px rgba(195, 178, 237, 1);
-        color: rgb(62, 19, 188);
-        background: linear-gradient(0deg, rgb(62, 19, 188) 0%, rgba(243, 240, 243, 1) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
+      .fuc_coin {
+        flex: 1;
+        padding-left: 96px;
 
-      .fuc_intro {
-        padding-top: 30px;
-        padding-bottom: 30px;
-        font-size: 18px;
-        color: $color;
-      }
-
-      .fuc_btn {
-        padding: 15px 42px;
-        border: 1px solid rgba(133, 114, 244, 1);
-        border-radius: 5px;
-        cursor: pointer;
-
-        .fuc_btn_text {
+        .fuc_header {
+          padding-top: 126px;
           font-weight: 400;
-          font-size: $fontSize;
-          color: rgba(133, 114, 244, 1);
+          font-size: 53px;
+          text-shadow: -2px -2px 1px rgba(195, 178, 237, 1);
+          color: rgb(62, 19, 188);
+          background: linear-gradient(0deg, rgb(62, 19, 188) 0%, rgba(243, 240, 243, 1) 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .fuc_intro {
+          padding-top: 30px;
+          padding-bottom: 30px;
+          font-size: 18px;
+          color: $color;
+        }
+
+        .fuc_btn {
+          padding: 15px 42px;
+          border: 1px solid rgba(133, 114, 244, 1);
+          border-radius: 5px;
+          cursor: pointer;
+
+          .fuc_btn_text {
+            font-weight: 400;
+            font-size: $fontSize;
+            color: rgba(133, 114, 244, 1);
+          }
         }
       }
     }
