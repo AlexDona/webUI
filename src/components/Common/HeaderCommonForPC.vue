@@ -816,7 +816,7 @@ export default{
       return getNestedData(this.userInfo, 'paypasswordSet')
     },
     isFubt () {
-      let enableXDomains = ['fubt', 'new.text.com', 'new.bzu.com']
+      let enableXDomains = ['fubt', 'new.test.com', 'new.bzu.com']
       return enableXDomains.some(item => xDomain.startsWith(item))
     }
   },
