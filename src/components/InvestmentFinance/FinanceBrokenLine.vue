@@ -223,7 +223,7 @@ export default {
       theme: state => state.common.theme,
       // 从全局获取时间数组
       financeLineRenderTimeList: state => state.finance.financeLineRenderTimeList,
-      // 从全局获取价钱数组
+      // 冲全局获取价钱数组
       financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList,
       // 监听全部status的变化，
       status: state => state.finance.status
