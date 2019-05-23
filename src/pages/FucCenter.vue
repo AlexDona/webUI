@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="language === 'zh_CN' || language ==='zh_TW'" class="container">
     <div class="banner">
         <div class="banner-content">
           <img class="fuc_center_bg" src="../assets/fuc/banner.png" />
@@ -192,11 +192,207 @@
       </div>
     </div>
   </div>
+<!-- 英文翻译 -->
+  <div v-else class="container">
+    <div class="banner">
+      <div class="banner-content">
+        <img class="fuc_center_bg" src="../assets/fuc/banner.png" />
+        <div class="fuc_coin">
+          <div class="fuc_header">FUCoin</div>
+          <div class="fuc_intro">FUCoin (FUC), is the FUBT platform token</div>
+          <button @click="handleFuc" class="fuc_btn"><span class="fuc_btn_text">Get FUC</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-container">
+      <div class="sub_fuc_intro">
+        <div class="sub_fuc_intro_header">
+          <span class="sub_fuc_intro_text">FUC introduction</span>
+          <span class="sub_line"></span>
+        </div>
+        <div class="sub_fuc_content">
+          <p class="sub_fuc_content_text">FUCoin (FUC) is the FUBT platform token. FUC relies on FUBT's global ecology. It is based on Ethereum's decentralized digital assets and is committed to building an industry space for industry development and resource management services.
+            FUC has a constant circulation of 100 million, and circulation began in June 2017.</p>
+          <p class="sub_fuc_content_text">In order to adapt to the international development requirements of FUBT trading platform, promote the global ecological value circulation and promotion of FUBT, and further feedback the users of the platform, FUBT decided to initiate the annual repurchase and destruction operation of FUC.</p>
+          <p class="sub_fuc_content_text">The amount of FUC expected to be repurchased during the year was 51 million.</p>
+          <p class="sub_fuc_content_text"> After the completion of the destruction, the total volume of FUC was reduced to 49 million, accounting for 49% of the original issuance</p>
+        </div>
+      </div>
+
+      <!--FUC回购计划-->
+      <div class="sub_fuc_intro">
+        <div class="sub_fuc_intro_header">
+          <span class="sub_fuc_intro_text">FUC Repurchase Plan</span>
+          <span class="sub_line sub_line_center"></span>
+        </div>
+        <div class="sub_fuc_content_1">
+          <div class="sub_fuc_content_row1">
+            <div class="sub_fuc_content_col1">Repurchase cycle</div>
+            <div class="sub_fuc_content_col2 text-align-l">{{this.dateStart}} 00:00—{{this.dateEnd}}  23:59（GMT+8）</div>
+          </div>
+
+          <div class="sub_fuc_content_row1 sub_fuc_content_row2">
+            <div class="sub_fuc_content_col1 sub_fuc_content_center1">Repurchase plan</div>
+            <div class="sub_fuc_content_col2 sub_fuc_content_center2">
+              <div class="sub_fuc_bars">
+                <div class="bars_box" :style="barStyle">
+                  <div class="bar">
+                    <div class="bar_tooltip">
+                      <div>{{this.percentage}}%</div>
+                      <div class="jiantou2">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-jiantou2"></use>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!--尾部tooltip-->
+                <div class="bar_bottom_tooltip">
+                  <!-- <div>{{this.total}}</div>
+                  <div class="bar_bottom_jiantou2">
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-jiantou2"></use>
+                    </svg>
+                  </div> -->
+                </div>
+              </div>
+
+              <div class="bar-text">
+                <div class="bar_text_left">{{this.count}} FUC</div>
+                <div class="bar_text_right">{{this.total}} FUC</div>
+              </div>
+
+              <p class="bar-p">30% of the daily transaction fee income of the FUBT platform is used for regular repurchase of the FUC. After the repurchase is completed, it will be destroyed. It is estimated that the total amount of repurchase at the end of the year will be 51 million FUC.</p>
+            </div>
+          </div>
+
+          <div class="sub_fuc_content_row1">
+            <div class="sub_fuc_content_col1 sub_fuc_content_center1">Public notice</div>
+            <div class="sub_fuc_content_col2">
+              <div class="text-l">daily repurchase, public notice. It will be announced twice a month, and the repurchase destruction of 00:00-23:59 (GMT+8) will be announced on the 16th of the month. </div>
+              <div class="text-l">The first working day of the next month will be announced from the 16th of the last month to the last day of the end of the month, 00:00 - 23:59 (GMT+8) repurchase destruction.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--FUC价值-->
+      <div class="fuc-price-content">
+        <div class="sub_fuc_intro_header">
+          <span class="sub_fuc_intro_text">FUC Value</span>
+          <span class="sub_line"></span>
+        </div>
+
+        <div class="sub-price-content">
+          <div class="sub-price-content-col1">
+            <div class="sub-price-content-list">
+              <img class="currency" src="../assets/fuc/currency.png">
+              <h2 class="sub-price-text-head">FUC Value</h2>
+              <p class="sub-price-p">FUC is a platform passport for FUBT's global ecosystem based on blockchain issuance and management, and can be used in FUBT and in multiple scenarios of the FUBT global ecosystem.</p>
+            </div>
+            <div class="sub-price-center">
+              <img class="currency" src="../assets/fuc/price_carrier.png">
+              <h2 class="sub-price-text-head">Value carrier</h2>
+              <p class="sub-price-p">FUBT Global Ecology gives FUC the innate value storage and delivery function, rewards platform users through value enhancement, and feeds on FUBT platform and global ecology, with continuous growth and unlimited growth space.</p>
+            </div>
+            <div>
+              <img class="currency" src="../assets/fuc/rights&interests.png">
+              <h2 class="sub-price-text-head">Privilege</h2>
+              <p class="sub-price-p">The FUC holder is the smallest unit and cell of the FUBT global ecological organization. It has the corresponding rights and interests of the ecosystem, and can obtain the relevant certificate of the FUBT global ecology, and enjoy the scarcity value added by the FUC continuous repurchase and destruction.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--FUC生态-->
+      <div ref="fuc" class="fuc-center-container">
+        <div class="sub_fuc_intro_header">
+          <span class="sub_fuc_intro_text">FUC Ecology</span>
+          <span class="sub_line"></span>
+        </div>
+
+        <div class="fuc-center-content">
+          <div ref="line2" class="fuc-center-left">
+            <h2 :key="line2" class="fuc-center-left-head">Ecological Scene</h2>
+            <div :key="line2" class="fuc-center-left-content">
+              <ul class="fuc-center-left-l text-l">
+                <li>Cloud Exchange Merchant Service Fee</li>
+                <li>Innovation Zone voting list</li>
+                <li>Project deposit</li>
+                <li>OTC merchant deposit</li>
+              </ul>
+              <ul class="fuc-center-left-r text-l">
+                <li>Eligibility for deposit income</li>
+                <li>Fee deduction and rebate</li>
+                <li>Online Payment & Offline Shopping</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="fuc-center-center">
+            <div ref="line1" class="fuc-center-center-content">
+              <h2 class="fuc-center-left-head " >Functional privilege</h2>
+              <div class="fuc-center-left-content">
+                <ul class="fuc-center-left-l text-l">
+                  <li>Functional privilege</li>
+                  <li>User pulls new reward</li>
+                  <li>Invite rebate</li>
+                  <li>Have voting privileges</li>
+                </ul>
+                <ul class="fuc-center-left-r text-l">
+                  <li>Get the Eco-Certificate Candy Award</li>
+                  <li>Exchange platform VIP privilege</li>
+                  <li>Participate in exclusive events</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="pallet">
+              <div class="logo"></div>
+              <div class="dot"></div>
+              <div class="lines">
+                <transition name="bounce">
+                  <div v-show= "line1" class="line1"></div>
+                </transition>
+                <transition name="bounce">
+                  <div v-show= "line2" class="line2"></div>
+                </transition>
+                <transition name="bounce">
+                  <div v-show= "line3" class="line3"></div>
+                </transition>
+              </div>
+            </div>
+          </div>
+
+          <div ref="line3" class="fuc-center-left">
+            <h2 class="fuc-center-left-head">Application extension</h2>
+            <div class="fuc-center-left-content">
+              <ul class="fuc-center-left-l text-l">
+                <li>Blockchain Professional Media Service</li>
+                <li>Industry community promotion payment</li>
+                <li>Quantitative and other technical research and development guidance</li>
+                <li>Conference, visit, business school deduction</li>
+              </ul>
+              <ul class="fuc-center-left-r text-l">
+                <li>Mining machine, hardware wallet payment</li>
+                <li>Headhunting, talent recruitment payment</li>
+                <li>Project primary evaluation service fee
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import {mapState, mapGetters} from 'vuex'
 import {getSchedule} from '../utils/api/common'
-
 export default {
   name: 'FucCenter',
   data () {
@@ -216,7 +412,11 @@ export default {
   async created () {
     await this.getSchedule()
   },
-
+  watch: {
+    language (newVal) {
+      this.errPWD = '' // 切换语言清空交易密码框错误提示
+    }
+  },
   methods: {
     handleScroll () {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -264,8 +464,8 @@ export default {
       let dateEnd = DATA.data.coinReleaseEndDate
 
       if (!DATA) return false
-      this.dateStart = dateStart.split('-')[0] + '年' + dateStart.split('-')[1] + '月' + dateStart.split('-')[2] + '日'
-      this.dateEnd = dateEnd.split('-')[0] + '年' + dateEnd.split('-')[1] + '月' + dateEnd.split('-')[2] + '日'
+      this.dateStart = this.language === 'zh_CN' ? dateStart.split('-')[0] + '年' + dateStart.split('-')[1] + '月' + dateStart.split('-')[2] + '日' : dateStart
+      this.dateEnd = this.language === 'zh_CN' ? dateEnd.split('-')[0] + '年' + dateEnd.split('-')[1] + '月' + dateEnd.split('-')[2] + '日' : dateEnd
       this.percentage = ((DATA.data.count / DATA.data.coinTotalNumber) * 100).toFixed(1)
       this.count = DATA.data.count
       this.total = DATA.data.coinTotalNumber
@@ -287,7 +487,13 @@ export default {
     card () {
       const style = {}
       return style
-    }
+    },
+    ...mapState({
+      language: state => state.common.language // 当前选中语言
+    }),
+    ...mapGetters({
+      '$isNeelLimitExchange_G_X': 'isNeedLimitExchange_G'
+    })
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
