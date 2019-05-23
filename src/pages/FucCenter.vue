@@ -119,9 +119,9 @@
         </div>
 
         <div class="fuc-center-content">
-          <transition-group class="fuc-center-left" name="bounce">
-            <h2 :key="line2" class="fuc-center-left-head" v-show = "this.line2">生态场景</h2>
-            <div :key="line2" class="fuc-center-left-content" v-show = "this.line2">
+          <div ref="line2" class="fuc-center-left">
+            <h2 :key="line2" class="fuc-center-left-head">生态场景</h2>
+            <div :key="line2" class="fuc-center-left-content">
               <ul class="fuc-center-left-l text-l">
                 <li>云交易所商户服务费</li>
                 <li>创新区投票上币</li>
@@ -134,12 +134,12 @@
                 <li>线上支付&线下购物</li>
               </ul>
             </div>
-          </transition-group>
+          </div>
 
           <div class="fuc-center-center">
-            <transition-group class="fuc-center-center-content" name="bounce">
-              <h2 :key="line1" class="fuc-center-left-head" v-show = "this.line1">功能权益</h2>
-              <div :key="line1" class="fuc-center-left-content" v-show = "this.line1">
+            <div ref="line1" class="fuc-center-center-content">
+              <h2 class="fuc-center-left-head" >功能权益</h2>
+              <div class="fuc-center-left-content">
                 <ul class="fuc-center-left-l text-l">
                   <li>用户拉新奖励</li>
                   <li>邀请返佣权</li>
@@ -152,28 +152,28 @@
                   <li>获得生态通证糖果奖励&线下购物</li>
                 </ul>
               </div>
-            </transition-group>
+            </div>
 
             <div class="pallet">
               <div class="logo"></div>
               <div class="dot"></div>
               <div class="lines">
                 <transition name="bounce">
-                  <div v-show= "this.line1" class="line1"></div>
+                  <div v-show= "line1" class="line1"></div>
                 </transition>
                 <transition name="bounce">
-                  <div v-show= "this.line2" class="line2"></div>
+                  <div v-show= "line2" class="line2"></div>
                 </transition>
                 <transition name="bounce">
-                  <div v-show= "this.line3" class="line3"></div>
+                  <div v-show= "line3" class="line3"></div>
                 </transition>
               </div>
             </div>
           </div>
 
-          <transition-group class="fuc-center-left" name="bounce">
-            <h2 :key="line3" class="fuc-center-left-head" v-show = "this.line3">应用延展</h2>
-            <div :key="line3" class="fuc-center-left-content" v-show = "this.line3">
+          <div ref="line3" class="fuc-center-left">
+            <h2 class="fuc-center-left-head">应用延展</h2>
+            <div class="fuc-center-left-content">
               <ul class="fuc-center-left-l text-l">
                 <li>区块链专业媒体服务</li>
                 <li>行业社群推广支付</li>
@@ -186,7 +186,7 @@
                 <li>项目初级测评服务费&线下购物</li>
               </ul>
             </div>
-          </transition-group>
+          </div>
         </div>
       </div>
     </div>
@@ -222,26 +222,39 @@ export default {
       if (this.$refs['fuc'].offsetTop && scrollTop >= this.$refs['fuc'].offsetTop - 800) {
         setTimeout(() => {
           this.line1 = 1
+          this.$refs['line1'].style.visibility = 'visible'
+          this.$refs['line1'].className = 'animated bounceIn delay-500ms'
         }, 300)
         setTimeout(() => {
           this.line2 = 1
-        }, 500)
+          this.$refs['line2'].style.visibility = 'visible'
+          this.$refs['line2'].className = 'animated bounceIn delay-500ms'
+          this.$refs['line2'].style.alignSelf = 'flex-end'
+        }, 800)
 
         setTimeout(() => {
           this.line3 = 1
-        }, 500)
+          this.$refs['line3'].style.visibility = 'visible'
+          this.$refs['line3'].className = 'animated bounceIn delay-500ms'
+          this.$refs['line3'].style.alignSelf = 'flex-end'
+        }, 1600)
       } else if (scrollTop <= this.$refs['fuc'].offsetTop - 1200) {
-        this.line1 = 0
         this.line2 = 0
         this.line3 = 0
+        this.line1 = 0
+        this.$refs['line1'].className = 'fuc-center-center-content'
+        this.$refs['line1'].style.visibility = 'hidden'
+        this.$refs['line3'].className = 'fuc-center-left'
+        this.$refs['line3'].style.visibility = 'hidden'
+        this.$refs['line2'].className = 'fuc-center-left'
+        this.$refs['line2'].style.visibility = 'hidden'
       }
     },
 
     handleFuc () {
       this.$router.push({
-        path: '/TradeCenter',
-        name: 'TradeCenter',
-        params: {coinId: 'fucfbt'}
+        path: '/TradeCenter/fucfbt',
+        name: 'TradeCenter'
       })
     },
 
@@ -270,6 +283,10 @@ export default {
         style.paddingRight = 0
       }
       return style
+    },
+    card () {
+      const style = {}
+      return style
     }
   },
   destroyed () {
@@ -295,7 +312,7 @@ ul {
 }
 
 .bounce-enter-active {
-  animation: bounce-in .5s;
+  animation: bounce-in .5s infinite;
 }
 
 .bounce-leave-active {
@@ -458,7 +475,6 @@ ul {
               .bars_box {
                 width: 46px;
                 height: 100%;
-                padding-right: 10px;
                 border-radius: 7px;
                 background: rgba(28, 33, 53, 1);
 
@@ -543,10 +559,10 @@ ul {
         .sub-price-content-col1 {
           z-index: 2;
           display: flex;
-          width: 79%;
+          width: 1575px;
           padding: 3% 10% 3% 20%;
           background: url("../assets/fuc/fuc_price_bg.png") center no-repeat;
-          background-size: cover;
+          background-size: contain;
 
           .sub-price-center {
             padding: 0 130px;
@@ -603,14 +619,16 @@ ul {
         .fuc-center-left-content {
           display: flex;
           align-items: end;
+          width: 396px;
           padding: 20px 14px;
-          margin-top: 9px;
+          margin: 9px auto;
           border-radius: 10px;
           background: rgba(106, 89, 193, .14);
         }
 
         .fuc-center-left {
           align-self: flex-end;
+          visibility: hidden;
         }
 
         .fuc-center-center {
@@ -618,6 +636,7 @@ ul {
             display: block;
             width: 396px;
             margin: 0 auto;
+            visibility: hidden;
           }
 
           .pallet {
