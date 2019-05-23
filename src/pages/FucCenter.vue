@@ -1,14 +1,12 @@
 <template>
   <div class="container">
     <div class="banner">
-      <div class="banner-content">
         <img class="fuc_center_bg" src="../assets/fuc/banner.png" />
         <div class="fuc_coin">
           <div class="fuc_header">FUCoin</div>
           <div class="fuc_intro">简称FUC，是FUBT平台token的简称</div>
-          <button class="fuc_btn"><span class="fuc_btn_text">即刻拥有FUC ></span></button>
+          <button @click="handleFuc" class="fuc_btn"><span class="fuc_btn_text">即刻拥有FUC ></span></button>
         </div>
-      </div>
     </div>
 
     <div class="sub-container">
@@ -239,6 +237,10 @@ export default {
       }
     },
 
+    handleFuc () {
+      this.$router.push('TradeCenter/fucfbt')
+    },
+
     async getSchedule () {
       const DATA = await getSchedule()
       let dateStart = DATA.data.coinReleaseBeginDate
@@ -258,7 +260,7 @@ export default {
   computed: {
     barStyle () {
       const style = {}
-      style.width = this.percentage + '%'
+      style.width = this.percentage < 1 ? '20px' : this.percentage + '%'
       if (this.percentage === 0) {
         style.borderRadius = 0
         style.paddingRight = 0
@@ -311,53 +313,53 @@ ul {
 }
 
 .container {
+  min-width: 1366px;
   padding-top: 50px;
   font-family: Bahnschrift-Regular;
   background: #272b41;
 
   .banner {
-    .banner-content {
-      display: flex;
-      width: 100%;
-      min-width: 1366px;
-      padding-top: 40px;
-      padding-right: 250px;
-      padding-left: 250px;
-      margin: 0 auto;
-      background: #11112b;
+    display: flex;
+    width: 100%;
+    min-width: 1366px;
+    padding-top: 40px;
+    padding-right: 16%;
+    padding-left: 16%;
+    margin: 0 auto;
+    background: #11112b;
 
-      .fuc_coin {
-        padding-left: 96px;
+    .fuc_coin {
+      flex: 1;
+      padding-left: 96px;
 
-        .fuc_header {
-          padding-top: 126px;
+      .fuc_header {
+        padding-top: 126px;
+        font-weight: 400;
+        font-size: 53px;
+        text-shadow: -2px -2px 1px rgba(195, 178, 237, 1);
+        color: rgb(62, 19, 188);
+        background: linear-gradient(0deg, rgb(62, 19, 188) 0%, rgba(243, 240, 243, 1) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .fuc_intro {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        font-size: 18px;
+        color: $color;
+      }
+
+      .fuc_btn {
+        padding: 15px 42px;
+        border: 1px solid rgba(133, 114, 244, 1);
+        border-radius: 5px;
+        cursor: pointer;
+
+        .fuc_btn_text {
           font-weight: 400;
-          font-size: 53px;
-          text-shadow: -2px -2px 1px rgba(195, 178, 237, 1);
-          color: rgb(62, 19, 188);
-          background: linear-gradient(0deg, rgb(62, 19, 188) 0%, rgba(243, 240, 243, 1) 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-
-        .fuc_intro {
-          padding-top: 30px;
-          padding-bottom: 30px;
-          font-size: 18px;
-          color: $color;
-        }
-
-        .fuc_btn {
-          padding: 15px 42px;
-          border: 1px solid rgba(133, 114, 244, 1);
-          border-radius: 5px;
-          cursor: pointer;
-
-          .fuc_btn_text {
-            font-weight: 400;
-            font-size: $fontSize;
-            color: rgba(133, 114, 244, 1);
-          }
+          font-size: $fontSize;
+          color: rgba(133, 114, 244, 1);
         }
       }
     }
@@ -537,7 +539,7 @@ ul {
         .sub-price-content-col1 {
           z-index: 2;
           display: flex;
-          width: 92%;
+          width: 79%;
           padding: 3% 10% 3% 20%;
           background: url("../assets/fuc/fuc_price_bg.png") center no-repeat;
           background-size: cover;
