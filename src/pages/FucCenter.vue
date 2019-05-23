@@ -238,7 +238,11 @@ export default {
     },
 
     handleFuc () {
-      this.$router.push('TradeCenter/fucfbt')
+      this.$router.push({
+        path: '/TradeCenter',
+        name: 'TradeCenter',
+        params: {coinId: 'fucfbt'}
+      })
     },
 
     async getSchedule () {
