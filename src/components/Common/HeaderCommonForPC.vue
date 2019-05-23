@@ -127,6 +127,11 @@
                 </li>
               </ul>
             </li>
+            <li v-if="isFubt" class="nav-item">
+              <router-link to="/FucCenter">
+                <span>FUC生态</span>
+              </router-link>
+            </li>
           </ul>
         </div>
         <!--注册登录-->
@@ -472,6 +477,8 @@ import {
   mapState,
   mapActions
 } from 'vuex'
+import {xDomain} from '../../utils/env'
+
 export default{
   components: {
     IconFontCommon
@@ -807,6 +814,10 @@ export default{
     }),
     localPayPwdSet () {
       return getNestedData(this.userInfo, 'paypasswordSet')
+    },
+    isFubt () {
+      let enableXDomains = ['fubt', 'new.test.com', 'new.bzu.com']
+      return enableXDomains.some(item => xDomain.startsWith(item))
     }
   },
   watch: {

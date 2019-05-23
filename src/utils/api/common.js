@@ -33,3 +33,5 @@ export const getConfigAjax = () => handleRequest(() => get('config'))
 export const getSymbolRate = () => handleRequest(() => get('/trade/rate', {'loading': true}))
 // 获取币种费率
 export const getCurrencyRate = () => handleRequest(() => get('/selectCoinRate', {'loading': true}))
+// fuc回购计划进度
+export const getSchedule = () => handleRequest(() => get('/banner/release'))
