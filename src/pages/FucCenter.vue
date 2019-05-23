@@ -107,7 +107,6 @@
               <p class="sub-price-p">FUC持有者是FUBT全球生态组织的最小单元和细胞，拥有该生态体系的对应权益，可获取FUBT全球生态的有关通证奖励，同时享受FUC持续回购销毁带来的稀缺性增值。</p>
             </div>
           </div>
-          <div class="sub-price-content-col2"></div>
         </div>
       </div>
 
@@ -138,7 +137,7 @@
 
           <div class="fuc-center-center">
             <div ref="line1" class="fuc-center-center-content">
-              <h2 class="fuc-center-left-head" >功能权益</h2>
+              <h2 class="fuc-center-left-head " >功能权益</h2>
               <div class="fuc-center-left-content">
                 <ul class="fuc-center-left-l text-l">
                   <li>用户拉新奖励</li>
@@ -554,15 +553,16 @@ ul {
       .sub-price-content {
         position: relative;
         display: flex;
+        width: 100%;
         margin-top: 57px;
+        background: url("../assets/fuc/fuc_price_bg.jpg") center no-repeat;
+        background-size: 100% 100%;
 
         .sub-price-content-col1 {
           z-index: 2;
           display: flex;
           width: 1575px;
           padding: 3% 10% 3% 20%;
-          background: url("../assets/fuc/fuc_price_bg.png") center no-repeat;
-          background-size: contain;
 
           .sub-price-center {
             padding: 0 130px;
@@ -621,7 +621,7 @@ ul {
           align-items: end;
           width: 396px;
           padding: 20px 14px;
-          margin: 9px auto;
+          margin-top: 9px;
           border-radius: 10px;
           background: rgba(106, 89, 193, .14);
         }
