@@ -326,7 +326,6 @@
                         :isNeedTag="isNeedTag"
                         :currencyName="currencyName"
                         :originalActiveWithdrawDepositAddress="originalActiveWithdrawDepositAddress"
-                        :originWithdrawRemark= "originWithdrawRemark"
                         :withdrawAddressList="withdrawAddressList"
                         :feeRangeOfWithdraw="feeRangeOfWithdraw"
                         :index="assetItem.coinId"
@@ -1123,10 +1122,7 @@ export default {
       this.isNeedTag = withdrawalAddressData.needTag
       // 返回列表数据并渲染币种列表
       this.withdrawAddressList = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList')
-      if (this.withdrawAddressList.length) {
-        this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address')
-        this.withdrawRemark = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].tag')
-      }
+      this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address') || ''
     },
     // select框自定义提币地址校验地址
     // 10 新增用户提币地址校验
@@ -1178,9 +1174,8 @@ export default {
       return true
     },
     // 当前提币地址改变回调
-    changeWithdrawAddress ({activeWithdrawDepositAddress, activeWithdrawRemark}) {
+    changeWithdrawAddress ({activeWithdrawDepositAddress}) {
       this.activeWithdrawDepositAddress = activeWithdrawDepositAddress
-      this.withdrawRemark = activeWithdrawRemark
       this.checkCurrencyAddress()
     },
     /**
@@ -1323,7 +1318,7 @@ export default {
         // googleCode: this.googleCode, // 谷歌验证码
         coinId: this.activeCoinId, // 币种ID
         withdrawAddress: this.activeWithdrawDepositAddress,
-        remark: this.withdrawRemark, // 地址标签
+        remark: this.withdrawRemark, // 提币地址
         networkFees: this.withdrawFeeVModel, // 手续费
         amount: this.withdrawCountVModel, // 提币数量
         payCode: this.password // 交易密码
@@ -1441,10 +1436,6 @@ export default {
     // 提币地址初始化赋值
     originalActiveWithdrawDepositAddress () {
       return this.activeWithdrawDepositAddress
-    },
-    // 地址标签初始值
-    originWithdrawRemark () {
-      return this.withdrawRemark
     },
     filteredData: function () {
       return this.withdrawDepositList.filter((item) => {
