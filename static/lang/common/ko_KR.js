@@ -160,5 +160,6 @@ export const common = {
   'common_footer_legal_notice': '법률 선언',
   'common_onlineText': '온라인 고객 서비스',
   'common_paypassword_locked': '거래 비밀번호 오류 2시간 이상, 거래 동결 2시간.。',
-  'common_no_processing': '잠시 처리하지 않다'
+  'common_no_processing': '잠시 처리하지 않다',
+  'common_fuc_eco': 'FUC 생태'
 }

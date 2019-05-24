@@ -93,7 +93,13 @@ let mixin = {
       $isShowServerPort_S_X: state => state.trade.serverData.isShowServerPort,
       $clientWidth_S_X: state => state.common.clientWidth,
       $activityInfo_S_X: state => state.trade.activity
-    })
+    }),
+    $activeBuyName_X () {
+      return (this.$middleTopData_S_X.area || '').toUpperCase()
+    },
+    $activeSellName_X () {
+      return (this.$middleTopData_S_X.sellsymbol || '').toUpperCase()
+    }
   }
 }
 export default mixin
