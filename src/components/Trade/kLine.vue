@@ -288,7 +288,7 @@ export default {
     init (options) {
       if (!this.widget) {
         this.widget = new TvWidget({
-          symbol: options.symbol,
+          symbol: `${this.$activeSellName_X}/${this.$activeBuyName_X}`,
           interval: options.interval,
           autosize: true,
           container_id: 'tv_chart_container',
