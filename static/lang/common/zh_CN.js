@@ -160,5 +160,6 @@ export const common = {
   'common_footer_legal_notice': '法律声明',
   'common_onlineText': '在线客服',
   'common_paypassword_locked': '交易密码错误次数超限，交易冻结2小时。',
-  'common_no_processing': '暂不处理'
+  'common_no_processing': '暂不处理',
+  'common_fuc_eco': 'FUC生态'
 }

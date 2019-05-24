@@ -129,7 +129,7 @@
             </li>
             <li v-if="isFubt" class="nav-item">
               <router-link to="/FucCenter">
-                <span>FUC生态</span>
+                <span>{{$t('M.common_fuc_eco')}}</span>
               </router-link>
             </li>
           </ul>
