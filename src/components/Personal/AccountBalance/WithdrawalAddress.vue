@@ -427,6 +427,9 @@ export default {
         if (data) {
           this.securityCenter = getNestedData(data, 'data.data')
           this.mentionMoneyConfirm = true
+          this.phoneCode = ''
+          this.emailCode = ''
+          this.googleCode = ''
         }
       })
     },
@@ -452,7 +455,6 @@ export default {
       } else {
         this.emptyErrorMsg = ''
       }
-      let data
       let param = {
         coinId: this.currencyValue, // 币种coinId
         remark: this.withdrawalRemark, // 备注
@@ -464,13 +466,13 @@ export default {
       }
       // 整页loading
       this.fullscreenLoading = true
-      data = await addNewWithdrawalAddress(param)
+      let data = await addNewWithdrawalAddress(param)
       // 接口失败清除loading
-      if (!data) return false
       this.fullscreenLoading = false
+      if (!data) return false
+      this.mentionMoneyConfirm = false
       this.getWithdrawalAddressList()
       this.resetFormContent()
-      this.mentionMoneyConfirm = false
     },
     /**
      *  5.刚进页面时候 提币地址列表查询
