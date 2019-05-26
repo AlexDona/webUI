@@ -264,12 +264,17 @@ export default {
       this.fullscreenLoading = true
       this.widget = null
       this.socket.on('message', this.onMessage)
-      this.options.symbol = symbol
-      this.options.areaId = this.activeTabId
-      this.options.paneProperties.background = this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-      this.options.paneProperties.vertGridPropertiesColor = this.$theme_S_X === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
-      this.options.interval = '15'
-      this.options.language = this.$language_S_X
+      let options = {
+        symbol,
+        areaId: this.activeTabId,
+        paneProperties: {
+          background: this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor,
+          vertGridPropertiesColor: this.$theme_S_X === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
+        },
+        interval: '15',
+        language: this.$language_S_X
+      }
+      this.options = {...this.options, ...options}
       this.init(this.options)
     },
     // 获取初始交易对
@@ -279,7 +284,7 @@ export default {
       let data = await getDefaultSymbol()
       if (!data) return false
       const obj = getNestedData(data, 'data')
-      activeSymbol = (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase()
+      activeSymbol = `${getNestedData(obj, 'sellCoinName')}${getNestedData(obj, 'buyCoinName')}`.toLowerCase()
       const {tradeId} = this.$route.params
       this.symbol = tradeId && tradeId !== 'default' ? tradeId : (localSymbol ? localSymbol : activeSymbol)
       this.RETURN_SYMBOL_DATA(true)
@@ -512,7 +517,7 @@ export default {
     onMessage (data) {
       this.barsRenderTime = this.LIMIT_BARS_RENDER_TIME - 2
       // const { countDown, isShow } = data.data
-      // console.log(data)
+      console.log(data)
       // if (this.activeSymbol.id !== symbol) return false
       switch (data.tradeType) {
         case 'KLINE':
