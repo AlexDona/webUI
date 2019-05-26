@@ -56,7 +56,7 @@
               'up':$middleTopData_S_X.chg>0,
               'down':$middleTopData_S_X.chg<0
             }"
-          >{{$scientificToNumber($middleTopData_S_X.chg)}}%</span>
+          >{{$keep2Num($middleTopData_S_X.chg)}}%</span>
         </div>
       </div>
       <div class="item">
