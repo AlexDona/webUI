@@ -28,109 +28,85 @@
                 >
               </router-link>
             </li>
-            <li class="nav-item">
-              <router-link to="/TradeCenter/default">
-                <!--<span>币币交易</span>-->
-                 <span>{{$t('M.comm_trade_center')}}</span>
-              </router-link>
-            </li>
-            <li
-              class="nav-item"
-              @mouseenter="toggleBox('otc',true)"
-              @mouseleave="toggleBox('otc',false)"
+            <li class="more-btn"
+                @mouseenter="toggleMoreNavs(true)"
+                @mouseleave="toggleMoreNavs(false)"
             >
-              <router-link to="/OTCCenter">
-                <!--<span>OTC交易</span>-->
-                <span>{{$t('M.comm_otc_center')}}</span>
-              </router-link>
-              <!--otc子导航-->
-              <!-- yuxia改的子导航显示 -->
-              <ul
-                class="sub-nav-list otc"
-                v-show="$route.path.indexOf('OTC') != -1"
-                >
-                <li class="sub-nav-item">
-                  <router-link to="/OTCBusinessApply">
-                    <!--商家申请-->
-                    {{$t('M.comm_business_application')}}
-                  </router-link>
-                </li>
-                <li
-                  class="sub-nav-item"
-                  @click="OTCAccountDisabledJudge"
-                >
-                  <router-link to="/OTCPublishAD">
-                    <!--发布广告-->
-                    {{$t('M.otc_merchant_publishAD')}}
-                  </router-link>
-                </li>
-                <li
-                  class="sub-nav-item"
-                  @click="applyMerchant"
-                >
-                  <router-link to="/OTCADManage">
-                    <!--广告管理-->
-                    {{$t('M.otc_adMange')}}
-                  </router-link>
-                </li>
-                <li
-                  class="sub-nav-item"
-                  @click="applyMerchant"
-                >
-                  <router-link to="/OTCMerchantsOrders">
-                    <!--商家订单-->
-                    {{$t('M.otc_MerchantsOrders')}}
-                  </router-link>
-                </li>
-                <li
-                  class="sub-nav-item"
-                  @click="applyMerchant"
-                >
-                  <router-link to="/OTCReportFormStatistics">
-                    <!--报表统计-->
-                    {{$t('M.otc_formStatistics')}}
-                  </router-link>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <router-link to="/FinanceCenter">
-                <!--<span>投资理财</span>-->
-                <span>{{$t('M.comm_finance_center')}}</span>
-              </router-link>
-            </li>
-            <li
-              class="nav-item"
-              @mouseenter="toggleBox('activity',true)"
-              @mouseleave="toggleBox('activity',false)"
-            >
-              <router-link to="/ActivityCenter">
-                <!--<span>活动中心</span>-->
-                <span>{{$t('M.comm_activity_center')}}</span>
-              </router-link>
-              <!--活动中心子导航-->
-              <ul
-                class="sub-nav-list activity-center"
-                v-show="$route.path ==='/ActivityCenter'||$route.path==='/RankingListOfInvitation'"
+              <!-- 更多 自定义导航-->
+              <a
+                class="more-nav-btn text-align-l"
               >
-                <!--<li class="sub-nav-item">-->
-                  <!--<router-link to="/CurrencyApplication">-->
-                    <!--&lt;!&ndash;上币申请&ndash;&gt;-->
-                    <!--{{$t('M.actionCenter_coin_apply')}}-->
-                  <!--</router-link>-->
-                <!--</li>-->
-                <li class="sub-nav-item">
-                  <router-link to="/RankingListOfInvitation">
-                    <!--邀请排行-->
-                    {{$t('M.comm_invitation_list')}}
-                  </router-link>
+                <TheMoreNavsButton
+                  :isActive="isShowSubNav"
+                />
+              </a>
+              <!-- 更多 自定义导航列表 -->
+              <ul
+                class="more-nav-list"
+                v-show="isShowSubNav"
+              >
+                <li
+                  v-for="(navItem, navIndex) in navigation.slice(4)"
+                  :key="navIndex"
+                  class="nav-item"
+                  @mouseenter="changeMoreActiveNavIndex(navIndex)"
+                  @mouseleave="changeMoreActiveNavIndex(-1)"
+                  :title="navItem.name"
+                >
+                  <a
+                    href="javascript:void(0);"
+                    @click="navToJump(navItem)"
+                  ><span>{{navItem.name}}</span></a>
+                  <!-- 子导航 -->
+                  <ul
+                    class="sub-nav-list"
+                    v-if="navItem.children"
+                    v-show="activeMoreNavIndex === navIndex"
+                    :style="{
+                      top: `${40*navIndex}px`
+                    }"
+                  >
+                    <li
+                      class="sub-nav-item"
+                      v-for="(subNav, subIndex) in navItem.children"
+                      :key="subIndex"
+                    >
+                      <a
+                        href="javascript:void(0);"
+                        @click="navToJump(subNav)"
+                      ><span>{{subNav.name}}</span></a>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </li>
-            <li v-if="isFubt" class="nav-item">
-              <router-link to="/FucCenter">
-                <span>FUC生态</span>
-              </router-link>
+            <li
+              class="nav-item"
+              v-for="(navigationItem, index) in navigation.slice(0, 4)"
+              :key="index"
+              @mouseenter="changeActiveNavIndex(index)"
+              @mouseleave="changeActiveNavIndex(-1)"
+            >
+              <a
+                href="javascript:void(0);"
+                @click="navToJump(navigationItem)"
+              ><span>{{navigationItem.name}}</span></a>
+              <ul
+                class="sub-nav-list"
+                v-if="navigationItem.children"
+                v-show="index === activeNavIndex"
+              >
+                <li
+                  class="sub-nav-item"
+                  v-for="(subNav, subIndex) in navigationItem.children"
+                  :key="subIndex"
+                >
+                  <a
+                    href="javascript:void(0);"
+                    @click="navToJump(subNav)"
+                  ><span>{{subNav.name}}</span></a>
+                </li>
+              </ul>
             </li>
           </ul>
         </div>
@@ -465,6 +441,7 @@
 import {getMerchantAvailableLegalTender} from '../../utils/api/OTC'
 import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
+import TheMoreNavsButton from '../Home/TheMoreNavsButton'
 import {
   getNestedData
 } from '../../utils/commonFunc'
@@ -481,7 +458,8 @@ import {xDomain} from '../../utils/env'
 
 export default{
   components: {
-    IconFontCommon
+    IconFontCommon,
+    TheMoreNavsButton
   },
   data () {
     return {
@@ -515,14 +493,160 @@ export default{
       // otc 子导航显示状态
       // otcSubNavStatus: false,
       // 任付伟大改动的：otc 子导航显示状态默认先显示，为了方便点击
-      otcSubNavStatus: true,
+      // otcSubNavStatus: true,
       // 活动中心子导航显示状态
-      activityCenterSubNavStatus: false,
+      // activityCenterSubNavStatus: false,
       styleTop: 30,
       topPadding: '0 30px',
       topBackgroundColor: 'rgba(0,0,0,0.7)',
       isPayPasswordLocked: false,
-      isNoticeReady: false
+      isNoticeReady: false,
+      navigation: [
+        {
+          name: '币币交易',
+          link: '/TradeCenter/default',
+          newTab: false,
+          children: [
+            {
+              name: '测试',
+              link: '/test',
+              newTab: false
+            }
+          ]
+        },
+        {
+          name: 'OTC交易',
+          link: '/OTCCenter',
+          newTab: false,
+          children: [
+            {
+              name: '商家申请13123123123123',
+              link: `/OTCBusinessApply`,
+              newTab: false
+            },
+            {
+              name: '发布广告',
+              link: `/OTCPublishAD`,
+              newTab: false
+            },
+            {
+              name: '广告管理',
+              link: `/OTCADManage`,
+              newTab: false
+            },
+            {
+              name: '商家订单',
+              link: `/OTCMerchantsOrders`,
+              newTab: false
+            },
+            {
+              name: '报表统计',
+              link: `/OTCReportFormStatistics`,
+              newTab: false
+            }
+          ]
+        },
+        {
+          name: '投资理财12313123123123',
+          link: '/FinanceCenter',
+          newTab: false
+        },
+        {
+          name: '活动中心',
+          link: '/ActivityCenter',
+          newTab: false,
+          children: [
+            {
+              name: '邀请排行',
+              link: `/RankingListOfInvitation`,
+              newTab: false
+            }
+          ]
+        },
+        {
+          name: 'OTC交易',
+          link: '/OTCCenter',
+          newTab: false,
+          children: [
+            {
+              name: '商家申请13123123123123',
+              link: `/OTCBusinessApply`,
+              newTab: false
+            },
+            {
+              name: '发布广告',
+              link: `/OTCPublishAD`,
+              newTab: false
+            },
+            {
+              name: '广告管理',
+              link: `/OTCADManage`,
+              newTab: false
+            },
+            {
+              name: '商家订单',
+              link: `/OTCMerchantsOrders`,
+              newTab: false
+            },
+            {
+              name: '报表统计',
+              link: `/OTCReportFormStatistics`,
+              newTab: false
+            }
+          ]
+        },
+        {
+          name: 'OTC交易123123123123',
+          link: '/OTCCenter',
+          newTab: false,
+          children: [
+            {
+              name: '商家申请13123123123123',
+              link: `/OTCBusinessApply`,
+              newTab: false
+            },
+            {
+              name: '发布广告',
+              link: `/OTCPublishAD`,
+              newTab: false
+            },
+            {
+              name: '广告管理',
+              link: `/OTCADManage`,
+              newTab: false
+            },
+            {
+              name: '商家订单',
+              link: `/OTCMerchantsOrders`,
+              newTab: false
+            },
+            {
+              name: '报表统计',
+              link: `/OTCReportFormStatistics`,
+              newTab: false
+            }
+          ]
+        },
+        {
+          name: '币币交易',
+          link: '/TradeCenter/default',
+          newTab: false,
+          children: [
+            {
+              name: '测试',
+              link: '/test',
+              newTab: false
+            }
+          ]
+        }
+      ],
+      // 当前导航选中项 索引
+      activeNavIndex: -1,
+      // 当前 更多导航选中项索引
+      activeMoreNavIndex: -1,
+      // 是否显示更多导航
+      // isShowSubNav: true
+      isShowSubNav: false
     }
   },
   async created () {
@@ -531,7 +655,17 @@ export default{
     if (this.isLogin && this.$route.path !== '/PersonalCenter') {
       this.refreshUserInfo()
     }
-
+    if (this.isFubt) {
+      this.navigation.push({
+        name: 'FUC生态',
+        link: '/FucCenter',
+        newTab: false
+      })
+    }
+    _.forEach(this.navigation, (nav, index) => {
+      nav['isInnerLink'] = this.checkIsInnerLink(nav.link) ? true : false
+    })
+    console.log(this.navigation)
     // 获取 语言列表
     if (!await this.GET_LANGUAGE_LIST_ACTION(this)) return false
     await this.SET_PARTNER_INFO_ACTION(this.language)
@@ -722,6 +856,7 @@ export default{
       this.$goToPage('/home')
     },
     toggleBox (type, status) {
+      // console.log(1)
       switch (type) {
         case 'notice':
           this.showNoticeList = status
@@ -733,12 +868,12 @@ export default{
         case 'lang':
           this.langSelecting = status
           break
-        case 'otc':
-          this.otcSubNavStatus = status
-          break
-        case 'activity':
-          this.activityCenterSubNavStatus = status
-          break
+        // case 'otc':
+        //   this.otcSubNavStatus = status
+        //   break
+        // case 'activity':
+        //   this.activityCenterSubNavStatus = status
+        //   break
       }
     },
     // 重置交易密码
@@ -788,6 +923,44 @@ export default{
         document.querySelector('title').innerText = newTitle
       } else {
         setTimeout(this.setNewTitle, 1000)
+      }
+    },
+    // 切换当前激活导航
+    changeActiveNavIndex (index) {
+      this.activeNavIndex = index
+    },
+    // 切换当前更多激活导航
+    changeMoreActiveNavIndex (index) {
+      this.activeMoreNavIndex = index
+    },
+    // 切换子导航显示
+    toggleMoreNavs (status) {
+      this.isShowSubNav = status
+    },
+    // 检测链接类型是否为内部类型（内部链接、外部链接）
+    checkIsInnerLink (link) {
+      // 外部 https://www.fubt.co www.fubt.co
+      // 内部 /TradeCenter
+      const isInnerLink = !link.includes('.')
+      console.log(isInnerLink)
+      return isInnerLink
+    },
+    // 导航跳转
+    navToJump (navigation) {
+      const { link, newTab } = navigation
+      console.log(link)
+      if (this.checkIsInnerLink(link)) {
+        this.$goToPage(`${link}`)
+      } else {
+        console.log('outerLink', newTab, link)
+        let formatLink = link
+        formatLink = !link.startsWith('http') ? `https://${formatLink}` : link
+        console.log(formatLink)
+        if (newTab) {
+          window.open(`${formatLink}`, '_blank')
+        } else {
+          window.location.href = formatLink
+        }
       }
     }
   },
@@ -864,6 +1037,7 @@ export default{
 </script>
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index";
+@import "../../../static/css/scss/Home/MarketListHome";
 
 .nav-box {
   position: fixed;
@@ -893,6 +1067,7 @@ export default{
 
           > .nav-item {
             position: relative;
+            left: -20px;
             display: inline-block;
             height: 100%;
             padding: 0 2%;
@@ -905,52 +1080,33 @@ export default{
               padding-left: 0;
             }
 
-            /* 子导航list */
             > .sub-nav-list {
               position: absolute;
-              box-sizing: border-box;
-              width: 700px;
-              height: 36px;
-              line-height: 36px;
-              text-align: left;
-              background-color: $nightSubNavBgColor;
-
-              &.otc,
-              &.activity-center {
-                left: 6px;
-              }
-
-              &::before {
-                position: absolute;
-                top: -16px;
-                left: 46px;
-                width: 0;
-                height: 0;
-                border: 8px solid transparent;
-                border-bottom-color: $nightSubNavBgColor;
-                content: '';
-              }
+              left: 0;
+              background-color: $mainContentNightBgColor;
 
               > .sub-nav-item {
-                display: inline-block;
-                height: 100%;
-                padding: 0 25px;
+                height: 40px;
+                padding: 0 20px;
+                line-height: 40px;
+                text-align: left;
+                background-color: $mainContentNightBgColor;
 
                 &:hover {
                   background-color: #21243a;
+
+                  > a {
+                    color: $mainColor;
+                  }
                 }
 
                 > a {
-                  white-space: nowrap;
-                  color: #8494a6;
-
-                  &.active {
-                    color: $mainColor;
-                  }
+                  color: $headerNavFontColor;
                 }
               }
             }
 
+            /* 自定义导航 */
             &:hover {
               background-color: #1b2136;
 
@@ -979,6 +1135,76 @@ export default{
               > .img {
                 width: 100%;
                 vertical-align: middle;
+              }
+            }
+          }
+
+          > .more-btn {
+            position: relative;
+            left: -20px;
+            display: inline-block;
+            height: 100%;
+            text-align: center;
+            vertical-align: top;
+            white-space: nowrap;
+            transition: all .5s;
+
+            > .more-nav-btn {
+              display: inline-block;
+              width: 30px;
+              height: 30px;
+              margin: 10px 0;
+            }
+
+            > .more-nav-list {
+              position: absolute;
+              top: 50px;
+              min-width: 200%;
+              text-align: left;
+              background-color: $mainContentNightBgColor;
+
+              > .nav-item {
+                height: 40px;
+                padding: 0 20px;
+                line-height: 40px;
+
+                &:hover {
+                  background-color: #21243a;
+
+                  > a {
+                    color: $mainColor;
+                  }
+                }
+
+                > a {
+                  color: $headerNavFontColor;
+                }
+
+                > .sub-nav-list {
+                  position: absolute;
+                  top: 0;
+                  left: 100%;
+                  background-color: $mainContentNightBgColor;
+
+                  > .sub-nav-item {
+                    height: 40px;
+                    padding: 0 20px;
+                    line-height: 40px;
+                    text-align: left;
+
+                    &:hover {
+                      background-color: #21243a;
+
+                      > a {
+                        color: $mainColor;
+                      }
+                    }
+
+                    > a {
+                      color: $headerNavFontColor;
+                    }
+                  }
+                }
               }
             }
           }
@@ -1203,15 +1429,6 @@ export default{
           }
         }
       }
-    }
-
-    > .bottom {
-      position: absolute;
-      z-index: 1;
-      top: 50px;
-      width: 100%;
-      height: 36px;
-      background-color: $nightSubNavBgColor;
     }
 
     /deep/ {
