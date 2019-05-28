@@ -147,7 +147,7 @@
               <!-- 名称 -->
               <el-table-column
                 :label="$t('M.otc_index_Merchant')"
-                align="center"
+                align="left"
               >
                 <template slot-scope = "s">
                   <div>
@@ -1248,7 +1248,29 @@ export default {
           padding: 15px 0;
         }
 
+        .el-table__header {
+          tr {
+            th {
+              &:first-child {
+                .cell {
+                  padding-left: 30px;
+                }
+              }
+            }
+          }
+        }
+
         .el-table__body {
+          tr {
+            td {
+              &:first-child {
+                .cell {
+                  padding-left: 30px;
+                }
+              }
+            }
+          }
+
           .el-button--danger.is-disabled {
             border-color: #e4b1a7;
             background-color: #e4b1a7;
