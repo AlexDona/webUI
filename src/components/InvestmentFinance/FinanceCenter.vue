@@ -502,47 +502,47 @@
                     :label="$t('M.comm_state')"
                   >
                     <template slot-scope="s">
-                      <div v-show="s.row.financialState === 'FREEZE'">
+                      <div v-show="s.row.state === 'FREEZE'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">冻结</span>
                         <span v-else>Freeze</span>
                       </div>
-                      <div v-show="s.row.financialState === 'CURRENT'">
+                      <div v-show="s.row.state === 'CURRENT'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">活期</span>
                         <span v-else>Current</span>
                       </div>
-                      <div v-show="s.row.financialState === 'REGULARMONTHLYRETURN'">
+                      <div v-show="s.row.state === 'REGULARMONTHLYRETURN'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期月返</span>
                         <span v-else style="word-wrap:normal;">Regular monthly return</span>
                       </div>
-                      <div v-show="s.row.financialState === 'PERIODICAL'">
+                      <div v-show="s.row.state === 'PERIODICAL'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期</span>
                         <span v-else>Regular</span>
                       </div>
-                      <div v-show="s.row.financialState === 'IS_DISTRIBUTE'">
+                      <div v-show="s.row.state === 'IS_DISTRIBUTE'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">发放收益</span>
                         <span v-else>Distribute</span>
                       </div>
-                      <div v-show="s.row.financialState === 'UNDISTRIBUTE'">
+                      <div v-show="s.row.state === 'UNDISTRIBUTE'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">未发放收益</span>
                         <span v-else>Undistribute</span>
                       </div>
-                      <div v-show="s.row.financialState === 'FINISHED'">
+                      <div v-show="s.row.state === 'FINISHED'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">已完成</span>
                         <span v-else>Finished</span>
                       </div>
-                      <div v-show="s.row.financialState === 'CANCEL'">
+                      <div v-show="s.row.state === 'CANCEL'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">已取消</span>
                         <span v-else>Cancel</span>
                       </div>
-                      <div v-show="s.row.financialState === 'AUTHENTICATION'">
+                      <div v-show="s.row.state === 'AUTHENTICATION'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">已认证</span>
                         <span v-else>Authentication</span>
                       </div>
-                      <div v-show="s.row.financialState === 'UNAUTHENTICATION'">
+                      <div v-show="s.row.state === 'UNAUTHENTICATION'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">未认证</span>
                         <span v-else>Unauthentication</span>
                       </div>
-                      <div v-show="s.row.financialState === 'EQUAL_PRINCIPAL'">
+                      <div v-show="s.row.state === 'EQUAL_PRINCIPAL'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">本金+利息</span>
                         <span v-else>Capital+Interest</span>
                       </div>
@@ -564,7 +564,7 @@
                     <!-- 活期 -->
                     <template slot-scope = "s">
                       <div
-                        v-if="s.row.state == 'CURRENT'"
+                        v-if="s.row.financialState == 'CURRENT' && s.row.state != 'CANCEL'"
                         class="blue cancelBtn"
                         @click="cancelInvest(s.row.id)"
                       >
