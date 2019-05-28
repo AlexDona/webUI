@@ -502,47 +502,47 @@
                     :label="$t('M.comm_state')"
                   >
                     <template slot-scope="s">
-                      <div v-show="s.row.state === 'FREEZE'">
+                      <div v-show="s.row.financialState === 'FREEZE'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">冻结</span>
                         <span v-else>Freeze</span>
                       </div>
-                      <div v-show="s.row.state === 'CURRENT'">
+                      <div v-show="s.row.financialState === 'CURRENT'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">活期</span>
                         <span v-else>Current</span>
                       </div>
-                      <div v-show="s.row.state === 'REGULARMONTHLYRETURN'">
+                      <div v-show="s.row.financialState === 'REGULARMONTHLYRETURN'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期月返</span>
                         <span v-else style="word-wrap:normal;">Regular monthly return</span>
                       </div>
-                      <div v-show="s.row.state === 'PERIODICAL'">
+                      <div v-show="s.row.financialState === 'PERIODICAL'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期</span>
                         <span v-else>Regular</span>
                       </div>
-                      <div v-show="s.row.state === 'IS_DISTRIBUTE'">
+                      <div v-show="s.row.financialState === 'IS_DISTRIBUTE'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">发放收益</span>
                         <span v-else>Distribute</span>
                       </div>
-                      <div v-show="s.row.state === 'UNDISTRIBUTE'">
+                      <div v-show="s.row.financialState === 'UNDISTRIBUTE'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">未发放收益</span>
                         <span v-else>Undistribute</span>
                       </div>
-                      <div v-show="s.row.state === 'FINISHED'">
+                      <div v-show="s.row.financialState === 'FINISHED'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">已完成</span>
                         <span v-else>Finished</span>
                       </div>
-                      <div v-show="s.row.state === 'CANCEL'">
+                      <div v-show="s.row.financialState === 'CANCEL'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">已取消</span>
                         <span v-else>Cancel</span>
                       </div>
-                      <div v-show="s.row.state === 'AUTHENTICATION'">
+                      <div v-show="s.row.financialState === 'AUTHENTICATION'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">已认证</span>
                         <span v-else>Authentication</span>
                       </div>
-                      <div v-show="s.row.state === 'UNAUTHENTICATION'">
+                      <div v-show="s.row.financialState === 'UNAUTHENTICATION'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">未认证</span>
                         <span v-else>Unauthentication</span>
                       </div>
-                      <div v-show="s.row.state === 'EQUAL_PRINCIPAL'">
+                      <div v-show="s.row.financialState === 'EQUAL_PRINCIPAL'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">本金+利息</span>
                         <span v-else>Capital+Interest</span>
                       </div>
