@@ -733,28 +733,6 @@ export default{
         this.SET_NOTICE_ID(noticeId)
       }
     },
-    // 非商家禁止进入OTC导航页提示框--开始
-    applyMerchant () {
-      if (this.isLogin) {
-        if (!(this.userInfo.type === 'MERCHANT')) {
-          this.showApplyMerchantStatus = true
-          return false
-        }
-      }
-    },
-    // otc账户禁用交易判断逻辑：如果禁用了，且为普通用户身份，不弹出去申请的提示框
-    async OTCAccountDisabledJudge () {
-      if (this.isLogin) {
-        await this.REFRESH_USER_INFO_ACTION() // 刷新用户信息
-        if (this.userInfo.otcEnable === 'disable') {
-          return false
-        }
-        if (!(this.userInfo.type === 'MERCHANT')) {
-          this.showApplyMerchantStatus = true
-          return false
-        }
-      }
-    },
     cancelApply () {
       this.showApplyMerchantStatus = false
     },
@@ -948,8 +926,36 @@ export default{
     // 导航跳转
     navToJump (navigation) {
       const { link, newTab } = navigation
-      console.log(link)
+      // console.log(link)
+      const needMerchantType = ['/OTCADManage', '/OTCMerchantsOrders', '/OTCReportFormStatistics']
+      const OTCPublishAD = '/OTCPublishAD'
+      const OTCBusinessApply = '/OTCBusinessApply'
+      const { otcEnable, type } = this.userInfo
       if (this.checkIsInnerLink(link)) {
+        // console.log(this.userInfo.otcEnable)
+        if (link !== OTCBusinessApply) {
+          // 非商家身份禁止访问
+          if (needMerchantType.some(route => route === link) && type !== 'MERCHANT') {
+            this.showApplyMerchantStatus = true
+            return false
+          }
+
+          if (otcEnable === 'disable') {
+            if (link === OTCPublishAD) {
+              this.$message({
+                message: this.$t(`M.${'otc_disable_account_tips'}`), // 该账号已被禁止交易OTC，请咨询客服
+                type: 'error'
+              })
+              return false
+            }
+          } else {
+            if (link === OTCPublishAD && type !== 'MERCHANT') {
+              this.showApplyMerchantStatus = true
+              return false
+            }
+          }
+        }
+
         this.$goToPage(`${link}`)
       } else {
         console.log('outerLink', newTab, link)
