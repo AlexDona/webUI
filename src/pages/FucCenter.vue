@@ -2,7 +2,7 @@
   <div v-if="language === 'zh_CN' || language ==='zh_TW'" class="container">
     <div class="banner">
         <div class="banner-content">
-          <div class="fuc_center_bg"></div>
+          <img class="fuc_center_bg" src="../assets/fuc/banner.png" />
           <div class="fuc_coin">
             <div class="fuc_header">FUCoin</div>
             <div class="fuc_intro">简称FUC，是FUBT平台token的简称</div>
@@ -196,7 +196,7 @@
   <div v-else class="container">
     <div class="banner">
       <div class="banner-content">
-        <div class="fuc_center_bg"></div>
+        <img class="fuc_center_bg" src="../assets/fuc/banner.png" />
         <div class="fuc_coin">
           <div class="fuc_header">FUCoin</div>
           <div class="fuc_intro">FUCoin (FUC), is the FUBT platform token</div>
@@ -559,12 +559,6 @@ ul {
       width: 1300px;
       margin: 0 auto;
 
-      .fuc_center_bg {
-        width: 782px;
-        height: 398px;
-        background: url("../assets/fuc/banner.png") no-repeat center;
-      }
-
       .fuc_coin {
         flex: 1;
         padding-left: 96px;
@@ -669,14 +663,12 @@ ul {
           white-space: nowrap;
 
           .sub_fuc_content_col1 {
-            min-width: 176px;
             padding: 30px;
             border-right: 1px solid rgba(67, 89, 124, 1);
           }
 
           .sub_fuc_content_center1 {
             display: flex;
-            justify-content: center;
             align-items: center;
             min-width: 176px;
           }
