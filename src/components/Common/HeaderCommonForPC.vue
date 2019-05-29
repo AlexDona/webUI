@@ -46,7 +46,7 @@
                 v-show="isShowSubNav"
               >
                 <li
-                  v-for="(navItem, navIndex) in navigation.slice(4)"
+                  v-for="(navItem, navIndex) in navigation.slice(5)"
                   :key="navIndex"
                   class="nav-item"
                   @mouseenter="changeMoreActiveNavIndex(navIndex)"
@@ -82,7 +82,7 @@
             </li>
             <li
               class="nav-item"
-              v-for="(navigationItem, index) in navigation.slice(0, 4)"
+              v-for="(navigationItem, index) in navigation.slice(0, 5)"
               :key="index"
               @mouseenter="changeActiveNavIndex(index)"
               @mouseleave="changeActiveNavIndex(-1)"
