@@ -51,7 +51,7 @@ export const finance = {
   'finance_invest_number': '存币数量不能为0',
   'finance_invest_read': '阅读',
   'finance_invest_explain': '存币说明',
-  'finance_invest_interest': '等额本息',
+  'finance_invest_interest': '等额本金',
   'finance_how_return': '怎么返',
   'finance_payment': '首期',
   'finance_return_rate': '返息',
