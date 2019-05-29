@@ -20,6 +20,7 @@
         type="text"
         class="input-mention border-radius2 padding-lr15 box-sizing"
         v-model="withdrawRemark"
+        readonly="true"
       >
     </div>
     <div class="recharge-list-left display-flex">

@@ -56,6 +56,6 @@ export const finance = {
   'finance_invest_number': 'The amount of deposit cannot be 0',
   'finance_invest_read': 'Reading',
   'finance_invest_explain': 'Deposit introduction',
-  'finance_invest_interest': 'Equivalent principal and interest',
+  'finance_invest_interest': 'Equivalent principal',
   'finance_vdsTips': '*Due to the distribution mechanism and randomness of VDS main chain, the mining revenue cannot be determined in a fixed proportion.The default setting of the system is 0, and the actual mining income shall prevail'
 }
