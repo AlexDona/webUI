@@ -55,6 +55,6 @@ export const finance = {
   'finance_invest_read': '閱讀',
   'finance_invest_explain': '存幣說明',
   'finance_return_data': '活期日返',
-  'finance_invest_interest': '等額本息',
+  'finance_invest_interest': '等額本金',
   'finance_vdsTips': '*由於VDS主鏈的分配機制與隨機性，挖礦收益並不能以固定比例確定。系統默認設置爲0，具體挖礦收益以實際爲準。'
 }

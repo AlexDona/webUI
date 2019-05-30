@@ -21,10 +21,23 @@
   border: none;
 }
 
+.night .layout__area--left {
+  border-right: 1px solid #272b3b;
+}
+
+.day .layout__area--left {
+  border-right: 1px solid #61688a;
+}
+
+.layout__area--left div {
+  background-color: transparent;
+}
+
 .header-chart-panel .button {
   height: 30px;
   padding: 0 10px;
   border: none;
+  font-weight: 400;
   font-size: 14px;
   line-height: 30px;
   color: #aaa;
@@ -34,12 +47,55 @@
 .header-chart-panel .button:hover,
 .header-chart-panel .button.selected {
   color: #338ff5 !important;
-  background-color: #3d4e58;
   cursor: pointer;
 }
 
 .header-chart-panel .button:hover svg {
   fill: #338ff5 !important;
+}
+
+/* 图标属性按钮 */
+.properties,
+.fullscreen,
+.indicators {
+  display: none !important;
+}
+
+.feature-no-touch .header-chart-panel .button:active {
+  background-color: transparent;
+}
+
+/* 自定义全屏 */
+.full-screen,
+.setting-button,
+.indicator-button {
+  width: 30px;
+  height: 100%;
+  cursor: pointer;
+}
+
+.full-screen {
+  background: url('../images/kline_full_screen.png') no-repeat center center;
+}
+
+.full-screen:hover {
+  background: url('../images/kline_full_screen_active.png') no-repeat center center;
+}
+
+.setting-button {
+  background: url('../images/kline_setting_bg.png') no-repeat center center;
+}
+
+.setting-button:hover {
+  background: url('../images/kline_setting_active_bg.png') no-repeat center center;
+}
+
+.indicator-button {
+  background: url('../images/kline_indicator_bg.png') no-repeat center center;
+}
+
+.indicator-button:hover {
+  background: url('../images/kline_indicator_active_bg.png') no-repeat center center;
 }
 
 .button.fullscreen svg,
@@ -84,6 +140,6 @@
   display: none;
 }
 
-.chart-container.active{
+.chart-container.active {
   background-color: transparent !important;
 }
