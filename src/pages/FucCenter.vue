@@ -663,12 +663,14 @@ ul {
           white-space: nowrap;
 
           .sub_fuc_content_col1 {
+            min-width: 176px;
             padding: 30px;
             border-right: 1px solid rgba(67, 89, 124, 1);
           }
 
           .sub_fuc_content_center1 {
             display: flex;
+            justify-content: center;
             align-items: center;
             min-width: 176px;
           }

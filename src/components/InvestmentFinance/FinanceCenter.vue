@@ -564,7 +564,7 @@
                     <!-- 活期 -->
                     <template slot-scope = "s">
                       <div
-                        v-if="s.row.state == 'CURRENT'"
+                        v-if="s.row.financialState == 'CURRENT' && s.row.state != 'CANCEL'"
                         class="blue cancelBtn"
                         @click="cancelInvest(s.row.id)"
                       >

@@ -30,6 +30,7 @@
                   filterable
                   :no-data-text="$t('M.comm_no_data')"
                   :disabled="currencyValueStatus"
+                  @change="changeCurrencyValue"
                 >
                   <el-option
                     :placeholder="$t('M.comm_please_choose')"

@@ -98,14 +98,14 @@ export default {
       barsRenderTime: 0,
       prevCacheList: [],
       currentCacheList: [],
-      LIMIT_BARS_RENDER_TIME: 20
+      LIMIT_BARS_RENDER_TIME: 20,
+      // 是否全屏
+      isFullScreen: false
     }
   },
   beforeCreate () {
   },
   async created () {
-    // this.widget = null
-    // console.log(this.socket)
     this.socket.doOpen()
   },
   async mounted () {
@@ -264,12 +264,17 @@ export default {
       this.fullscreenLoading = true
       this.widget = null
       this.socket.on('message', this.onMessage)
-      this.options.symbol = symbol
-      this.options.areaId = this.activeTabId
-      this.options.paneProperties.background = this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-      this.options.paneProperties.vertGridPropertiesColor = this.$theme_S_X === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
-      this.options.interval = '15'
-      this.options.language = this.$language_S_X
+      let options = {
+        symbol,
+        areaId: this.activeTabId,
+        paneProperties: {
+          background: this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor,
+          vertGridPropertiesColor: this.$theme_S_X === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
+        },
+        interval: '15',
+        language: this.$language_S_X
+      }
+      this.options = {...this.options, ...options}
       this.init(this.options)
     },
     // 获取初始交易对
@@ -279,7 +284,7 @@ export default {
       let data = await getDefaultSymbol()
       if (!data) return false
       const obj = getNestedData(data, 'data')
-      activeSymbol = (getNestedData(obj, 'sellCoinName') + getNestedData(obj, 'buyCoinName')).toLowerCase()
+      activeSymbol = `${getNestedData(obj, 'sellCoinName')}${getNestedData(obj, 'buyCoinName')}`.toLowerCase()
       const {tradeId} = this.$route.params
       this.symbol = tradeId && tradeId !== 'default' ? tradeId : (localSymbol ? localSymbol : activeSymbol)
       this.RETURN_SYMBOL_DATA(true)
@@ -288,7 +293,7 @@ export default {
     init (options) {
       if (!this.widget) {
         this.widget = new TvWidget({
-          symbol: options.symbol,
+          symbol: `${this.$activeSellName_X}/${this.$activeBuyName_X}`,
           interval: options.interval,
           autosize: true,
           container_id: 'tv_chart_container',
@@ -298,10 +303,10 @@ export default {
           enabled_features: [
             'dont_show_boolean_study_arguments',
             'hide_last_na_study_output',
-            'move_logo_to_main_pane',
-            'same_data_requery',
-            'side_toolbar_in_fullscreen_mode',
-            'hide_left_toolbar_by_default' // 隐藏左侧边栏
+            // 'move_logo_to_main_pane',
+            // 'same_data_requery',
+            'side_toolbar_in_fullscreen_mode'
+            // 'hide_left_toolbar_by_default' // 隐藏左侧边栏
           ],
           timezone: 'Asia/Shanghai',
           locale: options.language,
@@ -316,7 +321,6 @@ export default {
           custom_css_url: '../../../../static/tradeview/klineTheme.css'
         })
         this.widget.onChartReady(() => {
-          // console.log(2)
           const _self = this
           // let chart = getNestedData(_self, 'widget.chart()')
           let chart
@@ -325,18 +329,42 @@ export default {
             chart = _self.widget.chart()
           }
           if (!chart) return false
-          const btnList = [{
-            class: 'resolution_btn',
-            label: this.$t('M.trade_time_share'), // 分时
-            resolution: '1',
-            chartType: 3
-          }].concat(kLineBtnList)
           chart.onIntervalChanged().subscribe(null, function (interval, obj) {
             _self.widget.changingInterval = false
           })
           // console.log(this.klineInitCount)
           if (!this.klineInitCount) {
-            btnList.forEach(function (item, index) {
+            let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
+            /**
+             * 自定义 设置 按钮
+              * @type {JQuery | *}
+             */
+            let settingBtn = _self.widget.createButton({
+              align: 'left'
+            })
+            settingBtn
+              .attr('class', 'setting-button')
+              .on('click', function () {
+                // 设置切换
+                iframe$('.header-group-properties .apply-common-tooltip').click()
+              })
+
+            /**
+             * 自定义 指标 按钮
+             */
+
+            let indicatorBtn = _self.widget.createButton({
+              align: 'left'
+            })
+            indicatorBtn
+              .attr('class', 'indicator-button')
+              .on('click', function () {
+                iframe$('.header-group-indicators .apply-common-tooltip').click()
+              })
+            /**
+             * 自定义 分时切换 按钮
+             */
+            kLineBtnList.forEach(function (item, index) {
               let button = _self.widget.createButton({
                 align: 'left'
               })
@@ -363,8 +391,48 @@ export default {
                 })
                 .append(item.label)
             })
+            /**
+             * 自定义 全屏切换 按钮
+             * @type {JQuery | *}
+             */
+            let fullScreenBtn = _self.widget.createButton({
+              align: 'right'
+            })
+            fullScreenBtn
+              .attr('class', 'full-screen')
+              .on('click', function () {
+                const fullarea = iframe$('.chart-page.on-widget')[0]
+                // console.log(_self.isFullScreen)
+                const klineContainerHeight = iframe$('.chart-page.on-widget').height()
+
+                _self.isFullScreen = klineContainerHeight > 580 ? true : false
+
+                if (_self.isFullScreen) {
+                  if (document.exitFullscreen) {
+                    document.exitFullscreen()
+                  } else if (document.webkitCancelFullScreen) {
+                    document.webkitCancelFullScreen()
+                  } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen()
+                  } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen()
+                  }
+                } else {
+                  if (fullarea.requestFullscreen) {
+                    fullarea.requestFullscreen()
+                  } else if (fullarea.webkitRequestFullScreen) {
+                    fullarea.webkitRequestFullScreen()
+                  } else if (fullarea.mozRequestFullScreen) {
+                    fullarea.mozRequestFullScreen()
+                  } else if (fullarea.msRequestFullscreen) {
+                    // IE11
+                    fullarea.msRequestFullscreen()
+                  }
+                }
+                _self.isFullScreen = !_self.isFullScreen
+              })
+              // .append(fullScreenIcon)
           }
-          // let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
           // iframe$('.add7').click()
           // console.log()
           this.klineInitCount++
@@ -449,7 +517,7 @@ export default {
     onMessage (data) {
       this.barsRenderTime = this.LIMIT_BARS_RENDER_TIME - 2
       // const { countDown, isShow } = data.data
-      // console.log(data)
+      console.log(data)
       // if (this.activeSymbol.id !== symbol) return false
       switch (data.tradeType) {
         case 'KLINE':
