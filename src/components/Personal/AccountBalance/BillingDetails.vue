@@ -1009,7 +1009,7 @@ export default {
       }
 
       .el-tabs__content {
-        width: 930px;
+        width: 930px !important;
       }
     }
   }
