@@ -59,26 +59,6 @@
                   :isShow="!!errorShowStatusList[0]"
                 />
               </el-form-item>
-              <!--地址标签-->
-              <el-form-item
-                :label="$t('M.user_address_labels')"
-                v-if="isShowAddressLabel === 'true'"
-              >
-                <input
-                  type="text"
-                  class="form-input border-radius4 padding-left15"
-                  v-model.trim="addressLabel"
-                  @input="disableInputBlank"
-                  @keyup="setErrorMsg(2, '')"
-                  @keydown="disableInputBlank"
-                  @blur="checkoutInputFormat(2, addressLabel)"
-                >
-                <!--错误提示-->
-                <ErrorBox
-                  :text="errorShowStatusList[2]"
-                  :isShow="!!errorShowStatusList[2]"
-                />
-              </el-form-item>
               <!--提币地址-->
               <el-form-item
                 :label="$t('M.comm_mention_money') + $t('M.comm_site')"
@@ -305,8 +285,6 @@ export default {
       currencyList: [], // select币种列表
       withdrawalRemark: '', // 提现备注
       withdrawalAddress: '', // 提币地址
-      addressLabel: '', // 地址标签
-      isShowAddressLabel: 'true', // 是否显示
       withdrawalAddressList: [], // 提币地址列表
       operation: 'M.comm_delete', // 删除
       activeName: 'current-entrust',
@@ -336,10 +314,6 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'SET_NEW_WITHDRAW_ADDRESS'
     ]),
-    disableInputBlank () {
-      this.addressLabel = this.addressLabel.replace(/\s*/g, '')
-      console.log(this.addressLabel)
-    },
     // 1.0提币输入格式校验
     checkoutInputFormat (type, targetNum) {
       // console.log(type)
@@ -373,17 +347,6 @@ export default {
               return 0
           }
           break
-        case 2:
-          if (!targetNum) {
-            // 请输入地址标签
-            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_address_labels'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(2, '')
-            this.$forceUpdate()
-            return 1
-          }
       }
     },
     // 1.1设置错误信息
@@ -396,24 +359,30 @@ export default {
     },
     // 2.0点击显示验证信息
     addAddress () {
+      let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.withdrawalRemark) &&
-        this.checkoutInputFormat(1, this.withdrawalAddress) &&
-        this.checkoutInputFormat(2, this.addAddress)
+        this.checkoutInputFormat(1, this.withdrawalAddress)
       ) {
+        goOnStatus = 1
+      } else {
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
         // 验证通过调用新增提币地址接口
         this.gitCheckCurrencyAddress()
       }
     },
     // 3.0新增用户提币地址校验
     async gitCheckCurrencyAddress () {
+      let data
       let param = {
         coinId: this.currencyValue, // 币种coinId
         address: this.withdrawalAddress // 提币地址
       }
       // 整页loading
       this.fullscreenLoading = true
-      let data = await checkCurrencyAddress(param)
+      data = await checkCurrencyAddress(param)
       this.fullscreenLoading = false
       if (!data) return false
       // 验证通过调用验证方式接口
@@ -427,24 +396,12 @@ export default {
         if (data) {
           this.securityCenter = getNestedData(data, 'data.data')
           this.mentionMoneyConfirm = true
-          this.phoneCode = ''
-          this.emailCode = ''
-          this.googleCode = ''
         }
       })
     },
     // 4.0点击新增用户提币地址确认按钮
     submitMentionMoney () {
       this.stateSubmitAddAddress()
-    },
-    // 改变选中币种
-    changeCurrencyValue (e) {
-      _.forEach(this.currencyList, item => {
-        if (item.coinId === e) {
-          this.isShowAddressLabel = item.needTag
-        }
-      })
-      console.log(this.isShowAddressLabel)
     },
     // 4.01新增用户提币地址接口
     async stateSubmitAddAddress () {
@@ -455,24 +412,24 @@ export default {
       } else {
         this.emptyErrorMsg = ''
       }
+      let data
       let param = {
         coinId: this.currencyValue, // 币种coinId
         remark: this.withdrawalRemark, // 备注
         address: this.withdrawalAddress, // 提币地址
-        tag: this.addressLabel, // 地址标签
         phoneCode: this.phoneCode, // 手机验证
         emailCode: this.emailCode, // 邮箱验证
         googleCode: this.googleCode // 谷歌验证
       }
       // 整页loading
       this.fullscreenLoading = true
-      let data = await addNewWithdrawalAddress(param)
+      data = await addNewWithdrawalAddress(param)
       // 接口失败清除loading
       this.fullscreenLoading = false
       if (!data) return false
-      this.mentionMoneyConfirm = false
       this.getWithdrawalAddressList()
       this.resetFormContent()
+      this.mentionMoneyConfirm = false
     },
     /**
      *  5.刚进页面时候 提币地址列表查询
@@ -491,8 +448,6 @@ export default {
       // 返回列表数据
       let detailData = getNestedData(data, 'data')
       this.currencyList = getNestedData(detailData, 'canWithdrawPartnerCoinList')
-      // 判断是否显示地址标签
-      this.isShowAddressLabel = this.currencyList[0].needTag
       // 对ID名称进行赋值
       this.currencyValue = this.paramOfJumpToAddWithdrawAdress || getNestedData(detailData, 'canWithdrawPartnerCoinList[0].coinId')
       this.SET_NEW_WITHDRAW_ADDRESS('')
@@ -538,7 +493,6 @@ export default {
       this.phoneCode = ''
       this.emailCode = ''
       this.googleCode = ''
-      this.addressLabel = ''
     },
     // 7.发送验证码
     async sendPhoneOrEmailCode (loginType) {
@@ -584,7 +538,7 @@ export default {
 
   .withdrawal-address {
     > .withdrawal-address-main {
-      min-height: 400px;
+      min-height: 352px;
       border-radius: 5px 5px 0 0;
 
       > .withdrawal-header {
