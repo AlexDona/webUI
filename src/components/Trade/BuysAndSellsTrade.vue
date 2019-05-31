@@ -12,13 +12,14 @@
       >
         <span
           class="text"
-          @click="toggleShowContent">
+          @click="toggleShowContent"
+        >
           <span>
             <!--买卖单-->
             {{ $t('M.trade_coin_buying_and_sell') }}
           </span>
         </span>
-        <span class="right">
+        <!--<span class="right">
           <button
             class="middle"
             @click="changeListOrder('middle')"
@@ -31,7 +32,7 @@
             class="top"
             @click="changeListOrder('sells')"
           ></button>
-        </span>
+        </span>-->
       </div>
       <div
         class="content"
@@ -61,52 +62,53 @@
               </dt>
             </dl>
             <!--buys、sells-->
-              <div class="outer-box">
-                <div
-                  ref="buy-box"
-                  class="middle-box content-box"
+            <div class="outer-box">
+              <div
+                ref="buy-box"
+                class="middle-box content-box"
+              >
+                <!--卖出-->
+                <dl
+                  class="buys-list"
                 >
-                  <!--卖出-->
-                  <dl
-                    class="buys-list"
+                  <dd
+                    :style="{
+                      height:(20-sellsListLength)*30+'px'
+                    }"
+                    v-if="listOrder==='middle'"
                   >
-                    <dd
-                      :style="{
-                        height:(20-sellsListLength)*30+'px'
-                      }"
-                      v-if="listOrder==='middle'"
-                    ></dd>
-                    <dd
-                      class="buys-item cursor-pointer item"
-                      v-for="(item,index) in buysAndSellsList.sells.list||[]"
-                      :key="index"
-                      :class="{'odd':index%2!==0}"
-                      @click="changeActivePriceItem(item)"
+                  </dd>
+                  <dd
+                    class="buys-item cursor-pointer item"
+                    v-for="(item,index) in buysAndSellsList.sells.list||[]"
+                    :key="index"
+                    :class="{'odd':index%2!==0}"
+                    @click="changeActivePriceItem(item)"
+                  >
+                    <div class="inner">
+                      <span class="price sell-bg">
+                        <!--卖-->
+                        {{ $t('M.comm_ask') }} {{item.index}}
+                      </span><span
+                      class="price text-align-l sell-bg"
                     >
-                      <div class="inner">
-                        <span class="price sell-bg">
-                          <!--卖-->
-                          {{ $t('M.comm_ask') }} {{item.index}}
-                        </span><span
-                        class="price text-align-l sell-bg"
+                      {{$scientificToNumber(item.price)}}
+                    </span><span class="amount text-align-r">
+                      {{$scientificToNumber($cutOutPointLength(item.amount, $middleTopData_S_X.countExchange))}}
+                    </span><span class="total text-align-r">
+                      {{$scientificToNumber($cutOutPointLength(item.total, $middleTopData_S_X.priceExchange))}}
+                    </span><!--宽度条--><i
+                        class="color-sell-bg"
+                        :style="`width:${item.amount/buysAndSellsList.sells.highestAmount*100}%`"
                       >
-                        {{$scientificToNumber(item.price)}}
-                      </span><span class="amount text-align-r">
-                        {{$scientificToNumber($cutOutPointLength(item.amount, $middleTopData_S_X.countExchange))}}
-                      </span><span class="total text-align-r">
-                        {{$scientificToNumber($cutOutPointLength(item.total, $middleTopData_S_X.priceExchange))}}
-                      </span><!--宽度条--><i
-                          class="color-sell-bg"
-                          :style="`width:${item.amount/buysAndSellsList.sells.highestAmount*100}%`"
-                        >
-                        </i>
-                      </div>
-                    </dd>
-                  </dl>
-                  <!--最新价-->
-                  <TradeNewPrice/>
-                  <!--买入-->
-                  <dl
+                      </i>
+                    </div>
+                  </dd>
+                </dl>
+                <!--最新价-->
+                <TradeNewPrice/>
+                <!--买入-->
+                <dl
                   class="sells-list"
                 >
                   <dd
@@ -133,9 +135,47 @@
                         </i>
                     </div>
                   </dd>
-                </dl>
-                </div>
+              </dl>
               </div>
+            </div>
+            <div class="bits">
+              <div class="left-select">
+                <el-select
+                  v-model="checkedBits"
+                  placeholder="--"
+                  :no-data-text="$t('M.comm_no_data')"
+                  popper-class="buy-sell-order-bits-select"
+                  @change="changeBits"
+                >
+                  <!--将接口或者socket返回的小数位数据渲染到option下拉框中-->
+                  <!--v-for="(item, index) in bitsData"-->
+                  <!--v-for="(item,index) in buysAndSellsList.bitsData"-->
+                  <el-option
+                    v-for="(item, index) in bitsData"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                  >
+                  </el-option>
+                </el-select>
+              </div>
+              <div class="right-filter">
+                <span class="right">
+                  <button
+                    class="middle"
+                    @click="changeListOrder('middle')"
+                  ></button>
+                  <button
+                    class="bottom"
+                    @click="changeListOrder('buys')"
+                  ></button>
+                  <button
+                    class="top"
+                    @click="changeListOrder('sells')"
+                  ></button>
+                </span>
+              </div>
+            </div>
           </div>
         </el-collapse-transition>
       </div>
@@ -160,7 +200,26 @@ export default {
       contentShowStatus: true,
       reflashCount: 0, // 买卖单数据刷新次数
       // 显示顺序(buys,middle,sells)
-      listOrder: 'middle' // 切换显示顺序
+      listOrder: 'middle', // 切换显示顺序
+      // 交易对深度小数位-此处的定义数组要删除的
+      bitsData: [{
+        id: '1',
+        name: '1位小数'
+      }, {
+        id: '2',
+        name: '2位小数'
+      }, {
+        id: '3',
+        name: '3位小数'
+      }, {
+        id: '4',
+        name: '4位小数'
+      }, {
+        id: '5',
+        name: '5位小数'
+      }],
+      // 买卖单部分选中的小数位
+      checkedBits: ''
     }
   },
   created () {
@@ -174,8 +233,16 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'CHANGE_ACTIVE_PRICE_ITEM'
+      'CHANGE_ACTIVE_PRICE_ITEM',
+      // 改变全局存储的选中的小数位值的方法
+      'CHANGE_CHECKED_BITS'
     ]),
+    // 切换小数位下拉框
+    changeBits (e) {
+      console.log(e)
+      // 将选中的小数位值放全局
+      this.CHANGE_CHECKED_BITS(e)
+    },
     // 选中某一个买卖单价格
     changeActivePriceItem (item) {
       this.CHANGE_ACTIVE_PRICE_ITEM(item.price)
@@ -227,8 +294,24 @@ export default {
     $activeSymbol_S_X () {
       this.reflashCount = 0
     },
+    // 监控Socket返回的买卖单数据 buyAndSellData 有newVal表示接口回来了-此处逻辑需要完善
     buysAndSellsListBySocket: {
       handler (newVal) {
+        // 监控到数据回来之后将默认的小数位赋值给选中的小数位
+        this.checkedBits = this.buysAndSellsList.bitsData[0].id
+        // console.log(this.isSameSymbol, newVal)
+        if (this.isSameSymbol && !this.reflashCount && newVal) {
+          this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
+          this.reflashCount += 1
+        }
+      },
+      deep: true
+    },
+    // 监控接口ajax返回的买卖单数据 buyAndSellData 有newVal表示接口回来了
+    buysAndSellsListByAjax: {
+      handler (newVal) {
+        // 监控到数据回来之后将默认的小数位赋值给选中的小数位
+        this.checkedBits = this.buysAndSellsList.bitsData[0].id
         // console.log(this.isSameSymbol, newVal)
         if (this.isSameSymbol && !this.reflashCount && newVal) {
           this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
@@ -271,7 +354,8 @@ export default {
       }
 
       /* 买卖单顺序操作按钮 */
-      > .right {
+
+      /* > .right {
         flex: 1;
         text-align: right;
 
@@ -292,7 +376,7 @@ export default {
         > .top {
           background-image: url(../../assets/develop/sells.png);
         }
-      }
+      } */
     }
 
     > .content {
@@ -420,6 +504,70 @@ export default {
             }
           }
         }
+
+        > .bits {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 36px;
+          padding: 0 10px;
+
+          .left-select {
+            /* font-size: 12px; */
+          }
+
+          .right-filter {
+            /* 买卖单顺序操作按钮 */
+            > .right {
+              > button {
+                width: 28px;
+                height: 20px;
+                margin: 8px 0 0;
+                background: url(../../assets/develop/middle.png) no-repeat center right;
+                -webkit-background-size: 28px 20px;
+                background-size: 16px 12px;
+                cursor: pointer;
+              }
+
+              > .bottom {
+                background-image: url(../../assets/develop/buys.png);
+              }
+
+              > .top {
+                background-image: url(../../assets/develop/sells.png);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /deep/ {
+    .bits {
+      .left-select {
+        .el-input {
+          font-size: 12px;
+        }
+
+        .el-input__inner {
+          width: 82px;
+          height: 22px;
+          padding: 0 20px 0 10px;
+          border-radius: 2px;
+        }
+
+        .el-input__icon {
+          width: 16px;
+          height: 22px;
+          line-height: 22px;
+
+          &::before {
+            font-size: 12px;
+            color: #848a9d;
+            content: "\e60c";
+          }
+        }
       }
     }
   }
@@ -464,6 +612,18 @@ export default {
         }
       }
     }
+
+    /deep/ {
+      .bits {
+        .left-select {
+          .el-input__inner {
+            border-color: #464c5e;
+            color: #848a9d;
+            background-color: #1c1f32;
+          }
+        }
+      }
+    }
   }
 
   &.day {
@@ -501,6 +661,17 @@ export default {
                 }
               }
             }
+          }
+        }
+      }
+    }
+
+    /deep/ {
+      .bits {
+        .left-select {
+          .el-input__inner {
+            border-color: #c4c4c4;
+            background-color: #fff;
           }
         }
       }
