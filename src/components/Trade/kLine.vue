@@ -129,7 +129,7 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'CHANGE_SOCKET_AND_AJAX_DATA',
+      'CHANGE_SOCKET_AND_AJAX_DATA', // 改变socket数据
       'SET_IS_KLINE_DATA_READY',
       'SET_MIDDLE_TOP_DATA',
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
@@ -446,10 +446,11 @@ export default {
       }
       return newInterval
     },
+    // 接收到websocket数据以后数据处理
     onMessage (data) {
       this.barsRenderTime = this.LIMIT_BARS_RENDER_TIME - 2
       // const { countDown, isShow } = data.data
-      // console.log(data)
+      console.log(data)
       // if (this.activeSymbol.id !== symbol) return false
       switch (data.tradeType) {
         case 'KLINE':
@@ -480,7 +481,8 @@ export default {
           break
         // 买卖单
         case 'DEPTH':
-          // console.log(data)
+          console.log('买卖单数据')
+          console.log(data)
           // console.log(symbol, this.activeSymbol.id)
 
           const depthData = getNestedData(data, 'data')
@@ -659,7 +661,9 @@ export default {
       mainColor: state => state.common.mainColor,
       userId: state => state.user.loginStep1Info.userId,
       showId: state => state.user.loginStep1Info.userInfo.showId,
-      userInfo: state => state.user.loginStep1Info
+      userInfo: state => state.user.loginStep1Info,
+      // 拿到全局存储的选中的交易对小数位
+      globalCheckedBits: state => state.common.globalCheckedBits
     })
   },
   watch: {
@@ -726,6 +730,15 @@ export default {
     interval () {
       this.KlineNum = 0
       this.barsRenderTime = 0
+    },
+    // 监控全局存储的选中的小数位的值，若为老值取消订阅，若为新值重新订阅，要把选中的小数位id发送给后台-此处逻辑需要完善
+    globalCheckedBits (newValue, oldValue) {
+      console.log(newValue, oldValue)
+      if (newValue) {
+        // 先取消订阅 再重新订阅
+        // this.getBuyAndSellBySocket('CANCEL', oldValue)
+        // this.getBuyAndSellBySocket('SUB', symbol)
+      }
     }
   }
 }

@@ -141,15 +141,20 @@
             <div class="bits">
               <div class="left-select">
                 <el-select
-                  v-model="value"
+                  v-model="checkedBits"
                   placeholder="--"
+                  :no-data-text="$t('M.comm_no_data')"
                   popper-class="buy-sell-order-bits-select"
+                  @change="changeBits"
                 >
+                  <!--将接口或者socket返回的小数位数据渲染到option下拉框中-->
+                  <!--v-for="(item, index) in bitsData"-->
+                  <!--v-for="(item,index) in buysAndSellsList.bitsData"-->
                   <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    v-for="(item, index) in bitsData"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
                   >
                   </el-option>
                 </el-select>
@@ -196,24 +201,25 @@ export default {
       reflashCount: 0, // 买卖单数据刷新次数
       // 显示顺序(buys,middle,sells)
       listOrder: 'middle', // 切换显示顺序
-      // 交易对深度小数位
-      options: [{
-        value: '选项1',
-        label: '1位小数'
+      // 交易对深度小数位-此处的定义数组要删除的
+      bitsData: [{
+        id: '1',
+        name: '1位小数'
       }, {
-        value: '选项2',
-        label: '2位小数'
+        id: '2',
+        name: '2位小数'
       }, {
-        value: '选项3',
-        label: '3位小数'
+        id: '3',
+        name: '3位小数'
       }, {
-        value: '选项4',
-        label: '4位小数'
+        id: '4',
+        name: '4位小数'
       }, {
-        value: '选项5',
-        label: '5位小数'
+        id: '5',
+        name: '5位小数'
       }],
-      value: ''
+      // 买卖单部分选中的小数位
+      checkedBits: ''
     }
   },
   created () {
@@ -227,8 +233,16 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'CHANGE_ACTIVE_PRICE_ITEM'
+      'CHANGE_ACTIVE_PRICE_ITEM',
+      // 改变全局存储的选中的小数位值的方法
+      'CHANGE_CHECKED_BITS'
     ]),
+    // 切换小数位下拉框
+    changeBits (e) {
+      console.log(e)
+      // 将选中的小数位值放全局
+      this.CHANGE_CHECKED_BITS(e)
+    },
     // 选中某一个买卖单价格
     changeActivePriceItem (item) {
       this.CHANGE_ACTIVE_PRICE_ITEM(item.price)
@@ -280,8 +294,24 @@ export default {
     $activeSymbol_S_X () {
       this.reflashCount = 0
     },
+    // 监控Socket返回的买卖单数据 buyAndSellData 有newVal表示接口回来了-此处逻辑需要完善
     buysAndSellsListBySocket: {
       handler (newVal) {
+        // 监控到数据回来之后将默认的小数位赋值给选中的小数位
+        this.checkedBits = this.buysAndSellsList.bitsData[0].id
+        // console.log(this.isSameSymbol, newVal)
+        if (this.isSameSymbol && !this.reflashCount && newVal) {
+          this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
+          this.reflashCount += 1
+        }
+      },
+      deep: true
+    },
+    // 监控接口ajax返回的买卖单数据 buyAndSellData 有newVal表示接口回来了
+    buysAndSellsListByAjax: {
+      handler (newVal) {
+        // 监控到数据回来之后将默认的小数位赋值给选中的小数位
+        this.checkedBits = this.buysAndSellsList.bitsData[0].id
         // console.log(this.isSameSymbol, newVal)
         if (this.isSameSymbol && !this.reflashCount && newVal) {
           this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
