@@ -509,143 +509,143 @@ export default{
       isPayPasswordLocked: false,
       isNoticeReady: false,
       navigation: [
-        {
-          name: '币币交易',
-          link: '/TradeCenter/default',
-          newTab: false,
-          children: [
-            {
-              name: '测试',
-              link: '/test',
-              newTab: false
-            }
-          ]
-        },
-        {
-          name: 'OTC交易',
-          link: '/OTCCenter',
-          newTab: false,
-          children: [
-            {
-              name: '商家申请13123123123123',
-              link: `/OTCBusinessApply`,
-              newTab: false
-            },
-            {
-              name: '发布广告',
-              link: `/OTCPublishAD`,
-              newTab: false
-            },
-            {
-              name: '广告管理',
-              link: `/OTCADManage`,
-              newTab: false
-            },
-            {
-              name: '商家订单',
-              link: `/OTCMerchantsOrders`,
-              newTab: false
-            },
-            {
-              name: '报表统计',
-              link: `/OTCReportFormStatistics`,
-              newTab: false
-            }
-          ]
-        },
-        {
-          name: '投资理财12313123123123',
-          link: '/FinanceCenter',
-          newTab: false
-        },
-        {
-          name: '活动中心',
-          link: '/ActivityCenter',
-          newTab: false,
-          children: [
-            {
-              name: '邀请排行',
-              link: `/RankingListOfInvitation`,
-              newTab: false
-            }
-          ]
-        },
-        {
-          name: 'OTC交易',
-          link: '/OTCCenter',
-          newTab: false,
-          children: [
-            {
-              name: '商家申请13123123123123',
-              link: `/OTCBusinessApply`,
-              newTab: false
-            },
-            {
-              name: '发布广告',
-              link: `/OTCPublishAD`,
-              newTab: false
-            },
-            {
-              name: '广告管理',
-              link: `/OTCADManage`,
-              newTab: false
-            },
-            {
-              name: '商家订单',
-              link: `/OTCMerchantsOrders`,
-              newTab: false
-            },
-            {
-              name: '报表统计',
-              link: `/OTCReportFormStatistics`,
-              newTab: false
-            }
-          ]
-        },
-        {
-          name: 'OTC交易123123123123',
-          link: '/OTCCenter',
-          newTab: false,
-          children: [
-            {
-              name: '商家申请13123123123123',
-              link: `/OTCBusinessApply`,
-              newTab: false
-            },
-            {
-              name: '发布广告',
-              link: `/OTCPublishAD`,
-              newTab: false
-            },
-            {
-              name: '广告管理',
-              link: `/OTCADManage`,
-              newTab: false
-            },
-            {
-              name: '商家订单',
-              link: `/OTCMerchantsOrders`,
-              newTab: false
-            },
-            {
-              name: '报表统计',
-              link: `/OTCReportFormStatistics`,
-              newTab: false
-            }
-          ]
-        },
-        {
-          name: '币币交易',
-          link: '/TradeCenter/default',
-          newTab: false,
-          children: [
-            {
-              name: '测试',
-              link: '/test',
-              newTab: false
-            }
-          ]
-        }
+        // {
+        //   name: '币币交易',
+        //   link: '/TradeCenter/default',
+        //   newTab: false,
+        //   children: [
+        //     {
+        //       name: '测试',
+        //       link: '/test',
+        //       newTab: false
+        //     }
+        //   ]
+        // },
+        // {
+        //   name: 'OTC交易',
+        //   link: '/OTCCenter',
+        //   newTab: false,
+        //   children: [
+        //     {
+        //       name: '商家申请13123123123123',
+        //       link: `/OTCBusinessApply`,
+        //       newTab: false
+        //     },
+        //     {
+        //       name: '发布广告',
+        //       link: `/OTCPublishAD`,
+        //       newTab: false
+        //     },
+        //     {
+        //       name: '广告管理',
+        //       link: `/OTCADManage`,
+        //       newTab: false
+        //     },
+        //     {
+        //       name: '商家订单',
+        //       link: `/OTCMerchantsOrders`,
+        //       newTab: false
+        //     },
+        //     {
+        //       name: '报表统计',
+        //       link: `/OTCReportFormStatistics`,
+        //       newTab: false
+        //     }
+        //   ]
+        // },
+        // {
+        //   name: '投资理财12313123123123',
+        //   link: '/FinanceCenter',
+        //   newTab: false
+        // },
+        // {
+        //   name: '活动中心',
+        //   link: '/ActivityCenter',
+        //   newTab: false,
+        //   children: [
+        //     {
+        //       name: '邀请排行',
+        //       link: `/RankingListOfInvitation`,
+        //       newTab: false
+        //     }
+        //   ]
+        // },
+        // {
+        //   name: 'OTC交易',
+        //   link: '/OTCCenter',
+        //   newTab: false,
+        //   children: [
+        //     {
+        //       name: '商家申请13123123123123',
+        //       link: `/OTCBusinessApply`,
+        //       newTab: false
+        //     },
+        //     {
+        //       name: '发布广告',
+        //       link: `/OTCPublishAD`,
+        //       newTab: false
+        //     },
+        //     {
+        //       name: '广告管理',
+        //       link: `/OTCADManage`,
+        //       newTab: false
+        //     },
+        //     {
+        //       name: '商家订单',
+        //       link: `/OTCMerchantsOrders`,
+        //       newTab: false
+        //     },
+        //     {
+        //       name: '报表统计',
+        //       link: `/OTCReportFormStatistics`,
+        //       newTab: false
+        //     }
+        //   ]
+        // },
+        // {
+        //   name: 'OTC交易123123123123',
+        //   link: '/OTCCenter',
+        //   newTab: false,
+        //   children: [
+        //     {
+        //       name: '商家申请13123123123123',
+        //       link: `/OTCBusinessApply`,
+        //       newTab: false
+        //     },
+        //     {
+        //       name: '发布广告',
+        //       link: `/OTCPublishAD`,
+        //       newTab: false
+        //     },
+        //     {
+        //       name: '广告管理',
+        //       link: `/OTCADManage`,
+        //       newTab: false
+        //     },
+        //     {
+        //       name: '商家订单',
+        //       link: `/OTCMerchantsOrders`,
+        //       newTab: false
+        //     },
+        //     {
+        //       name: '报表统计',
+        //       link: `/OTCReportFormStatistics`,
+        //       newTab: false
+        //     }
+        //   ]
+        // },
+        // {
+        //   name: '币币交易',
+        //   link: '/TradeCenter/default',
+        //   newTab: false,
+        //   children: [
+        //     {
+        //       name: '测试',
+        //       link: '/test',
+        //       newTab: false
+        //     }
+        //   ]
+        // }
       ],
       // 当前导航选中项 索引
       activeNavIndex: -1,
@@ -665,7 +665,7 @@ export default{
 
     await this.getNavigations()
 
-    console.log(this.navigation)
+    // console.log(this.navigation)
     // 获取 语言列表
     if (!await this.GET_LANGUAGE_LIST_ACTION(this)) return false
     await this.SET_PARTNER_INFO_ACTION(this.language)
@@ -720,11 +720,12 @@ export default{
         language: this.$language_S_X
       }
       const data = await getNavigationsAJAX(params)
-      console.log(data)
+      // console.log(data)
       this.navigation = _.get(data, 'data')
       if (this.isFubt) {
         this.navigation.push({
-          name: 'FUC生态',
+          // FUC生态页
+          name: this.$t('M.common_fuc_eco'),
           link: '/FucCenter',
           newTab: false
         })
@@ -940,12 +941,12 @@ export default{
       // 外部 https://www.fubt.co www.fubt.co
       // 内部 /TradeCenter
       const isInnerLink = !link.includes('.')
-      console.log(isInnerLink)
+      // console.log(isInnerLink)
       return isInnerLink
     },
     // 导航跳转
     navToJump (navigation) {
-      console.log(this.$isLogin_S_X)
+      // console.log(this.$isLogin_S_X)
 
       const { link, newTab } = navigation
       // this.CHANGE_ROUTER_PATH(link)
@@ -957,7 +958,7 @@ export default{
       const otcEnable = _.get(this.userInfo, 'otcEnable')
       const type = _.get(this.userInfo, 'type')
       if (this.checkIsInnerLink(link)) {
-        console.log(link, isNeedLogin.some(linkItem => link.startsWith(linkItem)))
+        // console.log(link, isNeedLogin.some(linkItem => link.startsWith(linkItem)))
         if (!this.$isLogin_S_X && isNeedLogin.some(linkItem => link.startsWith(linkItem))) {
           this.$goToPage('/login')
           this.CHANGE_ROUTER_PATH(link)
@@ -985,17 +986,17 @@ export default{
             }
           }
         }
-        console.log(this.$route.path)
+        // console.log(this.$route.path)
         // console.log(this.$route.to.path, this.$route.from.path)
         // if (from.path !== '/login' || from.path !== '/register') {
         //   this.CHANGE_ROUTER_PATH(link)
         // }
         this.$goToPage(`${link}`)
       } else {
-        console.log('outerLink', newTab, link)
+        // console.log('outerLink', newTab, link)
         let formatLink = link
         formatLink = !link.startsWith('http') ? `https://${formatLink}` : link
-        console.log(formatLink)
+        // console.log(formatLink)
         if (newTab) {
           window.open(`${formatLink}`, '_blank')
         } else {
