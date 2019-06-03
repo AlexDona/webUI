@@ -35,6 +35,7 @@
               <!-- 更多 自定义导航-->
               <a
                 class="more-nav-btn text-align-l"
+                v-show="navigation.length > 5"
               >
                 <TheMoreNavsButton
                   :isActive="isShowSubNav"
@@ -108,6 +109,11 @@
                 </li>
               </ul>
             </li>
+            <!--<li v-if="isFubt" class="nav-item">-->
+              <!--<router-link to="/FucCenter">-->
+                <!--<span>{{$t('M.common_fuc_eco')}}</span>-->
+              <!--</router-link>-->
+            <!--</li>-->
           </ul>
         </div>
         <!--注册登录-->
@@ -455,6 +461,7 @@ import {
   mapActions
 } from 'vuex'
 import {xDomain} from '../../utils/env'
+import {getNavigationsAJAX} from '../../utils/api/common'
 
 export default{
   components: {
@@ -655,16 +662,9 @@ export default{
     if (this.isLogin && this.$route.path !== '/PersonalCenter') {
       this.refreshUserInfo()
     }
-    if (this.isFubt) {
-      this.navigation.push({
-        name: 'FUC生态',
-        link: '/FucCenter',
-        newTab: false
-      })
-    }
-    _.forEach(this.navigation, (nav, index) => {
-      nav['isInnerLink'] = this.checkIsInnerLink(nav.link) ? true : false
-    })
+
+    await this.getNavigations()
+
     console.log(this.navigation)
     // 获取 语言列表
     if (!await this.GET_LANGUAGE_LIST_ACTION(this)) return false
@@ -711,8 +711,28 @@ export default{
       'USER_LOGOUT',
       'CHANGE_REF_ACCOUNT_CREDITED_STATE',
       'SET_NOTICE_ID',
-      'CHANGE_PASSWORD_USEABLE'
+      'CHANGE_PASSWORD_USEABLE',
+      'CHANGE_ROUTER_PATH'
     ]),
+    // 自定义导航
+    async getNavigations () {
+      const params = {
+        language: this.$language_S_X
+      }
+      const data = await getNavigationsAJAX(params)
+      console.log(data)
+      this.navigation = _.get(data, 'data')
+      if (this.isFubt) {
+        this.navigation.push({
+          name: 'FUC生态',
+          link: '/FucCenter',
+          newTab: false
+        })
+      }
+      _.forEach(this.navigation, (nav, index) => {
+        nav['isInnerLink'] = this.checkIsInnerLink(nav.link) ? true : false
+      })
+    },
     initSettings () {
       if (getStore('convertCurrency')) {
         this.activeConvertCurrency = getStore('convertCurrency')
@@ -925,14 +945,24 @@ export default{
     },
     // 导航跳转
     navToJump (navigation) {
+      console.log(this.$isLogin_S_X)
+
       const { link, newTab } = navigation
+      // this.CHANGE_ROUTER_PATH(link)
       // console.log(link)
       const needMerchantType = ['/OTCADManage', '/OTCMerchantsOrders', '/OTCReportFormStatistics']
+      const isNeedLogin = ['/OTCADManage', '/OTCMerchantsOrders', '/OTCReportFormStatistics', '/OTCPublishAD']
       const OTCPublishAD = '/OTCPublishAD'
       const OTCBusinessApply = '/OTCBusinessApply'
-      const { otcEnable, type } = this.userInfo
+      const otcEnable = _.get(this.userInfo, 'otcEnable')
+      const type = _.get(this.userInfo, 'type')
       if (this.checkIsInnerLink(link)) {
-        // console.log(this.userInfo.otcEnable)
+        console.log(link, isNeedLogin.some(linkItem => link.startsWith(linkItem)))
+        if (!this.$isLogin_S_X && isNeedLogin.some(linkItem => link.startsWith(linkItem))) {
+          this.$goToPage('/login')
+          this.CHANGE_ROUTER_PATH(link)
+          return
+        }
         if (link !== OTCBusinessApply) {
           // 非商家身份禁止访问
           if (needMerchantType.some(route => route === link) && type !== 'MERCHANT') {
@@ -955,7 +985,11 @@ export default{
             }
           }
         }
-
+        console.log(this.$route.path)
+        // console.log(this.$route.to.path, this.$route.from.path)
+        // if (from.path !== '/login' || from.path !== '/register') {
+        //   this.CHANGE_ROUTER_PATH(link)
+        // }
         this.$goToPage(`${link}`)
       } else {
         console.log('outerLink', newTab, link)
@@ -1015,6 +1049,7 @@ export default{
       this.$i18n.locale = newVal
     },
     async language () {
+      this.getNavigations()
       this.SET_PARTNER_INFO_ACTION(this.language)
       await this.GET_ALL_NOTICE_ACTION(this.language)
       this.isNoticeReady = true
@@ -1081,10 +1116,6 @@ export default{
             vertical-align: top;
             white-space: nowrap;
             transition: all .5s;
-
-            &:first-of-type {
-              padding-left: 0;
-            }
 
             > .sub-nav-list {
               position: absolute;

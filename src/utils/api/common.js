@@ -24,9 +24,15 @@ export const getCurrencyInfoList = params => handleRequest(() => get('cms/coinIn
 // 服务条款币种列表对应的单个币种详细资料
 export const getCurrencyDetails = params => handleRequest(() => get(`cms/coinInformation/select/${params}`))
 // 获取服务协议
-export const getServiceProtocoDataAjax = params => handleRequest(() => get('cms/terms/selectAll', {...params, 'loading': true}))
+export const getServiceProtocoDataAjax = params => handleRequest(() => get('cms/terms/selectAll', {
+  ...params,
+  'loading': true
+}))
 // 获取关于我们信息
-export const getAboutUsDataAjax = params => handleRequest(() => get('cms/aboutUs/selectAll', {...params, 'loading': true}))
+export const getAboutUsDataAjax = params => handleRequest(() => get('cms/aboutUs/selectAll', {
+  ...params,
+  'loading': true
+}))
 // 获取网站配置信息
 export const getConfigAjax = () => handleRequest(() => get('config'))
 // 获取交易对费率
@@ -35,3 +41,5 @@ export const getSymbolRate = () => handleRequest(() => get('/trade/rate', {'load
 export const getCurrencyRate = () => handleRequest(() => get('/selectCoinRate', {'loading': true}))
 // fuc回购计划进度
 export const getSchedule = () => handleRequest(() => get('/banner/release'))
+// 获取自定义导航
+export const getNavigationsAJAX = params => handleRequest(() => get('/partnerMenu/partnermenu', params))

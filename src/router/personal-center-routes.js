@@ -24,11 +24,11 @@ const FiatOrders = () => import('@com/Personal/TransactionType/FiatOrders')
 const PersonalSettings = () => import('@com/Personal/Settings/PersonalSettings')
 
 const personalCenterRoutes = [
-  {
-    path: '',
-    component: AccountAssets,
-    redirect: 'AccountAssets'
-  },
+  // {
+  //   path: '',
+  //   component: AccountAssets,
+  //   redirect: 'AccountAssets'
+  // },
   {
     // 账户资产
     path: 'AccountAssets',

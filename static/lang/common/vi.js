@@ -160,5 +160,6 @@ export const common = {
   'common_onlineText': 'Chăm sóc khách hàng đang online',
   'common_paypassword_locked': 'Mật khẩu sai quá giới hạn, đóng băng 2 tiếng',
   'common_no_processing': 'Không thể xử lý',
-  'comm_PAYPAL': 'PAYPAL'
+  'comm_PAYPAL': 'PAYPAL',
+  'common_fuc_eco': 'FUC sinh thái'
 }

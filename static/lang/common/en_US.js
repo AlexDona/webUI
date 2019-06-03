@@ -160,5 +160,6 @@ export const common = {
   'common_footer_legal_notice': 'Legal Statement',
   'common_onlineText': 'Online Service',
   'common_paypassword_locked': 'Trading password error times exceed limit, trading will freeze 2 hours.',
-  'common_no_processing': 'Not processed yet'
+  'common_no_processing': 'Not processed yet',
+  'common_fuc_eco': 'FUC Eco'
 }
