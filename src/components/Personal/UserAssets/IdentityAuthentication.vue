@@ -627,7 +627,8 @@ export default {
       realNameInformationObj: {}, //  获取用户实名信息
       userInfoRefresh: {}, //  刷新用户信息
       statusRealNameInformation: {
-        cardNo: ''
+        cardNo: '',
+        cardType: ''
       },
       // 设置错误信息
       errorShowStatusList: [
@@ -739,7 +740,7 @@ export default {
       if (!data) return false
       // 返回列表数据
       this.realNameInformationObj = getNestedData(data, 'data')
-      this.statusRealNameInformation = getNestedData(data, 'data.authInfo')
+      this.statusRealNameInformation = getNestedData(data, 'data')
     },
     // 检测身份证号
     idCardRegexpInputNum (ref) {
