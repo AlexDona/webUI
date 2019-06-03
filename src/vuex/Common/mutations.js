@@ -103,6 +103,7 @@ export default {
   // 登录后路由跳转
   CHANGE_ROUTER_PATH (state, path) {
     state.routerTo = path
+    console.log(state.routerTo)
   },
   // 切换主题
   [USER_ASSETS_LIST] (state, data) {

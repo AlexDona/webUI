@@ -64,7 +64,8 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_THEME',
-      'CHANGE_CONVERT_CURRENCY'
+      'CHANGE_CONVERT_CURRENCY',
+      'CHANGE_ROUTER_PATH'
     ]),
     setBodyClassName (type, className) {
       type ? document.body.classList.add(className) : document.body.classList.remove(className)
@@ -77,12 +78,13 @@ export default {
       isLogin: state => state.user.isLogin,
       isMobile: state => state.user.isMobile,
       userInfo: state => state.user.loginStep1Info,
-      isAjaxReady: state => state.common.isAjaxReady
+      isAjaxReady: state => state.common.isAjaxReady,
+      routerTo: state => state.common.routerTo
     })
   },
   watch: {
     '$route' (to, from) {
-      console.log(to.path)
+      // console.log(to.path, from.path)
       let path = to.path
       if (from.path === '/PersonalCenter') {
         this.$setStore('active-target', 'assets')
@@ -118,6 +120,9 @@ export default {
       } else {
         $('#udesk_container').fadeOut()
       }
+    },
+    routerTo (New) {
+      console.log(New)
     }
   }
 }
