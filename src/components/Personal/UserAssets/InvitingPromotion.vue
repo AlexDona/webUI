@@ -304,7 +304,7 @@
               :label="$t('M.comm_currency')"
             >
               <template slot-scope = "s">
-                <div>{{ coinName }}</div>
+                <div>{{ source }}</div>
               </template>
             </el-table-column>
             <el-table-column
