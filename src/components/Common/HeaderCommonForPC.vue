@@ -52,7 +52,6 @@
                   class="nav-item"
                   @mouseenter="changeMoreActiveNavIndex(navIndex)"
                   @mouseleave="changeMoreActiveNavIndex(-1)"
-                  :title="navItem.name"
                 >
                   <a
                     href="javascript:void(0);"
