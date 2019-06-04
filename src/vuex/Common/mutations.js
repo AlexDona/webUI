@@ -67,6 +67,10 @@ export default {
     // console.log(type, ajaxData, socketData)
     switch (type) {
       case 'ajax':
+        // 交易对深度小数位数据
+        if (ajaxData.depthDecimal) {
+          state.klineAjaxData.depthDecimal = ajaxData.depthDecimal
+        }
         if (ajaxData.depthData) {
           state.klineAjaxData.depthData = ajaxData.depthData
         }

@@ -138,6 +138,7 @@
               </dl>
               </div>
             </div>
+            <!--小数位选择-->
             <div class="bits">
               <div class="left-select">
                 <el-select
@@ -147,13 +148,10 @@
                   popper-class="buy-sell-order-bits-select"
                   @change="changeBits"
                 >
-                  <!--将接口或者socket返回的小数位数据渲染到option下拉框中-->
-                  <!--v-for="(item, index) in bitsData"-->
-                  <!--v-for="(item,index) in buysAndSellsList.bitsData"-->
                   <el-option
                     v-for="(item, index) in bitsData"
                     :key="index"
-                    :label="item.name"
+                    :label="currentLanguage? item.chineseName : item.englishName"
                     :value="item.id"
                   >
                   </el-option>
@@ -201,25 +199,12 @@ export default {
       reflashCount: 0, // 买卖单数据刷新次数
       // 显示顺序(buys,middle,sells)
       listOrder: 'middle', // 切换显示顺序
-      // 交易对深度小数位-此处的定义数组要删除的
-      bitsData: [{
-        id: '1',
-        name: '1位小数'
-      }, {
-        id: '2',
-        name: '2位小数'
-      }, {
-        id: '3',
-        name: '3位小数'
-      }, {
-        id: '4',
-        name: '4位小数'
-      }, {
-        id: '5',
-        name: '5位小数'
-      }],
+      // 交易对深度小数位下拉框展示数组
+      bitsData: [],
       // 买卖单部分选中的小数位
-      checkedBits: ''
+      checkedBits: '',
+      // 国家类型
+      languageStyle: ['zh_CN', 'zh_TW']
     }
   },
   created () {
@@ -277,7 +262,11 @@ export default {
     ...mapState({
       buysAndSellsListByAjax: state => state.common.klineAjaxData.buyAndSellData,
       buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData,
-      socketSymbol: state => state.common.socketData.symbol
+      socketSymbol: state => state.common.socketData.symbol,
+      // 监控接口中返回的小数位数据对象
+      depthDecimalByAjax: state => state.common.klineAjaxData.depthDecimal,
+      // 获取当前语言
+      language: state => state.common.language
     }),
     buysAndSellsList () {
       return !this.isSameSymbol || !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
@@ -288,30 +277,33 @@ export default {
     isSameSymbol () {
       const {id} = this.$middleTopData_S_X
       return this.socketSymbol === id
+    },
+    // 当前语言判断是否中文或者繁体
+    currentLanguage () {
+      return this.language == this.languageStyle[0] || this.language == this.languageStyle[1]
     }
   },
   watch: {
+    // 监控小数位数据对象
+    depthDecimalByAjax (newVal) {
+      this.bitsData = []
+      this.bitsData = newVal.list
+      this.bitsData.forEach(item => {
+        if (item.englishName.indexOf('+') !== -1) {
+          item.englishName = item.englishName.replace('+', ' ')
+        }
+      })
+      this.bitsData.forEach((item, index) => {
+        if (newVal.defaultIndex === index) {
+          this.checkedBits = item.id
+        }
+      })
+    },
     $activeSymbol_S_X () {
       this.reflashCount = 0
     },
-    // 监控Socket返回的买卖单数据 buyAndSellData 有newVal表示接口回来了-此处逻辑需要完善
     buysAndSellsListBySocket: {
       handler (newVal) {
-        // 监控到数据回来之后将默认的小数位赋值给选中的小数位
-        this.checkedBits = this.buysAndSellsList.bitsData[0].id
-        // console.log(this.isSameSymbol, newVal)
-        if (this.isSameSymbol && !this.reflashCount && newVal) {
-          this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
-          this.reflashCount += 1
-        }
-      },
-      deep: true
-    },
-    // 监控接口ajax返回的买卖单数据 buyAndSellData 有newVal表示接口回来了
-    buysAndSellsListByAjax: {
-      handler (newVal) {
-        // 监控到数据回来之后将默认的小数位赋值给选中的小数位
-        this.checkedBits = this.buysAndSellsList.bitsData[0].id
         // console.log(this.isSameSymbol, newVal)
         if (this.isSameSymbol && !this.reflashCount && newVal) {
           this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
@@ -512,10 +504,6 @@ export default {
           height: 36px;
           padding: 0 10px;
 
-          .left-select {
-            /* font-size: 12px; */
-          }
-
           .right-filter {
             /* 买卖单顺序操作按钮 */
             > .right {
@@ -555,6 +543,7 @@ export default {
           height: 22px;
           padding: 0 20px 0 10px;
           border-radius: 2px;
+          font-size: 12px;
         }
 
         .el-input__icon {
@@ -678,4 +667,23 @@ export default {
     }
   }
 }
+</style>
+<style lang="scss" type="text/scss">
+  .buy-sell-order-bits-select {
+    .el-scrollbar {
+      .el-select-dropdown__wrap.el-scrollbar__wrap {
+        overflow: visible;
+
+        .el-select-dropdown__list {
+          padding-bottom: 1px;
+
+          .el-select-dropdown__item {
+            height: 22px !important;
+            font-size: 12px !important;
+            line-height: 22px !important;
+          }
+        }
+      }
+    }
+  }
 </style>

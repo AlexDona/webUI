@@ -54,12 +54,11 @@ const state = {
       sells: {
         list: [],
         highestAmount: ''
-      },
-      // 接口返回的交易对深度小数位数组数据
-      bitsData: []
+      }
     },
     tardeRecordList: [], // 交易记录
-    tradeMarketList: [] // 交易区列表
+    tradeMarketList: [], // 交易区列表
+    depthDecimal: {} // 交易对深度小数位数据
   },
   // socket 数据
   socketData: {
@@ -76,9 +75,7 @@ const state = {
       sells: {
         list: [],
         highestAmount: ''
-      },
-      // socket返回的交易对深度小数位数组数据
-      bitsData: []
+      }
     },
     // 交易对名称
     symbol: '',
@@ -86,7 +83,7 @@ const state = {
     tradeMarkeContentItem: {} // 交易区单项
   },
   // 全局存储的选中的交易对小数位
-  globalCheckedBits: '我是老值',
+  globalCheckedBits: '',
   routerTo: '', // 路由跳转
   withdrawDepositList: [], // 我的资产列表信息数据
   userRefreshUserList: [], // 刷新用户信息

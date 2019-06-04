@@ -100,7 +100,11 @@ export default {
       currentCacheList: [],
       LIMIT_BARS_RENDER_TIME: 20,
       // 是否全屏
-      isFullScreen: false
+      isFullScreen: false,
+      // 小数位选择的新值
+      newBitsValue: '',
+      // 交易对深度小数位改变时，socket订阅数据延时器
+      socketSUBTimer: null
     }
   },
   beforeCreate () {
@@ -126,6 +130,10 @@ export default {
   destroyed () {
     this.socket.destroy()
     this.widget = null
+    // 离开本组件清除socket订阅数据延时器
+    if (this.socketSUBTimer) {
+      clearTimeout(this.socketSUBTimer)
+    }
   },
   methods: {
     ...mapMutations([
@@ -233,7 +241,7 @@ export default {
         tradeList, // 交易记录
         tickerList // 行情交易区列表
       } = activeSymbolData
-      // console.log(activeSymbolData)
+      console.log(activeSymbolData)
       if (depthList && depthList.depthData.sells.list) {
         depthList.depthData.sells.list.reverse()
       }
@@ -245,6 +253,8 @@ export default {
       }
       // 买卖单
       this.ajaxData.buyAndSellData = getNestedData(depthList, 'depthData')
+      // 小数位数据
+      this.ajaxData.depthDecimal = getNestedData(depthList, 'depthDecimal')
       // 交易记录
       this.ajaxData.tardeRecordList = tradeList
       // 深度图
@@ -664,9 +674,15 @@ export default {
     // 获取买卖单
     getBuyAndSellBySocket (type, symbol) {
       // 买卖单
+      let content
+      if (type === 'CANCEL') {
+        content = `market.${symbol}.depth.step1`
+      } else {
+        content = `market.${symbol}.depth.step1.${this.newBitsValue}`
+      }
       this.socket.send({
         'tag': type,
-        'content': `market.${symbol}.depth.step1`,
+        'content': content,
         'id': 'pc'
       })
     },
@@ -799,14 +815,15 @@ export default {
       this.KlineNum = 0
       this.barsRenderTime = 0
     },
-    // 监控全局存储的选中的小数位的值，若为老值取消订阅，若为新值重新订阅，要把选中的小数位id发送给后台-此处逻辑需要完善
+    // 监控全局存储的选中的小数位的值，值改变了，先CANCEL，再REQ 再SUB
     globalCheckedBits (newValue, oldValue) {
-      console.log(newValue, oldValue)
-      if (newValue) {
-        // 先取消订阅 再重新订阅
-        // this.getBuyAndSellBySocket('CANCEL', oldValue)
-        // this.getBuyAndSellBySocket('SUB', symbol)
-      }
+      this.newBitsValue = newValue
+      // 先CANCEL 间隔10毫秒 再REQ 再SUB
+      this.getBuyAndSellBySocket('CANCEL', this.symbol)
+      this.socketSUBTimer = setTimeout(() => {
+        this.getBuyAndSellBySocket('REQ', this.symbol)
+        this.getBuyAndSellBySocket('SUB', this.symbol)
+      }, 10)
     }
   }
 }
