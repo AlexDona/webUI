@@ -465,7 +465,7 @@ export default {
 
       if (!DATA) return false
       this.dateStart = this.language === 'zh_CN' ? dateStart.split('-')[0] + '年' + dateStart.split('-')[1] + '月' + dateStart.split('-')[2].replace(/\s/, '日') : dateStart
-      this.dateEnd = this.language === 'zh_CN' ? dateEnd.split('-')[0] + '年' + dateEnd.split('-')[1] + '月' + dateStart.split('-')[2].replace(/\s/, '日') : dateEnd
+      this.dateEnd = this.language === 'zh_CN' ? dateEnd.split('-')[0] + '年' + dateEnd.split('-')[1] + '月' + dateEnd.split('-')[2].replace(/\s/, '日') : dateEnd
       this.percentage = ((DATA.data.count / DATA.data.coinTotalNumber) * 100).toFixed(1)
       this.count = DATA.data.count
       this.total = DATA.data.coinTotalNumber
