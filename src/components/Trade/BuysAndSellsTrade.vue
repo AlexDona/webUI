@@ -19,20 +19,6 @@
             {{ $t('M.trade_coin_buying_and_sell') }}
           </span>
         </span>
-        <!--<span class="right">
-          <button
-            class="middle"
-            @click="changeListOrder('middle')"
-          ></button>
-          <button
-            class="bottom"
-            @click="changeListOrder('buys')"
-          ></button>
-          <button
-            class="top"
-            @click="changeListOrder('sells')"
-          ></button>
-        </span>-->
       </div>
       <div
         class="content"
@@ -141,21 +127,31 @@
             <!--小数位选择-->
             <div class="bits">
               <div class="left-select">
-                <el-select
-                  v-model="checkedBits"
-                  placeholder="--"
-                  :no-data-text="$t('M.comm_no_data')"
-                  popper-class="buy-sell-order-bits-select"
-                  @change="changeBits"
-                >
-                  <el-option
-                    v-for="(item, index) in bitsData"
-                    :key="index"
-                    :label="currentLanguage? item.chineseName : item.englishName"
-                    :value="item.id"
+                <div class="parent">
+                  <select
+                    v-model="checkedBits"
+                    @change="changeBits"
+                    class="select-bits"
                   >
-                  </el-option>
-                </el-select>
+                    <option
+                      disabled
+                      value=""
+                      selected
+                      v-if="bitsData.length == 0"
+                    >
+                      --
+                    </option>
+                    <option
+                      v-for="(item, index) in bitsData"
+                      :key="index"
+                      :label="currentLanguage? item.chineseName : item.englishName"
+                      :value="item.id"
+                    >
+                    </option>
+                  </select>
+                  <!--改写小三角-->
+                  <div class="triangle"></div>
+                </div>
               </div>
               <div class="right-filter">
                 <span class="right">
@@ -203,7 +199,7 @@ export default {
       bitsData: [],
       // 买卖单部分选中的小数位
       checkedBits: '',
-      // 国家类型
+      // 国家语言类型
       languageStyle: ['zh_CN', 'zh_TW']
     }
   },
@@ -224,9 +220,9 @@ export default {
     ]),
     // 切换小数位下拉框
     changeBits (e) {
-      console.log(e)
+      // console.log(e.target.value)
       // 将选中的小数位值放全局
-      this.CHANGE_CHECKED_BITS(e)
+      this.CHANGE_CHECKED_BITS(e.target.value)
     },
     // 选中某一个买卖单价格
     changeActivePriceItem (item) {
@@ -320,7 +316,6 @@ export default {
 @import '../../../static/css/scss/Trade/TradeCenter.scss';
 
 .buys-and-sells-box {
-  /* width:433px; */
   > .inner-box {
     > .title {
       display: flex;
@@ -331,7 +326,6 @@ export default {
       box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
 
       > .text {
-        /* font-weight: 700; */
         display: inline-block;
         flex: 1;
         height: 100%;
@@ -344,31 +338,6 @@ export default {
           color: $mainColor;
         }
       }
-
-      /* 买卖单顺序操作按钮 */
-
-      /* > .right {
-        flex: 1;
-        text-align: right;
-
-        > button {
-          width: 28px;
-          height: 20px;
-          margin: 8px 0 0;
-          background: url(../../assets/develop/middle.png) no-repeat center right;
-          -webkit-background-size: 28px 20px;
-          background-size: 16px 12px;
-          cursor: pointer;
-        }
-
-        > .bottom {
-          background-image: url(../../assets/develop/buys.png);
-        }
-
-        > .top {
-          background-image: url(../../assets/develop/sells.png);
-        }
-      } */
     }
 
     > .content {
@@ -382,13 +351,9 @@ export default {
           line-height: 30px;
 
           .header {
-            /* display:flex; */
             > span {
-              /* border:1px solid red; */
               display: inline-block;
               box-sizing: border-box;
-
-              /* flex:1; */
               width: 29%;
               text-align: right;
               white-space: nowrap;
@@ -414,13 +379,10 @@ export default {
           > .content-box {
             height: 650px;
             margin-top: -300px;
-
-            /* background-color: pink; */
             transition: all .5s;
 
             > .buys-list,
             .sells-list {
-              /* padding:0 20px; */
               height: 600px;
               font-size: 12px;
 
@@ -442,7 +404,6 @@ export default {
                   }
 
                   > span {
-                    /* border:1px solid red; */
                     display: inline-block;
                     box-sizing: border-box;
                     width: 29%;
@@ -453,10 +414,6 @@ export default {
                       text-align: left;
                       white-space: nowrap;
                     }
-                  }
-
-                  > .amount {
-                    /* padding-right:18%; */
                   }
 
                   > .color-buy-bg,
@@ -504,6 +461,38 @@ export default {
           height: 36px;
           padding: 0 10px;
 
+          .left-select {
+            .select-bits {
+              -moz-appearance: none;
+              -webkit-appearance: none;
+              appearance: none;
+              box-sizing: border-box;
+              width: 82px;
+              height: 22px;
+              padding-left: 10px;
+              outline: none;
+              font-size: 12px;
+            }
+
+            .parent {
+              position: relative;
+              display: inline-block;
+
+              .triangle {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 0;
+                height: 0;
+                border-width: 3px;
+                border-style: solid dashed dashed;
+                overflow: hidden;
+                font-size: 0;
+                line-height: 0;
+              }
+            }
+          }
+
           .right-filter {
             /* 买卖单顺序操作按钮 */
             > .right {
@@ -525,36 +514,6 @@ export default {
                 background-image: url(../../assets/develop/sells.png);
               }
             }
-          }
-        }
-      }
-    }
-  }
-
-  /deep/ {
-    .bits {
-      .left-select {
-        .el-input {
-          font-size: 12px;
-        }
-
-        .el-input__inner {
-          width: 82px;
-          height: 22px;
-          padding: 0 20px 0 10px;
-          border-radius: 2px;
-          font-size: 12px;
-        }
-
-        .el-input__icon {
-          width: 16px;
-          height: 22px;
-          line-height: 22px;
-
-          &::before {
-            font-size: 12px;
-            color: #848a9d;
-            content: "\e60c";
           }
         }
       }
@@ -598,17 +557,21 @@ export default {
               }
             }
           }
-        }
-      }
-    }
 
-    /deep/ {
-      .bits {
-        .left-select {
-          .el-input__inner {
-            border-color: #464c5e;
-            color: #848a9d;
-            background-color: #1c1f32;
+          > .bits {
+            .left-select {
+              .select-bits {
+                border: 1px solid #464c5e;
+                color: #848a9d;
+                background-color: #1c1f32;
+              }
+
+              .parent {
+                .triangle {
+                  border-color: #848a9d transparent transparent;
+                }
+              }
+            }
           }
         }
       }
@@ -651,39 +614,25 @@ export default {
               }
             }
           }
-        }
-      }
-    }
 
-    /deep/ {
-      .bits {
-        .left-select {
-          .el-input__inner {
-            border-color: #c4c4c4;
-            background-color: #fff;
+          > .bits {
+            .left-select {
+              .select-bits {
+                border: 1px solid #c4c4c4;
+                color: #848a9d;
+                background-color: #fff;
+              }
+
+              .parent {
+                .triangle {
+                  border-color: #848a9d transparent transparent;
+                }
+              }
+            }
           }
         }
       }
     }
   }
 }
-</style>
-<style lang="scss" type="text/scss">
-  .buy-sell-order-bits-select {
-    .el-scrollbar {
-      .el-select-dropdown__wrap.el-scrollbar__wrap {
-        overflow: visible;
-
-        .el-select-dropdown__list {
-          padding-bottom: 1px;
-
-          .el-select-dropdown__item {
-            height: 22px !important;
-            font-size: 12px !important;
-            line-height: 22px !important;
-          }
-        }
-      }
-    }
-  }
 </style>
