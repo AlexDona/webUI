@@ -740,7 +740,8 @@ export default {
       if (!data) return false
       // 返回列表数据
       this.realNameInformationObj = getNestedData(data, 'data')
-      this.statusRealNameInformation = getNestedData(data, 'data')
+      this.statusRealNameInformation = getNestedData(data, 'data.authInfo')
+      // this.statusRealNameInformation = getNestedData(data, 'data')
     },
     // 检测身份证号
     idCardRegexpInputNum (ref) {
