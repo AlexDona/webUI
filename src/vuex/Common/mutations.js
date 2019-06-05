@@ -20,7 +20,9 @@ import {
   SET_NOTICE_ID,
   CHANGE_PASSWORD_USEABLE,
   // eslint-disable-next-line
-  CHANGE_ROUTER_PATH
+  CHANGE_ROUTER_PATH,
+  // 增加改变全局存储选中的交易对小数位方法
+  CHANGE_CHECKED_BITS
 } from './mutations-types.js'
 
 import {setStore} from '../../utils'
@@ -28,6 +30,10 @@ import {getNestedData} from '../../utils/commonFunc'
 // import {localapi, proapi} from 'src/config/env'
 
 export default {
+  // 改变全局存储的选中的交易对小数位的值
+  [CHANGE_CHECKED_BITS] (state, data) {
+    state.globalCheckedBits = data
+  },
   [SET_COUNT_DOWN_RESET_STATUS] (state, data) {
     state.countDownResetStatus = data
   },
@@ -61,6 +67,10 @@ export default {
     // console.log(type, ajaxData, socketData)
     switch (type) {
       case 'ajax':
+        // 交易对深度小数位数据
+        if (ajaxData.depthDecimal) {
+          state.klineAjaxData.depthDecimal = ajaxData.depthDecimal
+        }
         if (ajaxData.depthData) {
           state.klineAjaxData.depthData = ajaxData.depthData
         }

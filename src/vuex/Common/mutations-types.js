@@ -7,6 +7,8 @@ export const CHANGE_SOCKET_AND_AJAX_DATA = 'CHANGE_SOCKET_AND_AJAX_DATA' // 改�
 export const CHANGE_ACTIVE_TRADE_AREA = 'CHANGE_ACTIVE_TRADE_AREA' // 更改当前选中交易区
 export const CHANGE_CURRENCY_RATE_LIST = 'CHANGE_CURRENCY_RATE_LIST' // 更新当前汇率列表
 export const CHANGE_ROUTER_PATH = 'CHANGE_ROUTER_PATH' // 路由跳转
+// 改变全局存储的选中的交易对小数位的值
+export const CHANGE_CHECKED_BITS = 'CHANGE_CHECKED_BITS'
 // 个人中心 我的资产列表
 export const USER_ASSETS_LIST = 'USER_ASSETS_LIST' // 我的资产列表
 export const SET_COUNTRY_AREA_LIST = 'SET_COUNTRY_AREA_LIST' // 国家列表

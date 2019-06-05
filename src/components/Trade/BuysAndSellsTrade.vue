@@ -12,25 +12,12 @@
       >
         <span
           class="text"
-          @click="toggleShowContent">
+          @click="toggleShowContent"
+        >
           <span>
             <!--买卖单-->
             {{ $t('M.trade_coin_buying_and_sell') }}
           </span>
-        </span>
-        <span class="right">
-          <button
-            class="middle"
-            @click="changeListOrder('middle')"
-          ></button>
-          <button
-            class="bottom"
-            @click="changeListOrder('buys')"
-          ></button>
-          <button
-            class="top"
-            @click="changeListOrder('sells')"
-          ></button>
         </span>
       </div>
       <div
@@ -61,52 +48,53 @@
               </dt>
             </dl>
             <!--buys、sells-->
-              <div class="outer-box">
-                <div
-                  ref="buy-box"
-                  class="middle-box content-box"
+            <div class="outer-box">
+              <div
+                ref="buy-box"
+                class="middle-box content-box"
+              >
+                <!--卖出-->
+                <dl
+                  class="buys-list"
                 >
-                  <!--卖出-->
-                  <dl
-                    class="buys-list"
+                  <dd
+                    :style="{
+                      height:(20-sellsListLength)*30+'px'
+                    }"
+                    v-if="listOrder==='middle'"
                   >
-                    <dd
-                      :style="{
-                        height:(20-sellsListLength)*30+'px'
-                      }"
-                      v-if="listOrder==='middle'"
-                    ></dd>
-                    <dd
-                      class="buys-item cursor-pointer item"
-                      v-for="(item,index) in buysAndSellsList.sells.list||[]"
-                      :key="index"
-                      :class="{'odd':index%2!==0}"
-                      @click="changeActivePriceItem(item)"
+                  </dd>
+                  <dd
+                    class="buys-item cursor-pointer item"
+                    v-for="(item,index) in buysAndSellsList.sells.list||[]"
+                    :key="index"
+                    :class="{'odd':index%2!==0}"
+                    @click="changeActivePriceItem(item)"
+                  >
+                    <div class="inner">
+                      <span class="price sell-bg">
+                        <!--卖-->
+                        {{ $t('M.comm_ask') }} {{item.index}}
+                      </span><span
+                      class="price text-align-l sell-bg"
                     >
-                      <div class="inner">
-                        <span class="price sell-bg">
-                          <!--卖-->
-                          {{ $t('M.comm_ask') }} {{item.index}}
-                        </span><span
-                        class="price text-align-l sell-bg"
+                      {{$scientificToNumber(item.price)}}
+                    </span><span class="amount text-align-r">
+                      {{$scientificToNumber($cutOutPointLength(item.amount, $middleTopData_S_X.countExchange))}}
+                    </span><span class="total text-align-r">
+                      {{$scientificToNumber($cutOutPointLength(item.total, $middleTopData_S_X.priceExchange))}}
+                    </span><!--宽度条--><i
+                        class="color-sell-bg"
+                        :style="`width:${item.amount/buysAndSellsList.sells.highestAmount*100}%`"
                       >
-                        {{$scientificToNumber(item.price)}}
-                      </span><span class="amount text-align-r">
-                        {{$scientificToNumber($cutOutPointLength(item.amount, $middleTopData_S_X.countExchange))}}
-                      </span><span class="total text-align-r">
-                        {{$scientificToNumber($cutOutPointLength(item.total, $middleTopData_S_X.priceExchange))}}
-                      </span><!--宽度条--><i
-                          class="color-sell-bg"
-                          :style="`width:${item.amount/buysAndSellsList.sells.highestAmount*100}%`"
-                        >
-                        </i>
-                      </div>
-                    </dd>
-                  </dl>
-                  <!--最新价-->
-                  <TradeNewPrice/>
-                  <!--买入-->
-                  <dl
+                      </i>
+                    </div>
+                  </dd>
+                </dl>
+                <!--最新价-->
+                <TradeNewPrice/>
+                <!--买入-->
+                <dl
                   class="sells-list"
                 >
                   <dd
@@ -133,9 +121,55 @@
                         </i>
                     </div>
                   </dd>
-                </dl>
+              </dl>
+              </div>
+            </div>
+            <!--小数位选择-->
+            <div class="bits">
+              <div class="left-select">
+                <div class="parent">
+                  <select
+                    v-model="checkedBits"
+                    @change="changeBits"
+                    class="select-bits"
+                  >
+                    <option
+                      disabled
+                      value=""
+                      selected
+                      v-if="bitsData.length == 0"
+                    >
+                      --
+                    </option>
+                    <option
+                      v-for="(item, index) in bitsData"
+                      :key="index"
+                      :label="currentLanguage? item.chineseName : item.englishName"
+                      :value="item.id"
+                    >
+                    </option>
+                  </select>
+                  <!--改写小三角-->
+                  <div class="triangle"></div>
                 </div>
               </div>
+              <div class="right-filter">
+                <span class="right">
+                  <button
+                    class="middle"
+                    @click="changeListOrder('middle')"
+                  ></button>
+                  <button
+                    class="bottom"
+                    @click="changeListOrder('buys')"
+                  ></button>
+                  <button
+                    class="top"
+                    @click="changeListOrder('sells')"
+                  ></button>
+                </span>
+              </div>
+            </div>
           </div>
         </el-collapse-transition>
       </div>
@@ -160,7 +194,13 @@ export default {
       contentShowStatus: true,
       reflashCount: 0, // 买卖单数据刷新次数
       // 显示顺序(buys,middle,sells)
-      listOrder: 'middle' // 切换显示顺序
+      listOrder: 'middle', // 切换显示顺序
+      // 交易对深度小数位下拉框展示数组
+      bitsData: [],
+      // 买卖单部分选中的小数位
+      checkedBits: '',
+      // 国家语言类型
+      languageStyle: ['zh_CN', 'zh_TW']
     }
   },
   created () {
@@ -174,8 +214,16 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'CHANGE_ACTIVE_PRICE_ITEM'
+      'CHANGE_ACTIVE_PRICE_ITEM',
+      // 改变全局存储的选中的小数位值的方法
+      'CHANGE_CHECKED_BITS'
     ]),
+    // 切换小数位下拉框
+    changeBits (e) {
+      // console.log(e.target.value)
+      // 将选中的小数位值放全局
+      this.CHANGE_CHECKED_BITS(e.target.value)
+    },
     // 选中某一个买卖单价格
     changeActivePriceItem (item) {
       this.CHANGE_ACTIVE_PRICE_ITEM(item.price)
@@ -210,7 +258,11 @@ export default {
     ...mapState({
       buysAndSellsListByAjax: state => state.common.klineAjaxData.buyAndSellData,
       buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData,
-      socketSymbol: state => state.common.socketData.symbol
+      socketSymbol: state => state.common.socketData.symbol,
+      // 监控接口中返回的小数位数据对象
+      depthDecimalByAjax: state => state.common.klineAjaxData.depthDecimal,
+      // 获取当前语言
+      language: state => state.common.language
     }),
     buysAndSellsList () {
       return !this.isSameSymbol || !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
@@ -221,9 +273,28 @@ export default {
     isSameSymbol () {
       const {id} = this.$middleTopData_S_X
       return this.socketSymbol === id
+    },
+    // 当前语言判断是否中文或者繁体
+    currentLanguage () {
+      return this.language == this.languageStyle[0] || this.language == this.languageStyle[1]
     }
   },
   watch: {
+    // 监控小数位数据对象
+    depthDecimalByAjax (newVal) {
+      this.bitsData = []
+      this.bitsData = newVal.list
+      this.bitsData.forEach(item => {
+        if (item.englishName.indexOf('+') !== -1) {
+          item.englishName = item.englishName.replace('+', ' ')
+        }
+      })
+      this.bitsData.forEach((item, index) => {
+        if (newVal.defaultIndex === index) {
+          this.checkedBits = item.id
+        }
+      })
+    },
     $activeSymbol_S_X () {
       this.reflashCount = 0
     },
@@ -245,7 +316,6 @@ export default {
 @import '../../../static/css/scss/Trade/TradeCenter.scss';
 
 .buys-and-sells-box {
-  /* width:433px; */
   > .inner-box {
     > .title {
       display: flex;
@@ -256,7 +326,6 @@ export default {
       box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
 
       > .text {
-        /* font-weight: 700; */
         display: inline-block;
         flex: 1;
         height: 100%;
@@ -267,30 +336,6 @@ export default {
           border-bottom: 2px solid $mainColor;
           font-size: 14px;
           color: $mainColor;
-        }
-      }
-
-      /* 买卖单顺序操作按钮 */
-      > .right {
-        flex: 1;
-        text-align: right;
-
-        > button {
-          width: 28px;
-          height: 20px;
-          margin: 8px 0 0;
-          background: url(../../assets/develop/middle.png) no-repeat center right;
-          -webkit-background-size: 28px 20px;
-          background-size: 16px 12px;
-          cursor: pointer;
-        }
-
-        > .bottom {
-          background-image: url(../../assets/develop/buys.png);
-        }
-
-        > .top {
-          background-image: url(../../assets/develop/sells.png);
         }
       }
     }
@@ -306,13 +351,9 @@ export default {
           line-height: 30px;
 
           .header {
-            /* display:flex; */
             > span {
-              /* border:1px solid red; */
               display: inline-block;
               box-sizing: border-box;
-
-              /* flex:1; */
               width: 29%;
               text-align: right;
               white-space: nowrap;
@@ -338,13 +379,10 @@ export default {
           > .content-box {
             height: 650px;
             margin-top: -300px;
-
-            /* background-color: pink; */
             transition: all .5s;
 
             > .buys-list,
             .sells-list {
-              /* padding:0 20px; */
               height: 600px;
               font-size: 12px;
 
@@ -366,7 +404,6 @@ export default {
                   }
 
                   > span {
-                    /* border:1px solid red; */
                     display: inline-block;
                     box-sizing: border-box;
                     width: 29%;
@@ -377,10 +414,6 @@ export default {
                       text-align: left;
                       white-space: nowrap;
                     }
-                  }
-
-                  > .amount {
-                    /* padding-right:18%; */
                   }
 
                   > .color-buy-bg,
@@ -416,6 +449,69 @@ export default {
             > .buys-list {
               &.height22 {
                 overflow: hidden;
+              }
+            }
+          }
+        }
+
+        > .bits {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 36px;
+          padding: 0 10px;
+
+          .left-select {
+            .select-bits {
+              -moz-appearance: none;
+              -webkit-appearance: none;
+              appearance: none;
+              box-sizing: border-box;
+              width: 82px;
+              height: 22px;
+              padding-left: 10px;
+              outline: none;
+              font-size: 12px;
+            }
+
+            .parent {
+              position: relative;
+              display: inline-block;
+
+              .triangle {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 0;
+                height: 0;
+                border-width: 3px;
+                border-style: solid dashed dashed;
+                overflow: hidden;
+                font-size: 0;
+                line-height: 0;
+              }
+            }
+          }
+
+          .right-filter {
+            /* 买卖单顺序操作按钮 */
+            > .right {
+              > button {
+                width: 28px;
+                height: 20px;
+                margin: 8px 0 0;
+                background: url(../../assets/develop/middle.png) no-repeat center right;
+                -webkit-background-size: 28px 20px;
+                background-size: 16px 12px;
+                cursor: pointer;
+              }
+
+              > .bottom {
+                background-image: url(../../assets/develop/buys.png);
+              }
+
+              > .top {
+                background-image: url(../../assets/develop/sells.png);
               }
             }
           }
@@ -461,6 +557,22 @@ export default {
               }
             }
           }
+
+          > .bits {
+            .left-select {
+              .select-bits {
+                border: 1px solid #464c5e;
+                color: #848a9d;
+                background-color: #1c1f32;
+              }
+
+              .parent {
+                .triangle {
+                  border-color: #848a9d transparent transparent;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -498,6 +610,22 @@ export default {
                       background-color: rgba(0, 128, 105, .8);
                     }
                   }
+                }
+              }
+            }
+          }
+
+          > .bits {
+            .left-select {
+              .select-bits {
+                border: 1px solid #c4c4c4;
+                color: #848a9d;
+                background-color: #fff;
+              }
+
+              .parent {
+                .triangle {
+                  border-color: #848a9d transparent transparent;
                 }
               }
             }
