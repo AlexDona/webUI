@@ -21,7 +21,7 @@
               span {{tab.name}}
           //  存币记录列表
           .right
-            router-link(to="/") 存币记录
+            router-link(:to="`/${$routes_X.crowdFundingRecord}`") 存币记录
         .content
           li.crowd-funding-item(
             v-for="crowdFunding in crowdFundings"

@@ -29,5 +29,6 @@ export const routesVariable = {
   // 众筹
   crowdFunding: 'crowdFunding',
   // 登录
-  login: 'login'
+  login: 'login',
+  crowdFundingRecord: 'crowdFundingRecord'
 }

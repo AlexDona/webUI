@@ -15,5 +15,12 @@ export default [
       props: true
     }),
     component: () => import('@/pages/Activity/TheCrowdFundingDetail.vue')
+  },
+  {
+    ...createBaseRoute({
+      name: `${routesVariable.crowdFundingRecord}`,
+      path: `/${routesVariable.crowdFundingRecord}`
+    }),
+    component: () => import('@/pages/Activity/TheCrowdFundingRecord.vue')
   }
 ]

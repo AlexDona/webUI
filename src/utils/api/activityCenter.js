@@ -13,3 +13,5 @@ export const getCurrencyApplicationDownloadUrl = params => handleRequest(() => g
 export const getCrowdFuncdingsAJAX = params => handleRequest(() => get('/ieo/ieoList', params))
 // 获取当前众筹项目详情
 export const getCrowdFundingDetailAJAX = (detailId, params) => handleRequest(() => get(`/ieo/${detailId}`, params))
+// 获取存币记录列表
+export const getCrowdFundingRecordAJAX = params => handleRequest(() => get('/ieo/applyRecords', params))
