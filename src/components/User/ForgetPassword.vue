@@ -469,7 +469,7 @@ export default {
       if (!data) return false
       this.activeStepNumber = 4
       setTimeout(() => {
-        this.$goToPage('/login')
+        this.$goToPage(`/${this.$routes_X.login}`)
       }, 3000)
     },
     // 找回密码步骤2

@@ -562,7 +562,7 @@ export default {
           break
         // 深度图
         case 'DEPTHRENDER':
-          // console.log(data)
+          console.log(data)
           this.socketData.depthData = getNestedData(data, 'data')
           break
         case 'TRADE':

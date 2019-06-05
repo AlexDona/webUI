@@ -659,7 +659,7 @@ export default {
     // 点击交易中订单图标沙漏跳转到交易中订单
     toggleTradingOrder () {
       if (!this.isLogin) {
-        this.$goToPage('/login')
+        this.$goToPage(`/${this.$routes_X.login}`)
         return false
       }
       this.activeName = 'first'
@@ -688,7 +688,7 @@ export default {
       }, 500)
       // 未登录跳转到登录页面去
       if (!this.isLogin) {
-        this.$goToPage('/login')
+        this.$goToPage(`/${this.$routes_X.login}`)
         return false
       }
     },
@@ -713,7 +713,7 @@ export default {
       }
       // 未登录跳转到登录页面
       if (!this.isLogin) {
-        this.$goToPage('/login')
+        this.$goToPage(`/${this.$routes_X.login}`)
       } else {
         await this.REFRESH_USER_INFO_ACTION()
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
@@ -753,7 +753,7 @@ export default {
     async toOnlineBuyOrSell (id, coinId, userId, countryCode) {
       const CHINA = ['853', '852', '886', '86']
       if (!this.isLogin) {
-        this.$goToPage('/login')
+        this.$goToPage(`/${this.$routes_X.login}`)
       } else {
         // 刷新用户信息
         await this.REFRESH_USER_INFO_ACTION()
@@ -809,7 +809,7 @@ export default {
     // 0.5 查询更多订单按钮点击事件
     queryMoreOrder () {
       if (!this.isLogin) { // 未登录跳转登录页
-        this.$goToPage('/login')
+        this.$goToPage(`/${this.$routes_X.login}`)
       } else {
         // 登录后：商家用户跳转到商家订单；普通用户跳转到个人中心中的法币订单
         if (this.userInfo.type === 'COMMON') {

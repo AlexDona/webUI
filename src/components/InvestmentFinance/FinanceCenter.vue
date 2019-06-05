@@ -942,7 +942,7 @@ export default {
           })
         }
       } else {
-        this.$goToPage('/login')
+        this.$goToPage(`/${this.$routes_X.login}`)
         return false
       }
     },

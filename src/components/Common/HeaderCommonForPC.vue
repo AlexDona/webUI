@@ -132,6 +132,12 @@
                 <span>{{$t('M.common_fuc_eco')}}</span>
               </router-link>
             </li>
+            <!-- 众筹项目 -->
+            <li class="nav-item">
+              <router-link :to="`${$routes_X.crowdFunding}`">
+                <span>众筹</span>
+              </router-link>
+            </li>
           </ul>
         </div>
         <!--注册登录-->
@@ -199,7 +205,7 @@
               class="li-item"
               v-if="!isLogin"
             >
-              <router-link to="/login">
+              <router-link :to="`/${$routes_X.login}`">
                 <!--<span>登录</span>-->
                 <span>{{$t('M.comm_login')}}</span>
               </router-link>

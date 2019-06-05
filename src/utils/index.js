@@ -109,22 +109,24 @@ export const removeCookie = name => {
  *  'time'：只取时间（11：02：23）
  *  'BIH': 国际标准时分秒 (09ˋ40′32″)
  */
-export const timeFilter = (date, methods) => {
+export const timeFilter = (date, methods, daySplitSymbol = '-') => {
+  function formatTime (time) {
+    return `${time}`.padStart(2, '0')
+  }
+
   let filterTime
   date = new Date(date)
   let newDate
   let year = date.getFullYear()
-  let month = date.getMonth() + 1
-  month = month < 10 ? '0' + month : month
-  let day = date.getDate()
-  day = day < 10 ? '0' + day : day
-  newDate = year + '-' + month + '-' + day + ' '
-  let hour = date.getHours()
-  hour = hour < 10 ? '0' + hour : hour
-  let minute = date.getMinutes()
-  minute = minute < 10 ? '0' + minute : minute
-  let second = date.getSeconds()
-  second = second < 10 ? '0' + second : second
+  let month = formatTime(date.getMonth() + 1)
+  let day = formatTime(date.getDate())
+
+  newDate = `${year}${daySplitSymbol}${month}${daySplitSymbol}${day} `
+
+  let hour = formatTime(date.getHours())
+  let minute = formatTime(date.getMinutes())
+  let second = formatTime(date.getSeconds())
+
   const time = hour + ':' + minute + ':' + second
   const BIHTime = hour + 'ˋ' + minute + '′' + second + '″'
   switch (methods) {
@@ -143,18 +145,15 @@ export const timeFilter = (date, methods) => {
   }
   return filterTime
 }
-// 交易中订单倒计时国际标准时分秒 (09ˋ40′32″)
-export const formatSeconds = (date, type) => {
-  function formatTime (time) {
-    if (time < 10) time = `0${parseInt(time)}`
-    return time
-  }
+export const getDateTime = (date) => {
   // 获取总秒数
   let secondTime = parseInt(date / 1000)
   let dayTime = 0 // 天
   let minuteTime = 0 // 分
   let hourTime = 0 // 小时
-  if (secondTime >= 60) { // 如果秒数大于60，将秒数转换成整数
+
+  // 如果秒数大于60，将秒数转换成整数
+  if (secondTime >= 60) {
     // 获取分钟，除以60取整数，得到整数分钟
     minuteTime = parseInt(secondTime / 60)
     // 获取秒数，秒数取佘，得到整数秒数
@@ -171,6 +170,27 @@ export const formatSeconds = (date, type) => {
       hourTime = parseInt(hourTime % 24)
     }
   }
+  return {
+    dayTime,
+    hourTime,
+    minuteTime,
+    secondTime
+  }
+}
+// 交易中订单倒计时国际标准时分秒 (09ˋ40′32″)
+export const formatSeconds = (date, type) => {
+  function formatTime (time) {
+    if (time < 10) time = `0${parseInt(time)}`
+    return time
+  }
+
+  const timeObj = getDateTime(date)
+  let {
+    dayTime,
+    hourTime,
+    minuteTime,
+    secondTime
+  } = timeObj
   let result
   switch (type) {
     case 'OTC':

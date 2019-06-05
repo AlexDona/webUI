@@ -837,7 +837,7 @@ export default {
       if (this.inviter && this.isNeedApp && this.isMobile) {
         this.$goToPage(`/downloadApp?language${this.language}`)
       } else {
-        this.$goToPage('/login')
+        this.$goToPage(`/${this.$routes_X.login}`)
       }
     },
     // 检测输入格式

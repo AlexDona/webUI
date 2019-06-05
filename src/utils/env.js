@@ -16,7 +16,8 @@ let targetConfig = {
 }
 
 const devTestConfig = {
-  apiCommonUrl: 'http://192.168.2.200:8888/',
+  // apiCommonUrl: 'http://192.168.2.200:8888/',
+  apiCommonUrl: 'http://192.168.2.88:8888/',
   // apiCommonUrl: 'http://192.168.0.135:8888/',
   socketUrl: 'ws://192.168.2.200:8087/market',
   // socketUrl: 'ws://192.168.0.52:8087/market',

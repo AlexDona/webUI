@@ -7,7 +7,7 @@ import {
   formatSeconds,
   setStore,
   getStore,
-  getStoreWithJson
+  getStoreWithJson, timeFilter
 } from '../utils'
 import {
   jumpToOtherPageForFooter,
@@ -19,6 +19,8 @@ import {
   mapGetters,
   mapState
 } from 'vuex'
+
+import {routesVariable} from '../router/routesVariable'
 
 let mixin = {
   data () {
@@ -99,6 +101,20 @@ let mixin = {
     },
     $activeSellName_X () {
       return (this.$middleTopData_S_X.sellsymbol || '').toUpperCase()
+    },
+    $routes_X () {
+      return routesVariable
+    }
+  },
+  filters: {
+    $timeFilter_F_X: function (date, type, daySplitSymbol) {
+      return timeFilter(date, type, daySplitSymbol)
+    },
+    // 数字 => 货币
+    $moneyFilter_F_X: function (val) {
+      let num = parseFloat(val)
+      num = num.toLocaleString()
+      return num
     }
   }
 }

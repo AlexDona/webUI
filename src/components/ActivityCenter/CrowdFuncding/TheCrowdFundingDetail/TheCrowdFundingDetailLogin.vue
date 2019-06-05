@@ -1,0 +1,235 @@
+<!--
+  author: zhaoxinlei
+  create: 20190605
+  description: 当前页面为 众筹详情页 已登录模块组件
+-->
+<template lang="pug">
+  .the-crowd-funding-detail-login
+    .top
+      // 可用
+      span.usable
+        span.label {{label.usable}}
+        span.value  {{ieoCoinBalance}}
+        span.coin-name  {{ieoCoinName}}
+      //  余额
+      span.usable.balance
+        span.label {{label.balance}}
+        span.value  {{holdCoinBalance}}
+        span.coin-name  {{holdCoinName}}
+    .middle
+      el-form(
+        :model="form"
+        :rules="rules"
+        :ref="formRef"
+        label-width="100px"
+      )
+        el-form-item(
+        label=""
+        label-width="0px"
+        prop="buyCount"
+        )
+          el-input(
+          type="text"
+          v-model="form.buyCount"
+          :placeholder="buyCountPlaceholder"
+          :autofocus="true"
+          @keyup.native="formatInput"
+          @input.native="formatInput"
+          )
+            template(slot="append")
+              el-button(
+                @click="submitForm"
+                :disabled ="statusCode!=='ongoing'"
+              ) {{buttonText}}
+    .bottom
+      span.predict {{predictText}}
+      span.placeholder(v-if="!predict") --
+      span.predict(v-else) {{predict}}
+      span {{ieoCoinName}}
+</template>
+<script>
+import {getDateTime} from '../../../../utils'
+
+export default {
+  // name: '',
+  // mixins: [],
+  // components: {},
+  props: {
+    detail: {
+      type: Object
+    },
+    label: {
+      type: Object
+    }
+  },
+  data () {
+    let validateBuyCount = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error(`${this.buyCountPlaceholder}`))
+      } else if (this.ieoCoinBalance - value < 0) {
+        callback(new Error(`可用不足，请重新输入`))
+      } else if (this.holdCoinBalance - this.holdCoinAmount < 0) {
+        callback(new Error(`可用不足，请重新输入111`))
+      }
+      callback()
+    }
+    return {
+      form: {
+        // 申购数量
+        buyCount: ''
+      },
+      formRef: 'form',
+      rules: {
+        buyCount: [
+          { validator: validateBuyCount, trigger: 'blur' },
+          { validator: validateBuyCount, trigger: 'change' }
+        ]
+      },
+      buyCountPlaceholder: '请输入申购数量',
+      predictText: '预计收益',
+      // 预计收益
+      predict: '',
+      ONE_YEAR: 365
+    }
+  },
+  async created () {
+    console.log(this.statusCode)
+  },
+  // mounted () {}
+  // updated () {},
+  // beforeRouteUpdate () {},
+  // beforeDestroy () {},
+  // destroyed () {},
+  methods: {
+    /**
+     * 输入限制： 整数 最大 7位，小数 最大8位
+     */
+    formatInput () {
+      const { buyCount } = this.form
+      let integer = ''
+      let point = ''
+      if (buyCount.includes('.')) {
+        let strArr = buyCount.split('.')
+        integer = strArr[0]
+        point = strArr[1] || ''
+        console.log(strArr, integer, point)
+        integer = integer.substring(0, 7)
+        point = point.substring(0, 8)
+      } else {
+        integer = buyCount.substring(0, 7)
+      }
+
+      this.form.buyCount = buyCount.includes('.') ? `${integer}.${point}` : `${integer}`
+      this.updatePredict()
+    },
+    submitForm () {
+      this.$refs[this.formRef].validate((valid) => {
+        if (!valid) return false
+      })
+    },
+    updatePredict () {
+      let time = this.interestEndTime - this.interestStartTime
+      console.log(time)
+      const timeObj = getDateTime(time)
+      let {
+        dayTime
+      } = timeObj
+      console.log(this.interestRate, this.form.buyCount, dayTime)
+      // 预计收益 = ( 年化收益 * 申购数量 / 365 ) * 计息天数
+      const {buyCount} = this.form
+      this.predict = this.$cutOutPointLength((this.interestRate / 100 * buyCount) / this.ONE_YEAR * dayTime, 8)
+      // console.log(this.predict)
+    }
+  },
+  // filters: {},
+  computed: {
+    buttonText () {
+      let target = ''
+      const status = ['coming', 'ongoing', 'sell_out', 'ended']
+      const statusMap = {
+        [status[0]]: '即将开始',
+        [status[1]]: '进行中',
+        [status[2]]: '已满额',
+        [status[2]]: '已结束'
+      }
+      target = statusMap[this.statusCode]
+      return target
+    },
+    ieoCoinName () {
+      return _.get(this.detail, 'ieoCoinName')
+    },
+    // 募集币种余额
+    ieoCoinBalance () {
+      return _.get(this.detail, 'ieoCoinBalance')
+    },
+    // 需持币金额
+    holdCoinAmount () {
+      return _.get(this.detail, 'holdCoinAmount')
+    },
+    // 最低持仓币种
+    holdCoinName () {
+      return _.get(this.detail, 'holdCoinName')
+    },
+    // 持仓币种余额
+    holdCoinBalance () {
+      return _.get(this.detail, 'holdCoinBalance')
+    },
+    // 计息开始时间
+    interestStartTime () {
+      return _.get(this.detail, 'interestStartTime')
+    },
+    // 计息结束时间
+    interestEndTime () {
+      return _.get(this.detail, 'interestEndTime')
+    },
+    // 年化收益
+    interestRate () {
+      return _.get(this.detail, 'interestRate')
+    },
+    statusCode () {
+      return _.get(this.detail, 'statusCode')
+    }
+  }
+  // watch: {}
+}
+</script>
+
+<style scoped lang="stylus">
+  @import '../../../../assets/CSS/index.styl'
+  .the-crowd-funding-detail-login
+    >.top
+      display flex
+      justify-content space-between
+      margin-bottom 10px
+      >.usable
+        color S_font_color
+      >.balance
+        color #fff
+    >.middle
+      /deep/
+        .el-input__inner
+          border-radius 0
+          background-color #2a334f
+          border none
+          height 50px
+          font-size 12px
+        .el-input-group__append,.el-button--default
+          border-radius 0 2px 2px 0
+          border none
+        .el-input-group__append
+          background-color transparent
+        .el-button--default
+          background-color S_main_color
+          border none
+          color #fff
+          height 50px
+          font-size 12px
+          &.is-disabled
+            background-color #232b46
+    >.bottom
+      color S_main_color
+      >span
+        margin 0 2px
+      >.placeholder
+        font-size 20px
+</style>
