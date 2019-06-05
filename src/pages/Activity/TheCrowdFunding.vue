@@ -29,10 +29,13 @@
             TheCrowdFundingItem(
               :crowdFunding ="crowdFunding"
             )
+          // 暂无数据
+          .no-data(v-if="!crowdFundings.length")
+            span {{ $t('M.comm_no_data') }}
 </template>
 <script>
 import {mapState} from 'vuex'
-import {getCrowdFuncdingsAJAX} from '../../utils/api/activityCenter'
+import {getCrowdFundingAJAX} from '../../utils/api/activityCenter'
 import TheCrowdFundingItem from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFuncdingItem'
 export default {
   components: {
@@ -43,19 +46,19 @@ export default {
     return {
       tabs: [
         {
-          value: 'ALL',
+          value: '',
           name: '全部'
         },
         {
-          value: 'NOT_START',
+          value: 'coming',
           name: '未开始'
         },
         {
-          value: 'UNDERWAY',
+          value: 'ongoing',
           name: '进行中'
         },
         {
-          value: 'FINISHED',
+          value: 'ended',
           name: '已结束'
         }
       ],
@@ -65,7 +68,7 @@ export default {
   },
   async created () {
     this.activeName = this.tabs[0].value
-    await this.getCrowdFuncdings()
+    await this.getCrowdFunding()
   },
   // mounted () {},
   // activated () {},
@@ -76,18 +79,19 @@ export default {
   methods: {
     toggleTab (name) {
       this.activeName = name
-      this.getCrowdFuncdings()
+      this.getCrowdFunding()
     },
     // 获取众筹列表
-    getCrowdFuncdings: _.debounce(async function (status) {
+    getCrowdFunding: _.debounce(async function () {
       const params = {
-        status,
         language: this.$language_S_X
       }
-      const data = await getCrowdFuncdingsAJAX(params)
+      if (this.activeName) params.status = this.activeName
+      const data = await getCrowdFundingAJAX(params)
       if (!data) return
-      console.log(data)
+      // console.log(data)
       this.crowdFundings = _.get(data, 'data')
+      // this.crowdFundings = []
     }, 500)
   },
   // filter: {},
@@ -106,7 +110,7 @@ export default {
         background url('../../assets/images/crowd-funding-bg.png') no-repeat center center / cover
       > .container
         width S_main_content_width
-        margin -200px auto 0
+        margin -200px auto 100px
         /*background-color pink*/
         min-height 1000px
         > .header
@@ -146,4 +150,15 @@ export default {
             background-color #151b30
             margin-bottom 50px
             border-radius 6px
+          >.no-data
+            width 100%
+            background url('../../assets/images/no-data-bg.png') no-repeat center 40%
+            height 930px
+            position relative
+            >span
+              position absolute
+              top 55%
+              left 48%
+              transform translateX(-50%)
+              color S_main_color
 </style>

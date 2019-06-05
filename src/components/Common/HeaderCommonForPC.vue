@@ -471,6 +471,7 @@
 import {getMerchantAvailableLegalTender} from '../../utils/api/OTC'
 import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
+import TheGlobalPayPasswordDialog from '../Common/GlobalPayPassWordDialog'
 import {
   getNestedData
 } from '../../utils/commonFunc'
@@ -487,7 +488,8 @@ import {xDomain} from '../../utils/env'
 
 export default{
   components: {
-    IconFontCommon
+    IconFontCommon,
+    TheGlobalPayPasswordDialog
   },
   data () {
     return {

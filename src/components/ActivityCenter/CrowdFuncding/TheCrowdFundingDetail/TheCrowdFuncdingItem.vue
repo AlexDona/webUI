@@ -4,7 +4,7 @@
   description: 当前页面为 众筹页面 单个众筹项目 组件
 -->
 <template lang="pug">
-  .the-crowd-funcding-item
+  .the-crowd-funding-item
     // 项目详情
     .header
       .h-top
@@ -40,14 +40,14 @@
         TheProcess(:process="process")
       //  立即抢购、已结束、抢购未开始
       button.submit(
-        :class="{active: statusCode !== 'ongoing'}"
+        :class="{active: statusCode === 'ongoing'}"
         @click="buyNow"
       ) {{statusName}}
 </template>
 <script>
 import TheProcess from '../TheProcess'
 export default {
-  name: 'the-crowd-funcding-item',
+  name: 'the-crowd-funding-item',
   // mixins: [],
   components: {
     TheProcess
@@ -162,7 +162,7 @@ export default {
 
 <style scoped lang="stylus">
   @import '../../../../assets/CSS/index.styl'
-  .the-crowd-funcding-item
+  .the-crowd-funding-item
     background rgba(21,27,48,1)
     box-shadow 0 3px 4px 0 #181A29
     border-radius 6px
@@ -225,4 +225,7 @@ export default {
         &.active
           background-color #1d2440
           color S_main_color
+        &:hover
+          background-color S_main_color
+          color #fff
 </style>

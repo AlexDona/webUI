@@ -17,7 +17,8 @@ import {
 } from '../utils/commonFunc'
 import {
   mapGetters,
-  mapState
+  mapState,
+  mapMutations
 } from 'vuex'
 
 import {routesVariable} from '../router/routesVariable'
@@ -27,6 +28,9 @@ let mixin = {
     return {}
   },
   methods: {
+    ...mapMutations({
+      '$UPDATE_PAY_PASSWORD_DIALOG_M_X': 'UPDATE_PAY_PASSWORD_DIALOG_M'
+    }),
     $goToPage (routerName, param) {
       let newRouterPath = routerName
       if (!routerName.startsWith('/')) newRouterPath = `/${routerName}`
@@ -94,7 +98,11 @@ let mixin = {
       $serverTime_S_X: state => state.trade.serverData.serverTime,
       $isShowServerPort_S_X: state => state.trade.serverData.isShowServerPort,
       $clientWidth_S_X: state => state.common.clientWidth,
-      $activityInfo_S_X: state => state.trade.activity
+      $activityInfo_S_X: state => state.trade.activity,
+      // 是否显示交易密码弹窗
+      $isShowGlobalPayPass_S_X: state => state.common.isShowGlobalPayPass_S,
+      // 全局交易密码
+      $globalPayPassword_S_X: state => state.common.globalPayPassword_S
     }),
     $activeBuyName_X () {
       return (this.$middleTopData_S_X.area || '').toUpperCase()

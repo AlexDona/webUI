@@ -46,10 +46,12 @@
       span.placeholder(v-if="!predict") --
       span.predict(v-else) {{predict}}
       span {{ieoCoinName}}
+    PayPassDialog(@next="applyCrowdFunding")
 </template>
 <script>
 import {getDateTime} from '../../../../utils'
-
+import {applyCrowdFundingAJAX} from '../../../../utils/api/activityCenter'
+import {mapState} from 'vuex'
 export default {
   // name: '',
   // mixins: [],
@@ -125,6 +127,16 @@ export default {
     submitForm () {
       this.$refs[this.formRef].validate((valid) => {
         if (!valid) return false
+        if (!this.$userInfo_X.payPassword) {
+          // 请设置交易密码后操作
+          this.$message({
+            type: 'error',
+            message: this.$t('M.comm_please_set_up') + this.$t('M.comm_password') + this.$t('M.trade_exchange_after_operation')
+          })
+          this.$goToPage(`/${this.$routes_X.TransactionPassword}`)
+          return false
+        }
+        this.$UPDATE_PAY_PASSWORD_DIALOG_M_X(true)
       })
     },
     updatePredict () {
@@ -139,18 +151,33 @@ export default {
       const {buyCount} = this.form
       this.predict = this.$cutOutPointLength((this.interestRate / 100 * buyCount) / this.ONE_YEAR * dayTime, 8)
       // console.log(this.predict)
+    },
+    async applyCrowdFunding () {
+      const params = {
+        // 申购项目id
+        id: this.detailId,
+        // 项目金额
+        amount: this.form.buyCount,
+        payPassword: this.$globalPayPassword_S_X
+      }
+      const data = await applyCrowdFundingAJAX(params)
+      if (!data) return false
+      // console.log(data)
     }
   },
   // filters: {},
   computed: {
+    ...mapState({
+      $userInfo_X: state => state.user.loginStep1Info.userInfo
+    }),
     buttonText () {
       let target = ''
       const status = ['coming', 'ongoing', 'sell_out', 'ended']
       const statusMap = {
         [status[0]]: '即将开始',
-        [status[1]]: '进行中',
+        [status[1]]: '立即申购',
         [status[2]]: '已满额',
-        [status[2]]: '已结束'
+        [status[3]]: '已结束'
       }
       target = statusMap[this.statusCode]
       return target
@@ -188,6 +215,10 @@ export default {
     },
     statusCode () {
       return _.get(this.detail, 'statusCode')
+    },
+    // 当前项目ID
+    detailId () {
+      return _.get(this.detail, 'id')
     }
   }
   // watch: {}

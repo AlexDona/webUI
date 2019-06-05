@@ -10,6 +10,8 @@ export const getRankingList = () => handleRequest(() => get('user/inviters', {'l
 // 获取资产列表下载地址
 export const getCurrencyApplicationDownloadUrl = params => handleRequest(() => get('getCurrencyApplicationDownloadUrl', params))
 // 获取众筹列表
-export const getCrowdFuncdingsAJAX = params => handleRequest(() => get('/ieo/ieoList', params))
+export const getCrowdFundingAJAX = params => handleRequest(() => get('/ieo/ieoList', params))
 // 获取当前众筹项目详情
 export const getCrowdFundingDetailAJAX = (detailId, params) => handleRequest(() => get(`/ieo/${detailId}`, params))
+// 众筹项目申购
+export const applyCrowdFundingAJAX = params => handleRequest(() => get(`/ieo/apply`, params))
