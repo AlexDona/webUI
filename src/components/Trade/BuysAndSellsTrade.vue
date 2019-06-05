@@ -484,7 +484,7 @@ export default {
                 right: 10px;
                 width: 0;
                 height: 0;
-                border-width: 3px;
+                border-width: 4px;
                 border-style: solid dashed dashed;
                 overflow: hidden;
                 font-size: 0;
