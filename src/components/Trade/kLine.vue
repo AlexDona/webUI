@@ -678,7 +678,7 @@ export default {
       if (type === 'CANCEL') {
         content = `market.${symbol}.depth.step1`
       } else {
-        content = `market.${symbol}.depth.step1.${this.newBitsValue}`
+        content = `market.${symbol}.depth.step1${this.newBitsValue}`
       }
       this.socket.send({
         'tag': type,
@@ -728,6 +728,7 @@ export default {
     },
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min15') {
+      this.newBitsValue = ''
       this.getKlineByAjax(symbol, interval, this.KlineNum)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
@@ -817,7 +818,7 @@ export default {
     },
     // 监控全局存储的选中的小数位的值，值改变了，先CANCEL，再REQ 再SUB
     globalCheckedBits (newValue, oldValue) {
-      this.newBitsValue = newValue
+      this.newBitsValue = '.' + newValue
       // 先CANCEL 间隔10毫秒 再REQ 再SUB
       this.getBuyAndSellBySocket('CANCEL', this.symbol)
       this.socketSUBTimer = setTimeout(() => {
