@@ -281,8 +281,8 @@
                   <span class="margin-left10 buy">
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
-                    <span v-show="!buyUserCoinWallet.total||!$middleTopData_S_X.last">--</span>
-                    <span v-show="buyUserCoinWallet.total&&$middleTopData_S_X.last">
+                    <span v-show="!buyUserCoinWallet.total">--</span>
+                    <span v-show="buyUserCoinWallet.total">
                       {{$scientificToNumber(buyUserCoinWallet.total)}}
                     </span>
                     <span>{{$middleTopData_S_X.area}}</span>
