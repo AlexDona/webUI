@@ -85,9 +85,10 @@
                       {{$scientificToNumber($cutOutPointLength(item.total, $middleTopData_S_X.priceExchange))}}
                     </span><!--宽度条--><i
                         class="color-sell-bg"
-                        :style="`width:${item.amount/buysAndSellsList.sells.highestAmount*100}%`"
+                        :style="`width:${item.progressiveTotal/buysAndSellsList.sells.list[0].progressiveTotal * 100}%`"
                       >
                       </i>
+                      <!--:style="`width:${item.amount/buysAndSellsList.sells.highestAmount*100}%`"-->
                     </div>
                   </dd>
                 </dl>
@@ -116,9 +117,10 @@
                         {{$scientificToNumber(item.total)}}
                       </span><!--宽度条--><i
                           class="color-buy-bg"
-                          :style="`width:${item.amount/buysAndSellsList.buys.highestAmount*100}%`"
+                          :style="`width:${item.progressiveTotal/buysAndSellsList.buys.list[buysAndSellsList.buys.list.length - 1].progressiveTotal * 100}%`"
                         >
                         </i>
+                      <!--:style="`width:${item.amount/buysAndSellsList.buys.highestAmount*100}%`"-->
                     </div>
                   </dd>
               </dl>
