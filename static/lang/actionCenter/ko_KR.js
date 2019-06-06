@@ -14,5 +14,25 @@ export const actionCenter = {
   'actionCenter_Token_step6': '신코인 투표',
   'actionCenter_Token_step7': '온라인',
   'actionCenter_Token_step8': '거래소 온라인',
-  'actionCenter_coin_apply': '거래소 온라인'
+  'actionCenter_coin_apply': '거래소 온라인',
+
+  'crowd_funding_deposit_record': '재고 기록',
+  'crowd_funding_coming_soon': '시작',
+  'crowd_funding_processing': '진행 중',
+  'crowd_funding_over': '종료',
+  'crowd_funding_title1': '코인보관함',
+  'crowd_funding_title2': '화폐 향유 수익, 판시 대살기',
+  'crowd_funding_start_end_time': '시작 시간',
+  'crowd_funding_interest_rate': '연화 수익률',
+  'crowd_funding_total': '총액도',
+  'crowd_funding_locked': '자물쇠',
+  'crowd_funding_number_of_participants': '참여자',
+  'crowd_funding_time': '시간',
+  'crowd_funding_project_name': '프로젝트 이름',
+  'crowd_funding_way_of_income': '수익 방식',
+  'crowd_funding_deposit_cycle': '예금 주기 (천)',
+  'crowd_funding_deposit_quantity': '예금 수량',
+  'crowd_funding_yield_to_maturity': '만기 수익',
+  'crowd_funding_interest_time_unlock_time': '잠금 시간 / 해체 시간',
+  'crowd_funding_state': '상태'
 }

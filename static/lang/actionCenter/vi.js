@@ -14,5 +14,25 @@ export const actionCenter = {
   'actionCenter_Token_step6': 'Đồng tiền mới đăng kí vào đầu tư cổ phiếu',
   'actionCenter_Token_step7': 'Lên sàn',
   'actionCenter_Token_step8': 'Lên sàn khu vực giao dich',
-  'actionCenter_coin_apply': 'Xin đồng tiền lên sàn'
+  'actionCenter_coin_apply': 'Xin đồng tiền lên sàn',
+
+  'crowd_funding_deposit_record': 'Hồ sơ tiền gửi',
+  'crowd_funding_coming_soon': 'Chưa bắt đầu',
+  'crowd_funding_processing': 'Đang tiến hành',
+  'crowd_funding_over': 'Đã kết thúc',
+  'crowd_funding_title1': 'Tiết kiệm tiền bảo',
+  'crowd_funding_title2': 'Thu nhập tiền gửi, Sát khí thị trường gấu',
+  'crowd_funding_start_end_time': 'Bắt đầu và kết thúc',
+  'crowd_funding_interest_rate': 'Tỷ lệ lợi nhuận hàng năm',
+  'crowd_funding_total': 'Tổng tiền',
+  'crowd_funding_locked': 'Đã khóa',
+  'crowd_funding_number_of_participants': 'Lượng người tham gia',
+  'crowd_funding_time': 'Thời gian',
+  'crowd_funding_project_name': 'Tên dự án',
+  'crowd_funding_way_of_income': 'Cách thu nhập',
+  'crowd_funding_deposit_cycle': 'Chu kỳ tiền tệ (ngày)',
+  'crowd_funding_deposit_quantity': 'Số tiền gửi',
+  'crowd_funding_yield_to_maturity': 'Thu nhập cuối kì',
+  'crowd_funding_interest_time_unlock_time': 'Thời gian lãi/ thời gian mở khóa',
+  'crowd_funding_state': 'Trạng thái'
 }

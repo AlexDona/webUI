@@ -14,5 +14,25 @@ export const actionCenter = {
   'actionCenter_Token_step6': '新币登录投票',
   'actionCenter_Token_step7': '上线',
   'actionCenter_Token_step8': '上线交易区',
-  'actionCenter_coin_apply': '上幣申請'
+  'actionCenter_coin_apply': '上幣申請',
+
+  'crowd_funding_deposit_record': '存幣記錄',
+  'crowd_funding_coming_soon': '未開始',
+  'crowd_funding_processing': '進行中',
+  'crowd_funding_over': '已結束',
+  'crowd_funding_title1': '存幣寶',
+  'crowd_funding_title2': '存幣享收益，熊市大殺器',
+  'crowd_funding_start_end_time': '起止時間',
+  'crowd_funding_interest_rate': '年化收益率',
+  'crowd_funding_total': '總額度',
+  'crowd_funding_locked': '已鎖',
+  'crowd_funding_number_of_participants': '參與人數',
+  'crowd_funding_time': '時間',
+  'crowd_funding_project_name': '專案名稱',
+  'crowd_funding_way_of_income': '收益方式',
+  'crowd_funding_deposit_cycle': '存幣週期（天）',
+  'crowd_funding_deposit_quantity': '存幣數量',
+  'crowd_funding_yield_to_maturity': '到期收益',
+  'crowd_funding_interest_time_unlock_time': '計息時間/解鎖時間',
+  'crowd_funding_state': '狀態'
 }

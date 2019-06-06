@@ -4,7 +4,9 @@
   description: 当前页面为 众筹 进度条组件
 -->
 <template lang="pug">
-  .the-process
+  .the-process(
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+  )
     .the-process-bg(:class="{all: isAll,'not-all':!isAll}")
       .the-min-width(
         :style="{width: `${process}%`}"
@@ -88,4 +90,16 @@ export default {
       text-align right
       line-height 14px
       font-size 12px
+    &.day
+      >.the-process-bg
+        background #d1e4fa
+        box-shadow none
+        >.the-min-width
+          background-color S_main_color
+          >.bar
+            background url('../../../assets/images/crowd-funding-process-bar-white-bg.png') no-repeat center center
+        &.all
+          background-color transparent
+      >.text
+        color S_main_color
 </style>

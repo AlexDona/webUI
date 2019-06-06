@@ -5,10 +5,13 @@
 -->
 <template lang="pug">
   .crowd-funding(
-  :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   )
     .inner-box
       .banner
+        .inner-box
+          h3 {{$t(title1)}}
+          p {{$t(title2)}}
       .container
         .header
           // tabs
@@ -18,10 +21,11 @@
             :class="{active:activeName == tab.value}"
             @click="toggleTab(tab.value)"
             )
-              span {{tab.name}}
+              span {{$t(tab.name)}}
           //  存币记录列表
           .right
-            router-link(to="/") 存币记录
+            // 存币记录
+            router-link(:to="`/${$routes_X.crowdFundingRecord}`") {{$t('M.crowd_funding_deposit_record')}}
         .content
           li.crowd-funding-item(
             v-for="crowdFunding in crowdFundings"
@@ -45,25 +49,31 @@ export default {
   data () {
     return {
       tabs: [
+        // 全部
         {
           value: '',
-          name: '全部'
+          name: 'M.comm_all'
         },
+        // 未开始
         {
           value: 'coming',
-          name: '未开始'
+          name: 'M.crowd_funding_coming_soon'
         },
+        // 进行中
         {
           value: 'ongoing',
-          name: '进行中'
+          name: 'M.crowd_funding_processing'
         },
+        // 已结束
         {
           value: 'ended',
-          name: '已结束'
+          name: 'M.crowd_funding_over'
         }
       ],
       activeName: '',
-      crowdFundings: []
+      crowdFundings: [],
+      title1: 'M.crowd_funding_title1',
+      title2: 'M.crowd_funding_title2'
     }
   },
   async created () {
@@ -98,7 +108,12 @@ export default {
   computed: {
     ...mapState([])
   },
-  watch: {}
+  watch: {
+    $language_S_X (New) {
+      console.log(New)
+      this.getCrowdFunding()
+    }
+  }
 }
 </script>
 <style lang="stylus">
@@ -106,12 +121,24 @@ export default {
   .crowd-funding
     > .inner-box
       > .banner
-        height 600px
+        margin-top 50px
+        height 400px
         background url('../../assets/images/crowd-funding-bg.png') no-repeat center center / cover
+        position relative
+        >.inner-box
+          position absolute
+          left 30%
+          top 30%
+          >h3
+            font-size 44px
+            color #fff
+            line-height 80px
+          >p
+            font-size 30px
+            color #fff
       > .container
         width S_main_content_width
-        margin -200px auto 100px
-        /*background-color pink*/
+        margin -107px auto 100px
         min-height 1000px
         > .header
           height 70px
@@ -131,7 +158,6 @@ export default {
                 border-bottom 2px solid S_main_color
           > .right
             flex 1
-            /*background-color pink*/
             text-align right
             padding-right 40px
             > a
@@ -143,6 +169,7 @@ export default {
           box-sizing border-box
           flex-wrap wrap
           justify-content space-between
+          min-height 1000px
           > .crowd-funding-item
             width 384px
             min-width 384px
@@ -161,4 +188,29 @@ export default {
               left 48%
               transform translateX(-50%)
               color S_main_color
+    &.day
+      background-color #f5f5fa
+      > .inner-box
+        background-color #f5f5fa
+        > .banner
+        > .container
+          > .header
+            background-color #e7eefc
+            > .left
+              > .tab
+                color S_font_color
+                &.active
+                  color S_main_color
+                  border-bottom 2px solid S_main_color
+            > .right
+              > a
+                color S_main_color
+          > .content
+            background-color #fff
+            > .crowd-funding-item
+              background-color #fff
+              box-shadow 0 3px 5px 0 rgba(214,214,214,1)
+            >.no-data
+              >span
+                color S_main_color
 </style>

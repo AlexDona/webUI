@@ -14,5 +14,25 @@ export const actionCenter = {
   'actionCenter_Token_step6': 'New listing vote',
   'actionCenter_Token_step7': 'Listing',
   'actionCenter_Token_step8': 'List trade area',
-  'actionCenter_coin_apply': 'Listing application'
+  'actionCenter_coin_apply': 'Listing application',
+
+  'crowd_funding_deposit_record': 'Deposit record',
+  'crowd_funding_coming_soon': 'Coming soon',
+  'crowd_funding_processing': 'Processing',
+  'crowd_funding_over': 'Over',
+  'crowd_funding_title1': 'Treasure',
+  'crowd_funding_title2': 'Deposit for profit, bear market killer',
+  'crowd_funding_start_end_time': 'Start and end time',
+  'crowd_funding_interest_rate': 'Annualized return',
+  'crowd_funding_total': 'Total',
+  'crowd_funding_locked': 'Locked',
+  'crowd_funding_number_of_participants': 'Number of participants',
+  'crowd_funding_time': 'Time',
+  'crowd_funding_project_name': 'Project name',
+  'crowd_funding_way_of_income': 'Way of income',
+  'crowd_funding_deposit_cycle': 'Deposit cycle（day）',
+  'crowd_funding_deposit_quantity': 'Deposit quantity',
+  'crowd_funding_yield_to_maturity': 'Yield to maturity',
+  'crowd_funding_interest_time_unlock_time': 'Interest time/unlock time',
+  'crowd_funding_state': 'State'
 }

@@ -4,36 +4,38 @@
   description: 当前页面为 众筹页面 单个众筹项目 组件
 -->
 <template lang="pug">
-  .the-crowd-funding-item
+  .the-crowd-funding-item(
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+  )
     // 项目详情
     .header
       .h-top
         span.logo(
-          :style="{background: `url(${logo}) no-repeat center center/50px`}"
+          :style="{background: `#1c1f32 url(${logo}) no-repeat center center/50px`}"
         )
         span.title {{projectName}}
       .h-bottom
-        span.start-end {{startEndTimeText}}
+        span.start-end {{$t(startEndTimeText)}}
         span {{applyStartTime | timerFormat1}}~{{applyEndTime | timerFormat1}}
     //  年化收益
     .middle
       h3.interest {{interestRate}} %
-      span.interest {{interestRateText}}
+      span.interest {{$t(interestRateText)}}
       // 分隔符
       span.split
     //  详情
     .desc
       // 总额度
       .total
-        span.label {{totalText}}
+        span.label {{$t(totalText)}}
         span.value {{total |$moneyFilter_F_X}} {{ieoCoinName}}
       //  已锁
       .locked
-        span.label {{lockedText}}
+        span.label {{$t(lockedText)}}
         span.value {{locked |$moneyFilter_F_X}}
       //  参与人数
       .nums
-        span.label {{numsText}}
+        span.label {{$t(numsText)}}
         span.value {{joinUserCount}} {{$t('M.user_invite_people')}}
       // 进度条
       .process
@@ -59,11 +61,16 @@ export default {
   },
   data () {
     return {
-      startEndTimeText: '起止时间',
-      interestRateText: '年化收益率',
-      totalText: '总额度',
-      lockedText: '已锁',
-      numsText: '参与人数'
+      // 起止时间
+      startEndTimeText: 'M.crowd_funding_start_end_time',
+      // 年化收益率
+      interestRateText: 'M.crowd_funding_interest_rate',
+      // 总额度
+      totalText: 'M.crowd_funding_total',
+      // 已锁
+      lockedText: 'M.crowd_funding_locked',
+      // 参与人数
+      numsText: 'M.crowd_funding_number_of_participants'
     }
   },
   // async created () {
@@ -164,7 +171,6 @@ export default {
   @import '../../../../assets/CSS/index.styl'
   .the-crowd-funding-item
     background rgba(21,27,48,1)
-    box-shadow 0 3px 4px 0 #181A29
     border-radius 6px
     >.header
       display flex
@@ -181,7 +187,6 @@ export default {
           width 34px
           height 34px
           border-radius 50%
-          background-color yellow
       >.h-bottom
         display flex
         justify-content space-between
@@ -209,8 +214,6 @@ export default {
         display flex
         justify-content space-between
         line-height 24px
-        >span
-          /*background-color pink*/
         >.label
           color S_font_color
         >.value
@@ -228,4 +231,40 @@ export default {
         &:hover
           background-color S_main_color
           color #fff
+    &.day
+      background-color #fff
+      box-shadow 0 3 5px 0 rgba(214,214,214,1)
+      >.header
+        background-color #f8f9fb
+        >.h-top
+          color S_font_color
+        >.h-bottom
+          color S_font_color
+      >.middle
+        >h3.interest
+          color S_main_color
+        >span.interest
+          color S_font_color
+        >.split
+          height 1px
+          background-color #E6E6EB
+      >.desc
+        >.total,.locked,.nums
+          >.label
+            color #2F363D
+          >.value
+            color #2F363D
+        >.submit
+          width 100%
+          height 44px
+          background #e9ecef
+          border-radius 6px
+          color #657585
+          cursor pointer
+          &.active
+            background-color S_main_color
+            color #fff
+          &:hover
+            background-color S_main_color
+            color #fff
 </style>

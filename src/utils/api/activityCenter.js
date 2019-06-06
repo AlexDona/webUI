@@ -15,3 +15,5 @@ export const getCrowdFundingAJAX = params => handleRequest(() => get('/ieo/ieoLi
 export const getCrowdFundingDetailAJAX = (detailId, params) => handleRequest(() => get(`/ieo/${detailId}`, params))
 // 众筹项目申购
 export const applyCrowdFundingAJAX = params => handleRequest(() => get(`/ieo/apply`, params))
+// 获取存币记录列表
+export const getCrowdFundingRecordAJAX = params => handleRequest(() => get('/ieo/applyRecords', params))

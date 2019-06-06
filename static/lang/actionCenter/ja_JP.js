@@ -14,5 +14,25 @@ export const actionCenter = {
   'actionCenter_Token_step6': 'ニュートークン投票',
   'actionCenter_Token_step7': 'リスト',
   'actionCenter_Token_step8': '取引区にリスト',
-  'actionCenter_coin_apply': 'リスト申請'
+  'actionCenter_coin_apply': 'リスト申請',
+
+  'crowd_funding_deposit_record': 'デポジット記録',
+  'crowd_funding_coming_soon': '未開始',
+  'crowd_funding_processing': '進行中',
+  'crowd_funding_over': '終了した',
+  'crowd_funding_title1': '預ける宝物',
+  'crowd_funding_title2': 'デポジット収益、熊市の切り札',
+  'crowd_funding_start_end_time': '起止時間',
+  'crowd_funding_interest_rate': '年化収益率',
+  'crowd_funding_total': '総額',
+  'crowd_funding_locked': 'ロックした',
+  'crowd_funding_number_of_participants': '参加人数',
+  'crowd_funding_time': '時間',
+  'crowd_funding_project_name': 'プロジェクト名',
+  'crowd_funding_way_of_income': '収益方式',
+  'crowd_funding_deposit_cycle': 'デポジットサイクル（日）',
+  'crowd_funding_deposit_quantity': 'デポジット数',
+  'crowd_funding_yield_to_maturity': '満期の収益',
+  'crowd_funding_interest_time_unlock_time': '利息計算時間/ロック解除時間',
+  'crowd_funding_state': '状態'
 }
