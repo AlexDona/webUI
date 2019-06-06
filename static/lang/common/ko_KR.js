@@ -30,7 +30,7 @@ export const common = {
   'comm_balance': '잔액',
   'comm_price_metre': '가격',
   'comm_total_sum': '합계',
-  'comm_aggregate': '합계',
+  'comm_aggregate': '누적',
   'comm_usable': '사용 가능',
   'comm_should_pay': '당연히 지불 해야 한다',
   'comm_balance_completed1': '남은 수량',

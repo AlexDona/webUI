@@ -30,7 +30,7 @@ export const common = {
   'comm_balance': '余額',
   'comm_price_metre': '價格',
   'comm_total_sum': '總',
-  'comm_aggregate': '總計',
+  'comm_aggregate': '累計',
   'comm_usable': '可用',
   'comm_should_pay': '應付',
   'comm_balance_completed1': '剩余數量',

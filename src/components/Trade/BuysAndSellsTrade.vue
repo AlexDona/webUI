@@ -41,7 +41,7 @@
                   {{ $t('M.comm_count') }}
                   <span class="uppercase">({{$middleTopData_S_X.sellsymbol}})</span>
                 </span><span class="total text-align-r">
-                  <!--总计-->
+                  <!--累计-->
                   {{ $t('M.comm_aggregate') }}
                   <span class="uppercase">({{$middleTopData_S_X.area}})</span>
                 </span>
@@ -82,7 +82,7 @@
                     </span><span class="amount text-align-r">
                       {{$scientificToNumber($cutOutPointLength(item.amount, $middleTopData_S_X.countExchange))}}
                     </span><span class="total text-align-r">
-                      {{$scientificToNumber($cutOutPointLength(item.total, $middleTopData_S_X.priceExchange))}}
+                      {{$scientificToNumber($cutOutPointLength(item.progressiveTotal, $middleTopData_S_X.priceExchange))}}
                     </span><!--宽度条--><i
                         class="color-sell-bg"
                         :style="`width:${item.progressiveTotal/buysAndSellsList.sells.list[0].progressiveTotal * 100}%`"
@@ -114,7 +114,7 @@
                       </span><span class="amount text-align-r">
                         {{$scientificToNumber(item.amount)}}
                       </span><span class="total text-align-r">
-                        {{$scientificToNumber(item.total)}}
+                        {{$scientificToNumber(item.progressiveTotal)}}
                       </span><!--宽度条--><i
                           class="color-buy-bg"
                           :style="`width:${item.progressiveTotal/buysAndSellsList.buys.list[buysAndSellsList.buys.list.length - 1].progressiveTotal * 100}%`"
