@@ -132,12 +132,6 @@
                 <span>{{$t('M.common_fuc_eco')}}</span>
               </router-link>
             </li>
-            <!-- 众筹项目 -->
-            <li class="nav-item">
-              <router-link :to="`${$routes_X.crowdFunding}`">
-                <span>众筹</span>
-              </router-link>
-            </li>
           </ul>
         </div>
         <!--注册登录-->
