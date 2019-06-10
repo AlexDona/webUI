@@ -56,6 +56,7 @@
               'up':$middleTopData_S_X.chg>0,
               'down':$middleTopData_S_X.chg<0
             }"
+            v-show="String($keep2Num($middleTopData_S_X.chg))!='NaN'"
           >{{$keep2Num($middleTopData_S_X.chg)}}%</span>
         </div>
       </div>
