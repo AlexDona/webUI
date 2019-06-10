@@ -20,6 +20,7 @@
         type="text"
         class="input-mention border-radius2 padding-lr15 box-sizing"
         v-model="withdrawRemark"
+        @input="filterSpace"
       >
     </div>
     <div class="recharge-list-left display-flex">
@@ -210,6 +211,10 @@ export default {
   updated () {},
   beforeRouteUpdate () {},
   methods: {
+    // 地址标签输入时过滤空格
+    filterSpace () {
+      this.withdrawRemark = this.withdrawRemark.replace(/\s*/g, '')
+    },
     // 当前提币地址改变回调
     changeWithdrawAddress (e) {
       if (_.every(this.withdrawAddressList, item => item.address !== e)) {
