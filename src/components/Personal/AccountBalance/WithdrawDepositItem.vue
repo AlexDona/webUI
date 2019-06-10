@@ -20,7 +20,6 @@
         type="text"
         class="input-mention border-radius2 padding-lr15 box-sizing"
         v-model="withdrawRemark"
-        :readonly="isReadOnly"
       >
     </div>
     <div class="recharge-list-left display-flex">
@@ -200,9 +199,7 @@ export default {
       //  当前提币地址
       activeWithdrawDepositAddress: '',
       // 地址标签
-      withdrawRemark: '',
-      // 是否只读
-      isReadOnly: true
+      withdrawRemark: ''
     }
   },
   created () {},
@@ -216,13 +213,11 @@ export default {
     // 当前提币地址改变回调
     changeWithdrawAddress (e) {
       if (_.every(this.withdrawAddressList, item => item.address !== e)) {
-        this.isReadOnly = false
         this.$emit('changeWithdrawAddress', {
           activeWithdrawDepositAddress: e,
           activeWithdrawRemark: ''
         })
       } else {
-        this.isReadOnly = true
         _.forEach(this.withdrawAddressList, item => {
           if (item.address === e) {
             this.$emit('changeWithdrawAddress', {
