@@ -177,6 +177,7 @@
               <!-- 数量 -->
               <el-table-column
                 :label="$t('M.comm_count')"
+                width="170"
               >
                 <template slot-scope = "s">
                   <div>
@@ -1102,7 +1103,7 @@ export default {
 
         > .otc-merchant-list {
           position: relative;
-          height: 639px;
+          min-height: 639px;
           margin-top: 30px;
 
           .remark-tips {
