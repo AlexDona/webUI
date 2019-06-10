@@ -1141,6 +1141,7 @@ export default {
     // 2.0 请求交易中订单列表
     async getOTCTradingOrdersList () {
       this.loading = true
+      this.checkedPayRealNameArr = [] // 清空收款人名字
       this.activePayModeList = [] // 清空支付方式数组：防止换页码之后之前选中的在此页面付款方式也被选中的问题
       this.activeBankType = [] // 清空选中的支付方式所展示的付款账户和账号
       this.cancelOrderTimeArr = []
