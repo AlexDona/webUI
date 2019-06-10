@@ -298,6 +298,7 @@
               background
               v-show="onlineBuySellTableList.length"
               layout="prev, pager, next"
+              :current-page="currentPage"
               :page-count="totalPages"
               @current-change="changeCurrentPage"
             >
