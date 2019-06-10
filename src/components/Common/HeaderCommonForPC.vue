@@ -180,7 +180,7 @@
               class="li-item"
               v-if="!isLogin"
             >
-              <router-link to="/login">
+              <router-link :to="`/${$routes_X.login}`">
                 <!--<span>登录</span>-->
                 <span>{{$t('M.comm_login')}}</span>
               </router-link>
@@ -447,6 +447,7 @@ import {getMerchantAvailableLegalTender} from '../../utils/api/OTC'
 import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
 import TheMoreNavsButton from '../Home/TheMoreNavsButton'
+import TheGlobalPayPasswordDialog from '../Common/GlobalPayPassWordDialog'
 import {
   getNestedData
 } from '../../utils/commonFunc'
@@ -465,7 +466,8 @@ import {getNavigationsAJAX} from '../../utils/api/common'
 export default{
   components: {
     IconFontCommon,
-    TheMoreNavsButton
+    TheMoreNavsButton,
+    TheGlobalPayPasswordDialog
   },
   data () {
     return {

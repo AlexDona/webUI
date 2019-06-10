@@ -91,20 +91,18 @@ export default {
       }
       this.isNeedNotice = path === '/home' || path === '/' ? 1 : 0
       this.isNeedHeader = (
-        path !== '/login' &&
+        path !== `/${this.$routes_X.login}` &&
         !path.startsWith('/register') &&
         path !== '/downloadApp' &&
         !path.startsWith('/invitationRegister')
       ) ? 1 : 0
       this.isNeedFooter = (
-        path === '/login' ||
+        path === `/${this.$routes_X.login}` ||
         path.startsWith('/register') ||
         path === '/downloadApp' ||
         path.startsWith('/invitationRegister') ||
         path === '/ForgetPassword'
       ) ? 0 : 1
-      // let isLoginOrRigister = path === '/login' || path === '/register'
-      // document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width, initial-scale=0.3, minimum-scale=${isLoginOrRigister ? '0.3' : '0.1'}, maximum-scale=${isLoginOrRigister ? '0.3' : '1'}, user-scalable=${isLoginOrRigister ? 'no' : 'yes'}`)
       switch (path) {
         case '/register':
           this.setBodyClassName(true, 'register')

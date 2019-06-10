@@ -139,6 +139,7 @@ export default {
 
       > .left {
         width: 320px;
+        min-width: 320px;
         max-width: 320px;
         font-size: 12px;
       }
@@ -165,6 +166,7 @@ export default {
 
       > .right {
         width: 320px;
+        min-width: 320px;
       }
 
       @media screen and (max-width: 2560px) and (min-width: 1921px) {

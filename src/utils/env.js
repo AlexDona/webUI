@@ -18,8 +18,11 @@ let targetConfig = {
 const devTestConfig = {
   apiCommonUrl: 'http://192.168.2.200:8888/',
   // apiCommonUrl: 'http://192.168.2.98:8888/',
-  // apiCommonUrl: 'http://192.168.0.135:8888/',
-  // apiCommonUrl: 'http://192.168.2.52:22224/', // 浩田
+  // apiCommonUrl: 'http://192.168.2.200:8888/',
+  // 艾青
+  // apiCommonUrl: 'http://192.168.2.88:8888/',
+  // 浩田
+  // apiCommonUrl: 'http://192.168.2.52:22224/',
   socketUrl: 'ws://192.168.2.200:8087/market',
   // socketUrl: 'ws://192.168.0.52:8087/market',
   loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/'
@@ -51,7 +54,7 @@ switch (process.env.NODE_ENV) {
     targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
     // 210开发环境
     // targetConfig = {...dev210Config, xDomain: 'me.com'}
-    // 生产环境
+    // 测试环境 （外网）
     // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     // 生产环境
     // targetConfig = {...prodConfig, xDomain: 'fubt.co'}

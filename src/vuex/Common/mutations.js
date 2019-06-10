@@ -19,6 +19,8 @@ import {
   SET_WINDOW_WIDTH,
   SET_NOTICE_ID,
   CHANGE_PASSWORD_USEABLE,
+  UPDATE_PAY_PASSWORD_DIALOG_M,
+  UPDATE_PAY_PASSWORD_M,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH,
   // 增加改变全局存储选中的交易对小数位方法
@@ -164,5 +166,13 @@ export default {
   },
   [CHANGE_PASSWORD_USEABLE] (state, data) {
     state.isLockedPayPassword = data
+  },
+  [UPDATE_PAY_PASSWORD_DIALOG_M] (state, status) {
+    state.isShowGlobalPayPass_S = status
+    if (!status) state.globalPayPassword_S = ''
+    // console.log(status)
+  },
+  [UPDATE_PAY_PASSWORD_M] (state, payPassword) {
+    state.globalPayPassword_S = payPassword
   }
 }

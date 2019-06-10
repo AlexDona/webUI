@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import {routesVariable} from './routesVariable'
 // eslint-disable-next-line
 import storeCreator from '../vuex'
 import routes from './routes'
@@ -20,7 +21,7 @@ const routerCreator = () => {
         store.dispatch('GET_ALL_NOTICE_ACTION', store.state.common.language)
       }
     }
-    if (from.path !== '/login' || from.path !== '/register') {
+    if (from.path !== `/${routesVariable.login}` || from.path !== '/register') {
       store.commit('CHANGE_ROUTER_PATH', from.path)
     }
     if (store.state.user.loginStep1Info.userInfo) {

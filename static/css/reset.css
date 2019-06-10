@@ -176,7 +176,8 @@ hr {
 }
 
 ol,
-ul {
+ul,
+li {
   list-style-type: none;
 }
 

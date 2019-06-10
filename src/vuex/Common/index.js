@@ -101,7 +101,11 @@ const state = {
   clientWidth: 0,
   newsItemId: '',
   // 交易密码是否被锁定
-  isLockedPayPassword: false
+  isLockedPayPassword: false,
+  // 是否全局显示交易密码弹窗
+  isShowGlobalPayPass_S: false,
+  // 全局交易密码
+  globalPayPassword_S: ''
 }
 
 export default {
