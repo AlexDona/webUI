@@ -4,7 +4,9 @@
   description: 当前组件为 全局 交易密码弹窗
 -->
 <template lang="pug">
-  .global-pay-password-dialog
+  .global-pay-password-dialog(
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+  )
     el-dialog(
       title="交易密码"
       :visible="isShowGlobalPayPass_S"
@@ -24,7 +26,7 @@
         prop="payPassword"
         )
           el-input(
-          type="text"
+          type="password"
           v-model="form.payPassword"
           :placeholder="payPasswordPlaceholder"
           :autofocus="true"
@@ -144,6 +146,7 @@ export default {
           font-size 12px
           background-color #1a2233
           border-color #485776
+          color #fff
         .el-form-item
           &.is-success
             .el-input__inner
@@ -163,4 +166,32 @@ export default {
           &.confirm
             background linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%)
             border none
+    &.day
+      /deep/
+        background-color S_day_bg
+        .el-dialog__wrapper
+          background-color rgba(0,0,0,0.5)
+          .el-dialog
+            background-color transparent
+            .el-dialog__header
+              background-color S_day_bg
+              .el-dialog__title
+                color #333
+            .el-dialog__body
+              background-color S_day_bg
+            .el-input__inner
+              background-color S_day_bg
+              border-color #dcdfe6
+              color #333
+            .el-form-item
+              &.is-success
+                .el-input__inner
+                  border-color #485776
+            .el-button--default
+              border 1px solid rgba(51,143,245,1)
+              background-color transparent
+              color #333
+              &.confirm
+                background linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%)
+                color #fff
 </style>

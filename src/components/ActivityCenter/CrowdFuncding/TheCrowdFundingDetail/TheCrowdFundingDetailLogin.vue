@@ -4,16 +4,18 @@
   description: 当前页面为 众筹详情页 已登录模块组件
 -->
 <template lang="pug">
-  .the-crowd-funding-detail-login
+  .the-crowd-funding-detail-login(
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+  )
     .top
       // 可用
       span.usable
-        span.label {{label.usable}}
+        span.label {{$t(label.usable)}}
         span.value  {{ieoCoinBalance}}
         span.coin-name  {{ieoCoinName}}
       //  余额
       span.usable.balance
-        span.label {{label.balance}}
+        span.label {{$t(label.balance)}}
         span.value  {{holdCoinBalance}}
         span.coin-name  {{holdCoinName}}
     .middle
@@ -31,7 +33,7 @@
           el-input(
           type="text"
           v-model="form.buyCount"
-          :placeholder="buyCountPlaceholder"
+          :placeholder="$t(crowd_funding_error5)"
           :autofocus="true"
           @keyup.native="formatInput"
           @input.native="formatInput"
@@ -42,7 +44,7 @@
                 :disabled ="statusCode!=='ongoing'"
               ) {{buttonText}}
     .bottom
-      span.predict {{predictText}}
+      span.predict {{$t(predictText)}}
       span.placeholder(v-if="!predict") --
       span.predict(v-else) {{predict}}
       span {{ieoCoinName}}
@@ -67,11 +69,17 @@ export default {
   data () {
     let validateBuyCount = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error(`${this.buyCountPlaceholder}`))
+        callback(new Error(`${this.$t(this.crowd_funding_error5)}`))
+      } else if (value - this.buyDownLimit < 0) {
+        // 小于起购限额
+        callback(new Error(`${this.$t(this.crowd_funding_error1)}：${this.buyDownLimit} ${this.ieoCoinName}`))
+      } else if (value - this.buyUpLimit > 0) {
+        // 高于最高限额
+        callback(new Error(`${this.$t(this.crowd_funding_error2)}：${this.buyUpLimit} ${this.ieoCoinName}`))
       } else if (this.ieoCoinBalance - value < 0) {
-        callback(new Error(`可用不足，请重新输入`))
+        callback(new Error(`${this.$t(this.crowd_funding_error3)}`))
       } else if (this.holdCoinBalance - this.holdCoinAmount < 0) {
-        callback(new Error(`可用不足，请重新输入111`))
+        callback(new Error(`${this.$t(this.crowd_funding_error4)}`))
       }
       callback()
     }
@@ -88,10 +96,19 @@ export default {
         ]
       },
       buyCountPlaceholder: '请输入申购数量',
-      predictText: '预计收益',
+      // 预计收益
+      predictText: 'M.crowd_funding_expected_return',
+      crowd_funding_error1: 'M.crowd_funding_error1',
+      crowd_funding_error2: 'M.crowd_funding_error2',
+      crowd_funding_error3: 'M.crowd_funding_error3',
+      crowd_funding_error4: 'M.crowd_funding_error4',
+      crowd_funding_error5: 'M.crowd_funding_error5',
       // 预计收益
       predict: '',
-      ONE_YEAR: 365
+      ONE_YEAR: 365,
+      timer: null,
+      // 按钮文字
+      buttonText: ''
     }
   },
   async created () {
@@ -100,7 +117,9 @@ export default {
   // mounted () {}
   // updated () {},
   // beforeRouteUpdate () {},
-  // beforeDestroy () {},
+  beforeDestroy () {
+    clearTimeout(this.timer)
+  },
   // destroyed () {},
   methods: {
     /**
@@ -163,6 +182,21 @@ export default {
       const data = await applyCrowdFundingAJAX(params)
       if (!data) return false
       // console.log(data)
+      this.timer = setTimeout(() => {
+        this.$goToPage(`/${this.$routes_X.crowdFunding}`)
+      }, 2000)
+    },
+    updateButtonText () {
+      const status = ['coming', 'ongoing', 'ended']
+      const statusMap = {
+        // 即将开始
+        [status[0]]: 'M.trade_start',
+        // 立即申购
+        [status[1]]: 'M.crowd_funding_buy_now',
+        // 已结束
+        [status[2]]: 'M.crowd_funding_over'
+      }
+      this.buttonText = this.$t(statusMap[this.statusCode])
     }
   },
   // filters: {},
@@ -170,18 +204,6 @@ export default {
     ...mapState({
       $userInfo_X: state => state.user.loginStep1Info.userInfo
     }),
-    buttonText () {
-      let target = ''
-      const status = ['coming', 'ongoing', 'sell_out', 'ended']
-      const statusMap = {
-        [status[0]]: '即将开始',
-        [status[1]]: '立即申购',
-        [status[2]]: '已满额',
-        [status[3]]: '已结束'
-      }
-      target = statusMap[this.statusCode]
-      return target
-    },
     ieoCoinName () {
       return _.get(this.detail, 'ieoCoinName')
     },
@@ -192,6 +214,14 @@ export default {
     // 需持币金额
     holdCoinAmount () {
       return _.get(this.detail, 'holdCoinAmount')
+    },
+    // 起购金额
+    buyDownLimit () {
+      return _.get(this.detail, 'buyDownLimit')
+    },
+    // 最高限额
+    buyUpLimit () {
+      return _.get(this.detail, 'buyUpLimit')
     },
     // 最低持仓币种
     holdCoinName () {
@@ -220,8 +250,17 @@ export default {
     detailId () {
       return _.get(this.detail, 'id')
     }
+  },
+  watch: {
+    $language_S_X () {
+      this.updateButtonText()
+      console.log(this.buttonText)
+    },
+    detail (New) {
+      console.log(New)
+      this.updateButtonText()
+    }
   }
-  // watch: {}
 }
 </script>
 
@@ -263,4 +302,29 @@ export default {
         margin 0 2px
       >.placeholder
         font-size 20px
+    &.day
+      >.top
+        >.usable
+          color #2F363D
+        >.balance
+          color #2F363D
+      >.middle
+        /deep/
+          .el-input__inner
+            background-color #fff
+            border 1px solid S_main_color
+          .el-input-group__append,.el-button--default
+            border none
+          .el-input-group__append
+            background-color transparent
+          .el-button--default
+            background-color S_main_color
+            border 1px solid S_main_color
+            border-left none
+            color #fff
+            &.is-disabled
+              background-color #ededed
+              color #2F363D
+      >.bottom
+        color S_main_color
 </style>

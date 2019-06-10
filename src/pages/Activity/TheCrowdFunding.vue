@@ -119,6 +119,7 @@ export default {
 <style lang="stylus">
   @import '../../assets/CSS/index.styl'
   .crowd-funding
+    padding-bottom 100px
     > .inner-box
       > .banner
         margin-top 50px
@@ -138,8 +139,9 @@ export default {
             color #fff
       > .container
         width S_main_content_width
-        margin -107px auto 100px
+        margin -107px auto 0
         min-height 1000px
+        position relative
         > .header
           height 70px
           line-height 70px
@@ -168,14 +170,14 @@ export default {
           padding 50px
           box-sizing border-box
           flex-wrap wrap
-          justify-content space-between
+          /*justify-content space-between*/
           min-height 1000px
           > .crowd-funding-item
             width 384px
             min-width 384px
             height 420px
             background-color #151b30
-            margin-bottom 50px
+            margin 0 8px 50px 8px
             border-radius 6px
           >.no-data
             width 100%
@@ -198,7 +200,7 @@ export default {
             background-color #e7eefc
             > .left
               > .tab
-                color S_font_color
+                color #2F363D
                 &.active
                   color S_main_color
                   border-bottom 2px solid S_main_color
@@ -207,6 +209,7 @@ export default {
                 color S_main_color
           > .content
             background-color #fff
+            box-shadow 0 2px 2px 0 rgba(225,225,225,1)
             > .crowd-funding-item
               background-color #fff
               box-shadow 0 3px 5px 0 rgba(214,214,214,1)

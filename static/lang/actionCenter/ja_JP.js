@@ -20,6 +20,7 @@ export const actionCenter = {
   'crowd_funding_coming_soon': '未開始',
   'crowd_funding_processing': '進行中',
   'crowd_funding_over': '終了した',
+  'crowd_funding_buy_now': 'すぐ購入',
   'crowd_funding_title1': '預ける宝物',
   'crowd_funding_title2': 'デポジット収益、熊市の切り札',
   'crowd_funding_start_end_time': '起止時間',
@@ -34,5 +35,27 @@ export const actionCenter = {
   'crowd_funding_deposit_quantity': 'デポジット数',
   'crowd_funding_yield_to_maturity': '満期の収益',
   'crowd_funding_interest_time_unlock_time': '利息計算時間/ロック解除時間',
-  'crowd_funding_state': '状態'
+  'crowd_funding_state': '状態',
+
+  'crowd_funding_surplus': '残存額',
+  'crowd_funding_single_limit': 'シングルリミット',
+  'crowd_funding_purchase_quantity': '買い付け高',
+  'crowd_funding_return_method': '戻り方法',
+  'crowd_funding_minimum_position': '最低ポジション',
+  'crowd_funding_minimum_deadline': '締切時間',
+  'crowd_funding_interest_time': '利息計算時間',
+  'crowd_funding_expire_date': '締切時間',
+  'crowd_funding_expire_current_State': '現在の状態',
+
+  'crowd_funding_expire_purplus1': 'バランス',
+  'crowd_funding_description_title': 'プロジェクト紹介',
+  'crowd_funding_rules_title': 'プロジェクトルール',
+  'crowd_funding_question_title': 'FAQ',
+  'crowd_funding_error1': '最小デポジット',
+  'crowd_funding_error2': '最大デポジット',
+  'crowd_funding_error3': '残高が足りない',
+  'crowd_funding_error4': '最低手持ち不足',
+  'crowd_funding_error5': '申し込み数量を入力',
+  'crowd_funding_expected_return': '予想収益'
+
 }

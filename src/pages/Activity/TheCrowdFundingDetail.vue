@@ -4,9 +4,15 @@
   description: 当前页面为 众筹页面详情页
 -->
 <template lang="pug">
-  .the-crowd-funding-detail
+  .the-crowd-funding-detail(
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+  )
     .inner-box
-      h3.title {{projectName}}
+      .title-container
+        .left
+          h3.title {{projectName}}
+        .right
+          TheCrowdFundingGoBack
       .detail
         TheCrowdFundingDetailLeft.left(
           :detail="detail"
@@ -18,18 +24,36 @@
           :label="label"
         )
       .description
+        TheCrowdFundingRichText(
+          :title="$t(label.descriptionTitle)"
+          :content ="descriptionContent"
+        )
       .rules
+        TheCrowdFundingRichText(
+        :title="$t(label.rulesTitle)"
+        :content ="rulesContent"
+        )
+      .FAQ
+        TheCrowdFundingRichText(
+        :title="$t(label.FAQTitle)"
+        :content ="FAQContent"
+        )
 </template>
 <script>
 import {getCrowdFundingDetailAJAX} from '../../utils/api/activityCenter'
 import TheCrowdFundingDetailLeft from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingItemDetailLeft'
 import TheCrowdFundingDetailRight from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingItemDetailRight'
+import TheCrowdFundingRichText from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingRichText'
+import TheCrowdFundingGoBack from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingGoBack'
 export default {
   name: 'the-crowd-funding-detail',
   // mixins: [],
   components: {
     TheCrowdFundingDetailLeft,
-    TheCrowdFundingDetailRight
+    TheCrowdFundingDetailRight,
+    TheCrowdFundingRichText,
+    // Iconfont,
+    TheCrowdFundingGoBack
   },
   props: {
     detailId: {
@@ -39,21 +63,34 @@ export default {
   data () {
     return {
       detail: {},
+      title1: 'M.crowd_funding_title1',
       label: {
-        total: '总额度',
-        ieoRemained: '剩余额度',
-        limit: '单人限额',
-        buyDownLimit: '起购量',
-        interestReturnWay: '返息方式',
-        holdCoinAmount: '最低持仓',
-        applyEndTime: '截止时间',
-        interestStartTime: '计息时间',
-        interestEndTime: '到期时间',
-        interestRate: '年化收益率',
-        status: '当前状态',
-        joinUserCount: '参与人数',
-        usable: '可用',
-        balance: '余额'
+        total: 'M.crowd_funding_total',
+        // 剩余额度
+        ieoRemained: 'M.crowd_funding_surplus',
+        // 单人限额
+        limit: 'M.crowd_funding_single_limit',
+        // 起购量
+        buyDownLimit: 'M.crowd_funding_purchase_quantity',
+        // 返息方式
+        interestReturnWay: 'M.crowd_funding_return_method',
+        // 最低持仓
+        holdCoinAmount: 'M.crowd_funding_minimum_position',
+        // 截止时间
+        applyEndTime: 'M.crowd_funding_minimum_deadline',
+        // 计息时间
+        interestStartTime: 'M.crowd_funding_interest_time',
+        // 到期时间
+        interestEndTime: 'M.crowd_funding_expire_date',
+        interestRate: 'M.crowd_funding_interest_rate',
+        // 当前状态
+        status: 'M.crowd_funding_expire_current_State',
+        joinUserCount: 'M.crowd_funding_number_of_participants',
+        usable: 'M.comm_usable',
+        balance: 'M.crowd_funding_expire_purplus1',
+        descriptionTitle: 'M.crowd_funding_description_title',
+        rulesTitle: 'M.crowd_funding_rules_title',
+        FAQTitle: 'M.crowd_funding_question_title'
       }
     }
   },
@@ -168,6 +205,17 @@ export default {
      statusName
      true string
      */
+    descriptionContent () {
+      return _.get(this.detail, 'projectDesc')
+    },
+    // 常见问题
+    FAQContent () {
+      return _.get(this.detail, 'questions')
+    },
+    // 项目规则
+    rulesContent () {
+      return _.get(this.detail, 'projectDetail')
+    },
     ieoTotal () {
       return _.get(this.detail, 'ieoTotal')
     },
@@ -219,24 +267,33 @@ export default {
     joinUserCount () {
       return _.get(this.detail, 'joinUserCount')
     }
+  },
+  watch: {
+    $language_S_X () {
+      this.getCrowdFundingDetail()
+    }
   }
-  // watch: {}
 }
 </script>
 
 <style scoped lang="stylus">
   @import '../../assets/CSS/index.styl'
   .the-crowd-funding-detail
+    padding-bottom 100px
     .inner-box
       width S_main_content_width
-      margin 70px auto 0
+      margin 50px auto 0
       height 1000px
       color S_font_color
       font-size 12px
-      >.title
-        font-size 30px
+      .title-container
+        display flex
+        justify-content space-between
         line-height 80px
         color S_main_color
+        >.left
+          >.title
+            font-size 30px
       >.detail
         display flex
         height 320px
@@ -254,4 +311,19 @@ export default {
           margin 0 40px
         .right
           flex 3
+    &.day
+      background-color: #f5f5fa
+      .inner-box
+        color S_font_color
+        >.title
+          color S_main_color
+        >.detail
+          background-color #fff
+          box-shadow 0 4px 6px 0 rgba(214,215,217,1)
+          >.left
+            flex 2
+          .split
+            background url('../../assets/images/crowd-funding-split-bg.png') no-repeat center center
+          .right
+            flex 3
 </style>

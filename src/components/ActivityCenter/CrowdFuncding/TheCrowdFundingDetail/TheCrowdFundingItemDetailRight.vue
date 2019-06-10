@@ -4,20 +4,22 @@
   description: 当前页面为 众筹页面 详情页 右侧 当前众筹项目详情
 -->
 <template lang="pug">
-  .the-crowd-funding-item-detail-right
+  .the-crowd-funding-item-detail-right(
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+  )
     .top
       .left
         // 年化收益率
         span.value {{interestRate}}%
-        span.label {{label.interestRate}}
+        span.label {{$t(label.interestRate)}}
       .center.text-align-c
         // 当前状态
         span.value {{statusName}}
-        span.label {{label.status}}
+        span.label {{$t(label.status)}}
       .right
         // 参与人数
         span.value {{joinUserCount}} {{$t('M.user_invite_people')}}
-        span.label {{label.joinUserCount}}
+        span.label {{$t(label.joinUserCount)}}
     .bottom
       // 未登录
       .un-login(v-if="!$isLogin_S_X")
@@ -153,4 +155,33 @@ export default {
           &:hover
             background-color S_main_color
             color #fff
+    &.day
+      > .top
+        > div
+          >span
+          > .value
+            color S_error_color
+          > .label
+            font-size 12px
+            color #2F363D
+        > .left
+          background-color tranparent
+        > .center
+          background-color tranparent
+        > .right
+          background-color tranparent
+      > .bottom
+        >.un-login
+          .login
+            display inline-block
+            width 100%
+            height 50px
+            line-height 50px
+            background-color #eff1f3
+            color S_main_color
+            text-align center
+            font-size 14px
+            &:hover
+              background-color S_main_color
+              color #fff
 </style>

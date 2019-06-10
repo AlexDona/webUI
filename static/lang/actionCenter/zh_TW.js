@@ -20,6 +20,7 @@ export const actionCenter = {
   'crowd_funding_coming_soon': '未開始',
   'crowd_funding_processing': '進行中',
   'crowd_funding_over': '已結束',
+  'crowd_funding_buy_now': '立即申購',
   'crowd_funding_title1': '存幣寶',
   'crowd_funding_title2': '存幣享收益，熊市大殺器',
   'crowd_funding_start_end_time': '起止時間',
@@ -34,5 +35,26 @@ export const actionCenter = {
   'crowd_funding_deposit_quantity': '存幣數量',
   'crowd_funding_yield_to_maturity': '到期收益',
   'crowd_funding_interest_time_unlock_time': '計息時間/解鎖時間',
-  'crowd_funding_state': '狀態'
+  'crowd_funding_state': '狀態',
+
+  'crowd_funding_surplus': '剩餘額度',
+  'crowd_funding_single_limit': '單人限額',
+  'crowd_funding_purchase_quantity': '起購量',
+  'crowd_funding_return_method': '返息方式',
+  'crowd_funding_minimum_position': '最低持倉',
+  'crowd_funding_minimum_deadline': '截止時間',
+  'crowd_funding_interest_time': '計息時間',
+  'crowd_funding_expire_date': '到期時間',
+  'crowd_funding_expire_current_State': '當前狀態',
+
+  'crowd_funding_expire_purplus1': '餘額',
+  'crowd_funding_description_title': '項目介紹',
+  'crowd_funding_rules_title': '項目規則',
+  'crowd_funding_question_title': '常見問題',
+  'crowd_funding_error1': '最小起存量為',
+  'crowd_funding_error2': '最大存幣量為',
+  'crowd_funding_error3': '餘額不足',
+  'crowd_funding_error4': '最低持倉不足',
+  'crowd_funding_error5': '請輸入申購數量',
+  'crowd_funding_expected_return': '預計收益'
 }

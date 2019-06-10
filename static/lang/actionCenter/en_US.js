@@ -20,6 +20,7 @@ export const actionCenter = {
   'crowd_funding_coming_soon': 'Coming soon',
   'crowd_funding_processing': 'Processing',
   'crowd_funding_over': 'Over',
+  'crowd_funding_buy_now': 'Buy now',
   'crowd_funding_title1': 'Treasure',
   'crowd_funding_title2': 'Deposit for profit, bear market killer',
   'crowd_funding_start_end_time': 'Start and end time',
@@ -34,5 +35,26 @@ export const actionCenter = {
   'crowd_funding_deposit_quantity': 'Deposit quantity',
   'crowd_funding_yield_to_maturity': 'Yield to maturity',
   'crowd_funding_interest_time_unlock_time': 'Interest time/unlock time',
-  'crowd_funding_state': 'State'
+  'crowd_funding_state': 'State',
+
+  'crowd_funding_surplus': 'Surplus',
+  'crowd_funding_single_limit': 'Single limit',
+  'crowd_funding_purchase_quantity': 'Purchase quantity',
+  'crowd_funding_return_method': 'Return method',
+  'crowd_funding_minimum_position': 'Minimum position',
+  'crowd_funding_minimum_deadline': 'Deadline',
+  'crowd_funding_interest_time': 'Interest time',
+  'crowd_funding_expire_date': 'Expire date',
+  'crowd_funding_expire_current_State': 'State',
+
+  'crowd_funding_expire_purplus1': 'balance',
+  'crowd_funding_description_title': 'Project Introduction',
+  'crowd_funding_rules_title': 'Project Rules',
+  'crowd_funding_question_title': 'FAQ',
+  'crowd_funding_error1': 'Minimum deposit',
+  'crowd_funding_error2': 'Maximum deposit',
+  'crowd_funding_error3': 'Lack of balance',
+  'crowd_funding_error4': 'Insufficient minimum deposit',
+  'crowd_funding_error5': 'Enter the purchase amount',
+  'crowd_funding_expected_return': 'Expected return'
 }

@@ -4,8 +4,9 @@
   description: 当前页面为 众筹页面 单个众筹项目 组件
 -->
 <template lang="pug">
-  .the-crowd-funding-item(
+  .the-crowd-funding-item.cursor-pointer(
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+    @click="buyNow"
   )
     // 项目详情
     .header
@@ -132,7 +133,6 @@ export default {
       /**
        * coming("coming", "即将开始"),
        * ongoing("ongoing", "进行中"),
-       * sell_out("sell_out", "已满额"),
        * ended("ended", "已结束");
        */
       return _.get(this.crowdFunding, 'statusName')
@@ -228,9 +228,6 @@ export default {
         &.active
           background-color #1d2440
           color S_main_color
-        &:hover
-          background-color S_main_color
-          color #fff
     &.day
       background-color #fff
       box-shadow 0 3 5px 0 rgba(214,214,214,1)
@@ -238,6 +235,8 @@ export default {
         background-color #f8f9fb
         >.h-top
           color S_font_color
+          >.title
+            color #2F363D
         >.h-bottom
           color S_font_color
       >.middle
@@ -262,9 +261,6 @@ export default {
           color #657585
           cursor pointer
           &.active
-            background-color S_main_color
-            color #fff
-          &:hover
             background-color S_main_color
             color #fff
 </style>

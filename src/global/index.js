@@ -5,4 +5,6 @@
  */
 import Vue from 'vue'
 import PayPassDialog from '../components/Common/GlobalPayPassWordDialog.vue'
+import Iconfont from '../components/Common/IconFontCommon.vue'
 Vue.component('PayPassDialog', PayPassDialog)
+Vue.component('Iconfont', Iconfont)

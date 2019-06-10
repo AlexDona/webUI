@@ -20,6 +20,7 @@ export const actionCenter = {
   'crowd_funding_coming_soon': '시작',
   'crowd_funding_processing': '진행 중',
   'crowd_funding_over': '종료',
+  'crowd_funding_buy_now': '즉시 구입하다.',
   'crowd_funding_title1': '코인보관함',
   'crowd_funding_title2': '화폐 향유 수익, 판시 대살기',
   'crowd_funding_start_end_time': '시작 시간',
@@ -34,5 +35,26 @@ export const actionCenter = {
   'crowd_funding_deposit_quantity': '예금 수량',
   'crowd_funding_yield_to_maturity': '만기 수익',
   'crowd_funding_interest_time_unlock_time': '잠금 시간 / 해체 시간',
-  'crowd_funding_state': '상태'
+  'crowd_funding_state': '상태',
+
+  'crowd_funding_surplus': '잉여 한도',
+  'crowd_funding_single_limit': '1인 한도액',
+  'crowd_funding_purchase_quantity': '구입량',
+  'crowd_funding_return_method': '이자를 되돌리는 방식',
+  'crowd_funding_minimum_position': '최저 창고 소지',
+  'crowd_funding_minimum_deadline': '마감 시간',
+  'crowd_funding_interest_time': '이자 시간',
+  'crowd_funding_expire_date': '만기 시간',
+  'crowd_funding_expire_current_State': '현재 상태',
+
+  'crowd_funding_expire_purplus1': '잔액',
+  'crowd_funding_description_title': '프로젝트 소개',
+  'crowd_funding_rules_title': '프로젝트 규칙',
+  'crowd_funding_question_title': '흔한 문제',
+  'crowd_funding_error1': '최소 크기',
+  'crowd_funding_error2': '최대 저축 금액',
+  'crowd_funding_error3': '잔액이 부족하다',
+  'crowd_funding_error4': '최저 창고 소지 부족',
+  'crowd_funding_error5': '구매 수량을 입력하십시오',
+  'crowd_funding_expected_return': '예상 수익'
 }

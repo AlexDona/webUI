@@ -20,6 +20,7 @@ export const actionCenter = {
   'crowd_funding_coming_soon': 'Chưa bắt đầu',
   'crowd_funding_processing': 'Đang tiến hành',
   'crowd_funding_over': 'Đã kết thúc',
+  'crowd_funding_buy_now': 'Mua ngay ',
   'crowd_funding_title1': 'Tiết kiệm tiền bảo',
   'crowd_funding_title2': 'Thu nhập tiền gửi, Sát khí thị trường gấu',
   'crowd_funding_start_end_time': 'Bắt đầu và kết thúc',
@@ -34,5 +35,26 @@ export const actionCenter = {
   'crowd_funding_deposit_quantity': 'Số tiền gửi',
   'crowd_funding_yield_to_maturity': 'Thu nhập cuối kì',
   'crowd_funding_interest_time_unlock_time': 'Thời gian lãi/ thời gian mở khóa',
-  'crowd_funding_state': 'Trạng thái'
+  'crowd_funding_state': 'Trạng thái',
+
+  'crowd_funding_surplus': 'Số dư',
+  'crowd_funding_single_limit': 'Giới hạn đơn',
+  'crowd_funding_purchase_quantity': 'Lượng mua',
+  'crowd_funding_return_method': 'Cách hoàn lãi',
+  'crowd_funding_minimum_position': 'Vị trí thấp nhất',
+  'crowd_funding_minimum_deadline': 'Hạn chót',
+  'crowd_funding_interest_time': 'Thời gian lãi',
+  'crowd_funding_expire_date': 'Thời hạn',
+  'crowd_funding_expire_current_State': 'Hiện trạng',
+
+  'crowd_funding_expire_purplus1': 'Số dư',
+  'crowd_funding_description_title': 'Dự án giới thiệu.',
+  'crowd_funding_rules_title': 'Dự án luật',
+  'crowd_funding_question_title': 'Vấn đề thông thường.',
+  'crowd_funding_error1': 'Kể từ tối thiểu',
+  'crowd_funding_error2': 'Trữ lượng tiền rất lớn nhất là',
+  'crowd_funding_error3': 'Số dư thiếu',
+  'crowd_funding_error4': 'Thiếu tối thiểu.',
+  'crowd_funding_error5': 'Hãy nhập vào một số',
+  'crowd_funding_expected_return': 'Lợi nhuận dự tính'
 }

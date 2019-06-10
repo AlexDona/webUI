@@ -5,25 +5,34 @@
 -->
 <template lang="pug">
   .crowd-funding(
-  :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   )
     .inner-box
       .banner
+        .inner-box
+          h3 {{$t(title1)}}
+          p {{$t(title2)}}
       .container
-        .header 存币记录
+        // 存币记录
+        .header
+          .left {{$t('M.crowd_funding_deposit_record')}}
+          .right
+            TheCrowdFundingGoBack
         .content
           el-table(
           :data="dataList"
           :empty-text="$t('M.comm_no_data')"
           )
             el-table-column(
-            :label="$t(tableHeader[0])"
-            :width= "150"
-            prop="time"
+              :label="$t(tableHeader[0])"
+              prop="time"
+              width="90"
             )
+              template(slot-scope="s")
+                p {{s.row.time | timerFormat1_F_X('date')}}
+                p {{s.row.time | timerFormat1_F_X('time')}}
             el-table-column(
             :label="$t(tableHeader[1])"
-            :width= "180"
             prop="name"
             )
             el-table-column(
@@ -39,21 +48,22 @@
             prop="interestPeriod"
             )
             el-table-column(
-            :label="$t(tableHeader[5])"
-            prop="amount"
+              :label="$t(tableHeader[5])"
+              prop="amount"
+              width="90"
             )
             el-table-column(
             :label="$t(tableHeader[6])"
             prop="interestExpected"
             )
             el-table-column(
-            :label="$t(tableHeader[7])"
-            :width= "180"
-            prop="timeSpace"
+              :label="$t(tableHeader[7])"
+              prop="timeSpace"
             )
             el-table-column(
-            :label="$t(tableHeader[8])"
-            prop="status"
+              :label="$t(tableHeader[8])"
+              prop="status"
+              width="90"
             )
         el-pagination(
         background
@@ -67,8 +77,13 @@
 import {mapState} from 'vuex'
 import { timeFilter } from '../../utils'
 import {getCrowdFundingRecordAJAX} from '../../utils/api/activityCenter'
+import mixins from '../../mixins/crowdFunding'
+import TheCrowdFundingGoBack from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingGoBack'
 export default {
-  components: {},
+  components: {
+    TheCrowdFundingGoBack
+  },
+  mixins: [mixins],
   // props,
   data () {
     return {
@@ -101,7 +116,9 @@ export default {
       // 网站当前语言
       currentLanguage: '',
       // 总页数
-      totalPage: ''
+      totalPage: '',
+      title1: 'M.crowd_funding_title1',
+      title2: 'M.crowd_funding_title2'
     }
   },
   async created () {
@@ -161,6 +178,7 @@ export default {
     language (newVal) {
       console.log(newVal)
       this.currentLanguage = newVal
+      this.getCrowdFundingRecord()
     }
   }
 }
@@ -168,15 +186,30 @@ export default {
 <style lang="stylus">
   @import '../../assets/CSS/index.styl'
   .crowd-funding
+    padding-bottom 100px
     > .inner-box
       > .banner
-        height 600px
+        height 400px
         background url('../../assets/images/crowd-funding-bg.png') no-repeat center center / cover
+        position relative
+        >.inner-box
+          position absolute
+          left 30%
+          top 30%
+          >h3
+            font-size 44px
+            color #fff
+            line-height 80px
+          >p
+            font-size 30px
+            color #fff
       > .container
         width S_main_content_width
-        margin -200px auto 0
+        margin -107px auto 0
         background-color #1C1F32
-        min-height 1000px
+        min-height 1050px
+        position relative
+        padding-bottom 30px
         > .header
           height 70px
           line-height 70px
@@ -184,18 +217,68 @@ export default {
           padding-left 49px
           background-color #282c49
           color S_main_color
+          /deep/
+            .el-breadcrumb
+              line-height 70px
+              .el-breadcrumb__inner
+                color S_font_color
+              .is-link
+                color S_main_color
+                font-weight 400
         > .content
           box-sizing border-box
-          padding 30px
-    /deep/
-       .el-table th, .el-table tr
+          padding 0 20px
+          min-height 1050px
+      /deep/
+        .el-table, .el-table__body-wrapper
+          background-color #1c1f32 !important
+        .el-table th, .el-table tr
          background-color #1C1F32
-       .el-table td, .el-table th.is-leaf
+        .el-table td, .el-table th.is-leaf
          border none
-       .el-table th>.cell
+        .el-table th
+          border-bottom 1px solid #313857 !important
+        .el-table th>.cell
+          font-size 12px
           color #949BB6
-       .el-table--enable-row-hover,.el-table__body tr:hover>td
-         background-color #242840
-       .el-table__body tr td
-         color #fff
+        .el-table__body tr:hover>td
+          background-color #242840
+        .el-table__body tr td
+          color #fff
+          font-size 12px
+    &.day
+      > .inner-box
+        > .banner
+          margin-top 50px
+          height 400px
+          background url('../../assets/images/crowd-funding-bg.png') no-repeat center center / cover
+        > .container
+          width S_main_content_width
+          margin -107px auto 0
+          background-color #1C1F32
+          min-height 1000px
+          > .header
+            height 70px
+            line-height 70px
+            box-sizing border-box
+            padding-left 49px
+            background-color #e7eefc
+            color S_main_color
+          > .content
+            box-sizing border-box
+            padding 0 20px
+      /deep/
+        .el-table
+          background-color #fff !important
+          tr,th,.el-table__empty-block
+            background-color #fff
+          th
+            border-bottom 1px solid #D6D7D9 !important
+          td
+            color #333 !important
+          .el-table__body
+            tr
+              &:hover
+                >td
+                    background-color #f3f6fd
 </style>
