@@ -102,7 +102,9 @@ let mixin = {
       // 是否显示交易密码弹窗
       $isShowGlobalPayPass_S_X: state => state.common.isShowGlobalPayPass_S,
       // 全局交易密码
-      $globalPayPassword_S_X: state => state.common.globalPayPassword_S
+      $globalPayPassword_S_X: state => state.common.globalPayPassword_S,
+      // VIP是否禁用
+      $isVIPEnable_S_X: state => state.common.footerInfo.configInfo.vipEnabled
     }),
     $activeBuyName_X () {
       return (this.$middleTopData_S_X.area || '').toUpperCase()

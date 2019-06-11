@@ -221,6 +221,7 @@ export default {
     }
   },
   async created () {
+    if (!this.$isVIPEnable_S_X) this.$goToPage(`/home`)
     if (this.vipLevel) {
       this.activeStatus = this.vipLevel.split('')[3]
     }
