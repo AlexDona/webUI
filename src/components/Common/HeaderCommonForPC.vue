@@ -208,8 +208,15 @@
                   <span class="username">
                     {{userInfo.userName}}
                   </span>
-                  <div class="login-info">
-                    <div class="sub-nav-user">
+                  <div
+                    class="login-info"
+                    :class="{'has-vip':$isVIPEnable_S_X}"
+                  >
+                    <!-- VIP 信息 -->
+                    <div
+                      class="sub-nav-user"
+                      v-if="$isVIPEnable_S_X"
+                    >
                       <p class="nav-vip">
                         <!--VIP享手续费、提现优惠-->
                         {{$t('M.user_vip_text8')}}
@@ -1326,8 +1333,12 @@ export default{
               }
 
               &:hover .login-info {
-                height: 450px;
+                height: 330px;
                 transition: .5s;
+
+                &.has-vip {
+                  height: 450px;
+                }
               }
             }
 

@@ -357,7 +357,8 @@ export default {
     }
   },
   async created () {
-    console.log(this.vipAction)
+    if (!this.$isVIPEnable_S_X) this.$goToPage(`/home`)
+    // console.log(this.vipAction)
     if (this.vipLevel) {
       this.activeStatus = this.vipLevel.split('')[3] - 0
     }
@@ -374,8 +375,8 @@ export default {
     await this.REFRESH_USER_INFO_ACTION()
     await this.getVipPriceInfo()
     await this.getCurrencyApplicationDownloadUrl()
-    console.log(this.VipPriceInfoList)
-    console.log(this.vipName)
+    // console.log(this.VipPriceInfoList)
+    // console.log(this.vipName)
   },
   mounted () {},
   activated () {},
