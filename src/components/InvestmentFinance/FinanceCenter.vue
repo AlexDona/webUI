@@ -560,8 +560,9 @@
                   >
                     <!-- 活期 -->
                     <template slot-scope = "s">
+                      <!--状态是活期没取消且不是违约结算才显示取消按钮-->
                       <div
-                        v-if="s.row.financialState == 'CURRENT' && s.row.state != 'CANCEL'"
+                        v-if="s.row.financialState == 'CURRENT' && s.row.state != 'CANCEL' && s.row.state != 'DEFAULT_CLEARING'"
                         class="blue cancelBtn"
                         @click="cancelInvest(s.row.id)"
                       >
