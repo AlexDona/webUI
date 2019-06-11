@@ -161,7 +161,7 @@
                   >
                     <template slot-scope = "s">
                       <div
-                        v-if="s.row.financialState === 'CURRENT' && s.row.state !== 'CANCEL'"
+                        v-if="s.row.financialState === 'CURRENT' && s.row.state !== 'CANCEL' && s.row.state != 'DEFAULT_CLEARING'"
                         class="blue cancelBtn"
                         @click="cancelInvest(s.row.id)"
                       >
