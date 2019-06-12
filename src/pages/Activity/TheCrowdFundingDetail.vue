@@ -25,6 +25,7 @@
         )
       .description
         TheCrowdFundingRichText(
+          :isRichText="false"
           :title="$t(label.descriptionTitle)"
           :content ="descriptionContent"
         )

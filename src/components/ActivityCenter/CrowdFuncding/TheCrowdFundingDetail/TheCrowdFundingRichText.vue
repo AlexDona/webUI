@@ -9,7 +9,13 @@
   )
     h3.title {{title}}
     .split
-    .content(v-html="content")
+    .content(
+      v-html="content"
+      v-if="isRichTxt"
+    )
+    .content(
+      v-else
+    ) {{content}}
 </template>
 <script>
 export default {
@@ -22,6 +28,10 @@ export default {
     },
     content: {
       type: String
+    },
+    isRichTxt: {
+      type: Boolean,
+      default: true
     }
   }
   // data () {
