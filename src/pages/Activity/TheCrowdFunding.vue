@@ -129,7 +129,7 @@ export default {
         >.inner-box
           position absolute
           left 30%
-          top 30%
+          top 19%
           >h3
             font-size 44px
             color #fff
@@ -143,8 +143,8 @@ export default {
         min-height 1000px
         position relative
         > .header
-          height 70px
-          line-height 70px
+          height 50px
+          line-height 50px
           background-color #282c49
           display flex
           > .left
@@ -173,15 +173,16 @@ export default {
           /*justify-content space-between*/
           min-height 1000px
           > .crowd-funding-item
-            width 384px
-            min-width 384px
-            height 420px
+            width 370px
+            min-width 370px
+            height 370px
             background-color #151b30
-            margin 0 8px 50px 8px
+            margin 0 15px 50px 15px
             border-radius 6px
             transition all .1s ease
             &:hover
               transform scale(1.02)
+              margin-top -10px
           >.no-data
             width 100%
             background url('../../assets/images/no-data-bg.png') no-repeat center 40%
@@ -215,7 +216,7 @@ export default {
             box-shadow 0 2px 2px 0 rgba(225,225,225,1)
             > .crowd-funding-item
               background-color #fff
-              box-shadow 0 3px 5px 0 rgba(214,214,214,1)
+              box-shadow 0 -1px 9px 0 #d6d6d6
             >.no-data
               >span
                 color S_main_color

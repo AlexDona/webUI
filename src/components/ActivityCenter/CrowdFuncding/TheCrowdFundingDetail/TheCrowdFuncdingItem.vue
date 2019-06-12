@@ -20,7 +20,7 @@
         span {{applyStartTime | timerFormat1}}~{{applyEndTime | timerFormat1}}
     //  年化收益
     .middle
-      h3.interest {{interestRate}} %
+      h3.interest {{interestRate}}%
       span.interest {{$t(interestRateText)}}
       // 分隔符
       span.split
@@ -127,8 +127,8 @@ export default {
       return _.get(this.crowdFunding, 'joinUserCount')
     },
     process () {
-      return _.get(this.crowdFunding, 'process')
-      // return 10
+      // return _.get(this.crowdFunding, 'process')
+      return 50
     },
     statusName () {
       /**
@@ -183,9 +183,9 @@ export default {
     >.header
       display flex
       flex-direction column
-      padding 20px 26px
+      padding 12px 26px
       box-sizing border-box
-      height 92px
+      height 80px
       background-color #1d2440
       >.h-top
         display flex
@@ -195,33 +195,39 @@ export default {
           width 34px
           height 34px
           border-radius 50%
+        .title
+          line-height 34px
       >.h-bottom
+        margin-top 5px
+        font-size 12px
         display flex
         justify-content space-between
         color S_font_color
     >.middle
-      padding 27px
+      padding 14px 27px 0
       box-sizing border-box
       text-align center
+      max-height 98px
       >h3.interest
         font-size 36px
         /*line-height 50px*/
         color S_main_color
       >span.interest
         font-size 12px
-        line-height 40px
+        /*line-height 40px*/
         color S_font_color
       >.split
         display inline-block
         width 100%
-        height 1px#1D2440#1D2440
+        height 1px
         background-color #1D2440
     >.desc
-      padding 0 27px
+      padding 10px 27px
       >.total,.locked,.nums
         display flex
         justify-content space-between
         line-height 24px
+        font-size 12px
         >.label
           color S_font_color
         >.value
@@ -232,6 +238,7 @@ export default {
         background #1D2440
         border-radius 6px
         color #5E6891
+        margin-top 10px
         &.is-coming
           background-color #1d2440
           color S_main_color

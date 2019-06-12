@@ -195,7 +195,7 @@ export default {
         >.inner-box
           position absolute
           left 30%
-          top 30%
+          top 19%
           >h3
             font-size 44px
             color #fff
@@ -211,8 +211,8 @@ export default {
         position relative
         padding-bottom 30px
         > .header
-          height 70px
-          line-height 70px
+          height 50px
+          line-height 50px
           box-sizing border-box
           padding-left 49px
           background-color #282c49
@@ -223,7 +223,7 @@ export default {
             margin-right 20px
           /deep/
             .el-breadcrumb
-              line-height 70px
+              line-height 50px
               .el-breadcrumb__inner
                 color S_font_color
               .is-link
@@ -262,8 +262,8 @@ export default {
           background-color #1C1F32
           min-height 1000px
           > .header
-            height 70px
-            line-height 70px
+            height 50px
+            line-height 50px
             box-sizing border-box
             padding-left 49px
             background-color #e7eefc
