@@ -5,29 +5,30 @@
 -->
 <template lang="pug">
   .the-crowd-funding-item-detail-left(
+    v-show="ieoTotal"
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   )
     .left
       // 总额度
       .detail
         span.label {{$t(label.total)}}
-        span.value(v-show="ieoTotal") {{ieoTotal |$moneyFilter_F_X}} {{ieoCoinName}}
+        span.value {{ieoTotal |$moneyFilter_F_X}} {{ieoCoinName}}
       // 剩余额度
       .detail
         span.label {{$t(label.ieoRemained)}}
-        span.value(v-show="ieoRemained") {{ieoRemained | $moneyFilter_F_X}} {{ieoCoinName}}
+        span.value {{ieoRemained | $moneyFilter_F_X}} {{ieoCoinName}}
       // 单人限额
       .detail
         span.label {{$t(label.limit)}}
-        span.value(v-show="buyUpLimit") {{buyUpLimit | $moneyFilter_F_X}} {{ieoCoinName}}
+        span.value {{buyUpLimit | $moneyFilter_F_X}} {{ieoCoinName}}
       // 起购量
       .detail
         span.label {{$t(label.buyDownLimit)}}
-        span.value(v-show="buyDownLimit") {{buyDownLimit |$moneyFilter_F_X}} {{ieoCoinName}}
+        span.value {{buyDownLimit |$moneyFilter_F_X}} {{ieoCoinName}}
       // 返息方式
       .detail
         span.label {{$t(label.interestReturnWay)}}
-        span.value(v-show="interestReturnWay") {{interestReturnWay}}
+        span.value {{interestReturnWay}}
       // 最低持仓
       .detail
         span.label {{$t(label.holdCoinAmount)}}
@@ -40,17 +41,17 @@
           .right
         .time
           // 截止时间
-          .end-time(v-show="applyEndTime")
+          .end-time
             span {{applyEndTime | timerFormat1_F_X('date')}}
             span {{applyEndTime | timerFormat1_F_X('time')}}
             span.time {{$t(label.applyEndTime)}}
           //  计息时间
-          .start-interest-time.text-align-c(v-show="interestStartTime")
+          .start-interest-time.text-align-c
             span {{interestStartTime | timerFormat1_F_X('date')}}
             span {{interestStartTime | timerFormat1_F_X('time')}}
             span.time {{$t(label.interestStartTime)}}
           //  到期时间
-          .over-time.text-align-r(v-show="interestEndTime")
+          .over-time.text-align-r
             span {{interestEndTime | timerFormat1_F_X('date')}}
             span {{interestEndTime | timerFormat1_F_X('time')}}
             span.time {{$t(label.interestEndTime)}}

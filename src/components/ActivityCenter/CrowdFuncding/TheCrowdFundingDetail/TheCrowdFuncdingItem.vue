@@ -127,8 +127,8 @@ export default {
       return _.get(this.crowdFunding, 'joinUserCount')
     },
     process () {
-      // return _.get(this.crowdFunding, 'process')
-      return 50
+      return _.get(this.crowdFunding, 'process')
+      // return 50
     },
     statusName () {
       /**
