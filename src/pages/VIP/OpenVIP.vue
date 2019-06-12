@@ -377,7 +377,9 @@ export default {
     // console.log(this.VipPriceInfoList)
     // console.log(this.vipName)
   },
-  mounted () {},
+  mounted () {
+    if (!this.$isVIPEnable_S_X) this.$goToPage(`/home`)
+  },
   activated () {},
   update () {},
   beforeRouteUpdate () {

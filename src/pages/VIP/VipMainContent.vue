@@ -230,7 +230,9 @@ export default {
     await this.getVipPriceInfo()
     await this.getCurrencyApplicationDownloadUrl()
   },
-  mounted () {},
+  mounted () {
+    if (!this.$isVIPEnable_S_X) this.$goToPage(`/home`)
+  },
   activated () {},
   update () {},
   beforeRouteUpdate () {
