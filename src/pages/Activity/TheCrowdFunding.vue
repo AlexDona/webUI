@@ -179,6 +179,9 @@ export default {
             background-color #151b30
             margin 0 8px 50px 8px
             border-radius 6px
+            transition all .1s ease
+            &:hover
+              transform scale(1.02)
           >.no-data
             width 100%
             background url('../../assets/images/no-data-bg.png') no-repeat center 40%

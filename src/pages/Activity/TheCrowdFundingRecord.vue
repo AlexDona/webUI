@@ -217,6 +217,10 @@ export default {
           padding-left 49px
           background-color #282c49
           color S_main_color
+          display flex
+          justify-content space-between
+          .right
+            margin-right 20px
           /deep/
             .el-breadcrumb
               line-height 70px

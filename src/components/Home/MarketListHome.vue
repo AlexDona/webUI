@@ -656,7 +656,7 @@ export default {
     /* 表头 */
     .inner-box {
       position: relative;
-      width: 1130px;
+      width: 1300px;
       margin: 78px auto;
 
       > .search-box {
@@ -705,11 +705,11 @@ export default {
             overflow: hidden;
 
             &.max-height {
-              max-height: 610px;
+              max-height: 626px;
             }
 
             &.force-height {
-              height: 610px !important;
+              height: 626px !important;
             }
           }
         }
@@ -885,8 +885,8 @@ export default {
         height: 46px;
         background-image: url(../../assets/develop/tab-bg.png);
         background-position: center center;
-        -webkit-background-size: 1130px 46px;
-        background-size: 1130px 46px;
+        -webkit-background-size: 1300px 46px;
+        background-size: 1300px 46px;
       }
 
       .el-input__inner {

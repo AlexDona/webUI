@@ -43,7 +43,8 @@
         TheProcess(:process="process")
       //  立即抢购、已结束、抢购未开始
       button.submit(
-        :class="{active: statusCode === 'ongoing'}"
+        :class="{active: isActive, 'cursor-pointer': isActive, 'is-coming': isComing}"
+        :disabled="!isActive"
         @click="buyNow"
       ) {{statusName}}
 </template>
@@ -140,6 +141,13 @@ export default {
     statusCode () {
       return _.get(this.crowdFunding, 'statusCode')
     },
+    isActive () {
+      return this.statusCode === 'ongoing'
+    },
+    // 即将开始
+    isComing () {
+      return this.statusCode === 'coming'
+    },
     crowdFundingId () {
       return _.get(this.crowdFunding, 'id')
     }
@@ -224,10 +232,12 @@ export default {
         background #1D2440
         border-radius 6px
         color #5E6891
-        cursor pointer
-        &.active
+        &.is-coming
           background-color #1d2440
           color S_main_color
+        &.active
+          background-color S_main_color
+          color #fff
     &.day
       background-color #fff
       box-shadow 0 3 5px 0 rgba(214,214,214,1)
@@ -259,7 +269,9 @@ export default {
           background #e9ecef
           border-radius 6px
           color #657585
-          cursor pointer
+          &.is-coming
+            background-color #e9ecef
+            color S_main_color
           &.active
             background-color S_main_color
             color #fff

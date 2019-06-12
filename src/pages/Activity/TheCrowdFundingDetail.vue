@@ -35,9 +35,8 @@
         :content ="rulesContent"
         )
       .FAQ
-        TheCrowdFundingRichText(
+        TheCrowdFundingFAQ(
         :title="$t(label.FAQTitle)"
-        :content ="FAQContent"
         )
 </template>
 <script>
@@ -46,6 +45,7 @@ import TheCrowdFundingDetailLeft from '../../components/ActivityCenter/CrowdFunc
 import TheCrowdFundingDetailRight from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingItemDetailRight'
 import TheCrowdFundingRichText from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingRichText'
 import TheCrowdFundingGoBack from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingGoBack'
+import TheCrowdFundingFAQ from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingFAQ'
 export default {
   name: 'the-crowd-funding-detail',
   // mixins: [],
@@ -54,7 +54,8 @@ export default {
     TheCrowdFundingDetailRight,
     TheCrowdFundingRichText,
     // Iconfont,
-    TheCrowdFundingGoBack
+    TheCrowdFundingGoBack,
+    TheCrowdFundingFAQ
   },
   props: {
     detailId: {
@@ -284,7 +285,7 @@ export default {
     .inner-box
       width S_main_content_width
       margin 50px auto 0
-      height 1000px
+      min-height 1000px
       color S_font_color
       font-size 12px
       .title-container

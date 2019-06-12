@@ -56,6 +56,14 @@ export const actionCenter = {
   'crowd_funding_error3': '残高が足りない',
   'crowd_funding_error4': '最低手持ち不足',
   'crowd_funding_error5': '申し込み数量を入力',
-  'crowd_funding_expected_return': '予想収益'
+  'crowd_funding_expected_return': '予想収益',
 
+  'crowd_funding_faq_1': 'Q：デポジット宝は何ですか',
+  'crowd_funding_faq_answer_1': 'A：デポジット宝はデジタル資産に基づいた投資信託です。預金の宝の項目を購入して、ロック期間が終わったら、元利の収益が得られます',
+  'crowd_funding_faq_2': 'Q：ロックの預け入れ期間が終わっていませんが、前もって解約してもいいですか',
+  'crowd_funding_faq_answer_2': 'A：貯金の宝は前もって解約することができません。預金期間が終わったら自動的に解約します',
+  'crowd_funding_faq_3': 'Q：収益はどう得ていますか',
+  'crowd_funding_faq_answer_3': 'A：預金期間が終わったら、営業日以内に、元金と利息は全部あなたの資産口座に戻ります。残高の中で確認できます',
+  'crowd_funding_faq_4': 'Q：デポジット期間は収益がありますか',
+  'crowd_funding_faq_answer_4': 'A：デポジットの預け入れ期間中は、収益は毎日支給されません。貨幣の預け入れ期間が終わったら、一回に収益を支払わなければなりません'
 }
