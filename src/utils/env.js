@@ -19,10 +19,10 @@ const devTestConfig = {
   // 帅飞
   // apiCommonUrl: 'http://192.168.2.98:8888/',
   // 艾青
-  apiCommonUrl: 'http://192.168.2.88:8888/',
+  // apiCommonUrl: 'http://192.168.2.88:8888/',
   // 浩田
   // apiCommonUrl: 'http://192.168.2.52:22224/',
-  // apiCommonUrl: 'http://192.168.2.200:8888/',
+  apiCommonUrl: 'http://192.168.2.200:8888/',
   socketUrl: 'ws://192.168.2.200:8087/market',
   // 浩田
   // socketUrl: 'ws://192.168.0.52:8087/market',
