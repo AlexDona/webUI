@@ -102,11 +102,11 @@
                   </el-table-column>
                   <!-- 已返还本金 -->
                   <el-table-column
-                    :label="$t('M.comm_count')"
+                    :label="$t('M.finance_return_principal')"
                   >
                     <template slot-scope="s">
                       <div>
-                        {{s.row.sendBackPrincipal }}
+                        {{s.row.sendBackPrincipal ? (s.row.sendBackPrincipal-0).toFixed(4) : '/' }}
                       </div>
                     </template>
                   </el-table-column>
