@@ -62,13 +62,13 @@
                     :label="$t('M.finance_invest_coin1')"
                   >
                   </el-table-column>
-                  <!-- 存币类型 prop="typeDescription" :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription"-->
+                  <!--存币方案-->
                   <el-table-column
                     :label="$t('M.finance_invest_style')"
                   >
                     <template slot-scope="s">
-                      <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
-                      <div v-else>{{s.row.typeEnglishDescription}}</div>
+                      <div v-if="language === 'zh_CN' || language === 'zh_TW'" :title="s.row.typeDescription">{{s.row.typeDescription}}</div>
+                      <div v-else :title="s.row.typeDescription">{{s.row.typeEnglishDescription}}</div>
                     </template>
                   </el-table-column>
                   <!-- 类型 -->
@@ -102,18 +102,24 @@
                   </el-table-column>
                   <!-- 已返还本金 -->
                   <el-table-column
-                    :label="$t('M.comm_count')"
+                    :label="$t('M.finance_return_principal')"
                   >
                     <template slot-scope="s">
-                      <div>{{s.row.financialState === 'EQUAL_PRINCIPAL' ? s.row.sendBackPrincipal : '/' }}</div>
+                      <div>
+                        {{s.row.sendBackPrincipal ? (s.row.sendBackPrincipal-0).toFixed(4) : '/' }}
+                      </div>
                     </template>
                   </el-table-column>
                   <!-- 预计收益 -->
                   <el-table-column
-                    prop="expectedEarning"
                     width="100"
                     :label="$t('M.finance_predict') + $t('M.finance_earnings')"
                   >
+                    <template slot-scope="s">
+                      <div>
+                        {{(s.row.expectedEarning-0).toFixed(4)}}
+                      </div>
+                    </template>
                   </el-table-column>
                   <!-- 预计发放时间 -->
                   <el-table-column
@@ -372,6 +378,12 @@ export default {
       } else if (this.activeName === '2') {
         // 收益记录列表
         this.userInterestRecord = getNestedData(getData, 'userInterestRecord.list')
+        _.forEach(this.userInterestRecord, item => {
+          let newArr = item.expectedEarning.split('/')
+          let newInterest = item.interest.split('/')
+          item.expectedEarning = (newArr[0] - 0).toFixed(4) + '/' + (newArr[1] - 0).toFixed(4)
+          item.interest = (newInterest[0] - 0).toFixed(4) + '/' + (newInterest[1] - 0).toFixed(4)
+        })
         // 收益记录总页数
         this.interestTotalPages = getNestedData(getData, 'userInterestRecord.pages')
         // 收益记录总条数
@@ -597,6 +609,12 @@ export default {
 
             td {
               border-bottom: 1px solid #1d2531;
+            }
+
+            td div {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
           }
         }

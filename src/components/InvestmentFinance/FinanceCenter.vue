@@ -466,8 +466,19 @@
                     :label="$t('M.finance_invest_style')"
                   >
                     <template slot-scope="s">
-                      <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
-                      <div v-else>{{s.row.typeEnglishDescription}}</div>
+                      <span
+                        v-if="language === 'zh_CN' || language === 'zh_TW'"
+                        class="over-bubble"
+                        :title="s.row.typeDescription"
+                      >
+                        {{s.row.typeDescription}}
+                      </span>
+                      <span
+                        v-else class="over-bubble"
+                        :title="s.row.typeEnglishDescription"
+                      >
+                        {{s.row.typeEnglishDescription}}
+                      </span>
                     </template>
                   </el-table-column>
                   <!-- 类型 -->
@@ -505,16 +516,20 @@
                   >
                     <template slot-scope="s">
                       <div>
-                        {{s.row.financialState === 'EQUAL_PRINCIPAL' ? s.row.sendBackPrincipal : '/' }}
+                        {{s.row.sendBackPrincipal ? (s.row.sendBackPrincipal-0).toFixed(4) : '/' }}
                       </div>
                     </template>
                   </el-table-column>
                   <!-- 预计收益 -->
                   <el-table-column
-                    prop="expectedEarning"
                     width="100"
                     :label="$t('M.finance_predict_earnings')"
                   >
+                    <template slot-scope="s">
+                      <div>
+                        {{(s.row.expectedEarning - 0).toFixed(4)}}
+                      </div>
+                    </template>
                   </el-table-column>
                   <!-- 预计发放时间 -->
                   <el-table-column
@@ -597,7 +612,7 @@
                 <el-table
                   :data="userInterestRecord"
                   style="width: 100%;"
-                  :empty-text=this.noData
+                  :empty-text=noData
                 >
                   <!--:empty-text="$t('M.comm_no_data')"-->
                   <!-- 存币币种 -->
@@ -784,7 +799,9 @@ export default {
       // 存币说明富文本
       argumentContent: '',
       // 折算货币
-      convertCurrency: localStorage.convertCurrency
+      convertCurrency: localStorage.convertCurrency,
+      // 是否显示气泡
+      isShowBubble: []
     }
   },
   created () {
@@ -1054,6 +1071,12 @@ export default {
         this.investList = getNestedData(getData, 'userFinancialManagementRecord.list')
         // 收益记录列表
         this.userInterestRecord = getNestedData(getData, 'userInterestRecord.list')
+        _.forEach(this.userInterestRecord, item => {
+          let newArr = item.expectedEarning.split('/')
+          let newInterest = item.interest.split('/')
+          item.expectedEarning = (newArr[0] - 0).toFixed(4) + '/' + (newArr[1] - 0).toFixed(4)
+          item.interest = (newInterest[0] - 0).toFixed(4) + '/' + (newInterest[1] - 0).toFixed(4)
+        })
         if (!this.investList.length || !this.userInterestRecord.length) {
           // this.noData = '暂无数据'
           this.noData = this.$t('M.comm_no_data')
@@ -1563,7 +1586,21 @@ export default {
         }
 
         td {
+          position: relative;
           background: transparent;
+        }
+
+        td div {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .error-box {
+          position: absolute;
+          z-index: 1000;
+          top: 10px;
+          right: 0;
         }
       }
 
