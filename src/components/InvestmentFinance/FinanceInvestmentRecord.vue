@@ -105,15 +105,19 @@
                     :label="$t('M.comm_count')"
                   >
                     <template slot-scope="s">
-                      <div>{{s.row.financialState === 'EQUAL_PRINCIPAL' ? s.row.sendBackPrincipal : '/' }}</div>
+                      <div>{{s.row.financialState === 'EQUAL_PRINCIPAL' ? s.row.sendBackPrincipal.toFixed(4) : '/' }}</div>
                     </template>
                   </el-table-column>
                   <!-- 预计收益 -->
                   <el-table-column
-                    prop="expectedEarning"
                     width="100"
                     :label="$t('M.finance_predict') + $t('M.finance_earnings')"
                   >
+                    <template slot-scope="s">
+                      <div>
+                        {{s.row.expectedEarning.toFixed(4)}}
+                      </div>
+                    </template>
                   </el-table-column>
                   <!-- 预计发放时间 -->
                   <el-table-column

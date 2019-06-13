@@ -466,8 +466,25 @@
                     :label="$t('M.finance_invest_style')"
                   >
                     <template slot-scope="s">
-                      <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
-                      <div v-else>{{s.row.typeEnglishDescription}}</div>
+                      <div
+                        v-if="language === 'zh_CN' || language === 'zh_TW'"
+                        class="over-bubble"
+                        @mouseenter="mouseEnter(s.$index, true)"
+                        @mouseleave="mouseEnter(s.$index, false)"
+                      >
+                        {{s.row.typeDescription}}
+                      </div>
+                      <div
+                        v-else class="over-bubble"
+                        @mouseenter="mouseEnter(s.$index, true)"
+                        @mouseleave="mouseEnter(s.$index, false)"
+                      >
+                        {{s.row.typeEnglishDescription}}
+                      </div>
+                      <ErrorBox
+                        :text="language === 'zh_CN' || language === 'zh_TW' ? s.row.typeDescription : s.row.typeEnglishDescription"
+                        :isShow="isShowBubble[s.$index]"
+                      />
                     </template>
                   </el-table-column>
                   <!-- 类型 -->
@@ -505,16 +522,20 @@
                   >
                     <template slot-scope="s">
                       <div>
-                        {{s.row.financialState === 'EQUAL_PRINCIPAL' ? s.row.sendBackPrincipal : '/' }}
+                        {{s.row.sendBackPrincipal ? s.row.sendBackPrincipal.toFixed(4) : '/' }}
                       </div>
                     </template>
                   </el-table-column>
                   <!-- 预计收益 -->
                   <el-table-column
-                    prop="expectedEarning"
                     width="100"
                     :label="$t('M.finance_predict_earnings')"
                   >
+                    <template slot-scope="s">
+                      <div>
+                        {{s.row.expectedEarning.toFixed(4)}}
+                      </div>
+                    </template>
                   </el-table-column>
                   <!-- 预计发放时间 -->
                   <el-table-column
@@ -651,6 +672,7 @@
 <script>
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
+import ErrorBox from '../User/ErrorBox'
 import {timeFilter, formatNumberInput} from '../../utils'
 import {
   getFinancialManagement,
@@ -669,7 +691,8 @@ import {
 export default {
   components: {
     FinanceBrokenLine,
-    FinanceBrokenPie
+    FinanceBrokenPie,
+    ErrorBox
   },
   data () {
     return {
@@ -784,7 +807,9 @@ export default {
       // 存币说明富文本
       argumentContent: '',
       // 折算货币
-      convertCurrency: localStorage.convertCurrency
+      convertCurrency: localStorage.convertCurrency,
+      // 是否显示气泡
+      isShowBubble: []
     }
   },
   created () {
@@ -817,6 +842,11 @@ export default {
       let arr1 = arr[0].split('/') // 将日期格式改变
       let arr2 = arr1[0] + (-arr1[1]) + (-arr1[2])
       return arr2
+    },
+    // 鼠标划入收益记录里的存币方案气泡形式显示
+    mouseEnter (index, boolean) {
+      console.log(index, boolean)
+      this.$set(this.isShowBubble, index, boolean)
     },
     timeFormatting (data) {
       return timeFilter(data, 'data')
@@ -1563,7 +1593,20 @@ export default {
         }
 
         td {
+          position: relative;
           background: transparent;
+        }
+
+        td div.over-bubble {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .error-box {
+          position: absolute;
+          z-index: 1000;
+          top: 10px;
+          right: 0;
         }
       }
 
