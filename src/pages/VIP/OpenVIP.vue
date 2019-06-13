@@ -357,7 +357,6 @@ export default {
     }
   },
   async created () {
-    if (!this.$isVIPEnable_S_X) this.$goToPage(`/home`)
     // console.log(this.vipAction)
     if (this.vipLevel) {
       this.activeStatus = this.vipLevel.split('')[3] - 0
@@ -372,13 +371,15 @@ export default {
       }
     }
     this.getServiceProtocolData()
-    await this.REFRESH_USER_INFO_ACTION()
+    // await this.REFRESH_USER_INFO_ACTION()
     await this.getVipPriceInfo()
     await this.getCurrencyApplicationDownloadUrl()
     // console.log(this.VipPriceInfoList)
     // console.log(this.vipName)
   },
-  mounted () {},
+  mounted () {
+    if (!this.$isVIPEnable_S_X) this.$goToPage(`/home`)
+  },
   activated () {},
   update () {},
   beforeRouteUpdate () {
@@ -677,6 +678,9 @@ export default {
     },
     filteredData (newVal) {
       console.log(newVal)
+    },
+    $isVIPEnable_S_X (New) {
+      if (!New) this.$goToPage(`/home`)
     }
   },
   destroyed () {

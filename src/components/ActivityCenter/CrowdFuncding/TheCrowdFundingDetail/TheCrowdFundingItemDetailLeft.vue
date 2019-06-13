@@ -5,6 +5,7 @@
 -->
 <template lang="pug">
   .the-crowd-funding-item-detail-left(
+    v-show="ieoTotal"
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   )
     .left

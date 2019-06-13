@@ -56,5 +56,14 @@ export const actionCenter = {
   'crowd_funding_error3': 'Số dư thiếu',
   'crowd_funding_error4': 'Thiếu tối thiểu.',
   'crowd_funding_error5': 'Hãy nhập vào một số',
-  'crowd_funding_expected_return': 'Lợi nhuận dự tính'
+  'crowd_funding_expected_return': 'Lợi nhuận dự tính',
+
+  'crowd_funding_faq_1': 'Q: Tiền gửi là gì',
+  'crowd_funding_faq_answer_1': 'A: Tiền gửi là quản lí tài chính tài sản kĩ thuật số, khi bạn mua dự án tiền gửi, bạn sẽ nhận được lãi của phần vốn khi đáo hạn.',
+  'crowd_funding_faq_2': 'Q: Có thể rút tiền gửi trước kì hạn không',
+  'crowd_funding_faq_answer_2': 'A: Tiền gửi không thể rút trước kì hạn, phải đợi đến khi kết thúc kì hạn sẽ tự động giải ngân.',
+  'crowd_funding_faq_3': 'Q: Làm cách nào để nhận được thu nhập',
+  'crowd_funding_faq_answer_3': 'A: Trong vòng 1 ngày làm việc sau khi kết  thúc kì hạn, toàn bộ tiền vốn là tiền lãi của bạn sẽ được chuyển vào tài khoản của bạn, bạn có thế kiểm tra trong phần số dư.',
+  'crowd_funding_faq_4': 'Q: Thời kì gửi có tiền lãi không',
+  'crowd_funding_faq_answer_4': 'A: Trong kì hạn, tiền lãi không được trả mỗi ngày, mà sẽ trả 1 lần khi kết thúc kì hạn tiền gửi.'
 }

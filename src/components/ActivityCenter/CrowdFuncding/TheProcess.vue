@@ -12,7 +12,7 @@
         :style="{width: `${process}%`}"
       )
         .bar(v-show="!isAll")
-    .text {{process}} %
+    .text {{process}}%
 </template>
 <script>
 export default {
@@ -50,11 +50,9 @@ export default {
   .the-process
     display flex
     width 100%
-    /*background-color pink*/
     justify-content space-around
-    height 12px
+    height 10px
     margin 15px 0
-    /*overflow hidden*/
     >.the-process-bg
       flex 6
       box-shadow 0 3px 49px 0 rgba(24,26,41,1)
@@ -62,15 +60,13 @@ export default {
       background #353f61
       >.the-min-width
         background-color S_main_color
-        margin-top 1px
-        margin-left 1px
         height 10px
         border-radius 6px
         position relative
         >.bar
           position absolute
           content ''
-          right -13px
+          right -22px
           top 50%
           transform translateY(-50%)
           width 26px
@@ -81,9 +77,7 @@ export default {
         background-color transparent
       &.not-all
         >.the-min-width
-          margin-top 2px
-          margin-left 2px
-          height 8px
+          height 10px
     >.text
       flex 1
       color S_main_color

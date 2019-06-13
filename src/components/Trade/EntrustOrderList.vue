@@ -21,7 +21,7 @@
           {{$t(cancelEntrustBtnText)}}
         </button>
         <a
-          href="#"
+          href="javascript:void(0);"
           @click="jumpToPersonal"
         >
           <span>

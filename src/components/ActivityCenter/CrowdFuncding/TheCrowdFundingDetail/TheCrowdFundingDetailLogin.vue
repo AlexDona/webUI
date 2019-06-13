@@ -169,7 +169,7 @@ export default {
       // 预计收益 = ( 年化收益 * 申购数量 / 365 ) * 计息天数
       const {buyCount} = this.form
       this.predict = this.$cutOutPointLength((this.interestRate / 100 * buyCount) / this.ONE_YEAR * dayTime, 8)
-      // console.log(this.predict)
+      console.log(this.predict)
     },
     async applyCrowdFunding () {
       const params = {

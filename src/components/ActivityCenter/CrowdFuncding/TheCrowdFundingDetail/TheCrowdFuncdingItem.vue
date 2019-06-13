@@ -20,7 +20,7 @@
         span {{applyStartTime | timerFormat1}}~{{applyEndTime | timerFormat1}}
     //  年化收益
     .middle
-      h3.interest {{interestRate}} %
+      h3.interest {{interestRate}}%
       span.interest {{$t(interestRateText)}}
       // 分隔符
       span.split
@@ -43,7 +43,8 @@
         TheProcess(:process="process")
       //  立即抢购、已结束、抢购未开始
       button.submit(
-        :class="{active: statusCode === 'ongoing'}"
+        :class="{active: isActive, 'cursor-pointer': isActive, 'is-coming': isComing}"
+        :disabled="!isActive"
         @click="buyNow"
       ) {{statusName}}
 </template>
@@ -127,7 +128,7 @@ export default {
     },
     process () {
       return _.get(this.crowdFunding, 'process')
-      // return 10
+      // return 50
     },
     statusName () {
       /**
@@ -139,6 +140,13 @@ export default {
     },
     statusCode () {
       return _.get(this.crowdFunding, 'statusCode')
+    },
+    isActive () {
+      return this.statusCode === 'ongoing'
+    },
+    // 即将开始
+    isComing () {
+      return this.statusCode === 'coming'
     },
     crowdFundingId () {
       return _.get(this.crowdFunding, 'id')
@@ -175,9 +183,9 @@ export default {
     >.header
       display flex
       flex-direction column
-      padding 20px 26px
+      padding 12px 26px
       box-sizing border-box
-      height 92px
+      height 80px
       background-color #1d2440
       >.h-top
         display flex
@@ -187,33 +195,39 @@ export default {
           width 34px
           height 34px
           border-radius 50%
+        .title
+          line-height 34px
       >.h-bottom
+        margin-top 5px
+        font-size 12px
         display flex
         justify-content space-between
         color S_font_color
     >.middle
-      padding 27px
+      padding 14px 27px 0
       box-sizing border-box
       text-align center
+      max-height 98px
       >h3.interest
         font-size 36px
         /*line-height 50px*/
         color S_main_color
       >span.interest
         font-size 12px
-        line-height 40px
+        /*line-height 40px*/
         color S_font_color
       >.split
         display inline-block
         width 100%
-        height 1px#1D2440#1D2440
+        height 1px
         background-color #1D2440
     >.desc
-      padding 0 27px
+      padding 10px 27px
       >.total,.locked,.nums
         display flex
         justify-content space-between
         line-height 24px
+        font-size 12px
         >.label
           color S_font_color
         >.value
@@ -224,10 +238,13 @@ export default {
         background #1D2440
         border-radius 6px
         color #5E6891
-        cursor pointer
-        &.active
+        margin-top 10px
+        &.is-coming
           background-color #1d2440
           color S_main_color
+        &.active
+          background-color S_main_color
+          color #fff
     &.day
       background-color #fff
       box-shadow 0 3 5px 0 rgba(214,214,214,1)
@@ -259,7 +276,9 @@ export default {
           background #e9ecef
           border-radius 6px
           color #657585
-          cursor pointer
+          &.is-coming
+            background-color #e9ecef
+            color S_main_color
           &.active
             background-color S_main_color
             color #fff

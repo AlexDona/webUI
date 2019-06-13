@@ -56,5 +56,14 @@ export const actionCenter = {
   'crowd_funding_error3': '잔액이 부족하다',
   'crowd_funding_error4': '최저 창고 소지 부족',
   'crowd_funding_error5': '구매 수량을 입력하십시오',
-  'crowd_funding_expected_return': '예상 수익'
+  'crowd_funding_expected_return': '예상 수익',
+
+  'crowd_funding_faq_1': 'Q ：저금보물이 뭐예요',
+  'crowd_funding_faq_answer_1': 'A ：저금보는 디지털 자산에 기반한 재테크입니다. 당신은 저금기간이 끝나면 이자를 얻을 수 있습니다',
+  'crowd_funding_faq_2': 'Q: 예금 기간이 끝나지 않았는데 조기 해약 가능한가요',
+  'crowd_funding_faq_answer_2': 'A ：저금보는 조기 해약을 지지하지 않고 저금기간이 끝나야 자동으로 해약할 수 있다',
+  'crowd_funding_faq_3': 'Q: 내가 어떻게 수익을 얻을 것인가',
+  'crowd_funding_faq_answer_3': 'A ：예금 기간이 끝난 후 일 내에 당신의 원금과 이자는 모두 당신의 자산계좌로 되돌아갈 수 있습니다',
+  'crowd_funding_faq_4': 'Q: 예금 기간에 수익이 있습니까',
+  'crowd_funding_faq_answer_4': 'A ：예금 기간 동안 수익은 매일 발급되지 않을 것이며, 예금 기간이 끝나면 일회용 수익을 지급해야 한다'
 }

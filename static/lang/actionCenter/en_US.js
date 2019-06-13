@@ -56,5 +56,14 @@ export const actionCenter = {
   'crowd_funding_error3': 'Lack of balance',
   'crowd_funding_error4': 'Insufficient minimum deposit',
   'crowd_funding_error5': 'Enter the purchase amount',
-  'crowd_funding_expected_return': 'Expected return'
+  'crowd_funding_expected_return': 'Expected return',
+
+  'crowd_funding_faq_1': 'Q：What is deposit financing',
+  'crowd_funding_faq_answer_1': 'A：Deposit financing is based on digital assets, you buy a deposit financing project, you can get the principal and interest income after the end of the deposit period',
+  'crowd_funding_faq_2': 'Q：Can the contract be cancelled in advance if the deposit period is not over?',
+  'crowd_funding_faq_answer_2': 'A：The deposit financing does not support early termination, and must be automatically cancelled after the end of the deposit period.',
+  'crowd_funding_faq_3': 'Q：How will I get the income',
+  'crowd_funding_faq_answer_3': 'A：Within one business day after the end of the deposit period, your principal and interest will be returned to your asset account and can be viewed in the balance.',
+  'crowd_funding_faq_4': 'Q：Is there a gain in the deposit period',
+  'crowd_funding_faq_answer_4': 'A：During the deposit period, the profits will not be paid daily, and the profits must be paid in one lump sum after the end of the deposit period.'
 }

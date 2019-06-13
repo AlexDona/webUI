@@ -1,7 +1,7 @@
 <!--
   author: zhaoxinlei
-  create: 20190606
-  description: 当前页面为 众筹页面 详情 信息里 的富文本通用 组件
+  create: 20190612
+  description: 当前页面为 众筹页面 详情 信息里 的常见问题组件
 -->
 <template lang="pug">
   .the-crowd-funding-rich-text(
@@ -9,34 +9,43 @@
   )
     h3.title {{title}}
     .split
-    .content(
-      v-html="content"
-      v-if="isRichTxt"
-    )
-    .content(
-      v-else
-    ) {{content}}
+    .content
+      .faq-item(v-for="item in FAQ")
+        p.ques {{$t(item.ques)}}?
+        p.answer {{$t(item.answer)}}
 </template>
 <script>
 export default {
-  name: 'the-crowd-funding-rich-text',
+  name: 'the-crowd-funding-rich-faq',
   // mixins: [],
   // components: {},
   props: {
     title: {
       type: String
-    },
-    content: {
-      type: String
-    },
-    isRichTxt: {
-      type: Boolean,
-      default: true
+    }
+  },
+  data () {
+    return {
+      FAQ: [
+        {
+          ques: 'M.crowd_funding_faq_1',
+          answer: 'M.crowd_funding_faq_answer_1'
+        },
+        {
+          ques: 'M.crowd_funding_faq_2',
+          answer: 'M.crowd_funding_faq_answer_2'
+        },
+        {
+          ques: 'M.crowd_funding_faq_3',
+          answer: 'M.crowd_funding_faq_answer_3'
+        },
+        {
+          ques: 'M.crowd_funding_faq_4',
+          answer: 'M.crowd_funding_faq_answer_4'
+        }
+      ]
     }
   }
-  // data () {
-  //   return {}
-  // }
   // async created () {
   // },
   // mounted () {}
@@ -61,7 +70,7 @@ export default {
       font-size 18px
       color S_main_color
       font-weight 400
-      /*line-height 55px*/
+    /*line-height 55px*/
     .split
       height 1px
       width 100%
@@ -72,6 +81,9 @@ export default {
       padding 40px
       box-sizing border-box
       box-shadow 0 4px 4px 0 rgba(30,33,51,1)
+      .faq-item
+        .ques,.answer
+          line-height 30px
     &.day
       .title
         color S_main_color

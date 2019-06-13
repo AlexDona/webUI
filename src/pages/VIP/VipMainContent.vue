@@ -221,7 +221,6 @@ export default {
     }
   },
   async created () {
-    if (!this.$isVIPEnable_S_X) this.$goToPage(`/home`)
     if (this.vipLevel) {
       this.activeStatus = this.vipLevel.split('')[3]
     }
@@ -231,7 +230,9 @@ export default {
     await this.getVipPriceInfo()
     await this.getCurrencyApplicationDownloadUrl()
   },
-  mounted () {},
+  mounted () {
+    if (!this.$isVIPEnable_S_X) this.$goToPage(`/home`)
+  },
   activated () {},
   update () {},
   beforeRouteUpdate () {
@@ -366,6 +367,9 @@ export default {
     },
     filteredData (newVal) {
       // console.log(newVal)
+    },
+    $isVIPEnable_S_X (New) {
+      if (!New) this.$goToPage(`/home`)
     }
   }
 }

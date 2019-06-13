@@ -56,5 +56,14 @@ export const actionCenter = {
   'crowd_funding_error3': '余额不足',
   'crowd_funding_error4': '最低持仓不足',
   'crowd_funding_error5': '请输入申购数量',
-  'crowd_funding_expected_return': '预计收益'
+  'crowd_funding_expected_return': '预计收益',
+
+  'crowd_funding_faq_1': 'Q：存币宝是什么',
+  'crowd_funding_faq_answer_1': 'A：存币宝是基于数字资产的理财，您买入存币宝项目，在存币期结束后可以获得本息收益',
+  'crowd_funding_faq_2': 'Q：存币期未结束可以提前解约么',
+  'crowd_funding_faq_answer_2': 'A：存币宝不支持提前解约，必须等存币期结束后才会自动解约',
+  'crowd_funding_faq_3': 'Q：我将如何获得收益',
+  'crowd_funding_faq_answer_3': 'A：存币期结束后的一个工作日内，您的本金和利息将全部返回您的资产账户，可以在余额中查看',
+  'crowd_funding_faq_4': 'Q：存币期是否有收益',
+  'crowd_funding_faq_answer_4': 'A：存币期间，收益将不会每日发放，必须等存币期结束后，一次性发放收益'
 }

@@ -70,7 +70,7 @@
         @current-change="handleCurrentChange"
         :current-page="currentPage"
         layout="prev, pager, next"
-        :total="totalPage - 0"
+        :page-count="totalPage"
         )
 </template>
 <script>
@@ -116,7 +116,7 @@ export default {
       // 网站当前语言
       currentLanguage: '',
       // 总页数
-      totalPage: '',
+      totalPage: 0,
       title1: 'M.crowd_funding_title1',
       title2: 'M.crowd_funding_title2'
     }
@@ -140,7 +140,7 @@ export default {
       const data = await getCrowdFundingRecordAJAX(params)
       this.dataList = []
       if (!data) return false
-      console.log(data)
+      // console.log(data)
       _.forEach(_.get(data, 'data.list'), item => {
         let newItem = {
           time: this.computedTimeFilter(item.applyDate, 'normal'),
@@ -155,7 +155,8 @@ export default {
         }
         this.dataList.push(newItem)
       })
-      this.totalPage = _.get(data, 'data.total')
+      this.totalPage = _.get(data, 'data.pages') - 0
+      // console.log(this.totalPage)
     },
     computedTimeFilter (timeData, type) {
       let dateArr = timeFilter(timeData, type).split('-')
@@ -163,7 +164,7 @@ export default {
       return newData
     },
     handleCurrentChange (e) {
-      console.log(e)
+      // console.log(e)
       this.currentPage = e
       this.getCrowdFundingRecord()
     }
@@ -195,7 +196,7 @@ export default {
         >.inner-box
           position absolute
           left 30%
-          top 30%
+          top 19%
           >h3
             font-size 44px
             color #fff
@@ -211,15 +212,19 @@ export default {
         position relative
         padding-bottom 30px
         > .header
-          height 70px
-          line-height 70px
+          height 50px
+          line-height 50px
           box-sizing border-box
           padding-left 49px
           background-color #282c49
           color S_main_color
+          display flex
+          justify-content space-between
+          .right
+            margin-right 20px
           /deep/
             .el-breadcrumb
-              line-height 70px
+              line-height 50px
               .el-breadcrumb__inner
                 color S_font_color
               .is-link
@@ -258,8 +263,8 @@ export default {
           background-color #1C1F32
           min-height 1000px
           > .header
-            height 70px
-            line-height 70px
+            height 50px
+            line-height 50px
             box-sizing border-box
             padding-left 49px
             background-color #e7eefc
