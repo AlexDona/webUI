@@ -1,3 +1,8 @@
+/**
+ * author: zhaoxinlei
+ * create: 201803015
+ * description: 当前 js 为 common(基础信息) mutations-types
+ */
 // 公共部分
 export const CHANGE_THEME = 'CHANGE_THEME' // 设置主题
 export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE' // 设置语言
@@ -19,8 +24,6 @@ export const SET_FOOTER_INFO = 'SET_FOOTER_INFO' // 设置尾部信息
 export const SET_COUNT_DOWN_RESET_STATUS = 'SET_COUNT_DOWN_RESET_STATUS' // 设置倒计时重置状态
 // 设置默认语言
 export const CHANGE_DEFAULT_LANGUAGE = 'CHANGE_DEFAULT_LANGUAGE'
-// 设置全局loading 状态
-export const CHANGE_AJAX_READY_STATUS = 'CHANGE_AJAX_READY_STATUS'
 // 交易对是否更改
 export const CHANGE_SYMBOL_CHANGED_STATUS = 'CHANGE_SYMBOL_CHANGED_STATUS'
 // 页面宽度修改
@@ -33,3 +36,5 @@ export const CHANGE_PASSWORD_USEABLE = 'CHANGE_PASSWORD_USEABLE'
 export const UPDATE_PAY_PASSWORD_DIALOG_M = 'UPDATE_PAY_PASSWORD_DIALOG_M'
 // 全局交易密码
 export const UPDATE_PAY_PASSWORD_M = 'UPDATE_PAY_PASSWORD_M'
+// 更新当前正在请求次数
+export const SET_REQUEST_COUNT_M = 'SET_REQUEST_COUNT_M'

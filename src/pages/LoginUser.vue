@@ -1,6 +1,11 @@
 <template>
   <div
     class="login-box user"
+    :class="{
+      'day':$theme_S_X == 'day',
+      'night':$theme_S_X == 'night',
+      'pc-bg': !isMobile
+      }"
     :style="{
      'min-height':windowHeight < 800,
      'height': windowHeight + 'px',
@@ -792,7 +797,6 @@ export default {
       'SET_STEP1_INFO',
       'SET_USER_BUTTON_STATUS',
       'USER_LOGIN',
-      'CHANGE_AJAX_READY_STATUS',
       'CHANGE_TOKEN_AVAILABILITY',
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
@@ -837,7 +841,6 @@ export default {
     },
     // 刷新二维码
     async reflashErCode () {
-      this.CHANGE_AJAX_READY_STATUS(true)
       this.isScanSuccess = false
       if (this.socket) {
         this.socket.doClose()
@@ -876,7 +879,6 @@ export default {
           }
         })
       })
-      this.CHANGE_AJAX_READY_STATUS(false)
     },
     // 切换登录方式
     toggleLoginType () {
@@ -2104,7 +2106,7 @@ export default {
       box-sizing: border-box;
       width: 470px;
       height: 44px;
-      padding: 12px 0;
+      padding: 12px 24px;
       border-radius: 10px 10px 0 0;
       background: rgba(32, 41, 60, 1);
       box-shadow: 0 1px 2px 0 rgba(29, 33, 49, 1);
@@ -2150,6 +2152,12 @@ export default {
         padding: 0;
         border: none;
       }
+    }
+  }
+
+  &.day {
+    &.pc-bg {
+      background: #fff;
     }
   }
 }

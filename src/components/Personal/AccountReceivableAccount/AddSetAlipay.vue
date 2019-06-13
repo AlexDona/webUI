@@ -2,8 +2,6 @@
   <div
     class="add-account personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
     :style="{
       height: windowHeight+'px'
     }"
@@ -197,7 +195,6 @@ export default {
         '', // 支付宝账号
         '' // 交易密码
       ],
-      fullscreenLoading: false, // 整页loading
       // 添加支付宝成功后自动跳转定时器
       addAlipaySuccessJumpTimer: null,
       // 支付宝地址上传url
@@ -216,7 +213,6 @@ export default {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_REF_ACCOUNT_CREDITED_STATE',
-      'CHANGE_AJAX_READY_STATUS',
       'CHANGE_PASSWORD_USEABLE'
     ]),
     ...mapActions([
@@ -275,7 +271,6 @@ export default {
       let formData = new FormData()
       formData.append('file', file)
       const data = await uploadImageAjax(formData)
-      this.CHANGE_AJAX_READY_STATUS(false)
       if (!data) return false
       this.dialogImageHandUrl1 = getNestedData(data, 'data.fileUrl')
     },
@@ -285,7 +280,6 @@ export default {
       const COMPRESS_SIZE = 10485760
       let isLt10M = false
       if (size > COMPRESS_SIZE) {
-        this.CHANGE_AJAX_READY_STATUS(false)
         // 上传头像图片大小不能超过 10M!
         this.$message.error(this.$t('M.user_senior_hint5'))
         isLt10M = true
@@ -296,7 +290,6 @@ export default {
     getPicture (e) {
       if (!e.target.files.length) return false
       lrz(e.target.files[0]).then(async res => {
-        this.CHANGE_AJAX_READY_STATUS(true)
         const {base64, file, fileLen} = res
         if (this.beforeAvatarUpload(fileLen)) return false
         await this.uploadImg(file)
@@ -364,12 +357,8 @@ export default {
         let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
         this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
         if (this.isLockedPayPassword) return false
-        // 整页loading
-        this.fullscreenLoading = true
         data = await statusCardSettings(param)
         // console.log(data)
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         if (!data) return false
         this.successJump()
         this.stateEmptyData()
@@ -387,12 +376,8 @@ export default {
         userId: this.userInfo.userId,
         type: 'Alipay'
       }
-      // 整页loading
-      this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
       if (!data) return false
-      // 接口成功清除loading
-      this.fullscreenLoading = false
       const detailData = getNestedData(data, 'data')
       const {cardNo, qrcode, id, realname} = detailData
       // 返回状态展示

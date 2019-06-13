@@ -1,8 +1,8 @@
 <template>
   <div
     class="footer-box common"
-    v-show="!isloading"
     ref="footer"
+    v-show="!$loading_S_X"
   >
     <div class="inner-box">
       <!--顶部-->
@@ -318,7 +318,6 @@ export default {
       footerInfo1: {},
       footerInfo2: {},
       linkList: [], // 友情链接
-      isloading: true,
       // 上币申请模板下载url
       currencyApplicationURL: '',
       // 友情链接是否显示图片
@@ -384,7 +383,6 @@ export default {
       handler (newVal) {
         console.log(newVal)
         if (newVal) {
-          this.isloading = false
           this.footerInfo1 = newVal.footerInfo1
           this.footerInfo2 = newVal.footerInfo2
           console.log(this.footerInfo2)

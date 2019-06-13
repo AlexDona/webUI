@@ -10,6 +10,7 @@ import {
   getCookie,
   removeCookie
 } from '../index'
+// eslint-disable-next-line
 import {getNestedData} from '../commonFunc'
 import axios from 'axios'
 import storeCreator from '../../vuex'
@@ -23,14 +24,8 @@ util.ajax = axios.create({
 })
 let token
 util.ajax.interceptors.request.use((config) => {
+  store.commit('SET_REQUEST_COUNT_M', 'ADD')
   token = getCookie('token')
-  const url = `${config.url}`
-  let needLoading = getNestedData(config.params, 'loading') || getNestedData(config.data, 'loading') || url.endsWith('user/userLoginForStep1')
-  if (getNestedData(config.params, 'loading')) delete config.params.loading
-  if (getNestedData(config.data, 'loading')) delete config.data.loading
-  if (needLoading) {
-    store.commit('CHANGE_AJAX_READY_STATUS', true)
-  }
   config.headers['x-domain'] = xDomain
   let userToken = store.state.user.loginStep1Info.token
   config.headers['token'] = token || userToken
@@ -52,10 +47,11 @@ util.ajax.interceptors.response.use(
     if (!response.data) {
       response.data = {}
     }
-    store.commit('CHANGE_AJAX_READY_STATUS', false)
+    store.commit('SET_REQUEST_COUNT_M', 'SUBTRACT')
     return response
   },
   error => {
+    store.commit('SET_REQUEST_COUNT_M', 'RESET')
     return error.response // 返回接口返回的错误信息
   })
 

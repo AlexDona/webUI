@@ -180,8 +180,6 @@
             :data="extensionList"
             style="width: 100%;"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="partLoading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--用户UID 登录名 注册时间 姓名 高级认证 直接推荐人UID-->
             <!-- 用户UID -->
@@ -286,8 +284,6 @@
             :data="awardList"
             style="width: 100%;"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="partLoading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--奖励类型 邀请奖励 币种 数量 时间-->
             <el-table-column
@@ -391,8 +387,7 @@ export default {
       awardList: [],
       totalSumCNY: '', // cny资产
       CNYRate: '', // 转换汇率
-      coinName: '', // 币种名称
-      partLoading: false // 局部列表loading
+      coinName: '' // 币种名称
     }
   },
   async created () {
@@ -435,7 +430,6 @@ export default {
       this.generalizeOptionsList.forEach(item => {
         if (e === item.value) {
           this.generalizeValue = e
-          // this.loading = true
           this.getUserPromotionList()
           console.log(this.generalizeValue)
         }
@@ -449,8 +443,6 @@ export default {
         type: this.generalizeValue // 筛选类型
       })
       console.log(data)
-      // 接口返回清除局部loading
-      this.partLoading = false
       if (!data) return false
       // 返回展示
       this.extensionList = getNestedData(data, 'data.page.list')
@@ -470,8 +462,6 @@ export default {
         pageSize: this.pageSize, // 每页显示条数
         pageNumber: this.currentPageMyEntrust // 当前页码
       })
-      // 接口返回清除局部loading
-      this.partLoading = false
       if (!data) return false
       let responseData = getNestedData(data, 'data')
       // 返回展示
@@ -513,7 +503,6 @@ export default {
       }
     },
     async getInverData () {
-      this.partLoading = true
       console.log('invitation-promote')
       await this.getUserPromotionList()
       await this.getRecommendUserPromotion()

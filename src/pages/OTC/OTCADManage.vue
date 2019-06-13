@@ -145,8 +145,6 @@
         <!-- 下部分表格内容 -->
         <div
           class="manage-main-bottom"
-          v-loading="loading"
-          element-loading-background="rgba(0, 0, 0, 0.6)"
         >
           <el-table
             :data="ADList"
@@ -316,8 +314,6 @@ export default {
   },
   data () {
     return {
-      // loading加载
-      loading: true,
       // 广告管理内容的高度
       height: '',
       // 分页
@@ -390,7 +386,6 @@ export default {
     // 1.0 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
-      this.loading = true
       this.getOTCADManageList()
     },
     // 2.0 清空数据
@@ -406,7 +401,6 @@ export default {
       // 选中状态清空
       this.activatedADManageStatusList = ''
       // 重新获取列表
-      this.loading = true
       this.getOTCADManageList()
     },
     // 3.0 时间格式化
@@ -426,7 +420,6 @@ export default {
       // 返回数据正确的逻辑 渲染列表
       console.log('获取广告管理列表')
       console.log(data)
-      this.loading = false
       if (!data) return false
       let ADData = getNestedData(data, 'data')
       this.ADList = getNestedData(ADData, 'list')
@@ -481,7 +474,6 @@ export default {
         confirmButtonText: this.$t('M.comm_all_sold_out'), // 全部下架
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
-        this.loading = true
         this.cancelAllOneKeyConfirm()
       }).catch(() => {
       })
@@ -490,7 +482,6 @@ export default {
     async cancelAllOneKeyConfirm () {
       const data = await cancelAllOrdersOnekey()
       // 返回数据正确的逻辑
-      this.loading = false
       if (!data) return false
       this.getOTCADManageList()
     },
@@ -500,7 +491,6 @@ export default {
         confirmButtonText: this.$t('M.comm_sold_out'), // 下架
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
-        this.loading = true
         this.getOTCEntrustingOrdersRevocation(id)
       }).catch(() => {
       })
@@ -511,7 +501,6 @@ export default {
         entrustId: id
       })
       // 返回数据正确的逻辑 重新渲染列表
-      this.loading = false
       if (!data) return false
       this.getOTCADManageList()
     },
@@ -539,7 +528,6 @@ export default {
     findFilter () {
       // 改变查询条件从第1页开始查询
       this.currentPage = 1
-      this.loading = true
       this.getOTCADManageList()
     }
   },

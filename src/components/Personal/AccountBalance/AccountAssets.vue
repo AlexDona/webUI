@@ -55,8 +55,6 @@
           <!--账户资产币种列表-->
           <div
             class="content-list"
-            v-loading="localLoading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <div class="table-body text-align-l line-height50">
               <!-- 表头 -->
@@ -693,7 +691,6 @@ export default {
       sellsymbol: '', // 交易对名称
       isNeedTag: false, // 是否需要转账提示标签
       rechargeNoteInfo: '', // 充币地址备注信息
-      localLoading: true, // 页面列表局部loading
       isLegalWithdrawAddress: true, // 是否为合法提币地址
       minRechargeAmount: '', // 最小提币数量
       successCount: '', // 确认次数
@@ -1051,10 +1048,7 @@ export default {
         pageNum: this.currentPageForMyEntrust,
         pageSize: '10000'
       }
-      this.localLoading = true
       let data = await assetCurrenciesList(params)
-      // 接口失败清除loading
-      this.localLoading = false
       if (!data) return false
       this.withdrawDepositList.push({
         allIsShow: false,

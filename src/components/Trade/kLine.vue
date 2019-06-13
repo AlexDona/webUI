@@ -2,8 +2,6 @@
 <template>
   <div
     class="kline-container"
-    v-loading.lock="fullscreenLoading"
-    element-loading-background="rgb(28, 31, 50)"
   >
     <div
       id="tv_chart_container"

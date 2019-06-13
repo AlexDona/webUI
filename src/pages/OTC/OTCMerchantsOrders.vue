@@ -154,8 +154,6 @@
             :data = "merchantsOrdersList"
             style = "width: 100%;"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="loading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!-- 交易日期 -->
             <el-table-column
@@ -363,8 +361,6 @@ export default {
   },
   data () {
     return {
-      // loading加载
-      loading: true,
       // 商家订单内容的高度
       height: '',
       // 分页
@@ -456,7 +452,6 @@ export default {
     // 1分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
-      this.loading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 2时间格式化
@@ -538,7 +533,6 @@ export default {
     findFilter () {
       // 改变查询条件从第1页开始查询
       this.currentPage = 1
-      this.loading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 7重置
@@ -551,7 +545,6 @@ export default {
       this.activatedMerchantsOrdersStatusList = ''
       this.startTimeValue = ''
       this.endTimeValue = ''
-      this.loading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 8页面加载时请求接口渲染列表
@@ -577,7 +570,6 @@ export default {
       // 返回数据正确的逻辑 重新渲染列表
       console.log('商家订单列表')
       console.log(data)
-      this.loading = false
       if (!data) return false
       if (data.data) {
         let merchantsOrdersListData = getNestedData(data, 'data')

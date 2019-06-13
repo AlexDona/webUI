@@ -5,8 +5,6 @@
   >
     <div
       class="otc-trading-order-content"
-      v-loading="loading"
-      element-loading-background="rgba(0, 0, 0, 0.6)"
     >
       <!-- 一、交易中订单 -->
       <div
@@ -888,7 +886,6 @@ export default {
       confirmPaymentStatus: false, // 确认付款交易密码框提交按钮禁用状态
       confirmGatheringStatus: false, // 确认收款交易密码框提交按钮禁用状态
       submitAppealStatus: false, // 提交申诉交易密码框提交按钮禁用状态
-      loading: false, // loading
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
@@ -1140,7 +1137,6 @@ export default {
     },
     // 2.0 请求交易中订单列表
     async getOTCTradingOrdersList () {
-      this.loading = true
       this.checkedPayRealNameArr = [] // 清空收款人名字
       this.activePayModeList = [] // 清空支付方式数组：防止换页码之后之前选中的在此页面付款方式也被选中的问题
       this.activeBankType = [] // 清空选中的支付方式所展示的付款账户和账号
@@ -1155,7 +1151,6 @@ export default {
       console.log('交易中订单列表')
       console.log(data)
       // 返回数据正确的逻辑
-      this.loading = false
       if (!data) return false
       if (data.data) {
         let detailsData = getNestedData(data, 'data')
@@ -1255,7 +1250,6 @@ export default {
         return false
       } else {
         this.confirmPaymentStatus = true // 禁用确认付款交易密码框提交按钮
-        this.loading = true
         let params = {
           orderId: this.checkedTradingOrderId, // 订单id
           payId: this.checkedPayStyleId // 支付账户id
@@ -1266,7 +1260,6 @@ export default {
         this.getOTCTradingOrdersList() // 调用接口刷新列表-20190327新增
         this.confirmPaymentStatus = false // 开启确认付款交易密码框提交按钮
         this.dialogVisibleConfirmPayment = false
-        this.loading = false
         this.errPWD = ''
         this.tradePassword = ''
         if (!data) return false
@@ -1296,7 +1289,6 @@ export default {
         return false
       }
       this.confirmGatheringStatus = true // 禁用确认收款交易密码框提交按钮
-      this.loading = true
       let params = {
         orderId: this.checkedTradingOrderId // 订单id
       }
@@ -1307,7 +1299,6 @@ export default {
       this.getOTCTradingOrdersList() // 刷新列表-20190327新增
       this.confirmGatheringStatus = false // 开启确认收款交易密码框提交按钮
       this.dialogVisibleConfirmReceipt = false
-      this.loading = false
       this.errPWD = ''
       this.tradePassword = ''
       if (!data) return false
@@ -1383,7 +1374,6 @@ export default {
         return false
       }
       this.submitAppealStatus = true // 禁用提交申诉交易密码框提交按钮
-      this.loading = true
       let params = {
         orderId: this.checkedTradingOrderId, // 订单id
         reason: this.appealTextAreaValue, // 申诉原因
@@ -1405,7 +1395,6 @@ export default {
       // 正确逻辑
       this.submitAppealStatus = false // 开启提交申诉交易密码框提交按钮
       this.dialogVisibleSubmitComplaint = false
-      this.loading = false
       this.errPWD = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
       this.appealTextAreaValue = '' // 清空申诉原因

@@ -2,8 +2,6 @@
   <div
     class="credited-credited personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <header class="credited-credited-header personal-height40 line-height40 background-color">
       <span class="padding-left23 header-content font-size16">
@@ -439,8 +437,7 @@ export default {
       closePayPal: false, // 默认关闭PayPal
       closeWesternUnion: false, // 默认关闭西联汇款
       activeType: '', // 当前值类型
-      state: '', // 开启关闭状态
-      fullscreenLoading: true // 整页loading
+      state: '' // 开启关闭状态
     }
   },
   async created () {
@@ -693,14 +690,8 @@ export default {
           }
           break
       }
-      // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
+
       data = await openAndCloseModeSetting(params)
-      // 接口失败清除loading
-      this.loadingCircle.close()
       if (!data) return false
       // 安全中心状态刷新
       this.getAccountPaymentTerm()
@@ -709,10 +700,7 @@ export default {
     },
     // 5.收款方式
     async getAccountPaymentTerm () {
-      // 整页loading
-      this.fullscreenLoading = true
       let data = await accountPaymentTerm()
-      this.fullscreenLoading = false
       if (!data) return false
       // 返回状态展示
       this.paymentTerm = getNestedData(data, 'data')

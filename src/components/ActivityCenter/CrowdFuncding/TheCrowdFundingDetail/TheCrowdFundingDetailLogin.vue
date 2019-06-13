@@ -159,7 +159,7 @@ export default {
       })
     },
     updatePredict () {
-      let time = this.interestEndTime - this.interestStartTime
+      let time = this.interestEndTime - this.interestStartTime + 1 * 24 * 60 * 60 * 1000
       console.log(time)
       const timeObj = getDateTime(time)
       let {

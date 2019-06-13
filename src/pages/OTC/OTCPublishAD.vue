@@ -677,7 +677,6 @@ export default {
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
       'CHANGE_PASSWORD_USEABLE',
-      'CHANGE_AJAX_READY_STATUS', // 改变接口返回loading状态
       'CHANGE_REF_ACCOUNT_CREDITED_STATE',
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
@@ -698,14 +697,12 @@ export default {
     },
     // 3.0 广告管理跳转过来 请求详情接口
     async getOTCSelectedOrdersDetails () {
-      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       const data = await querySelectedOrdersDetails({
         entrustId: this.messageId
       })
       console.log('广告管理跳转过来挂单详情')
       console.log(data)
       // 正确逻辑
-      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       if (!data) return false
       if (data.data) {
         let detailsData = getNestedData(data, 'data')
@@ -919,7 +916,6 @@ export default {
       // 交易密码
       param = this.isNeedPayPassword ? { ...param, tradePassword: this.tradePassword } : param
       let data
-      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       if (this.ADManageJumpOrderStatus == 1) {
         data = await addOTCPutUpOrdersMerchantDedicated(param)
       }
@@ -928,7 +924,6 @@ export default {
         data = await addModifyPublishADOrder(param)
       }
       // 返回数据正确的逻辑
-      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       this.publishADTradePwdDialogStatus = false // 关闭交易密码框
       this.tradePassword = '' // 清空交易密码
       // console.log(data)

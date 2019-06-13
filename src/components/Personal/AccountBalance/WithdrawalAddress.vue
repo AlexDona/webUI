@@ -1,9 +1,12 @@
+<!--
+  author: zhaoxinlei
+  update: 20190613
+  description: 当前组件为 个人中心 提币地址 组件
+-->
 <template>
   <div
     class="withdrawal-address personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <div
       class="withdrawal-address-main"
@@ -204,8 +207,6 @@
           :data="withdrawalAddressList"
           style="width: 100%;"
           :empty-text="$t('M.comm_no_data')"
-          v-loading="partLoading"
-          element-loading-background="rgba(0, 0, 0, 0.6)"
         >
           <!--币种-->
           <el-table-column
@@ -319,9 +320,7 @@ export default {
       phoneCode: '', // 手机验证
       emailCode: '', // 邮箱验证
       googleCode: '', // 谷歌验证
-      currencyValueStatus: true, // 币种列表状态
-      fullscreenLoading: false, // 整页loading
-      partLoading: false // 局部列表loading
+      currencyValueStatus: true // 币种列表状态
     }
   },
   created () {
@@ -411,10 +410,7 @@ export default {
         coinId: this.currencyValue, // 币种coinId
         address: this.withdrawalAddress // 提币地址
       }
-      // 整页loading
-      this.fullscreenLoading = true
       let data = await checkCurrencyAddress(param)
-      this.fullscreenLoading = false
       if (!data) return false
       // 验证通过调用验证方式接口
       await this.getSecurityCenter()
@@ -464,11 +460,7 @@ export default {
         emailCode: this.emailCode, // 邮箱验证
         googleCode: this.googleCode // 谷歌验证
       }
-      // 整页loading
-      this.fullscreenLoading = true
       let data = await addNewWithdrawalAddress(param)
-      // 接口失败清除loading
-      this.fullscreenLoading = false
       if (!data) return false
       this.mentionMoneyConfirm = false
       this.getWithdrawalAddressList()
@@ -478,14 +470,12 @@ export default {
      *  5.刚进页面时候 提币地址列表查询
      */
     async getWithdrawalAddressList () {
-      this.partLoading = true
       console.log(this.paramOfJumpToAddWithdrawAdress)
       let params = {
         pageNum: this.currentPageForMyEntrust, // 页码
         pageSize: this.pageSize // 页数
       }
       let data = await inquireWithdrawalAddressList(params)
-      this.partLoading = false
       // console.log(data)
       if (!data) return false
       // 返回列表数据
@@ -529,8 +519,6 @@ export default {
         id: this.deleteWithdrawalId // 列表id
       }
       data = await deleteUserWithdrawAddress(param)
-      // 接口清除局部loading
-      this.partLoading = false
       if (!data) return false
       this.getWithdrawalAddressList()
       this.resetFormContent()

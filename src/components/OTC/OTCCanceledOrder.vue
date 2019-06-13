@@ -5,8 +5,6 @@
   >
     <div
       class="canceled-order-content"
-      v-loading="loading"
-      element-loading-background="rgba(0, 0, 0, 0.6)"
     >
       <!--表头属性-->
       <div class="canceled-table-head">
@@ -243,8 +241,6 @@ export default {
   // props,
   data () {
     return {
-      // loading加载缓冲
-      loading: true,
       // 分页
       // 当前页显示几条数据
       pageSize: 5,
@@ -278,7 +274,6 @@ export default {
     },
     // 3.0 请求已取消订单列表
     async getOTCCanceledOrdersList () {
-      this.loading = true
       const data = await getOTCOrdersThreeDay({
         status: 'CANCELED', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         pageNum: this.currentPage,
@@ -287,7 +282,6 @@ export default {
       console.log('请求已取消订单列表')
       console.log(data)
       // 返回数据正确的逻辑
-      this.loading = false
       if (!data) return false
       if (data.data) {
         let canceledOrderData = getNestedData(data, 'data')
