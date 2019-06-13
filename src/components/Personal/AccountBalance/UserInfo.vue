@@ -260,9 +260,11 @@ export default {
   methods: {
     // 1.0 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
+      const { shortName } = this.activeConvertCurrencyObj
+      if (!shortName) return
       const params = {
         coinName: 'FBT',
-        shortName: this.activeConvertCurrencyObj.shortName
+        shortName
       }
       const data = await currencyTransform(params)
       if (!data) return false

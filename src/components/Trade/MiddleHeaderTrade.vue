@@ -157,6 +157,7 @@ export default {
       > .bottom {
         height: 20px;
         line-height: 20px;
+        white-space: nowrap;
       }
 
       &.logo {
