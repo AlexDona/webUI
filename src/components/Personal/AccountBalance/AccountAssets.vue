@@ -1375,7 +1375,7 @@ export default {
     /**
      * 16.根据coinid查询交易信息
      */
-    async getQueryTransactionInformation () {
+    getQueryTransactionInformation: _.debounce(async function () {
       let data = await queryTransactionInformation({
         coinId: this.currencyTradingId // 币种coinId
       })
@@ -1383,7 +1383,7 @@ export default {
       if (!data) return false
       this.currencyTradingList = getNestedData(data, 'data.entrust') || []
       // console.log(data.data)
-    },
+    }, 500),
     // 个人资产跳转OTC
     jumpToOTCCenter (coinId) {
       // console.log(coinId)
