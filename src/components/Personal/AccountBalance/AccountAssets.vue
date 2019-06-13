@@ -1003,11 +1003,10 @@ export default {
     },
     // 6.10显示交易对跳转币种信息
     showSymbolJumpList (id, index) {
+      this.currencyTradingList = []
       this.currencyTradingId = id
-      // 个人资产跳转OTC-改写开始
       // console.log(id)
       this.OTCCenterHasCurrentCoin = _.some(this.OTCCoinList, ['coinId', this.currencyTradingId])
-      // 个人资产跳转OTC-改写结束
       this.tradingState = true
       this.current = index
       this.getQueryTransactionInformation()
