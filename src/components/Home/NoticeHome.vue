@@ -126,6 +126,7 @@ export default {
   @import '../../../static/css/scss/index';
 
   .notice-box {
+    position: relative;
     top: 0;
     width: 100%;
     height: 30px;
