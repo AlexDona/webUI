@@ -184,12 +184,13 @@ export default {
         state.requestCount_S += 1
         break
       case 'SUBTRACT':
-        state.requestCount_S -= 1
+        if (state.requestCount_S > 0) state.requestCount_S -= 1
         break
       case 'RESET':
         state.requestCount_S = 0
         break
     }
-    state.loading_S = state.requestCount_S == 0 ? false : true
+    console.log(state.requestCount_S)
+    state.loading_S = state.requestCount_S <= 0 ? false : true
   }
 }

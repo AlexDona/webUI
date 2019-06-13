@@ -31,7 +31,10 @@ export const inquireRechargeAddressList = params => handleRequest(() => get('per
 // 获取提币信息
 export const withdrawalInformation = params => handleRequest(() => get('queryWithdrawInfo', params))
 // 根据coinid查询交易信息
-export const queryTransactionInformation = (params) => handleRequest(() => get('personal/getTradeUrl', params))
+export const queryTransactionInformation = (params) => handleRequest(() => get('personal/getTradeUrl', {
+  ...params,
+  'not-loading': true
+}))
 // 刷新用户信息
 export const userRefreshUser = params => handleRequest(() => get('user/refreshUser', params))
 // 币币交易跳转到个人中心、我的资产提币校验
