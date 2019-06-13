@@ -167,7 +167,7 @@ export default {
         > .content
           background-color S_night_main_bg
           display flex
-          padding 50px
+          padding 50px !important
           box-sizing border-box
           flex-wrap wrap
           /*justify-content space-between*/
