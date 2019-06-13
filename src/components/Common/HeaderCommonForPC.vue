@@ -730,14 +730,6 @@ export default{
       const data = await getNavigationsAJAX(params)
       // console.log(data)
       this.navigation = _.get(data, 'data')
-      if (this.isFubt) {
-        this.navigation.push({
-          // FUC生态页
-          name: this.$t('M.common_fuc_eco'),
-          link: '/FucCenter',
-          newTab: false
-        })
-      }
       _.forEach(this.navigation, (nav, index) => {
         nav['isInnerLink'] = this.checkIsInnerLink(nav.link) ? true : false
       })
