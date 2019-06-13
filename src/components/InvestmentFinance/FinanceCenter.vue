@@ -466,25 +466,19 @@
                     :label="$t('M.finance_invest_style')"
                   >
                     <template slot-scope="s">
-                      <div
+                      <span
                         v-if="language === 'zh_CN' || language === 'zh_TW'"
                         class="over-bubble"
-                        @mouseenter="mouseEnter(s.$index, true)"
-                        @mouseleave="mouseEnter(s.$index, false)"
+                        :title="s.row.typeDescription"
                       >
                         {{s.row.typeDescription}}
-                      </div>
-                      <div
+                      </span>
+                      <span
                         v-else class="over-bubble"
-                        @mouseenter="mouseEnter(s.$index, true)"
-                        @mouseleave="mouseEnter(s.$index, false)"
+                        :title="s.row.typeEnglishDescription"
                       >
                         {{s.row.typeEnglishDescription}}
-                      </div>
-                      <ErrorBox
-                        :text="language === 'zh_CN' || language === 'zh_TW' ? s.row.typeDescription : s.row.typeEnglishDescription"
-                        :isShow="isShowBubble[s.$index]"
-                      />
+                      </span>
                     </template>
                   </el-table-column>
                   <!-- 类型 -->
@@ -522,7 +516,7 @@
                   >
                     <template slot-scope="s">
                       <div>
-                        {{s.row.sendBackPrincipal ? s.row.sendBackPrincipal.toFixed(4) : '/' }}
+                        {{s.row.sendBackPrincipal ? (s.row.sendBackPrincipal-0).toFixed(4) : '/' }}
                       </div>
                     </template>
                   </el-table-column>
@@ -533,7 +527,7 @@
                   >
                     <template slot-scope="s">
                       <div>
-                        {{s.row.expectedEarning.toFixed(4)}}
+                        {{(s.row.expectedEarning - 0).toFixed(4)}}
                       </div>
                     </template>
                   </el-table-column>
@@ -618,7 +612,7 @@
                 <el-table
                   :data="userInterestRecord"
                   style="width: 100%;"
-                  :empty-text=this.noData
+                  :empty-text=noData
                 >
                   <!--:empty-text="$t('M.comm_no_data')"-->
                   <!-- 存币币种 -->
@@ -672,7 +666,6 @@
 <script>
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
-import ErrorBox from '../User/ErrorBox'
 import {timeFilter, formatNumberInput} from '../../utils'
 import {
   getFinancialManagement,
@@ -691,8 +684,7 @@ import {
 export default {
   components: {
     FinanceBrokenLine,
-    FinanceBrokenPie,
-    ErrorBox
+    FinanceBrokenPie
   },
   data () {
     return {
@@ -842,11 +834,6 @@ export default {
       let arr1 = arr[0].split('/') // 将日期格式改变
       let arr2 = arr1[0] + (-arr1[1]) + (-arr1[2])
       return arr2
-    },
-    // 鼠标划入收益记录里的存币方案气泡形式显示
-    mouseEnter (index, boolean) {
-      console.log(index, boolean)
-      this.$set(this.isShowBubble, index, boolean)
     },
     timeFormatting (data) {
       return timeFilter(data, 'data')
@@ -1084,6 +1071,12 @@ export default {
         this.investList = getNestedData(getData, 'userFinancialManagementRecord.list')
         // 收益记录列表
         this.userInterestRecord = getNestedData(getData, 'userInterestRecord.list')
+        _.forEach(this.userInterestRecord, item => {
+          let newArr = item.expectedEarning.split('/')
+          let newInterest = item.interest.split('/')
+          item.expectedEarning = (newArr[0] - 0).toFixed(4) + '/' + (newArr[1] - 0).toFixed(4)
+          item.interest = (newInterest[0] - 0).toFixed(4) + '/' + (newInterest[1] - 0).toFixed(4)
+        })
         if (!this.investList.length || !this.userInterestRecord.length) {
           // this.noData = '暂无数据'
           this.noData = this.$t('M.comm_no_data')
@@ -1597,7 +1590,8 @@ export default {
           background: transparent;
         }
 
-        td div.over-bubble {
+        td div {
+          overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
