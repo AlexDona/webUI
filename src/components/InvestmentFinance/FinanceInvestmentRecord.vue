@@ -53,50 +53,77 @@
                   :data="investList"
                   style="width: 100%;"
                   :empty-text="$t('M.comm_no_data')"
-                  v-loading="loading"
-                  element-loading-background="rgba(0, 0, 0, 0.6)"
                 >
                   <!-- 存币币种 -->
                   <el-table-column
                     prop="coinShortName"
                     :label="$t('M.finance_invest_coin1')"
-                    width="110"
                   >
                   </el-table-column>
-                  <!-- 存币类型 prop="typeDescription" :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription"-->
+                  <!--存币方案-->
                   <el-table-column
-                    :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
+                    :label="$t('M.finance_invest_style')"
                   >
                     <template slot-scope="s">
-                      <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
-                      <div v-else>{{s.row.typeEnglishDescription}}</div>
+                      <div v-if="language === 'zh_CN' || language === 'zh_TW'" :title="s.row.typeDescription">{{s.row.typeDescription}}</div>
+                      <div v-else :title="s.row.typeDescription">{{s.row.typeEnglishDescription}}</div>
+                    </template>
+                  </el-table-column>
+                  <!-- 类型 -->
+                  <el-table-column
+                    :label="$t('M.otc_cancelOrder_type')"
+                  >
+                    <template slot-scope="s">
+                      <div v-show="s.row.financialState == 'CURRENT'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">活期</span>
+                        <span v-else>Current</span>
+                      </div>
+                      <div v-show="s.row.financialState == 'PERIODICAL'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期</span>
+                        <span v-else>Regular</span>
+                      </div>
+                      <div v-show="s.row.financialState == 'REGULARMONTHLYRETURN'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期月返</span>
+                        <span v-else>Regular monthly return</span>
+                      </div>
+                      <div v-show="s.row.financialState == 'EQUAL_PRINCIPAL'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">等额本金</span>
+                        <span v-else>Equivalent principal</span>
+                      </div>
                     </template>
                   </el-table-column>
                   <!-- 数量 -->
                   <el-table-column
                     prop="number"
-                    width="100"
                     :label="$t('M.comm_count')"
                   >
                   </el-table-column>
+                  <!-- 已返还本金 -->
+                  <el-table-column
+                    :label="$t('M.finance_return_principal')"
+                  >
+                    <template slot-scope="s">
+                      <div>
+                        {{s.row.sendBackPrincipal ? (s.row.sendBackPrincipal-0).toFixed(4) : '/' }}
+                      </div>
+                    </template>
+                  </el-table-column>
                   <!-- 预计收益 -->
                   <el-table-column
-                    prop="expectedEarning"
+                    width="100"
                     :label="$t('M.finance_predict') + $t('M.finance_earnings')"
                   >
+                    <template slot-scope="s">
+                      <div>
+                        {{(s.row.expectedEarning-0).toFixed(4)}}
+                      </div>
+                    </template>
                   </el-table-column>
                   <!-- 预计发放时间 -->
                   <el-table-column
                     prop="expectedTime"
                     width="150"
                     :label="$t('M.finance_predict_send_time')"
-                  >
-                  </el-table-column>
-                  <!-- 已发放收益-->
-                  <el-table-column
-                    prop="profit"
-                    width="150"
-                    :label="$t('M.finance_paid_income')"
                   >
                   </el-table-column>
                   <!-- 状态 prop="state" width="80"-->
@@ -109,26 +136,6 @@
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">冻结</span>
                         <span v-else>Freeze</span>
                       </div>
-                      <div v-show="s.row.state === 'CURRENT'">
-                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">活期</span>
-                        <span v-else>Current</span>
-                      </div>
-                      <div v-show="s.row.state === 'REGULARMONTHLYRETURN'">
-                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期月返</span>
-                        <span v-else>Regular monthly return</span>
-                      </div>
-                      <div v-show="s.row.state === 'PERIODICAL'">
-                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期</span>
-                        <span v-else>Regular</span>
-                      </div>
-                      <div v-show="s.row.state === 'IS_DISTRIBUTE'">
-                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">发放收益</span>
-                        <span v-else>Distribute</span>
-                      </div>
-                      <div v-show="s.row.state === 'UNDISTRIBUTE'">
-                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">未发放收益</span>
-                        <span v-else>Undistribute</span>
-                      </div>
                       <div v-show="s.row.state === 'FINISHED'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">已完成</span>
                         <span v-else>Finished</span>
@@ -137,13 +144,10 @@
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">已取消</span>
                         <span v-else>Cancel</span>
                       </div>
-                      <div v-show="s.row.state === 'AUTHENTICATION'">
-                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">已认证</span>
-                        <span v-else>Authentication</span>
-                      </div>
-                      <div v-show="s.row.state === 'UNAUTHENTICATION'">
-                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">未认证</span>
-                        <span v-else>Unauthentication</span>
+                      <!--违约结算-->
+                      <div v-show="s.row.state === 'DEFAULT_CLEARING'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">违约结算</span>
+                        <span v-else>Default clearing</span>
                       </div>
                     </template>
                   </el-table-column>
@@ -156,13 +160,12 @@
                   </el-table-column>
                   <!-- 操作 -->
                   <el-table-column
-                    width="80"
                     prop="operations"
                     :label="$t('M.otc_index_operate')"
                   >
                     <template slot-scope = "s">
                       <div
-                        v-if="s.row.financialState === 'CURRENT' && s.row.state !== 'CANCEL'"
+                        v-if="s.row.financialState === 'CURRENT' && s.row.state !== 'CANCEL' && s.row.state != 'DEFAULT_CLEARING'"
                         class="blue cancelBtn"
                         @click="cancelInvest(s.row.id)"
                       >
@@ -207,8 +210,6 @@
                   :data="userInterestRecord"
                   style="width: 100%;"
                   :empty-text="$t('M.comm_no_data')"
-                  v-loading="loading"
-                  element-loading-background="rgba(0, 0, 0, 0.6)"
                 >
                   <!-- 存币币种 -->
                   <el-table-column
@@ -288,7 +289,6 @@ export default {
   },
   data () {
     return {
-      loading: true,
       // 设置存币记录当前页码
       investCurrentPage: 1,
       // 设置存币记录总页数
@@ -351,14 +351,12 @@ export default {
       this.getFinancialManagementList(this.interestCurrentPage)
     },
     async getFinancialManagementList (pageNum) {
-      this.loading = true
       const data = await getFinancialManagement({
         pageNum: pageNum,
         pageSize: 10,
         coinId: this.coinId,
         coinName: this.coinName
       })
-      this.loading = false
       if (!data) return false
       let getData = getNestedData(data, 'data')
       if (this.activeName === '1') {
@@ -373,6 +371,12 @@ export default {
       } else if (this.activeName === '2') {
         // 收益记录列表
         this.userInterestRecord = getNestedData(getData, 'userInterestRecord.list')
+        _.forEach(this.userInterestRecord, item => {
+          let newArr = item.expectedEarning.split('/')
+          let newInterest = item.interest.split('/')
+          item.expectedEarning = (newArr[0] - 0).toFixed(4) + '/' + (newArr[1] - 0).toFixed(4)
+          item.interest = (newInterest[0] - 0).toFixed(4) + '/' + (newInterest[1] - 0).toFixed(4)
+        })
         // 收益记录总页数
         this.interestTotalPages = getNestedData(getData, 'userInterestRecord.pages')
         // 收益记录总条数
@@ -598,6 +602,12 @@ export default {
 
             td {
               border-bottom: 1px solid #1d2531;
+            }
+
+            td div {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
           }
         }

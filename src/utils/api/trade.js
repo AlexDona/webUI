@@ -5,7 +5,7 @@ import {handleRequest} from '../commonFunc'
  * 币币交易
  */
 // 新增委单
-export const saveEntrustTrade = params => handleRequest(() => post('saveEntrust', {...params, 'loading': true}), 1)
+export const saveEntrustTrade = params => handleRequest(() => post('saveEntrust', params), 1)
 // 我的委托单
 export const getMyEntrust = params => handleRequest(() => get('queryMyEntrust', params))
 // 历史委单
@@ -13,7 +13,7 @@ export const getHistoryEntrust = params => handleRequest(() => get('queryMyHisEn
 // 成交明细
 export const getMakeDetail = params => handleRequest(() => get('queryMyEntrustOrder', params))
 // 撤销当前委单
-export const repealMyEntrustAjax = params => handleRequest(() => put('cancelEntrust', {...params, 'loading': true}), 1)
+export const repealMyEntrustAjax = params => handleRequest(() => put('cancelEntrust', params), 1)
 // 全球行情
 // params 格式： ETH_BTC
 export const getGlobalMarket = params => handleRequest(() => get(`market3rd/${params}`), 0, 1)

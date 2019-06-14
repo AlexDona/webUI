@@ -1,3 +1,8 @@
+/**
+ * author: zhaoxinlei
+ * create: 201803015
+ * description: 当前 js 为 common(基础信息) getters
+ */
 import {xDomain} from '../../utils/env'
 
 export default {

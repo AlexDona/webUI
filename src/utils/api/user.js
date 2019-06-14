@@ -36,14 +36,11 @@ export const checkUserExist = (params) => postWithURLencoded('user/checkUserExis
 // 用户注册
 export const sendRegisterUser = (params) => postWithURLencoded('user/reg', params)
 // 用户登录第一步
-export const userLoginForStep1 = (params) => postWithFormData('user/userLoginForStep1', params, {'loading': true})
+export const userLoginForStep1 = (params) => postWithFormData('user/userLoginForStep1', params)
 // 用户登录第二步
-export const userLoginForStep2 = params => handleRequest(() => postWithURLencoded('user/userLoginForStep2', {
-  ...params,
-  'loading': true
-}), 1)
+export const userLoginForStep2 = params => handleRequest(() => postWithURLencoded('user/userLoginForStep2', params), 1)
 // 退出登录
-export const userLoginOut = () => handleRequest(() => postWithURLencoded('user/logout'), {'loading': true})
+export const userLoginOut = () => handleRequest(() => postWithURLencoded('user/logout'))
 // 找回密码步骤1
 export const findPasswordStep1 = params => handleRequest(() => postWithURLencoded('user/forgetPassword1', params))
 // 找回密码步骤2
@@ -56,7 +53,7 @@ export const getLoginErcode = () => handleRequest(() => get('user/qrcode'))
 export const getAppDownLoadUrlAjax = () => get('appDown')
 
 // 设置 用户交易密码时长
-export const setUserInputPasswordFrequency = params => handleRequest(() => postWithURLencoded('user/notInputPayPasswd', {...params, loading: true}), 1)
+export const setUserInputPasswordFrequency = params => handleRequest(() => postWithURLencoded('user/notInputPayPasswd', params), 1)
 
 // 是否需要输入交易密码（交易）
 export const isNeedPayPassowrd = (params) => get('user/isInputPayPasswd', params)

@@ -30,7 +30,7 @@ export const common = {
   'comm_balance': 'Số dư',
   'comm_price_metre': 'Giá',
   'comm_total_sum': 'Tổng',
-  'comm_aggregate': 'Lũy kế',
+  'comm_aggregate': 'Tích lũy',
   'comm_usable': 'Có thể dùng',
   'comm_should_pay': 'Nên trả',
   'comm_balance_completed1': 'Còn lại',

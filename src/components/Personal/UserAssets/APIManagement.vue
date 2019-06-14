@@ -2,8 +2,6 @@
   <div
     class="api-management personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <header class="api-management-header personal-height40 line-height40 padding-left20 font-size16 background-color">
       <span class="padding-left23 header-content font-weight600">
@@ -126,8 +124,6 @@
             :data="extensionList"
             style="width: 100%;"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="partLoading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--创建时间-->
             <el-table-column
@@ -508,9 +504,7 @@ export default {
       userId: '', // 编辑用户api
       apiRemark: '', // 编辑用户备注
       ipAddress: '', // 编辑用户ip
-      dialogVisible: false,
-      fullscreenLoading: false, // 整页loading
-      partLoading: true // 局部列表loading
+      dialogVisible: false
     }
   },
   created () {
@@ -530,12 +524,9 @@ export default {
     },
     // 获取多个用户api信息
     async getMultipleUserAPIInfo () {
-      this.partLoading = true
       let data = await multipleUserAPIInfo({})
       // console.log('获取多个用户api信息')
       // console.log(data)
-      // 接口返回清除局部loading
-      this.partLoading = false
       if (!data) return false
       // 返回展示渲染挨批列表
       this.extensionList = getNestedData(data, 'data')
@@ -637,16 +628,12 @@ export default {
     },
     //  获取秘钥
     async getAccessAecretKey () {
-      // 整页loading
-      this.fullscreenLoading = true
       let data = await accessAecretKeyInfo({
         phoneCode: this.phoneCode, // 手机验证码
         emailCode: this.emailCode, // 邮箱验证码
         googleCode: this.googleCode // 谷歌验证码
       })
       // console.log(data)
-      // 接口返回清除loading
-      this.fullscreenLoading = false
       if (!data) return false
       // 默认API确认弹窗
       this.APIMoneyConfirm = false
@@ -666,8 +653,6 @@ export default {
     },
     // 调用创建api接口并向后台传参
     async statusCreationApi () {
-      // 整页loading
-      this.fullscreenLoading = true
       let data = await stateCreationApi({
         remark: this.remark, // 备注
         ip: this.bindingIpAddress, // ip地址
@@ -675,8 +660,6 @@ export default {
         secretKey: this.secretKey // sk私钥
       })
       // console.log(data)
-      // 接口返回清除loading
-      this.fullscreenLoading = false
       if (!data) return false
       // 默认创建之后弹出二次挨批创建信息框 关闭
       // this.apiSecondaryConfirmation = false
@@ -733,16 +716,12 @@ export default {
         goOnStatus = 0
       }
       if (goOnStatus) {
-        // 整页loading
-        this.fullscreenLoading = true
         let data = await modifyUserInformation({
           id: this.userId, // 用户userId
           remark: this.apiRemark, // 编辑用户备注
           ip: this.ipAddress // 编辑用户ip
         })
         // console.log(data)
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         if (!data) return false
         // 调用查询接口编辑完成之后重新赋值渲染
         this.getMultipleUserAPIInfo()
@@ -771,14 +750,10 @@ export default {
     },
     //  删除记录
     async deleteUserApi () {
-      // 整页loading
-      this.fullscreenLoading = true
       let data = await deleteUserInformation({
         id: this.userId
       })
       // console.log(data)
-      // 接口失败清除loading
-      this.fullscreenLoading = false
       if (!data) return false
       // 返回展示
       this.getMultipleUserAPIInfo()

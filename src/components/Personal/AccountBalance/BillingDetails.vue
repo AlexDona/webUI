@@ -151,8 +151,6 @@
                 :data="chargeRecordList"
                 style="width: 100%;"
                 :empty-text="$t('M.comm_no_data')"
-                v-loading="partLoading"
-                element-loading-background="rgba(0, 0, 0, 0.6)"
               >
                 <!--币种-->
                 <el-table-column
@@ -270,7 +268,6 @@
             :data="otherRecordsList"
             style="width: 100%;"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="partLoading"
           >
             <!--时间-->
             <el-table-column
@@ -456,8 +453,7 @@ export default {
           label: 'M.invitation_reward'
         }
       ],
-      id: '',
-      partLoading: false // 局部loading
+      id: ''
     }
   },
   async created () {
@@ -580,7 +576,6 @@ export default {
     stateSearchButton (entrustType) {
       this.recordPageNumber = 1
       this.otherRecordPageNumbers = 1
-      this.partLoading = true
       this.getChargeMentionList(entrustType)
     },
     /**
@@ -624,7 +619,6 @@ export default {
           params.endTime = this.startTime[1] == null ? '' : timeFilter(this.startTime[1], 'normal') // 结束起止时间
           data = await statusRushedToRecordList(params)
           // console.log(data)
-          this.partLoading = false
           if (!data) return false
           // 返回冲提记录列表展示
           let detailData = getNestedData(data, 'data')
@@ -642,9 +636,7 @@ export default {
           // console.log(this.startTime)
           data1 = await getComprehensiveRecordsList(params)
           console.log(data1)
-          this.partLoading = false
           if (!data1) return false
-          // 接口成功清除局部loading
           this.otherRecordsList = getNestedData(data1, 'data.list') || []
           this.totalPagesOtherRecords = getNestedData(data1, 'data.pages') - 0
           break
@@ -659,13 +651,11 @@ export default {
       switch (entrustType) {
         case 'current-entrust':
           // console.log(pageNum)
-          this.partLoading = true
           this.recordPageNumber = pageNum
           this.getChargeMentionList(entrustType)
           break
         case 'other-records':
           // console.log(pageNum)
-          this.partLoading = true
           this.otherRecordPageNumbers = pageNum
           this.getChargeMentionList(entrustType)
           break
@@ -827,10 +817,6 @@ export default {
           background-color: #1c1f32;
         }
 
-        .el-loading-mask {
-          background-color: rgba(0, 0, 0, .6);
-        }
-
         .el-tabs__item {
           padding: 0;
           margin-right: 30px;
@@ -928,10 +914,6 @@ export default {
 
         .el-table__empty-block {
           background-color: #fff;
-        }
-
-        .el-loading-mask {
-          background-color: rgba(0, 0, 0, .6);
         }
 
         .el-tabs__item {

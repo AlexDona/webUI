@@ -4,8 +4,6 @@
     :style="{
       height:windowHeight+'px'
     }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommonForMobile
       :style="{
@@ -74,8 +72,7 @@ export default {
       downloadUrl: '',
       isAndroid: false,
       isIOS: false,
-      isWXBrowserStatus: true,
-      fullscreenLoading: true
+      isWXBrowserStatus: true
     }
   },
   async created () {
@@ -101,7 +98,6 @@ export default {
     // 获取app下载地址
     async getAppDownLoadUrl () {
       await this.GET_APP_URL_ACTION()
-      this.fullscreenLoading = false
       if (this.isAndroid) {
         window.location.href = 'scheme: //fubt.com/'
         this.downloadUrl = this.androidUrl

@@ -6,8 +6,6 @@
     <!-- 委托订单表格 -->
     <div
       class="otc-entrust-order-table"
-      v-loading="loading"
-      element-loading-background="rgba(0, 0, 0, 0.6)"
     >
       <!-- 表头 -->
       <div class="entrust-table-head">
@@ -147,8 +145,6 @@ export default {
   // props,
   data () {
     return {
-      // loading加载
-      loading: true,
       // 分页
       // 每页展示的条数
       pageSize: 10,
@@ -185,7 +181,6 @@ export default {
     },
     // 3.0 请求委托中订单列表
     async getOTCEntrustingOrdersList () {
-      this.loading = true
       const data = await getOTCEntrustingOrders({
         status: 'ENTRUSTED', // 状态（ENTRUSTED 挂单中 HISTORY 历史挂单）
         pageNum: this.currentPage,
@@ -194,7 +189,6 @@ export default {
       console.log('委托中订单列表')
       console.log(data)
       // 返回数据正确的逻辑
-      this.loading = false
       if (!data) return false
       if (data.data) {
         let OTCEntrustOrderListData = getNestedData(data, 'data')

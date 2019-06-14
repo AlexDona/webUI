@@ -2,8 +2,8 @@
   <div
     id="app"
     class="body-container"
-    v-loading.fullscreen.lock="isAjaxReady"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
+    v-loading.fullscreen.lock="$loading_S_X"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
   >
     <NoticeHome
       v-if="isNeedNotice"
@@ -64,7 +64,8 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_THEME',
-      'CHANGE_CONVERT_CURRENCY'
+      'CHANGE_CONVERT_CURRENCY',
+      'CHANGE_ROUTER_PATH'
     ]),
     setBodyClassName (type, className) {
       type ? document.body.classList.add(className) : document.body.classList.remove(className)
@@ -77,32 +78,30 @@ export default {
       isLogin: state => state.user.isLogin,
       isMobile: state => state.user.isMobile,
       userInfo: state => state.user.loginStep1Info,
-      isAjaxReady: state => state.common.isAjaxReady
+      routerTo: state => state.common.routerTo
     })
   },
   watch: {
     '$route' (to, from) {
-      console.log(to.path)
+      // console.log(to.path, from.path)
       let path = to.path
       if (from.path === '/PersonalCenter') {
         this.$setStore('active-target', 'assets')
       }
       this.isNeedNotice = path === '/home' || path === '/' ? 1 : 0
       this.isNeedHeader = (
-        path !== '/login' &&
+        path !== `/${this.$routes_X.login}` &&
         !path.startsWith('/register') &&
         path !== '/downloadApp' &&
         !path.startsWith('/invitationRegister')
       ) ? 1 : 0
       this.isNeedFooter = (
-        path === '/login' ||
+        path === `/${this.$routes_X.login}` ||
         path.startsWith('/register') ||
         path === '/downloadApp' ||
         path.startsWith('/invitationRegister') ||
         path === '/ForgetPassword'
       ) ? 0 : 1
-      // let isLoginOrRigister = path === '/login' || path === '/register'
-      // document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width, initial-scale=0.3, minimum-scale=${isLoginOrRigister ? '0.3' : '0.1'}, maximum-scale=${isLoginOrRigister ? '0.3' : '1'}, user-scalable=${isLoginOrRigister ? 'no' : 'yes'}`)
       switch (path) {
         case '/register':
           this.setBodyClassName(true, 'register')
@@ -118,6 +117,9 @@ export default {
       } else {
         $('#udesk_container').fadeOut()
       }
+    },
+    routerTo (New) {
+      console.log(New)
     }
   }
 }

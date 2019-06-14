@@ -2,8 +2,6 @@
   <div
     class="identity-authentication personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <header class="identity-header-background personal-height40 line-height40">
       <span class="padding-left23 header-content font-size16">
@@ -627,7 +625,8 @@ export default {
       realNameInformationObj: {}, //  获取用户实名信息
       userInfoRefresh: {}, //  刷新用户信息
       statusRealNameInformation: {
-        cardNo: ''
+        cardNo: '',
+        cardType: ''
       },
       // 设置错误信息
       errorShowStatusList: [
@@ -635,8 +634,7 @@ export default {
         '', // 证件号码
         '', // 护照号码
         '' // 国籍
-      ],
-      fullscreenLoading: false // 整页loading
+      ]
     }
   },
   async created () {
@@ -659,7 +657,6 @@ export default {
     ...mapMutations([
       'SET_USER_INFO_REFRESH_STATUS',
       'SET_STEP1_INFO',
-      'CHANGE_AJAX_READY_STATUS',
       'CHANGE_USER_REFRESH_SUCCESS'
     ]),
     // 选择图片文件
@@ -670,7 +667,6 @@ export default {
       if (!e.target.files.length) return false
       console.dir(e.target.id)
       const INPUT_ID = e.target.id
-      this.CHANGE_AJAX_READY_STATUS(true)
       lrz(e.target.files[0]).then(async res => {
         const {base64, file, fileLen} = res
         if (this.beforeAvatarUpload(fileLen)) return false
@@ -702,7 +698,6 @@ export default {
       formData.append('file', file)
       console.log(formData)
       const data = await uploadImageAjax(formData)
-      this.CHANGE_AJAX_READY_STATUS(false)
       if (!data) return false
       switch (index) {
         case 1:
@@ -724,7 +719,6 @@ export default {
       const COMPRESS_SIZE = 10485760
       let isLt10M = false
       if (size > COMPRESS_SIZE) {
-        this.CHANGE_AJAX_READY_STATUS(false)
         // 上传头像图片大小不能超过 10M!
         this.$message.error(this.$t('M.user_senior_hint5'))
         isLt10M = true
@@ -740,6 +734,7 @@ export default {
       // 返回列表数据
       this.realNameInformationObj = getNestedData(data, 'data')
       this.statusRealNameInformation = getNestedData(data, 'data.authInfo')
+      // this.statusRealNameInformation = getNestedData(data, 'data')
     },
     // 检测身份证号
     idCardRegexpInputNum (ref) {
@@ -846,11 +841,7 @@ export default {
           cardNo: this.identificationNumber,
           country: this.userInfo.country.chinese
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await submitRealNameAuthentication(param)
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         if (!data) return false
         await this.REFRESH_USER_INFO_ACTION()
         this.authenticationIsStatus()
@@ -938,8 +929,6 @@ export default {
         idcardBack: this.dialogImageReverseSideUrl, // 上传证件反面
         idcardHand: this.dialogImageHandUrl // 上传手持证件
       }
-      // 整页loading
-      this.fullscreenLoading = true
       data = await submitSeniorCertification(param)
       if (!data) return false
       this.stateEmptyData()
@@ -947,8 +936,6 @@ export default {
       this.SET_USER_INFO_REFRESH_STATUS(true)
       await this.REFRESH_USER_INFO_ACTION()
       await this.getRealNameInformation()
-      // 接口返回清除loading
-      this.fullscreenLoading = false
     },
     // 接口请求完成之后清空数据
     stateEmptyData () {

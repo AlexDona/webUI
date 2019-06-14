@@ -286,11 +286,12 @@
     "media-feature-colon-space-after": "always",
     "media-feature-range-operator-space-after": "always",
     "at-rule-name-space-after": "always",
-    "indentation": 2,
+    "indentation": null,
     "no-eol-whitespace": true,
     "string-no-newline": null,
     "no-descending-specificity":null,
     "font-family-no-missing-generic-family-keyword":null,
-    "function-linear-gradient-no-nonstandard-direction":null
+    "function-linear-gradient-no-nonstandard-direction":null,
+    "declaration-block-trailing-semicolon":null
   }
 }

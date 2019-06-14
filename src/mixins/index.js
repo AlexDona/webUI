@@ -7,7 +7,7 @@ import {
   formatSeconds,
   setStore,
   getStore,
-  getStoreWithJson
+  getStoreWithJson, timeFilter
 } from '../utils'
 import {
   jumpToOtherPageForFooter,
@@ -17,14 +17,20 @@ import {
 } from '../utils/commonFunc'
 import {
   mapGetters,
-  mapState
+  mapState,
+  mapMutations
 } from 'vuex'
+
+import {routesVariable} from '../router/routesVariable'
 
 let mixin = {
   data () {
     return {}
   },
   methods: {
+    ...mapMutations({
+      '$UPDATE_PAY_PASSWORD_DIALOG_M_X': 'UPDATE_PAY_PASSWORD_DIALOG_M'
+    }),
     $goToPage (routerName, param) {
       let newRouterPath = routerName
       if (!routerName.startsWith('/')) newRouterPath = `/${routerName}`
@@ -81,6 +87,7 @@ let mixin = {
       '$isChineseLanguage_G_X': 'isChineseLanguage'
     }),
     ...mapState({
+      $loading_S_X: state => state.common.loading_S,
       $theme_S_X: state => state.common.theme,
       $language_S_X: state => state.common.language,
       $isLogin_S_X: state => state.user.isLogin,
@@ -92,13 +99,33 @@ let mixin = {
       $serverTime_S_X: state => state.trade.serverData.serverTime,
       $isShowServerPort_S_X: state => state.trade.serverData.isShowServerPort,
       $clientWidth_S_X: state => state.common.clientWidth,
-      $activityInfo_S_X: state => state.trade.activity
+      $activityInfo_S_X: state => state.trade.activity,
+      // 是否显示交易密码弹窗
+      $isShowGlobalPayPass_S_X: state => state.common.isShowGlobalPayPass_S,
+      // 全局交易密码
+      $globalPayPassword_S_X: state => state.common.globalPayPassword_S,
+      // VIP是否禁用
+      $isVIPEnable_S_X: state => state.common.footerInfo.configInfo.vipEnabled
     }),
     $activeBuyName_X () {
       return (this.$middleTopData_S_X.area || '').toUpperCase()
     },
     $activeSellName_X () {
       return (this.$middleTopData_S_X.sellsymbol || '').toUpperCase()
+    },
+    $routes_X () {
+      return routesVariable
+    }
+  },
+  filters: {
+    $timeFilter_F_X: function (date, type, daySplitSymbol) {
+      return timeFilter(date, type, daySplitSymbol)
+    },
+    // 数字 => 货币
+    $moneyFilter_F_X: function (val) {
+      let num = parseFloat(val)
+      num = num.toLocaleString()
+      return num
     }
   }
 }

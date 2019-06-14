@@ -2,8 +2,6 @@
 <template>
   <div
     class="kline-container"
-    v-loading.lock="fullscreenLoading"
-    element-loading-background="rgb(28, 31, 50)"
   >
     <div
       id="tv_chart_container"
@@ -100,7 +98,11 @@ export default {
       currentCacheList: [],
       LIMIT_BARS_RENDER_TIME: 20,
       // 是否全屏
-      isFullScreen: false
+      isFullScreen: false,
+      // 小数位选择的新值
+      newBitsValue: '',
+      // 交易对深度小数位改变时，socket订阅数据延时器
+      socketSUBTimer: null
     }
   },
   beforeCreate () {
@@ -126,10 +128,14 @@ export default {
   destroyed () {
     this.socket.destroy()
     this.widget = null
+    // 离开本组件清除socket订阅数据延时器
+    if (this.socketSUBTimer) {
+      clearTimeout(this.socketSUBTimer)
+    }
   },
   methods: {
     ...mapMutations([
-      'CHANGE_SOCKET_AND_AJAX_DATA',
+      'CHANGE_SOCKET_AND_AJAX_DATA', // 改变socket数据
       'SET_IS_KLINE_DATA_READY',
       'SET_MIDDLE_TOP_DATA',
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
@@ -233,7 +239,7 @@ export default {
         tradeList, // 交易记录
         tickerList // 行情交易区列表
       } = activeSymbolData
-      // console.log(activeSymbolData)
+      console.log(activeSymbolData)
       if (depthList && depthList.depthData.sells.list) {
         depthList.depthData.sells.list.reverse()
       }
@@ -245,6 +251,8 @@ export default {
       }
       // 买卖单
       this.ajaxData.buyAndSellData = getNestedData(depthList, 'depthData')
+      // 小数位数据
+      this.ajaxData.depthDecimal = getNestedData(depthList, 'depthDecimal')
       // 交易记录
       this.ajaxData.tardeRecordList = tradeList
       // 深度图
@@ -514,6 +522,7 @@ export default {
       }
       return newInterval
     },
+    // 接收到websocket数据以后数据处理
     onMessage (data) {
       this.barsRenderTime = this.LIMIT_BARS_RENDER_TIME - 2
       // const { countDown, isShow } = data.data
@@ -548,7 +557,8 @@ export default {
           break
         // 买卖单
         case 'DEPTH':
-          // console.log(data)
+          console.log('买卖单数据')
+          console.log(data)
           // console.log(symbol, this.activeSymbol.id)
 
           const depthData = getNestedData(data, 'data')
@@ -562,7 +572,7 @@ export default {
           break
         // 深度图
         case 'DEPTHRENDER':
-          // console.log(data)
+          console.log(data)
           this.socketData.depthData = getNestedData(data, 'data')
           break
         case 'TRADE':
@@ -662,9 +672,15 @@ export default {
     // 获取买卖单
     getBuyAndSellBySocket (type, symbol) {
       // 买卖单
+      let content
+      if (type === 'CANCEL') {
+        content = `market.${symbol}.depth.step1`
+      } else {
+        content = `market.${symbol}.depth.step1${this.newBitsValue}`
+      }
       this.socket.send({
         'tag': type,
-        'content': `market.${symbol}.depth.step1`,
+        'content': content,
         'id': 'pc'
       })
     },
@@ -710,6 +726,7 @@ export default {
     },
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min15') {
+      this.newBitsValue = ''
       this.getKlineByAjax(symbol, interval, this.KlineNum)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
@@ -727,7 +744,9 @@ export default {
       mainColor: state => state.common.mainColor,
       userId: state => state.user.loginStep1Info.userId,
       showId: state => state.user.loginStep1Info.userInfo.showId,
-      userInfo: state => state.user.loginStep1Info
+      userInfo: state => state.user.loginStep1Info,
+      // 拿到全局存储的选中的交易对小数位
+      globalCheckedBits: state => state.common.globalCheckedBits
     })
   },
   watch: {
@@ -794,6 +813,16 @@ export default {
     interval () {
       this.KlineNum = 0
       this.barsRenderTime = 0
+    },
+    // 监控全局存储的选中的小数位的值，值改变了，先CANCEL，再REQ 再SUB
+    globalCheckedBits (newValue, oldValue) {
+      this.newBitsValue = '.' + newValue
+      // 先CANCEL 间隔10毫秒 再REQ 再SUB
+      this.getBuyAndSellBySocket('CANCEL', this.symbol)
+      this.socketSUBTimer = setTimeout(() => {
+        this.getBuyAndSellBySocket('REQ', this.symbol)
+        this.getBuyAndSellBySocket('SUB', this.symbol)
+      }, 10)
     }
   }
 }

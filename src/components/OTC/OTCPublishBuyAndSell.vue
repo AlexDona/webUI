@@ -587,7 +587,6 @@ export default {
       'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_PASSWORD_USEABLE',
-      'CHANGE_AJAX_READY_STATUS', // 改变接口返回loading状态
       'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     ...mapActions([
@@ -998,10 +997,8 @@ export default {
             }}
           break
       }
-      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       const data = await addOTCPutUpOrders(param)
       // 返回数据正确的逻辑
-      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       // 关闭交易密码框
       this.publishOrderTradePwdDialogStatus = false
       this.tradePassword = '' // 清空交易密码

@@ -2,8 +2,6 @@
   <div
     class="vip-main personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <div class="header-content">
       <img
@@ -14,11 +12,6 @@
         <!-- 一键开通VIP享受优惠特权 -->
         {{$t('M.user_vip_one_key_open')}}
       </div>
-    </div>
-    <div
-      class="loading-box"
-      v-if="fullscreenLoading"
-    >
     </div>
     <div class="content-main-content">
       <!--开通vip详情页面-->
@@ -342,22 +335,19 @@ export default {
       coinId: '', // 币种id
       currencyAsset: 0, // 币种数量
       activeStatus: 0, // VIP状态
-      loadingCircle: {}, // 整页loading
       discountsInstructionStatus: false, // 折扣说明弹窗显示状态
       serviceAgreementStatus: false,
       // 折扣说明内容
       discountsInstructionContent: '',
       // vip服务条款
       serviceAgreementContent: '',
-      // 整页loading
-      fullscreenLoading: true,
       // 用户需要支付金额
       needUserPayCount: 0,
       returnJumpTimer: null // 返回跳转倒计时
     }
   },
   async created () {
-    console.log(this.vipAction)
+    // console.log(this.vipAction)
     if (this.vipLevel) {
       this.activeStatus = this.vipLevel.split('')[3] - 0
     }
@@ -371,13 +361,15 @@ export default {
       }
     }
     this.getServiceProtocolData()
-    await this.REFRESH_USER_INFO_ACTION()
+    // await this.REFRESH_USER_INFO_ACTION()
     await this.getVipPriceInfo()
     await this.getCurrencyApplicationDownloadUrl()
-    console.log(this.VipPriceInfoList)
-    console.log(this.vipName)
+    // console.log(this.VipPriceInfoList)
+    // console.log(this.vipName)
   },
-  mounted () {},
+  mounted () {
+    if (!this.$isVIPEnable_S_X) this.$goToPage(`/home`)
+  },
   activated () {},
   update () {},
   beforeRouteUpdate () {
@@ -574,11 +566,7 @@ export default {
           month: this.month,
           type: this.vipAction
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await buyVipPriceInfo(params)
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         this.dialogFormVisible = false
         if (!data) return false
         this.password = ''
@@ -597,22 +585,14 @@ export default {
     async getVipPriceInfo () {
       let data = await vipPriceInfo({})
       console.log(data)
-      // 整页loading
-      this.fullscreenLoading = true
-      // 接口失败清除loading
-      this.fullscreenLoading = false
       if (!data) return false
       this.vipPriceInfo1 = getNestedData(data, 'data')
       console.log(this.vipPriceInfo1)
     },
     async getCurrencyApplicationDownloadUrl () {
-      // 整页loading
-      this.fullscreenLoading = true
       let data = await currencyApplicationDownloadUrl({
         key: 'VIP_COIN_NAME'
       })
-      // 接口失败清除loading
-      this.fullscreenLoading = false
       if (!data) return false
       // 返回展示
       // this.coinId = data.data.data.coinId
@@ -626,11 +606,7 @@ export default {
       let param = {
         coinId: this.coinId // 币种coinId
       }
-      // 整页loading
-      this.fullscreenLoading = true
       data = await getPushTotalByCoinId(param)
-      // 接口失败清除loading
-      this.fullscreenLoading = false
       if (!data) return false
       this.currencyAsset = getNestedData(data, 'data.total')
     }
@@ -676,6 +652,9 @@ export default {
     },
     filteredData (newVal) {
       console.log(newVal)
+    },
+    $isVIPEnable_S_X (New) {
+      if (!New) this.$goToPage(`/home`)
     }
   },
   destroyed () {
@@ -709,11 +688,6 @@ export default {
         color: #fff;
         transform: translate(-50%, -50%);
       }
-    }
-
-    > .loading-box {
-      width: 100%;
-      height: 800px;
     }
 
     > .content-main-content {

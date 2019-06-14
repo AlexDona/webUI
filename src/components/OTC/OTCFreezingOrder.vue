@@ -5,8 +5,6 @@
   >
     <div
       class="freezing-order-content"
-      v-loading="loading"
-      element-loading-background="rgba(0, 0, 0, 0.6)"
     >
       <!--表头属性-->
       <div class="freezing-table-head">
@@ -170,8 +168,6 @@ export default {
   // props,
   data () {
     return {
-      // loading 加载
-      loading: true,
       // 分页
       // 每页展示的条数
       pageSize: 5,
@@ -205,7 +201,6 @@ export default {
     },
     // 3.0 请求冻结中订单列表
     async getOTCFreezingOrdersList () {
-      this.loading = true
       const data = await getOTCOrdersThreeDay({
         status: 'FROZEN', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         pageNum: this.currentPage,
@@ -214,7 +209,6 @@ export default {
       console.log('冻结中订单')
       console.log(data)
       // 返回数据正确的逻辑
-      this.loading = false
       if (!data) return false
       if (data.data) {
         let otcFreezingOrderListData = getNestedData(data, 'data')

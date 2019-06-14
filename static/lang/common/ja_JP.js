@@ -30,7 +30,7 @@ export const common = {
   'comm_balance': '残高',
   'comm_price_metre': '価格',
   'comm_total_sum': '合計',
-  'comm_aggregate': '合計',
+  'comm_aggregate': '累計',
   'comm_usable': '利用可能',
   'comm_should_pay': '支払うべきである',
   'comm_balance_completed1': '残高',
