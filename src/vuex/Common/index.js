@@ -1,3 +1,8 @@
+/**
+ * author: zhaoxinlei
+ * create: 201803015
+ * description: 当前 js 为 common(基础信息) state
+ */
 import mutations from './mutations'
 import actions from './actions'
 import {getStore} from '../../utils'
@@ -96,8 +101,6 @@ const state = {
     configInfo: {}
   },
   isSymbolChanged: false,
-  // 全局loading
-  isAjaxReady: false,
   clientWidth: 0,
   newsItemId: '',
   // 交易密码是否被锁定
@@ -105,7 +108,11 @@ const state = {
   // 是否全局显示交易密码弹窗
   isShowGlobalPayPass_S: false,
   // 全局交易密码
-  globalPayPassword_S: ''
+  globalPayPassword_S: '',
+  // 当前未完成接口数量
+  requestCount_S: 0,
+  // 全局loading
+  loading_S: false
 }
 
 export default {

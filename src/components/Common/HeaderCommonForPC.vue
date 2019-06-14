@@ -730,14 +730,6 @@ export default{
       const data = await getNavigationsAJAX(params)
       // console.log(data)
       this.navigation = _.get(data, 'data')
-      if (this.isFubt) {
-        this.navigation.push({
-          // FUC生态页
-          name: this.$t('M.common_fuc_eco'),
-          link: '/FucCenter',
-          newTab: false
-        })
-      }
       _.forEach(this.navigation, (nav, index) => {
         nav['isInnerLink'] = this.checkIsInnerLink(nav.link) ? true : false
       })
@@ -1291,9 +1283,9 @@ export default{
                 position: absolute;
                 z-index: 2;
                 top: 50px;
-                right: -100px;
+                left: 0;
                 box-sizing: border-box;
-                width: 210px;
+                min-width: 112px;
                 height: 0;
                 padding: 0 25px;
                 overflow: hidden;
@@ -1306,6 +1298,7 @@ export default{
                     // height: 50px;
                     // line-height: 50px;
                     line-height: 20px;
+                    white-space: nowrap;
                   }
 
                   > .nav-button {
@@ -1313,6 +1306,7 @@ export default{
                     height: 30px;
                     border: 1px solid rgba(0, 121, 254, 1);
                     border-radius: 5px;
+                    white-space: nowrap;
                     color: #ccc;
                     cursor: pointer;
                   }
@@ -1324,6 +1318,8 @@ export default{
                   text-align: left;
 
                   > li {
+                    white-space: nowrap;
+
                     &:hover {
                       color: rgba(0, 121, 254, 1);
                       cursor: pointer;
@@ -1601,6 +1597,7 @@ export default{
 
                   > .sub-nav-user {
                     > .nav-vip {
+                      white-space: nowrap;
                       color: #7d90ac;
                     }
 
@@ -1623,8 +1620,12 @@ export default{
                 }
 
                 &:hover .login-info {
-                  height: 450px;
+                  height: 330px;
                   transition: .5s;
+
+                  &.has-vip {
+                    height: 450px;
+                  }
                 }
               }
             }
@@ -1722,4 +1723,10 @@ export default{
     }
   }
 }
+</style>
+<style>
+  .el-select-dropdown.el-popper {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
 </style>

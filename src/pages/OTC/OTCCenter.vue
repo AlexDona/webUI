@@ -135,8 +135,6 @@
           <!--商户列表表格部分-->
           <div
             class="otc-merchant-list"
-            v-loading="loading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!-- 表格信息 暂时无数据-->
             <el-table
@@ -492,8 +490,6 @@ export default {
       isDisabled: false,
       // 在线购买和在线出售按钮禁用状态
       isDisabledRadio: false,
-      // loading加载
-      loading: false,
       // 分页
       // 当前页码
       currentPage: 1,
@@ -901,7 +897,6 @@ export default {
     async getOTCPutUpOrdersList () {
       if (this.selectedOTCAvailableCurrencyCoinID && this.checkedCurrencyId) {
         // console.log('有法币和可以币种id')
-        this.loading = true
         let param = {
           pageNum: this.currentPage,
           payType: this.checkedPayType, // 按照选中的支付方式查询列表
@@ -918,7 +913,6 @@ export default {
         console.log('otc主页面查询挂单列表')
         console.log(data)
         // 返回数据正确的逻辑
-        this.loading = false
         if (!data) return false
         if (data.data) {
           let orderListData = getNestedData(data, 'data')

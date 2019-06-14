@@ -4,7 +4,7 @@
   description: 当前页面为 众筹 存币记录 页面
 -->
 <template lang="pug">
-  .crowd-funding(
+  .crowd-funding-record(
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   )
     .inner-box
@@ -26,44 +26,53 @@
             el-table-column(
               :label="$t(tableHeader[0])"
               prop="time"
-              width="90"
+              width="150"
             )
               template(slot-scope="s")
-                p {{s.row.time | timerFormat1_F_X('date')}}
-                p {{s.row.time | timerFormat1_F_X('time')}}
+                p {{s.row.time | timerFormat1_F_X('date')}} {{s.row.time | timerFormat1_F_X('time')}}
             el-table-column(
             :label="$t(tableHeader[1])"
             prop="name"
+            width="200"
             )
             el-table-column(
             :label="$t(tableHeader[2])"
             prop="incomeType"
+            width="135"
             )
             el-table-column(
             :label="$t(tableHeader[3])"
             prop="interestRate"
+            width="135"
             )
             el-table-column(
-            :label="$t(tableHeader[4])"
-            prop="interestPeriod"
+              :label="$t(tableHeader[4])"
+              prop="interestPeriod"
+              width="135"
             )
             el-table-column(
               :label="$t(tableHeader[5])"
-              prop="amount"
-              width="90"
+              width="135"
             )
+              template(slot-scope = "s")
+                span {{s.row.amount}}{{s.row.ieoCoinName}}
             el-table-column(
             :label="$t(tableHeader[6])"
-            prop="interestExpected"
+            width="135"
             )
+              template(slot-scope = "s")
+                span {{s.row.interestExpected}}{{s.row.ieoCoinName}}
             el-table-column(
               :label="$t(tableHeader[7])"
               prop="timeSpace"
+              width="160"
             )
             el-table-column(
               :label="$t(tableHeader[8])"
               prop="status"
-              width="90"
+              width="80"
+              align="right"
+              header-align="right"
             )
         el-pagination(
         background
@@ -151,7 +160,8 @@ export default {
           amount: item.applyAmount,
           interestExpected: item.interestAmountExpected,
           timeSpace: this.computedTimeFilter(item.interestStartTime, 'date') + '~' + this.computedTimeFilter(item.interestEndTime, 'date'),
-          status: this.language === 'zh_CN' || this.language === 'zh_TW' ? item.statusName : item.statusCode
+          status: this.language === 'zh_CN' || this.language === 'zh_TW' ? item.statusName : item.statusCode,
+          ieoCoinName: item.ieoCoinName
         }
         this.dataList.push(newItem)
       })
@@ -186,7 +196,7 @@ export default {
 </script>
 <style lang="stylus">
   @import '../../assets/CSS/index.styl'
-  .crowd-funding
+  .crowd-funding-record
     padding-bottom 100px
     > .inner-box
       > .banner
@@ -215,13 +225,13 @@ export default {
           height 50px
           line-height 50px
           box-sizing border-box
-          padding-left 49px
+          padding 0 25px
           background-color #282c49
           color S_main_color
           display flex
           justify-content space-between
           .right
-            margin-right 20px
+            text-align right
           /deep/
             .el-breadcrumb
               line-height 50px
@@ -232,25 +242,25 @@ export default {
                 font-weight 400
         > .content
           box-sizing border-box
-          padding 0 20px
+          padding 0 15px
           min-height 1050px
+    &.night
       /deep/
         .el-table, .el-table__body-wrapper
           background-color #1c1f32 !important
         .el-table th, .el-table tr
-         background-color #1C1F32
+          background-color #1C1F32
         .el-table td, .el-table th.is-leaf
-         border none
+          border none
         .el-table th
           border-bottom 1px solid #313857 !important
         .el-table th>.cell
-          font-size 12px
           color #949BB6
+          word-break keep-all
         .el-table__body tr:hover>td
           background-color #242840
         .el-table__body tr td
           color #fff
-          font-size 12px
     &.day
       > .inner-box
         > .banner
@@ -260,18 +270,19 @@ export default {
         > .container
           width S_main_content_width
           margin -107px auto 0
-          background-color #1C1F32
+          background-color #fff
           min-height 1000px
           > .header
             height 50px
             line-height 50px
+            padding 0 25px
             box-sizing border-box
-            padding-left 49px
             background-color #e7eefc
             color S_main_color
           > .content
+            background-color #fff
             box-sizing border-box
-            padding 0 20px
+            padding 0 15px
       /deep/
         .el-table
           background-color #fff !important
@@ -286,4 +297,8 @@ export default {
               &:hover
                 >td
                     background-color #f3f6fd
+    /deep/
+      .el-table th>.cell,
+      .el-table__body tr td
+        font-size 12px
 </style>

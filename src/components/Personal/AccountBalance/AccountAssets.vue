@@ -55,8 +55,6 @@
           <!--账户资产币种列表-->
           <div
             class="content-list"
-            v-loading="localLoading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <div class="table-body text-align-l line-height50">
               <!-- 表头 -->
@@ -693,7 +691,6 @@ export default {
       sellsymbol: '', // 交易对名称
       isNeedTag: false, // 是否需要转账提示标签
       rechargeNoteInfo: '', // 充币地址备注信息
-      localLoading: true, // 页面列表局部loading
       isLegalWithdrawAddress: true, // 是否为合法提币地址
       minRechargeAmount: '', // 最小提币数量
       successCount: '', // 确认次数
@@ -1006,11 +1003,10 @@ export default {
     },
     // 6.10显示交易对跳转币种信息
     showSymbolJumpList (id, index) {
+      this.currencyTradingList = []
       this.currencyTradingId = id
-      // 个人资产跳转OTC-改写开始
       // console.log(id)
       this.OTCCenterHasCurrentCoin = _.some(this.OTCCoinList, ['coinId', this.currencyTradingId])
-      // 个人资产跳转OTC-改写结束
       this.tradingState = true
       this.current = index
       this.getQueryTransactionInformation()
@@ -1051,10 +1047,7 @@ export default {
         pageNum: this.currentPageForMyEntrust,
         pageSize: '10000'
       }
-      this.localLoading = true
       let data = await assetCurrenciesList(params)
-      // 接口失败清除loading
-      this.localLoading = false
       if (!data) return false
       this.withdrawDepositList.push({
         allIsShow: false,
@@ -1381,7 +1374,7 @@ export default {
     /**
      * 16.根据coinid查询交易信息
      */
-    async getQueryTransactionInformation () {
+    getQueryTransactionInformation: _.debounce(async function () {
       let data = await queryTransactionInformation({
         coinId: this.currencyTradingId // 币种coinId
       })
@@ -1389,7 +1382,7 @@ export default {
       if (!data) return false
       this.currencyTradingList = getNestedData(data, 'data.entrust') || []
       // console.log(data.data)
-    },
+    }, 500),
     // 个人资产跳转OTC
     jumpToOTCCenter (coinId) {
       // console.log(coinId)

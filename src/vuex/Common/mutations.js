@@ -1,3 +1,8 @@
+/**
+ * author: zhaoxinlei
+ * create: 201803015
+ * description: 当前 js 为 common(基础信息) mutations
+ */
 import {
   CHANGE_THEME,
   CHANGE_LANGUAGE,
@@ -14,7 +19,6 @@ import {
   SET_FOOTER_INFO,
   SET_COUNT_DOWN_RESET_STATUS,
   CHANGE_DEFAULT_LANGUAGE,
-  CHANGE_AJAX_READY_STATUS,
   CHANGE_SYMBOL_CHANGED_STATUS,
   SET_WINDOW_WIDTH,
   SET_NOTICE_ID,
@@ -24,7 +28,8 @@ import {
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH,
   // 增加改变全局存储选中的交易对小数位方法
-  CHANGE_CHECKED_BITS
+  CHANGE_CHECKED_BITS,
+  SET_REQUEST_COUNT_M
 } from './mutations-types.js'
 
 import {setStore} from '../../utils'
@@ -154,9 +159,6 @@ export default {
   [CHANGE_DEFAULT_LANGUAGE] (state, data) {
     state.defaultLanguage = data
   },
-  [CHANGE_AJAX_READY_STATUS] (state, data) {
-    state.isAjaxReady = data
-  },
   [SET_WINDOW_WIDTH] (state, width) {
     state.clientWidth = width
     // console.log(state.clientWidth)
@@ -174,5 +176,21 @@ export default {
   },
   [UPDATE_PAY_PASSWORD_M] (state, payPassword) {
     state.globalPayPassword_S = payPassword
+  },
+  // 更新当前正在请求次数
+  [SET_REQUEST_COUNT_M] (state, type) {
+    switch (type) {
+      case 'ADD':
+        state.requestCount_S += 1
+        break
+      case 'SUBTRACT':
+        if (state.requestCount_S > 0) state.requestCount_S -= 1
+        break
+      case 'RESET':
+        state.requestCount_S = 0
+        break
+    }
+    console.log(state.requestCount_S)
+    state.loading_S = state.requestCount_S <= 0 ? false : true
   }
 }

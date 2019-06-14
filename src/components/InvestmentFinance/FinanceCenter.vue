@@ -13,8 +13,6 @@
     </div>
     <div
       class="inner-box"
-      v-loading.fullscreen.lock="fullscreenLoading"
-      element-loading-background="rgba(0,0,0,0.6)"
     >
       <!-- 2.0 币种类型 -->
       <div class="finance-inner">
@@ -690,7 +688,6 @@ export default {
     return {
       noData: '', // 记录列表暂无数据
       newArrInvestTypeList: [],
-      fullscreenLoading: false,
       // 选中币种的id
       selectedCoinId: '',
       // 选中币种的名称
@@ -818,7 +815,6 @@ export default {
       'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([
-      'CHANGE_AJAX_READY_STATUS', // 改变接口返回loading状态
       'FINANCE_LINE_RENDER_TIME_LIST',
       'FINANCE_LINE_RENDER_PRICE_LIST',
       'FINANCE_LINE_STATUS',
@@ -845,13 +841,11 @@ export default {
     },
     // 商家申请界面用户协议
     async argumentBusinessApplyRequest () {
-      this.CHANGE_AJAX_READY_STATUS(true) // 接口返回loading
       const data = await argumentBusinessApply({
         termsTypeIds: 13,
         language: this.language
       })
       // 正确逻辑
-      this.CHANGE_AJAX_READY_STATUS(false) // 关闭接口返回loading
       if (!data) return false
       if (data.data) {
         this.argumentContent = getNestedData(data, 'data[0].content')
@@ -880,11 +874,8 @@ export default {
     },
     // 点击确定按钮存币详情模态框关闭
     async dialogSuer () {
-      // 添加全局loading
-      this.fullscreenLoading = true
       // 判断输入密码框是否显示
       await this.REFRESH_USER_INFO_ACTION()
-      this.fullscreenLoading = false
       // 关闭模态框
       this.dialogVisible = false
       // 交易密码是否被锁定
@@ -938,12 +929,8 @@ export default {
         }
         if (this.selectedInvestTypeId && this.$refs.investAmountRef.value) {
           if (this.isShow === false) {
-            // 添加全局loading
-            this.fullscreenLoading = true
             // 显示理财详情模态框前请求数据渲染模态框
             this.clickGetInvestEarnings()
-            // 添加全局loading
-            this.fullscreenLoading = false
             // 显示模态框
             this.dialogVisible = true
           } else {
@@ -1023,7 +1010,6 @@ export default {
       this.newArrInvestTypeList = []
       this.investTypeList = []
       this.selectedInvestTypeId = ''
-      this.fullscreenLoading = true
       const data = await getFinancialManagement({
         pageNum: this.currentPage,
         pageSize: this.pageSize,
@@ -1031,7 +1017,6 @@ export default {
         coinName: this.selectedCoinName,
         currency: this.convertCurrency
       })
-      this.fullscreenLoading = false
       // 返回数据正确的逻辑
       if (!data) return false
       let getData = getNestedData(data, 'data')

@@ -20,7 +20,7 @@
               <el-table
                 :data="orderRecordList"
                 :empty-text="$t('M.comm_no_data')"
-                :height="$clientWidth_S_X > 1920 ? '800': '574'"
+                :height="$clientWidth_S_X > 1920 ? '764': '538'"
               >
                 <!--时间-->
                 <el-table-column

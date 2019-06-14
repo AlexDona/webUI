@@ -3,7 +3,6 @@
     class="market-list-box home"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!--<LoadingBox class="loading-box"/>-->
     <div class="inner-box">
       <!--表头-->
       <template>
@@ -238,7 +237,6 @@ export default {
       'CHANGE_COLLECT_SYMBOL',
       'CHANGE_SYMBOL_MAP',
       'CHANGE_ACTIVE_TRADE_AREA',
-      'CHANGE_AJAX_READY_STATUS',
       'RESET_SYMBOL_MAP'
     ]),
     async initPlatesAndAreas () {
@@ -512,9 +510,7 @@ export default {
       let now = new Date().getTime()
       let lastTime = getStore('platesAges')
       if (now - lastTime < this.ONE_MINUTES) {
-        this.CHANGE_AJAX_READY_STATUS(true)
         this.timer = setTimeout(() => {
-          this.CHANGE_AJAX_READY_STATUS(false)
           clearTimeout(this.timer)
         }, 500)
       }

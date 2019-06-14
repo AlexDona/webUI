@@ -205,6 +205,7 @@
             <div
               style="
                 height:30px;
+                padding-right: 40px;
                 margin:10px auto;
                 line-height: 30px;
                 white-space:nowrap; "

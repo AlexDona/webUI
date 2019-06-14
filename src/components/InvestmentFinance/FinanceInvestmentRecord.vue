@@ -53,8 +53,6 @@
                   :data="investList"
                   style="width: 100%;"
                   :empty-text="$t('M.comm_no_data')"
-                  v-loading="loading"
-                  element-loading-background="rgba(0, 0, 0, 0.6)"
                 >
                   <!-- 存币币种 -->
                   <el-table-column
@@ -212,8 +210,6 @@
                   :data="userInterestRecord"
                   style="width: 100%;"
                   :empty-text="$t('M.comm_no_data')"
-                  v-loading="loading"
-                  element-loading-background="rgba(0, 0, 0, 0.6)"
                 >
                   <!-- 存币币种 -->
                   <el-table-column
@@ -293,7 +289,6 @@ export default {
   },
   data () {
     return {
-      loading: true,
       // 设置存币记录当前页码
       investCurrentPage: 1,
       // 设置存币记录总页数
@@ -356,14 +351,12 @@ export default {
       this.getFinancialManagementList(this.interestCurrentPage)
     },
     async getFinancialManagementList (pageNum) {
-      this.loading = true
       const data = await getFinancialManagement({
         pageNum: pageNum,
         pageSize: 10,
         coinId: this.coinId,
         coinName: this.coinName
       })
-      this.loading = false
       if (!data) return false
       let getData = getNestedData(data, 'data')
       if (this.activeName === '1') {

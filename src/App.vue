@@ -2,8 +2,8 @@
   <div
     id="app"
     class="body-container"
-    v-loading.fullscreen.lock="isAjaxReady"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
+    v-loading.fullscreen.lock="$loading_S_X"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
   >
     <NoticeHome
       v-if="isNeedNotice"
@@ -78,7 +78,6 @@ export default {
       isLogin: state => state.user.isLogin,
       isMobile: state => state.user.isMobile,
       userInfo: state => state.user.loginStep1Info,
-      isAjaxReady: state => state.common.isAjaxReady,
       routerTo: state => state.common.routerTo
     })
   },
@@ -130,6 +129,7 @@ export default {
   @import '../static/css/font-family/font.css';
 
   .body-container {
+    min-width: 1366px;
     height: 100%;
     font-size: 14px;
     font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;

@@ -64,10 +64,6 @@
   height: 280px;
 }
 
-.register-box .image-dialog .el-dialog {
-  height: 320px;
-}
-
 .register-box .el-dialog__header {
   box-sizing: border-box;
   width: 470px;
@@ -88,20 +84,6 @@
 
 .register-box .slider .el-dialog__body {
   padding: 80px 30px;
-}
-
-.register-box .image-dialog .el-dialog__body {
-  padding: 40px 30px;
-}
-
-.register-box .image-dialog .el-input__inner {
-  height: 44px;
-}
-
-.register-box .image-dialog .el-input-group__append {
-  height: 44px;
-  padding: 0;
-  border: none;
 }
 
 /* 注册移动端 */

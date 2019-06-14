@@ -2,10 +2,11 @@
   <div
     class="register-box user"
     :class="{
-      'day':theme == 'day',
-      'night':theme == 'night',
+      'day':$theme_S_X == 'day',
+      'night':$theme_S_X == 'night',
       'min-height':windowHeight < 800,
-      'margin-top':isMobile?'0':'50px'
+      'margin-top':isMobile?'0':'50px',
+      'pc-bg': !isMobile
       }"
     :style="{height: windowHeight + 'px'}"
   >
@@ -756,9 +757,7 @@ export default {
   },
   async created () {
     require('../../static/css/list/User/Register.css')
-    if (this.isLogin) {
-      this.USER_LOGOUT()
-    }
+    if (this.$isLogin_S_X) this.USER_LOGOUT()
   },
   mounted () {
     this.pcDragEvent()
@@ -780,7 +779,6 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'USER_LOGOUT',
       'SET_COUNT_DOWN_RESET_STATUS',
-      'CHANGE_AJAX_READY_STATUS',
       'CHANGE_FOOTER_ACTIVE_NAME'
     ]),
     jumpToUserAgreement () {
@@ -1123,7 +1121,6 @@ export default {
     },
     // 按下滑块函数
     async successCallback (params) {
-      this.CHANGE_AJAX_READY_STATUS(true)
       if (this.sliderFlag) {
         this.sliderFlag = false// 调用函数节流阀
         $('.handler').css({'left': this.maxwidth})
@@ -1139,7 +1136,6 @@ export default {
         let userName = !this.activeMethod ? this.phoneNum : this.emailNum
         if (!await this.checkUserExistAjax(type, userName)) return false
         await this.sendRegister(params)
-        this.CHANGE_AJAX_READY_STATUS(false)
       } // 验证成功函数
     }
   },
@@ -1149,8 +1145,6 @@ export default {
       'isNeedApp': 'isNeedApp'
     }),
     ...mapState({
-      theme: state => state.common.theme,
-      isLogin: state => state.user.isLogin,
       isMobile: state => state.user.isMobile,
       language: state => state.common.language,
       countryAreaList: state => state.common.countryAreaList,
@@ -1651,6 +1645,12 @@ export default {
         > span {
           font-size: .8rem;
         }
+      }
+    }
+
+    &.day {
+      &.pc-bg {
+        background: #fff;
       }
     }
   }

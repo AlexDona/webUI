@@ -87,6 +87,7 @@ let mixin = {
       '$isChineseLanguage_G_X': 'isChineseLanguage'
     }),
     ...mapState({
+      $loading_S_X: state => state.common.loading_S,
       $theme_S_X: state => state.common.theme,
       $language_S_X: state => state.common.language,
       $isLogin_S_X: state => state.user.isLogin,

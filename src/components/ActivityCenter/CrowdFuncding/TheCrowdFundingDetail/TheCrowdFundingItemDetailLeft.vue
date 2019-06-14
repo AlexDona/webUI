@@ -103,7 +103,7 @@ export default {
       return _.get(this.detail, 'buyDownLimit')
     },
     interestReturnWay () {
-      return this.$t(`M.${_.get(this.detail, 'interestReturnWay')}`)
+      return _.get(this.detail, 'interestReturnWay')
     },
     holdCoinAmount () {
       return _.get(this.detail, 'holdCoinAmount')

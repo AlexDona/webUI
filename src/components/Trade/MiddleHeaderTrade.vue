@@ -151,7 +151,7 @@ export default {
     height: 100%;
 
     .item {
-      padding: 10px 20px;
+      padding: 10px;
 
       > .top,
       > .bottom {

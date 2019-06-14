@@ -6,7 +6,7 @@ import {
 } from './axios'
 import {handleRequest} from '../commonFunc'
 // 获取邀请排行榜数据
-export const getRankingList = () => handleRequest(() => get('user/inviters', {'loading': true}))
+export const getRankingList = () => handleRequest(() => get('user/inviters'))
 // 获取资产列表下载地址
 export const getCurrencyApplicationDownloadUrl = params => handleRequest(() => get('getCurrencyApplicationDownloadUrl', params))
 // 获取众筹列表
