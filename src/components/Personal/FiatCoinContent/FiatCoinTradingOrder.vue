@@ -1310,7 +1310,6 @@ export default {
         return false
       }
       this.confirmGatheringStatus = true // 禁用确认收款交易密码框提交按钮
-      this.loading = true
       const data = await sellerConfirmGetMoney({
         orderId: this.activedTradingOrderId, // 订单id
         tradePassword: this.tradePassword // 交易密码
@@ -1325,7 +1324,6 @@ export default {
       if (!data) return false
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
-      this.loading = false
     },
     // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index, orderType) {

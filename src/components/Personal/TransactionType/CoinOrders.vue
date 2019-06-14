@@ -140,8 +140,6 @@
               <el-table
                 :data="currentEntrustList"
                 :empty-text="$t('M.comm_no_data')"
-                v-loading="partLoading"
-                element-loading-background="rgba(0, 0, 0, 0.6)"
               >
                 <!--时间-->
                 <el-table-column
@@ -265,8 +263,6 @@
           <el-table
             :data="historyEntrustList"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="partLoading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--时间-->
             <el-table-column
@@ -370,8 +366,6 @@
           <el-table
             :data="currentMakeDetailList"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="partLoading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--时间-->
             <el-table-column
@@ -508,7 +502,6 @@ export default {
       activeType: '', // 当前选中方向(类型)
       // cancellationOfOrder: false, // 撤销当前委单
       // cancelHistoricalOrder: false, // 删除历史订单
-      partLoading: true, // 局部列表loading
       end: '' // 占位
     }
   },
@@ -526,7 +519,6 @@ export default {
     coinMoneyOrders (tab) {
       this.emptyData()
       // console.log(tab.name)
-      this.partLoading = true
       this.commissionList(tab.name)
     },
     /**
@@ -535,10 +527,7 @@ export default {
     async getEntrustSelectBox () {
       let params = {
       }
-      this.partLoading = true
       const data = await getEntrustSelectBox(params)
-      // 接口失败清除局部loading
-      this.partLoading = false
       if (!data) return false
       // console.log(data)
       let detailData = getNestedData(data, 'data')
@@ -548,7 +537,6 @@ export default {
     },
     // 2.01 查询列表
     searchWithCondition (entrustType) {
-      this.partLoading = true
       this.commissionList(entrustType)
     },
     // 2.02 获取当前委托、历史委托、成交明细列表数据
@@ -576,7 +564,6 @@ export default {
         case 'current-entrust':
           params.currentPage = this.currentPageForMyEntrust
           data = await getMyEntrust(params)
-          this.partLoading = false
           if (!data) return false
           this.currentEntrustList = getNestedData(data, 'data.list') || []
           this.totalPageForMyEntrust = getNestedData(data, 'data.pages') - 0
@@ -584,7 +571,6 @@ export default {
         case 'history-entrust':
           params.currentPage = this.currentPageForHistoryEntrust
           data1 = await getHistoryEntrust(params)
-          this.partLoading = false
           if (!data1) return false
           if (data1.data.list) {
             this.historyEntrustList = getNestedData(data1, 'data.list') || []
@@ -594,7 +580,6 @@ export default {
         case 'make-detail':
           params.currentPage = this.currentPageMakeDetailEntrust
           data2 = await getMakeDetail(params)
-          this.partLoading = false
           if (!data2) return false
           if (data2.data.list) {
             this.currentMakeDetailList = getNestedData(data2, 'data.list') || []
@@ -611,17 +596,14 @@ export default {
       console.log(pageNum)
       switch (entrustType) {
         case 'current-entrust':
-          this.partLoading = true
           this.currentPageForMyEntrust = pageNum
           this.commissionList(entrustType)
           break
         case 'history-entrust':
-          this.partLoading = true
           this.currentPageForHistoryEntrust = pageNum
           this.commissionList(entrustType)
           break
         case 'make-detail':
-          this.partLoading = true
           this.currentPageMakeDetailEntrust = pageNum
           this.commissionList(entrustType)
       }

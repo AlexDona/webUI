@@ -132,8 +132,6 @@
             :data="pushRecordList"
             style="width: 100%;"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="partLoading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--类型-->
             <el-table-column
@@ -479,7 +477,6 @@ export default {
       currencyValueStatus: true, // 币种列表状态
       pointLength: 4, // 保留小数位后四位
       payPasswordErrorMsg: '', // 错误提示
-      partLoading: false, // 局部列表loading
       isNeedPayPassword: false,
       // 付款类型： 'pay': 付款 'push': push
       payType: 'pay'
@@ -802,14 +799,10 @@ export default {
       this.errorShowStatusList[0] = ''
       this.errorShowStatusList[1] = ''
       this.errorShowStatusList[2] = ''
-      // 开启局部loading
-      this.partLoading = true
       let data = await getPushAssetList({
         pageNum: this.currentPageForMyEntrust, // 分页
         pageSize: this.pageSize // 页码
       })
-      // 清除局部loading
-      this.partLoading = false
       if (!data) return false
       // 返回push记录数据
       this.pushRecordList = getNestedData(data, 'data.userPushVOPageInfo.list')

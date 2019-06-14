@@ -348,8 +348,7 @@ import {
 } from '../../utils'
 import {
   sendPhoneOrEmailCodeAjax,
-  getNestedData,
-  requestWithLoading
+  getNestedData
 } from '../../utils/commonFunc'
 import {CHECKPASSWORD_REG} from '../../utils/regExp'
 import ImageValidate from '../Common/ImageValidateCommon'
@@ -408,8 +407,7 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_USER_BUTTON_STATUS',
-      'CHANGE_AJAX_READY_STATUS'
+      'SET_USER_BUTTON_STATUS'
     ]),
     // 改变时将改变的值赋给对应的value
     checkValue (type, e) {
@@ -465,11 +463,11 @@ export default {
         token: this.nextStepToken,
         newPassword: this.newPassword
       }
-      const data = await requestWithLoading(findPasswordStep3, params)
+      const data = await findPasswordStep3(params)
       if (!data) return false
       this.activeStepNumber = 4
       setTimeout(() => {
-        this.$goToPage('/login')
+        this.$goToPage(`/${this.$routes_X.login}`)
       }, 3000)
     },
     // 找回密码步骤2
@@ -506,7 +504,7 @@ export default {
         mailCode: this.emailCode,
         googleCode: this.googleCode
       }
-      const data = await requestWithLoading(findPasswordStep2, params)
+      const data = await findPasswordStep2(params)
       if (!data) return false
       this.nextStepToken = getNestedData(data, 'data')
       this.activeStepNumber = 3
@@ -544,7 +542,7 @@ export default {
       let params = {
         userName: this.username
       }
-      const data = await requestWithLoading(findPasswordStep1, params)
+      const data = await findPasswordStep1(params)
       if (!data) return false
 
       this.userInfo = getNestedData(data, 'data')

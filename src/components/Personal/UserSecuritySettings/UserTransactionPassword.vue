@@ -595,7 +595,6 @@ export default {
     getSecurityCenter () {
       getSecurityCenter(this, {}, data => {
         if (data) {
-          // 接口成功清除loading
           this.securityCenter = getNestedData(data, 'data.data')
         }
       })

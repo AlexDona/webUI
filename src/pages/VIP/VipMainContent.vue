@@ -213,7 +213,6 @@ export default {
       coinId: '', // 币种id
       currencyAsset: 0, // 币种数量
       activeStatus: 0, // VIP状态
-      loadingCircle: {}, // 整页loading
       discountsInstructionStatus: false, // 折扣说明弹窗显示状态
       serviceAgreementStatus: false,
       discountsInstructionContent: '', // 折扣说明内容
@@ -230,7 +229,9 @@ export default {
     await this.getVipPriceInfo()
     await this.getCurrencyApplicationDownloadUrl()
   },
-  mounted () {},
+  mounted () {
+    if (!this.$isVIPEnable_S_X) this.$goToPage(`/home`)
+  },
   activated () {},
   update () {},
   beforeRouteUpdate () {
@@ -286,17 +287,14 @@ export default {
     async getVipPriceInfo () {
       let data = await vipPriceInfo()
       console.log(data)
-      // 整页loading
       if (!data) return false
       this.VipPriceInfoList = []
-      // // 接口成功清除loading
       // if (data.data.data) {
       //   // 返回展示
       //   this.vipPriceInfo1 = data.data.data
       //   console.log(this.vipPriceInfo1[0].vipCoinName)
       // }
       // 任修复报错问题
-      // 接口成功清除loading
       // this.vipPriceInfo1 = data.data.data
       this.vipPriceInfo1 = getNestedData(data, 'data')
       for (let i = 0; i < this.vipPriceInfo1.length - 1; i += 4) {
@@ -311,9 +309,7 @@ export default {
       let data = await currencyApplicationDownloadUrl({
         key: 'VIP_COIN_NAME'
       })
-      // 整页loading
       if (!data) return false
-      // 接口成功清除loading
       // 返回展示
       // this.coinId = data.data.data.coinId
       // 任修复报错问题
@@ -326,11 +322,9 @@ export default {
       let param = {
         coinId: this.coinId // 币种coinId
       }
-      // 整页loading
       data = await getPushTotalByCoinId(param)
       console.log(data)
       if (!data) return false
-      // 接口成功清除loading
       // this.currencyAsset = data.data.data.total
       // 任修复报错问题
       this.currencyAsset = getNestedData(data, 'data.total')
@@ -365,6 +359,9 @@ export default {
     },
     filteredData (newVal) {
       // console.log(newVal)
+    },
+    $isVIPEnable_S_X (New) {
+      if (!New) this.$goToPage(`/home`)
     }
   }
 }
@@ -392,11 +389,6 @@ export default {
         color: #fff;
         transform: translate(-50%, -50%);
       }
-    }
-
-    > .loading-box {
-      width: 100%;
-      height: 800px;
     }
 
     > .content-main-content {

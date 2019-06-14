@@ -1,43 +1,62 @@
 <!--
-  author: xiaoming(确定页面后请删除标注)
-  createTime: 2019-04-19 (确定页面后请删除标注)
-  description: PRE活动页面币币交易遮罩 (确定页面后请删除标注)
+  author: xiaoming(模板文件，请在创建是删除括号内内容)
+  create: 20190327
+  description: 当前页面为 demo 组件，功能为提供开发模板
 -->
-<template>
-  <div
-    class="demo-box"
-    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
-  >
-    <div class="inner-box"></div>
-  </div>
+<!-- pug 模板 -->
+<template lang="pug">
+  .demo-box
+    .inner-box {{$t('meessage')}}
 </template>
-<!--请严格按照如下书写书序-->
+<!-- html 模板 -->
+<!--<template>-->
+<!--<div-->
+<!--class="demo-box"-->
+<!--&gt;-->
+<!--<div class="inner-box">-->
+<!--{{$t('message')}}-->
+<!--</div>-->
+<!--</div>-->
+<!--</template>-->
+<!--请严格按照如下书写顺序-->
 <script>
-import {mapState} from 'vuex'
-// import {returnAjaxMsg} from '../../utils/commonFunc'
+// import { getLanguagesAJAX } from '../utils/API/common'
 export default {
-  components: {
-  },
+  // !!! 注意 !!! 如需要相关声明周期或方法，请放开注释(默认处于注释状态)
+  // name 为必填项
+  // name: '',
+  // mixins: [],
+  // components: {},
   // props,
-  data () {
-    return {}
-  },
-  created () {},
-  mounted () {},
-  activated () {},
-  updated () {},
-  beforeRouteUpdate () {},
-  beforeDestroy () {},
-  destroyed () {},
-  methods: {},
-  filter: {},
-  computed: {
-    ...mapState([
-    ])
-  },
-  watch: {}
+  // data () {
+  //   return {}
+  // }
+  // async created () {
+  // 接口请求 demo
+  // const data = await getLanguagesAJAX()
+  // 数据处理
+  // console.log(data)
+  // },
+  // mounted () {}
+  // !!! 注意!!!  新版页面的路由模式会在生产环境调为 `history` 模式，activated、deactivated 声明周期将不再提供使用
+  // activated () {},
+  // deactivated () {}
+  // updated () {},
+  // beforeRouteUpdate () {},
+  // beforeDestroy () {},
+  // destroyed () {},
+  // methods: {},
+  // filters: {},
+  // computed: {
+  // },
+  // watch: {}
 }
 </script>
-<style scoped lang="scss" type="text/scss">
 
+<style scoped lang="stylus">
 </style>
+<!--<style scoped lang="scss" type="text/scss">-->
+<!--.demo-box {-->
+<!--background-color: $mainBG;-->
+<!--}-->
+<!--</style>-->
