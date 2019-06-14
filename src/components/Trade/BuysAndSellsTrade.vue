@@ -41,9 +41,10 @@
                   {{ $t('M.comm_count') }}
                   <span class="uppercase">({{$middleTopData_S_X.sellsymbol}})</span>
                 </span><span class="total text-align-r">
-                  <!--累计-->
+                  <!--累计:合计改为累计后，括号中的单位要和前面的数量保持一致-->
                   {{ $t('M.comm_aggregate') }}
-                  <span class="uppercase">({{$middleTopData_S_X.area}})</span>
+                  <!--<span class="uppercase">({{$middleTopData_S_X.area}})</span>-->
+                  <span class="uppercase">({{$middleTopData_S_X.sellsymbol}})</span>
                 </span>
               </dt>
             </dl>
