@@ -1724,3 +1724,9 @@ export default{
   }
 }
 </style>
+<style>
+  .el-select-dropdown.el-popper {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+</style>
