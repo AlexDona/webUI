@@ -1,5 +1,7 @@
 import personalCenterRoutes from './personal-center-routes'
-
+import activity from './activity'
+import {routesVariable} from './routesVariable'
+// console.log(routesVariable)
 const HomeCenter = () => import('@/pages/HomeCenter')
 const PersonalCenter = () => import('@/pages/PersonalCenter')
 // 银行卡设置
@@ -64,6 +66,7 @@ const errorFor404And500 = () => import('@/pages/ErrorFor500And404')
 const FucCenter = () => import('@/pages/FucCenter')
 
 const routes = [
+  ...activity,
   {
     path: '/',
     redirect: '/home'
@@ -275,8 +278,8 @@ const routes = [
     component: TradeCenter
   },
   {
-    path: '/login',
-    name: 'login',
+    path: `/${routesVariable.login}`,
+    name: `${routesVariable.login}`,
     component: Login
   },
   // 注册

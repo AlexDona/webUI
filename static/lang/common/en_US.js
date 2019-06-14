@@ -26,7 +26,7 @@ export const common = {
   'comm_balance': 'Balance',
   'comm_price_metre': 'Price',
   'comm_total_sum': 'Sum',
-  'comm_aggregate': 'Total',
+  'comm_aggregate': 'Cumulative',
   'comm_usable': 'Available',
   'comm_should_pay': 'Payment should be',
   'comm_balance_completed1': 'Balance',

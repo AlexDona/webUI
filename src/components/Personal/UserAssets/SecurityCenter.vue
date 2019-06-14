@@ -2,8 +2,6 @@
   <div
     class="security-center personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <header class="security-header security-background personal-height40 line-height40 font-size16 padding-left20">
       <span class="padding-left15 font-weight600">
@@ -655,8 +653,7 @@ export default {
       state: '', // 开启关闭状态
       closeErrorMsg: '', // 关闭错误提示close
       openErrorMsg: '', // 开启错误提示open
-      securityLevel: 0, // 账号安全级别
-      fullscreenLoading: false // 整页loading
+      securityLevel: 0 // 账号安全级别
     }
   },
   async created () {
@@ -712,14 +709,8 @@ export default {
           params.pageNumber = this.securityRecordPage // 页码
           break
       }
-      // 整页loading
-      // this.fullscreenLoading = true
       await getSecurityCenter(this, params, (data) => {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         if (data) {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.securityCenter = getNestedData(data, 'data.data')
           console.log(this.securityCenter)
           this.securityLevel = getNestedData(data, 'data.data.person')
@@ -748,13 +739,11 @@ export default {
       switch (entrustType) {
         // 登陆记录分页
         case 'logon-record':
-          this.loading = true
           this.logonRecordPage = pageNum
           await this.getSecurityCenter(entrustType)
           break
         // 安全设置分页
         case 'security-record':
-          this.loading = true
           this.securityRecordPage = pageNum
           await this.getSecurityCenter(entrustType)
           break
@@ -969,11 +958,6 @@ export default {
           return false
         }
       }
-      // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
       let data
       let params = {
         email: this.innerUserInfo.email, // 邮箱
@@ -1014,8 +998,6 @@ export default {
           break
       }
       data = await enableTheClosing(params)
-      // 接口返回清除loading
-      this.loadingCircle.close()
       if (!data) return false
       await this.getSecurityCenter()
       // 安全中心状态刷新

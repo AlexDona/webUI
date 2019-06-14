@@ -110,12 +110,10 @@ export default {
     }
   },
   async created () {
-    this.CHANGE_AJAX_READY_STATUS(true)
     this.templateId = getStore('templateId')
     this.templateId ? await this.changeNewDetailByLanguage() : await this.getDetailInfo(this.detailId)
     await this.getAllNewsTypeList()
     await this.getAllTypeListNewsList()
-    this.CHANGE_AJAX_READY_STATUS(false)
   },
   mounted () {},
   activated () {},
@@ -123,7 +121,6 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_AJAX_READY_STATUS',
       'CHANGE_NEWS_TYPE_ACTIVE_NAME'
     ]),
     backToParent (item) {
@@ -166,7 +163,6 @@ export default {
     async getAllTypeListNewsList () {
       console.log(this.newsTypeList)
       this.detailAllNewsList = []
-      this.CHANGE_AJAX_READY_STATUS(true)
       let params = {
         pageNum: 1,
         pageSize: 5,

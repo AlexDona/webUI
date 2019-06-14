@@ -20,6 +20,7 @@
         type="text"
         class="input-mention border-radius2 padding-lr15 box-sizing"
         v-model="withdrawRemark"
+        @input="filterSpace"
       >
     </div>
     <div class="recharge-list-left display-flex">
@@ -187,6 +188,8 @@ export default {
     'pointLengthAccountCount',
     // 提币地址初始值
     'originalActiveWithdrawDepositAddress',
+    // 地址标签初始值
+    'originWithdrawRemark',
     // 当前币种id
     'coinId',
     // 币种的可用总量
@@ -200,18 +203,35 @@ export default {
       withdrawRemark: ''
     }
   },
-  created () {
+  created () {},
+  mounted () {
+    console.log(this.originWithdrawRemark)
   },
-  mounted () {},
   activated () {},
   updated () {},
   beforeRouteUpdate () {},
   methods: {
+    // 地址标签输入时过滤空格
+    filterSpace () {
+      this.withdrawRemark = this.withdrawRemark.replace(/\s*/g, '')
+    },
     // 当前提币地址改变回调
-    changeWithdrawAddress () {
-      this.$emit('changeWithdrawAddress', {
-        activeWithdrawDepositAddress: this.activeWithdrawDepositAddress
-      })
+    changeWithdrawAddress (e) {
+      if (_.every(this.withdrawAddressList, item => item.address !== e)) {
+        this.$emit('changeWithdrawAddress', {
+          activeWithdrawDepositAddress: e,
+          activeWithdrawRemark: ''
+        })
+      } else {
+        _.forEach(this.withdrawAddressList, item => {
+          if (item.address === e) {
+            this.$emit('changeWithdrawAddress', {
+              activeWithdrawDepositAddress: this.activeWithdrawDepositAddress,
+              activeWithdrawRemark: item.tag
+            })
+          }
+        })
+      }
     },
     jumpToOtherTab (target, coinId, index) {
       this.$emit('jumpToOtherTab', {
@@ -257,6 +277,10 @@ export default {
     // 初始提币地址赋值
     originalActiveWithdrawDepositAddress (newVal) {
       this.activeWithdrawDepositAddress = newVal
+    },
+    originWithdrawRemark (newVal) {
+      console.log(newVal)
+      this.withdrawRemark = newVal
     }
   }
 }

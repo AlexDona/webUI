@@ -1,8 +1,6 @@
 <template>
   <div
     class="invitation-register-box"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommonForMobile
       :style="{
@@ -68,7 +66,6 @@ export default {
     return {
       inviter: '',
       showId: '',
-      fullscreenLoading: true,
       queryLanguage: '', // 参数语言
       isAndroid: false,
       isIOS: false
@@ -104,7 +101,6 @@ export default {
       const data = await findUserInfoByShowId(params)
       if (!data) return false
       this.inviter = getNestedData(data, 'data.userName')
-      this.fullscreenLoading = false
     }
   },
   filter: {},

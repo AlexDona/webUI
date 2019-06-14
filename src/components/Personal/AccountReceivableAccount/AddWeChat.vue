@@ -2,8 +2,6 @@
   <div
     class="add-chat personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
     :style="{
       height: windowHeight+'px'
     }"
@@ -193,7 +191,6 @@ export default {
       paymentTerm: {}, // 收款方式
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
-      fullscreenLoading: false, // 整页loading
       errorShowStatusList: [
         '', // 微信账号
         '' // 交易密码
@@ -216,7 +213,6 @@ export default {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_REF_ACCOUNT_CREDITED_STATE',
-      'CHANGE_AJAX_READY_STATUS',
       'CHANGE_PASSWORD_USEABLE'
     ]),
     ...mapActions([
@@ -258,7 +254,7 @@ export default {
       if (!e.target.files.length) return false
       lrz(e.target.files[0]).then(async res => {
         console.log(res)
-        this.CHANGE_AJAX_READY_STATUS(true)
+
         const {base64, file, fileLen} = res
         if (this.beforeAvatarUpload(fileLen)) return false
         await this.uploadImg(file)
@@ -271,7 +267,6 @@ export default {
       // console.log(res.file)
       formData.append('file', file)
       const data = await uploadImageAjax(formData)
-      this.CHANGE_AJAX_READY_STATUS(false)
       if (!data) return false
       console.log(data.data)
       this.dialogImageHandUrl1 = getNestedData(data, 'data.fileUrl')
@@ -283,7 +278,6 @@ export default {
       const COMPRESS_SIZE = 10485760
       let isLt10M = false
       if (size > COMPRESS_SIZE) {
-        this.CHANGE_AJAX_READY_STATUS(false)
         // 上传头像图片大小不能超过 10M!
         this.$message.error(this.$t('M.user_senior_hint5'))
         isLt10M = true
@@ -366,13 +360,9 @@ export default {
         let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
         this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
         if (this.isLockedPayPassword) return false
-        // 整页loading
-        this.fullscreenLoading = true
         // console.log(this.dialogImageHandUrl1)
         data = await statusCardSettings(param)
         // console.log(data)
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         if (!data) return false
         this.successJump()
         this.stateEmptyData()

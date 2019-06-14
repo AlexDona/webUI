@@ -185,7 +185,6 @@ export default {
         '', // 支行地址
         '' // 交易密码
       ],
-      loadingCircle: {}, // 整页loading
       successCountDownJumpTimer: null // 成功自动跳转定时器
     }
   },

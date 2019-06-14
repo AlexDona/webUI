@@ -56,6 +56,7 @@ export const finance = {
   'finance_payment': '首期',
   'finance_return_rate': '返息',
   'finance_return_data': '活期日返',
+  'finance_return_principal': '已返还本金',
   // vdsTis
   'finance_vdsTips': '*由于VDS主链的分配机制与随机性，挖矿收益并不能以固定比例确定。系统默认设置为0，具体挖矿收益以实际为准。'
 }

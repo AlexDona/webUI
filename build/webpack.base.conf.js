@@ -60,7 +60,7 @@ module.exports = {
       {
         test: /.scss$/,
         // loaders: ['style', 'css', 'sass']
-        use:[
+        use: [
           'vue-style-loader',
           'css-loader',
           'sass-loader'
@@ -99,6 +99,14 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.jade$/,
+        loader: 'jade'
+      },
+      {
+        test: /\.pug$/,
+        loader: 'pug'
       }
     ]
   },

@@ -28,7 +28,10 @@
           </div>
         </div>
         <div class="info float-left flex1">
-          <p class="info-top">
+          <p
+            class="info-top"
+            :style="{'marginTop': !$isVIPEnable_S_X ? '30px' : ''}"
+          >
             <!--未实名-->
             <span
               v-if="realNameAuth !== 'y'"
@@ -118,7 +121,10 @@
               />
             </span>
           </p>
-          <div class="info-centre margin-top16">
+          <div
+            class="info-centre margin-top16"
+            v-if="$isVIPEnable_S_X"
+          >
             <span class="info-centre-left float-left font-size12">
               <!--会员等级 - -->
               {{ $t('M.user_assets_grade_membership') }} -
@@ -254,9 +260,11 @@ export default {
   methods: {
     // 1.0 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
+      const { shortName } = this.activeConvertCurrencyObj
+      if (!shortName) return
       const params = {
         coinName: 'FBT',
-        shortName: this.activeConvertCurrencyObj.shortName
+        shortName
       }
       const data = await currencyTransform(params)
       if (!data) return false

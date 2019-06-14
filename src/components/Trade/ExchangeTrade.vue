@@ -1096,7 +1096,7 @@ export default {
           this.addEntrust()
         }
       } else {
-        this.$goToPage('/login')
+        this.$goToPage(`/${this.$routes_X.login}`)
       }
     },
     setRefValue (ref, value = '') {
@@ -1111,7 +1111,7 @@ export default {
     async addEntrust () {
       const {partnerTradeId} = this.$middleTopData_S_X
       if (!this.$isLogin_S_X) {
-        this.$goToPage('/login')
+        this.$goToPage(`/${this.$routes_X.login}`)
         return false
       }
       if (!this.loginStep1Info.userInfo.payPassword) {

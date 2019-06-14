@@ -3,7 +3,6 @@
     class="market-list-box home"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!--<LoadingBox class="loading-box"/>-->
     <div class="inner-box">
       <!--表头-->
       <template>
@@ -238,7 +237,6 @@ export default {
       'CHANGE_COLLECT_SYMBOL',
       'CHANGE_SYMBOL_MAP',
       'CHANGE_ACTIVE_TRADE_AREA',
-      'CHANGE_AJAX_READY_STATUS',
       'RESET_SYMBOL_MAP'
     ]),
     async initPlatesAndAreas () {
@@ -512,9 +510,7 @@ export default {
       let now = new Date().getTime()
       let lastTime = getStore('platesAges')
       if (now - lastTime < this.ONE_MINUTES) {
-        this.CHANGE_AJAX_READY_STATUS(true)
         this.timer = setTimeout(() => {
-          this.CHANGE_AJAX_READY_STATUS(false)
           clearTimeout(this.timer)
         }, 500)
       }
@@ -656,7 +652,7 @@ export default {
     /* 表头 */
     .inner-box {
       position: relative;
-      width: 1130px;
+      width: 1300px;
       margin: 78px auto;
 
       > .search-box {
@@ -705,11 +701,11 @@ export default {
             overflow: hidden;
 
             &.max-height {
-              max-height: 610px;
+              max-height: 626px;
             }
 
             &.force-height {
-              height: 610px !important;
+              height: 626px !important;
             }
           }
         }
@@ -885,8 +881,8 @@ export default {
         height: 46px;
         background-image: url(../../assets/develop/tab-bg.png);
         background-position: center center;
-        -webkit-background-size: 1130px 46px;
-        background-size: 1130px 46px;
+        -webkit-background-size: 1300px 46px;
+        background-size: 1300px 46px;
       }
 
       .el-input__inner {

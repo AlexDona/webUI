@@ -1,7 +1,7 @@
 <template>
   <div
     class="table-item-box"
-    v-show="item.content.length || (searchKeyWord&&item.id == searchAreaId)"
+    v-show="item.content.length || (searchKeyWord && isSearchArea)"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div
@@ -12,7 +12,7 @@
         >
           <div class="top">
             <span>{{item.area}}</span>
-            <span v-show="item.id != collectAreaId && item.id != searchAreaId">
+            <span v-show="!isSearchAreaOrCollectionArea">
               <!--交易区-->
               {{ $t('M.home_market_trade_sector') }}
             </span>
@@ -23,8 +23,8 @@
     <div
       class="right"
       :style="{
-        'height':`${+(50*((isGetMore ? (item.content.length + 1) : item.content.length) || 1) + 108)}px`,
-        'max-height':'610px'
+        'height': isSearchAreaOrCollectionArea ? `${+(50*((isGetMore ? (item.content.length + 1) : item.content.length) || 1) + 108)}px` : '',
+        'max-height':'594px'
       }"
     >
       <el-table
@@ -32,22 +32,27 @@
         :class="{
           'has-data': item.content.length
         }"
-        :data="item.id==collectAreaId || searchKeyWord ? item.content: item.content.filter(item=>item.visible)"
+        :data="isCollectionArea || searchKeyWord ? item.content: item.content.filter(item => item.visible)"
         @row-click="changeActiveSymbol"
-        :height="isGetMore ? 548: 598"
+        :height="isGetMore ? 548: 595"
       >
         <!--交易对:label="$t('M.comm_deal') + $t('M.comm_pair')"-->
         <el-table-column
           :label="$t('M.comm_deal_pair')"
-          width="120px"
+          align="left"
+          header-align="left"
         >
           <template slot-scope="s">
-            <div style="
+            <div
+              style="
               display:flex;
               box-sizing: border-box;
-              width: 132px !important;
-              padding-left:14px;">
-              <div class="left" style="border-radius: 50%;">
+              padding-left:14px;"
+            >
+              <div
+                class="left"
+                style="border-radius: 50%;"
+              >
                 <img
                   style="
                     display:inline-block;
@@ -89,16 +94,16 @@
         <el-table-column
           prop="last"
           :label="$t('M.home_market_recent_quotation')"
-          width="130px"
           sortable
+          align="right"
+          header-align="right"
         >
           <template slot-scope="s">
             <div
               style="
-                width:160px;
                 height:30px;
-                padding-left:10px;
-                margin:10px auto; ">
+                margin:10px auto; "
+            >
               <div class="top"
                    style="height:15px;
                       line-height: 15px;"
@@ -132,17 +137,18 @@
         <el-table-column
           prop="high"
           :label="$t('M.home_market_ceiling_price')"
-          width="130px"
           sortable
+          width="160"
+          align="right"
+          header-align="right"
         >
           <template slot-scope="s">
             <div
               style="
-                width:140px;
                 height:30px;
-                padding-left:10px;
                 margin:10px auto;
-                line-height: 30px; ">
+                line-height: 30px; "
+            >
               {{$scientificToNumber(s.row.high)}}
             </div>
           </template>
@@ -151,14 +157,15 @@
         <el-table-column
           prop="low"
           :label="$t('M.home_market_minimum_price')"
-          width="130px"
           sortable
+          width="166"
+          align="right"
+          header-align="right"
         >
           <template slot-scope="s">
             <div
-              style=" width:140px;
+              style="
                 height:30px;
-                padding-left:12px;
                 margin:10px auto;
                 line-height: 30px; ">
               {{$scientificToNumber(s.row.low)}}
@@ -169,15 +176,16 @@
         <el-table-column
           prop="vol24hour"
           :label="'24H' + $t('M.home_market_volume')"
-          width="150px"
+          width="160"
+          align="right"
+          header-align="right"
           sortable
         >
           <template slot-scope="s">
             <div
               v-show="String($formatCount(s.row.vol24hour))!='NaN'"
-              style=" width: 120px;
+              style="
                 height:30px;
-                padding-left:10px;
                 margin:10px auto;
                 line-height: 30px; ">
               {{$formatCount(s.row.vol24hour)}}
@@ -188,14 +196,16 @@
         <el-table-column
           prop="chg"
           :label="$t('M.trade_ups_and_downs')"
-          width="110px"
           sortable
+          width="138"
+          align="right"
+          header-align="center"
         >
           <template slot-scope="s">
             <div
-              style=" width:74px;
+              style="
                 height:30px;
-                padding-left:8px;
+                padding-right: 40px;
                 margin:10px auto;
                 line-height: 30px;
                 white-space:nowrap; "
@@ -224,12 +234,15 @@
         <el-table-column
           prop="tendency"
           :label="$t('M.home_market_price_tendency')"
-          width="130px"
+          width="132"
+          align="center"
+          heaer-align="center"
         >
           <template slot-scope="s">
             <EchartsLineCommon
               :id="s.row.id + Math.random()"
-              :data="s.row.triduumSampling"/>
+              :data="s.row.triduumSampling"
+            />
           </template>
         </el-table-column>
         <!--收藏-->
@@ -242,7 +255,7 @@
             <!--非自选区-->
             <div
               class="collect-box"
-              v-show="item.id!=collectAreaId"
+              v-show="!isCollectionArea"
             >
               <i
                 class="el-icon-star-on collected collect font-size16 cursor-pointer"
@@ -258,7 +271,7 @@
             <!--自选区-->
             <div
               class="collect-box"
-              v-show="item.id==collectAreaId"
+              v-show="isCollectionArea"
             >
               <i
                 class="el-icon-star-on collected collect font-size16 cursor-pointer"
@@ -395,6 +408,15 @@ export default {
     }),
     isGetMore () {
       return this.more && this.item.more
+    },
+    isSearchAreaOrCollectionArea () {
+      return this.isSearchArea || this.isCollectionArea
+    },
+    isSearchArea () {
+      return this.item.id == this.searchAreaId
+    },
+    isCollectionArea () {
+      return this.item.id == this.collectAreaId
     }
   },
   watch: {
@@ -413,11 +435,10 @@ export default {
 
   /* 侧边栏 */
   > .left {
-    /* min-height:560px; */
-
-    /* background-color: #f40; */
     position: relative;
     width: 210px;
+    max-width: 210px;
+    max-height: 608px;
     text-align: center;
 
     &::before {
@@ -461,6 +482,7 @@ export default {
     /* 正面 */
     > .right-side {
       position: relative;
+      z-index: 100;
       top: -30px;
       background: linear-gradient(#1d3862, #305fa7);
 
@@ -549,10 +571,9 @@ export default {
   /* 主要内容 */
   > .right {
     /* height:547px; */
-    width: 986px;
+    width: 1086px;
     margin: 13px 0 0;
     overflow: hidden;
-    background-color: transparent;
 
     > .more-btn {
       box-sizing: border-box;
@@ -570,9 +591,24 @@ export default {
 
     /deep/ {
       .el-table {
+        width: 1095px;
+
+        .caret-wrapper {
+          width: 15px;
+        }
+
+        .sort-caret.descending {
+          bottom: 8px;
+        }
+
         .el-table__row {
           td {
             padding: 0;
+
+            .cell {
+              overflow: unset;
+              white-space: nowrap;
+            }
 
             div {
               height: 50px;
@@ -589,6 +625,9 @@ export default {
 
   &.day {
     > .right {
+      background-color: transparent;
+      box-shadow: 0 1px 5px 0 lightgrey;
+
       > .more-btn {
         background-color: #fff;
 

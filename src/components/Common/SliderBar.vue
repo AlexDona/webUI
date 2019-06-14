@@ -348,6 +348,10 @@ export default {
           .vue-slider-component {
             margin: 0 0 10px;
 
+            .vue-slider-piecewise-label {
+              display: none;
+            }
+
             .vue-slider {
               height: 2px !important;
               background-color: #a9bed4;

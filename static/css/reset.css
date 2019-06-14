@@ -1,5 +1,6 @@
 html,
 body {
+  min-width: 1300px;
   overflow: auto;
 }
 
@@ -176,7 +177,8 @@ hr {
 }
 
 ol,
-ul {
+ul,
+li {
   list-style-type: none;
 }
 

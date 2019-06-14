@@ -2,8 +2,6 @@
   <div
     class="add-western personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
     :style="{
       height: windowHeight+'px'
     }"
@@ -135,7 +133,6 @@ export default {
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
-      fullscreenLoading: false, // 整页loading
       errorShowStatusList: [
         '', // 西联汇款账号
         '' // 交易密码
@@ -260,12 +257,8 @@ export default {
         let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
         this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
         if (this.isLockedPayPassword) return false
-        // 整页loading
-        this.fullscreenLoading = true
         data = await statusCardSettings(param)
         console.log(data)
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         if (!data) return false
         this.successJump()
         this.stateEmptyData()

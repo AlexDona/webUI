@@ -1,3 +1,8 @@
+/**
+ * author: zhaoxinlei
+ * create: 201803015
+ * description: 当前 js 为 common(基础信息) state
+ */
 import mutations from './mutations'
 import actions from './actions'
 import {getStore} from '../../utils'
@@ -57,7 +62,8 @@ const state = {
       }
     },
     tardeRecordList: [], // 交易记录
-    tradeMarketList: [] // 交易区列表
+    tradeMarketList: [], // 交易区列表
+    depthDecimal: {} // 交易对深度小数位数据
   },
   // socket 数据
   socketData: {
@@ -81,6 +87,8 @@ const state = {
     tardeRecordList: [], // 交易记录
     tradeMarkeContentItem: {} // 交易区单项
   },
+  // 全局存储的选中的交易对小数位
+  globalCheckedBits: '',
   routerTo: '', // 路由跳转
   withdrawDepositList: [], // 我的资产列表信息数据
   userRefreshUserList: [], // 刷新用户信息
@@ -93,12 +101,18 @@ const state = {
     configInfo: {}
   },
   isSymbolChanged: false,
-  // 全局loading
-  isAjaxReady: false,
   clientWidth: 0,
   newsItemId: '',
   // 交易密码是否被锁定
-  isLockedPayPassword: false
+  isLockedPayPassword: false,
+  // 是否全局显示交易密码弹窗
+  isShowGlobalPayPass_S: false,
+  // 全局交易密码
+  globalPayPassword_S: '',
+  // 当前未完成接口数量
+  requestCount_S: 0,
+  // 全局loading
+  loading_S: false
 }
 
 export default {
