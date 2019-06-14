@@ -218,12 +218,13 @@
                   >
                   </el-table-column>
                   <!-- 存币类型 prop="description" :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription"-->
+                  <!--存币类型-->
                   <el-table-column
                     :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
                   >
                     <template slot-scope="s">
-                      <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
-                      <div v-else>{{s.row.typeEnglishDescription}}</div>
+                      <div v-if="language === 'zh_CN' || language === 'zh_TW'" :title="s.row.typeDescription">{{s.row.typeDescription}}</div>
+                      <div v-else :title="s.row.typeEnglishDescription">{{s.row.typeEnglishDescription}}</div>
                     </template>
                   </el-table-column>
                   <!-- 数量 -->
