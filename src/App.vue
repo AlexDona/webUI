@@ -129,6 +129,7 @@ export default {
   @import '../static/css/font-family/font.css';
 
   .body-container {
+    min-width: 1366px;
     height: 100%;
     font-size: 14px;
     font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;

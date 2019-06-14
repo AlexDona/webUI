@@ -337,6 +337,7 @@
             :no-data-text="$t('M.comm_no_data')"
             v-model="activeConvertCurrency"
             :placeholder="$t('M.comm_please_choose')"
+            popper-class="convert-currency"
           >
             <el-option
               v-for="item in convertCurrencyList"
@@ -1723,4 +1724,10 @@ export default{
     }
   }
 }
+</style>
+<style>
+  .el-select-dropdown.el-popper.convert-currency {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
 </style>

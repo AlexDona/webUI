@@ -244,24 +244,23 @@ export default {
           box-sizing border-box
           padding 0 15px
           min-height 1050px
+    &.night
       /deep/
         .el-table, .el-table__body-wrapper
           background-color #1c1f32 !important
         .el-table th, .el-table tr
-         background-color #1C1F32
+          background-color #1C1F32
         .el-table td, .el-table th.is-leaf
-         border none
+          border none
         .el-table th
           border-bottom 1px solid #313857 !important
         .el-table th>.cell
-          font-size 12px
           color #949BB6
           word-break keep-all
         .el-table__body tr:hover>td
           background-color #242840
         .el-table__body tr td
           color #fff
-          font-size 12px
     &.day
       > .inner-box
         > .banner
@@ -271,18 +270,19 @@ export default {
         > .container
           width S_main_content_width
           margin -107px auto 0
-          background-color #1C1F32
+          background-color #fff
           min-height 1000px
           > .header
             height 50px
             line-height 50px
+            padding 0 25px
             box-sizing border-box
-            padding-left 49px
             background-color #e7eefc
             color S_main_color
           > .content
+            background-color #fff
             box-sizing border-box
-            padding 0 20px
+            padding 0 15px
       /deep/
         .el-table
           background-color #fff !important
@@ -297,4 +297,8 @@ export default {
               &:hover
                 >td
                     background-color #f3f6fd
+    /deep/
+      .el-table th>.cell,
+      .el-table__body tr td
+        font-size 12px
 </style>
