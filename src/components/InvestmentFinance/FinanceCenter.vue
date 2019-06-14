@@ -494,11 +494,11 @@
                       </div>
                       <div v-show="s.row.financialState == 'REGULARMONTHLYRETURN'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期月返</span>
-                        <span v-else>Regular monthly return</span>
+                        <span v-else title="Regular monthly return">Regular monthly return</span>
                       </div>
                       <div v-show="s.row.financialState == 'EQUAL_PRINCIPAL'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">等额本金</span>
-                        <span v-else>Equivalent principal</span>
+                        <span v-else title="Equivalent principal">Equivalent principal</span>
                       </div>
                     </template>
                   </el-table-column>
@@ -555,7 +555,7 @@
                       <!--违约结算-->
                       <div v-show="s.row.state === 'DEFAULT_CLEARING'">
                         <span v-if="language === 'zh_CN' || language === 'zh_TW'">违约结算</span>
-                        <span v-else>Default clearing</span>
+                        <span v-else title="Default clearing">Default clearing</span>
                       </div>
                     </template>
                   </el-table-column>
@@ -619,12 +619,13 @@
                     :label="$t('M.finance_invest_coin1')"
                   >
                   </el-table-column>
+                  <!--存币类型-->
                   <el-table-column
                     :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
                   >
                     <template slot-scope="s">
-                      <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
-                      <div v-else>{{s.row.typeEnglishDescription}}</div>
+                      <div v-if="language === 'zh_CN' || language === 'zh_TW'" :title="s.row.typeDescription">{{s.row.typeDescription}}</div>
+                      <div v-else :title="s.row.typeEnglishDescription">{{s.row.typeEnglishDescription}}</div>
                     </template>
                   </el-table-column>
                   <!-- 数量 -->
