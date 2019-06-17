@@ -596,7 +596,7 @@ export default {
     overflow: hidden;
 
     > .otc-merchants-orders-content {
-      width: 1200px;
+      width: 1300px;
       padding-top: 50px;
       margin: 50px auto 10px;
 

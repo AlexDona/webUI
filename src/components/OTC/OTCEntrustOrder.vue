@@ -238,7 +238,7 @@ export default {
       > .entrust-table-head {
         z-index: 200;
         box-sizing: border-box;
-        width: 1045px;
+        width: 1193px;
         height: 35px;
         margin-bottom: 15px;
         border-radius: 5px;

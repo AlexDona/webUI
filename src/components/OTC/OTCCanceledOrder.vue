@@ -309,7 +309,9 @@ export default {
     > .canceled-order-content {
       > .canceled-table-head {
         box-sizing: border-box;
-        width: 1043px;
+
+        /* width: 1043px; */
+        width: 1195px;
         height: 35px;
         margin-bottom: 15px;
         border-radius: 5px;
@@ -324,7 +326,9 @@ export default {
 
       > .canceled-table-body {
         box-sizing: border-box;
-        width: 1043px;
+
+        /* width: 1043px; */
+        width: 1195px;
         height: 170px;
         margin-bottom: 15px;
         border-radius: 5px;
@@ -387,7 +391,8 @@ export default {
       }
 
       > .no-data {
-        width: 1043px;
+        /* width: 1043px; */
+        width: 1195px;
         height: 432px;
         line-height: 432px;
         text-align: center;

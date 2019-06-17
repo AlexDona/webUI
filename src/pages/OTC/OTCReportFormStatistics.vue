@@ -774,7 +774,7 @@ export default {
   overflow: hidden;
 
   > .report-form-statistics-content {
-    width: 1150px;
+    width: 1300px;
     padding-top: 50px;
     margin: 50px auto 10px;
 

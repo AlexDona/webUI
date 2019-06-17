@@ -1019,7 +1019,7 @@ export default {
   margin-top: 50px;
 
   > .otc-center-content {
-    width: 1150px;
+    width: 1300px;
     padding-top: 30px;
     margin: 36px auto 100px;
 

@@ -1463,7 +1463,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
         margin-left: 40px;
 
         > .tip {
-          line-height: 20px;
+          line-height: 24px;
         }
       }
     }

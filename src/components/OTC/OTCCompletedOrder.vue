@@ -611,7 +611,7 @@ export default {
                     position: absolute;
                     bottom: -10px;
                     left: 0;
-                    width: 1045px;
+                    width: 1195px;
                     height: 20px;
                     border-bottom: 1px solid #262f38;
                     border-bottom-right-radius: 5px;
