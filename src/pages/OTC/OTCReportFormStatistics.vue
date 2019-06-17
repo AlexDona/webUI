@@ -728,7 +728,7 @@ export default {
       this.sellWeekMap = getNestedData(getData, 'sellWeekMap')
     },
     // 页面加载时请求接口渲染订单详情列表
-    async getOTCEntrustingOrdersRevocation () {
+    getOTCEntrustingOrdersRevocation: _.debounce(async function () {
       let data = await getOTCMerchantsOrdersList({
         // 当前页数
         pageNum: this.currentPage,
@@ -754,7 +754,7 @@ export default {
         this.orderInfoList = getNestedData(ordersRevocationData, 'list')
         this.totalPages = getNestedData(ordersRevocationData, 'pages') - 0 // 分页
       }
-    }
+    }, 500)
   },
   filter: {},
   computed: {

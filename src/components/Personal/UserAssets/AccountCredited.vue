@@ -1,3 +1,8 @@
+<!--
+  author: zhaoxinlei
+  update: 20190615
+  description: 当前组件为 个人中心 收款账户 子组件
+-->
 <template>
   <div
     class="credited-credited personal"
@@ -642,7 +647,7 @@ export default {
       this.confirmTransactionPassword(this.activeType, this.state)
     },
     // 4.01 关闭开启收款方式
-    async confirmTransactionPassword (type, state) {
+    confirmTransactionPassword: _.debounce(async function (type, state) {
       let data
       let params = {
         type: '', // 银行卡 微信 支付宝 paypal 西联汇款
@@ -697,7 +702,7 @@ export default {
       this.getAccountPaymentTerm()
       this.openCollectionMode = false // 开启收款方式
       this.closeCollectionMode = false // 关闭收款方式
-    },
+    }, 500),
     // 5.收款方式
     async getAccountPaymentTerm () {
       let data = await accountPaymentTerm()

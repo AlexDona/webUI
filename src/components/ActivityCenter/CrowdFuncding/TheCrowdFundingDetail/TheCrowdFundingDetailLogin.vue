@@ -171,7 +171,7 @@ export default {
       this.predict = this.$cutOutPointLength((this.interestRate / 100 * buyCount) / this.ONE_YEAR * dayTime, 8)
       console.log(this.predict)
     },
-    async applyCrowdFunding () {
+    applyCrowdFunding: _.debounce(async function () {
       const params = {
         // 申购项目id
         id: this.detailId,
@@ -185,7 +185,7 @@ export default {
       this.timer = setTimeout(() => {
         this.$goToPage(`/${this.$routes_X.crowdFunding}`)
       }, 2000)
-    },
+    }, 500),
     updateButtonText () {
       const status = ['coming', 'ongoing', 'ended']
       const statusMap = {

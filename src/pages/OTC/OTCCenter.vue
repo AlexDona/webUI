@@ -894,7 +894,7 @@ export default {
       }
     },
     //  3.0 刚进页面时候 otc主页面查询挂单列表
-    async getOTCPutUpOrdersList () {
+    getOTCPutUpOrdersList: _.debounce(async function () {
       if (this.selectedOTCAvailableCurrencyCoinID && this.checkedCurrencyId) {
         // console.log('有法币和可以币种id')
         let param = {
@@ -924,7 +924,7 @@ export default {
           this.UPDATE_OTC_HOME_LIST_STATUS(false)
         }
       }
-    },
+    }, 500),
     //  4.0 选中我想购买和出售币种名称
     selectCurrencyName (index) {
       this.currentPage = 1

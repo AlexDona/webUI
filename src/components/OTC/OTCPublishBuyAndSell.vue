@@ -965,7 +965,7 @@ export default {
       this.errorPWd = ''
     },
     // 15.0 点击输入密码框中的提交按钮
-    async publishOTCEntryOrders () {
+    publishOTCEntryOrders: _.debounce(async function () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
         this.errorPWd = this.$t('M.comm_please_enter') + this.$t('M.comm_password')
@@ -1011,7 +1011,7 @@ export default {
         this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
         this.$goToPage('/OTCCenter')
       }
-    },
+    }, 500),
     // 16.0 充币按钮跳转
     chargeMoney () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')

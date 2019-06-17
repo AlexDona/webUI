@@ -1108,7 +1108,7 @@ export default {
       return this.$scientificToNumber(formatNumberInput(target, pointLength) - 0)
     },
     // 新增委单
-    async addEntrust () {
+    addEntrust: _.debounce(async function () {
       const {partnerTradeId} = this.$middleTopData_S_X
       if (!this.$isLogin_S_X) {
         this.$goToPage(`/${this.$routes_X.login}`)
@@ -1173,7 +1173,7 @@ export default {
       if (!data) return false
       this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
       this.clearFormData()
-    },
+    }, 500),
     // 设置买卖价格
     setBuyAndSellPrice (targetPriceOfBuy, targetPriceOfSell = targetPriceOfBuy) {
       targetPriceOfBuy = this.$scientificToNumber(targetPriceOfBuy)

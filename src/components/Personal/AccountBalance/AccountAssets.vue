@@ -1308,7 +1308,7 @@ export default {
       }
     },
     // 14.提交提币接口
-    async stateSubmitAssets () {
+    stateSubmitAssets: _.debounce(async function () {
       let data
       let params = {
         // msgCode: this.phoneCode, // 短信验证码
@@ -1334,7 +1334,7 @@ export default {
       this.getAssetCurrenciesList()
       this.resetWithdrawFormContent(this.currentIndex)
       this.stateEmptyData()
-    },
+    }, 500),
     // 接口请求完成之后普通币种清空数据
     stateEmptyData () {
       this.phoneCode = '' // 短信验证码

@@ -225,7 +225,7 @@ export default {
       await this.stateSeniorCertification()
     },
     // 3.02 判断是否交易密码锁定
-    async stateSeniorCertification () {
+    stateSeniorCertification: _.debounce(async function () {
       await this.REFRESH_USER_INFO_ACTION()
       let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
       this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
@@ -261,7 +261,7 @@ export default {
         this.successJump()
         this.stateEmptyData()
       }
-    },
+    }, 500),
     // 3.03 接口请求完成之后清空数据
     stateEmptyData () {
       this.payPalAccount = ''

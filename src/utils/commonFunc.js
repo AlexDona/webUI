@@ -23,6 +23,7 @@ import {
   removeCollectionAjax,
   getCollectionListAjax
 } from '../utils/api/home'
+import _ from 'lodash'
 import storeCreator from '../vuex'
 import {
   // getStore,
@@ -43,6 +44,7 @@ import {
   CHINESE_REG,
   EMAILADDRESS_REG
 } from './regExp'
+
 const store = storeCreator()
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
@@ -170,11 +172,11 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 
 /**
  * 撤销委单
  */
-export const repealMyEntrustCommon = async (params, callback) => {
+export const repealMyEntrustCommon = _.debounce(async function (params, callback) {
   const data = await repealMyEntrustAjax(params)
   if (!data) return false
   callback(data)
-}
+}, 500)
 
 /**
  * 商家订单列表请求

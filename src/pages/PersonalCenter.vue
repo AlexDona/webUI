@@ -384,7 +384,8 @@ export default {
   @import "../../static/css/scss/Personal/IndexPersonal";
 
   .personal-center {
-    margin-top: 50px;
+    min-height: 1000px;
+    margin: 50px 0;
     overflow: hidden;
 
     > .personal-center-main {

@@ -443,7 +443,7 @@ export default {
       console.log(this.isShowAddressLabel)
     },
     // 4.01新增用户提币地址接口
-    async stateSubmitAddAddress () {
+    stateSubmitAddAddress: _.debounce(async function () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
         // 请输入验证码
         this.emptyErrorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
@@ -465,11 +465,11 @@ export default {
       this.mentionMoneyConfirm = false
       this.getWithdrawalAddressList()
       this.resetFormContent()
-    },
+    }, 500),
     /**
      *  5.刚进页面时候 提币地址列表查询
      */
-    async getWithdrawalAddressList () {
+    getWithdrawalAddressList: _.debounce(async function () {
       console.log(this.paramOfJumpToAddWithdrawAdress)
       let params = {
         pageNum: this.currentPageForMyEntrust, // 页码
@@ -498,7 +498,7 @@ export default {
       this.currencyValueStatus = false
       // console.log(this.currencyList)
       // console.log(this.withdrawalAddressList)
-    },
+    }, 500),
     // 6.删除提币地址弹窗
     cancelId (id) {
       console.log(id)
@@ -508,21 +508,21 @@ export default {
         cancelButtonText: this.$t('M.comm_cancel'), // 取消
         confirmButtonText: this.$t('M.comm_confirm') // 确定
       }).then(() => {
-        this.deleteWithdrawAddress(id)
+        this.deleteWithdrawAddress()
       }).catch(() => {
       })
     },
     // 6.01确认删除提币地址
-    async deleteWithdrawAddress () {
+    deleteWithdrawAddress: _.debounce(async function () {
       let data
       let param = {
-        id: this.deleteWithdrawalId // 列表id
+        id: this.deleteWithdrawalId // 列表ida
       }
       data = await deleteUserWithdrawAddress(param)
       if (!data) return false
       this.getWithdrawalAddressList()
       this.resetFormContent()
-    },
+    }, 500),
     // 接口请求完成之后清空数据
     resetFormContent () {
       this.dialogVisible = false
