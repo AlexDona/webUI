@@ -1,3 +1,8 @@
+<!--
+  author: zhaoxinlei
+  update: 20190615
+  description: 当前组件为 身份认证（ 实名认证、高级认证） 组件
+-->
 <template>
   <div
     class="identity-authentication personal"
@@ -822,7 +827,7 @@ export default {
       this.identificationNumber = ''
     },
     // 提交实名认证
-    async submitRealName () {
+    submitRealName: _.debounce(async function () {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.realName) &&
@@ -850,7 +855,7 @@ export default {
         this.realName = ''
         this.identificationNumber = ''
       }
-    },
+    }, 500),
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
@@ -879,8 +884,8 @@ export default {
       }
     },
     // 重新提交审核
-    async authenticationNoPass () {
-      await this.stateEmptyData()
+    authenticationNoPass () {
+      this.stateEmptyData()
       this.authenticationNotPass = false
       this.authenticationStatusFront = true
     },
@@ -898,7 +903,7 @@ export default {
     stateSubmitSeniorCertification () {
       this.stateSeniorCertification()
     },
-    async stateSeniorCertification () {
+    stateSeniorCertification: _.debounce(async function () {
       if (!this.isUploadImg1) {
         // 请上传证件正面
         this.$message({
@@ -936,7 +941,7 @@ export default {
       this.SET_USER_INFO_REFRESH_STATUS(true)
       await this.REFRESH_USER_INFO_ACTION()
       await this.getRealNameInformation()
-    },
+    }, 500),
     // 接口请求完成之后清空数据
     stateEmptyData () {
       // 证件类型为1 是身份证 2是护照

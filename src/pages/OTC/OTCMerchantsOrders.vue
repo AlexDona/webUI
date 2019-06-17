@@ -548,7 +548,7 @@ export default {
       this.getOTCEntrustingOrdersRevocation()
     },
     // 8页面加载时请求接口渲染列表
-    async getOTCEntrustingOrdersRevocation () {
+    getOTCEntrustingOrdersRevocation: _.debounce(async function () {
       let data = await getOTCMerchantsOrdersList({
         // 当前页数
         pageNum: this.currentPage,
@@ -576,7 +576,7 @@ export default {
         this.merchantsOrdersList = getNestedData(merchantsOrdersListData, 'list')
         this.totalPages = getNestedData(merchantsOrdersListData, 'pages') - 0 // 分页
       }
-    }
+    }, 500)
   },
   filter: {},
   computed: {

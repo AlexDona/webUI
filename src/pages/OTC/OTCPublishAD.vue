@@ -894,7 +894,7 @@ export default {
       this.errorInfoSuccessOrderCount = ''
     },
     // 11.0 点击密码框中的提交按提交钮发布广告
-    async publishADSubmitButton () {
+    publishADSubmitButton: _.debounce(async function () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
         this.errorInfoPassword = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
@@ -935,7 +935,7 @@ export default {
       // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
       this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
       this.$goToPage('/OTCCenter')
-    },
+    }, 500),
     // 12.0 交易密码框获得焦点
     tradePasswordFocus () {
       this.errorInfoPassword = ''

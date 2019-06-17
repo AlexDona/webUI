@@ -220,7 +220,7 @@ export default {
       this.confirmTiePhone()
     },
     // 确定设置按钮
-    async confirmTiePhone () {
+    confirmTiePhone: _.debounce(async function () {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.bankName) &&
@@ -255,7 +255,7 @@ export default {
         this.stateEmptyData()
         console.log(data)
       }
-    },
+    }, 500),
     // 接口请求完成之后清空数据
     stateEmptyData () {
       this.bankName = '' // 银行卡名称

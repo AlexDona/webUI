@@ -758,7 +758,7 @@ export default {
       }
     },
     // 2018129封装提交摘单买入和卖出方法
-    async pickOrdersToBuyOrSell () {
+    pickOrdersToBuyOrSell: _.debounce(async function () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
@@ -799,7 +799,7 @@ export default {
         // 跳转到首页的交易中订单区
         this.$goToPage('/OTCCenter')
       }
-    },
+    }, 500),
     // 2018129封装提交摘单买入和卖出方法
     // 8交易密码框获得焦点事件
     tradePasswordFocus () {

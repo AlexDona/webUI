@@ -668,7 +668,7 @@ import FinanceBrokenPie from './FinanceBrokenPie'
 import {timeFilter, formatNumberInput} from '../../utils'
 import {
   getFinancialManagement,
-  imediateInvestment,
+  immediateInvestment,
   cancelInvestment,
   getFinancialRecord
 } from '../../utils/api/investmentFinance'
@@ -985,10 +985,10 @@ export default {
       this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
     },
     // 添加理财记录
-    async clickImmediateInvestment () {
+    clickImmediateInvestment: _.debounce(async function () {
       // 请求回来时将按钮解除禁用
       this.isDisable = true
-      const data = await imediateInvestment({
+      const data = await immediateInvestment({
         financialManagementId: this.selectedInvestTypeId,
         payPassword: this.passwords,
         number: this.$refs.investAmountRef.value
@@ -1005,7 +1005,7 @@ export default {
       })
       // 清空交易密码
       this.passwords = ''
-    },
+    }, 500),
     // 存币理财页面币种查询
     async getFinancialManagementList () {
       this.newArrInvestTypeList = []
@@ -1085,11 +1085,11 @@ export default {
       this.$refs.investAmountRef.value = ''
     },
     // 用户取消存币接口
-    async clickCancelInvestment (id) {
+    clickCancelInvestment: _.debounce(async function (id) {
       const data = await cancelInvestment(id)
       if (!data) return false
       this.getFinancialManagementList()
-    },
+    }, 500),
     // 币种选择变化时赋值币种名称
     changeTraderCoin (e) {
       this.selectedCoinId = e

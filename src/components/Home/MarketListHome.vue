@@ -250,9 +250,9 @@ export default {
       this.areas = this.areasFromAPI
       this.moreBtnShowStatus = false
     },
-    async getAllTradeAreas (plateId = this.activeName) {
+    getAllTradeAreas: _.debounce(async function (plateId = this.activeName) {
       this.disabledStatus = true
-      let params = { plateId }
+      let params = {plateId}
 
       let now = new Date().getTime()
       let lastTime = getStore('platesAges')
@@ -367,7 +367,7 @@ export default {
       this.setCollectData(collectSymbol)
       // more
       this.setSymbolsForSocket()
-    },
+    }, 500),
     // 获取更多交易对
     getMoreSymbols ({areaId}) {
       // console.log(data)
@@ -507,14 +507,6 @@ export default {
       })
       this.moreBtnShowStatus = false
       await this.getAllTradeAreas()
-      let now = new Date().getTime()
-      let lastTime = getStore('platesAges')
-      if (now - lastTime < this.ONE_MINUTES) {
-        this.timer = setTimeout(() => {
-          clearTimeout(this.timer)
-        }, 500)
-      }
-      // this.getTradeAreas({})
     },
     // 搜索关键字e
     searchFromMarketList () {
@@ -543,7 +535,7 @@ export default {
       this.searchArea.area = this.$t('M.home_market_field_search')
     },
     // 切换收藏
-    async toggleCollect (data) {
+    toggleCollect: _.debounce(async function (data) {
       this.resetCoolectAndSearchAreaLang()
       let {id, status, row} = data
       status = Boolean(status)
@@ -573,7 +565,7 @@ export default {
       if (!this.isLogin) {
         setStore('collectSymbol', this.collectSymbol)
       }
-    }
+    }, 300)
   },
   filter: {},
   computed: {

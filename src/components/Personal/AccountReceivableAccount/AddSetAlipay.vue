@@ -320,7 +320,7 @@ export default {
      * 4.确认设置支付宝
      */
     // 4.01 确认设置支付宝账号
-    async submitSettings () {
+    submitSettings: _.debounce(async function () {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.alipayAccount) &&
@@ -350,7 +350,6 @@ export default {
           bankType: 'Alipay', // type
           id: this.id
         }
-
         // console.log(this.dialogImageHandUrl1)
         // 判断是否交易密码锁定
         await this.REFRESH_USER_INFO_ACTION()
@@ -363,7 +362,7 @@ export default {
         this.successJump()
         this.stateEmptyData()
       }
-    },
+    }),
     // 4.02 接口请求完成之后清空数据
     stateEmptyData () {
       this.alipayAccount = ''

@@ -479,12 +479,12 @@ export default {
       })
     },
     // 9.0 一键下架所有广告
-    async cancelAllOneKeyConfirm () {
+    cancelAllOneKeyConfirm: _.debounce(async function () {
       const data = await cancelAllOrdersOnekey()
       // 返回数据正确的逻辑
       if (!data) return false
       this.getOTCADManageList()
-    },
+    }, 500),
     // 10.0 点击表格中的下架按钮触发的事件
     updateADUnShelve (id) {
       this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
@@ -496,14 +496,14 @@ export default {
       })
     },
     // 11.0 点击 下架 按钮请求撤单接口
-    async getOTCEntrustingOrdersRevocation (id) {
+    getOTCEntrustingOrdersRevocation: _.debounce(async function (id) {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
       })
       // 返回数据正确的逻辑 重新渲染列表
       if (!data) return false
       this.getOTCADManageList()
-    },
+    }, 500),
     // 12.0 点击 修改 按钮钮触发的事件
     async modifyAD (id) {
       // 刷新用户个人信息

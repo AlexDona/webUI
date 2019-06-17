@@ -1243,7 +1243,7 @@ export default {
       this.errPWD = ''
     },
     // 7.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
-    async submitConfirmPayment () {
+    submitConfirmPayment: _.debounce(async function () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         // '请输入交易密码'
         this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
@@ -1264,7 +1264,7 @@ export default {
         this.tradePassword = ''
         if (!data) return false
       }
-    },
+    }, 500),
     // 8.0 卖家点击确认收款按钮
     async confirmGatherMoney (id) {
       this.checkedTradingOrderId = id
@@ -1283,7 +1283,7 @@ export default {
       }
     },
     // 9.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
-    async submitConfirmGathering () {
+    submitConfirmGathering: _.debounce(async function () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
@@ -1303,7 +1303,7 @@ export default {
       this.tradePassword = ''
       if (!data) return false
       this.getOTCTradingOrdersList()
-    },
+    }, 500),
     // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index, orderType) {
       console.log(orderType)
@@ -1366,7 +1366,7 @@ export default {
       }
     },
     // 13.0 卖家提交申诉按钮
-    async sellerSubmitAppeal () {
+    sellerSubmitAppeal: _.debounce(async function () {
       console.log(this.orderTypeParam)
       if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
@@ -1401,7 +1401,7 @@ export default {
       // 再次调用接口刷新列表
       this.getOTCTradingOrdersList()
       if (!data) return false
-    },
+    }, 500),
     // 忘记密码跳转
     forgetPwdJump () {
       this.$goToPage('/TransactionPassword')

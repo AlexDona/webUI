@@ -1037,7 +1037,7 @@ export default {
       }
     },
     // 发送注册申请
-    async sendRegister (params) {
+    sendRegister: _.debounce(async function (params) {
       try {
         const data = await sendRegisterUser(params)
         if (!returnAjaxMsg(data, this, 0)) {
@@ -1049,7 +1049,7 @@ export default {
       } catch (err) {
         console.log(err)
       }
-    },
+    }, 500),
     // 登录成功自动跳转
     successJump () {
       this.successJumpTimer = setInterval(() => {

@@ -1,4 +1,4 @@
-import {post, get, put, postWithURLencoded, deleteMethod} from './axios'
+import {post, get, put, postWithURLencoded, deleteMethod, notLoading} from './axios'
 import {handleRequest} from '../commonFunc'
 
 /**
@@ -33,7 +33,7 @@ export const withdrawalInformation = params => handleRequest(() => get('queryWit
 // 根据coinid查询交易信息
 export const queryTransactionInformation = (params) => handleRequest(() => get('personal/getTradeUrl', {
   ...params,
-  'not-loading': true
+  ...notLoading
 }))
 // 刷新用户信息
 export const userRefreshUser = params => handleRequest(() => get('user/refreshUser', params))

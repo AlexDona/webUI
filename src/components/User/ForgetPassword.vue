@@ -394,17 +394,23 @@ export default {
       // 验证成功判断
       confirmSuccess: false,
       // 下一步携带token
-      nextStepToken: ''
+      nextStepToken: '',
+      // 更改成功 延时器
+      timer: null
     }
   },
   created () {
     this.refreshCode()
   },
-  mounted () {
+  // mounted () {
+  // },
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
+  beforeDestroy () {
+    clearTimeout(this.timer)
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // destroyed () {},
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
@@ -426,36 +432,24 @@ export default {
       return phoneNumberFormat(phoneNum)
     },
     // 找回密码步骤3
-    async findPasswordStep3 () {
+    findPasswordStep3: _.debounce(async function () {
       if (!this.newPassword) {
         // 请输入新密码
-        this.$message({
-          type: 'error',
-          message: this.$t('M.login_please_input5')
-        })
+        this.$error_tips_X(`${this.$t('M.login_please_input5')}`)
         return false
       } else if (!CHECKPASSWORD_REG.test(this.newPassword)) {
         // 请输入8-20位字母、数字组合
-        this.$message({
-          type: 'error',
-          message: this.$t('M.login_please_input9')
-        })
+        this.$error_tips_X(`${this.$t('M.login_please_input9')}`)
         return false
       }
       if (!this.confirmPassword) {
         // 请再次输入新密码
-        this.$message({
-          type: 'error',
-          message: this.$t('M.login_please_input7')
-        })
+        this.$error_tips_X(`${this.$t('M.login_please_input7')}`)
         return false
       }
       if (this.confirmPassword !== this.newPassword) {
         // 请输入相同的密码
-        this.$message({
-          type: 'error',
-          message: this.$t('M.login_please_input8')
-        })
+        this.$error_tips_X(`${this.$t('M.login_please_input8')}`)
         return false
       }
 
@@ -466,35 +460,26 @@ export default {
       const data = await findPasswordStep3(params)
       if (!data) return false
       this.activeStepNumber = 4
-      setTimeout(() => {
+      this.timer = setTimeout(() => {
         this.$goToPage(`/${this.$routes_X.login}`)
       }, 3000)
-    },
+    }, 500),
     // 找回密码步骤2
     async findPasswordStep2 () {
       if (this.userInfo.isEnablePhone && !this.phoneCode) {
         // 请输入短信验证码
-        this.$message({
-          type: 'error',
-          message: this.$t('M.comm_please_enter') + this.$t('M.comm_note') + this.$t('M.comm_code')
-        })
+        this.$error_tips_X(`${this.$t('M.comm_please_enter')}${this.$t('M.comm_note')}${this.$t('M.comm_code')}`)
         return false
       }
 
       if (this.userInfo.isEnableMail && !this.emailCode) {
         // 请输入邮箱验证码
-        this.$message({
-          type: 'error',
-          message: this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code')
-        })
+        this.$error_tips_X(`${this.$t('M.comm_please_enter')}${this.$t('M.user_security_email')}${this.$t('M.comm_code')}`)
         return false
       }
       if (this.userInfo.isEnableGoogle && !this.googleCode) {
         // 请输入谷歌验证码
-        this.$message({
-          type: 'error',
-          message: this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.comm_code')
-        })
+        this.$error_tips_X(`${this.$t('M.comm_please_enter')}${this.$t('M.user_security_google')}${this.$t('M.comm_code')}`)
         return false
       }
 

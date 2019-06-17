@@ -328,7 +328,7 @@ export default {
       this.stateSeniorCertification()
     },
     // 4.02 确认设置接口
-    async stateSeniorCertification () {
+    stateSeniorCertification: _.debounce(async function () {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.cardNo) &&
@@ -367,7 +367,7 @@ export default {
         this.successJump()
         this.stateEmptyData()
       }
-    },
+    }),
     // 4.03 接口请求完成之后清空数据
     stateEmptyData () {
       this.cardNo = ''

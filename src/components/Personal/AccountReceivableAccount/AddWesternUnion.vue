@@ -226,7 +226,7 @@ export default {
       this.stateSeniorCertification()
     },
     // 3.02 确认设置提交
-    async stateSeniorCertification () {
+    stateSeniorCertification: _.debounce(async function () {
       if (!this.telegraphicTransferAddress) {
         // 请输入西联汇款账号
         this.$message({
@@ -263,7 +263,7 @@ export default {
         this.successJump()
         this.stateEmptyData()
       }
-    },
+    }, 500),
     // 3.03 获取西联信息
     async paymentMethodInformation () {
       let data
