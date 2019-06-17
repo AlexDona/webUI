@@ -209,7 +209,7 @@ export default {
       }).catch(() => {})
     },
     // 5.0 提交撤单
-    async getOTCEntrustingOrdersRevocation (id) {
+    getOTCEntrustingOrdersRevocation: _.debounce(async function (id) {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
       })
@@ -218,7 +218,7 @@ export default {
       this.getOTCEntrustingOrdersList()
       // 改变全局 委托定单撤单后，更新首页挂单列表状态
       this.UPDATE_OTC_HOME_LIST_STATUS(true)
-    }
+    }, 500)
   },
   filter: {},
   computed: {

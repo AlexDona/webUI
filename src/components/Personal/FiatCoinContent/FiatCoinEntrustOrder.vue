@@ -182,7 +182,7 @@ export default {
       })
     },
     // 4.0 提交撤单
-    async getOTCEntrustingOrdersRevocation (id) {
+    getOTCEntrustingOrdersRevocation: _.debounce(async function (id) {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
       })
@@ -192,7 +192,7 @@ export default {
         type: 'ENTRUSTED',
         status: true
       })
-    }
+    }, 500)
   },
   filter: {},
   computed: {
