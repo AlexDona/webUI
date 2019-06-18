@@ -179,7 +179,6 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    <!-- 后台添加了剩余数量字段remainCount-->
                     {{$scientificToNumber(s.row.remainCount)}}{{selectedOTCAvailableCurrencyName}}
                   </div>
                 </template>
@@ -678,7 +677,7 @@ export default {
     },
     // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {
-      console.log(this.activeName)
+      // console.log(this.activeName)
       // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
       this.isDisabled = true
       this.isDisabledTimer = setTimeout(() => {
@@ -871,14 +870,14 @@ export default {
     async getMerchantAvailableLegalTenderList () {
       this.currencyCoinSelectStatus = true // 禁用货币类型select框
       const data = await getMerchantAvailableLegalTender({})
-      console.log('otc法币查询列表')
-      console.log(data)
-      console.log(this.otcSelectedCurrencyId)
+      // console.log('otc法币查询列表')
+      // console.log(data)
+      // console.log(this.otcSelectedCurrencyId)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
         this.availableCurrencyId = getNestedData(data, 'data')
-        console.log(this.availableCurrencyId)
+        // console.log(this.availableCurrencyId)
         // 第一次进来默认选中人民币，切换之后跳出本页面，再返回本页面显示最后一次切换的法币
         if (this.otcSelectedCurrencyId) {
           this.checkedCurrencyId = this.otcSelectedCurrencyId
@@ -911,8 +910,8 @@ export default {
           param.entrustType = 'BUY' // 挂单类型（BUY SELL）
         }
         const data = await getOTCPutUpOrders(param)
-        console.log('otc主页面查询挂单列表')
-        console.log(data)
+        // console.log('otc主页面查询挂单列表')
+        // console.log(data)
         // 返回数据正确的逻辑
         if (!data) return false
         if (data.data) {
@@ -929,7 +928,7 @@ export default {
     //  4.0 选中我想购买和出售币种名称
     selectCurrencyName (index) {
       this.currentPage = 1
-      console.log(this.currentPage)
+      // console.log(this.currentPage)
       // console.log(index)
       this.selectCurrencyNameStatus = index
       this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name) // 币种名称
@@ -945,7 +944,7 @@ export default {
     },
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
-      console.log(e)
+      // console.log(e)
       this.CHANGE_OTC_SELECTED_CURRENCY_ID(e)
       if (this.countryInfoList.length) {
         this.checkedCountryId = this.countryInfoList[this.countryInfoList.length - 1].id // 增加国家-国家为所有国家
@@ -964,7 +963,7 @@ export default {
     // 9.0 改变支付方式下拉框的选中值
     payWayChangeValue (e) {
       this.currentPage = 1
-      console.log(this.currentPage)
+      // console.log(this.currentPage)
       this.checkedPayType = e
       // console.log(this.checkedPayType) //  选中的支付方式的id
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表

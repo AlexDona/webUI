@@ -264,7 +264,6 @@
                 </el-button>
                 <!-- 修改 -->
                 <!--20190222修改：后台增加字段币种是否可用来动态显示隐藏修改按钮s.row.coinStatus === 'ENABLE'-->
-                <!--也可以用禁用按钮方法：:disabled="s.row.coinStatus === 'DISABLE'"-->
                 <el-button
                   type="text"
                   v-if="s.row.status === 'CANCELED' && s.row.coinStatus === 'ENABLE'"
@@ -304,7 +303,6 @@ import {
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter} from '../../utils'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {mapState, mapActions} from 'vuex'

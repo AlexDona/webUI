@@ -482,7 +482,7 @@
             </el-table>
           </div>
           <!--分页-->
-          <div class="page">
+          <div class="page text-align-c">
             <el-pagination
               background
               v-show="orderInfoList.length"
@@ -509,7 +509,6 @@ import {
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter} from '../../utils'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -702,8 +701,8 @@ export default {
         currencyId: this.activatedTraderCurrencyCoinsId
       })
       // 提示信息
-      console.log('报表统计的主页面资产信息')
-      console.log(data)
+      // console.log('报表统计的主页面资产信息')
+      // console.log(data)
       if (!data) return false
       let getData = getNestedData(data, 'data')
       // 法币总资产
@@ -746,8 +745,8 @@ export default {
         dateType: this.activatedRadioId
       })
       // 返回数据正确的逻辑 重新渲染列表
-      console.log('报表列表')
-      console.log(data)
+      // console.log('报表列表')
+      // console.log(data)
       if (!data) return false
       if (data.data) {
         let ordersRevocationData = getNestedData(data, 'data')
@@ -920,7 +919,6 @@ export default {
 
         .page {
           padding: 10px 0;
-          text-align: center;
         }
       }
     }

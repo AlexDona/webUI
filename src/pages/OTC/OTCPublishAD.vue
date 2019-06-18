@@ -515,7 +515,6 @@
 // 引入接口
 import {
   formatNumberInput,
-  // positiveIntegerNumRegexpInput,
   positiveIntegerNumRegexpInputNoZero,
   amendPrecision,
   cutOutPointLength
@@ -530,7 +529,6 @@ import {
 import IconFontCommon from '../../components/Common/IconFontCommon'
 // 引入提示信息
 import {
-  // returnAjaxMsg,
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
@@ -666,8 +664,6 @@ export default {
     this.$refs.successRef.value = 0
     this.limitOrderCount = this.$refs.limitRef.value
     this.successOrderCount = this.$refs.successRef.value
-    // console.log(this.limitOrderCount)
-    // console.log(this.successOrderCount)
   },
   activated () {},
   update () {},
@@ -687,21 +683,21 @@ export default {
     positiveIntegerNumRegexpInputLimit (ref) {
       let target = this.$refs[ref]
       this.limitOrderCount = positiveIntegerNumRegexpInputNoZero(target)
-      console.log(this.$refs.limitRef.value)
+      // console.log(this.$refs.limitRef.value)
     },
     // 2.0 卖家必须成交过几次（0=不限制）input框限制
     positiveIntegerNumRegexpInputSuccess (ref) {
       let target = this.$refs[ref]
       this.successOrderCount = positiveIntegerNumRegexpInputNoZero(target)
-      console.log(this.$refs.successRef.value)
+      // console.log(this.$refs.successRef.value)
     },
     // 3.0 广告管理跳转过来 请求详情接口
     async getOTCSelectedOrdersDetails () {
       const data = await querySelectedOrdersDetails({
         entrustId: this.messageId
       })
-      console.log('广告管理跳转过来挂单详情')
-      console.log(data)
+      // console.log('广告管理跳转过来挂单详情')
+      // console.log(data)
       // 正确逻辑
       if (!data) return false
       if (data.data) {
@@ -725,8 +721,8 @@ export default {
         currencyId: this.activatedCurrencyId, // 法币id
         coinId: this.activatedCoinId // 币种id
       })
-      console.log('币种详情')
-      console.log(data)
+      // console.log('币种详情')
+      // console.log(data)
       if (!data) return false
       // 返回数据正确的逻辑
       // 1.0 可用币种列表
@@ -852,22 +848,20 @@ export default {
       if (!this.$refs.minCountValue.value) {
         // this.errorInfoMinCount = '单笔最小限额不能为空！'
         this.errorInfoMinCount = this.$t('M.otc_min_limit_not_empty')
-        console.log(1)
         this.minCountErrorTipsBorder = true
         return false
       }
       if (!this.$refs.maxCountValue.value) {
         // this.errorInfoMaxCount = '单笔最大限额不能为空！'
         this.errorInfoMaxCount = this.$t('M.otc_max_limit_not_empty')
-        console.log(2)
         this.maxCountErrorTipsBorder = true
         return false
       }
       // 限制设置--非必输选项
       // 20181213增加非空验证：变为了必须字段
-      console.log(this.limitOrderCount)
-      console.log(typeof this.limitOrderCount)
-      console.log(this.successOrderCount)
+      // console.log(this.limitOrderCount)
+      // console.log(typeof this.limitOrderCount)
+      // console.log(this.successOrderCount)
       if (!this.limitOrderCount) {
         // this.errorInfoLimitOrderCount = '同时处理最大订单数不能为空'
         this.errorInfoLimitOrderCount = this.$t('M.otc_publish_ad_err1')

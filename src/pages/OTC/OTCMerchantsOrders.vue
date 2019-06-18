@@ -326,7 +326,7 @@
           </el-table>
         </div>
         <!--分页-->
-        <div class="page">
+        <div class="page text-align-c">
           <el-pagination
             background
             v-show="merchantsOrdersList.length"
@@ -351,7 +351,6 @@ import {
   getOTCMerchantsOrdersList
 } from '../../utils/api/OTC'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {mapState} from 'vuex'
@@ -363,7 +362,6 @@ export default {
     return {
       // 商家订单内容的高度
       height: '',
-      // 分页
       // 每页显示的条数
       pageSize: 10,
       // 当前页码
@@ -529,13 +527,13 @@ export default {
           break
       }
     },
-    // 6点击查询按钮
+    // 6 点击查询按钮
     findFilter () {
       // 改变查询条件从第1页开始查询
       this.currentPage = 1
       this.getOTCEntrustingOrdersRevocation()
     },
-    // 7重置
+    // 7 重置
     resetCondition () {
       // 改变查询条件从第1页开始查询
       this.currentPage = 1
@@ -547,7 +545,7 @@ export default {
       this.endTimeValue = ''
       this.getOTCEntrustingOrdersRevocation()
     },
-    // 8页面加载时请求接口渲染列表
+    // 8 页面加载时请求接口渲染列表
     getOTCEntrustingOrdersRevocation: _.debounce(async function () {
       let data = await getOTCMerchantsOrdersList({
         // 当前页数
@@ -568,8 +566,8 @@ export default {
         tradeType: this.activatedMerchantsOrdersTraderStyleList
       })
       // 返回数据正确的逻辑 重新渲染列表
-      console.log('商家订单列表')
-      console.log(data)
+      // console.log('商家订单列表')
+      // console.log(data)
       if (!data) return false
       if (data.data) {
         let merchantsOrdersListData = getNestedData(data, 'data')
@@ -641,7 +639,6 @@ export default {
 
         .page {
           padding: 10px 0;
-          text-align: center;
         }
       }
     }
