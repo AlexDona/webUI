@@ -47,7 +47,7 @@
         class="entrust-table-body"
       >
         <div
-          class="no-data"
+          class="no-data text-align-c"
           v-show="!OTCEntrustOrderList.length"
         >
           <!-- 暂无数据 -->
@@ -116,7 +116,7 @@
       </div>
     </div>
     <!--分页-->
-    <div class="page">
+    <div class="page text-align-c">
       <el-pagination
         background
         v-show="OTCEntrustOrderList.length"
@@ -133,7 +133,6 @@
 import {timeFilter} from '../../utils'
 import {getOTCEntrustingOrders, querySelectedOrdersRevocation} from '../../utils/api/OTC'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -145,7 +144,6 @@ export default {
   // props,
   data () {
     return {
-      // 分页
       // 每页展示的条数
       pageSize: 10,
       // 当前页码
@@ -186,8 +184,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      console.log('委托中订单列表')
-      console.log(data)
+      // console.log('委托中订单列表')
+      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
@@ -291,7 +289,6 @@ export default {
         > .no-data {
           height: 432px;
           line-height: 432px;
-          text-align: center;
         }
 
         > .entrust-list-content {
@@ -337,10 +334,6 @@ export default {
           }
         }
       }
-    }
-
-    .page {
-      text-align: center;
     }
 
     &.night {

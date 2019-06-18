@@ -134,7 +134,7 @@
       </div>
       <!--暂无数据-->
       <div
-        class="no-data"
+        class="no-data text-align-c"
         v-if="!otcFreezingOrderList.length"
       >
         <!-- 暂无数据 -->
@@ -142,7 +142,7 @@
       </div>
     </div>
     <!--分页-->
-    <div class="page">
+    <div class="page text-align-c">
       <el-pagination
         background
         v-show="otcFreezingOrderList.length"
@@ -159,7 +159,6 @@
 import {timeFilter} from '../../utils'
 import {getOTCOrdersThreeDay} from '../../utils/api/OTC'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {mapState} from 'vuex'
@@ -168,7 +167,6 @@ export default {
   // props,
   data () {
     return {
-      // 分页
       // 每页展示的条数
       pageSize: 5,
       // 当前页码
@@ -206,8 +204,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      console.log('冻结中订单')
-      console.log(data)
+      // console.log('冻结中订单')
+      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
@@ -321,12 +319,7 @@ export default {
         width: 1195px;
         height: 432px;
         line-height: 432px;
-        text-align: center;
       }
-    }
-
-    .page {
-      text-align: center;
     }
 
     &.night {

@@ -46,8 +46,8 @@
             <!-- 左下部分商家备注部分 -->
             <div class="shopper-remark">
               <!-- 备注： -->
-              <p class="remark-title">{{$t('M.comm_remark')}}：</p>
-              <p class="remark-content">{{remark}}</p>
+              <p class="remark-title font-size14">{{$t('M.comm_remark')}}：</p>
+              <p class="remark-content font-size12">{{remark}}</p>
             </div>
         </div>
         <!-- 交易右边 -->
@@ -144,7 +144,7 @@
                     <!-- 标题 -->
                     <div class="want">
                       <!--您想出售多少/您想购买多少-->
-                      <span class="want-text">
+                      <span class="want-text font-size20">
                         {{onlineTraderStatus === 'onlineSell' ? $t('M.otc_index_sellMount') : $t('M.otc_index_buyMount')}}
                       </span>
                       <!--可用余额-->
@@ -289,9 +289,9 @@
             <div class="trading-notes">
               <div class="notes">
                 <!-- 交易须知 -->
-                <h4 class="title">*{{$t('M.otc_index_tradeKnow')}}：</h4>
+                <h4 class="title font-size14">*{{$t('M.otc_index_tradeKnow')}}：</h4>
                 <p class="tip">
-                  1. {{$t('M.otc_index_tradeKnowDetail1')}}<span class="warning">{{configInfo.otcUnpaidTimes}}{{$t('M.otc_ci')}}</span>，{{$t('M.otc_index_tradeKnowDetail2')}}
+                  1. {{$t('M.otc_index_tradeKnowDetail1')}}<span class="warning font-size14">{{configInfo.otcUnpaidTimes}}{{$t('M.otc_ci')}}</span>，{{$t('M.otc_index_tradeKnowDetail2')}}
                 </p>
                 <p class="tip">
                   2. {{$t('M.otc_index_tradeKnowDetail3')}}
@@ -446,7 +446,6 @@ export default {
       // 交易密码
       tradePassword: '',
       // 往后台传送的参数 挂单id（otc首页挂单列表中每行的币种id）
-      // id: '',
       entryOrdersID: '',
       // 商户币种id
       partnerCoinId: '',
@@ -471,16 +470,14 @@ export default {
     this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
     console.log(this.isNeedPayPassword)
     // 1.0 从OTCCenter传过来的URL中获取的
-    console.log(this.$route.params)
+    // console.log(this.$route.params)
     // 买卖类型
     this.onlineTraderStatus = this.$route.params.styleId
     // 从otc首页传过来的挂单id
-    // this.id = this.$route.params.id
     this.entryOrdersID = this.$route.params.id
     // OTC首页传过来的币种id
     this.partnerCoinId = this.$route.params.partnerCoinId
     // 2.0 查询选中的挂单，利用挂单id请求详情信息
-    // if (this.id) {
     if (this.entryOrdersID) {
       this.querySelectedOrdersDetails()
     }
@@ -536,7 +533,6 @@ export default {
           } else {
             // 2018129封装提交摘单买入和卖出方法
             this.pickOrdersToBuyOrSell()
-            // 2018129封装提交摘单买入和卖出方法
           }
           break
         // 在线卖
@@ -555,7 +551,6 @@ export default {
           } else {
             // 2018129封装提交摘单买入和卖出方法
             this.pickOrdersToBuyOrSell()
-            // 2018129封装提交摘单买入和卖出方法
           }
           break
       }
@@ -743,8 +738,8 @@ export default {
       const data = await queryUserTradeFeeAndCoinInfo({
         coinId: this.partnerCoinId // 商户币种id
       })
-      console.log('用户交易币种手续费率以及币种详情11')
-      console.log(data)
+      // console.log('用户交易币种手续费率以及币种详情11')
+      // console.log(data)
       // 返回数据正确的逻辑:将返回的数据赋值到页面中
       if (!data) return false
       let detailData = getNestedData(data, 'data')
@@ -911,15 +906,9 @@ export default {
               font-size: 12px;
             }
 
-            > .trader-total {
-              flex: 3;
-            }
-
-            > .failed {
-              flex: 3;
-            }
-
-            > .freeze {
+            > .trader-total,
+            .failed,
+            .freeze {
               flex: 3;
             }
           }
@@ -933,13 +922,8 @@ export default {
           margin-top: 20px;
           border-radius: 5px;
 
-          > .remark-title {
-            font-size: 14px;
-          }
-
           > .remark-content {
             margin-top: 5px;
-            font-size: 12px;
             line-height: 20px;
           }
         }
@@ -980,7 +964,6 @@ export default {
 
               > .want-text {
                 margin-right: 20px;
-                font-size: 20px;
               }
             }
 
@@ -1067,16 +1050,11 @@ export default {
           > .notes {
             > .title {
               margin-bottom: 15px;
-              font-size: 14px;
             }
 
             > .tip {
               font-size: 14px;
               line-height: 20px;
-
-              > .warning {
-                font-size: 14px;
-              }
             }
           }
         }

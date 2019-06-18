@@ -8,7 +8,7 @@
     >
       <!-- 一、交易中订单 -->
       <div
-        class="order-list"
+        class="order-list font-size12"
         v-for="(item, index) in tradingOrderList"
         :key="index"
       >
@@ -116,16 +116,7 @@
                   </div>
                   <!-- 收款人 -->
                   <p class="bank-info">
-                    <!--银行卡，微信，支付宝取userBankList中的realname，其他都去外层的sellName-->
-                    <!--<span>{{$t('M.otc_payee')}}:
-                      <span v-if="activeBankType[index] === 'Bankcard' || activeBankType[index] === 'Alipay' ||  activeBankType[index] === 'Wechat'">
-                        {{checkedPayRealNameArr[index]}}
-                      </span>
-                      <span v-else>
-                        {{item.sellName}}
-                      </span>
-                    </span>-->
-                    <!--现在改为：都取userBankList中的realname -->
+                    <!--都取userBankList中的realname -->
                     <span>
                       <span v-if="activeBankType[index]">
                         {{$t('M.otc_payee')}}:
@@ -599,12 +590,6 @@
                 <span class="appeal-reason">
                   <span class="star">*</span>{{$t('M.otc_complaint_appeal_reason')}}
                 </span>
-                <!--<el-input-->
-                  <!--type="textarea"-->
-                  <!--maxlength="30"-->
-                  <!--v-model="appealTextAreaValue"-->
-                <!--&gt;-->
-                <!--</el-input>-->
                 <textarea
                   class="appeal-textarea-text font-size12"
                   maxlength="30"
@@ -668,7 +653,7 @@
       </div>
       <!-- 二、暂无数据 -->
       <div
-        class="no-data"
+        class="no-data text-align-c"
         v-show="!tradingOrderList.length"
       >
         {{ $t('M.comm_no_data') }}
@@ -845,7 +830,7 @@
       </div>
     </div>
     <!-- 三、分页-->
-    <div class="page">
+    <div class="page text-align-c">
       <el-pagination
         background
         v-show="tradingOrderList.length"
@@ -1444,7 +1429,6 @@ export default {
 
 .otc-trading-order-box {
   > .otc-trading-order-content {
-    /* min-height: 472px; */
     border-radius: 5px;
 
     > .order-list {
@@ -1453,7 +1437,6 @@ export default {
       height: 170px;
       margin-bottom: 15px;
       border-radius: 5px;
-      font-size: 12px;
 
       > .order {
         > .order-list-head {
@@ -1686,14 +1669,8 @@ export default {
       width: 1195px;
       height: 482px;
       line-height: 482px;
-      text-align: center;
       color: rgba(255, 255, 255, .8);
     }
-  }
-
-  .page {
-    /* padding: 2px 0 15px; */
-    text-align: center;
   }
 
   /deep/ {
