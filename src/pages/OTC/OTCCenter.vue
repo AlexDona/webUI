@@ -869,7 +869,6 @@ export default {
     },
     //  2.0 otc可用法币查询
     async getMerchantAvailableLegalTenderList () {
-      console.log(1111111)
       this.currencyCoinSelectStatus = true // 禁用货币类型select框
       const data = await getMerchantAvailableLegalTender({})
       console.log('otc法币查询列表')
@@ -1037,7 +1036,7 @@ export default {
         > .otc-filtrate-publish {
           display: flex;
           justify-content: space-between;
-          padding: 25px 10px 0;
+          padding: 25px 15px 0;
 
           > .otc-filtrate-box {
             display: flex;
