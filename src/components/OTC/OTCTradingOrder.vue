@@ -1449,7 +1449,7 @@ export default {
 
     > .order-list {
       box-sizing: border-box;
-      width: 1045px;
+      width: 1195px;
       height: 170px;
       margin-bottom: 15px;
       border-radius: 5px;
@@ -1558,7 +1558,7 @@ export default {
                 }
 
                 > .order-cancel-tips {
-                  margin-left: 20px;
+                  margin-left: 10px;
                   line-height: 20px;
                 }
 

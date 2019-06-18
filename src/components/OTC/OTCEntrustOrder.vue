@@ -246,20 +246,19 @@ export default {
 
         > .item {
           display: inline-block;
-          width: 126px;
           text-align: center;
         }
 
         > .first-style {
-          width: 70px;
+          width: 100px;
         }
 
         > .second-coin {
-          width: 150px;
+          width: 130px;
         }
 
         > .third-price {
-          width: 150px;
+          width: 160px;
         }
 
         > .fourth-entrust-count {
@@ -267,19 +266,19 @@ export default {
         }
 
         > .fifth-match-count {
-          width: 130px;
-        }
-
-        > .sixth-total-amount {
           width: 150px;
         }
 
+        > .sixth-total-amount {
+          width: 160px;
+        }
+
         > .senventh-create-time {
-          width: 120px;
+          width: 160px;
         }
 
         > .eighth-action {
-          width: 90px;
+          width: 140px;
         }
       }
 
@@ -302,40 +301,39 @@ export default {
 
           > .item {
             display: inline-block;
-            width: 126px;
             text-align: center;
           }
 
           > .first-style {
-            width: 80px;
+            width: 100px;
           }
 
           > .second-coin {
-            width: 150px;
+            width: 130px;
           }
 
           > .third-price {
-            width: 150px;
+            width: 160px;
           }
 
           > .fourth-entrust-count {
-            width: 150px;
+            width: 160px;
           }
 
           > .fifth-match-count {
-            width: 150px;
+            width: 170px;
           }
 
           > .sixth-total-amount {
-            width: 150px;
+            width: 160px;
           }
 
           > .senventh-create-time {
-            width: 150px;
+            width: 160px;
           }
 
           > .eighth-action {
-            width: 80px;
+            width: 140px;
           }
         }
       }

@@ -178,7 +178,6 @@
           <!-- 类型 -->
           <el-table-column
             :label="$t('M.otc_cancelOrder_type')"
-            width="118"
           >
             <template slot-scope="s">
               <span
@@ -200,7 +199,6 @@
           <!-- 币种 -->
           <el-table-column
             :label="$t('M.comm_currency')"
-            width="118"
           >
             <template slot-scope="s">
               {{ s.row.coinName }}
@@ -209,7 +207,6 @@
           <!-- 价格 -->
           <el-table-column
             :label="$t('M.otc_index_price')"
-            width="118"
           >
             <template slot-scope="s">
               {{ $scientificToNumber(s.row.price) }}({{ s.row.currencyName }})
@@ -436,7 +433,7 @@ export default {
                   position: absolute;
                   bottom: -10px;
                   left: 0;
-                  width: 1045px;
+                  width: 1195px;
                   border-bottom-right-radius: 5px;
                   border-bottom-left-radius: 5px;
                   content: '';
@@ -772,7 +769,7 @@ export default {
                     position: absolute;
                     bottom: -10px;
                     left: 0;
-                    width: 1045px;
+                    width: 1195px;
                     border-bottom: 1px solid #ecf1f8;
                     border-bottom-right-radius: 5px;
                     border-bottom-left-radius: 5px;

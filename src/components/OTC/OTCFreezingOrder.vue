@@ -246,7 +246,7 @@ export default {
 
         > .item {
           display: inline-block;
-          width: 140px;
+          width: 160px;
           text-align: center;
         }
       }
@@ -265,7 +265,7 @@ export default {
 
           > .item {
             display: inline-block;
-            width: 140px;
+            width: 160px;
             text-align: center;
           }
         }

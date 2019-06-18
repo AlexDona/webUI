@@ -309,8 +309,6 @@ export default {
     > .canceled-order-content {
       > .canceled-table-head {
         box-sizing: border-box;
-
-        /* width: 1043px; */
         width: 1195px;
         height: 35px;
         margin-bottom: 15px;
@@ -319,15 +317,13 @@ export default {
 
         > .item {
           display: inline-block;
-          width: 140px;
+          width: 160px;
           text-align: center;
         }
       }
 
       > .canceled-table-body {
         box-sizing: border-box;
-
-        /* width: 1043px; */
         width: 1195px;
         height: 170px;
         margin-bottom: 15px;
@@ -340,7 +336,7 @@ export default {
 
           > .item {
             display: inline-block;
-            width: 140px;
+            width: 160px;
             text-align: center;
           }
         }
@@ -391,7 +387,6 @@ export default {
       }
 
       > .no-data {
-        /* width: 1043px; */
         width: 1195px;
         height: 432px;
         line-height: 432px;

@@ -821,7 +821,7 @@ export default {
         border-radius: 5px;
 
         > .head {
-          width: 570px;
+          width: 645px;
           height: 40px;
           line-height: 40px;
         }
@@ -830,7 +830,7 @@ export default {
           display: flex;
           flex-wrap: wrap;
           justify-content: space-between;
-          width: 570px;
+          width: 645px;
           height: 420px;
           padding: 7px 5px 0;
           border-top: 0;
@@ -839,7 +839,7 @@ export default {
 
           > .together {
             display: flex;
-            width: 275px;
+            width: 310px;
             height: 197px;
             padding-top: 30px;
 
