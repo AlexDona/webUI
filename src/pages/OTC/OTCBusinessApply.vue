@@ -512,7 +512,7 @@ export default {
               width: 83px;
               padding-bottom: 10px;
               font-weight: 700;
-              color: #338ff5;
+              color: $mainColor;
             }
 
             > .text {
@@ -736,7 +736,7 @@ export default {
 
             .el-dialog__title {
               font-size: 16px;
-              color: #338ff5 !important;
+              color: $mainColor !important;
             }
 
             .el-dialog__headerbtn {
@@ -770,7 +770,7 @@ export default {
 
               &:first-child {
                 border: 1px solid rgba(51, 143, 245, 1);
-                color: #338ff5;
+                color: $mainColor;
                 background: #1c2237;
               }
 
@@ -810,7 +810,7 @@ export default {
               > .title {
                 border-bottom: 1px dashed rgba(51, 143, 245, .3);
                 font-weight: 700;
-                color: #338ff5;
+                color: $mainColor;
               }
 
               > .text {
@@ -876,7 +876,7 @@ export default {
         }
 
         .el-dialog__title {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         .el-dialog {
@@ -926,7 +926,7 @@ export default {
               > .title {
                 border-bottom: 1px dashed rgba(51, 143, 245, .3);
                 font-weight: 700;
-                color: #338ff5;
+                color: $mainColor;
               }
 
               > .text {
@@ -1053,7 +1053,7 @@ export default {
               .el-button {
                 &:first-child {
                   border: 1px solid rgba(51, 143, 245, 1);
-                  color: #338ff5;
+                  color: $mainColor;
                   background: #fff;
                 }
               }
@@ -1076,7 +1076,7 @@ export default {
 
   /deep/ {
     .el-dialog__title {
-      color: #338ff5;
+      color: $mainColor;
     }
   }
 </style>

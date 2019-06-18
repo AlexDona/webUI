@@ -698,8 +698,8 @@ export default {
 
     > .otc-AD-manage-content {
       > .AD-title {
-        border-left: 3px solid #338ff5;
-        color: #338ff5;
+        border-left: 3px solid $mainColor;
+        color: $mainColor;
       }
 
       > .AD-manage-main {
@@ -717,7 +717,7 @@ export default {
 
         > .manage-main-middle {
           > .all-unShelve {
-            color: #338ff5;
+            color: $mainColor;
           }
         }
 
@@ -816,8 +816,8 @@ export default {
 
     > .otc-AD-manage-content {
       > .AD-title {
-        border-left: 3px solid #338ff5;
-        color: #338ff5;
+        border-left: 3px solid $mainColor;
+        color: $mainColor;
       }
 
       > .AD-manage-main {
@@ -835,7 +835,7 @@ export default {
 
         > .manage-main-middle {
           > .all-unShelve {
-            color: #338ff5;
+            color: $mainColor;
           }
         }
 

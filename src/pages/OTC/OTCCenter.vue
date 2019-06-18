@@ -1103,8 +1103,8 @@ export default {
             display: inline-block;
             width: 100px;
             overflow: hidden;
-            text-overflow: ellipsis; // 显示省略符号来代表被修剪的文本。
-            white-space: nowrap; // 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+            text-overflow: ellipsis;
+            white-space: nowrap;
             cursor: pointer;
           }
 
@@ -1153,7 +1153,7 @@ export default {
         position: absolute;
         top: 33px;
         left: 82px;
-        color: #338ff5;
+        color: $mainColor;
       }
 
       .trading-order-sand-clock {
@@ -1348,7 +1348,7 @@ export default {
                 color: #a8afbf;
 
                 .currencyNameActived {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
               }
             }
@@ -1378,7 +1378,7 @@ export default {
             background-color: $mainContentNightBgColor;
 
             .red {
-              color: #d45858;
+              color: $upColor;
             }
 
             > .shade-pay-way {
@@ -1397,11 +1397,11 @@ export default {
 
       > .otc-order-manage {
         > .more {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         .otc-tab-pane-arrow-right {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
     }
@@ -1423,7 +1423,7 @@ export default {
           &:first-child {
             &.is-active {
               .el-radio-button__inner {
-                background-color: #d45858;
+                background-color: $upColor;
               }
             }
           }
@@ -1504,13 +1504,13 @@ export default {
 
       .el-table__column-filter-trigger {
         i {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
       .el-button--danger {
-        border-color: #d45858;
-        background-color: #d45858;
+        border-color: $upColor;
+        background-color: $upColor;
       }
 
       .invest-list-body {
@@ -1547,7 +1547,7 @@ export default {
 
         &.is-active {
           color: #fff;
-          background-color: #338ff5;
+          background-color: $mainColor;
         }
       }
     }
@@ -1576,7 +1576,7 @@ export default {
                 color: #7d90ac;
 
                 .currencyNameActived {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
 
                 > .otc-filtrate-currency-name {
@@ -1588,19 +1588,19 @@ export default {
             > .otc-publish-box {
               > .pay-style {
                 > .pay-style-icon {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
               }
 
               > .currency-style {
                 > .currency-style-icon {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
               }
 
               > .country-style {
                 > .country-style-icon {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
               }
             }
@@ -1608,7 +1608,7 @@ export default {
 
           > .otc-merchant-list {
             .red {
-              color: #d45858;
+              color: $upColor;
             }
 
             > .shade-pay-way {
@@ -1626,11 +1626,11 @@ export default {
 
       > .otc-order-manage {
         > .more {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         .otc-tab-pane-arrow-right {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
     }
@@ -1654,7 +1654,7 @@ export default {
           &:first-child {
             &.is-active {
               .el-radio-button__inner {
-                background-color: #d45858;
+                background-color: $upColor;
               }
             }
           }
@@ -1729,13 +1729,13 @@ export default {
 
       .el-table__column-filter-trigger {
         i {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
       .el-button--danger {
-        border-color: #d45858;
-        background-color: #d45858;
+        border-color: $upColor;
+        background-color: $upColor;
       }
 
       .el-button--success {
@@ -1756,7 +1756,7 @@ export default {
 
         &.is-active {
           color: #fff;
-          background-color: #338ff5;
+          background-color: $mainColor;
         }
       }
     }

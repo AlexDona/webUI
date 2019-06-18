@@ -995,8 +995,8 @@ export default {
 
     > .report-form-statistics-content {
       > .report-form-title {
-        border-left: 3px solid #338ff5;
-        color: #338ff5;
+        border-left: 3px solid $mainColor;
+        color: $mainColor;
       }
 
       > .report-form-filtrate {
@@ -1006,7 +1006,7 @@ export default {
       }
 
       > .report-form-asset {
-        color: #338ff5;
+        color: $mainColor;
         background-color: #1c1f32;
 
         > .title {
@@ -1024,7 +1024,7 @@ export default {
           background-color: #1c1f32;
 
           > .head {
-            color: #338ff5;
+            color: $mainColor;
             box-shadow: 0 4px 6px #191e28;
           }
 
@@ -1080,7 +1080,7 @@ export default {
         background-color: #1c1f32;
 
         > .title {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         > .content {
@@ -1143,12 +1143,12 @@ export default {
             background-color: #1c1f32;
 
             &::after {
-              background-color: #338ff5;
+              background-color: $mainColor;
             }
           }
 
           .el-radio__input.is-checked + .el-radio__label {
-            color: #338ff5;
+            color: $mainColor;
           }
         }
       }
@@ -1195,8 +1195,8 @@ export default {
 
     > .report-form-statistics-content {
       > .report-form-title {
-        border-left: 3px solid #338ff5;
-        color: #338ff5;
+        border-left: 3px solid $mainColor;
+        color: $mainColor;
       }
 
       > .report-form-filtrate {
@@ -1206,7 +1206,7 @@ export default {
       }
 
       > .report-form-asset {
-        color: #338ff5;
+        color: $mainColor;
         background-color: #fff;
 
         > .title {
@@ -1225,7 +1225,7 @@ export default {
 
           > .head {
             border: 1px solid #ecf1f8;
-            color: #338ff5;
+            color: $mainColor;
             box-shadow: 0 4px 6px #f3f3f3;
           }
 
@@ -1285,7 +1285,7 @@ export default {
 
         > .title {
           border-bottom: 1px solid rgba(38, 47, 56, .1);
-          color: #338ff5;
+          color: $mainColor;
         }
 
         > .content {
@@ -1326,7 +1326,7 @@ export default {
       .date {
         .radio-date {
           .el-radio__input.is-checked + .el-radio__label {
-            color: #338ff5;
+            color: $mainColor;
           }
 
           .el-radio__label {
@@ -1338,7 +1338,7 @@ export default {
             background-color: #fff;
 
             &::after {
-              background-color: #338ff5;
+              background-color: $mainColor;
             }
           }
         }
@@ -1499,7 +1499,7 @@ export default {
                         background-color: #fff;
 
                         > a {
-                          color: #338ff5;
+                          color: $mainColor;
                         }
                       }
                     }

@@ -1118,7 +1118,7 @@ export default {
 
           .close-pwd-tip {
             margin-top: 5px;
-            color: #338ff5;
+            color: $mainColor;
           }
 
           .el-button {
@@ -1134,7 +1134,7 @@ export default {
 
           .forget-pwd-tip {
             padding: 8px 20px 0 0;
-            color: #338ff5;
+            color: $mainColor;
           }
         }
 
@@ -1232,7 +1232,7 @@ export default {
                 }
 
                 > .unit {
-                  color: #338ff5;
+                  color: $mainColor;
                   background-color: #303f59;
                 }
               }
@@ -1512,7 +1512,7 @@ export default {
         }
 
         .el-dialog__title {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         .el-dialog__body .password-input {

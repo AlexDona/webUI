@@ -1643,7 +1643,7 @@ export default {
               > .upload-title {
                 display: inline-block;
                 vertical-align: top;
-                color: #338ff5;
+                color: $mainColor;
               }
 
               > .upload-content {
@@ -1732,7 +1732,6 @@ export default {
     }
 
     .el-textarea {
-      /* width: 540px; */
       width: 180px;
     }
 
@@ -1794,7 +1793,7 @@ export default {
 
         .close-pwd-tip {
           margin-top: 5px;
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1804,7 +1803,7 @@ export default {
 
         .forget-pwd-tip {
           padding: 8px 20px 0 0;
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1928,7 +1927,7 @@ export default {
             > .appeal-body-content {
               > .appeal-textarea {
                 > .appeal-reason {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
 
                 > .appeal-textarea-text {
@@ -1992,7 +1991,7 @@ export default {
         line-height: 30px !important;
 
         &.selected {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         &:hover {
@@ -2000,7 +1999,7 @@ export default {
         }
 
         &.hover {
-          color: #338ff5;
+          color: $mainColor;
           background-color: #29343f;
         }
       }
@@ -2017,10 +2016,6 @@ export default {
 
       .el-button--mini {
         padding: 3px 10px;
-      }
-
-      .el-textarea {
-        /* width: 540px; */
       }
 
       .el-textarea__inner {
@@ -2165,7 +2160,7 @@ export default {
                   > .pay-style {
                     > .qiandai-icon {
                       > .icon {
-                        color: #338ff5;
+                        color: $mainColor;
                       }
                     }
                   }
@@ -2227,7 +2222,7 @@ export default {
             > .appeal-body-content {
               > .appeal-textarea {
                 > .appeal-reason {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
 
                 > .appeal-textarea-text {
@@ -2293,7 +2288,7 @@ export default {
         line-height: 30px !important;
 
         &.selected {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         &:hover {
@@ -2301,7 +2296,7 @@ export default {
         }
 
         &.hover {
-          color: #338ff5;
+          color: $mainColor;
           background-color: #29343f;
         }
       }
@@ -2319,17 +2314,13 @@ export default {
       .el-select {
         .el-input {
           .el-select__caret {
-            color: #338ff5;
+            color: $mainColor;
           }
         }
       }
 
       .el-button--mini {
         padding: 3px 10px;
-      }
-
-      .el-textarea {
-        /* width: 540px; */
       }
 
       .el-textarea__inner {
@@ -2372,7 +2363,7 @@ export default {
 
         .el-dialog__title {
           font-size: 14px;
-          color: #338ff5;
+          color: $mainColor;
         }
 
         .el-dialog__headerbtn {

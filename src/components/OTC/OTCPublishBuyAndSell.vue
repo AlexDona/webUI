@@ -1323,7 +1323,7 @@ export default {
 
         .close-pwd-tip {
           margin-top: 5px;
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1333,7 +1333,7 @@ export default {
 
         .forget-pwd-tip {
           padding: 8px 20px 0 0;
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1372,7 +1372,7 @@ export default {
 
           > .buy-sell-submit-form {
             .want-buy-sell-sum {
-              color: #338ff5;
+              color: $mainColor;
             }
 
             .want-buy-sell-sum-content {
@@ -1396,7 +1396,7 @@ export default {
               }
 
               > .unit {
-                color: #338ff5;
+                color: $mainColor;
                 background-color: #21243b;
               }
             }
@@ -1418,7 +1418,7 @@ export default {
               }
 
               > .monad {
-                color: #338ff5;
+                color: $mainColor;
                 background-color: #21243b;
               }
 
@@ -1515,7 +1515,7 @@ export default {
 
         .el-select-dropdown__item {
           &.hover {
-            color: #338ff5 !important;
+            color: $mainColor !important;
             background-color: #29343f !important;
           }
         }
@@ -1581,7 +1581,7 @@ export default {
 
           > .buy-sell-submit-form {
             .want-buy-sell-sum {
-              color: #338ff5;
+              color: $mainColor;
             }
 
             .want-buy-sell-sum-content {
@@ -1606,7 +1606,7 @@ export default {
 
               > .unit {
                 border: 1px solid #cbddf4;
-                color: #338ff5;
+                color: $mainColor;
                 background-color: #cbddf4;
               }
             }
@@ -1629,7 +1629,7 @@ export default {
 
               > .monad {
                 border: 1px solid #cbddf4;
-                color: #338ff5;
+                color: $mainColor;
                 background-color: #cbddf4;
               }
 
@@ -1739,7 +1739,7 @@ export default {
           }
 
           > .range-line {
-            color: #338ff5;
+            color: $mainColor;
           }
         }
 

@@ -336,6 +336,20 @@ export default {
       }
     }
 
+    /deep/ {
+      .otc-entrust-order-table {
+        .entrust-table-body {
+          .entrust-list-content {
+            .eighth-action {
+              .el-button--text {
+                color: $mainColor;
+              }
+            }
+          }
+        }
+      }
+    }
+
     &.night {
       .otc-entrust-order-table {
         > .entrust-table-head {

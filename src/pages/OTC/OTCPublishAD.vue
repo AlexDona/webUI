@@ -1557,7 +1557,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
         .close-pwd-tip {
           margin-top: 5px;
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1567,7 +1567,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
         .forget-pwd-tip {
           padding: 8px 20px 0 0;
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1585,8 +1585,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     > .otc-publish-AD-content {
       > .publish-AD-left {
         > .AD-title {
-          border-left: 3px solid #338ff5;
-          color: #338ff5;
+          border-left: 3px solid $mainColor;
+          color: $mainColor;
         }
 
         > .AD-big-form {
@@ -1722,7 +1722,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
       .limit-set {
         .icon {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1790,8 +1790,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     > .otc-publish-AD-content {
       > .publish-AD-left {
         > .AD-title {
-          border-left: 3px solid #338ff5;
-          color: #338ff5;
+          border-left: 3px solid $mainColor;
+          color: $mainColor;
         }
 
         > .AD-big-form {
@@ -1844,7 +1844,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
                 > .unit {
                   border: 1px solid #cbddf4;
-                  color: #338ff5;
+                  color: $mainColor;
                   background-color: #cbddf4;
                 }
               }
@@ -1862,7 +1862,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
                 > .unit {
                   border: 1px solid #cbddf4;
-                  color: #338ff5;
+                  color: $mainColor;
                   background-color: #cbddf4;
                 }
               }
@@ -1876,7 +1876,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
                 > .unit {
                   border: 1px solid #cbddf4;
-                  color: #338ff5;
+                  color: $mainColor;
                   background-color: #cbddf4;
                 }
 
@@ -1977,7 +1977,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
               > .right {
                 > .input {
                   > .unit[data-v-6b1c45d6] {
-                    color: #338ff5;
+                    color: $mainColor;
                     background-color: #cbddf4;
                   }
 
@@ -1994,7 +1994,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
               > .right {
                 > .input-top {
                   > .unit[data-v-6b1c45d6] {
-                    color: #338ff5;
+                    color: $mainColor;
                     background-color: #cbddf4;
                   }
 
@@ -2007,7 +2007,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
                 > .input-bottom {
                   > .unit[data-v-6b1c45d6] {
-                    color: #338ff5;
+                    color: $mainColor;
                     background-color: #cbddf4;
                   }
 

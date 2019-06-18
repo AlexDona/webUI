@@ -740,8 +740,8 @@ export default {
 
       > .otc-merchants-orders-content {
         > .merchants-title {
-          border-left: 3px solid #338ff5;
-          color: #338ff5;
+          border-left: 3px solid $mainColor;
+          color: $mainColor;
         }
 
         > .merchants-orders-main {
@@ -751,7 +751,7 @@ export default {
             }
 
             > .all-clear {
-              color: #338ff5;
+              color: $mainColor;
             }
           }
 
@@ -848,8 +848,8 @@ export default {
 
       > .otc-merchants-orders-content {
         > .merchants-title {
-          border-left: 3px solid #338ff5;
-          color: #338ff5;
+          border-left: 3px solid $mainColor;
+          color: $mainColor;
         }
 
         > .merchants-orders-main {
@@ -859,7 +859,7 @@ export default {
             }
 
             > .all-clear {
-              color: #338ff5;
+              color: $mainColor;
             }
           }
 

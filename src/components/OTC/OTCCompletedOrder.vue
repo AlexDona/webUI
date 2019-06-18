@@ -326,6 +326,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/OTC/OTCCenter.scss";
+@import "../../../static/css/scss/index.scss";
 
 .otc-completed-order-box {
   > .completed-order-content {
@@ -470,7 +471,7 @@ export default {
 
           > .order-info-left {
             > .pay-info {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -480,7 +481,7 @@ export default {
 
           > .order-info-middle {
             > .buyer-seller-info {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -488,7 +489,7 @@ export default {
         > .completed-info-right {
           > .order-info-right {
             > .confirm-time {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -649,7 +650,7 @@ export default {
 
           > .order-info-left {
             > .pay-info {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -659,7 +660,7 @@ export default {
 
           > .order-info-middle {
             > .buyer-seller-info {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -667,7 +668,7 @@ export default {
         > .completed-info-right {
           > .order-info-right {
             > .confirm-time {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }

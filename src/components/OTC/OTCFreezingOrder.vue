@@ -355,7 +355,7 @@ export default {
               border-right: 1px solid #262f38;
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
@@ -363,7 +363,7 @@ export default {
               border-right: 1px solid #262f38;
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
@@ -371,13 +371,13 @@ export default {
               border-right: 1px solid #262f38;
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
             > .info-reason {
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
           }
@@ -422,7 +422,7 @@ export default {
               border-right: 1px solid rgba(38, 47, 56, .1);
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
@@ -430,7 +430,7 @@ export default {
               border-right: 1px solid rgba(38, 47, 56, .1);
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
@@ -438,13 +438,13 @@ export default {
               border-right: 1px solid rgba(38, 47, 56, .1);
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
             > .info-reason {
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
           }
