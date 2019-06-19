@@ -1,7 +1,12 @@
+<!--
+  author: zhaoxinlei
+  update: 20190619
+  description: 当前页面为 新闻详情页面
+-->
 <template>
   <div
     class="news-and-notice-box"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box">
       <!--搜索区-->
@@ -18,7 +23,7 @@
       <div class="content-box">
         <div class="inner-box">
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/NewsAndNoticeCenter' }">{{$t('M.comm_news_and_notice')}}</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: `/${$routes_X.news}` }">{{$t('M.comm_news_and_notice')}}</el-breadcrumb-item>
             <el-breadcrumb-item>{{newDetail.newsTypeName}}</el-breadcrumb-item>
           </el-breadcrumb>
           <div
@@ -84,11 +89,6 @@ import {
 } from '../../utils/api/home'
 import {changeNewDetailByLanguage} from '../../utils/api/news'
 import {
-  setStore,
-  getStore,
-  removeStore
-} from '../../utils'
-import {
   getNestedData
 } from '../../utils/commonFunc'
 
@@ -110,30 +110,29 @@ export default {
     }
   },
   async created () {
-    this.templateId = getStore('templateId')
-    this.templateId ? await this.changeNewDetailByLanguage() : await this.getDetailInfo(this.detailId)
+    this.getDetailInfo(this.detailId)
     await this.getAllNewsTypeList()
-    await this.getAllTypeListNewsList()
+    this.getAllTypeListNewsList()
   },
-  mounted () {},
-  activated () {},
-  updated () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // updated () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_NEWS_TYPE_ACTIVE_NAME'
     ]),
     backToParent (item) {
-      console.log(item.id)
+      // console.log(item.id)
       this.CHANGE_NEWS_TYPE_ACTIVE_NAME({
         activeName: item.id
       })
-      this.$goToPage('/NewsAndNoticeCenter')
+      this.$goToPage(`/${this.$routes_X.news}`)
     },
     async changeNewDetailByLanguage () {
       let params = {
         templateId: this.templateId,
-        language: this.language
+        language: this.$language_S_X
       }
       const data = await changeNewDetailByLanguage(params)
       if (!data) return false
@@ -145,28 +144,34 @@ export default {
     // 获取所有新闻类型
     async getAllNewsTypeList () {
       const params = {
-        language: this.language
+        language: this.$language_S_X
       }
       const data = await getAllNewsTypeList(params)
       if (!data) return false
       this.newsTypeList = getNestedData(data, 'data') || []
     },
     // 获取详情信息
-    async getDetailInfo (id) {
+    getDetailInfo: _.debounce(async function (id) {
+      if (this.templateId == id) return
       const data = await getNewsDetail(id)
       if (!data) return false
       this.newDetail = getNestedData(data, 'data')
       this.templateId = getNestedData(data, 'data.templateId')
-      setStore('templateId', this.templateId)
-    },
+      let {href} = window.location
+      let tempArr = href.split('/')
+      tempArr.pop()
+
+      // console.log(tempArr.join('/'))
+      window.location.href = `${tempArr.join('/')}/${this.templateId}`
+    }, 500),
     // 获取全部type类型的前5条数据
     async getAllTypeListNewsList () {
-      console.log(this.newsTypeList)
+      // console.log(this.newsTypeList)
       this.detailAllNewsList = []
       let params = {
         pageNum: 1,
         pageSize: 5,
-        language: this.language
+        language: this.$language_S_X
       }
       for (let i = 0; i < this.newsTypeList.length; i++) {
         const item = this.newsTypeList[i]
@@ -178,20 +183,16 @@ export default {
       }
     }
   },
-  beforeDestroy () {
-    removeStore('templateId')
-  },
-  filter: {},
+  // beforeDestroy () {
+  // },
+  // filter: {},
   computed: {
     ...mapState({
-      language: state => state.common.language,
-      theme: state => state.common.theme,
-      newsTypeActiveName: state => state.footerInfo.newsTypeActiveName,
       newsItemId: state => state.common.newsItemId
     })
   },
   watch: {
-    async language () {
+    async $language_S_X () {
       await this.getAllNewsTypeList()
       await this.getAllTypeListNewsList()
       await this.changeNewDetailByLanguage()

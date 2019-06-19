@@ -5,6 +5,7 @@ import {
   CHANGE_NEWS_TYPE_ACTIVE_NAME,
   SET_APP_DOWNLOAD_URL
 } from './mutations-types.js'
+import {routesVariable} from '../../router/routesVariable'
 
 // import {setStore, getStore} from '../utils'
 
@@ -13,7 +14,7 @@ import {
 export default {
   [CHANGE_FOOTER_ACTIVE_NAME] (state, {type, activeName}) {
     switch (type) {
-      case '/NewsAndNoticeCenter':
+      case `/${routesVariable.news}`:
         state.newsAndNoticeActiveName = activeName
         break
       case '/ServiceAndProtocol':

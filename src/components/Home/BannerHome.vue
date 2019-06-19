@@ -8,7 +8,6 @@
         background: `url(${bannerBackgroundImage}) center center/cover no-repeat`
       }"
     ></div>
-    <!--<img src="../../assets/banner示例.png" />-->
     <SliderHome class="slider-content"/>
   </div>
 </template>
@@ -19,18 +18,18 @@ export default {
   components: {
     SliderHome
   },
-  data () {
-    return {
-    }
-  },
-  created () {
-  },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
-  methods: {},
-  filter: {},
+  // data () {
+  //   return {
+  //   }
+  // },
+  // created () {
+  // },
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
+  // methods: {},
+  // filter: {},
   computed: {
     ...mapState({
       bannerBackgroundImage: state => state.home.bannerBackgroundImage,
@@ -38,19 +37,10 @@ export default {
     }),
     screenWidth () {
       return this.clientWidth / 3
-    },
-    bannerImgHeight () {
-      return this.screenWidth * 0.7125
-    }
-  },
-  watch: {
-    screenWidth (newVal) {
-      console.log(newVal)
-    },
-    bannerImgHeight (newVal) {
-      console.log(newVal)
     }
   }
+  // watch: {
+  // }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

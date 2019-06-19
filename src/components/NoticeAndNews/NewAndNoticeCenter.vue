@@ -1,7 +1,12 @@
+<!--
+  author: zhaoxinlei
+  update: 20190619
+  description: 当前页面为 新闻列表页面
+-->
 <template>
   <div
     class="news-and-notice-box"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box">
       <!--搜索区-->
@@ -36,7 +41,7 @@
                     :key="index"
                   >
                     <router-link
-                      :to="`NewsAndNoticeItem/${item.id}`"
+                      :to="`/${$routes_X.newsItem}/${item.id}`"
                       class="content-item-link"
                     >
                       <div
@@ -200,7 +205,7 @@ export default {
     ]),
     async resetNewTypeList () {
       await this.getAllNewsTypeList()
-      console.log(this.newsTypeList)
+      // console.log(this.newsTypeList)
       if (this.newsTypeActiveName) {
         this.activeName = this.newsTypeActiveName
         this.changeTab({name: this.activeName})
@@ -210,7 +215,7 @@ export default {
       }
     },
     changeTab (e) {
-      console.log(e.name)
+      // console.log(e.name)
       this.newsTypeId = e.name
       this.pageNum = 1
       this.getNewsNoticeList()
@@ -222,18 +227,18 @@ export default {
     // 获取所有新闻类型
     async getAllNewsTypeList () {
       const params = {
-        language: this.language
+        language: this.$language_S_X
       }
       const data = await getAllNewsTypeList(params)
       if (!data) return false
       this.newsTypeList = getNestedData(data, 'data') || []
     },
     // 获取新闻公告列表
-    async getNewsNoticeList () {
+    getNewsNoticeList: _.debounce(async function () {
       const params = {
         pageNum: this.pageNum,
         pageSize: this.pageSize,
-        language: this.language,
+        language: this.$language_S_X,
         newsTypeId: this.newsTypeId
       }
       const data = await getNewsNoticeList(params)
@@ -242,7 +247,7 @@ export default {
       this.noticeList = getNestedData(targetData, 'list') || []
       this.pageNum = getNestedData(targetData, 'pageNum')
       this.totalPages = getNestedData(targetData, 'pages')
-    }
+    }, 500)
   },
   filter: {},
   computed: {
@@ -250,11 +255,7 @@ export default {
       'isChineseLanguage': 'isChineseLanguage'
     }),
     ...mapState({
-      language: state => state.common.language,
-      theme: state => state.common.theme,
-      newsDetailJumpId: state => state.footerInfo.newsDetailJumpId,
       newsTypeActiveName: state => state.footerInfo.newsTypeActiveName
-      // newsAndNoticeActiveName: state => state.footerInfo.newsAndNoticeActiveName
     }),
     noticeFilterList () {
       return this.noticeList.filter((item) => {
@@ -266,10 +267,10 @@ export default {
   },
   watch: {
     newsTypeActiveName (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       this.activeName = newVal
     },
-    async language () {
+    async $language_S_X () {
       await this.resetNewTypeList()
       this.getNewsNoticeList()
     }

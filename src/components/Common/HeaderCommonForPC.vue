@@ -1,7 +1,7 @@
 <template>
   <div
     class="nav-box common"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
     :style="{
       top:$route.path==='/home'&&noticeCloseVisible ? `${styleTop}px` : 0
     }"
@@ -108,11 +108,6 @@
                 </li>
               </ul>
             </li>
-            <!--<li v-if="isFubt" class="nav-item">-->
-              <!--<router-link to="/FucCenter">-->
-                <!--<span>{{$t('M.common_fuc_eco')}}</span>-->
-              <!--</router-link>-->
-            <!--</li>-->
           </ul>
         </div>
         <!--注册登录-->
@@ -157,7 +152,7 @@
                   >
                     <!-- 查看全部 -->
                     <router-link
-                      to="/NewsAndNoticeCenter"
+                      :to="`/${$routes_X.news}`"
                       class="view-more-link"
                     >{{$t('M.investment_look_all')}}</router-link>
                   </li>
@@ -178,7 +173,7 @@
             </li>
             <li
               class="li-item"
-              v-if="!isLogin"
+              v-if="!$isLogin_S_X"
             >
               <router-link :to="`/${$routes_X.login}`">
                 <!--<span>登录</span>-->
@@ -188,7 +183,7 @@
             <li class="li-split"></li>
             <li
               class="li-item"
-              v-if="!isLogin"
+              v-if="!$isLogin_S_X"
             >
               <router-link to="/register">
                 <!--<span>注册</span>-->
@@ -197,12 +192,12 @@
             </li>
             <li
               class="li-item"
-              v-if="isLogin"
+              v-if="$isLogin_S_X"
             >
               <span>
                 <span
                   class="login cursor-pointer"
-                  v-if="isLogin"
+                  v-if="$isLogin_S_X"
                 >
                   <!--用户名-->
                   <span class="username">
@@ -324,7 +319,7 @@
           :title="$t(settingBoxTitle)"
           :visible.sync="showSetting"
           width="470px"
-          :class="{day:theme=='day',night:theme=='night' }"
+          :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
           class="nav-box-dialog"
         >
           <p class="title line-height50 font-size14">
@@ -342,7 +337,7 @@
             <el-option
               v-for="item in convertCurrencyList"
               :key="item.shortName"
-              :label="language=='zh_CN' ? item.name : item.shortName"
+              :label="$language_S_X=='zh_CN' ? item.name : item.shortName"
               :value="item.shortName">
             </el-option>
           </el-select>
@@ -468,7 +463,6 @@ import {
   mapState,
   mapActions
 } from 'vuex'
-import {xDomain} from '../../utils/env'
 import {getNavigationsAJAX} from '../../utils/api/common'
 
 export default{
@@ -668,7 +662,7 @@ export default{
   async created () {
     // f5刷新页面刷新用户信息列表
     // console.log(this.$route)
-    if (this.isLogin && this.$route.path !== '/PersonalCenter') {
+    if (this.$isLogin_S_X && this.$route.path !== '/PersonalCenter') {
       this.refreshUserInfo()
     }
 
@@ -677,9 +671,9 @@ export default{
     // console.log(this.navigation)
     // 获取 语言列表
     if (!await this.GET_LANGUAGE_LIST_ACTION(this)) return false
-    await this.SET_PARTNER_INFO_ACTION(this.language)
+    await this.SET_PARTNER_INFO_ACTION(this.$language_S_X)
     await this.GET_COUNTRY_LIST_ACTION()
-    await this.GET_ALL_NOTICE_ACTION(this.language)
+    await this.GET_ALL_NOTICE_ACTION(this.$language_S_X)
     this.isNoticeReady = true
     // 查询某商户可用法币币种列表
     // 折算货币
@@ -739,7 +733,7 @@ export default{
       if (getStore('convertCurrency')) {
         this.activeConvertCurrency = getStore('convertCurrency')
       }
-      this.activeTheme = this.theme
+      this.activeTheme = this.$theme_S_X
     },
     cancelReset () {
       this.isPayPasswordLocked = false
@@ -749,8 +743,8 @@ export default{
     jumpToNewsItem (noticeId) {
       if (!this.isNoticeReady) return false
       let currentRoute = this.$route.path
-      if (!currentRoute.startsWith('/NewsAndNoticeItem')) {
-        this.$goToPage(`/NewsAndNoticeItem/${noticeId}`)
+      if (!currentRoute.startsWith(`/${this.$routes_X.newsItem}`)) {
+        this.$goToPage(`/${this.$routes_X.newsItem}/${noticeId}`)
       } else {
         this.SET_NOTICE_ID(noticeId)
       }
@@ -1008,10 +1002,7 @@ export default{
   },
   computed: {
     ...mapState({
-      theme: state => state.common.theme,
-      language: state => state.common.language,
       defaultLanguage: state => state.common.defaultLanguage,
-      isLogin: state => state.user.isLogin,
       middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
       userInfo: state => state.user.loginStep1Info.userInfo,
       activeLanguage: state => state.common.activeLanguage,
@@ -1020,8 +1011,6 @@ export default{
       title: state => state.common.title, // 网站title
       $mainNightBgColor: state => state.common.mainColor.$mainNightBgColor,
       noticeCloseVisible: state => state.home.noticeCloseVisible,
-      // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
-      otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus,
       // 首页消息列表
       homeNoticeList: state => state.home.noticeList,
       // 交易密码是否被锁定
@@ -1029,10 +1018,6 @@ export default{
     }),
     localPayPwdSet () {
       return getNestedData(this.userInfo, 'paypasswordSet')
-    },
-    isFubt () {
-      let enableXDomains = ['fubt', 'new.test.com', 'new.bzu.com']
-      return enableXDomains.some(item => xDomain.startsWith(item))
     }
   },
   watch: {
@@ -1050,10 +1035,10 @@ export default{
     defaultLanguage (newVal) {
       this.$i18n.locale = newVal
     },
-    async language () {
+    async $language_S_X () {
       this.getNavigations()
-      this.SET_PARTNER_INFO_ACTION(this.language)
-      await this.GET_ALL_NOTICE_ACTION(this.language)
+      this.SET_PARTNER_INFO_ACTION(this.$language_S_X)
+      await this.GET_ALL_NOTICE_ACTION(this.$language_S_X)
       this.isNoticeReady = true
     },
     middleTopDataPrice () {
@@ -1069,7 +1054,7 @@ export default{
     },
     userInfoRefreshStatus (newVal) {
       if (newVal) {
-        if (this.isLogin) {
+        if (this.$isLogin_S_X) {
           this.refreshUserInfo()
         }
         this.SET_USER_INFO_REFRESH_STATUS(false)

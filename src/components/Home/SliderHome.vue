@@ -1,6 +1,7 @@
 <!--
-  @name:首页轮播图
-  @author:赵鑫磊
+  author: zhaoxinlei
+  update: 20190619
+  description: 当前组件为 首页 轮播图 组件
 -->
 <template>
   <div
@@ -50,13 +51,10 @@ export default {
       sliderListAjax: []
     }
   },
-  async created () {
-  },
-  mounted () {
-  },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // async created () {
+  // },
+  // mounted () {
+  // },
   methods: {
     ...mapMutations([
       'CHANGE_BANNER_ACTIVE',
@@ -65,7 +63,7 @@ export default {
     // 获取轮播图
     async getBanner () {
       const params = {
-        language: this.language
+        language: this.$language_S_X
       }
       const data = await getBanner(params)
       if (!data) return false
@@ -88,6 +86,7 @@ export default {
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
       let sliderList = []
       this.sliderListAjax.forEach((item) => {
+        const {bigUrl, redirectUrl, url} = item
         let that = this
         sliderList.push({
           style: {
@@ -95,18 +94,20 @@ export default {
             height: '110px',
             borderRadius: '4px',
             margin: '33px 16.25px',
-            cursor: 'pointer',
+            cursor: redirectUrl ? 'pointer' : '',
             overflow: 'hidden'
           },
           component: {
             props: ['item', 'sliderinit', 'pages'],
             data () {
               return {
-                miniImg: http2https(item.url),
+                miniImg: http2https(url),
                 // background: `${require('../../assets/develop/banner-bg.png')}`
-                background: http2https(item.bigUrl)
+                background: http2https(bigUrl)
               }
             },
+            // created () {
+            // },
             mounted () {
               $('.slider-pagination-bullet').on('click', (e) => {
                 setTimeout(() => {
@@ -133,12 +134,17 @@ export default {
               },
               mouseLeave () {
                 this.CHANGE_BANNER_ACTIVE(false)
+              },
+              jumpToNews () {
+                // console.log(item)
+                // const {redirectUrl} = item
+                if (!redirectUrl) return
+                this.$goToPage(`/${this.$routes_X.newsItem}/${redirectUrl.split('/').reverse()[0]}`)
               }
             },
             computed: {
               ...mapState({
-                bannerActive: state => state.home.bannerActive,
-                bannerDefaultBackground: state => state.home.bannerDefaultBackground
+                bannerActive: state => state.home.bannerActive
               })
             },
             watch: {
@@ -147,9 +153,9 @@ export default {
                 newVal || that.sliderListAjax.length < that.AUTO_START_LIMIT ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
               }
             },
-            template: `<a
+            template: `<span
                          style="width: 100%;height:100%"
-                         href="${http2https(item.redirectUrl) || `javascript:void(0)`}"
+                         @click="jumpToNews"
                    >
                      <img
                       style="width: 100%;height:100%"
@@ -158,7 +164,7 @@ export default {
                       @mouseenter="mouseOver"
                       @mouseleave="mouseLeave"
                      />
-                   </a>`
+                   </span>`
           }
         })
       })
@@ -168,12 +174,11 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      bannerActive: state => state.home.bannerActive,
-      language: state => state.common.language
+      bannerActive: state => state.home.bannerActive
     })
   },
   watch: {
-    language: {
+    $language_S_X: {
       handler: 'getBanner',
       immediate: true
     }
