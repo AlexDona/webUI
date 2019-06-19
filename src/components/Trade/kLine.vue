@@ -417,23 +417,12 @@ export default {
 
           // K线图指针移动回调
           this.widget.chart().crossHairMoved(_.throttle(async (e) => {
-            const currentTime = e.time * 1000
-            const ticker = `${this.symbol}-${this.interval}`
-            const limitTime = getNestedData(this.cacheData[ticker], '[700].time') ||
-            getNestedData(this.cacheData[ticker], '[600].time') ||
-            getNestedData(this.cacheData[ticker], '[500].time') ||
-            getNestedData(this.cacheData[ticker], '[400].time') ||
-            getNestedData(this.cacheData[ticker], '[300].time') ||
-            getNestedData(this.cacheData[ticker], '[200].time')
-
-            const timeDiff = currentTime - limitTime
-            if (timeDiff < 0 && this.KlineNum > 1 && this.isAllowDrag) {
+            // const timeDiff = currentTime - limitTime
+            if (this.KlineNum > 1 && this.isAllowDrag) {
               let interval = this.transformInterval(this.interval)
-              _self.intervalLoading = true
               await this.getKlineByAjax(this.symbol, interval, this.KlineNum - 1)
-              _self.intervalLoading = false
             }
-          }, 5000))
+          }, 1000))
         })
         this.symbol = options.symbol
         // console.log(this.symbol)
