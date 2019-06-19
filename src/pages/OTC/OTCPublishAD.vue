@@ -1227,7 +1227,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     display: flex;
     flex: 3;
     width: 1150px;
-    padding-top: 50px;
+    padding-top: 20px;
     margin: 50px auto;
 
     > .publish-AD-left {

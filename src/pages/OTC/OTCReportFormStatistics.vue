@@ -774,7 +774,7 @@ export default {
 
   > .report-form-statistics-content {
     width: 1300px;
-    padding-top: 50px;
+    padding-top: 20px;
     margin: 50px auto 10px;
 
     > .report-form-title {
@@ -1125,7 +1125,7 @@ export default {
           }
 
           .el-input__inner {
-            background-color: #19202e;
+            background-color: rgba(255, 255, 255, .1);
           }
         }
 

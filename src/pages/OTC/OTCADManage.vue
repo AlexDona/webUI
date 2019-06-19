@@ -552,7 +552,7 @@ export default {
 
   > .otc-AD-manage-content {
     width: 1300px;
-    padding-top: 50px;
+    padding-top: 20px;
     margin: 50px auto 10px;
 
     > .AD-title {
