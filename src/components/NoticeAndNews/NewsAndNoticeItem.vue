@@ -110,9 +110,7 @@ export default {
     }
   },
   async created () {
-    this.getDetailInfo(this.detailId)
-    await this.getAllNewsTypeList()
-    this.getAllTypeListNewsList()
+    await this.getDetailInfo(this.detailId)
   },
   // mounted () {},
   // activated () {},
@@ -189,10 +187,13 @@ export default {
   computed: {
     ...mapState({
       newsItemId: state => state.common.newsItemId
-    })
+    }),
+    languageAndTemplateId () {
+      return `${this.$language_S_X}${this.templateId}`
+    }
   },
   watch: {
-    async $language_S_X () {
+    async languageAndTemplateId () {
       await this.getAllNewsTypeList()
       await this.getAllTypeListNewsList()
       await this.changeNewDetailByLanguage()
