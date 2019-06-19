@@ -1260,6 +1260,8 @@ export default{
             .login {
               position: relative;
               display: inline-block;
+              min-width: 100px;
+              text-align: center;
 
               > .username {
                 color: $mainColor;
@@ -1269,7 +1271,7 @@ export default{
                 position: absolute;
                 z-index: 2;
                 top: 50px;
-                left: 0;
+                left: -50%;
                 box-sizing: border-box;
                 min-width: 112px;
                 height: 0;
