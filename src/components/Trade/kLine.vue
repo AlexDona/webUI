@@ -102,7 +102,9 @@ export default {
       // 小数位选择的新值
       newBitsValue: '',
       // 交易对深度小数位改变时，socket订阅数据延时器
-      socketSUBTimer: null
+      socketSUBTimer: null,
+      // 所有的klinenum
+      KlineNums: []
     }
   },
   beforeCreate () {
@@ -141,7 +143,8 @@ export default {
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
       'GET_SERVER_DATA',
       'RETURN_SYMBOL_DATA',
-      'SET_PRE_INFO_M'
+      'SET_PRE_INFO_M',
+      'SET_REQUEST_COUNT_M'
     ]),
     changeIsKlineDataReady (status) {
       this.SET_IS_KLINE_DATA_READY(status)
@@ -239,7 +242,7 @@ export default {
         tradeList, // 交易记录
         tickerList // 行情交易区列表
       } = activeSymbolData
-      console.log(activeSymbolData)
+      // console.log(activeSymbolData)
       if (depthList && depthList.depthData.sells.list) {
         depthList.depthData.sells.list.reverse()
       }
@@ -463,7 +466,9 @@ export default {
             const timeDiff = currentTime - limitTime
             if (timeDiff < 0 && this.KlineNum > 1 && this.isAllowDrag) {
               let interval = this.transformInterval(this.interval)
+              _self.intervalLoading = true
               await this.getKlineByAjax(this.symbol, interval, this.KlineNum - 1)
+              _self.intervalLoading = false
             }
           }, 5000))
         })
@@ -557,8 +562,8 @@ export default {
           break
         // 买卖单
         case 'DEPTH':
-          console.log('买卖单数据')
-          console.log(data)
+          // console.log('买卖单数据')
+          // console.log(data)
           // console.log(symbol, this.activeSymbol.id)
 
           const depthData = getNestedData(data, 'data')
@@ -572,7 +577,7 @@ export default {
           break
         // 深度图
         case 'DEPTHRENDER':
-          console.log(data)
+          // console.log(data)
           this.socketData.depthData = getNestedData(data, 'data')
           break
         case 'TRADE':
@@ -588,7 +593,7 @@ export default {
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           break
         case 'PRE':
-          console.log(data)
+          // console.log(data)
           this.SET_PRE_INFO_M(data.data)
           break
       }
@@ -632,8 +637,15 @@ export default {
           newBars.push(item)
         })
         if (onLoadedCallback) {
+          // console.log(this.KlineNum)
+          this.KlineNums.unshift(this.KlineNum)
+          // console.log(this.KlineNums)
           // console.log(this.barsRenderTime, this.prevCacheList[0], this.currentCacheList[0])
-          if (this.barsRenderTime > this.LIMIT_BARS_RENDER_TIME && this.prevCacheList[0] === this.currentCacheList[0]) {
+          // if (this.barsRenderTime > this.LIMIT_BARS_RENDER_TIME && this.prevCacheList[0] === this.currentCacheList[0]) {
+          const New = this.KlineNums[0]
+          const Last = this.KlineNums[1]
+          if ((New == Last) && New < 2) {
+            this.KlineNums = []
             // console.log('noData')
             onLoadedCallback([])
           } else {
@@ -716,7 +728,7 @@ export default {
     // 获取PRE信息
     getPREInfo () {
       let uid = this.$isLogin_S_X ? this.showId : 0
-      console.log(uid, this.userInfo)
+      // console.log(uid, this.userInfo)
       this.socket.send({
         'tag': 'SUB',
         'content': `market.${uid}.pre`,
@@ -773,7 +785,7 @@ export default {
       }, 1000)
     },
     $middleTopData_S_X (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     async $activeSymbol_S_X (newVal) {
       this.changeIsKlineDataReady(false)
