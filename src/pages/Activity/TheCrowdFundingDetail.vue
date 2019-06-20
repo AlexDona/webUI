@@ -305,14 +305,14 @@ export default {
         box-sizing border-box
         line-height 24px
         >.left
-          flex 2
+          flex 3
         .split
           width 1px
           background url('../../assets/images/crowd-funding-split-bg.png') no-repeat center center
           height 228px
           margin 0 40px
         .right
-          flex 3
+          flex 2
     &.day
       background-color: #f5f5fa
       .inner-box

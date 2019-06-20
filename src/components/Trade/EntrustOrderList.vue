@@ -430,7 +430,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import '../../../static/css/scss/index.scss';
+@import '../../assets/CSS/index';
 
 .entrust-order-box {
   width: 100%;
@@ -675,7 +675,7 @@ export default {
   }
 
   &.day {
-    color: $dayFontColor;
+    color: $dayMainTitleColor;
     background-color: $mainDayBgColor;
 
     > .inner-box {

@@ -732,7 +732,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .credited-credited {
     > .credited-credited-main {
@@ -894,14 +894,14 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
       }
 
       > .credited-credited-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         .credited-box {
           > .payment-content {
@@ -1000,8 +1000,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .background-color {
         background-color: #ccc;
@@ -1009,7 +1009,7 @@ export default {
 
       > .credited-credited-main {
         border: 1px solid rgba(38, 47, 56, .1);
-        background-color: $dayBgColor;
+        background-color: $mainDayBgColor;
       }
 
       > .credited-credited-header {

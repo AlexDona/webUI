@@ -1044,7 +1044,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/index";
+@import "../../assets/CSS/index";
 
 .otc-publish-buy-and-sell-box {
   margin-top: 50px;

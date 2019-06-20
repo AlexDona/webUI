@@ -26,6 +26,7 @@ export const createBaseRoute = ({name, path = `/${name}`, redirect = '', childre
   }
 }
 export const routesVariable = {
+  home: 'home',
   // 众筹
   crowdFunding: 'crowdFunding',
   // 登录

@@ -568,7 +568,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import '../../../static/css/scss/index';
+@import '../../assets/CSS/index';
 
 .froget-password-box {
   height: 100%;

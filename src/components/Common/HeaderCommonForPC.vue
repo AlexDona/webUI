@@ -1,17 +1,17 @@
 <template>
   <div
     class="nav-box common"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
     :style="{
-      top:$route.path==='/home'&&noticeCloseVisible ? `${styleTop}px` : 0
+      top:$route.path===`/${$routes_X.home}` && noticeCloseVisible ? `${styleTop}px` : 0
     }"
   >
     <div class="inner-box">
       <div
         class="top"
         :style="{
-          padding: $route.path==='/home'? topPadding : '0 30px',
-          backgroundColor: $route.path==='/home'? topBackgroundColor : $mainNightBgColor
+          padding: $route.path === `/${$routes_X.home}` ? topPadding : '0 30px',
+          backgroundColor: $route.path === `/${$routes_X.home}` ? topBackgroundColor : $mainNightBgColor
         }"
       >
         <!--导航-->
@@ -28,9 +28,11 @@
                 >
               </router-link>
             </li>
-            <li class="more-btn"
-                @mouseenter="toggleMoreNavs(true)"
-                @mouseleave="toggleMoreNavs(false)"
+            <!-- 更多导航 -->
+            <li
+              class="more-btn"
+              @mouseenter="toggleMoreNavs(true)"
+              @mouseleave="toggleMoreNavs(false)"
             >
               <!-- 更多 自定义导航-->
               <a
@@ -80,6 +82,7 @@
                 </li>
               </ul>
             </li>
+            <!-- 正常显示导航 -->
             <li
               class="nav-item"
               v-for="(navigationItem, index) in navigation.slice(0, 5)"
@@ -90,7 +93,15 @@
               <a
                 href="javascript:void(0);"
                 @click="navToJump(navigationItem)"
-              ><span>{{navigationItem.name}}</span></a>
+              >
+                <span>{{navigationItem.name}}</span>
+                <!-- 箭头 -->
+                <Iconfont
+                  v-show="navigationItem.children.length"
+                  icon-name="icon-xiala"
+                  class="iconfont"
+                />
+              </a>
               <ul
                 class="sub-nav-list"
                 v-if="navigationItem.children"
@@ -125,8 +136,8 @@
               @mouseleave="toggleBox('notice',false)"
             >
               <button class="notice-btn">
-                <IconFontCommon
-                  class="font-size26"
+                <Iconfont
+                  class="font-size24"
                   icon-name="icon-xiaoxi"
                 />
               </button>
@@ -164,18 +175,7 @@
                 </ul>
               </el-collapse-transition>
             </li>
-            <li class="li-item setting-li">
-              <!--设置（语言，换肤）-->
-              <button
-                class="setting"
-                @click="toggleBox('setting',true)"
-              >
-                <IconFontCommon
-                  class="font-size26"
-                  iconName="icon-setting"
-                />
-              </button>
-            </li>
+            <TheSetting/>
             <li
               class="li-item"
               v-if="!isLogin"
@@ -238,7 +238,7 @@
                          {{$t('M.user_vip_look')}}
                       </button>
                     </div>
-                    <ul class="personal-user">
+                    <ul class="user-infos">
                       <li @click="stateReturnSuperior('account-balance')">
                         <!--账户资产-->
                         {{$t('M.comm_user_account_balance')}}
@@ -286,8 +286,14 @@
                 <dt
                   class="lang-selected"
                 >
-                  <span class="language-text">{{activeLanguage.name}}</span>
-                  <i class="el-icon-caret-bottom"></i>
+                  <span class="language-text">
+                    {{activeLanguage.name}}
+                    <Iconfont
+                      class="font-size20 iconfont"
+                      icon-name="icon-xiala"
+                    />
+                  </span>
+                  <!--<i class="el-icon-caret-bottom"></i>-->
                 </dt>
                 <el-collapse-transition>
                   <dd
@@ -317,70 +323,6 @@
         $route.path === '/ActivityCenter' ||
          $route.path === '/RankingListOfInvitation'"
       >
-      </div>
-      <div class="box">
-        <!--设置弹窗-->
-        <el-dialog
-          :title="$t(settingBoxTitle)"
-          :visible.sync="showSetting"
-          width="470px"
-          :class="{day:theme=='day',night:theme=='night' }"
-          class="nav-box-dialog"
-        >
-          <p class="title line-height50 font-size14">
-            <!--折算货币-->
-            {{$t('M.comm_convert_currency')}}
-          </p>
-          <!-- 折算货币选择 -->
-          <!--请选择-->
-          <el-select
-            :no-data-text="$t('M.comm_no_data')"
-            v-model="activeConvertCurrency"
-            :placeholder="$t('M.comm_please_choose')"
-            popper-class="convert-currency"
-          >
-            <el-option
-              v-for="item in convertCurrencyList"
-              :key="item.shortName"
-              :label="language=='zh_CN' ? item.name : item.shortName"
-              :value="item.shortName">
-            </el-option>
-          </el-select>
-          <p class="title line-height50 font-size14">
-            <!--主题-->
-            {{$t('M.comm_theme')}}
-          </p>
-          <!-- 主题选择框 -->
-          <el-radio-group
-            v-model="activeTheme">
-            <el-radio-button
-              v-for="(item,index) in themeList"
-              :key="index"
-              :label="item.value"
-              border
-            >
-              {{$t(item.label)}}
-              <i
-                class="el-icon-check"
-                v-show="activeTheme==item.value"
-              ></i>
-            </el-radio-button>
-          </el-radio-group>
-          <!--底部-->
-          <div
-            slot="footer"
-            class="dialog-footer"
-          >
-            <el-button
-              size="large"
-              type="primary"
-              @click="changeSetting"
-            >
-              <!--确 定-->
-              {{$t('M.comm_confirm')}}
-            </el-button>
-          </div>
-        </el-dialog>
       </div>
       <!-- 非商家禁止进入OTC导航页提示框 -->
       <div class="apply-merchant-dialog">
@@ -451,18 +393,13 @@
   </div>
 </template>
 <script>
-import {getMerchantAvailableLegalTender} from '../../utils/api/OTC'
 import {userLoginOut} from '../../utils/api/user'
-import IconFontCommon from '../Common/IconFontCommon'
 import TheMoreNavsButton from '../Home/TheMoreNavsButton'
 import TheGlobalPayPasswordDialog from '../Common/GlobalPayPassWordDialog'
+import TheSetting from '../Header/TheSetting'
 import {
   getNestedData
 } from '../../utils/commonFunc'
-import {
-  getStore,
-  setStore
-} from '../../utils'
 import {
   mapMutations,
   mapState,
@@ -473,9 +410,9 @@ import {getNavigationsAJAX} from '../../utils/api/common'
 
 export default{
   components: {
-    IconFontCommon,
     TheMoreNavsButton,
-    TheGlobalPayPasswordDialog
+    TheGlobalPayPasswordDialog,
+    TheSetting
   },
   data () {
     return {
@@ -484,28 +421,8 @@ export default{
       showNoticeList: false,
       // 语言选择中
       langSelecting: false,
-      // 设置弹窗状态
-      showSetting: false,
-      settingBoxTitle: 'M.comm_set', // 设置
-      // 折算货币列表
-      convertCurrencyList: [],
       // 语言列表
       languageList: [],
-      // 当前折算货币
-      activeConvertCurrency: '',
-      activeConvertCurrencyObj: {}, // 当前折算货币obj
-      // 主题列表
-      themeList: [
-        {
-          label: 'M.comm_black', // 黑色
-          value: 'night'
-        },
-        {
-          label: 'M.comm_white', // 白色
-          value: 'day'
-        }
-      ],
-      activeTheme: '',
       // otc 子导航显示状态
       // otcSubNavStatus: false,
       // 任付伟大改动的：otc 子导航显示状态默认先显示，为了方便点击
@@ -673,17 +590,14 @@ export default{
     }
 
     await this.getNavigations()
-
     // console.log(this.navigation)
     // 获取 语言列表
     if (!await this.GET_LANGUAGE_LIST_ACTION(this)) return false
-    await this.SET_PARTNER_INFO_ACTION(this.language)
+    await this.SET_PARTNER_INFO_ACTION(this.$language_S_X)
     await this.GET_COUNTRY_LIST_ACTION()
-    await this.GET_ALL_NOTICE_ACTION(this.language)
+    await this.GET_ALL_NOTICE_ACTION(this.$language_S_X)
     this.isNoticeReady = true
     // 查询某商户可用法币币种列表
-    // 折算货币
-    await this.getMerchantAvailableLegalTenderList()
   },
   mounted () {
     window.addEventListener('scroll', this.handleScroll)
@@ -735,12 +649,6 @@ export default{
         nav['isInnerLink'] = this.checkIsInnerLink(nav.link) ? true : false
       })
     },
-    initSettings () {
-      if (getStore('convertCurrency')) {
-        this.activeConvertCurrency = getStore('convertCurrency')
-      }
-      this.activeTheme = this.theme
-    },
     cancelReset () {
       this.isPayPasswordLocked = false
       this.CHANGE_PASSWORD_USEABLE(false)
@@ -780,26 +688,6 @@ export default{
         this.topPadding = '0 30px'
         this.topBackgroundColor = 'rgba(0,0,0,.5)'
       }
-    },
-    // 更改当前选中汇率转换货币
-    async changeActiveTransitionCurrency () {
-      const params = {
-        shortName: this.activeConvertCurrency || getStore('convertCurrency')
-      }
-      this.convertCurrencyList.forEach((item) => {
-        if (item.shortName === params.shortName) {
-          // console.log(item.shortName)
-          setStore('convertCurrency', item.shortName)
-          this.activeConvertCurrencyObj = item
-          return false
-        }
-      })
-      // console.log(params)
-      if (!params.shortName) return false
-      await this.GET_TRANSITION_RATE_ACTION({
-        params,
-        activeConvertCurrencyObj: this.activeConvertCurrencyObj
-      })
     },
     // 设置个人中心跳转
     setPersonalJump (target) {
@@ -853,17 +741,13 @@ export default{
       const data = await userLoginOut()
       if (!data) return false
       this.USER_LOGOUT()
-      this.$goToPage('/home')
+      this.$goToPage(`/${this.$routes_X.home}`)
     },
     toggleBox (type, status) {
       // console.log(1)
       switch (type) {
         case 'notice':
           this.showNoticeList = status
-          break
-        case 'setting':
-          this.showSetting = status
-          this.initSettings()
           break
         case 'lang':
           this.langSelecting = status
@@ -887,28 +771,6 @@ export default{
       this.CHANGE_LANGUAGE(e)
       this.$i18n.locale = e.shortName
     },
-    // 更改设置
-    async changeSetting () {
-      // 主题设置
-      this.CHANGE_THEME(this.activeTheme)
-      document.body.classList.remove('day', 'night')
-      document.body.classList.add(this.activeTheme)
-      // 汇率转换设置
-      await this.changeActiveTransitionCurrency()
-      this.CHANGE_CONVERT_CURRENCY(this.activeConvertCurrency)
-      this.toggleBox('setting', false)
-      this.CHANGE_PASSWORD_USEABLE(false)
-    },
-    // 查询某商户可用法币币种列表
-    async getMerchantAvailableLegalTenderList () {
-      let data = await getMerchantAvailableLegalTender()
-      // 返回数据正确的逻辑
-      if (!data) return false
-      if (data.data) {
-        this.convertCurrencyList = getNestedData(data, 'data')
-        await this.changeActiveTransitionCurrency()
-      }
-    },
     setNewTitle (path = '/TradeCenter') {
       const {last, sellsymbol, area} = this.$middleTopData_S_X
       let newTitle = ''
@@ -928,6 +790,7 @@ export default{
     // 切换当前激活导航
     changeActiveNavIndex (index) {
       this.activeNavIndex = index
+      console.log(this.activeMoreNavIndex)
     },
     // 切换当前更多激活导航
     changeMoreActiveNavIndex (index) {
@@ -1008,8 +871,6 @@ export default{
   },
   computed: {
     ...mapState({
-      theme: state => state.common.theme,
-      language: state => state.common.language,
       defaultLanguage: state => state.common.defaultLanguage,
       isLogin: state => state.user.isLogin,
       middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
@@ -1050,10 +911,10 @@ export default{
     defaultLanguage (newVal) {
       this.$i18n.locale = newVal
     },
-    async language () {
+    async $language_S_X () {
       this.getNavigations()
-      this.SET_PARTNER_INFO_ACTION(this.language)
-      await this.GET_ALL_NOTICE_ACTION(this.language)
+      this.SET_PARTNER_INFO_ACTION(this.$language_S_X)
+      await this.GET_ALL_NOTICE_ACTION(this.$language_S_X)
       this.isNoticeReady = true
     },
     middleTopDataPrice () {
@@ -1063,6 +924,8 @@ export default{
       // val是改变之后的路由，oldVal是改变之前的val
       handler: function (val, oldVal) {
         this.setNewTitle(val.path)
+        // 重置导航
+        this.activeNavIndex = -1
       },
       // 深度观察监听
       deep: true
@@ -1079,8 +942,7 @@ export default{
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/index";
-@import "../../../static/css/scss/Home/MarketListHome";
+@import "../../assets/CSS/index";
 
 .nav-box {
   position: fixed;
@@ -1096,8 +958,8 @@ export default{
 
     > .top {
       display: flex;
-      height: 50px;
-      line-height: 50px;
+      height: 60px;
+      line-height: 60px;
       transition: all .5s;
 
       > .left {
@@ -1121,15 +983,18 @@ export default{
 
             > .sub-nav-list {
               position: absolute;
-              left: 0;
-              background-color: $mainContentNightBgColor;
+              top: 50px;
+              left: 46%;
+              border-radius: 2px;
+              background-color: #2c314d;
+              box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
+              transform: translateX(-50%);
 
               > .sub-nav-item {
                 height: 40px;
                 padding: 0 20px;
                 line-height: 40px;
                 text-align: left;
-                background-color: $mainContentNightBgColor;
 
                 &:hover {
                   background-color: #21243a;
@@ -1147,10 +1012,12 @@ export default{
 
             /* 自定义导航 */
             &:hover {
-              background-color: #1b2136;
-
               > a {
                 color: $mainColor;
+
+                > .iconfont {
+                  transform: rotate(180deg);
+                }
               }
             }
 
@@ -1160,6 +1027,12 @@ export default{
               height: 100%;
               white-space: nowrap;
               color: $headerNavFontColor;
+
+              > .iconfont {
+                margin-top: -1px;
+                margin-left: -2px;
+                transition: all .2s;
+              }
 
               &.active {
                 color: $mainColor;
@@ -1199,8 +1072,10 @@ export default{
               position: absolute;
               top: 50px;
               min-width: 200%;
+              border-radius: 2px;
               text-align: left;
-              background-color: $mainContentNightBgColor;
+              background-color: #2c314d;
+              box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
 
               > .nav-item {
                 height: 40px;
@@ -1223,7 +1098,8 @@ export default{
                   position: absolute;
                   top: 0;
                   left: 100%;
-                  background-color: $mainContentNightBgColor;
+                  background-color: #2c314d;
+                  box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
 
                   > .sub-nav-item {
                     height: 40px;
@@ -1261,7 +1137,7 @@ export default{
           > .li-split {
             display: inline-block;
             width: 1px;
-            height: 20px;
+            height: 15px;
             vertical-align: middle;
             background-color: #4a5260;
           }
@@ -1275,6 +1151,9 @@ export default{
             .login {
               position: relative;
               display: inline-block;
+              padding: 0 4px;
+              text-align: center;
+              vertical-align: middle;
 
               > .username {
                 color: $mainColor;
@@ -1288,41 +1167,51 @@ export default{
                 box-sizing: border-box;
                 min-width: 112px;
                 height: 0;
-                padding: 0 25px;
                 overflow: hidden;
                 text-align: center;
-                background-color: $mainContentNightBgColor;
+                background-color: #2c314d;
+                box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
 
                 > .sub-nav-user {
                   > .nav-vip {
+                    padding: 0 25px;
                     margin-top: 16px;
-                    // height: 50px;
-                    // line-height: 50px;
                     line-height: 20px;
                     white-space: nowrap;
                   }
 
                   > .nav-button {
-                    width: 100%;
+                    min-width: 75%;
                     height: 30px;
-                    border: 1px solid rgba(0, 121, 254, 1);
+                    padding: 0 10px;
+                    border: 1px solid $mainColor;
                     border-radius: 5px;
                     white-space: nowrap;
-                    color: #ccc;
+                    color: $nightFontColor;
                     cursor: pointer;
+
+                    &:hover {
+                      border-color: $nightFontColor;
+                      color: $mainColor;
+                      background-color: #21243a;
+                    }
                   }
                 }
 
-                > .personal-user {
+                > .user-infos {
                   height: 40px;
                   line-height: 40px;
                   text-align: left;
+                  background-color: #2c314d;
 
                   > li {
+                    padding: 0 25px;
                     white-space: nowrap;
+                    color: $nightFontColor;
 
                     &:hover {
-                      color: rgba(0, 121, 254, 1);
+                      color: $mainColor;
+                      background-color: #21243a;
                       cursor: pointer;
                     }
                   }
@@ -1331,26 +1220,26 @@ export default{
 
               &:hover .login-info {
                 height: 330px;
+                border-radius: 2px;
                 transition: .5s;
 
                 &.has-vip {
-                  height: 450px;
+                  height: 420px;
                 }
               }
             }
 
             > a {
               padding: 5px 10px;
-              color: #fff;
+              border-radius: 2px;
+              vertical-align: middle;
+              color: $nightFontColor;
               transition: all 1s;
 
               &:hover {
+                color: #fff;
                 background-color: $mainColor;
               }
-            }
-
-            &.setting-li {
-              padding: 0;
             }
 
             /* 消息 */
@@ -1358,6 +1247,7 @@ export default{
               position: relative;
 
               > .notice-btn {
+                padding: 0;
                 color: $mainColor;
                 cursor: pointer;
               }
@@ -1366,33 +1256,34 @@ export default{
                 position: absolute;
                 z-index: 2;
                 top: 50px;
-                left: -10px;
+                left: -150%;
                 width: 300px;
                 max-height: 240px;
-                border-radius: 0 0 2px 2px;
+                border-radius: 2px;
                 overflow: hidden;
-                box-shadow: 0 1px 1px 0 rgb(32, 35, 55);
+                box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
 
                 > .notice-item {
                   box-sizing: border-box;
                   height: 40px;
-                  padding: 0 14px;
                   border-bottom: 1px solid #292c42;
                   font-size: 12px;
                   line-height: 40px;
                   text-align: left;
-                  background-color: $mainContentNightBgColor;
+                  background-color: #2c314d;
 
                   > a {
                     display: block;
                     height: 100%;
+                    padding: 0 14px;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
-                    color: $mainNightTitleColor;
+                    color: $nightFontColor;
 
                     &:hover {
                       color: $mainColor;
+                      background-color: #21243a;
                     }
                   }
 
@@ -1411,14 +1302,6 @@ export default{
               }
             }
 
-            /* 设置 */
-            .setting {
-              padding: 0;
-              font-size: 20px;
-              color: #fff;
-              cursor: pointer;
-            }
-
             /* 语言选择 dl */
             > .lang-box {
               position: relative;
@@ -1428,12 +1311,15 @@ export default{
 
               /* 当前语言 dt */
               > .lang-selected {
+                position: relative;
+                top: 1px;
                 display: inline-block;
                 box-sizing: border-box;
                 width: 100%;
+                min-width: 90px;
                 height: 30px;
-                padding: 10px 12px;
                 line-height: 0;
+                color: $nightFontColor;
 
                 > .icon {
                   margin-right: 5px;
@@ -1442,7 +1328,17 @@ export default{
                 > .language-text {
                   display: inline-block;
 
-                  /* width:60px; */
+                  > .iconfont {
+                    margin-top: -1px;
+                    margin-left: -2px;
+                    transition: all .2s;
+                  }
+
+                  &:hover {
+                    > .iconfont {
+                      transform: rotate(180deg);
+                    }
+                  }
                 }
               }
 
@@ -1450,8 +1346,10 @@ export default{
                 position: absolute;
                 z-index: 2;
                 top: 50px;
-                left: 0;
-                background-color: $mainContentNightBgColor;
+                left: -2px;
+                border-radius: 2px;
+                background-color: #2c314d;
+                box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
 
                 > .lang-item {
                   display: block;
@@ -1460,11 +1358,12 @@ export default{
                   padding: 0 10px;
                   line-height: 30px;
                   text-align: left;
-                  color: #fff;
+                  color: $nightFontColor;
                   cursor: pointer;
 
                   &:hover {
                     color: $mainColor;
+                    background-color: #21243a;
                   }
 
                   > .icon {
@@ -1486,8 +1385,10 @@ export default{
           border-radius: 4px;
 
           .el-dialog__header {
+            height: 44px;
             padding: 3px 20px;
             border-radius: 4px;
+            line-height: 44px;
 
             .el-dialog__title {
               font-size: 16px;
@@ -1540,100 +1441,23 @@ export default{
     }
   }
 
+  &.night {
+    /deep/ {
+     .apply-merchant-dialog {
+       .el-dialog {
+         background-color: #1c2237;
+
+         .el-dialog__header {
+           background-color: #1d2131;
+           box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+         }
+       }
+     }
+    }
+  }
+
   &.day {
     > .inner-box {
-      > .top {
-        > .right {
-          > .ul-list {
-            > .li-item {
-              /* 消息 */
-              &.notice-li {
-                .notice-list {
-                  box-shadow: 0 2px 10px 0 rgb(225, 232, 240);
-
-                  > .notice-item {
-                    border-bottom: 1px solid #e5eef8;
-                    background-color: $mainDayBgColor;
-
-                    > a {
-                      color: #7d90ac;
-
-                      &:hover {
-                        color: $mainColor;
-                      }
-                    }
-
-                    &.view-more {
-                      background-color: #f2f6fa;
-                    }
-
-                    .view-more-link {
-                      color: $mainColor;
-                    }
-                  }
-                }
-              }
-
-              /* 语言选择 dl */
-              > .lang-box {
-                > .lang-list {
-                  background-color: #fff;
-                  box-shadow: 0 2px 10px 0 rgb(225, 232, 240);
-
-                  > .lang-item {
-                    color: #7d90ac;
-
-                    &:hover {
-                      color: $mainColor;
-                    }
-                  }
-                }
-              }
-
-              .login {
-                > .login-info {
-                  border-radius: 0 0 2px 2px;
-                  background-color: #fff;
-                  box-shadow: 0 2px 10px 0 rgb(225, 232, 240);
-
-                  > .sub-nav-user {
-                    > .nav-vip {
-                      white-space: nowrap;
-                      color: #7d90ac;
-                    }
-
-                    > .nav-button {
-                      border-radius: 4px;
-                      color: $mainColor;
-                      background: rgba(51, 143, 245, .1);
-                    }
-                  }
-
-                  > .personal-user {
-                    > li {
-                      color: #7d90ac;
-
-                      &:hover {
-                        color: rgba(0, 121, 254, 1);
-                      }
-                    }
-                  }
-                }
-
-                &:hover .login-info {
-                  height: 330px;
-                  transition: .5s;
-
-                  &.has-vip {
-                    height: 450px;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-
       /deep/ {
         .apply-merchant-dialog {
           .el-dialog {
@@ -1657,26 +1481,6 @@ export default{
               }
             }
           }
-        }
-      }
-    }
-
-    /deep/ {
-      .el-radio-button__inner {
-        color: #333;
-        background-color: #fff;
-      }
-
-      .nav-box-dialog {
-        .el-dialog__title {
-          padding: 0;
-          color: #333;
-        }
-
-        .el-dialog,
-        .el-dialog__header {
-          background-color: #fff !important;
-          box-shadow: none;
         }
       }
     }
@@ -1724,10 +1528,4 @@ export default{
     }
   }
 }
-</style>
-<style>
-  .el-select-dropdown.el-popper.convert-currency {
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-  }
 </style>

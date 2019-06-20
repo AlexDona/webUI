@@ -483,6 +483,10 @@ export default {
       button.addClass('selected')
       this.widget.selectedIntervalButton = button
       // const ticker = `${this.symbol}-${this.interval}`
+      let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
+      // console.log(iframe$('.back-to-present'))
+      // 回到初始位置
+      iframe$('.back-to-present').click()
     },
     unSubscribe (interval) {
       let newInterval = this.transformInterval(interval)
@@ -828,7 +832,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import '../../../static/css/scss/index';
+  @import '../../assets/CSS/index';
   $maxHeight1920-2560: 580px;
   $defaultHeight: 355px;
 

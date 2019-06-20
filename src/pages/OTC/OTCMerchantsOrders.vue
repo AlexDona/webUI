@@ -587,7 +587,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index";
+  @import "../../assets/CSS/index";
 
   .otc-merchants-orders-box {
     margin-top: 50px;

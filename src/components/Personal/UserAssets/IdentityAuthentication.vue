@@ -992,7 +992,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .identity-authentication {
     > .identity-authentication-main {
@@ -1305,10 +1305,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .identity-header-background {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         .header-content {
           color: #338ff5;
@@ -1316,7 +1316,7 @@ export default {
       }
 
       .identity-authentication-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         .false-tips {
           color: #d45858;
@@ -1345,7 +1345,7 @@ export default {
       }
 
       .identity-background {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
       }
 
       > .advanced-certification-main {
@@ -1496,13 +1496,13 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       .identity-header-background {
         border: 1px solid rgba(38, 47, 56, .1);
         border-radius: 2px;
-        background-color: $dayBgColor;
+        background-color: $mainDayBgColor;
 
         .header-content {
           color: #338ff5;

@@ -229,8 +229,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/OTC/OTCCenter.scss";
-  @import "../../../static/css/scss/index.scss";
+  @import "../../assets/CSS/index";
 
   .otc-freezing-order-box {
     > .freezing-order-content {
@@ -395,12 +394,12 @@ export default {
         > .freezing-table-head {
           border: 1px solid #ecf1f8;
           color: #617499;
-          background-color: $mainDayColor;
+          background-color: $mainDayBgColor;
         }
 
         > .freezing-table-body {
           border: 1px solid #ecf1f8;
-          background-color: $mainDayColor;
+          background-color: $mainDayBgColor;
 
           > .freezing-info-top {
             color: #333;

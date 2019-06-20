@@ -852,7 +852,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/index.scss";
+@import "../../assets/CSS/index";
 
 .otc-online-trader-buy-sell-box {
   > .online-trader-buy-sell-content {

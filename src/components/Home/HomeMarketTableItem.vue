@@ -424,8 +424,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/index.scss";
-@import "../../../static/css/scss/Home/MarketListHome.scss";
+@import "../../assets/CSS/index";
 
 .table-item-box {
   display: flex;

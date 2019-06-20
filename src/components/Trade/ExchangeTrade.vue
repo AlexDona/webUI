@@ -1436,8 +1436,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import '../../../static/css/scss/index.scss';
-  @import '../../../static/css/scss/Trade/TradeCenter';
+  @import '../../assets/CSS/index';
 
   .exchange-box {
     width: 100%;
@@ -1877,8 +1876,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayMainBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       .warning {
         .warning-text {
@@ -1903,7 +1902,7 @@ export default {
             > .header {
               > .item {
                 > a {
-                  color: $dayFontColor;
+                  color: $dayMainTitleColor;
                 }
               }
             }
@@ -1920,7 +1919,7 @@ export default {
                 /* 限价input框 */
                 > input {
                   border-color: #c4c4c4;
-                  color: $dayFontColor;
+                  color: $dayMainTitleColor;
                   background-color: #fff;
                 }
               }

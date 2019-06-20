@@ -301,8 +301,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/OTC/OTCCenter.scss";
-  @import "../../../static/css/scss/index.scss";
+  @import "../../assets/CSS/index";
 
   .otc-canceled-order-box {
     > .canceled-order-content {
@@ -458,16 +457,16 @@ export default {
         > .canceled-table-head {
           border: 1px solid #ecf1f8;
           color: #617499;
-          background-color: $mainDayColor;
+          background-color: $mainDayBgColor;
         }
 
         > .canceled-table-body {
           border: 1px solid #ecf1f8;
-          background-color: $mainDayColor;
+          background-color: $mainDayBgColor;
 
           > .canceled-info-top {
             color: #333;
-            background-color: $mainDayColor;
+            background-color: $mainDayBgColor;
 
             .red {
               color: #d45858;
@@ -513,7 +512,7 @@ export default {
         > .no-data {
           border: 1px solid rgba(97, 116, 153, .1);
           color: #333;
-          background-color: $mainDayColor;
+          background-color: $mainDayBgColor;
         }
       }
     }

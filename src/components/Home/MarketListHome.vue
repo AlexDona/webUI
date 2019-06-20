@@ -624,8 +624,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index.scss";
-  @import "../../../static/css/scss/Home/MarketListHome.scss";
+  @import "../../assets/CSS/index";
 
   .market-list-box {
     width: 100%;
@@ -811,13 +810,13 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .inner-box {
         > .search-box {
           > input {
-            color: $dayFontColor;
+            color: $dayMainTitleColor;
           }
         }
       }

@@ -1187,7 +1187,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/index";
+@import "../../assets/CSS/index";
 
 input::-webkit-input-placeholder { /* input框中placeholder字体设置 */
   font-size: 12px;

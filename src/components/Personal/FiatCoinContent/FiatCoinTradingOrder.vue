@@ -1494,7 +1494,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
+  @import '../../../assets/CSS/index';
 
   .fiat-trading-order-box {
     > .fiat-trading-order-content {
@@ -1519,7 +1519,7 @@ export default {
         border: 1px solid #262f38;
         border-radius: 5px;
         font-size: 12px;
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .order {
           > .order-list-head {
@@ -1934,7 +1934,7 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .appeal-textarea-text {
         color: #9da5b3;
@@ -1968,12 +1968,12 @@ export default {
         }
 
         > .no-data {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
         }
       }
 
       > .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .fiat-color {
           color: #338ff5;
@@ -2071,8 +2071,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .fiat-trading-order-content {
         .button {

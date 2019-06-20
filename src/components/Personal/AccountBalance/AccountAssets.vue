@@ -1484,7 +1484,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .account-assets {
     > .account-assets-main {
@@ -2013,7 +2013,7 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .button-color {
         color: rgba(255, 255, 255, .7);
@@ -2027,7 +2027,7 @@ export default {
       }
 
       .account-assets-box {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         .account-assets-header {
           box-shadow: 0 2px 13px rgba(24, 30, 42, 1);
@@ -2280,8 +2280,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       .warning-text {
         color: #333;
@@ -2300,8 +2300,8 @@ export default {
 
       .account-assets-box {
         border: 1px solid rgba(38, 47, 56, .1);
-        color: $dayFontColor;
-        background-color: $dayBgColor;
+        color: $dayMainTitleColor;
+        background-color: $mainDayBgColor;
 
         .account-assets-header {
           > .header-left {

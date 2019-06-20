@@ -456,8 +456,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/OTC/OTCCenter.scss";
-  @import "../../../static/css/scss/index";
+  @import "../../assets/CSS/index";
 
   .otc-business-apply-box {
     margin-top: 50px;

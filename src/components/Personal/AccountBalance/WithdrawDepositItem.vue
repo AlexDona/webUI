@@ -286,7 +286,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .recharge-list {
     position: relative;
@@ -612,9 +612,9 @@ export default {
 
     &.day {
       border: 1px solid #338ff5;
-      color: $dayFontColor;
+      color: $dayMainTitleColor;
       background: #fff;
-      background-color: $dayBgColor;
+      background-color: $mainDayBgColor;
 
       .input-mention {
         color: #333;

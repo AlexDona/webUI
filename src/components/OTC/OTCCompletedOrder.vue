@@ -325,8 +325,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/OTC/OTCCenter.scss";
-@import "../../../static/css/scss/index.scss";
+@import "../../assets/CSS/index";
 
 .otc-completed-order-box {
   > .completed-order-content {

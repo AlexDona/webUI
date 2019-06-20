@@ -15,7 +15,7 @@ const routerCreator = () => {
     'linkExactActiveClass': 'active'
   })
   router.beforeEach(async (to, from, next) => {
-    if (to.path === '/home') {
+    if (to.path === `/${routesVariable.home}`) {
       console.log(store.state.common.language)
       if (store.state.common.language) {
         store.dispatch('GET_ALL_NOTICE_ACTION', store.state.common.language)

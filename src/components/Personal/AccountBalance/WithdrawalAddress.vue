@@ -573,7 +573,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .withdrawal-address {
     > .withdrawal-address-main {
@@ -659,13 +659,13 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .withdrawal-address-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .withdrawal-header {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
           box-shadow: 2px 0 2px rgba(20, 23, 37, 1);
 
           > .header-content {
@@ -809,13 +809,13 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .withdrawal-address-main {
         border: 1px solid rgba(236, 241, 248, 1);
-        color: $dayFontColor;
-        background-color: $dayBgColor;
+        color: $dayMainTitleColor;
+        background-color: $mainDayBgColor;
 
         > .withdrawal-header {
           border: 1px solid rgba(236, 241, 248, 1);

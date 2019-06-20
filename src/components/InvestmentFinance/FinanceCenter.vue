@@ -1163,8 +1163,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-/* 公共scss样式 */
-@import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
+@import '../../assets/CSS/index';
 
 .finance-box {
   width: 100%;
@@ -1683,7 +1682,7 @@ export default {
     }
 
     > .inner-box {
-      background-color: $nightInnerBoxBg;
+      background-color: $mainNightBgColor;
     }
 
     /deep/ {
