@@ -27,7 +27,7 @@ export const actionCenter = {
   'crowd_funding_interest_rate': '年化收益率',
   'crowd_funding_total': '總額度',
   'crowd_funding_locked': '已鎖',
-  'crowd_funding_number_of_participants': '參與人數',
+  'crowd_funding_number_of_participants': '參與人次',
   'crowd_funding_time': '時間',
   'crowd_funding_project_name': '專案名稱',
   'crowd_funding_way_of_income': '收益方式',

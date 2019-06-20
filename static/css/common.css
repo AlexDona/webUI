@@ -231,7 +231,7 @@
 }
 
 .el-message {
-  z-index: 2300 !important;
+  z-index: 23000 !important;
 }
 
 /* 添加日期时间组件全局样式 */

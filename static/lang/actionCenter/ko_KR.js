@@ -27,7 +27,7 @@ export const actionCenter = {
   'crowd_funding_interest_rate': '연화 수익률',
   'crowd_funding_total': '총액도',
   'crowd_funding_locked': '자물쇠',
-  'crowd_funding_number_of_participants': '참여자',
+  'crowd_funding_number_of_participants': '참여 인원수',
   'crowd_funding_time': '시간',
   'crowd_funding_project_name': '프로젝트 이름',
   'crowd_funding_way_of_income': '수익 방식',
