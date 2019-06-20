@@ -32,5 +32,7 @@ export const routesVariable = {
   login: 'login',
   // 设置交易密码
   TransactionPassword: 'TransactionPassword',
-  crowdFundingRecord: 'crowdFundingRecord'
+  crowdFundingRecord: 'crowdFundingRecord',
+  news: 'NewsAndNoticeCenter',
+  newsItem: 'NewsAndNoticeItem'
 }

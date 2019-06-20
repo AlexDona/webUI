@@ -27,7 +27,7 @@ export const actionCenter = {
   'crowd_funding_interest_rate': 'Tỷ lệ lợi nhuận hàng năm',
   'crowd_funding_total': 'Tổng tiền',
   'crowd_funding_locked': 'Đã khóa',
-  'crowd_funding_number_of_participants': 'Lượng người tham gia',
+  'crowd_funding_number_of_participants': 'Số lượng tham gia',
   'crowd_funding_time': 'Thời gian',
   'crowd_funding_project_name': 'Tên dự án',
   'crowd_funding_way_of_income': 'Cách thu nhập',

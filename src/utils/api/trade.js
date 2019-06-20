@@ -1,4 +1,4 @@
-import {post, get, put} from './axios'
+import {post, get, put, notLoading} from './axios'
 import {handleRequest} from '../commonFunc'
 
 /**
@@ -26,7 +26,7 @@ export const getActiveSymbolDataAjax = params => handleRequest(() => get('market
 // 获取币币交易市场
 export const getTradeMarketDataAjax = params => handleRequest(() => get('market/bbMarket/ticker', params))
 // 获取K线接口
-export const getKlineDataAjax = params => handleRequest(() => get('market/kline', params))
+export const getKlineDataAjax = params => handleRequest(() => get('market/kline', {...params, ...notLoading}))
 // 撤销所有委单
 export const cancelAllEntrustAjax = params => handleRequest(() => put('cancelEntrustBatch', params))
 // 获取PRE活动信息

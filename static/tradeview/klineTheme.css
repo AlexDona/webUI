@@ -143,3 +143,8 @@
 .chart-container.active {
   background-color: transparent !important;
 }
+
+.chart-page ._tv-dialog ._tv-dialog-content .main-properties:not(.main-properties-aftertabs) {
+  height: calc(100vh - 166px) !important;
+  padding: 14px;
+}
