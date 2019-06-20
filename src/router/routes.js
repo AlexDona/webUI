@@ -64,6 +64,7 @@ const GuideOfDownload = () => import('@/pages/GuideOfDownload')
 const errorFor404And500 = () => import('@/pages/ErrorFor500And404')
 
 const FucCenter = () => import('@/pages/FucCenter')
+const SuperNodes = () => import('@/pages/SuperNodes')
 
 const routes = [
   ...activity,
@@ -307,6 +308,11 @@ const routes = [
     // Fuc生态
     path: '/FucCenter',
     component: FucCenter
+  },
+  {
+    // 超级节点
+    path: '/SuperNodes',
+    component: SuperNodes
   },
   {
     // 上币申请
