@@ -107,3 +107,6 @@ export const deleteMethod = (url, params) => {
     }
   })
 }
+export const notLoading = {
+  'not-loading': true
+}
