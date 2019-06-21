@@ -200,6 +200,7 @@
             <!-- 单价 -->
             <el-table-column
               :label="$t('M.otc_index_UnitPrice')"
+              width="140px"
             >
               <template slot-scope="s">
                 <div>{{ $scientificToNumber(s.row.price) }}</div>
@@ -208,6 +209,7 @@
             <!-- 数量 -->
             <el-table-column
               :label="$t('M.comm_count')"
+              width="140px"
             >
               <template slot-scope="s">
                 <div>{{ $scientificToNumber(s.row.entrustCount) }}</div>
@@ -216,6 +218,7 @@
             <!-- 剩余数量 -->
             <el-table-column
               :label="$t('M.comm_balance_completed1')"
+              width="140px"
             >
               <template slot-scope="s">
                 <div>{{ $scientificToNumber(s.row.remainCount) }}</div>
@@ -252,6 +255,7 @@
             <!-- 操作 -->
             <el-table-column
               :label="$t('M.otc_index_operate')"
+              align="right"
             >
               <template slot-scope="s">
                 <!-- 下架 -->
@@ -645,6 +649,8 @@ export default {
       }
 
       .el-table {
+        padding-bottom: 15px;
+
         tr {
           height: 40px;
         }
