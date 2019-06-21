@@ -2116,7 +2116,6 @@ export default {
       box-sizing: border-box;
       width: 470px;
       height: 44px;
-      padding: 0 30px;
       color: #fff;
     }
   }

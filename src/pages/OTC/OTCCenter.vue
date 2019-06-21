@@ -1222,6 +1222,7 @@ export default {
         height: 32px;
         border: 0;
         line-height: 33px;
+        color: #fff;
       }
 
       .el-input--suffix {
@@ -1407,6 +1408,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #fff;
+      }
+
       .otc-online-buy-and-sell-button {
         .el-radio-button__inner {
           color: #d8d8d8;
@@ -1636,6 +1641,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #7d90ac;
+      }
+
       .otc-online-buy-and-sell-button {
         .el-radio-button__inner {
           border: 1px solid rgba(39, 49, 58, .1);
