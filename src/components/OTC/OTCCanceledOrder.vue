@@ -343,7 +343,7 @@ export default {
           display: flex;
           flex: 7;
           box-sizing: border-box;
-          padding: 15px 30px 0;
+          padding: 25px 30px 0;
 
           > .info-left {
             flex: 2;

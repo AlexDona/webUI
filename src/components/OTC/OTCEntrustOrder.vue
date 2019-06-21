@@ -235,48 +235,35 @@ export default {
     .otc-entrust-order-table {
       > .entrust-table-head {
         z-index: 200;
+        display: flex;
+        justify-content: space-around;
         box-sizing: border-box;
         width: 1193px;
         height: 35px;
+        padding: 0 20px;
         margin-bottom: 15px;
         border-radius: 5px;
         line-height: 35px;
 
-        > .item {
-          display: inline-block;
-          text-align: center;
+        > .first-style,
+        .second-coin {
+          width: 135px;
         }
 
-        > .first-style {
-          width: 100px;
-        }
-
-        > .second-coin {
-          width: 130px;
-        }
-
-        > .third-price {
+        > .third-price,
+        .fourth-entrust-count,
+        .fifth-match-count,
+        .sixth-total-amount {
           width: 160px;
         }
 
-        > .fourth-entrust-count {
-          width: 150px;
-        }
-
-        > .fifth-match-count {
-          width: 150px;
-        }
-
-        > .sixth-total-amount {
-          width: 160px;
-        }
-
-        > .senventh-create-time {
-          width: 160px;
+        > .senventh-create-time,
+        .eighth-action {
+          width: 140px;
         }
 
         > .eighth-action {
-          width: 140px;
+          text-align: right;
         }
       }
 
@@ -293,44 +280,30 @@ export default {
 
         > .entrust-list-content {
           display: flex;
+          justify-content: space-around;
           height: 40px;
+          padding: 0 20px;
           line-height: 40px;
 
-          > .item {
-            display: inline-block;
-            text-align: center;
+          > .first-style,
+          .second-coin {
+            width: 135px;
           }
 
-          > .first-style {
-            width: 100px;
-          }
-
-          > .second-coin {
-            width: 130px;
-          }
-
-          > .third-price {
+          > .third-price,
+          .fourth-entrust-count,
+          .fifth-match-count,
+          .sixth-total-amount {
             width: 160px;
           }
 
-          > .fourth-entrust-count {
-            width: 160px;
-          }
-
-          > .fifth-match-count {
-            width: 170px;
-          }
-
-          > .sixth-total-amount {
-            width: 160px;
-          }
-
-          > .senventh-create-time {
-            width: 160px;
+          > .senventh-create-time,
+          .eighth-action {
+            width: 140px;
           }
 
           > .eighth-action {
-            width: 140px;
+            text-align: right;
           }
         }
       }

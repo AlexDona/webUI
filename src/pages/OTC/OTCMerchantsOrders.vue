@@ -316,6 +316,7 @@
             <el-table-column
               :label = "$t('M.otc_record_complaint')"
               width="134"
+              align="right"
             >
               <template slot-scope = "s">
                 <div>
@@ -687,6 +688,8 @@ export default {
         }
 
         .el-table {
+          padding-bottom: 15px;
+
           tr {
             height: 40px;
           }
