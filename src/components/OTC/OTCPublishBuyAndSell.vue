@@ -1493,6 +1493,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #fff;
+      }
+
       .el-textarea__inner {
         color: #fff;
         background-color: #1c1f32;
@@ -1704,6 +1708,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #7d90ac;
+      }
+
       .el-form--label-top {
         .el-form-item__label {
           color: #7d90ac;

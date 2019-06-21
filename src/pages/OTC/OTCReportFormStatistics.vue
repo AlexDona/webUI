@@ -1119,6 +1119,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #fff;
+      }
+
       .report-form-filtrate {
         .el-input__inner {
           background-color: #1c1f32;
@@ -1324,6 +1328,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #7d90ac;
+      }
+
       .report-form-filtrate {
         .el-input__inner {
           border: 1px solid rgba(236, 241, 248, 1);

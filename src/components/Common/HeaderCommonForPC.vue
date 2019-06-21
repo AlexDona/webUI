@@ -1,9 +1,14 @@
+<!--
+  author: zhaoxinlei
+  update: 20190621
+  description: 当前组件为 公共头部组件
+-->
 <template>
   <div
     class="nav-box common"
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
     :style="{
-      top:$route.path===`/${$routes_X.home}` && noticeCloseVisible ? `${styleTop}px` : 0
+      top:$route.path ===`/${$routes_X.home}` && noticeCloseVisible ? `${styleTop}px` : 0
     }"
   >
     <div class="inner-box">
@@ -16,169 +21,19 @@
       >
         <!--导航-->
         <div class="left nav">
-          <ul class="nav-list">
-            <li class="nav-item">
-              <router-link
-                to="/"
-                class="logo"
-              >
-                <img
-                  class="img"
-                 :src="logoSrc"
-                >
-              </router-link>
-            </li>
-            <!-- 更多导航 -->
-            <li
-              class="more-btn"
-              @mouseenter="toggleMoreNavs(true)"
-              @mouseleave="toggleMoreNavs(false)"
-            >
-              <!-- 更多 自定义导航-->
-              <a
-                class="more-nav-btn text-align-l"
-                v-show="navigation.length > 5"
-              >
-                <TheMoreNavsButton
-                  :isActive="isShowSubNav"
-                />
-              </a>
-              <!-- 更多 自定义导航列表 -->
-              <ul
-                class="more-nav-list"
-                v-show="isShowSubNav"
-              >
-                <li
-                  v-for="(navItem, navIndex) in navigation.slice(5)"
-                  :key="navIndex"
-                  class="nav-item"
-                  @mouseenter="changeMoreActiveNavIndex(navIndex)"
-                  @mouseleave="changeMoreActiveNavIndex(-1)"
-                >
-                  <a
-                    href="javascript:void(0);"
-                    @click="navToJump(navItem)"
-                  ><span>{{navItem.name}}</span></a>
-                  <!-- 子导航 -->
-                  <ul
-                    class="sub-nav-list"
-                    v-if="navItem.children"
-                    v-show="activeMoreNavIndex === navIndex"
-                    :style="{
-                      top: `${40*navIndex}px`
-                    }"
-                  >
-                    <li
-                      class="sub-nav-item"
-                      v-for="(subNav, subIndex) in navItem.children"
-                      :key="subIndex"
-                    >
-                      <a
-                        href="javascript:void(0);"
-                        @click="navToJump(subNav)"
-                      ><span>{{subNav.name}}</span></a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <!-- 正常显示导航 -->
-            <li
-              class="nav-item"
-              v-for="(navigationItem, index) in navigation.slice(0, 5)"
-              :key="index"
-              @mouseenter="changeActiveNavIndex(index)"
-              @mouseleave="changeActiveNavIndex(-1)"
-            >
-              <a
-                href="javascript:void(0);"
-                @click="navToJump(navigationItem)"
-              >
-                <span>{{navigationItem.name}}</span>
-                <!-- 箭头 -->
-                <Iconfont
-                  v-show="navigationItem.children.length"
-                  icon-name="icon-xiala"
-                  class="iconfont"
-                />
-              </a>
-              <ul
-                class="sub-nav-list"
-                v-if="navigationItem.children"
-                v-show="index === activeNavIndex"
-              >
-                <li
-                  class="sub-nav-item"
-                  v-for="(subNav, subIndex) in navigationItem.children"
-                  :key="subIndex"
-                >
-                  <a
-                    href="javascript:void(0);"
-                    @click="navToJump(subNav)"
-                  ><span>{{subNav.name}}</span></a>
-                </li>
-              </ul>
-            </li>
-            <!--<li v-if="isFubt" class="nav-item">-->
-              <!--<router-link to="/FucCenter">-->
-                <!--<span>{{$t('M.common_fuc_eco')}}</span>-->
-              <!--</router-link>-->
-            <!--</li>-->
-          </ul>
+          <TheCustomNavs
+            :navigation="navigation"
+            @navToJump="navToJump"
+          />
         </div>
-        <!--注册登录-->
+        <!-- 消息、 注册、 登录-->
         <div class="right login">
           <ul class="ul-list">
-            <!--消息-->
-            <li
-              class="li-item notice-li"
-              @mouseenter="toggleBox('notice',true)"
-              @mouseleave="toggleBox('notice',false)"
-            >
-              <button class="notice-btn">
-                <Iconfont
-                  class="font-size24"
-                  icon-name="icon-xiaoxi"
-                />
-              </button>
-              <el-collapse-transition>
-                <ul
-                  class="notice-list"
-                  v-show="showNoticeList"
-                  :style="{
-                    height: `${homeNoticeList.length*40}px`
-                  }"
-                >
-                  <li
-                    class="notice-item"
-                    v-for="noticeItem in homeNoticeList.length < 5 ? homeNoticeList : homeNoticeList.slice(0,5)"
-                    :key="noticeItem.id"
-                    :track-by="noticeItem.id"
-                  >
-                      <a
-                        class="cursor-pointer"
-                        @click.stop="jumpToNewsItem(noticeItem.id)"
-                      >
-                        {{noticeItem.title}}
-                      </a>
-                  </li>
-                  <li
-                    class="notice-item view-more"
-                    v-show="homeNoticeList.length >= 5"
-                  >
-                    <!-- 查看全部 -->
-                    <router-link
-                      to="/NewsAndNoticeCenter"
-                      class="view-more-link"
-                    >{{$t('M.investment_look_all')}}</router-link>
-                  </li>
-                </ul>
-              </el-collapse-transition>
-            </li>
+            <TheNotice :isNoticeReady="isNoticeReady"/>
             <TheSetting/>
             <li
               class="li-item"
-              v-if="!isLogin"
+              v-if="!$isLogin_S_X"
             >
               <router-link :to="`/${$routes_X.login}`">
                 <!--<span>登录</span>-->
@@ -195,123 +50,8 @@
                 <span>{{$t('M.comm_register_time')}}</span>
               </router-link>
             </li>
-            <li
-              class="li-item"
-              v-if="isLogin"
-            >
-              <span>
-                <span
-                  class="login cursor-pointer"
-                  v-if="isLogin"
-                >
-                  <!--用户名-->
-                  <span class="username">
-                    {{userInfo.userName}}
-                  </span>
-                  <div
-                    class="login-info"
-                    :class="{'has-vip':$isVIPEnable_S_X}"
-                  >
-                    <!-- VIP 信息 -->
-                    <div
-                      class="sub-nav-user"
-                      v-if="$isVIPEnable_S_X"
-                    >
-                      <p class="nav-vip">
-                        <!--VIP享手续费、提现优惠-->
-                        {{$t('M.user_vip_text8')}}
-                      </p>
-                      <button
-                        v-if="!userInfo.level"
-                        class="nav-button"
-                        @click="stateOpenVip"
-                      >
-                        <!--立即开通-->
-                        {{$t('M.user_vip_immediately_opened')}}
-                      </button>
-                       <button
-                         v-else
-                         class="nav-button"
-                         @click="stateOpenVip"
-                       >
-                        <!--查看我的VIP-->
-                         {{$t('M.user_vip_look')}}
-                      </button>
-                    </div>
-                    <ul class="user-infos">
-                      <li @click="stateReturnSuperior('account-balance')">
-                        <!--账户资产-->
-                        {{$t('M.comm_user_account_balance')}}
-                      </li>
-                      <li @click="stateReturnSuperior('order-management')">
-                        <!--订单管理-->
-                        {{$t('M.comm_user_order_management')}}
-                      </li>
-                      <li @click="stateReturnSuperior('identity-authentication')">
-                        <!--身份认证-->
-                        {{$t('M.comm_user_identity_authentication')}}
-                      </li>
-                      <li @click="stateReturnSuperior('security-center')">
-                        <!--安全中心-->
-                        {{$t('M.comm_user_security_center')}}
-                      </li>
-                      <li @click="stateReturnSuperior('receiving-set')">
-                        <!--收款设置-->
-                        {{$t('M.comm_user_receiving_set')}}
-                      </li>
-                      <li @click="stateReturnSuperior('invite')">
-                        <!--邀请推广-->
-                        {{$t('M.comm_user_invite_generalize')}}
-                      </li>
-                      <li @click="stateReturnSuperior('api')">
-                        <!--API管理-->
-                        {{$t('M.comm_user_api_management')}}
-                      </li>
-                      <li @click="userLoginOut">
-                        <!--退出-->
-                        {{$t('M.comm_retreat')}}
-                      </li>
-                    </ul>
-                  </div>
-                </span>
-              </span>
-            </li>
-            <!--切换语言-->
-            <li class="li-item">
-              <dl
-                class="lang-box"
-                @mouseenter="toggleBox('lang',true)"
-                @mouseleave="toggleBox('lang',false)"
-              >
-                <dt
-                  class="lang-selected"
-                >
-                  <span class="language-text">
-                    {{activeLanguage.name}}
-                    <Iconfont
-                      class="font-size20 iconfont"
-                      icon-name="icon-xiala"
-                    />
-                  </span>
-                  <!--<i class="el-icon-caret-bottom"></i>-->
-                </dt>
-                <el-collapse-transition>
-                  <dd
-                    class="lang-list"
-                    v-show="langSelecting"
-                  >
-                    <button
-                      class="lang-item"
-                      @click="changeLanguage(item)"
-                      v-for="(item,index) in languageList"
-                      :key="index"
-                    >
-                      {{item.name}}
-                    </button>
-                  </dd>
-                </el-collapse-transition>
-              </dl>
-            </li>
+            <TheLogined/>
+            <TheLanguages/>
           </ul>
         </div>
       </div>
@@ -393,26 +133,31 @@
   </div>
 </template>
 <script>
-import {userLoginOut} from '../../utils/api/user'
 import TheMoreNavsButton from '../Home/TheMoreNavsButton'
 import TheGlobalPayPasswordDialog from '../Common/GlobalPayPassWordDialog'
 import TheSetting from '../Header/TheSetting'
-import {
-  getNestedData
-} from '../../utils/commonFunc'
+import TheLogined from '../Header/TheLogined'
+import TheLanguages from '../Header/TheLanguages'
+import TheNotice from '../Header/TheNotice'
+import TheCustomNavs from '../Header/TheCustomNavs'
+import mixins from '../../mixins/header'
 import {
   mapMutations,
   mapState,
   mapActions
 } from 'vuex'
-import {xDomain} from '../../utils/env'
 import {getNavigationsAJAX} from '../../utils/api/common'
 
 export default{
+  mixins: [mixins],
   components: {
     TheMoreNavsButton,
     TheGlobalPayPasswordDialog,
-    TheSetting
+    TheSetting,
+    TheLogined,
+    TheLanguages,
+    TheNotice,
+    TheCustomNavs
   },
   data () {
     return {
@@ -421,8 +166,6 @@ export default{
       showNoticeList: false,
       // 语言选择中
       langSelecting: false,
-      // 语言列表
-      languageList: [],
       // otc 子导航显示状态
       // otcSubNavStatus: false,
       // 任付伟大改动的：otc 子导航显示状态默认先显示，为了方便点击
@@ -434,145 +177,7 @@ export default{
       topBackgroundColor: 'rgba(0,0,0,0.7)',
       isPayPasswordLocked: false,
       isNoticeReady: false,
-      navigation: [
-        // {
-        //   name: '币币交易',
-        //   link: '/TradeCenter/default',
-        //   newTab: false,
-        //   children: [
-        //     {
-        //       name: '测试',
-        //       link: '/test',
-        //       newTab: false
-        //     }
-        //   ]
-        // },
-        // {
-        //   name: 'OTC交易',
-        //   link: '/OTCCenter',
-        //   newTab: false,
-        //   children: [
-        //     {
-        //       name: '商家申请13123123123123',
-        //       link: `/OTCBusinessApply`,
-        //       newTab: false
-        //     },
-        //     {
-        //       name: '发布广告',
-        //       link: `/OTCPublishAD`,
-        //       newTab: false
-        //     },
-        //     {
-        //       name: '广告管理',
-        //       link: `/OTCADManage`,
-        //       newTab: false
-        //     },
-        //     {
-        //       name: '商家订单',
-        //       link: `/OTCMerchantsOrders`,
-        //       newTab: false
-        //     },
-        //     {
-        //       name: '报表统计',
-        //       link: `/OTCReportFormStatistics`,
-        //       newTab: false
-        //     }
-        //   ]
-        // },
-        // {
-        //   name: '投资理财12313123123123',
-        //   link: '/FinanceCenter',
-        //   newTab: false
-        // },
-        // {
-        //   name: '活动中心',
-        //   link: '/ActivityCenter',
-        //   newTab: false,
-        //   children: [
-        //     {
-        //       name: '邀请排行',
-        //       link: `/RankingListOfInvitation`,
-        //       newTab: false
-        //     }
-        //   ]
-        // },
-        // {
-        //   name: 'OTC交易',
-        //   link: '/OTCCenter',
-        //   newTab: false,
-        //   children: [
-        //     {
-        //       name: '商家申请13123123123123',
-        //       link: `/OTCBusinessApply`,
-        //       newTab: false
-        //     },
-        //     {
-        //       name: '发布广告',
-        //       link: `/OTCPublishAD`,
-        //       newTab: false
-        //     },
-        //     {
-        //       name: '广告管理',
-        //       link: `/OTCADManage`,
-        //       newTab: false
-        //     },
-        //     {
-        //       name: '商家订单',
-        //       link: `/OTCMerchantsOrders`,
-        //       newTab: false
-        //     },
-        //     {
-        //       name: '报表统计',
-        //       link: `/OTCReportFormStatistics`,
-        //       newTab: false
-        //     }
-        //   ]
-        // },
-        // {
-        //   name: 'OTC交易123123123123',
-        //   link: '/OTCCenter',
-        //   newTab: false,
-        //   children: [
-        //     {
-        //       name: '商家申请13123123123123',
-        //       link: `/OTCBusinessApply`,
-        //       newTab: false
-        //     },
-        //     {
-        //       name: '发布广告',
-        //       link: `/OTCPublishAD`,
-        //       newTab: false
-        //     },
-        //     {
-        //       name: '广告管理',
-        //       link: `/OTCADManage`,
-        //       newTab: false
-        //     },
-        //     {
-        //       name: '商家订单',
-        //       link: `/OTCMerchantsOrders`,
-        //       newTab: false
-        //     },
-        //     {
-        //       name: '报表统计',
-        //       link: `/OTCReportFormStatistics`,
-        //       newTab: false
-        //     }
-        //   ]
-        // },
-        // {
-        //   name: '币币交易',
-        //   link: '/TradeCenter/default',
-        //   newTab: false,
-        //   children: [
-        //     {
-        //       name: '测试',
-        //       link: '/test',
-        //       newTab: false
-        //     }
-        //   ]
-        // }
-      ],
+      navigation: [],
       // 当前导航选中项 索引
       activeNavIndex: -1,
       // 当前 更多导航选中项索引
@@ -652,16 +257,7 @@ export default{
     cancelReset () {
       this.isPayPasswordLocked = false
       this.CHANGE_PASSWORD_USEABLE(false)
-      this.userLoginOut()
-    },
-    jumpToNewsItem (noticeId) {
-      if (!this.isNoticeReady) return false
-      let currentRoute = this.$route.path
-      if (!currentRoute.startsWith('/NewsAndNoticeItem')) {
-        this.$goToPage(`/NewsAndNoticeItem/${noticeId}`)
-      } else {
-        this.SET_NOTICE_ID(noticeId)
-      }
+      this.$userLogOut_X()
     },
     cancelApply () {
       this.showApplyMerchantStatus = false
@@ -689,87 +285,11 @@ export default{
         this.topBackgroundColor = 'rgba(0,0,0,.5)'
       }
     },
-    // 设置个人中心跳转
-    setPersonalJump (target) {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
-    },
-    // 开启vip
-    stateOpenVip () {
-      if (this.localPayPwdSet || this.userInfo.payPassword) {
-        this.$goToPage('/VipMainContent')
-      } else {
-        this.$goToPage('/TransactionPassword')
-      }
-    },
-    // 用户跳转到指定页面
-    async stateReturnSuperior (val) {
-      // console.log(this.localPayPwdSet)
-      await this.REFRESH_USER_INFO_ACTION()
-      if (this.localPayPwdSet || this.userInfo.payPassword) {
-        switch (val) {
-          case 'account-balance':
-            this.setPersonalJump('assets')
-            break
-          case 'order-management':
-            this.setPersonalJump('coin-orders')
-            break
-          case 'identity-authentication':
-            this.setPersonalJump('identity-authentication')
-            break
-          case 'security-center':
-            this.setPersonalJump('security-center')
-            this.CHANGE_REF_SECURITY_CENTER_INFO(true)
-            break
-          case 'receiving-set':
-            this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
-            this.setPersonalJump('account-credited')
-            break
-          case 'invite':
-            this.setPersonalJump('invitation-promote')
-            break
-          case 'api':
-            this.setPersonalJump('api-management')
-            break
-        }
-        this.$goToPage('/PersonalCenter')
-      } else {
-        this.$goToPage('/TransactionPassword')
-      }
-    },
-    // 用户登出
-    async userLoginOut () {
-      const data = await userLoginOut()
-      if (!data) return false
-      this.USER_LOGOUT()
-      this.$goToPage(`/${this.$routes_X.home}`)
-    },
-    toggleBox (type, status) {
-      // console.log(1)
-      switch (type) {
-        case 'notice':
-          this.showNoticeList = status
-          break
-        case 'lang':
-          this.langSelecting = status
-          break
-        // case 'otc':
-        //   this.otcSubNavStatus = status
-        //   break
-        // case 'activity':
-        //   this.activityCenterSubNavStatus = status
-        //   break
-      }
-    },
     // 重置交易密码
     resetPayPassword () {
       this.$goToPage('/TransactionPassword')
       this.isPayPasswordLocked = false
       this.CHANGE_PASSWORD_USEABLE(false)
-    },
-    // 切换语言
-    changeLanguage (e) {
-      this.CHANGE_LANGUAGE(e)
-      this.$i18n.locale = e.shortName
     },
     setNewTitle (path = '/TradeCenter') {
       const {last, sellsymbol, area} = this.$middleTopData_S_X
@@ -887,14 +407,7 @@ export default{
       homeNoticeList: state => state.home.noticeList,
       // 交易密码是否被锁定
       isLockedPayPassword: state => state.common.isLockedPayPassword
-    }),
-    localPayPwdSet () {
-      return getNestedData(this.userInfo, 'paypasswordSet')
-    },
-    isFubt () {
-      let enableXDomains = ['fubt', 'new.test.com', 'new.bzu.com']
-      return enableXDomains.some(item => xDomain.startsWith(item))
-    }
+    })
   },
   watch: {
     isLockedPayPassword (newVal) {
@@ -966,164 +479,6 @@ export default{
         position: relative;
         z-index: 2;
         flex: 2;
-
-        > .nav-list {
-          height: 100%;
-
-          > .nav-item {
-            position: relative;
-            left: -20px;
-            display: inline-block;
-            height: 100%;
-            padding: 0 2%;
-            text-align: center;
-            vertical-align: top;
-            white-space: nowrap;
-            transition: all .5s;
-
-            > .sub-nav-list {
-              position: absolute;
-              top: 50px;
-              left: 46%;
-              border-radius: 2px;
-              background-color: #2c314d;
-              box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
-              transform: translateX(-50%);
-
-              > .sub-nav-item {
-                height: 40px;
-                padding: 0 20px;
-                line-height: 40px;
-                text-align: left;
-
-                &:hover {
-                  background-color: #21243a;
-
-                  > a {
-                    color: $mainColor;
-                  }
-                }
-
-                > a {
-                  color: $headerNavFontColor;
-                }
-              }
-            }
-
-            /* 自定义导航 */
-            &:hover {
-              > a {
-                color: $mainColor;
-
-                > .iconfont {
-                  transform: rotate(180deg);
-                }
-              }
-            }
-
-            > a {
-              display: inline-block;
-              width: 100%;
-              height: 100%;
-              white-space: nowrap;
-              color: $headerNavFontColor;
-
-              > .iconfont {
-                margin-top: -1px;
-                margin-left: -2px;
-                transition: all .2s;
-              }
-
-              &.active {
-                color: $mainColor;
-              }
-            }
-
-            > .logo {
-              display: inline-block;
-              width: 100px;
-              height: 50px;
-
-              > .img {
-                width: 100%;
-                vertical-align: middle;
-              }
-            }
-          }
-
-          > .more-btn {
-            position: relative;
-            left: -20px;
-            display: inline-block;
-            height: 100%;
-            text-align: center;
-            vertical-align: top;
-            white-space: nowrap;
-            transition: all .5s;
-
-            > .more-nav-btn {
-              display: inline-block;
-              width: 30px;
-              height: 30px;
-              margin: 10px 0;
-            }
-
-            > .more-nav-list {
-              position: absolute;
-              top: 50px;
-              min-width: 200%;
-              border-radius: 2px;
-              text-align: left;
-              background-color: #2c314d;
-              box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
-
-              > .nav-item {
-                height: 40px;
-                padding: 0 20px;
-                line-height: 40px;
-
-                &:hover {
-                  background-color: #21243a;
-
-                  > a {
-                    color: $mainColor;
-                  }
-                }
-
-                > a {
-                  color: $headerNavFontColor;
-                }
-
-                > .sub-nav-list {
-                  position: absolute;
-                  top: 0;
-                  left: 100%;
-                  background-color: #2c314d;
-                  box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
-
-                  > .sub-nav-item {
-                    height: 40px;
-                    padding: 0 20px;
-                    line-height: 40px;
-                    text-align: left;
-
-                    &:hover {
-                      background-color: #21243a;
-
-                      > a {
-                        color: $mainColor;
-                      }
-                    }
-
-                    > a {
-                      color: $headerNavFontColor;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
       }
 
       > .right {
@@ -1145,90 +500,6 @@ export default{
           > .li-item {
             display: inline-block;
 
-            /* padding:0 1%; */
-
-            /* 用户登陆后鼠标悬浮出现个人中心效果 */
-            .login {
-              position: relative;
-              display: inline-block;
-              padding: 0 4px;
-              text-align: center;
-              vertical-align: middle;
-
-              > .username {
-                color: $mainColor;
-              }
-
-              > .login-info {
-                position: absolute;
-                z-index: 2;
-                top: 50px;
-                left: 0;
-                box-sizing: border-box;
-                min-width: 112px;
-                height: 0;
-                overflow: hidden;
-                text-align: center;
-                background-color: #2c314d;
-                box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
-
-                > .sub-nav-user {
-                  > .nav-vip {
-                    padding: 0 25px;
-                    margin-top: 16px;
-                    line-height: 20px;
-                    white-space: nowrap;
-                  }
-
-                  > .nav-button {
-                    min-width: 75%;
-                    height: 30px;
-                    padding: 0 10px;
-                    border: 1px solid $mainColor;
-                    border-radius: 5px;
-                    white-space: nowrap;
-                    color: $nightFontColor;
-                    cursor: pointer;
-
-                    &:hover {
-                      border-color: $nightFontColor;
-                      color: $mainColor;
-                      background-color: #21243a;
-                    }
-                  }
-                }
-
-                > .user-infos {
-                  height: 40px;
-                  line-height: 40px;
-                  text-align: left;
-                  background-color: #2c314d;
-
-                  > li {
-                    padding: 0 25px;
-                    white-space: nowrap;
-                    color: $nightFontColor;
-
-                    &:hover {
-                      color: $mainColor;
-                      background-color: #21243a;
-                      cursor: pointer;
-                    }
-                  }
-                }
-              }
-
-              &:hover .login-info {
-                height: 330px;
-                border-radius: 2px;
-                transition: .5s;
-
-                &.has-vip {
-                  height: 420px;
-                }
-              }
-            }
-
             > a {
               padding: 5px 10px;
               border-radius: 2px;
@@ -1239,137 +510,6 @@ export default{
               &:hover {
                 color: #fff;
                 background-color: $mainColor;
-              }
-            }
-
-            /* 消息 */
-            &.notice-li {
-              position: relative;
-
-              > .notice-btn {
-                padding: 0;
-                color: $mainColor;
-                cursor: pointer;
-              }
-
-              .notice-list {
-                position: absolute;
-                z-index: 2;
-                top: 50px;
-                left: -150%;
-                width: 300px;
-                max-height: 240px;
-                border-radius: 2px;
-                overflow: hidden;
-                box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
-
-                > .notice-item {
-                  box-sizing: border-box;
-                  height: 40px;
-                  border-bottom: 1px solid #292c42;
-                  font-size: 12px;
-                  line-height: 40px;
-                  text-align: left;
-                  background-color: #2c314d;
-
-                  > a {
-                    display: block;
-                    height: 100%;
-                    padding: 0 14px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    color: $nightFontColor;
-
-                    &:hover {
-                      color: $mainColor;
-                      background-color: #21243a;
-                    }
-                  }
-
-                  &.view-more {
-                    background-color: #2c3047;
-                  }
-
-                  .view-more-link {
-                    display: inline-block;
-                    width: 100%;
-                    text-align: center;
-                    color: $mainColor;
-                    cursor: pointer;
-                  }
-                }
-              }
-            }
-
-            /* 语言选择 dl */
-            > .lang-box {
-              position: relative;
-              text-align: left;
-              transition: all 1s;
-              cursor: pointer;
-
-              /* 当前语言 dt */
-              > .lang-selected {
-                position: relative;
-                top: 1px;
-                display: inline-block;
-                box-sizing: border-box;
-                width: 100%;
-                min-width: 90px;
-                height: 30px;
-                line-height: 0;
-                color: $nightFontColor;
-
-                > .icon {
-                  margin-right: 5px;
-                }
-
-                > .language-text {
-                  display: inline-block;
-
-                  > .iconfont {
-                    margin-top: -1px;
-                    margin-left: -2px;
-                    transition: all .2s;
-                  }
-
-                  &:hover {
-                    > .iconfont {
-                      transform: rotate(180deg);
-                    }
-                  }
-                }
-              }
-
-              > .lang-list {
-                position: absolute;
-                z-index: 2;
-                top: 50px;
-                left: -2px;
-                border-radius: 2px;
-                background-color: #2c314d;
-                box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
-
-                > .lang-item {
-                  display: block;
-                  width: 100%;
-                  height: 30px;
-                  padding: 0 10px;
-                  line-height: 30px;
-                  text-align: left;
-                  color: $nightFontColor;
-                  cursor: pointer;
-
-                  &:hover {
-                    color: $mainColor;
-                    background-color: #21243a;
-                  }
-
-                  > .icon {
-                    margin-right: 5px;
-                  }
-                }
               }
             }
           }

@@ -1714,6 +1714,10 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #fff;
+      }
+
       .choice {
         .el-input__inner {
           background: #1c1f32;
@@ -1919,6 +1923,10 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #7d90ac;
+      }
+
       .choice {
         .el-input__inner {
           border: 1px solid #ecf1f8;
