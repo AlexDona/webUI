@@ -316,6 +316,7 @@
             <el-table-column
               :label = "$t('M.otc_record_complaint')"
               width="134"
+              align="right"
             >
               <template slot-scope = "s">
                 <div>
@@ -687,6 +688,8 @@ export default {
         }
 
         .el-table {
+          padding-bottom: 15px;
+
           tr {
             height: 40px;
           }
@@ -770,6 +773,10 @@ export default {
       }
 
       /deep/ {
+        .el-input--suffix .el-input__inner {
+          color: #fff;
+        }
+
         .el-input__inner {
           background-color: #1c1f32;
         }
@@ -878,6 +885,10 @@ export default {
       }
 
       /deep/ {
+        .el-input--suffix .el-input__inner {
+          color: #7d90ac;
+        }
+
         .el-input__inner {
           border: 1px solid #ecf1f8;
           color: #7d90ac !important;

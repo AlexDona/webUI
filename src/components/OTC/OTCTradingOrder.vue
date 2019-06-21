@@ -1445,11 +1445,11 @@ export default {
           justify-content: space-between;
           box-sizing: border-box;
           height: 36px;
-          padding: 0 77px 0 25px;
+          padding: 0 50px 0 25px;
           line-height: 36px;
 
           > .order-id {
-            padding-left: 300px;
+            padding-left: 500px;
           }
 
           > .order-list-head-icon {
@@ -1491,7 +1491,7 @@ export default {
 
             > .logo {
               display: inline-block;
-              margin-right: 10px;
+              margin-right: 20px;
               text-align: center;
 
               > .logo-name {
@@ -1514,6 +1514,8 @@ export default {
 
             > .middle-content {
               display: flex;
+              padding-right: 20px;
+              padding-left: 20px;
 
               .trader-info {
                 flex: 2;
@@ -1521,7 +1523,7 @@ export default {
 
                 > .pay-style {
                   position: relative;
-                  margin: 0 0 8px 20px;
+                  margin: 0 0 8px;
 
                   > .qiandai-icon {
                     > .icon {
@@ -1536,7 +1538,7 @@ export default {
                 }
 
                 > .bank-info {
-                  margin-left: 20px;
+                  margin-left: 0;
                   line-height: 20px;
                 }
 
@@ -1562,7 +1564,6 @@ export default {
 
               > .bank-info-picture {
                 flex: 1;
-                padding-left: 10px;
                 vertical-align: top;
               }
             }
@@ -1570,10 +1571,11 @@ export default {
 
           > .order-list-body-right {
             flex: 3;
+            padding-left: 20px;
 
             > .right-content {
               > .action-tips {
-                margin: 0 0 10px 20px;
+                margin: 0 20px 10px;
 
                 .wait-pay {
                   margin-right: 10px;
@@ -1585,7 +1587,7 @@ export default {
               }
 
               > .action-explain {
-                margin-left: 20px;
+                margin-left: 30px;
                 line-height: 24px;
               }
 

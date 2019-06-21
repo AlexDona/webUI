@@ -6,8 +6,10 @@
 import {
   mapGetters,
   mapState,
-  mapActions
+  mapActions,
+  mapMutations
 } from 'vuex'
+import {userLogOut} from '../utils/api/user'
 
 let mixin = {
   data () {
@@ -15,35 +17,24 @@ let mixin = {
   },
   methods: {
     ...mapActions([]),
-    $toggleBox_X (type, status) {
-      // console.log(1)
-      switch (type) {
-        case 'notice':
-          this.showNoticeList = status
-          break
-        case 'setting':
-          this.showSetting = status
-          this.initSettings()
-          break
-        case 'lang':
-          this.langSelecting = status
-          break
-        // case 'otc':
-        //   this.otcSubNavStatus = status
-        //   break
-        // case 'activity':
-        //   this.activityCenterSubNavStatus = status
-        //   break
-      }
+    ...mapMutations([
+      'USER_LOGOUT'
+    ]),
+    // 用户登出
+    async $userLogOut_X () {
+      const data = await userLogOut()
+      if (!data) return false
+      this.USER_LOGOUT()
+      this.$goToPage(`/${this.$routes_X.home}`)
     }
   },
   computed: {
     ...mapGetters({}),
     ...mapState({
     })
-  },
-  destroyed () {
-  },
-  watch: {}
+  }
+  // destroyed () {
+  // },
+  // watch: {}
 }
 export default mixin

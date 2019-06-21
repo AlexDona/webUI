@@ -248,7 +248,7 @@
               <!-- 备注 -->
                 <el-table-column
                   :label="$t('M.comm_remark')"
-                  width="100"
+                  width="120"
                 >
                 <template slot-scope = "s">
                   <span
@@ -262,7 +262,8 @@
               <!-- 操作 -->
               <el-table-column
                 :label="$t('M.otc_index_operate')"
-                align="center"
+                align="right"
+                width="140"
               >
                 <template slot-scope="s">
                   <el-button
@@ -1035,7 +1036,7 @@ export default {
         > .otc-filtrate-publish {
           display: flex;
           justify-content: space-between;
-          padding: 25px 15px 0;
+          padding: 25px 20px 0;
 
           > .otc-filtrate-box {
             display: flex;
@@ -1222,6 +1223,7 @@ export default {
         height: 32px;
         border: 0;
         line-height: 33px;
+        color: #fff;
       }
 
       .el-input--suffix {
@@ -1247,7 +1249,13 @@ export default {
             th {
               &:first-child {
                 .cell {
-                  padding-left: 30px;
+                  padding-left: 20px;
+                }
+              }
+
+              &:nth-last-child(2) {
+                .cell {
+                  padding-right: 20px;
                 }
               }
             }
@@ -1259,7 +1267,13 @@ export default {
             td {
               &:first-child {
                 .cell {
-                  padding-left: 30px;
+                  padding-left: 20px;
+                }
+              }
+
+              &:nth-last-child(1) {
+                .cell {
+                  padding-right: 20px;
                 }
               }
             }
@@ -1407,6 +1421,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #fff;
+      }
+
       .otc-online-buy-and-sell-button {
         .el-radio-button__inner {
           color: #d8d8d8;
@@ -1636,6 +1654,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #7d90ac;
+      }
+
       .otc-online-buy-and-sell-button {
         .el-radio-button__inner {
           border: 1px solid rgba(39, 49, 58, .1);

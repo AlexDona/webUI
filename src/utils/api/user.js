@@ -40,7 +40,7 @@ export const userLoginForStep1 = (params) => postWithFormData('user/userLoginFor
 // 用户登录第二步
 export const userLoginForStep2 = params => handleRequest(() => postWithURLencoded('user/userLoginForStep2', params), 1)
 // 退出登录
-export const userLoginOut = () => handleRequest(() => postWithURLencoded('user/logout'))
+export const userLogOut = () => handleRequest(() => postWithURLencoded('user/logout'))
 // 找回密码步骤1
 export const findPasswordStep1 = params => handleRequest(() => postWithURLencoded('user/forgetPassword1', params))
 // 找回密码步骤2

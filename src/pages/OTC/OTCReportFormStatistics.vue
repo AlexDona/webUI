@@ -93,7 +93,7 @@
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
                   <span class="data">
-                    {{ $scientificToNumber(buyDayMap.count) }}{{ activatedTraderCoinName }}
+                    {{ $scientificToNumber(buyDayMap.count) || '--' }}{{ activatedTraderCoinName }}
                   </span>
                 </p>
                 <!--购买均价-->
@@ -102,14 +102,14 @@
                     {{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:
                   </span>
                   <span class="data">
-                    {{ $scientificToNumber(buyDayMap.average) }}{{ activatedTraderCurrencyCoinsName }}
+                    {{ $scientificToNumber(buyDayMap.average) || '--' }}{{ activatedTraderCurrencyCoinsName }}
                   </span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
                   <span class="data">
-                    {{ $scientificToNumber(buyDayMap.amount) }}{{ activatedTraderCurrencyCoinsName }}
+                    {{ $scientificToNumber(buyDayMap.amount) || '--' }}{{ activatedTraderCurrencyCoinsName }}
                   </span>
                 </p>
                 <!--成交订单-->
@@ -117,7 +117,9 @@
                   <span>
                     {{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:
                   </span>
-                  <span class="data">{{ $scientificToNumber(buyDayMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">
+                    {{ $scientificToNumber(buyDayMap.num) || '--' }}{{$t('M.comm_stock')}}
+                  </span>
                 </p>
               </div>
             </div>
@@ -132,22 +134,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyWeekMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyWeekMap.count) || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyWeekMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyWeekMap.average) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyWeekMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyWeekMap.amount) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyWeekMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(buyWeekMap.num) || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -162,22 +164,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyMonthMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyMonthMap.count) || '--' || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyMonthMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyMonthMap.average) || '--' || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyMonthMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyMonthMap.amount) || '--' || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyMonthMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(buyMonthMap.num) || '--' || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -192,22 +194,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyHistoryMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyHistoryMap.count) || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyHistoryMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyHistoryMap.average) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyHistoryMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyHistoryMap.amount) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyHistoryMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(buyHistoryMap.num) || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -234,22 +236,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellDayMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellDayMap.count) || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellDayMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellDayMap.average) || '--' || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_income_money')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellDayMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellDayMap.amount) || '--' || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellDayMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(sellDayMap.num) || '--' || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -264,22 +266,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellWeekMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellWeekMap.count) || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellWeekMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellWeekMap.average) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_income_money')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellWeekMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellWeekMap.amount) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellWeekMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(sellWeekMap.num) || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -294,22 +296,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellMonthMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellMonthMap.count) || '--' || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellMonthMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellMonthMap.average) || '--' || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_income_money')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellMonthMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellMonthMap.amount) || '--' || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellMonthMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(sellMonthMap.num) || '--' || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -324,22 +326,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellHistoryMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellHistoryMap.count) || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellHistoryMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellHistoryMap.average) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_income_money')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellHistoryMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellHistoryMap.amount) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellHistoryMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(sellHistoryMap.num) || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -414,7 +416,7 @@
               <!-- 交易日期 -->
               <el-table-column
                 :label = "$t('M.otc_transaction_data')"
-                width="180"
+                width="210"
               >
                 <template slot-scope = "s">
                   <div>{{timeFormatting(s.row.createTime)}}</div>
@@ -423,6 +425,7 @@
               <!-- 订单号 -->
               <el-table-column
                 :label = "$t('M.otc_MerchantsOrders_orderNum')"
+                width="210"
               >
                 <template slot-scope = "s">
                   <div>{{s.row.orderSequence}}</div>
@@ -431,6 +434,7 @@
               <!-- 交易类型 -->
               <el-table-column
                 :label = "$t('M.otc_type_ransaction')"
+                width="170"
               >
                 <template slot-scope = "s">
                   <div
@@ -450,6 +454,7 @@
               <!-- 资金类型 -->
               <el-table-column
                 :label = "$t('M.otc_type_capital')"
+                width="170"
               >
                 <template slot-scope = "s">
                   <div>{{s.row.currencyName}}</div>
@@ -458,6 +463,7 @@
               <!-- 数量 -->
               <el-table-column
                 :label = "$t('M.comm_count')"
+                width="180"
               >
                 <template slot-scope = "s">
                   <div>{{ $scientificToNumber(s.row.pickCount) }}</div>
@@ -466,6 +472,7 @@
               <!-- 单价 -->
               <el-table-column
                 :label= "$t('M.otc_index_UnitPrice')"
+                width="140"
               >
                 <template slot-scope = "s">
                   <div>{{ $scientificToNumber(s.row.price) }}</div>
@@ -474,6 +481,8 @@
               <!-- 总金额 -->
               <el-table-column
                 :label="$t('M.otc_canceled_total')"
+                align="right"
+                width="140"
               >
                 <template slot-scope = "s">
                   <div>{{ $scientificToNumber(s.row.payAmount) }}</div>
@@ -774,7 +783,7 @@ export default {
 
   > .report-form-statistics-content {
     width: 1300px;
-    padding-top: 20px;
+    padding: 20px 0 200px;
     margin: 50px auto 10px;
 
     > .report-form-title {
@@ -838,9 +847,9 @@ export default {
 
           > .together {
             display: flex;
+            align-items: center;
             width: 310px;
             height: 197px;
-            padding-top: 30px;
 
             > .left {
               position: relative;
@@ -864,7 +873,7 @@ export default {
 
             > .right {
               flex: 3;
-              line-height: 35px;
+              line-height: 40px;
             }
           }
         }
@@ -895,7 +904,7 @@ export default {
           display: flex;
           justify-content: space-between;
           height: 50px;
-          padding: 0 20px;
+          padding: 0 50px;
           margin-top: 30px;
           line-height: 50px;
 
@@ -913,7 +922,7 @@ export default {
         }
 
         > .order-table {
-          padding: 0 55px 0 43px;
+          padding: 0 40px;
           margin-top: 20px;
         }
 
@@ -1110,6 +1119,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #fff;
+      }
+
       .report-form-filtrate {
         .el-input__inner {
           background-color: #1c1f32;
@@ -1315,6 +1328,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #7d90ac;
+      }
+
       .report-form-filtrate {
         .el-input__inner {
           border: 1px solid rgba(236, 241, 248, 1);

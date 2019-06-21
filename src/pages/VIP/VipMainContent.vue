@@ -370,7 +370,7 @@ export default {
   @import '../../assets/CSS/index';
 
   .vip-main {
-    margin-top: 65px;
+    margin-top: 60px;
 
     > .header-content {
       position: relative;
