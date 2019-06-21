@@ -85,7 +85,7 @@
       </div>
       <!--右侧方块-->
       <div class="plan-right">
-        <img src="../assets/supernode/banner2.png">
+        <img src="../assets/supernode/banner2.gif">
       </div>
     </div>
     <!--2.0 权益-->
@@ -630,7 +630,7 @@ export default {
       > .plan-right {
         position: absolute;
         z-index: 10;
-        top: -8%;
+        top: -13%;
         right: 0;
       }
     }
