@@ -1386,8 +1386,12 @@ export default {
         this.clearPasswordErrorMsg()
       }
     },
-    async refreshEntrustStatus (newVal) {
-      if (newVal) await this.getUserAssetOfActiveSymbol()
+    refreshEntrustStatus (newVal) {
+      if (newVal) {
+        setTimeout(async () => {
+          await this.getUserAssetOfActiveSymbol()
+        }, 1000)
+      }
     },
     activeConvertCurrencyObj () {
       this.setBuyAndSellPrice(this.getRefValue(this.limitBuyPriceInputRef), this.getRefValue(this.limitSellPriceInputRef))

@@ -43,7 +43,7 @@
             <li class="li-split"></li>
             <li
               class="li-item"
-              v-if="!isLogin"
+              v-if="!$isLogin_S_X"
             >
               <router-link to="/register">
                 <!--<span>注册</span>-->
@@ -190,7 +190,7 @@ export default{
   async created () {
     // f5刷新页面刷新用户信息列表
     // console.log(this.$route)
-    if (this.isLogin && this.$route.path !== '/PersonalCenter') {
+    if (this.$isLogin_S_X && this.$route.path !== '/PersonalCenter') {
       this.refreshUserInfo()
     }
 
@@ -392,7 +392,6 @@ export default{
   computed: {
     ...mapState({
       defaultLanguage: state => state.common.defaultLanguage,
-      isLogin: state => state.user.isLogin,
       middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
       userInfo: state => state.user.loginStep1Info.userInfo,
       activeLanguage: state => state.common.activeLanguage,
@@ -401,8 +400,6 @@ export default{
       title: state => state.common.title, // 网站title
       $mainNightBgColor: state => state.common.mainColor.$mainNightBgColor,
       noticeCloseVisible: state => state.home.noticeCloseVisible,
-      // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
-      otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus,
       // 首页消息列表
       homeNoticeList: state => state.home.noticeList,
       // 交易密码是否被锁定
@@ -445,7 +442,7 @@ export default{
     },
     userInfoRefreshStatus (newVal) {
       if (newVal) {
-        if (this.isLogin) {
+        if (this.$isLogin_S_X) {
           this.refreshUserInfo()
         }
         this.SET_USER_INFO_REFRESH_STATUS(false)

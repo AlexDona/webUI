@@ -11,7 +11,10 @@
     .left
       .top
         .t-left
-          Pie
+          Pie(
+            :remaining="ieoRemained"
+            :total="ieoTotal"
+          )
         .t-right
           // 总额度
           .detail
@@ -62,7 +65,7 @@
 </template>
 <script>
 import mixins from '../../../../mixins/crowdFunding'
-import Pie from '../../../../components/Common/Pie'
+import Pie from '../ThePie'
 export default {
   name: 'the-crowd-funding-item-detail-left',
   mixins: [mixins],
@@ -130,8 +133,12 @@ export default {
     interestEndTime () {
       return _.get(this.detail, 'interestEndTime')
     }
+  },
+  watch: {
+    totalAndRemain (New) {
+      console.log(New)
+    }
   }
-  // watch: {}
 }
 </script>
 

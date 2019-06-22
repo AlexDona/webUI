@@ -131,7 +131,7 @@
             >
               <!--API文档-->
               <a
-                href="https://github.com/bizuyun/API"
+                :href="APIUrl"
                 target="_blank"
               >
                 {{$t('M.comm_api_doc')}}
@@ -160,7 +160,7 @@
             </dd>
             <dd
               class="dd-item"
-              @click="$footerJump('/NewsAndNoticeCenter','notice')"
+              @click="$footerJump(`/${$routes_X.news}`,'notice')"
             >
               <!--新闻公告-->
               {{$t('M.comm_news_and_notice')}}
@@ -321,11 +321,12 @@ export default {
       // 上币申请模板下载url
       currencyApplicationURL: '',
       // 友情链接是否显示图片
-      isShowLinkImage: true
+      isShowLinkImage: true,
+      APIUrl: 'https://github.com/bizuyun/API'
     }
   },
   async created () {
-    console.log(this.isNeedApp)
+    // console.log(this.isNeedApp)
     const data = await this.GET_CURRENCY_URL_ACTION({
       key: 'COIN_APPLY'
     })
@@ -369,10 +370,7 @@ export default {
       'isNeedApp': 'isNeedApp'
     }),
     ...mapState({
-      language: state => state.common.language,
-      logoSrc: state => state.common.logoSrc,
       footerInfo: state => state.common.footerInfo,
-      // footerInfo1: state => state.common.footerInfo.footerInfo1,
       // 公司名称fubt fbt fuc、邮箱等信息
       configInfo: state => state.common.footerInfo.configInfo,
       isMobile: state => state.user.isMobile
@@ -381,11 +379,11 @@ export default {
   watch: {
     footerInfo: {
       handler (newVal) {
-        console.log(newVal)
+        // console.log(newVal)
         if (newVal) {
           this.footerInfo1 = newVal.footerInfo1
           this.footerInfo2 = newVal.footerInfo2
-          console.log(this.footerInfo2)
+          // console.log(this.footerInfo2)
           this.isShowLinkImage = getNestedData(this.footerInfo2, 'flag') ? true : false
           this.shareList[0].ercodeSrc = getNestedData(this.footerInfo1, 'twitter')
           this.shareList[1].ercodeSrc = getNestedData(this.footerInfo1, 'facebook')

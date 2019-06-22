@@ -27,7 +27,7 @@ export const actionCenter = {
   'crowd_funding_interest_rate': '年化收益率',
   'crowd_funding_total': '总额度',
   'crowd_funding_locked': '已锁',
-  'crowd_funding_number_of_participants': '参与人数',
+  'crowd_funding_number_of_participants': '参与人次',
   'crowd_funding_time': '时间',
   'crowd_funding_project_name': '项目名称',
   'crowd_funding_way_of_income': '收益方式',
@@ -65,5 +65,8 @@ export const actionCenter = {
   'crowd_funding_faq_3': 'Q：我将如何获得收益',
   'crowd_funding_faq_answer_3': 'A：存币期结束后的一个工作日内，您的本金和利息将全部返回您的资产账户，可以在余额中查看',
   'crowd_funding_faq_4': 'Q：存币期是否有收益',
-  'crowd_funding_faq_answer_4': 'A：存币期间，收益将不会每日发放，必须等存币期结束后，一次性发放收益'
+  'crowd_funding_faq_answer_4': 'A：存币期间，收益将不会每日发放，必须等存币期结束后，一次性发放收益',
+  'crowd_funding_have_been_voted': '已投',
+  'crowd_funding_remained': '剩余'
+
 }

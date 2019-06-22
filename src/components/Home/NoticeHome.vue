@@ -1,5 +1,9 @@
+<!--
+  author: zhaoxinlei
+  update: 20190619
+  description: 当前组件为 首页公告 组件
+-->
 <template>
-  <!--首页公告-->
   <div
     class="notice-box home"
     :class="{close:!noticeCloseVisible}"
@@ -13,7 +17,7 @@
         v-for="(item,index) in noticeList"
         :key="index"
       >
-        <router-link :to="`NewsAndNoticeItem/${item.id}`">
+        <router-link :to="`/${$routes_X.newsItem}/${item.id}`">
         <span
             class="cursor-pointer"
             @click="jumpToNewsDetail(item)"
@@ -28,16 +32,14 @@
       class="close-btn"
       @click="closeNotice"
     >
-      <IconFont
+      <Iconfont
         class="font-size22 iconfont"
         iconName="icon-cha-"
       />
     </div>
   </div>
 </template>
-<!--请严格按照如下书写书序-->
 <script>
-import IconFont from '../Common/IconFontCommon'
 import {getPartNewsNotices} from '../../utils/api/home'
 import {
   getNestedData
@@ -48,26 +50,27 @@ import {
 } from 'vuex'
 
 export default {
-  components: {
-    IconFont
-  },
+  // components: {
+  // },
   // props,
   data () {
     return {
       noticeList: [], // 新闻（公告）列表
       animate: false,
       timer: null,
-      closeStatus: false // 是否关闭
+      // 是否关闭
+      closeStatus: false
     }
   },
   async created () {
     this.noticeList = []
     this.getNewsNoticeList()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  beforeDestroy () {
+    clearInterval(this.timer)
+  },
+  // destroyed () {},
   methods: {
     ...mapMutations([
       'CHANGE_NEWS_DETAIL_JUMP_ID',
@@ -75,13 +78,13 @@ export default {
     ]),
     jumpToNewsDetail (e) {
       this.CHANGE_NEWS_DETAIL_JUMP_ID(e.id)
-      this.$goToPage('/NewsAndNoticeCenter')
+      this.$goToPage(`/${this.$routes_X.news}`)
     },
     // 获取新闻公告列表
     async getNewsNoticeList () {
       clearInterval(this.timer)
       const params = {
-        language: this.language
+        language: this.$language_S_X
       }
       const data = await getPartNewsNotices(params)
       if (!data) return false
@@ -101,23 +104,17 @@ export default {
       }, 500)
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
-      language: state => state.common.language,
-      noticeCloseVisible: state => state.home.noticeCloseVisible,
-      homeNoticeList: state => state.home.noticeList
+      noticeCloseVisible: state => state.home.noticeCloseVisible
     })
   },
   watch: {
-    async language (newVal) {
+    async $language_S_X (newVal) {
       if (newVal) {
         await this.getNewsNoticeList()
       }
-    },
-    homeNoticeList (newVal) {
-      console.log(newVal)
-      // this.noticeList = [...this.homeNoticeList]
     }
   }
 }

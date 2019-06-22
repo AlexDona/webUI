@@ -319,11 +319,11 @@ const routes = [
   },
   {
     // 新闻中心
-    path: '/NewsAndNoticeCenter',
+    path: `/${routesVariable.news}`,
     component: NewsAndNoticeCenter
   },
   {
-    path: '/NewsAndNoticeItem/:detailId',
+    path: `/${routesVariable.newsItem}/:detailId`,
     name: 'news-and-notice-item',
     component: NewsAndNoticeItem,
     props: true

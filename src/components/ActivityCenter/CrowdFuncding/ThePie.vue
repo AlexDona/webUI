@@ -1,7 +1,7 @@
 <!--
   author: zhaoxinlei
   create: 20190619
-  description: 当前组件为 通用 扇形图 组件
+  description: 当前组件为 众筹详情页面 扇形图 组件
 -->
 <template lang="pug">
   .pie-container
@@ -17,7 +17,16 @@ export default {
   // mixins: [],
   // components: {},
   props: {
+    // 剩余额度
     remaining: {
+      type: String
+    },
+    // 总额度
+    total: {
+      type: String
+    },
+    // 状态码
+    statusCode: {
       type: String
     }
   },
@@ -36,6 +45,9 @@ export default {
 
         tooltip: {
           trigger: 'item',
+          textStyle: {
+            fontSize: 12
+          },
           formatter: function (params) {
             return `${params.name}：${params.percent}%`
           }
@@ -55,8 +67,10 @@ export default {
             radius: '70px',
             center: ['50%', '50%'],
             data: [
-              {value: 335, name: '已投'},
-              {value: 310, name: '未投'}
+              // 已投
+              {value: this.compTotal - this.compRemaining, name: this.$t('M.crowd_funding_have_been_voted')},
+              // 剩余
+              {value: this.compRemaining, name: this.$t('M.crowd_funding_remained')}
             ],
             selectedOffset: 1,
             // 半径梯度增加
@@ -65,9 +79,21 @@ export default {
               normal: {
                 show: true,
                 position: 'inner',
-                formatter: function (params) {
-                  // console.log(params)
-                  return `${params.percent}%`
+                align: 'center',
+                color: '#fff',
+                verticalAlign: 'middle',
+                formatter: (params) => {
+                  console.log(params)
+                  const {dataIndex, percent} = params
+                  // 不显示 100%
+
+                  // let notNeedLabel = (dataIndex == 1 && (this.isUnStart || percent == 100)) || (dataIndex == 1 && (this.isEnded || percent == 0))
+                  let notNeedLabel = (dataIndex == 0 && !percent) || (dataIndex == 1 && !percent)
+                  if (notNeedLabel) {
+                    return ''
+                  } else {
+                    return `${params.percent.toFixed(2)}%`
+                  }
                 }
               }
             },
@@ -84,7 +110,7 @@ export default {
             itemStyle: {
               normal: {
                 color: function (params) {
-                  let colors = ['#303957', '#338ff5']
+                  let colors = ['#338ff5', '#303957']
                   return colors[params.dataIndex]
                 }
                 // shadowBlur: 200,
@@ -115,17 +141,61 @@ export default {
   methods: {
     resetChart () {
       this.chart = echarts.init(document.getElementById('pie-box'))
+      this.options.series[0].data[0].name = this.$t('M.crowd_funding_have_been_voted')
+      this.options.series[0].data[1].name = this.$t('M.crowd_funding_remained')
+      // this.options.series[0].label.normal.formatter = (params) {
+      //   console.log(params)
+      //   const {dataIndex, percent} = params
+      //   let notNeedLabel = dataIndex == 0 && (this.isUnStart || this.isEnded || percent == 0 || percent == 100)
+      //   if (notNeedLabel) {
+      //     return ''
+      //   } else {
+      //     return `${params.percent.toFixed(2)}%`
+      //   }
+      // }
       this.chart.setOption(this.options)
     }
   },
   // filters: {},
-  // computed: {},
-  watch: {}
+  computed: {
+    compRemaining () {
+      return this.remaining - 0
+    },
+    compTotal () {
+      return this.total - 0
+    },
+    totalAndRemain () {
+      return `${this.compRemaining}/${this.compTotal}`
+    },
+    compStatusCode () {
+      return this.statusCode
+    },
+    isUnStart () {
+      return this.compStatusCode == 'coming'
+    },
+    isEnded () {
+      return this.compStatusCode == 'ended'
+    }
+  },
+  watch: {
+    $language_S_X () {
+      this.resetChart()
+    },
+    totalAndRemain (New) {
+      const remain = New.split('/')[0] - 0
+      const total = New.split('/')[1] - 0
+      console.log(New)
+      this.options.series[0].data[0].value = total - remain
+      this.options.series[0].data[1].value = remain
+      if (!remain || remain == total) this.options.series[0].label.normal.position = 'center'
+      this.resetChart()
+    }
+  }
 }
 </script>
 
 <style scoped lang="stylus">
-  @import '../../assets/CSS/index.styl'
+  @import '../../../assets/CSS/index.styl'
   .pie-container
     width 160px
     height 160px

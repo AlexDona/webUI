@@ -44,10 +44,9 @@ export default {
           'width': '50px',
           'height': '50px',
           'border-radius': '50%',
-          'line-height': '50px',
           'text-align': 'center',
           'right': '40px',
-          'padding': '5px'
+          'padding': '6px 5px 5px'
         },
         'pop': {
           'css': {
@@ -81,9 +80,9 @@ export default {
         default:
           this.msgLanguage = 'en-us'
       }
+      this.doAdd()
 
       if (xDomain.startsWith('fubt')) {
-        this.doAdd()
       }
     },
     addServiceForCustomer (a, h, c, b, f, g) {
