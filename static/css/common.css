@@ -21,7 +21,7 @@
 .night .el-pagination.is-background .btn-next,
 .night .el-pagination.is-background .btn-prev,
 .night .el-pagination.is-background .el-pager li {
-  min-width: 0;
+  min-width: 26px;
   color: #fff;
   box-shadow: 0 1px 1px 0 rgba(19, 24, 30, 1);
 }

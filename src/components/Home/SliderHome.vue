@@ -38,7 +38,7 @@ export default {
         thresholdDistance: 100, // 滑动距离阈值判定
         thresholdTime: 300, // 滑动时间阈值判定
         loop: false, // 无限循环
-        autoplay: 3000000, // 自动播放:时间[ms]
+        autoplay: 3000, // 自动播放:时间[ms]
         infinite: 0
       },
       AUTO_START_LIMIT: 5,
@@ -144,7 +144,7 @@ export default {
             watch: {
               bannerActive (newVal) {
                 // console.log(newVal)
-                newVal || that.sliderListAjax.length < that.AUTO_START_LIMIT ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000000)
+                newVal || that.sliderListAjax.length < that.AUTO_START_LIMIT ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
               }
             },
             template: `<span
