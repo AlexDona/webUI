@@ -28,50 +28,6 @@
               </p>
             </div>
           </div>
-          <!--<div class="first item">
-            <div class="left">
-              <img src="../assets/supernode/plan1.png">
-            </div>
-            <div class="right">
-              <h4 class="title font-size16 font-weight700">指导思想</h4>
-              <p class="text font-size14">
-                超级节点计划以FUBT交易服务平台为依托，以优秀节点资源为纽带，积极推动区块链技术变革与创新，以增强区块链实际落地应用，并营造良好的技术研究氛围，创造公平诚信环境，鼓励保护平等竞争、公正公平的市场秩序，推进节点生态标准化、规范化、国际化建设。
-              </p>
-            </div>
-          </div>
-          <div class="second item">
-            <div class="left">
-              <img src="../assets/supernode/plan2.png">
-            </div>
-            <div class="right">
-              <h4 class="title font-size16 font-weight700">基本原则</h4>
-              <p class="text font-size14">
-                立足平台与借鉴国际经验相结合，从FUBT平台实际出发，学习借鉴国际顶尖交易所成功经验，发展FUBT特色节点生态；着眼长远规划与现实改善相结合，加强顶层设计，树立大格局，节点生态共商、共建、共享；普遍规律与产业特色相结合，解放思想转变观念，尊重规律加强科学治理，破解发展难题。
-              </p>
-            </div>
-          </div>
-          <div class="third item">
-            <div class="left">
-              <img src="../assets/supernode/plan3.png">
-            </div>
-            <div class="right">
-              <h4 class="title font-size16 font-weight700">近期目标</h4>
-              <p class="text font-size14">
-                初步搭建节点型、综合性、开放型交易服务平台，打破传统桎梏，改善项目上线推广的环境和氛围，帮助100家优质潜力项目团队实现里程碑式跨越。包括且不限于提供项目投融资、模式设计优化、新币发行上线、社群建设维护、综合运营推广等。
-              </p>
-            </div>
-          </div>
-          <div class="fourth item">
-            <div class="left">
-              <img src="../assets/supernode/plan4.png">
-            </div>
-            <div class="right">
-              <h4 class="title font-size16 font-weight700">中远期目标</h4>
-              <p class="text font-size14">
-                创新项目开发、募资、运营及管理模式，形成区块链行业与产业协调发展。平台优质潜力项目大幅增加，基本覆盖区块链各主题板块概念；平台孵化器功能进一步增强，节点类型、涉及领域、运作模式、运行效率等持续提升。
-              </p>
-            </div>
-          </div>-->
         </div>
       </div>
       <!--左侧灯-->
@@ -97,7 +53,7 @@
         </div>
         <!--下部权益-->
         <div class="bottom" id="equitiesDiv">
-          <div class="left">
+          <div class="left" :class="{'middleStyle1':middleStatus}">
             <div class="item" v-for="(item, index) in nodeEquitiesLeftData" :key="index">
               <div class="left-content text-align-r">
                 <h4 class="title font-weight700 font-size14">{{$t(`${item.title}`)}}</h4>
@@ -109,52 +65,19 @@
                 <img :src="item.src" :class="`left${index + 1}`">
               </div>
             </div>
-           <!-- <div class="first item">
-              <div class="left-content">
-                <h4 class="title">推荐权</h4>
-                <p class="text">
-                  入选超级节点，成为FUBT的超级合作伙伴，可参与“节点型”交易服务平台的业务开拓与构建，同时享受有关奖励与福利。
-                </p>
-              </div>
-              <div class="right-content">
-                <img src="../assets/supernode/equities1.png">
-              </div>
-            </div>
-            <div class="second item">
-              <div class="left-content">
-                <h4 class="title">投票权</h4>
-                <p class="text">
-                  对于申请投票上线的项目，超级节点将通过其专业视角，以各自领域内特长帮助用户甄别出优质潜力项目，降低用户的投资风险。
-                </p>
-              </div>
-              <div class="right-content">
-                <img src="../assets/supernode/equities3.png">
-              </div>
-            </div>
-            <div class="third item">
-              <div class="left-content">
-                <h4 class="title">决策权</h4>
-                <p class="text">
-                  入选节点优先进入平台“风险决策理事会”，对于节点生态发展方向、战略规划、商业架构等等重大问题，理事会成员拥有表决权。
-                </p>
-              </div>
-              <div class="right-content">
-                <img src="../assets/supernode/equities5.png">
-              </div>
-            </div>-->
           </div>
-          <div class="middle" :class="{'middleStyle':middleStatus}">
-            <div class="equities-animate-top">
+          <div class="middle">
+            <div class="equities-animate-top" :class="{'lidAnimateTop':lidAnimateStart}">
               <img src="../assets/supernode/equities_animate_top.png">
             </div>
-            <div class="equities-animate-middle">
+            <div class="equities-animate-middle" :class="{'lidAnimateMiddle':lidAnimateStart}" v-show="lidAnimateStart">
               <img src="../assets/supernode/equities_animate_middle.png">
             </div>
             <div class="equities-animate-bottom">
               <img src="../assets/supernode/equities_animate_bottom.png">
             </div>
           </div>
-          <div class="right">
+          <div class="right" :class="{'middleStyle2':middleStatus}">
             <div class="item" v-for="(item, index) in nodeEquitiesRightData" :key="index">
               <div class="left-content" v-show="animateStatusStart">
                 <img :src="item.src" :class="`right${index + 1}`">
@@ -166,39 +89,6 @@
                 </p>
               </div>
             </div>
-            <!--<div class="first item">
-              <div class="left-content">
-                <img src="../assets/supernode/equities2.png">
-              </div>
-              <div class="right-content">
-                <h4 class="title">监督权</h4>
-                <p class="text">
-                  超级节点是生态耕耘者与获益者，亦是监督者与维护者，通过行使监管、督察、评审等权力，保障生态健康、持续、长久。
-                </p>
-              </div>
-            </div>
-            <div class="second item">
-              <div class="left-content">
-                <img src="../assets/supernode/equities4.png">
-              </div>
-              <div class="right-content">
-                <h4 class="title">仲裁权</h4>
-                <p class="text">
-                  节点型生态平台的自运转，需要多方参与合力共建。其中涉及面广、时间跨度长、项目开发存在不确定风险因素等，如涉及到利益纠纷由超级节点参与仲裁划分责任解决纠纷。
-                </p>
-              </div>
-            </div>
-            <div class="third item">
-              <div class="left-content">
-                <img src="../assets/supernode/equities6.png">
-              </div>
-              <div class="right-content">
-                <h4 class="title">收益权</h4>
-                <p class="text">
-                  超级节点作为产业生态融合的纽带和价值传递中枢，是该生态建设运作最为关键的环节，享受生态发展进步的各方面收益与权益。包括且不限于服务费佣金、手续费返佣、投资份额及其他收益等。
-                </p>
-              </div>
-            </div>-->
           </div>
         </div>
       </div>
@@ -222,11 +112,6 @@
               </div>
               <ul class="bar">
                 <li v-for="(item, index) in eligibilityData" :key="index">{{$t(`${item.text}`)}}</li>
-                <!--<li>FUBT资深用户，认同FUBT价值观，认可节点型生态；</li>
-                <li>拥有一定的资金实力，持有并自愿锁仓一定数量的FUC；</li>
-                <li>拥有较丰富的行业资源，或实际管理与运营经验；</li>
-                <li>区块链行业的深度参与者，具备国际性视野与大局观；</li>
-                <li>从事合法合规的产业，在法律允许的范围内开展业务活动。</li>-->
               </ul>
             </div>
           </div>
@@ -240,11 +125,6 @@
               </div>
               <ul class="bar">
                 <li v-for="(item, index) in dutyData" :key="index">{{$t(`${item.text}`)}}</li>
-                <!--<li>维护FUBT节点生态，努力推动技术革新与应用落地转化；</li>
-                <li>参与节点生态建设、市场开拓、社群推广、国际站点营建等；</li>
-                <li>新项目的对接，新用户的拓展，新节点的引荐与审核；</li>
-                <li>收集反馈用户意见，推进节点生态持续优化迭代；</li>
-                <li>搜集政策动态情报，促进行业产业融合，共建健康生态环境。</li>-->
               </ul>
             </div>
           </div>
@@ -287,6 +167,8 @@ export default {
   // props,
   data () {
     return {
+      // 权益中间盖子上下活动动画开始状态
+      lidAnimateStart: false,
       // 权益中间动画盒子类样式状态：刚开始加上此样式是为了撑开盒子
       middleStatus: true,
       // 权益6个标签动画开始状态：当页面完全滚动出当前内容时触发
@@ -399,13 +281,16 @@ export default {
     handleScroll () {
       let equitiesDiv = document.getElementById('equitiesDiv')
       let equitiesDivHeight = equitiesDiv.clientHeight || equitiesDiv.offsetHeight
-      // console.log(equitiesDivHeight)
       let clients = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
       let divTop = equitiesDiv.getBoundingClientRect().top
-      if (clients - divTop - equitiesDivHeight > 0) {
+      // console.log(clients)
+      // console.log(divTop)
+      // console.log(equitiesDivHeight)
+      if (clients - divTop - equitiesDivHeight > -50) {
         // console.log('权益div刚好全部出现在窗口中')
         this.animateStatusStart = true
         this.middleStatus = false
+        this.lidAnimateStart = true
       }
     }
   },
@@ -428,7 +313,7 @@ export default {
     }
 
     50% {
-      transform: translateY(45px);
+      transform: translateY(-45px);
     }
 
     100% {
@@ -442,7 +327,7 @@ export default {
     }
 
     50% {
-      transform: translateY(45px);
+      transform: translateY(-45px);
     }
 
     100% {
@@ -452,29 +337,29 @@ export default {
 
   @keyframes equitiesMiddle {
     0% {
-      opacity: 1;
-    }
-
-    50% {
       opacity: 0;
     }
 
-    100% {
+    50% {
       opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
     }
   }
 
   @-webkit-keyframes equitiesMiddle {
     0% {
-      opacity: 1;
-    }
-
-    50% {
       opacity: 0;
     }
 
-    100% {
+    50% {
       opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
     }
   }
 
@@ -826,8 +711,12 @@ export default {
             }
           }
 
-          .middleStyle {
-            margin: 0 132px;
+          .middleStyle1 {
+            padding-right: 84px;
+          }
+
+          .middleStyle2 {
+            padding-left: 84px;
           }
 
           > .middle {
@@ -838,8 +727,11 @@ export default {
             > .equities-animate-top {
               position: absolute;
               z-index: 12;
-              bottom: 280px;
+              bottom: 235px;
               left: 15%;
+            }
+
+            > .lidAnimateTop {
               -webkit-animation: equitiesTop 2s infinite linear;
               animation: equitiesTop 2s infinite linear;
             }
@@ -850,6 +742,9 @@ export default {
               bottom: 200px;
               left: 50%;
               transform: translateX(-50%);
+            }
+
+            > .lidAnimateMiddle {
               -webkit-animation: equitiesMiddle 2s infinite;
               animation: equitiesMiddle 2s infinite;
             }
