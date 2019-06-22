@@ -3,20 +3,14 @@
   update: 20190619
   description: 当前组件为 首页 轮播图 组件
 -->
-<template>
-  <div
-    class="slider-box home"
-    :class="{active:bannerActive}"
-  >
-    <Slider
+<template lang="pug">
+  .slider-box.home(:class="{active:bannerActive}")
+    Slider.inner-box(
       ref="slider"
       :pages="pages"
       :sliderinit="sliderinit"
-      class="inner-box"
       @slide='slide'
-    >
-    </Slider>
-  </div>
+    )
 </template>
 <script>
 import Slider from 'vue-concise-slider'// 引入slider组件
@@ -44,7 +38,7 @@ export default {
         thresholdDistance: 100, // 滑动距离阈值判定
         thresholdTime: 300, // 滑动时间阈值判定
         loop: false, // 无限循环
-        autoplay: 3000, // 自动播放:时间[ms]
+        autoplay: 3000000, // 自动播放:时间[ms]
         infinite: 0
       },
       AUTO_START_LIMIT: 5,
@@ -90,10 +84,10 @@ export default {
         let that = this
         sliderList.push({
           style: {
-            width: '200px',
-            height: '110px',
+            width: '236px',
+            height: '130px',
             borderRadius: '4px',
-            margin: '33px 16.25px',
+            margin: '33px 14px',
             cursor: redirectUrl ? 'pointer' : '',
             overflow: 'hidden'
           },
@@ -150,7 +144,7 @@ export default {
             watch: {
               bannerActive (newVal) {
                 // console.log(newVal)
-                newVal || that.sliderListAjax.length < that.AUTO_START_LIMIT ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
+                newVal || that.sliderListAjax.length < that.AUTO_START_LIMIT ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000000)
               }
             },
             template: `<span
@@ -196,8 +190,9 @@ export default {
 
     /* opacity:.8; */
     .inner-box {
-      width: 1130px;
+      width: 1300px;
       height: 160px;
+      margin: 3px auto;
     }
   }
 
@@ -206,12 +201,14 @@ export default {
     .slider-pagination-bullet {
       width: .2rem;
       height: .04rem;
+      margin: 0 3px;
       border-radius: 2px;
-      background-color: rgba(255, 255, 255, .8);
+      background-color: rgba(255, 255, 255, .4);
       transition: all 1s;
     }
 
     .slider-pagination {
+      padding-right: 4px;
       text-align: right;
     }
 
