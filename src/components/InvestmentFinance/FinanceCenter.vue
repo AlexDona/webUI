@@ -348,6 +348,12 @@
                   slot="footer"
                   class="dialog-footer"
                 >
+                  <span
+                    class="blue forgetPass jumpSet"
+                    @click.prevent="closePwdJump"
+                  >
+                    {{$t('M.user_payPassword_switch')}}
+                  </span>
                   <el-button
                     type="primary"
                     @click="submitPassword"
@@ -819,7 +825,9 @@ export default {
       'FINANCE_LINE_RENDER_TIME_LIST',
       'FINANCE_LINE_RENDER_PRICE_LIST',
       'FINANCE_LINE_STATUS',
-      'CHANGE_PASSWORD_USEABLE'
+      'CHANGE_PASSWORD_USEABLE',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 将返回来的天数转换成日期
     getDate (n) {
@@ -868,6 +876,12 @@ export default {
       } else {
         this.isShowErrorTips = true
       }
+    },
+    // 暂时关闭交易密码验证跳转
+    closePwdJump () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+      this.$goToPage('/PersonalCenter')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     },
     // 点击取消按钮存币详情模态框关闭
     dialogCancel () {
@@ -1532,6 +1546,11 @@ export default {
 
         .forgetPass:hover {
           cursor: pointer;
+        }
+
+        .jumpSet {
+          float: left;
+          margin-bottom: 10px;
         }
       }
 
