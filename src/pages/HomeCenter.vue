@@ -13,8 +13,10 @@
 import NoticeHome from '../components/Home/NoticeHome'
 import BannerHome from '../components/Home/BannerHome'
 import MarketListHome from '../components/Home/MarketListHome'
-import {xDomain} from '../utils/env'
-import {mapState} from 'vuex'
+import {
+  mapState,
+  mapGetters
+} from 'vuex'
 export default {
   components: {
     NoticeHome,
@@ -80,9 +82,9 @@ export default {
         default:
           this.msgLanguage = 'en-us'
       }
-      this.doAdd()
 
-      if (xDomain.startsWith('fubt')) {
+      if (this.$isNeedYST_G_X) {
+        this.doAdd()
       }
     },
     addServiceForCustomer (a, h, c, b, f, g) {
@@ -97,6 +99,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      '$isNeedYST_G_X': 'isNeedYST'
+    }),
     ...mapState({
       language: state => state.common.language,
       defaultLanguage: state => state.common.defaultLanguage
