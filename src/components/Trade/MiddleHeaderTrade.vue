@@ -175,6 +175,10 @@ export default {
         }
       }
 
+      &.latest-price {
+        min-width: 170px;
+      }
+
       > .bottom {
         white-space: nowrap;
 

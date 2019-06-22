@@ -134,7 +134,6 @@
 </template>
 <script>
 import TheMoreNavsButton from '../Home/TheMoreNavsButton'
-import TheGlobalPayPasswordDialog from '../Common/GlobalPayPassWordDialog'
 import TheSetting from '../Header/TheSetting'
 import TheLogined from '../Header/TheLogined'
 import TheLanguages from '../Header/TheLanguages'
@@ -152,7 +151,6 @@ export default{
   mixins: [mixins],
   components: {
     TheMoreNavsButton,
-    TheGlobalPayPasswordDialog,
     TheSetting,
     TheLogined,
     TheLanguages,

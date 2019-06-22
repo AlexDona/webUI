@@ -53,7 +53,10 @@
 <script>
 import {getDateTime} from '../../../../utils'
 import {applyCrowdFundingAJAX} from '../../../../utils/api/activityCenter'
-import {mapState} from 'vuex'
+import {
+  mapState,
+  mapMutations
+} from 'vuex'
 export default {
   // name: '',
   // mixins: [],
@@ -122,6 +125,9 @@ export default {
   },
   // destroyed () {},
   methods: {
+    ...mapMutations([
+      'UPDATE_PAY_PASSWORD_DIALOG_M'
+    ]),
     /**
      * 输入限制： 整数 最大 7位，小数 最大8位
      */
@@ -180,6 +186,8 @@ export default {
         payPassword: this.$globalPayPassword_S_X
       }
       const data = await applyCrowdFundingAJAX(params)
+      this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
+
       if (!data) return false
       // console.log(data)
       this.timer = setTimeout(() => {
