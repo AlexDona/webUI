@@ -96,7 +96,7 @@
           {{$t('M.super_node_authority')}}
         </div>
         <!--下部权益-->
-        <div class="bottom">
+        <div class="bottom" id="equitiesDiv">
           <div class="left">
             <div class="item" v-for="(item, index) in nodeEquitiesLeftData" :key="index">
               <div class="left-content text-align-r">
@@ -105,8 +105,8 @@
                   {{$t(`${item.text}`)}}
                 </p>
               </div>
-              <div class="right-content">
-                <img :src="item.src">
+              <div class="right-content" v-show="animateStatusStart">
+                <img :src="item.src" :class="`left${index + 1}`">
               </div>
             </div>
            <!-- <div class="first item">
@@ -143,7 +143,7 @@
               </div>
             </div>-->
           </div>
-          <div class="middle">
+          <div class="middle" :class="{'middleStyle':middleStatus}">
             <div class="equities-animate-top">
               <img src="../assets/supernode/equities_animate_top.png">
             </div>
@@ -156,8 +156,8 @@
           </div>
           <div class="right">
             <div class="item" v-for="(item, index) in nodeEquitiesRightData" :key="index">
-              <div class="left-content">
-                <img :src="item.src">
+              <div class="left-content" v-show="animateStatusStart">
+                <img :src="item.src" :class="`right${index + 1}`">
               </div>
               <div class="right-content text-align-l">
                 <h4 class="title font-size14 font-weight700">{{$t(`${item.title}`)}}</h4>
@@ -287,6 +287,10 @@ export default {
   // props,
   data () {
     return {
+      // 权益中间动画盒子类样式状态：刚开始加上此样式是为了撑开盒子
+      middleStatus: true,
+      // 权益6个标签动画开始状态：当页面完全滚动出当前内容时触发
+      animateStatusStart: false,
       // 计划四项数据
       planData: [
         {
@@ -385,24 +389,34 @@ export default {
     }
   },
   created () {},
-  mounted () {},
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+  },
   activated () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    handleScroll () {
+      let equitiesDiv = document.getElementById('equitiesDiv')
+      let equitiesDivHeight = equitiesDiv.clientHeight || equitiesDiv.offsetHeight
+      // console.log(equitiesDivHeight)
+      let clients = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+      let divTop = equitiesDiv.getBoundingClientRect().top
+      if (clients - divTop - equitiesDivHeight > 0) {
+        // console.log('权益div刚好全部出现在窗口中')
+        this.animateStatusStart = true
+        this.middleStatus = false
+      }
+    }
+  },
   filter: {},
   computed: {
     ...mapState({
       // 公司名称fubt fbt、fuc、邮箱等信息
-      configInfo: state => state.common.footerInfo.configInfo,
-      language: state => state.common.language // 当前选中语言
+      configInfo: state => state.common.footerInfo.configInfo
     })
   },
-  watch: {
-    language (newValue) {
-      console.log(newValue)
-    }
-  }
+  watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -517,6 +531,126 @@ export default {
 
     100% {
       opacity: 1;
+    }
+  }
+
+  @keyframes leftAnimate1 {
+    0% {
+      transform: translateX(150px) translateY(100px);
+    }
+
+    100% {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @-webkit-keyframes leftAnimate1 {
+    0% {
+      transform: translateX(150px) translateY(100px);
+    }
+
+    100% {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @keyframes leftAnimate2 {
+    0% {
+      transform: translateX(150px) translateY(20px);
+    }
+
+    100% {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @-webkit-keyframes leftAnimate2 {
+    0% {
+      transform: translateX(150px) translateY(20px);
+    }
+
+    100% {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @keyframes leftAnimate3 {
+    0% {
+      transform: translateX(150px) translateY(-20px);
+    }
+
+    100% {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @-webkit-keyframes leftAnimate3 {
+    0% {
+      transform: translateX(150px) translateY(-20px);
+    }
+
+    100% {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @keyframes rightAnimate1 {
+    0% {
+      transform: translateX(-150px) translateY(100px);
+    }
+
+    100% {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @-webkit-keyframes rightAnimate1 {
+    0% {
+      transform: translateX(-150px) translateY(100px);
+    }
+
+    100% {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @keyframes rightAnimate2 {
+    0% {
+      transform: translateX(-150px) translateY(20px);
+    }
+
+    100% {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @-webkit-keyframes rightAnimate2 {
+    0% {
+      transform: translateX(-150px) translateY(20px);
+    }
+
+    100% {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @keyframes rightAnimate3 {
+    0% {
+      transform: translateX(-150px) translateY(-20px);
+    }
+
+    100% {
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @-webkit-keyframes rightAnimate3 {
+    0% {
+      transform: translateX(-150px) translateY(-20px);
+    }
+
+    100% {
+      transform: translateX(0) translateY(0);
     }
   }
 
@@ -672,7 +806,28 @@ export default {
                   line-height: 24px;
                 }
               }
+
+              > .right-content {
+                > .left1 {
+                  -webkit-animation: leftAnimate1 .5s 1 linear;
+                  animation: leftAnimate1 .5s 1 linear;
+                }
+
+                > .left2 {
+                  -webkit-animation: leftAnimate2 .5s 1 linear;
+                  animation: leftAnimate2 .5s 1 linear;
+                }
+
+                > .left3 {
+                  -webkit-animation: leftAnimate3 .5s 1 linear;
+                  animation: leftAnimate3 .5s 1 linear;
+                }
+              }
             }
+          }
+
+          .middleStyle {
+            margin: 0 132px;
           }
 
           > .middle {
@@ -714,6 +869,23 @@ export default {
             > .item {
               display: flex;
               margin-bottom: 40px;
+
+              > .left-content {
+                > .right1 {
+                  -webkit-animation: rightAnimate1 .5s 1 linear;
+                  animation: rightAnimate1 .5s 1 linear;
+                }
+
+                > .right2 {
+                  -webkit-animation: rightAnimate2 .5s 1 linear;
+                  animation: rightAnimate2 .5s 1 linear;
+                }
+
+                > .right3 {
+                  -webkit-animation: rightAnimate3 .5s 1 linear;
+                  animation: rightAnimate3 .5s 1 linear;
+                }
+              }
 
               > .right-content {
                 > .title {
