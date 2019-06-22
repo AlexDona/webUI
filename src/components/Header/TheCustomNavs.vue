@@ -134,8 +134,13 @@ export default {
         logoSrc: state => state.common.logoSrc
       }
     )
+  },
+  watch: {
+    $route () {
+      // 重置导航
+      this.activeNavIndex = -1
+    }
   }
-  // watch: {}
 }
 </script>
 

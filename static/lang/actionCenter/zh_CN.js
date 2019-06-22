@@ -45,7 +45,7 @@ export const actionCenter = {
   'crowd_funding_minimum_deadline': '截止时间',
   'crowd_funding_interest_time': '计息时间',
   'crowd_funding_expire_date': '到期时间',
-  'crowd_funding_expire_current_State': '当前状态',
+  'crowd_funding_limit_time': '存币期限',
 
   'crowd_funding_expire_purplus1': '余额',
   'crowd_funding_description_title': '项目介绍',

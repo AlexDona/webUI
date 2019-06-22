@@ -432,8 +432,6 @@ export default{
       // val是改变之后的路由，oldVal是改变之前的val
       handler: function (val, oldVal) {
         this.setNewTitle(val.path)
-        // 重置导航
-        this.activeNavIndex = -1
       },
       // 深度观察监听
       deep: true

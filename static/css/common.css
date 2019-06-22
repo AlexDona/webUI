@@ -29,7 +29,7 @@
 .el-pagination.is-background .btn-next,
 .el-pagination.is-background .btn-prev,
 .el-pagination.is-background .el-pager li {
-  min-width: 0;
+  min-width: 26px;
 }
 
 .day .el-pagination.is-background .btn-next,
