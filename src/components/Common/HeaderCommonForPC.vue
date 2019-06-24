@@ -305,19 +305,6 @@ export default{
         setTimeout(this.setNewTitle, 1000)
       }
     },
-    // 切换当前激活导航
-    changeActiveNavIndex (index) {
-      this.activeNavIndex = index
-      console.log(this.activeMoreNavIndex)
-    },
-    // 切换当前更多激活导航
-    changeMoreActiveNavIndex (index) {
-      this.activeMoreNavIndex = index
-    },
-    // 切换子导航显示
-    toggleMoreNavs (status) {
-      this.isShowSubNav = status
-    },
     // 检测链接类型是否为内部类型（内部链接、外部链接）
     checkIsInnerLink (link) {
       // 外部 https://www.fubt.co www.fubt.co
@@ -355,10 +342,8 @@ export default{
 
           if (otcEnable === 'disable') {
             if (link === OTCPublishAD) {
-              this.$message({
-                message: this.$t(`M.${'otc_disable_account_tips'}`), // 该账号已被禁止交易OTC，请咨询客服
-                type: 'error'
-              })
+              // 该账号已被禁止交易OTC，请咨询客服
+              this.$error_tips_X(this.$t(`M.${'otc_disable_account_tips'}`))
               return false
             }
           } else {
@@ -432,8 +417,6 @@ export default{
       // val是改变之后的路由，oldVal是改变之前的val
       handler: function (val, oldVal) {
         this.setNewTitle(val.path)
-        // 重置导航
-        this.activeNavIndex = -1
       },
       // 深度观察监听
       deep: true

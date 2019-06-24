@@ -176,6 +176,7 @@ export default {
       const {buyCount} = this.form
       this.predict = this.$cutOutPointLength((this.interestRate / 100 * buyCount) / this.ONE_YEAR * dayTime, 8)
       console.log(this.predict)
+      return dayTime
     },
     applyCrowdFunding: _.debounce(async function () {
       const params = {
@@ -291,6 +292,7 @@ export default {
           border none
           height 50px
           font-size 12px
+          color #fff
         .el-input-group__append,.el-button--default
           border-radius 0 2px 2px 0
           border none
@@ -321,6 +323,7 @@ export default {
           .el-input__inner
             background-color #fff
             border 1px solid S_main_color
+            color S_night_font_color
           .el-input-group__append,.el-button--default
             border none
           .el-input-group__append

@@ -45,7 +45,7 @@ export const actionCenter = {
   'crowd_funding_minimum_deadline': '締切時間',
   'crowd_funding_interest_time': '利息計算時間',
   'crowd_funding_expire_date': '締切時間',
-  'crowd_funding_expire_current_State': '現在の状態',
+  'crowd_funding_limit_time': '',
 
   'crowd_funding_expire_purplus1': 'バランス',
   'crowd_funding_description_title': 'プロジェクト紹介',

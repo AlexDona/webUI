@@ -692,11 +692,11 @@ export default {
             overflow: hidden;
 
             &.max-height {
-              max-height: 626px;
+              max-height: 726px;
             }
 
             &.force-height {
-              height: 626px !important;
+              height: 726px !important;
             }
           }
         }

@@ -45,7 +45,7 @@ export const actionCenter = {
   'crowd_funding_minimum_deadline': 'Deadline',
   'crowd_funding_interest_time': 'Interest time',
   'crowd_funding_expire_date': 'Expire date',
-  'crowd_funding_expire_current_State': 'State',
+  'crowd_funding_limit_time': '',
 
   'crowd_funding_expire_purplus1': 'balance',
   'crowd_funding_description_title': 'Project Introduction',

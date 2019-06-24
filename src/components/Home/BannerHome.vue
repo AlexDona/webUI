@@ -1,15 +1,9 @@
-<template>
-  <div
-    class="banner-box home"
-  >
-    <div
-      class="img"
-      :style="{
-        background: `url(${bannerBackgroundImage}) center center/cover no-repeat`
-      }"
-    ></div>
-    <SliderHome class="slider-content"/>
-  </div>
+<template lang="pug">
+  .banner-box.home
+    .img(
+      :style="{background: `url(${bannerBackgroundImage}) center center/cover no-repeat`}"
+    )
+    SliderHome.slider-content
 </template>
 <script>
 import SliderHome from './SliderHome'
@@ -48,7 +42,7 @@ export default {
     position: relative;
     width: 100%;
     overflow: hidden;
-    background: linear-gradient(#1d3863, #251f3d);
+    background: linear-gradient(#1d3863, #171c33);
     background-size: 100% 100%;
     transition: all 1s;
 

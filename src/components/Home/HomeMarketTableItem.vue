@@ -24,7 +24,7 @@
       class="right"
       :style="{
         'height': isSearchAreaOrCollectionArea ? `${+(50*((isGetMore ? (item.content.length + 1) : item.content.length) || 1) + 108)}px` : '',
-        'max-height':'594px'
+        'max-height':'701px'
       }"
     >
       <el-table
@@ -34,7 +34,7 @@
         }"
         :data="isCollectionArea || searchKeyWord ? item.content: item.content.filter(item => item.visible)"
         @row-click="changeActiveSymbol"
-        :height="isGetMore ? 548: 595"
+        :height="isGetMore ? 651: 701"
       >
         <!--交易对:label="$t('M.comm_deal') + $t('M.comm_pair')"-->
         <el-table-column
@@ -176,7 +176,7 @@
         <el-table-column
           prop="vol24hour"
           :label="'24H' + $t('M.home_market_volume')"
-          width="160"
+          width="170"
           align="right"
           header-align="right"
           sortable
@@ -186,6 +186,7 @@
               v-show="String($formatCount(s.row.vol24hour))!='NaN'"
               style="
                 height:30px;
+                padding-right: 10px;
                 margin:10px auto;
                 line-height: 30px; ">
               {{$formatCount(s.row.vol24hour)}}
@@ -197,7 +198,7 @@
           prop="chg"
           :label="$t('M.trade_ups_and_downs')"
           sortable
-          width="138"
+          width="148"
           align="right"
           header-align="center"
         >
@@ -205,7 +206,7 @@
             <div
               style="
                 height:30px;
-                padding-right: 40px;
+                padding-right: 50px;
                 margin:10px auto;
                 line-height: 30px;
                 white-space:nowrap; "
@@ -437,7 +438,7 @@ export default {
     position: relative;
     width: 210px;
     max-width: 210px;
-    max-height: 608px;
+    max-height: 714px;
     text-align: center;
 
     &::before {

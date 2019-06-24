@@ -86,7 +86,7 @@ export default {
         interestEndTime: 'M.crowd_funding_expire_date',
         interestRate: 'M.crowd_funding_interest_rate',
         // 当前状态
-        status: 'M.crowd_funding_expire_current_State',
+        status: 'M.crowd_funding_limit_time',
         joinUserCount: 'M.crowd_funding_number_of_participants',
         usable: 'M.comm_usable',
         balance: 'M.crowd_funding_expire_purplus1',
