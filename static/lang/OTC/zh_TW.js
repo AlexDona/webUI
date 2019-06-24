@@ -128,6 +128,7 @@ export const OTC = {
   // 'otc_entrust_cancellationing': '撤單中',
   'otc_overtime': '買家超時未付款，系統自動取消。',
   'otc_freeze': '買家已付款，賣家有異議申請凍結訂單。',
+  'otc_freeze_info2': '買家已付款，買家有異議申請凍結訂單。',
   // 'otc_order0': '訂單生成後',
   // 'otc_order1': '30',
   // 'otc_order2': '分鐘內對方未確認付款,',

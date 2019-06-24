@@ -90,9 +90,19 @@
               <!--付款信息-->
               {{$t('M.otc_index_js2')}}
             </p>
-            <p class="text-info">
-              <!--买家已付款，卖家有异议申请冻结订单-->
+            <!--买家已付款，卖家有异议申请冻结订单-->
+            <p
+              class="text-info"
+              v-show="item.appealer==='SELL'"
+            >
               {{$t('M.otc_freeze')}}
+            </p>
+            <!--买家已付款，买家有异议申请冻结订单-->
+            <p
+              class="text-info"
+              v-show="item.appealer==='BUY'"
+            >
+              {{$t('M.otc_freeze_info2')}}
             </p>
           </div>
           <div class="info-middle">
