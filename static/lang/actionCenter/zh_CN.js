@@ -23,7 +23,7 @@ export const actionCenter = {
   'crowd_funding_buy_now': '立即申购',
   'crowd_funding_title1': '锁仓分红',
   'crowd_funding_title2': '更安全 更稳定   更灵活',
-  'crowd_funding_start_end_time': '起止时间',
+  'crowd_funding_start_end_time': '活动时间',
   'crowd_funding_interest_rate': '年化收益率',
   'crowd_funding_total': '总额度',
   'crowd_funding_locked': '已锁',
@@ -34,7 +34,7 @@ export const actionCenter = {
   'crowd_funding_deposit_cycle': '锁仓周期（天）',
   'crowd_funding_deposit_quantity': '锁仓数量',
   'crowd_funding_yield_to_maturity': '到期收益',
-  'crowd_funding_interest_time_unlock_time': '计息时间/解锁时间',
+  'crowd_funding_interest_time_unlock_time': '分红时间/解锁时间',
   'crowd_funding_state': '状态',
 
   'crowd_funding_surplus': '剩余额度',
@@ -45,7 +45,7 @@ export const actionCenter = {
   'crowd_funding_minimum_deadline': '截止时间',
   'crowd_funding_interest_time': '分红时间',
   'crowd_funding_expire_date': '到期时间',
-  'crowd_funding_limit_time': '分红期限',
+  'crowd_funding_limit_time': '锁仓期限',
 
   'crowd_funding_expire_purplus1': '余额',
   'crowd_funding_description_title': '项目介绍',
@@ -56,5 +56,7 @@ export const actionCenter = {
   'crowd_funding_error3': '余额不足',
   'crowd_funding_error4': '最低持仓不足',
   'crowd_funding_error5': '请输入申购数量',
-  'crowd_funding_expected_return': '预计收益'
+  'crowd_funding_expected_return': '预计收益',
+  'crowd_funding_have_been_voted': '已投',
+  'crowd_funding_remained': '剩余'
 }
