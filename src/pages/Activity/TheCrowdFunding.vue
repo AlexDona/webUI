@@ -22,10 +22,10 @@
             @click="toggleTab(tab.value)"
             )
               span {{$t(tab.name)}}
-          //  存币记录列表
+          //  锁仓记录列表
           .right
-            // 存币记录
-            router-link(:to="`/${$routes_X.crowdFundingRecord}`") {{$t('M.crowd_funding_deposit_record')}}
+            // 锁仓记录
+            router-link(:to="`/${$routes_X.crowdFundingRecord}`") {{$t('M.crowd_funding_lock_up_record')}}
         .content
           li.crowd-funding-item(
             v-for="crowdFunding in crowdFundings"
@@ -181,7 +181,6 @@ export default {
             border-radius 6px
             transition all .1s ease
             &:hover
-              transform scale(1.02)
               margin-top -10px
           >.no-data
             width 100%

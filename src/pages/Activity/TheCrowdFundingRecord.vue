@@ -1,7 +1,7 @@
 <!--
   author: yuxia
   createTime: 20190605
-  description: 当前页面为 众筹 存币记录 页面
+  description: 当前页面为 众筹 锁仓记录 页面
 -->
 <template lang="pug">
   .crowd-funding-record(
@@ -13,9 +13,9 @@
           h3 {{$t(title1)}}
           p {{$t(title2)}}
       .container
-        // 存币记录
+        // 锁仓记录
         .header
-          .left {{$t('M.crowd_funding_deposit_record')}}
+          .left {{$t('M.crowd_funding_lock_up_record')}}
           .right
             TheCrowdFundingGoBack
         .content
@@ -116,7 +116,7 @@ export default {
         // 状态
         'M.crowd_funding_state'
       ],
-      // 存币记录
+      // 锁仓记录
       dataList: [],
       // 当前页面
       currentPage: 1,

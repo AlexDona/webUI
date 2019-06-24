@@ -16,7 +16,7 @@ export const actionCenter = {
   'actionCenter_Token_step8': '上线交易区',
   'actionCenter_coin_apply': '上幣申請',
 
-  'crowd_funding_deposit_record': '存幣記錄',
+  'crowd_funding_lock_up_record': '存幣記錄',
   'crowd_funding_coming_soon': '未開始',
   'crowd_funding_processing': '進行中',
   'crowd_funding_over': '已結束',
@@ -34,18 +34,18 @@ export const actionCenter = {
   'crowd_funding_deposit_cycle': '存幣週期（天）',
   'crowd_funding_deposit_quantity': '存幣數量',
   'crowd_funding_yield_to_maturity': '到期收益',
-  'crowd_funding_interest_time_unlock_time': '計息時間/解鎖時間',
+  // 'crowd_funding_interest_time_unlock_time': '計息時間/解鎖時間',
   'crowd_funding_state': '狀態',
 
   'crowd_funding_surplus': '剩餘額度',
   'crowd_funding_single_limit': '單人限額',
-  'crowd_funding_purchase_quantity': '起購量',
+  // 'crowd_funding_purchase_quantity': '起購量',
   'crowd_funding_return_method': '返息方式',
   'crowd_funding_minimum_position': '最低持倉',
   'crowd_funding_minimum_deadline': '截止時間',
-  'crowd_funding_interest_time': '計息時間',
+  // 'crowd_funding_interest_time': '計息時間',
   'crowd_funding_expire_date': '到期時間',
-  'crowd_funding_expire_current_State': '當前狀態',
+  // 'crowd_funding_limit_time': '',
 
   'crowd_funding_expire_purplus1': '餘額',
   'crowd_funding_description_title': '項目介紹',
@@ -56,14 +56,5 @@ export const actionCenter = {
   'crowd_funding_error3': '餘額不足',
   'crowd_funding_error4': '最低持倉不足',
   'crowd_funding_error5': '請輸入申購數量',
-  'crowd_funding_expected_return': '預計收益',
-
-  'crowd_funding_faq_1': 'Q：存幣寶是什麼',
-  'crowd_funding_faq_answer_1': 'A：存幣寶是基於數字資產的理財，您買入存幣寶專案，在存幣期結束後可以獲得本息收益',
-  'crowd_funding_faq_2': 'Q：存幣期未結束可以提前解約麼',
-  'crowd_funding_faq_answer_2': 'A：存幣寶不支持提前解約，必須等存幣期結束後才會自動解約',
-  'crowd_funding_faq_3': 'Q：我將如何獲得收益',
-  'crowd_funding_faq_answer_3': 'A：存幣期結束後的一個工作日內，您的本金和利息將全部返回您的資產帳戶，可以在餘額中查看',
-  'crowd_funding_faq_4': 'Q：存幣期是否有收益',
-  'crowd_funding_faq_answer_4': 'A：存幣期間，收益將不會每日發放，必須等存幣期結束後，一次性發放收益'
+  'crowd_funding_expected_return': '預計收益'
 }

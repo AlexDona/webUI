@@ -16,7 +16,7 @@ export const actionCenter = {
   'actionCenter_Token_step8': '거래소 온라인',
   'actionCenter_coin_apply': '거래소 온라인',
 
-  'crowd_funding_deposit_record': '재고 기록',
+  'crowd_funding_lock_up_record': '재고 기록',
   'crowd_funding_coming_soon': '시작',
   'crowd_funding_processing': '진행 중',
   'crowd_funding_over': '종료',
@@ -34,18 +34,18 @@ export const actionCenter = {
   'crowd_funding_deposit_cycle': '예금 주기 (천)',
   'crowd_funding_deposit_quantity': '예금 수량',
   'crowd_funding_yield_to_maturity': '만기 수익',
-  'crowd_funding_interest_time_unlock_time': '잠금 시간 / 해체 시간',
+  // 'crowd_funding_interest_time_unlock_time': '잠금 시간 / 해체 시간',
   'crowd_funding_state': '상태',
 
   'crowd_funding_surplus': '잉여 한도',
   'crowd_funding_single_limit': '1인 한도액',
-  'crowd_funding_purchase_quantity': '구입량',
+  // 'crowd_funding_purchase_quantity': '구입량',
   'crowd_funding_return_method': '이자를 되돌리는 방식',
   'crowd_funding_minimum_position': '최저 창고 소지',
   'crowd_funding_minimum_deadline': '마감 시간',
-  'crowd_funding_interest_time': '이자 시간',
+  // 'crowd_funding_interest_time': '이자 시간',
   'crowd_funding_expire_date': '만기 시간',
-  'crowd_funding_expire_current_State': '현재 상태',
+  // 'crowd_funding_limit_time': '',
 
   'crowd_funding_expire_purplus1': '잔액',
   'crowd_funding_description_title': '프로젝트 소개',
@@ -56,14 +56,6 @@ export const actionCenter = {
   'crowd_funding_error3': '잔액이 부족하다',
   'crowd_funding_error4': '최저 창고 소지 부족',
   'crowd_funding_error5': '구매 수량을 입력하십시오',
-  'crowd_funding_expected_return': '예상 수익',
+  'crowd_funding_expected_return': '예상 수익'
 
-  'crowd_funding_faq_1': 'Q ：저금보물이 뭐예요',
-  'crowd_funding_faq_answer_1': 'A ：저금보는 디지털 자산에 기반한 재테크입니다. 당신은 저금기간이 끝나면 이자를 얻을 수 있습니다',
-  'crowd_funding_faq_2': 'Q: 예금 기간이 끝나지 않았는데 조기 해약 가능한가요',
-  'crowd_funding_faq_answer_2': 'A ：저금보는 조기 해약을 지지하지 않고 저금기간이 끝나야 자동으로 해약할 수 있다',
-  'crowd_funding_faq_3': 'Q: 내가 어떻게 수익을 얻을 것인가',
-  'crowd_funding_faq_answer_3': 'A ：예금 기간이 끝난 후 일 내에 당신의 원금과 이자는 모두 당신의 자산계좌로 되돌아갈 수 있습니다',
-  'crowd_funding_faq_4': 'Q: 예금 기간에 수익이 있습니까',
-  'crowd_funding_faq_answer_4': 'A ：예금 기간 동안 수익은 매일 발급되지 않을 것이며, 예금 기간이 끝나면 일회용 수익을 지급해야 한다'
 }
