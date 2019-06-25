@@ -26,51 +26,51 @@
             el-table-column(
               :label="$t(tableHeader[0])"
               prop="time"
-              width="150"
+              width="145"
             )
               template(slot-scope="s")
                 p {{s.row.time | timerFormat1_F_X('date')}} {{s.row.time | timerFormat1_F_X('time')}}
             el-table-column(
             :label="$t(tableHeader[1])"
             prop="name"
-            width="200"
+            width="236"
             )
-            el-table-column(
-            :label="$t(tableHeader[2])"
-            prop="incomeType"
-            width="135"
-            )
+            <!--el-table-column(-->
+            <!--:label="$t(tableHeader[2])"-->
+            <!--prop="incomeType"-->
+            <!--width="135"-->
+            <!--)-->
             el-table-column(
             :label="$t(tableHeader[3])"
             prop="interestRate"
-            width="135"
+            width="190"
             )
             el-table-column(
               :label="$t(tableHeader[4])"
               prop="interestPeriod"
-              width="135"
+              width="200"
             )
-            el-table-column(
-              :label="$t(tableHeader[5])"
-              width="135"
-            )
-              template(slot-scope = "s")
-                span {{s.row.amount}}{{s.row.ieoCoinName}}
+            <!--el-table-column(-->
+              <!--:label="$t(tableHeader[5])"-->
+              <!--width="135"-->
+            <!--)-->
+              <!--template(slot-scope = "s")-->
+                <!--span {{s.row.amount}}{{s.row.ieoCoinName}}-->
             el-table-column(
             :label="$t(tableHeader[6])"
-            width="135"
+            width="206"
             )
               template(slot-scope = "s")
                 span {{s.row.interestExpected}}{{s.row.ieoCoinName}}
             el-table-column(
               :label="$t(tableHeader[7])"
               prop="timeSpace"
-              width="160"
+              width="200"
             )
             el-table-column(
               :label="$t(tableHeader[8])"
               prop="status"
-              width="80"
+              width="82"
               align="right"
               header-align="right"
             )
@@ -242,7 +242,7 @@ export default {
                 font-weight 400
         > .content
           box-sizing border-box
-          padding 0 15px
+          padding 0 20px
           min-height 1050px
     &.night
       /deep/

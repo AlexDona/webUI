@@ -134,9 +134,12 @@ export default {
             font-size 44px
             color #fff
             line-height 80px
+            text-align center
           >p
             font-size 30px
             color #fff
+            background url('../../assets/images/crowd-banner-bg.png') no-repeat center center/100% 100%
+            padding 0 40px
       > .container
         width S_main_content_width
         margin -107px auto 0

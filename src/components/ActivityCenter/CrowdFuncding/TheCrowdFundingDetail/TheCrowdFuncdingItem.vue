@@ -12,7 +12,7 @@
     .header
       .h-top
         span.logo(
-          :style="{background: `#1c1f32 url(${logo}) no-repeat center center/50px`}"
+          :style="{background: `#1c1f32 url(${logo}) no-repeat center center`}"
         )
         span.title {{projectName}}
       .h-bottom

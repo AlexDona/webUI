@@ -32,10 +32,6 @@
           .detail
             span.label {{$t(label.buyDownLimit)}}
             span.value {{buyDownLimit |$moneyFilter_F_X}} {{ieoCoinName}}
-          // 返息方式
-          .detail
-            span.label {{$t(label.interestReturnWay)}}
-            span.value {{interestReturnWay}}
           // 最低持仓
           .detail
             span.label {{$t(label.holdCoinAmount)}}
@@ -51,17 +47,17 @@
           .end-time
             span {{applyEndTime | timerFormat1_F_X('date')}}
             span {{applyEndTime | timerFormat1_F_X('time')}}
-            span.time {{$t(label.applyEndTime)}}
+            span.time ({{$t(label.applyEndTime)}})
           //  计息时间
           .start-interest-time.text-align-c
             span {{interestStartTime | timerFormat1_F_X('date')}}
             span {{interestStartTime | timerFormat1_F_X('time')}}
-            span.time {{$t(label.interestStartTime)}}
+            span.time ({{$t(label.interestStartTime)}})
           //  到期时间
           .over-time.text-align-r
             span {{interestEndTime | timerFormat1_F_X('date')}}
             span {{interestEndTime | timerFormat1_F_X('time')}}
-            span.time {{$t(label.interestEndTime)}}
+            span.time ({{$t(label.interestEndTime)}})
 </template>
 <script>
 import mixins from '../../../../mixins/crowdFunding'
@@ -155,6 +151,7 @@ export default {
           >.detail
             display flex
             justify-content space-between
+            line-height 30px
       >.time-line
         display flex
         justify-content space-between

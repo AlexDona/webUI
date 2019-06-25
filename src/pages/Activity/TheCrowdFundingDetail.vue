@@ -79,7 +79,7 @@ export default {
         holdCoinAmount: 'M.crowd_funding_minimum_position',
         // 截止时间
         applyEndTime: 'M.crowd_funding_minimum_deadline',
-        // 计息时间
+        // 开始分红时间
         interestStartTime: 'M.crowd_funding_interest_time',
         // 到期时间
         interestEndTime: 'M.crowd_funding_expire_date',
