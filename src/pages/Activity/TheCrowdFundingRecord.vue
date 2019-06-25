@@ -50,18 +50,18 @@
               prop="interestPeriod"
               width="200"
             )
-            <!--el-table-column(-->
-              <!--:label="$t(tableHeader[5])"-->
-              <!--width="135"-->
-            <!--)-->
-              <!--template(slot-scope = "s")-->
-                <!--span {{s.row.amount}}{{s.row.ieoCoinName}}-->
             el-table-column(
-            :label="$t(tableHeader[6])"
-            width="206"
+              :label="$t(tableHeader[5])"
+              width="206"
             )
               template(slot-scope = "s")
-                span {{s.row.interestExpected}}{{s.row.ieoCoinName}}
+                span {{s.row.amount}}{{s.row.ieoCoinName}}
+            <!--el-table-column(-->
+            <!--:label="$t(tableHeader[6])"-->
+            <!--width="206"-->
+            <!--)-->
+              <!--template(slot-scope = "s")-->
+                <!--span {{s.row.interestExpected}}{{s.row.ieoCoinName}}-->
             el-table-column(
               :label="$t(tableHeader[7])"
               prop="timeSpace"
