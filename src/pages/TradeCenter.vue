@@ -119,7 +119,7 @@ export default {
 
   .trade-box {
     width: 100%;
-    margin-top: 50px;
+    margin-top: 60px;
 
     > .inner-box {
       display: flex;
