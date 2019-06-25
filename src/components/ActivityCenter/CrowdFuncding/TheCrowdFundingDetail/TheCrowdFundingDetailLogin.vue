@@ -344,6 +344,8 @@ export default {
         .el-dialog
           background-color #28334a
           height 166px
+          border-radius 4px
+          margin-top 21vh
           .el-dialog__header
             height 36px
             line-height 36px
@@ -354,14 +356,18 @@ export default {
               color #fff
             .el-dialog__headerbtn
               top 10px
+              right 10px
           .el-dialog__body
             padding 30px 20px 10px
           p
             color #cfd5df
             text-align center
+            line-height 27px
             .iconfont
               color S_main_color
               margin-right 5px
+              font-size 24px
+              vertical-align top
           .submit-button
             min-width 80px
             height 30px
