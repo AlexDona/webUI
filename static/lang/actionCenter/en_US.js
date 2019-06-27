@@ -18,7 +18,7 @@ export const actionCenter = {
 
   'crowd_funding_lock_up_record': 'Lock record',
   'crowd_funding_coming_soon': 'Coming soon',
-  'crowd_funding_processing': 'Join now',
+  'crowd_funding_processing': 'Processing',
   'crowd_funding_processing1': 'Lock application ',
   'crowd_funding_over': 'Over',
   'crowd_funding_title1': 'Locked bin dividend',

@@ -18,7 +18,7 @@ export const actionCenter = {
 
   'crowd_funding_lock_up_record': '锁仓记录',
   'crowd_funding_coming_soon': '未开始',
-  'crowd_funding_processing': '立即参加',
+  'crowd_funding_processing': '进行中',
   'crowd_funding_processing1': '申请锁仓',
   'crowd_funding_over': '已结束',
   'crowd_funding_title1': '锁仓分红',

@@ -18,7 +18,7 @@ export const actionCenter = {
 
   'crowd_funding_lock_up_record': '鎖倉記錄',
   'crowd_funding_coming_soon': '未開始',
-  'crowd_funding_processing': '立即參加',
+  'crowd_funding_processing': '進行中',
   'crowd_funding_processing1': '申請鎖倉',
   'crowd_funding_over': '已結束',
   'crowd_funding_title1': '鎖倉分紅 ',

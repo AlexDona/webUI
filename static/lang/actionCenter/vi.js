@@ -18,7 +18,7 @@ export const actionCenter = {
 
   'crowd_funding_lock_up_record': 'Khóa ghi chép',
   'crowd_funding_coming_soon': 'Chưa bắt đầu',
-  'crowd_funding_processing': 'Tham gia ngay',
+  'crowd_funding_processing': 'Đang tiến hành',
   'crowd_funding_processing1': 'Yêu cầu khoá',
   'crowd_funding_over': 'Đã kết thúc',
   'crowd_funding_title1': 'Khóa hoa hồng',

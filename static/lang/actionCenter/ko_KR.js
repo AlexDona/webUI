@@ -18,7 +18,7 @@ export const actionCenter = {
 
   'crowd_funding_lock_up_record': '기록을 잠그다',
   'crowd_funding_coming_soon': '시작',
-  'crowd_funding_processing': '즉시 참가하다',
+  'crowd_funding_processing': '진행 중',
   'crowd_funding_processing1': '자물쇠를 신청하다',
   'crowd_funding_over': '종료',
   'crowd_funding_title1': '창고를 채우다',

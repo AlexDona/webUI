@@ -17,9 +17,9 @@
           // tabs
           .left
             li.tab(
-            v-for="tab in tabs"
-            :class="{active:activeName == tab.value}"
-            @click="toggleTab(tab.value)"
+              v-for="tab in tabs"
+              :class="{active:activeName == tab.value}"
+              @click="toggleTab(tab.value)"
             )
               span {{$t(tab.name)}}
           //  锁仓记录列表
@@ -28,9 +28,12 @@
             router-link(:to="`/${$routes_X.crowdFundingRecord}`") {{$t('M.crowd_funding_lock_up_record')}}
         .content
           li.crowd-funding-item(
-            v-for="crowdFunding in crowdFundings"
+            v-for="(crowdFunding,index) in crowdFundings"
+            :class="{active: activeId == index}"
+            @mouseenter="toggleActive(index)"
+            @mouseleave="toggleActive"
           )
-            TheCrowdFundingItem(
+            TheCrowdFundingItem.item(
               :crowdFunding ="crowdFunding"
             )
           // 暂无数据
@@ -73,7 +76,8 @@ export default {
       activeName: '',
       crowdFundings: [],
       title1: 'M.crowd_funding_title1',
-      title2: 'M.crowd_funding_title2'
+      title2: 'M.crowd_funding_title2',
+      activeId: -1
     }
   },
   async created () {
@@ -102,7 +106,10 @@ export default {
       // console.log(data)
       this.crowdFundings = _.get(data, 'data')
       // this.crowdFundings = []
-    }, 500)
+    }, 500),
+    toggleActive: _.throttle(function (index = -1) {
+      this.activeId = index
+    })
   },
   // filter: {},
   computed: {
@@ -183,8 +190,11 @@ export default {
             margin 0 15px 50px 15px
             border-radius 6px
             transition all .1s ease
-            &:hover
-              margin-top -10px
+            transition-delay 0.1s
+            >.item
+              height 100%
+            &.active
+              margin-top -4px
           >.no-data
             width 100%
             background url('../../assets/images/no-data-bg.png') no-repeat center 40%

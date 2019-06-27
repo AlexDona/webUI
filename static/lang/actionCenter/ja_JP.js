@@ -18,7 +18,7 @@ export const actionCenter = {
 
   'crowd_funding_lock_up_record': 'ロック記録',
   'crowd_funding_coming_soon': '未開始',
-  'crowd_funding_processing': 'すぐ参加',
+  'crowd_funding_processing': '進行中',
   'crowd_funding_processing1': 'ロックを申請',
   'crowd_funding_over': '終了した',
   'crowd_funding_title1': '倉庫をかぎ分ける',
