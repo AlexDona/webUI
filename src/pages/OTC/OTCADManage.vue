@@ -16,7 +16,7 @@
         <div class="manage-main-top">
           <!-- 交易类型 -->
           <div class="one-filter-condition">
-            <span class="filtrate-text font-size14">
+            <span class="filtrate-text font-size12">
               {{$t('M.otc_type_ransaction')}}
             </span>
             <span class="style-input">
@@ -39,7 +39,7 @@
           </div>
           <!-- 交易币种 -->
           <div class="two-filter-condition">
-            <span class="filtrate-text font-size14">
+            <span class="filtrate-text font-size12">
               {{$t('M.otc_AD_trade_token')}}
             </span>
             <span class="market-input">
@@ -62,7 +62,7 @@
           </div>
           <!-- 交易法币 -->
           <div class="three-filter-condition">
-            <span class="filtrate-text font-size14">
+            <span class="filtrate-text font-size12">
               {{$t('M.otc_AD_trade_currency')}}
             </span>
             <span class="market-input">
@@ -85,7 +85,7 @@
           </div>
           <!-- 状态 -->
           <div class="four-filter-condition">
-            <span class="filtrate-text font-size14">
+            <span class="filtrate-text font-size12">
               {{$t('M.comm_state')}}
             </span>
             <span class="status-input">
@@ -137,7 +137,7 @@
               class="font-size22"
               iconName="icon-xiajia5"
             />
-            <span>
+            <span class="font-size12">
               {{$t('M.otc_adMange_advertingAD')}}
             </span>
           </span>
@@ -629,6 +629,7 @@ export default {
     .el-input__inner {
       height: 34px;
       border: 0;
+      font-size: 12px;
     }
 
     .el-input__icon {
@@ -640,6 +641,7 @@ export default {
       .el-button {
         padding: 10px 16px;
         border: 0;
+        font-size: 12px;
       }
     }
 
@@ -650,6 +652,7 @@ export default {
 
       .el-table {
         padding-bottom: 15px;
+        font-size: 12px;
 
         tr {
           height: 40px;
@@ -716,7 +719,7 @@ export default {
           .four-filter-condition,
           .five-filter-condition {
             > .filtrate-text {
-              color: #fff;
+              color: $mainDayBgColor;
             }
           }
         }
@@ -729,11 +732,11 @@ export default {
 
         > .manage-main-bottom {
           .red {
-            color: #d45858;
+            color: $upColor;
           }
 
           .green {
-            color: #008069;
+            color: $otcGreen;
           }
         }
       }
@@ -741,11 +744,11 @@ export default {
 
     /deep/ {
       .el-input--suffix .el-input__inner {
-        color: #fff;
+        color: $mainDayBgColor;
       }
 
       .el-input__inner {
-        background-color: #1c1f32;
+        background-color: $mainContentNightBgColor;
       }
 
       .inquire-button {
@@ -757,30 +760,30 @@ export default {
       .manage-main-bottom {
         .el-table {
           color: #9da5b3;
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
 
           thead {
-            color: #a9bed4;
+            color: $mainNightTitleColor;
           }
 
           tr {
-            background-color: #1c1f32;
+            background-color: $mainContentNightBgColor;
           }
 
           th {
-            background-color: #1c1f32;
+            background-color: $mainContentNightBgColor;
             box-shadow: 4px 4px 6px #191e28;
 
             &.is-leaf {
-              border-top: 1px solid #1c1f32;
+              border-top: 1px solid $mainContentNightBgColor;
               border-bottom: 1px solid #1c1f32;
 
               &:first-of-type {
-                border-left: 1px solid #1c1f32;
+                border-left: 1px solid $mainContentNightBgColor;
               }
 
               &:nth-last-of-type(2) {
-                border-right: 1px solid #1c1f32;
+                border-right: 1px solid $mainContentNightBgColor;
               }
             }
           }
@@ -789,17 +792,21 @@ export default {
             tr {
               &:last-of-type {
                 td {
-                  border-bottom: 1px solid #1c1f32;
+                  border-bottom: 1px solid $mainContentNightBgColor;
                 }
               }
 
               td {
                 &:first-of-type {
-                  border-left: 1px solid #1c1f32;
+                  border-left: 1px solid $mainContentNightBgColor;
                 }
 
                 &:last-of-type {
-                  border-right: 1px solid #1c1f32;
+                  border-right: 1px solid $mainContentNightBgColor;
+
+                  .el-button--text {
+                    color: $mainColor;
+                  }
                 }
               }
             }
@@ -822,7 +829,7 @@ export default {
   }
 
   &.day {
-    background-color: $mainDayBgColor;
+    background-color: $mainBgColorOfDay;
 
     > .otc-AD-manage-content {
       > .AD-title {
@@ -838,7 +845,7 @@ export default {
           .four-filter-condition,
           .five-filter-condition {
             > .filtrate-text {
-              color: #9da5b3;
+              color: $fontColorSecondaryOfDay;
             }
           }
         }
@@ -851,11 +858,11 @@ export default {
 
         > .manage-main-bottom {
           .red {
-            color: #d45858;
+            color: $upColor;
           }
 
           .green {
-            color: #008069;
+            color: $otcGreen;
           }
         }
       }
@@ -863,13 +870,13 @@ export default {
 
     /deep/ {
       .el-input--suffix .el-input__inner {
-        color: #7d90ac;
+        color: $dayMainTitleColor;
       }
 
       .el-input__inner {
-        border: 1px solid rgba(236, 241, 248, 1);
-        color: #7d90ac;
-        background: #fff;
+        border: 1px solid $borderColorOfDay;
+        color: $dayMainTitleColor;
+        background: $mainDayBgColor;
       }
 
       .inquire-button {
@@ -882,7 +889,7 @@ export default {
         > .AD-manage-main {
           > .manage-main-top {
             > .filtrate-text[data-v-0c55db16] {
-              color: #7d90ac;
+              color: $fontColorSecondaryOfDay;
             }
           }
         }
@@ -890,18 +897,19 @@ export default {
 
       .manage-main-bottom {
         .el-table {
-          border: 1px solid rgba(236, 241, 248, 1);
           border-radius: 5px;
-          background-color: #fff;
+          color: $dayMainTitleColor;
+          background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           thead {
-            color: #333;
+            color: $fontColorSecondaryOfDay;
           }
 
           th {
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
-            background-color: #fff;
+            background-color: $mainDayBgColor;
             box-shadow: inset 0 2px 4px #f3f3f3;
 
             &.is-leaf {
@@ -921,6 +929,16 @@ export default {
               }
             }
           }
+
+          .el-table__body {
+            tr {
+              td {
+                .el-button.el-button--text {
+                  color: $mainColor;
+                }
+              }
+            }
+          }
         }
       }
 
@@ -929,7 +947,7 @@ export default {
           tr {
             &:hover {
               > td {
-                background-color: #fff;
+                background-color: $mainDayBgColor;
               }
             }
           }

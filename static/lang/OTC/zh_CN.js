@@ -1,6 +1,6 @@
 export const OTC = {
-  'otc_AD_trade_currency': '交易法币',
-  'otc_AD_trade_token': '交易币种',
+  'otc_AD_trade_currency': '法币',
+  'otc_AD_trade_token': '币种',
   'otc_AD_token': '币种',
   'otc_Merchants_Orders_market': '币种',
   'otc_index_buy': '购买',
@@ -314,7 +314,7 @@ export const OTC = {
   'otc_index_pubTipsOne': '2、您可以在设置中设置您的收款方式；',
   'otc_index_pubTipsTwo': '3、交易中请注意判断和防范有欺诈风险的付款方式；',
   'otc_index_pubTipsThree': '4、请避免线下私自交易，',
-  'otc_index_pubTipsFour': '无法为您预防风险',
+  'otc_index_pubTipsFour': '无法为您预防风险。',
   'otc_index_inputBuyPrice': '请输入买入单价',
   'otc_index_inputSellPrice': '请输入卖出单价',
   'otc_index_inputSellAccount': '卖出数量不能为0',
