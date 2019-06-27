@@ -6,18 +6,20 @@
 <template lang="pug">
   .the-crowd-funding-rich-text(
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+    v-if="content"
   )
     h3.title {{title}}
     .split
-    .content(
+    .content.ql-editor(
       v-html="content"
       v-if="isRichTxt"
     )
-    .content(
+    .content.ql-editor(
       v-else
     ) {{content}}
 </template>
 <script>
+import '../../../../../static/css/rich-text/quill.snow.min.css'
 export default {
   name: 'the-crowd-funding-rich-text',
   // mixins: [],

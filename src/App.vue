@@ -88,7 +88,7 @@ export default {
       if (from.path === '/PersonalCenter') {
         this.$setStore('active-target', 'assets')
       }
-      this.isNeedNotice = path === '/home' || path === '/' ? 1 : 0
+      this.isNeedNotice = path === `/${this.$routes_X.home}` || path === '/' ? 1 : 0
       this.isNeedHeader = (
         path !== `/${this.$routes_X.login}` &&
         !path.startsWith('/register') &&
