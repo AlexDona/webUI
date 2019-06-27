@@ -115,6 +115,12 @@ export const common = {
   'comm_user_invite': '초대',
   'comm_user_generalize': '프로모션',
   'comm_user_invite_generalize': '프로모션 초대',
+
+  'comm_user_invite_info': '정보 보급',
+  'comm_user_inviter': '초청인',
+  'comm_user_invite_tip1': '주: 초청자 작성 후 수정할 수 없습니다!',
+  'comm_user_invite_tip2': '초대자 UID 를 입력하십시오',
+
   'comm_user_api_management': 'API관리',
   'comm_all': '전부',
   'comm_alipay': 'Alipay',

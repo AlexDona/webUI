@@ -115,6 +115,12 @@ export const common = {
   'comm_user_invite': 'Mời',
   'comm_user_generalize': 'Mở rộng',
   'comm_user_invite_generalize': 'Mời mở rộng',
+
+  'comm_user_invite_info': 'Thông tin quảng cáo',
+  'comm_user_inviter': 'Người giới thiệu',
+  'comm_user_invite_tip1': 'Chú thích: người giới thiệu không được chỉnh sửa!',
+  'comm_user_invite_tip2': 'Nhập UID người giới thiệu',
+
   'comm_user_api_management': 'Quản lí API',
   'comm_all': 'Toàn bộ',
   'comm_alipay': 'Chỉ trả bằng ali pay',

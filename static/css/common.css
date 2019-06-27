@@ -21,7 +21,7 @@
 .night .el-pagination.is-background .btn-next,
 .night .el-pagination.is-background .btn-prev,
 .night .el-pagination.is-background .el-pager li {
-  min-width: 26px;
+  min-width: 20px;
   color: #fff;
   box-shadow: 0 1px 1px 0 rgba(19, 24, 30, 1);
 }
@@ -29,7 +29,7 @@
 .el-pagination.is-background .btn-next,
 .el-pagination.is-background .btn-prev,
 .el-pagination.is-background .el-pager li {
-  min-width: 26px;
+  min-width: 20px;
 }
 
 .day .el-pagination.is-background .btn-next,
@@ -40,18 +40,13 @@
 }
 
 .el-pagination button {
-  /* width:20px;
-  height:20px; */
-  width: 26px;
   min-width: 0;
-  height: 25px;
-
-  /* background-color: pink; */
+  height: 20px;
 }
 
 .el-pager li {
-  height: 25px;
-  line-height: 26px;
+  height: 20px;
+  line-height: 20px;
 }
 
 .night .el-pagination button {
@@ -160,6 +155,7 @@
 .el-select-dropdown__wrap.el-scrollbar__wrap {
   margin-right: 0 !important;
   margin-bottom: 0 !important;
+  overflow: auto;
 }
 
 .el-scrollbar {

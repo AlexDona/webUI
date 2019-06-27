@@ -14,7 +14,7 @@
         {{ $t('M.user_identity') }}
       </span>
     </header>
-    <div class="identity-authentication-main margin-top9">
+    <div class="identity-authentication-main ">
       <!--实名认证-->
       <div class="real-name-authentication identity-background">
         <!--(1.姓名、2.身份证号、3.状态)-->
@@ -66,7 +66,7 @@
       </div>
       <div
         v-if="realNameAuth === 'n'"
-        class="name-authentication-content margin-top9"
+        class="name-authentication-content "
       >
         <el-form
           ref="form"
@@ -187,7 +187,7 @@
       </div>
     </div>
     <!--高级认证-->
-    <div class="advanced-certification-main identity-background margin-top9 margin-bottom10"
+    <div class="advanced-certification-main identity-background  margin-bottom10"
     >
       <div
         class="advanced-main-header"
@@ -1027,7 +1027,6 @@ export default {
 
       .advanced-main-header {
         width: 100%;
-        height: 56px;
 
         .main-header-title {
           line-height: 56px;
@@ -1061,7 +1060,6 @@ export default {
 
       .advanced-main-header {
         width: 100%;
-        height: 56px;
 
         .icon-down {
           padding-right: 10px;
@@ -1295,6 +1293,8 @@ export default {
 
       /* 实名认证表单样式 */
       .identity-authentication-main {
+        margin-bottom: 10px;
+
         .name-authentication-content {
           .el-form-item__content {
             margin-left: 140px !important;
@@ -1308,6 +1308,7 @@ export default {
       background-color: $mainNightBgColor;
 
       .identity-header-background {
+        margin-bottom: 10px;
         background-color: $mainContentNightBgColor;
 
         .header-content {
@@ -1497,12 +1498,12 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .identity-header-background {
-        border: 1px solid rgba(38, 47, 56, .1);
+        margin-bottom: 10px;
         border-radius: 2px;
         background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
 
         .header-content {
           color: #338ff5;
@@ -1510,8 +1511,8 @@ export default {
       }
 
       .identity-authentication-main {
-        border: 1px solid rgba(38, 47, 56, .1);
         background-color: #fff;
+        box-shadow: 0 0 6px #cfd5df;
 
         .name-authentication-content {
           .false-tips {
@@ -1552,13 +1553,11 @@ export default {
         color: #333;
       }
 
-      .identity-background {
-        background-color: #fff;
-      }
-
       > .advanced-certification-main {
         .identity-box {
-          border: 1px solid rgba(38, 47, 56, .1);
+          margin-top: 10px;
+          background-color: #fff;
+          box-shadow: 0 0 6px #cfd5df;
 
           > .wait-veritfy-back {
             > .wait-veritfy {
@@ -1590,7 +1589,8 @@ export default {
         }
 
         .header-border {
-          border: 1px solid rgba(38, 47, 56, .1);
+          background-color: #fff;
+          box-shadow: 0 0 6px #cfd5df;
         }
 
         .authentication-type {

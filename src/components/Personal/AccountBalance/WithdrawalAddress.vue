@@ -195,7 +195,7 @@
         </div>
       </div>
     </div>
-    <div class="withdrawal-address-main content-main margin-top9">
+    <div class="withdrawal-address-main content-main">
       <header class="address-list-header background-color border-radius2">
         <span class="header-content display-inline-block font-size16 cursor-pointer">
           <!--地址列表-->
@@ -578,7 +578,7 @@ export default {
   .withdrawal-address {
     > .withdrawal-address-main {
       min-height: 400px;
-      border-radius: 5px 5px 0 0;
+      margin-top: 10px;
 
       > .withdrawal-header {
         margin-bottom: 2px;
@@ -810,15 +810,14 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       > .withdrawal-address-main {
-        border: 1px solid rgba(236, 241, 248, 1);
         color: $dayMainTitleColor;
         background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
 
         > .withdrawal-header {
-          border: 1px solid rgba(236, 241, 248, 1);
+          border-bottom: 1px solid rgba(236, 241, 248, 1);
           background: rgba(255, 255, 255, 1);
 
           > .header-content {

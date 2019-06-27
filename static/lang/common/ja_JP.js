@@ -115,6 +115,12 @@ export const common = {
   'comm_user_invite': 'インビテーション',
   'comm_user_generalize': 'プロモーション',
   'comm_user_invite_generalize': 'インビテーション',
+
+  'comm_user_invite_info': '広め情報',
+  'comm_user_inviter': '招待者',
+  'comm_user_invite_tip1': '注：招待者が記入したら、修正できません。',
+  'comm_user_invite_tip2': '招待者UIDを入力してください',
+
   'comm_user_api_management': 'API管理',
   'comm_all': 'すべて',
   'comm_alipay': 'Alipay',

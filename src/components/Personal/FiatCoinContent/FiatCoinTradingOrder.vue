@@ -2168,8 +2168,8 @@ export default {
         }
 
         > .no-data {
-          border: 1px solid rgba(38, 47, 56, .1);
           background-color: #fff;
+          box-shadow: 0 0 6px #cfd5df;
         }
       }
 

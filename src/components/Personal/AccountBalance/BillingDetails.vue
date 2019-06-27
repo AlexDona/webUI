@@ -842,11 +842,10 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       > .billing-details-main {
-        border: 1px solid #ecf1f8;
         background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
 
         .billing-details-query {
           border-bottom: 1px solid rgba(57, 66, 77, .1);
@@ -863,10 +862,9 @@ export default {
       }
 
       > .billing-details-header {
-        border: 1px solid rgb(236, 241, 248);
         border-radius: 2px;
-        background: rgb(255, 255, 255);
-        box-shadow: 1px 0 3px rgb(236, 236, 236);
+        background: #fff;
+        box-shadow: 0 0 6px #cfd5df;
       }
 
       /deep/ {

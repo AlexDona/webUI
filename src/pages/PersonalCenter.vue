@@ -242,7 +242,8 @@ import IdentityAuthentication from '../components/Personal/UserAssets/IdentityAu
 // 收款账户
 import AccountCredited from '../components/Personal/UserAssets/AccountCredited'
 // 邀请推广
-import InvitingPromotion from '../components/Personal/UserAssets/InvitingPromotion'
+// import InvitingPromotion from '../components/Personal/UserAssets/InvitingPromotion'
+import InvitingPromotion from '../components/NewPersonalCenter/Invitation/TheInvitation'
 // 安全中心
 import SecurityCenter from '../components/Personal/UserAssets/SecurityCenter'
 // API管理
@@ -619,7 +620,7 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
+      background-color: #f5f5fa;
 
       .asset-info {
         background: #fff;
@@ -679,7 +680,8 @@ export default {
 
         .el-tabs__header {
           &.is-left {
-            border: 1px solid rgba(38, 47, 56, .1);
+            background-color: #fff;
+            box-shadow: 0 0 6px #cfd5df;
           }
         }
 

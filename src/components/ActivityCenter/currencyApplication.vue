@@ -279,6 +279,7 @@ export default {
         > .bottom {
           > .content {
             background-color: rgba(255, 255, 255, .3);
+            box-shadow: 0 0 6px #cfd5df;
 
             > .title {
               color: $mainColor;

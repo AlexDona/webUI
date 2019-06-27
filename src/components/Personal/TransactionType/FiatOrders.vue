@@ -4,12 +4,12 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="personal-height background-color line-height40 personal-height40 font-size16">
-      <span class="padding-left15 fiat-color font-weight600">
+      <span class="padding-left15 fiat-color font-weight400">
         <!--法币订单-->
         {{ $t('M.comm_coin') }}{{ $t('M.comm_order') }}
       </span>
     </header>
-    <div class="fiat-main min-height500 margin-top9">
+    <div class="fiat-main margin-top9">
       <el-tabs
         v-model="activeName"
         :tab-position = "tabPosition"
@@ -488,6 +488,7 @@ export default {
       .orders-main-top {
         height: 125px;
         padding: 0 25px;
+        margin: 10px 0;
 
         .trade-type {
           width: 250px;
@@ -574,6 +575,10 @@ export default {
         margin-left: 77px;
         border: 0;
       }
+
+      .el-tabs__header {
+        margin: 0;
+      }
     }
 
     &.night {
@@ -624,10 +629,10 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       > header {
-        border: 1px solid #ecf1f8;
+        background-color: #fff;
+        box-shadow: 0 0 6px #cfd5df;
 
         > span {
           color: #338ff5;
@@ -635,7 +640,15 @@ export default {
       }
 
       > div {
-        border: 1px solid #ecf1f8;
+        background-color: #fff;
+        box-shadow: 0 0 6px #cfd5df;
+      }
+
+      .fiat-main {
+        .orders-main-top {
+          background-color: #fff;
+          box-shadow: 0 0 6px #cfd5df;
+        }
       }
 
       /deep/ {

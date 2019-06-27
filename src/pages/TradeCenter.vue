@@ -337,7 +337,7 @@ export default {
 
     &.day {
       > .inner-box {
-        background-color: $dayInnerBoxBg;
+        background-color: $newDayBg;
 
         > .middle {
           /deep/ {

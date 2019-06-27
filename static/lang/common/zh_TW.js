@@ -115,6 +115,12 @@ export const common = {
   'comm_user_invite': '邀請',
   'comm_user_generalize': '推廣',
   'comm_user_invite_generalize': '邀請推廣',
+
+  'comm_user_invite_info': '推廣資訊',
+  'comm_user_inviter': '邀請人',
+  'comm_user_invite_tip1': '注：邀請人填寫後無法修改！',
+  'comm_user_invite_tip2': '請輸入邀請人UID',
+
   'comm_user_api_management': 'API管理',
   'comm_all': '全部',
   'comm_alipay': '支付寶',

@@ -2281,7 +2281,6 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .warning-text {
         color: #333;
@@ -2299,9 +2298,9 @@ export default {
       }
 
       .account-assets-box {
-        border: 1px solid rgba(38, 47, 56, .1);
         color: $dayMainTitleColor;
         background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
 
         .account-assets-header {
           > .header-left {

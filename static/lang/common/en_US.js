@@ -112,6 +112,12 @@ export const common = {
   'comm_user_invite': 'Invitation',
   'comm_user_generalize': 'Promote',
   'comm_user_invite_generalize': 'Invitation Promote',
+
+  'comm_user_invite_info': 'Promotion information',
+  'comm_user_inviter': 'Inviter',
+  'comm_user_invite_tip1': 'Note: Cannot be modified after the inviter fills in!',
+  'comm_user_invite_tip2': 'Please enter the inviter UID',
+
   'comm_user_api_management': 'API Management',
   'comm_all': 'All',
   'comm_alipay': 'Alipay',
