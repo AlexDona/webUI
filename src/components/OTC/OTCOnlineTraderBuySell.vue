@@ -2,7 +2,7 @@
   <div
     class="otc-online-trader-buy-sell-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{height: windowHeight+'px'}"
+    :style="{height: windowHeight - 293 - 120 + 'px'}"
   >
     <!-- otc在线交易 摘单 页面 -->
     <div class="online-trader-buy-sell-content">
@@ -20,7 +20,7 @@
                     v-if="this.userType === 'MERCHANT'"
                   >
                   <!-- 商户名称 -->
-                  <span class="name">
+                  <span class="name font-weight700">
                     {{userName}}
                   </span>
                 </div>
@@ -840,6 +840,7 @@ export default {
       loginStep1Info: state => state.user.loginStep1Info
     }),
     windowHeight () {
+      console.log(window.innerHeight)
       return window.innerHeight
     }
   },
@@ -856,8 +857,8 @@ export default {
 
 .otc-online-trader-buy-sell-box {
   > .online-trader-buy-sell-content {
-    width: 1150px;
-    margin: 150px auto 70px;
+    width: 1300px;
+    margin: 120px auto 70px;
 
     > .online-trader {
       display: flex;
@@ -868,7 +869,7 @@ export default {
 
         > .shopper-info {
           box-sizing: border-box;
-          width: 320px;
+          width: 340px;
           height: 180px;
           padding: 40px 35px 0;
           border-radius: 5px;
@@ -916,7 +917,7 @@ export default {
 
         > .shopper-remark {
           box-sizing: border-box;
-          width: 320px;
+          width: 340px;
           min-height: 130px;
           padding: 30px 49px 5px 39px;
           margin-top: 20px;
@@ -1054,7 +1055,7 @@ export default {
 
             > .tip {
               font-size: 14px;
-              line-height: 20px;
+              line-height: 24px;
             }
           }
         }
@@ -1162,72 +1163,72 @@ export default {
 
             > .shopper-name {
               > .name {
-                color: #fff;
+                color: $mainDayBgColor;
               }
             }
 
             > .shopper-statistics {
               .blue {
-                color: #3e79d6;
+                color: $mainColor;
               }
 
               .text {
-                color: #a9bed4;
+                color: $mainNightTitleColor;
               }
             }
           }
 
           > .shopper-remark {
-            background-color: #1c1f32;
+            background-color: $mainContentNightBgColor;
 
             > .remark-title {
-              color: #fff;
+              color: $mainDayBgColor;
             }
 
             > .remark-content {
-              color: #a9bed4;
+              color: $mainNightTitleColor;
             }
           }
         }
 
         > .online-trader-right {
           > .trader-details {
-            background-color: #1c1f32;
+            background-color: $mainContentNightBgColor;
 
             > .details-row {
               > .details-tip {
-                color: #a9bed4;
+                color: $mainNightTitleColor;
               }
 
               > .details-data {
-                color: #fff;
+                color: $mainDayBgColor;
               }
             }
 
             > .form {
               .want {
                 > .want-text {
-                  color: #3e79d6;
+                  color: $mainColor;
                 }
 
                 > .charge-money {
-                  color: #a9bed4;
+                  color: $mainNightTitleColor;
                 }
               }
 
               .sell-buy-input {
                 .red {
-                  border: 1px solid #d45858;
+                  border: 1px solid $upColor;
                   border-right: 0;
                 }
 
                 .coinNameBorder {
-                  border: 1px solid #d45858;
+                  border: 1px solid $upColor;
                   border-left: 0;
                 }
 
                 > .sell-sum {
-                  color: #a9bed4;
+                  color: $mainNightTitleColor;
                   background-color: #2d3651;
                 }
 
@@ -1239,50 +1240,50 @@ export default {
 
               .errorInfo {
                 > .number {
-                  color: #d45858;
+                  color: $upColor;
                 }
 
                 > .money {
-                  color: #d45858;
+                  color: $upColor;
                 }
               }
 
               .trader-submit {
                 > .trader-submit-button {
-                  color: #fff;
+                  color: $mainDayBgColor;
                 }
 
                 > .trader-submit-sell {
-                  background-color: #008069;
+                  background-color: $otcGreen;
                 }
 
                 > .trader-submit-buy {
-                  background-color: #d45858;
+                  background-color: $upColor;
                 }
               }
             }
 
             > .service-charge {
-              color: #a9bed4;
+              color: $mainNightTitleColor;
 
               .service-data {
-                color: #bb4c4c;
+                color: $upColor;
               }
 
               .rate-data {
-                color: #bb4c4c;
+                color: $upColor;
               }
             }
 
             > .service-charge-sell {
-              color: #a9bed4;
+              color: $mainNightTitleColor;
 
               .service-data-sell {
-                color: #008069;
+                color: $otcGreen;
               }
 
               .rate-data-sell {
-                color: #008069;
+                color: $otcGreen;
               }
             }
           }
@@ -1290,14 +1291,14 @@ export default {
           > .trading-notes {
             > .notes {
               > .title {
-                color: #bb4c4c;
+                color: $upColor;
               }
 
               > .tip {
                 color: #7d90ac;
 
                 > .warning {
-                  color: #bb4c4c;
+                  color: $upColor;
                 }
               }
             }
@@ -1307,7 +1308,7 @@ export default {
         > .password-dialog {
           .error-info {
             > .tips {
-              color: #d45858;
+              color: $upColor;
             }
           }
         }
@@ -1324,20 +1325,20 @@ export default {
           }
 
           .el-dialog__title {
-            color: #fff;
+            color: $mainDayBgColor;
           }
 
           .el-dialog__body {
-            color: #fff;
+            color: $mainDayBgColor;
 
             .password-input {
-              color: #fff;
+              color: $mainDayBgColor;
               background-color: #1a2233;
             }
           }
 
           .error-info {
-            color: #fff;
+            color: $mainDayBgColor;
           }
         }
       }
@@ -1345,131 +1346,140 @@ export default {
   }
 
   &.day {
-    background-color: $mainDayBgColor;
+    background-color: $mainBgColorOfDay;
 
     > .online-trader-buy-sell-content {
       > .online-trader {
         > .online-trader-left {
           > .shopper-info {
+            background-color: $mainDayBgColor;
+            box-shadow: 0 0 6px $boxShadowColorOfDay;
+
             > .shopper-name {
               > .name {
-                color: #333;
+                color: $dayMainTitleColor;
               }
             }
 
             > .shopper-statistics {
               .blue {
-                color: #3e79d6;
+                color: $mainColor;
               }
 
               .text {
-                color: #333;
+                color: $dayMainTitleColor;
               }
             }
           }
 
           > .shopper-remark {
+            background-color: $mainDayBgColor;
+            box-shadow: 0 0 6px $boxShadowColorOfDay;
+
             > .remark-title {
-              color: #333;
+              color: $dayMainTitleColor;
             }
 
             > .remark-content {
-              color: #7d90ac;
+              color: $dayMainTitleColor;
             }
           }
         }
 
         > .online-trader-right {
           > .trader-details {
+            background-color: $mainDayBgColor;
+            box-shadow: 0 0 6px $boxShadowColorOfDay;
+
             > .details-row {
               > .details-tip {
-                color: #7d90ac;
+                color: $fontColorSecondaryOfDay;
               }
 
               > .details-data {
-                color: #333;
+                color: $dayMainTitleColor;
               }
             }
 
             > .form {
               .want {
                 > .want-text {
-                  color: #3e79d6;
+                  color: $mainColor;
                 }
 
                 > .charge-money {
-                  color: #7d90ac;
+                  color: $fontColorSecondaryOfDay;
                 }
               }
 
               .sell-buy-input {
                 .red {
-                  border: 1px solid #d45858;
+                  border: 1px solid $upColor;
                 }
 
                 .coinNameBorder {
-                  border: 1px solid #d45858;
+                  border: 1px solid $upColor;
                 }
 
                 > .sell-sum {
-                  border: 1px solid rgba(236, 241, 248, 1);
-                  color: #333;
-                  background-color: #fff;
+                  border: 1px solid $borderColorOfDay;
+                  color: $dayMainTitleColor;
+                  background-color: $mainColorOfWhite;
                 }
 
                 > .unit {
-                  border: 1px solid rgba(236, 241, 248, 1);
-                  color: #7ea9e4;
-                  background-color: #cbddf4;
+                  border: 1px solid $coinBgColorOfDay;
+                  color: $mainColor;
+                  background-color: $coinBgColorOfDay;
                 }
               }
 
               .errorInfo {
                 > .number {
-                  color: #d45858;
+                  color: $upColor;
                 }
 
                 > .money {
-                  color: #d45858;
+                  color: $upColor;
                 }
               }
 
               .trader-submit {
                 > .trader-submit-button {
-                  color: #fff;
+                  color: $mainColorOfWhite;
                 }
 
                 > .trader-submit-sell {
-                  background-color: #008069;
+                  background-color: $otcGreen;
                 }
 
                 > .trader-submit-buy {
-                  background-color: #d45858;
+                  background-color: $upColor;
                 }
               }
             }
 
             > .service-charge {
-              color: #333;
+              color: $dayMainTitleColor;
 
               .service-data {
-                color: #bb4c4c;
+                color: $upColor;
               }
 
               .rate-data {
-                color: #bb4c4c;
+                color: $upColor;
               }
             }
 
             > .service-charge-sell {
-              color: #333;
+              color: $dayMainTitleColor;
 
               .service-data-sell {
-                color: #008069;
+                color: $otcGreen;
               }
 
               .rate-data-sell {
-                color: #008069;
+                color: $otcGreen;
               }
             }
           }
@@ -1477,14 +1487,14 @@ export default {
           > .trading-notes {
             > .notes {
               > .title {
-                color: #bb4c4c;
+                color: $upColor;
               }
 
               > .tip {
-                color: #7d90ac;
+                color: $fontColorSecondaryOfDay;
 
                 > .warning {
-                  color: #b43b3b;
+                  color: $upColor;
                 }
               }
             }
@@ -1494,7 +1504,7 @@ export default {
         > .password-dialog {
           .error-info {
             > .tips {
-              color: #d45858;
+              color: $upColor;
             }
           }
         }
@@ -1504,11 +1514,11 @@ export default {
     /deep/ {
       .password-dialog {
         .el-dialog {
-          background: #fff;
+          background: $mainColorOfWhite;
         }
 
         .el-dialog__header {
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
         }
 
         .el-dialog__title {
@@ -1516,7 +1526,7 @@ export default {
         }
 
         .el-dialog__body .password-input {
-          border: 1px solid #ecf1f8;
+          border: 1px solid $borderColorOfDay;
         }
       }
     }

@@ -60,7 +60,7 @@
               <span class="country-style">
                 <IconFontCommon
                   class="country-style-icon"
-                  iconName="icon-guojia2"
+                  iconName="icon-guojiapitchon"
                 />
                 <el-select
                   v-model="checkedCountryId"
@@ -1020,7 +1020,7 @@ export default {
   > .otc-center-content {
     width: 1300px;
     padding-top: 30px;
-    margin: 36px auto 100px;
+    margin: 36px auto 200px;
 
     > .otc-online-trading {
       > .otc-online-buy-and-sell-button {
@@ -1134,14 +1134,6 @@ export default {
             left: 616px;
             display: inline-block;
           }
-
-          > .shade-pay-way {
-            position: absolute;
-            z-index: 2;
-            top: 15px;
-            left: 631px;
-            display: inline-block;
-          }
         }
       }
     }
@@ -1233,8 +1225,9 @@ export default {
       }
 
       .el-button {
-        padding: 9px 10px;
+        padding: 10px 15px;
         border: 0;
+        font-size: 12px;
       }
     }
 
@@ -1355,7 +1348,7 @@ export default {
           > .otc-filtrate-publish {
             > .otc-filtrate-box {
               > .otc-i-wan {
-                color: #fff;
+                color: $mainColorOfWhite;
               }
 
               > .otc-filtrate-style {
@@ -1370,19 +1363,19 @@ export default {
             > .otc-publish-box {
               > .pay-style {
                 > .pay-style-icon {
-                  color: #fff;
+                  color: $mainColorOfWhite;
                 }
               }
 
               > .currency-style {
                 > .currency-style-icon {
-                  color: #fff;
+                  color: $mainColorOfWhite;
                 }
               }
 
               > .country-style {
                 > .country-style-icon {
-                  color: #fff;
+                  color: $mainColorOfWhite;
                 }
               }
             }
@@ -1393,10 +1386,6 @@ export default {
 
             .red {
               color: $upColor;
-            }
-
-            > .shade-pay-way {
-              color: #617499;
             }
           }
 
@@ -1422,19 +1411,19 @@ export default {
 
     /deep/ {
       .el-input--suffix .el-input__inner {
-        color: #fff;
+        color: $mainColorOfWhite;
       }
 
       .otc-online-buy-and-sell-button {
         .el-radio-button__inner {
           color: #d8d8d8;
-          background: #1c1f32;
+          background: $mainContentNightBgColor;
         }
 
         .el-radio-button {
           &.is-active {
             .el-radio-button__inner {
-              color: #fff;
+              color: $mainColorOfWhite;
             }
           }
 
@@ -1449,20 +1438,20 @@ export default {
           &:last-child {
             &.is-active {
               .el-radio-button__inner {
-                background-color: #008069;
+                background-color: $otcGreen;
               }
             }
           }
         }
 
         .el-radio-button__orig-radio:checked + .el-radio-button__inner {
-          box-shadow: -1px 0 0 0 #008069;
+          box-shadow: -1px 0 0 0 $otcGreen;
         }
       }
 
       .otc-publish-box {
         .el-input__inner {
-          border: 1px solid #7d90ac;
+          border: 1px solid $fontColorSecondaryOfDay;
           background-color: #19202e;
         }
 
@@ -1472,19 +1461,19 @@ export default {
       }
 
       .el-table {
-        color: #fff;
+        color: $mainColorOfWhite;
         background-color: #202a33;
 
         tr {
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
         }
 
         thead {
-          color: #a9bed4;
+          color: $mainNightTitleColor;
         }
 
         th {
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
 
           &.is-leaf {
             border-bottom: 1px solid rgba(97, 116, 153, .05);
@@ -1548,12 +1537,12 @@ export default {
       }
 
       .el-button--success {
-        border-color: #008069;
-        background-color: #008069;
+        border-color: $otcGreen;
+        background-color: $otcGreen;
       }
 
       .el-table__empty-block {
-        background-color: #1c1f32;
+        background-color: $mainContentNightBgColor;
       }
 
       .el-table__empty-text {
@@ -1564,7 +1553,7 @@ export default {
         color: #4f85da;
 
         &.is-active {
-          color: #fff;
+          color: $mainColorOfWhite;
           background-color: $mainColor;
         }
       }
@@ -1572,26 +1561,26 @@ export default {
   }
 
   &.day {
-    background-color: $mainDayBgColor;
+    background-color: $mainBgColorOfDay;
 
     > .otc-center-content {
       > .otc-online-trading {
         > .otc-online-buy-and-sell-button {
-          background-color: $mainDayBgColor;
+          background-color: $mainBgColorOfDay;
         }
 
         > .otc-merchant-content {
           background-color: $mainDayBgColor;
-          box-shadow: 0 0 6px rgba(204, 222, 242, 1);
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .otc-filtrate-publish {
             > .otc-filtrate-box {
               > .otc-i-wan {
-                color: #333;
+                color: $dayMainTitleColor;
               }
 
               > .otc-filtrate-style {
-                color: #7d90ac;
+                color: $fontColorSecondaryOfDay;
 
                 .currencyNameActived {
                   color: $mainColor;
@@ -1628,10 +1617,6 @@ export default {
             .red {
               color: $upColor;
             }
-
-            > .shade-pay-way {
-              color: #617499;
-            }
           }
 
           .page {
@@ -1655,21 +1640,21 @@ export default {
 
     /deep/ {
       .el-input--suffix .el-input__inner {
-        color: #7d90ac;
+        color: $dayMainTitleColor;
       }
 
       .otc-online-buy-and-sell-button {
         .el-radio-button__inner {
           border: 1px solid rgba(39, 49, 58, .1);
-          color: #333;
-          background: #fff;
+          color: $dayMainTitleColor;
+          background: $mainColorOfWhite;
         }
 
         .el-radio-button {
           &.is-active {
             .el-radio-button__inner {
               border: 1px solid rgba(39, 49, 58, .1);
-              color: #fff;
+              color: $mainColorOfWhite;
             }
           }
 
@@ -1684,21 +1669,21 @@ export default {
           &:last-child {
             &.is-active {
               .el-radio-button__inner {
-                background-color: #008069;
+                background-color: $otcGreen;
               }
             }
           }
         }
 
         .el-radio-button__orig-radio:checked + .el-radio-button__inner {
-          box-shadow: -1px 0 0 0 #008069;
+          box-shadow: -1px 0 0 0 $otcGreen;
         }
       }
 
       .otc-publish-box {
         .el-input__inner {
-          border: 1px solid #7d90ac;
-          background-color: #fff;
+          border: 1px solid $borderColorOfDay;
+          background-color: $mainColorOfWhite;
         }
 
         .el-button {
@@ -1707,14 +1692,13 @@ export default {
       }
 
       .el-table {
-        color: #333;
-        background-color: #202a33;
+        color: $dayMainTitleColor;
 
         th {
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
 
           &.is-leaf {
-            border-bottom: 1px solid rgba(97, 116, 153, .2);
+            border-bottom: 1px solid $borderColorOfDay;
           }
 
           > .cell {
@@ -1725,11 +1709,11 @@ export default {
         }
 
         tr {
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
         }
 
         thead {
-          color: #7d90ac;
+          color: $fontColorSecondaryOfDay;
         }
 
         td {
@@ -1742,7 +1726,7 @@ export default {
           tr {
             &:hover {
               > td {
-                background-color: #fff;
+                background-color: $mainColorOfWhite;
               }
             }
           }
@@ -1761,23 +1745,23 @@ export default {
       }
 
       .el-button--success {
-        border-color: #008069;
-        background-color: #008069;
+        border-color: $otcGreen;
+        background-color: $otcGreen;
       }
 
       .el-table__empty-block {
-        background-color: #fff;
+        background-color: $mainColorOfWhite;
       }
 
       .el-table__empty-text {
-        color: #333;
+        color: $dayMainTitleColor;
       }
 
       .el-tabs__item {
-        color: #4f85da;
+        color: $mainColor;
 
         &.is-active {
-          color: #fff;
+          color: $mainColorOfWhite;
           background-color: $mainColor;
         }
       }

@@ -122,7 +122,10 @@ body.night {
 }
 
 body.day {
-  background-color: #fff;
+  /* background-color: #fff; */
+
+  /* 白色版大背景色改为了#f5f5fa ren20190625增加 */
+  background-color: #f5f5fa;
 }
 
 select {

@@ -1433,9 +1433,9 @@ export default {
 
     > .order-list {
       box-sizing: border-box;
-      width: 1195px;
+      width: 1189px;
       height: 170px;
-      margin-bottom: 15px;
+      margin: 2px 2px 15px;
       border-radius: 5px;
 
       > .order {
@@ -1464,13 +1464,13 @@ export default {
           }
 
           > .buy-icon {
-            border-top: 18px solid #d45858;
-            border-right: 18px solid #d45858;
+            border-top: 18px solid $upColor;
+            border-right: 18px solid $upColor;
           }
 
           > .sell-icon {
-            border-top: 18px solid #008069;
-            border-right: 18px solid #008069;
+            border-top: 18px solid $otcGreen;
+            border-right: 18px solid $otcGreen;
           }
 
           > .buy-sell-icon {
@@ -1503,7 +1503,7 @@ export default {
               display: inline-block;
 
               > .trade-info {
-                line-height: 20px;
+                line-height: 22px;
               }
             }
           }
@@ -1539,17 +1539,17 @@ export default {
 
                 > .bank-info {
                   margin-left: 0;
-                  line-height: 20px;
+                  line-height: 22px;
                 }
 
                 > .order-cancel-tips {
                   margin-left: 10px;
-                  line-height: 20px;
+                  line-height: 22px;
                 }
 
                 > .bankMoneyInfo {
                   margin-left: 20px;
-                  line-height: 20px;
+                  line-height: 22px;
 
                   .icon {
                     width: 16px;
@@ -1592,7 +1592,7 @@ export default {
               }
 
               > .count-down-time {
-                line-height: 20px;
+                line-height: 22px;
 
                 .timeIcon {
                   margin-right: 10px;
@@ -1660,7 +1660,7 @@ export default {
             }
 
             .star {
-              color: #e8554f;
+              color: $upColor;
             }
           }
         }
@@ -1668,10 +1668,10 @@ export default {
     }
 
     > .no-data {
-      width: 1195px;
+      width: 1189px;
       height: 482px;
+      margin: 2px;
       line-height: 482px;
-      color: rgba(255, 255, 255, .8);
     }
   }
 
@@ -1833,17 +1833,17 @@ export default {
             color: #9da5b3;
 
             > .buy-icon {
-              border-top: 18px solid #d45858;
-              border-right: 18px solid #d45858;
+              border-top: 18px solid $upColor;
+              border-right: 18px solid $upColor;
             }
 
             > .sell-icon {
-              border-top: 18px solid #008069;
-              border-right: 18px solid #008069;
+              border-top: 18px solid $otcGreen;
+              border-right: 18px solid $otcGreen;
             }
 
             > .buy-sell-icon {
-              color: #fff;
+              color: $mainColorOfWhite;
             }
           }
 
@@ -1856,7 +1856,7 @@ export default {
               > .left-info {
                 > .trade-info {
                   > .money {
-                    color: #5e95ec;
+                    color: $mainColor;
                   }
                 }
               }
@@ -1870,7 +1870,7 @@ export default {
                   > .pay-style {
                     > .qiandai-icon {
                       > .icon {
-                        color: #fff;
+                        color: $mainColorOfWhite;
                       }
                     }
                   }
@@ -1884,16 +1884,16 @@ export default {
               > .right-content {
                 > .action-tips {
                   .wait-pay {
-                    color: #e8554f;
+                    color: $upColor;
                   }
                 }
 
                 > .submitted-confirm-payment {
-                  color: #5e95ec;
+                  color: $mainColor;
 
                   > .buy-appeal-order {
                     margin-left: 20px;
-                    color: #409eff;
+                    color: $mainColor;
                     background-color: #cdd9ee;
                   }
                 }
@@ -1904,14 +1904,14 @@ export default {
                   }
 
                   .appeal-order {
-                    color: #409eff;
+                    color: $mainColor;
                     background-color: #cdd9ee;
                   }
                 }
 
                 > .count-down-time {
                   .timeIcon {
-                    color: #e8554f;
+                    color: $upColor;
                   }
                 }
               }
@@ -1957,7 +1957,7 @@ export default {
 
       > .password-dialog {
         .tips {
-          color: #d45858;
+          color: $upColor;
         }
       }
     }
@@ -2032,9 +2032,9 @@ export default {
       .bank-info-picture {
         .el-button {
           padding: 2px 6px;
-          border-color: #409eff;
+          border-color: $mainColor;
           color: #fff;
-          background-color: #409eff;
+          background-color: $mainColor;
 
           &:hover {
             border-color: #66b1ff;
@@ -2059,7 +2059,7 @@ export default {
 
           .el-dialog__title {
             font-size: 14px;
-            color: #fff;
+            color: $mainColorOfWhite;
           }
 
           .el-dialog__headerbtn {
@@ -2070,7 +2070,7 @@ export default {
           .el-dialog__body {
             padding: 15px 20px 10px 30px;
             font-size: 12px;
-            color: #fff;
+            color: $mainColorOfWhite;
 
             .input {
               margin-top: 13px;
@@ -2083,7 +2083,7 @@ export default {
               padding-left: 10px;
               border-radius: 4px;
               font-size: 14px;
-              color: #fff;
+              color: $mainColorOfWhite;
               background-color: #1a2233;
             }
 
@@ -2116,31 +2116,31 @@ export default {
   &.day {
     > .otc-trading-order-content {
       > .order-list {
-        border: 1px solid rgba(72, 87, 118, .1);
-        background-color: #fff;
+        background-color: $mainColorOfWhite;
+        box-shadow: 0 0 6px $boxShadowColorOfDay;
 
         > .order {
           > .order-list-head {
             border-bottom: 1px solid rgba(72, 87, 118, .1);
-            color: #333;
+            color: $dayMainTitleColor;
 
             > .buy-icon {
-              border-top: 18px solid #d45858;
-              border-right: 18px solid #d45858;
+              border-top: 18px solid $upColor;
+              border-right: 18px solid $upColor;
             }
 
             > .sell-icon {
-              border-top: 18px solid #008069;
-              border-right: 18px solid #008069;
+              border-top: 18px solid $otcGreen;
+              border-right: 18px solid $otcGreen;
             }
 
             > .buy-sell-icon {
-              color: #fff;
+              color: $mainDayBgColor;
             }
           }
 
           > .order-list-body {
-            color: #7d90ac;
+            color: $dayMainTitleColor;
 
             > .order-list-body-left {
               border-right: 1px solid rgba(38, 47, 56, .1);
@@ -2148,7 +2148,7 @@ export default {
               > .left-info {
                 > .trade-info {
                   > .money {
-                    color: #5e95ec;
+                    color: $mainColor;
                   }
                 }
               }
@@ -2176,12 +2176,12 @@ export default {
               > .right-content {
                 > .action-tips {
                   .wait-pay {
-                    color: #e8554f;
+                    color: $upColor;
                   }
                 }
 
                 > .submitted-confirm-payment {
-                  color: #5e95ec;
+                  color: $mainColor;
 
                   > .buy-appeal-order {
                     margin-left: 20px;
@@ -2192,7 +2192,7 @@ export default {
 
                 > .action-explain {
                   > .remaining-time {
-                    color: #e8554f;
+                    color: $upColor;
                   }
 
                   .appeal-order {
@@ -2203,7 +2203,7 @@ export default {
 
                 > .count-down-time {
                   .timeIcon {
-                    color: #e8554f;
+                    color: $upColor;
                   }
                 }
               }
@@ -2216,7 +2216,7 @@ export default {
             border: 1px solid rgba(72, 87, 118, .1);
             border-top-right-radius: 5px;
             border-top-left-radius: 5px;
-            color: #333;
+            color: $dayMainTitleColor;
             background-color: #e7e8e9;
           }
 
@@ -2228,16 +2228,16 @@ export default {
                 }
 
                 > .appeal-textarea-text {
-                  color: #7d90ac;
-                  background-color: #fff;
+                  color: $dayMainTitleColor;
+                  background-color: $mainColorOfWhite;
                 }
               }
 
               > .appeal-button {
                 .cancel-appeal {
-                  border: 1px solid rgba(52, 70, 99, 1);
-                  color: #8094bb;
-                  background-color: #fff;
+                  border: 1px solid $borderColorOfDay;
+                  color: $fontColorSecondaryOfDay;
+                  background-color: $mainColorOfWhite;
                 }
               }
             }
@@ -2246,15 +2246,15 @@ export default {
       }
 
       > .no-data {
-        border: 1px solid rgba(72, 87, 118, .1);
-        border-radius: 5px;
-        color: #333;
-        background-color: #fff;
+        border-radius: 4px;
+        color: $dayMainTitleColor;
+        background-color: $mainColorOfWhite;
+        box-shadow: 0 0 6px $boxShadowColorOfDay;
       }
 
       > .password-dialog {
         .tips {
-          color: #d45858;
+          color: $upColor;
         }
       }
     }
@@ -2327,23 +2327,23 @@ export default {
 
       .el-textarea__inner {
         height: 90px;
-        border: 1px solid #7587a5;
+        border: 1px solid $borderColorOfDay;
         resize: none;
         font-size: 12px;
-        color: #7d90ac;
-        background-color: #fff;
+        color: $dayMainTitleColor;
+        background-color: $mainColorOfWhite;
       }
 
       .bank-info-picture {
         .el-button {
           padding: 2px 6px;
-          border-color: #409eff;
-          color: #fff;
-          background-color: #409eff;
+          border-color: $mainColor;
+          color: $mainColorOfWhite;
+          background-color: $mainColor;
 
           &:hover {
             border-color: #66b1ff;
-            color: #fff;
+            color: $mainColorOfWhite;
             background: #66b1ff;
           }
         }
@@ -2354,13 +2354,13 @@ export default {
           width: 350px;
           height: 240px;
           border-radius: 4px;
-          background: #fff;
+          background: $mainColorOfWhite;
         }
 
         .el-dialog__header {
           padding: 10px 20px;
           border-radius: 4px;
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
         }
 
         .el-dialog__title {
@@ -2376,7 +2376,7 @@ export default {
         .el-dialog__body {
           padding: 15px 20px 10px 30px;
           font-size: 12px;
-          color: #fff;
+          color: $mainColorOfWhite;
 
           .input {
             margin-top: 13px;
@@ -2387,7 +2387,7 @@ export default {
             width: 280px;
             height: 36px;
             padding-left: 10px;
-            border: 1px solid #ecf1f8;
+            border: 1px solid $borderColorOfDay;
             border-radius: 4px;
             font-size: 14px;
           }

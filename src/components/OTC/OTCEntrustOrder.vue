@@ -44,7 +44,7 @@
       </div>
       <!-- 表身体 -->
       <div
-        class="entrust-table-body"
+        class="entrust-table-body border-radius4"
       >
         <div
           class="no-data text-align-c"
@@ -238,10 +238,10 @@ export default {
         display: flex;
         justify-content: space-around;
         box-sizing: border-box;
-        width: 1193px;
+        width: 1189px;
         height: 35px;
         padding: 0 20px;
-        margin-bottom: 15px;
+        margin: 2px 2px 15px;
         border-radius: 5px;
         line-height: 35px;
 
@@ -268,10 +268,10 @@ export default {
       }
 
       > .entrust-table-body {
+        width: 1189px;
         height: 432px;
+        margin: 4px 2px;
         border-top: none;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
 
         > .no-data {
           height: 432px;
@@ -284,6 +284,14 @@ export default {
           height: 40px;
           padding: 0 20px;
           line-height: 40px;
+
+          .red {
+            color: $upColor;
+          }
+
+          .green {
+            color: $otcGreen;
+          }
 
           > .first-style,
           .second-coin {
@@ -340,16 +348,6 @@ export default {
           > .no-data {
             color: rgba(255, 255, 255, .8);
           }
-
-          > .entrust-list-content {
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
-          }
         }
       }
     }
@@ -357,28 +355,18 @@ export default {
     &.day {
       .otc-entrust-order-table {
         > .entrust-table-head {
-          border: 1px solid #ecf1f8;
-          color: #8a909e;
-          background-color: #fff;
+          color: $fontColorSecondaryOfDay;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .entrust-table-body {
-          border: 1px solid #ecf1f8;
-          color: #666;
-          background-color: #fff;
+          color: $dayMainTitleColor;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .no-data {
-            color: #333;
-          }
-
-          > .entrust-list-content {
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
+            color: $dayMainTitleColor;
           }
         }
       }
