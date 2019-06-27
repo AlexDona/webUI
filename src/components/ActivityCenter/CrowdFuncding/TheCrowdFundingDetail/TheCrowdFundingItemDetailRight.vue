@@ -13,13 +13,13 @@
         span.value {{interestRate}}%
         span.label {{$t(label.interestRate)}}
       .center.text-align-c
-        // 当前状态
-        span.value {{statusName}}
+        // 存币期限 (天)
+        span.value {{dayTime}} {{$t('M.finance_day')}}
         span.label {{$t(label.status)}}
       .right
         // 参与人数
-        span.value {{joinUserCount}} {{$t('M.user_invite_people')}}
-        span.label {{$t(label.joinUserCount)}}
+        span.value.text-align-r {{joinUserCount}} {{$t('M.user_invite_people')}}
+        span.label.text-align-r {{$t(label.joinUserCount)}}
     .bottom
       // 未登录
       .un-login(v-if="!$isLogin_S_X")
@@ -28,10 +28,12 @@
         TheCrowdFundingItemDetailLogin(
           :detail="detail"
           :label="label"
+          @updatePredict="updatePredict"
         )
 </template>
 <script>
 import TheCrowdFundingItemDetailLogin from './TheCrowdFundingDetailLogin'
+import {getDateTime} from '../../../../utils'
 export default {
   name: 'the-crowd-funding-item-detail-right',
   // mixins: [],
@@ -46,9 +48,12 @@ export default {
       type: Object
     }
   },
-  // data () {
-  //   return {}
-  // }
+  data () {
+    return {
+      // 存币期限（ 天）
+      dayTime: ''
+    }
+  },
   // created () {
   // },
   // mounted () {}
@@ -56,7 +61,18 @@ export default {
   // beforeRouteUpdate () {},
   // beforeDestroy () {},
   // destroyed () {},
-  // methods: {},
+  methods: {
+    updatePredict (e) {
+      console.log(e)
+      this.dayTime = e
+      let time = this.interestEndTime - this.interestStartTime + 1 * 24 * 60 * 60 * 1000
+      const timeObj = getDateTime(time)
+      let {
+        dayTime
+      } = timeObj
+      this.dayTime = dayTime
+    }
+  },
   // filters: {},
   computed: {
     ieoTotal () {
@@ -110,8 +126,12 @@ export default {
     joinUserCount () {
       return _.get(this.detail, 'joinUserCount')
     }
+  },
+  watch: {
+    detail () {
+      this.updatePredict()
+    }
   }
-  // watch: {}
 }
 </script>
 

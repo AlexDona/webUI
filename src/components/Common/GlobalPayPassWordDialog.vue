@@ -93,7 +93,6 @@ export default {
         if (!valid) return false
         this.UPDATE_PAY_PASSWORD_M(this.form.payPassword)
         this.$emit('next')
-        this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
       })
     },
     cancelSubmit () {

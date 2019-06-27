@@ -35,8 +35,9 @@
         :content ="rulesContent"
         )
       .FAQ
-        TheCrowdFundingFAQ(
+        TheCrowdFundingRichText(
         :title="$t(label.FAQTitle)"
+        :content ="FAQContent"
         )
 </template>
 <script>
@@ -45,7 +46,6 @@ import TheCrowdFundingDetailLeft from '../../components/ActivityCenter/CrowdFunc
 import TheCrowdFundingDetailRight from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingItemDetailRight'
 import TheCrowdFundingRichText from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingRichText'
 import TheCrowdFundingGoBack from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingGoBack'
-import TheCrowdFundingFAQ from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingFAQ'
 export default {
   name: 'the-crowd-funding-detail',
   // mixins: [],
@@ -54,8 +54,7 @@ export default {
     TheCrowdFundingDetailRight,
     TheCrowdFundingRichText,
     // Iconfont,
-    TheCrowdFundingGoBack,
-    TheCrowdFundingFAQ
+    TheCrowdFundingGoBack
   },
   props: {
     detailId: {
@@ -80,13 +79,13 @@ export default {
         holdCoinAmount: 'M.crowd_funding_minimum_position',
         // 截止时间
         applyEndTime: 'M.crowd_funding_minimum_deadline',
-        // 计息时间
+        // 开始分红时间
         interestStartTime: 'M.crowd_funding_interest_time',
         // 到期时间
         interestEndTime: 'M.crowd_funding_expire_date',
         interestRate: 'M.crowd_funding_interest_rate',
         // 当前状态
-        status: 'M.crowd_funding_expire_current_State',
+        status: 'M.crowd_funding_limit_time',
         joinUserCount: 'M.crowd_funding_number_of_participants',
         usable: 'M.comm_usable',
         balance: 'M.crowd_funding_expire_purplus1',
@@ -305,14 +304,14 @@ export default {
         box-sizing border-box
         line-height 24px
         >.left
-          flex 2
+          flex 3
         .split
           width 1px
           background url('../../assets/images/crowd-funding-split-bg.png') no-repeat center center
           height 228px
           margin 0 40px
         .right
-          flex 3
+          flex 2
     &.day
       background-color: #f5f5fa
       .inner-box
