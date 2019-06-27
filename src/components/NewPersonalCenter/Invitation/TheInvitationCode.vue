@@ -50,9 +50,10 @@
             span {{ $t('M.comm_copy') }}
       //  邀请人
       .detail-item.last.invitor
-        .left(:title="$t('M.comm_user_invite_tip1')")
+        .left(:title="notInviterTips")
           span {{$t('M.comm_user_inviter')}}
           Iconfont.iconfont(
+            v-if="!hasInviter"
             icon-name="icon-warning"
             )
         .right.text-align-r
@@ -87,7 +88,7 @@
 import mixins from '../../../mixins/user'
 import {domain} from '../../../utils/env'
 import {editInviterAJAX} from '../../../utils/api/user'
-import {mapMutations, mapState} from 'vuex'
+import {mapMutations, mapState, mapActions} from 'vuex'
 import {currencyTransform} from '../../../utils/api/personal'
 export default {
   name: 'the-invitation-code',
@@ -118,15 +119,20 @@ export default {
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
-    ...mapMutations([
+    ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    ...mapMutations([]),
     async editInviter () {
+      if (!this.inviter) return
       const params = {
         inviter: this.inviter
       }
       const data = await editInviterAJAX(params)
-      if (!data) return
+      if (!data) {
+        this.inviter = ''
+        return
+      }
       console.log(data)
       this.REFRESH_USER_INFO_ACTION()
     },
@@ -192,6 +198,9 @@ export default {
     activeSymbol () {
       const {shortName} = this.activeConvertCurrencyObj
       return shortName
+    },
+    notInviterTips () {
+      return this.hasInviter ? '' : this.$t('M.comm_user_invite_tip1')
     }
   },
   watch: {

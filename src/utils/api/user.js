@@ -1,8 +1,7 @@
 import {
   postWithURLencoded,
   get,
-  postWithFormData,
-  post
+  postWithFormData
 } from './axios'
 import {handleRequest} from '../commonFunc'
 // import {handleRequest} from '../commonFunc'
@@ -59,4 +58,4 @@ export const setUserInputPasswordFrequency = params => handleRequest(() => postW
 // 是否需要输入交易密码（交易）
 export const isNeedPayPassowrd = (params) => get('user/isInputPayPasswd', params)
 // 邀请人 回填
-export const editInviterAJAX = (params) => handleRequest(() => post('/user/backInviter', params), 1)
+export const editInviterAJAX = params => handleRequest(() => get('/user/backInviter', params), 1)
