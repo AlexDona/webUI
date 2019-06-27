@@ -13,47 +13,6 @@ h5 {
   margin: 0;
 }
 
-/* 富文本编辑器返回的用户协议样式颜色修改 */
-.night .ql-editor h1,
-.night .ql-editor h2,
-.night .ql-editor h3,
-.night .ql-editor h4,
-.night .ql-editor h5,
-.night .ql-editor span,
-.night .ql-editor div,
-.night .ql-editor strong,
-.night .ql-editor p,
-.night .ql-editor ul li,
-.night .ql-editor p span,
-.night .ql-editor p a,
-.night .ql-editor p strong,
-.night .ql-editor h1 span,
-.night .ql-editor h1 strong,
-.ql-editor h4 span,
-.night .ql-editor h4 strong {
-  color: #8ba0ca !important;
-}
-
-.day .ql-editor h1,
-.day .ql-editor h2,
-.day .ql-editor h3,
-.day .ql-editor h4,
-.day .ql-editor h5,
-.day .ql-editor span,
-.day .ql-editor div,
-.day .ql-editor strong,
-.day .ql-editor p,
-.day .ql-editor ul li,
-.day .ql-editor p span,
-.day .ql-editor p a,
-.day .ql-editor p strong,
-.day .ql-editor h1 span,
-.day .ql-editor h1 strong,
-.ql-editor h4 span,
-.day .ql-editor h4 strong {
-  color: #333 !important;
-}
-
 /* 富文本编辑器返回的折扣说明添加表格 */
 .night .vip-main.personal .discounts-instruction-dialog table {
   border-collapse: collapse;

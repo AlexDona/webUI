@@ -932,10 +932,6 @@ export default {
 
         .el-dialog__body {
           padding: 0 20px 10px;
-
-          .ql-editor {
-            padding-top: 0;
-          }
         }
 
         .el-dialog__title {
