@@ -817,6 +817,7 @@ export default {
     },
     // 4.0修改input value 输入限制
     changeInputValue ({ref, index, pointLengthAccountCount, val, coinId, total}) {
+      console.log(ref, index, pointLengthAccountCount, val, coinId, total)
       // console.log(coinId, total)
       // console.log(this.$refs[`withdrawItemRef${index}`][0])
       // 限制数量小数位位数

@@ -22,6 +22,7 @@ export const finance = {
   'finance_estimatedValue': '평가치',
   'finance_invest_estimatedValue': '예금 평가치',
   'finance_earnings': '수익',
+  'finance_income_ratio': '수익은 비례도를 차지한다',
   'finance_predict_earnings': '예상수익 ',
   'finance_predict_send_time': '예상 발급시간',
   'finance_earnings_value': '수익치',

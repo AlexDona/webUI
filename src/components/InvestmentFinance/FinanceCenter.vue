@@ -74,7 +74,7 @@
             <div class="left-body">
               <div class="left-label">
                 <!-- 存币方案 -->
-                <span class="label-title display-inline-block text-align-r">{{$t('M.finance_invest_style')}}:&nbsp;</span>
+                <span class="label-title display-inline-block">{{$t('M.finance_invest_style')}}:&nbsp;</span>
                 <el-select
                   :placeholder="$t('M.comm_please_choose')"
                   :no-data-text="$t('M.comm_no_data')"
@@ -92,7 +92,7 @@
               </div>
               <div class="left-label">
                 <!-- 存币数量 -->
-                <span class="label-title display-inline-block text-align-r">{{$t('M.finance_invest_count')}}:&nbsp;</span>
+                <span class="label-title display-inline-block">{{$t('M.finance_invest_count')}}:&nbsp;</span>
                 <div class='invest-amount float-right'>
                   <!-- 请输入数量 -->
                   <input
@@ -388,8 +388,8 @@
                   <!-- 存币估值 -->
                 <div>
                   {{$t('M.finance_invest_estimatedValue')}}
-                  <p class="green">
-                    <span>{{isLogin ? InvestmentValue : '--'}}</span>
+                  <p>
+                    <span>{{isLogin ? investmentValue : '--'}}</span>
                     {{convertCurrency}}
                   </p>
                 </div>
@@ -403,8 +403,18 @@
                 </div>
             </div>
             <div class="pieCharts">
+              <div v-if="!isLogin || (isLogin && !investmentValue && !getMoneyValue)">
+                <div class="defaultCircle">
+                  {{$t('M.finance_income_ratio')}}
+                </div>
+                <div class="legend">
+                  <span>{{$t('M.finance_invest')}}</span>
+                  <span class="income">{{$t('M.finance_earnings')}}</span>
+                </div>
+              </div>
               <FinanceBrokenPie
-                :investment-value = 'InvestmentValue'
+                v-else
+                :investment-value = 'investmentValue'
                 :get-money-value = 'getMoneyValue'
               />
             </div>
@@ -456,6 +466,7 @@
                   <!-- 存币币种 -->
                   <el-table-column
                     prop="coinShortName"
+                    width="100"
                     :label="$t('M.finance_invest_coin1')"
                   >
                   </el-table-column>
@@ -570,13 +581,14 @@
                   <el-table-column
                     prop="operations"
                     :label="$t('M.otc_index_operate')"
+                    align="right"
                   >
                     <!-- 活期 -->
                     <template slot-scope = "s">
                       <!--状态是活期没取消且不是违约结算才显示取消按钮-->
                       <div
                         v-if="s.row.financialState == 'CURRENT' && s.row.state != 'CANCEL' && s.row.state != 'DEFAULT_CLEARING'"
-                        class="blue cancelBtn"
+                        class="blue cancelBtn text-align-r"
                         @click="cancelInvest(s.row.id)"
                       >
                         <!-- 取消 -->
@@ -725,7 +737,7 @@ export default {
       // 是否立刻存币显示立即存币错误提示
       isShow: false,
       // 存币估值
-      InvestmentValue: 0,
+      investmentValue: 0,
       // 历史收益值
       getMoneyValue: 0,
       // 获取用户总资产
@@ -1049,9 +1061,9 @@ export default {
       // 设置可用余额
       this.availableBalance = getNestedData(getData, 'userTotal')
       // 存币估计值
-      this.InvestmentValue = getNestedData(getData, 'userNumber')
+      this.investmentValue = getNestedData(getData, 'userNumber') - 0
       // 历史收益
-      this.getMoneyValue = getNestedData(getData, 'userInterest')
+      this.getMoneyValue = getNestedData(getData, 'userInterest') - 0
       if (this.isLogin) {
         // 存币记录列表赋值
         this.investList = getNestedData(getData, 'userFinancialManagementRecord.list')
@@ -1165,6 +1177,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
 /* 公共scss样式 */
 @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
+@import "../../../static/css/scss/index";
 
 .finance-box {
   width: 100%;
@@ -1186,15 +1199,16 @@ export default {
     width: 100%;
 
     > .finance-inner {
-      width: 1100px;
+      width: 1300px;
       margin: 0 auto;
 
       > .kline-container {
-        padding: 100px 145px 0;
+        padding: 73px 0 0;
 
         > .finance-form-header {
           display: flex;
-          width: 100%;
+          width: 60%;
+          margin: 0 auto;
 
           > .newestPrice {
             display: flex;
@@ -1205,7 +1219,7 @@ export default {
             > li {
               flex: 1;
               text-align: center;
-              color: #a9bed4;
+              color: $mainNightTitleColor;
               border-right: 1px solid #1b2231;
 
               > p {
@@ -1230,7 +1244,7 @@ export default {
         justify-content: space-between;
 
         > .left {
-          color: #a9bed4;
+          color: $mainNightTitleColor;
 
           > .nav-header {
             > .balance {
@@ -1246,15 +1260,13 @@ export default {
                 -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg, rgba(124, 184, 250, 0), rgba(124, 184, 250, .2) 200%);
 
                 > span {
-                  font-size: 12px;
+                  font-size: 14px;
                 }
               }
             }
           }
 
           .left-body {
-            padding-top: 58px;
-
             > .left-label {
               margin: 32px 0;
               line-height: 50px;
@@ -1289,6 +1301,7 @@ export default {
                   text-align: center;
                   color: #fff;
                   background: -webkit-linear-gradient(45deg, #2b396e, #2a5082);
+                  box-shadow: 0 1px 1px #2a5082 inset;
                 }
               }
             }
@@ -1307,14 +1320,14 @@ export default {
 
         > .right {
           width: 482px;
-          color: #a9bed4;
+          color: $mainNightTitleColor;
 
           > .pieCharts-box {
             display: flex;
 
             > .right-infor {
               width: 245px;
-              padding-top: 100px;
+              padding-top: 70px;
               overflow: hidden;
 
               > div {
@@ -1334,15 +1347,53 @@ export default {
 
             > .pieCharts {
               width: 282px;
-              padding-top: 50px;
               margin-right: 50px;
+
+              .defaultCircle {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                line-height: 200px;
+                text-align: center;
+                color: #cfd5df;
+                background-color: #303957;
+              }
+
+              .legend {
+                display: flex;
+                justify-content: space-between;
+                box-sizing: border-box;
+                width: 150px;
+                padding-left: 15px;
+                margin: 27px auto 0;
+
+                > span {
+                  position: relative;
+
+                  &::before {
+                    position: absolute;
+                    top: 5px;
+                    left: -15px;
+                    width: 10px;
+                    height: 10px;
+                    background-color: #303957;
+                    content: "";
+                  }
+                }
+
+                .income {
+                  &::before {
+                    background-color: $mainColor;
+                  }
+                }
+              }
             }
           }
         }
       }
 
       > .invest-list {
-        margin: 96px 0 200px;
+        margin: 83px 0 118px;
 
         > .invest-list-body {
           position: relative;
@@ -1365,7 +1416,7 @@ export default {
             text-align: center;
 
             > a {
-              color: #338ff5;
+              color: $mainColor;
             }
           }
         }
@@ -1378,12 +1429,17 @@ export default {
       .el-input__inner {
         width: 168px;
         height: 40px;
-        border: 1px solid #338ff5;
+        border: 1px solid $mainColor;
         border-radius: 2px;
         font-size: 15px;
-        color: #338ff5;
+        color: $mainColor;
         background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
         box-shadow: 0 2px 2px rgba(13, 17, 25, 1);
+      }
+
+      .el-icon-arrow-up::before {
+        color: $mainColor;
+        content: "\e60c";
       }
     }
 
@@ -1434,6 +1490,10 @@ export default {
             background: #1e2636;
           }
         }
+
+        .el-icon-arrow-up::before {
+          content: "\e60c";
+        }
       }
 
       .dialogStyle {
@@ -1481,7 +1541,7 @@ export default {
         .el-button {
           width: 110px;
           height: 40px;
-          border: 1px solid #338ff5;
+          border: 1px solid $mainColor;
           border-radius: 4px;
           color: #fff;
           background: none;
@@ -1519,7 +1579,7 @@ export default {
 
         .errorTips {
           line-height: 36px;
-          color: #d45858;
+          color: $upColor;
         }
 
         .el-button.el-button--primary {
@@ -1546,15 +1606,13 @@ export default {
     .invest-list-body {
       .el-table {
         font-size: 12px;
-        color: #a9bed4;
-        background: #1c1f32;
+        color: $mainNightTitleColor;
+        background: $mainContentNightBgColor;
         box-shadow: 0 4px 6px rgba(25, 30, 40, .5);
 
         th {
-          border-top: 1px solid #a9bed4;
           color: #617499;
-          background: #1c1f32;
-          box-shadow: 0 4px 6px rgba(25, 30, 40, .5);
+          background: $mainContentNightBgColor;
 
           &.is-leaf {
             &:first-of-type {
@@ -1679,7 +1737,7 @@ export default {
 
   &.night {
     > .banner-box {
-      background: #272b41;
+      background: $mainNightBgColor;
     }
 
     > .inner-box {
@@ -1709,20 +1767,22 @@ export default {
         }
       }
 
-      .el-table__header {
-        box-shadow: 4px 0 4px 4px rgba(25, 30, 40, 1);
-      }
-
       > .inner-box {
         > .finance-inner {
           > .invest-list {
             > .invest-list-body {
               .finance-tips-box {
                 color: #617499;
-
-                /* background-color: #121824; */
               }
             }
+          }
+        }
+      }
+
+      .finance-inner-box {
+        .left {
+          .el-icon-arrow-up::before {
+            color: #fff;
           }
         }
       }
@@ -1730,9 +1790,7 @@ export default {
   }
 
   &.day {
-    > .banner-box {
-      background: #fff;
-    }
+    background-color: #f5f5fa;
 
     /deep/ {
       .inner-box {
@@ -1740,8 +1798,9 @@ export default {
           .kline-container {
             .finance-form-header {
               .el-input__inner {
-                background: #fff !important;
-                box-shadow: inset 1px 0 3px rgba(51, 143, 245, 1);
+                border-radius: 2px;
+                background: -webkit-linear-gradient(180deg, rgba(51, 143, 245, .1));
+                box-shadow: none;
               }
 
               .newestPrice {
@@ -1782,7 +1841,7 @@ export default {
                   color: #666;
 
                   div {
-                    color: #338ff5;
+                    color: $mainColor;
                   }
                 }
               }
@@ -1807,6 +1866,16 @@ export default {
             }
 
             .right {
+              .right-infor {
+                div {
+                  &:first-child {
+                    p {
+                      color: #000;
+                    }
+                  }
+                }
+              }
+
               .pieCharts {
                 width: 282px;
                 padding-top: 50px;
@@ -1838,9 +1907,13 @@ export default {
         .left {
           .left-body {
             .el-input__inner {
-              border: 1px solid #338ff5;
+              border: 1px solid $mainColor;
               background: #eaf4fe;
             }
+          }
+
+          .el-icon-arrow-up::before {
+            color: $mainColor;
           }
         }
 
@@ -1851,7 +1924,7 @@ export default {
           }
 
           .el-button {
-            color: #338ff5;
+            color: $mainColor;
           }
 
           .el-button--primary {
@@ -1859,14 +1932,14 @@ export default {
           }
 
           .saveTime {
-            color: #333;
+            color: $dayMainTitleColor;
           }
         }
 
         .passwordDialog {
           .password {
             border: 1px solid #ecf1f8;
-            color: #333;
+            color: $dayMainTitleColor;
             background-color: #fff;
           }
         }
@@ -1874,14 +1947,15 @@ export default {
 
       .el-table__header {
         margin-top: 2px;
-        box-shadow: 0 0 4px rgba(51, 143, 245, .5);
       }
 
       .invest-list-body {
         .el-table {
+          width: 1290px !important;
+          margin: 3px;
           color: #666;
-          background: transparent;
-          box-shadow: 0 0 0 rgba(25, 30, 40, .5);
+          background: #fff;
+          box-shadow: 0 0 2px #ddd;
 
           td {
             border-top: 1px solid #fff;
@@ -1893,7 +1967,7 @@ export default {
             border-top: 1px solid rgba(234, 244, 254, 1);
             border-bottom: 1px solid rgba(234, 244, 254, 1);
             color: #617499;
-            background: #eaf4fe;
+            background: #fff;
             box-shadow: 0 0 0 rgba(25, 30, 40, .5);
 
             &.is-leaf {
@@ -1935,13 +2009,13 @@ export default {
       }
 
       .invest {
-        color: #338ff5;
+        color: $mainColor;
         background: linear-gradient(90deg, rgba(51, 143, 245, .8), transparent);
       }
 
       .el-tabs__item {
         &.is-active {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1955,18 +2029,18 @@ export default {
       }
 
       .el-dialog__title {
-        color: #333;
+        color: $dayMainTitleColor;
       }
 
       .el-dialog__headerbtn {
         .el-dialog__close {
-          color: #333;
+          color: $dayMainTitleColor;
         }
       }
     }
 
     .black {
-      color: #333;
+      color: $dayMainTitleColor;
     }
   }
 
@@ -1976,7 +2050,7 @@ export default {
 
   .blue {
     font-size: 12px;
-    color: #338ff5;
+    color: $mainColor;
   }
 
   .green {
@@ -1984,11 +2058,11 @@ export default {
   }
 
   .red {
-    color: #d45858;
+    color: $upColor;
   }
 
   .red2 {
-    color: #b73c36;
+    color: $mainColor;
   }
 
   .saveTime {
@@ -2003,7 +2077,7 @@ export default {
   }
 
   .invest {
-    padding: 10px 20px 10px 26px;
+    padding: 10px 60px 10px 26px;
     font-size: 16px;
     color: #fff;
     background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
@@ -2011,7 +2085,7 @@ export default {
 
   .totalTipsPositon {
     margin: -20px 0 -20px 134px;
-    color: #d45858;
+    color: $upColor;
   }
 }
 
@@ -2024,7 +2098,7 @@ export default {
   line-height: 16px;
   text-align: center;
   color: #fff;
-  background: #338ff5;
+  background: $mainColor;
   cursor: pointer;
 }
 
@@ -2037,7 +2111,7 @@ export default {
   > ul {
     min-width: 300px;
     margin-left: 110px;
-    border-left: 4px solid #338ff5;
+    border-left: 4px solid $mainColor;
     font-weight: 600;
     color: #fff;
 
@@ -2059,7 +2133,7 @@ export default {
         width: 12px;
         height: 12px;
         border-radius: 50%;
-        background: #338ff5;
+        background: $mainColor;
         content: '';
       }
     }
