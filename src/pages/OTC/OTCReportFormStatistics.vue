@@ -13,7 +13,7 @@
       <!-- 2.2 筛选条件 -->
       <div class="report-form-filtrate">
         <!-- 交易币种 -->
-        <span class="filtrate-text font-size14">
+        <span class="filtrate-text font-size12">
           {{$t('M.otc_trade')}}{{$t('M.otc_AD_token')}}
         </span>
         <span class="currency-input">
@@ -32,7 +32,7 @@
           </el-select>
         </span>
         <!-- 交易法币 -->
-        <span class="filtrate-text font-size14">
+        <span class="filtrate-text font-size12">
           {{$t('M.otc_trade')}}{{$t('M.comm_coin')}}
         </span>
         <span class="legal-tender-input">
@@ -53,9 +53,9 @@
       </div>
       <!-- 2.3 资产配置 -->
       <div
-        class="report-form-asset"
+        class="report-form-asset border-radius4"
       >
-        <div class="title padding-l15 border-radius5">
+        <div class="title padding-l15 font-size14">
           {{$t('M.otc_formStatistics_asset')}}
         </div>
         <div
@@ -74,7 +74,7 @@
         <!-- 购买 -->
         <div class="common buy">
           <!-- 头 -->
-          <div class="head padding-l15 border-radius5">
+          <div class="head padding-l15 font-size14">
             {{$t('M.comm_buying')}}
           </div>
           <!-- 内容 -->
@@ -218,7 +218,7 @@
         <!-- 销售 -->
         <div class="common sell">
           <!-- 头 -->
-          <div class="head padding-l15 border-radius5">
+          <div class="head padding-l15 font-size14">
             {{$t('M.otc_sell')}}
           </div>
           <!-- 内容 -->
@@ -349,9 +349,9 @@
         </div>
       </div>
       <!-- 2.5 订单详情 -->
-      <div class="report-form-details">
+      <div class="report-form-details border-radius4">
         <!-- 2.5.1 标题 -->
-        <div class="title padding-l15 border-radius5">
+        <div class="title padding-l15 font-size14">
           {{$t('M.otc_formStatistics_orderDeatil')}}
         </div>
         <!-- 主要内容 -->
@@ -360,7 +360,7 @@
           <div class="date">
             <!-- 左侧日历 -->
             <div class="select-date">
-              <span class="text">{{$t('M.otc_MerchantsOrders_date')}}</span>
+              <span class="text font-size12">{{$t('M.otc_MerchantsOrders_date')}}</span>
               <span class="date-picker">
                 <!--开始日期-->
                 <el-date-picker
@@ -812,9 +812,6 @@ export default {
 
       > .content {
         height: 160px;
-        border-top: 0;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
         line-height: 160px;
         text-align: center;
       }
@@ -837,10 +834,10 @@ export default {
         > .body {
           display: flex;
           flex-wrap: wrap;
-          justify-content: space-between;
+          justify-content: space-around;
           width: 645px;
           height: 420px;
-          padding: 7px 5px 0;
+          padding: 10px;
           border-top: 0;
           border-bottom-right-radius: 5px;
           border-bottom-left-radius: 5px;
@@ -848,8 +845,8 @@ export default {
           > .together {
             display: flex;
             align-items: center;
-            width: 310px;
-            height: 197px;
+            width: 300px;
+            height: 190px;
 
             > .left {
               position: relative;
@@ -873,6 +870,7 @@ export default {
 
             > .right {
               flex: 3;
+              font-size: 12px;
               line-height: 40px;
             }
           }
@@ -891,8 +889,6 @@ export default {
 
     > .report-form-details {
       margin-top: 20px;
-      border-bottom-right-radius: 5px;
-      border-bottom-left-radius: 5px;
 
       > .title {
         height: 40px;
@@ -922,7 +918,7 @@ export default {
         }
 
         > .order-table {
-          padding: 0 40px;
+          padding: 0 35px;
           margin-top: 20px;
         }
 
@@ -987,6 +983,8 @@ export default {
 
     .order-table {
       .el-table {
+        font-size: 12px;
+
         tr {
           height: 40px;
         }
@@ -1016,21 +1014,21 @@ export default {
 
       > .report-form-asset {
         color: $mainColor;
-        background-color: #1c1f32;
+        background-color: $mainContentNightBgColor;
 
         > .title {
-          border: 1px solid #1c1f32;
+          border: 1px solid $mainContentNightBgColor;
           box-shadow: 0 4px 6px #191e28;
         }
 
         > .content {
-          border: 1px solid #1c1f32;
+          border: 1px solid $mainContentNightBgColor;
         }
       }
 
       > .report-form-buy-sell {
         > .common {
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
 
           > .head {
             color: $mainColor;
@@ -1044,7 +1042,7 @@ export default {
               border: 1px solid #23263c;
 
               > .left {
-                color: #d45858;
+                color: $upColor;
 
                 > .round {
                   background-color: #3b3139;
@@ -1055,7 +1053,7 @@ export default {
                 color: #9da5b3;
 
                 .data {
-                  color: #d45858;
+                  color: $upColor;
                 }
               }
             }
@@ -1068,7 +1066,7 @@ export default {
           > .body {
             .together {
               > .left {
-                color: #008069;
+                color: $otcGreen;
 
                 > .round {
                   background-color: #28403d;
@@ -1077,7 +1075,7 @@ export default {
 
               > .right {
                 .data {
-                  color: #008069 !important;
+                  color: $otcGreen !important;
                 }
               }
             }
@@ -1086,7 +1084,7 @@ export default {
       }
 
       > .report-form-details {
-        background-color: #1c1f32;
+        background-color: $mainContentNightBgColor;
 
         > .title {
           color: $mainColor;
@@ -1107,11 +1105,11 @@ export default {
 
           > .order-table {
             .red {
-              color: #d45858;
+              color: $upColor;
             }
 
             .green {
-              color: #008069;
+              color: $otcGreen;
             }
           }
         }
@@ -1120,12 +1118,12 @@ export default {
 
     /deep/ {
       .el-input--suffix .el-input__inner {
-        color: #fff;
+        color: $mainDayBgColor;
       }
 
       .report-form-filtrate {
         .el-input__inner {
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
         }
       }
 
@@ -1148,12 +1146,12 @@ export default {
           }
 
           .el-radio__label {
-            color: #fff;
+            color: $mainDayBgColor;
           }
 
           .el-radio__inner {
             border: 1px solid #b3b3b3;
-            background-color: #1c1f32;
+            background-color: $mainContentNightBgColor;
 
             &::after {
               background-color: $mainColor;
@@ -1181,18 +1179,18 @@ export default {
 
         .el-table {
           color: #9da5b3;
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
 
           thead {
-            color: #a9bed4;
+            color: $mainNightTitleColor;
           }
 
           tr {
-            background-color: #1c1f32;
+            background-color: $mainContentNightBgColor;
           }
 
           th {
-            background-color: #1c1f32;
+            background-color: $mainContentNightBgColor;
 
             &.is-leaf {
               border-bottom: 1px solid #262f38;
@@ -1204,7 +1202,7 @@ export default {
   }
 
   &.day {
-    background-color: $mainDayBgColor;
+    background-color: $mainBgColorOfDay;
 
     > .report-form-statistics-content {
       > .report-form-title {
@@ -1214,42 +1212,38 @@ export default {
 
       > .report-form-filtrate {
         > .filtrate-text {
-          color: #9da5b3;
+          color: $fontColorSecondaryOfDay;
         }
       }
 
       > .report-form-asset {
+        margin-top: 20px;
         color: $mainColor;
-        background-color: #fff;
+        background-color: $mainColorOfWhite;
+        box-shadow: 0 0 6px $boxShadowColorOfDay;
 
         > .title {
-          border: 1px solid #ecf1f8;
-          box-shadow: 0 4px 6px #f3f3f3;
-        }
-
-        > .content {
-          border: 1px solid #ecf1f8;
+          border-bottom: 1px solid $borderColorOfDay;
         }
       }
 
       > .report-form-buy-sell {
         > .common {
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .head {
-            border: 1px solid #ecf1f8;
+            border-bottom: 1px solid $borderColorOfDay;
             color: $mainColor;
-            box-shadow: 0 4px 6px #f3f3f3;
           }
 
           > .body {
-            border: 1px solid #ecf1f8;
-
             > .together {
-              border: 1px solid #ecf1f8;
+              border: 1px solid $borderColorOfDay;
+              border-radius: 2px;
 
               > .left {
-                color: #d45858;
+                color: $upColor;
 
                 > .round {
                   background: rgba(212, 88, 88, .1);
@@ -1257,10 +1251,10 @@ export default {
               }
 
               > .right {
-                color: #7d90ac;
+                color: $dayMainTitleColor;
 
                 .data {
-                  color: #d45858;
+                  color: $upColor;
                 }
               }
             }
@@ -1273,7 +1267,7 @@ export default {
           > .body {
             .together {
               > .left {
-                color: #008069;
+                color: $otcGreen;
 
                 > .round {
                   background: rgba(84, 189, 116, .1);
@@ -1282,7 +1276,7 @@ export default {
 
               > .right {
                 .data {
-                  color: #008069 !important;
+                  color: $otcGreen !important;
                 }
               }
             }
@@ -1291,13 +1285,11 @@ export default {
       }
 
       > .report-form-details {
-        border: 1px solid rgba(38, 47, 56, .1);
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
-        background-color: #fff;
+        background-color: $mainColorOfWhite;
+        box-shadow: 0 0 6px $boxShadowColorOfDay;
 
         > .title {
-          border-bottom: 1px solid rgba(38, 47, 56, .1);
+          border-bottom: 1px solid $borderColorOfDay;
           color: $mainColor;
         }
 
@@ -1305,22 +1297,22 @@ export default {
           > .date {
             > .select-date {
               > .text {
-                color: #9da5b3;
+                color: $fontColorSecondaryOfDay;
               }
             }
 
             > .radio-date {
-              color: #46505f;
+              color: $fontColorSecondaryOfDay;
             }
           }
 
           > .order-table {
             .red {
-              color: #d45858;
+              color: $upColor;
             }
 
             .green {
-              color: #008069;
+              color: $otcGreen;
             }
           }
         }
@@ -1329,14 +1321,14 @@ export default {
 
     /deep/ {
       .el-input--suffix .el-input__inner {
-        color: #7d90ac;
+        color: $dayMainTitleColor;
       }
 
       .report-form-filtrate {
         .el-input__inner {
-          border: 1px solid rgba(236, 241, 248, 1);
+          border: 1px solid $borderColorOfDay;
           border-radius: 2px;
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
         }
       }
 
@@ -1347,11 +1339,11 @@ export default {
           }
 
           .el-radio__label {
-            color: #7d90ac;
+            color: $fontColorSecondaryOfDay;
           }
 
           .el-radio__inner {
-            border: 1px solid rgba(38, 47, 56, .1);
+            border: 1px solid $borderColorOfDay;
             background-color: #fff;
 
             &::after {
@@ -1362,102 +1354,8 @@ export default {
 
         .select-date {
           .el-input__inner {
-            border: 1px solid rgba(38, 47, 56, .1);
-            background-color: #fff;
-          }
-        }
-      }
-
-      .border-radius5 {
-        border-radius: 0;
-      }
-
-      > .report-form-statistics-content {
-        > .report-form-details {
-          > .title[data-v-e69a84f0] {
-            border: 1px solid rgba(38, 47, 56, .1);
-            border-left: none;
-            border-top-right-radius: 5px;
-            border-top-left-radius: 5px;
-            box-shadow: 0 0 0 #191e28;
-            border-right: none;
-          }
-        }
-
-        > .report-form-details[data-v-e69a84f0] {
-          border: 1px solid rgba(38, 47, 56, .1);
-          border-top: 0 solid #000;
-          border-top-right-radius: 5px;
-          border-top-left-radius: 5px;
-          background-color: #fff;
-        }
-
-        > .report-form-asset {
-          margin-top: 20px;
-          border: 1px solid rgba(38, 47, 56, .1);
-          border-radius: 0;
-          background-color: #fff;
-
-          > .title[data-v-e69a84f0] {
-            border: none;
-            border-bottom: 1px solid rgba(38, 47, 56, .1);
-            box-shadow: 0 0 0 #191e28;
-          }
-
-          > .content[data-v-e69a84f0] {
-            border: 0 solid rgba(38, 47, 56, .1);
-          }
-        }
-
-        > .report-form-buy-sell {
-          > .sell {
-            > .body {
-              .together {
-                > .left {
-                  > .round[data-v-e69a84f0] {
-                    background: rgba(84, 189, 116, .15);
-                  }
-                }
-              }
-            }
-          }
-
-          > .common[data-v-e69a84f0] {
-            background-color: #fff;
-          }
-
-          > .common {
-            > .body {
-              > .together[data-v-e69a84f0] {
-                border: 1px solid rgba(38, 47, 56, .1);
-              }
-
-              > .together {
-                > .left {
-                  > .round[data-v-e69a84f0] {
-                    background-color: rgba(212, 88, 88, .15);
-                  }
-                }
-              }
-            }
-
-            > .body[data-v-e69a84f0] {
-              border: 1px solid rgba(38, 47, 56, .1);
-            }
-
-            > .head[data-v-e69a84f0] {
-              border: 1px solid rgba(38, 47, 56, .1);
-              border-bottom: none;
-              border-bottom-right-radius: 0;
-              border-bottom-left-radius: 0;
-              box-shadow: inset 0 2px 4px rgba(236, 241, 248, 1);
-            }
-          }
-        }
-
-        > .report-form-filtrate {
-          > .filtrate-text[data-v-e69a84f0] {
-            color: #7d90ac;
+            border: 1px solid $borderColorOfDay;
+            background-color: $mainColorOfWhite;
           }
         }
       }
@@ -1466,71 +1364,29 @@ export default {
         &.is-checked {
           .el-radio__inner {
             border-color: rgb(64, 158, 255);
-            background: #fff;
+            background: $mainColorOfWhite;
           }
         }
       }
 
       .order-table {
         .el-table {
-          background-color: #fff;
+          color: $dayMainTitleColor;
+          background-color: $mainColorOfWhite;
 
           th {
-            color: #999;
-            background-color: #fff;
+            color: $fontColorSecondaryOfDay;
+            background-color: $mainColorOfWhite;
 
             &.is-leaf {
-              border-bottom: 0 solid #262f38;
+              border-bottom: 1px solid $borderColorOfDay;
             }
           }
         }
       }
 
       .el-input__inner {
-        color: #7d90ac;
-      }
-
-      .nav-box {
-        > .inner-box {
-          > .top {
-            > .left {
-              > .nav-list {
-                > .nav-item {
-                  > .sub-nav-list[data-v-346cd49c] {
-                    background-color: #fff;
-
-                    &::before {
-                      border-bottom-color: #fff;
-                    }
-                  }
-
-                  > .sub-nav-list {
-                    > .sub-nav-item {
-                      > a[data-v-346cd49c] {
-                        color: #000;
-                      }
-                    }
-
-                    > .sub-nav-item[data-v-346cd49c] {
-                      &:hover {
-                        background-color: #fff;
-
-                        > a {
-                          color: $mainColor;
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-
-          > .bottom[data-v-346cd49c] {
-            background-color: #fff;
-            box-shadow: 4px 4px 4px rgba(3, 14, 32, .1);
-          }
-        }
+        color: $fontColorSecondaryOfDay;
       }
     }
   }
