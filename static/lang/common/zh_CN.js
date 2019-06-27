@@ -118,7 +118,7 @@ export const common = {
 
   'comm_user_invite_info': '推广信息',
   'comm_user_inviter': '邀请人',
-  'comm_user_invite_tip1': '注：邀请人填写后无法修改！',
+  'comm_user_invite_tip1': '注：邀请人回填后无法修改！',
   'comm_user_invite_tip2': '请输入邀请人UID',
 
   'comm_user_api_management': 'API管理',
