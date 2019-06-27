@@ -133,6 +133,7 @@ export const OTC = {
   // 'otc_entrust_cancellationing': 'Withdrawal',
   'otc_overtime': 'The buyer has not paid for the timeout and the system automatically cancels.',
   'otc_freeze': 'The buyer has paid, and the seller has an objection to apply for a freeze on the order.',
+  'otc_freeze_info2': 'The buyer has paid, and the buyer has an objection to apply for a freeze on the order.',
   // 'otc_order0': 'After the order is generated',
   // 'otc_order1': '30',
   // 'otc_order2': 'The other party did not confirm the payment within the minute.',

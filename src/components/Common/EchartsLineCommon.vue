@@ -73,18 +73,18 @@ export default {
       }
     }
   },
-  created () {
-  },
+  // created () {
+  // },
   mounted () {
     this.chart = echarts.init(document.getElementById(this.id))
     this.chart.setOption(this.options)
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
-  methods: {},
-  filter: {},
-  computed: {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
+  // methods: {},
+  // filter: {},
+  // computed: {},
   watch: {
     data (newVal) {
       this.options.series[0].data = newVal

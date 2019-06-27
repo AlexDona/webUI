@@ -26,6 +26,7 @@ export const createBaseRoute = ({name, path = `/${name}`, redirect = '', childre
   }
 }
 export const routesVariable = {
+  home: 'home',
   // 众筹
   crowdFunding: 'crowdFunding',
   // 登录
@@ -34,5 +35,21 @@ export const routesVariable = {
   TransactionPassword: 'TransactionPassword',
   crowdFundingRecord: 'crowdFundingRecord',
   news: 'NewsAndNoticeCenter',
-  newsItem: 'NewsAndNoticeItem'
+  newsItem: 'NewsAndNoticeItem',
+  // OTC模块首页
+  OTCCenter: 'OTCCenter',
+  // OTC发布购买和出售
+  OTCPublishBuyAndSell: 'OTCPublishBuyAndSell',
+  // OTC在线交易买卖
+  OTCOnlineTraderBuySell: 'OTCOnlineTraderBuySell',
+  // OTC发布广告
+  OTCPublishAD: 'OTCPublishAD',
+  // OTC广告管理
+  OTCADManage: 'OTCADManage',
+  // OTC商家订单
+  OTCMerchantsOrders: 'OTCMerchantsOrders',
+  // OTC商家申请
+  OTCBusinessApply: 'OTCBusinessApply',
+  // OTC报表统计
+  OTCReportFormStatistics: 'OTCReportFormStatistics'
 }

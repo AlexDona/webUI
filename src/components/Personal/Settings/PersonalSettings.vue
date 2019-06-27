@@ -318,7 +318,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .personal-setting {
     > .personal-setting-main {
@@ -491,14 +491,14 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
       }
 
       > .personal-setting-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .inner-box {
           > .title {
@@ -613,8 +613,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       .button-color {
         color: rgba(255, 255, 255, .7);
@@ -633,7 +633,7 @@ export default {
 
       > .personal-setting-main {
         border: 1px solid rgba(38, 47, 56, .1);
-        background-color: $dayBgColor;
+        background-color: $mainDayBgColor;
 
         > .inner-box {
           > .title {

@@ -481,7 +481,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .fiat-orders {
     .fiat-main {
@@ -578,10 +578,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .fiat-color {
           color: #338ff5;
@@ -623,8 +623,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > header {
         border: 1px solid #ecf1f8;

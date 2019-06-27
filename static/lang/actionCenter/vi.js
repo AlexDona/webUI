@@ -45,7 +45,7 @@ export const actionCenter = {
   'crowd_funding_minimum_deadline': 'Hạn chót',
   'crowd_funding_interest_time': 'Thời gian lãi',
   'crowd_funding_expire_date': 'Thời hạn',
-  'crowd_funding_expire_current_State': 'Hiện trạng',
+  'crowd_funding_limit_time': '',
 
   'crowd_funding_expire_purplus1': 'Số dư',
   'crowd_funding_description_title': 'Dự án giới thiệu.',

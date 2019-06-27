@@ -8,7 +8,7 @@
     >
       <!-- 一、交易中订单 -->
       <div
-        class="order-list"
+        class="order-list font-size12"
         v-for="(item, index) in tradingOrderList"
         :key="index"
       >
@@ -116,16 +116,7 @@
                   </div>
                   <!-- 收款人 -->
                   <p class="bank-info">
-                    <!--银行卡，微信，支付宝取userBankList中的realname，其他都去外层的sellName-->
-                    <!--<span>{{$t('M.otc_payee')}}:
-                      <span v-if="activeBankType[index] === 'Bankcard' || activeBankType[index] === 'Alipay' ||  activeBankType[index] === 'Wechat'">
-                        {{checkedPayRealNameArr[index]}}
-                      </span>
-                      <span v-else>
-                        {{item.sellName}}
-                      </span>
-                    </span>-->
-                    <!--现在改为：都取userBankList中的realname -->
+                    <!--都取userBankList中的realname -->
                     <span>
                       <span v-if="activeBankType[index]">
                         {{$t('M.otc_payee')}}:
@@ -599,12 +590,6 @@
                 <span class="appeal-reason">
                   <span class="star">*</span>{{$t('M.otc_complaint_appeal_reason')}}
                 </span>
-                <!--<el-input-->
-                  <!--type="textarea"-->
-                  <!--maxlength="30"-->
-                  <!--v-model="appealTextAreaValue"-->
-                <!--&gt;-->
-                <!--</el-input>-->
                 <textarea
                   class="appeal-textarea-text font-size12"
                   maxlength="30"
@@ -668,7 +653,7 @@
       </div>
       <!-- 二、暂无数据 -->
       <div
-        class="no-data"
+        class="no-data text-align-c"
         v-show="!tradingOrderList.length"
       >
         {{ $t('M.comm_no_data') }}
@@ -845,7 +830,7 @@
       </div>
     </div>
     <!-- 三、分页-->
-    <div class="page">
+    <div class="page text-align-c">
       <el-pagination
         background
         v-show="tradingOrderList.length"
@@ -1243,7 +1228,7 @@ export default {
       this.errPWD = ''
     },
     // 7.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
-    async submitConfirmPayment () {
+    submitConfirmPayment: _.debounce(async function () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         // '请输入交易密码'
         this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
@@ -1264,7 +1249,7 @@ export default {
         this.tradePassword = ''
         if (!data) return false
       }
-    },
+    }, 500),
     // 8.0 卖家点击确认收款按钮
     async confirmGatherMoney (id) {
       this.checkedTradingOrderId = id
@@ -1283,7 +1268,7 @@ export default {
       }
     },
     // 9.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
-    async submitConfirmGathering () {
+    submitConfirmGathering: _.debounce(async function () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         this.errPWD = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
@@ -1303,7 +1288,7 @@ export default {
       this.tradePassword = ''
       if (!data) return false
       this.getOTCTradingOrdersList()
-    },
+    }, 500),
     // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index, orderType) {
       console.log(orderType)
@@ -1366,7 +1351,7 @@ export default {
       }
     },
     // 13.0 卖家提交申诉按钮
-    async sellerSubmitAppeal () {
+    sellerSubmitAppeal: _.debounce(async function () {
       console.log(this.orderTypeParam)
       if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
@@ -1401,7 +1386,7 @@ export default {
       // 再次调用接口刷新列表
       this.getOTCTradingOrdersList()
       if (!data) return false
-    },
+    }, 500),
     // 忘记密码跳转
     forgetPwdJump () {
       this.$goToPage('/TransactionPassword')
@@ -1440,20 +1425,18 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/index";
+@import "../../assets/CSS/index";
 
 .otc-trading-order-box {
   > .otc-trading-order-content {
-    /* min-height: 472px; */
     border-radius: 5px;
 
     > .order-list {
       box-sizing: border-box;
-      width: 1045px;
+      width: 1195px;
       height: 170px;
       margin-bottom: 15px;
       border-radius: 5px;
-      font-size: 12px;
 
       > .order {
         > .order-list-head {
@@ -1462,11 +1445,11 @@ export default {
           justify-content: space-between;
           box-sizing: border-box;
           height: 36px;
-          padding: 0 77px 0 25px;
+          padding: 0 50px 0 25px;
           line-height: 36px;
 
           > .order-id {
-            padding-left: 300px;
+            padding-left: 500px;
           }
 
           > .order-list-head-icon {
@@ -1508,7 +1491,7 @@ export default {
 
             > .logo {
               display: inline-block;
-              margin-right: 10px;
+              margin-right: 20px;
               text-align: center;
 
               > .logo-name {
@@ -1531,6 +1514,8 @@ export default {
 
             > .middle-content {
               display: flex;
+              padding-right: 20px;
+              padding-left: 20px;
 
               .trader-info {
                 flex: 2;
@@ -1538,7 +1523,7 @@ export default {
 
                 > .pay-style {
                   position: relative;
-                  margin: 0 0 8px 20px;
+                  margin: 0 0 8px;
 
                   > .qiandai-icon {
                     > .icon {
@@ -1553,12 +1538,12 @@ export default {
                 }
 
                 > .bank-info {
-                  margin-left: 20px;
+                  margin-left: 0;
                   line-height: 20px;
                 }
 
                 > .order-cancel-tips {
-                  margin-left: 20px;
+                  margin-left: 10px;
                   line-height: 20px;
                 }
 
@@ -1579,7 +1564,6 @@ export default {
 
               > .bank-info-picture {
                 flex: 1;
-                padding-left: 10px;
                 vertical-align: top;
               }
             }
@@ -1587,10 +1571,11 @@ export default {
 
           > .order-list-body-right {
             flex: 3;
+            padding-left: 20px;
 
             > .right-content {
               > .action-tips {
-                margin: 0 0 10px 20px;
+                margin: 0 20px 10px;
 
                 .wait-pay {
                   margin-right: 10px;
@@ -1602,7 +1587,7 @@ export default {
               }
 
               > .action-explain {
-                margin-left: 20px;
+                margin-left: 30px;
                 line-height: 24px;
               }
 
@@ -1660,7 +1645,7 @@ export default {
               > .upload-title {
                 display: inline-block;
                 vertical-align: top;
-                color: #338ff5;
+                color: $mainColor;
               }
 
               > .upload-content {
@@ -1683,17 +1668,11 @@ export default {
     }
 
     > .no-data {
-      width: 1043px;
+      width: 1195px;
       height: 482px;
       line-height: 482px;
-      text-align: center;
       color: rgba(255, 255, 255, .8);
     }
-  }
-
-  .page {
-    /* padding: 2px 0 15px; */
-    text-align: center;
   }
 
   /deep/ {
@@ -1755,7 +1734,6 @@ export default {
     }
 
     .el-textarea {
-      /* width: 540px; */
       width: 180px;
     }
 
@@ -1817,7 +1795,7 @@ export default {
 
         .close-pwd-tip {
           margin-top: 5px;
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1827,7 +1805,7 @@ export default {
 
         .forget-pwd-tip {
           padding: 8px 20px 0 0;
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1951,7 +1929,7 @@ export default {
             > .appeal-body-content {
               > .appeal-textarea {
                 > .appeal-reason {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
 
                 > .appeal-textarea-text {
@@ -2015,7 +1993,7 @@ export default {
         line-height: 30px !important;
 
         &.selected {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         &:hover {
@@ -2023,7 +2001,7 @@ export default {
         }
 
         &.hover {
-          color: #338ff5;
+          color: $mainColor;
           background-color: #29343f;
         }
       }
@@ -2040,10 +2018,6 @@ export default {
 
       .el-button--mini {
         padding: 3px 10px;
-      }
-
-      .el-textarea {
-        /* width: 540px; */
       }
 
       .el-textarea__inner {
@@ -2188,7 +2162,7 @@ export default {
                   > .pay-style {
                     > .qiandai-icon {
                       > .icon {
-                        color: #338ff5;
+                        color: $mainColor;
                       }
                     }
                   }
@@ -2250,7 +2224,7 @@ export default {
             > .appeal-body-content {
               > .appeal-textarea {
                 > .appeal-reason {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
 
                 > .appeal-textarea-text {
@@ -2316,7 +2290,7 @@ export default {
         line-height: 30px !important;
 
         &.selected {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         &:hover {
@@ -2324,7 +2298,7 @@ export default {
         }
 
         &.hover {
-          color: #338ff5;
+          color: $mainColor;
           background-color: #29343f;
         }
       }
@@ -2342,17 +2316,13 @@ export default {
       .el-select {
         .el-input {
           .el-select__caret {
-            color: #338ff5;
+            color: $mainColor;
           }
         }
       }
 
       .el-button--mini {
         padding: 3px 10px;
-      }
-
-      .el-textarea {
-        /* width: 540px; */
       }
 
       .el-textarea__inner {
@@ -2395,7 +2365,7 @@ export default {
 
         .el-dialog__title {
           font-size: 14px;
-          color: #338ff5;
+          color: $mainColor;
         }
 
         .el-dialog__headerbtn {

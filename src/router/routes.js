@@ -69,11 +69,11 @@ const routes = [
   ...activity,
   {
     path: '/',
-    redirect: '/home'
+    redirect: `/${routesVariable.home}`
   },
   {
     // 首页
-    path: '/home',
+    path: `/${routesVariable.home}`,
     name: 'HomeCenter',
     component: HomeCenter
   },

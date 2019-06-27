@@ -250,9 +250,9 @@ export default {
       this.areas = this.areasFromAPI
       this.moreBtnShowStatus = false
     },
-    async getAllTradeAreas (plateId = this.activeName) {
+    getAllTradeAreas: _.debounce(async function (plateId = this.activeName) {
       this.disabledStatus = true
-      let params = { plateId }
+      let params = {plateId}
 
       let now = new Date().getTime()
       let lastTime = getStore('platesAges')
@@ -367,7 +367,7 @@ export default {
       this.setCollectData(collectSymbol)
       // more
       this.setSymbolsForSocket()
-    },
+    }, 500),
     // 获取更多交易对
     getMoreSymbols ({areaId}) {
       // console.log(data)
@@ -507,14 +507,6 @@ export default {
       })
       this.moreBtnShowStatus = false
       await this.getAllTradeAreas()
-      let now = new Date().getTime()
-      let lastTime = getStore('platesAges')
-      if (now - lastTime < this.ONE_MINUTES) {
-        this.timer = setTimeout(() => {
-          clearTimeout(this.timer)
-        }, 500)
-      }
-      // this.getTradeAreas({})
     },
     // 搜索关键字e
     searchFromMarketList () {
@@ -543,7 +535,7 @@ export default {
       this.searchArea.area = this.$t('M.home_market_field_search')
     },
     // 切换收藏
-    async toggleCollect (data) {
+    toggleCollect: _.debounce(async function (data) {
       this.resetCoolectAndSearchAreaLang()
       let {id, status, row} = data
       status = Boolean(status)
@@ -573,7 +565,7 @@ export default {
       if (!this.isLogin) {
         setStore('collectSymbol', this.collectSymbol)
       }
-    }
+    }, 300)
   },
   filter: {},
   computed: {
@@ -632,8 +624,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index.scss";
-  @import "../../../static/css/scss/Home/MarketListHome.scss";
+  @import "../../assets/CSS/index";
 
   .market-list-box {
     width: 100%;
@@ -701,11 +692,11 @@ export default {
             overflow: hidden;
 
             &.max-height {
-              max-height: 626px;
+              max-height: 726px;
             }
 
             &.force-height {
-              height: 626px !important;
+              height: 726px !important;
             }
           }
         }
@@ -819,13 +810,13 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .inner-box {
         > .search-box {
           > input {
-            color: $dayFontColor;
+            color: $dayMainTitleColor;
           }
         }
       }

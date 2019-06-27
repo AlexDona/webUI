@@ -179,7 +179,6 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    <!-- 后台添加了剩余数量字段remainCount-->
                     {{$scientificToNumber(s.row.remainCount)}}{{selectedOTCAvailableCurrencyName}}
                   </div>
                 </template>
@@ -249,7 +248,7 @@
               <!-- 备注 -->
                 <el-table-column
                   :label="$t('M.comm_remark')"
-                  width="100"
+                  width="120"
                 >
                 <template slot-scope = "s">
                   <span
@@ -263,7 +262,8 @@
               <!-- 操作 -->
               <el-table-column
                 :label="$t('M.otc_index_operate')"
-                align="center"
+                align="right"
+                width="140"
               >
                 <template slot-scope="s">
                   <el-button
@@ -678,7 +678,7 @@ export default {
     },
     // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {
-      console.log(this.activeName)
+      // console.log(this.activeName)
       // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
       this.isDisabled = true
       this.isDisabledTimer = setTimeout(() => {
@@ -869,17 +869,16 @@ export default {
     },
     //  2.0 otc可用法币查询
     async getMerchantAvailableLegalTenderList () {
-      console.log(1111111)
       this.currencyCoinSelectStatus = true // 禁用货币类型select框
       const data = await getMerchantAvailableLegalTender({})
-      console.log('otc法币查询列表')
-      console.log(data)
-      console.log(this.otcSelectedCurrencyId)
+      // console.log('otc法币查询列表')
+      // console.log(data)
+      // console.log(this.otcSelectedCurrencyId)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
         this.availableCurrencyId = getNestedData(data, 'data')
-        console.log(this.availableCurrencyId)
+        // console.log(this.availableCurrencyId)
         // 第一次进来默认选中人民币，切换之后跳出本页面，再返回本页面显示最后一次切换的法币
         if (this.otcSelectedCurrencyId) {
           this.checkedCurrencyId = this.otcSelectedCurrencyId
@@ -896,7 +895,7 @@ export default {
       }
     },
     //  3.0 刚进页面时候 otc主页面查询挂单列表
-    async getOTCPutUpOrdersList () {
+    getOTCPutUpOrdersList: _.debounce(async function () {
       if (this.selectedOTCAvailableCurrencyCoinID && this.checkedCurrencyId) {
         // console.log('有法币和可以币种id')
         let param = {
@@ -912,8 +911,8 @@ export default {
           param.entrustType = 'BUY' // 挂单类型（BUY SELL）
         }
         const data = await getOTCPutUpOrders(param)
-        console.log('otc主页面查询挂单列表')
-        console.log(data)
+        // console.log('otc主页面查询挂单列表')
+        // console.log(data)
         // 返回数据正确的逻辑
         if (!data) return false
         if (data.data) {
@@ -926,11 +925,11 @@ export default {
           this.UPDATE_OTC_HOME_LIST_STATUS(false)
         }
       }
-    },
+    }, 500),
     //  4.0 选中我想购买和出售币种名称
     selectCurrencyName (index) {
       this.currentPage = 1
-      console.log(this.currentPage)
+      // console.log(this.currentPage)
       // console.log(index)
       this.selectCurrencyNameStatus = index
       this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name) // 币种名称
@@ -946,7 +945,7 @@ export default {
     },
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
-      console.log(e)
+      // console.log(e)
       this.CHANGE_OTC_SELECTED_CURRENCY_ID(e)
       if (this.countryInfoList.length) {
         this.checkedCountryId = this.countryInfoList[this.countryInfoList.length - 1].id // 增加国家-国家为所有国家
@@ -965,7 +964,7 @@ export default {
     // 9.0 改变支付方式下拉框的选中值
     payWayChangeValue (e) {
       this.currentPage = 1
-      console.log(this.currentPage)
+      // console.log(this.currentPage)
       this.checkedPayType = e
       // console.log(this.checkedPayType) //  选中的支付方式的id
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
@@ -1013,13 +1012,13 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/index.scss";
+@import "../../assets/CSS/index";
 
 .otc-box {
   margin-top: 50px;
 
   > .otc-center-content {
-    width: 1150px;
+    width: 1300px;
     padding-top: 30px;
     margin: 36px auto 100px;
 
@@ -1037,7 +1036,7 @@ export default {
         > .otc-filtrate-publish {
           display: flex;
           justify-content: space-between;
-          padding: 25px 10px 0;
+          padding: 25px 20px 0;
 
           > .otc-filtrate-box {
             display: flex;
@@ -1105,8 +1104,8 @@ export default {
             display: inline-block;
             width: 100px;
             overflow: hidden;
-            text-overflow: ellipsis; // 显示省略符号来代表被修剪的文本。
-            white-space: nowrap; // 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+            text-overflow: ellipsis;
+            white-space: nowrap;
             cursor: pointer;
           }
 
@@ -1155,7 +1154,7 @@ export default {
         position: absolute;
         top: 33px;
         left: 82px;
-        color: #338ff5;
+        color: $mainColor;
       }
 
       .trading-order-sand-clock {
@@ -1224,6 +1223,7 @@ export default {
         height: 32px;
         border: 0;
         line-height: 33px;
+        color: #fff;
       }
 
       .el-input--suffix {
@@ -1249,7 +1249,13 @@ export default {
             th {
               &:first-child {
                 .cell {
-                  padding-left: 30px;
+                  padding-left: 20px;
+                }
+              }
+
+              &:nth-last-child(2) {
+                .cell {
+                  padding-right: 20px;
                 }
               }
             }
@@ -1261,7 +1267,13 @@ export default {
             td {
               &:first-child {
                 .cell {
-                  padding-left: 30px;
+                  padding-left: 20px;
+                }
+              }
+
+              &:nth-last-child(1) {
+                .cell {
+                  padding-right: 20px;
                 }
               }
             }
@@ -1350,7 +1362,7 @@ export default {
                 color: #a8afbf;
 
                 .currencyNameActived {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
               }
             }
@@ -1380,7 +1392,7 @@ export default {
             background-color: $mainContentNightBgColor;
 
             .red {
-              color: #d45858;
+              color: $upColor;
             }
 
             > .shade-pay-way {
@@ -1399,16 +1411,20 @@ export default {
 
       > .otc-order-manage {
         > .more {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         .otc-tab-pane-arrow-right {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #fff;
+      }
+
       .otc-online-buy-and-sell-button {
         .el-radio-button__inner {
           color: #d8d8d8;
@@ -1425,7 +1441,7 @@ export default {
           &:first-child {
             &.is-active {
               .el-radio-button__inner {
-                background-color: #d45858;
+                background-color: $upColor;
               }
             }
           }
@@ -1506,13 +1522,13 @@ export default {
 
       .el-table__column-filter-trigger {
         i {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
       .el-button--danger {
-        border-color: #d45858;
-        background-color: #d45858;
+        border-color: $upColor;
+        background-color: $upColor;
       }
 
       .invest-list-body {
@@ -1549,7 +1565,7 @@ export default {
 
         &.is-active {
           color: #fff;
-          background-color: #338ff5;
+          background-color: $mainColor;
         }
       }
     }
@@ -1578,7 +1594,7 @@ export default {
                 color: #7d90ac;
 
                 .currencyNameActived {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
 
                 > .otc-filtrate-currency-name {
@@ -1590,19 +1606,19 @@ export default {
             > .otc-publish-box {
               > .pay-style {
                 > .pay-style-icon {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
               }
 
               > .currency-style {
                 > .currency-style-icon {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
               }
 
               > .country-style {
                 > .country-style-icon {
-                  color: #338ff5;
+                  color: $mainColor;
                 }
               }
             }
@@ -1610,7 +1626,7 @@ export default {
 
           > .otc-merchant-list {
             .red {
-              color: #d45858;
+              color: $upColor;
             }
 
             > .shade-pay-way {
@@ -1628,16 +1644,20 @@ export default {
 
       > .otc-order-manage {
         > .more {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         .otc-tab-pane-arrow-right {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #7d90ac;
+      }
+
       .otc-online-buy-and-sell-button {
         .el-radio-button__inner {
           border: 1px solid rgba(39, 49, 58, .1);
@@ -1656,7 +1676,7 @@ export default {
           &:first-child {
             &.is-active {
               .el-radio-button__inner {
-                background-color: #d45858;
+                background-color: $upColor;
               }
             }
           }
@@ -1731,13 +1751,13 @@ export default {
 
       .el-table__column-filter-trigger {
         i {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
       .el-button--danger {
-        border-color: #d45858;
-        background-color: #d45858;
+        border-color: $upColor;
+        background-color: $upColor;
       }
 
       .el-button--success {
@@ -1758,7 +1778,7 @@ export default {
 
         &.is-active {
           color: #fff;
-          background-color: #338ff5;
+          background-color: $mainColor;
         }
       }
     }

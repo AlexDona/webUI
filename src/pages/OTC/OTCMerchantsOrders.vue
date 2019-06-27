@@ -316,6 +316,7 @@
             <el-table-column
               :label = "$t('M.otc_record_complaint')"
               width="134"
+              align="right"
             >
               <template slot-scope = "s">
                 <div>
@@ -326,7 +327,7 @@
           </el-table>
         </div>
         <!--分页-->
-        <div class="page">
+        <div class="page text-align-c">
           <el-pagination
             background
             v-show="merchantsOrdersList.length"
@@ -351,7 +352,6 @@ import {
   getOTCMerchantsOrdersList
 } from '../../utils/api/OTC'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {mapState} from 'vuex'
@@ -363,7 +363,6 @@ export default {
     return {
       // 商家订单内容的高度
       height: '',
-      // 分页
       // 每页显示的条数
       pageSize: 10,
       // 当前页码
@@ -529,13 +528,13 @@ export default {
           break
       }
     },
-    // 6点击查询按钮
+    // 6 点击查询按钮
     findFilter () {
       // 改变查询条件从第1页开始查询
       this.currentPage = 1
       this.getOTCEntrustingOrdersRevocation()
     },
-    // 7重置
+    // 7 重置
     resetCondition () {
       // 改变查询条件从第1页开始查询
       this.currentPage = 1
@@ -547,8 +546,8 @@ export default {
       this.endTimeValue = ''
       this.getOTCEntrustingOrdersRevocation()
     },
-    // 8页面加载时请求接口渲染列表
-    async getOTCEntrustingOrdersRevocation () {
+    // 8 页面加载时请求接口渲染列表
+    getOTCEntrustingOrdersRevocation: _.debounce(async function () {
       let data = await getOTCMerchantsOrdersList({
         // 当前页数
         pageNum: this.currentPage,
@@ -568,15 +567,15 @@ export default {
         tradeType: this.activatedMerchantsOrdersTraderStyleList
       })
       // 返回数据正确的逻辑 重新渲染列表
-      console.log('商家订单列表')
-      console.log(data)
+      // console.log('商家订单列表')
+      // console.log(data)
       if (!data) return false
       if (data.data) {
         let merchantsOrdersListData = getNestedData(data, 'data')
         this.merchantsOrdersList = getNestedData(merchantsOrdersListData, 'list')
         this.totalPages = getNestedData(merchantsOrdersListData, 'pages') - 0 // 分页
       }
-    }
+    }, 500)
   },
   filter: {},
   computed: {
@@ -589,15 +588,15 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index";
+  @import "../../assets/CSS/index";
 
   .otc-merchants-orders-box {
     margin-top: 50px;
     overflow: hidden;
 
     > .otc-merchants-orders-content {
-      width: 1200px;
-      padding-top: 50px;
+      width: 1300px;
+      padding-top: 20px;
       margin: 50px auto 10px;
 
       > .merchants-title {
@@ -641,7 +640,6 @@ export default {
 
         .page {
           padding: 10px 0;
-          text-align: center;
         }
       }
     }
@@ -690,6 +688,8 @@ export default {
         }
 
         .el-table {
+          padding-bottom: 15px;
+
           tr {
             height: 40px;
           }
@@ -743,8 +743,8 @@ export default {
 
       > .otc-merchants-orders-content {
         > .merchants-title {
-          border-left: 3px solid #338ff5;
-          color: #338ff5;
+          border-left: 3px solid $mainColor;
+          color: $mainColor;
         }
 
         > .merchants-orders-main {
@@ -754,7 +754,7 @@ export default {
             }
 
             > .all-clear {
-              color: #338ff5;
+              color: $mainColor;
             }
           }
 
@@ -773,6 +773,10 @@ export default {
       }
 
       /deep/ {
+        .el-input--suffix .el-input__inner {
+          color: #fff;
+        }
+
         .el-input__inner {
           background-color: #1c1f32;
         }
@@ -851,8 +855,8 @@ export default {
 
       > .otc-merchants-orders-content {
         > .merchants-title {
-          border-left: 3px solid #338ff5;
-          color: #338ff5;
+          border-left: 3px solid $mainColor;
+          color: $mainColor;
         }
 
         > .merchants-orders-main {
@@ -862,7 +866,7 @@ export default {
             }
 
             > .all-clear {
-              color: #338ff5;
+              color: $mainColor;
             }
           }
 
@@ -881,6 +885,10 @@ export default {
       }
 
       /deep/ {
+        .el-input--suffix .el-input__inner {
+          color: #7d90ac;
+        }
+
         .el-input__inner {
           border: 1px solid #ecf1f8;
           color: #7d90ac !important;

@@ -750,7 +750,7 @@ export default {
   created () {
     document.getElementsByTagName('body')[0].style.zoom = 1
     if (this.isLogin) {
-      this.$goToPage('/home')
+      this.$goToPage(`/${this.$routes_X.home}`)
     }
     this.ENTER_STEP1()
     this.refreshCode()
@@ -831,7 +831,7 @@ export default {
       ) {
         this.$goToPage(this.routerTo)
       } else {
-        this.$goToPage('/home')
+        this.$goToPage(`/${this.$routes_X.home}`)
       }
     },
     // 返回登录
@@ -1225,7 +1225,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import '../../static/css/scss/index.scss';
+@import '../assets/CSS/index';
 
 .login-box {
   &.user {
@@ -2116,7 +2116,6 @@ export default {
       box-sizing: border-box;
       width: 470px;
       height: 44px;
-      padding: 0 30px;
       color: #fff;
     }
   }

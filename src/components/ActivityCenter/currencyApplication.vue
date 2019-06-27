@@ -107,7 +107,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index.scss";
+  @import "../../assets/CSS/index";
 
   .currency-application-box {
     padding: 184px 0 0;

@@ -338,7 +338,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
+  @import '../../../assets/CSS/index';
 
   .fiat-completed-order-box {
     > .completed-order-content {
@@ -510,10 +510,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .fiat-color {
           color: #338ff5;
@@ -652,8 +652,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .background-color {
         background-color: #ccc;

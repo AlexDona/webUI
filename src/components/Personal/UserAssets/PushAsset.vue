@@ -864,7 +864,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .push-assets {
     > .push-assets-main {
@@ -1107,15 +1107,15 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .push-assets-main {
         > .push-assets-content,
         > .push-assets-content-box {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
 
           > .push-header {
-            background-color: $nightMainBgColor;
+            background-color: $mainContentNightBgColor;
 
             > .push-header-title {
               color: $mainColor;
@@ -1145,7 +1145,7 @@ export default {
         }
 
         > .award-record {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
 
           > .award-record-header {
             border-bottom: 1px solid #39424d !important;
@@ -1262,8 +1262,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .push-assets-main {
         > .push-assets-content,
