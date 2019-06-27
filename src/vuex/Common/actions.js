@@ -20,7 +20,6 @@ import {
 import {
   addFavicon,
   getNestedData,
-  changeLanguage,
   http2https
 } from '../../utils/commonFunc'
 // import store from "../index";
@@ -59,12 +58,19 @@ export default {
   async [GET_LANGUAGE_LIST_ACTION] ({commit, state}, self) {
     const data = await getLanguageList()
     if (!data) return false
-    self.languageList = data.data
+    commit('SET_LANGUAGES_M', data.data)
     const data1 = await getConfigAjax()
     if (!data1) return false
     let configInfo = getNestedData(data1, 'data')
-    console.log(configInfo, self.languageList)
-    changeLanguage(getStore('language') || configInfo.defaultLanguage, self, commit)
+    const language = getStore('language') || configInfo.defaultLanguage
+    _.forEach(state.languages_S, item => {
+      if (item.shortName === language) {
+        console.log(item)
+        commit('CHANGE_LANGUAGE', item)
+        commit('CHANGE_DEFAULT_LANGUAGE', item.shortName)
+        return false
+      }
+    })
     commit('SET_FOOTER_INFO', {
       configInfo
     })

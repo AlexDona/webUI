@@ -1,3 +1,8 @@
+/**
+ * author: zhaoxinlei
+ * update: 20190524
+ * description:user mutations
+ */
 import {
   TOGGLE_PC_MOBILE,
   ENTER_STEP1,

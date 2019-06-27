@@ -9,30 +9,33 @@
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   )
     .left
-      // 总额度
-      .detail
-        span.label {{$t(label.total)}}
-        span.value {{ieoTotal |$moneyFilter_F_X}} {{ieoCoinName}}
-      // 剩余额度
-      .detail
-        span.label {{$t(label.ieoRemained)}}
-        span.value {{ieoRemained | $moneyFilter_F_X}} {{ieoCoinName}}
-      // 单人限额
-      .detail
-        span.label {{$t(label.limit)}}
-        span.value {{buyUpLimit | $moneyFilter_F_X}} {{ieoCoinName}}
-      // 起购量
-      .detail
-        span.label {{$t(label.buyDownLimit)}}
-        span.value {{buyDownLimit |$moneyFilter_F_X}} {{ieoCoinName}}
-      // 返息方式
-      .detail
-        span.label {{$t(label.interestReturnWay)}}
-        span.value {{interestReturnWay}}
-      // 最低持仓
-      .detail
-        span.label {{$t(label.holdCoinAmount)}}
-        span.value {{holdCoinAmount |$moneyFilter_F_X}} {{holdCoinName}}
+      .top
+        .t-left
+          Pie(
+            :remaining="ieoRemained"
+            :total="ieoTotal"
+          )
+        .t-right
+          // 总额度
+          .detail
+            span.label {{$t(label.total)}}
+            span.value {{ieoTotal |$moneyFilter_F_X}} {{ieoCoinName}}
+          // 剩余额度
+          .detail
+            span.label {{$t(label.ieoRemained)}}
+            span.value {{ieoRemained | $moneyFilter_F_X}} {{ieoCoinName}}
+          // 单人限额
+          .detail
+            span.label {{$t(label.limit)}}
+            span.value {{buyUpLimit | $moneyFilter_F_X}} {{ieoCoinName}}
+          // 起购量
+          .detail
+            span.label {{$t(label.buyDownLimit)}}
+            span.value {{buyDownLimit |$moneyFilter_F_X}} {{ieoCoinName}}
+          // 最低持仓
+          .detail
+            span.label {{$t(label.holdCoinAmount)}}
+            span.value {{holdCoinAmount |$moneyFilter_F_X}} {{holdCoinName}}
       //  时间线
       .detail.time-line
         .line
@@ -44,24 +47,27 @@
           .end-time
             span {{applyEndTime | timerFormat1_F_X('date')}}
             span {{applyEndTime | timerFormat1_F_X('time')}}
-            span.time {{$t(label.applyEndTime)}}
+            span.time ({{$t(label.applyEndTime)}})
           //  计息时间
           .start-interest-time.text-align-c
             span {{interestStartTime | timerFormat1_F_X('date')}}
             span {{interestStartTime | timerFormat1_F_X('time')}}
-            span.time {{$t(label.interestStartTime)}}
+            span.time ({{$t(label.interestStartTime)}})
           //  到期时间
           .over-time.text-align-r
             span {{interestEndTime | timerFormat1_F_X('date')}}
             span {{interestEndTime | timerFormat1_F_X('time')}}
-            span.time {{$t(label.interestEndTime)}}
+            span.time ({{$t(label.interestEndTime)}})
 </template>
 <script>
 import mixins from '../../../../mixins/crowdFunding'
+import Pie from '../ThePie'
 export default {
   name: 'the-crowd-funding-item-detail-left',
   mixins: [mixins],
-  // components: {},
+  components: {
+    Pie
+  },
   props: {
     detail: {
       type: Object
@@ -123,8 +129,12 @@ export default {
     interestEndTime () {
       return _.get(this.detail, 'interestEndTime')
     }
+  },
+  watch: {
+    totalAndRemain (New) {
+      console.log(New)
+    }
   }
-  // watch: {}
 }
 </script>
 
@@ -132,47 +142,55 @@ export default {
   @import '../../../../assets/CSS/index.styl'
   .the-crowd-funding-item-detail-left
     .left
-      >.detail
+      .top
         display flex
-        justify-content space-between
-        &.time-line
-          margin-top 20px
-          display flex
-          flex-direction column
-          >.line
-            width 100%
-            height 1px
-            background-color #35587E
-            /*display flex*/
-            /*justify-content space-between*/
-            position relative
-            >.center,>.left,>.right
-              width 8px
-              height 8px
-              background-color S_main_color
-              border-radius 50%
-              margin -4px auto 0
-            >.left
-              position absolute
-              left 0
-              top 0
-            >.right
-              position absolute
-              right 0
-              top 0
-          >.time
-            margin-top 20px
-            height 40px
-            width 100%
+        .t-left
+          flex 4
+        .t-right
+          flex 5
+          >.detail
             display flex
             justify-content space-between
-            >div
-              flex 1
-              >span
-                display block
-                line-height 20px
-            >.start-interest-time
-              text-align center
+            line-height 30px
+      >.time-line
+        display flex
+        justify-content space-between
+        margin-top 10px
+        flex-direction column
+        >.line
+          width 100%
+          height 1px
+          background-color #35587E
+          /*display flex*/
+          /*justify-content space-between*/
+          position relative
+          >.center,>.left,>.right
+            width 8px
+            height 8px
+            background-color S_main_color
+            border-radius 50%
+            margin -4px auto 0
+          >.left
+            position absolute
+            left 0
+            top 0
+          >.right
+            position absolute
+            right 0
+            top 0
+        >.time
+          margin-top 20px
+          height 40px
+          width 100%
+          display flex
+          justify-content space-between
+          >div
+            flex 1
+            >span
+              display block
+              line-height 20px
+          >.start-interest-time
+            text-align center
     &.day
       .left
         background-color #fff
