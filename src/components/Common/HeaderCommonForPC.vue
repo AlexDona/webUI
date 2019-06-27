@@ -50,7 +50,7 @@
                 <span>{{$t('M.comm_register_time')}}</span>
               </router-link>
             </li>
-            <TheLogined/>
+            <TheLogined v-if="$isLogin_S_X"/>
             <TheLanguages/>
           </ul>
         </div>
