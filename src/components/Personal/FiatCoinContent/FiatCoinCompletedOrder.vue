@@ -459,12 +459,9 @@ export default {
           &:first-of-type {
             border-bottom: 1px solid #262f38;
             border-left: 1px solid #262f38;
-            border-bottom-left-radius: 5px;
-            border-top-left-radius: 5px;
           }
 
           &:nth-last-of-type(2) {
-            border-top-right-radius: 5px;
             border-right: 1px solid #262f38;
           }
         }
@@ -475,8 +472,6 @@ export default {
         border-bottom: 1px solid #262f38;
 
         &:first-of-type {
-          border-top-left-radius: 5px;
-
           &.el-table__expanded-cell {
             border-top: 0 solid #262f38;
             border-top-left-radius: 0;
@@ -487,8 +482,6 @@ export default {
               left: 0;
               height: 20px;
               border-bottom: 1px solid #262f38;
-              border-bottom-right-radius: 5px;
-              border-bottom-left-radius: 5px;
               background-color: #1e2636;
               content: '';
             }
@@ -496,8 +489,6 @@ export default {
         }
 
         &:nth-last-of-type(1) {
-          border-top-right-radius: 5px;
-
           &.el-table__expanded-cell {
             border-top-right-radius: 0;
           }
@@ -557,13 +548,9 @@ export default {
             &.is-leaf {
               &:first-of-type {
                 border-left: 1px solid #262f38;
-                border-bottom-left-radius: 5px;
-                border-top-left-radius: 5px;
               }
 
               &:nth-last-of-type(2) {
-                border-top-right-radius: 5px;
-                border-bottom-right-radius: 5px;
                 border-right: 1px solid #262f38;
               }
             }
@@ -579,20 +566,11 @@ export default {
         }
 
         .el-table__expanded-cell {
-          border-bottom: 15px solid #272b41;
+          border-bottom: 10px solid #272b41;
           background-color: #1c1f32;
 
           &:hover {
             background-color: #1c1f32 !important;
-          }
-        }
-
-        .el-table_2_column_9 {
-          .el-table__expand-column {
-            .is-leaf {
-              border-bottom-left-radius: 5px;
-              border-top-left-radius: 5px;
-            }
           }
         }
 
@@ -603,7 +581,6 @@ export default {
 
               &:first-of-type {
                 border-left: 1px solid #262f38;
-                border-top-left-radius: 5px;
 
                 &.el-table__expanded-cell {
                   border-top: 0 solid #262f38;
@@ -617,8 +594,6 @@ export default {
                     left: 0;
                     height: 20px;
                     border-bottom: 1px solid #262f38;
-                    border-bottom-right-radius: 5px;
-                    border-bottom-left-radius: 5px;
                     background-color: #1c1f32;
                     content: '';
                   }
@@ -626,7 +601,6 @@ export default {
               }
 
               &:nth-last-of-type(1) {
-                border-top-right-radius: 5px;
                 border-right: 1px solid #262f38;
 
                 &.el-table__expanded-cell {
@@ -722,10 +696,9 @@ export default {
 
           .el-table {
             margin: 0 auto;
-            border: 1px solid #ecf1f8;
             font-size: 12px;
             color: $dayMainTitleColor;
-            background: $mainColorOfWhite;
+            background: $mainBgColorOfDay;
 
             thead {
               color: $fontColorSecondaryOfDay;
@@ -754,11 +727,18 @@ export default {
           }
 
           .el-table__empty-block {
+            width: 962px !important;
+            margin: 2px;
             background: $mainColorOfWhite;
+            box-shadow: 0 0 6px $boxShadowColorOfDay;
+
+            .el-table__empty-text {
+              color: $fontColorSecondaryOfDay;
+            }
           }
 
           .el-table__expanded-cell {
-            border-bottom: 15px solid $mainBgColorOfDay !important;
+            border-bottom: 10px solid $mainBgColorOfDay !important;
             background-color: $mainColorOfWhite;
 
             &:hover {

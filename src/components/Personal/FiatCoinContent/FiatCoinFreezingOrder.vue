@@ -158,7 +158,7 @@
         @current-change="changeCurrentPage"
       >
       </el-pagination>
-      <div class="no-data" v-if="!OTCFreezingOrderList.length">
+      <div class="no-data font-size12" v-if="!OTCFreezingOrderList.length">
         <!--暂无数据-->
         {{$t('M.comm_no_data')}}
       </div>
@@ -223,7 +223,6 @@ export default {
         box-sizing: border-box;
         height: 35px;
         margin-bottom: 10px;
-        border-radius: 2px;
         line-height: 35px;
 
         > .item {
@@ -239,12 +238,10 @@ export default {
       > .freezing-table-body {
         box-sizing: border-box;
         height: 170px;
-        margin-bottom: 15px;
-        border-radius: 2px;
+        margin-bottom: 10px;
 
         > .freezing-info-top {
           height: 40px;
-          border-radius: 5px;
           line-height: 40px;
 
           .red {
@@ -336,7 +333,6 @@ export default {
           background-color: $mainContentNightBgColor;
 
           > .freezing-info-top {
-            border-radius: 5px;
             color: #617499;
             background-color: $mainContentNightBgColor;
           }

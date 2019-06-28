@@ -8,7 +8,7 @@
       class="fiat-entrust-order-table"
     >
       <!-- 表头 -->
-      <div class="entrust-table-head display-flex border-radius2 font-size12">
+      <div class="entrust-table-head display-flex font-size12">
         <span class="item first-style flex1">
           <!--类型-->
           {{$t('M.comm_type')}}
@@ -45,7 +45,7 @@
       </div>
       <!-- 表身体 -->
       <div
-        class="entrust-table-body border-radius2 font-size12"
+        class="entrust-table-body font-size12"
       >
         <div class="no-data" v-if="!OTCEntrustOrderList.length">
           <!--暂无数据-->
@@ -243,8 +243,6 @@ export default {
       > .entrust-table-body,
       .item {
         border-top: none;
-        border-bottom-right-radius: 2px;
-        border-bottom-left-radius: 2px;
 
         > .no-data {
           height: 431px;
@@ -345,6 +343,10 @@ export default {
               color: $otcGreen;
             }
           }
+        }
+
+        .no-data {
+          color: $fontColorSecondaryOfDay;
         }
       }
 

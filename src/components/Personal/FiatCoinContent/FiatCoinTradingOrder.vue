@@ -701,7 +701,7 @@
         </div>
       </div>
       <!-- 二、暂无数据 -->
-      <div class="no-data" v-if="!tradingOrderList.length">
+      <div class="no-data font-size12" v-if="!tradingOrderList.length">
         <!--暂无数据-->
         {{ $t('M.comm_no_data') }}
       </div>
@@ -1499,7 +1499,6 @@ export default {
   .fiat-trading-order-box {
     > .fiat-trading-order-content {
       min-height: 386px;
-      border-radius: 5px;
 
       .button {
         width: 290px;
@@ -1515,8 +1514,7 @@ export default {
       > .order-list {
         box-sizing: border-box;
         height: 170px;
-        margin-bottom: 15px;
-        border-radius: 5px;
+        margin-bottom: 10px;
         font-size: 12px;
         background-color: $mainContentNightBgColor;
 
@@ -1544,7 +1542,6 @@ export default {
               height: 0;
               border-bottom: 18px solid transparent;
               border-left: 18px solid transparent;
-              border-radius: 5px;
             }
 
             > .buy-icon {
@@ -1733,7 +1730,6 @@ export default {
                   height: 90px;
                   padding: 8px;
                   border: 1px solid #7587a5;
-                  border-radius: 4px;
                   outline-color: transparent;
                   line-height: 16px;
                 }
@@ -2163,6 +2159,7 @@ export default {
         }
 
         > .no-data {
+          color: $fontColorSecondaryOfDay;
           background-color: $mainColorOfWhite;
           box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
