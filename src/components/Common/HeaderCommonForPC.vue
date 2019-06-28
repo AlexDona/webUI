@@ -113,13 +113,6 @@
                 <!--<span>{{$t('M.common_fuc_eco')}}</span>-->
               <!--</router-link>-->
             <!--</li>-->
-            <li class="nav-item">
-              <router-link
-                to="/SuperNodes"
-              >
-                超级节点
-              </router-link>
-            </li>
           </ul>
         </div>
         <!--注册登录-->
