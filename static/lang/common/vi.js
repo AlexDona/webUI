@@ -149,6 +149,7 @@ export const common = {
   'comm_loginpassword': 'Mật khẩu',
   'comm_clause': 'Điều khoản',
   'comm_rate1': 'Tỷ lệ phí',
+  'common_connect_us': 'Liên hệ chúng tôi',
   'comm_pack_up': 'Dứng lại',
   'comm_after_get': 'lấy lại',
   'comm_get_code': 'Lấy mã code',

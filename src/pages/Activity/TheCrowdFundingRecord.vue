@@ -11,7 +11,7 @@
       .banner
         .inner-box
           h3 {{$t(title1)}}
-          p {{$t(title2)}}
+          p(v-html="$t(title2)")
       .container
         // 锁仓记录
         .header

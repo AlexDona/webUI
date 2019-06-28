@@ -149,6 +149,7 @@ export const common = {
   'comm_emailbox': '邮箱',
   'comm_loginpassword': '密码',
   'comm_clause': '条款',
+  'common_connect_us': '联系我们',
   'comm_rate1': '费率',
   'comm_pack_up': '收起',
   'comm_after_get': '后重获取',

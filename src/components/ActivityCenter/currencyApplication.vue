@@ -10,7 +10,6 @@
           class="content"
         >
           <h1 class="title">{{ $t('M.actionCenter_coin_apply') }}</h1>
-
           <div
             v-html="contentHTML"
             class="return_content"

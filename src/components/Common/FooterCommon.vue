@@ -1,272 +1,120 @@
-<template>
-  <div
-    class="footer-box common"
-    ref="footer"
-    v-show="!$loading_S_X"
-  >
-    <div class="inner-box">
-      <!--顶部-->
-      <div
-        class="top"
-      >
-        <div
-          class="left"
-        >
-          <!--logo-->
-          <div class="logo"
-            v-if="footerInfo1.logo"
-          >
-            <img :src="http2https(footerInfo1.logo)">
-          </div>
-          <!--简介-->
-          <div
-            class="introduction font-size12"
-            v-if="footerInfo1.logo"
-          >
-            {{footerInfo1.content}}
-          </div>
-          <!--分享-->
-          <ul class="share-box">
-            <li
-              class="share-item"
-              v-for="(item,index) in shareList"
-              :key="index"
-            >
-              <a
-                :href="http2https(item.ercodeSrc)"
-                class="mini-icon"
-                v-show="index!==2 && index!==3"
-              >
-                <Iconfont
-                  :icon-name="item.iconName"
-                  class-name="icon-text"
-                />
-              </a>
-              <!--微信-->
-              <a
-                class="weixin-btn"
-                v-show="index==2"
-                @mouseenter="toggleShowStatus('weixin',1)"
-                @mouseleave="toggleShowStatus('weixin',0)"
-              >
-                <Iconfont
-                  icon-name="icon-weixin-copy"
-                  class-name="icon-text icon-weixin"
-                >
-                </Iconfont>
-                <span
-                  class="er-code"
-                  v-show="isShowWeixin"
-                >
-                   <img
-                     :src="weixinImage"
-                   >
-                </span>
-              </a>
-              <a
-                class="weixin-btn"
-                v-show="index==3"
-                @mouseenter="toggleShowStatus('qq',1)"
-                @mouseleave="toggleShowStatus('qq',0)"
-              >
-                <!--qq-->
-                <Iconfont
-                  icon-name="icon-qq"
-                  class-name="icon-text"
-                />
-                <span
-                  class="er-code"
-                  v-show="isShowQQ"
-                >
-                  <img
-                    :src="qqImage"
-                  >
-                </span>
-              </a>
-            </li>
-          </ul>
-          <!-- 邮箱 -->
-          <div class="email">
-            <span
-              class="email-content"
-              v-if="configInfo['otcEmail']"
-            >
-              {{$t('M.footer_service_email')}}: {{configInfo['otcEmail']}}
-            </span>
-            <br/>
-            <!-- 投诉邮箱 -->
-            <span
-              class="email-content"
-              v-if="configInfo['complaintEmail']"
-            >
-              {{$t('M.footer_complaint_email')}}: {{configInfo['complaintEmail']}}
-            </span>
-          </div>
-        </div>
-        <div class="right">
-          <dl class="right-dl">
-            <dt class="title">
-              <!--下载-->
-              {{$t('M.comm_download')}}
-            </dt>
-            <dd
-              class="dd-item"
-              v-if="isNeedApp"
-            >
-              <!-- 客户端下载 -->
-              <router-link
-                :to="isMobile?'/downloadApp':'/guideOfDownload'"
-              >{{$t('M.comm_Client_Downloads')}}</router-link>
-            </dd>
-            <dd
-              class="dd-item"
-            >
-              <router-link to="/CurrencyApplication">
-                <!--上币申请-->
-                {{$t('M.actionCenter_coin_apply')}}
-              </router-link>
-            </dd>
-            <dd
-              class="dd-item"
-            >
-              <!--API文档-->
-              <a
+<template lang="pug">
+  .footer-box.common
+    .inner-box
+      .top
+        .left
+          .logo(v-if="footerInfo1.logo")
+            img(:src="http2https(footerInfo1.logo)")
+          //  简介
+          .introduction.font-size12(v-if="footerInfo1.logo") {{footerInfo1.content}}
+        .right
+          dl.right-dl
+            // 下载
+            dt.title {{$t('M.comm_download')}}
+            // API文档
+            dd.dd-item
+              a(
                 :href="APIUrl"
                 target="_blank"
-              >
-                {{$t('M.comm_api_doc')}}
-              </a>
-            </dd>
-            <dd
-              class="dd-item"
-              @click="$footerJump('/ServiceAndProtocol','CurrencyInformation')"
-            >
-              <!--币种资料-->
-              {{$t('M.comm_currency_info')}}
-            </dd>
-          </dl>
-          <dl class="right-dl">
-            <dt class="title">
-              <!--关于我们-->
-              {{$t('M.comm_us')}}
-            </dt>
-            <dd
-              class="dd-item"
-            >
-              <router-link to="/AboutUs">
-                <!--公司简介-->
-                {{$t('M.about_digital_terms_hint9')}}
-              </router-link>
-            </dd>
-            <dd
-              class="dd-item"
-              @click="$footerJump(`/${$routes_X.news}`,'notice')"
-            >
-              <!--新闻公告-->
-              {{$t('M.comm_news_and_notice')}}
-            </dd>
-            <dd
-              class="dd-item"
-            >
-              <router-link to="/HelpCenter">
-                <!--帮助中心-->
-                {{$t('M.comm_help_center')}}
-              </router-link>
-            </dd>
-            <dd
-              class="dd-item"
-              @click="$footerJump('/ServiceAndProtocol','TradingWarning')"
-            >
-              <!--交易须知-->
-              {{$t('M.otc_index_tradeKnow')}}
-            </dd>
-            <dd
-              class="dd-item"
-              @click="$footerJump('/ServiceAndProtocol','AML')"
-            >
-              <!--关于反洗钱-->
-              {{$t('M.about_digital_terms_hint10')}}
-            </dd>
-          </dl>
-          <dl class="right-dl">
-            <dt class="title">
-              <!--条款-->
-              {{$t('M.comm_clause')}}
-            </dt>
-            <dd
-              class="dd-item"
-              @click="$footerJump('/ServiceAndProtocol','UserProtocol')"
-            >
-              <!--用户协议-->
-              {{$t('M.common_footer_user_agreement')}}
-            </dd>
-            <dd
-              class="dd-item"
-              @click="$footerJump('/ServiceAndProtocol','PrivacyClause')"
-            >
-              <!--隐私条款-->
-              {{$t('M.common_footer_privacy_policy')}}
-            </dd>
-            <dd
-              class="dd-item"
-              @click="$footerJump('/ServiceAndProtocol','LegislationExplain')"
-            >
-              <!--法律声明-->
-              {{$t('M.common_footer_legal_notice')}}
-            </dd>
-            <dd
-              class="dd-item"
-              @click="$footerJump('/ServiceAndProtocol','Rate')"
-            >
-              <!--费率-->
-              {{$t('M.comm_rate1')}}
-            </dd>
-            <dd
-              class="dd-item"
-              @click="$footerJump('/ServiceAndProtocol','OTCServices')"
-            >
-              <!--OTC 服务协议-->
-              {{$t('M.about_digital_terms_hint8')}}
-            </dd>
-          </dl>
-        </div>
-      </div>
-      <!--底部友情链接-->
-      <div class="bottom">
-        <!-- 友情链接 -->
-        <span class="title">{{$t('M.common_friendly_link')}}</span>
-        <ul class="links-list">
-          <li
-            class="links-item"
+              ) {{$t('M.comm_api_doc')}}
+            // 上币申请
+            dd.dd-item
+              router-link(to="/CurrencyApplication") {{$t('M.actionCenter_coin_apply')}}
+            // 币种资料
+            dd.dd-item(@click="$footerJump('/ServiceAndProtocol','CurrencyInformation')") {{$t('M.comm_currency_info')}}
+            // 客户端下载
+            dd.dd-item(v-if="isNeedApp")
+              router-link(:to="downloadAppSrc") {{$t('M.comm_Client_Downloads')}}
+          // 关于我们
+          dl.right-dl
+            dt.title {{$t('M.comm_us')}}
+            // 新闻公告
+            dd.dd-item(@click="$footerJump(`/${$routes_X.news}`,'notice')")  {{$t('M.comm_news_and_notice')}}
+            // 帮助中心
+            dd.dd-item
+              router-link(to="/HelpCenter") {{$t('M.comm_help_center')}}
+            // 交易须知
+            dd.dd-item(@click="$footerJump('/ServiceAndProtocol','TradingWarning')")  {{$t('M.otc_index_tradeKnow')}}
+             // 关于反洗钱
+            dd.dd-item(@click="$footerJump('/ServiceAndProtocol','AML')")  {{$t('M.about_digital_terms_hint10')}}
+          //  条款
+          dl.right-dl
+            dt.title {{$t('M.comm_clause')}}
+            // 费率
+            dd.dd-item(@click="$footerJump('/ServiceAndProtocol','Rate')") {{$t('M.comm_rate1')}}
+            // 用户协议
+            dd.dd-item(@click="$footerJump('/ServiceAndProtocol','UserProtocol')") {{$t('M.common_footer_user_agreement')}}
+            // 隐私条款
+            dd.dd-item(@click="$footerJump('/ServiceAndProtocol','PrivacyClause')") {{$t('M.common_footer_privacy_policy')}}
+            // 法律声明
+            dd.dd-item(@click="$footerJump('/ServiceAndProtocol','LegislationExplain')") {{$t('M.common_footer_legal_notice')}}
+            // OTC 服务协议
+            dd.dd-item(@click="$footerJump('/ServiceAndProtocol','OTCServices')") {{$t('M.about_digital_terms_hint8')}}
+          //  联系我们
+          dl.right-dl
+            dt.title {{$t('M.common_connect_us')}}
+            .email
+              // 客服邮箱
+              span.email-content(v-if="configInfo['otcEmail']") {{$t('M.footer_service_email')}}: {{configInfo['otcEmail']}}
+              br
+              // 投诉邮箱
+              span.email-content(v-if="configInfo['complaintEmail']") {{$t('M.footer_complaint_email')}}: {{configInfo['complaintEmail']}}
+            ul.share-box
+              li.share-item(
+                v-for="(item,index) in shareList"
+                :key="index"
+              )
+                a.mini-icon(
+                  :href="http2https(item.ercodeSrc)"
+                  v-show="index!==2 && index!==3"
+                )
+                  Iconfont(
+                    :icon-name="item.iconName"
+                    class-name="icon-text"
+                    )
+                a.weixin-btn(
+                  v-show="index==2"
+                  @mouseenter="toggleShowStatus('weixin',1)"
+                  @mouseleave="toggleShowStatus('weixin',0)"
+                )
+                  Iconfont(
+                    icon-name="icon-weixin2"
+                    class-name="icon-text"
+                  )
+                  span.er-code(v-show="isShowWeixin")
+                    img(:src="weixinImage")
+                a.weixin-btn(
+                  v-show="index==3"
+                  @mouseenter="toggleShowStatus('qq',1)"
+                  @mouseleave="toggleShowStatus('qq',0)"
+                )
+                  Iconfont(
+                    icon-name="icon-QQ"
+                    class-name="icon-text"
+                  )
+                  span.er-code(v-show="isShowQQ")
+                    img(:src="qqImage")
+      .bottom
+        // 友情链接
+        span.title {{$t('M.common_friendly_link')}}
+        ul.links-list
+          li.links-item(
             v-for="(item,index) in footerInfo2.blogrollList"
             :key="index"
-            :style="{
-              display: ((isShowLinkImage && item.logo) || (!isShowLinkImage && item.name)) ? 'inline-block' : 'none'
-            }"
-          >
-            <a
-              class="link-item"
+            :style="{display: ((isShowLinkImage && item.logo) || (!isShowLinkImage && item.name)) ? 'inline-block' : 'none'}"
+          )
+            a.link-item(
               :href="item.link"
               target="_blank"
-            >
-              <img
+            )
+              img(
                 :src="http2https(item.logo)"
                 target="_blank"
                 v-show="isShowLinkImage && item.logo"
-              >
-              <span
-                v-show="!isShowLinkImage && item.name"
-                class="links-text"
-              >{{item.name}}</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="copyright">
-        <p>{{configInfo['copyright']}}</p>
-      </div>
-    </div>
-  </div>
+                )
+              span.links-text(v-show="!isShowLinkImage && item.name") {{item.name}}
+      .copyright
+        p {{configInfo['copyright']}}
 </template>
 <script>
 import {
@@ -274,7 +122,6 @@ import {
   getNestedData,
   http2https
 } from '../../utils/commonFunc'
-import {downloadFileWithUserDefined} from '../../utils'
 import Iconfont from '../Common/IconFontCommon'
 import {
   mapMutations,
@@ -295,23 +142,23 @@ export default {
       qqImage: '',
       shareList: [
         {
-          iconName: 'icon-twitter_F',
+          iconName: 'icon-tuite1',
           ercodeSrc: ''
         },
         {
-          iconName: 'icon-facebookfacebook52',
+          iconName: 'icon-facebook',
           ercodeSrc: ''
         },
         {
-          iconName: 'icon-weixin-copy',
+          iconName: 'icon-weixin2',
           ercodeSrc: ''
         },
         {
-          iconName: 'icon-qq',
+          iconName: 'icon-QQ',
           ercodeSrc: ''
         },
         {
-          iconName: 'icon-telegram1',
+          iconName: 'icon-send',
           ercodeSrc: ''
         }
       ],
@@ -345,11 +192,6 @@ export default {
     ...mapMutations([
       'CHANGE_FOOTER_ACTIVE_NAME'
     ]),
-    downloadCurrencyForm () {
-      let filename = 'Token application form'
-      if (!this.currencyApplicationURL) return
-      downloadFileWithUserDefined(this.currencyApplicationURL, filename)
-    },
     http2https (str) {
       return http2https(str)
     },
@@ -374,7 +216,10 @@ export default {
       // 公司名称fubt fbt fuc、邮箱等信息
       configInfo: state => state.common.footerInfo.configInfo,
       isMobile: state => state.user.isMobile
-    })
+    }),
+    downloadAppSrc () {
+      return this.mobile ? '/downloadApp' : '/guideOfDownload'
+    }
   },
   watch: {
     footerInfo: {
@@ -405,7 +250,7 @@ export default {
     background-color: #1c2237;
 
     > .inner-box {
-      width: 1130px;
+      width: 1300px;
       padding: 20px 0;
       margin: 0 auto;
 
@@ -414,7 +259,10 @@ export default {
         margin-bottom: 10px;
 
         > .left {
+          display: flex;
           flex: 1;
+          flex-direction: column;
+          justify-content: center;
 
           > .logo {
             > img {
@@ -425,80 +273,11 @@ export default {
           .introduction {
             margin-top: 10px;
           }
-
-          > .share-box {
-            margin-top: 26px;
-
-            > .share-item {
-              position: relative;
-              display: inline-block;
-              width: 20px;
-              height: 20px;
-              margin-right: 10px;
-
-              > .mini-icon {
-                display: inline-block;
-                width: 22px;
-                height: 22px;
-                border-radius: 50%;
-                line-height: 22px;
-                text-align: center;
-
-                .icon-text {
-                  font-size: 22px;
-                }
-              }
-
-              > .weixin-btn {
-                position: relative;
-
-                > .er-code {
-                  position: absolute;
-                  top: -110px;
-                  left: 50%;
-                  width: 100px;
-                  height: 100px;
-                  padding: 4px;
-                  background-color: #fff;
-                  transform: translate(-50%, 0);
-
-                  > img {
-                    width: 100%;
-                    height: 100%;
-                  }
-                }
-              }
-
-              > .hidden-box {
-                position: absolute;
-                top: -120px;
-                left: 50%;
-                width: 110px;
-                height: 110px;
-                background-color: green;
-                transform: translate(-50%, 0);
-
-                > img {
-                  width: 110px;
-                }
-              }
-            }
-          }
-
-          > .email {
-            margin-top: 10px;
-
-            > .email-content {
-              font-size: 12px;
-              line-height: 25px;
-              color: #cecece;
-            }
-          }
         }
 
         > .right {
           display: flex;
-          flex: 1;
+          flex: 3;
           justify-content: center;
 
           > .right-dl {
@@ -507,15 +286,86 @@ export default {
 
             > .title {
               height: 50px;
+              font-size: 12px;
               line-height: 50px;
             }
 
             > .dd-item {
+              font-size: 12px;
               line-height: 25px;
+              color: #cfd5df;
               cursor: pointer;
 
               > a {
-                color: #838dae;
+                color: #cfd5df;
+              }
+            }
+
+            > .email {
+              > .email-content {
+                font-size: 12px;
+                line-height: 25px;
+                color: #cecece;
+              }
+            }
+
+            > .share-box {
+              margin-top: 5px;
+
+              > .share-item {
+                position: relative;
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+
+                > .mini-icon {
+                  display: inline-block;
+                  width: 22px;
+                  height: 22px;
+                  border-radius: 50%;
+                  line-height: 22px;
+                  text-align: center;
+
+                  .icon-text {
+                    font-size: 22px;
+                    background-color: #1c2237;
+                  }
+                }
+
+                > .weixin-btn {
+                  position: relative;
+
+                  > .er-code {
+                    position: absolute;
+                    top: -110px;
+                    left: 50%;
+                    width: 100px;
+                    height: 100px;
+                    padding: 4px;
+                    background-color: #fff;
+                    transform: translate(-50%, 0);
+
+                    > img {
+                      width: 100%;
+                      height: 100%;
+                    }
+                  }
+                }
+
+                > .hidden-box {
+                  position: absolute;
+                  top: -120px;
+                  left: 50%;
+                  width: 110px;
+                  height: 110px;
+                  background-color: green;
+                  transform: translate(-50%, 0);
+
+                  > img {
+                    width: 110px;
+                  }
+                }
               }
             }
           }
@@ -523,32 +373,34 @@ export default {
       }
 
       > .bottom {
+        display: flex;
         width: 100%;
         padding-top: 15px;
         border-top: 1px solid rgba(67, 74, 95, .5);
 
         > .title {
-          display: inline-block;
-          width: 100px;
+          flex: 1;
+          margin-right: 20px;
+          line-height: 28px;
           vertical-align: top;
+          white-space: nowrap;
         }
 
         > .links-list {
-          display: inline-block;
-          width: 1026px;
+          flex: 14;
 
           > .links-item {
             display: inline-block;
             height: 20px;
-            margin-right: 30px;
+            margin-right: 26px;
 
             > .link-item {
               > img {
-                width: 100%;
+                height: 28px;
               }
 
               > .links-text {
-                color: #338ff5;
+                color: #838dae;
               }
             }
           }

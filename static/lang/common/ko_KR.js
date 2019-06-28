@@ -150,6 +150,7 @@ export const common = {
   'comm_loginpassword': '비밀번호',
   'comm_clause': '조항',
   'comm_rate1': '요율',
+  'common_connect_us': '연락 주세요',
   'comm_pack_up': '접다',
   'comm_after_get': '후 재취득',
   'comm_get_code': '인증번호 취득',
