@@ -334,6 +334,7 @@ export default {
     this.currencyApplicationURL = data
   },
   mounted () {
+    this.getFooterHeight()
   },
   activated () {},
   update () {},
@@ -343,8 +344,15 @@ export default {
       'GET_CURRENCY_URL_ACTION'
     ]),
     ...mapMutations([
-      'CHANGE_FOOTER_ACTIVE_NAME'
+      'CHANGE_FOOTER_ACTIVE_NAME',
+      'SAVE_FOOTER_HEIGHT'
     ]),
+    // 获取底部高度存全局
+    getFooterHeight () {
+      const height = this.$refs.footer.offsetHeight
+      this.SAVE_FOOTER_HEIGHT(height)
+      console.log(this.footerHeight)
+    },
     downloadCurrencyForm () {
       let filename = 'Token application form'
       if (!this.currencyApplicationURL) return

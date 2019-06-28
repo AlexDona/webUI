@@ -29,7 +29,8 @@ import {
   CHANGE_ROUTER_PATH,
   // 增加改变全局存储选中的交易对小数位方法
   CHANGE_CHECKED_BITS,
-  SET_REQUEST_COUNT_M
+  SET_REQUEST_COUNT_M,
+  SAVE_FOOTER_HEIGHT
 } from './mutations-types.js'
 
 import {setStore} from '../../utils'
@@ -192,5 +193,8 @@ export default {
     }
     console.log(state.requestCount_S)
     state.loading_S = state.requestCount_S <= 0 ? false : true
+  },
+  [SAVE_FOOTER_HEIGHT] (state, height) {
+    state.footerHeight = height
   }
 }

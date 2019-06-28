@@ -2,6 +2,7 @@
   <div
     class="finance-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{ height: windowHeight - footerHeight - 5 + 'px'}"
   >
   <!-- 导航 -->
     <!-- banner -->
@@ -322,7 +323,7 @@ export default {
     //   let historyPage = this.interestCurrentPage
     //   this.changeInterestPage(historyPage)
     // }
-    console.log(this.$route.query)
+    console.log(this.footerHeight)
   },
   mounted () {},
   activated () {},
@@ -422,10 +423,14 @@ export default {
       isLogin: state => state.user.isLogin,
       // 当前选中语言
       language: state => state.common.language,
-      clientWidth: state => state.common.clientWidth
+      clientWidth: state => state.common.clientWidth,
+      footerHeight: state => state.common.footerHeight
     }),
     screenWidth () {
       return this.clientWidth / 3
+    },
+    windowHeight () {
+      return window.innerHeight
     }
   },
   watch: {

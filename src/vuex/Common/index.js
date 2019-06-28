@@ -112,7 +112,9 @@ const state = {
   // 当前未完成接口数量
   requestCount_S: 0,
   // 全局loading
-  loading_S: false
+  loading_S: false,
+  // 底部高度
+  footerHeight: 0
 }
 
 export default {
