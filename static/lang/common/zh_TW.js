@@ -150,6 +150,7 @@ export const common = {
   'comm_loginpassword': '密碼',
   'comm_clause': '條款',
   'comm_rate1': '費率',
+  'common_connect_us': '聯系我們',
   'comm_pack_up': '收起',
   'comm_after_get': '後重獲取',
   'comm_get_code': '獲取驗證碼',

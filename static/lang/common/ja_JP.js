@@ -150,6 +150,7 @@ export const common = {
   'comm_loginpassword': 'パスワード',
   'comm_clause': '利用規約',
   'comm_rate1': '手数料',
+  'common_connect_us': '連絡します',
   'comm_pack_up': '折りたたむ',
   'comm_after_get': '取得',
   'common_direction': 'タイプ',

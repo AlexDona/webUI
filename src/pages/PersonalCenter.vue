@@ -386,7 +386,7 @@ export default {
 
   .personal-center {
     min-height: 1000px;
-    margin: 50px 0;
+    margin: 50px 0 0;
     overflow: hidden;
 
     > .personal-center-main {

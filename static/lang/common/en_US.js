@@ -147,6 +147,7 @@ export const common = {
   'comm_loginpassword': 'Password',
   'comm_clause': 'Terms',
   'comm_rate1': 'Fee',
+  'common_connect_us': 'Contact us',
   'comm_pack_up': 'Collapse',
   'comm_after_get': 'Retrieve',
   'comm_get_code': 'Get Code',
