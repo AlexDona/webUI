@@ -161,7 +161,7 @@
         </div>
       </div>
       <div
-        class="no-data"
+        class="no-data font-size12"
         v-if="!OTCCanceledOrderList.length"
       >
         <!--暂无数据-->
@@ -240,7 +240,6 @@ export default {
         box-sizing: border-box;
         height: 35px;
         margin-bottom: 10px;
-        border-radius: 2px;
         line-height: 35px;
 
         > .item {
@@ -252,12 +251,10 @@ export default {
       > .canceled-table-body {
         box-sizing: border-box;
         height: 170px;
-        margin-bottom: 15px;
-        border-radius: 2px;
+        margin-bottom: 10px;
 
         > .canceled-info-top {
           height: 40px;
-          border-radius: 5px;
           line-height: 40px;
 
           .red {

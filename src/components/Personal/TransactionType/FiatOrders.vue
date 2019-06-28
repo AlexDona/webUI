@@ -530,7 +530,7 @@ export default {
       .el-tabs__item {
         width: 105px;
         padding: 0;
-        margin-left: 4px;
+        margin: 3px 0;
         border-left: 0 solid transparent !important;
         text-align: center;
         background-color: transparent !important;
