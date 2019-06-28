@@ -8,7 +8,7 @@
       class="fiat-entrust-order-table"
     >
       <!-- 表头 -->
-      <div class="entrust-table-head display-flex">
+      <div class="entrust-table-head display-flex border-radius2 font-size12">
         <span class="item first-style flex1">
           <!--类型-->
           {{$t('M.comm_type')}}
@@ -45,7 +45,7 @@
       </div>
       <!-- 表身体 -->
       <div
-        class="entrust-table-body"
+        class="entrust-table-body border-radius2 font-size12"
       >
         <div class="no-data" v-if="!OTCEntrustOrderList.length">
           <!--暂无数据-->
@@ -223,8 +223,7 @@ export default {
         z-index: 200;
         box-sizing: border-box;
         height: 35px;
-        margin-bottom: 5px;
-        border-radius: 5px;
+        margin-bottom: 10px;
         line-height: 35px;
 
         > .item {
@@ -244,8 +243,8 @@ export default {
       > .entrust-table-body,
       .item {
         border-top: none;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 2px;
+        border-bottom-left-radius: 2px;
 
         > .no-data {
           height: 431px;
@@ -287,14 +286,6 @@ export default {
       color: $nightFontColor;
       background-color: $mainNightBgColor;
 
-      > .background-color {
-        background-color: $mainContentNightBgColor;
-
-        > .fiat-color {
-          color: #338ff5;
-        }
-      }
-
       > .fiat-entrust-order-table {
         > .entrust-table-head {
           border: 1px solid #262f38 !important;
@@ -310,11 +301,11 @@ export default {
 
           > .entrust-list-content {
             .red {
-              color: #d45858;
+              color: $upColor;
             }
 
             .green {
-              color: #008069;
+              color: $otcGreen;
             }
           }
 
@@ -327,36 +318,41 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
-
-      > .background-color {
-        background-color: $mainDayBgColor;
-      }
 
       > .fiat-entrust-order-table {
         > .entrust-table-head {
-          border: 1px solid rgba(72, 87, 118, .1) !important;
-          color: #617499;
+          color: $fontColorSecondaryOfDay;
           background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .entrust-table-body {
           min-height: 432px;
-          border: 1px solid rgba(72, 87, 118, .1);
-          color: #9da5b3;
-          background-color: #fff;
+          color: $dayMainTitleColor;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .entrust-list-content {
             > .item {
-              background-color: #fff;
+              background-color: $mainColorOfWhite;
             }
 
             .red {
-              color: #d45858;
+              color: $upColor;
             }
 
             .green {
-              color: #008069;
+              color: $otcGreen;
+            }
+          }
+        }
+      }
+
+      /deep/ {
+        .entrust-table-body {
+          .eighth-action {
+            .el-button--text {
+              color: $mainColor;
             }
           }
         }

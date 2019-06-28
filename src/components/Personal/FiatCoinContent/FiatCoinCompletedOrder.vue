@@ -342,12 +342,15 @@ export default {
 
   .fiat-completed-order-box {
     > .completed-order-content {
+      width: 966px;
+      margin: 2px auto 0;
+
       .red {
-        color: #d45858;
+        color: $upColor;
       }
 
       .green {
-        color: #008069;
+        color: $otcGreen;
       }
 
       .completed-info {
@@ -363,7 +366,7 @@ export default {
             line-height: 20px;
 
             > .pay-info {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -377,7 +380,7 @@ export default {
             line-height: 20px;
 
             > .buyer-seller-info {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -390,7 +393,7 @@ export default {
             line-height: 20px;
 
             > .confirm-time {
-              color: #5e95ec;
+              color: $mainColor;
             }
 
             // 增加原因字段样式
@@ -422,7 +425,7 @@ export default {
       }
 
       .el-table__header {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
       }
 
       .el-table {
@@ -451,7 +454,6 @@ export default {
       th {
         padding: 5px 0;
         background-color: #1e2636;
-        box-shadow: 4px 4px 6px #191e28;
 
         .is-leaf {
           &:first-of-type {
@@ -511,14 +513,6 @@ export default {
     &.night {
       color: $nightFontColor;
       background-color: $mainNightBgColor;
-
-      > .background-color {
-        background-color: $mainContentNightBgColor;
-
-        > .fiat-color {
-          color: #338ff5;
-        }
-      }
 
       /deep/ {
         th {
@@ -652,17 +646,11 @@ export default {
     }
 
     &.day {
-      color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
-
-      > .background-color {
-        background-color: #ccc;
-      }
-
       .completed-info {
         display: flex;
         flex: 7;
-        color: #9da5b3;
+        font-size: 12px;
+        color: $dayMainTitleColor;
 
         > .completed-info-left {
           flex: 2;
@@ -672,7 +660,7 @@ export default {
             line-height: 20px;
 
             > .pay-info {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -686,7 +674,7 @@ export default {
             line-height: 20px;
 
             > .buyer-seller-info {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -699,7 +687,7 @@ export default {
             line-height: 20px;
 
             > .confirm-time {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -708,62 +696,74 @@ export default {
       /deep/ {
         .completed-order-content {
           .el-table--enable-row-transition {
-            .el-table__body {
-              td {
-                border-top: 1px solid #ecf1f8;
+            tr:hover {
+              > td {
+                background-color: $mainColorOfWhite;
+              }
+            }
+
+            .el-table__header-wrapper {
+              background-color: $mainBgColorOfDay;
+
+              .el-table__header {
+                margin: 2px 2px 10px;
+                box-shadow: 0 0 6px $boxShadowColorOfDay;
+              }
+            }
+
+            .el-table__body-wrapper {
+              .el-table__body {
+                td {
+                  border-top: 1px solid #ecf1f8;
+                }
               }
             }
           }
-        }
 
-        tr:hover {
-          > td {
-            background-color: #fff;
-          }
-        }
+          .el-table {
+            margin: 0 auto;
+            border: 1px solid #ecf1f8;
+            font-size: 12px;
+            color: $dayMainTitleColor;
+            background: $mainColorOfWhite;
 
-        .el-table__header {
-          margin-bottom: 0;
-        }
+            thead {
+              color: $fontColorSecondaryOfDay;
+            }
 
-        .el-table {
-          margin: 0 auto;
-          border: 1px solid #ecf1f8;
-          background: #fff;
+            th.is-leaf {
+              border-right: 1px solid $mainColorOfWhite;
 
-          th.is-leaf {
-            border-right: 1px solid #fff;
+              &:first-of-type {
+                border-left: none;
+                border-radius: 0;
+              }
+            }
 
-            &:first-of-type {
-              border-left: none;
-              border-radius: 0;
+            th {
+              background: $mainColorOfWhite;
+            }
+
+            td {
+              border-bottom: 1px solid rgba(38, 47, 56, .1);
+
+              &:hover {
+                background-color: $mainColorOfWhite;
+              }
             }
           }
 
-          th {
-            background: #fff;
+          .el-table__empty-block {
+            background: $mainColorOfWhite;
           }
 
-          td {
-            border-bottom: 1px solid rgba(38, 47, 56, .1);
+          .el-table__expanded-cell {
+            border-bottom: 15px solid $mainBgColorOfDay !important;
+            background-color: $mainColorOfWhite;
 
             &:hover {
-              background-color: #fff;
+              background-color: $mainColorOfWhite !important;
             }
-          }
-        }
-
-        .el-table__empty-block {
-          background: #fff;
-        }
-
-        .el-table__expanded-cell {
-          /* border-bottom: 15px solid #fff !important; */
-          border-bottom: 15px solid #f4f4f4 !important;
-          background-color: #fff;
-
-          &:hover {
-            background-color: #fff !important;
           }
         }
       }

@@ -5,7 +5,7 @@
   >
     <div class="freezing-order-content">
       <!--表头属性-->
-      <div class="freezing-table-head display-flex">
+      <div class="freezing-table-head display-flex font-size12">
         <span class="item order-time">
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
@@ -37,7 +37,7 @@
       </div>
       <!--表格-->
       <div
-        class="freezing-table-body"
+        class="freezing-table-body font-size12"
         v-for="(item,index) in OTCFreezingOrderList"
         :key="index"
       >
@@ -222,8 +222,8 @@ export default {
       > .freezing-table-head {
         box-sizing: border-box;
         height: 35px;
-        margin-bottom: 5px;
-        border-radius: 5px;
+        margin-bottom: 10px;
+        border-radius: 2px;
         line-height: 35px;
 
         > .item {
@@ -240,12 +240,20 @@ export default {
         box-sizing: border-box;
         height: 170px;
         margin-bottom: 15px;
-        border-radius: 5px;
+        border-radius: 2px;
 
         > .freezing-info-top {
           height: 40px;
           border-radius: 5px;
           line-height: 40px;
+
+          .red {
+            color: $upColor;
+          }
+
+          .green {
+            color: $otcGreen;
+          }
 
           > .item {
             display: inline-block;
@@ -308,21 +316,12 @@ export default {
         height: 431px;
         line-height: 431px;
         text-align: center;
-        background-color: #1e2636;
       }
     }
 
     &.night {
       color: $nightFontColor;
       background-color: $mainNightBgColor;
-
-      > .background-color {
-        background-color: #1e2636;
-
-        > .fiat-color {
-          color: #338ff5;
-        }
-      }
 
       > .freezing-order-content {
         > .freezing-table-head {
@@ -340,14 +339,6 @@ export default {
             border-radius: 5px;
             color: #617499;
             background-color: $mainContentNightBgColor;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
           }
 
           > .freezing-info-bottom {
@@ -355,33 +346,19 @@ export default {
             border-top: 1px solid #262f38;
             color: #9da5b3;
 
-            > .info-left {
+            > .info-left,
+            .info-middle,
+            .info-right {
               border-right: 1px solid #262f38;
 
               > .text-blue {
-                color: #5e95ec;
-              }
-            }
-
-            > .info-middle {
-              border-right: 1px solid #262f38;
-
-              > .text-blue {
-                color: #5e95ec;
-              }
-            }
-
-            > .info-right {
-              border-right: 1px solid #262f38;
-
-              > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
             > .info-reason {
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
           }
@@ -395,107 +372,49 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
-
-      > .background-color {
-        background-color: #ccc;
-      }
 
       > .freezing-order-content {
         > .freezing-table-head {
-          border: 1px solid  rgba(72, 87, 118, .1);
-          color: #617499;
-          background-color: #fff;
-          box-shadow: -2px 3px 5px 1px #191e28;
+          color: $fontColorSecondaryOfDay;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .freezing-table-body {
-          border: 1px solid rgba(72, 87, 118, .1);
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .freezing-info-top {
-            color: #617499;
-            background-color: #fff;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
+            color: $dayMainTitleColor;
+            background-color: $mainColorOfWhite;
           }
 
           > .freezing-info-bottom {
             border-top: 1px solid rgba(72, 87, 118, .1);
-            color: #9da5b3;
+            color: $dayMainTitleColor;
 
-            > .info-left {
+            > .info-left,
+            .info-middle,
+            .info-right {
               border-right: 1px solid rgba(72, 87, 118, .1);
 
               > .text-blue {
-                color: #5e95ec;
-              }
-            }
-
-            > .info-middle {
-              border-right: 1px solid rgba(72, 87, 118, .1);
-
-              > .text-blue {
-                color: #5e95ec;
-              }
-            }
-
-            > .info-right {
-              border-right: 1px solid rgba(38, 47, 56, .1);
-
-              > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
             > .info-reason {
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
           }
         }
 
         > .no-data {
-          background-color: #fff;
-        }
-      }
-
-      /deep/ {
-        .freezing-order-content {
-          .freezing-table-head {
-            border: 1px solid #ecf1f8;
-            border-radius: 0;
-            color: #909399;
-            background-color: #fff;
-            -webkit-box-shadow: none;
-            box-shadow: none;
-
-            .order-time {
-              border-right: 0 solid #ecf1f8;
-            }
-          }
-
-          .no-data {
-            color: #909399;
-            background-color: #fff;
-          }
-        }
-
-        .el-table {
-          td {
-            border-bottom: 1px solid rgba(38, 47, 56, .1);
-          }
-        }
-
-        .el-table__expanded-cell {
-          background-color: #fff;
+          color: $fontColorSecondaryOfDay;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
     }

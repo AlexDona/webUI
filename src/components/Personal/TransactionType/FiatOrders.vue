@@ -3,13 +3,13 @@
     class="fiat-orders personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <header class="personal-height background-color line-height40 personal-height40 font-size16">
+    <!--法币订单-->
+    <!--<header class="personal-height background-color line-height40 personal-height40 font-size16">
       <span class="padding-left15 fiat-color font-weight400">
-        <!--法币订单-->
         {{ $t('M.comm_coin') }}{{ $t('M.comm_order') }}
       </span>
-    </header>
-    <div class="fiat-main margin-top9">
+    </header>-->
+    <div class="fiat-main">
       <el-tabs
         v-model="activeName"
         :tab-position = "tabPosition"
@@ -182,9 +182,6 @@ import FiatCoinCompletedOrder from '../FiatCoinContent/FiatCoinCompletedOrder'
 import FiatCoinFreezingOrder from '../FiatCoinContent/FiatCoinFreezingOrder'
 import FiatCoinEntrustOrder from '../FiatCoinContent/FiatCoinEntrustOrder'
 import IconFontCommon from '../../Common/IconFontCommon'
-// import {
-//   getOTCEntrustingOrders
-// } from '../../../utils/api/personal'
 import {
   getMerchantAvailableLegalTender,
   getOTCAvailableCurrency,
@@ -518,7 +515,7 @@ export default {
         }
 
         > .all-clear {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
     }
@@ -589,13 +586,13 @@ export default {
         background-color: $mainContentNightBgColor;
 
         > .fiat-color {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
       .fiat-main {
         .orders-main-top {
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
         }
       }
 
@@ -605,7 +602,7 @@ export default {
         /* tabs切换 */
         .el-tabs__item {
           &.is-active {
-            border-bottom: 2px solid #338ff5 !important;
+            border-bottom: 2px solid $mainColor !important;
             border-left: 0;
             color: rgba(0, 121, 254, 1) !important;
             background-color: #1c1f32 !important;
@@ -621,7 +618,7 @@ export default {
         }
 
         .el-button {
-          color: #fff;
+          color: $mainColorOfWhite;
           background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
@@ -631,43 +628,40 @@ export default {
       color: $dayMainTitleColor;
 
       > header {
-        background-color: #fff;
+        background-color: $mainColorOfWhite;
         box-shadow: 0 0 6px #cfd5df;
 
         > span {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
       > div {
-        background-color: #fff;
+        background-color: $mainColorOfWhite;
         box-shadow: 0 0 6px #cfd5df;
       }
 
       .fiat-main {
         .orders-main-top {
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
           box-shadow: 0 0 6px #cfd5df;
         }
       }
 
       /deep/ {
-        /* 个人中心（白色主题） */
-
         /* tabs切换 */
         .el-tabs__item {
-          border-bottom: 1px solid #ecf1f8;
           color: #7d90ac;
 
           &:hover {
             border-left: none;
-            color: #338ff5;
+            color: $mainColor;
           }
 
           &.is-active {
-            border-bottom: 2px solid #338ff5;
+            border-bottom: 2px solid $mainColor;
             border-left: none;
-            color: #338ff5;
+            color: $mainColor;
             background-color: transparent;
           }
         }

@@ -1516,7 +1516,6 @@ export default {
         box-sizing: border-box;
         height: 170px;
         margin-bottom: 15px;
-        border: 1px solid #262f38;
         border-radius: 5px;
         font-size: 12px;
         background-color: $mainContentNightBgColor;
@@ -1549,13 +1548,13 @@ export default {
             }
 
             > .buy-icon {
-              border-top: 18px solid #d45858;
-              border-right: 18px solid #d45858;
+              border-top: 18px solid $upColor;
+              border-right: 18px solid $upColor;
             }
 
             > .sell-icon {
-              border-top: 18px solid #008069;
-              border-right: 18px solid #008069;
+              border-top: 18px solid $otcGreen;
+              border-right: 18px solid $otcGreen;
             }
 
             > .buy-sell-icon {
@@ -1593,7 +1592,7 @@ export default {
                   line-height: 20px;
 
                   > .money {
-                    color: #5e95ec;
+                    color: $mainColor;
                   }
                 }
               }
@@ -1668,7 +1667,7 @@ export default {
 
                   .wait-pay {
                     margin-right: 10px;
-                    color: #e8554f;
+                    color: $upColor;
                   }
 
                   .count-time {
@@ -1677,7 +1676,7 @@ export default {
                 }
 
                 > .submitted-confirm-payment {
-                  color: #5e95ec;
+                  color: $mainColor;
                 }
 
                 > .action-explain {
@@ -1685,7 +1684,7 @@ export default {
                   line-height: 20px;
 
                   > .remaining-time {
-                    color: #d45858;
+                    color: $upColor;
                   }
                 }
 
@@ -1694,7 +1693,7 @@ export default {
 
                   .timeIcon {
                     margin-right: 10px;
-                    color: #d45858;
+                    color: $upColor;
                   }
                 }
               }
@@ -1709,7 +1708,7 @@ export default {
             padding: 0 77px 0 25px;
             border-bottom: 1px solid #262f38;
             line-height: 36px;
-            color: #fff;
+            color: $mainColorOfWhite;
           }
 
           > .appeal-body {
@@ -1725,7 +1724,7 @@ export default {
 
                 > .appeal-reason {
                   margin-right: 10px;
-                  color: #338ff5;
+                  color: $mainColor;
                 }
 
                 > .appeal-textarea-text {
@@ -1747,7 +1746,7 @@ export default {
                 > .upload-title {
                   display: inline-block;
                   vertical-align: top;
-                  color: #338ff5;
+                  color: $mainColor;
                 }
 
                 > .upload-content {
@@ -1762,7 +1761,7 @@ export default {
               }
 
               .star {
-                color: #e8554f;
+                color: $upColor;
               }
             }
           }
@@ -1777,7 +1776,7 @@ export default {
 
       > .password-dialog {
         .tips {
-          color: #d45858;
+          color: $upColor;
         }
       }
     }
@@ -1906,7 +1905,7 @@ export default {
 
           .close-pwd-tip {
             margin-top: 5px;
-            color: #338ff5;
+            color: $mainColor;
           }
         }
 
@@ -1916,7 +1915,7 @@ export default {
 
           .forget-pwd-tip {
             padding: 8px 20px 0 0;
-            color: #338ff5;
+            color: $mainColor;
           }
         }
 
@@ -1943,7 +1942,7 @@ export default {
 
       > .fiat-trading-order-content {
         .button {
-          color: #fff;
+          color: $mainColorOfWhite;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
@@ -1956,7 +1955,7 @@ export default {
                     > .pay-style {
                       > .qiandai-icon {
                         > .icon {
-                          color: #fff;
+                          color: $mainColorOfWhite;
                         }
                       }
                     }
@@ -1976,7 +1975,7 @@ export default {
         background-color: $mainContentNightBgColor;
 
         > .fiat-color {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1994,12 +1993,12 @@ export default {
         }
 
         .el-select-dropdown__item.selected {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         .el-select-dropdown__item {
           &:hover {
-            color: #338ff5;
+            color: $mainColor;
             background-color: #29343f;
           }
         }
@@ -2045,19 +2044,19 @@ export default {
           }
 
           .el-dialog__title {
-            color: #fff;
+            color: $mainColorOfWhite;
           }
 
           .el-dialog__body {
-            color: #fff;
+            color: $mainColorOfWhite;
 
             .password-input {
-              color: #fff;
+              color: $mainColorOfWhite;
               background-color: #1a2233;
             }
 
             .error-info {
-              color: #fff;
+              color: $mainColorOfWhite;
             }
           }
         }
@@ -2071,27 +2070,24 @@ export default {
     }
 
     &.day {
-      color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
-
       > .fiat-trading-order-content {
         .button {
-          color: #fff;
+          color: $mainColorOfWhite;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
         > .order-list {
-          border: 1px solid  rgba(72, 87, 118, .1);
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .order {
             > .order-list-head {
               border-bottom: 1px solid rgba(72, 87, 118, .1);
-              color: #333;
+              color: $dayMainTitleColor;
             }
 
             > .order-list-body {
-              color: #7d90ac;
+              color: $dayMainTitleColor;
 
               > .order-list-body-left {
                 border-right: 1px solid rgba(72, 87, 118, .1);
@@ -2103,11 +2099,9 @@ export default {
                 > .middle-content {
                   .trader-info {
                     > .pay-style {
-                      background: rgba(51, 143, 245, .1);
-
                       > .qiandai-icon {
                         > .icon {
-                          color: #338ff5;
+                          color: $mainColor;
                         }
                       }
                     }
@@ -2119,23 +2113,23 @@ export default {
                 > .right-content {
                   > .action-tips {
                     .wait-pay {
-                      color: #e8554f;
+                      color: $upColor;
                     }
                   }
 
                   > .submitted-confirm-payment {
-                    color: #5e95ec;
+                    color: $mainColor;
                   }
 
                   > .action-explain {
                     > .remaining-time {
-                      color: #d45858;
+                      color: $upColor;
                     }
                   }
 
                   > .count-down-time {
                     .timeIcon {
-                      color: #d45858;
+                      color: $upColor;
                     }
                   }
                 }
@@ -2145,21 +2139,22 @@ export default {
 
           > .appeal {
             > .appeal-head {
-              border-bottom: 1px solid rgba(72, 87, 118, .1);
-              color: #333;
-              background-color: #e7e8e9;
+              border-bottom: 1px solid $borderColorOfDay;
+              color: $dayMainTitleColor;
+              background-color: $mainColorOfWhite;
             }
 
             > .appeal-body {
               > .appeal-body-content {
                 > .appeal-textarea {
                   > .appeal-reason {
-                    color: #338ff5;
+                    color: $mainColor;
                   }
 
                   > .appeal-textarea-text {
-                    color: #7d90ac;
-                    background-color: #fff;
+                    border: 1px solid $borderColorOfDay;
+                    color: $dayMainTitleColor;
+                    background-color: $mainColorOfWhite;
                   }
                 }
               }
@@ -2168,8 +2163,8 @@ export default {
         }
 
         > .no-data {
-          background-color: #fff;
-          box-shadow: 0 0 6px #cfd5df;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
 
@@ -2182,7 +2177,25 @@ export default {
         .password-dialog {
           .el-dialog__body {
             .password-input {
-              border: 1px solid #ecf1f8;
+              border: 1px solid $borderColorOfDay;
+            }
+          }
+        }
+
+        /* 订单申诉按钮 */
+        .submitted-confirm-payment {
+          .buy-appeal-order {
+            color: $mainColor;
+            background-color: $coinBgColorOfDay;
+          }
+        }
+
+        /* 扫码支付按钮 */
+        .bank-info-picture {
+          .picture-box {
+            .el-button {
+              color: $mainColor;
+              background-color: $coinBgColorOfDay;
             }
           }
         }

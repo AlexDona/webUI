@@ -3,12 +3,12 @@
     class="coin-orders personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <header class="personal-height background-color personal-height40 line-height40 font-size16">
+    <!--<header class="personal-height background-color personal-height40 line-height40 font-size16">
       <span class="padding-left15 font-weight400 coin-color">
-        <!--币币订单-->
+        &lt;!&ndash;币币订单&ndash;&gt;
         {{ $t('M.user_coin_order7') }}
       </span>
-    </header>
+    </header>-->
     <div class="height500 background-color">
       <el-tabs
         v-model="activeName"
