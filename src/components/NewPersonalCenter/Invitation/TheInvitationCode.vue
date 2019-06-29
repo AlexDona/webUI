@@ -126,9 +126,6 @@ export default {
   props: {
     totalSumCNY: {
       type: String
-    },
-    inviterCount: {
-      type: Number
     }
   },
   data () {
@@ -216,7 +213,8 @@ export default {
   computed: {
     ...mapState({
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
-      currencyRateList: state => state.common.currencyRateList // 折算货币列表
+      currencyRateList: state => state.common.currencyRateList, // 折算货币列表
+      inviterCount: state => state.user.invitation_S.page.total
     }),
     inviteUrl () {
       console.log(domain)

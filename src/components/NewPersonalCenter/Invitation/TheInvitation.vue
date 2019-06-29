@@ -12,7 +12,6 @@
     // 邀请推广
     TheInvitationCode(
       :totalSumCNY="totalSumCNY"
-      :inviterCount="inviterCount"
     )
     // 邀请统计
     TheInvitationStatistics(@getUserPromotionList="getUserPromotionList")
@@ -44,8 +43,6 @@ export default {
       currentNum: 1,
       // 当前委托总页数
       total: 1,
-      // 邀请人数
-      inviterCount: 0,
       // 筛选类型 first: 直接推广、second ： 简介推广
       generalizeValue: 'first',
       pageSize: 10
@@ -77,7 +74,6 @@ export default {
       // 返回展示
       // this.statistics = _.get(data, 'data.page.list')
       // this.totalForMyEntrust = _.get(data, 'data.page.pages') - 0
-      // this.inviterCount = _.get(data, 'data.page.total') - 0
       // 已获得的佣金折合
       this.totalSumCNY = _.get(data, 'data.btc')
       this.UPDATE_INVITATIONS_M(_.get(data, 'data'))
