@@ -72,8 +72,7 @@ export default {
               emphasis: {
                 show: true,
                 textStyle: {
-                  fontSize: '22',
-                  fontWeight: 'bold'
+                  fontSize: '20'
                 }
               }
             },

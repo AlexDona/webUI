@@ -682,8 +682,8 @@ export default {
       activeCurrency: {}, // 当前选中币种
       totalSumBTC: '', // 资产总估值BTC
       isRecharge: '', // 是否允许充币
-      isRechargeState: true, // 是否允许充币(作用于前后台同时进行充币或者禁用)
       isWithdraw: '', // 是否允许提币
+      isRechargeState: true, // 是否允许充币(作用于前后台同时进行充币或者禁用)
       isWithdrawState: true, // 是否允许提币(作用于前后台同时进行充币或者禁用)
       currencyTradingId: '', // 根据Id跳转到对应交易信息
       id: '', // 币种ID

@@ -1878,7 +1878,6 @@ export default {
 
               .pieCharts {
                 width: 282px;
-                padding-top: 50px;
               }
             }
           }

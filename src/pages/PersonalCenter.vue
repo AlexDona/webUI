@@ -2,6 +2,7 @@
   <div
     class="personal-center personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{ 'min-height': windowHeight - footerHeight - 55 + 'px'}"
   >
     <div class="personal-center-main">
       <div class="personal-center-content clearfix">
@@ -359,8 +360,12 @@ export default {
       userInfo: state => state.user.loginStep1Info,
       payPassword: state => state.user.loginStep1Info.userInfo.payPassword,
       realname: state => state.user.loginStep1Info.userInfo.realname,
-      token: state => state.user.loginStep1Info.token
-    })
+      token: state => state.user.loginStep1Info.token,
+      footerHeight: state => state.common.footerHeight
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {
     userCenterActiveName (e) {
