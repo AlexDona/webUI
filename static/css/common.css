@@ -186,6 +186,7 @@
 /* 全局二次弹窗样式 */
 .day .el-message-box {
   background: #fff;
+  box-shadow: 0 0 12px rgba(0, 0, 0, .2);
 }
 
 .day .el-message-box__btns button:nth-child(1) {

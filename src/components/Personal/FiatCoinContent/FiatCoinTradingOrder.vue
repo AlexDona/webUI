@@ -1772,8 +1772,8 @@ export default {
       }
 
       > .no-data {
-        height: 472px;
-        line-height: 472px;
+        height: 530px;
+        line-height: 530px;
         text-align: center;
       }
 

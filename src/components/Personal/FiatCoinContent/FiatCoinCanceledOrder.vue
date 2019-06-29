@@ -322,8 +322,8 @@ export default {
       }
 
       > .no-data {
-        height: 431px;
-        line-height: 431px;
+        height: 485px;
+        line-height: 485px;
         text-align: center;
       }
     }
