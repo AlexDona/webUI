@@ -87,7 +87,7 @@
             )
               p
                 Iconfont.iconfont(icon-name="icon-jinggao")
-                span {{holdCoinName}} {{$t(inviter_tips)}}
+                span {{$t(inviter_tips)}}
               .dialog-footer(slot="footer")
                 // 取消
                 el-button.button(
