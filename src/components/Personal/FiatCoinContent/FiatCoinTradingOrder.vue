@@ -30,9 +30,7 @@
               <!--挂单时间-->
               {{$t('M.otc_entrust_time')}}：{{item.createTime}}
             </div>
-            <div class="order-list-head-icon buy-icon">
-              <!-- <img src="../../assets/develop/buy.png" alt=""> -->
-            </div>
+            <div class="order-list-head-icon buy-icon"></div>
             <div class="buy-sell-icon">
               <!--买-->
               {{$t('' + 'M.comm_bid')}}
@@ -44,7 +42,6 @@
             <div class="order-list-body-left">
               <!-- logo图标和名字 -->
               <div class="logo">
-                <!-- src="../../assets/develop/bi.png" -->
                 <img
                   :src="item.coinUrl"
                   width="30"
@@ -121,16 +118,7 @@
                   </div>
                   <!-- 收款人 -->
                   <p class="bank-info">
-                    <!--银行卡，微信，支付宝取userBankList中的realname，其他都去外层的sellName-->
-                    <!--<span>{{$t('M.otc_payee')}}:
-                      <span v-if="activeBankType[index] === 'Bankcard' || activeBankType[index] === 'Alipay' ||  activeBankType[index] === 'Wechat'">
-                        {{checkedPayRealNameArr[index]}}
-                      </span>
-                      <span v-else>
-                        {{item.sellName}}
-                      </span>
-                    </span>-->
-                    <!--现在改为：都取userBankList中的realname-->
+                    <!--取userBankList中的realname-->
                     <span>
                       <span v-if="activeBankType[index]">
                         {{$t('M.otc_payee')}}:
@@ -701,7 +689,7 @@
         </div>
       </div>
       <!-- 二、暂无数据 -->
-      <div class="no-data" v-if="!tradingOrderList.length">
+      <div class="no-data font-size12" v-if="!tradingOrderList.length">
         <!--暂无数据-->
         {{ $t('M.comm_no_data') }}
       </div>
@@ -753,7 +741,7 @@
             class="dialog-footer"
           >
             <button
-              class="button"
+              class="button cursor-pointer"
               type="primary"
               @click="submitButton1"
               :disabled="confirmPaymentStatus"
@@ -811,7 +799,7 @@
             class="dialog-footer"
           >
             <button
-              class="button"
+              class="button cursor-pointer"
               type="primary"
               @click="submitButton2"
               :disabled="confirmGatheringStatus"
@@ -866,7 +854,7 @@
             class="dialog-footer"
           >
             <button
-              class="button"
+              class="button cursor-pointer"
               type="primary"
               @click="submitsellerAppeal"
               :disabled="submitAppealStatus"
@@ -990,6 +978,17 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    // ren增加
+    // 清除定义的数组类数据
+    clearArrData () {
+      this.checkedPayRealNameArr = [] // 清空收款人名字
+      this.activePayModeList = [] // 清空支付方式数组
+      this.activeBankType = [] // 清空选中的支付方式所展示的付款账户和账号
+      this.cancelOrderTimeArr = [] // 清空取消订单倒计时
+      this.accomplishOrderTimeArr = [] // 清空自动成交倒计时
+      this.buyerAppealButtonStatus = [] // 清空买家申诉按钮
+    },
+    // ren增加
     // 申诉上传图片
     // 1.0 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
     // 文件上传之前调用做一些拦截限制
@@ -1224,6 +1223,7 @@ export default {
     },
     // 4.0 买家点击确认付款按钮 弹出交易密码框
     async confirmPayMoney (index) {
+      // console.log(index)
       if (!this.activePayModeList[index]) {
         this.$message({
           // 请选择支付方式
@@ -1269,11 +1269,13 @@ export default {
         // 1关闭交易密码框
         this.dialogVisible1 = false
         // 正确逻辑
-        // 2再次调用接口刷新列表
+        // 再次调用接口刷新列表
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
-        if (!data) return false
+        // 清除定义的数组类数据
+        this.clearArrData()
         this.errpwd = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框
+        if (!data) return false
       }
     }, 500),
     // 7.0 卖家在买家付款前点击确认收款按钮的提示事件
@@ -1316,14 +1318,17 @@ export default {
       })
       console.log(data)
       this.confirmGatheringStatus = false // 开启确认收款交易密码框提交按钮
+      // 正确逻辑
       // 1关闭交易密码框
       this.dialogVisible2 = false
-      // 正确逻辑
-      // 2再次调用接口刷新列表
-      this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
-      if (!data) return false
+      // 2清空密码
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
+      // 3清除定义的数组类数据
+      this.clearArrData()
+      // 4再次调用接口刷新列表
+      this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
+      if (!data) return false
     }, 500),
     // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index, orderType) {
@@ -1412,12 +1417,14 @@ export default {
         data = await sellerSendAppeal(params)
       }
       console.log(data)
+      // 正确逻辑
       this.submitAppealStatus = false // 开启提交申诉交易密码框提交按钮
       this.dialogVisible3 = false
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
       this.appealTextAreaValue = '' // 清空申诉原因
-      // 正确逻辑
+      // 1清除定义的数组类数据
+      this.clearArrData()
       // 2再次调用接口刷新列表
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       if (!data) return false
@@ -1499,7 +1506,6 @@ export default {
   .fiat-trading-order-box {
     > .fiat-trading-order-content {
       min-height: 386px;
-      border-radius: 5px;
 
       .button {
         width: 290px;
@@ -1515,9 +1521,7 @@ export default {
       > .order-list {
         box-sizing: border-box;
         height: 170px;
-        margin-bottom: 15px;
-        border: 1px solid #262f38;
-        border-radius: 5px;
+        margin-bottom: 10px;
         font-size: 12px;
         background-color: $mainContentNightBgColor;
 
@@ -1545,17 +1549,16 @@ export default {
               height: 0;
               border-bottom: 18px solid transparent;
               border-left: 18px solid transparent;
-              border-radius: 5px;
             }
 
             > .buy-icon {
-              border-top: 18px solid #d45858;
-              border-right: 18px solid #d45858;
+              border-top: 18px solid $upColor;
+              border-right: 18px solid $upColor;
             }
 
             > .sell-icon {
-              border-top: 18px solid #008069;
-              border-right: 18px solid #008069;
+              border-top: 18px solid $otcGreen;
+              border-right: 18px solid $otcGreen;
             }
 
             > .buy-sell-icon {
@@ -1593,7 +1596,7 @@ export default {
                   line-height: 20px;
 
                   > .money {
-                    color: #5e95ec;
+                    color: $mainColor;
                   }
                 }
               }
@@ -1668,7 +1671,7 @@ export default {
 
                   .wait-pay {
                     margin-right: 10px;
-                    color: #e8554f;
+                    color: $upColor;
                   }
 
                   .count-time {
@@ -1677,7 +1680,7 @@ export default {
                 }
 
                 > .submitted-confirm-payment {
-                  color: #5e95ec;
+                  color: $mainColor;
                 }
 
                 > .action-explain {
@@ -1685,7 +1688,7 @@ export default {
                   line-height: 20px;
 
                   > .remaining-time {
-                    color: #d45858;
+                    color: $upColor;
                   }
                 }
 
@@ -1694,7 +1697,7 @@ export default {
 
                   .timeIcon {
                     margin-right: 10px;
-                    color: #d45858;
+                    color: $upColor;
                   }
                 }
               }
@@ -1709,7 +1712,7 @@ export default {
             padding: 0 77px 0 25px;
             border-bottom: 1px solid #262f38;
             line-height: 36px;
-            color: #fff;
+            color: $mainColorOfWhite;
           }
 
           > .appeal-body {
@@ -1725,7 +1728,7 @@ export default {
 
                 > .appeal-reason {
                   margin-right: 10px;
-                  color: #338ff5;
+                  color: $mainColor;
                 }
 
                 > .appeal-textarea-text {
@@ -1734,7 +1737,6 @@ export default {
                   height: 90px;
                   padding: 8px;
                   border: 1px solid #7587a5;
-                  border-radius: 4px;
                   outline-color: transparent;
                   line-height: 16px;
                 }
@@ -1747,7 +1749,7 @@ export default {
                 > .upload-title {
                   display: inline-block;
                   vertical-align: top;
-                  color: #338ff5;
+                  color: $mainColor;
                 }
 
                 > .upload-content {
@@ -1762,7 +1764,7 @@ export default {
               }
 
               .star {
-                color: #e8554f;
+                color: $upColor;
               }
             }
           }
@@ -1777,7 +1779,7 @@ export default {
 
       > .password-dialog {
         .tips {
-          color: #d45858;
+          color: $upColor;
         }
       }
     }
@@ -1906,7 +1908,7 @@ export default {
 
           .close-pwd-tip {
             margin-top: 5px;
-            color: #338ff5;
+            color: $mainColor;
           }
         }
 
@@ -1916,7 +1918,7 @@ export default {
 
           .forget-pwd-tip {
             padding: 8px 20px 0 0;
-            color: #338ff5;
+            color: $mainColor;
           }
         }
 
@@ -1943,7 +1945,7 @@ export default {
 
       > .fiat-trading-order-content {
         .button {
-          color: #fff;
+          color: $mainColorOfWhite;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
@@ -1956,7 +1958,7 @@ export default {
                     > .pay-style {
                       > .qiandai-icon {
                         > .icon {
-                          color: #fff;
+                          color: $mainColorOfWhite;
                         }
                       }
                     }
@@ -1976,7 +1978,7 @@ export default {
         background-color: $mainContentNightBgColor;
 
         > .fiat-color {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1994,12 +1996,12 @@ export default {
         }
 
         .el-select-dropdown__item.selected {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         .el-select-dropdown__item {
           &:hover {
-            color: #338ff5;
+            color: $mainColor;
             background-color: #29343f;
           }
         }
@@ -2045,19 +2047,19 @@ export default {
           }
 
           .el-dialog__title {
-            color: #fff;
+            color: $mainColorOfWhite;
           }
 
           .el-dialog__body {
-            color: #fff;
+            color: $mainColorOfWhite;
 
             .password-input {
-              color: #fff;
+              color: $mainColorOfWhite;
               background-color: #1a2233;
             }
 
             .error-info {
-              color: #fff;
+              color: $mainColorOfWhite;
             }
           }
         }
@@ -2071,27 +2073,24 @@ export default {
     }
 
     &.day {
-      color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
-
       > .fiat-trading-order-content {
         .button {
-          color: #fff;
+          color: $mainColorOfWhite;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
         > .order-list {
-          border: 1px solid  rgba(72, 87, 118, .1);
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .order {
             > .order-list-head {
               border-bottom: 1px solid rgba(72, 87, 118, .1);
-              color: #333;
+              color: $dayMainTitleColor;
             }
 
             > .order-list-body {
-              color: #7d90ac;
+              color: $dayMainTitleColor;
 
               > .order-list-body-left {
                 border-right: 1px solid rgba(72, 87, 118, .1);
@@ -2103,11 +2102,9 @@ export default {
                 > .middle-content {
                   .trader-info {
                     > .pay-style {
-                      background: rgba(51, 143, 245, .1);
-
                       > .qiandai-icon {
                         > .icon {
-                          color: #338ff5;
+                          color: $mainColor;
                         }
                       }
                     }
@@ -2119,23 +2116,23 @@ export default {
                 > .right-content {
                   > .action-tips {
                     .wait-pay {
-                      color: #e8554f;
+                      color: $upColor;
                     }
                   }
 
                   > .submitted-confirm-payment {
-                    color: #5e95ec;
+                    color: $mainColor;
                   }
 
                   > .action-explain {
                     > .remaining-time {
-                      color: #d45858;
+                      color: $upColor;
                     }
                   }
 
                   > .count-down-time {
                     .timeIcon {
-                      color: #d45858;
+                      color: $upColor;
                     }
                   }
                 }
@@ -2145,21 +2142,22 @@ export default {
 
           > .appeal {
             > .appeal-head {
-              border-bottom: 1px solid rgba(72, 87, 118, .1);
-              color: #333;
-              background-color: #e7e8e9;
+              border-bottom: 1px solid $borderColorOfDay;
+              color: $dayMainTitleColor;
+              background-color: $mainColorOfWhite;
             }
 
             > .appeal-body {
               > .appeal-body-content {
                 > .appeal-textarea {
                   > .appeal-reason {
-                    color: #338ff5;
+                    color: $mainColor;
                   }
 
                   > .appeal-textarea-text {
-                    color: #7d90ac;
-                    background-color: #fff;
+                    border: 1px solid $borderColorOfDay;
+                    color: $dayMainTitleColor;
+                    background-color: $mainColorOfWhite;
                   }
                 }
               }
@@ -2168,8 +2166,9 @@ export default {
         }
 
         > .no-data {
-          border: 1px solid rgba(38, 47, 56, .1);
-          background-color: #fff;
+          color: $fontColorSecondaryOfDay;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
 
@@ -2182,7 +2181,25 @@ export default {
         .password-dialog {
           .el-dialog__body {
             .password-input {
-              border: 1px solid #ecf1f8;
+              border: 1px solid $borderColorOfDay;
+            }
+          }
+        }
+
+        /* 订单申诉按钮 */
+        .submitted-confirm-payment {
+          .buy-appeal-order {
+            color: $mainColor;
+            background-color: $coinBgColorOfDay;
+          }
+        }
+
+        /* 扫码支付按钮 */
+        .bank-info-picture {
+          .picture-box {
+            .el-button {
+              color: $mainColor;
+              background-color: $coinBgColorOfDay;
             }
           }
         }

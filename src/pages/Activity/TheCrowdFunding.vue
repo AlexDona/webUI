@@ -11,26 +11,32 @@
       .banner
         .inner-box
           h3 {{$t(title1)}}
-          p {{$t(title2)}}
+          p
+            span {{$t(title2)}}
+            span {{$t(title3)}}
+            span {{$t(title4)}}
       .container
         .header
           // tabs
           .left
             li.tab(
-            v-for="tab in tabs"
-            :class="{active:activeName == tab.value}"
-            @click="toggleTab(tab.value)"
+              v-for="tab in tabs"
+              :class="{active:activeName == tab.value}"
+              @click="toggleTab(tab.value)"
             )
               span {{$t(tab.name)}}
-          //  存币记录列表
+          //  锁仓记录列表
           .right
-            // 存币记录
-            router-link(:to="`/${$routes_X.crowdFundingRecord}`") {{$t('M.crowd_funding_deposit_record')}}
+            // 锁仓记录
+            router-link(:to="`/${$routes_X.crowdFundingRecord}`") {{$t('M.crowd_funding_lock_up_record')}}
         .content
           li.crowd-funding-item(
-            v-for="crowdFunding in crowdFundings"
+            v-for="(crowdFunding,index) in crowdFundings"
+            :class="{active: activeId == index}"
+            @mouseenter="toggleActive(index)"
+            @mouseleave="toggleActive"
           )
-            TheCrowdFundingItem(
+            TheCrowdFundingItem.item(
               :crowdFunding ="crowdFunding"
             )
           // 暂无数据
@@ -73,7 +79,10 @@ export default {
       activeName: '',
       crowdFundings: [],
       title1: 'M.crowd_funding_title1',
-      title2: 'M.crowd_funding_title2'
+      title2: 'M.crowd_funding_title2',
+      title3: 'M.crowd_funding_title3',
+      title4: 'M.crowd_funding_title4',
+      activeId: -1
     }
   },
   async created () {
@@ -102,7 +111,10 @@ export default {
       // console.log(data)
       this.crowdFundings = _.get(data, 'data')
       // this.crowdFundings = []
-    }, 500)
+    }, 500),
+    toggleActive: _.throttle(function (index = -1) {
+      this.activeId = index
+    })
   },
   // filter: {},
   computed: {
@@ -128,15 +140,20 @@ export default {
         position relative
         >.inner-box
           position absolute
-          left 30%
+          right 48%
           top 19%
           >h3
-            font-size 44px
+            font-size 50px
             color #fff
-            line-height 80px
+            line-height 90px
+            text-align center
           >p
-            font-size 30px
-            color #fff
+            font-size 26px
+            color #F7F297
+            background url('../../assets/images/crowd-banner-bg.png') no-repeat center center/100% 100%
+            padding 8px 40px 10px
+            >span
+              margin 0 20px
       > .container
         width S_main_content_width
         margin -107px auto 0
@@ -180,9 +197,11 @@ export default {
             margin 0 15px 50px 15px
             border-radius 6px
             transition all .1s ease
-            &:hover
-              transform scale(1.02)
-              margin-top -10px
+            transition-delay 0.1s
+            >.item
+              height 100%
+            &.active
+              margin-top -4px
           >.no-data
             width 100%
             background url('../../assets/images/no-data-bg.png') no-repeat center 40%

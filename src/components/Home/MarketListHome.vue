@@ -811,7 +811,7 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
+      background-color: $newDayBg;
 
       > .inner-box {
         > .search-box {

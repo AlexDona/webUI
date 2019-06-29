@@ -307,9 +307,9 @@ export default {
     > .canceled-order-content {
       > .canceled-table-head {
         box-sizing: border-box;
-        width: 1195px;
+        width: 1189px;
         height: 35px;
-        margin-bottom: 15px;
+        margin: 2px 2px 15px;
         border-radius: 5px;
         line-height: 35px;
 
@@ -322,15 +322,23 @@ export default {
 
       > .canceled-table-body {
         box-sizing: border-box;
-        width: 1195px;
+        width: 1189px;
         height: 170px;
-        margin-bottom: 15px;
+        margin: 2px 2px 15px;
         border-radius: 5px;
 
         > .canceled-info-top {
           height: 40px;
           border-radius: 5px;
           line-height: 40px;
+
+          .red {
+            color: $upColor;
+          }
+
+          .green {
+            color: $otcGreen;
+          }
 
           > .item {
             display: inline-block;
@@ -344,13 +352,14 @@ export default {
           flex: 7;
           box-sizing: border-box;
           padding: 25px 30px 0;
+          font-size: 12px;
 
           > .info-left {
             flex: 2;
             box-sizing: border-box;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
             }
           }
 
@@ -360,7 +369,7 @@ export default {
             margin-left: 30px;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
             }
           }
 
@@ -370,7 +379,7 @@ export default {
             margin-left: 30px;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
 
               .reason-content {
                 display: inline-block;
@@ -385,8 +394,9 @@ export default {
       }
 
       > .no-data {
-        width: 1195px;
+        width: 1189px;
         height: 432px;
+        margin: 2px 2px 15px;
         line-height: 432px;
       }
     }
@@ -396,25 +406,17 @@ export default {
         > .canceled-table-head {
           border: 1px solid #485776;
           color: #a9bed4;
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
           box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .canceled-table-body {
           border: 1px solid #485776;
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
 
           > .canceled-info-top {
             color: #9da5b3;
-            background-color: #1c1f32;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
+            background-color: $mainContentNightBgColor;
           }
 
           > .canceled-info-bottom {
@@ -455,31 +457,23 @@ export default {
     &.day {
       > .canceled-order-content {
         > .canceled-table-head {
-          border: 1px solid #ecf1f8;
-          color: #617499;
+          color: $fontColorSecondaryOfDay;
           background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .canceled-table-body {
-          border: 1px solid #ecf1f8;
           background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .canceled-info-top {
-            color: #333;
+            color: $dayMainTitleColor;
             background-color: $mainDayBgColor;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
           }
 
           > .canceled-info-bottom {
             border-top: 1px solid rgba(38, 47, 56, .1);
-            color: #7d90ac;
+            color: $dayMainTitleColor;
 
             > .info-left {
               border-right: 1px solid rgba(38, 47, 56, .1);
@@ -503,16 +497,16 @@ export default {
               }
 
               > .cancel-time {
-                color: #333;
+                color: $dayMainTitleColor;
               }
             }
           }
         }
 
         > .no-data {
-          border: 1px solid rgba(97, 116, 153, .1);
-          color: #333;
+          color: $dayMainTitleColor;
           background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
     }

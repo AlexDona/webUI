@@ -4,8 +4,8 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="canceled-order-content">
-      <!--&lt;!&ndash;表头属性&ndash;&gt;-->
-      <div class="canceled-table-head display-flex">
+      <!--表头属性-->
+      <div class="canceled-table-head display-flex font-size12">
         <span class="item flex1">
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
@@ -37,7 +37,7 @@
       </div>
       <!--表格-->
       <div
-        class="canceled-table-body"
+        class="canceled-table-body font-size12"
         v-for="(item,index) in OTCCanceledOrderList"
         :key="index"
       >
@@ -161,7 +161,7 @@
         </div>
       </div>
       <div
-        class="no-data"
+        class="no-data font-size12"
         v-if="!OTCCanceledOrderList.length"
       >
         <!--暂无数据-->
@@ -239,8 +239,7 @@ export default {
       > .canceled-table-head {
         box-sizing: border-box;
         height: 35px;
-        margin-bottom: 5px;
-        border-radius: 5px;
+        margin-bottom: 10px;
         line-height: 35px;
 
         > .item {
@@ -252,13 +251,19 @@ export default {
       > .canceled-table-body {
         box-sizing: border-box;
         height: 170px;
-        margin-bottom: 15px;
-        border-radius: 5px;
+        margin-bottom: 10px;
 
         > .canceled-info-top {
           height: 40px;
-          border-radius: 5px;
           line-height: 40px;
+
+          .red {
+            color: $upColor;
+          }
+
+          .green {
+            color: $otcGreen;
+          }
 
           > .item {
             display: inline-block;
@@ -283,13 +288,13 @@ export default {
 
             > .text-info {
               line-height: 20px;
-              // 增加原因字段样式
+
               .reason-content {
                 display: inline-block;
                 width: 250px;
                 overflow: hidden;
-                text-overflow: ellipsis; // 显示省略符号来代表被修剪的文本。
-                white-space: nowrap; // 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+                text-overflow: ellipsis;
+                white-space: nowrap;
               }
             }
           }
@@ -323,117 +328,9 @@ export default {
       }
     }
 
-    /deep/ {
-      /* 1.0付款方式下拉框 */
-      .el-input--suffix {
-        .el-input__inner {
-          width: 170px;
-          height: 26px;
-        }
-      }
-
-      .el-input__inner {
-        padding: 0 30px !important;
-        border: none;
-      }
-
-      .el-select-dropdown {
-        border: none;
-      }
-
-      .el-select-dropdown__item {
-        height: 30px !important;
-        line-height: 30px !important;
-      }
-
-      /* 2.0按钮样式 */
-      .el-button--mini {
-        padding: 3px 10px;
-      }
-
-      /* 3.0 订单申诉 */
-      .el-textarea {
-        width: 540px;
-      }
-
-      .el-textarea__inner {
-        height: 90px;
-        resize: none;
-        font-size: 14px;
-      }
-
-      /* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */
-      .bank-info-picture {
-        .el-button {
-          padding: 2px 6px;
-        }
-      }
-
-      /* 输入密码弹出框 */
-      .password-dialog {
-        .el-dialog {
-          width: 350px;
-          height: 207px;
-          border-radius: 4px;
-        }
-
-        .el-dialog__header {
-          padding: 10px 20px;
-          border-radius: 4px;
-        }
-
-        .el-dialog__title {
-          font-size: 14px;
-        }
-
-        .el-dialog__body {
-          padding: 15px 20px 10px 30px;
-          font-size: 12px;
-
-          .input {
-            margin-top: 13px;
-          }
-
-          .password-input {
-            display: inline-block;
-            width: 280px;
-            height: 36px;
-            padding-left: 10px;
-            border-radius: 4px;
-            font-size: 14px;
-          }
-
-          .error-info {
-            height: 20px;
-            padding-top: 5px;
-            font-size: 12px;
-          }
-        }
-
-        .el-dialog__footer {
-          padding: 0;
-          text-align: center;
-        }
-
-        .el-button {
-          width: 290px;
-          padding: 7px 20px;
-          border: 0;
-        }
-      }
-    }
-
     &.night {
       color: $nightFontColor;
       background-color: $mainNightBgColor;
-
-      > .background-color {
-        background-color: $mainContentNightBgColor;
-
-        > .fiat-color {
-          color: #338ff5;
-        }
-      }
 
       > .canceled-order-content {
         > .canceled-table-head {
@@ -451,40 +348,24 @@ export default {
           > .canceled-info-top {
             color: #617499;
             background-color: $mainContentNightBgColor;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
           }
 
           > .canceled-info-bottom {
             border-top: 1px solid #262f38;
             color: #9da5b3;
 
-            > .info-left {
-              flex: 2;
+            > .info-left,
+            .info-middle {
               border-right: 1px solid #262f38;
 
               > .text-blue {
-                color: #5e95ec;
-              }
-            }
-
-            > .info-middle {
-              border-right: 1px solid #262f38;
-
-              > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
             > .info-right {
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
           }
@@ -494,201 +375,50 @@ export default {
           background-color: $mainContentNightBgColor;
         }
       }
-
-      /deep/ {
-        /* 交易中的订单样式重写 */
-        .el-input__inner {
-          color: #9da5b3;
-          background-color: #303b45;
-        }
-
-        .el-select-dropdown {
-          background-color: #29343f;
-        }
-
-        .el-select-dropdown__item.selected {
-          color: #338ff5;
-        }
-
-        .el-select-dropdown__item {
-          &:hover {
-            background-color: #29343f;
-          }
-        }
-
-        .el-table__expanded-cell {
-          &:hover {
-            background-color: #1c1f32;
-          }
-        }
-
-        .el-select-dropdown__item.hover {
-          color: #338ff5;
-          background-color: #29343f;
-        }
-
-        .el-popper[x-placement^=bottom] {
-          .popper__arrow {
-            &::after {
-              border-bottom-color: #29343f;
-            }
-          }
-        }
-
-        /* 2.0按钮样式 */
-        .el-button--mini {
-          padding: 3px 10px;
-        }
-
-        .el-textarea__inner {
-          border: 1px solid #7587a5;
-          resize: none;
-          background-color: #1c1f32;
-        }
-
-        /* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */
-        .bank-info-picture {
-          .el-button {
-            border-color: #409eff;
-            color: #fff;
-            background-color: #409eff;
-
-            &:hover {
-              border-color: #66b1ff;
-              color: #fff;
-              background: #66b1ff;
-            }
-          }
-        }
-
-        /* 输入密码弹出框 */
-        .password-dialog {
-          .el-dialog {
-            background: #28334a;
-
-            .el-dialog__header {
-              background-color: #20293c;
-            }
-
-            .el-dialog__title {
-              color: #fff;
-            }
-
-            .el-dialog__body {
-              color: #fff;
-
-              .password-input {
-                color: #fff;
-                background-color: #1a2233;
-              }
-
-              .error-info {
-                color: #fff;
-              }
-            }
-          }
-
-          .el-button--primary {
-            background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-          }
-        }
-
-        tr {
-          background-color: #1c1f32;
-        }
-      }
     }
 
     &.day {
-      color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
-
-      > .background-color {
-        background-color: #ccc;
-      }
-
       > .canceled-order-content {
         > .canceled-table-head {
-          border: 1px solid rgba(38, 47, 56, .1) !important;
-          color: #617499;
+          color: $fontColorSecondaryOfDay;
           background-color: $mainDayBgColor;
-          box-shadow: -2px 3px 5px 1px #191e28;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .canceled-table-body {
-          border: 1px solid rgba(38, 47, 56, .1);
           background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .canceled-info-top {
-            color: #617499;
+            color: $dayMainTitleColor;
             background-color: $mainDayBgColor;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
           }
 
           > .canceled-info-bottom {
             border-top: 1px solid rgba(38, 47, 56, .1);
-            color: #9da5b3;
+            color: $dayMainTitleColor;
 
-            > .info-left {
+            > .info-left,
+            .info-middle {
               border-right: 1px solid rgba(38, 47, 56, .1);
 
               > .text-blue {
-                color: #5e95ec;
-              }
-            }
-
-            > .info-middle {
-              border-right: 1px solid rgba(38, 47, 56, .1);
-
-              > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
             > .info-right {
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
           }
         }
 
         > .no-data {
+          color: $fontColorSecondaryOfDay;
           background-color: $mainDayBgColor;
-        }
-      }
-
-      /deep/ {
-        .canceled-order-content {
-          .canceled-table-head {
-            border-radius: 0;
-            background-color: #fff;
-            -webkit-box-shadow: none;
-            box-shadow: none;
-
-            .item {
-              border-bottom: 1px solid #ecf1f8;
-              color: #909399;
-            }
-          }
-
-          .no-data {
-            width: 100%;
-            background-color: #fff;
-          }
-        }
-
-        .el-table {
-          tr {
-            background-color: #fff;
-          }
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
     }

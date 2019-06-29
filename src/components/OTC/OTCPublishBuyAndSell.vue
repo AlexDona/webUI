@@ -286,6 +286,7 @@
                   <span
                     class="predict-sum"
                     v-show="this.publishStyle === 'sell'"
+                    :class="{green:this.publishStyle === 'sell'}"
                   >
                     {{$scientificToNumber(traderSumSELL)}} {{CurrencyCoinsName}}
                   </span>
@@ -293,6 +294,7 @@
                   <span
                     class="predict-sum"
                     v-show="this.publishStyle === 'buy'"
+                    :class="{red:this.publishStyle === 'buy'}"
                   >
                     {{$scientificToNumber(traderSumBUY)}} {{CurrencyCoinsName}}
                   </span>
@@ -304,6 +306,7 @@
                   <span
                     class="predict-sum"
                     v-show="this.publishStyle === 'sell'"
+                    :class="{green:this.publishStyle === 'sell'}"
                   >
                     {{$scientificToNumber(serviceChargeSELL)}} {{coinName}}
                   </span>
@@ -311,6 +314,7 @@
                   <span
                     class="predict-sum"
                     v-show="this.publishStyle === 'buy'"
+                    :class="{red:this.publishStyle === 'buy'}"
                   >
                     {{$scientificToNumber(serviceChargeBUY)}} {{coinName}}
                   </span>
@@ -1051,23 +1055,31 @@ export default {
   overflow: hidden;
 
   .redBorderRightNone {
-    border: 1px solid #d45858 !important;
+    border: 1px solid $upColor !important;
     border-right: 0 !important;
   }
 
   .redBorderLeftNone {
-    border: 1px solid #d45858 !important;
+    border: 1px solid $upColor !important;
     border-left: 0 !important;
   }
 
+  .red {
+    color: $upColor;
+  }
+
+  .green {
+    color: $otcGreen;
+  }
+
   > .publish-buy-and-sell-content {
-    width: 1150px;
-    padding: 90px 0 50px;
-    margin: 0 auto;
+    width: 1300px;
+    margin: 60px auto 150px;
 
     > .publish-content {
       display: flex;
       flex: 3;
+      padding: 34px 50px 77px 150px;
 
       > .publish-content-left {
         flex: 2;
@@ -1225,12 +1237,11 @@ export default {
         flex: 1;
 
         > .release-notes {
-          width: 216px;
           font-size: 12px;
 
           > .release-tips {
             font-size: 14px;
-            line-height: 20px;
+            line-height: 26px;
           }
         }
       }
@@ -1353,20 +1364,20 @@ export default {
         > .publish-content-left {
           > .publish-button {
             > .common-style {
-              border: 1px solid #1c1f32;
-              color: #8494a6;
+              border: 1px solid $mainContentNightBgColor;
+              color: $nightFontColor;
             }
 
             > .green {
-              border: 1px solid #008069;
-              color: #fffefe;
-              background-color: #008069;
+              border: 1px solid $otcGreen;
+              color: $mainColorOfWhite;
+              background-color: $otcGreen;
             }
 
             > .red {
-              border: 1px solid #d45858;
-              color: #fffefe;
-              background-color: #d45858;
+              border: 1px solid $upColor;
+              color: $mainColorOfWhite;
+              background-color: $upColor;
             }
           }
 
@@ -1377,11 +1388,11 @@ export default {
 
             .want-buy-sell-sum-content {
               .sellGreen {
-                color: #30c296;
+                color: $otcGreen;
               }
 
               .buyOrange {
-                color: #e97345;
+                color: $upColor;
               }
 
               > .want-text {
@@ -1392,7 +1403,7 @@ export default {
             .sell-buy-input {
               > .sell-sum {
                 color: #9da5b3;
-                background-color: #1c1f32;
+                background-color: $mainContentNightBgColor;
               }
 
               > .unit {
@@ -1403,18 +1414,18 @@ export default {
 
             .buySellSumErrorTips {
               > .errorSell {
-                color: #d45858;
+                color: $upColor;
               }
 
               > .errorBuy {
-                color: #d45858;
+                color: $upColor;
               }
             }
 
             .volume-business {
               > .sell-sum {
                 color: #9da5b3;
-                background-color: #1c1f32;
+                background-color: $mainContentNightBgColor;
               }
 
               > .monad {
@@ -1423,14 +1434,14 @@ export default {
               }
 
               > .range-line {
-                color: #7d90ac;
+                color: $fontColorSecondaryOfDay;
               }
             }
 
             .limitErrorTips {
               > .errorLimitMin,
               .errorLimitMax {
-                color: #d45858;
+                color: $upColor;
               }
             }
 
@@ -1443,36 +1454,32 @@ export default {
                 color: #9fa7b2;
               }
 
-              > .predict-sum {
-                color: #30c296;
-              }
-
               > .rate-text {
                 color: #9fa7b2;
 
                 > .rate {
-                  color: #ca5040;
+                  color: $upColor;
                 }
               }
             }
 
             .publish-submit {
               > .publish-submit-button {
-                color: #fff;
+                color: $mainColorOfWhite;
               }
 
               > .publish-submit-buy {
-                background-color: #d45858;
+                background-color: $upColor;
               }
 
               > .publish-submit-sell {
-                background-color: #008069;
+                background-color: $otcGreen;
               }
             }
 
             .password-dialog {
               .tips {
-                color: #d45858;
+                color: $otcGreen;
               }
             }
           }
@@ -1482,10 +1489,10 @@ export default {
           flex: 1;
 
           > .release-notes {
-            color: #a9bed4;
+            color: $mainNightTitleColor;
 
             > .release-title {
-              color: #fff;
+              color: $mainColorOfWhite;
             }
           }
         }
@@ -1494,12 +1501,12 @@ export default {
 
     /deep/ {
       .el-input--suffix .el-input__inner {
-        color: #fff;
+        color: $mainColorOfWhite;
       }
 
       .el-textarea__inner {
-        color: #fff;
-        background-color: #1c1f32;
+        color: $mainColorOfWhite;
+        background-color: $mainContentNightBgColor;
       }
 
       .el-form--label-top {
@@ -1510,7 +1517,7 @@ export default {
 
       .buy-sell-submit-form {
         .el-input__inner {
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
         }
 
         .el-select-dropdown__list {
@@ -1535,19 +1542,19 @@ export default {
         }
 
         .el-dialog__title {
-          color: #fff;
+          color: $mainColorOfWhite;
         }
 
         .el-dialog__body {
-          color: #fff;
+          color: $mainColorOfWhite;
 
           .password-input {
-            color: #fff;
+            color: $mainColorOfWhite;
             background-color: #1a2233;
           }
 
           .error-info {
-            color: #fff;
+            color: $mainColorOfWhite;
           }
         }
 
@@ -1559,27 +1566,30 @@ export default {
   }
 
   &.day {
-    background-color: $mainDayBgColor;
+    background-color: $mainBgColorOfDay;
 
     > .publish-buy-and-sell-content {
       > .publish-content {
+        background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
+
         > .publish-content-left {
           > .publish-button {
             > .common-style {
-              border: 1px solid #333;
-              color: #8494a6;
+              border: 1px solid $borderColorOfDay;
+              color: $fontColorSecondaryOfDay;
             }
 
             > .green {
-              border: 1px solid #008069;
-              color: #fffefe;
-              background-color: #008069;
+              border: 1px solid $otcGreen;
+              color: $mainColorOfWhite;
+              background-color: $otcGreen;
             }
 
             > .red {
-              border: 1px solid #d45858;
-              color: #fffefe;
-              background-color: #d45858;
+              border: 1px solid $upColor;
+              color: $mainColorOfWhite;
+              background-color: $upColor;
             }
           }
 
@@ -1590,104 +1600,106 @@ export default {
 
             .want-buy-sell-sum-content {
               .sellGreen {
-                color: #30c296;
+                color: $otcGreen;
               }
 
               .buyOrange {
-                color: #e97345;
+                color: $upColor;
               }
 
               > .want-text {
-                color: #9da5b3;
+                color: $fontColorSecondaryOfDay;
               }
             }
 
             .sell-buy-input {
               > .sell-sum {
-                color: #9da5b3;
-                background-color: #fff;
+                border: 1px solid $borderColorOfDay;
+                color: $dayMainTitleColor;
+                background-color: $mainColorOfWhite;
+
+                &::-webkit-input-placeholder {
+                  color: #bdbdbd;
+                }
               }
 
               > .unit {
-                border: 1px solid #cbddf4;
+                border: 1px solid $coinBgColorOfDay;
                 color: $mainColor;
-                background-color: #cbddf4;
+                background-color: $coinBgColorOfDay;
               }
             }
 
             .buySellSumErrorTips {
               > .errorSell {
-                color: #d45858;
+                color: $upColor;
               }
 
               > .errorBuy {
-                color: #d45858;
+                color: $upColor;
               }
             }
 
             .volume-business {
               > .sell-sum {
-                color: #9da5b3;
-                background-color: #fff;
+                border: 1px solid $borderColorOfDay;
+                color: $dayMainTitleColor;
+                background-color: $mainColorOfWhite;
               }
 
               > .monad {
-                border: 1px solid #cbddf4;
+                border: 1px solid $coinBgColorOfDay;
                 color: $mainColor;
-                background-color: #cbddf4;
+                background-color: $coinBgColorOfDay;
               }
 
               > .range-line {
-                color: #7d90ac;
+                color: $fontColorSecondaryOfDay;
               }
             }
 
             .limitErrorTips {
               > .errorLimitMin,
               .errorLimitMax {
-                color: #d45858;
+                color: $upColor;
               }
             }
 
             .remark {
-              color: #9da5b3;
+              color: $fontColorSecondaryOfDay;
             }
 
             .predict {
               > .predict-text {
-                color: #9fa7b2;
-              }
-
-              > .predict-sum {
-                color: #30c296;
+                color: $dayMainTitleColor;
               }
 
               > .rate-text {
-                color: #9fa7b2;
+                color: $dayMainTitleColor;
 
                 > .rate {
-                  color: #ca5040;
+                  color: $upColor;
                 }
               }
             }
 
             .publish-submit {
               > .publish-submit-button {
-                color: #fff;
+                color: $mainColorOfWhite;
               }
 
               > .publish-submit-buy {
-                background-color: #d45858;
+                background-color: $upColor;
               }
 
               > .publish-submit-sell {
-                background-color: #008069;
+                background-color: $otcGreen;
               }
             }
 
             .password-dialog {
               .tips {
-                color: #d45858;
+                color: $upColor;
               }
             }
           }
@@ -1697,10 +1709,10 @@ export default {
           flex: 1;
 
           > .release-notes {
-            color: #7d90ac;
+            color: $fontColorSecondaryOfDay;
 
             > .release-title {
-              color: #bb4c4c;
+              color: $upColor;
             }
           }
         }
@@ -1709,103 +1721,47 @@ export default {
 
     /deep/ {
       .el-input--suffix .el-input__inner {
-        color: #7d90ac;
+        color: $dayMainTitleColor;
       }
 
       .el-form--label-top {
         .el-form-item__label {
-          color: #7d90ac;
+          color: $fontColorSecondaryOfDay;
         }
       }
 
       .el-textarea__inner {
-        border: 1px solid rgba(236, 241, 248, 1);
+        border: 1px solid $borderColorOfDay;
         border-radius: 2px;
         font-size: 12px;
-        background: rgba(255, 255, 255, 1);
+        background: $mainColorOfWhite;
 
         &::-webkit-input-placeholder {
-          color: #7d90ac;
+          color: $fontColorSecondaryOfDay;
         }
       }
 
       .buy-sell-submit-form {
         .el-input__inner {
-          border: 1px solid rgba(236, 241, 248, 1);
+          border: 1px solid $borderColorOfDay;
           background-color: transparent;
-        }
-
-        .volume-business {
-          > .sell-sum {
-            border: 1px solid rgba(236, 241, 248, 1);
-            background-color: transparent;
-          }
-
-          > .monad {
-            color: #7ea9e4;
-            background-color: #cbddf4;
-          }
-
-          > .range-line {
-            color: $mainColor;
-          }
-        }
-
-        .sell-buy-input {
-          > .sell-sum {
-            border: 1px solid rgba(236, 241, 248, 1);
-            background-color: transparent;
-
-            &::-webkit-input-placeholder {
-              color: #bdbdbd;
-            }
-          }
-
-          .sell-buy-input {
-            > .sell-sum {
-              &::-webkit-input-placeholder {
-                color: #bdbdbd;
-              }
-            }
-          }
-
-          > .unit {
-            color: #7ea9e4;
-            background-color: #cbddf4;
-          }
-        }
-
-        .predic {
-          .predict-sum {
-            color: #d45858;
-          }
-        }
-
-        .want-buy-sell-sum-content {
-          .buyOrange {
-            color: #d45858;
-          }
         }
       }
 
       .el-form-item__label {
-        color: #333;
-      }
-
-      .predict {
-        .predict-text {
-          color: #333 !important;
-        }
-
-        .rate-text {
-          color: #333 !important;
-        }
+        color: $dayMainTitleColor;
       }
 
       .password-dialog {
         .el-dialog__body {
           .password-input {
-            border: 1px solid #ecf1f8;
+            border: 1px solid $borderColorOfDay;
+          }
+        }
+
+        .el-dialog__footer {
+          .el-button--primary {
+            background-color: $mainColor;
           }
         }
       }

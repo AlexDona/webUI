@@ -159,6 +159,7 @@ export const personal = {
   'user_invite_people': '사람',
   'user_invite_succeed': '성공',
   'user_invite_have_obtained': '커미션 을 받아 접합 하다',
+  // 'user_inviter_tips': '邀请人保存后无法修改！',
   'user_invite_statistics': '통계',
   'user_invite_direct': '직접 보급',
   'user_direct_reward': '직접 장려하다',

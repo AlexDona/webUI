@@ -463,15 +463,13 @@ export default {
     overflow: hidden;
 
     > .business-apply-content {
-      padding-top: 20px;
-
       > .privilege {
-        width: 1150px;
+        width: 1300px;
         margin: 107px auto 0;
 
         > .title {
           text-align: center;
-          color: #fff;
+          color: $mainColorOfWhite;
         }
 
         > .content {
@@ -529,9 +527,8 @@ export default {
       }
 
       > .approve {
-        width: 1150px;
-        margin: 70px auto;
-        margin-top: 107px;
+        width: 1300px;
+        margin: 107px auto 70px;
 
         > .title {
           margin-top: 100px;
@@ -540,7 +537,7 @@ export default {
 
         > .number {
           position: relative;
-          width: 1150px;
+          width: 1300px;
           height: 52px;
           margin-top: 70px;
           line-height: 58px;
@@ -553,32 +550,32 @@ export default {
           > .apply {
             position: absolute;
             top: 0;
-            left: 185px;
+            left: 260px;
           }
 
           > .send-email {
             position: absolute;
             top: 0;
-            left: 430px;
+            left: 505px;
           }
 
           > .submit-apply {
             position: absolute;
             top: 0;
-            left: 680px;
+            left: 755px;
           }
 
           > .pass {
             position: absolute;
             top: 0;
-            left: 930px;
+            left: 1005px;
           }
         }
 
         > .step {
-          width: 1150px;
+          width: 1300px;
           height: 650px;
-          padding: 40px 0 0 238px;
+          padding: 40px 0 0 315px;
           margin-top: 70px;
           font-size: 14px;
           background: url(../../assets/develop/business-apply-bgm.png) no-repeat center;
@@ -620,7 +617,7 @@ export default {
 
     > .business-applying-content,
     .business-apply-success-content {
-      width: 1150px;
+      width: 1300px;
       padding-top: 20px;
       margin: 70px auto;
       text-align: center;
@@ -791,7 +788,7 @@ export default {
 
         > .privilege {
           > .title {
-            color: #fff;
+            color: $mainColorOfWhite;
           }
 
           > .content {
@@ -813,7 +810,7 @@ export default {
               }
 
               > .text {
-                color: #fff;
+                color: $mainColorOfWhite;
               }
             }
           }
@@ -821,12 +818,12 @@ export default {
 
         > .approve {
           > .title {
-            color: #fff;
+            color: $mainColorOfWhite;
           }
 
           > .number {
             > .common {
-              color: #fff;
+              color: $mainColorOfWhite;
             }
           }
 
@@ -835,30 +832,30 @@ export default {
 
             > .content {
               > .title {
-                color: #fff;
+                color: $mainColorOfWhite;
               }
 
               > .tips {
                 color: #4b5d6e;
 
                 > .agree {
-                  color: #d45858;
+                  color: $upColor;
                 }
               }
             }
           }
 
           > .agree {
-            color: #fff;
+            color: $mainColorOfWhite;
 
             .agreement {
-              color: #d45858;
+              color: $upColor;
             }
           }
 
           > .submit {
             > .button {
-              color: #fff;
+              color: $mainColorOfWhite;
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
@@ -902,12 +899,12 @@ export default {
 
     &.day {
       overflow: hidden;
-      background-color: $mainDayBgColor;
+      background-color: $mainBgColorOfDay;
 
       > .business-apply-content {
         > .privilege {
           > .title {
-            color: #333;
+            color: $dayMainTitleColor;
           }
 
           > .content {
@@ -929,7 +926,7 @@ export default {
               }
 
               > .text {
-                color: #fff;
+                color: $mainColorOfWhite;
               }
             }
           }
@@ -937,12 +934,12 @@ export default {
 
         > .approve {
           > .title {
-            color: #333;
+            color: $dayMainTitleColor;
           }
 
           > .number {
             > .common {
-              color: #333;
+              color: $dayMainTitleColor;
             }
           }
 
@@ -951,30 +948,30 @@ export default {
 
             > .content {
               > .title {
-                color: #fff;
+                color: $mainColorOfWhite;
               }
 
               > .tips {
                 color: #4b5d6e;
 
                 > .agree {
-                  color: #d45858;
+                  color: $upColor;
                 }
               }
             }
           }
 
           > .agree {
-            color: #333;
+            color: $dayMainTitleColor;
 
             .agreement {
-              color: #d45858;
+              color: $upColor;
             }
           }
 
           > .submit {
             > .button {
-              color: #fff;
+              color: $mainColorOfWhite;
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
@@ -983,7 +980,7 @@ export default {
 
       /deep/ {
         .el-dialog {
-          background: #fff;
+          background: $mainColorOfWhite;
         }
 
         .agree {
@@ -996,7 +993,7 @@ export default {
             position: relative;
             width: 340px;
             text-align: left;
-            background: #fff !important;
+            background: $mainColorOfWhite !important;
 
             .el-dialog__header {
               position: absolute;
@@ -1035,16 +1032,16 @@ export default {
         /* 申请商家提示框样式 */
         .apply-merchant-dialog {
           .el-dialog {
-            background: #fff !important;
+            background: $mainColorOfWhite !important;
 
             .el-dialog__header {
               border-bottom: 1px solid #ecf1f8;
-              background: #fff !important;
+              background: $mainColorOfWhite !important;
             }
 
             .el-dialog__body {
               .tips {
-                color: #333;
+                color: $dayMainTitleColor;
               }
             }
 
@@ -1053,7 +1050,7 @@ export default {
                 &:first-child {
                   border: 1px solid rgba(51, 143, 245, 1);
                   color: $mainColor;
-                  background: #fff;
+                  background: $mainColorOfWhite;
                 }
               }
             }
@@ -1063,7 +1060,7 @@ export default {
     }
 
     .businessApplyModel {
-      color: #d45858;
+      color: $upColor;
       cursor: pointer;
     }
   }

@@ -61,7 +61,7 @@
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
-                  @mouseenter="showStatusCode(1)"
+                  @mouseentevr="showStatusCode(1)"
                   @mouseleave="showStatusCode(2)"
                 >
                   <IconFontCommon
@@ -395,10 +395,10 @@ export default {
       // 汇率转换
       this.currencyTransform()
     }
+    this.getInverData()
   },
   mounted () {
     console.log(domain)
-    this.getInverData()
   },
   activated () {},
   update () {},

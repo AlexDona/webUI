@@ -1214,21 +1214,21 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
   overflow: hidden;
 
   .redBorderRightNone {
-    border: 1px solid #d45858 !important;
+    border: 1px solid $upColor !important;
     border-right: 0 !important;
   }
 
   .redBorderLeftNone {
-    border: 1px solid #d45858 !important;
+    border: 1px solid $upColor !important;
     border-left: 0 !important;
   }
 
   > .otc-publish-AD-content {
     display: flex;
     flex: 3;
-    width: 1150px;
-    padding-top: 20px;
-    margin: 50px auto;
+    width: 1300px;
+    padding: 30px 50px 130px 60px;
+    margin: 60px auto 260px;
 
     > .publish-AD-left {
       flex: 2;
@@ -1243,7 +1243,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
         width: 720px;
 
         .must-fill-star {
-          color: #d45858;
+          color: $upColor;
         }
 
         > .common {
@@ -1317,7 +1317,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             padding-left: 8px;
 
             .price-data {
-              color: #e97345;
+              color: $upColor;
             }
           }
         }
@@ -1415,7 +1415,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
         }
 
         > .fee-detail {
-          padding: 10px 0 0 115px;
+          padding: 25px 0 0 115px;
           font-size: 12px;
 
           .predict-text {
@@ -1423,7 +1423,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
           }
 
           .predict-sum {
-            color: #30c296;
+            color: $otcGreen;
           }
 
           .rate-text {
@@ -1431,14 +1431,13 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
           }
 
           .rate {
-            color: #ca5040;
+            color: $upColor;
           }
         }
 
         > .button {
           padding-left: 115px;
-          margin-top: 40px;
-          margin-bottom: 50px;
+          margin-top: 25px;
 
           > .AD-button {
             width: 200px;
@@ -1450,11 +1449,12 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     }
 
     > .publish-AD-right {
+      display: flex;
       flex: 1;
+      justify-content: flex-end;
 
       > .publish-tips {
-        width: 250px;
-        margin-left: 40px;
+        width: 274px;
 
         > .tip {
           line-height: 24px;
@@ -1495,7 +1495,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
       .el-checkbox__inner {
         &::after {
-          border: 1px solid #1f90ea;
+          border: 1px solid $mainColor;
           border-top: 0;
           border-left: 0;
         }
@@ -1595,7 +1595,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
           }
 
           .err {
-            color: #d45858;
+            color: $upColor;
           }
 
           > .common {
@@ -1627,11 +1627,11 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
           > .sale-price {
             > .right {
               .max-avail-sell {
-                color: #30c296;
+                color: $otcGreen;
               }
 
               .market-price {
-                color: #e97345;
+                color: $upColor;
               }
 
               > .input {
@@ -1789,9 +1789,12 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
   }
 
   &.day {
-    background-color: $mainDayBgColor;
+    background-color: $mainBgColorOfDay;
 
     > .otc-publish-AD-content {
+      background-color: $mainColorOfWhite;
+      box-shadow: 0 0 6px $boxShadowColorOfDay;
+
       > .publish-AD-left {
         > .AD-title {
           border-left: 3px solid $mainColor;
@@ -1800,56 +1803,48 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
         > .AD-big-form {
           .err {
-            color: #d45858;
+            color: $upColor;
           }
 
           > .common {
+            border-bottom: 1px solid $borderColorOfDay;
+
             > .left {
               > .tips {
-                color: #333;
+                color: $dayMainTitleColor;
               }
 
               > .warning {
-                color: #3e79d6;
+                color: $mainColor;
               }
             }
 
             > .right {
-              color: #7d90ac;
-            }
-          }
-
-          > .choice {
-            > .right {
-              > .right-change {
-                > .double-sided-arrow {
-                  color: #797979;
-                }
-              }
+              color: $fontColorSecondaryOfDay;
             }
           }
 
           > .sale-price {
             > .right {
               .max-avail-sell {
-                color: #30c296;
+                color: $otcGreen;
               }
 
               .market-price {
-                color: #e97345;
+                color: $upColor;
               }
 
               > .input {
                 > .price-input {
-                  border: 1px solid rgba(236, 241, 248, 1);
-                  color: #7d90ac;
-                  background-color: #fff;
+                  border: 1px solid $boxShadowColorOfDay;
+                  color: $dayMainTitleColor;
+                  background-color: $mainDayBgColor;
                 }
 
                 > .unit {
-                  border: 1px solid #cbddf4;
+                  border: 1px solid $coinBgColorOfDay;
                   color: $mainColor;
-                  background-color: #cbddf4;
+                  background-color: $coinBgColorOfDay;
                 }
               }
             }
@@ -1859,33 +1854,33 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             > .right {
               > .input-top {
                 > .input-sum {
-                  border: 1px solid rgba(236, 241, 248, 1);
-                  color: #9da5b3;
-                  background-color: #fff;
+                  border: 1px solid $borderColorOfDay;
+                  color: $dayMainTitleColor;
+                  background-color: $mainDayBgColor;
                 }
 
                 > .unit {
-                  border: 1px solid #cbddf4;
+                  border: 1px solid $coinBgColorOfDay;
                   color: $mainColor;
-                  background-color: #cbddf4;
+                  background-color: $coinBgColorOfDay;
                 }
               }
 
               > .input-bottom {
                 > .input-min,
                 .input-max {
-                  border: 1px solid rgba(236, 241, 248, 1);
-                  background-color: #fff;
+                  border: 1px solid $borderColorOfDay;
+                  background-color: $mainDayBgColor;
                 }
 
                 > .unit {
-                  border: 1px solid #cbddf4;
+                  border: 1px solid $coinBgColorOfDay;
                   color: $mainColor;
-                  background-color: #cbddf4;
+                  background-color: $coinBgColorOfDay;
                 }
 
                 > .minMaxLink {
-                  color: #7d90ac;
+                  color: $fontColorSecondaryOfDay;
                 }
               }
             }
@@ -1893,16 +1888,38 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
           > .limit-set {
             > .right {
+              .icon {
+                color: $mainColor;
+              }
+
               .input-limit {
-                border: 1px solid rgba(236, 241, 248, 1);
-                background-color: #fff;
+                border: 1px solid $borderColorOfDay;
+                background-color: $mainColorOfWhite;
+              }
+            }
+          }
+
+          > .fee-detail {
+            > .predict-text {
+              color: $fontColorSecondaryOfDay;
+            }
+
+            > .predict-sum {
+              color: $otcGreen;
+            }
+
+            > .rate-text {
+              color: $fontColorSecondaryOfDay;
+
+              > .rate {
+                color: $upColor;
               }
             }
           }
 
           > .button {
             > .AD-button {
-              color: #fff;
+              color: $mainColorOfWhite;
               background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
@@ -1912,11 +1929,11 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
       > .publish-AD-right {
         > .publish-tips {
           > .title {
-            color: #d45858;
+            color: $upColor;
           }
 
           > .tip {
-            color: #7d90ac;
+            color: $fontColorSecondaryOfDay;
           }
         }
       }
@@ -1924,21 +1941,21 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
     /deep/ {
       .el-input--suffix .el-input__inner {
-        color: #7d90ac;
+        color: $dayMainTitleColor;
       }
 
       .choice {
         .el-input__inner {
-          border: 1px solid #ecf1f8;
+          border: 1px solid $borderColorOfDay;
           border-radius: 2px;
-          background: #fff;
+          background: $mainDayBgColor;
         }
       }
 
       .trade-way {
         .el-checkbox__inner {
-          border: 1px solid #435372;
-          background-color: #fff;
+          border: 1px solid $dayMainTitleColor;
+          background-color: $mainDayBgColor;
         }
 
         .el-checkbox {
@@ -1953,106 +1970,27 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
       .el-checkbox__input {
         &.is-checked {
           .el-checkbox__inner {
-            background-color: #fff;
+            background-color: $mainDayBgColor;
           }
         }
 
         &.is-indeterminate {
           .el-checkbox__inner {
-            background-color: #fff;
+            background-color: $mainDayBgColor;
           }
         }
       }
 
       .el-textarea__inner {
-        border: 1px solid #ecf1f8;
-        color: #7d90ac;
-        background: #fff;
+        border: 1px solid $borderColorOfDay;
+        color: $dayMainTitleColor;
+        background: $mainDayBgColor;
       }
 
       .password-dialog {
         .el-dialog__body {
           .password-input {
-            border: 1px solid #ecf1f8;
-          }
-        }
-      }
-
-      .otc-publish-AD-content {
-        > .publish-AD-left {
-          > .AD-big-form {
-            > .sale-price {
-              > .right {
-                > .input {
-                  > .unit[data-v-6b1c45d6] {
-                    color: $mainColor;
-                    background-color: #cbddf4;
-                  }
-
-                  > .price-input[data-v-6b1c45d6] {
-                    border: 1px solid #ecf1f8;
-                    border-radius: 2px;
-                    background: #fff;
-                  }
-                }
-              }
-            }
-
-            > .sum-limit {
-              > .right {
-                > .input-top {
-                  > .unit[data-v-6b1c45d6] {
-                    color: $mainColor;
-                    background-color: #cbddf4;
-                  }
-
-                  > .input-sum[data-v-6b1c45d6] {
-                    border: 1px solid #ecf1f8;
-                    border-radius: 2px;
-                    background: #fff;
-                  }
-                }
-
-                > .input-bottom {
-                  > .unit[data-v-6b1c45d6] {
-                    color: $mainColor;
-                    background-color: #cbddf4;
-                  }
-
-                  > .input-min[data-v-6b1c45d6] {
-                    border: 1px solid #ecf1f8;
-                    border-radius: 2px;
-                    background: #fff;
-                  }
-
-                  .input-max[data-v-6b1c45d6] {
-                    border: 1px solid #ecf1f8;
-                    border-radius: 2px;
-                    background: #fff;
-                  }
-                }
-
-                .input-limit[data-v-6b1c45d6] {
-                  border: 1px solid #ecf1f8;
-                  border-radius: 2px;
-                  background: #fff;
-                }
-              }
-            }
-
-            > .common {
-              border-bottom: 1px solid rgba(50, 54, 76, .1);
-
-              > .left {
-                > .warning[data-v-6b1c45d6] {
-                  color: #3e79d6;
-                }
-
-                > .tips[data-v-6b1c45d6] {
-                  color: #333;
-                }
-              }
-            }
+            border: 1px solid $borderColorOfDay;
           }
         }
       }

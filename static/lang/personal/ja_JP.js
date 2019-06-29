@@ -156,6 +156,7 @@ export const personal = {
   'user_invite_people': '人々',
   'user_invite_succeed': '成功',
   'user_invite_have_obtained': '口銭を取得した',
+  // 'user_inviter_tips': '邀请人保存后无法修改！',
   'user_invite_statistics': '統計',
   'user_invite_direct': '直接推薦',
   'user_direct_reward': '直接奨励する',

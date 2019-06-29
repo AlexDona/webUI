@@ -14,7 +14,7 @@
         {{ $t('M.user_account_credited') }}
       </span>
     </header>
-    <div class="credited-credited-main min-height500 margin-top9">
+    <div class="credited-credited-main min-height500 ">
       <div class="credited-box">
         <p class="content-title font-size12">
           <!--温馨提示：-->
@@ -736,6 +736,8 @@ export default {
 
   .credited-credited {
     > .credited-credited-main {
+      margin-top: 10px;
+
       > .credited-box {
         padding: 30px 23px;
 
@@ -1001,20 +1003,19 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       > .background-color {
         background-color: #ccc;
       }
 
       > .credited-credited-main {
-        border: 1px solid rgba(38, 47, 56, .1);
         background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
       }
 
       > .credited-credited-header {
-        border: 1px solid rgba(236, 241, 248, 1);
-        background: rgba(255, 255, 255, 1);
+        background: #fff;
+        box-shadow: 0 0 6px #cfd5df;
 
         > .header-content {
           color: #333;

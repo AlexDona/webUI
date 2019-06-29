@@ -264,7 +264,8 @@ export default {
           .el-popper[x-placement^=bottom] .popper__arrow::after
             border none
         .el-dialog__footer
-          padding 35px 40px
+          /*padding 35px 40px*/
+          padding 5px 40px
           border none
           .el-button
             border none
