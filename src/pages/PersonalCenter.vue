@@ -386,10 +386,11 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../static/css/scss/Personal/IndexPersonal";
+  @import '../assets/CSS/index';
 
   .personal-center {
-    margin-top: 50px;
+    min-height: 1000px;
+    margin: 50px 0;
     overflow: hidden;
 
     > .personal-center-main {
@@ -558,7 +559,7 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .asset-info {
         background: #1c1f32;
@@ -622,8 +623,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       .asset-info {
         background: #fff;

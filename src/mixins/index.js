@@ -78,6 +78,22 @@ let mixin = {
     },
     $formatSeconds (date, type) {
       return formatSeconds(date, type)
+    },
+    // 成功弹窗
+    $success_tips_X (msg, duration = 2000) {
+      return this.$message({
+        message: msg,
+        type: 'success',
+        duration
+      })
+    },
+    // 失败弹窗
+    $error_tips_X (msg, duration = 2000) {
+      return this.$message({
+        message: msg,
+        type: 'error',
+        duration
+      })
     }
   },
   computed: {

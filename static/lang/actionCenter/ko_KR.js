@@ -45,7 +45,7 @@ export const actionCenter = {
   'crowd_funding_minimum_deadline': '마감 시간',
   'crowd_funding_interest_time': '이자 시간',
   'crowd_funding_expire_date': '만기 시간',
-  'crowd_funding_expire_current_State': '현재 상태',
+  'crowd_funding_limit_time': '',
 
   'crowd_funding_expire_purplus1': '잔액',
   'crowd_funding_description_title': '프로젝트 소개',

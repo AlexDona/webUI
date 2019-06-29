@@ -25,6 +25,7 @@ import {
   CHANGE_PASSWORD_USEABLE,
   UPDATE_PAY_PASSWORD_DIALOG_M,
   UPDATE_PAY_PASSWORD_M,
+  SET_LANGUAGES_M,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH,
   // 增加改变全局存储选中的交易对小数位方法
@@ -49,6 +50,9 @@ export default {
   [CHANGE_THEME] (state, data) {
     state.theme = data
     setStore('theme', data)
+  },
+  [SET_LANGUAGES_M] (state, languages) {
+    state.languages_S = languages
   },
   // 切换语言
   [CHANGE_LANGUAGE] (state, data) {

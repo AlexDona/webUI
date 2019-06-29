@@ -90,9 +90,19 @@
               <!--付款信息-->
               {{$t('M.otc_index_js2')}}
             </p>
-            <p class="text-info">
-              <!--买家已付款，卖家有异议申请冻结订单-->
+            <!--买家已付款，卖家有异议申请冻结订单-->
+            <p
+              class="text-info"
+              v-show="item.appealer==='SELL'"
+            >
               {{$t('M.otc_freeze')}}
+            </p>
+            <!--买家已付款，买家有异议申请冻结订单-->
+            <p
+              class="text-info"
+              v-show="item.appealer==='BUY'"
+            >
+              {{$t('M.otc_freeze_info2')}}
             </p>
           </div>
           <div class="info-middle">
@@ -205,7 +215,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
+  @import '../../../assets/CSS/index';
 
   .fiat-freezing-order-box {
     > .freezing-order-content {
@@ -304,7 +314,7 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .background-color {
         background-color: #1e2636;
@@ -318,18 +328,18 @@ export default {
         > .freezing-table-head {
           border: 1px solid #262f38;
           color: #617499;
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
           box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .freezing-table-body {
           border: 1px solid #262f38;
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
 
           > .freezing-info-top {
             border-radius: 5px;
             color: #617499;
-            background-color: $nightMainBgColor;
+            background-color: $mainContentNightBgColor;
 
             .red {
               color: #d45858;
@@ -378,14 +388,14 @@ export default {
         }
 
         > .no-data {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
         }
       }
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .background-color {
         background-color: #ccc;

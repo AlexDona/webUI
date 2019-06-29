@@ -40,3 +40,5 @@ export const UPDATE_PAY_PASSWORD_M = 'UPDATE_PAY_PASSWORD_M'
 export const SET_REQUEST_COUNT_M = 'SET_REQUEST_COUNT_M'
 // 底部盒子高度
 export const SAVE_FOOTER_HEIGHT = 'SAVE_FOOTER_HEIGHT'
+// 设置当前语言列表
+export const SET_LANGUAGES_M = 'SET_LANGUAGES_M'

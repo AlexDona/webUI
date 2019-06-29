@@ -238,7 +238,7 @@ export default {
       this.userLoginPWDSuccessJumpTimer = setInterval(() => {
         if (this.successCountDown === 0) {
           this.USER_LOGOUT()
-          this.$goToPage('/home')
+          this.$goToPage(`/${this.$routes_X.home}`)
         }
         this.successCountDown--
       }, 1000)
@@ -264,7 +264,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .login-password-box {
     width: 100%;
@@ -367,10 +367,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .login-password-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .login-password-header {
           border-bottom: 1px solid #39424d;
@@ -449,8 +449,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       .login-password-main {
         border: 1px solid rgba(246, 246, 246, 1);

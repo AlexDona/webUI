@@ -1252,7 +1252,7 @@ export default {
       this.errpwd = ''
     },
     // 6.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
-    async submitButton1 () {
+    submitButton1: _.debounce(async function () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.comm_password')
@@ -1275,7 +1275,7 @@ export default {
         this.errpwd = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框
       }
-    },
+    }, 500),
     // 7.0 卖家在买家付款前点击确认收款按钮的提示事件
     gatheringBefore () {
       this.$message({
@@ -1304,7 +1304,7 @@ export default {
       }
     },
     // 9.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
-    async submitButton2 () {
+    submitButton2: _.debounce(async function () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
@@ -1324,7 +1324,7 @@ export default {
       if (!data) return false
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
-    },
+    }, 500),
     // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index, orderType) {
       console.log(orderType)
@@ -1388,7 +1388,7 @@ export default {
       }
     },
     // 13.0 卖家提交申诉按钮
-    async submitsellerAppeal () {
+    submitsellerAppeal: _.debounce(async function () {
       console.log(this.orderTypeParam)
       if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
@@ -1421,7 +1421,7 @@ export default {
       // 2再次调用接口刷新列表
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       if (!data) return false
-    },
+    }, 500),
     // 忘记密码跳转
     forgetPwdJump () {
       this.$goToPage('/TransactionPassword')
@@ -1494,7 +1494,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
+  @import '../../../assets/CSS/index';
 
   .fiat-trading-order-box {
     > .fiat-trading-order-content {
@@ -1519,7 +1519,7 @@ export default {
         border: 1px solid #262f38;
         border-radius: 5px;
         font-size: 12px;
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .order {
           > .order-list-head {
@@ -1934,7 +1934,7 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .appeal-textarea-text {
         color: #9da5b3;
@@ -1968,12 +1968,12 @@ export default {
         }
 
         > .no-data {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
         }
       }
 
       > .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .fiat-color {
           color: #338ff5;
@@ -2071,8 +2071,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .fiat-trading-order-content {
         .button {

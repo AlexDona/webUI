@@ -13,8 +13,10 @@
 import NoticeHome from '../components/Home/NoticeHome'
 import BannerHome from '../components/Home/BannerHome'
 import MarketListHome from '../components/Home/MarketListHome'
-import {xDomain} from '../utils/env'
-import {mapState} from 'vuex'
+import {
+  mapState,
+  mapGetters
+} from 'vuex'
 export default {
   components: {
     NoticeHome,
@@ -44,10 +46,9 @@ export default {
           'width': '50px',
           'height': '50px',
           'border-radius': '50%',
-          'line-height': '50px',
           'text-align': 'center',
           'right': '40px',
-          'padding': '5px'
+          'padding': '6px 5px 5px'
         },
         'pop': {
           'css': {
@@ -82,7 +83,7 @@ export default {
           this.msgLanguage = 'en-us'
       }
 
-      if (xDomain.startsWith('fubt')) {
+      if (this.$isNeedYST_G_X) {
         this.doAdd()
       }
     },
@@ -98,6 +99,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      '$isNeedYST_G_X': 'isNeedYST'
+    }),
     ...mapState({
       language: state => state.common.language,
       defaultLanguage: state => state.common.defaultLanguage

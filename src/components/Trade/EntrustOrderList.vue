@@ -380,7 +380,7 @@ export default {
       }
     },
     // 获取历史委托
-    async getHistoryEntrust () {
+    getHistoryEntrust: _.debounce(async function () {
       const {partnerTradeId} = this.$middleTopData_S_X
       let params = {
         currentPage: this.currentPageForHistoryEntrust,
@@ -391,9 +391,9 @@ export default {
       if (!data) return false
       this.historyEntrustList = getNestedData(data, 'data.list') || []
       this.totalPageForHistoryEntrust = getNestedData(data, 'data.pages') - 0
-    },
+    }, 500),
     // 获取我的当前委单
-    async getMyCurrentEntrust () {
+    getMyCurrentEntrust: _.debounce(async function () {
       const {partnerTradeId} = this.$middleTopData_S_X
       let params = {
         currentPage: this.currentPageForMyEntrust,
@@ -405,7 +405,7 @@ export default {
       if (!data) return false
       this.currentEntrustList = getNestedData(data, 'data.list') || []
       this.totalPageForMyEntrust = getNestedData(data, 'data.pages') - 0
-    }
+    }, 500)
   },
   filter: {},
   computed: {
@@ -430,7 +430,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import '../../../static/css/scss/index.scss';
+@import '../../assets/CSS/index';
 
 .entrust-order-box {
   width: 100%;
@@ -675,7 +675,7 @@ export default {
   }
 
   &.day {
-    color: $dayFontColor;
+    color: $dayMainTitleColor;
     background-color: $mainDayBgColor;
 
     > .inner-box {

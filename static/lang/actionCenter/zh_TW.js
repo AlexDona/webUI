@@ -45,7 +45,7 @@ export const actionCenter = {
   'crowd_funding_minimum_deadline': '截止時間',
   'crowd_funding_interest_time': '計息時間',
   'crowd_funding_expire_date': '到期時間',
-  'crowd_funding_expire_current_State': '當前狀態',
+  'crowd_funding_limit_time': '',
 
   'crowd_funding_expire_purplus1': '餘額',
   'crowd_funding_description_title': '項目介紹',

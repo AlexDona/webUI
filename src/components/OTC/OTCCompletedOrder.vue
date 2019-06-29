@@ -178,7 +178,6 @@
           <!-- 类型 -->
           <el-table-column
             :label="$t('M.otc_cancelOrder_type')"
-            width="118"
           >
             <template slot-scope="s">
               <span
@@ -200,7 +199,6 @@
           <!-- 币种 -->
           <el-table-column
             :label="$t('M.comm_currency')"
-            width="118"
           >
             <template slot-scope="s">
               {{ s.row.coinName }}
@@ -209,7 +207,6 @@
           <!-- 价格 -->
           <el-table-column
             :label="$t('M.otc_index_price')"
-            width="118"
           >
             <template slot-scope="s">
               {{ $scientificToNumber(s.row.price) }}({{ s.row.currencyName }})
@@ -242,7 +239,7 @@
         </el-table>
       </div>
       <!--分页-->
-      <div class="page">
+      <div class="page text-align-c">
         <el-pagination
           background
           v-show="completedOrdersList.length"
@@ -260,7 +257,6 @@
 import {timeFilter} from '../../utils'
 import {getOTCOrdersThreeDay} from '../../utils/api/OTC'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {mapState} from 'vuex'
@@ -268,7 +264,6 @@ export default {
   components: {},
   data () {
     return {
-      // 分页
       // 每页展示的条数
       pageSize: 5,
       // 当前页码
@@ -306,8 +301,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      console.log('已完成订单')
-      console.log(data)
+      // console.log('已完成订单')
+      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
@@ -330,14 +325,10 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/OTC/OTCCenter.scss";
+@import "../../assets/CSS/index";
 
 .otc-completed-order-box {
   > .completed-order-content {
-    .page {
-      text-align: center;
-    }
-
     .completed-info {
       display: flex;
       flex: 7;
@@ -365,13 +356,13 @@ export default {
         > .order-info-right {
           margin-left: 50px;
           line-height: 20px;
-          // 增加原因字段样式
+
           .reason-content {
             display: inline-block;
             width: 250px;
             overflow: hidden;
-            text-overflow: ellipsis; // 显示省略符号来代表被修剪的文本。
-            white-space: nowrap; // 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }
@@ -436,7 +427,7 @@ export default {
                   position: absolute;
                   bottom: -10px;
                   left: 0;
-                  width: 1045px;
+                  width: 1195px;
                   border-bottom-right-radius: 5px;
                   border-bottom-left-radius: 5px;
                   content: '';
@@ -479,7 +470,7 @@ export default {
 
           > .order-info-left {
             > .pay-info {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -489,7 +480,7 @@ export default {
 
           > .order-info-middle {
             > .buyer-seller-info {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -497,7 +488,7 @@ export default {
         > .completed-info-right {
           > .order-info-right {
             > .confirm-time {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -523,7 +514,6 @@ export default {
         .el-table__header {
           margin-bottom: 15px;
 
-          /* 20190104增加已完成订单表头边框样式 */
           thead {
             > tr {
               > th {
@@ -611,7 +601,7 @@ export default {
                     position: absolute;
                     bottom: -10px;
                     left: 0;
-                    width: 1045px;
+                    width: 1195px;
                     height: 20px;
                     border-bottom: 1px solid #262f38;
                     border-bottom-right-radius: 5px;
@@ -659,7 +649,7 @@ export default {
 
           > .order-info-left {
             > .pay-info {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -669,7 +659,7 @@ export default {
 
           > .order-info-middle {
             > .buyer-seller-info {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -677,7 +667,7 @@ export default {
         > .completed-info-right {
           > .order-info-right {
             > .confirm-time {
-              color: #5e95ec;
+              color: $mainColor;
             }
           }
         }
@@ -765,14 +755,13 @@ export default {
                 border-top-left-radius: 5px;
 
                 &.el-table__expanded-cell {
-                  // border-top: 0 solid #fff;
                   border-top-left-radius: 0;
 
                   &::after {
                     position: absolute;
                     bottom: -10px;
                     left: 0;
-                    width: 1045px;
+                    width: 1195px;
                     border-bottom: 1px solid #ecf1f8;
                     border-bottom-right-radius: 5px;
                     border-bottom-left-radius: 5px;

@@ -182,7 +182,7 @@ export default {
       })
     },
     // 4.0 提交撤单
-    async getOTCEntrustingOrdersRevocation (id) {
+    getOTCEntrustingOrdersRevocation: _.debounce(async function (id) {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
       })
@@ -192,7 +192,7 @@ export default {
         type: 'ENTRUSTED',
         status: true
       })
-    }
+    }, 500)
   },
   filter: {},
   computed: {
@@ -215,7 +215,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
+  @import '../../../assets/CSS/index';
 
   .fiat-entrust-order-box {
     .fiat-entrust-order-table {
@@ -285,10 +285,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .fiat-color {
           color: #338ff5;
@@ -300,13 +300,13 @@ export default {
           border: 1px solid #262f38 !important;
           text-align: left;
           color: #617499;
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
           box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .entrust-table-body {
           color: #9da5b3;
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
 
           > .entrust-list-content {
             .red {
@@ -319,25 +319,25 @@ export default {
           }
 
           .no-data {
-            background-color: $nightMainBgColor;
+            background-color: $mainContentNightBgColor;
           }
         }
       }
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .background-color {
-        background-color: $dayBgColor;
+        background-color: $mainDayBgColor;
       }
 
       > .fiat-entrust-order-table {
         > .entrust-table-head {
           border: 1px solid rgba(72, 87, 118, .1) !important;
           color: #617499;
-          background-color: $dayBgColor;
+          background-color: $mainDayBgColor;
         }
 
         > .entrust-table-body {

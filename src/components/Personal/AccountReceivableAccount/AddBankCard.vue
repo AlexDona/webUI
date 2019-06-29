@@ -220,7 +220,7 @@ export default {
       this.confirmTiePhone()
     },
     // 确定设置按钮
-    async confirmTiePhone () {
+    confirmTiePhone: _.debounce(async function () {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.bankName) &&
@@ -255,7 +255,7 @@ export default {
         this.stateEmptyData()
         console.log(data)
       }
-    },
+    }, 500),
     // 接口请求完成之后清空数据
     stateEmptyData () {
       this.bankName = '' // 银行卡名称
@@ -385,7 +385,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
+  @import '../../../assets/CSS/index';
 
   .add-bank {
     margin-top: 50px;
@@ -466,10 +466,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .add-bank-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .add-bank-header {
           border-bottom: 1px solid #39424d;
@@ -532,8 +532,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       .add-bank-main {
         border: 1px solid rgb(246, 246, 246);

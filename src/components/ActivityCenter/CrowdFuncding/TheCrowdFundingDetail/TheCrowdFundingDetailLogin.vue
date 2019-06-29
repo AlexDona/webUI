@@ -53,7 +53,10 @@
 <script>
 import {getDateTime} from '../../../../utils'
 import {applyCrowdFundingAJAX} from '../../../../utils/api/activityCenter'
-import {mapState} from 'vuex'
+import {
+  mapState,
+  mapMutations
+} from 'vuex'
 export default {
   // name: '',
   // mixins: [],
@@ -122,6 +125,9 @@ export default {
   },
   // destroyed () {},
   methods: {
+    ...mapMutations([
+      'UPDATE_PAY_PASSWORD_DIALOG_M'
+    ]),
     /**
      * 输入限制： 整数 最大 7位，小数 最大8位
      */
@@ -170,8 +176,9 @@ export default {
       const {buyCount} = this.form
       this.predict = this.$cutOutPointLength((this.interestRate / 100 * buyCount) / this.ONE_YEAR * dayTime, 8)
       console.log(this.predict)
+      return dayTime
     },
-    async applyCrowdFunding () {
+    applyCrowdFunding: _.debounce(async function () {
       const params = {
         // 申购项目id
         id: this.detailId,
@@ -180,12 +187,14 @@ export default {
         payPassword: this.$globalPayPassword_S_X
       }
       const data = await applyCrowdFundingAJAX(params)
+      this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
+
       if (!data) return false
       // console.log(data)
       this.timer = setTimeout(() => {
         this.$goToPage(`/${this.$routes_X.crowdFunding}`)
       }, 2000)
-    },
+    }, 500),
     updateButtonText () {
       const status = ['coming', 'ongoing', 'ended']
       const statusMap = {
@@ -283,6 +292,7 @@ export default {
           border none
           height 50px
           font-size 12px
+          color #fff
         .el-input-group__append,.el-button--default
           border-radius 0 2px 2px 0
           border none
@@ -313,6 +323,7 @@ export default {
           .el-input__inner
             background-color #fff
             border 1px solid S_main_color
+            color S_night_font_color
           .el-input-group__append,.el-button--default
             border none
           .el-input-group__append

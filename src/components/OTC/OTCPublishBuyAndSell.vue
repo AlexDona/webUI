@@ -965,7 +965,7 @@ export default {
       this.errorPWd = ''
     },
     // 15.0 点击输入密码框中的提交按钮
-    async publishOTCEntryOrders () {
+    publishOTCEntryOrders: _.debounce(async function () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
         this.errorPWd = this.$t('M.comm_please_enter') + this.$t('M.comm_password')
@@ -1011,7 +1011,7 @@ export default {
         this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
         this.$goToPage('/OTCCenter')
       }
-    },
+    }, 500),
     // 16.0 充币按钮跳转
     chargeMoney () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
@@ -1044,7 +1044,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/index";
+@import "../../assets/CSS/index";
 
 .otc-publish-buy-and-sell-box {
   margin-top: 50px;
@@ -1323,7 +1323,7 @@ export default {
 
         .close-pwd-tip {
           margin-top: 5px;
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1333,7 +1333,7 @@ export default {
 
         .forget-pwd-tip {
           padding: 8px 20px 0 0;
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1372,7 +1372,7 @@ export default {
 
           > .buy-sell-submit-form {
             .want-buy-sell-sum {
-              color: #338ff5;
+              color: $mainColor;
             }
 
             .want-buy-sell-sum-content {
@@ -1396,7 +1396,7 @@ export default {
               }
 
               > .unit {
-                color: #338ff5;
+                color: $mainColor;
                 background-color: #21243b;
               }
             }
@@ -1418,7 +1418,7 @@ export default {
               }
 
               > .monad {
-                color: #338ff5;
+                color: $mainColor;
                 background-color: #21243b;
               }
 
@@ -1493,6 +1493,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #fff;
+      }
+
       .el-textarea__inner {
         color: #fff;
         background-color: #1c1f32;
@@ -1515,7 +1519,7 @@ export default {
 
         .el-select-dropdown__item {
           &.hover {
-            color: #338ff5 !important;
+            color: $mainColor !important;
             background-color: #29343f !important;
           }
         }
@@ -1581,7 +1585,7 @@ export default {
 
           > .buy-sell-submit-form {
             .want-buy-sell-sum {
-              color: #338ff5;
+              color: $mainColor;
             }
 
             .want-buy-sell-sum-content {
@@ -1606,7 +1610,7 @@ export default {
 
               > .unit {
                 border: 1px solid #cbddf4;
-                color: #338ff5;
+                color: $mainColor;
                 background-color: #cbddf4;
               }
             }
@@ -1629,7 +1633,7 @@ export default {
 
               > .monad {
                 border: 1px solid #cbddf4;
-                color: #338ff5;
+                color: $mainColor;
                 background-color: #cbddf4;
               }
 
@@ -1704,6 +1708,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #7d90ac;
+      }
+
       .el-form--label-top {
         .el-form-item__label {
           color: #7d90ac;
@@ -1739,7 +1747,7 @@ export default {
           }
 
           > .range-line {
-            color: #338ff5;
+            color: $mainColor;
           }
         }
 

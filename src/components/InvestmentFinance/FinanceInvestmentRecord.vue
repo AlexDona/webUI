@@ -443,7 +443,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
+  @import '../../assets/CSS/index';
 
   .finance-box {
     width: 100%;
@@ -592,7 +592,7 @@ export default {
 
     &.night {
       > .inner-box {
-        background-color: $nightInnerBoxBg;
+        background-color: $mainNightBgColor;
       }
 
       /deep/ {

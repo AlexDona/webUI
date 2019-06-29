@@ -73,7 +73,6 @@
         <div class="number">
           <!-- 商家申请 -->
           <span class="common apply">
-            <!-- {{$t('M.otc_merchant')}}{{$t('M.otc_apply')}} -->
             {{$t('M.otc_merchant_apply')}}
           </span>
           <!-- 发送邮件 -->
@@ -122,16 +121,6 @@
               {{$t('M.otc_merchant_step4')}}
             </h4>
             <p>{{$t('M.otc_merchant_datailSeven')}}</p>
-            <!--<h4 class="title tips">-->
-              <!--{{$t('M.otc_merchant_loveTips')}}-->
-              <!--<el-button-->
-                <!--type="text"-->
-                <!--@click="businessArgument"-->
-                <!--class="agree font-size14"-->
-              <!--&gt;-->
-                <!--《{{$t('M.otc_merchant_authentication')}}》-->
-              <!--</el-button>-->
-            <!--</h4>-->
           </div>
         </div>
         <!-- 2.2.4 同意协议部分 -->
@@ -252,7 +241,6 @@ import {
 } from '../../utils/api/OTC'
 import { downloadFileWithUserDefined } from '../../utils/'
 import {
-  // returnAjaxMsg,
   getNestedData,
   http2https
 } from '../../utils/commonFunc'
@@ -284,7 +272,7 @@ export default {
   },
   created () {
     // 动态获取申请中 申请成功内容的高度
-    console.log(document.documentElement.clientHeight)
+    // console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
     this.determineUser()
   },
@@ -315,7 +303,6 @@ export default {
           })
           return false
         }
-        // this.getOTCBusinessApply()
         this.showApplyMerchantStatus = true
       } else {
         this.$message({showClose: true, message: this.$t('M.otc_login_pi') + '!'})
@@ -334,7 +321,7 @@ export default {
     async getOTCBusinessApply () {
       const data = await businessApply()
       // 返回数据正确的逻辑
-      console.log(data)
+      // console.log(data)
       if (!data) return false
       if (data.meta) {
         let detailMeta = getNestedData(data, 'meta')
@@ -356,8 +343,8 @@ export default {
       // 刚进页面接口请求回来之前先展示缓冲界面
       this.applyStatus = 4
       const data = await firstEnterBusinessApply()
-      console.log(' 首次点击商家申请请求数据')
-      console.log(data)
+      // console.log(' 首次点击商家申请请求数据')
+      // console.log(data)
       // 正确逻辑
       if (data) {
         let getData = getNestedData(data, 'data')
@@ -378,9 +365,8 @@ export default {
           this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
           this.applyStatus = 3
         }
-        // ren 增加非商家点击提示框申请按钮跳转到申请页面中的申请按钮部分功能
+        // 非商家点击提示框申请按钮跳转到申请页面中的申请按钮部分功能
         if (getData.status !== 3 && this.otcApplyJumpBottomStatus) {
-          // console.log('进入方法了' + this.otcApplyJumpBottomStatus)
           this.scrollToTimerOne = setTimeout(() => {
             window.scrollTo(0, 2000)
           }, 100)
@@ -410,9 +396,8 @@ export default {
         this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
         this.applyStatus = 3
       }
-      // ren 增加非商家点击提示框申请按钮跳转到申请页面中的申请按钮部分功能
+      // 非商家点击提示框申请按钮跳转到申请页面中的申请按钮部分功能
       if (getData.status !== 3 && this.otcApplyJumpBottomStatus) {
-        // console.log('进入方法了' + this.otcApplyJumpBottomStatus)
         this.scrollToTimerOne = setTimeout(() => {
           window.scrollTo(0, 2000)
         }, 100)
@@ -425,8 +410,8 @@ export default {
         termsTypeIds: 9,
         language: this.language
       })
-      console.log('商家申请界面用户协议')
-      console.log(data)
+      // console.log('商家申请界面用户协议')
+      // console.log(data)
       // 正确逻辑
       if (!data) return false
       this.argumentContent = getNestedData(data, 'data[0].content')
@@ -439,7 +424,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
+      // 用户登录状态 false 未登录； true 登录
+      isLogin: state => state.user.isLogin,
       language: state => state.common.language,
       theme: state => state.common.theme,
       configInfo: state => state.common.footerInfo.configInfo,
@@ -449,7 +435,6 @@ export default {
   },
   watch: {
     otcApplyJumpBottomStatus (newVal) {
-      // console.log('监控')
       // console.log(newVal)
       if (newVal && this.applyStatus !== 3) {
         this.scrollToTimerTwo = setTimeout(() => {
@@ -471,8 +456,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/OTC/OTCCenter.scss";
-  @import "../../../static/css/scss/index";
+  @import "../../assets/CSS/index";
 
   .otc-business-apply-box {
     margin-top: 50px;
@@ -527,7 +511,7 @@ export default {
               width: 83px;
               padding-bottom: 10px;
               font-weight: 700;
-              color: #338ff5;
+              color: $mainColor;
             }
 
             > .text {
@@ -751,7 +735,7 @@ export default {
 
             .el-dialog__title {
               font-size: 16px;
-              color: #338ff5 !important;
+              color: $mainColor !important;
             }
 
             .el-dialog__headerbtn {
@@ -785,7 +769,7 @@ export default {
 
               &:first-child {
                 border: 1px solid rgba(51, 143, 245, 1);
-                color: #338ff5;
+                color: $mainColor;
                 background: #1c2237;
               }
 
@@ -825,7 +809,7 @@ export default {
               > .title {
                 border-bottom: 1px dashed rgba(51, 143, 245, .3);
                 font-weight: 700;
-                color: #338ff5;
+                color: $mainColor;
               }
 
               > .text {
@@ -891,7 +875,7 @@ export default {
         }
 
         .el-dialog__title {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         .el-dialog {
@@ -941,7 +925,7 @@ export default {
               > .title {
                 border-bottom: 1px dashed rgba(51, 143, 245, .3);
                 font-weight: 700;
-                color: #338ff5;
+                color: $mainColor;
               }
 
               > .text {
@@ -1068,7 +1052,7 @@ export default {
               .el-button {
                 &:first-child {
                   border: 1px solid rgba(51, 143, 245, 1);
-                  color: #338ff5;
+                  color: $mainColor;
                   background: #fff;
                 }
               }
@@ -1091,7 +1075,7 @@ export default {
 
   /deep/ {
     .el-dialog__title {
-      color: #338ff5;
+      color: $mainColor;
     }
   }
 </style>

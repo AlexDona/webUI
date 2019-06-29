@@ -200,6 +200,7 @@
             <!-- 单价 -->
             <el-table-column
               :label="$t('M.otc_index_UnitPrice')"
+              width="140px"
             >
               <template slot-scope="s">
                 <div>{{ $scientificToNumber(s.row.price) }}</div>
@@ -208,6 +209,7 @@
             <!-- 数量 -->
             <el-table-column
               :label="$t('M.comm_count')"
+              width="140px"
             >
               <template slot-scope="s">
                 <div>{{ $scientificToNumber(s.row.entrustCount) }}</div>
@@ -216,6 +218,7 @@
             <!-- 剩余数量 -->
             <el-table-column
               :label="$t('M.comm_balance_completed1')"
+              width="140px"
             >
               <template slot-scope="s">
                 <div>{{ $scientificToNumber(s.row.remainCount) }}</div>
@@ -252,6 +255,7 @@
             <!-- 操作 -->
             <el-table-column
               :label="$t('M.otc_index_operate')"
+              align="right"
             >
               <template slot-scope="s">
                 <!-- 下架 -->
@@ -264,7 +268,6 @@
                 </el-button>
                 <!-- 修改 -->
                 <!--20190222修改：后台增加字段币种是否可用来动态显示隐藏修改按钮s.row.coinStatus === 'ENABLE'-->
-                <!--也可以用禁用按钮方法：:disabled="s.row.coinStatus === 'DISABLE'"-->
                 <el-button
                   type="text"
                   v-if="s.row.status === 'CANCELED' && s.row.coinStatus === 'ENABLE'"
@@ -304,7 +307,6 @@ import {
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter} from '../../utils'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {mapState, mapActions} from 'vuex'
@@ -479,12 +481,12 @@ export default {
       })
     },
     // 9.0 一键下架所有广告
-    async cancelAllOneKeyConfirm () {
+    cancelAllOneKeyConfirm: _.debounce(async function () {
       const data = await cancelAllOrdersOnekey()
       // 返回数据正确的逻辑
       if (!data) return false
       this.getOTCADManageList()
-    },
+    }, 500),
     // 10.0 点击表格中的下架按钮触发的事件
     updateADUnShelve (id) {
       this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
@@ -496,14 +498,14 @@ export default {
       })
     },
     // 11.0 点击 下架 按钮请求撤单接口
-    async getOTCEntrustingOrdersRevocation (id) {
+    getOTCEntrustingOrdersRevocation: _.debounce(async function (id) {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
       })
       // 返回数据正确的逻辑 重新渲染列表
       if (!data) return false
       this.getOTCADManageList()
-    },
+    }, 500),
     // 12.0 点击 修改 按钮钮触发的事件
     async modifyAD (id) {
       // 刷新用户个人信息
@@ -546,15 +548,15 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/index";
+@import "../../assets/CSS/index";
 
 .otc-AD-manage-box {
   margin-top: 50px;
   overflow: hidden;
 
   > .otc-AD-manage-content {
-    width: 1150px;
-    padding-top: 50px;
+    width: 1300px;
+    padding-top: 20px;
     margin: 50px auto 10px;
 
     > .AD-title {
@@ -647,6 +649,8 @@ export default {
       }
 
       .el-table {
+        padding-bottom: 15px;
+
         tr {
           height: 40px;
         }
@@ -700,8 +704,8 @@ export default {
 
     > .otc-AD-manage-content {
       > .AD-title {
-        border-left: 3px solid #338ff5;
-        color: #338ff5;
+        border-left: 3px solid $mainColor;
+        color: $mainColor;
       }
 
       > .AD-manage-main {
@@ -719,7 +723,7 @@ export default {
 
         > .manage-main-middle {
           > .all-unShelve {
-            color: #338ff5;
+            color: $mainColor;
           }
         }
 
@@ -736,6 +740,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #fff;
+      }
+
       .el-input__inner {
         background-color: #1c1f32;
       }
@@ -818,8 +826,8 @@ export default {
 
     > .otc-AD-manage-content {
       > .AD-title {
-        border-left: 3px solid #338ff5;
-        color: #338ff5;
+        border-left: 3px solid $mainColor;
+        color: $mainColor;
       }
 
       > .AD-manage-main {
@@ -837,7 +845,7 @@ export default {
 
         > .manage-main-middle {
           > .all-unShelve {
-            color: #338ff5;
+            color: $mainColor;
           }
         }
 
@@ -854,6 +862,10 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #7d90ac;
+      }
+
       .el-input__inner {
         border: 1px solid rgba(236, 241, 248, 1);
         color: #7d90ac;

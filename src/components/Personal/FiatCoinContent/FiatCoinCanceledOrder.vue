@@ -232,7 +232,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
+  @import '../../../assets/CSS/index';
 
   .fiat-canceled-order-box {
     > .canceled-order-content {
@@ -425,10 +425,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .fiat-color {
           color: #338ff5;
@@ -440,17 +440,17 @@ export default {
           box-sizing: border-box;
           border: 1px solid #262f38;
           color: #617499;
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
           box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .canceled-table-body {
           border: 1px solid #262f38;
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
 
           > .canceled-info-top {
             color: #617499;
-            background-color: $nightMainBgColor;
+            background-color: $mainContentNightBgColor;
 
             .red {
               color: #d45858;
@@ -491,7 +491,7 @@ export default {
         }
 
         > .no-data {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
         }
       }
 
@@ -600,8 +600,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .background-color {
         background-color: #ccc;
@@ -611,17 +611,17 @@ export default {
         > .canceled-table-head {
           border: 1px solid rgba(38, 47, 56, .1) !important;
           color: #617499;
-          background-color: $dayBgColor;
+          background-color: $mainDayBgColor;
           box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .canceled-table-body {
           border: 1px solid rgba(38, 47, 56, .1);
-          background-color: $dayBgColor;
+          background-color: $mainDayBgColor;
 
           > .canceled-info-top {
             color: #617499;
-            background-color: $dayBgColor;
+            background-color: $mainDayBgColor;
 
             .red {
               color: #d45858;
@@ -661,7 +661,7 @@ export default {
         }
 
         > .no-data {
-          background-color: $dayBgColor;
+          background-color: $mainDayBgColor;
         }
       }
 

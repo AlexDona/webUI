@@ -16,6 +16,7 @@ const state = {
   // 国际化语言
   language: getStore('language') || 'en_US',
   activeLanguage: '',
+  languages_S: [],
   mainColor: {
     $mainNightBgColor: '#1c1f32',
     $mainDayBgColor: '#fff'

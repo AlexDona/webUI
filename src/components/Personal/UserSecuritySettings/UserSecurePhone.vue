@@ -858,7 +858,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .set-phone {
     margin-top: 50px;
@@ -1001,10 +1001,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .set-phone-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .set-phone-header {
           border-bottom: 1px solid #39424d;
@@ -1090,8 +1090,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       .set-phone-main {
         border: 1px solid rgba(246, 246, 246, 1);
