@@ -4,8 +4,8 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="freezing-order-content">
-      <!--表头属性-->
-      <div class="freezing-table-head display-flex font-size12">
+      <!--表头-->
+      <div class="freezing-table-head font-size12 box-sizing">
         <span class="item order-time">
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
@@ -37,30 +37,30 @@
       </div>
       <!--表格-->
       <div
-        class="freezing-table-body font-size12"
+        class="freezing-table-body font-size12 box-sizing"
         v-for="(item,index) in OTCFreezingOrderList"
         :key="index"
       >
         <!--表格上部分-->
-        <div class="freezing-info-top display-flex">
+        <div class="freezing-info-top">
           <!-- 订单号 -->
-          <span class="item order-time">{{item.orderSequence}}</span>
+          <span class="item order-time">
+            {{item.orderSequence}}
+          </span>
           <!-- 类型 买入 -->
           <span
             class="item flex1"
             v-if="item.orderType === 'BUY'"
             :class="{ red: item.orderType === 'BUY' }"
           >
-            <!--买入-->
              {{$t('M.comm_buy')}}
           </span>
-          <!-- 类型卖出 -->
+          <!-- 类型 卖出 -->
           <span
             class="item flex1"
             v-if="item.orderType === 'SELL'"
             :class="{ green: item.orderType === 'SELL' }"
           >
-            <!--卖出-->
             {{$t('M.comm_sell')}}
           </span>
           <!-- 币种 -->
@@ -80,14 +80,16 @@
             {{(item.price*item.pickCount).toFixed(2)}}({{ item.currencyName }})
           </span>
           <!-- 下单时间 -->
-          <span class="item order-time">{{timeFormatting(item.createTime)}}
+          <span class="item order-time">
+            {{timeFormatting(item.createTime)}}
           </span>
         </div>
         <!--表格下部分-->
-        <div class="freezing-info-bottom">
-          <div class="info-left">
+        <div class="freezing-info-bottom box-sizing">
+          <!--左侧1-->
+          <div class="info-left box-sizing">
+            <!--付款信息-->
             <p class="text-info text-blue">
-              <!--付款信息-->
               {{$t('M.otc_index_js2')}}
             </p>
             <!--买家已付款，卖家有异议申请冻结订单-->
@@ -105,29 +107,32 @@
               {{$t('M.otc_freeze_info2')}}
             </p>
           </div>
-          <div class="info-middle">
+          <!--中间2-->
+          <div class="info-middle box-sizing">
+            <!--卖家信息-->
             <p class="text-info text-blue">
-              <!--卖家信息-->
               {{$t('M.otc_stocks_seller')}}
             </p>
+            <!--姓名-->
             <p class="text-info">
               <span>
-                <!--姓名-->
                 {{$t('M.otc_name')}}：
               </span><span>
               {{item.sellName}}
             </span>
             </p>
+            <!--卖家手机号-->
             <p class="text-info">
               <span>
-                <!--卖家手机号-->
                 {{$t('M.otc_trading_sellphone')}}：
-              </span><span>
+              </span>
+              <span>
               {{item.sellPhone}}
             </span>
             </p>
           </div>
-          <div class="info-right">
+          <!--右侧3-->
+          <div class="info-right box-sizing">
             <!-- 申诉冻结，等待处理 -->
             <p class="text-info text-blue">
               {{$t('M.otc_complaint_frezzing')}}
@@ -137,7 +142,8 @@
               {{timeFormatting(item.freezeTime)}}
             </p>
           </div>
-          <div class="info-reason">
+          <!--最右侧4-->
+          <div class="info-reason box-sizing">
             <!-- 申诉原因 -->
             <p class="text-info text-blue">
               {{$t('M.otc_complaint_appeal_reason')}}
@@ -158,8 +164,11 @@
         @current-change="changeCurrentPage"
       >
       </el-pagination>
-      <div class="no-data font-size12" v-if="!OTCFreezingOrderList.length">
-        <!--暂无数据-->
+      <!--暂无数据-->
+      <div
+        class="no-data font-size12 text-align-c"
+        v-if="!OTCFreezingOrderList.length"
+      >
         {{$t('M.comm_no_data')}}
       </div>
     </div>
@@ -220,7 +229,7 @@ export default {
   .fiat-freezing-order-box {
     > .freezing-order-content {
       > .freezing-table-head {
-        box-sizing: border-box;
+        display: flex;
         height: 35px;
         margin-bottom: 10px;
         line-height: 35px;
@@ -236,11 +245,11 @@ export default {
       }
 
       > .freezing-table-body {
-        box-sizing: border-box;
         height: 170px;
         margin-bottom: 10px;
 
         > .freezing-info-top {
+          display: flex;
           height: 40px;
           line-height: 40px;
 
@@ -265,12 +274,10 @@ export default {
         > .freezing-info-bottom {
           display: flex;
           flex: 4;
-          box-sizing: border-box;
           padding: 30px 30px 0;
 
           > .info-left {
             flex: 1;
-            box-sizing: border-box;
 
             > .text-info {
               line-height: 20px;
@@ -279,7 +286,6 @@ export default {
 
           > .info-middle {
             flex: 1;
-            box-sizing: border-box;
             margin-left: 30px;
 
             > .text-info {
@@ -289,7 +295,6 @@ export default {
 
           > .info-right {
             flex: 1;
-            box-sizing: border-box;
             margin-left: 30px;
 
             > .text-info {
@@ -299,7 +304,6 @@ export default {
 
           > .info-reason {
             flex: 1;
-            box-sizing: border-box;
             margin-left: 30px;
 
             > .text-info {
@@ -310,31 +314,24 @@ export default {
       }
 
       > .no-data {
-        height: 431px;
-        line-height: 431px;
-        text-align: center;
+        height: 485px;
+        line-height: 485px;
       }
     }
 
     &.night {
-      color: $nightFontColor;
-      background-color: $mainNightBgColor;
-
       > .freezing-order-content {
         > .freezing-table-head {
-          border: 1px solid #262f38;
           color: #617499;
           background-color: $mainContentNightBgColor;
           box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .freezing-table-body {
-          border: 1px solid #262f38;
           background-color: $mainContentNightBgColor;
 
           > .freezing-info-top {
             color: #617499;
-            background-color: $mainContentNightBgColor;
           }
 
           > .freezing-info-bottom {
@@ -344,7 +341,8 @@ export default {
 
             > .info-left,
             .info-middle,
-            .info-right {
+            .info-right,
+            .info-reason {
               border-right: 1px solid #262f38;
 
               > .text-blue {
@@ -353,9 +351,7 @@ export default {
             }
 
             > .info-reason {
-              > .text-blue {
-                color: $mainColor;
-              }
+              border-right: 0;
             }
           }
         }
@@ -367,8 +363,6 @@ export default {
     }
 
     &.day {
-      color: $dayMainTitleColor;
-
       > .freezing-order-content {
         > .freezing-table-head {
           color: $fontColorSecondaryOfDay;
@@ -377,21 +371,17 @@ export default {
         }
 
         > .freezing-table-body {
+          color: $dayMainTitleColor;
           background-color: $mainColorOfWhite;
           box-shadow: 0 0 6px $boxShadowColorOfDay;
 
-          > .freezing-info-top {
-            color: $dayMainTitleColor;
-            background-color: $mainColorOfWhite;
-          }
-
           > .freezing-info-bottom {
             border-top: 1px solid rgba(72, 87, 118, .1);
-            color: $dayMainTitleColor;
 
             > .info-left,
             .info-middle,
-            .info-right {
+            .info-right,
+            .info-reason {
               border-right: 1px solid rgba(72, 87, 118, .1);
 
               > .text-blue {
@@ -400,9 +390,7 @@ export default {
             }
 
             > .info-reason {
-              > .text-blue {
-                color: $mainColor;
-              }
+              border-right: 0;
             }
           }
         }
