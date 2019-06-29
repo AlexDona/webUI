@@ -186,12 +186,8 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapActions([
-      'GET_CURRENCY_URL_ACTION'
-    ]),
-    ...mapMutations([
-      'CHANGE_FOOTER_ACTIVE_NAME'
-    ]),
+    ...mapActions(['GET_CURRENCY_URL_ACTION']),
+    ...mapMutations(['CHANGE_FOOTER_ACTIVE_NAME']),
     http2https (str) {
       return http2https(str)
     },

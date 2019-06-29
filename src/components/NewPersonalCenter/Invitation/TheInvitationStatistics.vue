@@ -118,13 +118,13 @@ export default {
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
-    updateGeneralize (e) {
+    updateGeneralize: _.debounce(function (e) {
       console.log(e, this.activeName)
       this.$emit('getUserPromotionList', {
         currentNum: this.currentNum,
         type: this.activeName
       })
-    },
+    }, 500),
     // 分页
     changeCurrentPage (pageNum) {
       this.currentNum = pageNum

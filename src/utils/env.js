@@ -22,6 +22,8 @@ const devTestConfig = {
   // apiCommonUrl: 'http://192.168.2.88:8888/',
   // 浩田
   // apiCommonUrl: 'http://192.168.2.52:22224/',
+  // 成翔
+  // apiCommonUrl: 'http://192.168.2.122:8888/',
   apiCommonUrl: 'http://192.168.2.200:8888/',
   socketUrl: 'ws://192.168.2.200:8087/market',
   // 浩田
