@@ -30,9 +30,7 @@
               <!--挂单时间-->
               {{$t('M.otc_entrust_time')}}：{{item.createTime}}
             </div>
-            <div class="order-list-head-icon buy-icon">
-              <!-- <img src="../../assets/develop/buy.png" alt=""> -->
-            </div>
+            <div class="order-list-head-icon buy-icon"></div>
             <div class="buy-sell-icon">
               <!--买-->
               {{$t('' + 'M.comm_bid')}}
@@ -44,7 +42,6 @@
             <div class="order-list-body-left">
               <!-- logo图标和名字 -->
               <div class="logo">
-                <!-- src="../../assets/develop/bi.png" -->
                 <img
                   :src="item.coinUrl"
                   width="30"
@@ -121,16 +118,7 @@
                   </div>
                   <!-- 收款人 -->
                   <p class="bank-info">
-                    <!--银行卡，微信，支付宝取userBankList中的realname，其他都去外层的sellName-->
-                    <!--<span>{{$t('M.otc_payee')}}:
-                      <span v-if="activeBankType[index] === 'Bankcard' || activeBankType[index] === 'Alipay' ||  activeBankType[index] === 'Wechat'">
-                        {{checkedPayRealNameArr[index]}}
-                      </span>
-                      <span v-else>
-                        {{item.sellName}}
-                      </span>
-                    </span>-->
-                    <!--现在改为：都取userBankList中的realname-->
+                    <!--取userBankList中的realname-->
                     <span>
                       <span v-if="activeBankType[index]">
                         {{$t('M.otc_payee')}}:
@@ -753,7 +741,7 @@
             class="dialog-footer"
           >
             <button
-              class="button"
+              class="button cursor-pointer"
               type="primary"
               @click="submitButton1"
               :disabled="confirmPaymentStatus"
@@ -811,7 +799,7 @@
             class="dialog-footer"
           >
             <button
-              class="button"
+              class="button cursor-pointer"
               type="primary"
               @click="submitButton2"
               :disabled="confirmGatheringStatus"
@@ -866,7 +854,7 @@
             class="dialog-footer"
           >
             <button
-              class="button"
+              class="button cursor-pointer"
               type="primary"
               @click="submitsellerAppeal"
               :disabled="submitAppealStatus"
@@ -990,6 +978,17 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    // ren增加
+    // 清除定义的数组类数据
+    clearArrData () {
+      this.checkedPayRealNameArr = [] // 清空收款人名字
+      this.activePayModeList = [] // 清空支付方式数组
+      this.activeBankType = [] // 清空选中的支付方式所展示的付款账户和账号
+      this.cancelOrderTimeArr = [] // 清空取消订单倒计时
+      this.accomplishOrderTimeArr = [] // 清空自动成交倒计时
+      this.buyerAppealButtonStatus = [] // 清空买家申诉按钮
+    },
+    // ren增加
     // 申诉上传图片
     // 1.0 上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
     // 文件上传之前调用做一些拦截限制
@@ -1224,6 +1223,7 @@ export default {
     },
     // 4.0 买家点击确认付款按钮 弹出交易密码框
     async confirmPayMoney (index) {
+      // console.log(index)
       if (!this.activePayModeList[index]) {
         this.$message({
           // 请选择支付方式
@@ -1269,11 +1269,13 @@ export default {
         // 1关闭交易密码框
         this.dialogVisible1 = false
         // 正确逻辑
-        // 2再次调用接口刷新列表
+        // 再次调用接口刷新列表
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
-        if (!data) return false
+        // 清除定义的数组类数据
+        this.clearArrData()
         this.errpwd = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框
+        if (!data) return false
       }
     }, 500),
     // 7.0 卖家在买家付款前点击确认收款按钮的提示事件
@@ -1316,14 +1318,17 @@ export default {
       })
       console.log(data)
       this.confirmGatheringStatus = false // 开启确认收款交易密码框提交按钮
+      // 正确逻辑
       // 1关闭交易密码框
       this.dialogVisible2 = false
-      // 正确逻辑
-      // 2再次调用接口刷新列表
-      this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
-      if (!data) return false
+      // 2清空密码
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
+      // 3清除定义的数组类数据
+      this.clearArrData()
+      // 4再次调用接口刷新列表
+      this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
+      if (!data) return false
     }, 500),
     // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index, orderType) {
@@ -1412,12 +1417,14 @@ export default {
         data = await sellerSendAppeal(params)
       }
       console.log(data)
+      // 正确逻辑
       this.submitAppealStatus = false // 开启提交申诉交易密码框提交按钮
       this.dialogVisible3 = false
       this.errpwd = '' // 清空密码错提示
       this.tradePassword = '' // 清空密码框
       this.appealTextAreaValue = '' // 清空申诉原因
-      // 正确逻辑
+      // 1清除定义的数组类数据
+      this.clearArrData()
       // 2再次调用接口刷新列表
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       if (!data) return false

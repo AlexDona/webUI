@@ -364,6 +364,8 @@ export default {
       }
       if (activeName == 'ENTRUSTED') {
         const data = await getOTCEntrustingOrders(params)
+        console.log('委托订单列表')
+        console.log(data)
         if (!data) return false
         let OTCEntrustingOrdersData = getNestedData(data, 'data')
         // 返回数据正确的逻辑 重新渲染列表
@@ -381,6 +383,10 @@ export default {
           if (!(returnAjaxMsg(data, this, 0))) {
             return false
           } else {
+            console.log('法币订单列表（除了委托订单)')
+            console.log(data)
+            // 请求接口之前，调用子组件（交易中订单组件）方法，清空定义的数组数据this.$refs.tradeOrder.clearArrData()
+            this.$refs.tradeOrder.clearArrData()
             let merchantsOrdersListData = getNestedData(data, 'data.data')
             // 返回数据正确的逻辑 重新渲染列表
             this.SET_LEGAL_TENDER_LIST({
