@@ -353,14 +353,16 @@ export default {
         endTime: this.endTime,
         // 类型
         // tradeType: this.activatedMerchantsOrdersTraderStyleList,
-        pageNum: this.legalTradePageNum,
-        pageSize: this.legalTradePageSize
+        pageNum: this.legalTradePageNum
+        // pageSize: this.legalTradePageSize
       }
       // 20190218 增加委单和其他状态交易类型字段判断 委托订单用entrustType字段其他用tradeType字段
       if (activeName == 'ENTRUSTED') {
         params.entrustType = this.activatedMerchantsOrdersTraderStyleList
+        params.pageSize = 10 // 委托订单每页显示10条
       } else {
         params.tradeType = this.activatedMerchantsOrdersTraderStyleList
+        params.pageSize = this.legalTradePageSize // 每页显示5条
       }
       if (activeName == 'ENTRUSTED') {
         const data = await getOTCEntrustingOrders(params)

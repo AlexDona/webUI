@@ -8,37 +8,37 @@
       class="fiat-entrust-order-table"
     >
       <!-- 表头 -->
-      <div class="entrust-table-head display-flex font-size12">
-        <span class="item first-style flex1">
+      <div class="entrust-table-head font-size12">
+        <span class="item first-style">
           <!--类型-->
           {{$t('M.comm_type')}}
         </span>
-        <span class="item second-coin flex1">
+        <span class="item second-coin">
           <!--币种-->
           {{$t('M.otc_AD_token')}}
         </span>
-        <span class="item third-price flex1">
+        <span class="item third-price">
           <!--价格-->
           {{$t('M.otc_index_price')}}
         </span>
-        <span class="item fourth-entrust-count flex1">
+        <span class="item fourth-entrust-count">
           <!--挂单数量-->
           {{$t('M.otc_entrust_number')}}
         </span>
-        <span class="item fifth-match-count flex1">
+        <span class="item fifth-match-count">
           <!--已匹配数量-->
           <!-- 20181213改为 已成交数量-->
           {{$t('M.otc_entrust_matching')}}
         </span>
-        <span class="item sixth-total-amount flex1">
+        <span class="item sixth-total-amount">
           <!--总金额-->
           {{$t('M.otc_canceled_total')}}
         </span>
-        <span class="item senventh-create-time">
+        <span class="item seventh-create-time">
           <!--挂单时间-->
           {{$t('M.otc_entrust_time')}}
         </span>
-        <span class="item eighth-action flex1">
+        <span class="item eighth-action text-align-r">
           <!--操作-->
           {{$t('M.otc_index_operate')}}
         </span>
@@ -47,12 +47,9 @@
       <div
         class="entrust-table-body font-size12"
       >
-        <div class="no-data" v-if="!OTCEntrustOrderList.length">
-          <!--暂无数据-->
-          {{$t('M.comm_no_data')}}
-        </div>
+        <!--委单列表-->
         <div
-          class="entrust-list-content display-flex"
+          class="entrust-list-content"
           v-for="(item,index) in OTCEntrustOrderList"
           :key="index"
           v-if="OTCEntrustOrderList.length"
@@ -60,7 +57,7 @@
           <!-- 1 类型 -->
           <!-- 买入 -->
           <span
-            class="item first-style flex1"
+            class="item first-style"
             v-if="item.entrustType === 'BUY'"
             :class="{ red: item.entrustType === 'BUY' }"
           >
@@ -69,7 +66,7 @@
           </span>
           <!-- 卖出 -->
           <span
-            class="item first-style flex1"
+            class="item first-style"
             v-if="item.entrustType === 'SELL'"
             :class="{ green: item.entrustType === 'SELL' }"
           >
@@ -77,31 +74,31 @@
             {{$t('M.comm_sell')}}
           </span>
           <!-- 2 币种 -->
-          <span class="item second-coin flex1">
+          <span class="item second-coin">
             {{item.coinName}}
           </span>
           <!-- 3 价格 -->
-          <span class="item third-price flex1">
+          <span class="item third-price">
             {{item.price}}({{item.currencyName}})
           </span>
           <!-- 4 挂单数量 -->
-          <span class="item fourth-entrust-count flex1">
+          <span class="item fourth-entrust-count">
             {{item.entrustCount}}({{item.coinName}})
           </span>
           <!-- 5 已匹配数量 -->
-          <span class="item fifth-match-count flex1">
+          <span class="item fifth-match-count">
             {{item.matchCount}}({{item.coinName}})
           </span>
           <!-- 6 总金额 -->
-          <span class="item sixth-total-amount flex1">
+          <span class="item sixth-total-amount">
             {{item.totalAmount}}({{item.currencyName}})
           </span>
           <!-- 7 挂单时间 -->
-          <span class="item senventh-create-time1">
+          <span class="item seventh-create-time1">
             {{item.createTime}}
           </span>
           <!-- 8 操作 -->
-          <span class="item eighth-action flex1">
+          <span class="item eighth-action text-align-r">
             <el-button
               type="text"
               @click="revocationOrder(item.id)"
@@ -111,16 +108,22 @@
             </el-button>
           </span>
         </div>
+        <!--暂无数据-->
+        <div class="no-data" v-if="!OTCEntrustOrderList.length">
+          {{$t('M.comm_no_data')}}
+        </div>
         <!--分页-->
-        <el-pagination
-          background
-          v-show="OTCEntrustOrderList.length"
-          layout="prev, pager, next"
-          :current-page="legalTradePageNum"
-          :page-count="legalTradePageTotals"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
+        <div class="pages">
+          <el-pagination
+            background
+            v-show="OTCEntrustOrderList.length"
+            layout="prev, pager, next"
+            :current-page="legalTradePageNum"
+            :page-count="legalTradePageTotals"
+            @current-change="changeCurrentPage"
+          >
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -220,62 +223,64 @@ export default {
   .fiat-entrust-order-box {
     .fiat-entrust-order-table {
       > .entrust-table-head {
-        z-index: 200;
+        display: flex;
         box-sizing: border-box;
         height: 35px;
+        padding: 0 10px;
         margin-bottom: 10px;
         line-height: 35px;
 
         > .item {
-          display: inline-block;
-          text-align: center;
-        }
-
-        > .senventh-create-time {
-          width: 150px;
-        }
-
-        > .senventh-create-time1 {
-          width: 120px;
+          flex: 1;
         }
       }
 
-      > .entrust-table-body,
-      .item {
-        border-top: none;
-
-        > .no-data {
-          height: 431px;
-          line-height: 431px;
-          text-align: center;
-        }
+      > .entrust-table-body {
+        min-height: 485px;
+        padding: 30px 0;
 
         > .entrust-list-content {
           display: flex;
           height: 34px;
+          padding: 0 10px;
           line-height: 34px;
 
           > .item {
-            text-align: center;
+            flex: 1;
           }
+
+          .red {
+            color: $upColor;
+          }
+
+          .green {
+            color: $otcGreen;
+          }
+        }
+
+        > .no-data {
+          height: 371px;
+          line-height: 431px;
+          text-align: center;
+        }
+
+        > .pages {
+          margin-top: 50px;
         }
       }
     }
 
     /deep/ {
-      .el-button {
-        min-width: 60px !important;
-        height: 26px !important;
-        margin: 0;
-        font-size: 14px;
-        line-height: 0;
-      }
-
       .fiat-entrust-order-table {
-        .entrust-table-head {
-          border-radius: 0;
-          -webkit-box-shadow: none;
-          box-shadow: none;
+        .entrust-table-body {
+          .eighth-action {
+            .el-button {
+              height: 34px;
+              line-height: 0;
+              color: $mainColor;
+              background: none;
+            }
+          }
         }
       }
     }
@@ -286,7 +291,6 @@ export default {
 
       > .fiat-entrust-order-table {
         > .entrust-table-head {
-          border: 1px solid #262f38 !important;
           text-align: left;
           color: #617499;
           background-color: $mainContentNightBgColor;
@@ -296,16 +300,6 @@ export default {
         > .entrust-table-body {
           color: #9da5b3;
           background-color: $mainContentNightBgColor;
-
-          > .entrust-list-content {
-            .red {
-              color: $upColor;
-            }
-
-            .green {
-              color: $otcGreen;
-            }
-          }
 
           .no-data {
             background-color: $mainContentNightBgColor;
@@ -325,7 +319,6 @@ export default {
         }
 
         > .entrust-table-body {
-          min-height: 432px;
           color: $dayMainTitleColor;
           background-color: $mainColorOfWhite;
           box-shadow: 0 0 6px $boxShadowColorOfDay;
@@ -334,29 +327,11 @@ export default {
             > .item {
               background-color: $mainColorOfWhite;
             }
-
-            .red {
-              color: $upColor;
-            }
-
-            .green {
-              color: $otcGreen;
-            }
           }
         }
 
         .no-data {
           color: $fontColorSecondaryOfDay;
-        }
-      }
-
-      /deep/ {
-        .entrust-table-body {
-          .eighth-action {
-            .el-button--text {
-              color: $mainColor;
-            }
-          }
         }
       }
     }
