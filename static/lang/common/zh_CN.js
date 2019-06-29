@@ -13,6 +13,7 @@ export const common = {
   'comm_black': '黑色',
   'comm_white': '白色',
   'comm_confirm': '确定',
+  'common_save': '保存',
   'comm_sold_out': '下架',
   'comm_all_sold_out': '全部下架',
   'comm_affirm': '确认',

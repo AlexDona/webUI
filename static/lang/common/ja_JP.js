@@ -14,6 +14,7 @@ export const common = {
   'comm_white': 'ホワイト',
   'comm_confirm': '確認',
   'comm_sold_out': '削除',
+  // 'common_save': '保存',
   'comm_all_sold_out': '全部削除',
   'comm_affirm': '確認',
   'comm_cancel': '取消す',

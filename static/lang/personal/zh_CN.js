@@ -159,6 +159,7 @@ export const personal = {
   'user_invite_people': '人',
   'user_invite_succeed': '成功',
   'user_invite_have_obtained': '已获得佣金折合',
+  'user_inviter_tips': '邀请人保存后无法修改！',
   'user_invite_statistics': '统计',
   'user_invite_direct': '直接推广',
   'user_direct_reward': '直接奖励',

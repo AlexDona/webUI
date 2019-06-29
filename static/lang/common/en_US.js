@@ -51,6 +51,7 @@ export const common = {
   'comm_begin': 'Start',
   'comm_end': 'End',
   'comm_sold_out': 'Unpublish',
+  // 'common_save': '保存',
   'comm_register_time': 'Register',
   'comm_sub_time': 'Submit',
   'comm_sub_anew': 'Renew',

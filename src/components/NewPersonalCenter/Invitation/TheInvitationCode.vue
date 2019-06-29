@@ -62,12 +62,41 @@
 
           // 无邀请人
           span.no-invitor(v-if="!hasInviter")
-            input.input(
-              :placeholder="$t('M.comm_user_invite_tip2')"
-              @blur="editInviter"
-              v-model="inviter"
+            // 未编辑状态
+            span.not-editing(v-show="!isEditing")
+              button.start-edit.cursor-pointer(@click="toggleEditing(true)")
+                Iconfont.iconfont(icon-name="icon-tianxie")
+            // 正在编辑状态
+            span.editing(v-show="isEditing")
+              input.input(
+                :placeholder="$t('M.comm_user_invite_tip2')"
+                v-model="inviter"
+                @keyup.enter="toggleDialog(true)"
+              )
+              // 保存
+              el-button.save-edit-button(
+                @click="toggleDialog(true)"
+                :disabled="isSaveButtonDisabled"
+              ) {{$t('M.common_save')}}
+            // 是否确认回填联系人弹窗
+            el-dialog.tip-dialog(
+              :title="$t('M.otc_prompt')"
+              :visible.sync="isShowTipDialog"
+              :close-on-click-modal="false"
+              width="320px"
             )
-            Iconfont.iconfont(icon-name="icon-tianxie")
+              p
+                Iconfont.iconfont(icon-name="icon-jinggao")
+                span {{holdCoinName}} {{$t(inviter_tips)}}
+              .dialog-footer(slot="footer")
+                // 取消
+                el-button.button(
+                  @click="toggleDialog(false)"
+                ) {{$t('M.comm_cancel')}}
+                // 确定
+                el-button.button.submit(
+                  @click="editInviter"
+                ) {{$t('M.comm_confirm')}}
       // 邀请成功人数
     .inviter-board
       .left
@@ -107,7 +136,13 @@ export default {
       isShowQrCode: false,
       inviter: '',
       // 人民币转换汇率
-      transformRate: ''
+      transformRate: '',
+      // 是否正在编辑
+      isEditing: false,
+      // 是否显示提示弹框
+      // isShowTipDialog: true,
+      isShowTipDialog: false,
+      inviter_tips: 'M.user_inviter_tips'
     }
   },
   async created () {
@@ -123,12 +158,16 @@ export default {
       'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([]),
+    toggleDialog (status) {
+      this.isShowTipDialog = status
+    },
     async editInviter () {
       if (!this.inviter) return
       const params = {
         inviter: this.inviter
       }
       const data = await editInviterAJAX(params)
+      this.toggleDialog(false)
       if (!data) {
         this.inviter = ''
         return
@@ -167,6 +206,10 @@ export default {
       if (!data) return false
       // 获取汇率
       this.transformRate = _.get(data, 'data.coinPrice')
+    },
+    // 切换编辑状态
+    toggleEditing (status) {
+      this.isEditing = status
     }
   },
   // filters: {},
@@ -201,6 +244,9 @@ export default {
     },
     notInviterTips () {
       return this.hasInviter ? '' : this.$t('M.comm_user_invite_tip1')
+    },
+    isSaveButtonDisabled () {
+      return !this.inviter
     }
   },
   watch: {
@@ -278,26 +324,83 @@ export default {
           >.right
             .has-invitor
             .no-invitor
-              position relative
-              >.input
-                border 1px solid S_main_color
-                height 30px
-                line-height 30px
-                box-sizing border-box
-                display inline-block
-                line-height 30px
-                min-width 210px
-                padding 0 10px 0 34px
-                border-radius 2px
-                color #fff
-                font-size 12px
-              >.iconfont
-                position: absolute
-                left 12px
-                top 50%
-                transform translateY(-50%)
-                font-size 14px
-                color S_main_color
+              /deep/
+                .tip-dialog
+                  background-color rgba(0,0,0,.5)
+                  .el-dialog
+                    background-color #28334a
+                    height 180px
+                    border-radius 4px
+                    margin-top 21vh
+                    overflow hidden
+                    .el-dialog__header
+                      height 36px
+                      line-height 36px
+                      padding 0 0  0 20px
+                      background-color #212b3f
+                      text-align left
+                      .el-dialog__title
+                        font-size 14px
+                        color #fff
+                      .el-dialog__headerbtn
+                        top 10px
+                        right 10px
+                    .el-dialog__body
+                      padding 30px 20px 10px
+                      p
+                        color #cfd5df
+                        text-align center
+                        line-height 27px
+                        .iconfont
+                          color S_main_color
+                          margin-right 5px
+                          font-size 24px
+                          vertical-align top
+                    .button
+                      min-width 80px
+                      height 30px
+                      line-height 5px
+                      border-radius 2px
+                      border none
+                      font-size 12px
+                      color #333
+                      border 1px solid S_main_color
+                      background-color transparent
+                      color #fff
+                      &.submit
+                        background linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%)
+                        border none
+              >.editing
+                position relative
+                >.input
+                  border 1px solid S_main_color
+                  height 26px
+                  line-height 26px
+                  box-sizing border-box
+                  display inline-block
+                  min-width 210px
+                  padding 0 10px 0 10px
+                  border-radius 2px
+                  color #fff
+                  font-size 12px
+                  vertical-align middle
+                >.save-edit-button
+                  height 26px
+                  line-height 26px
+                  background-color S_main_color
+                  vertical-align middle
+                  margin-left 24px
+                  color #fff
+                  font-size 12px
+                  padding 0 15px
+                  border-radius 2px
+                  cursor pointer
+                  border none
+              >.not-editing
+                >button
+                  >.iconfont
+                    font-size 16px
+                    color S_main_color
     >.inviter-board
       display flex
       height 90px
@@ -339,6 +442,22 @@ export default {
               .qr-code-box
                 box-shadow 0 0 6px #cfd5df
             >.no-invitor
-              >.input
-                color #333
+              >.editing
+                >.input
+                  color #333
+              /deep/
+                .tip-dialog
+                  .el-dialog
+                    background-color #fff
+                    .el-dialog__header
+                      background-color #DCE7F3
+                      .el-dialog__title
+                        color #333
+                    .el-dialog__body
+                      p
+                        color #333
+                    .button
+                      color #333
+                      &.submit
+                        color #fff
 </style>
