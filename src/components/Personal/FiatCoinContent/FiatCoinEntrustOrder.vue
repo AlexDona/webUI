@@ -4,44 +4,42 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 委托订单表格 -->
-    <div
-      class="fiat-entrust-order-table"
-    >
+    <div class="fiat-entrust-order-table">
       <!-- 表头 -->
-      <div class="entrust-table-head font-size12">
-        <span class="item first-style">
+      <div class="entrust-table-head font-size12 box-sizing">
+        <div class="item first-style">
           <!--类型-->
           {{$t('M.comm_type')}}
-        </span>
-        <span class="item second-coin">
+        </div>
+        <div class="item second-coin">
           <!--币种-->
           {{$t('M.otc_AD_token')}}
-        </span>
-        <span class="item third-price">
+        </div>
+        <div class="item third-price">
           <!--价格-->
           {{$t('M.otc_index_price')}}
-        </span>
-        <span class="item fourth-entrust-count">
+        </div>
+        <div class="item fourth-entrust-count">
           <!--挂单数量-->
           {{$t('M.otc_entrust_number')}}
-        </span>
-        <span class="item fifth-match-count">
+        </div>
+        <div class="item fifth-match-count">
           <!--已匹配数量-->
           <!-- 20181213改为 已成交数量-->
           {{$t('M.otc_entrust_matching')}}
-        </span>
-        <span class="item sixth-total-amount">
+        </div>
+        <div class="item sixth-total-amount">
           <!--总金额-->
           {{$t('M.otc_canceled_total')}}
-        </span>
-        <span class="item seventh-create-time">
+        </div>
+        <div class="item seventh-create-time">
           <!--挂单时间-->
           {{$t('M.otc_entrust_time')}}
-        </span>
-        <span class="item eighth-action text-align-r">
+        </div>
+        <div class="item eighth-action text-align-r">
           <!--操作-->
           {{$t('M.otc_index_operate')}}
-        </span>
+        </div>
       </div>
       <!-- 表身体 -->
       <div
@@ -56,49 +54,49 @@
         >
           <!-- 1 类型 -->
           <!-- 买入 -->
-          <span
+          <div
             class="item first-style"
             v-if="item.entrustType === 'BUY'"
             :class="{ red: item.entrustType === 'BUY' }"
           >
             <!--买入-->
             {{$t('M.comm_buy')}}
-          </span>
+          </div>
           <!-- 卖出 -->
-          <span
+          <div
             class="item first-style"
             v-if="item.entrustType === 'SELL'"
             :class="{ green: item.entrustType === 'SELL' }"
           >
             <!--卖出-->
             {{$t('M.comm_sell')}}
-          </span>
+          </div>
           <!-- 2 币种 -->
-          <span class="item second-coin">
+          <div class="item second-coin">
             {{item.coinName}}
-          </span>
+          </div>
           <!-- 3 价格 -->
-          <span class="item third-price">
+          <div class="item third-price">
             {{item.price}}({{item.currencyName}})
-          </span>
+          </div>
           <!-- 4 挂单数量 -->
-          <span class="item fourth-entrust-count">
+          <div class="item fourth-entrust-count">
             {{item.entrustCount}}({{item.coinName}})
-          </span>
+          </div>
           <!-- 5 已匹配数量 -->
-          <span class="item fifth-match-count">
+          <div class="item fifth-match-count">
             {{item.matchCount}}({{item.coinName}})
-          </span>
+          </div>
           <!-- 6 总金额 -->
-          <span class="item sixth-total-amount">
+          <div class="item sixth-total-amount">
             {{item.totalAmount}}({{item.currencyName}})
-          </span>
+          </div>
           <!-- 7 挂单时间 -->
-          <span class="item seventh-create-time1">
+          <div class="item seventh-create-time1">
             {{item.createTime}}
-          </span>
+          </div>
           <!-- 8 操作 -->
-          <span class="item eighth-action text-align-r">
+          <div class="item eighth-action text-align-r">
             <el-button
               type="text"
               @click="revocationOrder(item.id)"
@@ -106,10 +104,13 @@
               <!--撤单-->
               {{$t('M.otc_entrust_cancellations')}}
             </el-button>
-          </span>
+          </div>
         </div>
         <!--暂无数据-->
-        <div class="no-data" v-if="!OTCEntrustOrderList.length">
+        <div
+          class="no-data text-align-c"
+          v-if="!OTCEntrustOrderList.length"
+        >
           {{$t('M.comm_no_data')}}
         </div>
         <!--分页-->
@@ -224,14 +225,19 @@ export default {
     .fiat-entrust-order-table {
       > .entrust-table-head {
         display: flex;
-        box-sizing: border-box;
         height: 35px;
         padding: 0 10px;
         margin-bottom: 10px;
         line-height: 35px;
 
         > .item {
-          flex: 1;
+          width: 130px;
+        }
+
+        > .first-style,
+        .second-coin,
+        .eighth-action {
+          width: 100px;
         }
       }
 
@@ -246,7 +252,13 @@ export default {
           line-height: 34px;
 
           > .item {
-            flex: 1;
+            width: 130px;
+          }
+
+          > .first-style,
+          .second-coin,
+          .eighth-action {
+            width: 100px;
           }
 
           .red {
@@ -261,7 +273,6 @@ export default {
         > .no-data {
           height: 371px;
           line-height: 431px;
-          text-align: center;
         }
 
         > .pages {
