@@ -1461,6 +1461,7 @@ export default {
         /* select */
         .el-input__inner {
           border: 1px solid #364654;
+          color: #fff;
           background-color: #333a41;
 
           &:focus {
