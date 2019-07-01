@@ -1,5 +1,7 @@
 /**
- *请求封装
+ * author: zhaoxinlei
+ * update: 20190626
+ * description: 当前文件为 针对 axios 的封装文件， 包括常用的 请求方式封装
  */
 import {
   apiCommonUrl,
