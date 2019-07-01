@@ -10,9 +10,7 @@
     // 邀请推广
     .header {{$t('M.comm_user_invite_generalize')}}
     // 邀请推广
-    TheInvitationCode(
-      :totalSumCNY="totalSumCNY"
-    )
+    TheInvitationCode
     // 邀请统计
     TheInvitationStatistics(@getUserPromotionList="getUserPromotionList")
     // 奖励记录
@@ -75,7 +73,7 @@ export default {
       // this.statistics = _.get(data, 'data.page.list')
       // this.totalForMyEntrust = _.get(data, 'data.page.pages') - 0
       // 已获得的佣金折合
-      this.totalSumCNY = _.get(data, 'data.btc')
+      // this.totalSumCNY = _.get(data, 'data.btc')
       this.UPDATE_INVITATIONS_M(_.get(data, 'data'))
     }
   }

@@ -214,7 +214,8 @@ export default {
     ...mapState({
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
-      inviterCount: state => state.user.invitation_S.page.total
+      inviterCount: state => state.user.invitation_S.page.total,
+      totalSumCNY: state => state.user.invitation_S.btc
     }),
     inviteUrl () {
       console.log(domain)
@@ -250,6 +251,9 @@ export default {
   watch: {
     activeConvertCurrencyObj () {
       this.updateRate()
+    },
+    totalSumCNY (New) {
+      console.log(New)
     }
   }
 }
