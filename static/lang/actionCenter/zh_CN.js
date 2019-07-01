@@ -22,7 +22,9 @@ export const actionCenter = {
   'crowd_funding_processing1': '申请锁仓',
   'crowd_funding_over': '已结束',
   'crowd_funding_title1': '锁仓分红',
-  'crowd_funding_title2': '更安全 更稳定   更灵活',
+  'crowd_funding_title2': '更安全',
+  'crowd_funding_title3': '更稳定',
+  'crowd_funding_title4': '更灵活',
   'crowd_funding_start_end_time': '活动时间',
   'crowd_funding_interest_rate': '年化收益率',
   'crowd_funding_total': '总额度',
@@ -55,8 +57,9 @@ export const actionCenter = {
   'crowd_funding_error2': '最大存币量为',
   'crowd_funding_error3': '余额不足',
   'crowd_funding_error4': '最低持仓量不足',
-  'crowd_funding_error5': '请输入申购数量',
+  'ieo_failure_007': '锁仓数量必须为最小锁仓量的整数倍',
   'crowd_funding_expected_return': '预计收益',
+
   'crowd_funding_have_been_voted': '已投',
   'crowd_funding_remained': '剩余'
 }
