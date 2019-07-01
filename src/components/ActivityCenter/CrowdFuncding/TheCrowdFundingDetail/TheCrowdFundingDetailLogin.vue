@@ -86,12 +86,16 @@ export default {
   },
   data () {
     let validateBuyCount = (rule, value, callback) => {
+      console.log(value % this.buyDownLimit)
       if (value === '') {
         // 请输入锁仓数量
         callback(new Error(`${this.$t('M.comm_please_enter')}${this.$t('M.crowd_funding_deposit_quantity')}`))
       } else if (value - this.buyDownLimit < 0) {
         // 小于起购限额
         callback(new Error(`${this.$t(this.crowd_funding_error1)}：${this.buyDownLimit} ${this.ieoCoinName}`))
+      } else if (value % this.buyDownLimit) {
+        // 锁仓数量必须为最小锁仓量的整数倍
+        callback(new Error(`${this.$t(this.crowd_funding_error5)}`))
       } else if (value - this.buyUpLimit > 0) {
         // 高于最高限额
         callback(new Error(`${this.$t(this.crowd_funding_error2)}：${this.buyUpLimit} ${this.ieoCoinName}`))
@@ -152,18 +156,24 @@ export default {
       const { buyCount } = this.form
       let integer = ''
       let point = ''
+      console.log(isNaN(buyCount - 0))
+      if (isNaN(buyCount - 0)) {
+        this.form.buyCount = ''
+        integer = ''
+        return
+      }
+      // 非数字
       if (buyCount.includes('.')) {
         let strArr = buyCount.split('.')
         integer = strArr[0]
         point = strArr[1] || ''
         console.log(strArr, integer, point)
-        integer = integer.substring(0, 7)
-        point = point.substring(0, 8)
+        integer = integer.substring(0, 9)
       } else {
-        integer = buyCount.substring(0, 7)
+        integer = buyCount.substring(0, 9)
       }
 
-      this.form.buyCount = buyCount.includes('.') ? `${integer}.${point}` : `${integer}`
+      this.form.buyCount = integer
       this.updatePredict()
     },
     submitForm () {
@@ -177,10 +187,7 @@ export default {
         }
         if (!this.$userInfo_X.payPassword) {
           // 请设置交易密码后操作
-          this.$message({
-            type: 'error',
-            message: this.$t('M.comm_please_set_up') + this.$t('M.comm_password') + this.$t('M.trade_exchange_after_operation')
-          })
+          this.$error_tips_X(`${this.$t('M.comm_please_set_up')}${this.$t('M.comm_password')}${this.$t('M.trade_exchange_after_operation')}`)
           this.$goToPage(`/${this.$routes_X.TransactionPassword}`)
           return false
         }
