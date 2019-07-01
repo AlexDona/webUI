@@ -57,7 +57,7 @@ export const actionCenter = {
   'crowd_funding_error2': '最大存币量为',
   'crowd_funding_error3': '余额不足',
   'crowd_funding_error4': '最低持仓量不足',
-  'crowd_funding_error5': '锁仓数量必须为最小锁仓量的整数倍',
+  'ieo_failure_007': '锁仓数量必须为最小锁仓量的整数倍',
   'crowd_funding_expected_return': '预计收益',
 
   'crowd_funding_have_been_voted': '已投',

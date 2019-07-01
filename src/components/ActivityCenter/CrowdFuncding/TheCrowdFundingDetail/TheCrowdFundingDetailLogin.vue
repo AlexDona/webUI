@@ -95,7 +95,7 @@ export default {
         callback(new Error(`${this.$t(this.crowd_funding_error1)}：${this.buyDownLimit} ${this.ieoCoinName}`))
       } else if (value % this.buyDownLimit) {
         // 锁仓数量必须为最小锁仓量的整数倍
-        callback(new Error(`${this.$t(this.crowd_funding_error5)}`))
+        callback(new Error(`${this.$t(this.ieo_failure_007)}`))
       } else if (value - this.buyUpLimit > 0) {
         // 高于最高限额
         callback(new Error(`${this.$t(this.crowd_funding_error2)}：${this.buyUpLimit} ${this.ieoCoinName}`))
@@ -124,7 +124,7 @@ export default {
       // 可用不足
       crowd_funding_error3: 'M.user_vip_lack_of_available',
       crowd_funding_error4: 'M.crowd_funding_error4',
-      crowd_funding_error5: 'M.crowd_funding_error5',
+      ieo_failure_007: 'M.ieo_failure_007',
       // 预计收益
       predict: '',
       ONE_YEAR: 365,
