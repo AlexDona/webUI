@@ -57,7 +57,7 @@ export const actionCenter = {
   'crowd_funding_error2': '最大デポジット',
   'crowd_funding_error3': '残高が足りない',
   'crowd_funding_error4': 'の最低手持ち量不足',
-  'crowd_funding_error5': '申し込み数量を入力',
+  'ieo_failure_007': 'ラッチの数は最小の整数倍にしなければならない',
   'crowd_funding_expected_return': '予想収益',
   'crowd_funding_have_been_voted': '投票済み',
   'crowd_funding_remained': '残り'

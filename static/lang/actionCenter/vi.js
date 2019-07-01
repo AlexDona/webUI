@@ -57,7 +57,7 @@ export const actionCenter = {
   'crowd_funding_error2': 'Trữ lượng tiền rất lớn nhất là',
   'crowd_funding_error3': 'Số dư thiếu',
   'crowd_funding_error4': 'Lượng thấp nhất không đủ',
-  'crowd_funding_error5': 'Hãy nhập vào một số',
+  'ieo_failure_007': 'Số lượng khóa phải là bội số nguyên của lượng khoá nhỏ nhất',
   'crowd_funding_expected_return': 'Lợi nhuận dự tính',
   'crowd_funding_have_been_voted': 'Đã đầu tư',
   'crowd_funding_remained': 'Còn lại'

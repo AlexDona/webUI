@@ -57,7 +57,7 @@ export const actionCenter = {
   'crowd_funding_error2': '최대 저축 금액',
   'crowd_funding_error3': '잔액이 부족하다',
   'crowd_funding_error4': '최저 지창량 부족',
-  'crowd_funding_error5': '구매 수량을 입력하십시오',
+  'ieo_failure_007': '창고를 잠그는 량은 반드시 최소 자물쇠량의 완수배여야 한다',
   'crowd_funding_expected_return': '예상 수익',
   'crowd_funding_have_been_voted': '이미 투하하다',
   'crowd_funding_remained': '잉여'

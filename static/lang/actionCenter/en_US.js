@@ -57,7 +57,7 @@ export const actionCenter = {
   'crowd_funding_error2': 'Maximum deposit',
   'crowd_funding_error3': 'Lack of balance',
   'crowd_funding_error4': 'minimum position is insufficient',
-  'crowd_funding_error5': 'Enter the purchase amount',
+  'ieo_failure_007': 'Lock amounts must be  integer multiple of the minimum lock',
   'crowd_funding_expected_return': 'Expected return',
   'crowd_funding_have_been_voted': 'Already invested',
   'crowd_funding_remained': 'Surplus'

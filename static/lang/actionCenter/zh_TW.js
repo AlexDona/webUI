@@ -57,7 +57,7 @@ export const actionCenter = {
   'crowd_funding_error2': '最大存幣量為',
   'crowd_funding_error3': '餘額不足',
   'crowd_funding_error4': '最低持倉量不足',
-  'crowd_funding_error5': '請輸入申購數量',
+  'ieo_failure_007': '鎖倉數量必須為最小鎖倉量的整數倍',
   'crowd_funding_expected_return': '預計收益',
   'crowd_funding_have_been_voted': '已投',
   'crowd_funding_remained': '剩餘'
