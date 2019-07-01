@@ -121,13 +121,14 @@ export default {
       'SET_NOTICE_ID'
     ]),
     navToJump (navigation) {
-      console.log(navigation, this.navigation, this.activeNavIndex, this.activeMoreNavIndex)
       const { link } = navigation
       const targetRoute = this.navigation[this.activeNavIndex]
 
-      console.log(targetRoute, link)
+      const isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
       if (targetRoute.link == link) {
         this.activeLink = link
+      } else if (isChildLink) {
+        this.activeLink = targetRoute.link
       }
       this.$emit('navToJump', navigation)
     },
