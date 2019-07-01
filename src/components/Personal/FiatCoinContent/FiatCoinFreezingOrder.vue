@@ -10,11 +10,11 @@
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
         </span>
-        <span class="item flex1">
+        <span class="item order-type">
           <!--类型-->
           {{$t('M.otc_cancelOrder_type')}}
         </span>
-        <span class="item flex1">
+        <span class="item order-coin">
           <!--币种-->
           {{$t('M.comm_currency')}}
         </span>
@@ -49,7 +49,7 @@
           </span>
           <!-- 类型 买入 -->
           <span
-            class="item flex1"
+            class="item order-type"
             v-if="item.orderType === 'BUY'"
             :class="{ red: item.orderType === 'BUY' }"
           >
@@ -57,14 +57,14 @@
           </span>
           <!-- 类型 卖出 -->
           <span
-            class="item flex1"
+            class="item order-type"
             v-if="item.orderType === 'SELL'"
             :class="{ green: item.orderType === 'SELL' }"
           >
             {{$t('M.comm_sell')}}
           </span>
           <!-- 币种 -->
-          <span class="item flex1">
+          <span class="item order-coin">
             {{item.coinName}}
           </span>
           <!-- 价格 -->
@@ -240,7 +240,12 @@ export default {
         }
 
         > .order-time {
-          width: 170px;
+          width: 140px;
+        }
+
+        > .order-type,
+        .order-coin {
+          width: 100px;
         }
       }
 
@@ -267,7 +272,12 @@ export default {
           }
 
           > .order-time {
-            width: 170px;
+            width: 140px;
+          }
+
+          > .order-type,
+          .order-coin {
+            width: 100px;
           }
         }
 

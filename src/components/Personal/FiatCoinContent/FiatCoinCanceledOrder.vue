@@ -5,16 +5,16 @@
   >
     <div class="canceled-order-content">
       <!--表头属性-->
-      <div class="canceled-table-head display-flex font-size12">
-        <span class="item flex1">
+      <div class="canceled-table-head display-flex font-size12 box-sizing">
+        <span class="item order-time">
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
         </span>
-        <span class="item flex1">
+        <span class="item order-type">
           <!--类型-->
           {{$t('M.otc_cancelOrder_type')}}
         </span>
-        <span class="item flex1">
+        <span class="item order-coin">
           <!--币种-->
           {{$t('M.comm_currency')}}
         </span>
@@ -30,41 +30,41 @@
           <!--总金额-->
           {{$t('M.otc_canceled_total')}}
         </span>
-        <span class="item flex1">
+        <span class="item order-time">
           <!--下单时间-->
           {{$t('M.otc_stocks_ordertime')}}
         </span>
       </div>
       <!--表格-->
       <div
-        class="canceled-table-body font-size12"
+        class="canceled-table-body font-size12 box-sizing"
         v-for="(item,index) in OTCCanceledOrderList"
         :key="index"
       >
         <!--表格上部分-->
         <div class="canceled-info-top display-flex">
           <!-- 订单号 -->
-          <span class="item order-time">{{item.orderSequence}}</span>
+          <span class="item order-time">
+            {{item.orderSequence}}
+          </span>
           <!-- 类型 买入 -->
           <span
-            class="item flex1"
+            class="item order-type"
             v-if="item.orderType === 'BUY'"
             :class="{ red: item.orderType === 'BUY' }"
           >
-            <!--买入-->
             {{$t('M.comm_buy')}}
           </span>
           <!-- 类型卖出 -->
           <span
-            class="item flex1"
+            class="item order-type"
             v-if="item.orderType === 'SELL'"
             :class="{ green: item.orderType === 'SELL' }"
           >
-            <!--卖出-->
             {{$t('M.comm_sell')}}
           </span>
           <!-- 币种 -->
-          <span class="item flex1">
+          <span class="item order-coin">
             {{item.coinName}}
           </span>
           <!-- 价格 -->
@@ -85,64 +85,56 @@
           </span>
         </div>
         <!--表格下部分-->
-        <div class="canceled-info-bottom">
-          <div class="info-left">
+        <div class="canceled-info-bottom box-sizing">
+          <div class="info-left box-sizing">
+            <!--付款信息-->
             <p class="text-info text-blue">
-              <!--付款信息-->
               {{$t('M.otc_index_js2')}}
             </p>
+            <!--卖家超时未付款，系统自动取消-->
             <p class="text-info">
-              <!--卖家超时未付款，系统自动取消-->
               {{$t('M.otc_overtime')}}
             </p>
           </div>
-          <div class="info-middle">
+          <div class="info-middle box-sizing">
+            <!--卖家信息-->
             <p class="text-info text-blue">
-              <!--卖家信息-->
               {{$t('M.otc_stocks_seller')}}
             </p>
+            <!--姓名-->
             <p class="text-info">
               <span>
-                <!--姓名-->
                 {{$t('M.otc_name')}}：
               </span><span>
               {{item.sellName}}
             </span>
             </p>
+            <!--卖家手机号-->
             <p class="text-info">
               <span>
-                <!--卖家手机号-->
                 {{$t('M.otc_trading_sellphone')}}：
               </span><span>
               {{item.sellPhone}}
             </span>
             </p>
           </div>
-          <div class="info-right">
-            <!--取消时间-->
-            <!-- <p class="text-info text-blue">
-              {{$t('M.otc_canceled_cancel')}}
-            </p>
-            <p class="text-info">
-              {{timeFormatting(item.cancelTime)}}
-            </p> -->
+          <div class="info-right box-sizing">
+            <!-- 超时未支付，订单取消 -->
             <p
               class="text-info"
               v-if="item.appeal == 'NO'"
             >
-             <!-- 超时未支付，订单取消 -->
               {{$t('M.otc_overBuy_cancel')}}
             </p>
+            <!-- 申诉判定，订单取消 -->
             <p
               class="text-info"
               v-if="item.appeal == 'YES'"
             >
-              <!-- 申诉判定，订单取消 -->
               {{$t('M.otc_shesu_cancel')}}
             </p>
-            <p
-              class="text-info"
-            >
+            <!--取消时间-->
+            <p class="text-info">
               {{$t('M.otc_canceled_cancel')}}:{{timeFormatting(item.cancelTime)}}
             </p>
             <!--原因-->
@@ -151,7 +143,7 @@
               v-show="item.appeal == 'YES'"
             >
               <span
-                class="reason-content cursor-pointer"
+                class="reason-content cursor-pointer display-inline-block"
                 :title="item.handleSuggest"
               >
                 {{$t('M.otc_order_reason')}}：{{item.handleSuggest}}
@@ -160,8 +152,9 @@
           </div>
         </div>
       </div>
+      <!--暂无数据-->
       <div
-        class="no-data font-size12"
+        class="no-data font-size12 text-align-c"
         v-if="!OTCCanceledOrderList.length"
       >
         <!--暂无数据-->
@@ -237,7 +230,6 @@ export default {
   .fiat-canceled-order-box {
     > .canceled-order-content {
       > .canceled-table-head {
-        box-sizing: border-box;
         height: 35px;
         margin-bottom: 10px;
         line-height: 35px;
@@ -246,10 +238,18 @@ export default {
           display: inline-block;
           text-align: center;
         }
+
+        > .order-time {
+          width: 140px;
+        }
+
+        > .order-type,
+        .order-coin {
+          width: 100px;
+        }
       }
 
       > .canceled-table-body {
-        box-sizing: border-box;
         height: 170px;
         margin-bottom: 10px;
 
@@ -271,26 +271,27 @@ export default {
           }
 
           > .order-time {
-            width: 170px;
+            width: 140px;
+          }
+
+          > .order-type,
+          .order-coin {
+            width: 100px;
           }
         }
 
         > .canceled-info-bottom {
           display: flex;
           flex: 7;
-          box-sizing: border-box;
           padding: 30px 30px 0;
-          color: #9da5b3;
 
           > .info-left {
             flex: 2;
-            box-sizing: border-box;
 
             > .text-info {
               line-height: 20px;
 
               .reason-content {
-                display: inline-block;
                 width: 250px;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -301,7 +302,6 @@ export default {
 
           > .info-middle {
             flex: 2;
-            box-sizing: border-box;
             margin-left: 30px;
 
             > .text-info {
@@ -311,7 +311,6 @@ export default {
 
           > .info-right {
             flex: 3;
-            box-sizing: border-box;
             margin-left: 30px;
 
             > .text-info {
@@ -324,25 +323,18 @@ export default {
       > .no-data {
         height: 485px;
         line-height: 485px;
-        text-align: center;
       }
     }
 
     &.night {
-      color: $nightFontColor;
-      background-color: $mainNightBgColor;
-
       > .canceled-order-content {
         > .canceled-table-head {
-          box-sizing: border-box;
-          border: 1px solid #262f38;
           color: #617499;
           background-color: $mainContentNightBgColor;
           box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .canceled-table-body {
-          border: 1px solid #262f38;
           background-color: $mainContentNightBgColor;
 
           > .canceled-info-top {
