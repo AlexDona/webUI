@@ -71,6 +71,8 @@
               input.input(
                 :placeholder="$t('M.comm_user_invite_tip2')"
                 v-model="inviter"
+                @keyup="formatInput(true)"
+                @input="formatInput(true)"
                 @keyup.enter="toggleDialog(true)"
               )
               // 保存
@@ -118,6 +120,7 @@ import {domain} from '../../../utils/env'
 import {editInviterAJAX} from '../../../utils/api/user'
 import {mapMutations, mapState, mapActions} from 'vuex'
 import {currencyTransform} from '../../../utils/api/personal'
+import {CHINESE_REG} from '../../../utils/regExp'
 export default {
   name: 'the-invitation-code',
   mixins: [mixins],
@@ -150,7 +153,18 @@ export default {
       'REFRESH_USER_INFO_ACTION'
     ]),
     ...mapMutations([]),
+    formatInput () {
+      if (isNaN(this.inviter - 0) || CHINESE_REG.test(this.inviter)) {
+        this.inviter = ''
+        return false
+      }
+
+      if (this.inviter.endsWith('.')) {
+        this.inviter = this.inviter.substring(0, this.inviter.length - 1)
+      }
+    },
     toggleDialog (status) {
+      if (!this.inviter) return
       this.isShowTipDialog = status
     },
     async editInviter () {
