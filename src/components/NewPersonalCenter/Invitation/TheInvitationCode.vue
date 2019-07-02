@@ -83,7 +83,6 @@
               :title="$t('M.otc_prompt')"
               :visible.sync="isShowTipDialog"
               :close-on-click-modal="false"
-              width="320px"
             )
               p
                 Iconfont.iconfont(icon-name="icon-jinggao")
@@ -323,8 +322,9 @@ export default {
                 .tip-dialog
                   background-color rgba(0,0,0,.5)
                   .el-dialog
+                    max-width 340px
                     background-color #28334a
-                    height 180px
+                    max-height 230px
                     border-radius 4px
                     margin-top 21vh
                     overflow hidden
