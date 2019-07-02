@@ -910,7 +910,6 @@ export default {
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
             background-color: $mainDayBgColor;
-            box-shadow: inset 0 2px 4px #f3f3f3;
 
             &.is-leaf {
               border-top: 0 solid #262f38;
