@@ -682,8 +682,8 @@ export default {
       activeCurrency: {}, // 当前选中币种
       totalSumBTC: '', // 资产总估值BTC
       isRecharge: '', // 是否允许充币
-      isRechargeState: true, // 是否允许充币(作用于前后台同时进行充币或者禁用)
       isWithdraw: '', // 是否允许提币
+      isRechargeState: true, // 是否允许充币(作用于前后台同时进行充币或者禁用)
       isWithdrawState: true, // 是否允许提币(作用于前后台同时进行充币或者禁用)
       currencyTradingId: '', // 根据Id跳转到对应交易信息
       id: '', // 币种ID
@@ -817,6 +817,7 @@ export default {
     },
     // 4.0修改input value 输入限制
     changeInputValue ({ref, index, pointLengthAccountCount, val, coinId, total}) {
+      console.log(ref, index, pointLengthAccountCount, val, coinId, total)
       // console.log(coinId, total)
       // console.log(this.$refs[`withdrawItemRef${index}`][0])
       // 限制数量小数位位数
@@ -1308,7 +1309,7 @@ export default {
       }
     },
     // 14.提交提币接口
-    async stateSubmitAssets () {
+    stateSubmitAssets: _.debounce(async function () {
       let data
       let params = {
         // msgCode: this.phoneCode, // 短信验证码
@@ -1334,7 +1335,7 @@ export default {
       this.getAssetCurrenciesList()
       this.resetWithdrawFormContent(this.currentIndex)
       this.stateEmptyData()
-    },
+    }, 500),
     // 接口请求完成之后普通币种清空数据
     stateEmptyData () {
       this.phoneCode = '' // 短信验证码
@@ -1484,7 +1485,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .account-assets {
     > .account-assets-main {
@@ -2013,7 +2014,7 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .button-color {
         color: rgba(255, 255, 255, .7);
@@ -2027,7 +2028,7 @@ export default {
       }
 
       .account-assets-box {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         .account-assets-header {
           box-shadow: 0 2px 13px rgba(24, 30, 42, 1);
@@ -2280,8 +2281,7 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
 
       .warning-text {
         color: #333;
@@ -2299,9 +2299,9 @@ export default {
       }
 
       .account-assets-box {
-        border: 1px solid rgba(38, 47, 56, .1);
-        color: $dayFontColor;
-        background-color: $dayBgColor;
+        color: $dayMainTitleColor;
+        background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
 
         .account-assets-header {
           > .header-left {

@@ -2,6 +2,7 @@
   <div
     class="personal-center personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{ 'min-height': windowHeight - footerHeight - 55 + 'px'}"
   >
     <div class="personal-center-main">
       <div class="personal-center-content clearfix">
@@ -242,7 +243,8 @@ import IdentityAuthentication from '../components/Personal/UserAssets/IdentityAu
 // 收款账户
 import AccountCredited from '../components/Personal/UserAssets/AccountCredited'
 // 邀请推广
-import InvitingPromotion from '../components/Personal/UserAssets/InvitingPromotion'
+// import InvitingPromotion from '../components/Personal/UserAssets/InvitingPromotion'
+import InvitingPromotion from '../components/NewPersonalCenter/Invitation/TheInvitation'
 // 安全中心
 import SecurityCenter from '../components/Personal/UserAssets/SecurityCenter'
 // API管理
@@ -359,8 +361,12 @@ export default {
       userInfo: state => state.user.loginStep1Info,
       payPassword: state => state.user.loginStep1Info.userInfo.payPassword,
       realname: state => state.user.loginStep1Info.userInfo.realname,
-      token: state => state.user.loginStep1Info.token
-    })
+      token: state => state.user.loginStep1Info.token,
+      footerHeight: state => state.common.footerHeight
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {
     userCenterActiveName (e) {
@@ -381,10 +387,11 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../static/css/scss/Personal/IndexPersonal";
+  @import '../assets/CSS/index';
 
   .personal-center {
-    margin-top: 50px;
+    min-height: 1000px;
+    margin: 50px 0 0;
     overflow: hidden;
 
     > .personal-center-main {
@@ -553,7 +560,7 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .asset-info {
         background: #1c1f32;
@@ -617,8 +624,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: #f5f5fa;
 
       .asset-info {
         background: #fff;
@@ -678,7 +685,8 @@ export default {
 
         .el-tabs__header {
           &.is-left {
-            border: 1px solid rgba(38, 47, 56, .1);
+            background-color: #fff;
+            box-shadow: 0 0 6px #cfd5df;
           }
         }
 

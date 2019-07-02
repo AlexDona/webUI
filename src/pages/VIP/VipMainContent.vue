@@ -230,7 +230,7 @@ export default {
     await this.getCurrencyApplicationDownloadUrl()
   },
   mounted () {
-    if (!this.$isVIPEnable_S_X) this.$goToPage(`/home`)
+    if (!this.$isVIPEnable_S_X) this.$goToPage(`/${this.$routes_X.home}`)
   },
   activated () {},
   update () {},
@@ -361,16 +361,16 @@ export default {
       // console.log(newVal)
     },
     $isVIPEnable_S_X (New) {
-      if (!New) this.$goToPage(`/home`)
+      if (!New) this.$goToPage(`/${this.$routes_X.home}`)
     }
   }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../assets/CSS/index';
 
   .vip-main {
-    margin-top: 65px;
+    margin-top: 60px;
 
     > .header-content {
       position: relative;
@@ -698,7 +698,7 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .header-content {
         background-color: #272b41;
@@ -907,8 +907,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       /deep/ {
         .el-dialog__header {
@@ -935,8 +935,8 @@ export default {
 
       > .content-main-content {
         margin-top: -3px;
-        color: $dayFontColor;
-        background-color: $dayBgColor;
+        color: $dayMainTitleColor;
+        background-color: $mainDayBgColor;
 
         > .content-main {
           .content-info-hint {
@@ -1064,7 +1064,7 @@ export default {
           }
 
           > .detail-page-duration {
-            background-color: $dayBgColor;
+            background-color: $mainDayBgColor;
 
             > .duration {
               background: rgba(234, 239, 244, 1);

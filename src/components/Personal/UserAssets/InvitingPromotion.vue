@@ -61,7 +61,7 @@
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
-                  @mouseenter="showStatusCode(1)"
+                  @mouseentevr="showStatusCode(1)"
                   @mouseleave="showStatusCode(2)"
                 >
                   <IconFontCommon
@@ -395,10 +395,10 @@ export default {
       // 汇率转换
       this.currencyTransform()
     }
+    this.getInverData()
   },
   mounted () {
     console.log(domain)
-    this.getInverData()
   },
   activated () {},
   update () {},
@@ -530,7 +530,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .invitation-promotion {
     > .invitation-promotion-main {
@@ -692,15 +692,15 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
       }
 
       .invitation-promotion-main {
         > .extension-info {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
 
           > .extension-info-header {
             border-bottom: 1px solid #39424d;
@@ -755,7 +755,7 @@ export default {
         }
 
         > .extension-statistics {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
 
           > .extension-statistics-header {
             border-bottom: 1px solid #39424d;
@@ -767,7 +767,7 @@ export default {
         }
 
         > .award-record {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
 
           > .award-record-header {
             border-bottom: 1px solid #39424d;
@@ -840,8 +840,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .background-color {
         background-color: #ccc;

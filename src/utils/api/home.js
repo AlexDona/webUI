@@ -1,4 +1,4 @@
-import {get, postWithURLencoded} from './axios'
+import {get, postWithURLencoded, notLoading} from './axios'
 import {handleRequest} from '../commonFunc'
 
 /**
@@ -17,9 +17,9 @@ export const getPartNewsNotices = params => handleRequest(() => get('newsBulleti
 // 获取新闻详情
 export const getNewsDetail = params => handleRequest(() => get(`newsBulletin/${params}`))
 // 添加收藏
-export const addUserCollectionAjax = params => handleRequest(() => postWithURLencoded('collection', params))
+export const addUserCollectionAjax = params => handleRequest(() => postWithURLencoded('collection', {...params, ...notLoading}))
 // 取消收藏
-export const removeCollectionAjax = params => handleRequest(() => postWithURLencoded('collection/cancel', params))
+export const removeCollectionAjax = params => handleRequest(() => postWithURLencoded('collection/cancel', {...params, ...notLoading}))
 // 收藏列表
 export const getCollectionListAjax = () => handleRequest(() => get('collection'))
 // 首页行情

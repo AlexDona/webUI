@@ -69,6 +69,8 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @import '../../assets/CSS/index';
+
   .about-us-box {
     width: 100%;
     height: 100%;
@@ -124,12 +126,12 @@ export default {
     &.day {
       > .content {
         > .content {
-          background-color: #fff;
+          background-color: $newDayBg;
 
           > .inner-box {
-            border: 1px solid rgba(234, 235, 236, 1);
             color: #666;
             background-color: #fff;
+            box-shadow: 0 0 6px #cfd5df;
           }
         }
       }

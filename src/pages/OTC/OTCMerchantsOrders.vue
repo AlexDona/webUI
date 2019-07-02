@@ -18,119 +18,130 @@
         <!-- 上部分筛选条件 -->
         <div class="orders-main-top">
           <!-- 交易类型 -->
-          <span class="filtrate-text font-size14">
-            {{$t('M.otc_type_ransaction')}}
-          </span>
-          <span class="status-input">
-            <el-select
-              v-model="activatedMerchantsOrdersTraderStyleList"
-              :no-data-text="$t('M.comm_no_data')"
-              @change="changeSelectValue('changeMerchantsOrdersTraderStyleList', $event)"
-              clearable
-              :placeholder="$t('M.comm_all')"
-            >
-              <el-option
-                v-for="item in merchantsOrdersTraderStyleList"
-                :key="item.value"
-                :label="$t(item.label)"
-                :value="item.value"
+          <div>
+            <span class="filtrate-text font-size12">
+              {{$t('M.otc_type_ransaction')}}
+            </span>
+              <span class="status-input">
+              <el-select
+                v-model="activatedMerchantsOrdersTraderStyleList"
+                :no-data-text="$t('M.comm_no_data')"
+                @change="changeSelectValue('changeMerchantsOrdersTraderStyleList', $event)"
+                clearable
+                :placeholder="$t('M.comm_all')"
               >
-              </el-option>
-            </el-select>
-          </span>
+                <el-option
+                  v-for="item in merchantsOrdersTraderStyleList"
+                  :key="item.value"
+                  :label="$t(item.label)"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </span>
+          </div>
           <!-- 币种 -->
-          <span class="filtrate-text font-size14">
-            {{$t('M.otc_AD_token')}}
-          </span>
-          <span class="status-input">
-            <el-select
-              v-model="activatedMerchantsOrdersCoin"
-              :no-data-text="$t('M.comm_no_data')"
-              @change="changeSelectValue('changeMerchantsOrdersCoin', $event)"
-              clearable
-              :placeholder="$t('M.comm_all')"
-            >
-              <el-option
-                v-for="(item,index) in merchantsOrdersCoinList"
-                :key="index"
-                :label="item.name"
-                :value="item.coinId"
+          <div>
+            <span class="filtrate-text font-size12">
+              {{$t('M.otc_AD_token')}}
+            </span>
+              <span class="status-input">
+              <el-select
+                v-model="activatedMerchantsOrdersCoin"
+                :no-data-text="$t('M.comm_no_data')"
+                @change="changeSelectValue('changeMerchantsOrdersCoin', $event)"
+                clearable
+                :placeholder="$t('M.comm_all')"
               >
-              </el-option>
-            </el-select>
-          </span>
+                <el-option
+                  v-for="(item,index) in merchantsOrdersCoinList"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.coinId"
+                >
+                </el-option>
+              </el-select>
+            </span>
+          </div>
           <!-- 货币 -->
-          <span class="filtrate-text font-size14">
-            {{$t('M.otc_MerchantsOrders_currecy')}}
-          </span>
-          <span class="status-input">
-            <el-select
-              v-model="activatedMerchantsOrdersCurrency"
-              :no-data-text="$t('M.comm_no_data')"
-              @change="changeSelectValue('changeMerchantsOrdersCurrency', $event)"
-              clearable
-              :placeholder="$t('M.comm_all')"
-            >
-              <el-option
-                v-for="(item,index) in merchantsOrdersCurrencyList"
-                :key="index"
-                :label="language == 'zh_CN'? item.name : item.shortName"
-                :value="item.id"
+          <div>
+            <span class="filtrate-text font-size12">
+              {{$t('M.otc_MerchantsOrders_currecy')}}
+            </span>
+              <span class="status-input">
+              <el-select
+                v-model="activatedMerchantsOrdersCurrency"
+                :no-data-text="$t('M.comm_no_data')"
+                @change="changeSelectValue('changeMerchantsOrdersCurrency', $event)"
+                clearable
+                :placeholder="$t('M.comm_all')"
               >
-              </el-option>
-            </el-select>
-          </span>
+                <el-option
+                  v-for="(item,index) in merchantsOrdersCurrencyList"
+                  :key="index"
+                  :label="language == 'zh_CN'? item.name : item.shortName"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+            </span>
+          </div>
           <!-- 状态 -->
-          <span class="filtrate-text font-size14">
-            {{$t('M.comm_state')}}
-          </span>
-          <span class="status-input">
-            <el-select
-              v-model="activatedMerchantsOrdersStatusList"
-              :no-data-text="$t('M.comm_no_data')"
-              @change="changeSelectValue('changeMerchantsOrdersStatusList', $event)"
-              clearable
-              :placeholder="$t('M.comm_all')"
-            >
-              <el-option
-                v-for="item in merchantsOrdersStatusList"
-                :key="item.value"
-                :label="$t(item.label)"
-                :value="item.value"
+          <div>
+            <span class="filtrate-text font-size12">
+              {{$t('M.comm_state')}}
+            </span>
+              <span class="status-input">
+              <el-select
+                v-model="activatedMerchantsOrdersStatusList"
+                :no-data-text="$t('M.comm_no_data')"
+                @change="changeSelectValue('changeMerchantsOrdersStatusList', $event)"
+                clearable
+                :placeholder="$t('M.comm_all')"
               >
-              </el-option>
-            </el-select>
-          </span>
+                <el-option
+                  v-for="item in merchantsOrdersStatusList"
+                  :key="item.value"
+                  :label="$t(item.label)"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </span>
+          </div>
           <!-- 日期 -->
-          <span class="filtrate-text font-size14">
-            {{$t('M.otc_MerchantsOrders_date')}}
-          </span>
-          <span class="date-picker">
-            <!--开始日期-->
-            <el-date-picker
-              :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_MerchantsOrders_date')"
-              v-model="startTimeValue"
-              type="date"
-              value-format="yyyy-MM-dd"
-              @change="changeSelectValue('startDate' , $event)"
-              clearable
-              :picker-options="pickerOptions"
-            >
-            </el-date-picker>
-            <span class="date-short-line">-</span>
-            <!--结束日期-->
-            <el-date-picker
-              :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_MerchantsOrders_date')"
-              v-model="endTimeValue"
-              value-format="yyyy-MM-dd"
-              type="date"
-              @change="changeSelectValue('endDate', $event)"
-              clearable
-              :picker-options="pickerOptions"
-            >
-            </el-date-picker>
-          </span>
-          <br>
+          <div>
+            <span class="filtrate-text font-size12">
+              {{$t('M.otc_MerchantsOrders_date')}}
+            </span>
+            <span class="date-picker">
+              <!--开始日期-->
+              <el-date-picker
+                :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_MerchantsOrders_date')"
+                v-model="startTimeValue"
+                type="date"
+                value-format="yyyy-MM-dd"
+                @change="changeSelectValue('startDate' , $event)"
+                clearable
+                :picker-options="pickerOptions"
+              >
+              </el-date-picker>
+              <span class="date-short-line">-</span>
+                <!--结束日期-->
+              <el-date-picker
+                :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_MerchantsOrders_date')"
+                v-model="endTimeValue"
+                value-format="yyyy-MM-dd"
+                type="date"
+                @change="changeSelectValue('endDate', $event)"
+                clearable
+                :picker-options="pickerOptions"
+              >
+              </el-date-picker>
+            </span>
+          </div>
+        </div>
+        <div class="second-line">
           <span class="inquire-button">
             <!-- 查询 -->
             <el-button
@@ -316,6 +327,7 @@
             <el-table-column
               :label = "$t('M.otc_record_complaint')"
               width="134"
+              align="right"
             >
               <template slot-scope = "s">
                 <div>
@@ -326,7 +338,7 @@
           </el-table>
         </div>
         <!--分页-->
-        <div class="page">
+        <div class="page text-align-c">
           <el-pagination
             background
             v-show="merchantsOrdersList.length"
@@ -351,7 +363,6 @@ import {
   getOTCMerchantsOrdersList
 } from '../../utils/api/OTC'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {mapState} from 'vuex'
@@ -363,7 +374,6 @@ export default {
     return {
       // 商家订单内容的高度
       height: '',
-      // 分页
       // 每页显示的条数
       pageSize: 10,
       // 当前页码
@@ -529,13 +539,13 @@ export default {
           break
       }
     },
-    // 6点击查询按钮
+    // 6 点击查询按钮
     findFilter () {
       // 改变查询条件从第1页开始查询
       this.currentPage = 1
       this.getOTCEntrustingOrdersRevocation()
     },
-    // 7重置
+    // 7 重置
     resetCondition () {
       // 改变查询条件从第1页开始查询
       this.currentPage = 1
@@ -547,8 +557,8 @@ export default {
       this.endTimeValue = ''
       this.getOTCEntrustingOrdersRevocation()
     },
-    // 8页面加载时请求接口渲染列表
-    async getOTCEntrustingOrdersRevocation () {
+    // 8 页面加载时请求接口渲染列表
+    getOTCEntrustingOrdersRevocation: _.debounce(async function () {
       let data = await getOTCMerchantsOrdersList({
         // 当前页数
         pageNum: this.currentPage,
@@ -568,15 +578,15 @@ export default {
         tradeType: this.activatedMerchantsOrdersTraderStyleList
       })
       // 返回数据正确的逻辑 重新渲染列表
-      console.log('商家订单列表')
-      console.log(data)
+      // console.log('商家订单列表')
+      // console.log(data)
       if (!data) return false
       if (data.data) {
         let merchantsOrdersListData = getNestedData(data, 'data')
         this.merchantsOrdersList = getNestedData(merchantsOrdersListData, 'list')
         this.totalPages = getNestedData(merchantsOrdersListData, 'pages') - 0 // 分页
       }
-    }
+    }, 500)
   },
   filter: {},
   computed: {
@@ -589,15 +599,15 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index";
+  @import "../../assets/CSS/index";
 
   .otc-merchants-orders-box {
     margin-top: 50px;
     overflow: hidden;
 
     > .otc-merchants-orders-content {
-      width: 1200px;
-      padding-top: 50px;
+      width: 1300px;
+      padding-top: 20px;
       margin: 50px auto 10px;
 
       > .merchants-title {
@@ -608,27 +618,35 @@ export default {
 
       > .merchants-orders-main {
         > .orders-main-top {
-          min-height: 60px;
-          margin-bottom: 25px;
+          display: flex;
+          justify-content: space-between;
+          height: 60px;
           line-height: 60px;
 
-          > .filtrate-text {
+          .filtrate-text {
             margin-right: 5px;
           }
 
-          > .status-input {
+          .status-input {
             margin-right: 46px;
           }
 
-          > .date-picker {
+          .date-picker {
             > .date-short-line {
               margin: 0 3px;
             }
           }
 
-          > .inquire-button {
+          .inquire-button {
             float: right;
           }
+        }
+
+        > .second-line {
+          display: flex;
+          justify-content: flex-end;
+          height: 60px;
+          line-height: 40px;
         }
 
         > .orders-main-bottom {
@@ -641,7 +659,6 @@ export default {
 
         .page {
           padding: 10px 0;
-          text-align: center;
         }
       }
     }
@@ -670,6 +687,7 @@ export default {
       .el-input__inner {
         height: 34px;
         border: 0;
+        font-size: 12px;
       }
 
       .el-input__icon {
@@ -681,6 +699,7 @@ export default {
         .el-button {
           padding: 10px 16px;
           border: 0;
+          font-size: 12px;
         }
       }
 
@@ -690,6 +709,9 @@ export default {
         }
 
         .el-table {
+          padding-bottom: 15px;
+          font-size: 12px;
+
           tr {
             height: 40px;
           }
@@ -743,18 +765,14 @@ export default {
 
       > .otc-merchants-orders-content {
         > .merchants-title {
-          border-left: 3px solid #338ff5;
-          color: #338ff5;
+          border-left: 3px solid $mainColor;
+          color: $mainColor;
         }
 
         > .merchants-orders-main {
           > .orders-main-top {
-            > .filtrate-text {
+            .filtrate-text {
               color: #9da5b3;
-            }
-
-            > .all-clear {
-              color: #338ff5;
             }
           }
 
@@ -773,6 +791,10 @@ export default {
       }
 
       /deep/ {
+        .el-input--suffix .el-input__inner {
+          color: #fff;
+        }
+
         .el-input__inner {
           background-color: #1c1f32;
         }
@@ -847,22 +869,18 @@ export default {
     }
 
     &.day {
-      background-color: $mainDayBgColor;
+      background-color: $mainBgColorOfDay;
 
       > .otc-merchants-orders-content {
         > .merchants-title {
-          border-left: 3px solid #338ff5;
-          color: #338ff5;
+          border-left: 3px solid $mainColor;
+          color: $mainColor;
         }
 
         > .merchants-orders-main {
           > .orders-main-top {
-            > .filtrate-text {
-              color: #9da5b3;
-            }
-
-            > .all-clear {
-              color: #338ff5;
+            .filtrate-text {
+              color: $fontColorSecondaryOfDay;
             }
           }
 
@@ -870,28 +888,32 @@ export default {
             min-height: 440px;
 
             .red {
-              color: #d45858;
+              color: $upColor;
             }
 
             .green {
-              color: #008069;
+              color: $otcGreen;
             }
           }
         }
       }
 
       /deep/ {
+        .el-input--suffix .el-input__inner {
+          color: $dayMainTitleColor;
+        }
+
         .el-input__inner {
-          border: 1px solid #ecf1f8;
-          color: #7d90ac !important;
-          background-color: #fff;
+          border: 1px solid $borderColorOfDay;
+          color: $dayMainTitleColor !important;
+          background-color: $mainDayBgColor;
         }
 
         .otc-merchants-orders-content {
           > .merchants-orders-main {
             > .orders-main-top {
               > .filtrate-text[data-v-3d7faed3] {
-                color: #7d90ac;
+                color: $fontColorSecondaryOfDay;
               }
             }
           }
@@ -907,7 +929,7 @@ export default {
           .el-input--suffix {
             > input {
               &::-webkit-input-placeholder {
-                color: #7d90ac;
+                color: $fontColorSecondaryOfDay;
               }
             }
           }
@@ -915,16 +937,20 @@ export default {
 
         .orders-main-bottom {
           .el-table {
-            border: 1px solid #ecf1f8;
-            background-color: #fff;
+            color: $dayMainTitleColor;
+            background-color: $mainDayBgColor;
+            box-shadow: 0 0 6px $boxShadowColorOfDay;
+
+            thead {
+              color: $fontColorSecondaryOfDay;
+            }
 
             th {
-              background-color: #fff;
+              background-color: $mainDayBgColor;
               box-shadow: none;
               border-right: 0;
 
               &.is-leaf {
-                border-top: 1px solid #ecf1f8;
                 border-bottom: 1px solid #ecf1f8;
                 box-shadow: inset 0 1px 2px #ecf1f8;
 

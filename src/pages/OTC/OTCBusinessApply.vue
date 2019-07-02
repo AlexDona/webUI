@@ -73,7 +73,6 @@
         <div class="number">
           <!-- 商家申请 -->
           <span class="common apply">
-            <!-- {{$t('M.otc_merchant')}}{{$t('M.otc_apply')}} -->
             {{$t('M.otc_merchant_apply')}}
           </span>
           <!-- 发送邮件 -->
@@ -122,16 +121,6 @@
               {{$t('M.otc_merchant_step4')}}
             </h4>
             <p>{{$t('M.otc_merchant_datailSeven')}}</p>
-            <!--<h4 class="title tips">-->
-              <!--{{$t('M.otc_merchant_loveTips')}}-->
-              <!--<el-button-->
-                <!--type="text"-->
-                <!--@click="businessArgument"-->
-                <!--class="agree font-size14"-->
-              <!--&gt;-->
-                <!--《{{$t('M.otc_merchant_authentication')}}》-->
-              <!--</el-button>-->
-            <!--</h4>-->
           </div>
         </div>
         <!-- 2.2.4 同意协议部分 -->
@@ -252,7 +241,6 @@ import {
 } from '../../utils/api/OTC'
 import { downloadFileWithUserDefined } from '../../utils/'
 import {
-  // returnAjaxMsg,
   getNestedData,
   http2https
 } from '../../utils/commonFunc'
@@ -284,7 +272,7 @@ export default {
   },
   created () {
     // 动态获取申请中 申请成功内容的高度
-    console.log(document.documentElement.clientHeight)
+    // console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
     this.determineUser()
   },
@@ -315,7 +303,6 @@ export default {
           })
           return false
         }
-        // this.getOTCBusinessApply()
         this.showApplyMerchantStatus = true
       } else {
         this.$message({showClose: true, message: this.$t('M.otc_login_pi') + '!'})
@@ -334,7 +321,7 @@ export default {
     async getOTCBusinessApply () {
       const data = await businessApply()
       // 返回数据正确的逻辑
-      console.log(data)
+      // console.log(data)
       if (!data) return false
       if (data.meta) {
         let detailMeta = getNestedData(data, 'meta')
@@ -356,8 +343,8 @@ export default {
       // 刚进页面接口请求回来之前先展示缓冲界面
       this.applyStatus = 4
       const data = await firstEnterBusinessApply()
-      console.log(' 首次点击商家申请请求数据')
-      console.log(data)
+      // console.log(' 首次点击商家申请请求数据')
+      // console.log(data)
       // 正确逻辑
       if (data) {
         let getData = getNestedData(data, 'data')
@@ -378,9 +365,8 @@ export default {
           this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
           this.applyStatus = 3
         }
-        // ren 增加非商家点击提示框申请按钮跳转到申请页面中的申请按钮部分功能
+        // 非商家点击提示框申请按钮跳转到申请页面中的申请按钮部分功能
         if (getData.status !== 3 && this.otcApplyJumpBottomStatus) {
-          // console.log('进入方法了' + this.otcApplyJumpBottomStatus)
           this.scrollToTimerOne = setTimeout(() => {
             window.scrollTo(0, 2000)
           }, 100)
@@ -410,9 +396,8 @@ export default {
         this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
         this.applyStatus = 3
       }
-      // ren 增加非商家点击提示框申请按钮跳转到申请页面中的申请按钮部分功能
+      // 非商家点击提示框申请按钮跳转到申请页面中的申请按钮部分功能
       if (getData.status !== 3 && this.otcApplyJumpBottomStatus) {
-        // console.log('进入方法了' + this.otcApplyJumpBottomStatus)
         this.scrollToTimerOne = setTimeout(() => {
           window.scrollTo(0, 2000)
         }, 100)
@@ -425,8 +410,8 @@ export default {
         termsTypeIds: 9,
         language: this.language
       })
-      console.log('商家申请界面用户协议')
-      console.log(data)
+      // console.log('商家申请界面用户协议')
+      // console.log(data)
       // 正确逻辑
       if (!data) return false
       this.argumentContent = getNestedData(data, 'data[0].content')
@@ -439,7 +424,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
+      // 用户登录状态 false 未登录； true 登录
+      isLogin: state => state.user.isLogin,
       language: state => state.common.language,
       theme: state => state.common.theme,
       configInfo: state => state.common.footerInfo.configInfo,
@@ -449,7 +435,6 @@ export default {
   },
   watch: {
     otcApplyJumpBottomStatus (newVal) {
-      // console.log('监控')
       // console.log(newVal)
       if (newVal && this.applyStatus !== 3) {
         this.scrollToTimerTwo = setTimeout(() => {
@@ -471,23 +456,20 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/OTC/OTCCenter.scss";
-  @import "../../../static/css/scss/index";
+  @import "../../assets/CSS/index";
 
   .otc-business-apply-box {
     margin-top: 50px;
     overflow: hidden;
 
     > .business-apply-content {
-      padding-top: 20px;
-
       > .privilege {
-        width: 1150px;
+        width: 1300px;
         margin: 107px auto 0;
 
         > .title {
           text-align: center;
-          color: #fff;
+          color: $mainColorOfWhite;
         }
 
         > .content {
@@ -527,7 +509,7 @@ export default {
               width: 83px;
               padding-bottom: 10px;
               font-weight: 700;
-              color: #338ff5;
+              color: $mainColor;
             }
 
             > .text {
@@ -545,9 +527,8 @@ export default {
       }
 
       > .approve {
-        width: 1150px;
-        margin: 70px auto;
-        margin-top: 107px;
+        width: 1300px;
+        margin: 107px auto 70px;
 
         > .title {
           margin-top: 100px;
@@ -556,7 +537,7 @@ export default {
 
         > .number {
           position: relative;
-          width: 1150px;
+          width: 1300px;
           height: 52px;
           margin-top: 70px;
           line-height: 58px;
@@ -569,32 +550,32 @@ export default {
           > .apply {
             position: absolute;
             top: 0;
-            left: 185px;
+            left: 260px;
           }
 
           > .send-email {
             position: absolute;
             top: 0;
-            left: 430px;
+            left: 505px;
           }
 
           > .submit-apply {
             position: absolute;
             top: 0;
-            left: 680px;
+            left: 755px;
           }
 
           > .pass {
             position: absolute;
             top: 0;
-            left: 930px;
+            left: 1005px;
           }
         }
 
         > .step {
-          width: 1150px;
+          width: 1300px;
           height: 650px;
-          padding: 40px 0 0 238px;
+          padding: 40px 0 0 315px;
           margin-top: 70px;
           font-size: 14px;
           background: url(../../assets/develop/business-apply-bgm.png) no-repeat center;
@@ -636,7 +617,7 @@ export default {
 
     > .business-applying-content,
     .business-apply-success-content {
-      width: 1150px;
+      width: 1300px;
       padding-top: 20px;
       margin: 70px auto;
       text-align: center;
@@ -751,7 +732,7 @@ export default {
 
             .el-dialog__title {
               font-size: 16px;
-              color: #338ff5 !important;
+              color: $mainColor !important;
             }
 
             .el-dialog__headerbtn {
@@ -785,7 +766,7 @@ export default {
 
               &:first-child {
                 border: 1px solid rgba(51, 143, 245, 1);
-                color: #338ff5;
+                color: $mainColor;
                 background: #1c2237;
               }
 
@@ -807,7 +788,7 @@ export default {
 
         > .privilege {
           > .title {
-            color: #fff;
+            color: $mainColorOfWhite;
           }
 
           > .content {
@@ -825,11 +806,11 @@ export default {
               > .title {
                 border-bottom: 1px dashed rgba(51, 143, 245, .3);
                 font-weight: 700;
-                color: #338ff5;
+                color: $mainColor;
               }
 
               > .text {
-                color: #fff;
+                color: $mainColorOfWhite;
               }
             }
           }
@@ -837,12 +818,12 @@ export default {
 
         > .approve {
           > .title {
-            color: #fff;
+            color: $mainColorOfWhite;
           }
 
           > .number {
             > .common {
-              color: #fff;
+              color: $mainColorOfWhite;
             }
           }
 
@@ -851,30 +832,30 @@ export default {
 
             > .content {
               > .title {
-                color: #fff;
+                color: $mainColorOfWhite;
               }
 
               > .tips {
                 color: #4b5d6e;
 
                 > .agree {
-                  color: #d45858;
+                  color: $upColor;
                 }
               }
             }
           }
 
           > .agree {
-            color: #fff;
+            color: $mainColorOfWhite;
 
             .agreement {
-              color: #d45858;
+              color: $upColor;
             }
           }
 
           > .submit {
             > .button {
-              color: #fff;
+              color: $mainColorOfWhite;
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
@@ -891,7 +872,7 @@ export default {
         }
 
         .el-dialog__title {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         .el-dialog {
@@ -918,12 +899,12 @@ export default {
 
     &.day {
       overflow: hidden;
-      background-color: $mainDayBgColor;
+      background-color: $mainBgColorOfDay;
 
       > .business-apply-content {
         > .privilege {
           > .title {
-            color: #333;
+            color: $dayMainTitleColor;
           }
 
           > .content {
@@ -941,11 +922,11 @@ export default {
               > .title {
                 border-bottom: 1px dashed rgba(51, 143, 245, .3);
                 font-weight: 700;
-                color: #338ff5;
+                color: $mainColor;
               }
 
               > .text {
-                color: #fff;
+                color: $mainColorOfWhite;
               }
             }
           }
@@ -953,12 +934,12 @@ export default {
 
         > .approve {
           > .title {
-            color: #333;
+            color: $dayMainTitleColor;
           }
 
           > .number {
             > .common {
-              color: #333;
+              color: $dayMainTitleColor;
             }
           }
 
@@ -967,30 +948,30 @@ export default {
 
             > .content {
               > .title {
-                color: #fff;
+                color: $mainColorOfWhite;
               }
 
               > .tips {
                 color: #4b5d6e;
 
                 > .agree {
-                  color: #d45858;
+                  color: $upColor;
                 }
               }
             }
           }
 
           > .agree {
-            color: #333;
+            color: $dayMainTitleColor;
 
             .agreement {
-              color: #d45858;
+              color: $upColor;
             }
           }
 
           > .submit {
             > .button {
-              color: #fff;
+              color: $mainColorOfWhite;
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
@@ -999,7 +980,7 @@ export default {
 
       /deep/ {
         .el-dialog {
-          background: #fff;
+          background: $mainColorOfWhite;
         }
 
         .agree {
@@ -1012,7 +993,7 @@ export default {
             position: relative;
             width: 340px;
             text-align: left;
-            background: #fff !important;
+            background: $mainColorOfWhite !important;
 
             .el-dialog__header {
               position: absolute;
@@ -1051,16 +1032,16 @@ export default {
         /* 申请商家提示框样式 */
         .apply-merchant-dialog {
           .el-dialog {
-            background: #fff !important;
+            background: $mainColorOfWhite !important;
 
             .el-dialog__header {
               border-bottom: 1px solid #ecf1f8;
-              background: #fff !important;
+              background: $mainColorOfWhite !important;
             }
 
             .el-dialog__body {
               .tips {
-                color: #333;
+                color: $dayMainTitleColor;
               }
             }
 
@@ -1068,8 +1049,8 @@ export default {
               .el-button {
                 &:first-child {
                   border: 1px solid rgba(51, 143, 245, 1);
-                  color: #338ff5;
-                  background: #fff;
+                  color: $mainColor;
+                  background: $mainColorOfWhite;
                 }
               }
             }
@@ -1079,7 +1060,7 @@ export default {
     }
 
     .businessApplyModel {
-      color: #d45858;
+      color: $upColor;
       cursor: pointer;
     }
   }
@@ -1091,7 +1072,7 @@ export default {
 
   /deep/ {
     .el-dialog__title {
-      color: #338ff5;
+      color: $mainColor;
     }
   }
 </style>

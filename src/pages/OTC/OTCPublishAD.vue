@@ -515,7 +515,6 @@
 // 引入接口
 import {
   formatNumberInput,
-  // positiveIntegerNumRegexpInput,
   positiveIntegerNumRegexpInputNoZero,
   amendPrecision,
   cutOutPointLength
@@ -530,7 +529,6 @@ import {
 import IconFontCommon from '../../components/Common/IconFontCommon'
 // 引入提示信息
 import {
-  // returnAjaxMsg,
   getNestedData,
   isNeedPayPasswordAjax
 } from '../../utils/commonFunc'
@@ -666,8 +664,6 @@ export default {
     this.$refs.successRef.value = 0
     this.limitOrderCount = this.$refs.limitRef.value
     this.successOrderCount = this.$refs.successRef.value
-    // console.log(this.limitOrderCount)
-    // console.log(this.successOrderCount)
   },
   activated () {},
   update () {},
@@ -687,21 +683,21 @@ export default {
     positiveIntegerNumRegexpInputLimit (ref) {
       let target = this.$refs[ref]
       this.limitOrderCount = positiveIntegerNumRegexpInputNoZero(target)
-      console.log(this.$refs.limitRef.value)
+      // console.log(this.$refs.limitRef.value)
     },
     // 2.0 卖家必须成交过几次（0=不限制）input框限制
     positiveIntegerNumRegexpInputSuccess (ref) {
       let target = this.$refs[ref]
       this.successOrderCount = positiveIntegerNumRegexpInputNoZero(target)
-      console.log(this.$refs.successRef.value)
+      // console.log(this.$refs.successRef.value)
     },
     // 3.0 广告管理跳转过来 请求详情接口
     async getOTCSelectedOrdersDetails () {
       const data = await querySelectedOrdersDetails({
         entrustId: this.messageId
       })
-      console.log('广告管理跳转过来挂单详情')
-      console.log(data)
+      // console.log('广告管理跳转过来挂单详情')
+      // console.log(data)
       // 正确逻辑
       if (!data) return false
       if (data.data) {
@@ -725,8 +721,8 @@ export default {
         currencyId: this.activatedCurrencyId, // 法币id
         coinId: this.activatedCoinId // 币种id
       })
-      console.log('币种详情')
-      console.log(data)
+      // console.log('币种详情')
+      // console.log(data)
       if (!data) return false
       // 返回数据正确的逻辑
       // 1.0 可用币种列表
@@ -852,22 +848,20 @@ export default {
       if (!this.$refs.minCountValue.value) {
         // this.errorInfoMinCount = '单笔最小限额不能为空！'
         this.errorInfoMinCount = this.$t('M.otc_min_limit_not_empty')
-        console.log(1)
         this.minCountErrorTipsBorder = true
         return false
       }
       if (!this.$refs.maxCountValue.value) {
         // this.errorInfoMaxCount = '单笔最大限额不能为空！'
         this.errorInfoMaxCount = this.$t('M.otc_max_limit_not_empty')
-        console.log(2)
         this.maxCountErrorTipsBorder = true
         return false
       }
       // 限制设置--非必输选项
       // 20181213增加非空验证：变为了必须字段
-      console.log(this.limitOrderCount)
-      console.log(typeof this.limitOrderCount)
-      console.log(this.successOrderCount)
+      // console.log(this.limitOrderCount)
+      // console.log(typeof this.limitOrderCount)
+      // console.log(this.successOrderCount)
       if (!this.limitOrderCount) {
         // this.errorInfoLimitOrderCount = '同时处理最大订单数不能为空'
         this.errorInfoLimitOrderCount = this.$t('M.otc_publish_ad_err1')
@@ -894,7 +888,7 @@ export default {
       this.errorInfoSuccessOrderCount = ''
     },
     // 11.0 点击密码框中的提交按提交钮发布广告
-    async publishADSubmitButton () {
+    publishADSubmitButton: _.debounce(async function () {
       if (this.isNeedPayPassword && !this.tradePassword) {
         // 请输入交易密码
         this.errorInfoPassword = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
@@ -935,7 +929,7 @@ export default {
       // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
       this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
       this.$goToPage('/OTCCenter')
-    },
+    }, 500),
     // 12.0 交易密码框获得焦点
     tradePasswordFocus () {
       this.errorInfoPassword = ''
@@ -1193,7 +1187,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/index";
+@import "../../assets/CSS/index";
 
 input::-webkit-input-placeholder { /* input框中placeholder字体设置 */
   font-size: 12px;
@@ -1220,21 +1214,21 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
   overflow: hidden;
 
   .redBorderRightNone {
-    border: 1px solid #d45858 !important;
+    border: 1px solid $upColor !important;
     border-right: 0 !important;
   }
 
   .redBorderLeftNone {
-    border: 1px solid #d45858 !important;
+    border: 1px solid $upColor !important;
     border-left: 0 !important;
   }
 
   > .otc-publish-AD-content {
     display: flex;
     flex: 3;
-    width: 1150px;
-    padding-top: 50px;
-    margin: 50px auto;
+    width: 1300px;
+    padding: 30px 50px 130px 60px;
+    margin: 60px auto 260px;
 
     > .publish-AD-left {
       flex: 2;
@@ -1249,7 +1243,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
         width: 720px;
 
         .must-fill-star {
-          color: #d45858;
+          color: $upColor;
         }
 
         > .common {
@@ -1323,7 +1317,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             padding-left: 8px;
 
             .price-data {
-              color: #e97345;
+              color: $upColor;
             }
           }
         }
@@ -1421,7 +1415,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
         }
 
         > .fee-detail {
-          padding: 10px 0 0 115px;
+          padding: 25px 0 0 115px;
           font-size: 12px;
 
           .predict-text {
@@ -1429,7 +1423,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
           }
 
           .predict-sum {
-            color: #30c296;
+            color: $otcGreen;
           }
 
           .rate-text {
@@ -1437,14 +1431,13 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
           }
 
           .rate {
-            color: #ca5040;
+            color: $upColor;
           }
         }
 
         > .button {
           padding-left: 115px;
-          margin-top: 40px;
-          margin-bottom: 50px;
+          margin-top: 25px;
 
           > .AD-button {
             width: 200px;
@@ -1456,14 +1449,15 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     }
 
     > .publish-AD-right {
+      display: flex;
       flex: 1;
+      justify-content: flex-end;
 
       > .publish-tips {
-        width: 250px;
-        margin-left: 40px;
+        width: 274px;
 
         > .tip {
-          line-height: 20px;
+          line-height: 24px;
         }
       }
     }
@@ -1501,7 +1495,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
       .el-checkbox__inner {
         &::after {
-          border: 1px solid #1f90ea;
+          border: 1px solid $mainColor;
           border-top: 0;
           border-left: 0;
         }
@@ -1563,7 +1557,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
         .close-pwd-tip {
           margin-top: 5px;
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1573,7 +1567,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
         .forget-pwd-tip {
           padding: 8px 20px 0 0;
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1591,8 +1585,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     > .otc-publish-AD-content {
       > .publish-AD-left {
         > .AD-title {
-          border-left: 3px solid #338ff5;
-          color: #338ff5;
+          border-left: 3px solid $mainColor;
+          color: $mainColor;
         }
 
         > .AD-big-form {
@@ -1601,7 +1595,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
           }
 
           .err {
-            color: #d45858;
+            color: $upColor;
           }
 
           > .common {
@@ -1633,11 +1627,11 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
           > .sale-price {
             > .right {
               .max-avail-sell {
-                color: #30c296;
+                color: $otcGreen;
               }
 
               .market-price {
-                color: #e97345;
+                color: $upColor;
               }
 
               > .input {
@@ -1720,6 +1714,10 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: #fff;
+      }
+
       .choice {
         .el-input__inner {
           background: #1c1f32;
@@ -1728,7 +1726,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
       .limit-set {
         .icon {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
@@ -1791,67 +1789,62 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
   }
 
   &.day {
-    background-color: $mainDayBgColor;
+    background-color: $mainBgColorOfDay;
 
     > .otc-publish-AD-content {
+      background-color: $mainColorOfWhite;
+      box-shadow: 0 0 6px $boxShadowColorOfDay;
+
       > .publish-AD-left {
         > .AD-title {
-          border-left: 3px solid #338ff5;
-          color: #338ff5;
+          border-left: 3px solid $mainColor;
+          color: $mainColor;
         }
 
         > .AD-big-form {
           .err {
-            color: #d45858;
+            color: $upColor;
           }
 
           > .common {
+            border-bottom: 1px solid $borderColorOfDay;
+
             > .left {
               > .tips {
-                color: #333;
+                color: $dayMainTitleColor;
               }
 
               > .warning {
-                color: #3e79d6;
+                color: $mainColor;
               }
             }
 
             > .right {
-              color: #7d90ac;
-            }
-          }
-
-          > .choice {
-            > .right {
-              > .right-change {
-                > .double-sided-arrow {
-                  color: #797979;
-                }
-              }
+              color: $fontColorSecondaryOfDay;
             }
           }
 
           > .sale-price {
             > .right {
               .max-avail-sell {
-                color: #30c296;
+                color: $otcGreen;
               }
 
               .market-price {
-                color: #e97345;
+                color: $upColor;
               }
 
               > .input {
                 > .price-input {
-                  border: 1px solid rgba(236, 241, 248, 1);
-                  color: #7d90ac;
-                  background-color: #fff;
+                  border: 1px solid $boxShadowColorOfDay;
+                  color: $dayMainTitleColor;
+                  background-color: $mainDayBgColor;
                 }
 
                 > .unit {
-                  border: 1px solid #cbddf4;
-                  color: #338ff5;
-                  background-color: #cbddf4;
+                  border: 1px solid $coinBgColorOfDay;
+                  color: $mainColor;
+                  background-color: $coinBgColorOfDay;
                 }
               }
             }
@@ -1861,33 +1854,33 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             > .right {
               > .input-top {
                 > .input-sum {
-                  border: 1px solid rgba(236, 241, 248, 1);
-                  color: #9da5b3;
-                  background-color: #fff;
+                  border: 1px solid $borderColorOfDay;
+                  color: $dayMainTitleColor;
+                  background-color: $mainDayBgColor;
                 }
 
                 > .unit {
-                  border: 1px solid #cbddf4;
-                  color: #338ff5;
-                  background-color: #cbddf4;
+                  border: 1px solid $coinBgColorOfDay;
+                  color: $mainColor;
+                  background-color: $coinBgColorOfDay;
                 }
               }
 
               > .input-bottom {
                 > .input-min,
                 .input-max {
-                  border: 1px solid rgba(236, 241, 248, 1);
-                  background-color: #fff;
+                  border: 1px solid $borderColorOfDay;
+                  background-color: $mainDayBgColor;
                 }
 
                 > .unit {
-                  border: 1px solid #cbddf4;
-                  color: #338ff5;
-                  background-color: #cbddf4;
+                  border: 1px solid $coinBgColorOfDay;
+                  color: $mainColor;
+                  background-color: $coinBgColorOfDay;
                 }
 
                 > .minMaxLink {
-                  color: #7d90ac;
+                  color: $fontColorSecondaryOfDay;
                 }
               }
             }
@@ -1895,16 +1888,38 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
           > .limit-set {
             > .right {
+              .icon {
+                color: $mainColor;
+              }
+
               .input-limit {
-                border: 1px solid rgba(236, 241, 248, 1);
-                background-color: #fff;
+                border: 1px solid $borderColorOfDay;
+                background-color: $mainColorOfWhite;
+              }
+            }
+          }
+
+          > .fee-detail {
+            > .predict-text {
+              color: $fontColorSecondaryOfDay;
+            }
+
+            > .predict-sum {
+              color: $otcGreen;
+            }
+
+            > .rate-text {
+              color: $fontColorSecondaryOfDay;
+
+              > .rate {
+                color: $upColor;
               }
             }
           }
 
           > .button {
             > .AD-button {
-              color: #fff;
+              color: $mainColorOfWhite;
               background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
@@ -1914,29 +1929,33 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
       > .publish-AD-right {
         > .publish-tips {
           > .title {
-            color: #d45858;
+            color: $upColor;
           }
 
           > .tip {
-            color: #7d90ac;
+            color: $fontColorSecondaryOfDay;
           }
         }
       }
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: $dayMainTitleColor;
+      }
+
       .choice {
         .el-input__inner {
-          border: 1px solid #ecf1f8;
+          border: 1px solid $borderColorOfDay;
           border-radius: 2px;
-          background: #fff;
+          background: $mainDayBgColor;
         }
       }
 
       .trade-way {
         .el-checkbox__inner {
-          border: 1px solid #435372;
-          background-color: #fff;
+          border: 1px solid $dayMainTitleColor;
+          background-color: $mainDayBgColor;
         }
 
         .el-checkbox {
@@ -1951,106 +1970,27 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
       .el-checkbox__input {
         &.is-checked {
           .el-checkbox__inner {
-            background-color: #fff;
+            background-color: $mainDayBgColor;
           }
         }
 
         &.is-indeterminate {
           .el-checkbox__inner {
-            background-color: #fff;
+            background-color: $mainDayBgColor;
           }
         }
       }
 
       .el-textarea__inner {
-        border: 1px solid #ecf1f8;
-        color: #7d90ac;
-        background: #fff;
+        border: 1px solid $borderColorOfDay;
+        color: $dayMainTitleColor;
+        background: $mainDayBgColor;
       }
 
       .password-dialog {
         .el-dialog__body {
           .password-input {
-            border: 1px solid #ecf1f8;
-          }
-        }
-      }
-
-      .otc-publish-AD-content {
-        > .publish-AD-left {
-          > .AD-big-form {
-            > .sale-price {
-              > .right {
-                > .input {
-                  > .unit[data-v-6b1c45d6] {
-                    color: #338ff5;
-                    background-color: #cbddf4;
-                  }
-
-                  > .price-input[data-v-6b1c45d6] {
-                    border: 1px solid #ecf1f8;
-                    border-radius: 2px;
-                    background: #fff;
-                  }
-                }
-              }
-            }
-
-            > .sum-limit {
-              > .right {
-                > .input-top {
-                  > .unit[data-v-6b1c45d6] {
-                    color: #338ff5;
-                    background-color: #cbddf4;
-                  }
-
-                  > .input-sum[data-v-6b1c45d6] {
-                    border: 1px solid #ecf1f8;
-                    border-radius: 2px;
-                    background: #fff;
-                  }
-                }
-
-                > .input-bottom {
-                  > .unit[data-v-6b1c45d6] {
-                    color: #338ff5;
-                    background-color: #cbddf4;
-                  }
-
-                  > .input-min[data-v-6b1c45d6] {
-                    border: 1px solid #ecf1f8;
-                    border-radius: 2px;
-                    background: #fff;
-                  }
-
-                  .input-max[data-v-6b1c45d6] {
-                    border: 1px solid #ecf1f8;
-                    border-radius: 2px;
-                    background: #fff;
-                  }
-                }
-
-                .input-limit[data-v-6b1c45d6] {
-                  border: 1px solid #ecf1f8;
-                  border-radius: 2px;
-                  background: #fff;
-                }
-              }
-            }
-
-            > .common {
-              border-bottom: 1px solid rgba(50, 54, 76, .1);
-
-              > .left {
-                > .warning[data-v-6b1c45d6] {
-                  color: #3e79d6;
-                }
-
-                > .tips[data-v-6b1c45d6] {
-                  color: #333;
-                }
-              }
-            }
+            border: 1px solid $borderColorOfDay;
           }
         }
       }

@@ -22,6 +22,8 @@ const devTestConfig = {
   // apiCommonUrl: 'http://192.168.2.88:8888/',
   // 浩田
   // apiCommonUrl: 'http://192.168.2.52:22224/',
+  // 成翔
+  // apiCommonUrl: 'http://192.168.2.122:8888/',
   apiCommonUrl: 'http://192.168.2.200:8888/',
   socketUrl: 'ws://192.168.2.200:8087/market',
   // 浩田
@@ -31,7 +33,7 @@ const devTestConfig = {
 
 const dev210Config = {
   apiCommonUrl: 'http://192.168.2.210:8888/',
-  socketUrl: 'ws://192.168.2.134:8087/market',
+  socketUrl: 'ws://192.168.2.210:8087/market',
   loginSocketUrl: 'ws://192.168.2.210:8888/qrcodeLogin/'
 }
 
@@ -51,10 +53,9 @@ const newProdConfig = {
 switch (process.env.NODE_ENV) {
   case 'development':
     // 本地开发
-    // 本地开发
-    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
+    // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
     // 210开发环境
-    // targetConfig = {...dev210Config, xDomain: 'me.com'}
+    targetConfig = {...dev210Config, xDomain: 'me.com'}
     // 测试环境 （外网）
     // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     // 生产环境

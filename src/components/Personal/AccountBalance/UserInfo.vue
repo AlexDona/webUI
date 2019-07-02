@@ -316,7 +316,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .user-info {
     > .user-info-main {
@@ -413,10 +413,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .user-info-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .user-info-content-box {
           > .user,
@@ -509,13 +509,13 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       > .user-info-main {
-        border: 1px solid rgba(38, 47, 56, .1);
-        color: $dayFontColor;
-        background-color: $dayBgColor;
+        color: $dayMainTitleColor;
+        background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
 
         > .user-info-content-box {
           > .user,

@@ -53,8 +53,9 @@ export const actionCenter = {
   'crowd_funding_description_title': 'プロジェクト紹介',
   'crowd_funding_rules_title': 'プロジェクト詳細',
   'crowd_funding_question_title': 'FAQ',
-  'crowd_funding_error1': '最小デポジット',
-  'crowd_funding_error2': '最大デポジット',
+  'crowd_funding_error1': '最小ロック量',
+  'crowd_funding_error2': '最大ロック量',
+
   'crowd_funding_error3': '残高が足りない',
   'crowd_funding_error4': 'の最低手持ち量不足',
   'ieo_failure_007': 'ラッチの数は最小の整数倍にしなければならない',

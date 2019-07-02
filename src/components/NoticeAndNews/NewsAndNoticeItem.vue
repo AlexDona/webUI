@@ -207,7 +207,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import '../../../static/css/scss/index.scss';
+@import '../../assets/CSS/index';
 
 .news-and-notice-box {
   > .inner-box {
@@ -573,11 +573,14 @@ export default {
 
   &.day {
     > .inner-box {
+      background-color: $newDayBg;
+
       > .content-box {
-        background-color: #fff;
+        background-color: $newDayBg;
 
         > .inner-box {
-          border: 1px solid #ecf1f8;
+          background-color: #fff;
+          box-shadow: 0 0 6px #cfd5df;
 
           .item-content {
             > .content-list {

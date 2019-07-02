@@ -98,7 +98,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import '../../../static/css/scss/index';
+  @import '../../assets/CSS/index';
 
   .mask-box {
     width: 100%;

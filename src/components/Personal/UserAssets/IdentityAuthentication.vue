@@ -1,3 +1,8 @@
+<!--
+  author: zhaoxinlei
+  update: 20190615
+  description: 当前组件为 身份认证（ 实名认证、高级认证） 组件
+-->
 <template>
   <div
     class="identity-authentication personal"
@@ -9,7 +14,7 @@
         {{ $t('M.user_identity') }}
       </span>
     </header>
-    <div class="identity-authentication-main margin-top9">
+    <div class="identity-authentication-main ">
       <!--实名认证-->
       <div class="real-name-authentication identity-background">
         <!--(1.姓名、2.身份证号、3.状态)-->
@@ -61,7 +66,7 @@
       </div>
       <div
         v-if="realNameAuth === 'n'"
-        class="name-authentication-content margin-top9"
+        class="name-authentication-content "
       >
         <el-form
           ref="form"
@@ -182,7 +187,7 @@
       </div>
     </div>
     <!--高级认证-->
-    <div class="advanced-certification-main identity-background margin-top9 margin-bottom10"
+    <div class="advanced-certification-main identity-background  margin-bottom10"
     >
       <div
         class="advanced-main-header"
@@ -822,7 +827,7 @@ export default {
       this.identificationNumber = ''
     },
     // 提交实名认证
-    async submitRealName () {
+    submitRealName: _.debounce(async function () {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.realName) &&
@@ -850,7 +855,7 @@ export default {
         this.realName = ''
         this.identificationNumber = ''
       }
-    },
+    }, 500),
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
@@ -879,8 +884,8 @@ export default {
       }
     },
     // 重新提交审核
-    async authenticationNoPass () {
-      await this.stateEmptyData()
+    authenticationNoPass () {
+      this.stateEmptyData()
       this.authenticationNotPass = false
       this.authenticationStatusFront = true
     },
@@ -898,7 +903,7 @@ export default {
     stateSubmitSeniorCertification () {
       this.stateSeniorCertification()
     },
-    async stateSeniorCertification () {
+    stateSeniorCertification: _.debounce(async function () {
       if (!this.isUploadImg1) {
         // 请上传证件正面
         this.$message({
@@ -936,7 +941,7 @@ export default {
       this.SET_USER_INFO_REFRESH_STATUS(true)
       await this.REFRESH_USER_INFO_ACTION()
       await this.getRealNameInformation()
-    },
+    }, 500),
     // 接口请求完成之后清空数据
     stateEmptyData () {
       // 证件类型为1 是身份证 2是护照
@@ -987,7 +992,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .identity-authentication {
     > .identity-authentication-main {
@@ -1022,7 +1027,6 @@ export default {
 
       .advanced-main-header {
         width: 100%;
-        height: 56px;
 
         .main-header-title {
           line-height: 56px;
@@ -1056,7 +1060,6 @@ export default {
 
       .advanced-main-header {
         width: 100%;
-        height: 56px;
 
         .icon-down {
           padding-right: 10px;
@@ -1290,6 +1293,8 @@ export default {
 
       /* 实名认证表单样式 */
       .identity-authentication-main {
+        margin-bottom: 10px;
+
         .name-authentication-content {
           .el-form-item__content {
             margin-left: 140px !important;
@@ -1300,10 +1305,11 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .identity-header-background {
-        background-color: $nightMainBgColor;
+        margin-bottom: 10px;
+        background-color: $mainContentNightBgColor;
 
         .header-content {
           color: #338ff5;
@@ -1311,7 +1317,7 @@ export default {
       }
 
       .identity-authentication-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         .false-tips {
           color: #d45858;
@@ -1340,7 +1346,7 @@ export default {
       }
 
       .identity-background {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
       }
 
       > .advanced-certification-main {
@@ -1455,6 +1461,7 @@ export default {
         /* select */
         .el-input__inner {
           border: 1px solid #364654;
+          color: #fff;
           background-color: #333a41;
 
           &:focus {
@@ -1491,13 +1498,13 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
 
       .identity-header-background {
-        border: 1px solid rgba(38, 47, 56, .1);
+        margin-bottom: 10px;
         border-radius: 2px;
-        background-color: $dayBgColor;
+        background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
 
         .header-content {
           color: #338ff5;
@@ -1505,8 +1512,8 @@ export default {
       }
 
       .identity-authentication-main {
-        border: 1px solid rgba(38, 47, 56, .1);
         background-color: #fff;
+        box-shadow: 0 0 6px #cfd5df;
 
         .name-authentication-content {
           .false-tips {
@@ -1547,13 +1554,11 @@ export default {
         color: #333;
       }
 
-      .identity-background {
-        background-color: #fff;
-      }
-
       > .advanced-certification-main {
         .identity-box {
-          border: 1px solid rgba(38, 47, 56, .1);
+          margin-top: 10px;
+          background-color: #fff;
+          box-shadow: 0 0 6px #cfd5df;
 
           > .wait-veritfy-back {
             > .wait-veritfy {
@@ -1585,7 +1590,8 @@ export default {
         }
 
         .header-border {
-          border: 1px solid rgba(38, 47, 56, .1);
+          background-color: #fff;
+          box-shadow: 0 0 6px #cfd5df;
         }
 
         .authentication-type {

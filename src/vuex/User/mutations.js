@@ -17,7 +17,8 @@ import {
   CHANGE_VIP_PRICE_INFO_LIST,
   CHANGE_RENEW_STATUS,
   CHANGE_USER_REFRESH_SUCCESS,
-  CHANGE_TOKEN_AVAILABILITY
+  CHANGE_TOKEN_AVAILABILITY,
+  UPDATE_INVITATIONS_M
 } from './mutations-types.js'
 
 import {
@@ -123,5 +124,8 @@ export default {
   },
   [CHANGE_TOKEN_AVAILABILITY] (state, data) {
     state.isTokenDisable = data
+  },
+  [UPDATE_INVITATIONS_M] (state, data) {
+    state.invitation_S = data
   }
 }

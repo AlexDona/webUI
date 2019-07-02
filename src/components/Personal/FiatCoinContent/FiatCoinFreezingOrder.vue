@@ -4,17 +4,17 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="freezing-order-content">
-      <!--表头属性-->
-      <div class="freezing-table-head display-flex">
+      <!--表头-->
+      <div class="freezing-table-head font-size12 box-sizing">
         <span class="item order-time">
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
         </span>
-        <span class="item flex1">
+        <span class="item order-type">
           <!--类型-->
           {{$t('M.otc_cancelOrder_type')}}
         </span>
-        <span class="item flex1">
+        <span class="item order-coin">
           <!--币种-->
           {{$t('M.comm_currency')}}
         </span>
@@ -37,34 +37,34 @@
       </div>
       <!--表格-->
       <div
-        class="freezing-table-body"
+        class="freezing-table-body font-size12 box-sizing"
         v-for="(item,index) in OTCFreezingOrderList"
         :key="index"
       >
         <!--表格上部分-->
-        <div class="freezing-info-top display-flex">
+        <div class="freezing-info-top">
           <!-- 订单号 -->
-          <span class="item order-time">{{item.orderSequence}}</span>
+          <span class="item order-time">
+            {{item.orderSequence}}
+          </span>
           <!-- 类型 买入 -->
           <span
-            class="item flex1"
+            class="item order-type"
             v-if="item.orderType === 'BUY'"
             :class="{ red: item.orderType === 'BUY' }"
           >
-            <!--买入-->
              {{$t('M.comm_buy')}}
           </span>
-          <!-- 类型卖出 -->
+          <!-- 类型 卖出 -->
           <span
-            class="item flex1"
+            class="item order-type"
             v-if="item.orderType === 'SELL'"
             :class="{ green: item.orderType === 'SELL' }"
           >
-            <!--卖出-->
             {{$t('M.comm_sell')}}
           </span>
           <!-- 币种 -->
-          <span class="item flex1">
+          <span class="item order-coin">
             {{item.coinName}}
           </span>
           <!-- 价格 -->
@@ -80,44 +80,59 @@
             {{(item.price*item.pickCount).toFixed(2)}}({{ item.currencyName }})
           </span>
           <!-- 下单时间 -->
-          <span class="item order-time">{{timeFormatting(item.createTime)}}
+          <span class="item order-time">
+            {{timeFormatting(item.createTime)}}
           </span>
         </div>
         <!--表格下部分-->
-        <div class="freezing-info-bottom">
-          <div class="info-left">
+        <div class="freezing-info-bottom box-sizing">
+          <!--左侧1-->
+          <div class="info-left box-sizing">
+            <!--付款信息-->
             <p class="text-info text-blue">
-              <!--付款信息-->
               {{$t('M.otc_index_js2')}}
             </p>
-            <p class="text-info">
-              <!--买家已付款，卖家有异议申请冻结订单-->
+            <!--买家已付款，卖家有异议申请冻结订单-->
+            <p
+              class="text-info"
+              v-show="item.appealer==='SELL'"
+            >
               {{$t('M.otc_freeze')}}
             </p>
+            <!--买家已付款，买家有异议申请冻结订单-->
+            <p
+              class="text-info"
+              v-show="item.appealer==='BUY'"
+            >
+              {{$t('M.otc_freeze_info2')}}
+            </p>
           </div>
-          <div class="info-middle">
+          <!--中间2-->
+          <div class="info-middle box-sizing">
+            <!--卖家信息-->
             <p class="text-info text-blue">
-              <!--卖家信息-->
               {{$t('M.otc_stocks_seller')}}
             </p>
+            <!--姓名-->
             <p class="text-info">
               <span>
-                <!--姓名-->
                 {{$t('M.otc_name')}}：
               </span><span>
               {{item.sellName}}
             </span>
             </p>
+            <!--卖家手机号-->
             <p class="text-info">
               <span>
-                <!--卖家手机号-->
                 {{$t('M.otc_trading_sellphone')}}：
-              </span><span>
+              </span>
+              <span>
               {{item.sellPhone}}
             </span>
             </p>
           </div>
-          <div class="info-right">
+          <!--右侧3-->
+          <div class="info-right box-sizing">
             <!-- 申诉冻结，等待处理 -->
             <p class="text-info text-blue">
               {{$t('M.otc_complaint_frezzing')}}
@@ -127,7 +142,8 @@
               {{timeFormatting(item.freezeTime)}}
             </p>
           </div>
-          <div class="info-reason">
+          <!--最右侧4-->
+          <div class="info-reason box-sizing">
             <!-- 申诉原因 -->
             <p class="text-info text-blue">
               {{$t('M.otc_complaint_appeal_reason')}}
@@ -148,8 +164,11 @@
         @current-change="changeCurrentPage"
       >
       </el-pagination>
-      <div class="no-data" v-if="!OTCFreezingOrderList.length">
-        <!--暂无数据-->
+      <!--暂无数据-->
+      <div
+        class="no-data font-size12 text-align-c"
+        v-if="!OTCFreezingOrderList.length"
+      >
         {{$t('M.comm_no_data')}}
       </div>
     </div>
@@ -205,15 +224,14 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
+  @import '../../../assets/CSS/index';
 
   .fiat-freezing-order-box {
     > .freezing-order-content {
       > .freezing-table-head {
-        box-sizing: border-box;
+        display: flex;
         height: 35px;
-        margin-bottom: 5px;
-        border-radius: 5px;
+        margin-bottom: 10px;
         line-height: 35px;
 
         > .item {
@@ -222,20 +240,31 @@ export default {
         }
 
         > .order-time {
-          width: 170px;
+          width: 140px;
+        }
+
+        > .order-type,
+        .order-coin {
+          width: 100px;
         }
       }
 
       > .freezing-table-body {
-        box-sizing: border-box;
         height: 170px;
-        margin-bottom: 15px;
-        border-radius: 5px;
+        margin-bottom: 10px;
 
         > .freezing-info-top {
+          display: flex;
           height: 40px;
-          border-radius: 5px;
           line-height: 40px;
+
+          .red {
+            color: $upColor;
+          }
+
+          .green {
+            color: $otcGreen;
+          }
 
           > .item {
             display: inline-block;
@@ -243,19 +272,22 @@ export default {
           }
 
           > .order-time {
-            width: 170px;
+            width: 140px;
+          }
+
+          > .order-type,
+          .order-coin {
+            width: 100px;
           }
         }
 
         > .freezing-info-bottom {
           display: flex;
           flex: 4;
-          box-sizing: border-box;
           padding: 30px 30px 0;
 
           > .info-left {
             flex: 1;
-            box-sizing: border-box;
 
             > .text-info {
               line-height: 20px;
@@ -264,7 +296,6 @@ export default {
 
           > .info-middle {
             flex: 1;
-            box-sizing: border-box;
             margin-left: 30px;
 
             > .text-info {
@@ -274,7 +305,6 @@ export default {
 
           > .info-right {
             flex: 1;
-            box-sizing: border-box;
             margin-left: 30px;
 
             > .text-info {
@@ -284,7 +314,6 @@ export default {
 
           > .info-reason {
             flex: 1;
-            box-sizing: border-box;
             margin-left: 30px;
 
             > .text-info {
@@ -295,49 +324,24 @@ export default {
       }
 
       > .no-data {
-        height: 431px;
-        line-height: 431px;
-        text-align: center;
-        background-color: #1e2636;
+        height: 485px;
+        line-height: 485px;
       }
     }
 
     &.night {
-      color: $nightFontColor;
-      background-color: $nightBgColor;
-
-      > .background-color {
-        background-color: #1e2636;
-
-        > .fiat-color {
-          color: #338ff5;
-        }
-      }
-
       > .freezing-order-content {
         > .freezing-table-head {
-          border: 1px solid #262f38;
           color: #617499;
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
           box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .freezing-table-body {
-          border: 1px solid #262f38;
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
 
           > .freezing-info-top {
-            border-radius: 5px;
             color: #617499;
-            background-color: $nightMainBgColor;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
           }
 
           > .freezing-info-bottom {
@@ -345,147 +349,66 @@ export default {
             border-top: 1px solid #262f38;
             color: #9da5b3;
 
-            > .info-left {
+            > .info-left,
+            .info-middle,
+            .info-right,
+            .info-reason {
               border-right: 1px solid #262f38;
 
               > .text-blue {
-                color: #5e95ec;
-              }
-            }
-
-            > .info-middle {
-              border-right: 1px solid #262f38;
-
-              > .text-blue {
-                color: #5e95ec;
-              }
-            }
-
-            > .info-right {
-              border-right: 1px solid #262f38;
-
-              > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
             > .info-reason {
-              > .text-blue {
-                color: #5e95ec;
-              }
+              border-right: 0;
             }
           }
         }
 
         > .no-data {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
         }
       }
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
-
-      > .background-color {
-        background-color: #ccc;
-      }
-
       > .freezing-order-content {
         > .freezing-table-head {
-          border: 1px solid  rgba(72, 87, 118, .1);
-          color: #617499;
-          background-color: #fff;
-          box-shadow: -2px 3px 5px 1px #191e28;
+          color: $fontColorSecondaryOfDay;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .freezing-table-body {
-          border: 1px solid rgba(72, 87, 118, .1);
-          background-color: #fff;
-
-          > .freezing-info-top {
-            color: #617499;
-            background-color: #fff;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
-          }
+          color: $dayMainTitleColor;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .freezing-info-bottom {
             border-top: 1px solid rgba(72, 87, 118, .1);
-            color: #9da5b3;
 
-            > .info-left {
+            > .info-left,
+            .info-middle,
+            .info-right,
+            .info-reason {
               border-right: 1px solid rgba(72, 87, 118, .1);
 
               > .text-blue {
-                color: #5e95ec;
-              }
-            }
-
-            > .info-middle {
-              border-right: 1px solid rgba(72, 87, 118, .1);
-
-              > .text-blue {
-                color: #5e95ec;
-              }
-            }
-
-            > .info-right {
-              border-right: 1px solid rgba(38, 47, 56, .1);
-
-              > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
             > .info-reason {
-              > .text-blue {
-                color: #5e95ec;
-              }
+              border-right: 0;
             }
           }
         }
 
         > .no-data {
-          background-color: #fff;
-        }
-      }
-
-      /deep/ {
-        .freezing-order-content {
-          .freezing-table-head {
-            border: 1px solid #ecf1f8;
-            border-radius: 0;
-            color: #909399;
-            background-color: #fff;
-            -webkit-box-shadow: none;
-            box-shadow: none;
-
-            .order-time {
-              border-right: 0 solid #ecf1f8;
-            }
-          }
-
-          .no-data {
-            color: #909399;
-            background-color: #fff;
-          }
-        }
-
-        .el-table {
-          td {
-            border-bottom: 1px solid rgba(38, 47, 56, .1);
-          }
-        }
-
-        .el-table__expanded-cell {
-          background-color: #fff;
+          color: $fontColorSecondaryOfDay;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
     }

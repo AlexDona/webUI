@@ -15,6 +15,7 @@ export const finance = {
   'finance_invest_style': 'Phương án trữ tiền',
   'finance_invest_coin1': 'Trữ các loại tiền',
   'finance_useBalance': 'Số dư có thể dùng',
+  'finance_income_ratio': 'Biểu đồ tỉ lệ thu nhập',
   'finance_errorTips': 'Số lượng trữ đồng tiền có thể dùng bị lỗi',
   'finance_mast': 'Lập tức',
   'finance_mine': 'Của tôi',

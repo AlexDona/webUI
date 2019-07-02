@@ -14,6 +14,7 @@ export const common = {
   'comm_white': '백색',
   'comm_confirm': '확인',
   'comm_sold_out': '오프',
+  'common_save': '보존하다',
   'comm_all_sold_out': '전부 오프',
   'comm_affirm': '확인',
   'comm_cancel': '취소',
@@ -115,6 +116,12 @@ export const common = {
   'comm_user_invite': '초대',
   'comm_user_generalize': '프로모션',
   'comm_user_invite_generalize': '프로모션 초대',
+
+  'comm_user_invite_info': '정보 보급',
+  'comm_user_inviter': '초청인',
+  'comm_user_invite_tip1': '주: 초청자 작성 후 수정할 수 없습니다!',
+  'comm_user_invite_tip2': '초대자 UID 를 입력하십시오',
+
   'comm_user_api_management': 'API관리',
   'comm_all': '전부',
   'comm_alipay': 'Alipay',
@@ -144,6 +151,7 @@ export const common = {
   'comm_loginpassword': '비밀번호',
   'comm_clause': '조항',
   'comm_rate1': '요율',
+  'common_connect_us': '연락 주세요',
   'comm_pack_up': '접다',
   'comm_after_get': '후 재취득',
   'comm_get_code': '인증번호 취득',

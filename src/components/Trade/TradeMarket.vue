@@ -602,9 +602,8 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import '../../../static/css/scss/index.scss';
+  @import '../../assets/CSS/index';
 
-  /* @import '../../../static/css/scss/Trade/TradeCenter.scss'; */
   .trade-market-box {
     /* width:433px; */
     > .inner-box {

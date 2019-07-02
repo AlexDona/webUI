@@ -13,6 +13,7 @@ export const common = {
   'comm_black': '黑色',
   'comm_white': '白色',
   'comm_confirm': '确定',
+  'common_save': '保存',
   'comm_sold_out': '下架',
   'comm_all_sold_out': '全部下架',
   'comm_affirm': '确认',
@@ -115,6 +116,12 @@ export const common = {
   'comm_user_invite': '邀请',
   'comm_user_generalize': '推广',
   'comm_user_invite_generalize': '邀请推广',
+
+  'comm_user_invite_info': '推广信息',
+  'comm_user_inviter': '邀请人',
+  'comm_user_invite_tip1': '注：邀请人回填后无法修改！',
+  'comm_user_invite_tip2': '请输入邀请人UID',
+
   'comm_user_api_management': 'API管理',
   'comm_all': '全部',
   'comm_alipay': '支付宝',
@@ -143,6 +150,7 @@ export const common = {
   'comm_emailbox': '邮箱',
   'comm_loginpassword': '密码',
   'comm_clause': '条款',
+  'common_connect_us': '联系我们',
   'comm_rate1': '费率',
   'comm_pack_up': '收起',
   'comm_after_get': '后重获取',

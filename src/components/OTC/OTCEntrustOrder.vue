@@ -44,10 +44,10 @@
       </div>
       <!-- 表身体 -->
       <div
-        class="entrust-table-body"
+        class="entrust-table-body border-radius4"
       >
         <div
-          class="no-data"
+          class="no-data text-align-c"
           v-show="!OTCEntrustOrderList.length"
         >
           <!-- 暂无数据 -->
@@ -116,7 +116,7 @@
       </div>
     </div>
     <!--分页-->
-    <div class="page">
+    <div class="page text-align-c">
       <el-pagination
         background
         v-show="OTCEntrustOrderList.length"
@@ -133,7 +133,6 @@
 import {timeFilter} from '../../utils'
 import {getOTCEntrustingOrders, querySelectedOrdersRevocation} from '../../utils/api/OTC'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -145,7 +144,6 @@ export default {
   // props,
   data () {
     return {
-      // 分页
       // 每页展示的条数
       pageSize: 10,
       // 当前页码
@@ -186,8 +184,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      console.log('委托中订单列表')
-      console.log(data)
+      // console.log('委托中订单列表')
+      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
@@ -209,7 +207,7 @@ export default {
       }).catch(() => {})
     },
     // 5.0 提交撤单
-    async getOTCEntrustingOrdersRevocation (id) {
+    getOTCEntrustingOrdersRevocation: _.debounce(async function (id) {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
       })
@@ -218,7 +216,7 @@ export default {
       this.getOTCEntrustingOrdersList()
       // 改变全局 委托定单撤单后，更新首页挂单列表状态
       this.UPDATE_OTC_HOME_LIST_STATUS(true)
-    }
+    }, 500)
   },
   filter: {},
   computed: {
@@ -231,118 +229,106 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index.scss";
+  @import "../../assets/CSS/index";
 
   .otc-entrust-order-box {
     .otc-entrust-order-table {
       > .entrust-table-head {
         z-index: 200;
+        display: flex;
+        justify-content: space-around;
         box-sizing: border-box;
-        width: 1045px;
+        width: 1189px;
         height: 35px;
-        margin-bottom: 15px;
+        padding: 0 20px;
+        margin: 2px 2px 15px;
         border-radius: 5px;
         line-height: 35px;
 
-        > .item {
-          display: inline-block;
-          width: 126px;
-          text-align: center;
+        > .first-style,
+        .second-coin {
+          width: 135px;
         }
 
-        > .first-style {
-          width: 70px;
+        > .third-price,
+        .fourth-entrust-count,
+        .fifth-match-count,
+        .sixth-total-amount {
+          width: 160px;
         }
 
-        > .second-coin {
-          width: 150px;
-        }
-
-        > .third-price {
-          width: 150px;
-        }
-
-        > .fourth-entrust-count {
-          width: 150px;
-        }
-
-        > .fifth-match-count {
-          width: 130px;
-        }
-
-        > .sixth-total-amount {
-          width: 150px;
-        }
-
-        > .senventh-create-time {
-          width: 120px;
+        > .senventh-create-time,
+        .eighth-action {
+          width: 140px;
         }
 
         > .eighth-action {
-          width: 90px;
+          text-align: right;
         }
       }
 
       > .entrust-table-body {
+        width: 1189px;
         height: 432px;
+        margin: 4px 2px;
         border-top: none;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
 
         > .no-data {
           height: 432px;
           line-height: 432px;
-          text-align: center;
         }
 
         > .entrust-list-content {
           display: flex;
+          justify-content: space-around;
           height: 40px;
+          padding: 0 20px;
           line-height: 40px;
 
-          > .item {
-            display: inline-block;
-            width: 126px;
-            text-align: center;
+          .red {
+            color: $upColor;
           }
 
-          > .first-style {
-            width: 80px;
+          .green {
+            color: $otcGreen;
           }
 
-          > .second-coin {
-            width: 150px;
+          > .first-style,
+          .second-coin {
+            width: 135px;
           }
 
-          > .third-price {
-            width: 150px;
+          > .third-price,
+          .fourth-entrust-count,
+          .fifth-match-count,
+          .sixth-total-amount {
+            width: 160px;
           }
 
-          > .fourth-entrust-count {
-            width: 150px;
-          }
-
-          > .fifth-match-count {
-            width: 150px;
-          }
-
-          > .sixth-total-amount {
-            width: 150px;
-          }
-
-          > .senventh-create-time {
-            width: 150px;
+          > .senventh-create-time,
+          .eighth-action {
+            width: 140px;
           }
 
           > .eighth-action {
-            width: 80px;
+            text-align: right;
           }
         }
       }
     }
 
-    .page {
-      text-align: center;
+    /deep/ {
+      .otc-entrust-order-table {
+        .entrust-table-body {
+          .entrust-list-content {
+            .eighth-action {
+              .el-button--text {
+                color: $mainColor;
+              }
+            }
+          }
+        }
+      }
     }
 
     &.night {
@@ -362,16 +348,6 @@ export default {
           > .no-data {
             color: rgba(255, 255, 255, .8);
           }
-
-          > .entrust-list-content {
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
-          }
         }
       }
     }
@@ -379,28 +355,18 @@ export default {
     &.day {
       .otc-entrust-order-table {
         > .entrust-table-head {
-          border: 1px solid #ecf1f8;
-          color: #8a909e;
-          background-color: #fff;
+          color: $fontColorSecondaryOfDay;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .entrust-table-body {
-          border: 1px solid #ecf1f8;
-          color: #666;
-          background-color: #fff;
+          color: $dayMainTitleColor;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .no-data {
-            color: #333;
-          }
-
-          > .entrust-list-content {
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
+            color: $dayMainTitleColor;
           }
         }
       }

@@ -53,8 +53,9 @@ export const actionCenter = {
   'crowd_funding_description_title': 'Project Introduction',
   'crowd_funding_rules_title': 'Preject description',
   'crowd_funding_question_title': 'FAQ',
-  'crowd_funding_error1': 'Minimum deposit',
-  'crowd_funding_error2': 'Maximum deposit',
+  'crowd_funding_error1': 'The minimum lock volume is',
+  'crowd_funding_error2': 'The maximum lock volume is',
+
   'crowd_funding_error3': 'Lack of balance',
   'crowd_funding_error4': 'minimum position is insufficient',
   'ieo_failure_007': 'Lock amounts must be  integer multiple of the minimum lock',
