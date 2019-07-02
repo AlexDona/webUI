@@ -289,6 +289,6 @@ export default {
 
   .v-modal {
     position: relative;
-    z-index: 2000;
+    z-index: 2000 !important;
   }
 </style>
