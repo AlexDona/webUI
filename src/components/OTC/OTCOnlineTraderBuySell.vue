@@ -2,7 +2,7 @@
   <div
     class="otc-online-trader-buy-sell-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{height: windowHeight - 293 - 120 + 'px'}"
+    :style="{'min-height': windowHeight - 293 - 120 + 'px'}"
   >
     <!-- otc在线交易 摘单 页面 -->
     <div class="online-trader-buy-sell-content">
@@ -1045,7 +1045,6 @@ export default {
         > .trading-notes {
           box-sizing: border-box;
           width: 760px;
-          height: 122px;
           padding: 35px 0 0 48px;
 
           > .notes {
