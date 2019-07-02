@@ -11,7 +11,7 @@
       .banner
         .inner-box
           h3 {{$t(title1)}}
-          p {{$t(title2)}}
+          p(v-html="$t(title2)")
       .container
         // 锁仓记录
         .header
@@ -140,7 +140,7 @@ export default {
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
-    async getCrowdFundingRecord () {
+    getCrowdFundingRecord: _.debounce(async function () {
       let params = {
         currentPage: this.currentPage,
         pageSize: this.pageSize,
@@ -167,7 +167,7 @@ export default {
       })
       this.totalPage = _.get(data, 'data.pages') - 0
       // console.log(this.totalPage)
-    },
+    }, 500),
     computedTimeFilter (timeData, type) {
       let dateArr = timeFilter(timeData, type).split('-')
       let newData = dateArr[0] + '/' + dateArr[1] + '/' + dateArr[2]

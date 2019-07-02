@@ -3,20 +3,14 @@
   update: 20190619
   description: 当前组件为 首页 轮播图 组件
 -->
-<template>
-  <div
-    class="slider-box home"
-    :class="{active:bannerActive}"
-  >
-    <Slider
+<template lang="pug">
+  .slider-box.home(:class="{active:bannerActive}")
+    Slider.inner-box(
       ref="slider"
       :pages="pages"
       :sliderinit="sliderinit"
-      class="inner-box"
       @slide='slide'
-    >
-    </Slider>
-  </div>
+    )
 </template>
 <script>
 import Slider from 'vue-concise-slider'// 引入slider组件
@@ -90,10 +84,10 @@ export default {
         let that = this
         sliderList.push({
           style: {
-            width: '200px',
-            height: '110px',
+            width: '236px',
+            height: '130px',
             borderRadius: '4px',
-            margin: '33px 16.25px',
+            margin: '33px 14px',
             cursor: redirectUrl ? 'pointer' : '',
             overflow: 'hidden'
           },
@@ -196,8 +190,9 @@ export default {
 
     /* opacity:.8; */
     .inner-box {
-      width: 1130px;
+      width: 1300px;
       height: 160px;
+      margin: 3px auto;
     }
   }
 
@@ -206,12 +201,14 @@ export default {
     .slider-pagination-bullet {
       width: .2rem;
       height: .04rem;
+      margin: 0 3px;
       border-radius: 2px;
-      background-color: rgba(255, 255, 255, .8);
+      background-color: rgba(255, 255, 255, .4);
       transition: all 1s;
     }
 
     .slider-pagination {
+      padding-right: 4px;
       text-align: right;
     }
 

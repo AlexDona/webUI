@@ -320,7 +320,7 @@ export default {
      * 4.确认设置支付宝
      */
     // 4.01 确认设置支付宝账号
-    async submitSettings () {
+    submitSettings: _.debounce(async function () {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.alipayAccount) &&
@@ -350,7 +350,6 @@ export default {
           bankType: 'Alipay', // type
           id: this.id
         }
-
         // console.log(this.dialogImageHandUrl1)
         // 判断是否交易密码锁定
         await this.REFRESH_USER_INFO_ACTION()
@@ -363,7 +362,7 @@ export default {
         this.successJump()
         this.stateEmptyData()
       }
-    },
+    }),
     // 4.02 接口请求完成之后清空数据
     stateEmptyData () {
       this.alipayAccount = ''
@@ -422,7 +421,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
+  @import '../../../assets/CSS/index';
 
   .add-account {
     margin-top: 50px;
@@ -549,10 +548,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .add-account-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .add-account-header {
           border-bottom: 1px solid #39424d;
@@ -627,8 +626,8 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
+      background-color: $mainDayBgColor;
 
       .add-account-main {
         border: 1px solid rgba(246, 246, 246, 1);

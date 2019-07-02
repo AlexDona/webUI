@@ -195,7 +195,7 @@
         </div>
       </div>
     </div>
-    <div class="withdrawal-address-main content-main margin-top9">
+    <div class="withdrawal-address-main content-main">
       <header class="address-list-header background-color border-radius2">
         <span class="header-content display-inline-block font-size16 cursor-pointer">
           <!--地址列表-->
@@ -443,7 +443,7 @@ export default {
       console.log(this.isShowAddressLabel)
     },
     // 4.01新增用户提币地址接口
-    async stateSubmitAddAddress () {
+    stateSubmitAddAddress: _.debounce(async function () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
         // 请输入验证码
         this.emptyErrorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
@@ -465,11 +465,11 @@ export default {
       this.mentionMoneyConfirm = false
       this.getWithdrawalAddressList()
       this.resetFormContent()
-    },
+    }, 500),
     /**
      *  5.刚进页面时候 提币地址列表查询
      */
-    async getWithdrawalAddressList () {
+    getWithdrawalAddressList: _.debounce(async function () {
       console.log(this.paramOfJumpToAddWithdrawAdress)
       let params = {
         pageNum: this.currentPageForMyEntrust, // 页码
@@ -498,7 +498,7 @@ export default {
       this.currencyValueStatus = false
       // console.log(this.currencyList)
       // console.log(this.withdrawalAddressList)
-    },
+    }, 500),
     // 6.删除提币地址弹窗
     cancelId (id) {
       console.log(id)
@@ -508,21 +508,21 @@ export default {
         cancelButtonText: this.$t('M.comm_cancel'), // 取消
         confirmButtonText: this.$t('M.comm_confirm') // 确定
       }).then(() => {
-        this.deleteWithdrawAddress(id)
+        this.deleteWithdrawAddress()
       }).catch(() => {
       })
     },
     // 6.01确认删除提币地址
-    async deleteWithdrawAddress () {
+    deleteWithdrawAddress: _.debounce(async function () {
       let data
       let param = {
-        id: this.deleteWithdrawalId // 列表id
+        id: this.deleteWithdrawalId // 列表ida
       }
       data = await deleteUserWithdrawAddress(param)
       if (!data) return false
       this.getWithdrawalAddressList()
       this.resetFormContent()
-    },
+    }, 500),
     // 接口请求完成之后清空数据
     resetFormContent () {
       this.dialogVisible = false
@@ -573,12 +573,12 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .withdrawal-address {
     > .withdrawal-address-main {
       min-height: 400px;
-      border-radius: 5px 5px 0 0;
+      margin-top: 10px;
 
       > .withdrawal-header {
         margin-bottom: 2px;
@@ -659,13 +659,13 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .withdrawal-address-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .withdrawal-header {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
           box-shadow: 2px 0 2px rgba(20, 23, 37, 1);
 
           > .header-content {
@@ -809,16 +809,15 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
 
       > .withdrawal-address-main {
-        border: 1px solid rgba(236, 241, 248, 1);
-        color: $dayFontColor;
-        background-color: $dayBgColor;
+        color: $dayMainTitleColor;
+        background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
 
         > .withdrawal-header {
-          border: 1px solid rgba(236, 241, 248, 1);
+          border-bottom: 1px solid rgba(236, 241, 248, 1);
           background: rgba(255, 255, 255, 1);
 
           > .header-content {

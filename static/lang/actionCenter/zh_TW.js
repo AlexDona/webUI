@@ -53,8 +53,9 @@ export const actionCenter = {
   'crowd_funding_description_title': '項目介紹',
   'crowd_funding_rules_title': '專案詳情',
   'crowd_funding_question_title': '常見問題',
-  'crowd_funding_error1': '最小起存量為',
-  'crowd_funding_error2': '最大存幣量為',
+  'crowd_funding_error1': '最小鎖倉量為',
+  'crowd_funding_error2': '最大鎖倉量為',
+
   'crowd_funding_error3': '餘額不足',
   'crowd_funding_error4': '最低持倉量不足',
   'ieo_failure_007': '鎖倉數量必須為最小鎖倉量的整數倍',

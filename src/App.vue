@@ -131,6 +131,7 @@ export default {
   .body-container {
     min-width: 1366px;
     height: 100%;
+    min-height: 1000px;
     font-size: 14px;
     font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

@@ -88,11 +88,11 @@ export default {
       'UPDATE_PAY_PASSWORD_M'
     ]),
     submitForm () {
-      this.$refs[this.formRef].validate((valid) => {
+      this.$refs[this.formRef].validate(async (valid) => {
         console.log(valid)
         if (!valid) return false
         this.UPDATE_PAY_PASSWORD_M(this.form.payPassword)
-        this.$emit('next')
+        await this.$emit('next')
       })
     },
     cancelSubmit () {

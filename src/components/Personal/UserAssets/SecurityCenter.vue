@@ -4,12 +4,12 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="security-header security-background personal-height40 line-height40 font-size16 padding-left20">
-      <span class="padding-left15 font-weight600">
+      <span class="padding-left15 font-weight400">
         <!--安全中心-->
         {{ $t('M.comm_user_security_center') }}
       </span>
     </header>
-    <div class="security-information security-background margin-top9 padding20 box-sizing">
+    <div class="security-information security-background padding20 box-sizing">
       <div class="security-title">
         <div class="display-flex">
           <div class="security-title-info flex1 display-flex font-size14">
@@ -483,7 +483,7 @@
         </div>
       </div>
     </div>
-    <div class="security-record security-background margin-top9">
+    <div class="security-record security-background">
       <el-tabs
         v-model="activeName"
         @tab-click = "coinMoneyOrders"
@@ -1038,11 +1038,12 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .security-center {
     > .security-information {
       height: 100px;
+      margin: 10px 0;
 
       .security-title-info {
         > .login-time {
@@ -1120,6 +1121,7 @@ export default {
 
     > .security-record {
       min-height: 510px;
+      margin-top: 10px;
 
       .tab-list {
         height: 450px;
@@ -1295,10 +1297,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .security-background {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
       }
 
       > .security-header {
@@ -1483,12 +1485,11 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
 
       > .security-background {
-        border: 1px solid rgba(236, 241, 248, 1);
         background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 6px #cfd5df;
       }
 
       > .security-header {

@@ -750,7 +750,7 @@ export default {
   created () {
     document.getElementsByTagName('body')[0].style.zoom = 1
     if (this.isLogin) {
-      this.$goToPage('/home')
+      this.$goToPage(`/${this.$routes_X.home}`)
     }
     this.ENTER_STEP1()
     this.refreshCode()
@@ -831,7 +831,7 @@ export default {
       ) {
         this.$goToPage(this.routerTo)
       } else {
-        this.$goToPage('/home')
+        this.$goToPage(`/${this.$routes_X.home}`)
       }
     },
     // 返回登录
@@ -1225,7 +1225,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import '../../static/css/scss/index.scss';
+@import '../assets/CSS/index';
 
 .login-box {
   &.user {
@@ -1427,7 +1427,7 @@ export default {
       /* 图片验证码提示框 */
       .image-dialog {
         .title {
-          margin-bottom: 25px;
+          margin-bottom: 20px;
           color: #fff;
         }
 
@@ -1449,7 +1449,7 @@ export default {
             border-radius: 4px;
 
             &.submit-box {
-              margin-top: 45px;
+              margin-top: 30px;
               border: none;
 
               > .subimt {
@@ -1486,13 +1486,17 @@ export default {
         .outer-box {
           padding: 0 10px;
 
+          > .title {
+            color: #fff;
+          }
+
           > .inner-box {
             display: inline-block;
             width: 410px;
             height: 44px;
 
             /* padding: 0 10px; */
-            margin: 30px 0;
+            margin: 20px 0 30px;
             line-height: 44px;
             vertical-align: middle;
 
@@ -1511,7 +1515,7 @@ export default {
             /* 发送信息按钮 */
             > .send-code-btn {
               display: block;
-              padding: 0 20px;
+              padding: 0 20px 0 0;
               margin: 5px 0 0;
               color: $upColor;
             }
@@ -1845,7 +1849,7 @@ export default {
         > .img-verify {
           .pic-verify {
             > .title {
-              margin-bottom: 25px;
+              margin-bottom: 20px;
               font-size: 1rem;
               color: #fff;
             }
@@ -1871,7 +1875,7 @@ export default {
                 line-height: 160px;
 
                 &.submit-box {
-                  margin-top: 45px;
+                  margin-top: 30px;
                   border: none;
 
                   > .submit {
@@ -2092,7 +2096,7 @@ export default {
     }
 
     .el-dialog {
-      width: 470px;
+      width: 490px;
       border-radius: 10px;
       background: rgba(40, 51, 74, 1);
       -moz-user-select: none; /* 火狐 */
@@ -2104,9 +2108,9 @@ export default {
 
     .el-dialog__header {
       box-sizing: border-box;
-      width: 470px;
+      width: 490px;
       height: 44px;
-      padding: 12px 24px;
+      padding: 12px 40px;
       border-radius: 10px 10px 0 0;
       background: rgba(32, 41, 60, 1);
       box-shadow: 0 1px 2px 0 rgba(29, 33, 49, 1);
@@ -2114,9 +2118,9 @@ export default {
 
     .el-dialog__title {
       box-sizing: border-box;
-      width: 470px;
+      width: 490px;
       height: 44px;
-      padding: 0 30px;
+      font-size: 16px;
       color: #fff;
     }
   }
@@ -2128,7 +2132,7 @@ export default {
       }
 
       .el-dialog__body {
-        padding: 80px 30px;
+        padding: 80px 40px;
       }
     }
   }
@@ -2136,11 +2140,11 @@ export default {
   .image-dialog {
     /deep/ {
       .el-dialog {
-        height: 320px;
+        height: 290px;
       }
 
       .el-dialog__body {
-        padding: 40px 30px;
+        padding: 40px;
       }
 
       .el-input__inner {

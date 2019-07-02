@@ -157,6 +157,7 @@ export const personal = {
   'user_invite_people': 'people',
   'user_invite_succeed': 'Success ',
   'user_invite_have_obtained': 'Commissioned conversion',
+  'user_inviter_tips': 'Cannot be modified after the inviter saves',
   'user_invite_statistics': ' Statistics',
   'user_invite_direct': 'Direct promotion',
   'user_direct_reward': 'Direct reward',
@@ -267,7 +268,7 @@ export const personal = {
   'user_push_forbid': 'Prohibit self PUSH',
   'user_push_amount': 'PUSH the amount',
   'user_push_amount_count': 'PUSH quantity cannot be 0',
-  'user_push_amount_price': 'PUSH unit price cannot be 0',
+  'user_push_amount_price': 'PUSH unit price cannot be empty',
   // PUSH记录PUSH record
   // #####################我的交易#####################My transaction
   // 币币订单Coin order

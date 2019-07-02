@@ -156,6 +156,7 @@ export const personal = {
   'user_invite_people': '人々',
   'user_invite_succeed': '成功',
   'user_invite_have_obtained': '口銭を取得した',
+  'user_inviter_tips': '招待者を保存したら変更できません。',
   'user_invite_statistics': '統計',
   'user_invite_direct': '直接推薦',
   'user_direct_reward': '直接奨励する',
@@ -267,7 +268,7 @@ export const personal = {
   'user_push_forbid': '自己PUSHを禁止する',
   'user_push_amount': 'PUS H金額',
   'user_push_amount_count': 'PUS Hの数は0になることができません',
-  'user_push_amount_price': 'PUS H単価は0ではありません',
+  'user_push_amount_price': 'PUSH単価は空にはなれない',
   // PUSHレコード
   // #####################私の取引#####################
   // トークン注文

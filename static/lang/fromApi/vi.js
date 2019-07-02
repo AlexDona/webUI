@@ -481,5 +481,13 @@ export const fromApi = {
   'user_pay_password_not_setting': 'Chưa đặt mật khẩu giao dịch, Vui lòng đặt mật khẩu.',
   'user_trade_password_incorrect': 'mật khẩu tài khoản giao dịch không đúng',
   'user_vip_has_expire': 'vip tài khoản đã hết hạn không thể nâng cấp!',
-  'user_vip_update_failure': 'Tài khoản hiện không thể gia hạn hoặc nâng cấp, vui lòng liên hệ tư vấn viên!'
+  'user_vip_update_failure': 'Tài khoản hiện không thể gia hạn hoặc nâng cấp, vui lòng liên hệ tư vấn viên!',
+
+  'user-bind-failure': 'Thêm liên kết người giới thiệu thất bại',
+  'user-bind-success': 'Thêm liên kết người giới thiệu thành công',
+  'user-down-notbind': 'Người dùng này không thể thêm cấp dưới',
+  'user-not-exist': 'Người dùng không tồn tài',
+  'inviter-not-exist': 'Người giới thiệu đã nhập không tồn tại',
+  'inviter-is-user': 'Người giới thiệu đã nhập không được là chính bạn'
+
 }

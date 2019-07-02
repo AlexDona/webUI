@@ -3,13 +3,13 @@
     class="coin-orders personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <header class="personal-height background-color personal-height40 line-height40 font-size16">
-      <span class="padding-left15 font-weight600 coin-color">
-        <!--币币订单-->
+    <!--<header class="personal-height background-color personal-height40 line-height40 font-size16">
+      <span class="padding-left15 font-weight400 coin-color">
+        &lt;!&ndash;币币订单&ndash;&gt;
         {{ $t('M.user_coin_order7') }}
       </span>
-    </header>
-    <div class="height500 background-color margin-top9">
+    </header>-->
+    <div class="height500 background-color">
       <el-tabs
         v-model="activeName"
         @tab-click = "coinMoneyOrders"
@@ -728,9 +728,13 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .coin-orders {
+    header {
+      margin-bottom: 10px;
+    }
+
     .search-condition-box {
       width: 100%;
       padding: 20px;
@@ -879,10 +883,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .coin-color {
           color: #338ff5;
@@ -973,12 +977,11 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
 
       .background-color {
-        border: 1px solid rgba(236, 241, 248, 1);
         background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 6px #cfd5df;
 
         > .coin-color {
           color: #338ff5;

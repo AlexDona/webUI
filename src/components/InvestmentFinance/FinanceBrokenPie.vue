@@ -1,10 +1,6 @@
 <template>
   <div class="financePie-box">
-    <div
-      id="financePie"
-      class="financePie"
-    >
-    </div>
+    <div id="financePie" class="financePie"></div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -37,23 +33,27 @@ export default {
         legend: {
           orient: 'horizontal',
           // selectedMode: false,
+          itemWidth: 10, // 设置宽度
+          itemHeight: 10, // 设置高度
+          itemGap: 40, // 设置间距
+          icon: 'stack',
           y: 'bottom',
           type: 'plain',
           show: 'true',
           textStyle: {
             color: '#fff',
-            fontSize: 10
+            fontSize: 12
           },
           data: ['存币', '收益']
         },
         // 设置颜色
-        color: ['#008069', '#B73C36'],
+        color: ['#303957', '#338FF5'],
         // 设置线的颜色
         series: [
           {
             name: '',
             type: 'pie',
-            radius: ['30%', '80%'],
+            radius: ['0%', '90%'],
             // 设置饼状图不可点击
             // selectedMode: 'single',
             avoidLabelOverlap: false,
@@ -72,8 +72,7 @@ export default {
               emphasis: {
                 show: true,
                 textStyle: {
-                  fontSize: '22',
-                  fontWeight: 'bold'
+                  fontSize: '20'
                 }
               }
             },
@@ -132,6 +131,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      isLogin: state => state.user.isLogin,
       language: state => state.common.language // 当前选中语言
     })
   },

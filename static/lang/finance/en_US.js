@@ -25,6 +25,7 @@ export const finance = {
   'finance_predict_earnings': 'Income',
   'finance_predict_send_time': 'Release time',
   'finance_earnings_value': 'Profit',
+  'finance_income_ratio': 'Income ratio chart',
   'finance_recode': ' Record',
   // 'finance_predict': 'Expected',
   'finance_predict': '',

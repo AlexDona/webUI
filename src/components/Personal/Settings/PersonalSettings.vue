@@ -318,7 +318,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .personal-setting {
     > .personal-setting-main {
@@ -387,6 +387,10 @@ export default {
                 font-size: 12px;
                 line-height: 50px;
                 background: rgba(40, 48, 73, 1);
+
+                &:last-of-type {
+                  border-bottom: 1px solid rgba(53, 62, 91, 1) !important;
+                }
 
                 .button {
                   float: right;
@@ -491,14 +495,14 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
       }
 
       > .personal-setting-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         > .inner-box {
           > .title {
@@ -613,8 +617,7 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
 
       .button-color {
         color: rgba(255, 255, 255, .7);
@@ -632,8 +635,8 @@ export default {
       }
 
       > .personal-setting-main {
-        border: 1px solid rgba(38, 47, 56, .1);
-        background-color: $dayBgColor;
+        background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
 
         > .inner-box {
           > .title {
@@ -654,6 +657,10 @@ export default {
                 > li {
                   border-color: rgb(229, 234, 241);
                   background: rgb(243, 248, 255);
+
+                  &:last-of-type {
+                    border-bottom: 1px solid rgb(229, 234, 241) !important;
+                  }
                 }
               }
             }
@@ -662,8 +669,8 @@ export default {
       }
 
       > .personal-setting-header {
-        border: 1px solid rgba(236, 241, 248, 1);
         background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 6px #cfd5df;
 
         > .header-content {
           color: #333;

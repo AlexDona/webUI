@@ -1,6 +1,6 @@
 export const OTC = {
-  'otc_AD_trade_currency': '交易法幣',
-  'otc_AD_trade_token': '交易幣種',
+  'otc_AD_trade_currency': '法幣',
+  'otc_AD_trade_token': '幣種',
   'otc_AD_token': '幣種',
   'otc_Merchants_Orders_market': '幣種',
   'otc_index_buy': '購買',
@@ -128,6 +128,7 @@ export const OTC = {
   // 'otc_entrust_cancellationing': '撤單中',
   'otc_overtime': '買家超時未付款，系統自動取消。',
   'otc_freeze': '買家已付款，賣家有異議申請凍結訂單。',
+  'otc_freeze_info2': '買家已付款，買家有異議申請凍結訂單。',
   // 'otc_order0': '訂單生成後',
   // 'otc_order1': '30',
   // 'otc_order2': '分鐘內對方未確認付款,',
@@ -313,7 +314,7 @@ export const OTC = {
   'otc_index_pubTipsOne': '2、您可以在設置中設置您的收款方式；',
   'otc_index_pubTipsTwo': '3、交易中請註意判斷和防範有欺詐風險的付款方式；',
   'otc_index_pubTipsThree': '4、請避免線下私自交易，',
-  'otc_index_pubTipsFour': '無法為您預防風險',
+  'otc_index_pubTipsFour': '無法為您預防風險。',
   'otc_index_inputBuyPrice': '請輸入買入單價',
   'otc_index_inputSellPrice': '請輸入賣出單價',
   // #################交易中列表############

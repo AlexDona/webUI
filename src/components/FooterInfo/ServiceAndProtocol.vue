@@ -288,6 +288,8 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @import '../../assets/CSS/index';
+
 .service-protocol-box {
   width: 100%;
   // height:100%;
@@ -422,11 +424,11 @@ export default {
   &.day {
     > .content {
       > .content {
-        background-color: #fff;
+        background-color: $newDayBg;
 
         > .inner-box {
           color: #666;
-          background-color: #fff;
+          background-color: $newDayBg;
         }
       }
     }

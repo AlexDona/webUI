@@ -4,12 +4,12 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="api-management-header personal-height40 line-height40 padding-left20 font-size16 background-color">
-      <span class="padding-left23 header-content font-weight600">
+      <span class="padding-left23 header-content font-weight400">
         <!--API管理-->
         API{{ $t('M.user_api_administration') }}
       </span>
     </header>
-    <div class="invitation-promotion-main min-height500 margin-top9">
+    <div class="invitation-promotion-main min-height500 ">
       <!--创建API KEY-->
       <div class="extension-info padding-top0">
         <header class="extension-info-header line-height56">
@@ -112,7 +112,7 @@
         </div>
       </div>
       <!--我的 API KEY-->
-      <div class="extension-statistics margin-top9 padding-top0">
+      <div class="extension-statistics  padding-top0">
         <header class="extension-statistics-header line-height56">
           <span class="font-size16 header-color header-right">
             <!--我的 API KEY-->
@@ -817,7 +817,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .api-management {
     > .invitation-promotion-main {
@@ -872,7 +872,7 @@ export default {
       .primary-button {
         width: 300px;
         height: 35px;
-        border-radius: 4px;
+        border-radius: 2px;
       }
 
       .send-code-btn {
@@ -886,6 +886,7 @@ export default {
 
       > .extension-info {
         min-height: 350px;
+        margin: 10px 0;
 
         > .extension-info-header {
           height: 56px;
@@ -1123,10 +1124,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
       }
 
       .invitation-promotion-main {
@@ -1161,7 +1162,7 @@ export default {
         }
 
         > .extension-info {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
 
           > .extension-info-header {
             border-bottom: 1px solid #39424d;
@@ -1199,7 +1200,7 @@ export default {
         }
 
         > .extension-statistics {
-          background-color: $nightMainBgColor;
+          background-color: $mainContentNightBgColor;
 
           > .extension-statistics-header {
             border-bottom: 1px solid #39424d;
@@ -1282,12 +1283,11 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
 
       > .background-color {
-        border: 1px solid rgba(236, 241, 248, 1);
-        background: rgba(255, 255, 255, 1);
+        background: #fff;
+        box-shadow: 0 0 6px #cfd5df;
       }
 
       .invitation-promotion-main {
@@ -1316,10 +1316,9 @@ export default {
         }
 
         > .extension-info {
-          border: 1px solid rgba(246, 246, 246, 1);
-          border-radius: 4px;
-          background: rgba(255, 255, 255, 1);
-          box-shadow: 0 0 4px rgba(235, 240, 248, 1);
+          border-radius: 2px;
+          background: #fff;
+          box-shadow: 0 0 6px #cfd5df;
 
           > .extension-info-header {
             border-bottom: 1px solid rgba(57, 66, 77, .1);
@@ -1368,10 +1367,9 @@ export default {
         }
 
         > .extension-statistics {
-          border: 1px solid rgba(246, 246, 246, 1);
-          border-radius: 4px;
-          background: rgba(255, 255, 255, 1);
-          box-shadow: 0 0 4px rgba(235, 240, 248, 1);
+          border-radius: 2px;
+          background: #fff;
+          box-shadow: 0 0 6px #cfd5df;
 
           > .extension-statistics-header {
             border-bottom: 1px solid rgba(57, 66, 77, .1);

@@ -23,12 +23,12 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import '../../../static/css/scss/index.scss';
+  @import '../../assets/CSS/index';
 
   .more-button {
     width: 30px;
     height: 30px;
-    padding-top: 5px;
+    padding-top: 10px;
     transition: all 1s;
 
     > div {

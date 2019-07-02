@@ -21,12 +21,13 @@
           v-for="(navItem, navIndex) in navigation.slice(5)"
           :key="navIndex"
           class="nav-item"
+          :class="{'active': activeLink == navItem.link}"
           @mouseenter="changeMoreActiveNavIndex(navIndex)"
           @mouseleave="changeMoreActiveNavIndex(-1)"
         )
           a(
             href="javascript:void(0);"
-            @click="navToJump(navItem)"
+            @click="navToJump(navItem,'more')"
           )
             span {{navItem.name}}
           ul.sub-nav-list(
@@ -40,12 +41,13 @@
             )
               a(
                 href="javascript:void(0);"
-                @click="navToJump(subNav)"
+                @click="navToJump(subNav, 'more')"
               )
                 span {{subNav.name}}
     li.nav-item(
       v-for="(navigationItem, index) in navigation.slice(0, 5)"
       :key="index"
+      :class="{'active': activeLink == navigationItem.link}"
       @mouseenter="changeActiveNavIndex(index)"
       @mouseleave="changeActiveNavIndex(-1)"
     )
@@ -95,11 +97,19 @@ export default {
       // 当前导航选中项 索引
       activeNavIndex: -1,
       // 当前 更多导航选中项索引
-      activeMoreNavIndex: -1
+      activeMoreNavIndex: -1,
+      // 当前选中链接
+      activeLink: {
+        outer: '',
+        inner: ''
+      }
     }
   },
-  // async created () {
-  // },
+  created () {
+    console.log(this.$route)
+    const { path } = this.$route
+    this.activeLink = path
+  },
   // mounted () {}
   // updated () {},
   // beforeRouteUpdate () {},
@@ -110,7 +120,28 @@ export default {
       'CHANGE_LANGUAGE',
       'SET_NOTICE_ID'
     ]),
-    navToJump (navigation) {
+    /**
+     * type: normal: 正常导航; more: 更多导航
+     * @param navigation
+     * @param type
+     */
+    navToJump (navigation, type = 'normal') {
+      switch (type) {
+        case 'normal':
+          const { link } = navigation
+          const targetRoute = this.navigation[this.activeNavIndex]
+          console.log(link, targetRoute, this.activeNavIndex, this.navigation, this.activeMoreNavIndex)
+          const isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
+          if (targetRoute.link == link) {
+            this.activeLink = link
+          } else if (isChildLink) {
+            this.activeLink = targetRoute.link
+          }
+          break
+        case 'more':
+          break
+      }
+
       this.$emit('navToJump', navigation)
     },
     // 切换子导航显示
@@ -136,9 +167,13 @@ export default {
     )
   },
   watch: {
-    $route () {
+    $route (to) {
+      console.log(to)
       // 重置导航
       this.activeNavIndex = -1
+    },
+    activeLink (New) {
+      console.log(New)
     }
   }
 }
@@ -146,161 +181,129 @@ export default {
 
 <style scoped lang="stylus">
   @import '../../assets/CSS/index.styl'
-  .nav-list {
-    height: 100%;
+  .nav-list
+    height 100%
+    > .nav-item
+      position relative
+      left -20px
+      display inline-block
+      height 100%
+      padding 0 2%
+      text-align center
+      vertical-align top
+      white-space nowrap
+      transition all .5s
+      &.active
+        >a
+          color S_main_color
+      > .sub-nav-list
+        position absolute
+        top 50px
+        left 46%
+        border-radius 2px
+        background-color #2c314d
+        box-shadow 0 3px 6px 0 rgba(32, 35, 54, 1)
+        transform translateX(-50%)
 
-    > .nav-item {
-      position: relative;
-      left: -20px;
-      display: inline-block;
-      height: 100%;
-      padding: 0 2%;
-      text-align: center;
-      vertical-align: top;
-      white-space: nowrap;
-      transition: all .5s;
+        > .sub-nav-item
+          height 40px
+          padding 0 20px
+          line-height 40px
+          text-align left
 
-      > .sub-nav-list {
-        position: absolute;
-        top: 50px;
-        left: 46%;
-        border-radius: 2px;
-        background-color: #2c314d;
-        box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
-        transform: translateX(-50%);
+          &:hover
+            background-color #21243a
 
-        > .sub-nav-item {
-          height: 40px;
-          padding: 0 20px;
-          line-height: 40px;
-          text-align: left;
-
-          &:hover {
-            background-color: #21243a;
-
-            > a {
-              color: S_main_color;
-            }
-          }
-
-          > a {
-            color: S_font_color;
-          }
-        }
-      }
-
+            > a
+              color S_main_color
+          > a
+            color S_font_color
       /* 自定义导航 */
-      &:hover {
-        > a {
-          color: S_main_color;
+      &:hover
+        > a
+          color S_main_color
+          > .iconfont
+            transform rotate(180deg)
+      > a
+        display inline-block
+        width 100%
+        height 100%
+        white-space nowrap
+        color S_font_color
 
-          > .iconfont {
-            transform: rotate(180deg);
-          }
-        }
-      }
+        > .iconfont
+          margin-top -1px
+          margin-left -2px
+          transition all .2s
 
-      > a {
-        display: inline-block;
-        width: 100%;
-        height: 100%;
-        white-space: nowrap;
-        color: S_font_color;
+        &.active
+          color S_main_color
+      > .logo
+        display inline-block
+        width 100px
+        height 50px
 
-        > .iconfont {
-          margin-top: -1px;
-          margin-left: -2px;
-          transition: all .2s;
-        }
+        > .img
+          width 100%
+          vertical-align middle
+    > .more-btn
+      position relative
+      left -20px
+      display inline-block
+      height 100%
+      text-align center
+      vertical-align top
+      white-space nowrap
+      transition all .5s
 
-        &.active {
-          color: S_main_color;
-        }
-      }
+      > .more-nav-btn
+        display inline-block
+        width 30px
+        height 30px
+        margin 10px 0
 
-      > .logo {
-        display: inline-block;
-        width: 100px;
-        height: 50px;
+      > .more-nav-list
+        position absolute
+        top 50px
+        min-width 200%
+        border-radius 2px
+        text-align left
+        background-color #2c314d
+        box-shadow 0 3px 6px 0 rgba(32, 35, 54, 1)
 
-        > .img {
-          width: 100%;
-          vertical-align: middle;
-        }
-      }
-    }
+        > .nav-item
+          height 40px
+          padding 0 20px
+          line-height 40px
 
-    > .more-btn {
-      position: relative;
-      left: -20px;
-      display: inline-block;
-      height: 100%;
-      text-align: center;
-      vertical-align: top;
-      white-space: nowrap;
-      transition: all .5s;
+          &:hover
+            background-color #21243a
 
-      > .more-nav-btn {
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        margin: 10px 0;
-      }
+            > a
+              color S_main_color
 
-      > .more-nav-list {
-        position: absolute;
-        top: 50px;
-        min-width: 200%;
-        border-radius: 2px;
-        text-align: left;
-        background-color: #2c314d;
-        box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
+          > a
+            color S_font_color
 
-        > .nav-item {
-          height: 40px;
-          padding: 0 20px;
-          line-height: 40px;
+          > .sub-nav-list
+            position absolute
+            top 0
+            left 100%
+            background-color #2c314d
+            box-shadow 0 3px 6px 0 rgba(32, 35, 54, 1)
 
-          &:hover {
-            background-color: #21243a;
+            > .sub-nav-item
+              height 40px
+              padding 0 20px
+              line-height 40px
+              text-align left
 
-            > a {
-              color: S_main_color;
-            }
-          }
+              &:hover
+                background-color #21243a
 
-          > a {
-            color: S_font_color;
-          }
+                > a
+                  color S_main_color
 
-          > .sub-nav-list {
-            position: absolute;
-            top: 0;
-            left: 100%;
-            background-color: #2c314d;
-            box-shadow: 0 3px 6px 0 rgba(32, 35, 54, 1);
-
-            > .sub-nav-item {
-              height: 40px;
-              padding: 0 20px;
-              line-height: 40px;
-              text-align: left;
-
-              &:hover {
-                background-color: #21243a;
-
-                > a {
-                  color: S_main_color;
-                }
-              }
-
-              > a {
-                color: S_font_color;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+              > a
+                color S_font_color
 </style>

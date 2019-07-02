@@ -1,3 +1,8 @@
+<!--
+  author: zhaoxinlei
+  update: 20190615
+  description: 当前组件为 个人中心 收款账户 子组件
+-->
 <template>
   <div
     class="credited-credited personal"
@@ -9,7 +14,7 @@
         {{ $t('M.user_account_credited') }}
       </span>
     </header>
-    <div class="credited-credited-main min-height500 margin-top9">
+    <div class="credited-credited-main min-height500 ">
       <div class="credited-box">
         <p class="content-title font-size12">
           <!--温馨提示：-->
@@ -642,7 +647,7 @@ export default {
       this.confirmTransactionPassword(this.activeType, this.state)
     },
     // 4.01 关闭开启收款方式
-    async confirmTransactionPassword (type, state) {
+    confirmTransactionPassword: _.debounce(async function (type, state) {
       let data
       let params = {
         type: '', // 银行卡 微信 支付宝 paypal 西联汇款
@@ -697,7 +702,7 @@ export default {
       this.getAccountPaymentTerm()
       this.openCollectionMode = false // 开启收款方式
       this.closeCollectionMode = false // 关闭收款方式
-    },
+    }, 500),
     // 5.收款方式
     async getAccountPaymentTerm () {
       let data = await accountPaymentTerm()
@@ -727,10 +732,12 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .credited-credited {
     > .credited-credited-main {
+      margin-top: 10px;
+
       > .credited-box {
         padding: 30px 23px;
 
@@ -889,14 +896,14 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .background-color {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
       }
 
       > .credited-credited-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         .credited-box {
           > .payment-content {
@@ -995,21 +1002,20 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
 
       > .background-color {
         background-color: #ccc;
       }
 
       > .credited-credited-main {
-        border: 1px solid rgba(38, 47, 56, .1);
-        background-color: $dayBgColor;
+        background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
       }
 
       > .credited-credited-header {
-        border: 1px solid rgba(236, 241, 248, 1);
-        background: rgba(255, 255, 255, 1);
+        background: #fff;
+        box-shadow: 0 0 6px #cfd5df;
 
         > .header-content {
           color: #333;

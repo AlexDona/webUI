@@ -14,6 +14,7 @@ export const common = {
   'comm_white': 'Màu trắng',
   'comm_confirm': 'Quyết định',
   'comm_sold_out': 'Bán hết',
+  'common_save': 'Lưu',
   'comm_all_sold_out': 'Tất cả bán hết',
   'comm_affirm': 'Xác nhận',
   'comm_cancel': 'Hủy bỏ',
@@ -115,6 +116,12 @@ export const common = {
   'comm_user_invite': 'Mời',
   'comm_user_generalize': 'Mở rộng',
   'comm_user_invite_generalize': 'Mời mở rộng',
+
+  'comm_user_invite_info': 'Thông tin quảng cáo',
+  'comm_user_inviter': 'Người giới thiệu',
+  'comm_user_invite_tip1': 'Chú thích: người giới thiệu không được chỉnh sửa!',
+  'comm_user_invite_tip2': 'Nhập UID người giới thiệu',
+
   'comm_user_api_management': 'Quản lí API',
   'comm_all': 'Toàn bộ',
   'comm_alipay': 'Chỉ trả bằng ali pay',
@@ -143,6 +150,7 @@ export const common = {
   'comm_loginpassword': 'Mật khẩu',
   'comm_clause': 'Điều khoản',
   'comm_rate1': 'Tỷ lệ phí',
+  'common_connect_us': 'Liên hệ chúng tôi',
   'comm_pack_up': 'Dứng lại',
   'comm_after_get': 'lấy lại',
   'comm_get_code': 'Lấy mã code',

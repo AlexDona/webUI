@@ -278,7 +278,9 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-.news-and-notice-box {
+  @import '../../assets/CSS/index';
+
+  .news-and-notice-box {
   > .inner-box {
     > .search-box {
       height: 250px;
@@ -613,7 +615,7 @@ export default {
   &.day {
     > .inner-box {
       > .content-box {
-        background-color: #fff;
+        background-color: $newDayBg;
 
         > .inner-box {
           .item-content {
@@ -661,14 +663,13 @@ export default {
 
     /deep/ {
       .el-tabs__nav {
-        border: 1px solid rgba(236, 241, 248, 1);
-        background: rgba(255, 255, 255, 1);
-        box-shadow: 0 0 2px rgba(246, 246, 246, 1);
+        background: #fff;
+        box-shadow: 0 0 6px #cfd5df;
       }
 
       .el-tabs__content {
-        border: 1px solid rgba(234, 235, 236, 1);
-        background: rgba(255, 255, 255, 1);
+        background: #fff;
+        box-shadow: 0 0 6px #cfd5df;
       }
     }
   }

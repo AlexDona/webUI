@@ -11,7 +11,10 @@
       .banner
         .inner-box
           h3 {{$t(title1)}}
-          p {{$t(title2)}}
+          p
+            span {{$t(title2)}}
+            span {{$t(title3)}}
+            span {{$t(title4)}}
       .container
         .header
           // tabs
@@ -77,6 +80,8 @@ export default {
       crowdFundings: [],
       title1: 'M.crowd_funding_title1',
       title2: 'M.crowd_funding_title2',
+      title3: 'M.crowd_funding_title3',
+      title4: 'M.crowd_funding_title4',
       activeId: -1
     }
   },
@@ -135,18 +140,20 @@ export default {
         position relative
         >.inner-box
           position absolute
-          left 30%
+          right 48%
           top 19%
           >h3
-            font-size 44px
+            font-size 50px
             color #fff
-            line-height 80px
+            line-height 90px
             text-align center
           >p
-            font-size 30px
-            color #fff
+            font-size 26px
+            color #F7F297
             background url('../../assets/images/crowd-banner-bg.png') no-repeat center center/100% 100%
-            padding 0 40px
+            padding 8px 40px 10px
+            >span
+              margin 0 20px
       > .container
         width S_main_content_width
         margin -107px auto 0

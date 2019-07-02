@@ -20,7 +20,8 @@ let mixin = {
     ...mapGetters({}),
     ...mapState({
       // 用户身份
-      $userType_X: state => state.user.loginStep1Info.userInfo.type
+      $userType_X: state => state.user.loginStep1Info.userInfo.type,
+      $userInfo_X: state => state.user.loginStep1Info.userInfo
     }),
     $userTypeOptions_X () {
       return {

@@ -50,7 +50,6 @@ import 'animate.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import '../static/css/common.css'
 import '../static/css/list/Common/HeaderCommon/HeaderCommon.css'
-import '../static/css/theme/night/Common/HeaderCommonNight.css'
 import '../static/css/reset.css'
 
 import zhCN from 'element-ui/lib/locale/lang/zh-CN'
