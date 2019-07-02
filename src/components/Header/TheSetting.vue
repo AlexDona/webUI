@@ -11,7 +11,7 @@
       @click="toggleBox(true)"
     )
       Iconfont.font-size24(icon-name="icon-setting")
-    el-dialog(
+    el-dialog.setting(
       :title="$t('M.comm_set')"
       :visible.sync="showSetting"
       width="470px"
@@ -19,7 +19,7 @@
       class="nav-box-dialog"
     )
       // 折算货币
-      p.title.line-height50 {{$t('M.comm_convert_currency')}}
+      p.title {{$t('M.comm_convert_currency')}}
       el-select(
         :no-data-text="$t('M.comm_no_data')"
         v-model="activeConvertCurrency"
@@ -33,7 +33,7 @@
           :value="item.shortName"
         )
       //  主题
-      p.title.line-height50 {{$t('M.comm_theme')}}
+      p.title {{$t('M.comm_theme')}}
       // 主题选择框
       el-radio-group(
         v-model="activeTheme"
@@ -219,57 +219,62 @@ export default {
             background-color #fff !important
             box-shadow none
     /deep/
-      .el-dialog
-        height 380px
-        border-radius 10px
-        overflow hidden
-        .el-dialog__header,.el-dialog__body
-          padding 0 40px
-          text-align left
-        .el-dialog__header
-          height 44px
-          line-height 54px
-          .el-dialog__title
-            font-size 20px
-          .el-dialog__headerbtn
-            top 15px
-        .el-dialog__body
-          .el-select
-            width 100%
-          .el-input--suffix .el-input__inner,
-          .el-radio-button__inner,
-          .el-select-dropdown__item
-            width 100%
+      .setting
+        .el-dialog
+          height 340px
+          border-radius 10px
+          overflow hidden
+          .el-dialog__header,.el-dialog__body
+            padding 0 40px
+            text-align left
+          .el-dialog__header
             height 44px
-            line-height 44px
-          .el-radio-button__inner
-            width 110px
-            padding 0
-            margin-right 44px
-            border 1px solid #c3c8cd
-            border-radius 4px
-          .el-radio-button__orig-radio:checked + .el-radio-button__inner
-            border 1px solid S_main_color
-            box-shadow none
-          .el-icon-check
-            position absolute
-            top 0
-            right 0
-            padding 2px 2px 5px 5px
-            border-bottom-left-radius: 2em
-            color S_day_bg
-            background-color S_main_color
-          .el-popper[x-placement^=bottom] .popper__arrow
-            border-bottom-color transparent
-          .el-popper[x-placement^=bottom] .popper__arrow::after
+            line-height 48px
+            .el-dialog__title
+              font-size 16px
+            .el-dialog__headerbtn
+              top 15px
+          .el-dialog__body
+            padding 10px 40px 0
+            .el-select
+              width 100%
+            .el-input--suffix .el-input__inner,
+            .el-radio-button__inner,
+            .el-select-dropdown__item
+              width 100%
+              height 44px
+              line-height 44px
+            .el-radio-button__inner
+              width 110px
+              padding 0
+              margin-right 44px
+              border 1px solid #c3c8cd
+              border-radius 4px
+            .el-radio-button__orig-radio:checked + .el-radio-button__inner
+              border 1px solid S_main_color
+              box-shadow none
+            .el-icon-check
+              position absolute
+              top 0
+              right 0
+              padding 2px 2px 5px 5px
+              border-bottom-left-radius: 2em
+              color S_day_bg
+              background-color S_main_color
+            .el-popper[x-placement^=bottom] .popper__arrow
+              border-bottom-color transparent
+            .el-popper[x-placement^=bottom] .popper__arrow::after
+              border none
+            .title
+              line-height  30px
+              margin-top 10px
+          .el-dialog__footer
+            /*padding 35px 40px*/
+            padding 5px 40px
             border none
-        .el-dialog__footer
-          /*padding 35px 40px*/
-          padding 5px 40px
-          border none
-          .el-button
-            border none
-            background linear-gradient(to left, #2a5082, #2b396e)
+            .el-button
+              border none
+              background linear-gradient(to left, #2a5082, #2b396e)
 </style>
 <style>
   .convert-currency.el-select-dropdown.el-popper {

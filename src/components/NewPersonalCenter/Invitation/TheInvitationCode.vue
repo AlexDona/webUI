@@ -123,11 +123,7 @@ export default {
   name: 'the-invitation-code',
   mixins: [mixins],
   // components: {},
-  props: {
-    totalSumCNY: {
-      type: String
-    }
-  },
+  // props: {},
   data () {
     return {
       isShowQrCode: false,
@@ -169,7 +165,7 @@ export default {
         this.inviter = ''
         return
       }
-      console.log(data)
+      // console.log(data)
       this.REFRESH_USER_INFO_ACTION()
     },
     toggleQrCode (status) {
@@ -214,11 +210,11 @@ export default {
     ...mapState({
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
-      inviterCount: state => state.user.invitation_S.page.total,
-      totalSumCNY: state => state.user.invitation_S.btc
+      inviterCount: state => _.get(state.user.invitation_S, 'page.total'),
+      totalSumCNY: state => _.get(state.user.invitation_S, 'btc')
     }),
     inviteUrl () {
-      console.log(domain)
+      // console.log(domain)
       return `${domain}/${this.$routes_X.register}?showId=${this.$userInfo_X.showId}`
     },
     hasInviter () {
@@ -251,9 +247,6 @@ export default {
   watch: {
     activeConvertCurrencyObj () {
       this.updateRate()
-    },
-    totalSumCNY (New) {
-      console.log(New)
     }
   }
 }

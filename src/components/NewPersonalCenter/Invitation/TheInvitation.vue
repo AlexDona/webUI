@@ -33,8 +33,6 @@ export default {
   // props,
   data () {
     return {
-      // CNY 资产
-      totalSumCNY: '',
       // 推广统计列表
       statistics: [],
       // 当前委托页码
@@ -69,11 +67,6 @@ export default {
       })
       console.log(data)
       if (!data) return false
-      // 返回展示
-      // this.statistics = _.get(data, 'data.page.list')
-      // this.totalForMyEntrust = _.get(data, 'data.page.pages') - 0
-      // 已获得的佣金折合
-      // this.totalSumCNY = _.get(data, 'data.btc')
       this.UPDATE_INVITATIONS_M(_.get(data, 'data'))
     }
   }

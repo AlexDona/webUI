@@ -128,7 +128,7 @@ export default {
     },
     process () {
       return _.get(this.crowdFunding, 'process') - 0
-      // return 50
+      // return 100
     },
     statusName () {
       /**
