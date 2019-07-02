@@ -272,7 +272,7 @@ export const personal = {
   'user_push_forbid': '禁止自我PUSH',
   'user_push_amount': 'PUSH金額',
   'user_push_amount_count': 'PUSH數量不能為0',
-  'user_push_amount_price': 'PUSH單價不能為0',
+  'user_push_amount_price': 'PUSH單價不能為空',
   // PUSH記錄
   // #####################我的交易#####################
   // 幣幣訂單

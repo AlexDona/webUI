@@ -272,7 +272,7 @@ export const personal = {
   'user_push_forbid': '체 PUSH 금지',
   'user_push_amount': 'PUSH 금액',
   'user_push_amount_count': 'PUSH 수가 0 이 안 돼요.',
-  'user_push_amount_price': 'PUSH 단가 0 은 안 된다',
+  'user_push_amount_price': 'PUSH 단가가 비워서는 안 된다',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单

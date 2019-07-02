@@ -672,12 +672,10 @@ export default {
         })
         return false
       }
-      if (this.$refs.price.value === '0') {
-        // PUSH单价为零提示单价不能为0
-        this.$message({
-          message: this.$t('M.user_push_amount_price'),
-          type: 'error'
-        })
+      const price = this.$refs.price.value
+      if (price != '0' && !price) {
+        // PUSH单价为零提示单价不能为空
+        this.$error_tips_X(this.$t('M.user_push_amount_price'))
         return false
       }
       let goOnStatus = 0

@@ -272,7 +272,7 @@ export const personal = {
   'user_push_forbid': '禁止自我PUSH',
   'user_push_amount': 'PUSH金额',
   'user_push_amount_count': 'PUSH数量不能为0',
-  'user_push_amount_price': 'PUSH单价不能为0',
+  'user_push_amount_price': 'PUSH单价不能为空',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单

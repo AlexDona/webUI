@@ -268,7 +268,7 @@ export const personal = {
   'user_push_forbid': '自己PUSHを禁止する',
   'user_push_amount': 'PUS H金額',
   'user_push_amount_count': 'PUS Hの数は0になることができません',
-  'user_push_amount_price': 'PUS H単価は0ではありません',
+  'user_push_amount_price': 'PUSH単価は空にはなれない',
   // PUSHレコード
   // #####################私の取引#####################
   // トークン注文
