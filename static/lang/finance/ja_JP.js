@@ -10,6 +10,7 @@ export const finance = {
   'finance_date': '同じ日',
   'finance_history': '歴史',
   'finance_history_earnings': '歴史収益',
+  'finance_income_ratio': '収益比率図',
   'finance_invest': 'デポジット',
   'finance_invest_count': 'デポジット数量',
   'finance_invest_style': '残高提案',

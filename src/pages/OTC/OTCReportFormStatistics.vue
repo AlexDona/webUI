@@ -13,7 +13,7 @@
       <!-- 2.2 筛选条件 -->
       <div class="report-form-filtrate">
         <!-- 交易币种 -->
-        <span class="filtrate-text font-size14">
+        <span class="filtrate-text font-size12">
           {{$t('M.otc_trade')}}{{$t('M.otc_AD_token')}}
         </span>
         <span class="currency-input">
@@ -32,7 +32,7 @@
           </el-select>
         </span>
         <!-- 交易法币 -->
-        <span class="filtrate-text font-size14">
+        <span class="filtrate-text font-size12">
           {{$t('M.otc_trade')}}{{$t('M.comm_coin')}}
         </span>
         <span class="legal-tender-input">
@@ -53,9 +53,9 @@
       </div>
       <!-- 2.3 资产配置 -->
       <div
-        class="report-form-asset"
+        class="report-form-asset border-radius4"
       >
-        <div class="title padding-l15 border-radius5">
+        <div class="title padding-l15 font-size14">
           {{$t('M.otc_formStatistics_asset')}}
         </div>
         <div
@@ -74,7 +74,7 @@
         <!-- 购买 -->
         <div class="common buy">
           <!-- 头 -->
-          <div class="head padding-l15 border-radius5">
+          <div class="head padding-l15 font-size14">
             {{$t('M.comm_buying')}}
           </div>
           <!-- 内容 -->
@@ -93,7 +93,7 @@
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
                   <span class="data">
-                    {{ $scientificToNumber(buyDayMap.count) }}{{ activatedTraderCoinName }}
+                    {{ $scientificToNumber(buyDayMap.count) || '--' }}{{ activatedTraderCoinName }}
                   </span>
                 </p>
                 <!--购买均价-->
@@ -102,14 +102,14 @@
                     {{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:
                   </span>
                   <span class="data">
-                    {{ $scientificToNumber(buyDayMap.average) }}{{ activatedTraderCurrencyCoinsName }}
+                    {{ $scientificToNumber(buyDayMap.average) || '--' }}{{ activatedTraderCurrencyCoinsName }}
                   </span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
                   <span class="data">
-                    {{ $scientificToNumber(buyDayMap.amount) }}{{ activatedTraderCurrencyCoinsName }}
+                    {{ $scientificToNumber(buyDayMap.amount) || '--' }}{{ activatedTraderCurrencyCoinsName }}
                   </span>
                 </p>
                 <!--成交订单-->
@@ -117,7 +117,9 @@
                   <span>
                     {{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:
                   </span>
-                  <span class="data">{{ $scientificToNumber(buyDayMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">
+                    {{ $scientificToNumber(buyDayMap.num) || '--' }}{{$t('M.comm_stock')}}
+                  </span>
                 </p>
               </div>
             </div>
@@ -132,22 +134,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyWeekMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyWeekMap.count) || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyWeekMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyWeekMap.average) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyWeekMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyWeekMap.amount) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyWeekMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(buyWeekMap.num) || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -162,22 +164,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyMonthMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyMonthMap.count) || '--' || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyMonthMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyMonthMap.average) || '--' || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyMonthMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyMonthMap.amount) || '--' || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyMonthMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(buyMonthMap.num) || '--' || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -192,22 +194,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyHistoryMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyHistoryMap.count) || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyHistoryMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyHistoryMap.average) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyHistoryMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(buyHistoryMap.amount) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(buyHistoryMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(buyHistoryMap.num) || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -216,7 +218,7 @@
         <!-- 销售 -->
         <div class="common sell">
           <!-- 头 -->
-          <div class="head padding-l15 border-radius5">
+          <div class="head padding-l15 font-size14">
             {{$t('M.otc_sell')}}
           </div>
           <!-- 内容 -->
@@ -234,22 +236,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellDayMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellDayMap.count) || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellDayMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellDayMap.average) || '--' || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_income_money')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellDayMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellDayMap.amount) || '--' || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellDayMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(sellDayMap.num) || '--' || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -264,22 +266,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellWeekMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellWeekMap.count) || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellWeekMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellWeekMap.average) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_income_money')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellWeekMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellWeekMap.amount) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellWeekMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(sellWeekMap.num) || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -294,22 +296,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellMonthMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellMonthMap.count) || '--' || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellMonthMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellMonthMap.average) || '--' || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_income_money')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellMonthMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellMonthMap.amount) || '--' || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellMonthMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(sellMonthMap.num) || '--' || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -324,22 +326,22 @@
                 <!--购买数量-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.comm_count')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellHistoryMap.count) }}{{ activatedTraderCoinName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellHistoryMap.count) || '--' }}{{ activatedTraderCoinName }}</span>
                 </p>
                 <!--购买均价-->
                 <p>
                   <span>{{$t('M.comm_offering')}}{{$t('M.otc_formStatistics_average')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellHistoryMap.average) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellHistoryMap.average) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--支出金额-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_income_money')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellHistoryMap.amount) }}{{ activatedTraderCurrencyCoinsName }}</span>
+                  <span class="data">{{ $scientificToNumber(sellHistoryMap.amount) || '--' }}{{ activatedTraderCurrencyCoinsName }}</span>
                 </p>
                 <!--成交订单-->
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data">{{ $scientificToNumber(sellHistoryMap.num) }}{{$t('M.comm_stock')}}</span>
+                  <span class="data">{{ $scientificToNumber(sellHistoryMap.num) || '--' }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -347,9 +349,9 @@
         </div>
       </div>
       <!-- 2.5 订单详情 -->
-      <div class="report-form-details">
+      <div class="report-form-details border-radius4">
         <!-- 2.5.1 标题 -->
-        <div class="title padding-l15 border-radius5">
+        <div class="title padding-l15 font-size14">
           {{$t('M.otc_formStatistics_orderDeatil')}}
         </div>
         <!-- 主要内容 -->
@@ -358,7 +360,7 @@
           <div class="date">
             <!-- 左侧日历 -->
             <div class="select-date">
-              <span class="text">{{$t('M.otc_MerchantsOrders_date')}}</span>
+              <span class="text font-size12">{{$t('M.otc_MerchantsOrders_date')}}</span>
               <span class="date-picker">
                 <!--开始日期-->
                 <el-date-picker
@@ -414,7 +416,7 @@
               <!-- 交易日期 -->
               <el-table-column
                 :label = "$t('M.otc_transaction_data')"
-                width="180"
+                width="210"
               >
                 <template slot-scope = "s">
                   <div>{{timeFormatting(s.row.createTime)}}</div>
@@ -423,6 +425,7 @@
               <!-- 订单号 -->
               <el-table-column
                 :label = "$t('M.otc_MerchantsOrders_orderNum')"
+                width="210"
               >
                 <template slot-scope = "s">
                   <div>{{s.row.orderSequence}}</div>
@@ -431,6 +434,7 @@
               <!-- 交易类型 -->
               <el-table-column
                 :label = "$t('M.otc_type_ransaction')"
+                width="170"
               >
                 <template slot-scope = "s">
                   <div
@@ -450,6 +454,7 @@
               <!-- 资金类型 -->
               <el-table-column
                 :label = "$t('M.otc_type_capital')"
+                width="170"
               >
                 <template slot-scope = "s">
                   <div>{{s.row.currencyName}}</div>
@@ -458,6 +463,7 @@
               <!-- 数量 -->
               <el-table-column
                 :label = "$t('M.comm_count')"
+                width="180"
               >
                 <template slot-scope = "s">
                   <div>{{ $scientificToNumber(s.row.pickCount) }}</div>
@@ -466,6 +472,7 @@
               <!-- 单价 -->
               <el-table-column
                 :label= "$t('M.otc_index_UnitPrice')"
+                width="140"
               >
                 <template slot-scope = "s">
                   <div>{{ $scientificToNumber(s.row.price) }}</div>
@@ -474,6 +481,8 @@
               <!-- 总金额 -->
               <el-table-column
                 :label="$t('M.otc_canceled_total')"
+                align="right"
+                width="140"
               >
                 <template slot-scope = "s">
                   <div>{{ $scientificToNumber(s.row.payAmount) }}</div>
@@ -482,7 +491,7 @@
             </el-table>
           </div>
           <!--分页-->
-          <div class="page">
+          <div class="page text-align-c">
             <el-pagination
               background
               v-show="orderInfoList.length"
@@ -509,7 +518,6 @@ import {
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter} from '../../utils'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {
@@ -702,8 +710,8 @@ export default {
         currencyId: this.activatedTraderCurrencyCoinsId
       })
       // 提示信息
-      console.log('报表统计的主页面资产信息')
-      console.log(data)
+      // console.log('报表统计的主页面资产信息')
+      // console.log(data)
       if (!data) return false
       let getData = getNestedData(data, 'data')
       // 法币总资产
@@ -728,7 +736,7 @@ export default {
       this.sellWeekMap = getNestedData(getData, 'sellWeekMap')
     },
     // 页面加载时请求接口渲染订单详情列表
-    async getOTCEntrustingOrdersRevocation () {
+    getOTCEntrustingOrdersRevocation: _.debounce(async function () {
       let data = await getOTCMerchantsOrdersList({
         // 当前页数
         pageNum: this.currentPage,
@@ -746,15 +754,15 @@ export default {
         dateType: this.activatedRadioId
       })
       // 返回数据正确的逻辑 重新渲染列表
-      console.log('报表列表')
-      console.log(data)
+      // console.log('报表列表')
+      // console.log(data)
       if (!data) return false
       if (data.data) {
         let ordersRevocationData = getNestedData(data, 'data')
         this.orderInfoList = getNestedData(ordersRevocationData, 'list')
         this.totalPages = getNestedData(ordersRevocationData, 'pages') - 0 // 分页
       }
-    }
+    }, 500)
   },
   filter: {},
   computed: {
@@ -767,15 +775,15 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/index";
+@import "../../assets/CSS/index";
 
 .otc-report-form-statistics-box {
   margin-top: 50px;
   overflow: hidden;
 
   > .report-form-statistics-content {
-    width: 1150px;
-    padding-top: 50px;
+    width: 1300px;
+    padding: 20px 0 200px;
     margin: 50px auto 10px;
 
     > .report-form-title {
@@ -804,9 +812,6 @@ export default {
 
       > .content {
         height: 160px;
-        border-top: 0;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
         line-height: 160px;
         text-align: center;
       }
@@ -821,7 +826,7 @@ export default {
         border-radius: 5px;
 
         > .head {
-          width: 570px;
+          width: 645px;
           height: 40px;
           line-height: 40px;
         }
@@ -829,19 +834,19 @@ export default {
         > .body {
           display: flex;
           flex-wrap: wrap;
-          justify-content: space-between;
-          width: 570px;
+          justify-content: space-around;
+          width: 645px;
           height: 420px;
-          padding: 7px 5px 0;
+          padding: 10px;
           border-top: 0;
           border-bottom-right-radius: 5px;
           border-bottom-left-radius: 5px;
 
           > .together {
             display: flex;
-            width: 275px;
-            height: 197px;
-            padding-top: 30px;
+            align-items: center;
+            width: 300px;
+            height: 190px;
 
             > .left {
               position: relative;
@@ -865,7 +870,8 @@ export default {
 
             > .right {
               flex: 3;
-              line-height: 35px;
+              font-size: 12px;
+              line-height: 40px;
             }
           }
         }
@@ -883,8 +889,6 @@ export default {
 
     > .report-form-details {
       margin-top: 20px;
-      border-bottom-right-radius: 5px;
-      border-bottom-left-radius: 5px;
 
       > .title {
         height: 40px;
@@ -896,7 +900,7 @@ export default {
           display: flex;
           justify-content: space-between;
           height: 50px;
-          padding: 0 20px;
+          padding: 0 50px;
           margin-top: 30px;
           line-height: 50px;
 
@@ -914,13 +918,12 @@ export default {
         }
 
         > .order-table {
-          padding: 0 55px 0 43px;
+          padding: 0 35px;
           margin-top: 20px;
         }
 
         .page {
           padding: 10px 0;
-          text-align: center;
         }
       }
     }
@@ -980,6 +983,8 @@ export default {
 
     .order-table {
       .el-table {
+        font-size: 12px;
+
         tr {
           height: 40px;
         }
@@ -997,8 +1002,8 @@ export default {
 
     > .report-form-statistics-content {
       > .report-form-title {
-        border-left: 3px solid #338ff5;
-        color: #338ff5;
+        border-left: 3px solid $mainColor;
+        color: $mainColor;
       }
 
       > .report-form-filtrate {
@@ -1008,25 +1013,25 @@ export default {
       }
 
       > .report-form-asset {
-        color: #338ff5;
-        background-color: #1c1f32;
+        color: $mainColor;
+        background-color: $mainContentNightBgColor;
 
         > .title {
-          border: 1px solid #1c1f32;
+          border: 1px solid $mainContentNightBgColor;
           box-shadow: 0 4px 6px #191e28;
         }
 
         > .content {
-          border: 1px solid #1c1f32;
+          border: 1px solid $mainContentNightBgColor;
         }
       }
 
       > .report-form-buy-sell {
         > .common {
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
 
           > .head {
-            color: #338ff5;
+            color: $mainColor;
             box-shadow: 0 4px 6px #191e28;
           }
 
@@ -1037,7 +1042,7 @@ export default {
               border: 1px solid #23263c;
 
               > .left {
-                color: #d45858;
+                color: $upColor;
 
                 > .round {
                   background-color: #3b3139;
@@ -1048,7 +1053,7 @@ export default {
                 color: #9da5b3;
 
                 .data {
-                  color: #d45858;
+                  color: $upColor;
                 }
               }
             }
@@ -1061,7 +1066,7 @@ export default {
           > .body {
             .together {
               > .left {
-                color: #008069;
+                color: $otcGreen;
 
                 > .round {
                   background-color: #28403d;
@@ -1070,7 +1075,7 @@ export default {
 
               > .right {
                 .data {
-                  color: #008069 !important;
+                  color: $otcGreen !important;
                 }
               }
             }
@@ -1079,10 +1084,10 @@ export default {
       }
 
       > .report-form-details {
-        background-color: #1c1f32;
+        background-color: $mainContentNightBgColor;
 
         > .title {
-          color: #338ff5;
+          color: $mainColor;
         }
 
         > .content {
@@ -1100,11 +1105,11 @@ export default {
 
           > .order-table {
             .red {
-              color: #d45858;
+              color: $upColor;
             }
 
             .green {
-              color: #008069;
+              color: $otcGreen;
             }
           }
         }
@@ -1112,9 +1117,13 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: $mainDayBgColor;
+      }
+
       .report-form-filtrate {
         .el-input__inner {
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
         }
       }
 
@@ -1127,7 +1136,7 @@ export default {
           }
 
           .el-input__inner {
-            background-color: #19202e;
+            background-color: rgba(255, 255, 255, .1);
           }
         }
 
@@ -1137,20 +1146,20 @@ export default {
           }
 
           .el-radio__label {
-            color: #fff;
+            color: $mainDayBgColor;
           }
 
           .el-radio__inner {
             border: 1px solid #b3b3b3;
-            background-color: #1c1f32;
+            background-color: $mainContentNightBgColor;
 
             &::after {
-              background-color: #338ff5;
+              background-color: $mainColor;
             }
           }
 
           .el-radio__input.is-checked + .el-radio__label {
-            color: #338ff5;
+            color: $mainColor;
           }
         }
       }
@@ -1170,18 +1179,18 @@ export default {
 
         .el-table {
           color: #9da5b3;
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
 
           thead {
-            color: #a9bed4;
+            color: $mainNightTitleColor;
           }
 
           tr {
-            background-color: #1c1f32;
+            background-color: $mainContentNightBgColor;
           }
 
           th {
-            background-color: #1c1f32;
+            background-color: $mainContentNightBgColor;
 
             &.is-leaf {
               border-bottom: 1px solid #262f38;
@@ -1193,52 +1202,48 @@ export default {
   }
 
   &.day {
-    background-color: $mainDayBgColor;
+    background-color: $mainBgColorOfDay;
 
     > .report-form-statistics-content {
       > .report-form-title {
-        border-left: 3px solid #338ff5;
-        color: #338ff5;
+        border-left: 3px solid $mainColor;
+        color: $mainColor;
       }
 
       > .report-form-filtrate {
         > .filtrate-text {
-          color: #9da5b3;
+          color: $fontColorSecondaryOfDay;
         }
       }
 
       > .report-form-asset {
-        color: #338ff5;
-        background-color: #fff;
+        margin-top: 20px;
+        color: $mainColor;
+        background-color: $mainColorOfWhite;
+        box-shadow: 0 0 6px $boxShadowColorOfDay;
 
         > .title {
-          border: 1px solid #ecf1f8;
-          box-shadow: 0 4px 6px #f3f3f3;
-        }
-
-        > .content {
-          border: 1px solid #ecf1f8;
+          border-bottom: 1px solid $borderColorOfDay;
         }
       }
 
       > .report-form-buy-sell {
         > .common {
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .head {
-            border: 1px solid #ecf1f8;
-            color: #338ff5;
-            box-shadow: 0 4px 6px #f3f3f3;
+            border-bottom: 1px solid $borderColorOfDay;
+            color: $mainColor;
           }
 
           > .body {
-            border: 1px solid #ecf1f8;
-
             > .together {
-              border: 1px solid #ecf1f8;
+              border: 1px solid $borderColorOfDay;
+              border-radius: 2px;
 
               > .left {
-                color: #d45858;
+                color: $upColor;
 
                 > .round {
                   background: rgba(212, 88, 88, .1);
@@ -1246,10 +1251,10 @@ export default {
               }
 
               > .right {
-                color: #7d90ac;
+                color: $dayMainTitleColor;
 
                 .data {
-                  color: #d45858;
+                  color: $upColor;
                 }
               }
             }
@@ -1262,7 +1267,7 @@ export default {
           > .body {
             .together {
               > .left {
-                color: #008069;
+                color: $otcGreen;
 
                 > .round {
                   background: rgba(84, 189, 116, .1);
@@ -1271,7 +1276,7 @@ export default {
 
               > .right {
                 .data {
-                  color: #008069 !important;
+                  color: $otcGreen !important;
                 }
               }
             }
@@ -1280,36 +1285,34 @@ export default {
       }
 
       > .report-form-details {
-        border: 1px solid rgba(38, 47, 56, .1);
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
-        background-color: #fff;
+        background-color: $mainColorOfWhite;
+        box-shadow: 0 0 6px $boxShadowColorOfDay;
 
         > .title {
-          border-bottom: 1px solid rgba(38, 47, 56, .1);
-          color: #338ff5;
+          border-bottom: 1px solid $borderColorOfDay;
+          color: $mainColor;
         }
 
         > .content {
           > .date {
             > .select-date {
               > .text {
-                color: #9da5b3;
+                color: $fontColorSecondaryOfDay;
               }
             }
 
             > .radio-date {
-              color: #46505f;
+              color: $fontColorSecondaryOfDay;
             }
           }
 
           > .order-table {
             .red {
-              color: #d45858;
+              color: $upColor;
             }
 
             .green {
-              color: #008069;
+              color: $otcGreen;
             }
           }
         }
@@ -1317,132 +1320,42 @@ export default {
     }
 
     /deep/ {
+      .el-input--suffix .el-input__inner {
+        color: $dayMainTitleColor;
+      }
+
       .report-form-filtrate {
         .el-input__inner {
-          border: 1px solid rgba(236, 241, 248, 1);
+          border: 1px solid $borderColorOfDay;
           border-radius: 2px;
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
         }
       }
 
       .date {
         .radio-date {
           .el-radio__input.is-checked + .el-radio__label {
-            color: #338ff5;
+            color: $mainColor;
           }
 
           .el-radio__label {
-            color: #7d90ac;
+            color: $fontColorSecondaryOfDay;
           }
 
           .el-radio__inner {
-            border: 1px solid rgba(38, 47, 56, .1);
+            border: 1px solid $borderColorOfDay;
             background-color: #fff;
 
             &::after {
-              background-color: #338ff5;
+              background-color: $mainColor;
             }
           }
         }
 
         .select-date {
           .el-input__inner {
-            border: 1px solid rgba(38, 47, 56, .1);
-            background-color: #fff;
-          }
-        }
-      }
-
-      .border-radius5 {
-        border-radius: 0;
-      }
-
-      > .report-form-statistics-content {
-        > .report-form-details {
-          > .title[data-v-e69a84f0] {
-            border: 1px solid rgba(38, 47, 56, .1);
-            border-left: none;
-            border-top-right-radius: 5px;
-            border-top-left-radius: 5px;
-            box-shadow: 0 0 0 #191e28;
-            border-right: none;
-          }
-        }
-
-        > .report-form-details[data-v-e69a84f0] {
-          border: 1px solid rgba(38, 47, 56, .1);
-          border-top: 0 solid #000;
-          border-top-right-radius: 5px;
-          border-top-left-radius: 5px;
-          background-color: #fff;
-        }
-
-        > .report-form-asset {
-          margin-top: 20px;
-          border: 1px solid rgba(38, 47, 56, .1);
-          border-radius: 0;
-          background-color: #fff;
-
-          > .title[data-v-e69a84f0] {
-            border: none;
-            border-bottom: 1px solid rgba(38, 47, 56, .1);
-            box-shadow: 0 0 0 #191e28;
-          }
-
-          > .content[data-v-e69a84f0] {
-            border: 0 solid rgba(38, 47, 56, .1);
-          }
-        }
-
-        > .report-form-buy-sell {
-          > .sell {
-            > .body {
-              .together {
-                > .left {
-                  > .round[data-v-e69a84f0] {
-                    background: rgba(84, 189, 116, .15);
-                  }
-                }
-              }
-            }
-          }
-
-          > .common[data-v-e69a84f0] {
-            background-color: #fff;
-          }
-
-          > .common {
-            > .body {
-              > .together[data-v-e69a84f0] {
-                border: 1px solid rgba(38, 47, 56, .1);
-              }
-
-              > .together {
-                > .left {
-                  > .round[data-v-e69a84f0] {
-                    background-color: rgba(212, 88, 88, .15);
-                  }
-                }
-              }
-            }
-
-            > .body[data-v-e69a84f0] {
-              border: 1px solid rgba(38, 47, 56, .1);
-            }
-
-            > .head[data-v-e69a84f0] {
-              border: 1px solid rgba(38, 47, 56, .1);
-              border-bottom: none;
-              border-bottom-right-radius: 0;
-              border-bottom-left-radius: 0;
-              box-shadow: inset 0 2px 4px rgba(236, 241, 248, 1);
-            }
-          }
-        }
-
-        > .report-form-filtrate {
-          > .filtrate-text[data-v-e69a84f0] {
-            color: #7d90ac;
+            border: 1px solid $borderColorOfDay;
+            background-color: $mainColorOfWhite;
           }
         }
       }
@@ -1451,71 +1364,29 @@ export default {
         &.is-checked {
           .el-radio__inner {
             border-color: rgb(64, 158, 255);
-            background: #fff;
+            background: $mainColorOfWhite;
           }
         }
       }
 
       .order-table {
         .el-table {
-          background-color: #fff;
+          color: $dayMainTitleColor;
+          background-color: $mainColorOfWhite;
 
           th {
-            color: #999;
-            background-color: #fff;
+            color: $fontColorSecondaryOfDay;
+            background-color: $mainColorOfWhite;
 
             &.is-leaf {
-              border-bottom: 0 solid #262f38;
+              border-bottom: 1px solid $borderColorOfDay;
             }
           }
         }
       }
 
       .el-input__inner {
-        color: #7d90ac;
-      }
-
-      .nav-box {
-        > .inner-box {
-          > .top {
-            > .left {
-              > .nav-list {
-                > .nav-item {
-                  > .sub-nav-list[data-v-346cd49c] {
-                    background-color: #fff;
-
-                    &::before {
-                      border-bottom-color: #fff;
-                    }
-                  }
-
-                  > .sub-nav-list {
-                    > .sub-nav-item {
-                      > a[data-v-346cd49c] {
-                        color: #000;
-                      }
-                    }
-
-                    > .sub-nav-item[data-v-346cd49c] {
-                      &:hover {
-                        background-color: #fff;
-
-                        > a {
-                          color: #338ff5;
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-
-          > .bottom[data-v-346cd49c] {
-            background-color: #fff;
-            box-shadow: 4px 4px 4px rgba(3, 14, 32, .1);
-          }
-        }
+        color: $fontColorSecondaryOfDay;
       }
     }
   }

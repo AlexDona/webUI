@@ -6,7 +6,7 @@
     <div class="inner-box">
       <div class="left">
         <router-link
-          to="/home"
+          :to="`/${$routes_X.home}`"
           class="logo"
         >
         <img
@@ -150,7 +150,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index";
+  @import "../../assets/CSS/index";
 
   .mobile-header-box {
     > .inner-box {

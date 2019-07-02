@@ -243,20 +243,18 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
 .financeline-box {
-  width: 1000px;
-  margin: 80px auto;
+  margin: 67px auto;
 
   > .finance-line {
     width: 100%;
     height: 450px;
-    margin-left: -100px;
   }
 
   > .no-data {
     position: relative;
-    width: 1000px;
+    width: 1100px;
     height: 274px;
-    margin: 100px 0 100px -100px;
+    margin: 100px auto;
     line-height: 274px;
     text-align: center;
 

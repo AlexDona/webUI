@@ -315,8 +315,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import '../../../static/css/scss/index.scss';
-@import '../../../static/css/scss/Trade/TradeCenter.scss';
+@import '../../assets/CSS/index';
 
 .buys-and-sells-box {
   > .inner-box {
@@ -585,7 +584,7 @@ export default {
     > .inner-box {
       > .title {
         color: $dayMainTitleColor;
-        background-color: $dayMainBgColor;
+        background-color: $mainDayBgColor;
         box-shadow: 2px 0 3px rgba(239, 239, 239, 1);
       }
 

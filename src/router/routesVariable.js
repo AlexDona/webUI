@@ -51,5 +51,19 @@ export const routesVariable = {
   // OTC商家申请
   OTCBusinessApply: 'OTCBusinessApply',
   // OTC报表统计
-  OTCReportFormStatistics: 'OTCReportFormStatistics'
+  OTCReportFormStatistics: 'OTCReportFormStatistics',
+  ForgetPassword: 'ForgetPassword',
+  register: 'register',
+  normalLogin: 'normal',
+  scanLogin: 'scan',
+  // 登录二次确认页面
+  confirmUserInfo: 'confirm',
+  nofind404: 'nofind404',
+  serverError: '500'
+}
+
+export const globalLabel = {
+  login: 'M.comm_login',
+  forgetPassword: 'M.login_tips3',
+  registerImmediately: 'M.login_tips4'
 }

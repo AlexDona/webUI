@@ -676,7 +676,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import '../../../assets/CSS/index';
 
   .billing-details {
     > .billing-details-main {
@@ -728,10 +728,10 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
 
       > .billing-details-main {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
 
         .billing-details-query {
           border-bottom: 1px solid #39424d;
@@ -744,7 +744,7 @@ export default {
       }
 
       > .billing-details-header {
-        background-color: $nightMainBgColor;
+        background-color: $mainContentNightBgColor;
         box-shadow: 0 5px 50px #181e2a;
       }
 
@@ -841,12 +841,11 @@ export default {
     }
 
     &.day {
-      color: $dayFontColor;
-      background-color: $dayBgColor;
+      color: $dayMainTitleColor;
 
       > .billing-details-main {
-        border: 1px solid #ecf1f8;
-        background-color: $dayBgColor;
+        background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
 
         .billing-details-query {
           border-bottom: 1px solid rgba(57, 66, 77, .1);
@@ -863,10 +862,9 @@ export default {
       }
 
       > .billing-details-header {
-        border: 1px solid rgb(236, 241, 248);
         border-radius: 2px;
-        background: rgb(255, 255, 255);
-        box-shadow: 1px 0 3px rgb(236, 236, 236);
+        background: #fff;
+        box-shadow: 0 0 6px #cfd5df;
       }
 
       /deep/ {

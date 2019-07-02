@@ -11,6 +11,7 @@ export const finance = {
   'finance_history': '历史',
   'finance_history_earnings': '历史收益',
   'finance_invest': '存币',
+  'finance_income_ratio': '收益占比图',
   'finance_invest_count': '存币数量',
   'finance_invest_style': '存币方案',
   'finance_invest_coin1': '存币币种',

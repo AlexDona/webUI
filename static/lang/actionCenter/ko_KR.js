@@ -53,8 +53,9 @@ export const actionCenter = {
   'crowd_funding_description_title': '프로젝트 소개',
   'crowd_funding_rules_title': '프로젝트 정보',
   'crowd_funding_question_title': '흔한 문제',
-  'crowd_funding_error1': '최소 크기',
-  'crowd_funding_error2': '최대 저축 금액',
+  'crowd_funding_error1': '최소 창고',
+  'crowd_funding_error2': '최대 사물량',
+
   'crowd_funding_error3': '잔액이 부족하다',
   'crowd_funding_error4': '최저 지창량 부족',
   'ieo_failure_007': '창고를 잠그는 량은 반드시 최소 자물쇠량의 완수배여야 한다',

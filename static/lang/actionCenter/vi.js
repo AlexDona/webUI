@@ -53,8 +53,9 @@ export const actionCenter = {
   'crowd_funding_description_title': 'Dự án giới thiệu.',
   'crowd_funding_rules_title': 'Chi tiết dự án',
   'crowd_funding_question_title': 'Vấn đề thông thường.',
-  'crowd_funding_error1': 'Kể từ tối thiểu',
-  'crowd_funding_error2': 'Trữ lượng tiền rất lớn nhất là',
+  'crowd_funding_error1': 'lượng khoá nhỏ nhất là',
+  'crowd_funding_error2': 'lượng khoá lớn nhất là',
+
   'crowd_funding_error3': 'Số dư thiếu',
   'crowd_funding_error4': 'Lượng thấp nhất không đủ',
   'ieo_failure_007': 'Số lượng khóa phải là bội số nguyên của lượng khoá nhỏ nhất',

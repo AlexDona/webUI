@@ -172,11 +172,11 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 
 /**
  * 撤销委单
  */
-export const repealMyEntrustCommon = async (params, callback) => {
+export const repealMyEntrustCommon = _.debounce(async function (params, callback) {
   const data = await repealMyEntrustAjax(params)
   if (!data) return false
   callback(data)
-}
+}, 500)
 
 /**
  * 商家订单列表请求
@@ -304,16 +304,16 @@ export const isWXBrowser = () => {
   const ua = navigator.userAgent.toLowerCase()
   return ua.match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
 }
-export const changeLanguage = (language, self, commit) => {
-  _.forEach(self.languageList, item => {
-    if (item.shortName === language) {
-      console.log(item)
-      commit('CHANGE_LANGUAGE', item)
-      commit('CHANGE_DEFAULT_LANGUAGE', item.shortName)
-      return false
-    }
-  })
-}
+// export const changeLanguage = (language, self, commit) => {
+//   _.forEach(self.languageList, item => {
+//     if (item.shortName === language) {
+//       console.log(item)
+//       commit('CHANGE_LANGUAGE', item)
+//       commit('CHANGE_DEFAULT_LANGUAGE', item.shortName)
+//       return false
+//     }
+//   })
+// }
 
 export const isNeedPayPasswordAjax = async (self) => {
   const data = await isNeedPayPassowrd()

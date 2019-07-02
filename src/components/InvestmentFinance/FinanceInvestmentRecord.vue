@@ -2,6 +2,7 @@
   <div
     class="finance-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{ height: windowHeight - footerHeight - 5 + 'px'}"
   >
   <!-- 导航 -->
     <!-- banner -->
@@ -57,6 +58,7 @@
                   <!-- 存币币种 -->
                   <el-table-column
                     prop="coinShortName"
+                    width="100"
                     :label="$t('M.finance_invest_coin1')"
                   >
                   </el-table-column>
@@ -162,11 +164,12 @@
                   <el-table-column
                     prop="operations"
                     :label="$t('M.otc_index_operate')"
+                    align="right"
                   >
                     <template slot-scope = "s">
                       <div
                         v-if="s.row.financialState === 'CURRENT' && s.row.state !== 'CANCEL' && s.row.state != 'DEFAULT_CLEARING'"
-                        class="blue cancelBtn"
+                        class="blue cancelBtn text-align-r"
                         @click="cancelInvest(s.row.id)"
                       >
                         <!-- 取消 -->
@@ -320,7 +323,7 @@ export default {
     //   let historyPage = this.interestCurrentPage
     //   this.changeInterestPage(historyPage)
     // }
-    console.log(this.$route.query)
+    console.log(this.footerHeight)
   },
   mounted () {},
   activated () {},
@@ -420,10 +423,14 @@ export default {
       isLogin: state => state.user.isLogin,
       // 当前选中语言
       language: state => state.common.language,
-      clientWidth: state => state.common.clientWidth
+      clientWidth: state => state.common.clientWidth,
+      footerHeight: state => state.common.footerHeight
     }),
     screenWidth () {
       return this.clientWidth / 3
+    },
+    windowHeight () {
+      return window.innerHeight
     }
   },
   watch: {
@@ -436,7 +443,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
+  @import '../../assets/CSS/index';
 
   .finance-box {
     width: 100%;
@@ -448,7 +455,7 @@ export default {
       width: 100%;
 
       > .finance-inner {
-        width: 1100px;
+        width: 1300px;
         margin: 0 auto;
 
         > .invest-list {
@@ -515,10 +522,8 @@ export default {
           box-shadow: 0 4px 6px rgba(25, 30, 40, .5);
 
           th {
-            border-top: 1px solid #a9bed4;
             color: #617499;
             background: #1c1f32;
-            box-shadow: 0 4px 6px rgba(25, 30, 40, .5);
 
             &.is-leaf {
               &:first-of-type {
@@ -537,6 +542,12 @@ export default {
 
           td {
             background: transparent;
+          }
+
+          td div {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
 
@@ -581,7 +592,7 @@ export default {
 
     &.night {
       > .inner-box {
-        background-color: $nightInnerBoxBg;
+        background-color: $mainNightBgColor;
       }
 
       /deep/ {
@@ -604,22 +615,14 @@ export default {
             td {
               border-bottom: 1px solid #1d2531;
             }
-
-            td div {
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
           }
-        }
-
-        .el-table__header {
-          box-shadow: 4px 0 4px 4px rgba(25, 30, 40, 1);
         }
       }
     }
 
     &.day {
+      background-color: #f5f5fa;
+
       > .inner-box {
         background-color: #fff;
       }
@@ -627,14 +630,15 @@ export default {
       /deep/ {
         .el-table__header {
           margin-top: 2px;
-          box-shadow: 0 0 4px rgba(51, 143, 245, .5);
         }
 
         .invest-list-body {
           .el-table {
+            width: 1290px !important;
+            margin: 3px;
             color: #666;
-            background: transparent;
-            box-shadow: 0 0 0 rgba(25, 30, 40, .5);
+            background: #fff;
+            box-shadow: 0 0 2px #ddd;
 
             td {
               border-top: 1px solid #fff;
@@ -646,7 +650,7 @@ export default {
               border-top: 1px solid rgba(234, 244, 254, 1);
               border-bottom: 1px solid rgba(234, 244, 254, 1);
               color: #617499;
-              background: #eaf4fe;
+              background: #fff;
               box-shadow: 0 0 0 rgba(25, 30, 40, .5);
 
               &.is-leaf {

@@ -480,5 +480,11 @@ export const fromApi = {
   'user_pay_password_not_setting': '请先设置交易密码后进行存币投资',
   'user_trade_password_incorrect': '账户交易密码不正确',
   'user_vip_has_expire': '此账号vip已到期无法升级！',
-  'user_vip_update_failure': '此账号暂不支持续费及升级，详情请咨询客服！'
+  'user_vip_update_failure': '此账号暂不支持续费及升级，详情请咨询客服！',
+  'user-bind-failure': '邀请人绑定失败',
+  'user-bind-success': '邀请人绑定成功',
+  'user-down-notbind': '该用户不能绑定下级用户',
+  'user-not-exist': '该用户不存在',
+  'inviter-not-exist': '回填的邀请人不存在',
+  'inviter-is-user': '回填的邀请人不能是本人'
 }

@@ -98,6 +98,7 @@ export const OTC = {
   'otc_entrust_cancellations': 'Hủy đơn',
   'otc_overtime': 'Bên mua quá hạn chưa thanh ttoans, hệ thống sẽ tự hủy',
   'otc_freeze': 'Bên mua đã thanh toán, bên bán phản đối xin yêu cầu đơn đóng băng',
+  'otc_freeze_info2': 'Bên mua đã thanh toán, bên mua phản đối đóng băng đơn hàng',
   'otc_transaction_inquiries_more': 'Tìm hiểu thêm',
   'otc_inquiries': 'Kiểm tra',
   'otc_transaction_data': 'Thời gian',

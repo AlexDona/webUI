@@ -207,7 +207,7 @@
         </div>
       </div>
       <div
-        class="no-data"
+        class="no-data text-align-c"
         v-show="!otcCanceledOrderList.length"
       >
         <!-- 暂无数据 -->
@@ -215,7 +215,7 @@
       </div>
     </div>
     <!--分页-->
-    <div class="page">
+    <div class="page text-align-c">
       <el-pagination
         background
         v-show="otcCanceledOrderList.length"
@@ -241,7 +241,6 @@ export default {
   // props,
   data () {
     return {
-      // 分页
       // 当前页显示几条数据
       pageSize: 5,
       // 当前页码
@@ -275,12 +274,12 @@ export default {
     // 3.0 请求已取消订单列表
     async getOTCCanceledOrdersList () {
       const data = await getOTCOrdersThreeDay({
-        status: 'CANCELED', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
+        status: 'CANCELED', // 状态 (已取消: CANCELED)
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      console.log('请求已取消订单列表')
-      console.log(data)
+      // console.log('请求已取消订单列表')
+      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
@@ -302,31 +301,30 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/OTC/OTCCenter.scss";
-  @import "../../../static/css/scss/index.scss";
+  @import "../../assets/CSS/index";
 
   .otc-canceled-order-box {
     > .canceled-order-content {
       > .canceled-table-head {
         box-sizing: border-box;
-        width: 1043px;
+        width: 1189px;
         height: 35px;
-        margin-bottom: 15px;
+        margin: 2px 2px 15px;
         border-radius: 5px;
         line-height: 35px;
 
         > .item {
           display: inline-block;
-          width: 140px;
+          width: 160px;
           text-align: center;
         }
       }
 
       > .canceled-table-body {
         box-sizing: border-box;
-        width: 1043px;
+        width: 1189px;
         height: 170px;
-        margin-bottom: 15px;
+        margin: 2px 2px 15px;
         border-radius: 5px;
 
         > .canceled-info-top {
@@ -334,9 +332,17 @@ export default {
           border-radius: 5px;
           line-height: 40px;
 
+          .red {
+            color: $upColor;
+          }
+
+          .green {
+            color: $otcGreen;
+          }
+
           > .item {
             display: inline-block;
-            width: 140px;
+            width: 160px;
             text-align: center;
           }
         }
@@ -345,14 +351,15 @@ export default {
           display: flex;
           flex: 7;
           box-sizing: border-box;
-          padding: 15px 30px 0;
+          padding: 25px 30px 0;
+          font-size: 12px;
 
           > .info-left {
             flex: 2;
             box-sizing: border-box;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
             }
           }
 
@@ -362,7 +369,7 @@ export default {
             margin-left: 30px;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
             }
           }
 
@@ -372,14 +379,14 @@ export default {
             margin-left: 30px;
 
             > .text-info {
-              line-height: 20px;
-              // 增加原因字段样式
+              line-height: 22px;
+
               .reason-content {
                 display: inline-block;
                 width: 250px;
                 overflow: hidden;
-                text-overflow: ellipsis; // 显示省略符号来代表被修剪的文本。
-                white-space: nowrap; // 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+                text-overflow: ellipsis;
+                white-space: nowrap;
               }
             }
           }
@@ -387,15 +394,11 @@ export default {
       }
 
       > .no-data {
-        width: 1043px;
+        width: 1189px;
         height: 432px;
+        margin: 2px 2px 15px;
         line-height: 432px;
-        text-align: center;
       }
-    }
-
-    > .page {
-      text-align: center;
     }
 
     &.night {
@@ -403,25 +406,17 @@ export default {
         > .canceled-table-head {
           border: 1px solid #485776;
           color: #a9bed4;
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
           box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .canceled-table-body {
           border: 1px solid #485776;
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
 
           > .canceled-info-top {
             color: #9da5b3;
-            background-color: #1c1f32;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
+            background-color: $mainContentNightBgColor;
           }
 
           > .canceled-info-bottom {
@@ -432,7 +427,7 @@ export default {
               border-right: 1px solid #262f38;
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
@@ -440,13 +435,13 @@ export default {
               border-right: 1px solid #262f38;
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
             > .info-right {
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
           }
@@ -462,37 +457,29 @@ export default {
     &.day {
       > .canceled-order-content {
         > .canceled-table-head {
-          border: 1px solid #ecf1f8;
-          color: #617499;
-          background-color: $mainDayColor;
+          color: $fontColorSecondaryOfDay;
+          background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .canceled-table-body {
-          border: 1px solid #ecf1f8;
-          background-color: $mainDayColor;
+          background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .canceled-info-top {
-            color: #333;
-            background-color: $mainDayColor;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
+            color: $dayMainTitleColor;
+            background-color: $mainDayBgColor;
           }
 
           > .canceled-info-bottom {
             border-top: 1px solid rgba(38, 47, 56, .1);
-            color: #7d90ac;
+            color: $dayMainTitleColor;
 
             > .info-left {
               border-right: 1px solid rgba(38, 47, 56, .1);
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
@@ -500,26 +487,26 @@ export default {
               border-right: 1px solid rgba(38, 47, 56, .1);
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
             > .info-right {
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
 
               > .cancel-time {
-                color: #333;
+                color: $dayMainTitleColor;
               }
             }
           }
         }
 
         > .no-data {
-          border: 1px solid rgba(97, 116, 153, .1);
-          color: #333;
-          background-color: $mainDayColor;
+          color: $dayMainTitleColor;
+          background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
     }

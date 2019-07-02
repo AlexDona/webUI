@@ -94,7 +94,19 @@
             <!-- 付款信息 -->
             <p class="text-info text-blue">{{$t('M.otc_index_js2')}}</p>
             <!-- 买家已付款，卖家有异议申请冻结订单 -->
-            <p class="text-info">{{$t('M.otc_freeze')}}</p>
+            <p
+              class="text-info"
+              v-show="item.appealer==='SELL'"
+            >
+              {{$t('M.otc_freeze')}}
+            </p>
+            <!--买家已付款，买家有异议申请冻结订单-->
+            <p
+              class="text-info"
+              v-show="item.appealer==='BUY'"
+            >
+              {{$t('M.otc_freeze_info2')}}
+            </p>
           </div>
           <div class="info-middle">
             <!-- 卖家信息 -->
@@ -134,7 +146,7 @@
       </div>
       <!--暂无数据-->
       <div
-        class="no-data"
+        class="no-data text-align-c"
         v-if="!otcFreezingOrderList.length"
       >
         <!-- 暂无数据 -->
@@ -142,7 +154,7 @@
       </div>
     </div>
     <!--分页-->
-    <div class="page">
+    <div class="page text-align-c">
       <el-pagination
         background
         v-show="otcFreezingOrderList.length"
@@ -159,7 +171,6 @@
 import {timeFilter} from '../../utils'
 import {getOTCOrdersThreeDay} from '../../utils/api/OTC'
 import {
-  // returnAjaxMsg,
   getNestedData
 } from '../../utils/commonFunc'
 import {mapState} from 'vuex'
@@ -168,7 +179,6 @@ export default {
   // props,
   data () {
     return {
-      // 分页
       // 每页展示的条数
       pageSize: 5,
       // 当前页码
@@ -206,8 +216,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      console.log('冻结中订单')
-      console.log(data)
+      // console.log('冻结中订单')
+      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
@@ -231,31 +241,30 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/OTC/OTCCenter.scss";
-  @import "../../../static/css/scss/index.scss";
+  @import "../../assets/CSS/index";
 
   .otc-freezing-order-box {
     > .freezing-order-content {
       > .freezing-table-head {
         box-sizing: border-box;
-        width: 1043px;
+        width: 1191px;
         height: 35px;
-        margin-bottom: 15px;
+        margin: 2px 2px 15px;
         border-radius: 5px;
         line-height: 35px;
 
         > .item {
           display: inline-block;
-          width: 140px;
+          width: 160px;
           text-align: center;
         }
       }
 
       > .freezing-table-body {
         box-sizing: border-box;
-        width: 1043px;
+        width: 1191px;
         height: 170px;
-        margin-bottom: 15px;
+        margin: 2px 2px 15px;
         border-radius: 5px;
 
         > .freezing-info-top {
@@ -263,9 +272,17 @@ export default {
           border-radius: 5px;
           line-height: 40px;
 
+          .red {
+            color: $upColor;
+          }
+
+          .green {
+            color: $otcGreen;
+          }
+
           > .item {
             display: inline-block;
-            width: 140px;
+            width: 160px;
             text-align: center;
           }
         }
@@ -275,13 +292,14 @@ export default {
           flex: 4;
           box-sizing: border-box;
           padding: 30px 30px 0;
+          font-size: 12px;
 
           > .info-left {
             flex: 1;
             box-sizing: border-box;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
             }
           }
 
@@ -291,7 +309,7 @@ export default {
             margin-left: 30px;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
             }
           }
 
@@ -301,7 +319,7 @@ export default {
             margin-left: 30px;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
             }
           }
 
@@ -311,22 +329,19 @@ export default {
             margin-left: 30px;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
             }
           }
         }
       }
 
       > .no-data {
-        width: 1043px;
+        width: 1189px;
         height: 432px;
+        margin: 2px 2px 15px;
+        border-radius: 4px;
         line-height: 432px;
-        text-align: center;
       }
-    }
-
-    .page {
-      text-align: center;
     }
 
     &.night {
@@ -344,14 +359,6 @@ export default {
 
           > .freezing-info-top {
             color: #9da5b3;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
           }
 
           > .freezing-info-bottom {
@@ -362,7 +369,7 @@ export default {
               border-right: 1px solid #262f38;
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
@@ -370,7 +377,7 @@ export default {
               border-right: 1px solid #262f38;
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
@@ -378,13 +385,13 @@ export default {
               border-right: 1px solid #262f38;
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
             > .info-reason {
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
           }
@@ -400,36 +407,28 @@ export default {
     &.day {
       > .freezing-order-content {
         > .freezing-table-head {
-          border: 1px solid #ecf1f8;
-          color: #617499;
-          background-color: $mainDayColor;
+          color: $fontColorSecondaryOfDay;
+          background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .freezing-table-body {
-          border: 1px solid #ecf1f8;
-          background-color: $mainDayColor;
+          background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .freezing-info-top {
-            color: #333;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
+            color: $dayMainTitleColor;
           }
 
           > .freezing-info-bottom {
             border-top: 1px solid rgba(38, 47, 56, .1);
-            color: #7d90ac;
+            color: $dayMainTitleColor;
 
             > .info-left {
               border-right: 1px solid rgba(38, 47, 56, .1);
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
@@ -437,7 +436,7 @@ export default {
               border-right: 1px solid rgba(38, 47, 56, .1);
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
@@ -445,22 +444,22 @@ export default {
               border-right: 1px solid rgba(38, 47, 56, .1);
 
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
 
             > .info-reason {
               > .text-blue {
-                color: #5e95ec;
+                color: $mainColor;
               }
             }
           }
         }
 
         > .no-data {
-          border: 1px solid #ecf1f8;
-          color: #333;
-          background-color: #fff;
+          color: $dayMainTitleColor;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
     }

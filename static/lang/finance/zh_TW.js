@@ -22,6 +22,7 @@ export const finance = {
   'finance_estimatedValue': '估值',
   'finance_invest_estimatedValue': '存幣估值',
   'finance_earnings': '收益',
+  'finance_income_ratio': '收益占比圖',
   'finance_predict_earnings': '預計收益',
   'finance_predict_send_time': '預計發放時間',
   'finance_earnings_value': '收益值',

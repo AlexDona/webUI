@@ -481,5 +481,12 @@ export const fromApi = {
   'user_pay_password_not_setting': '사용자가 거래 비밀번호를 설정하지 않았습니다. 먼저 거래 비밀번호를 설정하십시오.',
   'user_trade_password_incorrect': '계정 거래 비밀번호 잘못되었습니다.',
   'user_vip_has_expire': '이 계정 vip 기한이 업그레이드되지 않습니다!',
-  'user_vip_update_failure': '이 계정은 속비 및 업그레이드 지원하지 않습니다, 자세한 사정, update 서비스!'
+  'user_vip_update_failure': '이 계정은 속비 및 업그레이드 지원하지 않습니다, 자세한 사정, update 서비스!',
+
+  'user-bind-failure': '초대자 바인딩 실패',
+  'user-bind-success': '초대자 바인딩 성공',
+  'user-down-notbind': '이 사용자는 다음 사용자를 묶을 수 없습니다',
+  'user-not-exist': '이 사용자는 존재하지 않습니다',
+  'inviter-not-exist': '재작성한 초대자는 존재하지 않습니다',
+  'inviter-is-user': '재작성한 초대인은 본인이 될 수 없습니다.'
 }

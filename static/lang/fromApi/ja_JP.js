@@ -481,5 +481,13 @@ export const fromApi = {
   'user_pay_password_not_setting': 'ユーザーが取引パスワードを設定しない。先ず取引パスワードを設定してください。',
   'user_trade_password_incorrect': 'アカウントのトランザクションパスワードが間違っています',
   'user_vip_has_expire': 'このアカウントのvipは期限が切れていますので、アップグレードできません。',
-  'user_vip_update_failure': 'このアカウントは続き料とアップグレードをサポートしていません。詳しくはカスタマーサービスにお問い合わせください。'
+  'user_vip_update_failure': 'このアカウントは続き料とアップグレードをサポートしていません。詳しくはカスタマーサービスにお問い合わせください。',
+
+  'user-bind-failure': '招待者バインディング失敗',
+  'user-bind-success': '招待者バインディング成功',
+  'user-down-notbind': 'このユーザーは下級ユーザーをバインドできない。',
+  'user-not-exist': 'このユーザは存在しません。',
+  'inviter-not-exist': '書き込みの招待者は存在しません。',
+  'inviter-is-user': '書き込みの招待者は本人ではありません。',
+
 }

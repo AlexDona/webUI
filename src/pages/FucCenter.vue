@@ -174,7 +174,7 @@
 
           <div ref="line3" class="fuc-center-left">
             <h2 class="fuc-center-left-head">应用延展</h2>
-            <div class="fuc-center-left-content">
+            <div class="fuc-center-left-content content1">
               <ul class="fuc-center-left-l text-l">
                 <li>区块链专业媒体服务</li>
                 <li>行业社群推广支付</li>
@@ -744,9 +744,9 @@ ul {
               top: 38px;
               width: 100%;
               margin-top: 22px;
+              overflow: hidden;
               line-height: 30px;
               text-align: left;
-              text-indent: -40px;
             }
           }
 
@@ -789,7 +789,7 @@ ul {
           }
 
           .sub-price-p {
-            width: 231px;
+            width: 256px;
             margin-top: 32px;
             font-size: $fontSize;
             line-height: 30px;
@@ -840,6 +840,10 @@ ul {
           margin-top: 9px;
           border-radius: 10px;
           background: rgba(106, 89, 193, .14);
+
+          &.content1 {
+            width: 430px;
+          }
         }
 
         .fuc-center-left {

@@ -114,8 +114,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../static/css/scss/index";
-  @import "../../static/css/scss/Trade/TradeCenter";
+  @import "../assets/CSS/index";
 
   .trade-box {
     width: 100%;
@@ -338,7 +337,7 @@ export default {
 
     &.day {
       > .inner-box {
-        background-color: $dayInnerBoxBg;
+        background-color: $newDayBg;
 
         > .middle {
           /deep/ {

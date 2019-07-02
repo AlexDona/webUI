@@ -105,7 +105,7 @@
         top="25vh"
         class="pay-password-loaded-dialog"
       >
-        <p class="font-size12 warning-text margin-top35 text-align-c">
+        <p class="font-size12 warning-text text-align-c">
           <!--交易密码错误次数超限，交易冻结2小时。-->
           {{ $t('M.common_paypassword_locked') }}
         </p>
@@ -433,7 +433,7 @@ export default{
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../assets/CSS/index.scss";
+@import "../../assets/CSS/index";
 
 .nav-box {
   position: fixed;

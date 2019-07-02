@@ -10,7 +10,6 @@
           class="content"
         >
           <h1 class="title">{{ $t('M.actionCenter_coin_apply') }}</h1>
-
           <div
             v-html="contentHTML"
             class="return_content"
@@ -107,7 +106,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index.scss";
+  @import "../../assets/CSS/index";
 
   .currency-application-box {
     padding: 184px 0 0;
@@ -279,6 +278,7 @@ export default {
         > .bottom {
           > .content {
             background-color: rgba(255, 255, 255, .3);
+            box-shadow: 0 0 6px #cfd5df;
 
             > .title {
               color: $mainColor;

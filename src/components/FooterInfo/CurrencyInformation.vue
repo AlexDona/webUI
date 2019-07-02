@@ -137,6 +137,8 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @import '../../assets/CSS/index';
+
   .currency-information-box {
     width: 100%;
 
@@ -261,12 +263,12 @@ export default {
     }
 
     &.day {
-      background-color: #fff;
+      background-color: $newDayBg;
 
       > .inner-box {
         > .left {
-          border: 1px solid rgba(236, 241, 248, 1);
           background: #fff;
+          box-shadow: 0 0 6px #cfd5df;
 
           > .title {
             background: rgba(51, 143, 245, .5);
@@ -301,9 +303,9 @@ export default {
         }
 
         > .right {
-          border: 1px solid rgba(236, 241, 248, 1);
           color: #8ba0ca;
           background-color: #fff;
+          box-shadow: 0 0 6px #cfd5df;
 
           > .inner-box {
             > h1 {
