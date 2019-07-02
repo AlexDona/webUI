@@ -35,8 +35,9 @@
         :content ="rulesContent"
         )
       .FAQ
-        TheCrowdFundingFAQ(
+        TheCrowdFundingRichText(
         :title="$t(label.FAQTitle)"
+        :content ="FAQContent"
         )
 </template>
 <script>
@@ -45,7 +46,6 @@ import TheCrowdFundingDetailLeft from '../../components/ActivityCenter/CrowdFunc
 import TheCrowdFundingDetailRight from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingItemDetailRight'
 import TheCrowdFundingRichText from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingRichText'
 import TheCrowdFundingGoBack from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingGoBack'
-import TheCrowdFundingFAQ from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingFAQ'
 export default {
   name: 'the-crowd-funding-detail',
   // mixins: [],
@@ -54,8 +54,7 @@ export default {
     TheCrowdFundingDetailRight,
     TheCrowdFundingRichText,
     // Iconfont,
-    TheCrowdFundingGoBack,
-    TheCrowdFundingFAQ
+    TheCrowdFundingGoBack
   },
   props: {
     detailId: {
@@ -80,7 +79,7 @@ export default {
         holdCoinAmount: 'M.crowd_funding_minimum_position',
         // 截止时间
         applyEndTime: 'M.crowd_funding_minimum_deadline',
-        // 计息时间
+        // 开始分红时间
         interestStartTime: 'M.crowd_funding_interest_time',
         // 到期时间
         interestEndTime: 'M.crowd_funding_expire_date',

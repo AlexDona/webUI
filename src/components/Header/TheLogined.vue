@@ -7,7 +7,6 @@
   li.the-logined.li-item(
     @mouseenter="toggleBox(true)"
     @mouseleave="toggleBox(false)"
-    v-if="$isLogin_S_X"
   )
     span.username {{userInfo.userName}}
     el-collapse-transition

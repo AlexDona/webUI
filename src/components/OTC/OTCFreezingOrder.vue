@@ -247,9 +247,9 @@ export default {
     > .freezing-order-content {
       > .freezing-table-head {
         box-sizing: border-box;
-        width: 1195px;
+        width: 1191px;
         height: 35px;
-        margin-bottom: 15px;
+        margin: 2px 2px 15px;
         border-radius: 5px;
         line-height: 35px;
 
@@ -262,15 +262,23 @@ export default {
 
       > .freezing-table-body {
         box-sizing: border-box;
-        width: 1195px;
+        width: 1191px;
         height: 170px;
-        margin-bottom: 15px;
+        margin: 2px 2px 15px;
         border-radius: 5px;
 
         > .freezing-info-top {
           height: 40px;
           border-radius: 5px;
           line-height: 40px;
+
+          .red {
+            color: $upColor;
+          }
+
+          .green {
+            color: $otcGreen;
+          }
 
           > .item {
             display: inline-block;
@@ -284,13 +292,14 @@ export default {
           flex: 4;
           box-sizing: border-box;
           padding: 30px 30px 0;
+          font-size: 12px;
 
           > .info-left {
             flex: 1;
             box-sizing: border-box;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
             }
           }
 
@@ -300,7 +309,7 @@ export default {
             margin-left: 30px;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
             }
           }
 
@@ -310,7 +319,7 @@ export default {
             margin-left: 30px;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
             }
           }
 
@@ -320,15 +329,17 @@ export default {
             margin-left: 30px;
 
             > .text-info {
-              line-height: 20px;
+              line-height: 22px;
             }
           }
         }
       }
 
       > .no-data {
-        width: 1195px;
+        width: 1189px;
         height: 432px;
+        margin: 2px 2px 15px;
+        border-radius: 4px;
         line-height: 432px;
       }
     }
@@ -348,14 +359,6 @@ export default {
 
           > .freezing-info-top {
             color: #9da5b3;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
           }
 
           > .freezing-info-bottom {
@@ -404,30 +407,22 @@ export default {
     &.day {
       > .freezing-order-content {
         > .freezing-table-head {
-          border: 1px solid #ecf1f8;
-          color: #617499;
+          color: $fontColorSecondaryOfDay;
           background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .freezing-table-body {
-          border: 1px solid #ecf1f8;
           background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .freezing-info-top {
-            color: #333;
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
+            color: $dayMainTitleColor;
           }
 
           > .freezing-info-bottom {
             border-top: 1px solid rgba(38, 47, 56, .1);
-            color: #7d90ac;
+            color: $dayMainTitleColor;
 
             > .info-left {
               border-right: 1px solid rgba(38, 47, 56, .1);
@@ -462,9 +457,9 @@ export default {
         }
 
         > .no-data {
-          border: 1px solid #ecf1f8;
-          color: #333;
-          background-color: #fff;
+          color: $dayMainTitleColor;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
     }

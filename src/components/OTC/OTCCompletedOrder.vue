@@ -329,9 +329,13 @@ export default {
 
 .otc-completed-order-box {
   > .completed-order-content {
+    width: 1187px;
+    margin: 3px;
+
     .completed-info {
       display: flex;
       flex: 7;
+      font-size: 12px;
 
       > .completed-info-left {
         flex: 2;
@@ -422,16 +426,6 @@ export default {
 
               &.el-table__expanded-cell {
                 border-top-left-radius: 0;
-
-                &::after {
-                  position: absolute;
-                  bottom: -10px;
-                  left: 0;
-                  width: 1195px;
-                  border-bottom-right-radius: 5px;
-                  border-bottom-left-radius: 5px;
-                  content: '';
-                }
               }
             }
 
@@ -447,7 +441,9 @@ export default {
       }
 
       .el-table__empty-block {
-        height: 433px;
+        width: 1189px !important;
+        min-height: 432px;
+        margin: 2px;
       }
     }
   }
@@ -455,11 +451,11 @@ export default {
   &.night {
     > .completed-order-content {
       .red {
-        color: #d45858;
+        color: $upColor;
       }
 
       .green {
-        color: #008069;
+        color: $otcGreen;
       }
 
       .completed-info {
@@ -504,7 +500,7 @@ export default {
             tr {
               &:hover {
                 > td {
-                  background-color: #1c1f32;
+                  background-color: $mainContentNightBgColor;
                 }
               }
             }
@@ -543,7 +539,7 @@ export default {
 
         .el-table__expanded-cell {
           border-bottom: 25px solid #272b41;
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
         }
 
         > .tables {
@@ -572,6 +568,8 @@ export default {
             box-shadow: 4px 4px 6px #191e28;
 
             &.is-leaf {
+              border-bottom: 1px solid #485776 !important;
+
               &:first-of-type {
                 border-bottom-left-radius: 5px;
                 border-top-left-radius: 5px;
@@ -601,12 +599,12 @@ export default {
                     position: absolute;
                     bottom: -10px;
                     left: 0;
-                    width: 1195px;
+                    width: 1189px;
                     height: 20px;
                     border-bottom: 1px solid #262f38;
                     border-bottom-right-radius: 5px;
                     border-bottom-left-radius: 5px;
-                    background-color: #1c1f32;
+                    background-color: $mainContentNightBgColor;
                     content: '';
                   }
                 }
@@ -624,8 +622,7 @@ export default {
         }
 
         .el-table__empty-block {
-          min-height: 432px;
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
         }
       }
     }
@@ -634,15 +631,15 @@ export default {
   &.day {
     > .completed-order-content {
       .red {
-        color: #d45858;
+        color: $upColor;
       }
 
       .green {
-        color: #008069;
+        color: $otcGreen;
       }
 
       .completed-info {
-        color: #7d90ac;
+        color: $dayMainTitleColor;
 
         > .completed-info-left {
           border-right: 1px solid rgba(38, 47, 56, .1);
@@ -676,18 +673,30 @@ export default {
       /deep/ {
         .el-table {
           border-collapse: separate !important;
-          color: #9da5b3;
-          background-color: #fff;
+          color: $dayMainTitleColor;
+          background-color: $mainBgColorOfDay;
+
+          .el-table__header-wrapper {
+            width: 1181px;
+            margin: 3px;
+            overflow: initial;
+            box-shadow: 0 0 6px #cfd5df;
+
+            .el-table__header {
+              table-layout: inherit;
+              width: 1180px !important;
+            }
+          }
+
+          thead {
+            color: $fontColorSecondaryOfDay;
+          }
 
           th {
             padding: 5px 0;
 
             &.is-leaf {
-              border-top: 1px solid #ecf1f8;
-              border-bottom: 1px solid #ecf1f8;
-
               &:first-of-type {
-                border-left: 1px solid #ecf1f8;
                 border-bottom-left-radius: 5px;
                 border-top-left-radius: 5px;
               }
@@ -695,14 +704,13 @@ export default {
               &:nth-last-of-type(2) {
                 border-top-right-radius: 5px;
                 border-bottom-right-radius: 5px;
-                border-right: 1px solid #ecf1f8;
               }
             }
           }
         }
 
         .el-table__empty-text {
-          color: #333;
+          color: $dayMainTitleColor;
         }
 
         .el-table--enable-row-hover {
@@ -710,7 +718,7 @@ export default {
             tr {
               &:hover {
                 > td {
-                  background-color: #fff;
+                  background-color: $mainColorOfWhite;
                 }
               }
             }
@@ -726,8 +734,8 @@ export default {
         }
 
         .el-table__expanded-cell {
-          border-bottom: 25px solid #fff;
-          background-color: #fff;
+          border-bottom: 25px solid $mainColorOfWhite;
+          background-color: $mainColorOfWhite;
         }
 
         .el-icon-arrow-right {
@@ -759,13 +767,13 @@ export default {
 
                   &::after {
                     position: absolute;
-                    bottom: -10px;
-                    left: 0;
-                    width: 1195px;
-                    border-bottom: 1px solid #ecf1f8;
-                    border-bottom-right-radius: 5px;
-                    border-bottom-left-radius: 5px;
-                    background-color: #fff;
+                    bottom: -25px;
+                    left: -2px;
+                    width: 1190px;
+                    height: 13px;
+                    background-color: $mainBgColorOfDay;
+                    -webkit-box-shadow: 0 0 6px $boxShadowColorOfDay;
+                    box-shadow: 0 0 6px $boxShadowColorOfDay;
                     content: '';
                   }
                 }
@@ -784,9 +792,8 @@ export default {
         }
 
         .el-table__empty-block {
-          min-height: 432px;
-          border: 1px solid #ecf1f8;
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
     }
@@ -795,6 +802,10 @@ export default {
 
 /deep/ {
   .el-table {
+    th.is-leaf {
+      border-bottom: 0 !important;
+    }
+
     td {
       border-bottom: 1px solid #262f38;
     }

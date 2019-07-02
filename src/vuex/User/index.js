@@ -41,7 +41,9 @@ const state = {
   },
   isUserRefreshSuccess: false,
   // 登录是否失效
-  isTokenDisable: false
+  isTokenDisable: false,
+  // 邀请 推广 数据
+  invitation_S: {}
 }
 
 export default {

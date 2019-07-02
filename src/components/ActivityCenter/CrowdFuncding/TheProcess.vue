@@ -11,7 +11,10 @@
       .the-min-width(
         :style="{width: `${process}%`}"
       )
-        .bar(v-show="!isAll")
+        .bar(
+          v-show="!isAll"
+          :style="{right: process ? '-13px' : `-26px`}"
+        )
     .text {{process}}%
 </template>
 <script>
@@ -54,7 +57,9 @@ export default {
     height 10px
     margin 15px 0
     >.the-process-bg
-      flex 6
+      position relative
+      /*left 13px*/
+      width 80%
       box-shadow 0 3px 49px 0 rgba(24,26,41,1)
       border-radius 6px
       background #353f61
@@ -66,7 +71,6 @@ export default {
         >.bar
           position absolute
           content ''
-          right -22px
           top 50%
           transform translateY(-50%)
           width 26px
@@ -79,7 +83,7 @@ export default {
         >.the-min-width
           height 10px
     >.text
-      flex 1
+      width 20%
       color S_main_color
       text-align right
       line-height 14px

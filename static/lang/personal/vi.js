@@ -130,6 +130,7 @@ export const personal = {
   'user_invite_people': 'Người',
   'user_invite_succeed': 'Thành công',
   'user_invite_have_obtained': 'Đã lấy được tiền thưởng',
+  // 'user_inviter_tips': '邀请人保存后无法修改！',
   'user_invite_statistics': 'Thống kê',
   'user_invite_direct': 'Trực tiếp mở rộng',
   'user_direct_reward': 'Trưcp tiếp thưởng',

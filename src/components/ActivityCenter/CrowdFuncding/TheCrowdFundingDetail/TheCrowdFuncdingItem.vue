@@ -12,7 +12,7 @@
     .header
       .h-top
         span.logo(
-          :style="{background: `#1c1f32 url(${logo}) no-repeat center center/50px`}"
+          :style="{background: `#1c1f32 url(${logo}) no-repeat center center/100%`}"
         )
         span.title {{projectName}}
       .h-bottom
@@ -128,7 +128,7 @@ export default {
     },
     process () {
       return _.get(this.crowdFunding, 'process') - 0
-      // return 50
+      // return 100
     },
     statusName () {
       /**

@@ -159,6 +159,7 @@ export const personal = {
   'user_invite_people': '人',
   'user_invite_succeed': '成功',
   'user_invite_have_obtained': '已獲得的傭金折合',
+  // 'user_inviter_tips': '邀请人保存后无法修改！',
   'user_invite_statistics': '統計',
   'user_invite_direct': '直接推廣',
   'user_direct_reward': '直接獎勵',
@@ -271,7 +272,7 @@ export const personal = {
   'user_push_forbid': '禁止自我PUSH',
   'user_push_amount': 'PUSH金額',
   'user_push_amount_count': 'PUSH數量不能為0',
-  'user_push_amount_price': 'PUSH單價不能為0',
+  'user_push_amount_price': 'PUSH單價不能為空',
   // PUSH記錄
   // #####################我的交易#####################
   // 幣幣訂單

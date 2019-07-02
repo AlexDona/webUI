@@ -4,104 +4,99 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 委托订单表格 -->
-    <div
-      class="fiat-entrust-order-table"
-    >
+    <div class="fiat-entrust-order-table">
       <!-- 表头 -->
-      <div class="entrust-table-head display-flex">
-        <span class="item first-style flex1">
+      <div class="entrust-table-head font-size12 box-sizing">
+        <div class="item first-style">
           <!--类型-->
           {{$t('M.comm_type')}}
-        </span>
-        <span class="item second-coin flex1">
+        </div>
+        <div class="item second-coin">
           <!--币种-->
           {{$t('M.otc_AD_token')}}
-        </span>
-        <span class="item third-price flex1">
+        </div>
+        <div class="item third-price">
           <!--价格-->
           {{$t('M.otc_index_price')}}
-        </span>
-        <span class="item fourth-entrust-count flex1">
+        </div>
+        <div class="item fourth-entrust-count">
           <!--挂单数量-->
           {{$t('M.otc_entrust_number')}}
-        </span>
-        <span class="item fifth-match-count flex1">
+        </div>
+        <div class="item fifth-match-count">
           <!--已匹配数量-->
           <!-- 20181213改为 已成交数量-->
           {{$t('M.otc_entrust_matching')}}
-        </span>
-        <span class="item sixth-total-amount flex1">
+        </div>
+        <div class="item sixth-total-amount">
           <!--总金额-->
           {{$t('M.otc_canceled_total')}}
-        </span>
-        <span class="item senventh-create-time">
+        </div>
+        <div class="item seventh-create-time">
           <!--挂单时间-->
           {{$t('M.otc_entrust_time')}}
-        </span>
-        <span class="item eighth-action flex1">
+        </div>
+        <div class="item eighth-action text-align-r">
           <!--操作-->
           {{$t('M.otc_index_operate')}}
-        </span>
+        </div>
       </div>
       <!-- 表身体 -->
       <div
-        class="entrust-table-body"
+        class="entrust-table-body font-size12"
       >
-        <div class="no-data" v-if="!OTCEntrustOrderList.length">
-          <!--暂无数据-->
-          {{$t('M.comm_no_data')}}
-        </div>
+        <!--委单列表-->
         <div
-          class="entrust-list-content display-flex"
+          class="entrust-list-content"
           v-for="(item,index) in OTCEntrustOrderList"
           :key="index"
           v-if="OTCEntrustOrderList.length"
         >
           <!-- 1 类型 -->
           <!-- 买入 -->
-          <span
-            class="item first-style flex1"
+          <div
+            class="item first-style"
             v-if="item.entrustType === 'BUY'"
             :class="{ red: item.entrustType === 'BUY' }"
           >
             <!--买入-->
             {{$t('M.comm_buy')}}
-          </span>
+          </div>
           <!-- 卖出 -->
-          <span
-            class="item first-style flex1"
+          <div
+            class="item first-style"
             v-if="item.entrustType === 'SELL'"
             :class="{ green: item.entrustType === 'SELL' }"
           >
             <!--卖出-->
             {{$t('M.comm_sell')}}
-          </span>
+          </div>
           <!-- 2 币种 -->
-          <span class="item second-coin flex1">
+          <div class="item second-coin">
             {{item.coinName}}
-          </span>
+          </div>
           <!-- 3 价格 -->
-          <span class="item third-price flex1">
+          <div class="item third-price">
             {{item.price}}({{item.currencyName}})
-          </span>
+          </div>
           <!-- 4 挂单数量 -->
-          <span class="item fourth-entrust-count flex1">
+          <div class="item fourth-entrust-count">
             {{item.entrustCount}}({{item.coinName}})
-          </span>
+          </div>
           <!-- 5 已匹配数量 -->
-          <span class="item fifth-match-count flex1">
+          <div class="item fifth-match-count">
             {{item.matchCount}}({{item.coinName}})
-          </span>
+          </div>
           <!-- 6 总金额 -->
-          <span class="item sixth-total-amount flex1">
+          <div class="item sixth-total-amount">
             {{item.totalAmount}}({{item.currencyName}})
-          </span>
+          </div>
           <!-- 7 挂单时间 -->
-          <span class="item senventh-create-time1">
+          <div class="item seventh-create-time1">
             {{item.createTime}}
-          </span>
+          </div>
           <!-- 8 操作 -->
-          <span class="item eighth-action flex1">
+          <div class="item eighth-action text-align-r">
             <el-button
               type="text"
               @click="revocationOrder(item.id)"
@@ -109,18 +104,27 @@
               <!--撤单-->
               {{$t('M.otc_entrust_cancellations')}}
             </el-button>
-          </span>
+          </div>
+        </div>
+        <!--暂无数据-->
+        <div
+          class="no-data text-align-c"
+          v-if="!OTCEntrustOrderList.length"
+        >
+          {{$t('M.comm_no_data')}}
         </div>
         <!--分页-->
-        <el-pagination
-          background
-          v-show="OTCEntrustOrderList.length"
-          layout="prev, pager, next"
-          :current-page="legalTradePageNum"
-          :page-count="legalTradePageTotals"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
+        <div class="pages">
+          <el-pagination
+            background
+            v-show="OTCEntrustOrderList.length"
+            layout="prev, pager, next"
+            :current-page="legalTradePageNum"
+            :page-count="legalTradePageTotals"
+            @current-change="changeCurrentPage"
+          >
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -220,65 +224,74 @@ export default {
   .fiat-entrust-order-box {
     .fiat-entrust-order-table {
       > .entrust-table-head {
-        z-index: 200;
-        box-sizing: border-box;
+        display: flex;
         height: 35px;
-        margin-bottom: 5px;
-        border-radius: 5px;
+        padding: 0 10px;
+        margin-bottom: 10px;
         line-height: 35px;
 
         > .item {
-          display: inline-block;
-          text-align: center;
+          width: 130px;
         }
 
-        > .senventh-create-time {
-          width: 150px;
-        }
-
-        > .senventh-create-time1 {
-          width: 120px;
+        > .first-style,
+        .second-coin,
+        .eighth-action {
+          width: 100px;
         }
       }
 
-      > .entrust-table-body,
-      .item {
-        border-top: none;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-
-        > .no-data {
-          height: 431px;
-          line-height: 431px;
-          text-align: center;
-        }
+      > .entrust-table-body {
+        min-height: 485px;
+        padding: 30px 0;
 
         > .entrust-list-content {
           display: flex;
           height: 34px;
+          padding: 0 10px;
           line-height: 34px;
 
           > .item {
-            text-align: center;
+            width: 130px;
           }
+
+          > .first-style,
+          .second-coin,
+          .eighth-action {
+            width: 100px;
+          }
+
+          .red {
+            color: $upColor;
+          }
+
+          .green {
+            color: $otcGreen;
+          }
+        }
+
+        > .no-data {
+          height: 371px;
+          line-height: 431px;
+        }
+
+        > .pages {
+          margin-top: 50px;
         }
       }
     }
 
     /deep/ {
-      .el-button {
-        min-width: 60px !important;
-        height: 26px !important;
-        margin: 0;
-        font-size: 14px;
-        line-height: 0;
-      }
-
       .fiat-entrust-order-table {
-        .entrust-table-head {
-          border-radius: 0;
-          -webkit-box-shadow: none;
-          box-shadow: none;
+        .entrust-table-body {
+          .eighth-action {
+            .el-button {
+              height: 34px;
+              line-height: 0;
+              color: $mainColor;
+              background: none;
+            }
+          }
         }
       }
     }
@@ -287,17 +300,8 @@ export default {
       color: $nightFontColor;
       background-color: $mainNightBgColor;
 
-      > .background-color {
-        background-color: $mainContentNightBgColor;
-
-        > .fiat-color {
-          color: #338ff5;
-        }
-      }
-
       > .fiat-entrust-order-table {
         > .entrust-table-head {
-          border: 1px solid #262f38 !important;
           text-align: left;
           color: #617499;
           background-color: $mainContentNightBgColor;
@@ -308,16 +312,6 @@ export default {
           color: #9da5b3;
           background-color: $mainContentNightBgColor;
 
-          > .entrust-list-content {
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
-          }
-
           .no-data {
             background-color: $mainContentNightBgColor;
           }
@@ -327,38 +321,28 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
-
-      > .background-color {
-        background-color: $mainDayBgColor;
-      }
 
       > .fiat-entrust-order-table {
         > .entrust-table-head {
-          border: 1px solid rgba(72, 87, 118, .1) !important;
-          color: #617499;
+          color: $fontColorSecondaryOfDay;
           background-color: $mainDayBgColor;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .entrust-table-body {
-          min-height: 432px;
-          border: 1px solid rgba(72, 87, 118, .1);
-          color: #9da5b3;
-          background-color: #fff;
+          color: $dayMainTitleColor;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .entrust-list-content {
             > .item {
-              background-color: #fff;
-            }
-
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
+              background-color: $mainColorOfWhite;
             }
           }
+        }
+
+        .no-data {
+          color: $fontColorSecondaryOfDay;
         }
       }
     }

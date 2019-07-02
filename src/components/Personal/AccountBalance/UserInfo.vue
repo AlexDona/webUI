@@ -513,9 +513,9 @@ export default {
       background-color: $mainDayBgColor;
 
       > .user-info-main {
-        border: 1px solid rgba(38, 47, 56, .1);
         color: $dayMainTitleColor;
         background-color: $mainDayBgColor;
+        box-shadow: 0 0 6px #cfd5df;
 
         > .user-info-content-box {
           > .user,

@@ -6,13 +6,13 @@
     <div class="push-assets-main">
       <div class="push-assets-content">
         <header class="push-header personal-height40 line-height40">
-          <span class="push-header-title display-inline-block padding-left23 font-size16 font-weight600">
+          <span class="push-header-title display-inline-block padding-left23 font-size16 font-weight400">
             <!--PUSH资产-->
             PUSH{{ $t('M.comm_property') }}
           </span>
         </header>
       </div>
-      <div class="push-assets-content-box margin-top9">
+      <div class="push-assets-content-box">
         <div class="push-from-box">
           <el-form label-width="125px">
             <!--资产-->
@@ -116,10 +116,10 @@
       </div>
     </div>
     <div
-      class="push-assets-main margin-top9"
+      class="push-assets-main"
       v-if="userCenterActiveName==='push-asset'"
     >
-      <div class="award-record margin-top9 padding-top0">
+      <div class="award-record padding-top0">
         <header class="award-record-header line-height56">
           <span class="font-size16 header-color">
             <!--PUSH记录-->
@@ -672,12 +672,10 @@ export default {
         })
         return false
       }
-      if (this.$refs.price.value === '0') {
-        // PUSH单价为零提示单价不能为0
-        this.$message({
-          message: this.$t('M.user_push_amount_price'),
-          type: 'error'
-        })
+      const price = this.$refs.price.value
+      if (price != '0' && !price) {
+        // PUSH单价为零提示单价不能为空
+        this.$error_tips_X(this.$t('M.user_push_amount_price'))
         return false
       }
       let goOnStatus = 0
@@ -870,6 +868,7 @@ export default {
     > .push-assets-main {
       > .push-assets-content-box {
         min-height: 448px;
+        margin: 10px 0;
 
         > .push-from-box {
           width: 400px;
@@ -1263,19 +1262,17 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       > .push-assets-main {
         > .push-assets-content,
         > .push-assets-content-box {
-          border: 1px solid rgba(246, 246, 246, 1);
-          border-radius: 4px;
-          background: rgba(255, 255, 255, 1);
-          box-shadow: 0 0 4px rgba(235, 240, 248, 1);
+          border-radius: 2px;
+          background: #fff;
+          box-shadow: 0 0 6px #cfd5df;
 
           > .push-header {
-            border: 1px solid rgba(236, 241, 248, 1);
-            background: rgba(255, 255, 255, 1);
+            background: #fff;
+            box-shadow: 0 0 6px #cfd5df;
 
             > .push-header-title {
               color: $mainColor;
@@ -1305,10 +1302,9 @@ export default {
         }
 
         > .award-record {
-          border: 1px solid rgba(246, 246, 246, 1);
-          border-radius: 4px;
-          background: rgba(255, 255, 255, 1);
-          box-shadow: 0 0 4px rgba(235, 240, 248, 1);
+          border-radius: 2px;
+          background: #fff;
+          box-shadow: 0 0 6px #cfd5df;
 
           > .award-record-header {
             border-bottom: 1px solid rgba(57, 66, 77, .1);

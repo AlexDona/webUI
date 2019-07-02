@@ -115,6 +115,12 @@ export const common = {
   'comm_user_invite': '邀請',
   'comm_user_generalize': '推廣',
   'comm_user_invite_generalize': '邀請推廣',
+
+  'comm_user_invite_info': '推廣資訊',
+  'comm_user_inviter': '邀請人',
+  'comm_user_invite_tip1': '注：邀請人填寫後無法修改！',
+  'comm_user_invite_tip2': '請輸入邀請人UID',
+
   'comm_user_api_management': 'API管理',
   'comm_all': '全部',
   'comm_alipay': '支付寶',
@@ -144,6 +150,7 @@ export const common = {
   'comm_loginpassword': '密碼',
   'comm_clause': '條款',
   'comm_rate1': '費率',
+  'common_connect_us': '聯系我們',
   'comm_pack_up': '收起',
   'comm_after_get': '後重獲取',
   'comm_get_code': '獲取驗證碼',

@@ -3,13 +3,13 @@
     class="fiat-orders personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <header class="personal-height background-color line-height40 personal-height40 font-size16">
-      <span class="padding-left15 fiat-color font-weight600">
-        <!--法币订单-->
+    <!--法币订单-->
+    <!--<header class="personal-height background-color line-height40 personal-height40 font-size16">
+      <span class="padding-left15 fiat-color font-weight400">
         {{ $t('M.comm_coin') }}{{ $t('M.comm_order') }}
       </span>
-    </header>
-    <div class="fiat-main min-height500 margin-top9">
+    </header>-->
+    <div class="fiat-main">
       <el-tabs
         v-model="activeName"
         :tab-position = "tabPosition"
@@ -182,9 +182,6 @@ import FiatCoinCompletedOrder from '../FiatCoinContent/FiatCoinCompletedOrder'
 import FiatCoinFreezingOrder from '../FiatCoinContent/FiatCoinFreezingOrder'
 import FiatCoinEntrustOrder from '../FiatCoinContent/FiatCoinEntrustOrder'
 import IconFontCommon from '../../Common/IconFontCommon'
-// import {
-//   getOTCEntrustingOrders
-// } from '../../../utils/api/personal'
 import {
   getMerchantAvailableLegalTender,
   getOTCAvailableCurrency,
@@ -356,17 +353,21 @@ export default {
         endTime: this.endTime,
         // 类型
         // tradeType: this.activatedMerchantsOrdersTraderStyleList,
-        pageNum: this.legalTradePageNum,
-        pageSize: this.legalTradePageSize
+        pageNum: this.legalTradePageNum
+        // pageSize: this.legalTradePageSize
       }
       // 20190218 增加委单和其他状态交易类型字段判断 委托订单用entrustType字段其他用tradeType字段
       if (activeName == 'ENTRUSTED') {
         params.entrustType = this.activatedMerchantsOrdersTraderStyleList
+        params.pageSize = 10 // 委托订单每页显示10条
       } else {
         params.tradeType = this.activatedMerchantsOrdersTraderStyleList
+        params.pageSize = this.legalTradePageSize // 每页显示5条
       }
       if (activeName == 'ENTRUSTED') {
         const data = await getOTCEntrustingOrders(params)
+        console.log('委托订单列表')
+        console.log(data)
         if (!data) return false
         let OTCEntrustingOrdersData = getNestedData(data, 'data')
         // 返回数据正确的逻辑 重新渲染列表
@@ -384,6 +385,10 @@ export default {
           if (!(returnAjaxMsg(data, this, 0))) {
             return false
           } else {
+            console.log('法币订单列表（除了委托订单)')
+            console.log(data)
+            // 请求接口之前，调用子组件（交易中订单组件）方法，清空定义的数组数据this.$refs.tradeOrder.clearArrData()
+            this.$refs.tradeOrder.clearArrData()
             let merchantsOrdersListData = getNestedData(data, 'data.data')
             // 返回数据正确的逻辑 重新渲染列表
             this.SET_LEGAL_TENDER_LIST({
@@ -488,6 +493,7 @@ export default {
       .orders-main-top {
         height: 125px;
         padding: 0 25px;
+        margin: 10px 0;
 
         .trade-type {
           width: 250px;
@@ -517,7 +523,7 @@ export default {
         }
 
         > .all-clear {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
     }
@@ -532,7 +538,7 @@ export default {
       .el-tabs__item {
         width: 105px;
         padding: 0;
-        margin-left: 4px;
+        margin: 3px 0;
         border-left: 0 solid transparent !important;
         text-align: center;
         background-color: transparent !important;
@@ -574,6 +580,10 @@ export default {
         margin-left: 77px;
         border: 0;
       }
+
+      .el-tabs__header {
+        margin: 0;
+      }
     }
 
     &.night {
@@ -584,13 +594,13 @@ export default {
         background-color: $mainContentNightBgColor;
 
         > .fiat-color {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
       .fiat-main {
         .orders-main-top {
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
         }
       }
 
@@ -600,7 +610,7 @@ export default {
         /* tabs切换 */
         .el-tabs__item {
           &.is-active {
-            border-bottom: 2px solid #338ff5 !important;
+            border-bottom: 2px solid $mainColor !important;
             border-left: 0;
             color: rgba(0, 121, 254, 1) !important;
             background-color: #1c1f32 !important;
@@ -616,7 +626,7 @@ export default {
         }
 
         .el-button {
-          color: #fff;
+          color: $mainColorOfWhite;
           background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
@@ -624,37 +634,42 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       > header {
-        border: 1px solid #ecf1f8;
+        background-color: $mainColorOfWhite;
+        box-shadow: 0 0 6px #cfd5df;
 
         > span {
-          color: #338ff5;
+          color: $mainColor;
         }
       }
 
       > div {
-        border: 1px solid #ecf1f8;
+        background-color: $mainColorOfWhite;
+        box-shadow: 0 0 6px #cfd5df;
+      }
+
+      .fiat-main {
+        .orders-main-top {
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px #cfd5df;
+        }
       }
 
       /deep/ {
-        /* 个人中心（白色主题） */
-
         /* tabs切换 */
         .el-tabs__item {
-          border-bottom: 1px solid #ecf1f8;
           color: #7d90ac;
 
           &:hover {
             border-left: none;
-            color: #338ff5;
+            color: $mainColor;
           }
 
           &.is-active {
-            border-bottom: 2px solid #338ff5;
+            border-bottom: 2px solid $mainColor;
             border-left: none;
-            color: #338ff5;
+            color: $mainColor;
             background-color: transparent;
           }
         }

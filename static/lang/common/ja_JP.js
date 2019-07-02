@@ -14,6 +14,7 @@ export const common = {
   'comm_white': 'ホワイト',
   'comm_confirm': '確認',
   'comm_sold_out': '削除',
+  // 'common_save': '保存',
   'comm_all_sold_out': '全部削除',
   'comm_affirm': '確認',
   'comm_cancel': '取消す',
@@ -115,6 +116,12 @@ export const common = {
   'comm_user_invite': 'インビテーション',
   'comm_user_generalize': 'プロモーション',
   'comm_user_invite_generalize': 'インビテーション',
+
+  'comm_user_invite_info': '広め情報',
+  'comm_user_inviter': '招待者',
+  'comm_user_invite_tip1': '注：招待者が記入したら、修正できません。',
+  'comm_user_invite_tip2': '招待者UIDを入力してください',
+
   'comm_user_api_management': 'API管理',
   'comm_all': 'すべて',
   'comm_alipay': 'Alipay',
@@ -144,6 +151,7 @@ export const common = {
   'comm_loginpassword': 'パスワード',
   'comm_clause': '利用規約',
   'comm_rate1': '手数料',
+  'common_connect_us': '連絡します',
   'comm_pack_up': '折りたたむ',
   'comm_after_get': '取得',
   'common_direction': 'タイプ',
