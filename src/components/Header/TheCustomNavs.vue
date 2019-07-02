@@ -27,7 +27,7 @@
         )
           a(
             href="javascript:void(0);"
-            @click="navToJump(navItem)"
+            @click="navToJump(navItem,'more')"
           )
             span {{navItem.name}}
           ul.sub-nav-list(
@@ -41,7 +41,7 @@
             )
               a(
                 href="javascript:void(0);"
-                @click="navToJump(subNav)"
+                @click="navToJump(subNav, 'more')"
               )
                 span {{subNav.name}}
     li.nav-item(
@@ -120,16 +120,28 @@ export default {
       'CHANGE_LANGUAGE',
       'SET_NOTICE_ID'
     ]),
-    navToJump (navigation) {
-      const { link } = navigation
-      const targetRoute = this.navigation[this.activeNavIndex]
-
-      const isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
-      if (targetRoute.link == link) {
-        this.activeLink = link
-      } else if (isChildLink) {
-        this.activeLink = targetRoute.link
+    /**
+     * type: normal: 正常导航; more: 更多导航
+     * @param navigation
+     * @param type
+     */
+    navToJump (navigation, type = 'normal') {
+      switch (type) {
+        case 'normal':
+          const { link } = navigation
+          const targetRoute = this.navigation[this.activeNavIndex]
+          console.log(link, targetRoute, this.activeNavIndex, this.navigation, this.activeMoreNavIndex)
+          const isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
+          if (targetRoute.link == link) {
+            this.activeLink = link
+          } else if (isChildLink) {
+            this.activeLink = targetRoute.link
+          }
+          break
+        case 'more':
+          break
       }
+
       this.$emit('navToJump', navigation)
     },
     // 切换子导航显示
