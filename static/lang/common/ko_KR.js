@@ -14,7 +14,7 @@ export const common = {
   'comm_white': '백색',
   'comm_confirm': '확인',
   'comm_sold_out': '오프',
-  // 'common_save': '保存',
+  'common_save': '보존하다',
   'comm_all_sold_out': '전부 오프',
   'comm_affirm': '확인',
   'comm_cancel': '취소',

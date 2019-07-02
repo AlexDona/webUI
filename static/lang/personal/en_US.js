@@ -157,7 +157,7 @@ export const personal = {
   'user_invite_people': 'people',
   'user_invite_succeed': 'Success ',
   'user_invite_have_obtained': 'Commissioned conversion',
-  // 'user_inviter_tips': '邀请人保存后无法修改！',
+  'user_inviter_tips': 'Cannot be modified after the inviter saves',
   'user_invite_statistics': ' Statistics',
   'user_invite_direct': 'Direct promotion',
   'user_direct_reward': 'Direct reward',

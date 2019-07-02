@@ -14,7 +14,7 @@ export const common = {
   'comm_white': 'Màu trắng',
   'comm_confirm': 'Quyết định',
   'comm_sold_out': 'Bán hết',
-  // 'common_save': '保存',
+  'common_save': 'Lưu',
   'comm_all_sold_out': 'Tất cả bán hết',
   'comm_affirm': 'Xác nhận',
   'comm_cancel': 'Hủy bỏ',

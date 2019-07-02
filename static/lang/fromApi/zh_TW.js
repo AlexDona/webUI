@@ -481,5 +481,12 @@ export const fromApi = {
   'user_pay_password_not_setting': '用戶未設置交易密碼，請先設置交易密碼',
   'user_trade_password_incorrect': '帳戶交易密碼不正確',
   'user_vip_has_expire': '此帳號vip已到期限無法陞級！',
-  'user_vip_update_failure': '此帳號暫不支持續費及陞級，詳情請諮_客服務！'
+  'user_vip_update_failure': '此帳號暫不支持續費及陞級，詳情請諮_客服務！',
+
+  'user-bind-failure': '邀請人綁定失敗',
+  'user-bind-success': '邀請人綁定成功',
+  'user-down-notbind': '該用戶不能綁定下級用戶',
+  'user-not-exist': '該用戶不存在',
+  'inviter-not-exist': '回填的邀請人不存在',
+  'inviter-is-user': '回填的邀請人不能是本人'
 }

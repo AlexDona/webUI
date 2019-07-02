@@ -481,5 +481,12 @@ export const fromApi = {
   'user_pay_password_not_setting': 'You have not set a transaction password, please set the transaction password first.',
   'user_trade_password_incorrect': 'Account transaction password is incorrect',
   'user_vip_has_expire': 'this account VIP expires and cannot be upgraded!',
-  'user_vip_update_failure': 'This account does not support renewal and upgrade for suspend, please consult customer service for details!'
+  'user_vip_update_failure': 'This account does not support renewal and upgrade for suspend, please consult customer service for details!',
+  'user-bind-failure': 'Inviter binds failed',
+  'user-bind-success': 'Inviter binds successfully',
+  'user-down-notbind': 'The user cannot bind the subordinate user.',
+  'user-not-exist': 'The user does not exist',
+  'inviter-not-exist': 'Inviter does not exist',
+  'inviter-is-user': 'The inviter cannot be yourself',
+
 }
