@@ -276,6 +276,9 @@ export default {
   },
   activated () {},
   update () {},
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
   beforeRouteUpdate () {},
   methods: {
     handleScroll () {
