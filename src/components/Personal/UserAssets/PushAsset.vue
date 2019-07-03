@@ -1370,7 +1370,7 @@ export default {
 
         .shipping-address {
           .el-dialog__header {
-            background: #20293c;
+            background: #fff;
           }
         }
       }

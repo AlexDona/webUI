@@ -516,10 +516,8 @@ export default {
           this.startTimeValue = targetValue
           if (this.endTimeValue) {
             if (this.startTimeValue > this.endTimeValue) {
-              this.$message({ // message: '开始时间不能大于结束时间',
-                message: this.$t('M.otc_time_limit'),
-                type: 'error'
-              })
+              // 开始时间不能大于结束时间
+              this.$error_tips_X(this.$t('M.otc_time_limit'))
               return false
             }
           }
@@ -529,10 +527,8 @@ export default {
           this.endTimeValue = targetValue
           if (this.startTimeValue) {
             if (this.startTimeValue > this.endTimeValue) {
-              this.$message({ // message: '开始时间不能大于结束时间',
-                message: this.$t('M.otc_time_limit'),
-                type: 'error'
-              })
+              // 开始时间不能大于结束时间
+              this.$error_tips_X(this.$t('M.otc_time_limit'))
               return false
             }
           }
@@ -952,7 +948,6 @@ export default {
 
               &.is-leaf {
                 border-bottom: 1px solid #ecf1f8;
-                box-shadow: inset 0 1px 2px #ecf1f8;
 
                 &:first-of-type {
                   border-left: 0 solid #ecf1f8;

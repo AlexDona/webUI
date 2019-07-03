@@ -664,11 +664,8 @@ export default {
       this.activatedRadioId = ''
       if (this.endTimeValue) {
         if (this.startTimeValue > this.endTimeValue) {
-          // message: '开始时间不能大于结束时间',
-          this.$message({
-            message: this.$t('M.otc_time_limit'),
-            type: 'error'
-          })
+          // 开始时间不能大于结束时间
+          this.$error_tips_X(this.$t('M.otc_time_limit'))
           return false
         }
       }
@@ -680,11 +677,8 @@ export default {
       this.activatedRadioId = ''
       if (this.startTimeValue) {
         if (this.startTimeValue > this.endTimeValue) {
-          // message: '开始时间不能大于结束时间',
-          this.$message({
-            message: this.$t('M.otc_time_limit'),
-            type: 'error'
-          })
+          // 开始时间不能大于结束时间
+          this.$error_tips_X(this.$t('M.otc_time_limit'))
           return false
         }
       }
