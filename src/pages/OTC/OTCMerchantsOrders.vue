@@ -115,27 +115,17 @@
               {{$t('M.otc_MerchantsOrders_date')}}
             </span>
             <span class="date-picker">
-              <!--开始日期-->
               <el-date-picker
-                :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_MerchantsOrders_date')"
-                v-model="startTimeValue"
-                type="date"
+                v-model="checkedTime"
+                type="daterange"
+                range-separator="-"
+                :start-placeholder="$t('M.comm_begin') + $t('M.comm_data')"
+                :end-placeholder="$t('M.comm_end') + $t('M.comm_data')"
+                :editable="false"
+                :picker-options="pickerOptionsTime"
+                @change="changeSelectValue('date', $event)"
                 value-format="yyyy-MM-dd"
-                @change="changeSelectValue('startDate' , $event)"
-                clearable
-                :picker-options="pickerOptions"
-              >
-              </el-date-picker>
-              <span class="date-short-line">-</span>
-                <!--结束日期-->
-              <el-date-picker
-                :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_MerchantsOrders_date')"
-                v-model="endTimeValue"
-                value-format="yyyy-MM-dd"
-                type="date"
-                @change="changeSelectValue('endDate', $event)"
-                clearable
-                :picker-options="pickerOptions"
+                :clearable="false"
               >
               </el-date-picker>
             </span>
@@ -429,16 +419,13 @@ export default {
           label: 'M.otc_enum_status_yidongjie'
         }
       ],
-      // 默认开始时间
-      startTimeValue: '',
-      // 默认结束时间
-      endTimeValue: '',
       // 商家订单列表
       merchantsOrdersList: [],
-      // 日期插件增加日期限制:只能选择当天及当前以前的日期
-      pickerOptions: {
-        disabledDate (time) {
-          return time.getTime() > Date.now() - 8.64e6 // 如果没有后面的-8.64e6就是不可以选择今天的
+      // 时间选择器
+      checkedTime: [], // 时间选择器选中的时间
+      pickerOptionsTime: {
+        disabledDate: (time) => {
+          return time.getTime() > Date.now()
         }
       }
     }
@@ -454,7 +441,9 @@ export default {
     // 3.0 加载列表
     this.getOTCEntrustingOrdersRevocation()
   },
-  mounted () {},
+  mounted () {
+    this.setDateWidth(this.language)
+  },
   activated () {},
   update () {},
   beforeRouteUpdate () {},
@@ -463,6 +452,14 @@ export default {
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
       this.getOTCEntrustingOrdersRevocation()
+    },
+    // 设置日期选择组件的宽度
+    setDateWidth (val) {
+      if (val === 'yuenan') {
+        document.querySelector('.el-date-editor--daterange').style.width = '285px'
+      } else {
+        document.querySelector('.el-date-editor--daterange').style.width = '150px'
+      }
     },
     // 2时间格式化
     timeFormatting (date) {
@@ -511,31 +508,10 @@ export default {
         case 'changeMerchantsOrdersStatusList':
           this.activatedMerchantsOrdersStatusList = targetValue
           break
-        // 初始 日期赋值
-        case 'startDate':
-          this.startTimeValue = targetValue
-          if (this.endTimeValue) {
-            if (this.startTimeValue > this.endTimeValue) {
-              this.$message({ // message: '开始时间不能大于结束时间',
-                message: this.$t('M.otc_time_limit'),
-                type: 'error'
-              })
-              return false
-            }
-          }
-          break
-        // 结束 日期赋值
-        case 'endDate':
-          this.endTimeValue = targetValue
-          if (this.startTimeValue) {
-            if (this.startTimeValue > this.endTimeValue) {
-              this.$message({ // message: '开始时间不能大于结束时间',
-                message: this.$t('M.otc_time_limit'),
-                type: 'error'
-              })
-              return false
-            }
-          }
+        case 'date':
+          console.log(targetValue)
+          this.checkedTime = targetValue
+          console.log(this.checkedTime[0], this.checkedTime[1])
           break
       }
     },
@@ -553,8 +529,7 @@ export default {
       this.activatedMerchantsOrdersCoin = ''
       this.activatedMerchantsOrdersCurrency = ''
       this.activatedMerchantsOrdersStatusList = ''
-      this.startTimeValue = ''
-      this.endTimeValue = ''
+      this.checkedTime = []
       this.getOTCEntrustingOrdersRevocation()
     },
     // 8 页面加载时请求接口渲染列表
@@ -571,9 +546,9 @@ export default {
         // 状态 状态 (未付款 PICKED 已付款 PAYED 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         status: this.activatedMerchantsOrdersStatusList,
         // 开始时间
-        startTime: this.startTimeValue,
+        startTime: this.checkedTime[0] ? this.checkedTime[0] : '',
         // 结束时间
-        endTime: this.endTimeValue,
+        endTime: this.checkedTime[1] ? this.checkedTime[1] : '',
         // 类型
         tradeType: this.activatedMerchantsOrdersTraderStyleList
       })
@@ -595,7 +570,11 @@ export default {
       theme: state => state.common.theme
     })
   },
-  watch: {}
+  watch: {
+    language (val) {
+      this.setDateWidth(val)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -629,12 +608,6 @@ export default {
 
           .status-input {
             margin-right: 46px;
-          }
-
-          .date-picker {
-            > .date-short-line {
-              margin: 0 3px;
-            }
           }
 
           .inquire-button {
@@ -676,10 +649,27 @@ export default {
         }
       }
 
+      /* 日期插件 */
       .date-picker {
+        .el-range-editor.el-input__inner {
+          padding: 3px 5px;
+        }
+
+        .el-date-editor--daterange.el-input__inner {
+          width: 150px;
+        }
+
         .el-date-editor {
-          &.el-input {
-            width: 135px;
+          .el-range-separator {
+            line-height: 26px;
+          }
+
+          .el-range__close-icon {
+            width: 0;
+          }
+
+          .el-range-input {
+            font-size: 12px;
           }
         }
       }
@@ -865,6 +855,17 @@ export default {
             }
           }
         }
+
+        /* 日期插件 */
+        .date-picker {
+          .el-range-input {
+            color: $mainBgColorOfDay;
+          }
+
+          .el-range-separator {
+            color: $mainBgColorOfDay;
+          }
+        }
       }
     }
 
@@ -952,7 +953,6 @@ export default {
 
               &.is-leaf {
                 border-bottom: 1px solid #ecf1f8;
-                box-shadow: inset 0 1px 2px #ecf1f8;
 
                 &:first-of-type {
                   border-left: 0 solid #ecf1f8;
@@ -971,6 +971,17 @@ export default {
         .el-button--primary {
           border: none;
           background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+
+        /* 日期插件 */
+        .date-picker {
+          .el-range-input {
+            color: $dayMainTitleColor;
+          }
+
+          .el-range-separator {
+            color: $dayMainTitleColor;
+          }
         }
       }
     }

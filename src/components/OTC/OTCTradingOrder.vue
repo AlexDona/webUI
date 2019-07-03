@@ -975,10 +975,7 @@ export default {
       }
       if (!isJPG) {
         // 上传图片只能是 jpeg/jpg/png/bmp 格式!
-        this.$message({
-          message: this.$t('M.otc_upload_picture3'),
-          type: 'error'
-        })
+        this.$error_tips_X(this.$t('M.otc_upload_picture3'))
         return isJPG
       }
       // 对图片进行压缩
@@ -1010,11 +1007,8 @@ export default {
         })
       }
       if (imgSize > 5) {
-        this.$message({
-          // message: '请上传小于5M的图片',
-          message: this.$t('M.otc_upload_picture7'),
-          type: 'error'
-        })
+        // 请上传小于5M的图片
+        this.$error_tips_X(this.$t('M.otc_upload_picture7'))
         return false
       }
     },
@@ -1042,22 +1036,16 @@ export default {
     imgUploadError (file, fileList) {
       // console.log('文件上传失败时')
       // console.log(file, fileList)
-      this.$message({
-        // message: '上传图片失败,请重试！',
-        message: this.$t('M.otc_upload_picture5'),
-        type: 'error'
-      })
+      // 上传图片失败,请重试！
+      this.$error_tips_X(this.$t('M.otc_upload_picture5'))
       this.uploadFileList = fileList
     },
     // 6.0 文件超出个数限制时的钩子
     handleExceed (files, fileList) {
       // console.log('文件超出个数限制时')
       // console.log(files. fileList)
-      this.$message({
-        // message: '上传图片不能超过3张!',
-        message: this.$t('M.otc_upload_picture6'),
-        type: 'error'
-      })
+      // 上传图片不能超过3张
+      this.$error_tips_X(this.$t('M.otc_upload_picture6'))
       this.uploadFileList = fileList
     },
     // 1.0 分页
@@ -1199,11 +1187,8 @@ export default {
     // 4.0 买家点击确认付款按钮 弹出交易密码框
     async confirmPayMoney (index) {
       if (!this.activePayModeList[index]) {
-        this.$message({
-          // 请选择支付方式
-          message: this.$t('M.otc_choose_pay_style'),
-          type: 'error'
-        })
+        // 请选择支付方式
+        this.$error_tips_X(this.$t('M.otc_choose_pay_style'))
         return false
       }
       // 用户交易密码是否锁定判断
@@ -1313,21 +1298,15 @@ export default {
       this.orderTypeParam = orderType
       // 申诉原因验证
       if (!this.appealTextAreaValue) {
-        this.$message({
-          // 请输入申诉原因
-          message: this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_complaint_appeal_reason'),
-          type: 'error'
-        })
+        // 请输入申诉原因
+        this.$error_tips_X(this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_complaint_appeal_reason'))
         return false
       }
       // 申诉图片验证
       console.log(this.uploadFileList.length)
       if (!this.uploadFileList.length) {
-        this.$message({
-          // message: '请至少上传一张图片！',
-          message: this.$t('M.otc_upload_picture2'),
-          type: 'error'
-        })
+        // 请至少上传一张图片
+        this.$error_tips_X(this.$t('M.otc_upload_picture2'))
         return false
       }
       // 申诉图片赋值
@@ -1631,7 +1610,6 @@ export default {
                 width: 180px;
                 height: 90px;
                 padding: 8px;
-                border: 1px solid #7587a5;
                 border-radius: 4px;
                 outline-color: transparent;
                 line-height: 16px;
@@ -1933,6 +1911,7 @@ export default {
                 }
 
                 > .appeal-textarea-text {
+                  border: 1px solid #7587a5;
                   color: #9da5b3;
                   background-color: #1e2636;
                 }
@@ -2228,6 +2207,7 @@ export default {
                 }
 
                 > .appeal-textarea-text {
+                  border: 1px solid $borderColorOfDay;
                   color: $dayMainTitleColor;
                   background-color: $mainColorOfWhite;
                 }
