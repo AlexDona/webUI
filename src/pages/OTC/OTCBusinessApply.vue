@@ -195,39 +195,26 @@
     </div>
     <!--申请成为商家提示框-->
     <div class="apply-merchant-dialog">
-      <!--申请提示-->
       <el-dialog
         :title="$t('M.otc_apply_tips6')"
         :visible.sync="showApplyMerchantStatus"
         top="30vh"
         modal
       >
-        <div class="tips">
-          <!--您需要先申请成为商家才能使用此功能！-->
-          <p class="content">
-            <!--需OTC交易次数≥5次，资产可用≥10HF,是否继续？-->
-            {{$t('M.otc_apply_tips3')}}≥{{successTimes}}{{$t('M.otc_ci')}},{{$t('M.otc_apply_tips4')}}≥{{count}}{{coinName}}, {{$t('M.otc_apply_tips5')}}？
-          </p>
+        <!--需OTC交易次数≥5次，资产可用≥10HF,是否继续？-->
+        <div class="content">
+          {{$t('M.otc_apply_tips3')}}≥{{successTimes}}{{$t('M.otc_ci')}},{{$t('M.otc_apply_tips4')}}≥{{count}}{{coinName}}, {{$t('M.otc_apply_tips5')}}？
         </div>
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
-            <el-button
-              type="primary"
-              @click="cancelApply"
-            >
-              <!--取消-->
+        <span slot="footer">
+          <div class="button-group">
+            <button class="cancel item" @click="cancelApply">
               {{$t('M.comm_cancel')}}
-            </el-button>
-            <el-button
-              type="primary"
-              @click="confirmApply"
-            >
+            </button>
+            <button class="confirm item" @click="confirmApply">
               {{$t('M.comm_confirm')}}
-              <!--确定-->
-            </el-button>
-            </span>
+            </button>
+          </div>
+        </span>
       </el-dialog>
     </div>
   </div>
@@ -713,68 +700,49 @@ export default {
 
       /* 申请商家提示框样式 */
       .apply-merchant-dialog {
-        /* 遮罩层样式 */
         .el-dialog__wrapper {
-          background: rgba(0, 0, 0, .7) !important;
-        }
-
-        .el-dialog__header {
-          text-align: left;
-          background-color: #1d2131 !important;
-        }
-
-        .el-dialog {
-          width: 350px;
-          height: 207px;
-          border-radius: 4px;
-          background-color: #1c2237 !important;
-
-          .el-dialog__header {
-            padding: 3px 20px;
+          .el-dialog {
+            width: 350px;
+            height: 180px;
             border-radius: 4px;
 
-            .el-dialog__title {
-              font-size: 16px;
-              color: $mainColor !important;
+            .el-dialog__header {
+              padding: 6px 18px;
+              border-radius: 4px 4px 0 0;
+
+              .el-dialog__title {
+                font-size: 14px;
+              }
+
+              .el-dialog__headerbtn {
+                top: 10px;
+                right: 10px;
+              }
             }
 
-            .el-dialog__headerbtn {
-              top: 15px;
-              right: 10px;
-            }
-          }
-
-          .el-dialog__body {
-            padding: 15px 20px 10px 30px;
-            font-size: 12px;
-
-            .tips {
-              height: 80px;
-              padding-top: 20px;
+            .el-dialog__body {
+              height: 84px;
+              padding: 35px 18px;
               font-size: 14px;
-              color: #b8bdd0;
-
-              > .content {
-                line-height: 20px;
-              }
+              text-align: center;
             }
-          }
 
-          .el-dialog__footer {
-            padding: 0 20px 0 0;
+            .el-dialog__footer {
+              padding: 0 18px;
 
-            .el-button {
-              padding: 7px 20px;
-              border: 0;
+              .button-group {
+                .item {
+                  height: 30px;
+                  padding: 0 28px;
+                  border-radius: 2px;
+                  font-size: 12px;
+                  line-height: 30px;
+                  cursor: pointer;
+                }
 
-              &:first-child {
-                border: 1px solid rgba(51, 143, 245, 1);
-                color: $mainColor;
-                background: #1c2237;
-              }
-
-              &:last-child {
-                padding: 8px 21px;
+                .confirm {
+                  margin-left: 20px;
+                }
               }
             }
           }
@@ -895,6 +863,42 @@ export default {
 
           &::-webkit-scrollbar-corner {
             background: #292e42;
+          }
+        }
+
+        /* 申请商家提示框样式 */
+        .apply-merchant-dialog {
+          .el-dialog__wrapper {
+            .el-dialog {
+              background-color: $dialogColor1;
+
+              .el-dialog__header {
+                background-color: $dialogColor2;
+
+                .el-dialog__title {
+                  color: $dialogColor4;
+                }
+              }
+
+              .el-dialog__body {
+                color: $dialogColor5;
+              }
+
+              .el-dialog__footer {
+                .button-group {
+                  .cancel {
+                    border: 1px solid $mainColor;
+                    color: #fff;
+                    background-color: $dialogColor1;
+                  }
+
+                  .confirm {
+                    color: #fff;
+                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1034,26 +1038,34 @@ export default {
 
         /* 申请商家提示框样式 */
         .apply-merchant-dialog {
-          .el-dialog {
-            background: $mainColorOfWhite !important;
+          .el-dialog__wrapper {
+            .el-dialog {
+              background-color: $mainColorOfWhite;
 
-            .el-dialog__header {
-              border-bottom: 1px solid #ecf1f8;
-              background: $mainColorOfWhite !important;
-            }
+              .el-dialog__header {
+                background-color: $dialogColor7;
 
-            .el-dialog__body {
-              .tips {
+                .el-dialog__title {
+                  color: $dayMainTitleColor;
+                }
+              }
+
+              .el-dialog__body {
                 color: $dayMainTitleColor;
               }
-            }
 
-            .el-dialog__footer {
-              .el-button {
-                &:first-child {
-                  border: 1px solid rgba(51, 143, 245, 1);
-                  color: $mainColor;
-                  background: $mainColorOfWhite;
+              .el-dialog__footer {
+                .button-group {
+                  .cancel {
+                    border: 1px solid $mainColor;
+                    color: $mainColor;
+                    background-color: $mainColorOfWhite;
+                  }
+
+                  .confirm {
+                    color: #fff;
+                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                  }
                 }
               }
             }
