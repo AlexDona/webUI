@@ -297,15 +297,17 @@ export default {
       if (this.isLogin) {
         if (!this.checked) {
           // 请先同意认证商家协议
-          this.$message({
-            message: this.$t('M.otc_firstSure') + this.$t('M.otc_merchant_authentication'),
-            type: 'error'
-          })
+          this.$error_tips_X(this.$t('M.otc_firstSure') + this.$t('M.otc_merchant_authentication'))
           return false
         }
         this.showApplyMerchantStatus = true
       } else {
-        this.$message({showClose: true, message: this.$t('M.otc_login_pi') + '!'})
+        // 改之后
+        // 请先登录
+        this.$error_tips_X(this.$t('M.otc_login_pi'))
+        return false
+        // 原来的
+        // this.$message({showClose: true, message: this.$t('M.otc_login_pi') + '!'})
       }
     },
     // 申请成为商家提示框确定申请
@@ -330,7 +332,8 @@ export default {
           this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
         } else {
           // 如果失败提示返回的数据
-          this.$message({showClose: true, message: detailMeta.message})
+          this.$error_tips_X(detailMeta.message) // 改后
+          // this.$message({showClose: true, message: detailMeta.message}) // 原来的
           this.applyStatus = 1
         }
       }
