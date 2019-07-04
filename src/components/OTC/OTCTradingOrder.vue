@@ -669,7 +669,6 @@
         >
           <!-- 请输入交易密码 -->
           <div class="input">
-            <!-- 交易密码 -->
             <input
               type="password"
               autocomplete="new-password"
@@ -686,7 +685,7 @@
           </div>
           <!--暂时关闭交易密码验证-->
           <span
-            class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+            class="close-pwd-tip cursor-pointer display-inline-block"
             @click.prevent="closePwdJump"
           >
             {{$t('M.user_payPassword_switch')}}
@@ -706,11 +705,11 @@
             <!--忘记交易密码？-->
             <div class="text-align-r">
               <span
-                class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                class="forget-pwd-tip cursor-pointer display-inline-block"
                 @click.prevent="forgetPwdJump"
               >
-              {{$t('M.user_payPassword')}}
-            </span>
+                {{$t('M.user_payPassword')}}
+              </span>
             </div>
           </span>
         </el-dialog>
@@ -725,7 +724,6 @@
         >
           <!-- 请输入交易密码 -->
           <div class="input">
-            <!-- 交易密码 -->
             <input
               type="password"
               autocomplete="new-password"
@@ -742,7 +740,7 @@
           </div>
           <!--暂时关闭交易密码验证-->
           <span
-            class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+            class="close-pwd-tip cursor-pointer display-inline-block"
             @click.prevent="closePwdJump"
           >
             {{$t('M.user_payPassword_switch')}}
@@ -762,7 +760,7 @@
             <!--忘记交易密码？-->
             <div class="text-align-r">
               <span
-                class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                class="forget-pwd-tip cursor-pointer display-inline-block"
                 @click.prevent="forgetPwdJump"
               >
               {{$t('M.user_payPassword')}}
@@ -782,7 +780,6 @@
         >
           <!-- 请输入交易密码 -->
           <div class="input">
-            <!-- 交易密码 -->
             <input
               type="password"
               autocomplete="new-password"
@@ -799,7 +796,7 @@
           </div>
           <!--暂时关闭交易密码验证-->
           <span
-            class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+            class="close-pwd-tip cursor-pointer display-inline-block"
             @click.prevent="closePwdJump"
           >
             {{$t('M.user_payPassword_switch')}}
@@ -819,11 +816,11 @@
             <!--忘记交易密码？-->
             <div class="text-align-r">
               <span
-                class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                class="forget-pwd-tip cursor-pointer display-inline-block"
                 @click.prevent="forgetPwdJump"
               >
-              {{$t('M.user_payPassword')}}
-            </span>
+                {{$t('M.user_payPassword')}}
+              </span>
             </div>
           </span>
         </el-dialog>
@@ -1732,69 +1729,64 @@ export default {
         width: 350px;
         height: 240px;
         border-radius: 4px;
-      }
 
-      .el-dialog__header {
-        padding: 10px 20px;
-        border-radius: 4px;
-      }
+        .el-dialog__header {
+          padding: 10px 20px;
+          border-radius: 4px 4px 0 0;
 
-      .el-dialog__title {
-        font-size: 14px;
-      }
+          .el-dialog__title {
+            font-size: 14px;
+          }
 
-      .el-dialog__headerbtn {
-        top: 15px;
-        right: 10px;
-      }
-
-      .el-dialog__body {
-        padding: 15px 20px 10px 30px;
-        font-size: 12px;
-
-        .input {
-          margin-top: 13px;
+          .el-dialog__headerbtn {
+            top: 15px;
+            right: 10px;
+          }
         }
 
-        .password-input {
-          display: inline-block;
-          width: 280px;
-          height: 36px;
-          padding-left: 10px;
-          border-radius: 4px;
-          font-size: 14px;
-        }
-
-        .error-info {
-          height: 20px;
-          padding-top: 5px;
+        .el-dialog__body {
+          padding: 15px 20px 10px 30px;
           font-size: 12px;
+
+          .input {
+            margin-top: 13px;
+
+            .password-input {
+              display: inline-block;
+              width: 280px;
+              height: 36px;
+              padding-left: 10px;
+              border-radius: 4px;
+            }
+          }
+
+          .error-info {
+            height: 20px;
+            padding-top: 5px;
+          }
+
+          .close-pwd-tip {
+            margin-top: 5px;
+          }
         }
 
-        .close-pwd-tip {
-          margin-top: 5px;
-          color: $mainColor;
+        .el-dialog__footer {
+          padding: 0;
+          font-size: 12px;
+          text-align: center;
+
+          .el-button {
+            width: 290px;
+            padding: 9px 20px;
+            border: 0;
+            border-radius: 2px;
+            font-size: 12px;
+          }
+
+          .forget-pwd-tip {
+            padding: 8px 20px 0 0;
+          }
         }
-      }
-
-      .el-dialog__footer {
-        padding: 0;
-        text-align: center;
-
-        .forget-pwd-tip {
-          padding: 8px 20px 0 0;
-          color: $mainColor;
-        }
-      }
-
-      .el-button {
-        width: 290px;
-        padding: 7px 20px;
-        border: 0;
-      }
-
-      .el-button--primary {
-        background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
       }
     }
   }
@@ -1933,12 +1925,6 @@ export default {
         color: rgba(255, 255, 255, .8);
         background-color: #1c1f32;
       }
-
-      > .password-dialog {
-        .tips {
-          color: $upColor;
-        }
-      }
     }
 
     /deep/ {
@@ -2025,67 +2011,41 @@ export default {
 
       .password-dialog {
         .el-dialog {
-          width: 350px;
-          height: 240px;
-          border-radius: 4px;
-          background: #28334a;
+          background-color: $dialogColor1;
 
           .el-dialog__header {
-            padding: 10px 20px;
-            border-radius: 4px;
-            background-color: #20293c;
-          }
+            background-color: $dialogColor2;
 
-          .el-dialog__title {
-            font-size: 14px;
-            color: $mainColorOfWhite;
-          }
-
-          .el-dialog__headerbtn {
-            top: 15px;
-            right: 10px;
+            .el-dialog__title {
+              color: $dialogColor4;
+            }
           }
 
           .el-dialog__body {
-            padding: 15px 20px 10px 30px;
-            font-size: 12px;
-            color: $mainColorOfWhite;
-
-            .input {
-              margin-top: 13px;
-            }
-
             .password-input {
-              display: inline-block;
-              width: 280px;
-              height: 36px;
-              padding-left: 10px;
-              border-radius: 4px;
-              font-size: 14px;
+              border: 1px solid $dialogColor6;
               color: $mainColorOfWhite;
-              background-color: #1a2233;
+              background-color: $dialogColor3;
             }
 
-            .error-info {
-              height: 20px;
-              padding-top: 5px;
-              font-size: 12px;
+            .tips {
+              color: $upColor;
+            }
+
+            .close-pwd-tip {
+              color: $mainColor;
             }
           }
 
           .el-dialog__footer {
-            padding: 0;
-            text-align: center;
-          }
+            .el-button--primary {
+              color: $mainColorOfWhite;
+              background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            }
 
-          .el-button {
-            width: 290px;
-            padding: 7px 20px;
-            border: 0;
-          }
-
-          .el-button--primary {
-            background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+            .forget-pwd-tip {
+              color: $mainColor;
+            }
           }
         }
       }
@@ -2231,12 +2191,6 @@ export default {
         background-color: $mainColorOfWhite;
         box-shadow: 0 0 6px $boxShadowColorOfDay;
       }
-
-      > .password-dialog {
-        .tips {
-          color: $upColor;
-        }
-      }
     }
 
     /deep/ {
@@ -2331,67 +2285,43 @@ export default {
 
       .password-dialog {
         .el-dialog {
-          width: 350px;
-          height: 240px;
-          border-radius: 4px;
-          background: $mainColorOfWhite;
-        }
-
-        .el-dialog__header {
-          padding: 10px 20px;
-          border-radius: 4px;
           background-color: $mainColorOfWhite;
-        }
 
-        .el-dialog__title {
-          font-size: 14px;
-          color: $mainColor;
-        }
+          .el-dialog__header {
+            background-color: $dialogColor7;
 
-        .el-dialog__headerbtn {
-          top: 15px;
-          right: 10px;
-        }
-
-        .el-dialog__body {
-          padding: 15px 20px 10px 30px;
-          font-size: 12px;
-          color: $mainColorOfWhite;
-
-          .input {
-            margin-top: 13px;
+            .el-dialog__title {
+              color: $dayMainTitleColor;
+            }
           }
 
-          .password-input {
-            display: inline-block;
-            width: 280px;
-            height: 36px;
-            padding-left: 10px;
-            border: 1px solid $borderColorOfDay;
-            border-radius: 4px;
-            font-size: 14px;
+          .el-dialog__body {
+            .password-input {
+              border: 1px solid $dialogColor8;
+              color: $dayMainTitleColor;
+              background-color: $mainColorOfWhite;
+              box-shadow: inset 0 2px 4px 0 rgba(243, 243, 243, 1);
+            }
+
+            .tips {
+              color: $upColor;
+            }
+
+            .close-pwd-tip {
+              color: $mainColor;
+            }
           }
 
-          .error-info {
-            height: 20px;
-            padding-top: 5px;
-            font-size: 12px;
+          .el-dialog__footer {
+            .el-button--primary {
+              color: $mainColorOfWhite;
+              background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            }
+
+            .forget-pwd-tip {
+              color: $mainColor;
+            }
           }
-        }
-
-        .el-dialog__footer {
-          padding: 0;
-          text-align: center;
-        }
-
-        .el-button {
-          width: 290px;
-          padding: 7px 20px;
-          border: 0;
-        }
-
-        .el-button--primary {
-          background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
       }
     }
