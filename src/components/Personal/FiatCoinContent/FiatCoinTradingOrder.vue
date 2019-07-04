@@ -1020,10 +1020,7 @@ export default {
       }
       if (!isJPG) {
         // 上传图片只能是 jpeg/jpg/png/bmp 格式!
-        this.$message({
-          message: this.$t('M.otc_upload_picture3'),
-          type: 'error'
-        })
+        this.$error_tips_X(this.$t('M.otc_upload_picture3'))
         return isJPG
       }
       // 对图片进行压缩
@@ -1055,11 +1052,8 @@ export default {
         })
       }
       if (imgSize > 5) {
-        this.$message({
-          // message: '请上传小于5M的图片',
-          message: this.$t('M.otc_upload_picture7'),
-          type: 'error'
-        })
+        // 请上传小于5M的图片
+        this.$error_tips_X(this.$t('M.otc_upload_picture7'))
         return false
       }
     },
@@ -1087,22 +1081,16 @@ export default {
     imgUploadError (file, fileList) {
       // console.log('文件上传失败时')
       // console.log(file, fileList)
-      this.$message({
-        // message: '上传图片失败,请重试！',
-        message: this.$t('M.otc_upload_picture5'),
-        type: 'error'
-      })
+      // 上传图片失败,请重试！
+      this.$error_tips_X(this.$t('M.otc_upload_picture5'))
       this.uploadFileList = fileList
     },
     // 6.0 文件超出个数限制时的钩子
     handleExceed (files, fileList) {
       // console.log('文件超出个数限制时')
       // console.log(files. fileList)
-      this.$message({
-        // message: '上传图片不能超过3张!',
-        message: this.$t('M.otc_upload_picture6'),
-        type: 'error'
-      })
+      // 上传图片不能超过3张
+      this.$error_tips_X(this.$t('M.otc_upload_picture6'))
       this.uploadFileList = fileList
     },
     // 1.0 分页
@@ -1225,11 +1213,8 @@ export default {
     async confirmPayMoney (index) {
       // console.log(index)
       if (!this.activePayModeList[index]) {
-        this.$message({
-          // 请选择支付方式
-          message: this.$t('M.comm_please_choose') + this.$t('M.otc_index_Payment_method'),
-          type: 'error'
-        })
+        // 请选择支付方式
+        this.$error_tips_X(this.$t('M.comm_please_choose') + this.$t('M.otc_index_Payment_method'))
         return false
       }
       // 判断是否交易密码锁定
@@ -1280,11 +1265,8 @@ export default {
     }, 500),
     // 7.0 卖家在买家付款前点击确认收款按钮的提示事件
     gatheringBefore () {
-      this.$message({
-        // 请等待买家付款
-        message: this.$t('M.comm_please') + this.$t('M.otc_waiting_buyer_payment') + '。',
-        type: 'error'
-      })
+      // 请等待买家付款
+      this.$error_tips_X(this.$t('M.comm_please') + this.$t('M.otc_waiting_buyer_payment') + '。')
     },
     // 8.0 卖家点击确认收款按钮
     async confirmGatherMoney (id) {
@@ -1356,20 +1338,14 @@ export default {
       this.orderTypeParam = orderType
       // 申诉原因验证
       if (!this.appealTextAreaValue) {
-        this.$message({
-          // 请输入申诉原因
-          message: this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_complaint_appeal_reason'),
-          type: 'error'
-        })
+        // 请输入申诉原因
+        this.$error_tips_X(this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_complaint_appeal_reason'))
         return false
       }
       // 申诉图片验证
       if (!this.uploadFileList.length) {
-        this.$message({
-          // message: '请至少上传一张图片！',
-          message: this.$t('M.otc_upload_picture2'),
-          type: 'error'
-        })
+        // message: '请至少上传一张图片！',
+        this.$error_tips_X(this.$t('M.otc_upload_picture2'))
         return false
       } else {
         // 申诉图片赋值

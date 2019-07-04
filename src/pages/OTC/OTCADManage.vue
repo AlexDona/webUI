@@ -511,10 +511,8 @@ export default {
       // 刷新用户个人信息
       await this.REFRESH_USER_INFO_ACTION()
       if (this.userInfo.otcEnable === 'disable') {
-        this.$message({
-          message: this.$t('M.otc_disable_account_tips'), // 该账号已被禁止交易OTC，请咨询客服
-          type: 'error'
-        })
+        // 该账号已被禁止交易OTC，请咨询客服
+        this.$error_tips_X(this.$t('M.otc_disable_account_tips'))
         return false
       }
       this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), {

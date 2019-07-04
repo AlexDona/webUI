@@ -694,19 +694,13 @@ export default {
     async toPublishOrder () {
       // 增加没有币种和法币点击按钮不跳转的验证
       if (!this.selectedOTCAvailableCurrencyCoinID) {
-        // message: '请选择要发布的币种',
-        this.$message({
-          message: this.$t('M.otc_publish_order_err_tips1'),
-          type: 'error'
-        })
+        // 请选择要发布的币种
+        this.$error_tips_X(this.$t('M.otc_publish_order_err_tips1'))
         return false
       }
       if (!this.checkedCurrencyId) {
-        // message: '请选择法币类型',
-        this.$message({
-          message: this.$t('M.otc_publish_order_err_tips2'),
-          type: 'error'
-        })
+        // 请选择法币类型
+        this.$error_tips_X(this.$t('M.otc_publish_order_err_tips2'))
         return false
       }
       // 未登录跳转到登录页面
@@ -716,28 +710,20 @@ export default {
         await this.REFRESH_USER_INFO_ACTION()
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
-          this.$message({
-            message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
-            type: 'error'
-          })
+          // 去个人中心设置交易密码
+          this.$error_tips_X(this.$t('M.otc_index_js'))
           return false
         } else if (!this.userInfo.realname) {
-          this.$message({
-            message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
-            type: 'error'
-          })
+          // 去个人中心完成实名认证
+          this.$error_tips_X(this.$t('M.otc_index_digo_tips'))
           return false
         } else if (!(this.userInfo.advancedAuth === 'pass')) {
-          this.$message({
-            message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
-            type: 'error'
-          })
+          // 去个人中心完成高级认证
+          this.$error_tips_X(this.$t('M.otc_index_digo_tips_pass'))
           return false
         } if (this.userInfo.otcEnable === 'disable') {
-          this.$message({
-            message: this.$t('M.otc_disable_account_tips'), // 该账号已被禁止交易OTC，请咨询客服
-            type: 'error'
-          })
+          // 该账号已被禁止交易OTC，请咨询客服
+          this.$error_tips_X(this.$t('M.otc_disable_account_tips'))
           return false
         } else {
           // this.OTCBuySellStyle 当前买卖类型
@@ -758,43 +744,30 @@ export default {
         // console.log(countryCode, userId, this.userInfo)
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
-          this.$message({
-            message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
-            type: 'error'
-          })
+          // 去个人中心设置交易密码
+          this.$error_tips_X(this.$t('M.otc_index_js'))
           return false
         } else if (!this.userInfo.realname) {
-          this.$message({
-            message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
-            type: 'error'
-          })
+          // 去个人中心完成实名认证
+          this.$error_tips_X(this.$t('M.otc_index_digo_tips'))
           return false
         } else if (!(this.userInfo.advancedAuth === 'pass')) {
-          this.$message({
-            message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
-            type: 'error'
-          })
+          // 去个人中心完成高级认证
+          this.$error_tips_X(this.$t('M.otc_index_digo_tips_pass'))
           return false
         } if (this.userInfo.otcEnable === 'disable') {
-          this.$message({
-            message: this.$t('M.otc_disable_account_tips'), // 该账号已被禁止交易OTC，请咨询客服
-            type: 'error'
-          })
+          // 该账号已被禁止交易OTC，请咨询客服
+          this.$error_tips_X(this.$t('M.otc_disable_account_tips'))
           return false
         } else {
           if (userId === this.userInfo.id) {
-            this.$message({
-              message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
-              type: 'error'
-            })
+            // 禁止自买自卖
+            this.$error_tips_X(this.$t('M.otc_index_forbided_buyand_sell'))
             return false
             // 增加个人用户信息中的国籍和选中的国家对比，如果相同，可以摘单，不相同，不能摘单，给出提示
           } else if (!(CHINA.includes(countryCode) && CHINA.includes(this.userInfo.country)) && !(countryCode == this.userInfo.country)) {
-            this.$message({
-              // 根据您注册所在地的相关规定，无法进行此操作
-              message: this.$t('M.otc_failure_0094'),
-              type: 'error'
-            })
+            // 根据您注册所在地的相关规定，无法进行此操作
+            this.$error_tips_X(this.$t('M.otc_failure_0094'))
             return false
           } else {
             // id - 挂单id
