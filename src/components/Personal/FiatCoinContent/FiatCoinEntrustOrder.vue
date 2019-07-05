@@ -42,9 +42,7 @@
         </div>
       </div>
       <!-- 表身体 -->
-      <div
-        class="entrust-table-body font-size12"
-      >
+      <div class="entrust-table-body font-size12">
         <!--委单列表-->
         <div
           class="entrust-list-content"
@@ -126,6 +124,27 @@
           </el-pagination>
         </div>
       </div>
+      <div class="cancel-order-dialog">
+        <el-dialog
+          :title="$t('M.otc_prompt')"
+          :visible.sync="cancelOrderDialogStatus"
+          top="25vh"
+        >
+          <div class="content">
+            {{$t('M.otc_revoke')}}
+          </div>
+          <span slot="footer">
+          <div class="button-group">
+            <button class="cancel item" @click="closeDialog">
+              {{$t('M.comm_cancel')}}
+            </button>
+            <button class="confirm item" @click="confirmDialog">
+              {{$t('M.comm_confirm')}}
+            </button>
+          </div>
+        </span>
+        </el-dialog>
+      </div>
     </div>
   </div>
 </template>
@@ -148,9 +167,13 @@ export default {
   // props,
   data () {
     return {
-      dialogVisible: false
+      dialogVisible: false,
       // OTC委托订单列表
       // OTCEntrustOrderList: []
+      // 撤单弹窗显示隐藏状态
+      cancelOrderDialogStatus: false,
+      // 委单id
+      orderID: ''
     }
   },
   created () {},
@@ -173,17 +196,17 @@ export default {
     },
     // 3.0 点击撤单按钮
     revocationOrder (id) {
-      // this.getOTCEntrustingOrdersRevocation(id)
-      // 确定撤销委单？  取消  确定
-      this.$confirm(this.$t('M.otc_revoke'), {
-        // 确定
-        confirmButtonText: this.$t('M.comm_confirm'),
-        // 取消
-        cancelButtonText: this.$t('M.comm_cancel')
-      }).then(() => {
-        this.getOTCEntrustingOrdersRevocation(id)
-      }).catch(() => {
-      })
+      this.orderID = id
+      this.cancelOrderDialogStatus = true
+    },
+    // 关闭弹窗
+    closeDialog () {
+      this.cancelOrderDialogStatus = false
+    },
+    // 点击弹窗确定按钮
+    confirmDialog () {
+      this.getOTCEntrustingOrdersRevocation(this.orderID)
+      this.closeDialog()
     },
     // 4.0 提交撤单
     getOTCEntrustingOrdersRevocation: _.debounce(async function (id) {
@@ -211,11 +234,7 @@ export default {
       return this.legalTraderEntrustList
     }
   },
-  watch: {
-    OTCEntrustOrderList (newVal) {
-      console.log(newVal)
-    }
-  }
+  watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -283,13 +302,63 @@ export default {
 
     /deep/ {
       .fiat-entrust-order-table {
-        .entrust-table-body {
+        > .entrust-table-body {
           .eighth-action {
             .el-button {
               height: 34px;
               line-height: 0;
               color: $mainColor;
               background: none;
+            }
+          }
+        }
+
+        > .cancel-order-dialog {
+          .el-dialog__wrapper {
+            .el-dialog {
+              width: 350px;
+              height: 180px;
+              border-radius: 4px;
+
+              .el-dialog__header {
+                padding: 6px 18px;
+                border-radius: 4px 4px 0 0;
+
+                .el-dialog__title {
+                  font-size: 14px;
+                }
+
+                .el-dialog__headerbtn {
+                  top: 10px;
+                  right: 10px;
+                }
+              }
+
+              .el-dialog__body {
+                height: 84px;
+                padding: 35px 18px;
+                font-size: 14px;
+                text-align: center;
+              }
+
+              .el-dialog__footer {
+                padding: 0 18px;
+
+                .button-group {
+                  .item {
+                    height: 30px;
+                    padding: 0 28px;
+                    border-radius: 2px;
+                    font-size: 12px;
+                    line-height: 30px;
+                    cursor: pointer;
+                  }
+
+                  .confirm {
+                    margin-left: 20px;
+                  }
+                }
+              }
             }
           }
         }
@@ -314,6 +383,43 @@ export default {
 
           .no-data {
             background-color: $mainContentNightBgColor;
+          }
+        }
+      }
+
+      /deep/ {
+        .cancel-order-dialog {
+          .el-dialog__wrapper {
+            .el-dialog {
+              background-color: $dialogColor1;
+
+              .el-dialog__header {
+                background-color: $dialogColor2;
+
+                .el-dialog__title {
+                  color: $dialogColor4;
+                }
+              }
+
+              .el-dialog__body {
+                color: $dialogColor5;
+              }
+
+              .el-dialog__footer {
+                .button-group {
+                  .cancel {
+                    border: 1px solid $mainColor;
+                    color: $mainColorOfWhite;
+                    background-color: $dialogColor1;
+                  }
+
+                  .confirm {
+                    color: $mainColorOfWhite;
+                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -343,6 +449,43 @@ export default {
 
         .no-data {
           color: $fontColorSecondaryOfDay;
+        }
+      }
+
+      /deep/ {
+        .cancel-order-dialog {
+          .el-dialog__wrapper {
+            .el-dialog {
+              background-color: $mainColorOfWhite;
+
+              .el-dialog__header {
+                background-color: $dialogColor7;
+
+                .el-dialog__title {
+                  color: $dayMainTitleColor;
+                }
+              }
+
+              .el-dialog__body {
+                color: $dayMainTitleColor;
+              }
+
+              .el-dialog__footer {
+                .button-group {
+                  .cancel {
+                    border: 1px solid $mainColor;
+                    color: $mainColor;
+                    background-color: $mainColorOfWhite;
+                  }
+
+                  .confirm {
+                    color: $mainColorOfWhite;
+                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

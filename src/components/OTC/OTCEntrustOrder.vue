@@ -447,12 +447,12 @@ export default {
                 .button-group {
                   .cancel {
                     border: 1px solid $mainColor;
-                    color: #fff;
+                    color: $mainColorOfWhite;
                     background-color: $dialogColor1;
                   }
 
                   .confirm {
-                    color: #fff;
+                    color: $mainColorOfWhite;
                     background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
                   }
                 }
@@ -509,7 +509,7 @@ export default {
                   }
 
                   .confirm {
-                    color: #fff;
+                    color: $mainColorOfWhite;
                     background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
                   }
                 }
