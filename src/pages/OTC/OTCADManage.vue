@@ -292,6 +292,57 @@
           </el-pagination>
         </div>
       </div>
+      <!--2.3 公用二次确认弹出-->
+      <div class="common-dialog">
+        <el-dialog
+          :title="$t('M.otc_prompt')"
+          :visible.sync="showDialogStatus"
+          top="30vh"
+          modal
+        >
+          <div class="content">
+            <!--此操作将下架所有广告，是否继续-->
+            <span v-show="buttonStyle === buttonArr[0]">
+              {{$t('M.otc_adMange_tipsContentThree')}}
+            </span>
+            <!--确定下架此广告单-->
+            <span v-show="buttonStyle === buttonArr[1]">
+              {{$t('M.otc_adMange_tipsContentOne')}}
+            </span>
+            <!--确定修改此广告单吗-->
+            <span v-show="buttonStyle === buttonArr[2]">
+              {{$t('M.otc_adMange_tipsContentTwo')}}
+            </span>
+          </div>
+          <span slot="footer">
+            <div class="button-group">
+              <button
+                class="cancel item"
+                @click="cancelDialog"
+              >
+                {{$t('M.comm_cancel')}}
+              </button>
+              <button
+                class="confirm item"
+                @click="confirmDialog"
+              >
+                <!--全部下架-->
+                <span v-show="buttonStyle === buttonArr[0]">
+                  {{$t('M.comm_all_sold_out')}}
+                </span>
+                <!--下架-->
+                <span v-show="buttonStyle === buttonArr[1]">
+                  {{$t('M.comm_sold_out')}}
+                </span>
+                <!--确定-->
+                <span v-show="buttonStyle === buttonArr[2]">
+                  {{$t('M.comm_confirm')}}
+                </span>
+              </button>
+            </div>
+          </span>
+        </el-dialog>
+      </div>
     </div>
   </div>
 </template>
@@ -363,7 +414,15 @@ export default {
       // 设置列表当前页数
       pageSize: 10,
       // 广告列表
-      ADList: []
+      ADList: [],
+      // 公用弹窗隐藏显示状态
+      showDialogStatus: false,
+      // 操作按钮类型
+      buttonStyle: '',
+      // 当前订单id
+      currentOrderID: '',
+      // 按钮类型自定义字段
+      buttonArr: ['all', 'current', 'modify']
     }
   },
   created () {
@@ -470,65 +529,69 @@ export default {
         this.ADManageCurrencyId = getNestedData(data, 'data')
       }
     },
-    // 8.0 一键下架所有广告 二次确认弹出框
-    cancelAllOneKey () {
-      this.$confirm(this.$t('M.otc_adMange_tipsContentThree'), {
-        confirmButtonText: this.$t('M.comm_all_sold_out'), // 全部下架
-        cancelButtonText: this.$t('M.comm_cancel') // 取消
-      }).then(() => {
-        this.cancelAllOneKeyConfirm()
-      }).catch(() => {
-      })
-    },
     // 9.0 一键下架所有广告
     cancelAllOneKeyConfirm: _.debounce(async function () {
       const data = await cancelAllOrdersOnekey()
-      // 返回数据正确的逻辑
       if (!data) return false
+      this.currentPage = 1
       this.getOTCADManageList()
     }, 500),
-    // 10.0 点击表格中的下架按钮触发的事件
-    updateADUnShelve (id) {
-      this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
-        confirmButtonText: this.$t('M.comm_sold_out'), // 下架
-        cancelButtonText: this.$t('M.comm_cancel') // 取消
-      }).then(() => {
-        this.getOTCEntrustingOrdersRevocation(id)
-      }).catch(() => {
-      })
-    },
     // 11.0 点击 下架 按钮请求撤单接口
     getOTCEntrustingOrdersRevocation: _.debounce(async function (id) {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
       })
-      // 返回数据正确的逻辑 重新渲染列表
       if (!data) return false
       this.getOTCADManageList()
     }, 500),
-    // 12.0 点击 修改 按钮钮触发的事件
-    async modifyAD (id) {
-      // 刷新用户个人信息
-      await this.REFRESH_USER_INFO_ACTION()
-      if (this.userInfo.otcEnable === 'disable') {
-        // 该账号已被禁止交易OTC，请咨询客服
-        this.$error_tips_X(this.$t('M.otc_disable_account_tips'))
-        return false
-      }
-      this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), {
-        confirmButtonText: this.$t('M.comm_confirm'), // 确定
-        cancelButtonText: this.$t('M.comm_cancel') // 取消
-      }).then(() => {
-        // 跳转发布广告页面并携带一条信息的参数
-        this.$goToPage('/OTCPublishAD', {id})
-      }).catch(() => {
-      })
-    },
     // 13.0 点击查询按钮 重新请求列表数据
     findFilter () {
       // 改变查询条件从第1页开始查询
       this.currentPage = 1
       this.getOTCADManageList()
+    },
+    // 一键下架
+    cancelAllOneKey () {
+      this.buttonStyle = this.buttonArr[0]
+      this.showDialogStatus = true
+    },
+    // 下架
+    updateADUnShelve (id) {
+      this.currentOrderID = id
+      this.buttonStyle = this.buttonArr[1]
+      this.showDialogStatus = true
+    },
+    // 修改
+    async modifyAD (id) {
+      this.currentOrderID = id
+      this.buttonStyle = this.buttonArr[2]
+      await this.REFRESH_USER_INFO_ACTION()
+      if (this.userInfo.otcEnable === 'disable') {
+        this.$error_tips_X(this.$t('M.otc_disable_account_tips')) // 该账号已被禁止交易OTC，请咨询客服
+        return false
+      } else {
+        this.showDialogStatus = true
+      }
+    },
+    // 弹窗确认
+    confirmDialog () {
+      console.log(this.buttonStyle)
+      switch (this.buttonStyle) {
+        case this.buttonArr[0]:
+          this.cancelAllOneKeyConfirm()
+          break
+        case this.buttonArr[1]:
+          this.getOTCEntrustingOrdersRevocation(this.currentOrderID)
+          break
+        case this.buttonArr[2]:
+          this.$goToPage('/OTCPublishAD', {id: this.currentOrderID})
+          break
+      }
+      this.cancelDialog()
+    },
+    // 弹窗取消
+    cancelDialog () {
+      this.showDialogStatus = false
     }
   },
   filter: {},
@@ -698,6 +761,56 @@ export default {
         min-height: 410px;
       }
     }
+
+    .common-dialog {
+      .el-dialog__wrapper {
+        .el-dialog {
+          width: 350px;
+          height: 180px;
+          border-radius: 4px;
+
+          .el-dialog__header {
+            padding: 6px 18px;
+            border-radius: 4px 4px 0 0;
+
+            .el-dialog__title {
+              font-size: 14px;
+            }
+
+            .el-dialog__headerbtn {
+              top: 10px;
+              right: 10px;
+            }
+          }
+
+          .el-dialog__body {
+            height: 84px;
+            padding: 35px 18px;
+            font-size: 14px;
+            text-align: center;
+          }
+
+          .el-dialog__footer {
+            padding: 0 18px;
+
+            .button-group {
+              .item {
+                height: 30px;
+                padding: 0 28px;
+                border-radius: 2px;
+                font-size: 12px;
+                line-height: 30px;
+                cursor: pointer;
+              }
+
+              .confirm {
+                margin-left: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   &.night {
@@ -818,6 +931,41 @@ export default {
             &:hover {
               > td {
                 background-color: #1e2636;
+              }
+            }
+          }
+        }
+      }
+
+      .common-dialog {
+        .el-dialog__wrapper {
+          .el-dialog {
+            background-color: $dialogColor1;
+
+            .el-dialog__header {
+              background-color: $dialogColor2;
+
+              .el-dialog__title {
+                color: $dialogColor4;
+              }
+            }
+
+            .el-dialog__body {
+              color: $dialogColor5;
+            }
+
+            .el-dialog__footer {
+              .button-group {
+                .cancel {
+                  border: 1px solid $mainColor;
+                  color: #fff;
+                  background-color: $dialogColor1;
+                }
+
+                .confirm {
+                  color: #fff;
+                  background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                }
               }
             }
           }
@@ -945,6 +1093,41 @@ export default {
             &:hover {
               > td {
                 background-color: $mainDayBgColor;
+              }
+            }
+          }
+        }
+      }
+
+      .common-dialog {
+        .el-dialog__wrapper {
+          .el-dialog {
+            background-color: $mainColorOfWhite;
+
+            .el-dialog__header {
+              background-color: $dialogColor7;
+
+              .el-dialog__title {
+                color: $dayMainTitleColor;
+              }
+            }
+
+            .el-dialog__body {
+              color: $dayMainTitleColor;
+            }
+
+            .el-dialog__footer {
+              .button-group {
+                .cancel {
+                  border: 1px solid $mainColor;
+                  color: $mainColor;
+                  background-color: $mainColorOfWhite;
+                }
+
+                .confirm {
+                  color: #fff;
+                  background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                }
               }
             }
           }
