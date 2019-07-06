@@ -89,10 +89,7 @@ export default {
   components: {
     TheMoreNavsButton
   },
-  props: {
-    navigation: {
-    }
-  },
+  // props: {},
   data () {
     return {
       isShowSubNav: false,
@@ -128,16 +125,15 @@ export default {
      * @param type
      */
     navToJump (navigation, type = 'normal') {
-      console.log(navigation, type)
+      // console.log(navigation, type)
       const { link, index } = navigation
       if (!link) return
       let targetRoute
       let isChildLink
-      console.log(targetRoute, this.activeMoreNavIndex)
-
       switch (type) {
         case 'normal':
           targetRoute = this.$navigators_S_X[this.activeNavIndex]
+          // console.log(targetRoute, link, this.$activeLinkIndex_S_X)
           isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
           // console.log(link, targetRoute, this.activeNavIndex, this.navigation, this.activeMoreNavIndex)
           if (targetRoute.link == link) {
@@ -149,7 +145,7 @@ export default {
         case 'more':
           targetRoute = this.$navigators_S_X[this.activeMoreNavIndex + 5]
           isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
-          console.log(targetRoute)
+          // console.log(targetRoute)
           // console.log(link, targetRoute, this.activeNavIndex, this.navigation, this.activeMoreNavIndex)
           if (targetRoute.link == link) {
             this.SET_ACTIVE_LINK_NAME_M(index)

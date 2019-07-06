@@ -129,18 +129,18 @@ export default {
         // console.log(path, link)
         // 命中 路由
         if (path == link || path.startsWith(`/${link.split('/')[1]}`)) {
-          // console.log(path)
+          // console.log(path, outerIndex)
           this.$SET_ACTIVE_LINK_NAME_M_X(outerIndex)
           return false
-        } else {
-          _.forEach(children, (childRoute) => {
-            const {link} = childRoute
-            if (path == link || path.startsWith(`/${link.split('/')[1]}`)) {
-              this.$SET_ACTIVE_LINK_NAME_M_X(outerIndex)
-              return false
-            }
-          })
         }
+
+        _.forEach(children, (childRoute) => {
+          const {link} = childRoute
+          if (path == link || path.startsWith(`/${link.split('/')[1]}`)) {
+            this.$SET_ACTIVE_LINK_NAME_M_X(outerIndex)
+            return false
+          }
+        })
         // if(!hitTarget) this.$SET_ACTIVE_LINK_NAME_M_X(-1)
       })
       if (from.path === '/PersonalCenter') {

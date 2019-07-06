@@ -324,7 +324,7 @@ export default{
     // 导航跳转
     navToJump (navigation) {
       // console.log(this.$isLogin_S_X)
-      console.log(this.navigation)
+      // console.log(navigation)
       const { link, newTab } = navigation
       if (!link) return
       // this.CHANGE_ROUTER_PATH(link)
@@ -336,9 +336,11 @@ export default{
       const otcEnable = _.get(this.userInfo, 'otcEnable')
       const type = _.get(this.userInfo, 'type')
       if (this.checkIsInnerLink(link)) {
+        if (!this.$isLogin_S_X && link == OTCBusinessApply) this.$SET_ACTIVE_LINK_NAME_M_X(-1)
         // console.log(link, isNeedLogin.some(linkItem => link.startsWith(linkItem)))
         if (!this.$isLogin_S_X && isNeedLogin.some(linkItem => link.startsWith(linkItem))) {
           this.$goToPage('/login')
+          this.$SET_ACTIVE_LINK_NAME_M_X(-1)
           this.CHANGE_ROUTER_PATH(link)
           return
         }
