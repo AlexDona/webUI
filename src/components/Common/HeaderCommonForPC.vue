@@ -326,6 +326,7 @@ export default{
       // console.log(this.$isLogin_S_X)
       console.log(this.navigation)
       const { link, newTab } = navigation
+      if (!link) return
       // this.CHANGE_ROUTER_PATH(link)
       // console.log(link)
       const needMerchantType = ['/OTCADManage', '/OTCMerchantsOrders', '/OTCReportFormStatistics']

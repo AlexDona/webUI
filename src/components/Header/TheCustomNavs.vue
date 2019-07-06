@@ -24,7 +24,7 @@
           v-for="(navItem, navIndex) in $navigators_S_X.slice(5)"
           :key="navIndex"
           class="nav-item"
-          :class="{'active': $activeLinkIndex_S_X == navItem.name}"
+          :class="{'active': $activeLinkIndex_S_X == (navIndex + 5)}"
           @mouseenter="changeMoreActiveNavIndex(navIndex)"
           @mouseleave="changeMoreActiveNavIndex(-1)"
         )
@@ -96,23 +96,15 @@ export default {
   data () {
     return {
       isShowSubNav: false,
+      // isShowSubNav: true,
       MAX_SHOW_COUNT: 5,
       // 当前导航选中项 索引
       activeNavIndex: -1,
       // 当前 更多导航选中项索引
-      activeMoreNavIndex: -1,
-      // 当前选中链接
-      activeLink: {
-        outer: '',
-        inner: ''
-      }
+      activeMoreNavIndex: -1
     }
   },
-  created () {
-    // console.log(this.$route)
-    const { path } = this.$route
-    this.activeLink = path
-  },
+  // created () {},
   // mounted () {}
   // updated () {},
   // beforeRouteUpdate () {},
@@ -136,22 +128,34 @@ export default {
      * @param type
      */
     navToJump (navigation, type = 'normal') {
-      console.log(navigation, type, this.activeLink)
+      console.log(navigation, type)
+      const { link, index } = navigation
+      if (!link) return
+      let targetRoute
+      let isChildLink
+      console.log(targetRoute, this.activeMoreNavIndex)
+
       switch (type) {
         case 'normal':
-          const { link, name, index } = navigation
-          const targetRoute = this.$navigators_S_X[this.activeNavIndex]
+          targetRoute = this.$navigators_S_X[this.activeNavIndex]
+          isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
           // console.log(link, targetRoute, this.activeNavIndex, this.navigation, this.activeMoreNavIndex)
-          const isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
           if (targetRoute.link == link) {
-            this.activeLink = name
             this.SET_ACTIVE_LINK_NAME_M(index)
           } else if (isChildLink) {
-            this.activeLink = targetRoute.index
             this.SET_ACTIVE_LINK_NAME_M(targetRoute.index)
           }
           break
         case 'more':
+          targetRoute = this.$navigators_S_X[this.activeMoreNavIndex + 5]
+          isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
+          console.log(targetRoute)
+          // console.log(link, targetRoute, this.activeNavIndex, this.navigation, this.activeMoreNavIndex)
+          if (targetRoute.link == link) {
+            this.SET_ACTIVE_LINK_NAME_M(index)
+          } else if (isChildLink) {
+            this.SET_ACTIVE_LINK_NAME_M(targetRoute.index)
+          }
           break
       }
 
@@ -283,7 +287,7 @@ export default {
           padding 0 20px
           line-height 40px
 
-          &:hover
+          &:hover,&.active
             background-color #21243a
 
             > a
