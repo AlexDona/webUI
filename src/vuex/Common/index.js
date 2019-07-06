@@ -64,7 +64,8 @@ const state = {
     },
     tardeRecordList: [], // 交易记录
     tradeMarketList: [], // 交易区列表
-    depthDecimal: {} // 交易对深度小数位数据
+    // 交易对深度小数位数据
+    depthDecimal: {}
   },
   // socket 数据
   socketData: {
@@ -115,7 +116,11 @@ const state = {
   // 全局loading
   loading_S: false,
   // 底部高度
-  footerHeight: 0
+  footerHeight: 0,
+  // 当前激活链接 索引
+  activeLinkIndex_S: '',
+  // 导航
+  navigators_S: []
 }
 
 export default {

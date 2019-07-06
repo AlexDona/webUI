@@ -31,6 +31,7 @@ import {
   mapMutations,
   mapState
 } from 'vuex'
+import {getNavigationsAJAX} from './utils/api/common'
 export default {
   name: 'App',
   components: {
@@ -50,6 +51,7 @@ export default {
     // require('../static/css/common.css')
     // require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
     // require('../static/css/theme/night/Common/HeaderCommonNight.css')
+    await this.getNavigations()
     // 取主题
     const theme = getStore('theme') || 'night'
     this.CHANGE_THEME(theme)
@@ -58,17 +60,47 @@ export default {
     const convertCurrency = getStore('convertCurrency')
     this.CHANGE_CONVERT_CURRENCY(convertCurrency)
   },
-  mounted () {},
-  activated () {},
-  update () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
   methods: {
     ...mapMutations([
       'CHANGE_THEME',
       'CHANGE_CONVERT_CURRENCY',
-      'CHANGE_ROUTER_PATH'
+      'CHANGE_ROUTER_PATH',
+      'SET_NAVIGATOR_M'
     ]),
     setBodyClassName (type, className) {
       type ? document.body.classList.add(className) : document.body.classList.remove(className)
+    },
+    // 检测链接类型是否为内部类型（内部链接、外部链接）
+    checkIsInnerLink (link) {
+      // 外部 https://www.fubt.co www.fubt.co
+      // 内部 /TradeCenter
+      const isInnerLink = !link.includes('.')
+      // console.log(isInnerLink)
+      return isInnerLink
+    },
+    // 自定义导航
+    async getNavigations () {
+      const params = {
+        language: this.$language_S_X
+      }
+      const data = await getNavigationsAJAX(params)
+      // console.log(data)
+      this.navigation = _.get(data, 'data')
+      _.forEach(this.navigation, (nav, index) => {
+        nav['isInnerLink'] = this.checkIsInnerLink(nav.link) ? true : false
+        nav.link = nav['isInnerLink'] && !nav.link.startsWith('/') && nav.link ? `/${nav.link}` : nav.link
+        nav['index'] = index
+        if (nav.children.length) {
+          _.forEach(nav.children, childNav => {
+            childNav['isInnerLink'] = this.checkIsInnerLink(childNav.link) ? true : false
+          })
+        }
+      })
+      console.log(this.navigation)
+      this.SET_NAVIGATOR_M(this.navigation)
     }
   },
   filter: {},
@@ -82,9 +114,35 @@ export default {
     })
   },
   watch: {
-    '$route' (to, from) {
+    $language_S_X () {
+      this.getNavigations()
+    },
+    async '$route' (to, from) {
       // console.log(to.path, from.path)
       let path = to.path
+      if (!this.$navigators_S_X.length) {
+        await this.getNavigations()
+      }
+      console.log(path, this.$navigators_S_X)
+      _.forEach(this.$navigators_S_X, (outerRoute, outerIndex) => {
+        const {link, children} = outerRoute
+        // console.log(path, link)
+        // 命中 路由
+        if (path == link || path.startsWith(`/${link.split('/')[1]}`)) {
+          // console.log(path)
+          this.$SET_ACTIVE_LINK_NAME_M_X(outerIndex)
+          return false
+        } else {
+          _.forEach(children, (childRoute) => {
+            const {link} = childRoute
+            if (path == link || path.startsWith(`/${link.split('/')[1]}`)) {
+              this.$SET_ACTIVE_LINK_NAME_M_X(outerIndex)
+              return false
+            }
+          })
+        }
+        // if(!hitTarget) this.$SET_ACTIVE_LINK_NAME_M_X(-1)
+      })
       if (from.path === '/PersonalCenter') {
         this.$setStore('active-target', 'assets')
       }
