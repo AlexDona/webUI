@@ -312,7 +312,6 @@
                         :chargeMoneyAddress="chargeMoneyAddress"
                         :isNeedTag="isNeedTag"
                         :rechargeNoteInfo="rechargeNoteInfo"
-                        :USDT_COIN_ID="USDT_COIN_ID"
                         @jumpToOtherTab="jumpToOtherTab"
                       />
                     </div>
@@ -334,7 +333,6 @@
                         :ref="`withdrawItemRef${assetItem.coinId}`"
                         :coinId="assetItem.coinId"
                         :total="assetItem.total"
-                        :USDT_COIN_ID="USDT_COIN_ID"
                         @changeInputValue="changeInputValue"
                         @validateOfWithdraw="validateOfWithdraw"
                         @checkUserInputAvailable="checkUserInputAvailable"
@@ -715,6 +713,8 @@ export default {
     await this.currencyTransform()
     // 个人资产跳转OTC-otc可用币种查询
     await this.getOTCAvailableCurrencyList()
+    await this.GET_USDT_LINK_NAMES_A()
+    this.UPDATE_ACTIVE_LINK_NAMES_M(this.linkNames_S[0].value)
   },
   async mounted () {
     await this.getAssetCurrenciesList()
@@ -724,7 +724,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapActions([
-      'REFRESH_USER_INFO_ACTION'
+      'REFRESH_USER_INFO_ACTION',
+      'GET_USDT_LINK_NAMES_A'
     ]),
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
@@ -735,7 +736,8 @@ export default {
       'SET_NEW_WITHDRAW_ADDRESS',
       'SET_NEW_WITHDRAW_RECORD',
       'SET_NEW_WITHDRAW_RECORD_STATUS',
-      'CHANGE_PASSWORD_USEABLE'
+      'CHANGE_PASSWORD_USEABLE',
+      'UPDATE_ACTIVE_LINK_NAMES_M'
     ]),
     // 点击跳转到重置交易密码
     payPasswordState () {
@@ -1116,7 +1118,7 @@ export default {
       if (!data) return false
       let withdrawalAddressData = getNestedData(data, 'data')
       // 对币种类型进行赋值 true公信宝类 false普通币种
-      this.isNeedTag = withdrawalAddressData.needTag
+      this.isNeedTag = withdrawalAddressData.needTag == 'true' ? true : false
       // 返回列表数据并渲染币种列表
       this.withdrawAddressList = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList')
       if (this.withdrawAddressList.length) {
@@ -1159,9 +1161,14 @@ export default {
      *  12.点击充币按钮时 查询充币地址查询
      */
     async fillingCurrencyAddress (id) {
-      let data = await inquireRechargeAddressList({
+      this.chargeMoneyAddress = ''
+      let params = {
         coinId: id ? id : this.chargeMoneyAddressId
-      })
+      }
+
+      if (!params.coinId) return
+      params = params.coinId == this.USDT_COIN_ID_S ? {...params, rechargeType: this.activeLinkName_S} : params
+      let data = await inquireRechargeAddressList(params)
       if (!data) return false
       // 获取充币地址
       this.chargeMoneyAddress = getNestedData(data, 'data.userRechargeAddress.address')
@@ -1424,7 +1431,10 @@ export default {
       activeConvertCurrency: state => state.common.activeConvertCurrency, // 目标货币对象
       // 交易密码是否被锁定
       isLockedPayPassword: state => state.common.isLockedPayPassword,
-      currencyRateList: state => state.common.currencyRateList // 折算货币列表
+      currencyRateList: state => state.common.currencyRateList, // 折算货币列表
+      activeLinkName_S: state => state.personal.activeLinkName_S,
+      linkNames_S: state => state.personal.linkNames_S,
+      USDT_COIN_ID_S: state => state.personal.USDT_COIN_ID_S
     }),
     // 提现手续费输入input ref
     feeInputRef () {
@@ -1475,6 +1485,9 @@ export default {
     },
     filteredData2 () {
       // console.log(this.filteredData2)
+    },
+    activeLinkName_S () {
+      this.fillingCurrencyAddress()
     },
     userCenterActiveName (newVal) {
       // console.log(newVal)
@@ -1636,7 +1649,7 @@ export default {
                     > .recharge-list {
                       position: relative;
                       z-index: 2;
-                      padding: 20px 6px;
+                      padding: 20px 10px;
 
                       > .triangle-one {
                         right: 65px;
@@ -1675,15 +1688,15 @@ export default {
                         > .input-box {
                           > .hint-input {
                             width: 430px;
-                            height: 32px;
+                            height: 34px;
                           }
 
                           > .code-copy {
                             min-width: 90px;
-                            height: 32px;
+                            height: 34px;
                             padding: 0 5px;
                             border-radius: 0 2px 2px 0;
-                            line-height: 32px;
+                            line-height: 34px;
                           }
                         }
 
@@ -1736,7 +1749,7 @@ export default {
 
                             > .new-address {
                               position: absolute;
-                              top: 38px;
+                              top: 38.5px;
                               right: 1px;
                               height: 34px;
                               padding: 0 5px;
@@ -2033,8 +2046,6 @@ export default {
         background-color: $mainContentNightBgColor;
 
         .account-assets-header {
-          box-shadow: 0 2px 13px rgba(24, 30, 42, 1);
-
           > .header-left {
             color: #338ff5;
           }

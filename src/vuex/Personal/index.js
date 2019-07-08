@@ -42,7 +42,28 @@ const state = {
   // 我的资产跳转账单明细
   assetJumpStatementDetails: '',
   // 我的资产跳转账单明细状态类型提币或者充值
-  assetJumpStatementDetailsType: ''
+  assetJumpStatementDetailsType: '',
+  // USDT 币种 id
+  USDT_COIN_ID_S: '501762327108911104',
+  // 全局 链名称
+  activeLinkName_S: '',
+  linkNames_S: [
+    {
+      label: 'OMNI',
+      value: 'OMNI',
+      disabled: false
+    },
+    {
+      label: 'ERC20',
+      value: 'ERC20',
+      disabled: false
+    },
+    {
+      label: 'TRC20',
+      value: 'TRC20',
+      disabled: true
+    }
+  ]
 }
 
 export default {

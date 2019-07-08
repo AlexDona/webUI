@@ -9,7 +9,9 @@ import {
   CHANGE_RE_RENDER_TRADING_LIST_STATUS,
   SET_NEW_WITHDRAW_ADDRESS,
   SET_NEW_WITHDRAW_RECORD_STATUS,
-  SET_NEW_WITHDRAW_RECORD
+  SET_NEW_WITHDRAW_RECORD,
+  UPDATE_ACTIVE_LINK_NAMES_M,
+  UPDATE_LINK_NAMES_M
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -94,5 +96,13 @@ export default {
   // 我的资产跳转到账单明细提币携带提币充值类型
   [SET_NEW_WITHDRAW_RECORD_STATUS] (state, data) {
     state.assetJumpStatementDetailsType = data
+  },
+  // 更新全局链名称
+  [UPDATE_ACTIVE_LINK_NAMES_M] (state, activeLinkName) {
+    state.activeLinkName_S = activeLinkName
+  },
+  // 更新全局链名称
+  [UPDATE_LINK_NAMES_M] (state, linknames) {
+    state.linkNames_S = linknames
   }
 }

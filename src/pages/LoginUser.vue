@@ -618,10 +618,6 @@
                   />
                 </span>
                   </div>
-                  <!--<ErrorBox-->
-                  <!--:text="errorShowStatusList[2]"-->
-                  <!--:isShow="!!errorShowStatusList[2]"-->
-                  <!--/>-->
                   <div class="inner-box submit-box">
                     <button
                       class="submit cursor-pointer"
@@ -675,15 +671,12 @@ import ImageValidate from '../components/Common/ImageValidateCommon'
 import HeaderCommonForPC from '../components/Common/HeaderCommonForPC'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
 import IconFont from '../components/Common/IconFontCommon'
-import VueClipboard from 'vue-clipboard2'
 import Qrcode from '../components/Common/Qrcode'
 
 import {
   mapMutations,
   mapState
 } from 'vuex'
-import Vue from 'vue'
-Vue.use(VueClipboard)
 export default {
   components: {
     CountDownButton, // 倒计时组件
