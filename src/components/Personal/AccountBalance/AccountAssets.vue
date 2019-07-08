@@ -1112,9 +1112,11 @@ export default {
     async queryWithdrawalAddressList () {
       this.activeWithdrawDepositAddress = ''
       this.withdrawAddressList = []
-      let data = await inquireWithdrawalAddressId({
+      let params = {
         coinId: this.activeCoinId
-      })
+      }
+      params = params.coinId == this.USDT_COIN_ID_S ? {...params, rechargeType: this.activeLinkName_S} : params
+      let data = await inquireWithdrawalAddressId(params)
       if (!data) return false
       let withdrawalAddressData = getNestedData(data, 'data')
       // 对币种类型进行赋值 true公信宝类 false普通币种
@@ -1321,20 +1323,24 @@ export default {
     stateSubmitAssets: _.debounce(async function () {
       let data
       let params = {
-        // msgCode: this.phoneCode, // 短信验证码
-        // emailCode: this.emailCode, // 邮箱验证码
-        // googleCode: this.googleCode, // 谷歌验证码
-        coinId: this.activeCoinId, // 币种ID
+        // 币种ID
+        coinId: this.activeCoinId,
         withdrawAddress: this.activeWithdrawDepositAddress,
-        remark: this.withdrawRemark, // 地址标签
-        networkFees: this.withdrawFeeVModel, // 手续费
-        amount: this.withdrawCountVModel, // 提币数量
-        payCode: this.password // 交易密码
+        // 地址标签
+        remark: this.withdrawRemark,
+        // 手续费
+        networkFees: this.withdrawFeeVModel,
+        // 提币数量
+        amount: this.withdrawCountVModel,
+        // 交易密码
+        payCode: this.password
       }
       const {isPhoneEnable, isMailEnable, isGoogleEnable} = this.securityCenter
       if (isPhoneEnable) params.msgCode = this.phoneCode
       if (isMailEnable) params.emailCode = this.emailCode
       if (isGoogleEnable) params.googleCode = this.googleCode
+      params = params.coinId == this.USDT_COIN_ID_S ? {...params, usdtType: this.activeLinkName_S} : params
+
       data = await statusSubmitWithdrawButton(params)
       // console.log(data)
       this.isShowWithdrawDialog = false
