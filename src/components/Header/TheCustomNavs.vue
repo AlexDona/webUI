@@ -6,22 +6,25 @@
 <template lang="pug">
   ul.nav-list
     li.nav-item
-      router-link.logo(:to="`/${$routes_X.home}`")
+      a.logo(
+        href="javascript:void(0);"
+        @click="gotoHome"
+      )
         img.img(:src="logoSrc")
     // 更多导航（自动收起）
     li.more-btn(
       @mouseenter="toggleMoreNavs(true)"
       @mouseleave="toggleMoreNavs(false)"
     )
-      a.more-nav-btn.text-align-l(v-show="navigation.length > 5")
+      a.more-nav-btn.text-align-l(v-show="$navigators_S_X.length > 5")
         TheMoreNavsButton(:isActive="isShowSubNav")
       // 自定义导航列表
       ul.more-nav-list(v-show="isShowSubNav")
         li(
-          v-for="(navItem, navIndex) in navigation.slice(5)"
+          v-for="(navItem, navIndex) in $navigators_S_X.slice(5)"
           :key="navIndex"
           class="nav-item"
-          :class="{'active': activeLink == navItem.link}"
+          :class="{'active': $activeLinkIndex_S_X == (navIndex + 5)}"
           @mouseenter="changeMoreActiveNavIndex(navIndex)"
           @mouseleave="changeMoreActiveNavIndex(-1)"
         )
@@ -45,9 +48,9 @@
               )
                 span {{subNav.name}}
     li.nav-item(
-      v-for="(navigationItem, index) in navigation.slice(0, 5)"
+      v-for="(navigationItem, index) in $navigators_S_X.slice(0, 5)"
       :key="index"
-      :class="{'active': activeLink == navigationItem.link}"
+      :class="{'active': $activeLinkIndex_S_X == navigationItem.index}"
       @mouseenter="changeActiveNavIndex(index)"
       @mouseleave="changeActiveNavIndex(-1)"
     )
@@ -86,30 +89,19 @@ export default {
   components: {
     TheMoreNavsButton
   },
-  props: {
-    navigation: {
-    }
-  },
+  // props: {},
   data () {
     return {
       isShowSubNav: false,
+      // isShowSubNav: true,
       MAX_SHOW_COUNT: 5,
       // 当前导航选中项 索引
       activeNavIndex: -1,
       // 当前 更多导航选中项索引
-      activeMoreNavIndex: -1,
-      // 当前选中链接
-      activeLink: {
-        outer: '',
-        inner: ''
-      }
+      activeMoreNavIndex: -1
     }
   },
-  created () {
-    console.log(this.$route)
-    const { path } = this.$route
-    this.activeLink = path
-  },
+  // created () {},
   // mounted () {}
   // updated () {},
   // beforeRouteUpdate () {},
@@ -118,27 +110,48 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_LANGUAGE',
-      'SET_NOTICE_ID'
+      'SET_NOTICE_ID',
+      'SET_ACTIVE_LINK_NAME_M'
     ]),
+    gotoHome () {
+      this.$goToPage(`/${this.$routes_X.home}`)
+      this.activeNavIndex = -1
+      this.activeMoreNavIndex = -1
+      this.SET_ACTIVE_LINK_NAME_M(-1)
+    },
     /**
      * type: normal: 正常导航; more: 更多导航
      * @param navigation
      * @param type
      */
     navToJump (navigation, type = 'normal') {
+      // console.log(navigation, type)
+      const { link, index } = navigation
+      if (!link) return
+      let targetRoute
+      let isChildLink
       switch (type) {
         case 'normal':
-          const { link } = navigation
-          const targetRoute = this.navigation[this.activeNavIndex]
-          console.log(link, targetRoute, this.activeNavIndex, this.navigation, this.activeMoreNavIndex)
-          const isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
+          targetRoute = this.$navigators_S_X[this.activeNavIndex]
+          // console.log(targetRoute, link, this.$activeLinkIndex_S_X)
+          isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
+          // console.log(link, targetRoute, this.activeNavIndex, this.navigation, this.activeMoreNavIndex)
           if (targetRoute.link == link) {
-            this.activeLink = link
+            this.SET_ACTIVE_LINK_NAME_M(index)
           } else if (isChildLink) {
-            this.activeLink = targetRoute.link
+            this.SET_ACTIVE_LINK_NAME_M(targetRoute.index)
           }
           break
         case 'more':
+          targetRoute = this.$navigators_S_X[this.activeMoreNavIndex + 5]
+          isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
+          // console.log(targetRoute)
+          // console.log(link, targetRoute, this.activeNavIndex, this.navigation, this.activeMoreNavIndex)
+          if (targetRoute.link == link) {
+            this.SET_ACTIVE_LINK_NAME_M(index)
+          } else if (isChildLink) {
+            this.SET_ACTIVE_LINK_NAME_M(targetRoute.index)
+          }
           break
       }
 
@@ -151,7 +164,6 @@ export default {
     // 切换当前激活导航
     changeActiveNavIndex (index) {
       this.activeNavIndex = index
-      console.log(this.activeMoreNavIndex)
     },
     // 切换当前更多激活导航
     changeMoreActiveNavIndex (index) {
@@ -160,20 +172,15 @@ export default {
   },
   // filters: {},
   computed: {
-    ...mapState(
-      {
-        logoSrc: state => state.common.logoSrc
-      }
-    )
+    ...mapState({
+      logoSrc: state => state.common.logoSrc
+    })
   },
   watch: {
     $route (to) {
       console.log(to)
       // 重置导航
       this.activeNavIndex = -1
-    },
-    activeLink (New) {
-      console.log(New)
     }
   }
 }
@@ -276,7 +283,7 @@ export default {
           padding 0 20px
           line-height 40px
 
-          &:hover
+          &:hover,&.active
             background-color #21243a
 
             > a

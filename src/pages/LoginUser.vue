@@ -748,6 +748,7 @@ export default {
     }
   },
   created () {
+    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
     document.getElementsByTagName('body')[0].style.zoom = 1
     if (this.isLogin) {
       this.$goToPage(`/${this.$routes_X.home}`)
