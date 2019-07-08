@@ -94,7 +94,9 @@ export default {
     // 最小充币数量
     'minRechargeAmount',
     // 当前币种id
-    'coinId'
+    'coinId',
+    // USDT 币种名称
+    'USDT_COIN_ID'
   ],
   data () {
     return {}

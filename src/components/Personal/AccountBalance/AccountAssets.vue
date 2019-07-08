@@ -312,6 +312,7 @@
                         :chargeMoneyAddress="chargeMoneyAddress"
                         :isNeedTag="isNeedTag"
                         :rechargeNoteInfo="rechargeNoteInfo"
+                        :USDT_COIN_ID="USDT_COIN_ID"
                         @jumpToOtherTab="jumpToOtherTab"
                       />
                     </div>
@@ -333,6 +334,7 @@
                         :ref="`withdrawItemRef${assetItem.coinId}`"
                         :coinId="assetItem.coinId"
                         :total="assetItem.total"
+                        :USDT_COIN_ID="USDT_COIN_ID"
                         @changeInputValue="changeInputValue"
                         @validateOfWithdraw="validateOfWithdraw"
                         @checkUserInputAvailable="checkUserInputAvailable"
