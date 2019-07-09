@@ -160,13 +160,13 @@
               <div class="dot"></div>
               <div class="lines">
                 <transition name="bounce">
-                  <div v-show= "line1" class="line1"></div>
+                  <div v-show="line1" class="line1"></div>
                 </transition>
                 <transition name="bounce">
-                  <div v-show= "line2" class="line2"></div>
+                  <div v-show="line2" class="line2"></div>
                 </transition>
                 <transition name="bounce">
-                  <div v-show= "line3" class="line3"></div>
+                  <div v-show="line3" class="line3"></div>
                 </transition>
               </div>
             </div>
@@ -423,32 +423,19 @@ export default {
       if (this.$refs['fuc'].offsetTop && scrollTop >= this.$refs['fuc'].offsetTop - 800) {
         setTimeout(() => {
           this.line1 = 1
-          this.$refs['line1'].style.visibility = 'visible'
-          this.$refs['line1'].className = 'animated bounceIn delay-500ms'
+          this.$refs['line1'].className = 'animated pulse fast'
         }, 300)
         setTimeout(() => {
           this.line2 = 1
-          this.$refs['line2'].style.visibility = 'visible'
-          this.$refs['line2'].className = 'animated bounceIn delay-500ms'
+          this.$refs['line2'].className = 'animated pulse fast'
           this.$refs['line2'].style.alignSelf = 'flex-end'
         }, 800)
 
         setTimeout(() => {
           this.line3 = 1
-          this.$refs['line3'].style.visibility = 'visible'
-          this.$refs['line3'].className = 'animated bounceIn delay-500ms'
+          this.$refs['line3'].className = 'animated pulse fast'
           this.$refs['line3'].style.alignSelf = 'flex-end'
         }, 1600)
-      } else if (scrollTop <= this.$refs['fuc'].offsetTop - 1200) {
-        this.line2 = 0
-        this.line3 = 0
-        this.line1 = 0
-        this.$refs['line1'].className = 'fuc-center-center-content'
-        this.$refs['line1'].style.visibility = 'hidden'
-        this.$refs['line3'].className = 'fuc-center-left'
-        this.$refs['line3'].style.visibility = 'hidden'
-        this.$refs['line2'].className = 'fuc-center-left'
-        this.$refs['line2'].style.visibility = 'hidden'
       }
     },
 
@@ -517,26 +504,19 @@ ul {
   margin-left: 14px;
 }
 
-.bounce-enter-active {
-  animation: bounce-in .5s infinite;
+.bounce-enter,
+.bounce-leave-to {
+    opacity: 0;
 }
 
+.bounce-enter-to,
+.bounce-leave {
+    opacity: 1;
+}
+
+.bounce-enter-active,
 .bounce-leave-active {
-  animation: bounce-in .5s reverse;
-}
-
-@keyframes bounce-in {
-  0% {
-    transform: scale(.3);
-  }
-
-  50% {
-    transform: scale(1.3);
-  }
-
-  100% {
-    transform: scale(1);
-  }
+    transition: opacity .2s linear .15s;
 }
 
 .container {
