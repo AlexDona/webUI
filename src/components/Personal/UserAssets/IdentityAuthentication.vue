@@ -773,7 +773,7 @@ export default {
           switch (validateNumForUserInput('ID-card', targetNum)) {
             case 0:
               // '请输入正确的证件号码'
-              if (!identityCodeValid(targetNum)) {
+              if (!identityCodeValid(targetNum.toUpperCase())) {
                 this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_real_certificate_cone'))
                 this.$forceUpdate()
                 return 0
