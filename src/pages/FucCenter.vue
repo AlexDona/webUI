@@ -777,8 +777,9 @@ ul {
         .sub-price-content-col1 {
           z-index: 2;
           display: flex;
-          width: 1575px;
-          padding: 3% 10% 3% 20%;
+          max-width: 1300px;
+          padding: 3% 100px;
+          margin: 0 auto;
 
           .sub-price-center {
             padding: 0 130px;
