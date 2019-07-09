@@ -141,6 +141,7 @@ export default {
   // created () {},
   // mounted () {},
   // updated () {},
+  // destroyed () {},
   // beforeRouteUpdate () {},
   methods: {
     // 地址标签输入时过滤空格
@@ -203,13 +204,16 @@ export default {
       USDT_COIN_ID_S: state => state.personal.USDT_COIN_ID_S
     }),
     isShowUSDTSelect () {
-      return this.coinId == this.USDT_COIN_ID_S
+      return this.coinId == this.USDT_COIN_ID_S && this.isShow
     },
     accountCountFilter () {
       return this.$scientificToNumber(this.accountCount)
     }
   },
   watch: {
+    isShow (New) {
+      console.log(New)
+    },
     // 初始提币地址赋值
     originalActiveWithdrawDepositAddress (newVal) {
       this.activeWithdrawDepositAddress = newVal

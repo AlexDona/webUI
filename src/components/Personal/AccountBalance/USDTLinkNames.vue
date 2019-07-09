@@ -30,7 +30,14 @@ export default {
       activeLinkIndex: 0
     }
   },
-  // async created () {},
+  created () {
+    this.linkNames_S.forEach((item, index) => {
+      if (item.value == this.activeLinkName_S) {
+        this.activeLinkIndex = index
+        return false
+      }
+    })
+  },
   // mounted () {}
   // updated () {},
   // beforeRouteUpdate () {},
@@ -41,18 +48,19 @@ export default {
       'UPDATE_ACTIVE_LINK_NAMES_M'
     ]),
     // 针对 USDT 多链 切换链名称
-    toggleLinkName (linkName, index) {
+    toggleLinkName: _.debounce(function (linkName, index) {
       this.activeLinkIndex = index
       this.UPDATE_ACTIVE_LINK_NAMES_M(linkName)
-    }
+    }, 100)
   },
   // filters: {},
   computed: {
     ...mapState({
-      linkNames_S: state => state.personal.linkNames_S
+      linkNames_S: state => state.personal.linkNames_S,
+      activeLinkName_S: state => state.personal.activeLinkName_S
     })
-  }
-  // watch: {}
+  },
+  watch: {}
 }
 </script>
 

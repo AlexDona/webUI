@@ -359,10 +359,10 @@ export default {
     this.activeLinkName = this.linkNames_S[0].value
     this.getWithdrawalAddressList()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
@@ -530,14 +530,22 @@ export default {
       // 返回列表数据
       let detailData = getNestedData(data, 'data')
       this.currencyList = getNestedData(detailData, 'canWithdrawPartnerCoinList')
+      // 当前选中的币种 对应的 索引
+      let targetIndex = 0
+      _.forEach(this.currencyList, (currencyItem, currencyIndex) => {
+        if (this.currencyValue == _.get(currencyItem, 'coinId')) {
+          targetIndex = currencyIndex
+          return false
+        }
+      })
       // 判断是否显示地址标签
-      this.isShowAddressLabel = this.currencyList[0].needTag
+      this.isShowAddressLabel = this.currencyList[targetIndex].needTag
       // 对ID名称进行赋值
       if (this.paramOfJumpToAddWithdrawAdress) {
         this.currencyValue = this.paramOfJumpToAddWithdrawAdress
-        this.isShowAddressLabel = this.currencyList.filter(item => item.coinId === this.currencyValue)[0].needTag
+        this.isShowAddressLabel = this.currencyList[targetIndex].needTag
       } else {
-        this.currencyValue = getNestedData(detailData, 'canWithdrawPartnerCoinList[0].coinId')
+        this.currencyValue = _.get(detailData, `canWithdrawPartnerCoinList[${targetIndex}].coinId`)
       }
       this.SET_NEW_WITHDRAW_ADDRESS('')
       // 对币种名称列表进行赋值
@@ -620,8 +628,12 @@ export default {
       USDT_COIN_ID_S: state => state.personal.USDT_COIN_ID_S,
       activeLinkName_S: state => state.personal.activeLinkName_S
     })
+  },
+  watch: {
+    currencyValue (New) {
+      if (New == this.USDT_COIN_ID_S) this.isShowLinkSelect = true
+    }
   }
-  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

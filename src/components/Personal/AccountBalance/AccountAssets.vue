@@ -715,6 +715,8 @@ export default {
     await this.getOTCAvailableCurrencyList()
     await this.GET_USDT_LINK_NAMES_A()
     this.UPDATE_ACTIVE_LINK_NAMES_M(this.linkNames_S[0].value)
+    // this.fillingCurrencyAddress(this.USDT_COIN_ID_S)
+    // this.queryWithdrawalAddressList()
   },
   async mounted () {
     await this.getAssetCurrenciesList()
