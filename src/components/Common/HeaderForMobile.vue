@@ -40,7 +40,7 @@
                   <button
                     class="lang-item"
                     @click.stop="changeLanguage(item)"
-                    v-for="(item,index) in languageList"
+                    v-for="(item,index) in languages"
                     :key="index"
                   >
                     {{item.name}}
@@ -69,17 +69,17 @@ export default {
     return {
       // 语言选择中
       langSelecting: false,
-      activeTheme: '',
-      languageList: []
+      // langSelecting: true,
+      activeTheme: ''
     }
   },
   async created () {
-    console.log(this.isMobile)
+    // console.log(this.isMobile)
     // 获取 语言列表
     if (!await this.GET_LANGUAGE_LIST_ACTION(this)) return false
     await this.SET_PARTNER_INFO_ACTION(this.language)
     if (this.routeLanguage) {
-      _.forEach(this.languageList, item => {
+      _.forEach(this.languages, item => {
         if (this.routeLanguage === item.shortName) {
           this.changeLanguage(item)
         }
@@ -91,10 +91,10 @@ export default {
       this.REFRESH_USER_INFO_ACTION()
     }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapActions([
       'GET_COUNTRY_LIST_ACTION',
@@ -136,7 +136,8 @@ export default {
       language: state => state.common.language, // 语言
       // 默认语言
       defaultLanguage: state => state.common.defaultLanguage,
-      isMobile: state => state.user.isMobile
+      isMobile: state => state.user.isMobile,
+      languages: state => state.common.languages_S
     }),
     routeLanguage () {
       return this.$route.query.language

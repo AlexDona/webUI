@@ -29,9 +29,12 @@ let mixin = {
   },
   methods: {
     ...mapMutations({
-      '$UPDATE_PAY_PASSWORD_DIALOG_M_X': 'UPDATE_PAY_PASSWORD_DIALOG_M'
+      '$UPDATE_PAY_PASSWORD_DIALOG_M_X': 'UPDATE_PAY_PASSWORD_DIALOG_M',
+      '$SET_ACTIVE_LINK_NAME_M_X': 'SET_ACTIVE_LINK_NAME_M'
     }),
     $goToPage (routerName, param) {
+      console.log(routerName)
+      if (!routerName) return
       let newRouterPath = routerName
       if (!routerName.startsWith('/')) newRouterPath = `/${routerName}`
       if (param) {
@@ -121,7 +124,9 @@ let mixin = {
       // 全局交易密码
       $globalPayPassword_S_X: state => state.common.globalPayPassword_S,
       // VIP是否禁用
-      $isVIPEnable_S_X: state => state.common.footerInfo.configInfo.vipEnabled
+      $isVIPEnable_S_X: state => state.common.footerInfo.configInfo.vipEnabled,
+      $navigators_S_X: state => state.common.navigators_S,
+      $activeLinkIndex_S_X: state => state.common.activeLinkIndex_S
     }),
     $activeBuyName_X () {
       return (this.$middleTopData_S_X.area || '').toUpperCase()
