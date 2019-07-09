@@ -114,7 +114,7 @@
               >
                 <input
                   class="form-input border-radius4 padding-left15"
-                  v-model="withdrawalAddress"
+                  v-model.trim="withdrawalAddress"
                   @keydown="setErrorMsg(1, '')"
                   @blur="checkoutInputFormat(1, withdrawalAddress)"
                 >
@@ -499,7 +499,7 @@ export default {
       } else {
         this.emptyErrorMsg = ''
       }
-      let param = {
+      let params = {
         coinId: this.currencyValue, // 币种coinId
         remark: this.withdrawalRemark, // 备注
         address: this.withdrawalAddress, // 提币地址
@@ -508,7 +508,8 @@ export default {
         emailCode: this.emailCode, // 邮箱验证
         googleCode: this.googleCode // 谷歌验证
       }
-      let data = await addNewWithdrawalAddress(param)
+      params = params.coinId == this.USDT_COIN_ID_S ? {...params, rechargeType: this.activeLinkName} : params
+      let data = await addNewWithdrawalAddress(params)
       if (!data) return false
       this.mentionMoneyConfirm = false
       this.getWithdrawalAddressList()
@@ -616,7 +617,8 @@ export default {
       // 跳转到的提币地址
       paramOfJumpToAddWithdrawAdress: state => state.personal.paramOfJumpToAddWithdrawAdress,
       linkNames_S: state => state.personal.linkNames_S,
-      USDT_COIN_ID_S: state => state.personal.USDT_COIN_ID_S
+      USDT_COIN_ID_S: state => state.personal.USDT_COIN_ID_S,
+      activeLinkName_S: state => state.personal.activeLinkName_S
     })
   }
   // watch: {}

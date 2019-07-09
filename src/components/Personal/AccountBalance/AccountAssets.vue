@@ -930,6 +930,7 @@ export default {
           provideWithdrawDepositIsShow: false
         })
       })
+      this.$forceUpdate()
       let item = this.withdrawDepositMap.get(id)
       if (!item.rechargeIsShow) {
         this.withdrawDepositMap.set(id, {...item, rechargeIsShow: true})
@@ -1115,6 +1116,8 @@ export default {
       let params = {
         coinId: this.activeCoinId
       }
+
+      if (!params.coinId) return
       params = params.coinId == this.USDT_COIN_ID_S ? {...params, rechargeType: this.activeLinkName_S} : params
       let data = await inquireWithdrawalAddressId(params)
       if (!data) return false
@@ -1175,7 +1178,8 @@ export default {
       // 获取充币地址
       this.chargeMoneyAddress = getNestedData(data, 'data.userRechargeAddress.address')
       // 获取币种类型 true公信宝类 false普通币种
-      this.isNeedTag = getNestedData(data, 'data.userRechargeAddress.needTag')
+      this.isNeedTag = getNestedData(data, 'data.userRechargeAddress.needTag') == 'true' ? true : false
+
       // 获取充值备注信息 rechargeNoteInfo
       this.rechargeNoteInfo = getNestedData(data, 'data.userRechargeAddress.tag')
       this.minRechargeAmount = getNestedData(data, 'data.userRechargeAddress.minRechargeAmount')
@@ -1493,7 +1497,8 @@ export default {
       // console.log(this.filteredData2)
     },
     activeLinkName_S () {
-      this.fillingCurrencyAddress()
+      this.fillingCurrencyAddress(this.USDT_COIN_ID_S)
+      this.queryWithdrawalAddressList()
     },
     userCenterActiveName (newVal) {
       // console.log(newVal)
