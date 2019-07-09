@@ -21,22 +21,11 @@
           <p class="step-desc">{{$t('M.login_forgot_pwd_find2')}}</p>
         </div>
         <div
-          class="step-item"
-         :class="{'have-down': activeStepNumber>=2}"
+          class="step-item step2"
+          :class="{'have-down': activeStepNumber>=2}"
         >
           <div class="line"></div>
           <p class="step-number">2</p>
-          <!-- 验证身份 -->
-          <p class="step-desc">
-            {{$t('M.login_forgot_pwd_find3')}}
-          </p>
-        </div>
-        <div
-          class="step-item"
-          :class="{'have-down': activeStepNumber>=3}"
-        >
-          <div class="line"></div>
-          <p class="step-number">3</p>
           <p class="step-desc">
             <!--设置新密码-->
             {{ $t('M.login_forgot_pwd_find4') }}
@@ -44,10 +33,15 @@
         </div>
         <div
           class="step-item"
-          :class="{'have-down': activeStepNumber>=4}"
+          :class="{'have-down': activeStepNumber>=3}"
         >
           <div class="line"></div>
-          <p class="step-number">4</p>
+          <p class="step-number">
+            <Iconfont
+              icon-name="icon-success"
+              class="iconfont"
+            />
+          </p>
           <p class="step-desc">
             <!--完成-->
             {{ $t('M.forgetPassword_achieve') }}
@@ -134,9 +128,9 @@
             </div>
           </div>
         </div>
-        <!--步骤二v-else-if="activeStepNumber == 2"-->
+        <!--步骤三-->
         <div
-          class="content-item step2"
+          class="content-item step3"
           v-else-if="activeStepNumber == 2"
         >
           <div class="inner-box">
@@ -234,27 +228,6 @@
               </span>
             </div>
             <div class="item">
-              <span class="label"></span>
-              <span class="label-content">
-                <!--下一步按钮-->
-                <button
-                  class="next-btn cursor-pointer"
-                  @click="findPasswordStep2"
-                >
-                  <!--下一步-->
-                  {{ $t('M.forgetPassword_next_step') }}
-                </button>
-              </span>
-            </div>
-          </div>
-        </div>
-        <!--步骤三-->
-        <div
-          class="content-item step3"
-          v-else-if="activeStepNumber == 3"
-        >
-          <div class="inner-box">
-            <div class="item">
               <span class="label">
                 <!--新登录密码-->
                 {{ $t('M.forgetPassword_new_login') }}
@@ -292,8 +265,8 @@
                   class="next-btn cursor-pointer"
                   @click="findPasswordStep3"
                 >
-                  <!--完成-->
-                  {{ $t('M.forgetPassword_achieve') }}
+                  <!--下一步-->
+                  {{ $t('M.forgetPassword_next_step') }}
                 </button>
               </span>
             </div>
@@ -339,7 +312,6 @@ import IconFont from '../Common/IconFontCommon'
 import CountDownButton from '../Common/CountDownCommon'
 import {
   findPasswordStep1,
-  findPasswordStep2,
   findPasswordStep3
 } from '../../utils/api/user'
 import {
@@ -433,6 +405,22 @@ export default {
     },
     // 找回密码步骤3
     findPasswordStep3: _.debounce(async function () {
+      if (this.userInfo.isEnablePhone && !this.phoneCode) {
+        // 请输入短信验证码
+        this.$error_tips_X(`${this.$t('M.comm_please_enter')}${this.$t('M.comm_note')}${this.$t('M.comm_code')}`)
+        return false
+      }
+
+      if (this.userInfo.isEnableMail && !this.emailCode) {
+        // 请输入邮箱验证码
+        this.$error_tips_X(`${this.$t('M.comm_please_enter')}${this.$t('M.user_security_email')}${this.$t('M.comm_code')}`)
+        return false
+      }
+      if (this.userInfo.isEnableGoogle && !this.googleCode) {
+        // 请输入谷歌验证码
+        this.$error_tips_X(`${this.$t('M.comm_please_enter')}${this.$t('M.user_security_google')}${this.$t('M.comm_code')}`)
+        return false
+      }
       if (!this.newPassword) {
         // 请输入新密码
         this.$error_tips_X(`${this.$t('M.login_please_input5')}`)
@@ -454,46 +442,19 @@ export default {
       }
 
       const params = {
-        token: this.nextStepToken,
+        token: this.userInfo.token,
+        phoneCode: this.phoneCode,
+        mailCode: this.emailCode,
+        googleCode: this.googleCode,
         newPassword: this.newPassword
       }
       const data = await findPasswordStep3(params)
       if (!data) return false
-      this.activeStepNumber = 4
+      this.activeStepNumber = 3
       this.timer = setTimeout(() => {
         this.$goToPage(`/${this.$routes_X.login}`)
       }, 3000)
     }, 500),
-    // 找回密码步骤2
-    async findPasswordStep2 () {
-      if (this.userInfo.isEnablePhone && !this.phoneCode) {
-        // 请输入短信验证码
-        this.$error_tips_X(`${this.$t('M.comm_please_enter')}${this.$t('M.comm_note')}${this.$t('M.comm_code')}`)
-        return false
-      }
-
-      if (this.userInfo.isEnableMail && !this.emailCode) {
-        // 请输入邮箱验证码
-        this.$error_tips_X(`${this.$t('M.comm_please_enter')}${this.$t('M.user_security_email')}${this.$t('M.comm_code')}`)
-        return false
-      }
-      if (this.userInfo.isEnableGoogle && !this.googleCode) {
-        // 请输入谷歌验证码
-        this.$error_tips_X(`${this.$t('M.comm_please_enter')}${this.$t('M.user_security_google')}${this.$t('M.comm_code')}`)
-        return false
-      }
-
-      const params = {
-        token: this.userInfo.token,
-        phoneCode: this.phoneCode,
-        mailCode: this.emailCode,
-        googleCode: this.googleCode
-      }
-      const data = await findPasswordStep2(params)
-      if (!data) return false
-      this.nextStepToken = getNestedData(data, 'data')
-      this.activeStepNumber = 3
-    },
     userInputFormat (ref, vModel) {
       let targetStr = positiveIntegerNumRegexpInput(this.$refs[ref])
       this.$refs[ref].value = targetStr
@@ -608,6 +569,15 @@ export default {
         height: 100px;
         vertical-align: top;
 
+        &.step2 {
+          flex: 2;
+          max-width: 280px;
+
+          > .line {
+            width: 280px;
+          }
+        }
+
         &.have-down {
           > .line,
           > .step-number {
@@ -641,6 +611,11 @@ export default {
           color: #fff;
           background-color: #5d7a9f;
           transform: translate(-50%, -50%);
+
+          > .iconfont {
+            font-size: 14px;
+            color: #fff;
+          }
         }
 
         > .step-desc {
