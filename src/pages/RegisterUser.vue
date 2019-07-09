@@ -756,6 +756,7 @@ export default {
     }
   },
   async created () {
+    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
     require('../../static/css/list/User/Register.css')
     if (this.$isLogin_S_X) this.USER_LOGOUT()
   },
