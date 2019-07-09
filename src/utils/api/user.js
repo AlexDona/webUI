@@ -1,7 +1,7 @@
 import {
   postWithURLencoded,
   get,
-  postWithFormData, post
+  postWithFormData
 } from './axios'
 import {handleRequest} from '../commonFunc'
 // import {handleRequest} from '../commonFunc'
@@ -48,7 +48,7 @@ export const findPasswordStep2 = params => handleRequest(() => postWithURLencode
 // 找回密码步骤3
 export const findPasswordStep3 = params => handleRequest(() => postWithURLencoded('user/forgetPassword3', params))
 
-export const findPassword = params => handleRequest(() => post('user/forgetPasswordAndSetNewPass', params))
+export const findPassword = params => handleRequest(() => postWithURLencoded('user/forgetPasswordAndSetNewPass', params))
 // 二维码登录生成二维码
 export const getLoginErcode = () => handleRequest(() => get('user/qrcode'))
 // 获取app下载地址

@@ -311,8 +311,8 @@
 import IconFont from '../Common/IconFontCommon'
 import CountDownButton from '../Common/CountDownCommon'
 import {
-  findPasswordStep1,
-  findPasswordStep3
+  findPassword,
+  findPasswordStep1
 } from '../../utils/api/user'
 import {
   phoneNumberFormat,
@@ -372,6 +372,7 @@ export default {
     }
   },
   created () {
+    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
     this.refreshCode()
   },
   // mounted () {
@@ -448,7 +449,7 @@ export default {
         googleCode: this.googleCode,
         newPassword: this.newPassword
       }
-      const data = await findPasswordStep3(params)
+      const data = await findPassword(params)
       if (!data) return false
       this.activeStepNumber = 3
       this.timer = setTimeout(() => {
