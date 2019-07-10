@@ -1,25 +1,17 @@
-<template>
-  <div
+<template lang="pug">
+  .body-container(
     id="app"
-    class="body-container"
     v-loading.fullscreen.lock="$loading_S_X"
     element-loading-background="rgba(0, 0, 0, 0.8)"
-  >
-    <NoticeHome
-      v-if="isNeedNotice"
-    />
-    <keep-alive>
-      <HeaderCommon
-        v-if="isNeedHeader"
-      />
-    </keep-alive>
-      <router-view />
-    <keep-alive>
-      <FooterCommon
-        v-if="isNeedFooter"
-      />
-    </keep-alive>
-  </div>
+  )
+    NoticeHome(v-if="isShowNotice")
+    HeaderCommon(v-if="isShowHeader")
+    router-view(
+      @toggleShowHeader="toggleShowHeader"
+      @toggleShowFooter="toggleShowFooter"
+      @toggleShowNotice="toggleShowNotice"
+    )
+    FooterCommon(v-if="isShowFooter")
 </template>
 <script>
 import {getStore} from './utils'
@@ -44,7 +36,10 @@ export default {
     return {
       isNeedHeader: false,
       isNeedFooter: false,
-      isNeedNotice: false
+      isNeedNotice: false,
+      isShowNotice: false,
+      isShowHeader: true,
+      isShowFooter: true
     }
   },
   async created () {
@@ -70,6 +65,15 @@ export default {
       'CHANGE_ROUTER_PATH',
       'SET_NAVIGATOR_M'
     ]),
+    toggleShowHeader (status) {
+      this.isShowHeader = status
+    },
+    toggleShowFooter (status) {
+      this.isShowFooter = status
+    },
+    toggleShowNotice (status) {
+      this.isShowNotice = status
+    },
     setBodyClassName (type, className) {
       type ? document.body.classList.add(className) : document.body.classList.remove(className)
     },
@@ -150,16 +154,15 @@ export default {
       this.isNeedHeader = (
         path !== `/${this.$routes_X.login}` &&
         !path.startsWith('/register') &&
+        !path.startsWith('/invitationRegister') &&
+        path !== '/downloadApp'
+      ) ? 1 : 0
+      this.isNeedFooter = (
+        path !== `/${this.$routes_X.login}` &&
+        !path.startsWith('/register') &&
         path !== '/downloadApp' &&
         !path.startsWith('/invitationRegister')
       ) ? 1 : 0
-      this.isNeedFooter = (
-        path === `/${this.$routes_X.login}` ||
-        path.startsWith('/register') ||
-        path === '/downloadApp' ||
-        path.startsWith('/invitationRegister') ||
-        path === '/ForgetPassword'
-      ) ? 0 : 1
       switch (path) {
         case '/register':
           this.setBodyClassName(true, 'register')
@@ -187,7 +190,7 @@ export default {
   @import '../static/css/font-family/font.css';
 
   .body-container {
-    min-width: 1366px;
+    min-width: 1300px;
     height: 100%;
     min-height: 1000px;
     font-size: 14px;

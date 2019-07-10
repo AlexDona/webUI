@@ -387,6 +387,14 @@ String.prototype.format = function (args) {
   }
   return result
 }
+// 重写 toFixed 方法
+// eslint-disable-next-line
+Number.prototype.toFixed = function toFixed (s) {
+  let times = Math.pow(10, s)
+  let des = this * times + 0.5
+  des = parseInt(des, 10) / times
+  return des + ''
+}
 /**
  * 接口统一处理
  * @param request
@@ -394,6 +402,7 @@ String.prototype.format = function (args) {
  * @param errorTip
  * @returns {Promise<*>}
  */
+
 export const handleRequest = async (request, noTip, errorTip) => {
   const DATA = await request()
   if (!returnAjaxMsg(DATA, that, noTip, errorTip)) {
