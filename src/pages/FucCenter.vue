@@ -121,8 +121,8 @@
 
         <div class="fuc-center-content">
           <div ref="line2" class="fuc-center-left">
-            <h2 :key="line2" class="fuc-center-left-head">生态场景</h2>
-            <div :key="line2" class="fuc-center-left-content">
+            <h2 class="fuc-center-left-head">生态场景</h2>
+            <div class="fuc-center-left-content">
               <ul class="fuc-center-left-l text-l">
                 <li>云交易所商户服务费</li>
                 <li>创新区投票上币</li>
@@ -212,11 +212,15 @@
           <span class="sub_line"></span>
         </div>
         <div class="sub_fuc_content">
-          <p class="sub_fuc_content_text">FUCoin (FUC) is the FUBT platform token. FUC relies on FUBT's global ecology. It is based on Ethereum's decentralized digital assets and is committed to building an industry space for industry development and resource management services.
-            FUC has a constant circulation of 100 million, and circulation began in June 2017.</p>
-          <p class="sub_fuc_content_text">In order to adapt to the international development requirements of FUBT trading platform, promote the global ecological value circulation and promotion of FUBT, and further feedback the users of the platform, FUBT decided to initiate the annual repurchase and destruction operation of FUC.</p>
-          <p class="sub_fuc_content_text">The amount of FUC expected to be repurchased during the year was 51 million.</p>
-          <p class="sub_fuc_content_text"> After the completion of the destruction, the total volume of FUC was reduced to 49 million, accounting for 49% of the original issuance</p>
+          <p class="sub_fuc_content_text">FUCoin (FUC) is the FUBT platform token. The total amount of FUC issuance is 100 million, and
+            the circulation begins in June2017.</p>
+          <p class="sub_fuc_content_text">FUC relies on the global ecosystem of FUBT and is based on the de-centralized digital assets of
+            ETH.It is committed to building an ecological space and resource management services.</p>
+          <p class="sub_fuc_content_text">In order to adapt to the international development of FUBT, promote the global ecological, and
+            further feedback the users of the platform, FUBT decided to initiate the annual repurchase and
+            destruction operation of FUC.</p>
+          <p class="sub_fuc_content_text">The amount of FUC expected to be repurchased during 2019 was 51 million. After the destruction,
+             the total was reduced to 49 million, 49% of the original issuance.</p>
         </div>
       </div>
 
@@ -316,8 +320,8 @@
 
         <div class="fuc-center-content">
           <div ref="line2" class="fuc-center-left">
-            <h2 :key="line2" class="fuc-center-left-head">Ecological Scene</h2>
-            <div :key="line2" class="fuc-center-left-content">
+            <h2 class="fuc-center-left-head">Ecological Scene</h2>
+            <div class="fuc-center-left-content">
               <ul class="fuc-center-left-l text-l">
                 <li>Cloud Exchange Merchant Service Fee</li>
                 <li>Innovation Zone voting list</li>
@@ -337,15 +341,15 @@
               <h2 class="fuc-center-left-head " >Functional privilege</h2>
               <div class="fuc-center-left-content">
                 <ul class="fuc-center-left-l text-l">
-                  <li>Functional privilege</li>
                   <li>User pulls new reward</li>
                   <li>Invite rebate</li>
                   <li>Have voting privileges</li>
+                  <li>Exchange platform VIP privilege</li>
                 </ul>
                 <ul class="fuc-center-left-r text-l">
-                  <li>Get the Eco-Certificate Candy Award</li>
-                  <li>Exchange platform VIP privilege</li>
+                  <li>FUBT Capital Privilege</li>
                   <li>Participate in exclusive events</li>
+                  <li>Get the Eco-Certificate Candy Award</li>
                 </ul>
               </div>
             </div>
@@ -379,8 +383,7 @@
               <ul class="fuc-center-left-r text-l">
                 <li>Mining machine, hardware wallet payment</li>
                 <li>Headhunting, talent recruitment payment</li>
-                <li>Project primary evaluation service fee
-                </li>
+                <li>Project primary evaluation service fee</li>
               </ul>
             </div>
           </div>
@@ -420,22 +423,24 @@ export default {
   methods: {
     handleScroll () {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      if (this.$refs['fuc'].offsetTop && scrollTop >= this.$refs['fuc'].offsetTop - 800) {
-        setTimeout(() => {
-          this.line1 = 1
-          this.$refs['line1'].className = 'animated pulse fast'
-        }, 300)
-        setTimeout(() => {
-          this.line2 = 1
-          this.$refs['line2'].className = 'animated pulse fast'
-          this.$refs['line2'].style.alignSelf = 'flex-end'
-        }, 800)
+      if (this.$refs['fuc'].offsetTop) {
+        if (scrollTop >= this.$refs['fuc'].offsetTop - 1000) {
+          setTimeout(() => {
+            this.line1 = true
+            this.$refs['line1'].className = 'animated pulse fast'
+          }, 300)
+          setTimeout(() => {
+            this.line2 = true
+            this.$refs['line2'].className = 'animated pulse fast'
+            this.$refs['line2'].style.alignSelf = 'flex-end'
+          }, 800)
 
-        setTimeout(() => {
-          this.line3 = 1
-          this.$refs['line3'].className = 'animated pulse fast'
-          this.$refs['line3'].style.alignSelf = 'flex-end'
-        }, 1600)
+          setTimeout(() => {
+            this.line3 = true
+            this.$refs['line3'].className = 'animated pulse fast'
+            this.$refs['line3'].style.alignSelf = 'flex-end'
+          }, 1600)
+        }
       }
     },
 
@@ -837,7 +842,7 @@ ul {
             display: block;
             width: 396px;
             margin: 0 auto;
-            visibility: hidden;
+            opacity: 0;
           }
 
           .pallet {
