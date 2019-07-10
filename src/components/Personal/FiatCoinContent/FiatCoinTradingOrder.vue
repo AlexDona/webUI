@@ -1521,27 +1521,27 @@ export default {
             > .order-list-head-icon {
               position: absolute;
               top: 0;
-              right: 0;
+              left: 0;
               width: 0;
               height: 0;
+              border-right: 18px solid transparent;
               border-bottom: 18px solid transparent;
-              border-left: 18px solid transparent;
             }
 
             > .buy-icon {
               border-top: 18px solid $upColor;
-              border-right: 18px solid $upColor;
+              border-left: 18px solid $upColor;
             }
 
             > .sell-icon {
               border-top: 18px solid $otcGreen;
-              border-right: 18px solid $otcGreen;
+              border-left: 18px solid $otcGreen;
             }
 
             > .buy-sell-icon {
               position: absolute;
-              top: -8px;
-              right: 4px;
+              top: -6px;
+              left: 3px;
               color: #fff;
             }
           }
