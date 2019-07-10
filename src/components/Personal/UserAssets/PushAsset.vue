@@ -556,8 +556,9 @@ export default {
         this.sumState = false
       } else if (this.$refs.count.value !== '' || this.$refs.price.value !== '') {
         this.sumState = true
-        this.grossAmount = (this.$refs.count.value * this.$refs.price.value).toFixed(10)
-        this.grossAmount = (this.$refs.price.value * this.$refs.count.value).toFixed(10)
+
+        this.grossAmount = (this.$refs.count.value * this.$refs.price.value).toFixed(10) - 0
+        this.grossAmount = (this.$refs.price.value * this.$refs.count.value).toFixed(10) - 0
       }
     },
     // 2.2 检测输入格式

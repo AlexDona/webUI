@@ -388,5 +388,5 @@ export const personal = {
   'user_pay_pwd_user_set': '小時內免輸入交易密碼',
   'user_pay_pwd_never': '永不輸入交易密碼',
   'user_re_input_ip': 'IP格式不正確請重新輸入',
-  // 'user_link_name': '链名称'
+  'user_link_name': '鏈名稱'
 }

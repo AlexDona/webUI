@@ -386,5 +386,5 @@ export const personal = {
   'user_re_input_ip': 'The IP format is not correct, please re-enter',
   'user_address_labels_prompt': 'Incorrect entry may result in loss of assets,Please check it carefully',
   'user_address_labels': 'Address tag',
-  // 'user_link_name': '链名称'
+  'user_link_name': 'Chain name'
 }

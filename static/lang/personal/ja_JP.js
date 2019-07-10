@@ -385,5 +385,5 @@ export const personal = {
   'user_pay_pwd_never': 'トランザクションパスワードを入力しない',
   'user_re_input_ip': 'ipフォーマットが正しくないので再入力してください',
   'user_address_labels_prompt': '記入ミスは資産損失につながる可能性がある、よくチェックしてください',
-  // 'user_link_name': '链名称'
+  'user_link_name': 'チェーン名'
 }
