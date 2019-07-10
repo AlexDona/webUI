@@ -4,21 +4,21 @@
  * description: 当前文件为 读取 国际化 JSON 文件 脚本
  */
 
+
 const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
-
 const BaseURL = {
-  test: 'http://192.168.2.200:8888/',
+  testing: 'http://192.168.2.200:8888/',
   development: 'http://192.168.2.210:8888/',
   production: 'https://s.fubt.co/'
 }
-const baseUrl = BaseURL.development
+const baseUrl = BaseURL[process.env.NODE_ENV]
 
-let {handleRequest} = require('./server')
+let {handleRequest, unzip} = require('./server')
 
 // 接口url
-let url = 'lan/selectList'
+let url = 'i18n/getWebUiI18nData'
 let targetPath = path.join(__dirname, '../static/lang')
 
 // 获取语言列表
@@ -44,9 +44,19 @@ handleRequest({
       console.error(`接口调用失败，请排查原因), 失败码： ${code}`)
       throw code
     }
+    let dataObjList = data
+    // 原始数据
+    let originData
+    let dataStr = ''
+    _.forEach(dataObjList, dataObj => {
+      dataStr += unzip(dataObj)
+    })
+    if (!dataStr) return false
+    originData = JSON.parse(dataStr).data || []
+    // console.log(originData)
     _.forEach(langs, (lang, index) => {
       // 获取每种语言对应的国际化数据
-      const writeData = `export default M = ${JSON.stringify(data[index])}`
+      const writeData = `export const M = ${JSON.stringify(originData[lang.shortName])}`
       fs.writeFile(path.join(targetPath, `${lang.shortName}.js`), writeData, function (err) {
         if (err) throw err
         console.log(`${lang.name} 写入完成!`)
