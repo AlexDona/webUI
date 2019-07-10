@@ -53,13 +53,13 @@ const newProdConfig = {
 switch (process.env.NODE_ENV) {
   case 'development':
     // 本地开发
-    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
+    // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
     // 210开发环境
     // targetConfig = {...dev210Config, xDomain: 'me.com'}
     // 测试环境 （外网）
     // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     // 生产环境
-    // targetConfig = {...prodConfig, xDomain: 'fubt.co'}
+    targetConfig = {...prodConfig, xDomain: 'fubt.co'}
     // targetConfig = {...newProdConfig, xDomain: 'coin67.cn'}
     break
   // 210开发环境

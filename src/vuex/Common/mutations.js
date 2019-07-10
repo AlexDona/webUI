@@ -31,7 +31,9 @@ import {
   // 增加改变全局存储选中的交易对小数位方法
   CHANGE_CHECKED_BITS,
   SET_REQUEST_COUNT_M,
-  SAVE_FOOTER_HEIGHT
+  SAVE_FOOTER_HEIGHT,
+  SET_ACTIVE_LINK_NAME_M,
+  SET_NAVIGATOR_M
 } from './mutations-types.js'
 
 import {setStore} from '../../utils'
@@ -200,5 +202,12 @@ export default {
   },
   [SAVE_FOOTER_HEIGHT] (state, height) {
     state.footerHeight = height
+  },
+  [SET_ACTIVE_LINK_NAME_M] (state, name) {
+    state.activeLinkIndex_S = name
+    console.log(state.activeLinkIndex_S)
+  },
+  [SET_NAVIGATOR_M] (state, navigators) {
+    state.navigators_S = navigators
   }
 }
