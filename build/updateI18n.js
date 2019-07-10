@@ -6,8 +6,14 @@
 
 const fs = require('fs')
 const path = require('path')
-const baseUrl = 'https://s.fubt.co/'
 const _ = require('lodash')
+
+const BaseURL = {
+  test: 'http://192.168.2.200:8888/',
+  development: 'http://192.168.2.210:8888/',
+  production: 'https://s.fubt.co/'
+}
+const baseUrl = BaseURL.development
 
 let {handleRequest} = require('./server')
 
