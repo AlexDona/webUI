@@ -317,5 +317,5 @@ export const personal = {
   'user_pay_pwd_user_set': 'Trong 1 giờ phải nhập mât khẩu giao dịch',
   'user_pay_pwd_never': 'Không được nhâp mật khẩu giao dịch',
   'user_re_input_ip': 'Ip không chính xác, vui lòng nhập lại',
-  // 'user_link_name': '链名称'
+  'user_link_name': 'Tên chuỗi'
 }
