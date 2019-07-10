@@ -1,174 +1,109 @@
-<template>
-  <div
-    class="recharge-list recharge-list-mention list-mention-treasure"
+<!--
+  author: zhaoxinlei
+  update: 20190704
+  description: 当前组件为 单个 提币组件
+-->
+<template lang="pug">
+  .recharge-list.recharge-list-mention.list-mention-treasure(
     v-show="isShow"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
-  >
-    <p class="triangle triangle-one"></p>
-    <!--公信宝类提币备注-->
-    <div
-      class="mention"
-      v-if="isNeedTag"
-    >
-      <p class="mention-treasure">
-        <!--地址标签-->
-        {{ $t('M.comm_address_labels') }}
-        <!--（填写错误可能导致资产损失，请仔细核对）-->
-        <span class="treasure-info font-size12">({{ $t('M.user_address_labels_prompt') }})</span>
-      </p>
-      <input
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+  )
+    p.triangle.triangle-one
+    // 公信宝类提币备注
+    .mention(v-if="isNeedTag")
+      // 地址标签
+      p.mention-treasure {{ $t('M.comm_address_labels') }}
+        // （填写错误可能导致资产损失，请仔细核对）
+        span.treasure-info.font-size12 ({{ $t('M.user_address_labels_prompt') }})
+      input.input-mention.border-radius2.padding-lr15.box-sizing(
         type="text"
-        class="input-mention border-radius2 padding-lr15 box-sizing"
         v-model="withdrawRemark"
         @input="filterSpace"
-      >
-    </div>
-    <div class="recharge-list-left display-flex">
-      <div class="list-left-flex flex1 font-size12">
-        <div class="flex-box padding-top10">
-          <p class="left-flex-hint">
-            <!--提币地址-->
-            {{ $t('M.comm_mention_money') }}{{ $t('M.comm_site') }}
-          </p>
-          <el-select
+      )
+    // USDT 多链选择
+    USDTLinkNames(v-if="isShowUSDTSelect")
+    .recharge-list-left.display-flex
+      .list-left-flex.flex1.font-size12
+        .flex-box.padding-top10
+          // 提币地址
+          p.left-flex-hint {{ $t('M.comm_mention_money') }}{{ $t('M.comm_site') }}
+          el-select(
             placeholder=""
-            v-model="activeWithdrawDepositAddress"
+            v-model.trim="activeWithdrawDepositAddress"
             :no-data-text="$t('M.comm_no_data')"
             filterable
             @change="changeWithdrawAddress"
             allow-create
-          >
-            <el-option
+          )
+            el-option(
               v-for="(item, index) in withdrawAddressList"
               :key="index"
               :label="`${item.address} ${item.remark}`"
               :value="item.address"
-            >
-            </el-option>
-          </el-select>
-          <span
-            class="new-address cursor-pointer address-bg"
-            @click.prevent="jumpToOtherTab('mention-address', coinId)"
-          >
-            <!--新增-->
-            {{ $t('M.comm_newly_increased') }}
-          </span>
-        </div>
-        <div class="flex-box padding-top20">
-          <p class="left-flex-hint">
-            <!--手续费-->
-            {{ $t('M.comm_service_charge') }}
-          </p>
-          <input
+            )
+          //  新增
+          span.new-address.cursor-pointer.address-bg(@click.prevent="jumpToOtherTab('mention-address', coinId)") {{ $t('M.comm_newly_increased') }}
+        .flex-box.padding-top20
+          // 手续费
+          p.left-flex-hint {{ $t('M.comm_service_charge') }}
+          input.flex-input.border-radius2.padding-l15.box-sizing(
             type="text"
-            class="flex-input border-radius2 padding-l15 box-sizing"
             ref="feeInputRef"
             @keyup="changeInputValue('feeInputRef', index, pointLengthAccountCount, 'serviceType', coinId, total)"
             @input="changeInputValue('feeInputRef', index, pointLengthAccountCount, 'serviceType', coinId, total)"
-          >
-          <span class="service-charge display-inline-block text-align-r">
-            {{feeRangeOfWithdraw.minFees}}
-            -
-            {{feeRangeOfWithdraw.maxFees}}
-          </span>
-        </div>
-      </div>
-      <div class="count-box flex1 font-size12">
-        <div class="count-flex-box padding-top10">
-          <p class="content-flex-hint">
-            <!--数量-->
-            {{ $t('M.comm_count') }}
-          </p>
-          <input
+          )
+          span.service-charge.display-inline-block.text-align-r {{feeRangeOfWithdraw.minFees}} - {{feeRangeOfWithdraw.maxFees}}
+      .count-box.flex1.font-size12
+        .count-flex-box.padding-top10
+          // 数量
+          p.content-flex-hint {{$t('M.comm_count')}}
+          input.count-flex-input.border-radius2.padding-lr15.box-sizing.text-align-r(
             type="text"
-            class="count-flex-input border-radius2 padding-lr15 box-sizing text-align-r"
             ref="countInputRef"
-            @blur="checkUserInputAvailable
-('withdrawCount', index, total)"
+            @blur="checkUserInputAvailable('withdrawCount', index, total)"
             @keyup="changeInputValue('countInputRef', index, pointLengthAccountCount, 'rechargeType', coinId, total)"
             @input="changeInputValue('countInputRef', index, pointLengthAccountCount, 'rechargeType', coinId, total)"
-          >
-          <p class="count-flex-text text-align-r">
-            <span>
-              <!--限额：-->
-              {{ $t('M.comm_limit') }}：
-            </span>
-            <span>
-              {{feeRangeOfWithdraw.minWithdraw}}
-              -
-              {{feeRangeOfWithdraw.maxWithdraw}}
-            </span>
-          </p>
-        </div>
-        <div class="count-flex-box padding-top20">
-          <p class="content-flex-hint">
-            <!--到账数量-->
-            {{ $t('M.comm_account') }}{{ $t('M.comm_count') }}
-          </p>
-          <input
+          )
+          p.count-flex-text.text-align-r
+            // 限额
+            span {{ $t('M.comm_limit') }}：
+            span  {{feeRangeOfWithdraw.minWithdraw}} - {{feeRangeOfWithdraw.maxWithdraw}}
+        .count-flex-box.padding-top20
+          // 到账数量
+          p.content-flex-hint {{ $t('M.comm_account') }}{{ $t('M.comm_count') }}
+          input.count-text-input.border-radius2.padding-lr15.box-sizing.text-align-r(
             type="text"
             disabled
-            class="count-text-input border-radius2 padding-lr15 box-sizing text-align-r"
             v-model="accountCountFilter"
-          >
-        </div>
-      </div>
-      <div
-        class="text-info-mention flex1 font-size12"
-        :class="{'need-tag-top':isNeedTag}"
-      >
-        <!--提现费率规则：-->
-        <p class="currency-rule">
-          <span>{{ currencyName }}</span>
-          {{ $t('M.user_assets_withdrawal_hint1') }}：
-        </p>
-        <!--为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；-->
-        <p
-          class="prompt-message cursor-pointer"
-          :title="$t('M.user_assets_withdrawal_hint2')"
-        >
-          * {{ $t('M.user_assets_withdrawal_hint2') }}
-        </p>
-        <!--充值经过1个确认后，才允许提现；-->
-        <p
-          class="prompt-message cursor-pointer"
-          :title="$t('M.user_assets_withdrawal_hint3')"
-        >
-          * <span>{{ currencyName }}</span>
-          {{ $t('M.user_assets_withdrawal_hint3') }}
-        </p>
-        <!--可提现金额≤账户可用资产-未确认的数字资产。-->
-        <p
-          class="prompt-message cursor-pointer"
-          :title="$t('M.user_assets_withdrawal_hint4')"
-        >
-          * {{ $t('M.user_assets_withdrawal_hint4') }}
-        </p>
-        <p class="mention-button">
-          <button
-            class="font-size12 submit-but border-radius4 cursor-pointer"
-            @click.prevent="validateOfWithdraw(coinId, withdrawRemark)"
-          >
-            <!--提币-->
-            {{ $t('M.comm_mention_money') }}
-          </button>
-          <span
-            class="float-right cursor-pointer"
-            @click.prevent="jumpToOtherTab('billing-details', coinId, 2)"
-          >
-            <!--提币记录-->
-            {{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}
-          </span>
-        </p>
-      </div>
-    </div>
-  </div>
+          )
+      .text-info-mention.flex1.font-size12(:class="{'need-tag-top':isNeedTag}")
+        // 提现费率规则
+        p.currency-rule
+          span {{ currencyName }}
+          // 不一样
+          span {{ $t('M.user_assets_withdrawal_hint1') }}：
+        //  为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；
+        p.prompt-message.cursor-pointer(:title="$t('M.user_assets_withdrawal_hint2')") *  {{ $t('M.user_assets_withdrawal_hint2') }}
+        // 充值经过1个确认后，才允许提现；
+        p.prompt-message.cursor-pointer(:title="$t('M.user_assets_withdrawal_hint3')") *
+          span  {{ currencyName }} {{ $t('M.user_assets_withdrawal_hint3') }}
+        // 可提现金额≤账户可用资产-未确认的数字资产。
+        p.prompt-message.cursor-pointer(:title="$t('M.user_assets_withdrawal_hint4')") *  {{ $t('M.user_assets_withdrawal_hint4') }}
+        // 提币
+        p.mention-button
+          button.font-size12.submit-but.border-radius4.cursor-pointer(@click.prevent="validateOfWithdraw(coinId, withdrawRemark)"
+          ) {{ $t('M.comm_mention_money') }}
+          // 提币记录
+          span.float-right.cursor-pointer(@click.prevent="jumpToOtherTab('billing-details', coinId, 2)") {{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}
+
 </template>
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
+import USDTLinkNames from './USDTLinkNames'
 export default {
   components: {
+    USDTLinkNames
   },
   props: [
     'isShow',
@@ -203,13 +138,11 @@ export default {
       withdrawRemark: ''
     }
   },
-  created () {},
-  mounted () {
-    console.log(this.originWithdrawRemark)
-  },
-  activated () {},
-  updated () {},
-  beforeRouteUpdate () {},
+  // created () {},
+  // mounted () {},
+  // updated () {},
+  // destroyed () {},
+  // beforeRouteUpdate () {},
   methods: {
     // 地址标签输入时过滤空格
     filterSpace () {
@@ -264,22 +197,29 @@ export default {
       })
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
-      theme: store => store.common.theme
+      theme: store => store.common.theme,
+      USDT_COIN_ID_S: state => state.personal.USDT_COIN_ID_S
     }),
+    isShowUSDTSelect () {
+      return this.coinId == this.USDT_COIN_ID_S && this.isShow
+    },
     accountCountFilter () {
       return this.$scientificToNumber(this.accountCount)
     }
   },
   watch: {
+    isShow (New) {
+      console.log(New)
+    },
     // 初始提币地址赋值
     originalActiveWithdrawDepositAddress (newVal) {
       this.activeWithdrawDepositAddress = newVal
     },
     originWithdrawRemark (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       this.withdrawRemark = newVal
     }
   }
@@ -399,7 +339,7 @@ export default {
 
           > .new-address {
             position: absolute;
-            top: 38px;
+            top: 38.5px;
             right: 1px;
             height: 34px;
             padding: 0 5px;
@@ -417,6 +357,7 @@ export default {
         padding-left: 15px;
 
         > .count-flex-box {
+          width: 250px;
           height: 80px;
 
           > .content-flex-hint,
@@ -426,8 +367,13 @@ export default {
 
           > .count-flex-input,
           > .count-text-input {
-            width: 275px;
+            width: 250px;
             height: 34px;
+            margin-top: 9px;
+          }
+
+          > .count-text-input {
+            margin-top: 5px;
           }
         }
       }
@@ -613,7 +559,6 @@ export default {
     &.day {
       border: 1px solid #338ff5;
       color: $dayMainTitleColor;
-      background: #fff;
       background-color: $mainDayBgColor;
 
       .input-mention {
@@ -787,7 +732,7 @@ export default {
         }
 
         .el-input__inner {
-          border: 1px solid rgba(236, 241, 248, 1);
+          border: 1px solid rgba(38, 47, 56, .1);
           background: rgba(51, 143, 245, .1);
         }
 

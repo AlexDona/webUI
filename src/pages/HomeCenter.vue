@@ -31,6 +31,7 @@ export default {
     }
   },
   created () {
+    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
     this.doAdd()
   },
   methods: {

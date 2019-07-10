@@ -384,5 +384,6 @@ export const personal = {
   'user_pay_pwd_user_set': '数時間以内に取引パスワードを無料で入力',
   'user_pay_pwd_never': 'トランザクションパスワードを入力しない',
   'user_re_input_ip': 'ipフォーマットが正しくないので再入力してください',
-  'user_address_labels_prompt': '記入ミスは資産損失につながる可能性がある、よくチェックしてください'
+  'user_address_labels_prompt': '記入ミスは資産損失につながる可能性がある、よくチェックしてください',
+  // 'user_link_name': '链名称'
 }

@@ -361,6 +361,7 @@ export default {
         name
       })
       this.$goToPage(`/TradeCenter/${id}`)
+      // this.$navigators_S_X()
     },
     // 正面动画
     beforeEnter (el) {

@@ -50,8 +50,7 @@ import {
 } from 'vuex'
 
 export default {
-  // components: {
-  // },
+  // components: {},
   // props,
   data () {
     return {
