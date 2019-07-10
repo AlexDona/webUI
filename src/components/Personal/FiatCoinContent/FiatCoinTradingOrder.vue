@@ -21,7 +21,7 @@
               {{$t('M.otc_seller')}}：{{item.sellName}}
             </div>
             <!--广告id-->
-            <div>
+            <div class="AD-ID">
               {{$t('M.otc_AD_ID')}}：{{item.entrustSequence}}
             </div>
             <!-- 订单号 -->
@@ -391,7 +391,7 @@
               {{$t('M.otc_buyer')}}：{{item.buyName}}
             </div>
             <!--广告id-->
-            <div>
+            <div class="AD-ID">
               {{$t('M.otc_AD_ID')}}：{{item.entrustSequence}}
             </div>
             <!-- 订单号 -->
@@ -1505,17 +1505,18 @@ export default {
           > .order-list-head {
             position: relative;
             display: flex;
-            justify-content: space-between;
             box-sizing: border-box;
             height: 36px;
-            padding: 0 77px 0 25px;
+            padding-left: 55px;
             border-bottom: 1px solid #262f38;
             line-height: 36px;
             color: #9da5b3;
 
-            > .order-id {
-              /* padding-left: 300px; */
-              padding-left: 1px;
+            > .buyer-seller,
+            .order-id,
+            .AD-ID,
+            .deal-time {
+              margin-right: 35px;
             }
 
             > .order-list-head-icon {
