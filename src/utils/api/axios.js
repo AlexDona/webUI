@@ -26,11 +26,14 @@ util.ajax = axios.create({
   withCredentials: true
 })
 let token
+const {state: {common: {language}}} = store
 util.ajax.interceptors.request.use((config) => {
   let notNeedLoading = _.get(config.params, 'not-loading')
   notNeedLoading ? delete config.params['not-loading'] : store.commit('SET_REQUEST_COUNT_M', 'ADD')
   token = getCookie('token')
   config.headers['x-domain'] = xDomain
+  config.headers['language'] = language
+  config.headers['client'] = 'web'
   let userToken = store.state.user.loginStep1Info.token
   config.headers['token'] = token || userToken
   return config
