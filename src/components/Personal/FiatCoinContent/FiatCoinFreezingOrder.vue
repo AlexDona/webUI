@@ -6,6 +6,10 @@
     <div class="freezing-order-content">
       <!--表头-->
       <div class="freezing-table-head font-size12 box-sizing">
+        <span class="item AD-ID">
+          <!--广告id-->
+          {{$t('M.otc_AD_ID')}}
+        </span>
         <span class="item order-time">
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
@@ -43,6 +47,10 @@
       >
         <!--表格上部分-->
         <div class="freezing-info-top">
+          <!-- 广告id -->
+          <span class="item AD-ID">
+            {{item.entrustSequence}}
+          </span>
           <!-- 订单号 -->
           <span class="item order-time">
             {{item.orderSequence}}
@@ -244,7 +252,8 @@ export default {
         }
 
         > .order-type,
-        .order-coin {
+        .order-coin,
+        .AD-ID {
           width: 100px;
         }
       }
@@ -276,7 +285,8 @@ export default {
           }
 
           > .order-type,
-          .order-coin {
+          .order-coin,
+          .AD-ID {
             width: 100px;
           }
         }

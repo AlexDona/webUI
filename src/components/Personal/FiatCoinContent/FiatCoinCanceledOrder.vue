@@ -6,6 +6,10 @@
     <div class="canceled-order-content">
       <!--表头属性-->
       <div class="canceled-table-head display-flex font-size12 box-sizing">
+        <span class="item AD-ID">
+          <!--广告id-->
+          {{$t('M.otc_AD_ID')}}
+        </span>
         <span class="item order-time">
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
@@ -43,6 +47,10 @@
       >
         <!--表格上部分-->
         <div class="canceled-info-top display-flex">
+          <!-- 广告id -->
+          <span class="item AD-ID">
+            {{item.entrustSequence}}
+          </span>
           <!-- 订单号 -->
           <span class="item order-time">
             {{item.orderSequence}}
@@ -244,7 +252,8 @@ export default {
         }
 
         > .order-type,
-        .order-coin {
+        .order-coin,
+        .AD-ID {
           width: 100px;
         }
       }
@@ -275,7 +284,8 @@ export default {
           }
 
           > .order-type,
-          .order-coin {
+          .order-coin,
+          .AD-ID {
             width: 100px;
           }
         }

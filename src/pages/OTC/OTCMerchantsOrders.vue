@@ -165,6 +165,15 @@
                 <div>{{timeFormatting(s.row.createTime)}}</div>
               </template>
             </el-table-column>
+            <!-- 广告id -->
+            <el-table-column
+              :label = "$t('M.otc_AD_ID')"
+              width="100"
+            >
+              <template slot-scope = "s">
+                <div>{{s.row.entrustSequence}}</div>
+              </template>
+            </el-table-column>
             <!-- 订单号 -->
             <el-table-column
               :label = "$t('M.otc_MerchantsOrders_orderNum')"
@@ -316,7 +325,7 @@
             <!-- 申诉记录 -->
             <el-table-column
               :label = "$t('M.otc_record_complaint')"
-              width="134"
+              width="120"
               align="right"
             >
               <template slot-scope = "s">
@@ -458,7 +467,7 @@ export default {
       if (val === 'yuenan') {
         document.querySelector('.el-date-editor--daterange').style.width = '285px'
       } else {
-        document.querySelector('.el-date-editor--daterange').style.width = '150px'
+        document.querySelector('.el-date-editor--daterange').style.width = '180px'
       }
     },
     // 2时间格式化
@@ -656,7 +665,7 @@ export default {
         }
 
         .el-date-editor--daterange.el-input__inner {
-          width: 150px;
+          width: 180px !important;
         }
 
         .el-date-editor {

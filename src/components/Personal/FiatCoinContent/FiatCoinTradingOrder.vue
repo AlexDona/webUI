@@ -20,6 +20,10 @@
               <!--卖家-->
               {{$t('M.otc_seller')}}：{{item.sellName}}
             </div>
+            <!--广告id-->
+            <div>
+              {{$t('M.otc_AD_ID')}}：{{item.entrustSequence}}
+            </div>
             <!-- 订单号 -->
             <div class="order-id">
               <!--订单号-->
@@ -386,6 +390,10 @@
               <!--买家-->
               {{$t('M.otc_buyer')}}：{{item.buyName}}
             </div>
+            <!--广告id-->
+            <div>
+              {{$t('M.otc_AD_ID')}}：{{item.entrustSequence}}
+            </div>
             <!-- 订单号 -->
             <div class="order-id">
               <!--订单号-->
@@ -396,9 +404,7 @@
               <!--挂单时间-->
               {{$t('M.otc_entrust_time')}}：{{item.createTime}}
             </div>
-            <div class="order-list-head-icon sell-icon">
-              <!-- <img src="../../assets/develop/sell.png" alt=""> -->
-            </div>
+            <div class="order-list-head-icon sell-icon"></div>
             <div class="buy-sell-icon">
               <!--卖-->
               {{$t('M.comm_ask')}}
@@ -1508,7 +1514,8 @@ export default {
             color: #9da5b3;
 
             > .order-id {
-              padding-left: 300px;
+              /* padding-left: 300px; */
+              padding-left: 1px;
             }
 
             > .order-list-head-icon {

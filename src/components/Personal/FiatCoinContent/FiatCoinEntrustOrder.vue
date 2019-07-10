@@ -7,6 +7,10 @@
     <div class="fiat-entrust-order-table">
       <!-- 表头 -->
       <div class="entrust-table-head font-size12 box-sizing">
+        <div class="item nine-AD-ID">
+          <!--广告id-->
+          {{$t('M.otc_AD_ID')}}
+        </div>
         <div class="item first-style">
           <!--类型-->
           {{$t('M.comm_type')}}
@@ -24,8 +28,7 @@
           {{$t('M.otc_entrust_number')}}
         </div>
         <div class="item fifth-match-count">
-          <!--已匹配数量-->
-          <!-- 20181213改为 已成交数量-->
+          <!--已成交数量-->
           {{$t('M.otc_entrust_matching')}}
         </div>
         <div class="item sixth-total-amount">
@@ -50,6 +53,10 @@
           :key="index"
           v-if="OTCEntrustOrderList.length"
         >
+          <!--广告id-->
+          <div class="item nine-AD-ID">
+            {{item.entrustSequence}}
+          </div>
           <!-- 1 类型 -->
           <!-- 买入 -->
           <div
@@ -255,7 +262,8 @@ export default {
 
         > .first-style,
         .second-coin,
-        .eighth-action {
+        .eighth-action,
+        .nine-AD-ID {
           width: 100px;
         }
       }
@@ -276,7 +284,8 @@ export default {
 
           > .first-style,
           .second-coin,
-          .eighth-action {
+          .eighth-action,
+          .nine-AD-ID {
             width: 100px;
           }
 

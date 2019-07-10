@@ -154,10 +154,19 @@
             <!-- 时间 -->
             <el-table-column
               :label="$t('M.comm_time')"
-              width="180"
+              width="150"
             >
               <template slot-scope="s">
                 <div>{{timeFormatting(s.row.createTime)}}</div>
+              </template>
+            </el-table-column>
+            <!--广告id-->
+            <el-table-column
+              :label="$t('M.otc_AD_ID')"
+              width="110"
+            >
+              <template slot-scope="s">
+                <div>{{s.row.entrustSequence}}</div>
               </template>
             </el-table-column>
             <!-- 交易类型 -->

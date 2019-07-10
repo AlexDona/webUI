@@ -364,5 +364,6 @@ export const OTC = {
   'otc_current-market-price-min': '市場最低販売価',
   'otc_current-market-price-max': '市場最高買付価',
   // otc 账号禁用不能交易提示
-  'otc_disable_account_tips': 'このアカウントは取引が禁止になってOTC、サービスへお問い合わせ下さい'
+  'otc_disable_account_tips': 'このアカウントは取引が禁止になってOTC、サービスへお問い合わせ下さい',
+  'otc_AD_ID': '広告ID'
 }

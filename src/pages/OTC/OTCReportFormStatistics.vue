@@ -408,16 +408,25 @@
               <!-- 交易日期 -->
               <el-table-column
                 :label = "$t('M.otc_transaction_data')"
-                width="210"
+                width="150"
               >
                 <template slot-scope = "s">
                   <div>{{timeFormatting(s.row.createTime)}}</div>
                 </template>
               </el-table-column>
+              <!--广告id-->
+              <el-table-column
+                :label = "$t('M.otc_AD_ID')"
+                width="130"
+              >
+                <template slot-scope = "s">
+                  <div>{{s.row.entrustSequence}}</div>
+                </template>
+              </el-table-column>
               <!-- 订单号 -->
               <el-table-column
                 :label = "$t('M.otc_MerchantsOrders_orderNum')"
-                width="210"
+                width="160"
               >
                 <template slot-scope = "s">
                   <div>{{s.row.orderSequence}}</div>
@@ -426,7 +435,7 @@
               <!-- 交易类型 -->
               <el-table-column
                 :label = "$t('M.otc_type_ransaction')"
-                width="170"
+                width="140"
               >
                 <template slot-scope = "s">
                   <div
@@ -446,7 +455,7 @@
               <!-- 资金类型 -->
               <el-table-column
                 :label = "$t('M.otc_type_capital')"
-                width="170"
+                width="160"
               >
                 <template slot-scope = "s">
                   <div>{{s.row.currencyName}}</div>
@@ -592,7 +601,7 @@ export default {
       if (val === 'yuenan') {
         document.querySelector('.el-date-editor--daterange').style.width = '285px'
       } else {
-        document.querySelector('.el-date-editor--daterange').style.width = '150px'
+        document.querySelector('.el-date-editor--daterange').style.width = '180px'
       }
     },
     // 分页
@@ -934,7 +943,7 @@ export default {
           }
 
           .el-date-editor--daterange.el-input__inner {
-            width: 150px;
+            width: 180px !important;
             height: 34px;
           }
 
