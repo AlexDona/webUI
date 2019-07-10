@@ -338,7 +338,6 @@
 import {mapState} from 'vuex'
 import IconFontCommon from '../../Common/IconFontCommon'
 import Qrcode from '../../Common/Qrcode'
-import VueClipboard from 'vue-clipboard2'
 import {
   userPromotionList,
   getRecommendUserPromotionList,
@@ -350,8 +349,6 @@ import {
   getNestedData
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
-import Vue from 'vue'
-Vue.use(VueClipboard)
 export default {
   components: {
     IconFontCommon, // 字体图标

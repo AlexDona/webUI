@@ -1,7 +1,7 @@
 import {
   postWithURLencoded,
   get,
-  postWithFormData
+  postWithFormData, notLoading
 } from './axios'
 import {handleRequest} from '../commonFunc'
 // import {handleRequest} from '../commonFunc'
@@ -47,6 +47,8 @@ export const findPasswordStep1 = params => handleRequest(() => postWithURLencode
 export const findPasswordStep2 = params => handleRequest(() => postWithURLencoded('user/forgetPassword2', params))
 // 找回密码步骤3
 export const findPasswordStep3 = params => handleRequest(() => postWithURLencoded('user/forgetPassword3', params))
+
+export const findPassword = params => handleRequest(() => postWithURLencoded('user/forgetPasswordAndSetNewPass', params))
 // 二维码登录生成二维码
 export const getLoginErcode = () => handleRequest(() => get('user/qrcode'))
 // 获取app下载地址
@@ -56,6 +58,6 @@ export const getAppDownLoadUrlAjax = () => get('appDown')
 export const setUserInputPasswordFrequency = params => handleRequest(() => postWithURLencoded('user/notInputPayPasswd', params), 1)
 
 // 是否需要输入交易密码（交易）
-export const isNeedPayPassowrd = (params) => get('user/isInputPayPasswd', params)
+export const isNeedPayPassowrd = (params) => get('user/isInputPayPasswd', {...params, ...notLoading})
 // 邀请人 回填
 export const editInviterAJAX = params => handleRequest(() => get('/user/backInviter', params), 1)

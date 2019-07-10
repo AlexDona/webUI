@@ -82,13 +82,39 @@
                   :isShow="!!errorShowStatusList[2]"
                 />
               </el-form-item>
+              <!-- 链名称 （USDT）-->
+              <el-form-item
+                :label="$t('M.user_link_name')"
+                v-show="isShowLinkSelect"
+              >
+                <el-select
+                  v-model="activeLinkName"
+                  :no-data-text="$t('M.comm_no_data')"
+                  @change="changeLinkNames"
+                  popper-class="link-names"
+                >
+                  <el-option
+                    v-for="(item, index) in linkNames_S"
+                    :key="index"
+                    :label="item.label"
+                    :disabled="item.disabled"
+                    :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
+                <!--错误提示-->
+                <ErrorBox
+                  :text="errorShowStatusList[2]"
+                  :isShow="!!errorShowStatusList[2]"
+                />
+              </el-form-item>
               <!--提币地址-->
               <el-form-item
                 :label="$t('M.comm_mention_money') + $t('M.comm_site')"
               >
                 <input
                   class="form-input border-radius4 padding-left15"
-                  v-model="withdrawalAddress"
+                  v-model.trim="withdrawalAddress"
                   @keydown="setErrorMsg(1, '')"
                   @blur="checkoutInputFormat(1, withdrawalAddress)"
                 >
@@ -320,21 +346,34 @@ export default {
       phoneCode: '', // 手机验证
       emailCode: '', // 邮箱验证
       googleCode: '', // 谷歌验证
-      currencyValueStatus: true // 币种列表状态
+      currencyValueStatus: true, // 币种列表状态
+      // 当前选中链名称
+      activeLinkName: '',
+      activeLinkIndex: 0,
+      // 是否显示 链名称下拉
+      isShowLinkSelect: false
     }
   },
   created () {
+    // 更改最新页面
+    this.activeLinkName = this.linkNames_S[0].value
     this.getWithdrawalAddressList()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
-      'SET_NEW_WITHDRAW_ADDRESS'
+      'SET_NEW_WITHDRAW_ADDRESS',
+      'UPDATE_ACTIVE_LINK_NAMES_M'
     ]),
+    changeLinkNames (e) {
+      console.log(e)
+      // this.activeLinkIndex =
+      this.UPDATE_ACTIVE_LINK_NAMES_M(e)
+    },
     disableInputBlank () {
       this.addressLabel = this.addressLabel.replace(/\s*/g, '')
       console.log(this.addressLabel)
@@ -410,6 +449,13 @@ export default {
         coinId: this.currencyValue, // 币种coinId
         address: this.withdrawalAddress // 提币地址
       }
+
+      if (this.currencyValue == this.USDT_COIN_ID_S) {
+        param = {
+          ...param,
+          rechargeType: this.activeLinkName
+        }
+      }
       let data = await checkCurrencyAddress(param)
       if (!data) return false
       // 验证通过调用验证方式接口
@@ -438,9 +484,11 @@ export default {
       _.forEach(this.currencyList, item => {
         if (item.coinId === e) {
           this.isShowAddressLabel = item.needTag
+          return false
         }
       })
-      console.log(this.isShowAddressLabel)
+      // USDT 币种id
+      this.isShowLinkSelect = e == this.USDT_COIN_ID_S
     },
     // 4.01新增用户提币地址接口
     stateSubmitAddAddress: _.debounce(async function () {
@@ -451,7 +499,7 @@ export default {
       } else {
         this.emptyErrorMsg = ''
       }
-      let param = {
+      let params = {
         coinId: this.currencyValue, // 币种coinId
         remark: this.withdrawalRemark, // 备注
         address: this.withdrawalAddress, // 提币地址
@@ -460,7 +508,8 @@ export default {
         emailCode: this.emailCode, // 邮箱验证
         googleCode: this.googleCode // 谷歌验证
       }
-      let data = await addNewWithdrawalAddress(param)
+      params = params.coinId == this.USDT_COIN_ID_S ? {...params, rechargeType: this.activeLinkName} : params
+      let data = await addNewWithdrawalAddress(params)
       if (!data) return false
       this.mentionMoneyConfirm = false
       this.getWithdrawalAddressList()
@@ -481,14 +530,22 @@ export default {
       // 返回列表数据
       let detailData = getNestedData(data, 'data')
       this.currencyList = getNestedData(detailData, 'canWithdrawPartnerCoinList')
+      // 当前选中的币种 对应的 索引
+      let targetIndex = 0
+      _.forEach(this.currencyList, (currencyItem, currencyIndex) => {
+        if (this.currencyValue == _.get(currencyItem, 'coinId')) {
+          targetIndex = currencyIndex
+          return false
+        }
+      })
       // 判断是否显示地址标签
-      this.isShowAddressLabel = this.currencyList[0].needTag
+      this.isShowAddressLabel = this.currencyList[targetIndex].needTag
       // 对ID名称进行赋值
       if (this.paramOfJumpToAddWithdrawAdress) {
         this.currencyValue = this.paramOfJumpToAddWithdrawAdress
-        this.isShowAddressLabel = this.currencyList.filter(item => item.coinId === this.currencyValue)[0].needTag
+        this.isShowAddressLabel = this.currencyList[targetIndex].needTag
       } else {
-        this.currencyValue = getNestedData(detailData, 'canWithdrawPartnerCoinList[0].coinId')
+        this.currencyValue = _.get(detailData, `canWithdrawPartnerCoinList[${targetIndex}].coinId`)
       }
       this.SET_NEW_WITHDRAW_ADDRESS('')
       // 对币种名称列表进行赋值
@@ -565,10 +622,17 @@ export default {
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName,
-      paramOfJumpToAddWithdrawAdress: state => state.personal.paramOfJumpToAddWithdrawAdress // 跳转到的提币地址
+      // 跳转到的提币地址
+      paramOfJumpToAddWithdrawAdress: state => state.personal.paramOfJumpToAddWithdrawAdress,
+      linkNames_S: state => state.personal.linkNames_S,
+      USDT_COIN_ID_S: state => state.personal.USDT_COIN_ID_S,
+      activeLinkName_S: state => state.personal.activeLinkName_S
     })
   },
   watch: {
+    currencyValue (New) {
+      if (New == this.USDT_COIN_ID_S) this.isShowLinkSelect = true
+    }
   }
 }
 </script>
@@ -578,6 +642,7 @@ export default {
   .withdrawal-address {
     > .withdrawal-address-main {
       min-height: 400px;
+      padding-bottom: 30px;
       margin-top: 10px;
 
       > .withdrawal-header {
@@ -1031,6 +1096,32 @@ export default {
 
         .el-dialog__footer {
           text-align: center;
+        }
+      }
+    }
+  }
+</style>
+<style lang="scss">
+  .night {
+    .link-names {
+      .el-select-dropdown__item {
+        &.is-disabled {
+          &:hover {
+            background-color: #2a3242 !important;
+          }
+        }
+      }
+    }
+  }
+
+  .day {
+    .link-names {
+      .el-select-dropdown__item {
+        &.is-disabled {
+          &:hover {
+            color: #c0c4cf;
+            background-color: #fff !important;
+          }
         }
       }
     }

@@ -22,7 +22,6 @@
         <!--导航-->
         <div class="left nav">
           <TheCustomNavs
-            :navigation="navigation"
             @navToJump="navToJump"
           />
         </div>
@@ -136,7 +135,6 @@ import {
   mapState,
   mapActions
 } from 'vuex'
-import {getNavigationsAJAX} from '../../utils/api/common'
 
 export default{
   mixins: [mixins],
@@ -173,7 +171,9 @@ export default{
       activeMoreNavIndex: -1,
       // 是否显示更多导航
       // isShowSubNav: true
-      isShowSubNav: false
+      isShowSubNav: false,
+      // 上一个 激活链接名称
+      oldActiveLinkIndex: ''
     }
   },
   async created () {
@@ -183,7 +183,7 @@ export default{
       this.refreshUserInfo()
     }
 
-    await this.getNavigations()
+    // await this.getNavigations()
     // console.log(this.navigation)
     // 获取 语言列表
     if (!await this.GET_LANGUAGE_LIST_ACTION(this)) return false
@@ -231,29 +231,37 @@ export default{
       'CHANGE_PASSWORD_USEABLE',
       'CHANGE_ROUTER_PATH'
     ]),
-    // 自定义导航
-    async getNavigations () {
-      const params = {
-        language: this.$language_S_X
-      }
-      const data = await getNavigationsAJAX(params)
-      // console.log(data)
-      this.navigation = _.get(data, 'data')
-      _.forEach(this.navigation, (nav, index) => {
-        nav['isInnerLink'] = this.checkIsInnerLink(nav.link) ? true : false
-      })
-    },
     cancelReset () {
       this.isPayPasswordLocked = false
       this.CHANGE_PASSWORD_USEABLE(false)
       this.$userLogOut_X()
     },
     cancelApply () {
+      if (this.$route.path !== '/OTCBusinessApply') {
+        this.$SET_ACTIVE_LINK_NAME_M_X(this.oldActiveLinkIndex)
+      }
       this.showApplyMerchantStatus = false
     },
     confirmApply () {
       this.showApplyMerchantStatus = false
-      this.$goToPage('/OTCBusinessApply')
+      let outerIndex
+      let innerIndex
+      // const OTCs = ['/OTCADManage', '/OTCMerchantsOrders', '/OTCReportFormStatistics', '/OTCPublishAD']
+      _.forEach(this.$navigators_S_X, (route, index) => {
+        // console.log(route)
+        if (route.link === '/OTCCenter') {
+          outerIndex = index
+          _.forEach(route.children, (childRoute, childIndex) => {
+            if (childRoute.link == '/OTCBusinessApply') {
+              innerIndex = childIndex
+              return false
+            }
+          })
+        }
+      })
+      let targetRoute = this.$navigators_S_X[outerIndex].children[innerIndex]
+      // this.$goToPage('/OTCBusinessApply')
+      this.navToJump(targetRoute)
       // location.reload() // 重新刷新页面
       // 任增加
       this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(true)
@@ -307,8 +315,9 @@ export default{
     // 导航跳转
     navToJump (navigation) {
       // console.log(this.$isLogin_S_X)
-
+      // console.log(navigation)
       const { link, newTab } = navigation
+      if (!link) return
       // this.CHANGE_ROUTER_PATH(link)
       // console.log(link)
       const needMerchantType = ['/OTCADManage', '/OTCMerchantsOrders', '/OTCReportFormStatistics']
@@ -318,9 +327,11 @@ export default{
       const otcEnable = _.get(this.userInfo, 'otcEnable')
       const type = _.get(this.userInfo, 'type')
       if (this.checkIsInnerLink(link)) {
+        if (!this.$isLogin_S_X && link == OTCBusinessApply) this.$SET_ACTIVE_LINK_NAME_M_X(-1)
         // console.log(link, isNeedLogin.some(linkItem => link.startsWith(linkItem)))
         if (!this.$isLogin_S_X && isNeedLogin.some(linkItem => link.startsWith(linkItem))) {
           this.$goToPage('/login')
+          this.$SET_ACTIVE_LINK_NAME_M_X(-1)
           this.CHANGE_ROUTER_PATH(link)
           return
         }
@@ -328,6 +339,7 @@ export default{
           // 非商家身份禁止访问
           if (needMerchantType.some(route => route === link) && type !== 'MERCHANT') {
             this.showApplyMerchantStatus = true
+            // this.$SET_ACTIVE_LINK_NAME_M_X(this.oldActiveLinkIndex)
             return false
           }
 
@@ -335,6 +347,7 @@ export default{
             if (link === OTCPublishAD) {
               // 该账号已被禁止交易OTC，请咨询客服
               this.$error_tips_X(this.$t(`M.${'otc_disable_account_tips'}`))
+              this.$SET_ACTIVE_LINK_NAME_M_X(this.oldActiveLinkIndex)
               return false
             }
           } else {
@@ -344,11 +357,6 @@ export default{
             }
           }
         }
-        // console.log(this.$route.path)
-        // console.log(this.$route.to.path, this.$route.from.path)
-        // if (from.path !== '/login' || from.path !== '/register') {
-        //   this.CHANGE_ROUTER_PATH(link)
-        // }
         this.$goToPage(`${link}`)
       } else {
         // console.log('outerLink', newTab, link)
@@ -381,6 +389,10 @@ export default{
     })
   },
   watch: {
+    $activeLinkIndex_S_X (New, Old) {
+      // console.log(New, Old)
+      this.oldActiveLinkIndex = Old
+    },
     isLockedPayPassword (newVal) {
       // console.log(newVal)
       if (newVal) {
@@ -396,7 +408,7 @@ export default{
       this.$i18n.locale = newVal
     },
     async $language_S_X () {
-      this.getNavigations()
+      // this.getNavigations()
       this.SET_PARTNER_INFO_ACTION(this.$language_S_X)
       await this.GET_ALL_NOTICE_ACTION(this.$language_S_X)
       this.isNoticeReady = true
