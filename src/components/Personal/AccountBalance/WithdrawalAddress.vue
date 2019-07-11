@@ -102,11 +102,6 @@
                   >
                   </el-option>
                 </el-select>
-                <!--错误提示-->
-                <ErrorBox
-                  :text="errorShowStatusList[2]"
-                  :isShow="!!errorShowStatusList[2]"
-                />
               </el-form-item>
               <!--提币地址-->
               <el-form-item
@@ -490,6 +485,9 @@ export default {
       // USDT 币种id
       this.isShowLinkSelect = e == this.USDT_COIN_ID_S
       this.resetFormContent()
+      this.setErrorMsg(0, '')
+      this.setErrorMsg(1, '')
+      this.setErrorMsg(2, '')
     },
     // 4.01新增用户提币地址接口
     stateSubmitAddAddress: _.debounce(async function () {
