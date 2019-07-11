@@ -1435,7 +1435,7 @@ export default {
 
       .el-table {
         color: $mainColorOfWhite;
-        background-color: #202a33;
+        background-color: $mainContentNightBgColor;
 
         tr {
           background-color: $mainContentNightBgColor;
