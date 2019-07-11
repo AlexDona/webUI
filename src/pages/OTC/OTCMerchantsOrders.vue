@@ -464,7 +464,7 @@ export default {
     },
     // 设置日期选择组件的宽度
     setDateWidth (val) {
-      if (val === 'yuenan') {
+      if (val === 'vi_VN') {
         document.querySelector('.el-date-editor--daterange').style.width = '285px'
       } else {
         document.querySelector('.el-date-editor--daterange').style.width = '180px'
@@ -665,7 +665,7 @@ export default {
         }
 
         .el-date-editor--daterange.el-input__inner {
-          width: 180px !important;
+          width: 180px;
         }
 
         .el-date-editor {
