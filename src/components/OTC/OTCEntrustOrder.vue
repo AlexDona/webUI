@@ -7,6 +7,10 @@
     <div class="otc-entrust-order-table">
       <!-- 表头 -->
       <div class="entrust-table-head">
+        <!--广告id-->
+        <span class="item AD-ID">
+          {{$t('M.otc_AD_ID')}}
+        </span>
         <!-- 类型 -->
         <span class="item first-style">
           {{$t('M.comm_type')}}
@@ -55,6 +59,10 @@
           :key="index"
           v-show="OTCEntrustOrderList.length"
         >
+          <!--广告id-->
+          <span class="item AD-ID">
+            {{item.entrustSequence}}
+          </span>
           <!-- 1 类型 -->
           <!-- 买入 -->
           <span
@@ -270,23 +278,21 @@ export default {
         line-height: 35px;
 
         > .first-style,
-        .second-coin {
-          width: 135px;
+        .second-coin,
+        .AD-ID {
+          width: 110px;
         }
 
         > .third-price,
         .fourth-entrust-count,
         .fifth-match-count,
-        .sixth-total-amount {
-          width: 160px;
-        }
-
-        > .senventh-create-time,
-        .eighth-action {
-          width: 140px;
+        .sixth-total-amount,
+        .senventh-create-time {
+          width: 150px;
         }
 
         > .eighth-action {
+          width: 110px;
           text-align: right;
         }
       }
@@ -318,23 +324,21 @@ export default {
           }
 
           > .first-style,
-          .second-coin {
-            width: 135px;
+          .second-coin,
+          .AD-ID {
+            width: 110px;
           }
 
           > .third-price,
           .fourth-entrust-count,
           .fifth-match-count,
-          .sixth-total-amount {
-            width: 160px;
-          }
-
-          > .senventh-create-time,
-          .eighth-action {
-            width: 140px;
+          .sixth-total-amount,
+          .senventh-create-time {
+            width: 150px;
           }
 
           > .eighth-action {
+            width: 110px;
             text-align: right;
           }
         }
