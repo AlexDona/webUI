@@ -19,7 +19,7 @@ const zh_TWObject = require(path.join(originPath, `zh_TW`)).M
 const en_USObject = require(path.join(originPath, `en_US`)).M
 const ko_KRObject = require(path.join(originPath, `ko_KR`)).M
 const ja_JPObject = require(path.join(originPath, `ja_JP`)).M
-const viObject = require(path.join(originPath, `vi`)).M
+const viObject = require(path.join(originPath, `vi_VN`)).M
 let i18nS = [[
   'system',
   'code',
@@ -28,7 +28,7 @@ let i18nS = [[
   'en_US',
   'ko_KR',
   'ja_JP',
-  'vi'
+  'vi_VN'
 ]]
 Object.keys(zh_CNObject).forEach((key) => {
   i18nS.push([
