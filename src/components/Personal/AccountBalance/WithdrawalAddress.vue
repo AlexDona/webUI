@@ -489,6 +489,7 @@ export default {
       })
       // USDT 币种id
       this.isShowLinkSelect = e == this.USDT_COIN_ID_S
+      this.resetFormContent()
     },
     // 4.01新增用户提币地址接口
     stateSubmitAddAddress: _.debounce(async function () {
