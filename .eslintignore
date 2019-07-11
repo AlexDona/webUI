@@ -6,3 +6,4 @@
 /test/unit/coverage/
 /main.js
 /src/utils/tradingview/chart.js
+/static/lang/*.js

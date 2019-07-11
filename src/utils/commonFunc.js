@@ -55,13 +55,14 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
     return false
   }
   const meta = data.data.meta
+  const {message} = meta
   if (meta) {
     if (!meta.success && !errorTip) {
       if (meta.code !== 500 && !store.state.user.isTokenDisable) {
         ElementUI.Message({
           type: 'error',
           // duration: 5000000,
-          message: (!meta.params || !meta.params.length) ? that.$t(`M.${meta.i18n_code}`) : that.$t(`M.${meta.i18n_code}`).format(meta.params)
+          message: message
         })
       }
       // 登录失效
@@ -80,7 +81,7 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
       if (noTip) {
         ElementUI.Message({
           type: 'success',
-          message: that.$t(`M.${meta.i18n_code}`)
+          message: message
         })
       }
       return 1
