@@ -984,6 +984,7 @@ export default {
                 width: 190px;
                 height: 36px;
                 padding-left: 10px;
+                vertical-align: super;
               }
 
               > .unit {
@@ -995,7 +996,7 @@ export default {
                 font-size: 16px;
                 line-height: 36px;
                 text-align: center;
-                vertical-align: middle;
+                vertical-align: top;
               }
             }
 
