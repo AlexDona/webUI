@@ -12,9 +12,9 @@
     "lint:staged": "lint-staged",
     "analyze": "NODE_ENV=production npm_config_report=true npm run build",
     "clean": "rimraf dist && rimraf static/dll.vendor*",
-    "build--test": "cross-env NODE_ENV=testing env_config=test npm run update-i18n && npm run build-dll && node build/build.js",
-    "build--dev": "cross-env NODE_ENV=development210 env_config=dev && npm run update-i18n && npm run build-dll &&  node build/build.js",
-    "build--prod": "cross-env NODE_ENV=production env_config=prod && npm run update-i18n && npm run build-dll && node build/build.js",
+    "build--test": "cross-env NODE_ENV=testing env_config=test npm run update-i18n && npm run build-dll && cross-env NODE_ENV=testing env_config=test node build/build.js",
+    "build--dev": "cross-env NODE_ENV=development210 env_config=dev npm run update-i18n && npm run build-dll && cross-env NODE_ENV=development210 env_config=dev node build/build.js",
+    "build--prod": "cross-env NODE_ENV=production env_config=prod npm run update-i18n && npm run build-dll && cross-env NODE_ENV=production env_config=prod node build/build.js",
     "update-i18n": "node build/updateI18n.js",
     "build-dll": "npm run clean && node build/dll.js"
   },
