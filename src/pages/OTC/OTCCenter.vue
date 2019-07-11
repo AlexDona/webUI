@@ -583,9 +583,9 @@ export default {
       this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(false)
     }
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -943,7 +943,7 @@ export default {
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,

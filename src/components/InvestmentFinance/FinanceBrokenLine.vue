@@ -124,15 +124,14 @@ export default {
       arrTime: []
     }
   },
-  created () {},
+  // created () {},
   mounted () {
     this.resetOptions()
     this.resetChart(this.options)
   },
-  activated () {},
-  update () {
-  },
-  beforeRouteUpdate () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([]),
     timeFormatting (data) {
@@ -217,7 +216,7 @@ export default {
       console.log(this.options)
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,

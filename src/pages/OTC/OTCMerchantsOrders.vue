@@ -453,9 +453,9 @@ export default {
   mounted () {
     this.setDateWidth(this.language)
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     // 1分页
     changeCurrentPage (pageNum) {
@@ -572,7 +572,7 @@ export default {
       }
     }, 500)
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       language: state => state.common.language,

@@ -936,10 +936,10 @@ export default {
       this.getOTCTradingOrdersList()
     }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -1382,7 +1382,7 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,

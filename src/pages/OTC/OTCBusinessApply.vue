@@ -263,10 +263,10 @@ export default {
     this.height = document.documentElement.clientHeight
     this.determineUser()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
@@ -411,7 +411,7 @@ export default {
       this.argumentBusinessApplyRequest()
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       // 用户登录状态 false 未登录； true 登录

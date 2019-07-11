@@ -445,10 +445,10 @@ export default {
     // 3.0 获取otc广告管理列表
     this.getOTCADManageList()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -603,7 +603,7 @@ export default {
       this.showDialogStatus = false
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
@@ -613,8 +613,8 @@ export default {
     windowHeight () {
       return window.innerHeight
     }
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

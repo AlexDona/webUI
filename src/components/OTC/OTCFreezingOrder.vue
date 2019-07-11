@@ -183,7 +183,7 @@ import {
 } from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
-  components: {},
+  // components: {},
   // props,
   data () {
     return {
@@ -203,10 +203,10 @@ export default {
       this.getOTCFreezingOrdersList()
     }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     // 1.0 分页
     changeCurrentPage (pageNum) {
@@ -236,7 +236,7 @@ export default {
       }
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       // 主题
@@ -244,8 +244,8 @@ export default {
       // 是否登录
       isLogin: state => state.user.isLogin
     })
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

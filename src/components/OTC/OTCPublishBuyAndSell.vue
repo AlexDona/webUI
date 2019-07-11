@@ -581,10 +581,10 @@ export default {
     // 刚进页面就调此方法请求币种详情来渲染页面
     this.getOTCCoinInfo()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
@@ -1032,7 +1032,7 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       configInfo: state => state.common.footerInfo.configInfo,
@@ -1043,8 +1043,8 @@ export default {
       isLockedPayPassword: state => state.common.isLockedPayPassword,
       loginStep1Info: state => state.user.loginStep1Info
     })
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

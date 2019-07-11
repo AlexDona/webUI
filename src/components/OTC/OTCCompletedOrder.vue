@@ -289,10 +289,10 @@ export default {
       this.getOTCCompletedOrdersList()
     }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     // 0.2 分页改变事件
     changeCurrentPage (pageNum) {
@@ -323,14 +323,14 @@ export default {
       }
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
       isLogin: state => state.user.isLogin // 是否登录
     })
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

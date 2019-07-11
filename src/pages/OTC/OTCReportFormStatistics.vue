@@ -591,9 +591,9 @@ export default {
   mounted () {
     this.setDateWidth(this.language)
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([]),
     // 设置日期选择组件的宽度
@@ -748,7 +748,7 @@ export default {
       }
     }, 500)
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       language: state => state.common.language,
