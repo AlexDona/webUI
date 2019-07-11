@@ -167,6 +167,15 @@
               </template>
             </el-table-column>
           </div>
+          <!-- 广告id -->
+          <el-table-column
+            :label="$t('M.otc_AD_ID')"
+            width="100"
+          >
+            <template slot-scope="s">
+              {{ s.row.entrustSequence }}
+            </template>
+          </el-table-column>
           <!-- 订单号 -->
           <el-table-column
             :label="$t('M.otc_MerchantsOrders_orderNum')"
