@@ -272,7 +272,9 @@ export default {
       'CHANGE_LEGAL_PAGE',
       // 更改重新渲染交易中订单列表状态
       'CHANGE_RE_RENDER_TRADING_LIST_STATUS',
-      'SET_LEGAL_TENDER_REFLASH_STATUS'
+      'SET_LEGAL_TENDER_REFLASH_STATUS',
+      // 改变清除交易中数据方法的状态
+      'CHANGE_CLEAR_DATA_STATUS_M'
     ]),
     // 切换tab时将全局当前页码改为1加载第一页的数据
     toggleTabPane () {
@@ -387,8 +389,8 @@ export default {
           } else {
             console.log('法币订单列表（除了委托订单)')
             console.log(data)
-            // 请求接口之前，调用子组件（交易中订单组件）方法，清空定义的数组数据this.$refs.tradeOrder.clearArrData()
-            this.$refs.tradeOrder.clearArrData()
+            // 请求接口之前，调用子组件（交易中订单组件）方法，清空定义的数组数据
+            this.CHANGE_CLEAR_DATA_STATUS_M(true)
             let merchantsOrdersListData = getNestedData(data, 'data.data')
             // 返回数据正确的逻辑 重新渲染列表
             this.SET_LEGAL_TENDER_LIST({
