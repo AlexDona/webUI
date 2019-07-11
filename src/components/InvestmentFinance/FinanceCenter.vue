@@ -818,11 +818,10 @@ export default {
     // 页面创建完成请求币种接口
     this.getFinancialManagementList()
   },
-  mounted () {
-  },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -1139,7 +1138,7 @@ export default {
       })
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,

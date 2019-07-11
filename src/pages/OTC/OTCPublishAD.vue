@@ -663,9 +663,9 @@ export default {
     this.limitOrderCount = this.$refs.limitRef.value
     this.successOrderCount = this.$refs.successRef.value
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
@@ -1170,7 +1170,7 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       language: state => state.common.language,
@@ -1180,8 +1180,8 @@ export default {
       isLockedPayPassword: state => state.common.isLockedPayPassword,
       loginStep1Info: state => state.user.loginStep1Info
     })
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

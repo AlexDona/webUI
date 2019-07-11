@@ -591,14 +591,14 @@ export default {
   mounted () {
     this.setDateWidth(this.language)
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([]),
     // 设置日期选择组件的宽度
     setDateWidth (val) {
-      if (val === 'yuenan') {
+      if (val === 'vi_VN') {
         document.querySelector('.el-date-editor--daterange').style.width = '285px'
       } else {
         document.querySelector('.el-date-editor--daterange').style.width = '180px'
@@ -748,7 +748,7 @@ export default {
       }
     }, 500)
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       language: state => state.common.language,
@@ -943,7 +943,7 @@ export default {
           }
 
           .el-date-editor--daterange.el-input__inner {
-            width: 180px !important;
+            width: 180px;
             height: 34px;
           }
 

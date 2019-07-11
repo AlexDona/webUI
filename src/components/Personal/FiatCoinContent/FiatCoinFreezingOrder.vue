@@ -344,7 +344,6 @@ export default {
         > .freezing-table-head {
           color: #617499;
           background-color: $mainContentNightBgColor;
-          box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .freezing-table-body {

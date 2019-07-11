@@ -973,7 +973,9 @@ export default {
       'CHANGE_RE_RENDER_TRADING_LIST_STATUS', // 更改重新渲染交易中订单列表状态,
       'CHANGE_PASSWORD_USEABLE',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      // 改变清除交易中数据方法的状态
+      'CHANGE_CLEAR_DATA_STATUS_M'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -987,6 +989,7 @@ export default {
       this.cancelOrderTimeArr = [] // 清空取消订单倒计时
       this.accomplishOrderTimeArr = [] // 清空自动成交倒计时
       this.buyerAppealButtonStatus = [] // 清空买家申诉按钮
+      this.CHANGE_CLEAR_DATA_STATUS_M(false)
     },
     // ren增加
     // 申诉上传图片
@@ -1432,7 +1435,9 @@ export default {
       reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus, // 从全局获得的重新渲染交易中订单列表状态
       // 交易密码是否被锁定
       isLockedPayPassword: state => state.common.isLockedPayPassword,
-      configInfo: state => state.common.footerInfo.configInfo
+      configInfo: state => state.common.footerInfo.configInfo,
+      // 法币订单交易中订单定义的数组数据状态
+      clearTradingOrderArrDataStatus: state => state.personal.clearTradingOrderArrDataStatus
     })
     // 从全局获得的交易中订单列表
     // tradingOrderList () {
@@ -1440,6 +1445,12 @@ export default {
     // }
   },
   watch: {
+    // 清空定义的数组数据
+    clearTradingOrderArrDataStatus (val) {
+      if (val) {
+        this.clearArrData()
+      }
+    },
     // 监控交易中订单列表并调用倒计时逻辑方法
     tradingOrderList (newVal) {
       this.timerLogicMethod()
