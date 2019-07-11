@@ -1,17 +1,25 @@
-<template lang="pug">
-  .body-container(
+<template>
+  <div
     id="app"
+    class="body-container"
     v-loading.fullscreen.lock="$loading_S_X"
     element-loading-background="rgba(0, 0, 0, 0.8)"
-  )
-    NoticeHome(v-if="isShowNotice")
-    HeaderCommon(v-if="isShowHeader")
-    router-view(
-      @toggleShowHeader="toggleShowHeader"
-      @toggleShowFooter="toggleShowFooter"
-      @toggleShowNotice="toggleShowNotice"
-    )
-    FooterCommon(v-if="isShowFooter")
+  >
+    <NoticeHome
+      v-if="isNeedNotice"
+    />
+    <keep-alive>
+      <HeaderCommon
+        v-if="isNeedHeader"
+      />
+    </keep-alive>
+      <router-view />
+    <keep-alive>
+      <FooterCommon
+        v-if="isNeedFooter"
+      />
+    </keep-alive>
+  </div>
 </template>
 <script>
 import {getStore} from './utils'
@@ -36,10 +44,7 @@ export default {
     return {
       isNeedHeader: false,
       isNeedFooter: false,
-      isNeedNotice: false,
-      isShowNotice: false,
-      isShowHeader: true,
-      isShowFooter: true
+      isNeedNotice: false
     }
   },
   async created () {
@@ -65,15 +70,6 @@ export default {
       'CHANGE_ROUTER_PATH',
       'SET_NAVIGATOR_M'
     ]),
-    toggleShowHeader (status) {
-      this.isShowHeader = status
-    },
-    toggleShowFooter (status) {
-      this.isShowFooter = status
-    },
-    toggleShowNotice (status) {
-      this.isShowNotice = status
-    },
     setBodyClassName (type, className) {
       type ? document.body.classList.add(className) : document.body.classList.remove(className)
     },
@@ -105,9 +101,35 @@ export default {
       })
       console.log(this.navigation)
       this.SET_NAVIGATOR_M(this.navigation)
+    },
+    // 切换 PC/H5 移动端适配
+    toggleViewPortMeta () {
+      let metaContent = {
+        mobile: 'width=device-width, initial-scale=0.2, minimum-scale=0.1, maximum-scale=1, user-scalable=0',
+        PC: 'width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=1, user-scalable=yes'
+      }
+      const meta = document.querySelector('meta[name="viewport"]')
+      const {path} = this.$route
+
+      const userDisScalabledRoutes = [
+        `/${this.$routes_X.login}`,
+        `/${this.$routes_X.register}`,
+        `/downloadApp`,
+        `/invitationRegister`
+      ]
+      const notNeedUserScalable = _.some(userDisScalabledRoutes, (route, index) => (route == path || path.startsWith(route)))
+
+      switch (this.isMobile && notNeedUserScalable) {
+        case true:
+          meta.content = metaContent.mobile
+          break
+        case false:
+          meta.content = metaContent.PC
+          break
+      }
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
@@ -122,6 +144,7 @@ export default {
       this.getNavigations()
     },
     async '$route' (to, from) {
+      this.toggleViewPortMeta()
       // console.log(to.path, from.path)
       let path = to.path
       if (!this.$navigators_S_X.length) {
@@ -154,15 +177,16 @@ export default {
       this.isNeedHeader = (
         path !== `/${this.$routes_X.login}` &&
         !path.startsWith('/register') &&
-        !path.startsWith('/invitationRegister') &&
-        path !== '/downloadApp'
-      ) ? 1 : 0
-      this.isNeedFooter = (
-        path !== `/${this.$routes_X.login}` &&
-        !path.startsWith('/register') &&
         path !== '/downloadApp' &&
         !path.startsWith('/invitationRegister')
       ) ? 1 : 0
+      this.isNeedFooter = (
+        path === `/${this.$routes_X.login}` ||
+        path.startsWith('/register') ||
+        path === '/downloadApp' ||
+        path.startsWith('/invitationRegister') ||
+        path === '/ForgetPassword'
+      ) ? 0 : 1
       switch (path) {
         case '/register':
           this.setBodyClassName(true, 'register')
@@ -171,6 +195,8 @@ export default {
     },
     isMobile (newVal) {
       this.setBodyClassName(newVal, 'mobile')
+      console.log(newVal)
+      this.toggleViewPortMeta()
     },
     isNeedNotice (newVal) {
       if (newVal) {
