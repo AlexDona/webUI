@@ -341,7 +341,7 @@ export default {
             position: absolute;
             top: 38.5px;
             right: 1px;
-            height: 34px;
+            height: 30px;
             padding: 0 5px;
             line-height: 34px;
             text-align: center;

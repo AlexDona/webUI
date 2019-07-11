@@ -305,7 +305,7 @@ export default {
             top: 38.5px;
             right: 1px;
             width: 35px;
-            height: 34px;
+            height: 30px;
             line-height: 34px;
             text-align: center;
           }
