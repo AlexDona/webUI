@@ -423,7 +423,6 @@ export default {
         > .no-data {
           color: $fontColorSecondaryOfDay;
           background-color: $mainDayBgColor;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
     }
