@@ -1096,11 +1096,11 @@ export default {
             margin-right: -4px;
             border-bottom-left-radius: 4px;
             border-top-left-radius: 4px;
-            border-right: 0;
+            border-right: 0 !important;
           }
 
           > .buy-button {
-            border-left: 0;
+            border-left: 0 !important;
             border-top-right-radius: 4px;
             border-bottom-right-radius: 4px;
           }
@@ -1360,10 +1360,12 @@ export default {
 
     > .publish-buy-and-sell-content {
       > .publish-content {
+        background-color: $mainContentNightBgColor;
+
         > .publish-content-left {
           > .publish-button {
             > .common-style {
-              border: 1px solid $mainContentNightBgColor;
+              border: 1px solid rgba(207, 213, 223, .5);
               color: $nightFontColor;
             }
 
@@ -1402,12 +1404,12 @@ export default {
             .sell-buy-input {
               > .sell-sum {
                 color: #9da5b3;
-                background-color: $mainContentNightBgColor;
+                background-color: $nightInputBg;
               }
 
               > .unit {
                 color: $mainColor;
-                background-color: #21243b;
+                background-color: $nightUnitBg;
               }
             }
 
@@ -1424,12 +1426,12 @@ export default {
             .volume-business {
               > .sell-sum {
                 color: #9da5b3;
-                background-color: $mainContentNightBgColor;
+                background-color: $nightInputBg;
               }
 
               > .monad {
                 color: $mainColor;
-                background-color: #21243b;
+                background-color: $nightUnitBg;
               }
 
               > .range-line {
@@ -1499,7 +1501,7 @@ export default {
 
       .el-textarea__inner {
         color: $mainColorOfWhite;
-        background-color: $mainContentNightBgColor;
+        background-color: $nightInputBg;
       }
 
       .el-form--label-top {
@@ -1510,7 +1512,7 @@ export default {
 
       .buy-sell-submit-form {
         .el-input__inner {
-          background-color: $mainContentNightBgColor;
+          background-color: $nightInputBg;
         }
 
         .el-select-dropdown__list {
