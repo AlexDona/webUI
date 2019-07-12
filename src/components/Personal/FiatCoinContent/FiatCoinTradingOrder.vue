@@ -582,14 +582,16 @@
                     <!--确认收款-->
                     {{$t('M.otc_trading_collectionconfirmation')}}
                   </el-button>
-                  <el-button
-                    type="primary"
-                    size="mini"
-                    @click="orderAppeal(item.id, index, item.orderType)"
-                  >
+                  <span class="appeal-button-sell">
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="orderAppeal(item.id, index, item.orderType)"
+                    >
                     <!--订单申诉-->
                     {{$t('M.otc_complaint')}}
                   </el-button>
+                  </span>
                 </p>
                 <p class="action-explain">
                   <!--买家付款已付款-->
@@ -674,6 +676,7 @@
               <!-- 3. 按钮部分 -->
               <div class="appeal-button">
                 <el-button
+                  class="appeal-button-submit"
                   type="primary"
                   size="mini"
                   @click="sellerAppeal(item.id, index, item.orderType)"
@@ -682,6 +685,7 @@
                   {{$t('M.otc_complaint_submit')}}
                 </el-button>
                 <el-button
+                  class="appeal-button-cancel"
                   type="primary"
                   size="mini"
                   @click="cancelOrderAppeal(index)"
@@ -1959,6 +1963,27 @@ export default {
                   }
                 }
               }
+
+              > .order-list-body-right {
+                .action-tips,
+                .action-explain {
+                  .el-button {
+                    background-color: $mainColor;
+                  }
+
+                  .appeal-button-sell {
+                    .el-button {
+                      color: #8094bb;
+                      background: rgba(205, 217, 238, 1);
+                    }
+                  }
+
+                  .buy-appeal-order {
+                    color: #8094bb;
+                    background: rgba(205, 217, 238, 1);
+                  }
+                }
+              }
             }
           }
         }
@@ -2076,6 +2101,17 @@ export default {
           color: #fff;
           background-color: #409eff;
         }
+
+        .appeal-button {
+          .appeal-button-submit {
+            background-color: $mainColor;
+          }
+
+          .appeal-button-cancel {
+            color: #8094bb;
+            background: #cdd9ee;
+          }
+        }
       }
     }
 
@@ -2123,9 +2159,21 @@ export default {
 
               > .order-list-body-right {
                 > .right-content {
-                  > .action-tips {
+                  > .action-tips,
+                  .action-explain {
                     .wait-pay {
                       color: $upColor;
+                    }
+
+                    .el-button {
+                      background-color: $mainColor;
+                    }
+
+                    .appeal-button-sell {
+                      .el-button {
+                        color: #8094bb;
+                        background: rgba(205, 217, 238, 1);
+                      }
                     }
                   }
 
@@ -2229,9 +2277,20 @@ export default {
 
         /* 订单申诉按钮 */
         .submitted-confirm-payment {
-          .buy-appeal-order {
-            color: $mainColor;
-            background-color: $coinBgColorOfDay;
+          .buy-appeal-order.el-button {
+            color: #8094bb;
+            background-color: #cdd9ee !important;
+          }
+        }
+
+        .appeal-button {
+          .appeal-button-submit {
+            background-color: $mainColor;
+          }
+
+          .appeal-button-cancel {
+            color: #8094bb;
+            background: #cdd9ee;
           }
         }
 
