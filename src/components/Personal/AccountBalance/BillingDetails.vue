@@ -820,18 +820,18 @@ export default {
         .el-tabs__item {
           padding: 0;
           margin-right: 30px;
-          border-left: 0;
+          border-left: 0 !important;
           text-align: center;
 
           &.is-active {
             border-bottom: 2px solid #0079fe;
-            border-left: 0;
+            border-left: 0 !important;
             color: #0079fe;
             background: transparent;
           }
 
           &:hover {
-            border-left: 0;
+            border-left: 0 !important;
             text-align: center;
             color: #0079fe;
             background: transparent;

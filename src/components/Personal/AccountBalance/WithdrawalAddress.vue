@@ -640,11 +640,12 @@ export default {
 
   .withdrawal-address {
     > .withdrawal-address-main {
-      min-height: 400px;
-      padding-bottom: 30px;
+      min-height: 200px;
+      padding-bottom: 28px;
       margin-top: 10px;
 
       > .withdrawal-header {
+        margin-top: -10px;
         margin-bottom: 2px;
 
         > .header-content {
