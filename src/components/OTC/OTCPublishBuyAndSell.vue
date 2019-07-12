@@ -1163,28 +1163,28 @@ export default {
             margin-bottom: 10px;
 
             > .sell-sum {
-              width: 130px;
+              width: 190px;
               height: 36px;
               padding-left: 10px;
             }
 
             > .max-sell-sum {
-              width: 180px;
+              width: 190px;
             }
 
             > .monad {
               display: inline-block;
-              width: 50px;
+              width: 70px;
               height: 36px;
               margin-left: -4px;
-              font-size: 12px;
+              font-size: 14px;
               line-height: 36px;
               text-align: center;
               vertical-align: top;
             }
 
             > .range-line {
-              margin: 0 10px;
+              margin: 0 16px;
             }
           }
 
@@ -1192,7 +1192,7 @@ export default {
             > .errorLimitMin,
             .errorLimitMax {
               display: inline-block;
-              width: 230px;
+              width: 320px;
               font-size: 12px;
             }
           }
