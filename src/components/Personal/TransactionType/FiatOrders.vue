@@ -680,6 +680,10 @@ export default {
         .el-input__inner {
           border: 1px solid #ccc;
         }
+
+        .el-button {
+          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
       }
     }
   }

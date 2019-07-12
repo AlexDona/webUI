@@ -249,6 +249,8 @@ export default {
 
   .fiat-entrust-order-box {
     .fiat-entrust-order-table {
+      padding: 0 10px;
+
       > .entrust-table-head {
         display: flex;
         height: 35px;
@@ -269,8 +271,9 @@ export default {
       }
 
       > .entrust-table-body {
-        min-height: 485px;
+        min-height: 495px;
         padding: 30px 0;
+        margin-top: -10px;
 
         > .entrust-list-content {
           display: flex;
@@ -376,18 +379,18 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $mainNightBgColor;
 
       > .fiat-entrust-order-table {
+        background-color: $mainContentNightBgColor;
+
         > .entrust-table-head {
+          border-bottom: 1px solid $dialogColor6;
           text-align: left;
           color: #617499;
-          background-color: $mainContentNightBgColor;
         }
 
         > .entrust-table-body {
           color: #9da5b3;
-          background-color: $mainContentNightBgColor;
 
           .no-data {
             background-color: $mainContentNightBgColor;
@@ -437,22 +440,15 @@ export default {
       color: $dayMainTitleColor;
 
       > .fiat-entrust-order-table {
+        background-color: $mainDayBgColor;
+
         > .entrust-table-head {
+          border-bottom: 1px solid $borderColorOfDay;
           color: $fontColorSecondaryOfDay;
-          background-color: $mainDayBgColor;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .entrust-table-body {
           color: $dayMainTitleColor;
-          background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
-
-          > .entrust-list-content {
-            > .item {
-              background-color: $mainColorOfWhite;
-            }
-          }
         }
 
         .no-data {

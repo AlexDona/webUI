@@ -236,10 +236,13 @@ export default {
 
   .fiat-freezing-order-box {
     > .freezing-order-content {
+      min-height: 530px;
+      padding: 0 10px 10px;
+
       > .freezing-table-head {
         display: flex;
         height: 35px;
-        margin-bottom: 10px;
+        margin-bottom: 12px !important;
         line-height: 35px;
 
         > .item {
@@ -261,6 +264,7 @@ export default {
       > .freezing-table-body {
         height: 170px;
         margin-bottom: 10px;
+        border-radius: 6px;
 
         > .freezing-info-top {
           display: flex;
@@ -334,20 +338,22 @@ export default {
       }
 
       > .no-data {
-        height: 485px;
-        line-height: 485px;
+        height: 475px;
+        line-height: 475px;
       }
     }
 
     &.night {
       > .freezing-order-content {
+        background-color: $mainContentNightBgColor;
+
         > .freezing-table-head {
+          border-bottom: 1px solid $dialogColor6;
           color: #617499;
-          background-color: $mainContentNightBgColor;
         }
 
         > .freezing-table-body {
-          background-color: $mainContentNightBgColor;
+          border: 1px solid $dialogColor6;
 
           > .freezing-info-top {
             color: #617499;
@@ -383,16 +389,15 @@ export default {
 
     &.day {
       > .freezing-order-content {
+        background-color: $mainColorOfWhite;
+
         > .freezing-table-head {
+          border-bottom: 1px solid $borderColorOfDay;
           color: $fontColorSecondaryOfDay;
-          background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .freezing-table-body {
-          color: $dayMainTitleColor;
-          background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
+          border: 1px solid $borderColorOfDay;
 
           > .freezing-info-bottom {
             border-top: 1px solid rgba(72, 87, 118, .1);
