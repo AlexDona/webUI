@@ -41,7 +41,7 @@
             </div>
             <div class="buy-sell-icon">
               <!-- 买 -->
-              {{$t('M.comm_bid')}}
+              {{$t('M.otc_trading_order_buy')}}
             </div>
           </div>
           <!-- 1.2 表身体 -->
@@ -389,7 +389,7 @@
             </div>
             <div class="buy-sell-icon">
               <!-- 卖 -->
-              {{$t('M.comm_ask')}}
+              {{$t('M.otc_trading_order_sell')}}
             </div>
           </div>
           <!-- 2.2 表身体 -->

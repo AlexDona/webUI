@@ -650,7 +650,8 @@ export default {
       .fiat-main {
         .orders-main-top {
           background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px #cfd5df;
+
+          /* box-shadow: 0 0 6px #cfd5df; */
         }
       }
 

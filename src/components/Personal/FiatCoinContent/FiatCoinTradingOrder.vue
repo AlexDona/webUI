@@ -37,7 +37,7 @@
             <div class="order-list-head-icon buy-icon"></div>
             <div class="buy-sell-icon">
               <!--买-->
-              {{$t('' + 'M.comm_bid')}}
+              {{$t('M.otc_trading_order_buy')}}
             </div>
           </div>
           <!-- 1.2 表身体 -->
@@ -407,7 +407,7 @@
             <div class="order-list-head-icon sell-icon"></div>
             <div class="buy-sell-icon">
               <!--卖-->
-              {{$t('M.comm_ask')}}
+              {{$t('M.otc_trading_order_sell')}}
             </div>
           </div>
           <!-- 2.2 表身体 -->
@@ -1491,8 +1491,11 @@ export default {
   @import '../../../assets/CSS/index';
 
   .fiat-trading-order-box {
+    margin-top: -10px;
+
     > .fiat-trading-order-content {
-      min-height: 386px;
+      min-height: 540px;
+      padding: 0 10px 10px;
 
       .button {
         width: 290px;
@@ -1509,6 +1512,7 @@ export default {
         box-sizing: border-box;
         height: 170px;
         margin-bottom: 10px;
+        border-radius: 6px;
         font-size: 12px;
         background-color: $mainContentNightBgColor;
 
@@ -1538,6 +1542,7 @@ export default {
               height: 0;
               border-right: 18px solid transparent;
               border-bottom: 18px solid transparent;
+              border-top-left-radius: 6px;
             }
 
             > .buy-icon {
@@ -1553,7 +1558,7 @@ export default {
             > .buy-sell-icon {
               position: absolute;
               top: -6px;
-              left: 3px;
+              left: 2px;
               color: #fff;
             }
           }
@@ -1598,20 +1603,20 @@ export default {
 
               > .middle-content {
                 .trader-info {
-                  width: 190px;
+                  width: 185px;
 
                   > .pay-style {
                     position: relative;
                     width: 150px;
                     height: 23px;
-                    margin: 0 0 8px 20px;
+                    margin: 0 0 8px 10px;
 
                     > .qiandai-icon {
                       > .icon {
                         position: absolute;
                         z-index: 2;
                         top: 5px;
-                        left: 10px;
+                        left: 5px;
                         width: 14px;
                         height: 14px;
                       }
@@ -1619,7 +1624,7 @@ export default {
                   }
 
                   > .bank-info {
-                    margin-left: 20px;
+                    margin-left: 10px;
                     line-height: 20px;
                   }
 
@@ -1629,7 +1634,7 @@ export default {
                   }
 
                   > .bankMoneyInfo {
-                    margin-left: 20px;
+                    margin-left: 10px;
                     line-height: 20px;
 
                     .icon {
@@ -1805,8 +1810,9 @@ export default {
       }
 
       .el-input__inner {
-        padding: 0 30px;
+        padding: 0 25px;
         border: none;
+        font-size: 12px;
       }
 
       .el-select-dropdown {
@@ -1840,7 +1846,7 @@ export default {
         .el-button {
           float: right;
           padding: 2px 6px;
-          margin-right: 5px;
+          font-size: 12px;
         }
       }
 
@@ -1928,12 +1934,16 @@ export default {
       }
 
       > .fiat-trading-order-content {
+        background-color: $mainContentNightBgColor;
+
         .button {
           color: $mainColorOfWhite;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
         > .order-list {
+          border: 1px solid $dialogColor6;
+
           > .order {
             > .order-list-body {
               > .order-list-body-middle {
@@ -2071,14 +2081,16 @@ export default {
 
     &.day {
       > .fiat-trading-order-content {
+        background-color: $mainColorOfWhite;
+
         .button {
           color: $mainColorOfWhite;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
         > .order-list {
+          border: 1px solid rgba(72, 87, 118, .1);
           background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .order {
             > .order-list-head {
