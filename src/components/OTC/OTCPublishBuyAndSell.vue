@@ -1144,7 +1144,7 @@ export default {
               width: 70px;
               height: 36px;
               margin: 0 50px 0 -4px;
-              font-size: 16px;
+              font-size: 14px;
               line-height: 36px;
               text-align: center;
               vertical-align: top;

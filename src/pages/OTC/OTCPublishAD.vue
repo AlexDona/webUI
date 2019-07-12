@@ -1580,6 +1580,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     background-color: $mainNightBgColor;
 
     > .otc-publish-AD-content {
+      background-color: $mainContentNightBgColor;
+
       > .publish-AD-left {
         > .AD-title {
           border-left: 3px solid $mainColor;
@@ -1634,12 +1636,12 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
               > .input {
                 > .price-input {
                   color: #9da5b3;
-                  background-color: #1c1f32;
+                  background-color: $nightInputBg;
                 }
 
                 > .unit {
                   color: #7ea9e4;
-                  background-color: #21243b;
+                  background-color: $nightUnitBg;
                 }
               }
             }
@@ -1650,12 +1652,12 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
               > .input-top {
                 > .input-sum {
                   color: #9da5b3;
-                  background-color: #1c1f32;
+                  background-color: $nightInputBg;
                 }
 
                 > .unit {
                   color: #7ea9e4;
-                  background-color: #21243b;
+                  background-color: $nightUnitBg;
                 }
               }
 
@@ -1663,12 +1665,12 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
                 > .input-min,
                 .input-max {
                   color: #9da5b3;
-                  background-color: #1c1f32;
+                  background-color: $nightInputBg;
                 }
 
                 > .unit {
                   color: #7ea9e4;
-                  background-color: #21243b;
+                  background-color: $nightUnitBg;
                 }
 
                 > .minMaxLink {
@@ -1682,7 +1684,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             > .right {
               .input-limit {
                 color: #9da5b3;
-                background-color: #1c1f32;
+                background-color: $nightUnitBg;
               }
             }
           }
@@ -1717,7 +1719,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
       .choice {
         .el-input__inner {
-          background: #1c1f32;
+          background: $nightInputBg;
         }
       }
 
@@ -1729,7 +1731,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
       .el-textarea__inner {
         color: #a9bed4;
-        background-color: #1c1f32;
+        background-color: $nightInputBg;
       }
 
       .trade-way {
