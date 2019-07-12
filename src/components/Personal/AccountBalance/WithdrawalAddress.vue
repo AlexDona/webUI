@@ -65,7 +65,7 @@
               <!--地址标签-->
               <el-form-item
                 :label="$t('M.user_address_labels')"
-                v-if="isShowAddressLabel === 'true'"
+                v-if="isShowAddressLabel === true"
               >
                 <input
                   type="text"
@@ -216,7 +216,7 @@
         </div>
       </div>
     </div>
-    <div class="withdrawal-address-main content-main">
+    <div class="withdrawal-address-main content-main" >
       <header class="address-list-header background-color border-radius2">
         <span class="header-content display-inline-block font-size16 cursor-pointer">
           <!--地址列表-->
@@ -533,7 +533,7 @@ export default {
       let targetIndex = 0
       _.forEach(this.currencyList, (currencyItem, currencyIndex) => {
         if (this.currencyValue == _.get(currencyItem, 'coinId')) {
-          targetIndex = currencyIndex
+          targetIndex = currencyIndexwithdrawal - address
           return false
         }
       })
@@ -550,6 +550,21 @@ export default {
       // 对币种名称列表进行赋值
       this.withdrawalAddressList = getNestedData(detailData, 'UserWithdrawAddressPage.list')
       this.totalPageForMyEntrust = getNestedData(detailData, 'UserWithdrawAddressPage.pages') - 0
+      // 控制地址列表无数据时的高度
+      if (this.withdrawalAddressList.length === 0) {
+        if (this.isShowAddressLabel && this.isShowLinkSelect) {
+          this.$el.querySelector('.el-table__empty-block').style.height = '134px'
+        } else {
+          if (this.isShowLinkSelect) {
+            this.$el.querySelector('.el-table__empty-block').style.height = '216px'
+            if (this.isShowAddressLabel) {
+              this.$el.querySelector('.el-table__empty-block').style.height = '196px'
+            }
+          } else {
+            this.$el.querySelector('.el-table__empty-block').style.height = '256px'
+          }
+        }
+      }
       // 接口回来之后吧select状态改为可用
       this.currencyValueStatus = false
       // console.log(this.currencyList)
@@ -630,7 +645,12 @@ export default {
   },
   watch: {
     currencyValue (New) {
-      if (New == this.USDT_COIN_ID_S) this.isShowLinkSelect = true
+      if (New == this.USDT_COIN_ID_S) {
+        this.isShowLinkSelect = true
+        this.$el.querySelector('.el-table__empty-block').style.height = '196px'
+      } else {
+        this.$el.querySelector('.el-table__empty-block').style.height = '256px'
+      }
     }
   }
 }
@@ -731,7 +751,7 @@ export default {
 
         > .withdrawal-header {
           background-color: $mainContentNightBgColor;
-          box-shadow: 2px 0 2px rgba(20, 23, 37, 1);
+          box-shadow: 0 0 2px rgba(20, 23, 37, 1);
 
           > .header-content {
             color: #338ff5;
@@ -996,7 +1016,7 @@ export default {
     /deep/ {
       .el-table__empty-block {
         width: 920px !important;
-        height: 257px;
+        height: 256px;
       }
 
       .el-input__inner {
