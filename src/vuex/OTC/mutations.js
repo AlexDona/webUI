@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import {setStore} from '../../utils'
 import {
   // OTC改变选中的可用币种名字
@@ -19,8 +20,9 @@ import {
   // 改变otc主页国家列表筛选框选中的国家id
   CHANGE_OTC_SELECTED_COUNTRY_ID,
   // 改变otc主页法币列表筛选框选中的法币类型id
-  CHANGE_OTC_SELECTED_CURRENCY_ID
-
+  CHANGE_OTC_SELECTED_CURRENCY_ID,
+  UPDATE_IM_BOX_SHOW_STATUS_M,
+  UPDATE_IM_SOCKET_M
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -69,5 +71,13 @@ export default {
   // 改变otc主页法币列表筛选框选中的法币类型id
   [CHANGE_OTC_SELECTED_CURRENCY_ID] (state, data) {
     state.otcSelectedCurrencyId = data
+  },
+  // 更改 及时通讯状态
+  [UPDATE_IM_BOX_SHOW_STATUS_M] (state, {orderId, status}) {
+    Vue.set(state.IMBoxShowStatusMap_S, orderId, status)
+  },
+  // 设置 OTC socket
+  [UPDATE_IM_SOCKET_M] (state, socket) {
+    state.OTCIMSocket_S = socket
   }
 }

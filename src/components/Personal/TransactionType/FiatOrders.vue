@@ -140,6 +140,7 @@
           <FiatCoinTradingOrder
             ref = "tradeOrder"
             @fatherMethod="getOTCEntrustingOrdersRevocation"
+            :OTC_IM_TOP="OTC_IM_TOPS.trading"
           />
         </el-tab-pane>
         <!--已完成订单-->
@@ -147,21 +148,30 @@
           :label="$t('M.otc_stocks')"
           name="COMPLETED"
         >
-          <FiatCoinCompletedOrder ref = "cancelledOrder"/>
+          <FiatCoinCompletedOrder
+            ref = "cancelledOrder"
+            :OTC_IM_TOP="OTC_IM_TOPS.completed"
+          />
         </el-tab-pane>
         <!--已取消订单-->
         <el-tab-pane
           :label="$t('M.otc_canceled')"
           name="CANCELED"
         >
-          <FiatCoinCanceledOrder ref = "completedOrder"/>
+          <FiatCoinCanceledOrder
+            ref = "completedOrder"
+            :OTC_IM_TOP="OTC_IM_TOPS.canceled"
+          />
         </el-tab-pane>
         <!--冻结中订单-->
         <el-tab-pane
           :label="$t('M.otc_freezingOrder')"
           name="FROZEN"
         >
-          <FiatCoinFreezingOrder ref = "pendingOrder"/>
+          <FiatCoinFreezingOrder
+            ref = "pendingOrder"
+            :OTC_IM_TOP="OTC_IM_TOPS.frozen"
+          />
         </el-tab-pane>
         <!--委托订单-->
         <el-tab-pane
@@ -196,7 +206,11 @@ import {
   mapMutations,
   mapState
 } from 'vuex'
+import Socket from '../../../utils/datafeeds/socket'
+import {OTCIMSocketUrl} from '../../../utils/env'
+import mixins from '../../../mixins/user'
 export default {
+  mixins: [mixins],
   components: {
     IconFontCommon, //  字体图标
     FiatCoinTradingOrder, //  交易中订单
@@ -255,24 +269,36 @@ export default {
       startTime: '', // 默认开始时间
       endTime: '', // 默认结束时间
       // 商家订单列表
-      merchantsOrdersList: []
+      merchantsOrdersList: [],
+      socket: '',
+      OTC_IM_TOPS: {
+        trading: `170px`,
+        completed: `170px`,
+        canceled: `99px`,
+        frozen: `170px`
+      }
     }
   },
   async created () {
     await this.getOTCAvailableCurrencyList()
     await this.getMerchantAvailableLegalTenderList()
+    const {id} = this.$userInfo_X
+    this.socket = new Socket(this.url = `${OTCIMSocketUrl}/${id}`)
+    this.UPDATE_IM_SOCKET_M(this.socket)
+    this.socket.doOpen()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_LEGAL_TENDER_LIST',
       'CHANGE_LEGAL_PAGE',
       // 更改重新渲染交易中订单列表状态
       'CHANGE_RE_RENDER_TRADING_LIST_STATUS',
-      'SET_LEGAL_TENDER_REFLASH_STATUS'
+      'SET_LEGAL_TENDER_REFLASH_STATUS',
+      'UPDATE_IM_SOCKET_M'
     ]),
     // 切换tab时将全局当前页码改为1加载第一页的数据
     toggleTabPane () {

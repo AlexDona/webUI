@@ -262,7 +262,11 @@ import {
 } from 'vuex'
 export default {
   components: {},
-  // props,
+  props: {
+    OTC_IM_TOP: {
+      type: String
+    }
+  },
   data () {
     return {}
   },

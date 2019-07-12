@@ -26,30 +26,38 @@ const devTestConfig = {
   // apiCommonUrl: 'http://192.168.2.122:8888/',
   // FangRuiChang
   // apiCommonUrl: 'http://192.168.10.9:8888/',
+  // WeiYongPan
+  // apiCommonUrl: 'http://192.168.2.145:8888/',
+  // ZhangXuYang
+  // apiCommonUrl: 'http://192.168.2.127:8888/',
   apiCommonUrl: 'http://192.168.2.200:8888/',
   socketUrl: 'ws://192.168.2.200:8087/market',
   // HuaHaoTian
   // socketUrl: 'ws://192.168.0.52:8087/market',
-  loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/'
+  loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
+  OTCIMSocketUrl: 'ws://192.168.2.210:8888/websoc'
 }
 
 const dev210Config = {
   apiCommonUrl: 'http://192.168.2.210:8888/',
   socketUrl: 'ws://192.168.2.210:8087/market',
-  loginSocketUrl: 'ws://192.168.2.210:8888/qrcodeLogin/'
+  loginSocketUrl: 'ws://192.168.2.210:8888/qrcodeLogin/',
+  OTCIMSocketUrl: 'ws://192.168.2.210:8888/websoc'
 }
 // eslint-disable-next-line
 const prodConfig = {
   apiCommonUrl: 'https://s.fubt.co/', // 全局接口 commonURL
   socketUrl: 'wss://market.fubt.co/market', // 行情 socket
-  loginSocketUrl: 'wss://qrcode.fubt.co/qrcodeLogin/' // 扫码登录 socket
+  loginSocketUrl: 'wss://qrcode.fubt.co/qrcodeLogin/', // 扫码登录 socket
   // loginSocketUrl: 'wss://s.fubt.co/qrcodeLogin/' // 扫码登录 socket
+  OTCIMSocketUrl: 'ws://192.168.2.210:8888/websoc'
 }
 // eslint-disable-next-line
 const newProdConfig = {
   apiCommonUrl: 'http://api.coin67.cn/', // 全局接口 commonURL
   socketUrl: 'ws://market.coin67.cn/market', // 行情 socket
-  loginSocketUrl: 'ws://market.coin67.cn/qrcodeLogin/' // 扫码登录 socket
+  loginSocketUrl: 'ws://market.coin67.cn/qrcodeLogin/', // 扫码登录 socket
+  OTCIMSocketUrl: 'ws://192.168.2.210:8888/websoc'
 }
 switch (process.env.NODE_ENV) {
   case 'development':
@@ -84,7 +92,8 @@ const {
   socketUrl,
   loginSocketUrl,
   xDomain,
-  domain
+  domain,
+  OTCIMSocketUrl
 } = targetConfig
 console.log(domain)
 export {
@@ -92,5 +101,6 @@ export {
   socketUrl,
   loginSocketUrl,
   xDomain,
-  domain
+  domain,
+  OTCIMSocketUrl
 }
