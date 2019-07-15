@@ -1136,11 +1136,14 @@ export default {
     // select框自定义提币地址校验地址
     // 10 新增用户提币地址校验
     async checkCurrencyAddress () {
-      let param = {
+      let params = {
         coinId: this.activeCoinId, // 币种coinId
         address: this.activeWithdrawDepositAddress
       }
-      let data = await checkCurrencyAddress(param)
+
+      params = params.coinId == this.USDT_COIN_ID_S ? {...params, rechargeType: this.activeLinkName_S} : params
+
+      let data = await checkCurrencyAddress(params)
       this.isLegalWithdrawAddress = false
       if (!data) return false
       this.isLegalWithdrawAddress = true

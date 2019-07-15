@@ -7,8 +7,8 @@ const request = require('request')
 const {atob} = require('abab')
 const pako = require('pako')
 const XDomin = {
-  test: 'new.test.com',
-  development: 'me.com',
+  testing: 'new.test.com',
+  development210: 'me.com',
   production: 'fubt.co'
 }
 const handleRequest = async (options, callback) => {
