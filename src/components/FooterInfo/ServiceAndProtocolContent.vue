@@ -56,10 +56,9 @@ export default {
 
         > .inner-box {
           width: 1100px;
-          height: 1100px;
+          min-height: 1100px;
           padding: 20px 50px;
           margin: 0 auto;
-          overflow: auto;
 
           > h2 {
             line-height: 70px;
