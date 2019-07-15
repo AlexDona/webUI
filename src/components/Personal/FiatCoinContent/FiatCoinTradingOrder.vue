@@ -1833,18 +1833,6 @@ export default {
         padding: 3px 10px;
       }
 
-      /* 3.0 订单申诉 */
-      .el-textarea {
-        width: 160px;
-      }
-
-      .el-textarea__inner {
-        height: 90px;
-        resize: none;
-        font-size: 12px;
-        color: #9da5b3;
-      }
-
       /* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */
       .bank-info-picture {
         .el-button {
@@ -2032,11 +2020,6 @@ export default {
           .popper__arrow {
             border-bottom-color: #29343f;
           }
-        }
-
-        .el-textarea__inner {
-          border: 1px solid #7587a5;
-          background-color: #1c1f32;
         }
 
         /* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */
