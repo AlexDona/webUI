@@ -57,7 +57,7 @@ handleRequest({
     // console.log(originData)
     _.forEach(langs, (lang, index) => {
       // 获取每种语言对应的国际化数据
-      const writeData = `export const M = ${JSON.stringify(originData[lang.shortName])}`
+      const writeData = `export const M = ${(JSON.stringify(originData[lang.shortName])).replace(/\+/g,' ')}`
       fs.writeFile(path.join(targetPath, `${lang.shortName}.js`), writeData, function (err) {
         if (err) throw err
         console.log(`${lang.name} 写入完成!`)
