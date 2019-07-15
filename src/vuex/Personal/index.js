@@ -63,7 +63,9 @@ const state = {
       value: 'TRC20',
       disabled: true
     }
-  ]
+  ],
+  // 清除法币订单交易中订单定义的数组数据状态-默认是false，当为true时候调用清除数据的方法
+  clearTradingOrderArrDataStatus: false
 }
 
 export default {

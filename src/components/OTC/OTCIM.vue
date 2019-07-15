@@ -31,7 +31,7 @@
             @click="toggleShowIMContent('close')"
           )
             Iconfont.iconfont(icon-name="icon-cha-")
-      //   聊天内容
+      // 聊天内容
       .bottom
         // 聊天内容
         .chat-box
@@ -46,7 +46,7 @@
                   p.msg-content {{message.messageContent}}
                   p.time 15:03:50
               // 对方的消息
-              .opposite-msg(v-else-if="message.buyId !== $userInfo_X.id")
+              .opposite-msg(v-else-if="message.userId !== $userInfo_X.id")
                 .avatar 成
                 .content
                   p.date 2019/03/12n
@@ -62,26 +62,32 @@
         //  发送聊天内容
         .send-chat-box
           .inner-box
-            textarea.edit-box(
+            el-input.edit-box(
+              type="textarea"
               :placeholder="editPlaceholder"
-              :style="{'line-height': editText ? '16px': '40px'}"
+              :class="{'has-content': editText}"
               v-model="editText"
               :disabled="IsOver24Hours"
-              @keyup.enter="sendMessage"
+              @keyup.native.enter="sendMessage"
             )
-            button.image-button(@click="$refs[imageInputRef].click()")
+            el-upload.image-button(
+              :action="uploadUrl"
+              :headers="{'token':token,'x-domain':xDomain}"
+              :on-preview="handlePictureCardPreview"
+              :on-remove="handleRemove"
+              :on-success="handleAvatarSuccess"
+              :on-error="imgUploadError"
+              :before-upload="beforeAvatarUpload"
+              :on-exceed="handleExceed"
+            )
               Iconfont.iconfont(icon-name="icon-tupian")
-              input(
-                type="file"
-                :style="{display: 'none'}"
-                :ref="imageInputRef"
-                :disabled="IsOver24Hours"
-              )
 </template>
 <script>
 import {mapState, mapMutations} from 'vuex'
 import {getIMHistoryRecordAJAX} from '../../utils/api/OTC_IM'
 import mixins from '../../mixins/user'
+import {apiCommonUrl, xDomain} from '../../utils/env'
+import {getCookie} from '../../utils'
 export default {
   name: 'OTC_IM',
   mixins: [mixins],
@@ -97,6 +103,9 @@ export default {
   },
   data () {
     return {
+      xDomain: xDomain,
+      token: getCookie('token'),
+      uploadUrl: `${apiCommonUrl}uploadfile`, // 上传图片地址
       nickName: '诚信商贸',
       recentDealLabel: '近30天成交',
       // 最近30天成交笔数
@@ -127,6 +136,7 @@ export default {
       //   "orderId":"329566371228680192",     //订单id
       //   "action":"sendMessage"   //请求的动作:“updateState”修改消息状态为已读;“sendMessage”发送聊天内容
       // }
+      if (!this.editText) return
       const {id} = this.$userInfo_X
       this.IMSocket_S.send({
         'messageContent': this.editText,
@@ -137,6 +147,7 @@ export default {
         'action': 'sendMessage'
       })
       this.editText = ''
+      this.receiveMessage()
     },
     sendImage () {
       const {id} = this.$userInfo_X
@@ -169,6 +180,13 @@ export default {
           status: !this.IMBoxShowStatusMap_S[this.orderId]
         })
       }
+    },
+    // 回调消息
+    receiveMessage () {
+      this.IMSocket_S.on('message', (e) => {
+        console.log(e)
+        this.messages.push(e)
+      })
     }
   },
   // filters: {},
@@ -360,23 +378,29 @@ export default {
             border-radius 5px
             background-color #fff
             overflow hidden
-            /* 编辑框 */
-            >.edit-box
-              flex 1
-              border none
-              outline none
-              height 40px
-              box-sizing border-box
-              background-color #fff
-              font-size 12px
-              padding 0 10px
+            /deep/
+              /* 编辑框 */
+              .edit-box
+                > textarea
+                  flex 1
+                  border none
+                  outline none
+                  height 40px
+                  box-sizing border-box
+                  background-color #fff
+                  font-size 12px
+                  padding 0 10px
+                  line-height 40px
+                &.has-content
+                  >textarea
+                    line-height 16px
             >.image-button
-              margin 8px 15px
-              width 22px
-              height 22px
-              padding 0
-              cursor pointer
-              >.iconfont
-                font-size 25px
-                color #2b4477
+                margin 8px 15px
+                width 22px
+                height 22px
+                padding 0
+                cursor pointer
+                .iconfont
+                  font-size 25px
+                  color #2b4477
 </style>

@@ -325,9 +325,9 @@ export default {
     // }
     console.log(this.footerHeight)
   },
-  mounted () {},
-  activated () {},
-  updated () {},
+  // mounted () {},
+  // activated () {},
+  // updated () {},
   methods: {
     timeFormatting (data) {
       return timeFilter(data, 'data')
@@ -416,7 +416,7 @@ export default {
       })
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,

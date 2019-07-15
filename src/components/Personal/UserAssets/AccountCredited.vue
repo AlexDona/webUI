@@ -739,6 +739,7 @@ export default {
       margin-top: 10px;
 
       > .credited-box {
+        min-height: 664px;
         padding: 30px 23px;
 
         > .title-status {

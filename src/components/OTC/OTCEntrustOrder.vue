@@ -189,10 +189,10 @@ export default {
       this.getOTCEntrustingOrdersList()
     }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'UPDATE_OTC_HOME_LIST_STATUS'
@@ -250,14 +250,14 @@ export default {
       this.UPDATE_OTC_HOME_LIST_STATUS(true)
     }, 500)
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
       isLogin: state => state.user.isLogin // 是否登录
     })
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

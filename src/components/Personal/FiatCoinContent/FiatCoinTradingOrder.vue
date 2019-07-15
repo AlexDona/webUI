@@ -1000,7 +1000,9 @@ export default {
       'CHANGE_PASSWORD_USEABLE',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_REF_ACCOUNT_CREDITED_STATE',
-      'UPDATE_IM_BOX_SHOW_STATUS_M'
+      'UPDATE_IM_BOX_SHOW_STATUS_M',
+      // 改变清除交易中数据方法的状态
+      'CHANGE_CLEAR_DATA_STATUS_M'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -1014,6 +1016,7 @@ export default {
       this.cancelOrderTimeArr = [] // 清空取消订单倒计时
       this.accomplishOrderTimeArr = [] // 清空自动成交倒计时
       this.buyerAppealButtonStatus = [] // 清空买家申诉按钮
+      this.CHANGE_CLEAR_DATA_STATUS_M(false)
     },
     // ren增加
     // 申诉上传图片
@@ -1459,7 +1462,9 @@ export default {
       reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus, // 从全局获得的重新渲染交易中订单列表状态
       // 交易密码是否被锁定
       isLockedPayPassword: state => state.common.isLockedPayPassword,
-      configInfo: state => state.common.footerInfo.configInfo
+      configInfo: state => state.common.footerInfo.configInfo,
+      // 法币订单交易中订单定义的数组数据状态
+      clearTradingOrderArrDataStatus: state => state.personal.clearTradingOrderArrDataStatus
     })
     // 从全局获得的交易中订单列表
     // tradingOrderList () {
@@ -1467,6 +1472,12 @@ export default {
     // }
   },
   watch: {
+    // 清空定义的数组数据
+    clearTradingOrderArrDataStatus (val) {
+      if (val) {
+        this.clearArrData()
+      }
+    },
     // 监控交易中订单列表并调用倒计时逻辑方法
     tradingOrderList (New) {
       console.log(New)
@@ -1511,8 +1522,11 @@ export default {
   @import '../../../assets/CSS/index';
 
   .fiat-trading-order-box {
+    margin-top: -10px;
+
     > .fiat-trading-order-content {
-      min-height: 530px;
+      min-height: 540px;
+      padding: 0 10px 10px;
 
       .button {
         width: 290px;
@@ -1529,6 +1543,7 @@ export default {
         box-sizing: border-box;
         height: 170px;
         margin-bottom: 10px;
+        border-radius: 6px;
         font-size: 12px;
         background-color: $mainContentNightBgColor;
 
@@ -1563,7 +1578,8 @@ export default {
                 height: 0;
                 border-right: 18px solid transparent;
                 border-bottom: 18px solid transparent;
-              }
+                border-top-left-radius: 6px;
+            }
 
               > .buy-icon {
                 border-top: 18px solid $upColor;
@@ -1578,7 +1594,7 @@ export default {
               > .buy-sell-icon {
                 position: absolute;
                 top: -6px;
-                left: 3px;
+                left: 2px;
                 color: #fff;
               }
             }
@@ -1630,20 +1646,20 @@ export default {
 
               > .middle-content {
                 .trader-info {
-                  width: 190px;
+                  width: 185px;
 
                   > .pay-style {
                     position: relative;
                     width: 150px;
                     height: 23px;
-                    margin: 0 0 8px 20px;
+                    margin: 0 0 8px 10px;
 
                     > .qiandai-icon {
                       > .icon {
                         position: absolute;
                         z-index: 2;
                         top: 5px;
-                        left: 10px;
+                        left: 5px;
                         width: 14px;
                         height: 14px;
                       }
@@ -1651,7 +1667,7 @@ export default {
                   }
 
                   > .bank-info {
-                    margin-left: 20px;
+                    margin-left: 10px;
                     line-height: 20px;
                   }
 
@@ -1661,7 +1677,7 @@ export default {
                   }
 
                   > .bankMoneyInfo {
-                    margin-left: 20px;
+                    margin-left: 10px;
                     line-height: 20px;
 
                     .icon {
@@ -1837,8 +1853,9 @@ export default {
       }
 
       .el-input__inner {
-        padding: 0 30px;
+        padding: 0 25px;
         border: none;
+        font-size: 12px;
       }
 
       .el-select-dropdown {
@@ -1872,7 +1889,7 @@ export default {
         .el-button {
           float: right;
           padding: 2px 6px;
-          margin-right: 5px;
+          font-size: 12px;
         }
       }
 
@@ -1960,12 +1977,16 @@ export default {
       }
 
       > .fiat-trading-order-content {
+        background-color: $mainContentNightBgColor;
+
         .button {
           color: $mainColorOfWhite;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
         > .order-list {
+          border: 1px solid $dialogColor6;
+
           > .order {
             > .order-list-body {
               > .order-list-body-middle {
@@ -2103,14 +2124,16 @@ export default {
 
     &.day {
       > .fiat-trading-order-content {
+        background-color: $mainColorOfWhite;
+
         .button {
           color: $mainColorOfWhite;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
         > .order-list {
+          border: 1px solid rgba(72, 87, 118, .1);
           background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .order {
             > .order-list-head {
@@ -2197,7 +2220,6 @@ export default {
         > .no-data {
           color: $fontColorSecondaryOfDay;
           background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
 

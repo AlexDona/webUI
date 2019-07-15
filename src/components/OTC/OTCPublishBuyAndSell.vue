@@ -581,10 +581,10 @@ export default {
     // 刚进页面就调此方法请求币种详情来渲染页面
     this.getOTCCoinInfo()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
@@ -1032,7 +1032,7 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       configInfo: state => state.common.footerInfo.configInfo,
@@ -1043,8 +1043,8 @@ export default {
       isLockedPayPassword: state => state.common.isLockedPayPassword,
       loginStep1Info: state => state.user.loginStep1Info
     })
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -1096,11 +1096,11 @@ export default {
             margin-right: -4px;
             border-bottom-left-radius: 4px;
             border-top-left-radius: 4px;
-            border-right: 0;
+            border-right: 0 !important;
           }
 
           > .buy-button {
-            border-left: 0;
+            border-left: 0 !important;
             border-top-right-radius: 4px;
             border-bottom-right-radius: 4px;
           }
@@ -1163,28 +1163,28 @@ export default {
             margin-bottom: 10px;
 
             > .sell-sum {
-              width: 130px;
+              width: 190px;
               height: 36px;
               padding-left: 10px;
             }
 
             > .max-sell-sum {
-              width: 180px;
+              width: 190px;
             }
 
             > .monad {
               display: inline-block;
-              width: 50px;
+              width: 70px;
               height: 36px;
               margin-left: -4px;
-              font-size: 12px;
+              font-size: 14px;
               line-height: 36px;
               text-align: center;
               vertical-align: top;
             }
 
             > .range-line {
-              margin: 0 10px;
+              margin: 0 16px;
             }
           }
 
@@ -1192,7 +1192,7 @@ export default {
             > .errorLimitMin,
             .errorLimitMax {
               display: inline-block;
-              width: 230px;
+              width: 320px;
               font-size: 12px;
             }
           }
@@ -1360,10 +1360,12 @@ export default {
 
     > .publish-buy-and-sell-content {
       > .publish-content {
+        background-color: $mainContentNightBgColor;
+
         > .publish-content-left {
           > .publish-button {
             > .common-style {
-              border: 1px solid $mainContentNightBgColor;
+              border: 1px solid rgba(207, 213, 223, .5);
               color: $nightFontColor;
             }
 
@@ -1402,12 +1404,12 @@ export default {
             .sell-buy-input {
               > .sell-sum {
                 color: #9da5b3;
-                background-color: $mainContentNightBgColor;
+                background-color: $nightInputBg;
               }
 
               > .unit {
                 color: $mainColor;
-                background-color: #21243b;
+                background-color: $nightUnitBg;
               }
             }
 
@@ -1424,12 +1426,12 @@ export default {
             .volume-business {
               > .sell-sum {
                 color: #9da5b3;
-                background-color: $mainContentNightBgColor;
+                background-color: $nightInputBg;
               }
 
               > .monad {
                 color: $mainColor;
-                background-color: #21243b;
+                background-color: $nightUnitBg;
               }
 
               > .range-line {
@@ -1499,7 +1501,7 @@ export default {
 
       .el-textarea__inner {
         color: $mainColorOfWhite;
-        background-color: $mainContentNightBgColor;
+        background-color: $nightInputBg;
       }
 
       .el-form--label-top {
@@ -1510,7 +1512,7 @@ export default {
 
       .buy-sell-submit-form {
         .el-input__inner {
-          background-color: $mainContentNightBgColor;
+          background-color: $nightInputBg;
         }
 
         .el-select-dropdown__list {

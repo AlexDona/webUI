@@ -41,7 +41,7 @@
             </div>
             <div class="buy-sell-icon">
               <!-- 买 -->
-              {{$t('M.comm_bid')}}
+              {{$t('M.otc_trading_order_buy')}}
             </div>
           </div>
           <!-- 1.2 表身体 -->
@@ -389,7 +389,7 @@
             </div>
             <div class="buy-sell-icon">
               <!-- 卖 -->
-              {{$t('M.comm_ask')}}
+              {{$t('M.otc_trading_order_sell')}}
             </div>
           </div>
           <!-- 2.2 表身体 -->
@@ -936,10 +936,10 @@ export default {
       this.getOTCTradingOrdersList()
     }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -1382,7 +1382,7 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,

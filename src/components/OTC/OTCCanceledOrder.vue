@@ -265,10 +265,10 @@ export default {
       this.getOTCCanceledOrdersList()
     }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     // 1.0 分页
     changeCurrentPage (pageNum) {
@@ -298,14 +298,14 @@ export default {
       }
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
       isLogin: state => state.user.isLogin // 是否登录
     })
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
