@@ -533,7 +533,7 @@ export default {
       let targetIndex = 0
       _.forEach(this.currencyList, (currencyItem, currencyIndex) => {
         if (this.currencyValue == _.get(currencyItem, 'coinId')) {
-          targetIndex = currencyIndexwithdrawal - address
+          targetIndex = currencyIndex
           return false
         }
       })
@@ -549,6 +549,7 @@ export default {
       this.SET_NEW_WITHDRAW_ADDRESS('')
       // 对币种名称列表进行赋值
       this.withdrawalAddressList = getNestedData(detailData, 'UserWithdrawAddressPage.list')
+      console.log(this.withdrawalAddressList)
       this.totalPageForMyEntrust = getNestedData(detailData, 'UserWithdrawAddressPage.pages') - 0
       // 控制地址列表无数据时的高度
       if (this.withdrawalAddressList.length === 0) {
