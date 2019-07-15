@@ -305,16 +305,16 @@ export default {
     }
 
     > .content-box {
-      height: 1215px;
+      min-height: 1215px;
 
       > .inner-box {
         width: 1100px;
-        height: 1100px;
+        min-height: 1100px;
+        padding-bottom: 116px;
         margin: 0 auto;
-        overflow: hidden;
 
         .item-content {
-          height: 950px;
+          min-height: 950px;
 
           > .content-list {
             > .content-item {
@@ -539,7 +539,7 @@ export default {
     }
 
     .el-tabs__content {
-      height: 1100px;
+      min-height: 1100px;
     }
 
     .el-pagination {

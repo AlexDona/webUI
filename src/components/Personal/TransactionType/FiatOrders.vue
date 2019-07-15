@@ -645,13 +645,17 @@ export default {
           }
         }
 
-        .el-input__inner {
-          background-color: #2d3651;
+        .orders-main-top {
+          .inquire-button {
+            .el-button {
+              color: $mainColorOfWhite;
+              background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            }
+          }
         }
 
-        .el-button {
-          color: $mainColorOfWhite;
-          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        .el-input__inner {
+          background-color: #2d3651;
         }
       }
     }
@@ -707,8 +711,12 @@ export default {
           border: 1px solid #ccc;
         }
 
-        .el-button {
-          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        .orders-main-top {
+          .inquire-button {
+            .el-button {
+              background: $mainColor;
+            }
+          }
         }
       }
     }

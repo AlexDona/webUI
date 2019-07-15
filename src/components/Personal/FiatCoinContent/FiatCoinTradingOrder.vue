@@ -602,14 +602,16 @@
                     <!--确认收款-->
                     {{$t('M.otc_trading_collectionconfirmation')}}
                   </el-button>
-                  <el-button
-                    type="primary"
-                    size="mini"
-                    @click="orderAppeal(item.id, index, item.orderType)"
-                  >
+                  <span class="appeal-button-sell">
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="orderAppeal(item.id, index, item.orderType)"
+                    >
                     <!--订单申诉-->
                     {{$t('M.otc_complaint')}}
                   </el-button>
+                  </span>
                 </p>
                 <p class="action-explain">
                   <!--买家付款已付款-->
@@ -694,6 +696,7 @@
               <!-- 3. 按钮部分 -->
               <div class="appeal-button">
                 <el-button
+                  class="appeal-button-submit"
                   type="primary"
                   size="mini"
                   @click="sellerAppeal(item.id, index, item.orderType)"
@@ -702,6 +705,7 @@
                   {{$t('M.otc_complaint_submit')}}
                 </el-button>
                 <el-button
+                  class="appeal-button-cancel"
                   type="primary"
                   size="mini"
                   @click="cancelOrderAppeal(index)"
@@ -1872,18 +1876,6 @@ export default {
         padding: 3px 10px;
       }
 
-      /* 3.0 订单申诉 */
-      .el-textarea {
-        width: 160px;
-      }
-
-      .el-textarea__inner {
-        height: 90px;
-        resize: none;
-        font-size: 12px;
-        color: #9da5b3;
-      }
-
       /* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */
       .bank-info-picture {
         .el-button {
@@ -2002,6 +1994,27 @@ export default {
                   }
                 }
               }
+
+              > .order-list-body-right {
+                .action-tips,
+                .action-explain {
+                  .el-button {
+                    background-color: $mainColor;
+                  }
+
+                  .appeal-button-sell {
+                    .el-button {
+                      color: #8094bb;
+                      background: rgba(205, 217, 238, 1);
+                    }
+                  }
+
+                  .buy-appeal-order {
+                    color: #8094bb;
+                    background: rgba(205, 217, 238, 1);
+                  }
+                }
+              }
             }
           }
         }
@@ -2050,11 +2063,6 @@ export default {
           .popper__arrow {
             border-bottom-color: #29343f;
           }
-        }
-
-        .el-textarea__inner {
-          border: 1px solid #7587a5;
-          background-color: #1c1f32;
         }
 
         /* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */
@@ -2119,6 +2127,17 @@ export default {
           color: #fff;
           background-color: #409eff;
         }
+
+        .appeal-button {
+          .appeal-button-submit {
+            background-color: $mainColor;
+          }
+
+          .appeal-button-cancel {
+            color: #8094bb;
+            background: #cdd9ee;
+          }
+        }
       }
     }
 
@@ -2166,9 +2185,21 @@ export default {
 
               > .order-list-body-right {
                 > .right-content {
-                  > .action-tips {
+                  > .action-tips,
+                  .action-explain {
                     .wait-pay {
                       color: $upColor;
+                    }
+
+                    .el-button {
+                      background-color: $mainColor;
+                    }
+
+                    .appeal-button-sell {
+                      .el-button {
+                        color: #8094bb;
+                        background: rgba(205, 217, 238, 1);
+                      }
                     }
                   }
 
@@ -2272,9 +2303,20 @@ export default {
 
         /* 订单申诉按钮 */
         .submitted-confirm-payment {
-          .buy-appeal-order {
-            color: $mainColor;
-            background-color: $coinBgColorOfDay;
+          .buy-appeal-order.el-button {
+            color: #8094bb;
+            background-color: #cdd9ee !important;
+          }
+        }
+
+        .appeal-button {
+          .appeal-button-submit {
+            background-color: $mainColor;
+          }
+
+          .appeal-button-cancel {
+            color: #8094bb;
+            background: #cdd9ee;
           }
         }
 
