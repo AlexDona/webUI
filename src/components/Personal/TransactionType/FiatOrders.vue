@@ -272,7 +272,9 @@ export default {
       'CHANGE_LEGAL_PAGE',
       // 更改重新渲染交易中订单列表状态
       'CHANGE_RE_RENDER_TRADING_LIST_STATUS',
-      'SET_LEGAL_TENDER_REFLASH_STATUS'
+      'SET_LEGAL_TENDER_REFLASH_STATUS',
+      // 改变清除交易中数据方法的状态
+      'CHANGE_CLEAR_DATA_STATUS_M'
     ]),
     // 切换tab时将全局当前页码改为1加载第一页的数据
     toggleTabPane () {
@@ -387,8 +389,8 @@ export default {
           } else {
             console.log('法币订单列表（除了委托订单)')
             console.log(data)
-            // 请求接口之前，调用子组件（交易中订单组件）方法，清空定义的数组数据this.$refs.tradeOrder.clearArrData()
-            this.$refs.tradeOrder.clearArrData()
+            // 请求接口之前，调用子组件（交易中订单组件）方法，清空定义的数组数据
+            this.CHANGE_CLEAR_DATA_STATUS_M(true)
             let merchantsOrdersListData = getNestedData(data, 'data.data')
             // 返回数据正确的逻辑 重新渲染列表
             this.SET_LEGAL_TENDER_LIST({
@@ -411,10 +413,8 @@ export default {
     startDate () {
       if (this.endTime) {
         if (this.startTime > this.endTime) {
-          this.$message({ // message: '开始时间不能大于结束时间',
-            message: this.$t('M.otc_time_limit'),
-            type: 'error'
-          })
+          // 开始时间不能大于结束时间
+          this.$error_tips_X(this.$t('M.otc_time_limit'))
           return false
         }
       }
@@ -423,10 +423,8 @@ export default {
     endDate () {
       if (this.startTime) {
         if (this.startTime > this.endTime) {
-          this.$message({ // message: '开始时间不能大于结束时间',
-            message: this.$t('M.otc_time_limit'),
-            type: 'error'
-          })
+          // 开始时间不能大于结束时间
+          this.$error_tips_X(this.$t('M.otc_time_limit'))
           return false
         }
       }
@@ -538,7 +536,7 @@ export default {
       .el-tabs__item {
         width: 105px;
         padding: 0;
-        margin: 3px 0;
+        margin: 6px 0 0;
         border-left: 0 solid transparent !important;
         text-align: center;
         background-color: transparent !important;
@@ -621,13 +619,17 @@ export default {
           }
         }
 
-        .el-input__inner {
-          background-color: #2d3651;
+        .orders-main-top {
+          .inquire-button {
+            .el-button {
+              color: $mainColorOfWhite;
+              background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            }
+          }
         }
 
-        .el-button {
-          color: $mainColorOfWhite;
-          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        .el-input__inner {
+          background-color: #2d3651;
         }
       }
     }
@@ -652,7 +654,8 @@ export default {
       .fiat-main {
         .orders-main-top {
           background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px #cfd5df;
+
+          /* box-shadow: 0 0 6px #cfd5df; */
         }
       }
 
@@ -680,6 +683,14 @@ export default {
 
         .el-input__inner {
           border: 1px solid #ccc;
+        }
+
+        .orders-main-top {
+          .inquire-button {
+            .el-button {
+              background: $mainColor;
+            }
+          }
         }
       }
     }

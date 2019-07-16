@@ -143,3 +143,6 @@ export const cancelPasswdDialog = params => handleRequest(() => post('user/payPa
 
 // 文件上传
 export const uploadImageAjax = params => handleRequest(() => post('uploadfile', params), 1)
+
+// 获取 USDT 链名称
+export const getUSDTLinkNamesAJAX = () => handleRequest(() => get('personal/getUSDTRechargeEnum'))

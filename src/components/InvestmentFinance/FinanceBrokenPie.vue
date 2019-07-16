@@ -99,9 +99,9 @@ export default {
     this.resetOptions()
     this.resetChart(this.options)
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     resetChart (params) {
       this.financePieCharts = echarts.init(document.getElementById('financePie'))
@@ -127,7 +127,7 @@ export default {
       this.options.series[0].data[1].name = this.$t('M.finance_earnings')
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,

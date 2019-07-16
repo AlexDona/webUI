@@ -17,6 +17,7 @@ import {
   mapState,
   mapGetters
 } from 'vuex'
+import {getdynamicCsConfigAJAX} from '../utils/api/common'
 export default {
   components: {
     NoticeHome,
@@ -31,13 +32,21 @@ export default {
   },
   created () {
     this.$SET_ACTIVE_LINK_NAME_M_X(-1)
+    this.doAdd()
   },
   methods: {
-    doAdd () {
+    async doAdd () {
+      const data = await getdynamicCsConfigAJAX()
+      if (!data) return
+      const {code, link, webStatus} = _.get(data, 'data')
+      if (!webStatus || !code || !link) return
+
       this.addServiceForCustomer(window, document, 'script', 'https://assets-cli.udesk.cn/im_client/js/udeskApi.js', 'ud')
       ud({
-        'code': '311h1067', // 标识
-        'link': 'https://fubt.udesk.cn/im_client/?web_plugin_id=59660', // IM链接地址
+        // 标识
+        code,
+        // IM链接地址
+        link,
         'isInvite': false,
         'mode': 'inner',
         'color': '#338ff5',
@@ -83,10 +92,7 @@ export default {
         default:
           this.msgLanguage = 'en-us'
       }
-
-      if (this.$isNeedYST_G_X) {
-        this.doAdd()
-      }
+      this.doAdd()
     },
     addServiceForCustomer (a, h, c, b, f, g) {
       a['UdeskApiObject'] = f

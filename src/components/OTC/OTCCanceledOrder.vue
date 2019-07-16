@@ -8,6 +8,10 @@
     >
       <!--表头属性-->
       <div class="canceled-table-head">
+        <span class="item AD-ID">
+          <!--广告id-->
+          {{$t('M.otc_AD_ID')}}
+        </span>
         <!-- 订单号 -->
         <span class="item">
           {{$t('M.otc_MerchantsOrders_orderNum')}}
@@ -45,6 +49,10 @@
       >
         <!--表格上部分-->
         <div class="canceled-info-top">
+          <!-- 广告id -->
+          <span class="item AD-ID">
+            {{item.entrustSequence}}
+          </span>
           <!-- 订单号 -->
           <span class="item">
             {{item.orderSequence}}
@@ -257,10 +265,10 @@ export default {
       this.getOTCCanceledOrdersList()
     }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     // 1.0 分页
     changeCurrentPage (pageNum) {
@@ -290,14 +298,14 @@ export default {
       }
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
       isLogin: state => state.user.isLogin // 是否登录
     })
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -306,6 +314,7 @@ export default {
   .otc-canceled-order-box {
     > .canceled-order-content {
       > .canceled-table-head {
+        display: flex;
         box-sizing: border-box;
         width: 1189px;
         height: 35px;
@@ -314,8 +323,7 @@ export default {
         line-height: 35px;
 
         > .item {
-          display: inline-block;
-          width: 160px;
+          flex: 1;
           text-align: center;
         }
       }
@@ -328,6 +336,7 @@ export default {
         border-radius: 5px;
 
         > .canceled-info-top {
+          display: flex;
           height: 40px;
           border-radius: 5px;
           line-height: 40px;
@@ -341,8 +350,7 @@ export default {
           }
 
           > .item {
-            display: inline-block;
-            width: 160px;
+            flex: 1;
             text-align: center;
           }
         }

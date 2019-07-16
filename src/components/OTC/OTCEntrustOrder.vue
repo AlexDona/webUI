@@ -4,11 +4,13 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 委托订单表格 -->
-    <div
-      class="otc-entrust-order-table"
-    >
+    <div class="otc-entrust-order-table">
       <!-- 表头 -->
       <div class="entrust-table-head">
+        <!--广告id-->
+        <span class="item AD-ID">
+          {{$t('M.otc_AD_ID')}}
+        </span>
         <!-- 类型 -->
         <span class="item first-style">
           {{$t('M.comm_type')}}
@@ -43,9 +45,7 @@
         </span>
       </div>
       <!-- 表身体 -->
-      <div
-        class="entrust-table-body border-radius4"
-      >
+      <div class="entrust-table-body border-radius4">
         <div
           class="no-data text-align-c"
           v-show="!OTCEntrustOrderList.length"
@@ -59,6 +59,10 @@
           :key="index"
           v-show="OTCEntrustOrderList.length"
         >
+          <!--广告id-->
+          <span class="item AD-ID">
+            {{item.entrustSequence}}
+          </span>
           <!-- 1 类型 -->
           <!-- 买入 -->
           <span
@@ -114,6 +118,27 @@
           </span>
         </div>
       </div>
+      <div class="cancel-order-dialog">
+        <el-dialog
+          :title="$t('M.otc_prompt')"
+          :visible.sync="cancelOrderDialogStatus"
+          top="35vh"
+        >
+          <div class="content">
+            {{$t('M.otc_revoke')}}
+          </div>
+          <span slot="footer">
+          <div class="button-group">
+            <button class="cancel item" @click="closeDialog">
+              {{$t('M.comm_cancel')}}
+            </button>
+            <button class="confirm item" @click="confirmDialog">
+              {{$t('M.comm_confirm')}}
+            </button>
+          </div>
+        </span>
+        </el-dialog>
+      </div>
     </div>
     <!--分页-->
     <div class="page text-align-c">
@@ -151,7 +176,11 @@ export default {
       // 总页数
       totalPages: 1,
       // OTC委托订单列表
-      OTCEntrustOrderList: []
+      OTCEntrustOrderList: [],
+      // 撤单弹窗显示隐藏状态
+      cancelOrderDialogStatus: false,
+      // 委单id
+      orderID: ''
     }
   },
   created () {
@@ -160,10 +189,10 @@ export default {
       this.getOTCEntrustingOrdersList()
     }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'UPDATE_OTC_HOME_LIST_STATUS'
@@ -195,16 +224,19 @@ export default {
         this.totalPages = getNestedData(OTCEntrustOrderListData, 'pages') - 0
       }
     },
-    // 4.0 点击撤单按钮
+    // 4.0 点击撤单按钮:打开撤单二次弹窗
     revocationOrder (id) {
-      // 二次确认弹出框
-      // 确定撤销委托单  // 取消   // 确定
-      this.$confirm(this.$t('M.otc_revoke'), {
-        cancelButtonText: this.$t('M.comm_cancel'),
-        confirmButtonText: this.$t('M.comm_confirm')
-      }).then(() => {
-        this.getOTCEntrustingOrdersRevocation(id)
-      }).catch(() => {})
+      this.orderID = id
+      this.cancelOrderDialogStatus = true
+    },
+    // 关闭弹窗
+    closeDialog () {
+      this.cancelOrderDialogStatus = false
+    },
+    // 点击弹窗确定按钮
+    confirmDialog () {
+      this.getOTCEntrustingOrdersRevocation(this.orderID)
+      this.closeDialog()
     },
     // 5.0 提交撤单
     getOTCEntrustingOrdersRevocation: _.debounce(async function (id) {
@@ -218,14 +250,14 @@ export default {
       this.UPDATE_OTC_HOME_LIST_STATUS(true)
     }, 500)
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
       isLogin: state => state.user.isLogin // 是否登录
     })
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -246,23 +278,21 @@ export default {
         line-height: 35px;
 
         > .first-style,
-        .second-coin {
-          width: 135px;
+        .second-coin,
+        .AD-ID {
+          width: 110px;
         }
 
         > .third-price,
         .fourth-entrust-count,
         .fifth-match-count,
-        .sixth-total-amount {
-          width: 160px;
-        }
-
-        > .senventh-create-time,
-        .eighth-action {
-          width: 140px;
+        .sixth-total-amount,
+        .senventh-create-time {
+          width: 150px;
         }
 
         > .eighth-action {
+          width: 110px;
           text-align: right;
         }
       }
@@ -294,23 +324,21 @@ export default {
           }
 
           > .first-style,
-          .second-coin {
-            width: 135px;
+          .second-coin,
+          .AD-ID {
+            width: 110px;
           }
 
           > .third-price,
           .fourth-entrust-count,
           .fifth-match-count,
-          .sixth-total-amount {
-            width: 160px;
-          }
-
-          > .senventh-create-time,
-          .eighth-action {
-            width: 140px;
+          .sixth-total-amount,
+          .senventh-create-time {
+            width: 150px;
           }
 
           > .eighth-action {
+            width: 110px;
             text-align: right;
           }
         }
@@ -319,11 +347,61 @@ export default {
 
     /deep/ {
       .otc-entrust-order-table {
-        .entrust-table-body {
+        > .entrust-table-body {
           .entrust-list-content {
             .eighth-action {
               .el-button--text {
                 color: $mainColor;
+              }
+            }
+          }
+        }
+
+        > .cancel-order-dialog {
+          .el-dialog__wrapper {
+            .el-dialog {
+              width: 350px;
+              height: 180px;
+              border-radius: 4px;
+
+              .el-dialog__header {
+                padding: 6px 18px;
+                border-radius: 4px 4px 0 0;
+
+                .el-dialog__title {
+                  font-size: 14px;
+                }
+
+                .el-dialog__headerbtn {
+                  top: 10px;
+                  right: 10px;
+                }
+              }
+
+              .el-dialog__body {
+                height: 84px;
+                padding: 35px 18px;
+                font-size: 14px;
+                text-align: center;
+              }
+
+              .el-dialog__footer {
+                padding: 0 18px;
+
+                .button-group {
+                  .item {
+                    height: 30px;
+                    padding: 0 28px;
+                    border-radius: 2px;
+                    font-size: 12px;
+                    line-height: 30px;
+                    cursor: pointer;
+                  }
+
+                  .confirm {
+                    margin-left: 20px;
+                  }
+                }
               }
             }
           }
@@ -350,6 +428,43 @@ export default {
           }
         }
       }
+
+      /deep/ {
+        .cancel-order-dialog {
+          .el-dialog__wrapper {
+            .el-dialog {
+              background-color: $dialogColor1;
+
+              .el-dialog__header {
+                background-color: $dialogColor2;
+
+                .el-dialog__title {
+                  color: $dialogColor4;
+                }
+              }
+
+              .el-dialog__body {
+                color: $dialogColor5;
+              }
+
+              .el-dialog__footer {
+                .button-group {
+                  .cancel {
+                    border: 1px solid $mainColor;
+                    color: $mainColorOfWhite;
+                    background-color: $dialogColor1;
+                  }
+
+                  .confirm {
+                    color: $mainColorOfWhite;
+                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
     &.day {
@@ -367,6 +482,43 @@ export default {
 
           > .no-data {
             color: $dayMainTitleColor;
+          }
+        }
+      }
+
+      /deep/ {
+        .cancel-order-dialog {
+          .el-dialog__wrapper {
+            .el-dialog {
+              background-color: $mainColorOfWhite;
+
+              .el-dialog__header {
+                background-color: $dialogColor7;
+
+                .el-dialog__title {
+                  color: $dayMainTitleColor;
+                }
+              }
+
+              .el-dialog__body {
+                color: $dayMainTitleColor;
+              }
+
+              .el-dialog__footer {
+                .button-group {
+                  .cancel {
+                    border: 1px solid $mainColor;
+                    color: $mainColor;
+                    background-color: $mainColorOfWhite;
+                  }
+
+                  .confirm {
+                    color: $mainColorOfWhite;
+                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                  }
+                }
+              }
+            }
           }
         }
       }

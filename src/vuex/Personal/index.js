@@ -42,7 +42,30 @@ const state = {
   // 我的资产跳转账单明细
   assetJumpStatementDetails: '',
   // 我的资产跳转账单明细状态类型提币或者充值
-  assetJumpStatementDetailsType: ''
+  assetJumpStatementDetailsType: '',
+  // USDT 币种 id
+  USDT_COIN_ID_S: '501762327108911104',
+  // 全局 链名称
+  activeLinkName_S: '',
+  linkNames_S: [
+    {
+      label: 'OMNI',
+      value: 'OMNI',
+      disabled: false
+    },
+    {
+      label: 'ERC20',
+      value: 'ERC20',
+      disabled: false
+    },
+    {
+      label: 'TRC20',
+      value: 'TRC20',
+      disabled: true
+    }
+  ],
+  // 清除法币订单交易中订单定义的数组数据状态-默认是false，当为true时候调用清除数据的方法
+  clearTradingOrderArrDataStatus: false
 }
 
 export default {

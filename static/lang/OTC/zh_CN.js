@@ -363,5 +363,8 @@ export const OTC = {
   'otc_current-market-price-min': '当前市场最低出售价',
   'otc_current-market-price-max': '当前市场最高收购价',
   // otc 账号禁用不能交易提示
-  'otc_disable_account_tips': '该账号已被禁止交易OTC，请咨询客服'
+  'otc_disable_account_tips': '该账号已被禁止交易OTC，请咨询客服',
+  'otc_AD_ID': '广告ID',
+  'otc_trading_order_buy': '买',
+  'otc_trading_order_sell': '卖'
 }

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="froget-password-box"
+    class="forget-password-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{'height':windowHeight+'px'}"
   >
@@ -532,7 +532,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import '../../assets/CSS/index';
 
-.froget-password-box {
+.forget-password-box {
   height: 100%;
   margin-top: 50px;
   overflow: hidden;

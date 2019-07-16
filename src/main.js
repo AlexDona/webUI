@@ -109,7 +109,7 @@ const i18n = new VueI18n({
     'zh_TW': {...zhTW, ...require('../static/lang/zh_TW')},
     'ko_KR': {...koKR, ...require('../static/lang/ko_KR')},
     'ja_JP': {...jaJP, ...require('../static/lang/ja_JP')},
-    'yuenan': {...vi, ...require('../static/lang/vi')}
+    'vi_VN': {...vi, ...require('../static/lang/vi_VN')}
   }
 })
 lang.i18n((key, value) => i18n.t(key, value)) // element插件的多语言切换

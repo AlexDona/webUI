@@ -16,17 +16,19 @@ let targetConfig = {
 }
 
 const devTestConfig = {
-  // 帅飞
+  // WangShuaiFei
   // apiCommonUrl: 'http://192.168.2.98:8888/',
-  // 艾青
+  // AiQing
   // apiCommonUrl: 'http://192.168.2.88:8888/',
-  // 浩田
+  // HuaHaoTian
   // apiCommonUrl: 'http://192.168.2.52:22224/',
-  // 成翔
+  // ZhangChangXiang
   // apiCommonUrl: 'http://192.168.2.122:8888/',
+  // FangRuiChang
+  // apiCommonUrl: 'http://192.168.10.9:8888/',
   apiCommonUrl: 'http://192.168.2.200:8888/',
   socketUrl: 'ws://192.168.2.200:8087/market',
-  // 浩田
+  // HuaHaoTian
   // socketUrl: 'ws://192.168.0.52:8087/market',
   loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/'
 }
@@ -36,7 +38,6 @@ const dev210Config = {
   socketUrl: 'ws://192.168.2.210:8087/market',
   loginSocketUrl: 'ws://192.168.2.210:8888/qrcodeLogin/'
 }
-
 // eslint-disable-next-line
 const prodConfig = {
   apiCommonUrl: 'https://s.fubt.co/', // 全局接口 commonURL
@@ -53,13 +54,14 @@ const newProdConfig = {
 switch (process.env.NODE_ENV) {
   case 'development':
     // 本地开发
-    // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
+    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
+    // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'me.com'}
     // 210开发环境
     // targetConfig = {...dev210Config, xDomain: 'me.com'}
     // 测试环境 （外网）
     // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     // 生产环境
-    targetConfig = {...prodConfig, xDomain: 'fubt.co'}
+    // targetConfig = {...prodConfig, xDomain: 'fubt.co'}
     // targetConfig = {...newProdConfig, xDomain: 'coin67.cn'}
     break
   // 210开发环境
