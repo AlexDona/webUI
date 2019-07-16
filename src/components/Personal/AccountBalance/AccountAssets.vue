@@ -1125,7 +1125,7 @@ export default {
       if (!data) return false
       let withdrawalAddressData = getNestedData(data, 'data')
       // 对币种类型进行赋值 true公信宝类 false普通币种
-      this.isNeedTag = withdrawalAddressData.needTag == 'true' ? true : false
+      this.isNeedTag = withdrawalAddressData.needTag
       // 返回列表数据并渲染币种列表
       this.withdrawAddressList = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList')
       if (this.withdrawAddressList.length) {
