@@ -283,9 +283,16 @@ export default {
     await this.getOTCAvailableCurrencyList()
     await this.getMerchantAvailableLegalTenderList()
     const {id} = this.$userInfo_X
-    this.socket = new Socket(this.url = `${OTCIMSocketUrl}/${id}`)
+    this.socket = new Socket(this.url = `${OTCIMSocketUrl}/web/${id}`)
+
     this.UPDATE_IM_SOCKET_M(this.socket)
     this.socket.doOpen()
+    this.socket.send({
+      // 当前用户id
+      'userId': id,
+      // 请求的动作:“toConnect”建立socket连接;“sendMessage”发送聊天内容
+      'action': 'toConnect'
+    })
   },
   // mounted () {},
   // activated () {},

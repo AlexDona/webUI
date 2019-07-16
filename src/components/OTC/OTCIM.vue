@@ -10,7 +10,6 @@
       @click="toggleShowIMContent('')"
     )
       Iconfont.iconfont(icon-name="icon-xiaoxi1")
-    transition()
     .content-box(
       :style="{ 'top': isShowContent ? top: '40px', 'opacity': isShowContent ? '1': '0', 'z-index': isShowContent ? '2': -1}"
     )
@@ -36,29 +35,32 @@
         // 聊天内容
         .chat-box
           .inner-box(v-if="messages.length")
-            .message(v-for="(message, index) in messages")
+            .message(v-for="(message, msgIndex) in messages")
               // 系统消息
               .system-msg(v-if="message.messageType == 'sysMsg'")
                 .avatar
                   Iconfont.iconfont(icon-name="icon-kefu1")
-                .content
-                  p.date 2019/03/12
-                  p.msg-content {{message.messageContent}}
-                  p.time 15:03:50
+                TheOTCIMContent(
+                  :isShowDate="msgIndex|isShowDate(message.createTime, messages)"
+                  :message="message"
+                  @previewImage="previewImage"
+                )
               // 对方的消息
               .opposite-msg(v-else-if="message.userId !== $userInfo_X.id")
                 .avatar 成
-                .content
-                  p.date 2019/03/12n
-                  p.msg-content {{message.messageContent}}
-                  p.time 15:03:50
+                TheOTCIMContent(
+                  :isShowDate="msgIndex|isShowDate(message.createTime, messages)"
+                  :message="message"
+                  @previewImage="previewImage"
+                )
               //  自己的消息
               .self-msg(v-else)
                 .avatar 成
-                .content
-                  p.date 2019/03/12
-                  p.msg-content {{message.messageContent}}
-                  p.time 15:03:50
+                TheOTCIMContent(
+                  :isShowDate="msgIndex|isShowDate(message.createTime, messages)"
+                  :message="message"
+                  @previewImage="previewImage"
+                )
         //  发送聊天内容
         .send-chat-box
           .inner-box
@@ -70,28 +72,37 @@
               :disabled="IsOver24Hours"
               @keyup.native.enter="sendMessage"
             )
-            el-upload.image-button(
-              :action="uploadUrl"
-              :headers="{'token':token,'x-domain':xDomain}"
-              :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove"
-              :on-success="handleAvatarSuccess"
-              :on-error="imgUploadError"
-              :before-upload="beforeAvatarUpload"
-              :on-exceed="handleExceed"
+            // 上传图片
+            UploadImage.image-button(
+              :isNeedSuccessTips="false"
+              @uploadSuccess="uploadSuccess"
             )
               Iconfont.iconfont(icon-name="icon-tupian")
+    .shadow-box(
+      v-show="isShowShadow"
+      @click.stop="toggleShowShadow(false)"
+    )
+      .inner-box(v-show="isShowShadow")
+        img(
+          :src="shadowImage"
+          :style="{transform:`translate(-50%, -50%)  rotate(${targetDeg}deg)`}"
+          )
+      button.rotate-button(@click.stop="rotateShadow")
+        Iconfont.iconfont(icon-name="icon-xuanzhuan")
 </template>
 <script>
 import {mapState, mapMutations} from 'vuex'
-import {getIMHistoryRecordAJAX} from '../../utils/api/OTC_IM'
+import {getIMHistoryRecordAJAX, updateIMStatusAJAX} from '../../utils/api/OTC_IM'
 import mixins from '../../mixins/user'
-import {apiCommonUrl, xDomain} from '../../utils/env'
-import {getCookie} from '../../utils'
+import UploadImage from '../Common/UploadImage'
+import TheOTCIMContent from './TheOTCIMContent'
 export default {
   name: 'OTC_IM',
   mixins: [mixins],
-  // components: {},
+  components: {
+    UploadImage,
+    TheOTCIMContent
+  },
   props: {
     // 当前订单信息
     orderInfo: {
@@ -103,9 +114,6 @@ export default {
   },
   data () {
     return {
-      xDomain: xDomain,
-      token: getCookie('token'),
-      uploadUrl: `${apiCommonUrl}uploadfile`, // 上传图片地址
       nickName: '诚信商贸',
       recentDealLabel: '近30天成交',
       // 最近30天成交笔数
@@ -114,7 +122,11 @@ export default {
       editPlaceholder: '下单24H后不能聊天',
       imageInputRef: 'image-input',
       editText: '',
-      messages: []
+      messages: [],
+      ONE_DAY: 86400 * 1000,
+      shadowImage: '',
+      isShowShadow: false,
+      targetDeg: 0
     }
   },
   // created () {},
@@ -127,6 +139,22 @@ export default {
     ...mapMutations([
       'UPDATE_IM_BOX_SHOW_STATUS_M'
     ]),
+    // 发送图片成功回调
+    uploadSuccess ({type, index, url}) {
+      console.log(type, index, url)
+      this.sendImage(url)
+    },
+    previewImage (url) {
+      this.shadowImage = url
+      this.toggleShowShadow(true)
+    },
+    toggleShowShadow (status) {
+      this.isShowShadow = status
+      if (!status) this.targetDeg = 0
+    },
+    rotateShadow () {
+      this.targetDeg += 90
+    },
     sendMessage () {
       // {
       //   "messageContent":"你好，哈哈哈哈哈哈",  //消息内容，为普通文字或者图片url
@@ -141,7 +169,6 @@ export default {
       this.IMSocket_S.send({
         'messageContent': this.editText,
         'userId': id,
-        'sellId': this.sellId,
         'messageType': 'text',
         'orderId': this.orderId,
         'action': 'sendMessage'
@@ -149,16 +176,16 @@ export default {
       this.editText = ''
       this.receiveMessage()
     },
-    sendImage () {
+    sendImage (url) {
       const {id} = this.$userInfo_X
       this.IMSocket_S.send({
-        'messageContent': this.editText,
+        'messageContent': url,
         'userId': id,
-        'sellId': this.sellId,
         'messageType': 'img',
         'orderId': this.orderId,
         'action': 'sendMessage'
       })
+      this.receiveMessage()
     },
     async toggleShowIMContent (status) {
       // this.isShowSelf = !this.isShowSelf
@@ -167,6 +194,10 @@ export default {
         const data = await getIMHistoryRecordAJAX({orderId: this.orderId})
         console.log(data)
         this.messages = _.get(data, 'data')
+      }
+
+      if (this.IMBoxShowStatusMap_S[this.orderId]) {
+        this.updateIMStatus()
       }
 
       if (status) {
@@ -187,17 +218,33 @@ export default {
         console.log(e)
         this.messages.push(e)
       })
+    },
+    // 更新当前订单已读未读状态
+    async updateIMStatus () {
+      const {id} = this.$userInfo_X
+
+      let params = {
+        orderId: this.orderId,
+        userId: id
+      }
+
+      const data = await updateIMStatusAJAX(params)
+      if (!data) return
+      console.log(data)
     }
   },
-  // filters: {},
+  filters: {
+    isShowDate: function (index, createTime, messages) {
+      let currentDate = new Date(createTime - 0).getDay()
+      let lastDate = new Date((messages[(index > 0 ? index - 1 : index) ].createTime - 0)).getDay()
+      return index > 0 && currentDate == lastDate ? false : true
+    }
+  },
   computed: {
     ...mapState({
       IMBoxShowStatusMap_S: state => state.OTC.IMBoxShowStatusMap_S,
       IMSocket_S: state => state.OTC.OTCIMSocket_S
     }),
-    sellId () {
-      return _.get(this.orderInfo, 'sellId')
-    },
     orderId () {
       return _.get(this.orderInfo, 'id')
     },
@@ -222,6 +269,36 @@ export default {
     width 20px
     height 20px
     position relative
+    .shadow-box
+      width 100%
+      height 100%
+      background-color rgba(0, 0, 0, .6)
+      position fixed
+      left 0
+      top 0
+      z-index 1000000
+      text-align center
+      >.inner-box
+        /*background-color pink*/
+        height 800px
+        width 800px
+        margin 0 auto 50px
+        line-height 600px
+        position relative
+        >img
+          position absolute
+          top 50%
+          left 50%
+          max-width 800px
+          max-height 800px
+          transition all .4s
+      >.rotate-button
+        /*background-color pink*/
+        padding 10px
+        cursor pointer
+        >.iconfont
+          font-size 40px
+          color #fff
     /* 聊天框显示隐藏状态 */
     > .toggle-button
       width 35px
@@ -325,14 +402,9 @@ export default {
                 >.avatar
                   min-width 30px
                   margin-right 10px
+                  position relative
                   >.iconfont
                     font-size 30px
-                >.content
-                  p
-                    line-height 18px
-                    &.msg-content
-                      color #8BA0CA
-                      max-width 160px
               >.opposite-msg,
               >.self-msg
                 >.avatar
@@ -343,30 +415,50 @@ export default {
                   text-align center
                   font-size 14px
                   background linear-gradient(0deg,rgba(43,58,110,1),rgba(42,80,129,1))
-                  position relative
-                  top 20px
-                >.content
-                  p
-                    &.msg-content
-                      color #fff
+                /deep/
+                  .content
+                    p
+                      &.msg-content
+                        color #fff
+                        position relative
+                        &:after
+                          content ''
+                          width 0
+                          height 0
+                          position absolute
+                          top 15px
+                          transform translateY(-50%)
               >.opposite-msg
                 >.avatar
                   /*margin-top 35px*/
-                >.content
-                  >.msg-content
-                    background-color #5675a3
-                    border-radius 15px
-                    padding 6px 18px
+                /deep/
+                  .content
+                    >.msg-content
+                      background-color #5675a3
+                      border-radius 15px
+                      padding 6px 18px
+                      &:after
+                        left -6px
+                        border-right 8px solid #5675a3
+                        border-top 7px solid transparent
+                        border-bottom 7px solid transparent
               >.self-msg
                 text-align right
                 flex-direction row-reverse
-                >.content
-                  >.msg-content
-                    background-color S_main_color
-                    border-radius 15px
-                    padding 6px 18px
-                    text-align left
-                    margin-right 10px
+                /deep/
+                  .content
+                    >.date
+                      right 0
+                    >.msg-content
+                      background-color S_main_color
+                      border-radius 15px
+                      padding 6px 18px
+                      text-align left
+                      &:after
+                        right -6px
+                        border-left 8px solid S_main_color
+                        border-top 7px solid transparent
+                        border-bottom 7px solid transparent
         /* 发送消息框 */
         >.send-chat-box
           height 52px
