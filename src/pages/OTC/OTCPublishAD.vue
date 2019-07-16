@@ -1684,7 +1684,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             > .right {
               .input-limit {
                 color: #9da5b3;
-                background-color: $nightUnitBg;
+                background-color: $nightInputBg;
               }
             }
           }
