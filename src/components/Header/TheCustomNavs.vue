@@ -283,7 +283,7 @@ export default {
           padding 0 20px
           line-height 40px
 
-          &:hover
+          &:hover,&.active
             background-color #21243a
 
             > a

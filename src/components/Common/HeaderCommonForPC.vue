@@ -65,35 +65,26 @@
       </div>
       <!-- 非商家禁止进入OTC导航页提示框 -->
       <div class="apply-merchant-dialog">
-        <!--温馨提示-->
         <el-dialog
           :title="$t('M.otc_apply_tips1')"
           :visible.sync="showApplyMerchantStatus"
           top="30vh"
+          modal
         >
-          <div class="tips">
-            <!--您需要先申请成为商家才能使用此功能！-->
-            <p class="content">{{$t('M.otc_apply_tips2')}}</p>
+          <div class="content">
+            <!--您需要先申请成为商家才能使用此功能-->
+            {{$t('M.otc_apply_tips2')}}
           </div>
-          <span
-            slot="footer"
-            class="dialog-footer"
-          >
-            <el-button
-              type="primary"
-              @click="cancelApply"
-            >
-              <!--取消-->
-              {{$t('M.comm_cancel')}}
-            </el-button>
-            <el-button
-              type="primary"
-              @click="confirmApply"
-            >
-              {{$t('M.actionCenter_Token_step1')}}
-              <!--申请-->
-            </el-button>
-            </span>
+          <span slot="footer">
+            <div class="button-group">
+              <button class="cancel item" @click="cancelApply">
+                {{$t('M.comm_cancel')}}
+              </button>
+              <button class="confirm item" @click="confirmApply">
+                {{$t('M.actionCenter_Token_step1')}}
+              </button>
+            </div>
+          </span>
         </el-dialog>
       </div>
       <!-- 交易密码锁定弹窗 -->
@@ -509,60 +500,49 @@ export default{
 
     /deep/ {
       .apply-merchant-dialog {
-        .el-dialog {
-          width: 350px;
-          height: 207px;
-          border-radius: 4px;
-
-          .el-dialog__header {
-            height: 44px;
-            padding: 3px 20px;
+        .el-dialog__wrapper {
+          .el-dialog {
+            width: 350px;
+            height: 180px;
             border-radius: 4px;
-            line-height: 44px;
 
-            .el-dialog__title {
-              font-size: 16px;
-              color: #338ff5 !important;
+            .el-dialog__header {
+              padding: 6px 18px;
+              border-radius: 4px 4px 0 0;
+
+              .el-dialog__title {
+                font-size: 14px;
+              }
+
+              .el-dialog__headerbtn {
+                top: 10px;
+                right: 10px;
+              }
             }
 
-            .el-dialog__headerbtn {
-              top: 15px;
-              right: 10px;
-            }
-          }
-
-          .el-dialog__body {
-            padding: 15px 20px 10px 30px;
-            font-size: 12px;
-
-            .tips {
-              height: 80px;
-              padding-top: 20px;
+            .el-dialog__body {
+              height: 84px;
+              padding: 35px 18px;
               font-size: 14px;
-              color: #b8bdd0;
-
-              > .content {
-                line-height: 20px;
-              }
+              text-align: center;
             }
-          }
 
-          .el-dialog__footer {
-            padding: 0 20px 0 0;
+            .el-dialog__footer {
+              padding: 0 18px;
 
-            .el-button {
-              width: 123px;
-              padding: 7px 20px;
-              border: 0;
+              .button-group {
+                .item {
+                  height: 30px;
+                  padding: 0 28px;
+                  border-radius: 2px;
+                  font-size: 12px;
+                  line-height: 30px;
+                  cursor: pointer;
+                }
 
-              &:first-child {
-                border: 1px solid rgba(51, 143, 245, 1);
-                color: #338ff5;
-                background: #1c2237;
-              }
-
-              &:last-child {
-                padding: 8px 14px;
+                .confirm {
+                  margin-left: 20px;
+                }
               }
             }
           }
@@ -574,12 +554,36 @@ export default{
   &.night {
     /deep/ {
      .apply-merchant-dialog {
-       .el-dialog {
-         background-color: #1c2237;
+       .el-dialog__wrapper {
+         .el-dialog {
+           background-color: $dialogColor1;
 
-         .el-dialog__header {
-           background-color: #1d2131;
-           box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+           .el-dialog__header {
+             background-color: $dialogColor2;
+
+             .el-dialog__title {
+               color: $dialogColor4;
+             }
+           }
+
+           .el-dialog__body {
+             color: $dialogColor5;
+           }
+
+           .el-dialog__footer {
+             .button-group {
+               .cancel {
+                 border: 1px solid $mainColor;
+                 color: #fff;
+                 background-color: $dialogColor1;
+               }
+
+               .confirm {
+                 color: #fff;
+                 background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+               }
+             }
+           }
          }
        }
      }
@@ -590,23 +594,34 @@ export default{
     > .inner-box {
       /deep/ {
         .apply-merchant-dialog {
-          .el-dialog {
-            .el-dialog__header {
-              border-bottom: 1px solid #ecf1f8;
-            }
+          .el-dialog__wrapper {
+            .el-dialog {
+              background-color: $mainColorOfWhite;
 
-            .el-dialog__body {
-              .tips {
-                color: #333;
+              .el-dialog__header {
+                background-color: $dialogColor7;
+
+                .el-dialog__title {
+                  color: $dayMainTitleColor;
+                }
               }
-            }
 
-            .el-dialog__footer {
-              .el-button {
-                &:first-child {
-                  border: 1px solid rgba(51, 143, 245, 1);
-                  color: #338ff5;
-                  background: #fff;
+              .el-dialog__body {
+                color: $dayMainTitleColor;
+              }
+
+              .el-dialog__footer {
+                .button-group {
+                  .cancel {
+                    border: 1px solid $mainColor;
+                    color: $mainColor;
+                    background-color: $mainColorOfWhite;
+                  }
+
+                  .confirm {
+                    color: #fff;
+                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                  }
                 }
               }
             }

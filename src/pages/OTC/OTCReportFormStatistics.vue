@@ -362,27 +362,19 @@
             <div class="select-date">
               <span class="text font-size12">{{$t('M.otc_MerchantsOrders_date')}}</span>
               <span class="date-picker">
-                <!--开始日期-->
                 <el-date-picker
-                  :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_MerchantsOrders_date')"
-                  v-model="startTimeValue"
-                  type="date"
+                  v-model="checkedTime"
+                  type="daterange"
+                  range-separator="-"
+                  :start-placeholder="$t('M.comm_begin') + $t('M.comm_data')"
+                  :end-placeholder="$t('M.comm_end') + $t('M.comm_data')"
+                  :editable="false"
+                  :picker-options="pickerOptionsTime"
+                  @change="changeDate"
                   value-format="yyyy-MM-dd"
-                  @change="startTime"
-                  :picker-options="pickerOptions"
+                  :clearable="false"
                 >
-                </el-date-picker>
-                <span class="date-short-line">-</span>
-                <!--结束日期-->
-                <el-date-picker
-                  :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_MerchantsOrders_date')"
-                  v-model="endTimeValue"
-                  value-format="yyyy-MM-dd"
-                  type="date"
-                  @change="endTime"
-                  :picker-options="pickerOptions"
-                >
-                </el-date-picker>
+              </el-date-picker>
               </span>
             </div>
             <!-- 右侧单选日期按钮 -->
@@ -416,16 +408,25 @@
               <!-- 交易日期 -->
               <el-table-column
                 :label = "$t('M.otc_transaction_data')"
-                width="210"
+                width="150"
               >
                 <template slot-scope = "s">
                   <div>{{timeFormatting(s.row.createTime)}}</div>
                 </template>
               </el-table-column>
+              <!--广告id-->
+              <el-table-column
+                :label = "$t('M.otc_AD_ID')"
+                width="130"
+              >
+                <template slot-scope = "s">
+                  <div>{{s.row.entrustSequence}}</div>
+                </template>
+              </el-table-column>
               <!-- 订单号 -->
               <el-table-column
                 :label = "$t('M.otc_MerchantsOrders_orderNum')"
-                width="210"
+                width="160"
               >
                 <template slot-scope = "s">
                   <div>{{s.row.orderSequence}}</div>
@@ -434,7 +435,7 @@
               <!-- 交易类型 -->
               <el-table-column
                 :label = "$t('M.otc_type_ransaction')"
-                width="170"
+                width="140"
               >
                 <template slot-scope = "s">
                   <div
@@ -454,7 +455,7 @@
               <!-- 资金类型 -->
               <el-table-column
                 :label = "$t('M.otc_type_capital')"
-                width="170"
+                width="160"
               >
                 <template slot-scope = "s">
                   <div>{{s.row.currencyName}}</div>
@@ -544,10 +545,6 @@ export default {
       traderCurrencyCoinsList: [],
       activatedTraderCurrencyCoinsId: '', // 选中的交易法币id
       activatedTraderCurrencyCoinsName: '', // 选中的交易法币name
-      // 默认开始时间
-      startTimeValue: '',
-      // 默认结束时间
-      endTimeValue: '',
       // 单选按钮时间
       activatedRadioId: '',
       // 法币总资产
@@ -572,10 +569,11 @@ export default {
       sellMonthMap: {},
       // 出售本周交易
       sellWeekMap: {},
-      // 日期插件增加日期限制:只能选择当天及当前以前的日期
-      pickerOptions: {
-        disabledDate (time) {
-          return time.getTime() > Date.now() - 8.64e6 // 如果没有后面的-8.64e6就是不可以选择今天的
+      // 时间选择器
+      checkedTime: [], // 时间选择器选中的时间
+      pickerOptionsTime: {
+        disabledDate: (time) => {
+          return time.getTime() > Date.now()
         }
       }
     }
@@ -590,12 +588,22 @@ export default {
     // 报表统计主页
     this.getOTCReportFormStatistics()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  mounted () {
+    this.setDateWidth(this.language)
+  },
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([]),
+    // 设置日期选择组件的宽度
+    setDateWidth (val) {
+      if (val === 'vi_VN') {
+        document.querySelector('.el-date-editor--daterange').style.width = '285px'
+      } else {
+        document.querySelector('.el-date-editor--daterange').style.width = '180px'
+      }
+    },
     // 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
@@ -658,36 +666,12 @@ export default {
       this.getOTCReportFormStatistics()
       this.getOTCEntrustingOrdersRevocation()
     },
-    // 开始时间赋值
-    startTime (e) {
-      this.startTimeValue = e
+    // 日期选择器事件
+    changeDate (e) {
+      console.log(e)
+      this.checkedTime = e
+      console.log(this.checkedTime[0], this.checkedTime[1])
       this.activatedRadioId = ''
-      if (this.endTimeValue) {
-        if (this.startTimeValue > this.endTimeValue) {
-          // message: '开始时间不能大于结束时间',
-          this.$message({
-            message: this.$t('M.otc_time_limit'),
-            type: 'error'
-          })
-          return false
-        }
-      }
-      this.getOTCEntrustingOrdersRevocation()
-    },
-    // 结束时间赋值
-    endTime (e) {
-      this.endTimeValue = e
-      this.activatedRadioId = ''
-      if (this.startTimeValue) {
-        if (this.startTimeValue > this.endTimeValue) {
-          // message: '开始时间不能大于结束时间',
-          this.$message({
-            message: this.$t('M.otc_time_limit'),
-            type: 'error'
-          })
-          return false
-        }
-      }
       this.getOTCEntrustingOrdersRevocation()
     },
     // 右侧单选日期按钮change事件
@@ -696,8 +680,8 @@ export default {
       this.currentPage = 1
       this.activatedRadioId = e
       if (e == '4') {
-        this.startTimeValue = ''
-        this.endTimeValue = ''
+        // 若选历史，清空日期选择器
+        this.checkedTime = []
       }
       this.getOTCEntrustingOrdersRevocation()
     },
@@ -747,9 +731,9 @@ export default {
         // 法币
         currencyId: this.activatedTraderCurrencyCoinsId,
         // 开始时间
-        startTime: this.startTimeValue,
+        startTime: this.checkedTime[0] ? this.checkedTime[0] : '',
         // 结束时间
-        endTime: this.endTimeValue,
+        endTime: this.checkedTime[1] ? this.checkedTime[1] : '',
         // 日期类型
         dateType: this.activatedRadioId
       })
@@ -764,14 +748,18 @@ export default {
       }
     }, 500)
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme
     })
   },
-  watch: {}
+  watch: {
+    language (val) {
+      this.setDateWidth(val)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -908,12 +896,6 @@ export default {
             > .text {
               margin-right: 10px;
             }
-
-            > .date-picker {
-              > .date-short-line {
-                margin: 0 7px;
-              }
-            }
           }
         }
 
@@ -955,15 +937,33 @@ export default {
 
     .date {
       .select-date {
-        .el-date-editor {
-          &.el-input {
-            width: 134px;
+        .date-picker {
+          .el-range-editor.el-input__inner {
+            padding: 3px 5px;
           }
-        }
 
-        .el-input__inner {
-          height: 34px;
-          border: 0;
+          .el-date-editor--daterange.el-input__inner {
+            width: 180px;
+            height: 34px;
+          }
+
+          .el-date-editor {
+            .el-range-separator {
+              line-height: 26px;
+            }
+
+            .el-range__close-icon {
+              width: 0;
+            }
+
+            .el-range-input {
+              font-size: 12px;
+            }
+          }
+
+          .el-range__icon {
+            line-height: 20px !important;
+          }
         }
       }
 
@@ -1129,14 +1129,19 @@ export default {
 
       .date {
         .select-date {
-          .el-date-editor {
-            &.el-input {
-              width: 134px;
+          .date-picker {
+            .el-input__inner {
+              border: none;
+              background-color: rgba(255, 255, 255, .1);
             }
-          }
 
-          .el-input__inner {
-            background-color: rgba(255, 255, 255, .1);
+            .el-range-input {
+              color: $mainBgColorOfDay;
+            }
+
+            .el-range-separator {
+              color: $mainBgColorOfDay;
+            }
           }
         }
 
@@ -1353,9 +1358,11 @@ export default {
         }
 
         .select-date {
-          .el-input__inner {
-            border: 1px solid $borderColorOfDay;
-            background-color: $mainColorOfWhite;
+          .date-picker {
+            .el-input__inner {
+              border: 1px solid $borderColorOfDay;
+              background-color: $mainColorOfWhite;
+            }
           }
         }
       }

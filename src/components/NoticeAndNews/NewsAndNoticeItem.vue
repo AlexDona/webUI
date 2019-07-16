@@ -234,11 +234,11 @@ export default {
     }
 
     > .content-box {
-      height: 1215px;
+      min-height: 1215px;
 
       > .inner-box {
         width: 1100px;
-        height: 1100px;
+        min-height: 1124px;
         margin: 50px auto;
         overflow: hidden;
 

@@ -1,7 +1,7 @@
 import {
   postWithURLencoded,
   get,
-  postWithFormData
+  postWithFormData, notLoading
 } from './axios'
 import {handleRequest} from '../commonFunc'
 // import {handleRequest} from '../commonFunc'
@@ -58,6 +58,6 @@ export const getAppDownLoadUrlAjax = () => get('appDown')
 export const setUserInputPasswordFrequency = params => handleRequest(() => postWithURLencoded('user/notInputPayPasswd', params), 1)
 
 // 是否需要输入交易密码（交易）
-export const isNeedPayPassowrd = (params) => get('user/isInputPayPasswd', params)
+export const isNeedPayPassowrd = (params) => get('user/isInputPayPasswd', {...params, ...notLoading})
 // 邀请人 回填
 export const editInviterAJAX = params => handleRequest(() => get('/user/backInviter', params), 1)

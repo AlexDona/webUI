@@ -374,5 +374,8 @@ export const OTC = {
   'otc_current-market-price-min': 'Lowest market price',
   'otc_current-market-price-max': 'Highest market price',
   // otc 账号禁用不能交易提示
-  'otc_disable_account_tips': 'This account has been banned from trading OTC, please contact customer service'
+  'otc_disable_account_tips': 'This account has been banned from trading OTC, please contact customer service',
+  'otc_AD_ID': 'AD ID',
+  'otc_trading_order_buy': 'buy',
+  'otc_trading_order_sell': 'sell'
 }

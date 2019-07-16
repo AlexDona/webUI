@@ -6,6 +6,10 @@
     <div class="canceled-order-content">
       <!--表头属性-->
       <div class="canceled-table-head display-flex font-size12 box-sizing">
+        <span class="item AD-ID">
+          <!--广告id-->
+          {{$t('M.otc_AD_ID')}}
+        </span>
         <span class="item order-time">
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
@@ -43,6 +47,10 @@
       >
         <!--表格上部分-->
         <div class="canceled-info-top display-flex">
+          <!-- 广告id -->
+          <span class="item AD-ID">
+            {{item.entrustSequence}}
+          </span>
           <!-- 订单号 -->
           <span class="item order-time">
             {{item.orderSequence}}
@@ -300,9 +308,12 @@ export default {
 
   .fiat-canceled-order-box {
     > .canceled-order-content {
+      min-height: 530px;
+      padding: 0 10px 10px;
+
       > .canceled-table-head {
         height: 35px;
-        margin-bottom: 10px;
+        margin-bottom: 12px !important;
         line-height: 35px;
 
         > .item {
@@ -315,7 +326,8 @@ export default {
         }
 
         > .order-type,
-        .order-coin {
+        .order-coin,
+        .AD-ID {
           width: 100px;
         }
       }
@@ -323,6 +335,7 @@ export default {
       > .canceled-table-body {
         height: 170px;
         margin-bottom: 10px;
+        border-radius: 6px;
 
         > .canceled-info-top {
           height: 40px;
@@ -346,7 +359,8 @@ export default {
           }
 
           > .order-type,
-          .order-coin {
+          .order-coin,
+          .AD-ID {
             width: 100px;
           }
         }
@@ -392,25 +406,25 @@ export default {
       }
 
       > .no-data {
-        height: 485px;
-        line-height: 485px;
+        height: 475px;
+        line-height: 475px;
       }
     }
 
     &.night {
       > .canceled-order-content {
+        background-color: $mainContentNightBgColor;
+
         > .canceled-table-head {
+          border-bottom: 1px solid $dialogColor6;
           color: #617499;
-          background-color: $mainContentNightBgColor;
-          box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .canceled-table-body {
-          background-color: $mainContentNightBgColor;
+          border: 1px solid $dialogColor6;
 
           > .canceled-info-top {
             color: #617499;
-            background-color: $mainContentNightBgColor;
           }
 
           > .canceled-info-bottom {
@@ -442,19 +456,18 @@ export default {
 
     &.day {
       > .canceled-order-content {
+        background-color: $mainColorOfWhite;
+
         > .canceled-table-head {
+          border-bottom: 1px solid $borderColorOfDay;
           color: $fontColorSecondaryOfDay;
-          background-color: $mainDayBgColor;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .canceled-table-body {
-          background-color: $mainDayBgColor;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
+          border: 1px solid $borderColorOfDay;
 
           > .canceled-info-top {
             color: $dayMainTitleColor;
-            background-color: $mainDayBgColor;
           }
 
           > .canceled-info-bottom {
@@ -481,7 +494,6 @@ export default {
         > .no-data {
           color: $fontColorSecondaryOfDay;
           background-color: $mainDayBgColor;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
     }

@@ -73,6 +73,7 @@
                 @keydown="setErrorMsg(1, '')"
                 @blur="checkoutInputFormat(1, count)"
                 @keyup="formatUserInput('count', pointLength)"
+                @input="formatUserInput('count', pointLength)"
               />
               <!--错误提示-->
               <ErrorBox
@@ -475,7 +476,8 @@ export default {
       totalPageForMyEntrust: 1, // 当前总页数
       // pageSize: 10, // 每页显示条数
       currencyValueStatus: true, // 币种列表状态
-      pointLength: 4, // 保留小数位后四位
+      // 最新修改 价格小数位、数量小数位 保留 10位
+      pointLength: 10,
       payPasswordErrorMsg: '', // 错误提示
       isNeedPayPassword: false,
       // 付款类型： 'pay': 付款 'push': push
@@ -489,13 +491,9 @@ export default {
       this.getPushRecordList()
     }
   },
-  mounted () {
-  },
-  activated () {},
-  update () {
-  },
-  beforeRouteUpdate () {
-  },
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_PUSH_BUTTON_STATUS',
@@ -558,8 +556,9 @@ export default {
         this.sumState = false
       } else if (this.$refs.count.value !== '' || this.$refs.price.value !== '') {
         this.sumState = true
-        this.grossAmount = this.$keep8Num(this.$refs.count.value * this.$refs.price.value)
-        this.grossAmount = this.$keep8Num(this.$refs.price.value * this.$refs.count.value)
+
+        this.grossAmount = (this.$refs.count.value * this.$refs.price.value).toFixed(10) - 0
+        this.grossAmount = (this.$refs.price.value * this.$refs.count.value).toFixed(10) - 0
       }
     },
     // 2.2 检测输入格式
@@ -1370,7 +1369,7 @@ export default {
 
         .shipping-address {
           .el-dialog__header {
-            background: #20293c;
+            background: #fff;
           }
         }
       }

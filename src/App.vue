@@ -101,9 +101,35 @@ export default {
       })
       console.log(this.navigation)
       this.SET_NAVIGATOR_M(this.navigation)
+    },
+    // 切换 PC/H5 移动端适配
+    toggleViewPortMeta () {
+      let metaContent = {
+        mobile: 'width=device-width, initial-scale=0.2, minimum-scale=0.1, maximum-scale=1, user-scalable=0',
+        PC: 'width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=1, user-scalable=yes'
+      }
+      const meta = document.querySelector('meta[name="viewport"]')
+      const {path} = this.$route
+
+      const userDisScalabledRoutes = [
+        `/${this.$routes_X.login}`,
+        `/${this.$routes_X.register}`,
+        `/downloadApp`,
+        `/invitationRegister`
+      ]
+      const notNeedUserScalable = _.some(userDisScalabledRoutes, (route, index) => (route == path || path.startsWith(route)))
+
+      switch (this.isMobile && notNeedUserScalable) {
+        case true:
+          meta.content = metaContent.mobile
+          break
+        case false:
+          meta.content = metaContent.PC
+          break
+      }
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
@@ -118,6 +144,7 @@ export default {
       this.getNavigations()
     },
     async '$route' (to, from) {
+      this.toggleViewPortMeta()
       // console.log(to.path, from.path)
       let path = to.path
       if (!this.$navigators_S_X.length) {
@@ -168,6 +195,8 @@ export default {
     },
     isMobile (newVal) {
       this.setBodyClassName(newVal, 'mobile')
+      console.log(newVal)
+      this.toggleViewPortMeta()
     },
     isNeedNotice (newVal) {
       if (newVal) {
@@ -187,7 +216,7 @@ export default {
   @import '../static/css/font-family/font.css';
 
   .body-container {
-    min-width: 1366px;
+    min-width: 1300px;
     height: 100%;
     min-height: 1000px;
     font-size: 14px;

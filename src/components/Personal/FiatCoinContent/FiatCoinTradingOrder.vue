@@ -20,6 +20,10 @@
               <!--卖家-->
               {{$t('M.otc_seller')}}：{{item.sellName}}
             </div>
+            <!--广告id-->
+            <div class="AD-ID">
+              {{$t('M.otc_AD_ID')}}：{{item.entrustSequence}}
+            </div>
             <!-- 订单号 -->
             <div class="order-id">
               <!--订单号-->
@@ -33,7 +37,7 @@
             <div class="order-list-head-icon buy-icon"></div>
             <div class="buy-sell-icon">
               <!--买-->
-              {{$t('' + 'M.comm_bid')}}
+              {{$t('M.otc_trading_order_buy')}}
             </div>
           </div>
           <!-- 1.2 表身体 -->
@@ -386,6 +390,10 @@
               <!--买家-->
               {{$t('M.otc_buyer')}}：{{item.buyName}}
             </div>
+            <!--广告id-->
+            <div class="AD-ID">
+              {{$t('M.otc_AD_ID')}}：{{item.entrustSequence}}
+            </div>
             <!-- 订单号 -->
             <div class="order-id">
               <!--订单号-->
@@ -396,12 +404,10 @@
               <!--挂单时间-->
               {{$t('M.otc_entrust_time')}}：{{item.createTime}}
             </div>
-            <div class="order-list-head-icon sell-icon">
-              <!-- <img src="../../assets/develop/sell.png" alt=""> -->
-            </div>
+            <div class="order-list-head-icon sell-icon"></div>
             <div class="buy-sell-icon">
               <!--卖-->
-              {{$t('M.comm_ask')}}
+              {{$t('M.otc_trading_order_sell')}}
             </div>
           </div>
           <!-- 2.2 表身体 -->
@@ -576,14 +582,16 @@
                     <!--确认收款-->
                     {{$t('M.otc_trading_collectionconfirmation')}}
                   </el-button>
-                  <el-button
-                    type="primary"
-                    size="mini"
-                    @click="orderAppeal(item.id, index, item.orderType)"
-                  >
+                  <span class="appeal-button-sell">
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="orderAppeal(item.id, index, item.orderType)"
+                    >
                     <!--订单申诉-->
                     {{$t('M.otc_complaint')}}
                   </el-button>
+                  </span>
                 </p>
                 <p class="action-explain">
                   <!--买家付款已付款-->
@@ -668,6 +676,7 @@
               <!-- 3. 按钮部分 -->
               <div class="appeal-button">
                 <el-button
+                  class="appeal-button-submit"
                   type="primary"
                   size="mini"
                   @click="sellerAppeal(item.id, index, item.orderType)"
@@ -676,6 +685,7 @@
                   {{$t('M.otc_complaint_submit')}}
                 </el-button>
                 <el-button
+                  class="appeal-button-cancel"
                   type="primary"
                   size="mini"
                   @click="cancelOrderAppeal(index)"
@@ -715,7 +725,6 @@
         >
           <!-- 请输入交易密码 -->
           <div class="input">
-            <!-- 交易密码 -->
             <input
               type="password"
               class="password-input"
@@ -723,15 +732,13 @@
               @focus="passWordFocus"
             >
           </div>
+          <!-- 错误提示 -->
           <div class="error-info">
-            <!-- 错误提示 -->
-            <div class="tips">
-              {{errpwd}}
-            </div>
+            <div class="tips">{{ errpwd }}</div>
           </div>
           <!--暂时关闭交易密码验证-->
           <span
-            class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+            class="close-pwd-tip cursor-pointer display-inline-block"
             @click.prevent="closePwdJump"
           >
             {{$t('M.user_payPassword_switch')}}
@@ -740,23 +747,23 @@
             slot="footer"
             class="dialog-footer"
           >
+            <!--提 交-->
             <button
               class="button cursor-pointer"
               type="primary"
               @click="submitButton1"
               :disabled="confirmPaymentStatus"
             >
-              <!--提 交-->
               {{$t('M.comm_sub_time')}}
             </button>
             <!--忘记交易密码？-->
             <div class="text-align-r">
               <span
-                class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                class="forget-pwd-tip cursor-pointer display-inline-block"
                 @click.prevent="forgetPwdJump"
               >
-              {{$t('M.user_payPassword')}}
-            </span>
+                {{$t('M.user_payPassword')}}
+              </span>
             </div>
           </span>
         </el-dialog>
@@ -771,7 +778,7 @@
           top="25vh"
           width="470"
         >
-          <!--请输入交易密码2-->
+          <!--请输入交易密码-->
           <div class="input">
             <input
               type="password"
@@ -780,16 +787,13 @@
               @focus="passWordFocus"
             >
           </div>
+          <!-- 错误提示 -->
           <div class="error-info">
-            <!-- 错误提示 -->
-            <div class="tips">
-              <!--错误提示-->
-              {{errpwd}}
-            </div>
+            <div class="tips">{{ errpwd }}</div>
           </div>
           <!--暂时关闭交易密码验证-->
           <span
-            class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+            class="close-pwd-tip cursor-pointer display-inline-block"
             @click.prevent="closePwdJump"
           >
             {{$t('M.user_payPassword_switch')}}
@@ -798,23 +802,23 @@
             slot="footer"
             class="dialog-footer"
           >
+            <!--提 交-->
             <button
               class="button cursor-pointer"
               type="primary"
               @click="submitButton2"
               :disabled="confirmGatheringStatus"
             >
-              <!--提 交-->
               {{$t('M.comm_sub_time')}}
             </button>
             <!--忘记交易密码？-->
             <div class="text-align-r">
               <span
-                class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                class="forget-pwd-tip cursor-pointer display-inline-block"
                 @click.prevent="forgetPwdJump"
               >
-              {{$t('M.user_payPassword')}}
-            </span>
+                {{$t('M.user_payPassword')}}
+              </span>
             </div>
           </span>
         </el-dialog>
@@ -829,7 +833,7 @@
           top="25vh"
           width="470"
         >
-          <!--<div>请输入交易密码3</div>-->
+          <!--请输入交易密码-->
           <div class="input">
             <input
               type="password"
@@ -838,13 +842,13 @@
               @focus="passWordFocus"
             >
           </div>
+          <!-- 错误提示 -->
           <div class="error-info">
-            <!-- 错误提示 -->
             <div class="tips">{{ errpwd }}</div>
           </div>
           <!--暂时关闭交易密码验证-->
           <span
-            class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+            class="close-pwd-tip cursor-pointer display-inline-block"
             @click.prevent="closePwdJump"
           >
             {{$t('M.user_payPassword_switch')}}
@@ -853,23 +857,23 @@
             slot="footer"
             class="dialog-footer"
           >
+            <!--提 交-->
             <button
               class="button cursor-pointer"
               type="primary"
               @click="submitsellerAppeal"
               :disabled="submitAppealStatus"
             >
-              <!--提 交-->
               {{$t('M.comm_sub_time')}}
             </button>
             <!--忘记交易密码？-->
             <div class="text-align-r">
               <span
-                class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                class="forget-pwd-tip cursor-pointer display-inline-block"
                 @click.prevent="forgetPwdJump"
               >
-              {{$t('M.user_payPassword')}}
-            </span>
+                {{$t('M.user_payPassword')}}
+              </span>
             </div>
           </span>
         </el-dialog>
@@ -973,7 +977,9 @@ export default {
       'CHANGE_RE_RENDER_TRADING_LIST_STATUS', // 更改重新渲染交易中订单列表状态,
       'CHANGE_PASSWORD_USEABLE',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      // 改变清除交易中数据方法的状态
+      'CHANGE_CLEAR_DATA_STATUS_M'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -987,6 +993,7 @@ export default {
       this.cancelOrderTimeArr = [] // 清空取消订单倒计时
       this.accomplishOrderTimeArr = [] // 清空自动成交倒计时
       this.buyerAppealButtonStatus = [] // 清空买家申诉按钮
+      this.CHANGE_CLEAR_DATA_STATUS_M(false)
     },
     // ren增加
     // 申诉上传图片
@@ -1020,10 +1027,7 @@ export default {
       }
       if (!isJPG) {
         // 上传图片只能是 jpeg/jpg/png/bmp 格式!
-        this.$message({
-          message: this.$t('M.otc_upload_picture3'),
-          type: 'error'
-        })
+        this.$error_tips_X(this.$t('M.otc_upload_picture3'))
         return isJPG
       }
       // 对图片进行压缩
@@ -1055,11 +1059,8 @@ export default {
         })
       }
       if (imgSize > 5) {
-        this.$message({
-          // message: '请上传小于5M的图片',
-          message: this.$t('M.otc_upload_picture7'),
-          type: 'error'
-        })
+        // 请上传小于5M的图片
+        this.$error_tips_X(this.$t('M.otc_upload_picture7'))
         return false
       }
     },
@@ -1087,22 +1088,16 @@ export default {
     imgUploadError (file, fileList) {
       // console.log('文件上传失败时')
       // console.log(file, fileList)
-      this.$message({
-        // message: '上传图片失败,请重试！',
-        message: this.$t('M.otc_upload_picture5'),
-        type: 'error'
-      })
+      // 上传图片失败,请重试！
+      this.$error_tips_X(this.$t('M.otc_upload_picture5'))
       this.uploadFileList = fileList
     },
     // 6.0 文件超出个数限制时的钩子
     handleExceed (files, fileList) {
       // console.log('文件超出个数限制时')
       // console.log(files. fileList)
-      this.$message({
-        // message: '上传图片不能超过3张!',
-        message: this.$t('M.otc_upload_picture6'),
-        type: 'error'
-      })
+      // 上传图片不能超过3张
+      this.$error_tips_X(this.$t('M.otc_upload_picture6'))
       this.uploadFileList = fileList
     },
     // 1.0 分页
@@ -1225,11 +1220,8 @@ export default {
     async confirmPayMoney (index) {
       // console.log(index)
       if (!this.activePayModeList[index]) {
-        this.$message({
-          // 请选择支付方式
-          message: this.$t('M.comm_please_choose') + this.$t('M.otc_index_Payment_method'),
-          type: 'error'
-        })
+        // 请选择支付方式
+        this.$error_tips_X(this.$t('M.comm_please_choose') + this.$t('M.otc_index_Payment_method'))
         return false
       }
       // 判断是否交易密码锁定
@@ -1280,11 +1272,8 @@ export default {
     }, 500),
     // 7.0 卖家在买家付款前点击确认收款按钮的提示事件
     gatheringBefore () {
-      this.$message({
-        // 请等待买家付款
-        message: this.$t('M.comm_please') + this.$t('M.otc_waiting_buyer_payment') + '。',
-        type: 'error'
-      })
+      // 请等待买家付款
+      this.$error_tips_X(this.$t('M.comm_please') + this.$t('M.otc_waiting_buyer_payment') + '。')
     },
     // 8.0 卖家点击确认收款按钮
     async confirmGatherMoney (id) {
@@ -1356,20 +1345,14 @@ export default {
       this.orderTypeParam = orderType
       // 申诉原因验证
       if (!this.appealTextAreaValue) {
-        this.$message({
-          // 请输入申诉原因
-          message: this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_complaint_appeal_reason'),
-          type: 'error'
-        })
+        // 请输入申诉原因
+        this.$error_tips_X(this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_complaint_appeal_reason'))
         return false
       }
       // 申诉图片验证
       if (!this.uploadFileList.length) {
-        this.$message({
-          // message: '请至少上传一张图片！',
-          message: this.$t('M.otc_upload_picture2'),
-          type: 'error'
-        })
+        // message: '请至少上传一张图片！',
+        this.$error_tips_X(this.$t('M.otc_upload_picture2'))
         return false
       } else {
         // 申诉图片赋值
@@ -1456,7 +1439,9 @@ export default {
       reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus, // 从全局获得的重新渲染交易中订单列表状态
       // 交易密码是否被锁定
       isLockedPayPassword: state => state.common.isLockedPayPassword,
-      configInfo: state => state.common.footerInfo.configInfo
+      configInfo: state => state.common.footerInfo.configInfo,
+      // 法币订单交易中订单定义的数组数据状态
+      clearTradingOrderArrDataStatus: state => state.personal.clearTradingOrderArrDataStatus
     })
     // 从全局获得的交易中订单列表
     // tradingOrderList () {
@@ -1464,6 +1449,12 @@ export default {
     // }
   },
   watch: {
+    // 清空定义的数组数据
+    clearTradingOrderArrDataStatus (val) {
+      if (val) {
+        this.clearArrData()
+      }
+    },
     // 监控交易中订单列表并调用倒计时逻辑方法
     tradingOrderList (newVal) {
       this.timerLogicMethod()
@@ -1504,8 +1495,11 @@ export default {
   @import '../../../assets/CSS/index';
 
   .fiat-trading-order-box {
+    margin-top: -10px;
+
     > .fiat-trading-order-content {
-      min-height: 386px;
+      min-height: 540px;
+      padding: 0 10px 10px;
 
       .button {
         width: 290px;
@@ -1522,6 +1516,7 @@ export default {
         box-sizing: border-box;
         height: 170px;
         margin-bottom: 10px;
+        border-radius: 6px;
         font-size: 12px;
         background-color: $mainContentNightBgColor;
 
@@ -1529,42 +1524,45 @@ export default {
           > .order-list-head {
             position: relative;
             display: flex;
-            justify-content: space-between;
             box-sizing: border-box;
             height: 36px;
-            padding: 0 77px 0 25px;
+            padding-left: 55px;
             border-bottom: 1px solid #262f38;
             line-height: 36px;
             color: #9da5b3;
 
-            > .order-id {
-              padding-left: 300px;
+            > .buyer-seller,
+            .order-id,
+            .AD-ID,
+            .deal-time {
+              margin-right: 35px;
             }
 
             > .order-list-head-icon {
               position: absolute;
               top: 0;
-              right: 0;
+              left: 0;
               width: 0;
               height: 0;
+              border-right: 18px solid transparent;
               border-bottom: 18px solid transparent;
-              border-left: 18px solid transparent;
+              border-top-left-radius: 6px;
             }
 
             > .buy-icon {
               border-top: 18px solid $upColor;
-              border-right: 18px solid $upColor;
+              border-left: 18px solid $upColor;
             }
 
             > .sell-icon {
               border-top: 18px solid $otcGreen;
-              border-right: 18px solid $otcGreen;
+              border-left: 18px solid $otcGreen;
             }
 
             > .buy-sell-icon {
               position: absolute;
-              top: -8px;
-              right: 4px;
+              top: -6px;
+              left: 2px;
               color: #fff;
             }
           }
@@ -1609,20 +1607,20 @@ export default {
 
               > .middle-content {
                 .trader-info {
-                  width: 190px;
+                  width: 185px;
 
                   > .pay-style {
                     position: relative;
                     width: 150px;
                     height: 23px;
-                    margin: 0 0 8px 20px;
+                    margin: 0 0 8px 10px;
 
                     > .qiandai-icon {
                       > .icon {
                         position: absolute;
                         z-index: 2;
                         top: 5px;
-                        left: 10px;
+                        left: 5px;
                         width: 14px;
                         height: 14px;
                       }
@@ -1630,7 +1628,7 @@ export default {
                   }
 
                   > .bank-info {
-                    margin-left: 20px;
+                    margin-left: 10px;
                     line-height: 20px;
                   }
 
@@ -1640,7 +1638,7 @@ export default {
                   }
 
                   > .bankMoneyInfo {
-                    margin-left: 20px;
+                    margin-left: 10px;
                     line-height: 20px;
 
                     .icon {
@@ -1776,12 +1774,6 @@ export default {
         line-height: 530px;
         text-align: center;
       }
-
-      > .password-dialog {
-        .tips {
-          color: $upColor;
-        }
-      }
     }
 
     /deep/ {
@@ -1822,8 +1814,9 @@ export default {
       }
 
       .el-input__inner {
-        padding: 0 30px;
+        padding: 0 25px;
         border: none;
+        font-size: 12px;
       }
 
       .el-select-dropdown {
@@ -1840,24 +1833,12 @@ export default {
         padding: 3px 10px;
       }
 
-      /* 3.0 订单申诉 */
-      .el-textarea {
-        width: 160px;
-      }
-
-      .el-textarea__inner {
-        height: 90px;
-        resize: none;
-        font-size: 12px;
-        color: #9da5b3;
-      }
-
       /* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */
       .bank-info-picture {
         .el-button {
           float: right;
           padding: 2px 6px;
-          margin-right: 5px;
+          font-size: 12px;
         }
       }
 
@@ -1867,63 +1848,64 @@ export default {
           width: 350px;
           height: 240px;
           border-radius: 4px;
-        }
 
-        .el-dialog__header {
-          padding: 10px 20px;
-          border-radius: 4px;
-        }
+          .el-dialog__header {
+            padding: 10px 20px;
+            border-radius: 4px 4px 0 0;
 
-        .el-dialog__title {
-          font-size: 14px;
-        }
+            .el-dialog__title {
+              font-size: 14px;
+            }
 
-        .el-dialog__headerbtn {
-          top: 15px;
-          right: 10px;
-        }
-
-        .el-dialog__body {
-          padding: 15px 20px 10px 30px;
-          font-size: 12px;
-
-          .input {
-            margin-top: 13px;
+            .el-dialog__headerbtn {
+              top: 15px;
+              right: 10px;
+            }
           }
 
-          .password-input {
-            display: inline-block;
-            width: 280px;
-            height: 36px;
-            padding-left: 10px;
-            border-radius: 4px;
-            font-size: 14px;
-          }
-
-          .error-info {
-            height: 20px;
-            padding-top: 5px;
+          .el-dialog__body {
+            padding: 15px 20px 10px 30px;
             font-size: 12px;
+
+            .input {
+              margin-top: 13px;
+
+              .password-input {
+                display: inline-block;
+                width: 280px;
+                height: 36px;
+                padding-left: 10px;
+                border-radius: 4px;
+              }
+            }
+
+            .error-info {
+              height: 20px;
+              padding-top: 5px;
+            }
+
+            .close-pwd-tip {
+              margin-top: 5px;
+            }
           }
 
-          .close-pwd-tip {
-            margin-top: 5px;
-            color: $mainColor;
+          .el-dialog__footer {
+            padding: 0;
+            font-size: 12px;
+            text-align: center;
+
+            .el-button {
+              width: 290px;
+              padding: 9px 20px;
+              border: 0;
+              border-radius: 2px;
+              font-size: 12px;
+            }
+
+            .forget-pwd-tip {
+              padding: 8px 20px 0 0;
+            }
           }
-        }
-
-        .el-dialog__footer {
-          padding: 0;
-          text-align: center;
-
-          .forget-pwd-tip {
-            padding: 8px 20px 0 0;
-            color: $mainColor;
-          }
-        }
-
-        .el-button--primary {
-          background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
       }
 
@@ -1944,12 +1926,16 @@ export default {
       }
 
       > .fiat-trading-order-content {
+        background-color: $mainContentNightBgColor;
+
         .button {
           color: $mainColorOfWhite;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
         > .order-list {
+          border: 1px solid $dialogColor6;
+
           > .order {
             > .order-list-body {
               > .order-list-body-middle {
@@ -1962,6 +1948,27 @@ export default {
                         }
                       }
                     }
+                  }
+                }
+              }
+
+              > .order-list-body-right {
+                .action-tips,
+                .action-explain {
+                  .el-button {
+                    background-color: $mainColor;
+                  }
+
+                  .appeal-button-sell {
+                    .el-button {
+                      color: #8094bb;
+                      background: rgba(205, 217, 238, 1);
+                    }
+                  }
+
+                  .buy-appeal-order {
+                    color: #8094bb;
+                    background: rgba(205, 217, 238, 1);
                   }
                 }
               }
@@ -1983,7 +1990,6 @@ export default {
       }
 
       /deep/ {
-        /* 黑色样式切换 */
         .el-input__inner {
           padding: 0 30px;
           color: #9da5b3;
@@ -2016,11 +2022,6 @@ export default {
           }
         }
 
-        .el-textarea__inner {
-          border: 1px solid #7587a5;
-          background-color: #1c1f32;
-        }
-
         /* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */
         .bank-info-picture {
           .el-button {
@@ -2039,27 +2040,41 @@ export default {
         /* 输入密码弹出框 */
         .password-dialog {
           .el-dialog {
-            background: #28334a;
-          }
+            background-color: $dialogColor1;
 
-          .el-dialog__header {
-            background-color: #20293c;
-          }
+            .el-dialog__header {
+              background-color: $dialogColor2;
 
-          .el-dialog__title {
-            color: $mainColorOfWhite;
-          }
-
-          .el-dialog__body {
-            color: $mainColorOfWhite;
-
-            .password-input {
-              color: $mainColorOfWhite;
-              background-color: #1a2233;
+              .el-dialog__title {
+                color: $dialogColor4;
+              }
             }
 
-            .error-info {
-              color: $mainColorOfWhite;
+            .el-dialog__body {
+              .password-input {
+                border: 1px solid $dialogColor6;
+                color: $mainColorOfWhite;
+                background-color: $dialogColor3;
+              }
+
+              .tips {
+                color: $upColor;
+              }
+
+              .close-pwd-tip {
+                color: $mainColor;
+              }
+            }
+
+            .el-dialog__footer {
+              .el-button--primary {
+                color: $mainColorOfWhite;
+                background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+              }
+
+              .forget-pwd-tip {
+                color: $mainColor;
+              }
             }
           }
         }
@@ -2069,19 +2084,32 @@ export default {
           color: #fff;
           background-color: #409eff;
         }
+
+        .appeal-button {
+          .appeal-button-submit {
+            background-color: $mainColor;
+          }
+
+          .appeal-button-cancel {
+            color: #8094bb;
+            background: #cdd9ee;
+          }
+        }
       }
     }
 
     &.day {
       > .fiat-trading-order-content {
+        background-color: $mainColorOfWhite;
+
         .button {
           color: $mainColorOfWhite;
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
         > .order-list {
+          border: 1px solid rgba(72, 87, 118, .1);
           background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .order {
             > .order-list-head {
@@ -2114,9 +2142,21 @@ export default {
 
               > .order-list-body-right {
                 > .right-content {
-                  > .action-tips {
+                  > .action-tips,
+                  .action-explain {
                     .wait-pay {
                       color: $upColor;
+                    }
+
+                    .el-button {
+                      background-color: $mainColor;
+                    }
+
+                    .appeal-button-sell {
+                      .el-button {
+                        color: #8094bb;
+                        background: rgba(205, 217, 238, 1);
+                      }
                     }
                   }
 
@@ -2168,7 +2208,6 @@ export default {
         > .no-data {
           color: $fontColorSecondaryOfDay;
           background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
 
@@ -2177,20 +2216,64 @@ export default {
           width: 130px;
         }
 
-        /* 交易密码弹出框样式修复 */
         .password-dialog {
-          .el-dialog__body {
-            .password-input {
-              border: 1px solid $borderColorOfDay;
+          .el-dialog {
+            background-color: $mainColorOfWhite;
+
+            .el-dialog__header {
+              background-color: $dialogColor7;
+
+              .el-dialog__title {
+                color: $dayMainTitleColor;
+              }
+            }
+
+            .el-dialog__body {
+              .password-input {
+                border: 1px solid $dialogColor8;
+                color: $dayMainTitleColor;
+                background-color: $mainColorOfWhite;
+                box-shadow: inset 0 2px 4px 0 rgba(243, 243, 243, 1);
+              }
+
+              .tips {
+                color: $upColor;
+              }
+
+              .close-pwd-tip {
+                color: $mainColor;
+              }
+            }
+
+            .el-dialog__footer {
+              .el-button--primary {
+                color: $mainColorOfWhite;
+                background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+              }
+
+              .forget-pwd-tip {
+                color: $mainColor;
+              }
             }
           }
         }
 
         /* 订单申诉按钮 */
         .submitted-confirm-payment {
-          .buy-appeal-order {
-            color: $mainColor;
-            background-color: $coinBgColorOfDay;
+          .buy-appeal-order.el-button {
+            color: #8094bb;
+            background-color: #cdd9ee !important;
+          }
+        }
+
+        .appeal-button {
+          .appeal-button-submit {
+            background-color: $mainColor;
+          }
+
+          .appeal-button-cancel {
+            color: #8094bb;
+            background: #cdd9ee;
           }
         }
 

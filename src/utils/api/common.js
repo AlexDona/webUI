@@ -37,3 +37,5 @@ export const getCurrencyRate = () => handleRequest(() => get('/selectCoinRate'))
 export const getSchedule = () => handleRequest(() => get('/banner/release'))
 // 获取自定义导航
 export const getNavigationsAJAX = params => handleRequest(() => get('/partnerMenu/partnermenu', params))
+// 获取当前客服插件信息
+export const getdynamicCsConfigAJAX = params => handleRequest(() => get('/dynamicCsConfig/selectConfigInfo', params))

@@ -8,6 +8,10 @@
     >
       <!--表头属性-->
       <div class="freezing-table-head">
+        <span class="item AD-ID">
+          <!--广告id-->
+          {{$t('M.otc_AD_ID')}}
+        </span>
         <!-- 订单号 -->
         <span class="item">
           {{$t('M.otc_MerchantsOrders_orderNum')}}
@@ -45,6 +49,10 @@
       >
         <!--表格上部分-->
         <div class="freezing-info-top">
+          <!-- 广告id -->
+          <span class="item AD-ID">
+            {{item.entrustSequence}}
+          </span>
           <!-- 订单号 -->
           <span class="item">
             {{item.orderSequence}}
@@ -175,7 +183,7 @@ import {
 } from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
-  components: {},
+  // components: {},
   // props,
   data () {
     return {
@@ -195,10 +203,10 @@ export default {
       this.getOTCFreezingOrdersList()
     }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     // 1.0 分页
     changeCurrentPage (pageNum) {
@@ -228,7 +236,7 @@ export default {
       }
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       // 主题
@@ -236,8 +244,8 @@ export default {
       // 是否登录
       isLogin: state => state.user.isLogin
     })
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -246,6 +254,7 @@ export default {
   .otc-freezing-order-box {
     > .freezing-order-content {
       > .freezing-table-head {
+        display: flex;
         box-sizing: border-box;
         width: 1191px;
         height: 35px;
@@ -254,8 +263,7 @@ export default {
         line-height: 35px;
 
         > .item {
-          display: inline-block;
-          width: 160px;
+          flex: 1;
           text-align: center;
         }
       }
@@ -268,6 +276,7 @@ export default {
         border-radius: 5px;
 
         > .freezing-info-top {
+          display: flex;
           height: 40px;
           border-radius: 5px;
           line-height: 40px;
@@ -281,8 +290,7 @@ export default {
           }
 
           > .item {
-            display: inline-block;
-            width: 160px;
+            flex: 1;
             text-align: center;
           }
         }
