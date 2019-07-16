@@ -65,7 +65,7 @@
               <!--地址标签-->
               <el-form-item
                 :label="$t('M.user_address_labels')"
-                v-if="isShowAddressLabel === true"
+                v-if="isShowAddressLabel"
               >
                 <input
                   type="text"
@@ -328,7 +328,7 @@ export default {
       withdrawalRemark: '', // 提现备注
       withdrawalAddress: '', // 提币地址
       addressLabel: '', // 地址标签
-      isShowAddressLabel: 'true', // 是否显示
+      isShowAddressLabel: false, // 是否显示
       withdrawalAddressList: [], // 提币地址列表
       operation: 'M.comm_delete', // 删除
       activeName: 'current-entrust',
@@ -531,17 +531,19 @@ export default {
       this.currencyList = getNestedData(detailData, 'canWithdrawPartnerCoinList')
       // 当前选中的币种 对应的 索引
       let targetIndex = 0
-      _.forEach(this.currencyList, (currencyItem, currencyIndex) => {
-        if (this.currencyValue == _.get(currencyItem, 'coinId')) {
-          targetIndex = currencyIndex
-          return false
-        }
-      })
+
+      console.log(this.currencyValue, targetIndex)
       // 判断是否显示地址标签
       this.isShowAddressLabel = this.currencyList[targetIndex].needTag
       // 对ID名称进行赋值
       if (this.paramOfJumpToAddWithdrawAdress) {
         this.currencyValue = this.paramOfJumpToAddWithdrawAdress
+        _.forEach(this.currencyList, (currencyItem, currencyIndex) => {
+          if (this.currencyValue == _.get(currencyItem, 'coinId')) {
+            targetIndex = currencyIndex
+            return false
+          }
+        })
         this.isShowAddressLabel = this.currencyList[targetIndex].needTag
       } else {
         this.currencyValue = _.get(detailData, `canWithdrawPartnerCoinList[${targetIndex}].coinId`)
