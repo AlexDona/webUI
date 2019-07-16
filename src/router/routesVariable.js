@@ -29,6 +29,7 @@ export const routesVariable = {
   home: 'home',
   // 众筹
   crowdFunding: 'crowdFunding',
+  exchange: 'TradeCenter',
   // 登录
   login: 'login',
   // 设置交易密码

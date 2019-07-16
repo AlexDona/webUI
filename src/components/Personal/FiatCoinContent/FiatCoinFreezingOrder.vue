@@ -6,6 +6,10 @@
     <div class="freezing-order-content">
       <!--表头-->
       <div class="freezing-table-head font-size12 box-sizing">
+        <span class="item AD-ID">
+          <!--广告id-->
+          {{$t('M.otc_AD_ID')}}
+        </span>
         <span class="item order-time">
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
@@ -43,6 +47,10 @@
       >
         <!--表格上部分-->
         <div class="freezing-info-top">
+          <!-- 广告id -->
+          <span class="item AD-ID">
+            {{item.entrustSequence}}
+          </span>
           <!-- 订单号 -->
           <span class="item order-time">
             {{item.orderSequence}}
@@ -228,10 +236,13 @@ export default {
 
   .fiat-freezing-order-box {
     > .freezing-order-content {
+      min-height: 530px;
+      padding: 0 10px 10px;
+
       > .freezing-table-head {
         display: flex;
         height: 35px;
-        margin-bottom: 10px;
+        margin-bottom: 12px !important;
         line-height: 35px;
 
         > .item {
@@ -244,7 +255,8 @@ export default {
         }
 
         > .order-type,
-        .order-coin {
+        .order-coin,
+        .AD-ID {
           width: 100px;
         }
       }
@@ -252,6 +264,7 @@ export default {
       > .freezing-table-body {
         height: 170px;
         margin-bottom: 10px;
+        border-radius: 6px;
 
         > .freezing-info-top {
           display: flex;
@@ -276,7 +289,8 @@ export default {
           }
 
           > .order-type,
-          .order-coin {
+          .order-coin,
+          .AD-ID {
             width: 100px;
           }
         }
@@ -324,21 +338,22 @@ export default {
       }
 
       > .no-data {
-        height: 485px;
-        line-height: 485px;
+        height: 475px;
+        line-height: 475px;
       }
     }
 
     &.night {
       > .freezing-order-content {
+        background-color: $mainContentNightBgColor;
+
         > .freezing-table-head {
+          border-bottom: 1px solid $dialogColor6;
           color: #617499;
-          background-color: $mainContentNightBgColor;
-          box-shadow: -2px 3px 5px 1px #191e28;
         }
 
         > .freezing-table-body {
-          background-color: $mainContentNightBgColor;
+          border: 1px solid $dialogColor6;
 
           > .freezing-info-top {
             color: #617499;
@@ -374,16 +389,15 @@ export default {
 
     &.day {
       > .freezing-order-content {
+        background-color: $mainColorOfWhite;
+
         > .freezing-table-head {
+          border-bottom: 1px solid $borderColorOfDay;
           color: $fontColorSecondaryOfDay;
-          background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
 
         > .freezing-table-body {
-          color: $dayMainTitleColor;
-          background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
+          border: 1px solid $borderColorOfDay;
 
           > .freezing-info-bottom {
             border-top: 1px solid rgba(72, 87, 118, .1);
@@ -408,7 +422,6 @@ export default {
         > .no-data {
           color: $fontColorSecondaryOfDay;
           background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
         }
       }
     }

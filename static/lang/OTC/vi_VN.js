@@ -311,5 +311,8 @@ export const OTC = {
   'otc_current-market-price-min': 'Giá Thấp Nhất',
   'otc_current-market-price-max': 'Giá Cao Nhất ',
   // otc 账号禁用不能交易提示
-  'otc_disable_account_tips': 'khi tài khoản bị cấm giao dic OTC, vui lòng liên hệ phòng tư vấn'
+  'otc_disable_account_tips': 'khi tài khoản bị cấm giao dic OTC, vui lòng liên hệ phòng tư vấn',
+  'otc_AD_ID': 'Quảng cáoID',
+  'otc_trading_order_buy': 'buy',
+  'otc_trading_order_sell': 'sell'
 }

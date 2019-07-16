@@ -55,13 +55,14 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
     return false
   }
   const meta = data.data.meta
+  const {message} = meta
   if (meta) {
     if (!meta.success && !errorTip) {
       if (meta.code !== 500 && !store.state.user.isTokenDisable) {
         ElementUI.Message({
           type: 'error',
           // duration: 5000000,
-          message: (!meta.params || !meta.params.length) ? that.$t(`M.${meta.i18n_code}`) : that.$t(`M.${meta.i18n_code}`).format(meta.params)
+          message: message
         })
       }
       // 登录失效
@@ -80,7 +81,7 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
       if (noTip) {
         ElementUI.Message({
           type: 'success',
-          message: that.$t(`M.${meta.i18n_code}`)
+          message: message
         })
       }
       return 1
@@ -387,6 +388,14 @@ String.prototype.format = function (args) {
   }
   return result
 }
+// 重写 toFixed 方法
+// eslint-disable-next-line
+Number.prototype.toFixed = function toFixed (s) {
+  let times = Math.pow(10, s)
+  let des = this * times + 0.5
+  des = parseInt(des, 10) / times
+  return des + ''
+}
 /**
  * 接口统一处理
  * @param request
@@ -394,6 +403,7 @@ String.prototype.format = function (args) {
  * @param errorTip
  * @returns {Promise<*>}
  */
+
 export const handleRequest = async (request, noTip, errorTip) => {
   const DATA = await request()
   if (!returnAjaxMsg(DATA, that, noTip, errorTip)) {

@@ -333,7 +333,7 @@
             </div>
             <!--暂时关闭交易密码验证-->
             <span
-              class="close-pwd-tip font-size12 cursor-pointer display-inline-block"
+              class="close-pwd-tip cursor-pointer display-inline-block"
               @click.prevent="closePwdJump"
             >
               {{$t('M.user_payPassword_switch')}}
@@ -342,21 +342,21 @@
               slot="footer"
               class="dialog-footer"
             >
+              <!-- 提交 -->
               <el-button
                 type="primary"
                 @click="pickOrdersToBuyOrSell"
               >
-                <!-- 提交 -->
                 {{$t('M.otc_submit')}}
               </el-button>
               <!--忘记交易密码？-->
               <div class="text-align-r">
                 <span
-                  class="forget-pwd-tip font-size12 cursor-pointer display-inline-block"
+                  class="forget-pwd-tip cursor-pointer display-inline-block"
                   @click.prevent="forgetPwdJump"
                 >
-                {{$t('M.user_payPassword')}}
-              </span>
+                  {{$t('M.user_payPassword')}}
+                </span>
               </div>
             </span>
           </el-dialog>
@@ -482,10 +482,10 @@ export default {
       this.querySelectedOrdersDetails()
     }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       // 0.1 改变全局锚点状态方法
@@ -828,7 +828,7 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       language: state => state.common.language, // 当前选中语言
@@ -984,6 +984,7 @@ export default {
                 width: 190px;
                 height: 36px;
                 padding-left: 10px;
+                vertical-align: super;
               }
 
               > .unit {
@@ -995,7 +996,7 @@ export default {
                 font-size: 16px;
                 line-height: 36px;
                 text-align: center;
-                vertical-align: middle;
+                vertical-align: top;
               }
             }
 
@@ -1081,16 +1082,16 @@ export default {
 
         .el-dialog__header {
           padding: 10px 20px;
-          border-radius: 4px;
-        }
+          border-radius: 4px 4px 0 0;
 
-        .el-dialog__title {
-          font-size: 14px;
-        }
+          .el-dialog__title {
+            font-size: 14px;
+          }
 
-        .el-dialog__headerbtn {
-          top: 15px;
-          right: 10px;
+          .el-dialog__headerbtn {
+            top: 15px;
+            right: 10px;
+          }
         }
 
         .el-dialog__body {
@@ -1099,53 +1100,42 @@ export default {
 
           .input {
             margin-top: 13px;
-          }
 
-          .password-input {
-            display: inline-block;
-            width: 280px;
-            height: 36px;
-            padding-left: 10px;
-            border-radius: 4px;
-            font-size: 14px;
+            .password-input {
+              display: inline-block;
+              width: 280px;
+              height: 36px;
+              padding-left: 10px;
+              border-radius: 4px;
+            }
           }
 
           .error-info {
             height: 20px;
             padding-top: 5px;
-            font-size: 12px;
           }
 
           .close-pwd-tip {
             margin-top: 5px;
-            color: $mainColor;
-          }
-
-          .el-button {
-            width: 290px;
-            padding: 7px 20px;
-            border: 0;
           }
         }
 
         .el-dialog__footer {
           padding: 0;
+          font-size: 12px;
           text-align: center;
+
+          .el-button {
+            width: 290px;
+            padding: 9px 20px;
+            border: 0;
+            border-radius: 2px;
+            font-size: 12px;
+          }
 
           .forget-pwd-tip {
             padding: 8px 20px 0 0;
-            color: $mainColor;
           }
-        }
-
-        .el-button {
-          width: 290px;
-          padding: 7px 20px;
-          border: 0;
-        }
-
-        .el-button--primary {
-          background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
       }
     }
@@ -1303,41 +1293,47 @@ export default {
             }
           }
         }
-
-        > .password-dialog {
-          .error-info {
-            > .tips {
-              color: $upColor;
-            }
-          }
-        }
       }
     }
 
     /deep/ {
       .password-dialog {
         .el-dialog {
-          background: #28334a;
+          background-color: $dialogColor1;
 
           .el-dialog__header {
-            background-color: #20293c;
-          }
+            background-color: $dialogColor2;
 
-          .el-dialog__title {
-            color: $mainDayBgColor;
-          }
-
-          .el-dialog__body {
-            color: $mainDayBgColor;
-
-            .password-input {
-              color: $mainDayBgColor;
-              background-color: #1a2233;
+            .el-dialog__title {
+              color: $dialogColor4;
             }
           }
 
-          .error-info {
-            color: $mainDayBgColor;
+          .el-dialog__body {
+            .password-input {
+              border: 1px solid $dialogColor6;
+              color: $mainColorOfWhite;
+              background-color: $dialogColor3;
+            }
+
+            .tips {
+              color: $upColor;
+            }
+
+            .close-pwd-tip {
+              color: $mainColor;
+            }
+          }
+
+          .el-dialog__footer {
+            .el-button--primary {
+              color: $mainColorOfWhite;
+              background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            }
+
+            .forget-pwd-tip {
+              color: $mainColor;
+            }
           }
         }
       }
@@ -1499,33 +1495,49 @@ export default {
             }
           }
         }
-
-        > .password-dialog {
-          .error-info {
-            > .tips {
-              color: $upColor;
-            }
-          }
-        }
       }
     }
 
     /deep/ {
       .password-dialog {
         .el-dialog {
-          background: $mainColorOfWhite;
-        }
-
-        .el-dialog__header {
           background-color: $mainColorOfWhite;
-        }
 
-        .el-dialog__title {
-          color: $mainColor;
-        }
+          .el-dialog__header {
+            background-color: $dialogColor7;
 
-        .el-dialog__body .password-input {
-          border: 1px solid $borderColorOfDay;
+            .el-dialog__title {
+              color: $dayMainTitleColor;
+            }
+          }
+
+          .el-dialog__body {
+            .password-input {
+              border: 1px solid $dialogColor8;
+              color: $dayMainTitleColor;
+              background-color: $mainColorOfWhite;
+              box-shadow: inset 0 2px 4px 0 rgba(243, 243, 243, 1);
+            }
+
+            .tips {
+              color: $upColor;
+            }
+
+            .close-pwd-tip {
+              color: $mainColor;
+            }
+          }
+
+          .el-dialog__footer {
+            .el-button--primary {
+              color: $mainColorOfWhite;
+              background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            }
+
+            .forget-pwd-tip {
+              color: $mainColor;
+            }
+          }
         }
       }
     }
