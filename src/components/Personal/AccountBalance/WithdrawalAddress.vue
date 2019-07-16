@@ -533,6 +533,12 @@ export default {
       let targetIndex = 0
 
       console.log(this.currencyValue, targetIndex)
+      _.forEach(this.currencyList, (currencyItem, currencyIndex) => {
+        if (this.currencyValue == _.get(currencyItem, 'coinId')) {
+          targetIndex = currencyIndex
+          return false
+        }
+      })
       // 判断是否显示地址标签
       this.isShowAddressLabel = this.currencyList[targetIndex].needTag
       // 对ID名称进行赋值
