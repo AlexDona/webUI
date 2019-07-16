@@ -7,7 +7,7 @@
     :logoScale="0.2"
     :size="size"
     :logoCornerRadius="1"
-    :logoMargin="1"
+    :logoMargin="0"
     logoBackgroundColor="#fff"
     v-if="value"
     colorLight="#fff"
