@@ -44,41 +44,41 @@
                       :to="`/${$routes_X.newsItem}/${item.id}`"
                       class="content-item-link"
                     >
-                      <div
+                      <!--<div
                         class="left"
                         v-if="isChineseLanguage"
                       >
                           <div class="top">
-                            <!--年-->
+                            &lt;!&ndash;年&ndash;&gt;
                             {{item.createTime.split('-')[0]+ $t('M.news_year')}}
                           </div>
                           <div class="bottom">
-                            <!--月-->
+                            &lt;!&ndash;月&ndash;&gt;
                             {{item.createTime.split('-')[1]-0+ $t('M.news_month')}}
                           </div>
-                      </div>
-                      <div
+                      </div>-->
+                      <!--<div
                         class="left"
                         v-else
                       >
                         <div class="top">
-                          <!--年-->
+                          &lt;!&ndash;年&ndash;&gt;
                           {{item.createTime.split('-')[0]}}
                         </div>
                         <div class="bottom">
-                          <!--月-->
+                          &lt;!&ndash;月&ndash;&gt;
                           {{item.createTime.split('-')[1]-0+  monthList[(item.createTime.split('-')[1]-1)].label}}
                         </div>
-                      </div>
+                      </div>-->
                       <div class="right">
                         <p class="top">
                           {{item.title}}
                         </p>
-                        <p class="middle">
+                        <!--<p class="middle">
                           {{item.keyword}}
-                        </p>
+                        </p>-->
                         <p class="bottom">
-                          <span class="author">{{item.creator}}</span>
+                         <!-- <span class="author">{{item.creator}}</span>-->
                           <span class="date">{{item.createTime}}</span>
                         </p>
                       </div>
@@ -86,16 +86,16 @@
                   </li>
                 </ul>
               </div>
-              <el-pagination
-                v-show="noticeFilterList.length"
-                background
-                layout="prev, pager, next"
-                :current-page="pageNum"
-                :page-count="totalPages"
-                @current-change="changeCurrentPage"
-              >
-              </el-pagination>
             </el-tab-pane>
+            <el-pagination
+                    v-show="noticeFilterList.length"
+                    background
+                    layout="prev, pager, next"
+                    :current-page="pageNum"
+                    :page-count="totalPages"
+                    @current-change="changeCurrentPage"
+            >
+            </el-pagination>
           </el-tabs>
         </div>
       </div>
@@ -314,15 +314,21 @@ export default {
         overflow: hidden;
 
         .item-content {
-          height: 950px;
+          height: 920px;
 
           > .content-list {
             > .content-item {
-              padding: 30px 144px 15px;
+              padding: 21px 40px;
               text-align: left;
+
+              &:last-child {
+                border-color: transparent;
+              }
 
               > .content-item-link {
                 display: inline-block;
+                width: 100%;
+                height: fit-content;
 
                 > .left,
                 > .right {
@@ -339,11 +345,11 @@ export default {
                   > .top {
                     height: 25px;
                     line-height: 25px;
-                    color: #fff !important;
                     background: rgba(149, 160, 184, 1);
                   }
 
                   > .bottom {
+                    float: right;
                     height: 60px;
                     font-size: 26px;
                     line-height: 60px;
@@ -354,7 +360,10 @@ export default {
 
                 > .right {
                   /* background-color: green; */
-                  width: 668px;
+                  display: flex;
+                  width: 100%;
+                  font-weight: 400;
+                  color: #c1d2f3;
 
                   > .top {
                     width: 100%;
@@ -364,7 +373,6 @@ export default {
                     font-size: 14px;
                     text-overflow: ellipsis;
                     white-space: nowrap;
-                    color: rgba(255, 255, 255, 1);
                   }
 
                   > .middle {
@@ -376,15 +384,14 @@ export default {
                     font-size: 12px;
                     line-height: 20px;
                     text-overflow: ellipsis;
-                    color: rgba(139, 160, 202, 1);
                     -webkit-box-orient: vertical;
                     -webkit-line-clamp: 3;
                   }
 
                   > .bottom {
+                    flex: 0 0 112px;
                     font-weight: 400;
                     font-size: 12px;
-                    color: rgba(68, 81, 107, 1);
 
                     > .author {
                       margin-right: 20px;
@@ -523,9 +530,10 @@ export default {
     .el-tabs__nav {
       width: 100%;
       height: 60px;
+      padding-left: 38px;
       margin-top: 30px;
+      font-size: 18px;
       line-height: 60px;
-      text-align: center;
     }
 
     .el-tabs__nav-wrap {
@@ -543,6 +551,7 @@ export default {
     }
 
     .el-pagination {
+      margin-top: 30px;
       text-align: center;
     }
   }
@@ -550,20 +559,13 @@ export default {
   &.night {
     > .inner-box {
       > .content-box {
-        background-color: #121824;
+        background-color: $mainNightBgColor;
 
         > .inner-box {
           .item-content {
             > .content-list {
               > .content-item {
-                > .content-item-link {
-                  > .left,
-                  > .right {
-                    > .top {
-                      color: #fff;
-                    }
-                  }
-                }
+                border-bottom: 1px solid #292d47;
               }
             }
 
@@ -594,11 +596,12 @@ export default {
 
     /deep/ {
       .el-tabs__nav {
-        background-color: #1e2636;
+        background-color: $mainContentNightBgColor;
         box-shadow: 0 0 2px rgba(11, 14, 22, 1);
       }
 
       .el-tabs__item {
+        font-size: 18px;
         color: #42506b;
 
         &.is-active {
@@ -608,7 +611,24 @@ export default {
       }
 
       .el-tabs__content {
-        background: rgba(30, 38, 54, 1);
+       // background: rgba(30, 38, 54, 1);
+        > .el-tab-pane {
+          background: $mainContentNightBgColor;
+        }
+      }
+
+      .el-pagination.is-background .btn-next.disabled,
+      .el-pagination.is-background .btn-next:disabled,
+      .el-pagination.is-background .btn-prev.disabled,
+      .el-pagination.is-background .btn-prev:disabled,
+      .el-pagination.is-background .el-pager li.disabled {
+        color: #fff;
+      }
+
+      .el-pagination {
+        button {
+          background-color: $mainContentNightBgColor !important;
+        }
       }
     }
   }
@@ -622,11 +642,15 @@ export default {
           .item-content {
             > .content-list {
               > .content-item {
+                border-bottom: 1px solid $borderColorOfDay;
+
                 > .content-item-link {
                   > .left,
                   > .right {
+                      color: $fontColorSecondaryOfDay;
+
                     > .top {
-                      color: #338ff5;
+                      color: $dayMainTitleColor;
                     }
 
                     > .middle {
@@ -666,11 +690,38 @@ export default {
       .el-tabs__nav {
         background: #fff;
         box-shadow: 0 0 6px #cfd5df;
+
+        .el-tabs__item {
+          font-size: 18px;
+
+          &.is-active {
+            font-weight: 700;
+            color: #338ff5;
+          }
+        }
       }
 
       .el-tabs__content {
-        background: #fff;
         box-shadow: 0 0 6px #cfd5df;
+
+        .el-tab-pane {
+          background: $mainDayBgColor;
+        }
+      }
+
+      .el-pagination.is-background .btn-next.disabled,
+      .el-pagination.is-background .btn-next:disabled,
+      .el-pagination.is-background .btn-prev.disabled,
+      .el-pagination.is-background .btn-prev:disabled,
+      .el-pagination.is-background .el-pager li.disabled {
+        color: #333;
+      }
+
+      .el-pagination {
+        button {
+          border: none !important;
+          background-color: $mainDayBgColor !important
+        }
       }
     }
   }
