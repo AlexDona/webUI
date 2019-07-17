@@ -559,21 +559,6 @@ export default {
       this.withdrawalAddressList = getNestedData(detailData, 'UserWithdrawAddressPage.list')
       console.log(this.withdrawalAddressList)
       this.totalPageForMyEntrust = getNestedData(detailData, 'UserWithdrawAddressPage.pages') - 0
-      // 控制地址列表无数据时的高度
-      if (this.withdrawalAddressList.length === 0) {
-        if (this.isShowAddressLabel && this.isShowLinkSelect) {
-          this.$el.querySelector('.el-table__empty-block').style.height = '134px'
-        } else {
-          if (this.isShowLinkSelect) {
-            this.$el.querySelector('.el-table__empty-block').style.height = '216px'
-            if (this.isShowAddressLabel) {
-              this.$el.querySelector('.el-table__empty-block').style.height = '196px'
-            }
-          } else {
-            this.$el.querySelector('.el-table__empty-block').style.height = '196px'
-          }
-        }
-      }
       // 接口回来之后吧select状态改为可用
       this.currencyValueStatus = false
       // console.log(this.currencyList)
@@ -656,6 +641,7 @@ export default {
     currencyValue (New) {
       if (New == this.USDT_COIN_ID_S) {
         this.isShowLinkSelect = true
+        // 控制地址列表无数据时的高度
         this.$el.querySelector('.el-table__empty-block').style.height = '196px'
       } else if (this.isShowAddressLabel) {
         this.$el.querySelector('.el-table__empty-block').style.height = '196px'
