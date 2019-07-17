@@ -570,7 +570,7 @@ export default {
               this.$el.querySelector('.el-table__empty-block').style.height = '196px'
             }
           } else {
-            this.$el.querySelector('.el-table__empty-block').style.height = '256px'
+            this.$el.querySelector('.el-table__empty-block').style.height = '196px'
           }
         }
       }
@@ -654,8 +654,11 @@ export default {
   },
   watch: {
     currencyValue (New) {
+      debugger
       if (New == this.USDT_COIN_ID_S) {
         this.isShowLinkSelect = true
+        this.$el.querySelector('.el-table__empty-block').style.height = '196px'
+      } else if (this.isShowAddressLabel) {
         this.$el.querySelector('.el-table__empty-block').style.height = '196px'
       } else {
         this.$el.querySelector('.el-table__empty-block').style.height = '256px'
