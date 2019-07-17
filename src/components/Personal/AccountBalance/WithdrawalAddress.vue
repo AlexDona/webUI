@@ -654,7 +654,6 @@ export default {
   },
   watch: {
     currencyValue (New) {
-      debugger
       if (New == this.USDT_COIN_ID_S) {
         this.isShowLinkSelect = true
         this.$el.querySelector('.el-table__empty-block').style.height = '196px'
