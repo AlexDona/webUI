@@ -96,25 +96,17 @@
                 {{ $t('M.user_coin_order4') }}
             </span>
             <span class="date-picker">
-              <!--开始日期-->
               <el-date-picker
-                :placeholder="$t('M.comm_begin') + $t('M.comm_data')"
-                v-model="startTime"
-                type="date"
+                v-model="checkedTime"
+                type="daterange"
+                range-separator="-"
+                :start-placeholder="$t('M.comm_begin') + $t('M.comm_data')"
+                :end-placeholder="$t('M.comm_end') + $t('M.comm_data')"
+                :editable="false"
+                :picker-options="pickerOptionsTime"
+                @change="changeSelectValue('date', $event)"
                 value-format="yyyy-MM-dd"
-                @change="startDate"
-                clearable
-              >
-              </el-date-picker>
-              <span class="date-short-line">-</span>
-              <!--结束日期-->
-              <el-date-picker
-                :placeholder="$t('M.comm_end') + $t('M.comm_data')"
-                v-model="endTime"
-                value-format="yyyy-MM-dd"
-                type="date"
-                @change="endDate"
-                clearable
+                :clearable="true"
               >
               </el-date-picker>
             </span>
@@ -252,10 +244,15 @@ export default {
           label: 'M.otc_enum_status_yidongjie' // 已冻结
         }
       ],
-      startTime: '', // 默认开始时间
-      endTime: '', // 默认结束时间
       // 商家订单列表
-      merchantsOrdersList: []
+      merchantsOrdersList: [],
+      // 时间选择器
+      checkedTime: [], // 时间选择器选中的时间
+      pickerOptionsTime: {
+        disabledDate: (time) => {
+          return time.getTime() > Date.now()
+        }
+      }
     }
   },
   async created () {
@@ -276,6 +273,16 @@ export default {
       // 改变清除交易中数据方法的状态
       'CHANGE_CLEAR_DATA_STATUS_M'
     ]),
+    // 时间选择
+    changeSelectValue (type, targetValue) {
+      switch (type) {
+        case 'date':
+          // console.log(targetValue)
+          this.checkedTime = targetValue
+          // console.log(this.checkedTime[0], this.checkedTime[1])
+          break
+      }
+    },
     // 切换tab时将全局当前页码改为1加载第一页的数据
     toggleTabPane () {
       this.resetCondition()
@@ -335,8 +342,9 @@ export default {
       this.activatedMerchantsOrdersCoin = ''
       this.activatedMerchantsOrdersCurrency = ''
       this.activatedMerchantsOrdersStatusList = ''
-      this.startTime = ''
-      this.endTime = ''
+      // this.startTime = ''
+      // this.endTime = ''
+      this.checkedTime = []
       // this.getOTCEntrustingOrdersRevocation()
     },
     // 页面加载时请求接口渲染列表
@@ -350,9 +358,11 @@ export default {
         // 状态
         status: activeName,
         // 开始时间
-        startTime: this.startTime,
+        // startTime: this.startTime,
+        startTime: this.checkedTime && this.checkedTime[0] ? this.checkedTime[0] : '',
         // 结束时间
-        endTime: this.endTime,
+        // endTime: this.endTime,
+        endTime: this.checkedTime && this.checkedTime[1] ? this.checkedTime[1] : '',
         // 类型
         // tradeType: this.activatedMerchantsOrdersTraderStyleList,
         pageNum: this.legalTradePageNum
@@ -406,27 +416,6 @@ export default {
             })
           }
         })
-      }
-    },
-    // 时间选择器change事件：
-    // 开始时间
-    startDate () {
-      if (this.endTime) {
-        if (this.startTime > this.endTime) {
-          // 开始时间不能大于结束时间
-          this.$error_tips_X(this.$t('M.otc_time_limit'))
-          return false
-        }
-      }
-    },
-    // 结束时间
-    endDate () {
-      if (this.startTime) {
-        if (this.startTime > this.endTime) {
-          // 开始时间不能大于结束时间
-          this.$error_tips_X(this.$t('M.otc_time_limit'))
-          return false
-        }
       }
     }
   },
@@ -508,16 +497,6 @@ export default {
           > .filtrate-text {
             margin-right: 5px;
           }
-
-          .date-short-line {
-            margin: 0 8px;
-          }
-        }
-
-        > .date-picker {
-          > .date-short-line {
-            margin: 0 3px;
-          }
         }
 
         > .all-clear {
@@ -557,14 +536,16 @@ export default {
         border: 0;
       }
 
-      .el-date-editor.el-input {
-        width: 180px;
-        height: 30px;
-      }
+      .date-picker {
+        .el-input__inner {
+          width: 240px;
+        }
 
-      .el-date-editor .el-input__inner {
-        width: 180px;
-        height: 30px;
+        .el-date-editor {
+          .el-range-separator {
+            line-height: 23px;
+          }
+        }
       }
 
       .cell {
@@ -631,6 +612,14 @@ export default {
         .el-input__inner {
           background-color: #2d3651;
         }
+
+        .date-picker {
+          .el-date-editor {
+            .el-range-separator {
+              color: $mainColorOfWhite;
+            }
+          }
+        }
       }
     }
 
@@ -654,8 +643,6 @@ export default {
       .fiat-main {
         .orders-main-top {
           background-color: $mainColorOfWhite;
-
-          /* box-shadow: 0 0 6px #cfd5df; */
         }
       }
 
