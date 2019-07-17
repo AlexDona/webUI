@@ -1132,7 +1132,7 @@ export default {
 
             .form-input-common-state {
               color: #fff;
-              background-color: #37424c;
+              background-color: $nightInputBg;
             }
 
             .form-button-common {
@@ -1291,6 +1291,7 @@ export default {
             .form-input-common-state {
               border: 1px solid rgba(236, 241, 248, 1);
               color: #333;
+              background-color: #e9edf3;
             }
 
             .form-button-common {

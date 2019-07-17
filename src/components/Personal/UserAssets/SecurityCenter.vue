@@ -1222,7 +1222,7 @@ export default {
       .el-tabs__item {
         height: 45px;
         padding: 0 10px !important;
-        border-left: 4px solid transparent !important;
+        border-left: 0 solid transparent !important;
         text-align: center;
         background-color: transparent !important;
 

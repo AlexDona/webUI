@@ -1431,7 +1431,6 @@ export default {
         border-radius: 2px;
         font-size: 15px;
         color: $mainColor;
-        background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
         box-shadow: 0 2px 2px rgba(13, 17, 25, 1);
       }
 
@@ -1784,6 +1783,12 @@ export default {
           }
         }
       }
+
+      .finance-form-header {
+        .el-input__inner {
+          background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
+        }
+      }
     }
   }
 
@@ -1797,7 +1802,7 @@ export default {
             .finance-form-header {
               .el-input__inner {
                 border-radius: 2px;
-                background: -webkit-linear-gradient(180deg, rgba(51, 143, 245, .1));
+                background: linear-gradient(-90deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
                 box-shadow: none;
               }
 
@@ -2166,6 +2171,18 @@ export default {
     position: absolute;
     top: 50%;
     right: 32%;
+    width: 400px;
+    font-size: 40px;
+    text-align: center;
+    color: #fff;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .banner-title {
+    position: absolute;
+    top: 50%;
+    left: 53%;
     width: 400px;
     font-size: 40px;
     text-align: center;

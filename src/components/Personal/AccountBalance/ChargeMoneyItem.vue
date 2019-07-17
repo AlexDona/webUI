@@ -78,8 +78,8 @@
     p.triangle
     .recharge-content
       USDTLinkNames(v-if="isShowUSDTSelect")
-      // 充值地址
-      p.recharge-content-hint.font-size12  {{ $t('M.comm_charge_recharge') }}{{ $t('M.comm_site') }}
+      // 充币地址
+      p.recharge-content-hint.font-size12  {{ $t('M.comm_charge_money') }}{{ $t('M.comm_site') }}
       .input-box
         input.hint-input.border-radius2.padding-l15.float-left(
           disabled
@@ -107,8 +107,8 @@
     .recharge-content-right.flex1
       p.recharge-content-code.margin-top20.float-left
         QRCode.ercode(:value="chargeMoneyAddress")
-      //  充值记录
-      p.code-list.text-align-r.float-right.cursor-pointer.font-size12(@click.prevent="jumpToOtherTab('billing-details', coinId, 1)") {{ $t('M.comm_charge_recharge') }}{{ $t('M.comm_record') }}
+      //  充币记录
+      p.code-list.text-align-r.float-right.cursor-pointer.font-size12(@click.prevent="jumpToOtherTab('billing-details', coinId, 1)") {{ $t('M.comm_charge_money') }}{{ $t('M.comm_record') }}
 
 </template>
 <script>

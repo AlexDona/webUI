@@ -770,6 +770,7 @@ export default {
           margin: 2px;
           border: 1px solid rgba(72, 87, 118, 1);
           border-radius: 2px;
+          font-size: 12px;
           vertical-align: top;
           color: #fff;
         }
@@ -847,6 +848,12 @@ export default {
           &.is-leaf {
             border-top: 0;
           }
+        }
+
+        .el-table__header,
+        .el-table__body {
+          table-layout: auto;
+          width: 970px !important;
         }
       }
 
