@@ -317,6 +317,7 @@ export default {
 
       > .coin-item {
         > .coin-item {
+          display: flex;
           height: 30px;
           padding: 0 10px;
           line-height: 30px;

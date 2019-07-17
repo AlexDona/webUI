@@ -608,9 +608,9 @@ export default {
       authenticationStatusFront: false, // 用户高级认证前
       authenticationNotPass: false, // 用户高级未通过
       // 身份认证默认图片
-      firstPictureSrc: require('../../../assets/user/card_positive.png'), // 正面
+      firstPictureSrc: require('../../../assets/user/card_negative.png'), // 正面
       firstPictureSrcShow: true, // 显示身份证正面
-      secondPictureSrc: require('../../../assets/user/card_negative.png'), // 反面
+      secondPictureSrc: require('../../../assets/user/card_positive.png'), // 反面
       secondPictureSrcShow: true, // 显示身份证反面
       thirdPictureSrc: require('../../../assets/user/card_handheld.png'), // 手持
       thirdPictureSrcShow: true, // 显示手持身份证
