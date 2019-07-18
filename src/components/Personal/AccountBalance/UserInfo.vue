@@ -126,12 +126,12 @@
              display-flex margin-top16"
             v-if="$isVIPEnable_S_X"
           >
-            <span class="info-centre-left float-left font-size12">
+            <span class="info-centre-left text-indent float-left font-size12">
               <!--会员等级 - -->
               {{ $t('M.user_assets_grade_membership') }} -
             </span>
             <p
-              class="info-picture margin-left10 float-left cursor-pointer"
+              class="info-picture float-left cursor-pointer"
               @click="stateOpenVip"
             >
               <!--未申请VIP默认背景-->
@@ -200,16 +200,16 @@
               </div>
               <div v-else>
                 <p
-                  class="info-color font-size12"
+                  class="info-color font-size16"
                   v-if="activeConvertCurrencyObj.shortName !== 'CNY'"
                 >
-                  0.00 <span class="font-size12">{{ activeConvertCurrencyObj.shortName }}</span>
+                  0.00 <span class="font-size14">{{ activeConvertCurrencyObj.shortName }}</span>
                 </p>
                 <p
-                  class="info-color font-size12"
+                  class="info-color font-size16"
                   v-else
                 >
-                  0.00  <span class="font-size12">CNY</span>
+                  0.00  <span class="font-size14">CNY</span>
                 </p>
               </div>
             </div>
@@ -361,26 +361,30 @@ export default {
             }
 
             > .info-right {
-              margin-right: 12px;
+              margin-right: 29px;
             }
           }
 
           > .margin-top16 {
               justify-content: center;
 
-            > .info-centre {
-              padding: 0 70px;
+              .text-indent {
+                  text-indent: -70px;
 
-              > .info-picture {
-                position: relative;
+                  > .info-centre {
+                      padding: 0 70px;
 
-                > .info-centre-right {
-                  position: absolute;
-                  top: 0;
-                  left: 17px;
-                }
+                      > .info-picture {
+                          position: relative;
+
+                          > .info-centre-right {
+                              position: absolute;
+                              top: 0;
+                              left: 17px;
+                          }
+                      }
+                  }
               }
-            }
           }
 
           > .info-discount {
@@ -410,7 +414,7 @@ export default {
           }
 
           > .asset-color {
-            padding-left: 67px;
+            padding-left: 58px;
           }
         }
       }
