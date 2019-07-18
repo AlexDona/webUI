@@ -248,7 +248,7 @@
                         {{$t('M.finance_payment') + computedTime}}
                         <strong class="blue">
                           {{$t('M.finance_return_rate')}}
-                          {{formLabelAlign.jsonTimeline[0].amount ? (formLabelAlign.jsonTimeline[0].amount - 0).toFixed(6) : ''}}
+                          {{formLabelAlign.jsonTimeline.length && formLabelAlign.jsonTimeline[0].amount ? (formLabelAlign.jsonTimeline[0].amount - 0).toFixed(6) : ''}}
                         </strong>
                       </span>
                       <span
@@ -260,7 +260,7 @@
                     </div>
                   </el-form-item>
                 </el-form>
-                <div class="show-dividend-time-list">
+                <div class="show-dividend-time-list" v-if="formLabelAlign.jsonTimeline.length">
                   <transition name="el-fade-in-linear">
                     <ul v-show='showDividendTime'>
                       <li
@@ -991,8 +991,10 @@ export default {
       if (!data) return false
       this.formLabelAlign = _.get(data, 'data')
       this.$refs.changeAlignNum.value = this.formLabelAlign.number
-      let newTimeArr = this.formLabelAlign.jsonTimeline[0].date.split(' ')[0].split('-')
-      this.computedTime = newTimeArr[0] + '/' + newTimeArr[1] + '/' + newTimeArr[2]
+      if (this.formLabelAlign.jsonTimeline.length) {
+        let newTimeArr = this.formLabelAlign.jsonTimeline[0].date.split(' ')[0].split('-')
+        this.computedTime = newTimeArr[0] + '/' + newTimeArr[1] + '/' + newTimeArr[2]
+      }
       this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
     },
     // 添加理财记录

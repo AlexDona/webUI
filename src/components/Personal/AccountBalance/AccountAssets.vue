@@ -2388,7 +2388,7 @@ export default {
                 > .table-charge-money,
                 > .table-mention-money,
                 > .table-deal {
-                  color: #7d90ac;
+                  color: #338ff5;
 
                   > .type-transaction {
                     border: 1px solid rgba(38, 47, 56, .1);
@@ -2409,6 +2409,10 @@ export default {
                       }
                     }
                   }
+                }
+
+                > .money-color {
+                  color: #7d90ac;
                 }
               }
 

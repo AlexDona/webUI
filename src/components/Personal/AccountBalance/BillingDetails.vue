@@ -769,10 +769,6 @@ export default {
           .el-range-separator {
             color: #fff;
           }
-
-          .el-range-separator {
-            line-height: 23px;
-          }
         }
 
         .el-table {
@@ -971,6 +967,10 @@ export default {
 
         .el-range__icon {
           line-height: 25px;
+        }
+
+        .el-range-separator {
+          line-height: 26px;
         }
       }
 
