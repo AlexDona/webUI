@@ -1522,10 +1522,6 @@ export default {
     margin-top: 10px;
   }
 
-  .box-shadow {
-    box-shadow: 0 2px 2px 0 rgba(20, 23, 37, 1);
-  }
-
   .text-indent1 {
     text-indent: 30px;
   }
@@ -2071,6 +2067,10 @@ export default {
       color: $nightFontColor;
       background-color: $mainNightBgColor;
 
+      .box-shadow {
+          box-shadow: 0 2px 2px 0 rgba(20, 23, 37, 1);
+      }
+
       .button-color {
         color: rgba(255, 255, 255, .7);
         background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
@@ -2335,6 +2335,10 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
+
+      .box-shadow {
+          box-shadow: 0 1px 3px 0 rgba(236, 236, 236, 1);
+      }
 
       .warning-text {
         color: #333;
