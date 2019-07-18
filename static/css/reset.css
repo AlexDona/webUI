@@ -458,6 +458,7 @@ input {
 }
 
 .el-message {
+  z-index: 23000 !important;
   top: 35%;
   min-width: 0;
 }

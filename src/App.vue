@@ -87,6 +87,7 @@ export default {
         language: this.$language_S_X
       }
       const data = await getNavigationsAJAX(params)
+      if (!data) return
       // console.log(data)
       this.navigation = _.get(data, 'data')
       _.forEach(this.navigation, (nav, index) => {
