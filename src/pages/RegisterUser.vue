@@ -1164,6 +1164,9 @@ export default {
   watch: {
     activeMethod () {
       this.SET_COUNT_DOWN_RESET_STATUS(true)
+    },
+    $language_S_X () {
+      this.setErrorMsg()
     }
   }
 }

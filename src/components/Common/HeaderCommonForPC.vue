@@ -587,6 +587,32 @@ export default{
          }
        }
      }
+
+     .pay-password-loaded-dialog {
+       > .el-dialog {
+         background-color: #28334a;
+
+         .el-dialog__header {
+           padding: 10px;
+           background-color: #20293c;
+
+           .el-dialog__title {
+             font-size: 16px;
+             color: #fff;
+           }
+
+           .el-dialog__headerbtn {
+             top: 12px;
+           }
+         }
+
+         > .el-dialog__body {
+           > p {
+             color: $upColor;
+           }
+         }
+       }
+     }
     }
   }
 
@@ -623,6 +649,32 @@ export default{
                     background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
                   }
                 }
+              }
+            }
+          }
+        }
+
+        .pay-password-loaded-dialog {
+          > .el-dialog {
+            background-color: #fff;
+
+            .el-dialog__header {
+              padding: 10px;
+              background-color: #fff;
+
+              .el-dialog__title {
+                font-size: 16px;
+                color: #333;
+              }
+
+              .el-dialog__headerbtn {
+                top: 12px;
+              }
+            }
+
+            > .el-dialog__body {
+              > p {
+                color: $upColor;
               }
             }
           }
