@@ -163,6 +163,7 @@
             class="otc-im"
             :orderInfo="item"
             :top="OTC_IM_TOP"
+            activeName="CANCELED"
           />
         </div>
       </div>

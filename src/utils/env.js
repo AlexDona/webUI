@@ -42,7 +42,7 @@ const dev210Config = {
   apiCommonUrl: 'http://192.168.2.210:8888/',
   socketUrl: 'ws://192.168.2.210:8087/market',
   loginSocketUrl: 'ws://192.168.2.210:8888/qrcodeLogin/',
-  OTCIMSocketUrl: 'ws://192.168.2.210:8888/websoc'
+  OTCIMSocketUrl: 'ws://192.168.2.210:8068/websoc'
 }
 // eslint-disable-next-line
 const prodConfig = {

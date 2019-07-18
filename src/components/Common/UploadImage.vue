@@ -13,6 +13,7 @@
     :on-exceed="handleExceed"
     :on-success="handleSuccess"
     :before-upload="beforeUpload"
+    :disabled="disabled"
     accept="image/jpeg,image/jpg,image/png,image/bmp"
     :show-file-list="false"
     )
@@ -31,6 +32,9 @@ export default {
   // mixins: [],
   // components: {},
   props: {
+    disabled: {
+      type: Boolean
+    },
     // 是否需要 成功提示
     isNeedSuccessTips: {
       type: Boolean,

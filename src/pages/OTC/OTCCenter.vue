@@ -305,145 +305,145 @@
         </div>
       </div>
       <!-- 2.2 订单管理-->
-      <div
-        class="otc-order-manage"
-        id="orderView"
-      >
-        <!--交易中订单右箭头-->
-        <div class="trading-order-right-arrow">
-          <i
-            class="el-icon-caret-right font-size20"
-            v-if="activeName === 'first'"
-          >
-          </i>
-        </div>
-        <!--交易中订单图标沙漏-->
-        <div
-          class="trading-order-sand-clock cursor-pointer"
-          @click="toggleTradingOrder"
-        >
-          <IconFontCommon
-            v-if="activeName === 'first'"
-            iconName="icon-shalou"
-            style="color: #fff;"
-          />
-          <IconFontCommon
-            v-else
-            iconName="icon-shalou"
-            style="color: #4f85da;"
-          />
-        </div>
-        <!--订单管理tab栏-->
-        <el-tabs
-          :tab-position = "tabPosition"
-          @tab-click = "toggleTabPane"
-          v-model = "activeName"
-        >
-          <!-- 2.2.1 交易中的订单 -->
-          <el-tab-pane
-            name = "first"
-            :disabled="isDisabled"
-            :label="$t('M.otc_trading')"
-          >
-            <!--<span slot="label">
-              <i
-                class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-if="activeName === 'first'"
-              >
-              </i>
-              <IconFontCommon
-                iconName="icon-shalou"
-              />
-                交易中订单
-              {{$t('M.otc_trading')}}
-            </span>-->
-            <OTCTradingOrder v-if="activeName === 'first'"/>
-          </el-tab-pane>
-          <!-- 2.2.2 已完成订单 -->
-          <el-tab-pane
-            name = "second"
-            :disabled="isDisabled"
-          >
-            <span slot="label">
-              <i
-                class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-if="activeName === 'second'"
-              >
-              </i>
-              <IconFontCommon
-                iconName="icon-msnui-task-complete"
-              />
-              <!-- 已完成订单 -->
-              {{$t('M.otc_stocks')}}
-            </span>
-            <OTCCompletedOrder v-if="activeName === 'second'"/>
-          </el-tab-pane>
-          <!-- 2.2.3 已取消订单 -->
-          <el-tab-pane
-            name = "third"
-            :disabled="isDisabled"
-          >
-            <span slot="label">
-              <i
-                class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-if="activeName === 'third'"
-              >
-              </i>
-              <IconFontCommon
-                iconName="icon-cancel_order"
-              />
-              <!-- 已取消订单 -->
-              {{$t('M.otc_canceled')}}
-            </span>
-            <OTCCanceledOrder v-if="activeName === 'third'"/>
-          </el-tab-pane>
-          <!-- 2.2.4 冻结中订单 -->
-          <el-tab-pane
-            name = "fourth"
-            :disabled="isDisabled"
-          >
-            <span slot="label">
-              <i
-                class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-if="activeName === 'fourth'"
-              >
-              </i>
-              <IconFontCommon
-                iconName="icon-dongjie"
-              />
-              <!-- 冻结中订单 -->
-              {{$t('M.otc_freezingOrder')}}
-            </span>
-            <OTCFreezingOrder v-if="activeName === 'fourth'"/>
-          </el-tab-pane>
-          <!-- 2.2.5 委托订单 -->
-          <el-tab-pane
-            name = "fifth"
-            :disabled="isDisabled"
-          >
-            <span slot="label">
-              <i
-                class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-if="activeName === 'fifth'"
-              >
-              </i>
-              <IconFontCommon
-                iconName="icon-daohang2"
-              />
-              <!-- 委托订单 -->
-              {{$t('M.otc_entrust')}}
-            </span>
-            <OTCEntrustOrder v-if="activeName === 'fifth'"/>
-          </el-tab-pane>
-        </el-tabs>
-        <!-- 查询更多 -->
-        <span
-          class="more"
-          @click="queryMoreOrder"
-        >
-            {{$t('M.otc_transaction_inquiries_more')}}
-          </span>
-      </div>
+      <!--<div-->
+        <!--class="otc-order-manage"-->
+        <!--id="orderView"-->
+      <!--&gt;-->
+        <!--&lt;!&ndash;交易中订单右箭头&ndash;&gt;-->
+        <!--<div class="trading-order-right-arrow">-->
+          <!--<i-->
+            <!--class="el-icon-caret-right font-size20"-->
+            <!--v-if="activeName === 'first'"-->
+          <!--&gt;-->
+          <!--</i>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;交易中订单图标沙漏&ndash;&gt;-->
+        <!--<div-->
+          <!--class="trading-order-sand-clock cursor-pointer"-->
+          <!--@click="toggleTradingOrder"-->
+        <!--&gt;-->
+          <!--<IconFontCommon-->
+            <!--v-if="activeName === 'first'"-->
+            <!--iconName="icon-shalou"-->
+            <!--style="color: #fff;"-->
+          <!--/>-->
+          <!--<IconFontCommon-->
+            <!--v-else-->
+            <!--iconName="icon-shalou"-->
+            <!--style="color: #4f85da;"-->
+          <!--/>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;订单管理tab栏&ndash;&gt;-->
+        <!--<el-tabs-->
+          <!--:tab-position = "tabPosition"-->
+          <!--@tab-click = "toggleTabPane"-->
+          <!--v-model = "activeName"-->
+        <!--&gt;-->
+          <!--&lt;!&ndash; 2.2.1 交易中的订单 &ndash;&gt;-->
+          <!--<el-tab-pane-->
+            <!--name = "first"-->
+            <!--:disabled="isDisabled"-->
+            <!--:label="$t('M.otc_trading')"-->
+          <!--&gt;-->
+            <!--&lt;!&ndash;<span slot="label">-->
+              <!--<i-->
+                <!--class="el-icon-caret-right otc-tab-pane-arrow-right"-->
+                <!--v-if="activeName === 'first'"-->
+              <!--&gt;-->
+              <!--</i>-->
+              <!--<IconFontCommon-->
+                <!--iconName="icon-shalou"-->
+              <!--/>-->
+                <!--交易中订单-->
+              <!--{{$t('M.otc_trading')}}-->
+            <!--</span>&ndash;&gt;-->
+            <!--<OTCTradingOrder v-if="activeName === 'first'"/>-->
+          <!--</el-tab-pane>-->
+          <!--&lt;!&ndash; 2.2.2 已完成订单 &ndash;&gt;-->
+          <!--<el-tab-pane-->
+            <!--name = "second"-->
+            <!--:disabled="isDisabled"-->
+          <!--&gt;-->
+            <!--<span slot="label">-->
+              <!--<i-->
+                <!--class="el-icon-caret-right otc-tab-pane-arrow-right"-->
+                <!--v-if="activeName === 'second'"-->
+              <!--&gt;-->
+              <!--</i>-->
+              <!--<IconFontCommon-->
+                <!--iconName="icon-msnui-task-complete"-->
+              <!--/>-->
+              <!--&lt;!&ndash; 已完成订单 &ndash;&gt;-->
+              <!--{{$t('M.otc_stocks')}}-->
+            <!--</span>-->
+            <!--<OTCCompletedOrder v-if="activeName === 'second'"/>-->
+          <!--</el-tab-pane>-->
+          <!--&lt;!&ndash; 2.2.3 已取消订单 &ndash;&gt;-->
+          <!--<el-tab-pane-->
+            <!--name = "third"-->
+            <!--:disabled="isDisabled"-->
+          <!--&gt;-->
+            <!--<span slot="label">-->
+              <!--<i-->
+                <!--class="el-icon-caret-right otc-tab-pane-arrow-right"-->
+                <!--v-if="activeName === 'third'"-->
+              <!--&gt;-->
+              <!--</i>-->
+              <!--<IconFontCommon-->
+                <!--iconName="icon-cancel_order"-->
+              <!--/>-->
+              <!--&lt;!&ndash; 已取消订单 &ndash;&gt;-->
+              <!--{{$t('M.otc_canceled')}}-->
+            <!--</span>-->
+            <!--<OTCCanceledOrder v-if="activeName === 'third'"/>-->
+          <!--</el-tab-pane>-->
+          <!--&lt;!&ndash; 2.2.4 冻结中订单 &ndash;&gt;-->
+          <!--<el-tab-pane-->
+            <!--name = "fourth"-->
+            <!--:disabled="isDisabled"-->
+          <!--&gt;-->
+            <!--<span slot="label">-->
+              <!--<i-->
+                <!--class="el-icon-caret-right otc-tab-pane-arrow-right"-->
+                <!--v-if="activeName === 'fourth'"-->
+              <!--&gt;-->
+              <!--</i>-->
+              <!--<IconFontCommon-->
+                <!--iconName="icon-dongjie"-->
+              <!--/>-->
+              <!--&lt;!&ndash; 冻结中订单 &ndash;&gt;-->
+              <!--{{$t('M.otc_freezingOrder')}}-->
+            <!--</span>-->
+            <!--<OTCFreezingOrder v-if="activeName === 'fourth'"/>-->
+          <!--</el-tab-pane>-->
+          <!--&lt;!&ndash; 2.2.5 委托订单 &ndash;&gt;-->
+          <!--<el-tab-pane-->
+            <!--name = "fifth"-->
+            <!--:disabled="isDisabled"-->
+          <!--&gt;-->
+            <!--<span slot="label">-->
+              <!--<i-->
+                <!--class="el-icon-caret-right otc-tab-pane-arrow-right"-->
+                <!--v-if="activeName === 'fifth'"-->
+              <!--&gt;-->
+              <!--</i>-->
+              <!--<IconFontCommon-->
+                <!--iconName="icon-daohang2"-->
+              <!--/>-->
+              <!--&lt;!&ndash; 委托订单 &ndash;&gt;-->
+              <!--{{$t('M.otc_entrust')}}-->
+            <!--</span>-->
+            <!--<OTCEntrustOrder v-if="activeName === 'fifth'"/>-->
+          <!--</el-tab-pane>-->
+        <!--</el-tabs>-->
+        <!--&lt;!&ndash; 查询更多 &ndash;&gt;-->
+        <!--<span-->
+          <!--class="more"-->
+          <!--@click="queryMoreOrder"-->
+        <!--&gt;-->
+            <!--{{$t('M.otc_transaction_inquiries_more')}}-->
+          <!--</span>-->
+      <!--</div>-->
     </div>
   </div>
 </template>

@@ -273,9 +273,9 @@ export default {
       socket: '',
       OTC_IM_TOPS: {
         trading: `170px`,
-        completed: `170px`,
+        completed: `99px`,
         canceled: `99px`,
-        frozen: `170px`
+        frozen: `99px`
       }
     }
   },
@@ -295,7 +295,6 @@ export default {
     })
   },
   // mounted () {},
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
@@ -373,7 +372,7 @@ export default {
       // this.getOTCEntrustingOrdersRevocation()
     },
     // 页面加载时请求接口渲染列表
-    async getOTCEntrustingOrdersRevocation (activeName) {
+    async getOTCEntrustingOrdersRevocation () {
       // console.log(activeName)
       let params = {
         // 币种
@@ -381,7 +380,7 @@ export default {
         // 法币
         currencyId: this.activatedMerchantsOrdersCurrency,
         // 状态
-        status: activeName,
+        status: this.activeName,
         // 开始时间
         startTime: this.startTime,
         // 结束时间
@@ -392,14 +391,14 @@ export default {
         // pageSize: this.legalTradePageSize
       }
       // 20190218 增加委单和其他状态交易类型字段判断 委托订单用entrustType字段其他用tradeType字段
-      if (activeName == 'ENTRUSTED') {
+      if (this.activeName == 'ENTRUSTED') {
         params.entrustType = this.activatedMerchantsOrdersTraderStyleList
         params.pageSize = 10 // 委托订单每页显示10条
       } else {
         params.tradeType = this.activatedMerchantsOrdersTraderStyleList
         params.pageSize = this.legalTradePageSize // 每页显示5条
       }
-      if (activeName == 'ENTRUSTED') {
+      if (this.activeName == 'ENTRUSTED') {
         const data = await getOTCEntrustingOrders(params)
         console.log('委托订单列表')
         console.log(data)
@@ -407,7 +406,7 @@ export default {
         let OTCEntrustingOrdersData = getNestedData(data, 'data')
         // 返回数据正确的逻辑 重新渲染列表
         this.SET_LEGAL_TENDER_LIST({
-          type: activeName,
+          type: this.activeName,
           data: OTCEntrustingOrdersData.list
         })
         // console.log(data)
@@ -427,7 +426,7 @@ export default {
             let merchantsOrdersListData = getNestedData(data, 'data.data')
             // 返回数据正确的逻辑 重新渲染列表
             this.SET_LEGAL_TENDER_LIST({
-              type: activeName,
+              type: this.activeName,
               data: merchantsOrdersListData.list
             })
             // 刷新列表之后将重新渲染交易中订单列表状态改为false
@@ -474,6 +473,8 @@ export default {
       legalTradePageSize: state => state.personal.legalTradePageSize,
       legalTraderCompletedReflashStatus: state => state.personal.legalTraderCompletedReflashStatus,
       legalTraderEntrustReflashStatus: state => state.personal.legalTraderEntrustReflashStatus,
+      legalTraderCancelReflashStatus: state => state.personal.legalTraderCancelReflashStatus,
+      legalTraderTradingReflashStatus: state => state.personal.legalTraderTradingReflashStatus,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
@@ -482,17 +483,42 @@ export default {
   },
   watch: {
     activeName () {
-      this.getOTCEntrustingOrdersRevocation(this.activeName)
+      this.getOTCEntrustingOrdersRevocation()
     },
     legalTradePageNum () {
-      this.getOTCEntrustingOrdersRevocation(this.activeName)
+      this.getOTCEntrustingOrdersRevocation()
     },
-    legalTraderCompletedReflashStatus () {
-      this.getOTCEntrustingOrdersRevocation(this.activeName)
+    legalTraderCompletedReflashStatus (New) {
+      if (New) {
+        this.getOTCEntrustingOrdersRevocation()
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'COMPLETED',
+          status: false
+        })
+      }
+    },
+    legalTraderTradingReflashStatus (New) {
+      if (New) {
+        this.getOTCEntrustingOrdersRevocation()
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'TRADING',
+          status: false
+        })
+      }
+    },
+    legalTraderCancelReflashStatus (New) {
+      console.log(New)
+      if (New) {
+        this.getOTCEntrustingOrdersRevocation()
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'CANCELED',
+          status: false
+        })
+      }
     },
     legalTraderEntrustReflashStatus (newVal) {
-      this.getOTCEntrustingOrdersRevocation(this.activeName)
       if (newVal) {
+        this.getOTCEntrustingOrdersRevocation()
         this.SET_LEGAL_TENDER_REFLASH_STATUS({
           type: 'ENTRUSTED',
           status: false
@@ -502,7 +528,7 @@ export default {
     userCenterActiveName (newVal) {
       this.resetCondition()
       if (newVal === 'fiat-orders') {
-        this.getOTCEntrustingOrdersRevocation(this.activeName)
+        this.getOTCEntrustingOrdersRevocation()
       }
     },
     //  监控重新渲染交易中订单列表状态:当为true时调用重新刷新列表方法
@@ -510,7 +536,7 @@ export default {
       console.log('重新渲染交易中订单列表状态')
       console.log(this.reRenderTradingListStatus)
       if (this.reRenderTradingListStatus) {
-        this.getOTCEntrustingOrdersRevocation(this.activeName)
+        this.getOTCEntrustingOrdersRevocation()
       }
     }
   }

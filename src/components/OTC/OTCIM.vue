@@ -4,7 +4,9 @@
   description: 当前组件为 OTC 订单页面 的 OTC即时通讯组件
 -->
 <template lang="pug">
-  .otc-im-box
+  .otc-im-box(
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+  )
     button.toggle-button.cursor-pointer(
      :class="{'has-new-msg': hasUnReadMessage}"
       @click="toggleShowIMContent('')"
@@ -18,13 +20,9 @@
         // 头像、
         .h-left
           // 头像
-          .avatar 城
+          .avatar {{oppositeShortNickName}}
           //  昵称
-          span.nick-name {{nickName}}
-          // 最近成交
-          .resent-deal
-            span.label {{recentDealLabel}}
-            span.value {{recentDealCount}}笔
+          span.nick-name {{oppositeNickName}}
         .h-right
           button.close-button(
             @click="toggleShowIMContent('close')"
@@ -34,8 +32,14 @@
       .bottom
         // 聊天内容
         .chat-box
-          .inner-box(v-if="messages.length")
-            .message(v-for="(message, msgIndex) in messages")
+          .inner-box(
+            v-show="messages.length"
+            :id="`chat${orderId}`"
+          )
+            .message(
+              v-for="(message, msgIndex) in messages"
+              :style="{'margin-bottom': isShowDate(msgIndex, message.createTime,messages) ? '20px': '0px' }"
+            )
               // 系统消息
               .system-msg(v-if="message.messageType == 'sysMsg'")
                 .avatar
@@ -47,7 +51,7 @@
                 )
               // 对方的消息
               .opposite-msg(v-else-if="message.userId !== $userInfo_X.id")
-                .avatar 成
+                .avatar {{oppositeShortNickName}}
                 TheOTCIMContent(
                   :isShowDate="msgIndex|isShowDate(message.createTime, messages)"
                   :message="message"
@@ -55,7 +59,7 @@
                 )
               //  自己的消息
               .self-msg(v-else)
-                .avatar 成
+                .avatar {{selfShortNickName}}
                 TheOTCIMContent(
                   :isShowDate="msgIndex|isShowDate(message.createTime, messages)"
                   :message="message"
@@ -63,17 +67,22 @@
                 )
         //  发送聊天内容
         .send-chat-box
-          .inner-box
+          .inner-box(:class="{disabled: IsOver24Hours}")
             el-input.edit-box(
               type="textarea"
-              :placeholder="editPlaceholder"
+              :placeholder="$t(editPlaceholder)"
               :class="{'has-content': editText}"
               v-model="editText"
               :disabled="IsOver24Hours"
-              @keyup.native.enter="sendMessage"
+              @keydown.native.enter="sendMessageByEnter"
             )
+            el-button.send-button(
+              v-if="editText"
+              @click="sendMessage"
+            ) {{$t('M.login_send')}}
             // 上传图片
             UploadImage.image-button(
+              v-else
               :isNeedSuccessTips="false"
               @uploadSuccess="uploadSuccess"
             )
@@ -104,6 +113,9 @@ export default {
     TheOTCIMContent
   },
   props: {
+    activeName: {
+      type: String
+    },
     // 当前订单信息
     orderInfo: {
       type: Object
@@ -114,31 +126,34 @@ export default {
   },
   data () {
     return {
-      nickName: '诚信商贸',
-      recentDealLabel: '近30天成交',
-      // 最近30天成交笔数
-      recentDealCount: 30,
       isShowSelf: false,
-      editPlaceholder: '下单24H后不能聊天',
+      editPlaceholder: 'M.otc_im_edit_placeholder',
       imageInputRef: 'image-input',
       editText: '',
       messages: [],
-      ONE_DAY: 86400 * 1000,
       shadowImage: '',
       isShowShadow: false,
       targetDeg: 0
     }
   },
   // created () {},
-  // mounted () {}
+  mounted () {
+    this.receiveMessage()
+  },
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
     ...mapMutations([
-      'UPDATE_IM_BOX_SHOW_STATUS_M'
+      'UPDATE_IM_BOX_SHOW_STATUS_M',
+      'SET_LEGAL_TENDER_REFLASH_STATUS',
+      'UPDATE_IM_HAS_NEW_MESSAGE_MAP_M'
     ]),
+    sendMessageByEnter (e) {
+      e.preventDefault()
+      this.sendMessage()
+    },
     // 发送图片成功回调
     uploadSuccess ({type, index, url}) {
       console.log(type, index, url)
@@ -190,14 +205,21 @@ export default {
     async toggleShowIMContent (status) {
       // this.isShowSelf = !this.isShowSelf
       this.messages = []
+      // 开启聊天
       if (!this.IMBoxShowStatusMap_S[this.orderId]) {
         const data = await getIMHistoryRecordAJAX({orderId: this.orderId})
-        console.log(data)
+        // console.log(data)
         this.messages = _.get(data, 'data')
+        this.UPDATE_IM_HAS_NEW_MESSAGE_MAP_M({orderId: this.orderId, status: false})
       }
 
+      // 关闭聊天
       if (this.IMBoxShowStatusMap_S[this.orderId]) {
-        this.updateIMStatus()
+        await this.updateIMStatus()
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: this.activeName,
+          status: true
+        })
       }
 
       if (status) {
@@ -211,13 +233,31 @@ export default {
           status: !this.IMBoxShowStatusMap_S[this.orderId]
         })
       }
+      this.resetDOMScroll(this.chatDOM.scrollHeight)
+    },
+    resetDOMScroll (height) {
+      this.chatDOM.scrollTop = height
     },
     // 回调消息
     receiveMessage () {
       this.IMSocket_S.on('message', (e) => {
-        console.log(e)
+        const {isOppositeMsg, orderId} = e
+        console.log(orderId, this.orderId)
+        this.UPDATE_IM_HAS_NEW_MESSAGE_MAP_M({
+          orderId,
+          status: isOppositeMsg
+        })
+
         this.messages.push(e)
+        this.$nextTick(() => {
+          this.resetDOMScroll(this.chatDOM.scrollHeight)
+        })
       })
+    },
+    isShowDate (index, createTime, messages) {
+      let currentDate = new Date(createTime - 0).getDay()
+      let lastDate = new Date((messages[(index > 0 ? index - 1 : index) ].createTime - 0)).getDay()
+      return index > 0 && currentDate == lastDate ? false : true
     },
     // 更新当前订单已读未读状态
     async updateIMStatus () {
@@ -243,22 +283,65 @@ export default {
   computed: {
     ...mapState({
       IMBoxShowStatusMap_S: state => state.OTC.IMBoxShowStatusMap_S,
+      IMHasNewMessageMap_S: state => state.OTC.IMHasNewMessageMap_S,
       IMSocket_S: state => state.OTC.OTCIMSocket_S
     }),
+    chatDOM () {
+      return document.getElementById(`chat${this.orderId}`)
+    },
     orderId () {
       return _.get(this.orderInfo, 'id')
     },
     hasUnReadMessage () {
-      return _.get(this.orderInfo, 'hasUnReadMessage')
+      // 有新消息：
+      // 1、 后台返回有新消息 且 聊天窗口 处于 关闭状态
+      // 2、 有socket 推送且处于 关闭状态
+      return (!this.isShowContent && this.IMHasNewMessageMap_S[this.orderId]) || (_.get(this.orderInfo, 'hasUnReadMessage') && !this.isShowContent)
     },
     IsOver24Hours () {
       return _.get(this.orderInfo, 'IsOver24Hours')
     },
+    currencyId () {
+      return _.get(this.orderInfo, 'currencyId')
+    },
+    coinId () {
+      return _.get(this.orderInfo, 'coinId')
+    },
+    buyId () {
+      return _.get(this.orderInfo, 'buyId')
+    },
+    sellNickName () {
+      return _.get(this.orderInfo, 'sellNickName')
+    },
+    buyNickName () {
+      return _.get(this.orderInfo, 'buyNickName')
+    },
+    // 当前聊天用户 昵称
+    selfNickName () {
+      const {id} = this.$userInfo_X
+      return id == this.buyId ? this.buyNickName : this.sellNickName
+    },
+    // 当前聊天对方用户 昵称
+    oppositeNickName () {
+      return this.selfNickName == this.buyNickName ? this.sellNickName : this.buyNickName
+    },
+    selfShortNickName () {
+      return this.selfNickName.length ? this.selfNickName.substring(0, 1) : ''
+    },
+    oppositeShortNickName () {
+      return this.oppositeNickName.length ? this.oppositeNickName.substring(0, 1) : ''
+    },
     isShowContent () {
       return this.IMBoxShowStatusMap_S[this.orderId]
     }
+  },
+  watch: {
+    isShowContent (New) {
+      if (!New) {
+        // this.UPDATE_IM_HAS_NEW_MESSAGE_MAP_M({orderId: this.orderId, status: false})
+      }
+    }
   }
-  // watch: {}
 }
 </script>
 
@@ -279,10 +362,9 @@ export default {
       z-index 1000000
       text-align center
       >.inner-box
-        /*background-color pink*/
         height 800px
         width 800px
-        margin 0 auto 50px
+        margin 50px auto 50px
         line-height 600px
         position relative
         >img
@@ -293,7 +375,6 @@ export default {
           max-height 800px
           transition all .4s
       >.rotate-button
-        /*background-color pink*/
         padding 10px
         cursor pointer
         >.iconfont
@@ -384,15 +465,19 @@ export default {
       >.bottom
         background-color #242d41
         >.chat-box
-          height 309px
-          /*background-color pink*/
-          overflow-y auto
+          height 300px
+          margin 5px 0
+          overflow hidden
           >.inner-box
-            /*min-height 350px*/
+            height 300px
+            overflow-y auto
             /*background-color green*/
-            padding 15px
+            padding 25px 15px
             box-sizing border-box
             >.message
+              margin-top 20px
+              margin-bottom 10px
+              border 1px solid transparent
               /* 客服信息 */
               >.system-msg,
               >.opposite-msg,
@@ -411,10 +496,10 @@ export default {
                   border-radius 50%
                   height 30px
                   line-height 30px
-                  background-color pink
                   text-align center
                   font-size 14px
-                  background linear-gradient(0deg,rgba(43,58,110,1),rgba(42,80,129,1))
+                  // background linear-gradient(0deg,rgba(43,58,110,1),rgba(42,80,129,1))
+                  background pink
                 /deep/
                   .content
                     p
@@ -436,7 +521,7 @@ export default {
                     >.msg-content
                       background-color #5675a3
                       border-radius 15px
-                      padding 6px 18px
+                      padding 6px 17px
                       &:after
                         left -6px
                         border-right 8px solid #5675a3
@@ -452,7 +537,7 @@ export default {
                     >.msg-content
                       background-color S_main_color
                       border-radius 15px
-                      padding 6px 18px
+                      padding 6px 17px
                       text-align left
                       &:after
                         right -6px
@@ -482,17 +567,215 @@ export default {
                   background-color #fff
                   font-size 12px
                   padding 0 10px
-                  line-height 40px
+                  line-height 16px
+                  border-radius 0
+                  padding-top 14px
                 &.has-content
                   >textarea
-                    line-height 16px
+                    background-color transparent
+              .send-button
+                background-color S_main_color !important
+                padding 5px 10px
+                height 25px
+                margin 7px 10px
+                border none
+                color #fff
+                font-size 12px
             >.image-button
-                margin 8px 15px
-                width 22px
-                height 22px
-                padding 0
-                cursor pointer
+              margin 8px 15px
+              width 22px
+              height 22px
+              padding 0
+              .iconfont
+                vertical-align top
+                font-size 25px
+                color #2b4477
+    &.night
+      // 聊天主窗口
+      >.content-box
+        background-color #242d41
+        box-shadow 0 7px 10px rgba(0,0,0,0.4)
+        >.header
+          background-color #1d2535
+
+          >.h-left
+            >.avatar
+              background linear-gradient(0deg,rgba(43,58,110,1), rgba(42,80,129,1))
+              color #7D90AC
+            >.nick-name
+              color #fff
+            >.resent-deal
+              color #fff
+          >.h-right
+            .close-button
+              background-color #9da5b3
+              &:hover
+                >.iconfont
+                  color S_main_color
+              >.iconfont
+                color #fff
+        >.bottom
+          background-color #242d41
+          >.chat-box
+            >.inner-box
+              >.message
+                /* 客服信息 */
+                >.opposite-msg,
+                >.self-msg
+                  >.avatar
+                    background linear-gradient(0deg,rgba(43,58,110,1),rgba(42,80,129,1))
+                  /deep/
+                  .content
+                    p
+                      &.msg-content
+                        color #fff
+                >.opposite-msg
+                  >.avatar
+                  /deep/
+                  .content
+                    >.msg-content
+                      background-color #5675a3
+                      &:after
+                        border-right 8px solid #5675a3
+                        border-top 7px solid transparent
+                        border-bottom 7px solid transparent
+                >.self-msg
+                  >.avatar
+                    background S_main_color
+                    color #fff
+                  /deep/
+                  .content
+                    >.date
+                      right 0
+                    >.msg-content
+                      background-color S_main_color
+                      &:after
+                        right -6px
+                        border-left 8px solid S_main_color
+                        border-top 7px solid transparent
+                        border-bottom 7px solid transparent
+          /* 发送消息框 */
+          >.send-chat-box
+            background-color #242d41
+            >.inner-box
+              background-color #fff
+              /deep/
+                /* 编辑框 */
+              .edit-box
+                > textarea
+                  border none
+                  outline none
+                  background-color #fff
+              >.image-button
                 .iconfont
-                  font-size 25px
                   color #2b4477
+              &.disabled
+                background-color #e5e5e5
+                /deep/
+                  /* 编辑框 */
+                  .edit-box
+                    > textarea
+                      background-color #e5e5e5
+                  >.image-button
+                    .iconfont
+                      color #ccc
+    &.day
+      // 聊天主窗口
+      >.content-box
+        background-color #fff
+        border 1px solid  rgba(72, 87, 118, 0.1)
+        box-shadow 0 8px 6px #cfd5df
+        >.header
+          background-color #fff
+          border-bottom 1px solid #f2f3f3
+          >.h-left
+            >.avatar
+              color #fff
+            >.nick-name
+              color #7D90AC
+            >.resent-deal
+              color #7D90AC
+          >.h-right
+            .close-button
+              background-color: #9da5b3
+              &:hover
+                >.iconfont
+                  color S_main_color
+              >.iconfont
+                color #fff
+        >.bottom
+          background-color #fff
+          >.chat-box
+            >.inner-box
+              >.message
+                /* 客服信息 */
+                >.system-msg,
+                >.opposite-msg,
+                >.self-msg
+                  /deep/
+                    .date,.time
+                      color #7D90AC
+                >.system-msg
+                  >.avatar
+                    >.iconfont
+                      color #7D90AC
+                >.opposite-msg,
+                >.self-msg
+                  >.avatar
+                    color #fff
+                    background linear-gradient(0deg,rgba(43,58,110,1),rgba(42,80,129,1))
+                  /deep/
+                  .content
+                    p
+                      &.msg-content
+                        color #fff
+                >.opposite-msg
+                  >.avatar
+                  /deep/
+                  .content
+                    >.msg-content
+                      background-color #5675a3
+                      &:after
+                        border-right 8px solid #5675a3
+                        border-top 7px solid transparent
+                        border-bottom 7px solid transparent
+                >.self-msg
+                  >.avatar
+                    background S_main_color
+                  /deep/
+                  .content
+                    >.date
+                      right 0
+                    >.msg-content
+                      background-color S_main_color
+                      &:after
+                        right -6px
+                        border-left 8px solid S_main_color
+                        border-top 7px solid transparent
+                        border-bottom 7px solid transparent
+          /* 发送消息框 */
+          >.send-chat-box
+            background-color #fff
+            >.inner-box
+              background-color #EAF4FE
+              /deep/
+                /* 编辑框 */
+                .edit-box
+                  > textarea
+                    border none
+                    outline none
+                    background-color #EAF4FE
+                >.image-button
+                  .iconfont
+                    color S_main_color
+              &.disabled
+                background-color #e5e5e5
+                /deep/
+                  /* 编辑框 */
+                  .edit-box
+                    > textarea
+                      background-color #e5e5e5
+                  >.image-button
+                    .iconfont
+                      color #ccc
 </style>

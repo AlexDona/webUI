@@ -47,6 +47,7 @@
                 class="otc-im"
                 :orderInfo="item"
                 :top="OTC_IM_TOP"
+                activeName="TRADING"
               />
             </div>
           </div>
@@ -427,6 +428,7 @@
                 class="otc-im"
                 :orderInfo="item"
                 :top="OTC_IM_TOP"
+                activeName="TRADING"
               />
             </div>
           </div>
@@ -1006,7 +1008,8 @@ export default {
       'CHANGE_REF_ACCOUNT_CREDITED_STATE',
       'UPDATE_IM_BOX_SHOW_STATUS_M',
       // 改变清除交易中数据方法的状态
-      'CHANGE_CLEAR_DATA_STATUS_M'
+      'CHANGE_CLEAR_DATA_STATUS_M',
+      'UPDATE_IM_HAS_NEW_MESSAGE_MAP_M'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -1460,6 +1463,8 @@ export default {
       loginStep1Info: state => state.user.loginStep1Info,
       // legalTraderTradingList: state => state.personal.legalTraderTradingList, // 从全局获得的交易中订单列表
       tradingOrderList: state => state.personal.legalTraderTradingList, // 从全局获得的交易中订单列表tradingOrderList
+      // 已完成订单
+      completeList: state => state.personal.legalTraderCompletedList,
       legalTraderTradingReflashStatus: state => state.personal.legalTraderTradingReflashStatus,
       legalTradePageTotals: state => state.personal.legalTradePageTotals,
       legalTradePageNum: state => state.personal.legalTradePageNum,
@@ -1487,8 +1492,14 @@ export default {
       console.log(New)
       _.forEach(New, item => {
         this.UPDATE_IM_BOX_SHOW_STATUS_M({orderId: item.id, status: false})
+        this.UPDATE_IM_HAS_NEW_MESSAGE_MAP_M({orderId: item.id, status: false})
       })
       this.timerLogicMethod()
+    },
+    completeList (New) {
+      _.forEach(New, item => {
+        this.UPDATE_IM_HAS_NEW_MESSAGE_MAP_M({orderId: item.id, status: false})
+      })
     },
     language () {
       this.errpwd = '' // 清空密码错提示

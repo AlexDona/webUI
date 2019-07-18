@@ -27,6 +27,8 @@ const state = {
   otcSelectedCurrencyId: '',
   // 即时通讯弹窗显示隐藏状态
   IMBoxShowStatusMap_S: {},
+  // 是否有最新消息
+  IMHasNewMessageMap_S: {},
   // OTC及时通讯
   OTCIMSocket_S: null
 }

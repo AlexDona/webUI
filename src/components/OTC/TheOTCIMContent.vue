@@ -83,17 +83,20 @@ export default {
       text-align center
       height 15px
       position absolute
-      top -15px
+      top -25px
       width 212px
+    .time
+      margin-top 10px
     p
       line-height 18px
       &.msg-content
         color #8BA0CA
-        max-width 160px
+        max-width 190px
         word-break break-word
+        box-sizing border-box
     .image
       height 68px
-      max-width 160px
+      max-width 190px
       border 2px solid S_main_color
       border-radius 15px
 </style>

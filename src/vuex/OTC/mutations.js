@@ -22,7 +22,8 @@ import {
   // 改变otc主页法币列表筛选框选中的法币类型id
   CHANGE_OTC_SELECTED_CURRENCY_ID,
   UPDATE_IM_BOX_SHOW_STATUS_M,
-  UPDATE_IM_SOCKET_M
+  UPDATE_IM_SOCKET_M,
+  UPDATE_IM_HAS_NEW_MESSAGE_MAP_M
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -74,10 +75,20 @@ export default {
   },
   // 更改 及时通讯状态
   [UPDATE_IM_BOX_SHOW_STATUS_M] (state, {orderId, status}) {
+    for (let k in state.IMBoxShowStatusMap_S) {
+      Vue.set(state.IMBoxShowStatusMap_S, k, false)
+    }
+    // state.IMBoxShowStatusMap_S.forEach()
     Vue.set(state.IMBoxShowStatusMap_S, orderId, status)
   },
   // 设置 OTC socket
   [UPDATE_IM_SOCKET_M] (state, socket) {
     state.OTCIMSocket_S = socket
+  },
+  // 设置 单个属性状态
+  [UPDATE_IM_HAS_NEW_MESSAGE_MAP_M] (state, {orderId, status}) {
+    console.log(state.IMHasNewMessageMap_S, orderId)
+    Vue.set(state.IMHasNewMessageMap_S, orderId, status)
+    console.log(state.IMHasNewMessageMap_S, orderId)
   }
 }

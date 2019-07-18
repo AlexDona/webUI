@@ -548,6 +548,7 @@ export default {
         position: relative;
         float: right;
         width: 970px;
+        margin-bottom: 190px;
         overflow: unset;
       }
 

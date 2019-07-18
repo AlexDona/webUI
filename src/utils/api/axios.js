@@ -75,6 +75,16 @@ export const put = (url, params) => {
     data: params
   })
 }
+export const putWithURLencoded = (url, params) => {
+  return util.ajax({
+    method: 'put',
+    url,
+    params,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  })
+}
 export const postWithURLencoded = (url, params) => {
   return util.ajax({
     method: 'post',

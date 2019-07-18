@@ -230,6 +230,13 @@
               </span>
             </p>
           </div>
+          <!-- otc 及时通讯-->
+          <OTCIM
+            class="otc-im"
+            :orderInfo="item"
+            :top="OTC_IM_TOP"
+            activeName="COMPLETED"
+          />
         </div>
       </div>
       <!--暂无数据-->
@@ -256,12 +263,15 @@
 <script>
 import {timeFilter} from '../../../utils'
 import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
+import OTCIM from '../../OTC/OTCIM'
 import {
   mapMutations,
   mapState
 } from 'vuex'
 export default {
-  components: {},
+  components: {
+    OTCIM
+  },
   props: {
     OTC_IM_TOP: {
       type: String
