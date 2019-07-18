@@ -396,7 +396,7 @@ export default {
     overflow: hidden;
 
     > .personal-center-main {
-      width: 1150px;
+      width: 1300px;
       min-height: 715px;
       margin: 60px auto;
 
@@ -442,13 +442,13 @@ export default {
       }
 
       > .personal-center-content {
-        width: 1150px;
+        width: 1300px;
       }
 
       .asset-info {
         position: absolute;
         z-index: 2;
-        left: -179px;
+        left: -193px;
         width: 160px;
         height: 44px;
         padding-left: 21px;
@@ -508,14 +508,14 @@ export default {
 
         .el-tabs__item {
           &.is-left {
-            width: 162px;
+            width: 176px;
             text-align: left;
           }
         }
 
         .el-tabs__header {
           &.is-left {
-            margin-right: 16px;
+            margin-right: 19px;
           }
         }
       }
@@ -547,7 +547,7 @@ export default {
       .el-tabs__content {
         position: relative;
         float: right;
-        width: 970px;
+        width: 1105px;
         overflow: unset;
       }
 
