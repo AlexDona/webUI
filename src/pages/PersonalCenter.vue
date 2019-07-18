@@ -396,7 +396,7 @@ export default {
     overflow: hidden;
 
     > .personal-center-main {
-      width: 1150px;
+      width: 1300px;
       min-height: 715px;
       margin: 60px auto;
 
@@ -442,7 +442,7 @@ export default {
       }
 
       > .personal-center-content {
-        width: 1150px;
+        width: 1300px;
       }
 
       .asset-info {
@@ -515,7 +515,7 @@ export default {
 
         .el-tabs__header {
           &.is-left {
-            margin-right: 16px;
+            margin-right: 19px;
           }
         }
       }
@@ -547,7 +547,7 @@ export default {
       .el-tabs__content {
         position: relative;
         float: right;
-        width: 970px;
+        width: 1119px;
         overflow: unset;
       }
 
