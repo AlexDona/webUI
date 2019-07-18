@@ -58,5 +58,9 @@ export const trade = {
   'trade_profile': '項目簡介',
   'trade_rules': '項目規則',
   'trade_pre_desc': '即將開盤，距離開始還有',
-  'trade_fee': '交易費率'
+  'trade_fee': '交易費率',
+  'limit_market_trade_price_min_tips': '委托價格低於最低限價',
+  'limit_market_trade_price_max_tips': '委托價格高於最高限價',
+  'limit_market_trade_count_min_tips': '委托數量低於最低限量',
+  'limit_market_trade_count_max_tips': '委托數量高於最高數量'
 }

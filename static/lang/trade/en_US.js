@@ -59,5 +59,9 @@ export const trade = {
   'trade_profile': 'Project profile',
   'trade_rules': 'Activity rules',
   'trade_pre_desc': 'open right away,count down',
-  'trade_fee': 'trading fee'
+  'trade_fee': 'trading fee',
+  'limit_market_trade_price_min_tips': 'The commission price is lower than the minimum price',
+  'limit_market_trade_price_max_tips': 'The commission price is higher than the maximum price',
+  'limit_market_trade_count_min_tips': 'The number of orders is below the minimum limit',
+  'limit_market_trade_count_max_tips': 'The number of orders is higher than the maximum number'
 }

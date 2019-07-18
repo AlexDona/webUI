@@ -58,5 +58,9 @@ export const trade = {
   'trade_profile': '프로젝트 소개',
   'trade_rules': '활동 규칙',
   'trade_pre_desc': '곧 개봉, 아직 거리가 있습니다',
-  'trade_fee': '거래율'
+  'trade_fee': '거래율',
+  'limit_market_trade_price_min_tips': '수수료 가격이 최저 가격보다 낮습니다.',
+  'limit_market_trade_price_max_tips': '수수료 가격이 최대 가격보다 높습니다.',
+  'limit_market_trade_count_min_tips': '주문 수량이 최소 한도 미만입니다.',
+  'limit_market_trade_count_max_tips': '주문 수는 최대 주문 수보다 많습니다.'
 }

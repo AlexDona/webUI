@@ -51,5 +51,9 @@ export const trade = {
   'trade_langEnd': 'Hạn kết Thúc ',
   'trade_currentAccount': 'lượng Lượt Này',
   'trade_bili': 'Tỷ Giá',
-  'trade_singleLimit': 'Hạn Mức Mỗi Người'
+  'trade_singleLimit': 'Hạn Mức Mỗi Người',
+  'limit_market_trade_price_min_tips': 'Giá hoa hồng thấp hơn giá tối thiểu',
+  'limit_market_trade_price_max_tips': 'Giá hoa hồng cao hơn giá tối đa',
+  'limit_market_trade_count_min_tips': 'Số lượng đơn đặt hàng dưới giới hạn tối thiểu',
+  'limit_market_trade_count_max_tips': 'Số lượng đơn đặt hàng cao hơn số lượng tối đa'
 }

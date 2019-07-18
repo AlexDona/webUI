@@ -58,5 +58,9 @@ export const trade = {
   'trade_profile': 'プロジェクト概要',
   'trade_rules': '活動規則',
   'trade_pre_desc': 'すぐオープン、カウントダウン',
-  'trade_fee': '取引手数料'
+  'trade_fee': '取引手数料',
+  'limit_market_trade_price_min_tips': '手数料価格が最低価格より低い',
+  'limit_market_trade_price_max_tips': 'コミッション価格が最高価格より高い',
+  'limit_market_trade_count_min_tips': '注文数が最小限度を下回っています',
+  'limit_market_trade_count_max_tips': '注文数が最大数を超えています'
 }
