@@ -128,7 +128,7 @@
           >
             <span class="info-centre-left text-indent float-left font-size12">
               <!--会员等级 - -->
-              {{ $t('M.user_assets_grade_membership') }} -
+              {{ $t('M.user_assets_grade_membership') }} -<v-hmtl>&nbsp;</v-hmtl>
             </span>
             <p
               class="info-picture float-left cursor-pointer"
@@ -369,7 +369,7 @@ export default {
               justify-content: center;
 
               .text-indent {
-                  text-indent: -70px;
+                  text-indent: -60px;
 
                   > .info-centre {
                       padding: 0 70px;
