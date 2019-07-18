@@ -1390,6 +1390,7 @@ export default {
         /* 表格样式修改 */
         .el-table {
           color: #fff;
+          background-color: $mainContentNightBgColor;
 
           th,
           tr {
@@ -1572,6 +1573,7 @@ export default {
         /* 个人中心（白色主题） */
         .el-table {
           color: #fff;
+          background-color: $mainColorOfWhite;
 
           th,
           tr {

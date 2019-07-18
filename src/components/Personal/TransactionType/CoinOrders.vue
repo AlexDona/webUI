@@ -883,7 +883,7 @@ export default {
 
       .el-table__empty-block {
         width: 964px !important;
-        min-height: 280px;
+        min-height: 450px;
         margin-left: 2px;
       }
     }
@@ -934,6 +934,8 @@ export default {
         }
 
         .el-table {
+          background-color: $mainContentNightBgColor;
+
           thead {
             color: #617499;
           }
@@ -1048,6 +1050,10 @@ export default {
 
         .cell {
           color: #333;
+        }
+
+        .el-table {
+          background-color: $mainColorOfWhite;
         }
       }
     }

@@ -1223,6 +1223,10 @@ export default {
       }
 
       /deep/ {
+        .el-table {
+          background-color: $mainContentNightBgColor;
+        }
+
         .el-form-item__label {
           color: #b8bdd0;
         }
@@ -1388,6 +1392,10 @@ export default {
       }
 
       /deep/ {
+        .el-table {
+          background-color: $mainColorOfWhite;
+        }
+
         .el-form-item__label {
           color: #7d90ac;
         }

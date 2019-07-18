@@ -1209,6 +1209,8 @@ export default {
         }
 
         .el-table {
+          background-color: $mainContentNightBgColor;
+
           thead {
             color: #617499;
           }
@@ -1372,6 +1374,10 @@ export default {
           .el-dialog__header {
             background: #fff;
           }
+        }
+
+        .el-table {
+          background-color: $mainColorOfWhite;
         }
       }
     }
