@@ -12,7 +12,7 @@
               iconName="icon-yonghu1"
             />
           </p>
-          <div class="text-align-id margin-top16 float-right">
+          <div class="text-align-id margin-top16 float-left">
             <p class="font-size12">
               <span class="text-color">
                 <!--您好，-->
@@ -122,7 +122,8 @@
             </span>
           </p>
           <div
-            class="info-centre margin-top16"
+            class="
+             display-flex margin-top16"
             v-if="$isVIPEnable_S_X"
           >
             <span class="info-centre-left float-left font-size12">
@@ -337,7 +338,7 @@ export default {
           > .user-background {
             width: 59px;
             height: 60px;
-            margin: 15px 20px 0 36px;
+            margin: 15px 21px 0 36px;
             border-radius: 50%;
           }
 
@@ -364,16 +365,20 @@ export default {
             }
           }
 
-          > .info-centre {
-            padding: 0 70px;
+          > .margin-top16 {
+              justify-content: center;
 
-            > .info-picture {
-              position: relative;
+            > .info-centre {
+              padding: 0 70px;
 
-              > .info-centre-right {
-                position: absolute;
-                top: 0;
-                left: 17px;
+              > .info-picture {
+                position: relative;
+
+                > .info-centre-right {
+                  position: absolute;
+                  top: 0;
+                  left: 17px;
+                }
               }
             }
           }
@@ -396,16 +401,16 @@ export default {
 
         > .asset {
           > .asset-text {
-            padding: 0 20px;
+            padding: 0 67px;
             margin-top: 8px;
           }
 
           > .asset-info {
-            padding: 0 20px;
+            padding: 0 67px;
           }
 
           > .asset-color {
-            padding: 0 15px;
+            padding-left: 67px;
           }
         }
       }
@@ -447,6 +452,7 @@ export default {
 
           > .info {
             padding-top: 10px;
+            text-align: center;
 
             > .info-top {
               > .icon-user-info,
