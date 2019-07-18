@@ -28,9 +28,7 @@
           name="limit-price"
           v-if="isShowLimitPrice"
         >
-          <div
-            class="content-box limit"
-          >
+          <div class="content-box limit">
             <div class="inner-box left">
               <div class="header">
                 <div class="left item">
@@ -77,10 +75,13 @@
                   >
                     ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformBuyPrice,$middleTopData_S_X.legalCurrencyDecimal)}}
                   </div>
+                  <!--买入价错误提示信息-->
                   <span
                     class="error-box"
                     v-show="errorMsg.limit.buy.price"
-                  >{{errorMsg.limit.buy.price}}</span>
+                  >
+                    {{errorMsg.limit.buy.price}}
+                  </span>
                 </div>
                 <!--买入量-->
                 <div
@@ -100,6 +101,7 @@
                     onpaste="return false"
                   >
                   <span class="currency">{{$middleTopData_S_X.sellsymbol}}</span>
+                  <!--买入量错误提示信息-->
                   <span
                     class="error-box"
                     v-show="errorMsg.limit.buy.amount"
@@ -194,6 +196,7 @@
                   >
                     ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformSellPrice, $middleTopData_S_X.legalCurrencyDecimal)}}
                   </div>
+                  <!--卖出价错误提示信息-->
                   <span
                     class="error-box"
                     v-show="errorMsg.limit.sell.price"
@@ -214,6 +217,7 @@
                     onpaste="return false"
                   >
                   <span class="currency">{{$middleTopData_S_X.sellsymbol}}</span>
+                  <!--卖出量错误提示信息-->
                   <span
                     class="error-box"
                     v-show="errorMsg.limit.sell.amount"
@@ -325,6 +329,7 @@
                     onpaste="return false"
                   >
                   <span class="currency">{{$middleTopData_S_X.area}}</span>
+                  <!-- 成交额错误提示信息 -->
                   <span
                     class="error-box"
                     v-show="errorMsg.market.buy.amount"
@@ -414,6 +419,7 @@
                     onpaste="return false"
                   >
                   <span class="currency">{{$middleTopData_S_X.sellsymbol}}</span>
+                  <!-- 卖出量错误提示信息 -->
                   <span
                     class="error-box"
                     v-show="errorMsg.market.sell.amount"
@@ -683,6 +689,7 @@ export default {
     }
   },
   async created () {
+    // 刷新用户信息
     if (this.$isLogin_S_X) {
       await this.REFRESH_USER_INFO_ACTION()
       // console.log(this.REFRESH_USER_INFO_ACTION)
@@ -702,8 +709,7 @@ export default {
   },
   activated () {},
   update () {},
-  beforeRouteUpdate () {
-  },
+  beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
@@ -740,6 +746,7 @@ export default {
         this.sellIsWithdraw = getNestedData(data.data, 'isWithdraw')
       }
     },
+    // 跳转个人中心方法
     async jumpToPersonalCenter (target, tradType, type) {
       const {buyCoinId, sellCoinId} = this.$middleTopData_S_X
       if (tradType) {
@@ -772,13 +779,15 @@ export default {
         tradeId: partnerTradeId // 交易对id
       }
       const data = await getUserAssetOfActiveSymbol(params)
+      console.log('用户对应交易对资产')
+      console.log(data)
       if (!data) return false
       this.buyUserCoinWallet = getNestedData(data, 'data.buyUserCoinWallet')
       this.sellUserCoinWallet = getNestedData(data, 'data.sellUserCoinWallet')
       this.setBuyAndSellPrice(targetPriceOfBuy, targetPriceOfSell)
       this.changeSliderDisabled()
     },
-    // 清空交易密码
+    // 清空交易密码及表单数据
     clearFormData () {
       this.payPassword = ''
       this.clearRefValue(this.limitBuyPriceInputRef)
@@ -808,9 +817,11 @@ export default {
         this.$refs[refName].value = ''
       }
     },
+    // 清除交易密码错误提示信息
     clearPasswordErrorMsg () {
       this.isPayPasswordEmpty = false
     },
+    // 清除错误提示信息方法
     clearErrorMsg (type) {
       switch (type) {
         case 'limit-buy':
@@ -877,7 +888,11 @@ export default {
         // 限价买
         case 'limit-buy':
           this.limitExchange.buyPrice = this.getRefValue(this.limitBuyPriceInputRef)
+          console.log('买入价：' + this.limitExchange.buyPrice)
+          // this.errorMsg.limit.buy.price = '你输入了买入价'
           this.limitExchange.buyCount = this.getRefValue(this.limitBuyCountInputRef)
+          console.log('买入量：' + this.limitExchange.buyCount)
+          // this.errorMsg.limit.buy.amount = '你输入了买入量'
           this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
           if (this.limitExchange.buyPrice) {
             this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice).toFixed(priceExchange)
@@ -1206,6 +1221,7 @@ export default {
       switch (target) {
         // 限价买
         case 'limit-buy':
+          console.log('买入价：' + this.limitExchange.buyPrice)
           console.log(this.getRefValue(this.limitBuyPriceInputRef))
           if (!this.getRefValue(this.limitBuyPriceInputRef)) return false
           this.errorMsg.limit.buy.price = ''
@@ -1422,7 +1438,7 @@ export default {
       }
     },
     async currentCoinId (newVal) {
-      // 请求决定该交易对书否能重提币
+      // 请求决定该交易对书否能充提币
       if (this.$isLogin_S_X) {
         this.isRechargeOrWithdraw('buy')
         this.isRechargeOrWithdraw('sell')

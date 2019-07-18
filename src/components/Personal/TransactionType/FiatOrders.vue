@@ -487,7 +487,7 @@ export default {
         }
 
         .trade-data {
-          width: 535px;
+          width: 500px;
         }
 
         .main-top-type {
