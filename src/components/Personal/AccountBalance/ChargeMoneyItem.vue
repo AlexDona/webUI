@@ -108,7 +108,7 @@
       p.recharge-content-code.margin-top20.float-left
         QRCode.ercode(:value="chargeMoneyAddress")
       //  充币记录
-      p.code-list.text-align-r.float-right.cursor-pointer.font-size12(@click.prevent="jumpToOtherTab('billing-details', coinId, 1)") {{ $t('M.comm_charge_money') }}{{ $t('M.comm_record') }}
+      p.code-list.text-align-c.cursor-pointer.font-size12(@click.prevent="jumpToOtherTab('billing-details', coinId, 1)") {{ $t('M.comm_charge_money') }}{{ $t('M.comm_record') }}
 
 </template>
 <script>
@@ -225,7 +225,7 @@ export default {
 
     .recharge-content {
       flex: 2;
-      padding: 0 20px;
+      padding: 0 35px;
 
       .recharge-content-hint {
         height: 20px;

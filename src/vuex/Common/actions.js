@@ -90,7 +90,7 @@ export default {
       footerInfo1,
       footerInfo2
     })
-    console.log(footerInfo1.title)
+    // console.log(footerInfo1.title)
     // favicon 添加
     addFavicon(
       http2https(getNestedData(footerInfo1, 'headTitleLogo')),

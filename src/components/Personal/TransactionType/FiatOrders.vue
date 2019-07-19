@@ -132,6 +132,7 @@
           <FiatCoinTradingOrder
             ref = "tradeOrder"
             @fatherMethod="getOTCEntrustingOrdersRevocation"
+            :OTC_IM_TOP="OTC_IM_TOPS.trading"
           />
         </el-tab-pane>
         <!--已完成订单-->
@@ -139,21 +140,30 @@
           :label="$t('M.otc_stocks')"
           name="COMPLETED"
         >
-          <FiatCoinCompletedOrder ref = "cancelledOrder"/>
+          <FiatCoinCompletedOrder
+            ref = "cancelledOrder"
+            :OTC_IM_TOP="OTC_IM_TOPS.completed"
+          />
         </el-tab-pane>
         <!--已取消订单-->
         <el-tab-pane
           :label="$t('M.otc_canceled')"
           name="CANCELED"
         >
-          <FiatCoinCanceledOrder ref = "completedOrder"/>
+          <FiatCoinCanceledOrder
+            ref = "completedOrder"
+            :OTC_IM_TOP="OTC_IM_TOPS.canceled"
+          />
         </el-tab-pane>
         <!--冻结中订单-->
         <el-tab-pane
           :label="$t('M.otc_freezingOrder')"
           name="FROZEN"
         >
-          <FiatCoinFreezingOrder ref = "pendingOrder"/>
+          <FiatCoinFreezingOrder
+            ref = "pendingOrder"
+            :OTC_IM_TOP="OTC_IM_TOPS.frozen"
+          />
         </el-tab-pane>
         <!--委托订单-->
         <el-tab-pane
@@ -188,7 +198,11 @@ import {
   mapMutations,
   mapState
 } from 'vuex'
+import Socket from '../../../utils/datafeeds/socket'
+import {OTCIMSocketUrl} from '../../../utils/env'
+import mixins from '../../../mixins/user'
 export default {
+  mixins: [mixins],
   components: {
     IconFontCommon, //  字体图标
     FiatCoinTradingOrder, //  交易中订单
@@ -252,17 +266,34 @@ export default {
         disabledDate: (time) => {
           return time.getTime() > Date.now()
         }
+      },
+      socket: '',
+      OTC_IM_TOPS: {
+        trading: `170px`,
+        completed: `99px`,
+        canceled: `99px`,
+        frozen: `99px`
       }
     }
   },
   async created () {
     await this.getOTCAvailableCurrencyList()
     await this.getMerchantAvailableLegalTenderList()
+    const {id} = this.$userInfo_X
+    this.socket = new Socket(this.url = `${OTCIMSocketUrl}/web/${id}`)
+
+    this.UPDATE_IM_SOCKET_M(this.socket)
+    this.socket.doOpen()
+    this.socket.send({
+      // 当前用户id
+      'userId': id,
+      // 请求的动作:“toConnect”建立socket连接;“sendMessage”发送聊天内容
+      'action': 'toConnect'
+    })
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_LEGAL_TENDER_LIST',
@@ -270,6 +301,7 @@ export default {
       // 更改重新渲染交易中订单列表状态
       'CHANGE_RE_RENDER_TRADING_LIST_STATUS',
       'SET_LEGAL_TENDER_REFLASH_STATUS',
+      'UPDATE_IM_SOCKET_M',
       // 改变清除交易中数据方法的状态
       'CHANGE_CLEAR_DATA_STATUS_M'
     ]),
@@ -348,7 +380,7 @@ export default {
       // this.getOTCEntrustingOrdersRevocation()
     },
     // 页面加载时请求接口渲染列表
-    async getOTCEntrustingOrdersRevocation (activeName) {
+    async getOTCEntrustingOrdersRevocation () {
       // console.log(activeName)
       let params = {
         // 币种
@@ -356,7 +388,7 @@ export default {
         // 法币
         currencyId: this.activatedMerchantsOrdersCurrency,
         // 状态
-        status: activeName,
+        status: this.activeName,
         // 开始时间
         // startTime: this.startTime,
         startTime: this.checkedTime && this.checkedTime[0] ? this.checkedTime[0] : '',
@@ -369,14 +401,14 @@ export default {
         // pageSize: this.legalTradePageSize
       }
       // 20190218 增加委单和其他状态交易类型字段判断 委托订单用entrustType字段其他用tradeType字段
-      if (activeName == 'ENTRUSTED') {
+      if (this.activeName == 'ENTRUSTED') {
         params.entrustType = this.activatedMerchantsOrdersTraderStyleList
         params.pageSize = 10 // 委托订单每页显示10条
       } else {
         params.tradeType = this.activatedMerchantsOrdersTraderStyleList
         params.pageSize = this.legalTradePageSize // 每页显示5条
       }
-      if (activeName == 'ENTRUSTED') {
+      if (this.activeName == 'ENTRUSTED') {
         const data = await getOTCEntrustingOrders(params)
         console.log('委托订单列表')
         console.log(data)
@@ -384,7 +416,7 @@ export default {
         let OTCEntrustingOrdersData = getNestedData(data, 'data')
         // 返回数据正确的逻辑 重新渲染列表
         this.SET_LEGAL_TENDER_LIST({
-          type: activeName,
+          type: this.activeName,
           data: OTCEntrustingOrdersData.list
         })
         // console.log(data)
@@ -404,7 +436,7 @@ export default {
             let merchantsOrdersListData = getNestedData(data, 'data.data')
             // 返回数据正确的逻辑 重新渲染列表
             this.SET_LEGAL_TENDER_LIST({
-              type: activeName,
+              type: this.activeName,
               data: merchantsOrdersListData.list
             })
             // 刷新列表之后将重新渲染交易中订单列表状态改为false
@@ -430,6 +462,8 @@ export default {
       legalTradePageSize: state => state.personal.legalTradePageSize,
       legalTraderCompletedReflashStatus: state => state.personal.legalTraderCompletedReflashStatus,
       legalTraderEntrustReflashStatus: state => state.personal.legalTraderEntrustReflashStatus,
+      legalTraderCancelReflashStatus: state => state.personal.legalTraderCancelReflashStatus,
+      legalTraderTradingReflashStatus: state => state.personal.legalTraderTradingReflashStatus,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
@@ -438,17 +472,42 @@ export default {
   },
   watch: {
     activeName () {
-      this.getOTCEntrustingOrdersRevocation(this.activeName)
+      this.getOTCEntrustingOrdersRevocation()
     },
     legalTradePageNum () {
-      this.getOTCEntrustingOrdersRevocation(this.activeName)
+      this.getOTCEntrustingOrdersRevocation()
     },
-    legalTraderCompletedReflashStatus () {
-      this.getOTCEntrustingOrdersRevocation(this.activeName)
+    legalTraderCompletedReflashStatus (New) {
+      if (New) {
+        this.getOTCEntrustingOrdersRevocation()
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'COMPLETED',
+          status: false
+        })
+      }
+    },
+    legalTraderTradingReflashStatus (New) {
+      if (New) {
+        this.getOTCEntrustingOrdersRevocation()
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'TRADING',
+          status: false
+        })
+      }
+    },
+    legalTraderCancelReflashStatus (New) {
+      console.log(New)
+      if (New) {
+        this.getOTCEntrustingOrdersRevocation()
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'CANCELED',
+          status: false
+        })
+      }
     },
     legalTraderEntrustReflashStatus (newVal) {
-      this.getOTCEntrustingOrdersRevocation(this.activeName)
       if (newVal) {
+        this.getOTCEntrustingOrdersRevocation()
         this.SET_LEGAL_TENDER_REFLASH_STATUS({
           type: 'ENTRUSTED',
           status: false
@@ -458,7 +517,7 @@ export default {
     userCenterActiveName (newVal) {
       this.resetCondition()
       if (newVal === 'fiat-orders') {
-        this.getOTCEntrustingOrdersRevocation(this.activeName)
+        this.getOTCEntrustingOrdersRevocation()
       }
     },
     //  监控重新渲染交易中订单列表状态:当为true时调用重新刷新列表方法
@@ -466,7 +525,7 @@ export default {
       console.log('重新渲染交易中订单列表状态')
       console.log(this.reRenderTradingListStatus)
       if (this.reRenderTradingListStatus) {
-        this.getOTCEntrustingOrdersRevocation(this.activeName)
+        this.getOTCEntrustingOrdersRevocation()
       }
     }
   }

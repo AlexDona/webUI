@@ -158,6 +158,13 @@
               </span>
             </p>
           </div>
+          <!-- otc 及时通讯-->
+          <OTCIM
+            class="otc-im"
+            :orderInfo="item"
+            :top="OTC_IM_TOP"
+            activeName="CANCELED"
+          />
         </div>
       </div>
       <!--暂无数据-->
@@ -181,9 +188,9 @@
     </div>
   </div>
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../../utils'
+import OTCIM from '../../OTC/OTCIM'
 // import {mapState, mapMutations} from 'vuex'
 import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
 import {
@@ -191,17 +198,22 @@ import {
   mapState
 } from 'vuex'
 export default {
-  components: {},
-  // props,
-  data () {
-    return {}
+  components: {
+    OTCIM
   },
-  created () {
+  props: {
+    OTC_IM_TOP: {
+      type: String
+    }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // data () {
+  //   return {}
+  // },
+  // created () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_LEGAL_PAGE',

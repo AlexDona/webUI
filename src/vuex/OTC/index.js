@@ -24,7 +24,13 @@ const state = {
   // otc主页国家列表筛选框选中的国家id
   otcSelectedCountryId: '',
   // otc主页法币列表筛选框选中的法币类型id
-  otcSelectedCurrencyId: ''
+  otcSelectedCurrencyId: '',
+  // 即时通讯弹窗显示隐藏状态
+  IMBoxShowStatusMap_S: {},
+  // 是否有最新消息
+  IMHasNewMessageMap_S: {},
+  // OTC及时通讯
+  OTCIMSocket_S: null
 }
 
 export default {
