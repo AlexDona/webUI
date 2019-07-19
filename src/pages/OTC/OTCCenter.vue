@@ -155,7 +155,8 @@
                       v-show="s.row.userType === 'MERCHANT'"
                       :title="$t('M.otc_merchant')"
                     >
-                    {{s.row.userName}}
+                    <!--{{s.row.userName}}-->
+                    {{s.row.userNick}}
                   </div>
                 </template>
               </el-table-column>

@@ -126,7 +126,8 @@
               <span>
                 {{$t('M.otc_name')}}：
               </span><span>
-              {{item.sellName}}
+              <!--{{item.sellName}}-->
+              {{item.sellNickName}}
             </span>
             </p>
             <!--卖家手机号-->

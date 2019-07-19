@@ -716,7 +716,8 @@ export default {
       if (!data) return false
       if (data.data) {
         let detailsData = getNestedData(data, 'data')
-        this.userName = getNestedData(detailsData, 'userName') // 挂单人姓名
+        // this.userName = getNestedData(detailsData, 'userName') // 挂单人姓名
+        this.userName = getNestedData(detailsData, 'userNick') // 挂单人昵称
         this.successTimes = getNestedData(detailsData, 'successTimes') // 成交次数
         this.failTimes = getNestedData(detailsData, 'failTimes') // 失败次数
         this.freezeTimes = getNestedData(detailsData, 'freezeTimes') // 冻结次数
