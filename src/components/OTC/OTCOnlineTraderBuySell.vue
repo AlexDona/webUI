@@ -789,10 +789,12 @@ export default {
         this.clearInput(this.onlineTraderStatus) // 清空数据
         this.querySelectedOrdersDetails()
         this.queryUserTradeFeeAndCoinInfo()
+        this.$goToPage('/PersonalCenter')
+        this.CHANGE_USER_CENTER_ACTIVE_NAME('fiat-orders')
         // 改变全局锚点状态
-        this.CHANGE_OTC_ANCHOR_STATUS(true)
+        // this.CHANGE_OTC_ANCHOR_STATUS(true)
         // 跳转到首页的交易中订单区
-        this.$goToPage('/OTCCenter')
+        // this.$goToPage('/OTCCenter')
       }
     }, 500),
     // 2018129封装提交摘单买入和卖出方法

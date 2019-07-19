@@ -197,7 +197,7 @@ export default {
         state.requestCount_S = 0
         break
     }
-    console.log(state.requestCount_S)
+    // console.log(state.requestCount_S)
     state.loading_S = state.requestCount_S <= 0 ? false : true
   },
   [SAVE_FOOTER_HEIGHT] (state, height) {
