@@ -144,6 +144,9 @@ export default {
     }
   },
   watch: {
+    invitation_S (New) {
+      this.total = New.page.pages
+    },
     statistics (New) {
       console.log(New)
     }
