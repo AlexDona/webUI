@@ -128,7 +128,7 @@
           >
             <span class="info-centre-left text-indent float-left font-size12">
               <!--会员等级 - -->
-              {{ $t('M.user_assets_grade_membership') }} -<v-hmtl>&nbsp;</v-hmtl>
+              {{ $t('M.user_assets_grade_membership') }} -&nbsp;
             </span>
             <p
               class="info-picture float-left cursor-pointer"
