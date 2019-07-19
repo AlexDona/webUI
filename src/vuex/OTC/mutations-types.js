@@ -8,7 +8,7 @@ export const CHANGE_OTC_AVAILABLE_CURRENCY_ID = 'CHANGE_OTC_AVAILABLE_CURRENCY_I
 // otc 商家和普通用户通用挂单页面可用币种起订量:选中不同的币种获得不同币种的起订量
 export const CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT = 'CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT'
 // otc 购买或者出售成功后跳转到交易中订单（首页的）的锚点地方
-export const CHANGE_OTC_ANCHOR_STATUS = 'CHANGE_OTC_ANCHOR_STATUS'
+// export const CHANGE_OTC_ANCHOR_STATUS = 'CHANGE_OTC_ANCHOR_STATUS'
 // 委托定单撤单后，更新首页挂单列表
 export const UPDATE_OTC_HOME_LIST_STATUS = 'UPDATE_OTC_HOME_LIST_STATUS'
 // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态

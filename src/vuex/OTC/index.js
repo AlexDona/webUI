@@ -12,7 +12,7 @@ const state = {
   // OTC改变选中的可用币种partnerCoinId
   // selectedOTCAvailablePartnerCoinId: '',
   // OTC交易首页锚点状态
-  anchorStatus: false,
+  // anchorStatus: false,
   // 委托定单撤单后，更新首页挂单列表状态：false为不刷新 true为刷新
   updateOTCHomeListStatus: false,
   // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
