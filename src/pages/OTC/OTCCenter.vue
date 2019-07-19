@@ -189,7 +189,16 @@
               >
                 <template slot-scope = "s">
                   <!-- 此处的单位根据设置中的法币类型来变化：为人民币时候显示CNY，为美元时候显示$ 此处需要从全局拿到设置中的法币类型来渲染页面-->
-                  <div class="red">
+                  <div
+                    class="red"
+                    v-show="OTCBuySellStyle === 'onlineBuy'"
+                  >
+                    {{$scientificToNumber(s.row.price)}}{{checkedCurrencyName}}
+                  </div>
+                  <div
+                    class="green"
+                    v-show="OTCBuySellStyle === 'onlineSell'"
+                  >
                     {{$scientificToNumber(s.row.price)}}{{checkedCurrencyName}}
                   </div>
                 </template>
@@ -1073,6 +1082,14 @@ export default {
           min-height: 639px;
           margin-top: 30px;
 
+          .red {
+            color: $upColor;
+          }
+
+          .green {
+            color: $otcGreen;
+          }
+
           .remark-tips {
             display: inline-block;
             width: 100px;
@@ -1356,10 +1373,6 @@ export default {
 
           > .otc-merchant-list {
             background-color: $mainContentNightBgColor;
-
-            .red {
-              color: $upColor;
-            }
           }
 
           .page {

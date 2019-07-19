@@ -26,10 +26,10 @@ const devTestConfig = {
   // apiCommonUrl: 'http://192.168.2.122:8888/',
   // FangRuiChang
   // apiCommonUrl: 'http://192.168.10.9:8888/',
-  apiCommonUrl: 'http://192.168.2.200:8888/',
-  socketUrl: 'ws://192.168.2.200:8087/market',
   // HuaHaoTian
   // socketUrl: 'ws://192.168.0.52:8087/market',
+  // apiCommonUrl: 'http://192.168.2.200:8888/',
+  socketUrl: 'ws://192.168.2.200:8087/market',
   loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/'
 }
 
