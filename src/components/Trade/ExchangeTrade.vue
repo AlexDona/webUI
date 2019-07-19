@@ -922,9 +922,13 @@ export default {
         case 'limit-buy':
           this.limitExchange.buyPrice = this.getRefValue(this.limitBuyPriceInputRef)
           if (this.$isLogin_S_X) {
-            if (!this.limitExchange.buyPrice) {
-              return false
+            this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
+            if (this.limitExchange.buyPrice) {
+              this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice).toFixed(priceExchange)
             }
+            // if (!this.limitExchange.buyPrice) {
+            //   return false
+            // }
             if (this.limitExchange.buyPrice - this.priceMin < 0) {
               // 委托价格低于最低限价
               this.errorMsg.limit.buy.price = this.$t('M.limit_market_trade_price_min_tips') + this.priceMin
@@ -937,6 +941,7 @@ export default {
               this.errorMsg.limit.buy.price = ''
             }
           }
+
           this.limitExchange.buyCount = this.getRefValue(this.limitBuyCountInputRef)
           if (this.$isLogin_S_X) {
             if (!this.limitExchange.buyCount) {
@@ -954,18 +959,15 @@ export default {
               this.errorMsg.limit.buy.amount = ''
             }
           }
-          this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
-          if (this.limitExchange.buyPrice) {
-            this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice).toFixed(priceExchange)
-          }
           break
         // 限价卖
         case 'limit-sell':
           this.limitExchange.sellPrice = this.getRefValue(this.limitSellPriceInputRef)
           if (this.$isLogin_S_X) {
-            if (!this.limitExchange.sellPrice) {
-              return false
-            }
+            this.setTransformPrice('limit-sell', this.limitExchange.sellPrice)
+            // if (!this.limitExchange.sellPrice) {
+            //   return false
+            // }
             if (this.limitExchange.sellPrice - this.amountMin < 0) {
               // 委托价格低于最低限价
               this.errorMsg.limit.sell.price = this.$t('M.limit_market_trade_price_min_tips') + this.amountMin
@@ -995,7 +997,6 @@ export default {
               this.errorMsg.limit.sell.amount = ''
             }
           }
-          this.setTransformPrice('limit-sell', this.limitExchange.sellPrice)
           break
         // 市价买
         case 'market-buy':
