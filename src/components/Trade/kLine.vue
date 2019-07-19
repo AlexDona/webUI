@@ -799,7 +799,7 @@ export default {
     }
   }
 
-  @media screen and (max-width: 2560px) and (min-width: 1921px) {
+  @media screen and (min-width: 1921px) {
     .kline-container {
       height: $maxHeight1920-2560;
 
@@ -813,4 +813,5 @@ export default {
       }
     }
   }
+
 </style>

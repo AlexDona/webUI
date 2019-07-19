@@ -344,7 +344,7 @@
               :label="$t('M.comm_state')"
             >
               <template slot-scope="s">
-                <span>{{ s.row.statusName }}</span>
+                <span>{{ $t(`M.${s.row.i18nStatusName}`) }}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -833,6 +833,10 @@ export default {
         line-height: 1;
       }
 
+      .el-table__row .cell {
+        word-break: break-word;
+      }
+
       td,
       th {
         height: 30px;
@@ -911,6 +915,10 @@ export default {
           background: #2d3651;
           -webkit-transition: all .3s;
           transition: all .3s;
+        }
+
+        .el-table__header {
+          background-color: #1c1f32;
         }
 
         /* tabs切换 */

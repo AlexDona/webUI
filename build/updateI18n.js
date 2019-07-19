@@ -61,7 +61,6 @@ handleRequest({
       fs.writeFile(path.join(targetPath, `${lang.shortName}.js`), writeData, function (err) {
         if (err) throw err
         console.log(`${lang.name} 写入完成!`)
-        if (index == langs.length - 1) console.log('国际化更新完成')
       })
     })
   })

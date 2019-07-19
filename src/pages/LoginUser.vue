@@ -1215,6 +1215,12 @@ export default {
     }
   },
   watch: {
+    $language_S_X () {
+      this.setErrorMsg(0)
+      this.setErrorMsg(1)
+      this.setErrorMsg(2)
+      this.setErrorMsg(3)
+    }
   }
 }
 </script>
