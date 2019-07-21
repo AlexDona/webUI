@@ -141,6 +141,13 @@
           >
             <PersonalSettings/>
           </el-tab-pane>
+          <!--关注拉黑-->
+          <el-tab-pane
+            label = "关注拉黑"
+            name = "focus-blacklist"
+          >
+            <FocusBlackList/>
+          </el-tab-pane>
         </el-tabs>
       </div>
       <!--设置交易密码前弹框提示-->
@@ -257,6 +264,8 @@ import CoinOrders from '../components/Personal/TransactionType/CoinOrders'
 import FiatOrders from '../components/Personal/TransactionType/FiatOrders'
 // 个人设置
 import PersonalSettings from '../components/Personal/Settings/PersonalSettings'
+// 关注拉黑
+import FocusBlackList from '../components/Personal/FocusBlack/FocusBlackList'
 
 import IconFontCommon from '../components/Common/IconFontCommon'
 import {
@@ -282,7 +291,9 @@ export default {
     CoinOrders, // 币币订单
     FiatOrders, // 法币订单
     // 个人设置
-    PersonalSettings
+    PersonalSettings,
+    // 关注拉黑
+    FocusBlackList
   },
   // props,
   data () {
