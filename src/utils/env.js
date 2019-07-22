@@ -49,7 +49,7 @@ const devTestConfig = {
   socketUrl: 'ws://192.168.2.200:8087/market',
   apiCommonUrl: 'http://192.168.2.200:8888/',
   loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
-  OTCIMSocketUrl: 'ws://192.168.2.200:8888/websoc'
+  OTCIMSocketUrl: 'ws://192.168.2.200:8068/websoc'
 }
 
 const dev210Config = {
