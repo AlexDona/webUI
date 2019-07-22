@@ -504,8 +504,8 @@ export default {
             }
 
             .bank-button {
-              color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, rgb(43, 57, 110), rgb(42, 80, 130));
+              color: rgba(255, 255, 255, 1);
+              background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
             }
           }
         }
@@ -515,7 +515,7 @@ export default {
         /* 个人中心黑色主题 */
         .el-form-item__label {
           min-width: 140px;
-          color: rgba(255, 255, 255, .7);
+          color: #a9bed4;
         }
 
         .el-input__inner {
@@ -567,8 +567,8 @@ export default {
             }
 
             .bank-button {
-              color: #ccc;
-              background: linear-gradient(0deg, rgb(43, 57, 110), rgb(42, 80, 130));
+              color: #fff;
+              background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
             }
           }
         }
