@@ -459,7 +459,6 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .add-payment-main {
         border: 1px solid rgba(246, 246, 246, 1);

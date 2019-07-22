@@ -333,6 +333,7 @@ export default {
 
         > .header-content-right {
           text-align: right;
+          color: #7d90ac;
         }
 
         > .header-content-left {
@@ -437,7 +438,7 @@ export default {
             }
 
             .western-button {
-              color: rgba(255, 255, 255, .7);
+              color: rgba(255, 255, 255, 1);
               background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
             }
           }
@@ -460,7 +461,6 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .add-western-main {
         border: 1px solid rgba(246, 246, 246, 1);
@@ -470,10 +470,6 @@ export default {
 
         > .add-western-header {
           border-bottom: 1px solid rgba(57, 66, 77, .1);
-
-          > .header-content-left {
-            color: #7d90ac;
-          }
         }
 
         > .add-western-content {

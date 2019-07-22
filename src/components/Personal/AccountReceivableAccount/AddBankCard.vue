@@ -533,7 +533,6 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .add-bank-main {
         border: 1px solid rgb(246, 246, 246);
