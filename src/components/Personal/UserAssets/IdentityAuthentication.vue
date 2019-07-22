@@ -24,6 +24,7 @@
           <div
             class="header-border display-flex margin20"
             v-if="innerUserInfo"
+            :class="{'border-format':realNameAuth === 'y'}"
           >
               <span class="font-size16 main-header-title">
                 <!--实名认证-->
@@ -183,7 +184,7 @@
       </div>
       <div
         v-else
-        class="name-authentication-content success-height">
+        class="name-authentication-content padding-format">
       </div>
     </div>
     <!--高级认证-->
@@ -191,18 +192,18 @@
     >
       <div
         class="advanced-main-header"
+        :class="{ 'padding-format': realNameAuth === 'y'}"
       >
         <!--authenticationMethod // 点击弹出扫码确认框-->
         <p
           class="header-border padding-lr20"
-          @click.prevent="authenticationMethod"
         >
           <span class="font-size16 main-header-title">
             <!--高级认证-->
             {{ $t('M.user_senior_certification') }}
           </span>
           <span
-            v-if="advancedAuth === ''"
+            v-if="advancedAuth === '' && realNameAuth === 'n'"
             class="authentication-type font-size12"
           >
             <!--未高级认证-->
@@ -222,18 +223,18 @@
             <!--待审核-->
             （{{ $t('M.user_senior_audit') }}）
           </span>
-          <span
+          <!--<span
             class="float-right authentication-type font-size12"
             v-if="advancedAuth === ''"
           >
-            <!--去认证-->
+            &lt;!&ndash;去认证&ndash;&gt;
             {{ $t('M.user_senior_go_certification') }}
           </span>
-          <span v-else></span>
+          <span v-else></span>-->
         </p>
       </div>
-      <div class="identity-box">
-        <div v-if="authenticationStatusFront">
+      <div class="identity-box" :class="{'success-height': realNameAuth === 'y' && advancedAuth !== ''}">
+        <div v-if="realNameAuth === 'y' && advancedAuth === ''">
           <el-collapse-transition>
             <div class="transition-box">
               <div class="personal-information">
@@ -857,7 +858,7 @@ export default {
       }
     }, 500),
     // 高级认证弹窗
-    authenticationMethod () {
+    /* authenticationMethod () {
       // 判断是否高级认证&&实名认证
       if (this.realNameAuth === 'y' && this.advancedAuth === '') {
         // 显示高级认证页面
@@ -869,7 +870,7 @@ export default {
       //   // 隐藏高级认证页面
       //   this.authenticationStatusFront = false
       // }
-    },
+    }, */
     // 高级认证未通过被驳回
     authenticationIsStatus () {
       if (this.advancedAuth === '' && this.realNameAuth === 'n') {
@@ -994,12 +995,25 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import '../../../assets/CSS/index';
 
+  .padding-format {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .border-format {
+    border: none !important;
+  }
+
+  .success-height {
+    height: 547px;
+  }
+
   .identity-authentication {
     > .identity-authentication-main {
       .name-authentication-content {
         width: 500px;
-        padding-top: 28px;
-        padding-bottom: 25px;
+        padding-top: 40px;
+        padding-bottom: 77px;
         margin: 0 auto;
 
         .common-input,
@@ -1060,6 +1074,7 @@ export default {
 
       .advanced-main-header {
         width: 100%;
+        padding-bottom: 117px;
 
         .icon-down {
           padding-right: 10px;
@@ -1094,7 +1109,7 @@ export default {
         }
 
         > .wait-veritfy-back {
-          height: 490px;
+          height: 545px;
           padding-top: 130px;
 
           > .wait-veritfy {
@@ -1328,7 +1343,7 @@ export default {
         }
 
         .authentication-type {
-          color: #09f;
+          color: #d45858;
         }
 
         .authentication-type-info {
@@ -1387,7 +1402,7 @@ export default {
         }
 
         .authentication-type {
-          color: #09f;
+          color: #d45858;
         }
 
         .upload-submit {
@@ -1397,7 +1412,7 @@ export default {
 
         .submit-information {
           color: #fff;
-          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+          background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
         }
 
         .text-hints {
@@ -1527,7 +1542,7 @@ export default {
 
           .submit {
             color: #fff;
-            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
           }
         }
 
@@ -1583,7 +1598,7 @@ export default {
 
               .no-pass-button {
                 color: #fff;
-                background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
               }
             }
           }
@@ -1605,7 +1620,7 @@ export default {
 
         .submit-information {
           color: #fff;
-          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+          background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
         }
 
         .text-hints {

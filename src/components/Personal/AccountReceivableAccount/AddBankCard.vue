@@ -425,7 +425,7 @@ export default {
 
         > .bank-content-from {
           width: 500px;
-          margin-left: 55px;
+          margin: 58px auto;
 
           .bank-input {
             width: 220px;
