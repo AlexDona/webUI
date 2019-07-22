@@ -31,7 +31,7 @@
             <div class="login-after" v-else>
               <div class="view-info">
                 <span class="person-name font-size20">王二狗</span>
-                <span class="view-text cursor-pointer">查看</span>
+                <span class="view-text cursor-pointer" @click="personInfoDiaStatus = true">查看</span>
               </div>
               <div class="available-count">
                 <span>{{selectedOTCAvailableCurrencyName}}</span>
@@ -352,6 +352,98 @@
             <p class="rules-item">3.{{$t('M.otc_publishAD_discriptLineFour')}}</p>
           </div>
         </div>
+        <!--1.4 查看个人信息弹窗-->
+        <div class="person-info-dialog">
+          <el-dialog
+            :visible.sync="personInfoDiaStatus"
+            top="22vh"
+          >
+            <div class="person-body-content">
+              <!--1头像部分-->
+              <div class="photo">
+                <!--左侧-->
+                <div class="photo-left">
+                  <IconFontCommon
+                    class="font-size40 icon-user"
+                    iconName="icon-gerenzhongxin"
+                  />
+                  <span class="person-name font-size16">王二狗</span>
+                </div>
+                <!--右侧-->
+                <div class="photo-right">
+                  <div class="time-top text-align-r">注册时间：2019/06/20</div>
+                  <div class="time-bottom text-align-r">最近登录时间：2019/06/27</div>
+                </div>
+              </div>
+              <!--2认证部分-->
+              <div class="identity-box">
+                <div class="first-item items">
+                  <span>邮箱认证</span>
+                  <IconFontCommon
+                    class="font-size40 icon-user"
+                    iconName="icon-tongguo_huaban"
+                  />
+                </div>
+                <div class="second-item items">
+                  <span>手机认证</span>
+                  <IconFontCommon
+                    class="font-size40 icon-user"
+                    iconName="icon-tongguo_huaban"
+                  />
+                </div>
+                <div class="third-item items">
+                  <span>实名认证</span>
+                  <IconFontCommon
+                    class="font-size40 icon-user"
+                    iconName="icon-tongguo_huaban"
+                  />
+                </div>
+                <div class="fourth-item items">
+                  <span>高级认证</span>
+                  <IconFontCommon
+                    class="font-size40 icon-user"
+                    iconName="icon-tongguo_huaban"
+                  />
+                </div>
+                <div class="fifth-item items">
+                  <span>商家认证</span>
+                  <IconFontCommon
+                    class="font-size40 icon-user"
+                    iconName="icon-tongguo_huaban"
+                  />
+                </div>
+
+              </div>
+              <!--3其他信息-->
+              <div class="other-infos">
+                <div class="first-bar bars">
+                  <div class="bar-top">商家保证金</div>
+                  <div class="bar-bottom">10000FUC</div>
+                </div>
+                <div class="second-bar bars">
+                  <div class="bar-top">交易总单数</div>
+                  <div class="bar-bottom">5646</div>
+                </div>
+                <div class="third-bar bars">
+                  <div class="bar-top">30日成交单</div>
+                  <div class="bar-bottom">453</div>
+                </div>
+                <div class="fourth-bar bars">
+                  <div class="bar-top">30日成交率</div>
+                  <div class="bar-bottom">99.66%</div>
+                </div>
+                <div class="fifth-bar bars">
+                  <div class="bar-top">30日冻结次数</div>
+                  <div class="bar-bottom">56</div>
+                </div>
+                <div class="sixth-bar bars">
+                  <div class="bar-top">平均放行时间</div>
+                  <div class="bar-bottom">05/06</div>
+                </div>
+              </div>
+            </div>
+          </el-dialog>
+        </div>
       </div>
       <!-- 2 订单管理-->
       <!--<div
@@ -534,6 +626,8 @@ export default {
   },
   data () {
     return {
+      // 个人信息弹窗显示状态
+      personInfoDiaStatus: false,
       currencyCoinSelectStatus: true, // 货币类型法币可用状态
       // 用户是否可以发单状态
       userPutUpOrderStatus: false,
@@ -1242,6 +1336,90 @@ export default {
           }
         }
       }
+
+      /* 个人信息弹窗 */
+      > .person-info-dialog {
+        .person-body-content {
+          > .photo {
+            display: flex;
+            justify-content: space-between;
+            height: 60px;
+            padding: 0 30px;
+            border-bottom: 1px solid #34415e;
+
+            > .photo-left {
+              padding-top: 10px;
+
+              .icon {
+                margin-right: 5px;
+              }
+
+              > .person-name {
+                color: $mainColorOfWhite;
+              }
+            }
+
+            > .photo-right {
+              padding-top: 10px;
+
+              > .time-top {
+                color: #66718f;
+              }
+
+              > .time-bottom {
+                color: #66718f;
+              }
+            }
+          }
+
+          > .identity-box {
+            display: flex;
+            flex-wrap: wrap;
+            height: 100px;
+            padding: 15px 30px 0 80px;
+            box-shadow: 0 2px 6px 0 rgba(32, 36, 55, 1);
+
+            .icon {
+              width: 24px;
+              height: 24px;
+              color: $mainColor;
+            }
+
+            .items {
+              width: 33%;
+              font-size: 12px;
+              color: $mainColorOfWhite;
+            }
+          }
+
+          > .other-infos {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 25px 30px 0 80px;
+
+            > .bars {
+              width: 33%;
+
+              > .bar-top {
+                margin-bottom: 6px;
+                font-size: 12px;
+                color: #66718f;
+              }
+
+              > .bar-bottom {
+                font-size: 14px;
+                color: $mainColorOfWhite;
+              }
+            }
+
+            > .first-bar,
+            .second-bar,
+            .third-bar {
+              margin-bottom: 25px;
+            }
+          }
+        }
+      }
     }
 
     > .otc-order-manage {
@@ -1469,6 +1647,32 @@ export default {
 
     .el-tabs__nav-scroll {
       overflow: visible;
+    }
+
+    /* 个人信息弹窗 */
+    .person-info-dialog {
+      .el-dialog__wrapper {
+        background-color: rgba(0, 0, 0, .7);
+      }
+
+      .el-dialog {
+        width: 550px !important;
+        height: 360px;
+        border-radius: 4px;
+        background-color: $dialogColor1;
+
+        .el-dialog__header {
+          .el-dialog__headerbtn {
+            top: 10px;
+            right: 10px;
+            padding: 0;
+          }
+        }
+
+        .el-dialog__body {
+          padding: 0;
+        }
+      }
     }
   }
 
@@ -1811,6 +2015,90 @@ export default {
             color: $dayMainTitleColor;
           }
         }
+
+        /* 个人信息弹窗白色 */
+        > .person-info-dialog {
+          .person-body-content {
+            > .photo {
+              display: flex;
+              justify-content: space-between;
+              height: 60px;
+              padding: 0 30px;
+              border-bottom: 1px solid rgba(97, 116, 153, .1);
+
+              > .photo-left {
+                padding-top: 10px;
+
+                .icon {
+                  margin-right: 5px;
+                }
+
+                > .person-name {
+                  color: $dayMainTitleColor;
+                }
+              }
+
+              > .photo-right {
+                padding-top: 10px;
+
+                > .time-top {
+                  color: #66718f;
+                }
+
+                > .time-bottom {
+                  color: #66718f;
+                }
+              }
+            }
+
+            > .identity-box {
+              display: flex;
+              flex-wrap: wrap;
+              height: 100px;
+              padding: 15px 30px 0 80px;
+              box-shadow: 0 2px 2px 0 rgba(240, 240, 240, 1);
+
+              .icon {
+                width: 24px;
+                height: 24px;
+                color: $mainColor;
+              }
+
+              .items {
+                width: 33%;
+                font-size: 12px;
+                color: $mainColor;
+              }
+            }
+
+            > .other-infos {
+              display: flex;
+              flex-wrap: wrap;
+              padding: 25px 30px 0 80px;
+
+              > .bars {
+                width: 33%;
+
+                > .bar-top {
+                  margin-bottom: 6px;
+                  font-size: 12px;
+                  color: #66718f;
+                }
+
+                > .bar-bottom {
+                  font-size: 14px;
+                  color: $dayMainTitleColor;
+                }
+              }
+
+              > .first-bar,
+              .second-bar,
+              .third-bar {
+                margin-bottom: 25px;
+              }
+            }
+          }
+        }
       }
 
       > .otc-order-manage {
@@ -1936,6 +2224,28 @@ export default {
         &.is-active {
           color: $mainColorOfWhite;
           background-color: $mainColor;
+        }
+      }
+
+      /* 个人信息弹窗 */
+      .person-info-dialog {
+        .el-dialog {
+          width: 550px !important;
+          height: 360px;
+          border-radius: 4px;
+          background-color: $mainColorOfWhite;
+
+          .el-dialog__header {
+            .el-dialog__headerbtn {
+              top: 10px;
+              right: 10px;
+              padding: 0;
+            }
+          }
+
+          .el-dialog__body {
+            padding: 0;
+          }
         }
       }
     }
