@@ -854,7 +854,7 @@ export default {
 
           > .search-button {
             color: #fff;
-            background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+            background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
           }
 
           .demonstration {
