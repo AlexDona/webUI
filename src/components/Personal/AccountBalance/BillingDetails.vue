@@ -43,7 +43,7 @@
           <!--充提记录类型-->
           <div
             v-if="activeName === 'current-entrust'"
-            class="float-left margin-left50 cursor-pointer"
+            class="float-left margin-left150 cursor-pointer"
           >
           <span class="demonstration font-size12">
             <!--类型-->
@@ -65,7 +65,7 @@
           <!--其他记录类型-->
           <div
             v-else
-            class="float-left margin-left50 cursor-pointer"
+            class="float-left margin-left150 cursor-pointer"
           >
             <!--类型-->
             <span class="demonstration">
@@ -83,7 +83,7 @@
               </el-option>
             </el-select>
           </div>
-          <div class="float-left margin-left58 cursor-pointer">
+          <div class="float-left margin-left150 cursor-pointer">
             <div
               class="block"
               v-if="activeName === 'current-entrust'"
@@ -156,7 +156,7 @@
                 <el-table-column
                   :label="$t('M.comm_currency')"
                 >
-                  <template slot-scope = "s">
+                  <template slot-scope = "s" style="background: red">
                     <div>{{ s.row.coinName }}</div>
                   </template>
                 </el-table-column>
@@ -165,7 +165,7 @@
                   :label="$t('M.comm_type')"
                 >
                   <template slot-scope = "s">
-                    <div>{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
+                    <div class="coin-type">{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
                   </template>
                 </el-table-column>
                 <!--提币地址-->
@@ -702,6 +702,10 @@ export default {
         height: 57px;
         line-height: 57px;
 
+        .margin-left150 {
+          margin-left: 150px;
+        }
+
         .search-button {
           min-width: 50px;
           height: 30px;
@@ -738,7 +742,7 @@ export default {
 
           > .search-button {
             color: #fff;
-            background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+            background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
           }
         }
       }
@@ -977,13 +981,27 @@ export default {
       .el-table {
         .cell {
           font-size: 12px;
-          text-align: center;
         }
 
         th {
+          &:nth-child(1) {
+            text-align: left;
+          }
+
+          &:nth-of-type(4) {
+            text-align: center;
+          }
+
+          &:nth-of-type(5) {
+            text-align: right;
+          }
+
+          &:nth-of-type(6) {
+            text-align: right;
+          }
+
           & > .cell {
             font-size: 12px;
-            text-align: center;
           }
 
           &.is-leaf {
@@ -993,7 +1011,7 @@ export default {
       }
 
       .el-tabs__content {
-        width: 930px !important;
+        width: 100%;
       }
     }
   }
