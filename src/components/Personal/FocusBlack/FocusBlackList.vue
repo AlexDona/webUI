@@ -60,7 +60,6 @@ export default {
   .focus-black-box {
     width: 1105px;
     height: 758px;
-    background-color: $mainContentNightBgColor;
 
     > .inner-box {
       width: 1105px;
@@ -71,25 +70,10 @@ export default {
         .el-tabs {
           .el-tabs__header {
             padding-left: 30px !important;
-            box-shadow: 0 2px 2px 0 rgba(20, 23, 37, 1);
 
             .el-tabs__item {
               padding: 0;
               margin: 2px 0 !important;
-              border-left: 0 solid transparent;
-            }
-
-            .el-tabs__item.is-active {
-              border-bottom: 2px solid $mainColor;
-              border-left: 0 solid transparent;
-              color: $mainColor;
-              background-color: $mainContentNightBgColor;
-            }
-
-            .el-tabs__item:hover {
-              border-left: 0 solid transparent;
-              color: $mainColor;
-              background-color: $mainContentNightBgColor;
             }
 
             .el-tabs__item.is-top {
@@ -103,22 +87,68 @@ export default {
     }
 
     &.night {
-      > .inner-box {
-        /* 1 */
-      }
+      background-color: $mainContentNightBgColor;
 
       /deep/ {
-        /* 1 */
+        .inner-box {
+          .el-tabs {
+            .el-tabs__header {
+              box-shadow: 0 2px 2px 0 rgba(20, 23, 37, 1);
+
+              .el-tabs__item {
+                border-left: 0 solid transparent;
+              }
+
+              .el-tabs__item.is-active {
+                border-bottom: 2px solid $mainColor;
+                border-left: 0 solid transparent;
+                color: $mainColor;
+                background-color: $mainContentNightBgColor;
+              }
+
+              .el-tabs__item:hover {
+                border-left: 0 solid transparent;
+                color: $mainColor;
+                background-color: $mainContentNightBgColor;
+              }
+            }
+          }
+        }
       }
     }
 
     &.day {
-      > .inner-box {
-        /* 1 */
-      }
+      background-color: $mainColorOfWhite;
 
       /deep/ {
-        /* 1 */
+        .inner-box {
+          .el-tabs {
+            .el-tabs__header {
+              border-bottom: 1px solid rgba(57, 66, 77, .1);
+
+              .el-tabs__nav {
+                background-color: transparent;
+              }
+
+              .el-tabs__item {
+                border-left: 0 solid transparent;
+              }
+
+              .el-tabs__item.is-active {
+                border-bottom: 2px solid $mainColor;
+                border-left: 0 solid transparent;
+                color: $mainColor;
+                background-color: $mainColorOfWhite;
+              }
+
+              .el-tabs__item:hover {
+                border-left: 0 solid transparent;
+                color: $mainColor;
+                background-color: $mainColorOfWhite;
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -3,50 +3,88 @@
     class="otc-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!--2.0 在线交易和订单管理-->
+    <!--在线交易和订单管理-->
     <div class="otc-center-content">
-      <!-- 2.1 在线交易-->
+      <!-- 1 在线交易-->
       <div
         class="otc-online-trading"
         id="jumpScrollTop"
       >
-        <!-- 2.1.1 在线购买和在线出售按钮-->
-        <div class="otc-online-buy-and-sell-button">
-          <el-radio-group
-            v-model="OTCBuySellStyle"
-            @change="toggleBuyOrSellStyle"
-          >
-            <el-radio-button
-              label="onlineBuy"
-              :disabled="isDisabledRadio"
+        <!--1.1个人信息-->
+        <div class="person-info-box font-size12">
+          <!--左侧-->
+          <div class="info-left">
+            <!--头像-->
+            <div class="avatar text-align-c">
+              <IconFontCommon
+                class="font-size40 icon-user"
+                iconName="icon-gerenzhongxin"
+              />
+            </div>
+            <!--信息-->
+            <div class="login-before" v-if="!isLogin">
+              <div class="login-text cursor-pointer" @click="loginJump">登录</div>
+              <div class="coin-count">
+                <span>{{selectedOTCAvailableCurrencyName}}</span> 可用 0.00000000  / 冻结 0.0000000
+              </div>
+            </div>
+            <div class="login-after" v-else>
+              <div class="view-info">
+                <span class="person-name font-size20">王二狗</span>
+                <span class="view-text cursor-pointer">查看</span>
+              </div>
+              <div class="available-count">
+                <span>{{selectedOTCAvailableCurrencyName}}</span>
+                <span>可用 0.00000000</span> /
+                <span>冻结 0.0000000</span>
+              </div>
+            </div>
+          </div>
+          <!--右侧-->
+          <div class="info-right">
+            <!-- 发布订单按钮 -->
+            <el-button
+              type="primary"
+              @click="toPublishOrder"
+              v-if="userPutUpOrderStatus"
             >
-              <!-- 在线购买 -->
-              {{ $t('M.otc_index_online_buy') }}
-            </el-radio-button>
-            <el-radio-button
-              label="onlineSell"
-              :disabled="isDisabledRadio"
-            >
-              <!-- 在线出售 -->
-              {{ $t('M.otc_index_online_sell') }}
-            </el-radio-button>
-          </el-radio-group>
+              {{ $t('M.otc_release_order') }}
+            </el-button>
+          </div>
         </div>
-        <!-- 2.1.2 我要购买和商户列表内容-->
+        <!-- 1.2 我要购买和商户列表内容-->
         <div class="otc-merchant-content">
-          <!--我要购买和发布订单按钮-->
+          <!--1.2.1在线购买和在线出售切换-->
+          <div class="otc-online-buy-and-sell-button">
+            <el-radio-group
+              v-model="OTCBuySellStyle"
+              @change="toggleBuyOrSellStyle"
+            >
+              <el-radio-button
+                label="onlineBuy"
+                :disabled="isDisabledRadio"
+              >
+                <!-- 在线购买 -->
+                {{ $t('M.otc_index_online_buy') }}
+              </el-radio-button>
+              <el-radio-button
+                label="onlineSell"
+                :disabled="isDisabledRadio"
+              >
+                <!-- 在线出售 -->
+                {{ $t('M.otc_index_online_sell') }}
+              </el-radio-button>
+            </el-radio-group>
+          </div>
+          <!--1.2.2我要购买/出售和筛选框-->
           <div class="otc-filtrate-publish">
             <!-- 可用币种列表 -->
             <div class="otc-filtrate-box">
-              <!-- 我要购买/我要出售 -->
-              <span class="otc-i-wan">
-                {{ OTCBuySellStyle === 'onlineBuy' ? $t('M.otc_index_wantTo_buy'): $t('M.otc_index_wantTo_sell') }}：
-              </span>
               <div class="otc-filtrate-style">
                 <span
                   v-for="(item, index) in IWantToBuySellArr"
                   :key="index"
-                  class="otc-filtrate-currency-name"
+                  class="otc-filtrate-currency-name font-size12 cursor-pointer border-radius2"
                   :class="{ currencyNameActived: selectCurrencyNameStatus === index }"
                   @click="selectCurrencyName(index)"
                 >
@@ -122,20 +160,10 @@
                   </el-option>
                 </el-select>
               </span>
-              <!-- 发布订单按钮 -->
-              <el-button
-                type="primary"
-                @click="toPublishOrder"
-                v-if="userPutUpOrderStatus"
-              >
-              {{ $t('M.otc_release_order') }}
-              </el-button>
             </div>
           </div>
-          <!--商户列表表格部分-->
-          <div
-            class="otc-merchant-list"
-          >
+          <!--1.2.3商户列表表格部分-->
+          <div class="otc-merchant-list">
             <!-- 表格信息 暂时无数据-->
             <el-table
               :data="onlineBuySellTableList"
@@ -300,7 +328,7 @@
               </el-table-column>
             </el-table>
           </div>
-          <!--分页-->
+          <!--1.2.4分页-->
           <div class="page">
             <el-pagination
               background
@@ -313,147 +341,158 @@
             </el-pagination>
           </div>
         </div>
+        <!--1.3交易须知-->
+        <div class="trade-rules border-radius2">
+          <div class="rules-header">
+            交易规则：
+          </div>
+          <div class="rules-box font-size12">
+            <p class="rules-item">1.交易中请注意判断和防范有欺诈风险的付款方式；</p>
+            <p class="rules-item">2.{{$t('M.otc_publishAD_discriptLineThree')}}{{configInfo.otcAd}}{{$t('M.otc_publishAD_discriptLineFive')}}</p>
+            <p class="rules-item">3.{{$t('M.otc_publishAD_discriptLineFour')}}</p>
+          </div>
+        </div>
       </div>
-      <!-- 2.2 订单管理-->
-      <!--<div-->
-        <!--class="otc-order-manage"-->
-        <!--id="orderView"-->
-      <!--&gt;-->
-        <!--&lt;!&ndash;交易中订单右箭头&ndash;&gt;-->
-        <!--<div class="trading-order-right-arrow">-->
-          <!--<i-->
-            <!--class="el-icon-caret-right font-size20"-->
-            <!--v-if="activeName === 'first'"-->
-          <!--&gt;-->
-          <!--</i>-->
-        <!--</div>-->
-        <!--&lt;!&ndash;交易中订单图标沙漏&ndash;&gt;-->
-        <!--<div-->
-          <!--class="trading-order-sand-clock cursor-pointer"-->
-          <!--@click="toggleTradingOrder"-->
-        <!--&gt;-->
-          <!--<IconFontCommon-->
-            <!--v-if="activeName === 'first'"-->
-            <!--iconName="icon-shalou"-->
-            <!--style="color: #fff;"-->
-          <!--/>-->
-          <!--<IconFontCommon-->
-            <!--v-else-->
-            <!--iconName="icon-shalou"-->
-            <!--style="color: #4f85da;"-->
-          <!--/>-->
-        <!--</div>-->
-        <!--&lt;!&ndash;订单管理tab栏&ndash;&gt;-->
-        <!--<el-tabs-->
-          <!--:tab-position = "tabPosition"-->
-          <!--@tab-click = "toggleTabPane"-->
-          <!--v-model = "activeName"-->
-        <!--&gt;-->
-          <!--&lt;!&ndash; 2.2.1 交易中的订单 &ndash;&gt;-->
-          <!--<el-tab-pane-->
-            <!--name = "first"-->
-            <!--:disabled="isDisabled"-->
-            <!--:label="$t('M.otc_trading')"-->
-          <!--&gt;-->
-            <!--&lt;!&ndash;<span slot="label">-->
-              <!--<i-->
-                <!--class="el-icon-caret-right otc-tab-pane-arrow-right"-->
-                <!--v-if="activeName === 'first'"-->
-              <!--&gt;-->
-              <!--</i>-->
-              <!--<IconFontCommon-->
-                <!--iconName="icon-shalou"-->
-              <!--/>-->
-                <!--交易中订单-->
-              <!--{{$t('M.otc_trading')}}-->
-            <!--</span>&ndash;&gt;-->
-            <!--<OTCTradingOrder v-if="activeName === 'first'"/>-->
-          <!--</el-tab-pane>-->
-          <!--&lt;!&ndash; 2.2.2 已完成订单 &ndash;&gt;-->
-          <!--<el-tab-pane-->
-            <!--name = "second"-->
-            <!--:disabled="isDisabled"-->
-          <!--&gt;-->
-            <!--<span slot="label">-->
-              <!--<i-->
-                <!--class="el-icon-caret-right otc-tab-pane-arrow-right"-->
-                <!--v-if="activeName === 'second'"-->
-              <!--&gt;-->
-              <!--</i>-->
-              <!--<IconFontCommon-->
-                <!--iconName="icon-msnui-task-complete"-->
-              <!--/>-->
-              <!--&lt;!&ndash; 已完成订单 &ndash;&gt;-->
-              <!--{{$t('M.otc_stocks')}}-->
-            <!--</span>-->
-            <!--<OTCCompletedOrder v-if="activeName === 'second'"/>-->
-          <!--</el-tab-pane>-->
-          <!--&lt;!&ndash; 2.2.3 已取消订单 &ndash;&gt;-->
-          <!--<el-tab-pane-->
-            <!--name = "third"-->
-            <!--:disabled="isDisabled"-->
-          <!--&gt;-->
-            <!--<span slot="label">-->
-              <!--<i-->
-                <!--class="el-icon-caret-right otc-tab-pane-arrow-right"-->
-                <!--v-if="activeName === 'third'"-->
-              <!--&gt;-->
-              <!--</i>-->
-              <!--<IconFontCommon-->
-                <!--iconName="icon-cancel_order"-->
-              <!--/>-->
-              <!--&lt;!&ndash; 已取消订单 &ndash;&gt;-->
-              <!--{{$t('M.otc_canceled')}}-->
-            <!--</span>-->
-            <!--<OTCCanceledOrder v-if="activeName === 'third'"/>-->
-          <!--</el-tab-pane>-->
-          <!--&lt;!&ndash; 2.2.4 冻结中订单 &ndash;&gt;-->
-          <!--<el-tab-pane-->
-            <!--name = "fourth"-->
-            <!--:disabled="isDisabled"-->
-          <!--&gt;-->
-            <!--<span slot="label">-->
-              <!--<i-->
-                <!--class="el-icon-caret-right otc-tab-pane-arrow-right"-->
-                <!--v-if="activeName === 'fourth'"-->
-              <!--&gt;-->
-              <!--</i>-->
-              <!--<IconFontCommon-->
-                <!--iconName="icon-dongjie"-->
-              <!--/>-->
-              <!--&lt;!&ndash; 冻结中订单 &ndash;&gt;-->
-              <!--{{$t('M.otc_freezingOrder')}}-->
-            <!--</span>-->
-            <!--<OTCFreezingOrder v-if="activeName === 'fourth'"/>-->
-          <!--</el-tab-pane>-->
-          <!--&lt;!&ndash; 2.2.5 委托订单 &ndash;&gt;-->
-          <!--<el-tab-pane-->
-            <!--name = "fifth"-->
-            <!--:disabled="isDisabled"-->
-          <!--&gt;-->
-            <!--<span slot="label">-->
-              <!--<i-->
-                <!--class="el-icon-caret-right otc-tab-pane-arrow-right"-->
-                <!--v-if="activeName === 'fifth'"-->
-              <!--&gt;-->
-              <!--</i>-->
-              <!--<IconFontCommon-->
-                <!--iconName="icon-daohang2"-->
-              <!--/>-->
-              <!--&lt;!&ndash; 委托订单 &ndash;&gt;-->
-              <!--{{$t('M.otc_entrust')}}-->
-            <!--</span>-->
-            <!--<OTCEntrustOrder v-if="activeName === 'fifth'"/>-->
-          <!--</el-tab-pane>-->
-        <!--</el-tabs>-->
-        <!--&lt;!&ndash; 查询更多 &ndash;&gt;-->
-        <!--<span-->
-          <!--class="more"-->
-          <!--@click="queryMoreOrder"-->
-        <!--&gt;-->
-            <!--{{$t('M.otc_transaction_inquiries_more')}}-->
-          <!--</span>-->
-      <!--</div>-->
+      <!-- 2 订单管理-->
+      <!--<div
+        class="otc-order-manage"
+        id="orderView"
+      >
+        &lt;!&ndash;交易中订单右箭头&ndash;&gt;
+        <div class="trading-order-right-arrow">
+          <i
+            class="el-icon-caret-right font-size20"
+            v-if="activeName === 'first'"
+          >
+          </i>
+        </div>
+        &lt;!&ndash;交易中订单图标沙漏&ndash;&gt;
+        <div
+          class="trading-order-sand-clock cursor-pointer"
+          @click="toggleTradingOrder"
+        >
+          <IconFontCommon
+            v-if="activeName === 'first'"
+            iconName="icon-shalou"
+            style="color: #fff;"
+          />
+          <IconFontCommon
+            v-else
+            iconName="icon-shalou"
+            style="color: #4f85da;"
+          />
+        </div>
+        &lt;!&ndash;订单管理tab栏&ndash;&gt;
+        <el-tabs
+          :tab-position = "tabPosition"
+          @tab-click = "toggleTabPane"
+          v-model = "activeName"
+        >
+          &lt;!&ndash; 2.2.1 交易中的订单 &ndash;&gt;
+          <el-tab-pane
+            name = "first"
+            :disabled="isDisabled"
+            :label="$t('M.otc_trading')"
+          >
+            &lt;!&ndash;<span slot="label">
+              <i
+                class="el-icon-caret-right otc-tab-pane-arrow-right"
+                v-if="activeName === 'first'"
+              >
+              </i>
+              <IconFontCommon
+                iconName="icon-shalou"
+              />
+                交易中订单
+              {{$t('M.otc_trading')}}
+            </span>&ndash;&gt;
+            <OTCTradingOrder v-if="activeName === 'first'"/>
+          </el-tab-pane>
+          &lt;!&ndash; 2.2.2 已完成订单 &ndash;&gt;
+          <el-tab-pane
+            name = "second"
+            :disabled="isDisabled"
+          >
+            <span slot="label">
+              <i
+                class="el-icon-caret-right otc-tab-pane-arrow-right"
+                v-if="activeName === 'second'"
+              >
+              </i>
+              <IconFontCommon
+                iconName="icon-msnui-task-complete"
+              />
+              &lt;!&ndash; 已完成订单 &ndash;&gt;
+              {{$t('M.otc_stocks')}}
+            </span>
+            <OTCCompletedOrder v-if="activeName === 'second'"/>
+          </el-tab-pane>
+          &lt;!&ndash; 2.2.3 已取消订单 &ndash;&gt;
+          <el-tab-pane
+            name = "third"
+            :disabled="isDisabled"
+          >
+            <span slot="label">
+              <i
+                class="el-icon-caret-right otc-tab-pane-arrow-right"
+                v-if="activeName === 'third'"
+              >
+              </i>
+              <IconFontCommon
+                iconName="icon-cancel_order"
+              />
+              &lt;!&ndash; 已取消订单 &ndash;&gt;
+              {{$t('M.otc_canceled')}}
+            </span>
+            <OTCCanceledOrder v-if="activeName === 'third'"/>
+          </el-tab-pane>
+          &lt;!&ndash; 2.2.4 冻结中订单 &ndash;&gt;
+          <el-tab-pane
+            name = "fourth"
+            :disabled="isDisabled"
+          >
+            <span slot="label">
+              <i
+                class="el-icon-caret-right otc-tab-pane-arrow-right"
+                v-if="activeName === 'fourth'"
+              >
+              </i>
+              <IconFontCommon
+                iconName="icon-dongjie"
+              />
+              &lt;!&ndash; 冻结中订单 &ndash;&gt;
+              {{$t('M.otc_freezingOrder')}}
+            </span>
+            <OTCFreezingOrder v-if="activeName === 'fourth'"/>
+          </el-tab-pane>
+          &lt;!&ndash; 2.2.5 委托订单 &ndash;&gt;
+          <el-tab-pane
+            name = "fifth"
+            :disabled="isDisabled"
+          >
+            <span slot="label">
+              <i
+                class="el-icon-caret-right otc-tab-pane-arrow-right"
+                v-if="activeName === 'fifth'"
+              >
+              </i>
+              <IconFontCommon
+                iconName="icon-daohang2"
+              />
+              &lt;!&ndash; 委托订单 &ndash;&gt;
+              {{$t('M.otc_entrust')}}
+            </span>
+            <OTCEntrustOrder v-if="activeName === 'fifth'"/>
+          </el-tab-pane>
+        </el-tabs>
+        &lt;!&ndash; 查询更多 &ndash;&gt;
+        <span
+          class="more"
+          @click="queryMoreOrder"
+        >
+            {{$t('M.otc_transaction_inquiries_more')}}
+          </span>
+      </div>-->
     </div>
   </div>
 </template>
@@ -614,6 +653,10 @@ export default {
       // 改变otc主页法币列表筛选框选中的法币类型id
       'CHANGE_OTC_SELECTED_CURRENCY_ID'
     ]),
+    // 登录跳转
+    loginJump () {
+      this.$goToPage(`/${this.$routes_X.login}`)
+    },
     // 增加国家-查询法币联动国家列表
     async getCurrencyCountrysList () {
       this.countrySelectStatus = true
@@ -956,6 +999,7 @@ export default {
   // filter: {},
   computed: {
     ...mapState({
+      configInfo: state => state.common.footerInfo.configInfo,
       theme: state => state.common.theme,
       // anchorStatus: state => state.OTC.anchorStatus, // OTC全局定义的锚点状态 默认为false
       publishOrderJumpTopStatus: state => state.OTC.publishOrderJumpTopStatus, // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态 默认为false
@@ -998,28 +1042,75 @@ export default {
 @import "../../assets/CSS/index";
 
 .otc-box {
-  margin-top: 50px;
+  margin-top: 60px;
 
   > .otc-center-content {
     width: 1300px;
-    padding-top: 30px;
     margin: 36px auto 200px;
 
     > .otc-online-trading {
-      > .otc-online-buy-and-sell-button {
-        height: 45px;
-        padding: 50px 0 30px;
-        line-height: 45px;
-        text-align: center;
+      padding-top: 66px;
+
+      > .person-info-box {
+        display: flex;
+        justify-content: space-between;
+        width: 1300px;
+        height: 80px;
+        padding: 0 30px;
+        line-height: 80px;
+
+        > .info-left {
+          display: flex;
+
+          > .avatar {
+            margin-right: 10px;
+
+            .icon {
+              width: 30px;
+              height: 30px;
+            }
+          }
+
+          > .login-before {
+            display: flex;
+
+            > .login-text {
+              margin-right: 45px;
+            }
+          }
+
+          > .login-after {
+            display: flex;
+
+            > .view-info {
+              margin-right: 45px;
+
+              > .person-name {
+                margin-right: 10px;
+              }
+            }
+
+            > .available-count {
+              line-height: 90px;
+            }
+          }
+        }
       }
 
       > .otc-merchant-content {
         margin-top: 30px;
 
+        /* 在线购买和在线出售切换 */
+        > .otc-online-buy-and-sell-button {
+          height: 54px;
+          padding-left: 30px;
+          line-height: 54px;
+        }
+
         > .otc-filtrate-publish {
           display: flex;
           justify-content: space-between;
-          padding: 25px 20px 0;
+          padding: 10px 30px;
 
           > .otc-filtrate-box {
             display: flex;
@@ -1027,8 +1118,15 @@ export default {
 
             > .otc-filtrate-style {
               > .otc-filtrate-currency-name {
+                display: inline-block;
+                height: 26px;
+                padding: 0 10px;
                 margin: 0 10px;
-                cursor: pointer;
+                line-height: 26px;
+
+                &:first-child {
+                  margin-left: 0;
+                }
               }
             }
           }
@@ -1036,7 +1134,6 @@ export default {
           > .otc-publish-box {
             > .pay-style {
               position: relative;
-              margin-right: 5px;
 
               > .pay-style-icon {
                 position: absolute;
@@ -1080,8 +1177,8 @@ export default {
 
         > .otc-merchant-list {
           position: relative;
-          min-height: 639px;
-          margin-top: 30px;
+          min-height: 828px;
+          margin-top: 20px;
 
           .red {
             color: $upColor;
@@ -1124,6 +1221,24 @@ export default {
             top: 10px;
             left: 616px;
             display: inline-block;
+          }
+        }
+      }
+
+      > .trade-rules {
+        margin-top: 31px;
+
+        > .rules-header {
+          height: 43px;
+          padding: 0 30px;
+          line-height: 43px;
+        }
+
+        > .rules-box {
+          padding: 18px 30px 32px;
+
+          > .rules-item {
+            line-height: 27px;
           }
         }
       }
@@ -1173,6 +1288,15 @@ export default {
   }
 
   /deep/ {
+    /* 发布订单按钮 */
+    .person-info-box {
+      .el-button {
+        padding: 9px 15px;
+        border: 0;
+        font-size: 12px;
+      }
+    }
+
     .el-table .cell,
     .el-table th div {
       padding: 0;
@@ -1182,17 +1306,43 @@ export default {
       line-height: 34px;
     }
 
+    /* 在线购买和在线出售切换 */
     .otc-online-buy-and-sell-button {
       .el-radio-button__inner {
+        height: 36px;
+        padding: 0;
         border: 0;
+        border-radius: 0;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 36px;
       }
-    }
 
-    .el-radio-button {
-      &:first-child,
-      &:last-child {
-        .el-radio-button__inner {
-          width: 150px;
+      .el-radio-button {
+        &:first-child {
+          position: relative;
+
+          &::after {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 1px;
+            height: 10px;
+            background-color: #6e778d;
+            transform: translateY(-50%);
+            content: '';
+          }
+
+          .el-radio-button__inner {
+            padding-left: 0;
+            margin-right: 15px;
+          }
+        }
+
+        &:last-child {
+          .el-radio-button__inner {
+            margin-left: 15px;
+          }
         }
       }
     }
@@ -1214,18 +1364,12 @@ export default {
           padding: 2px 28px;
         }
       }
-
-      .el-button {
-        padding: 10px 15px;
-        border: 0;
-        font-size: 12px;
-      }
     }
 
     .otc-merchant-list {
       .el-table {
         td {
-          padding: 15px 0;
+          padding: 24px 0;
         }
 
         .el-table__header {
@@ -1233,13 +1377,13 @@ export default {
             th {
               &:first-child {
                 .cell {
-                  padding-left: 20px;
+                  padding-left: 30px;
                 }
               }
 
               &:nth-last-child(2) {
                 .cell {
-                  padding-right: 20px;
+                  padding-right: 30px;
                 }
               }
             }
@@ -1251,13 +1395,13 @@ export default {
             td {
               &:first-child {
                 .cell {
-                  padding-left: 20px;
+                  padding-left: 30px;
                 }
               }
 
               &:nth-last-child(1) {
                 .cell {
-                  padding-right: 20px;
+                  padding-right: 30px;
                 }
               }
             }
@@ -1283,7 +1427,7 @@ export default {
       }
 
       .el-table__empty-block {
-        height: 620px;
+        height: 760px;
       }
     }
 
@@ -1333,20 +1477,43 @@ export default {
 
     > .otc-center-content {
       > .otc-online-trading {
+        > .person-info-box {
+          color: #838ea6;
+          background-color: $mainContentNightBgColor;
+          box-shadow: 0 3px 4px 0 rgba(25, 30, 40, 1);
+
+          > .info-left {
+            > .login-before {
+              > .login-text {
+                color: $mainColor;
+              }
+            }
+
+            > .login-after {
+              > .view-info {
+                > .person-name {
+                  color: $mainColorOfWhite;
+                }
+
+                > .view-text {
+                  color: $mainColor;
+                }
+              }
+            }
+          }
+        }
+
         > .otc-merchant-content {
           background-color: $mainContentNightBgColor;
 
           > .otc-filtrate-publish {
             > .otc-filtrate-box {
-              > .otc-i-wan {
-                color: $mainColorOfWhite;
-              }
-
               > .otc-filtrate-style {
-                color: #a8afbf;
+                color: #838ea6;
 
                 .currencyNameActived {
-                  color: $mainColor;
+                  color: $mainColorOfWhite;
+                  background-color: $mainColor;
                 }
               }
             }
@@ -1383,6 +1550,20 @@ export default {
             background-color: $mainContentNightBgColor;
           }
         }
+
+        > .trade-rules {
+          background: $mainContentNightBgColor;
+          box-shadow: 0 3px 4px 0 rgba(25, 30, 40, 1);
+
+          > .rules-header {
+            border-bottom: 1px solid rgba(97, 116, 153, .2);
+            color: $mainColor;
+          }
+
+          > .rules-box {
+            color: #a9bed4;
+          }
+        }
       }
 
       > .otc-order-manage {
@@ -1397,42 +1578,35 @@ export default {
     }
 
     /deep/ {
+      /* 发布订单按钮 */
+      .person-info-box {
+        .el-button {
+          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+      }
+
       .el-input--suffix .el-input__inner {
         color: $mainColorOfWhite;
       }
 
+      /* 在线购买和在线出售切换 */
       .otc-online-buy-and-sell-button {
         .el-radio-button__inner {
-          color: #d8d8d8;
+          color: #838ea6;
           background: $mainContentNightBgColor;
         }
 
         .el-radio-button {
           &.is-active {
             .el-radio-button__inner {
-              color: $mainColorOfWhite;
-            }
-          }
-
-          &:first-child {
-            &.is-active {
-              .el-radio-button__inner {
-                background-color: $upColor;
-              }
-            }
-          }
-
-          &:last-child {
-            &.is-active {
-              .el-radio-button__inner {
-                background-color: $otcGreen;
-              }
+              border-bottom: 1px solid $mainColor;
+              color: $mainColor;
             }
           }
         }
 
         .el-radio-button__orig-radio:checked + .el-radio-button__inner {
-          box-shadow: -1px 0 0 0 $otcGreen;
+          box-shadow: -1px 0 0 0 transparent;
         }
       }
 
@@ -1440,10 +1614,6 @@ export default {
         .el-input__inner {
           border: 1px solid $fontColorSecondaryOfDay;
           background-color: #19202e;
-        }
-
-        .el-button {
-          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
 
@@ -1552,8 +1722,30 @@ export default {
 
     > .otc-center-content {
       > .otc-online-trading {
-        > .otc-online-buy-and-sell-button {
-          background-color: $mainBgColorOfDay;
+        > .person-info-box {
+          color: $dayMainTitleColor;
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px #cfd5df;
+
+          > .info-left {
+            > .login-before {
+              > .login-text {
+                color: $mainColor;
+              }
+            }
+
+            > .login-after {
+              > .view-info {
+                > .person-name {
+                  color: $dayMainTitleColor;
+                }
+
+                > .view-text {
+                  color: $mainColor;
+                }
+              }
+            }
+          }
         }
 
         > .otc-merchant-content {
@@ -1562,19 +1754,12 @@ export default {
 
           > .otc-filtrate-publish {
             > .otc-filtrate-box {
-              > .otc-i-wan {
-                color: $dayMainTitleColor;
-              }
-
               > .otc-filtrate-style {
-                color: $fontColorSecondaryOfDay;
+                color: #838ea6;
 
                 .currencyNameActived {
-                  color: $mainColor;
-                }
-
-                > .otc-filtrate-currency-name {
-                  cursor: pointer;
+                  color: $mainColorOfWhite;
+                  background-color: $mainColor;
                 }
               }
             }
@@ -1612,6 +1797,20 @@ export default {
             text-align: center;
           }
         }
+
+        > .trade-rules {
+          background: $mainColorOfWhite;
+          box-shadow: 0 0 6px $borderColorOfDay;
+
+          > .rules-header {
+            border-bottom: 1px solid rgba(97, 116, 153, .2);
+            color: $mainColor;
+          }
+
+          > .rules-box {
+            color: $dayMainTitleColor;
+          }
+        }
       }
 
       > .otc-order-manage {
@@ -1626,44 +1825,35 @@ export default {
     }
 
     /deep/ {
+      /* 发布订单按钮 */
+      .person-info-box {
+        .el-button {
+          background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
+        }
+      }
+
       .el-input--suffix .el-input__inner {
         color: $dayMainTitleColor;
       }
 
+      /* 在线购买和在线出售切换 */
       .otc-online-buy-and-sell-button {
         .el-radio-button__inner {
-          border: 1px solid rgba(39, 49, 58, .1);
-          color: $dayMainTitleColor;
+          color: #838ea6;
           background: $mainColorOfWhite;
         }
 
         .el-radio-button {
           &.is-active {
             .el-radio-button__inner {
-              border: 1px solid rgba(39, 49, 58, .1);
-              color: $mainColorOfWhite;
-            }
-          }
-
-          &:first-child {
-            &.is-active {
-              .el-radio-button__inner {
-                background-color: $upColor;
-              }
-            }
-          }
-
-          &:last-child {
-            &.is-active {
-              .el-radio-button__inner {
-                background-color: $otcGreen;
-              }
+              border-bottom: 1px solid $mainColor;
+              color: $mainColor;
             }
           }
         }
 
         .el-radio-button__orig-radio:checked + .el-radio-button__inner {
-          box-shadow: -1px 0 0 0 $otcGreen;
+          box-shadow: -1px 0 0 0 transparent;
         }
       }
 
@@ -1671,10 +1861,6 @@ export default {
         .el-input__inner {
           border: 1px solid $borderColorOfDay;
           background-color: $mainColorOfWhite;
-        }
-
-        .el-button {
-          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
 

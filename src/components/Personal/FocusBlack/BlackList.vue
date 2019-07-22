@@ -49,7 +49,7 @@
             width="150"
           >
             <template slot-scope = "s">
-              <div class="operation-text cursor-pointer" @click="unBlackList(s.row.id)">解除</div>
+              <div class="operation-text cursor-pointer" @click="confirmUnBlackList(s.row.id)">解除</div>
             </template>
           </el-table-column>
         </el-table>
@@ -65,28 +65,6 @@
           >
           </el-pagination>
         </div>
-      </div>
-      <!--解除黑名单弹窗-->
-      <div class="un-black-list-dialog">
-        <el-dialog
-          :title="$t('M.otc_prompt')"
-          :visible.sync="dialogVisible"
-          top="25vh"
-        >
-          <div class="content">
-            解除黑名单
-          </div>
-          <span slot="footer">
-            <div class="button-group">
-              <button class="cancel item" @click="dialogVisible = false">
-                {{$t('M.comm_cancel')}}
-              </button>
-              <button class="confirm item" @click="confirmUnBlackList">
-                {{$t('M.comm_confirm')}}
-              </button>
-            </div>
-          </span>
-        </el-dialog>
       </div>
     </div>
   </div>
@@ -136,11 +114,7 @@ export default {
           time: '2019/06/25',
           id: 4
         }
-      ],
-      // 解除黑名单弹窗显示状态
-      dialogVisible: false,
-      // 解除的黑名单id
-      unBlackId: ''
+      ]
     }
   },
   created () {
@@ -155,24 +129,20 @@ export default {
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
-    },
-    // 解除黑名单弹窗
-    unBlackList (id) {
-      this.unBlackId = id
-      this.dialogVisible = true
+      // 重新刷新列表
+      this.getBlackLists()
     },
     // 确认解除黑名单接口
-    async confirmUnBlackList () {
+    async confirmUnBlackList (id) {
       let param = {
-        id: this.unBlackId
+        id: id
       }
       const data = await unBlackAJAX(param)
       console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
       // 重新刷新列表
-      // 关闭弹窗
-      this.dialogVisible = false
+      this.getBlackLists()
     },
     // 获得黑名单列表
     async getBlackLists () {
@@ -215,16 +185,9 @@ export default {
       .inner-box {
         .el-table {
           font-size: 12px;
-          color: $mainNightTitleColor;
-          background-color: $mainContentNightBgColor;
 
           .el-table__empty-text {
             line-height: 600px;
-          }
-
-          tr,
-          th {
-            background-color: $mainContentNightBgColor;
           }
 
           td {
@@ -244,12 +207,6 @@ export default {
 
           .el-table__body {
             tr {
-              &:hover {
-                td {
-                  background-color: $mainContentNightBgColor !important;
-                }
-              }
-
               td {
                 .cell {
                   padding-right: 0;
@@ -262,6 +219,23 @@ export default {
 
         .tab-two {
           .el-table {
+            .el-table__body {
+              td {
+                border-bottom: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.night {
+      /deep/ {
+        .inner-box {
+          .el-table {
+            color: $mainNightTitleColor;
+            background-color: $mainContentNightBgColor;
+
             .el-table__header {
               th.is-leaf {
                 border-bottom: 1px solid $nightInputBg;
@@ -272,100 +246,16 @@ export default {
               }
             }
 
+            tr,
+            th {
+              background-color: $mainContentNightBgColor;
+            }
+
             .el-table__body {
-              td {
-                border-bottom: 0;
-              }
-            }
-          }
-        }
-
-        .un-black-list-dialog {
-          .el-dialog__wrapper {
-            .el-dialog {
-              width: 350px;
-              height: 180px;
-              border-radius: 4px;
-
-              .el-dialog__header {
-                padding: 6px 18px;
-                border-radius: 4px 4px 0 0;
-
-                .el-dialog__title {
-                  font-size: 14px;
-                }
-
-                .el-dialog__headerbtn {
-                  top: 10px;
-                  right: 10px;
-                }
-              }
-
-              .el-dialog__body {
-                height: 84px;
-                padding: 35px 18px;
-                font-size: 14px;
-                text-align: center;
-              }
-
-              .el-dialog__footer {
-                padding: 0 18px;
-
-                .button-group {
-                  .item {
-                    height: 30px;
-                    padding: 0 28px;
-                    border-radius: 2px;
-                    font-size: 12px;
-                    line-height: 30px;
-                    cursor: pointer;
-                  }
-
-                  .confirm {
-                    margin-left: 20px;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.night {
-      > .inner-box {
-        /* 1 */
-      }
-
-      /deep/ {
-        .un-black-list-dialog {
-          .el-dialog__wrapper {
-            .el-dialog {
-              background-color: $dialogColor1;
-
-              .el-dialog__header {
-                background-color: $dialogColor2;
-
-                .el-dialog__title {
-                  color: $dialogColor4;
-                }
-              }
-
-              .el-dialog__body {
-                color: $dialogColor5;
-              }
-
-              .el-dialog__footer {
-                .button-group {
-                  .cancel {
-                    border: 1px solid $mainColor;
-                    color: $mainColorOfWhite;
-                    background-color: $dialogColor1;
-                  }
-
-                  .confirm {
-                    color: $mainColorOfWhite;
-                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+              tr {
+                &:hover {
+                  td {
+                    background-color: $mainContentNightBgColor !important;
                   }
                 }
               }
@@ -376,39 +266,32 @@ export default {
     }
 
     &.day {
-      > .inner-box {
-        /* 1 */
-      }
-
       /deep/ {
-        .un-black-list-dialog {
-          .el-dialog__wrapper {
-            .el-dialog {
+        .inner-box {
+          .el-table {
+            color: $dayMainTitleColor;
+            background-color: $mainColorOfWhite;
+
+            .el-table__header {
+              th.is-leaf {
+                border-bottom: 1px solid rgba(57, 66, 77, .1);
+              }
+
+              thead {
+                color: $fontColorSecondaryOfDay;
+              }
+            }
+
+            tr,
+            th {
               background-color: $mainColorOfWhite;
+            }
 
-              .el-dialog__header {
-                background-color: $dialogColor7;
-
-                .el-dialog__title {
-                  color: $dayMainTitleColor;
-                }
-              }
-
-              .el-dialog__body {
-                color: $dayMainTitleColor;
-              }
-
-              .el-dialog__footer {
-                .button-group {
-                  .cancel {
-                    border: 1px solid $mainColor;
-                    color: $mainColor;
-                    background-color: $mainColorOfWhite;
-                  }
-
-                  .confirm {
-                    color: $mainColorOfWhite;
-                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            .el-table__body {
+              tr {
+                &:hover {
+                  td {
+                    background-color: $mainColorOfWhite !important;
                   }
                 }
               }
