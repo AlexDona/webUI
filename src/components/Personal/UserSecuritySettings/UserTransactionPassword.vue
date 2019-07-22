@@ -897,7 +897,7 @@ export default {
             }
 
             .transaction-button {
-              color: #ccc;
+              color: #fff;
               background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
             }
           }
