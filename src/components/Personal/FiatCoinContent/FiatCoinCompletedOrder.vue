@@ -169,11 +169,13 @@
               </span>
               <!-- 买单显示：卖家姓名 -->
               <span  v-if="item.orderType === 'BUY'">
-                {{item.sellName}}
+                <!--{{item.sellName}}-->
+                {{item.sellNickName}}
               </span>
               <!-- 卖单显示：买家姓名 -->
               <span  v-if="item.orderType === 'SELL'">
-                {{item.buyName}}
+                <!--{{item.buyName}}-->
+                {{item.buyNickName}}
               </span>
             </p>
             <!--手机号-->

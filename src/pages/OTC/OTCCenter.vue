@@ -155,7 +155,8 @@
                       v-show="s.row.userType === 'MERCHANT'"
                       :title="$t('M.otc_merchant')"
                     >
-                    {{s.row.userName}}
+                    <!--{{s.row.userName}}-->
+                    {{s.row.userNick}}
                   </div>
                 </template>
               </el-table-column>
@@ -189,7 +190,16 @@
               >
                 <template slot-scope = "s">
                   <!-- 此处的单位根据设置中的法币类型来变化：为人民币时候显示CNY，为美元时候显示$ 此处需要从全局拿到设置中的法币类型来渲染页面-->
-                  <div class="red">
+                  <div
+                    class="red"
+                    v-show="OTCBuySellStyle === 'onlineBuy'"
+                  >
+                    {{$scientificToNumber(s.row.price)}}{{checkedCurrencyName}}
+                  </div>
+                  <div
+                    class="green"
+                    v-show="OTCBuySellStyle === 'onlineSell'"
+                  >
                     {{$scientificToNumber(s.row.price)}}{{checkedCurrencyName}}
                   </div>
                 </template>
@@ -571,11 +581,11 @@ export default {
   },
   mounted () {
     // 如果是从购买和出售下单跳转过来的时候，页面加载打开到锚点位置：anchorStatus在全局先定义false，当用户购买或者出售时候改为true
-    if (this.anchorStatus) {
-      document.getElementById('orderView').scrollIntoView(true) // scrollIntoView(true)参数为true时候才调用此方法
-      // 改变全局锚点状态
-      this.CHANGE_OTC_ANCHOR_STATUS(false)
-    }
+    // if (this.anchorStatus) {
+    //   document.getElementById('orderView').scrollIntoView(true) // scrollIntoView(true)参数为true时候才调用此方法
+    //   // 改变全局锚点状态
+    //   this.CHANGE_OTC_ANCHOR_STATUS(false)
+    // }
     // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
     if (this.publishOrderJumpTopStatus) {
       document.getElementById('jumpScrollTop').scrollIntoView(true) // scrollIntoView(true)参数为true时候才调用此方法
@@ -947,7 +957,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      anchorStatus: state => state.OTC.anchorStatus, // OTC全局定义的锚点状态 默认为false
+      // anchorStatus: state => state.OTC.anchorStatus, // OTC全局定义的锚点状态 默认为false
       publishOrderJumpTopStatus: state => state.OTC.publishOrderJumpTopStatus, // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态 默认为false
       selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
       // selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
@@ -1072,6 +1082,14 @@ export default {
           position: relative;
           min-height: 639px;
           margin-top: 30px;
+
+          .red {
+            color: $upColor;
+          }
+
+          .green {
+            color: $otcGreen;
+          }
 
           .remark-tips {
             display: inline-block;
@@ -1356,10 +1374,6 @@ export default {
 
           > .otc-merchant-list {
             background-color: $mainContentNightBgColor;
-
-            .red {
-              color: $upColor;
-            }
           }
 
           .page {

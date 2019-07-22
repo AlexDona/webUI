@@ -31,3 +31,5 @@ export const getKlineDataAjax = params => handleRequest(() => get('market/kline'
 export const cancelAllEntrustAjax = params => handleRequest(() => put('cancelEntrustBatch', params))
 // 获取PRE活动信息
 export const getPREInfoAJAX = () => handleRequest(() => get('pre/check'))
+//  查询交易对参数信息
+export const getTradePairInfoAJAX = params => handleRequest(() => get('trade/info', params))

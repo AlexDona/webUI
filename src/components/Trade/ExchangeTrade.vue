@@ -568,7 +568,8 @@ import {
 } from '../../utils'
 import {
   saveEntrustTrade,
-  getUserAssetOfActiveSymbol
+  getUserAssetOfActiveSymbol,
+  getTradePairInfoAJAX
 } from '../../utils/api/trade'
 import {
   getCoinRechargeWithdraw
@@ -685,7 +686,15 @@ export default {
         // 卖滑动是否禁用
         isSellSliderBarDisabled: false
       },
-      isUserChangePrice: true
+      isUserChangePrice: true,
+      // 后台设置的币币下单 价格最低价
+      priceMin: '',
+      // 价格最高价
+      priceMax: '',
+      // 数量最低量
+      amountMin: '',
+      // 数量最高量
+      amountMax: ''
     }
   },
   async created () {
@@ -724,6 +733,31 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    // 查询交易对参数信息
+    async getTradePairInfo () {
+      const {partnerTradeId} = this.$middleTopData_S_X
+      let params = {
+        tradeId: partnerTradeId // 交易对id
+      }
+      console.log(partnerTradeId)
+      const data = await getTradePairInfoAJAX(params)
+      console.log('查询交易对参数信息')
+      console.log(data)
+      if (!data) return false
+      // 返回数据逻辑
+      this.priceMin = getNestedData(data, 'data.minPrice')
+      this.priceMax = getNestedData(data, 'data.maxPrice')
+      this.amountMin = getNestedData(data, 'data.minCount')
+      this.amountMax = getNestedData(data, 'data.maxCount')
+    },
+    // 清除input提示信息
+    clearInputTipsData () {
+      this.errorMsg.limit.buy.price = ''
+      this.errorMsg.limit.buy.amount = ''
+      this.errorMsg.limit.sell.price = ''
+      this.errorMsg.limit.sell.amount = ''
+      this.errorMsg.market.sell.amount = ''
+    },
     // 实名认证验证
     realNameAuthConfirm () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
@@ -791,7 +825,6 @@ export default {
     clearFormData () {
       this.payPassword = ''
       this.clearRefValue(this.limitBuyPriceInputRef)
-      this.clearRefValue(this.limitBuyCountInputRef)
       this.clearRefValue(this.limitBuyCountInputRef)
       this.clearRefValue(this.marketBuyAmountInputRef)
       this.clearRefValue(this.limitSellPriceInputRef)
@@ -888,21 +921,82 @@ export default {
         // 限价买
         case 'limit-buy':
           this.limitExchange.buyPrice = this.getRefValue(this.limitBuyPriceInputRef)
-          console.log('买入价：' + this.limitExchange.buyPrice)
-          // this.errorMsg.limit.buy.price = '你输入了买入价'
+          if (this.$isLogin_S_X) {
+            this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
+            if (this.limitExchange.buyPrice) {
+              this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice).toFixed(priceExchange)
+            }
+            // if (!this.limitExchange.buyPrice) {
+            //   return false
+            // }
+            if (this.limitExchange.buyPrice - this.priceMin < 0) {
+              // 委托价格低于最低限价
+              this.errorMsg.limit.buy.price = this.$t('M.limit_market_trade_price_min_tips') + this.priceMin
+              return false
+            } else if (this.limitExchange.buyPrice - this.priceMax > 0) {
+              // 委托价格高于最高限价
+              this.errorMsg.limit.buy.price = this.$t('M.limit_market_trade_price_max_tips') + this.priceMax
+              return false
+            } else {
+              this.errorMsg.limit.buy.price = ''
+            }
+          }
+
           this.limitExchange.buyCount = this.getRefValue(this.limitBuyCountInputRef)
-          console.log('买入量：' + this.limitExchange.buyCount)
-          // this.errorMsg.limit.buy.amount = '你输入了买入量'
-          this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
-          if (this.limitExchange.buyPrice) {
-            this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice).toFixed(priceExchange)
+          if (this.$isLogin_S_X) {
+            if (!this.limitExchange.buyCount) {
+              return false
+            }
+            if (this.limitExchange.buyCount - this.amountMin < 0) {
+              // 委托数量低于最低限量
+              this.errorMsg.limit.buy.amount = this.$t('M.limit_market_trade_count_min_tips') + this.amountMin
+              return false
+            } else if (this.limitExchange.buyCount - this.amountMax > 0) {
+              // 委托数量高于最高数量
+              this.errorMsg.limit.buy.amount = this.$t('M.limit_market_trade_count_max_tips') + this.amountMax
+              return false
+            } else {
+              this.errorMsg.limit.buy.amount = ''
+            }
           }
           break
         // 限价卖
         case 'limit-sell':
           this.limitExchange.sellPrice = this.getRefValue(this.limitSellPriceInputRef)
+          if (this.$isLogin_S_X) {
+            this.setTransformPrice('limit-sell', this.limitExchange.sellPrice)
+            // if (!this.limitExchange.sellPrice) {
+            //   return false
+            // }
+            if (this.limitExchange.sellPrice - this.amountMin < 0) {
+              // 委托价格低于最低限价
+              this.errorMsg.limit.sell.price = this.$t('M.limit_market_trade_price_min_tips') + this.amountMin
+              return false
+            } else if (this.limitExchange.sellPrice - this.amountMax > 0) {
+              // 委托价格高于最高限价
+              this.errorMsg.limit.sell.price = this.$t('M.limit_market_trade_price_max_tips') + this.amountMax
+              return false
+            } else {
+              this.errorMsg.limit.sell.price = ''
+            }
+          }
           this.limitExchange.sellCount = this.getRefValue(this.limitSellCountInputRef)
-          this.setTransformPrice('limit-sell', this.limitExchange.sellPrice)
+          if (this.$isLogin_S_X) {
+            if (!this.limitExchange.sellCount) {
+              return false
+            }
+            if (this.limitExchange.sellCount - this.amountMin < 0) {
+              // 委托数量低于最低限量
+              this.errorMsg.limit.sell.amount = this.$t('M.limit_market_trade_count_min_tips') + this.amountMin
+              return false
+            } else if (this.limitExchange.sellCount - this.amountMax > 0) {
+              // 委托数量高于最高数量
+              this.errorMsg.limit.sell.amount = this.$t('M.limit_market_trade_count_max_tips') + this.amountMax
+              return false
+            } else {
+              this.errorMsg.limit.sell.amount = ''
+            }
+          }
           break
         // 市价买
         case 'market-buy':
@@ -911,6 +1005,22 @@ export default {
         // 市价卖
         case 'market-sell':
           this.marketExchange.sellCount = this.getRefValue(this.marketSellCountInputRef)
+          if (this.$isLogin_S_X) {
+            if (!this.marketExchange.sellCount) {
+              return false
+            }
+            if (this.marketExchange.sellCount - this.amountMin < 0) {
+              // 委托数量低于最低限量
+              this.errorMsg.market.sell.amount = this.$t('M.limit_market_trade_count_min_tips') + this.amountMin
+              return false
+            } else if (this.marketExchange.sellCount - this.amountMax > 0) {
+              // 委托数量高于最高数量
+              this.errorMsg.market.sell.amount = this.$t('M.limit_market_trade_count_max_tips') + this.amountMax
+              return false
+            } else {
+              this.errorMsg.market.sell.amount = ''
+            }
+          }
           break
       }
       this.setSiderBarValue('limit', {
@@ -969,18 +1079,24 @@ export default {
     toggleMatchType () {
       switch (this.activeName) {
         case 'market-price':
+          console.log('市价')
           this.matchType = 'MARKET'
           this.setRefValue(this.limitBuyCountInputRef)
           this.limitExchange.buyCount = 0
           this.setRefValue(this.limitSellCountInputRef)
           this.limitExchange.sellCount = 0
+          // 清除input提示信息
+          this.clearInputTipsData()
           break
         case 'limit-price':
+          console.log('限价')
           this.matchType = 'LIMIT'
           this.setRefValue(this.marketBuyAmountInputRef)
           this.marketExchange.sellCount = 0
           this.setRefValue(this.marketSellCountInputRef)
           this.marketExchange.buyAmount = 0
+          // 清除input提示信息
+          this.clearInputTipsData()
           break
       }
     },
@@ -1013,23 +1129,42 @@ export default {
                 params.count = this.getRefValue(this.limitBuyCountInputRef)
                 this.limitExchange.buyCount = params.count
                 this.limitExchange.buyPrice = params.price
+                // 请输入买入价
+                // if (!this.limitExchange.buyPrice) {
+                //   this.errorMsg.limit.buy.price = this.$t('M.trade_empty_buy_price')
+                //   return false
+                // } else {
+                //   this.errorMsg.limit.buy.price = ''
+                // }
+                // 改为：
                 if (!this.limitExchange.buyPrice) {
-                  // 请输入买入价
                   this.errorMsg.limit.buy.price = this.$t('M.trade_empty_buy_price')
                   return false
-                } else {
-                  this.errorMsg.limit.buy.price = ''
                 }
+                if (this.errorMsg.limit.buy.price) {
+                  return false
+                }
+                // 改为：
 
+                // 请输入买入量
+                // if (!this.limitExchange.buyCount) {
+                //   this.errorMsg.limit.buy.amount = this.$t('M.trade_empty_buy_count')
+                //   return false
+                // } else {
+                //   this.errorMsg.limit.buy.amount = ''
+                // }
+                // 改为：
                 if (!this.limitExchange.buyCount) {
-                  // 请输入买入量
                   this.errorMsg.limit.buy.amount = this.$t('M.trade_empty_buy_count')
                   return false
-                } else {
-                  this.errorMsg.limit.buy.amount = ''
                 }
+                if (this.errorMsg.limit.buy.amount) {
+                  return false
+                }
+                // 改为：
 
                 if ((this.buyUserCoinWallet.total / params.price) < params.count) {
+                  // 可用币种数量不足
                   this.errorMsg.limit.buy.price = this.$t('M.trade_exchange_currency_available')
                   return false
                 }
@@ -1044,6 +1179,7 @@ export default {
                 }
                 params.count = this.getRefValue(this.marketBuyAmountInputRef)
                 if (this.buyUserCoinWallet.total - params.count < 0) {
+                  // 可用币种数量不足
                   this.errorMsg.market.buy.amount = this.$t('M.trade_exchange_currency_available')
                   return false
                 }
@@ -1058,18 +1194,39 @@ export default {
                 params.count = this.getRefValue(this.limitSellCountInputRef)
                 this.limitExchange.sellCount = params.count
                 this.limitExchange.sellPrice = params.price
+                // 请输入卖出价
+                // if (!this.limitExchange.sellPrice) {
+                //   this.errorMsg.limit.sell.price = this.$t('M.trade_empty_sell_price')
+                //   return false
+                // } else {
+                //   this.errorMsg.limit.sell.price = ''
+                // }
+                // 改为：
                 if (!this.limitExchange.sellPrice) {
                   this.errorMsg.limit.sell.price = this.$t('M.trade_empty_sell_price')
                   return false
-                } else {
-                  this.errorMsg.limit.sell.price = ''
                 }
+                if (this.errorMsg.limit.sell.price) {
+                  return false
+                }
+                // 改为：
+                // 请输入卖出量
+                // if (!this.limitExchange.sellCount) {
+                //   this.errorMsg.limit.sell.amount = this.$t('M.trade_empty_sell_count')
+                //   return false
+                // } else {
+                //   this.errorMsg.limit.sell.amount = ''
+                // }
+                // 改为：
                 if (!this.limitExchange.sellCount) {
+                  // 请输入卖出量
                   this.errorMsg.limit.sell.amount = this.$t('M.trade_empty_sell_count')
                   return false
-                } else {
-                  this.errorMsg.limit.sell.amount = ''
                 }
+                if (this.errorMsg.limit.sell.amount) {
+                  return false
+                }
+                // 改为：
                 console.log((this.sellUserCoinWallet.total), params.count)
                 if (this.sellUserCoinWallet.total - params.count < 0) {
                   // 可用币种数量不足
@@ -1082,12 +1239,23 @@ export default {
                 // console.log(1)
                 params.count = this.getRefValue(this.marketSellCountInputRef)
                 this.marketExchange.sellCount = params.count
+                // 请输入卖出量
+                // if (!this.marketExchange.sellCount) {
+                //   this.errorMsg.market.sell.amount = this.$t('M.trade_empty_sell_count')
+                //   return false
+                // } else {
+                //   this.errorMsg.market.sell.amount = ''
+                // }
+                // 改为：
                 if (!this.marketExchange.sellCount) {
+                  // 请输入卖出量
                   this.errorMsg.market.sell.amount = this.$t('M.trade_empty_sell_count')
                   return false
-                } else {
-                  this.errorMsg.market.sell.amount = ''
                 }
+                if (this.errorMsg.market.sell.amount) {
+                  return false
+                }
+                // 改为：
                 if (this.sellUserCoinWallet.total - params.count < 0) {
                   // 可用币种数量不足
                   this.errorMsg.market.sell.count = this.$t('M.trade_exchange_currency_available')
@@ -1188,6 +1356,8 @@ export default {
       if (!data) return false
       this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
       this.clearFormData()
+      // 清除input提示信息
+      this.clearInputTipsData()
     }, 500),
     // 设置买卖价格
     setBuyAndSellPrice (targetPriceOfBuy, targetPriceOfSell = targetPriceOfBuy) {
@@ -1233,6 +1403,23 @@ export default {
 
             this.$refs[this.limitBuyCountInputRef].value = count
             this.limitExchange.buyCount = count
+            // console.log('买入量：' + this.limitExchange.buyCount)
+            if (this.$isLogin_S_X) {
+              if (!this.limitExchange.buyCount) {
+                return false
+              }
+              if (this.limitExchange.buyCount - this.amountMin < 0) {
+                // 委托数量低于最低限量
+                this.errorMsg.limit.buy.amount = this.$t('M.limit_market_trade_count_min_tips') + this.amountMin
+                return false
+              } else if (this.limitExchange.buyCount - this.amountMax > 0) {
+                // 委托数量高于最高数量
+                this.errorMsg.limit.buy.amount = this.$t('M.limit_market_trade_count_max_tips') + this.amountMax
+                return false
+              } else {
+                this.errorMsg.limit.buy.amount = ''
+              }
+            }
           }
           break
         // 市价买
@@ -1267,9 +1454,43 @@ export default {
         switch (type) {
           case 'limit':
             this.limitExchange.sellCount = count
+            console.log('限价卖：卖出量' + this.limitExchange.sellCount)
+            if (this.$isLogin_S_X) {
+              if (!this.limitExchange.sellCount) {
+                return false
+              }
+              if (this.limitExchange.sellCount - this.amountMin < 0) {
+                // 委托数量低于最低限量
+                this.errorMsg.limit.sell.amount = this.$t('M.limit_market_trade_count_min_tips') + this.amountMin
+                return false
+              } else if (this.limitExchange.sellCount - this.amountMax > 0) {
+                // 委托数量高于最高数量
+                this.errorMsg.limit.sell.amount = this.$t('M.limit_market_trade_count_max_tips') + this.amountMax
+                return false
+              } else {
+                this.errorMsg.limit.sell.amount = ''
+              }
+            }
             break
           case 'market':
             this.marketExchange.sellCount = count
+            console.log('市价卖：卖出量' + this.marketExchange.sellCount)
+            if (this.$isLogin_S_X) {
+              if (!this.marketExchange.sellCount) {
+                return false
+              }
+              if (this.marketExchange.sellCount - this.amountMin < 0) {
+                // 委托数量低于最低限量
+                this.errorMsg.market.sell.amount = this.$t('M.limit_market_trade_count_min_tips') + this.amountMin
+                return false
+              } else if (this.marketExchange.sellCount - this.amountMax > 0) {
+                // 委托数量高于最高数量
+                this.errorMsg.market.sell.amount = this.$t('M.limit_market_trade_count_max_tips') + this.amountMax
+                return false
+              } else {
+                this.errorMsg.market.sell.amount = ''
+              }
+            }
             break
         }
       }
@@ -1432,6 +1653,10 @@ export default {
         if (newVal.last) this.reflashCount++
         if (this.$isLogin_S_X) {
           await this.getUserAssetOfActiveSymbol(targetPriceOfSell, targetPriceOfBuy)
+          // 查询交易对参数信息
+          await this.getTradePairInfo()
+          // 清除input提示信息
+          this.clearInputTipsData()
         } else {
           this.setBuyAndSellPrice(targetPriceOfSell, targetPriceOfBuy)
         }

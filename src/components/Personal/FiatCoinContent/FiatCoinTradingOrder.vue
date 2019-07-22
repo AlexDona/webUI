@@ -19,7 +19,8 @@
               <!-- 买卖家 -->
               <div class="buyer-seller">
                 <!--卖家-->
-                {{$t('M.otc_seller')}}：{{item.sellName}}
+                <!--{{$t('M.otc_seller')}}：{{item.sellName}}-->
+                {{$t('M.otc_seller')}}：{{item.sellNickName}}
               </div>
               <!--广告id-->
               <div class="AD-ID">
@@ -400,7 +401,8 @@
               <!-- 买家 -->
               <div class="buyer-seller">
                 <!--买家-->
-                {{$t('M.otc_buyer')}}：{{item.buyName}}
+                <!--{{$t('M.otc_buyer')}}：{{item.buyName}}-->
+                {{$t('M.otc_buyer')}}：{{item.buyNickName}}
               </div>
               <!--广告id-->
               <div class="AD-ID">

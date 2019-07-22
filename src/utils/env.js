@@ -18,24 +18,37 @@ let targetConfig = {
 const devTestConfig = {
   // WangShuaiFei
   // apiCommonUrl: 'http://192.168.2.98:8888/',
+
   // AiQing
   // apiCommonUrl: 'http://192.168.2.88:8888/',
+
   // HuaHaoTian
   // apiCommonUrl: 'http://192.168.2.52:22224/',
+
   // ZhangChangXiang
   // apiCommonUrl: 'http://192.168.2.122:8888/',
+
   // FangRuiChang
   // apiCommonUrl: 'http://192.168.10.9:8888/',
-  // WeiYongPan
-  // apiCommonUrl: 'http://192.168.2.145:8888/',
-  // ZhangXuYang
-  // apiCommonUrl: 'http://192.168.2.127:8888/',
-  apiCommonUrl: 'http://192.168.2.200:8888/',
-  socketUrl: 'ws://192.168.2.200:8087/market',
+
   // HuaHaoTian
   // socketUrl: 'ws://192.168.0.52:8087/market',
-  loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
-  OTCIMSocketUrl: 'ws://192.168.2.210:8888/websoc'
+  // apiCommonUrl: 'http://192.168.2.200:8888/',
+  // socketUrl: 'ws://192.168.2.200:8087/market',
+  // loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/'
+
+  // WeiYongPan
+  // apiCommonUrl: 'http://192.168.2.145:8888/',
+
+  // ZhangXuYang
+  // apiCommonUrl: 'http://192.168.2.127:8888/',
+  // apiCommonUrl: 'http://192.168.2.200:8888/',
+  // socketUrl: 'ws://192.168.2.200:8087/market',
+
+  // HuaHaoTian
+  // socketUrl: 'ws://192.168.0.52:8087/market',
+  // loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
+  // OTCIMSocketUrl: 'ws://192.168.2.210:8888/websoc'
 }
 
 const dev210Config = {
@@ -65,9 +78,9 @@ switch (process.env.NODE_ENV) {
     // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
     // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'me.com'}
     // 210开发环境
-    targetConfig = {...dev210Config, xDomain: 'me.com'}
+    // targetConfig = {...dev210Config, xDomain: 'me.com'}
     // 测试环境 （外网）
-    // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
+    targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     // 生产环境
     // targetConfig = {...prodConfig, xDomain: 'fubt.co'}
     // targetConfig = {...newProdConfig, xDomain: 'coin67.cn'}
