@@ -573,7 +573,7 @@ export default {
 
       .button-color {
         color: rgba(255, 255, 255, .7);
-        background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
       }
 
       .btn {
