@@ -932,7 +932,7 @@ export default {
             }
 
             .payment-card {
-              color: #fff;
+              color: #8ba0ca;
             }
 
             .payment-state {
@@ -971,7 +971,7 @@ export default {
       }
 
       .title-status {
-        color: rgba(255, 255, 255, .7);
+        color: rgba(255, 255, 255, 1);
         background: rgba(248, 249, 252, .05);
       }
 
