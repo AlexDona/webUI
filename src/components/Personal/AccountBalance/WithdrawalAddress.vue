@@ -787,7 +787,7 @@ export default {
 
             .form-button {
               color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
             }
           }
         }
@@ -806,9 +806,9 @@ export default {
 
       /deep/ {
         .el-input__inner {
-          border: 0;
+          border: 1px solid #5c6882;
           color: rgba(255, 255, 255, .7);
-          background-color: #2d3651;
+          background-color: #1c1f32 !important;
         }
 
         .el-form-item__label {
@@ -934,7 +934,7 @@ export default {
 
             .form-button {
               color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
             }
           }
         }
