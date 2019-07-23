@@ -642,11 +642,11 @@ export default {
       if (New == this.USDT_COIN_ID_S) {
         this.isShowLinkSelect = true
         // 控制地址列表无数据时的高度
-        this.$el.querySelector('.el-table__empty-block').style.height = '196px'
+        this.$el.querySelector('.el-table__empty-block').style.height = '240px'
       } else if (this.isShowAddressLabel) {
-        this.$el.querySelector('.el-table__empty-block').style.height = '196px'
+        this.$el.querySelector('.el-table__empty-block').style.height = '240px'
       } else {
-        this.$el.querySelector('.el-table__empty-block').style.height = '256px'
+        this.$el.querySelector('.el-table__empty-block').style.height = '301px'
       }
     }
   }
