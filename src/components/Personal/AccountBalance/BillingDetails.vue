@@ -1000,6 +1000,10 @@ export default {
             text-align: right;
           }
 
+          &:nth-of-type(7) {
+            text-align: right;
+          }
+
           & > .cell {
             font-size: 12px;
           }
