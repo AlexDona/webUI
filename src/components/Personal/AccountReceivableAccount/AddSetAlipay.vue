@@ -102,7 +102,7 @@
                   >
                     <IconFontCommon
                       class="font-size60"
-                      iconName="icon-jia1"
+                      iconName="icon-hao"
                     />
                     <img
                       v-show="alipayImgUrl"
@@ -671,6 +671,13 @@ export default {
                 top: 35px;
                 right: 35px;
                 color: #555;
+              }
+
+              .img {
+                .picture {
+                  border: 1px dashed rgba(72, 87, 118, .1);
+                  background: #eaf4fe;
+                }
               }
             }
 

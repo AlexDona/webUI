@@ -6,12 +6,10 @@
     <div class="user-info-main">
       <div class="user-info-content-box display-flex">
         <div class="user float-left flex1">
-          <p class="user-background text-align-c line-height56 float-left">
             <IconFontCommon
-              class="font-size40 icon-user"
+              class="user-background text-align-c line-height56 float-left font-size40 icon-user"
               iconName="icon-yonghu1"
             />
-          </p>
           <div class="text-align-id margin-top16 float-left">
             <p class="font-size12">
               <span class="text-color">
@@ -436,8 +434,6 @@ export default {
 
           > .user {
             > .user-background {
-              background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-
               .icon-user {
                 color: #e1f3ff;
               }
@@ -536,8 +532,6 @@ export default {
 
           > .user {
             > .user-background {
-              background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-
               .icon-user {
                 color: #e1f3ff;
               }

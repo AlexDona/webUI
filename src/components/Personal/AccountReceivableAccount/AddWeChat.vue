@@ -102,7 +102,7 @@
                   >
                     <IconFontCommon
                       class="font-size60"
-                      iconName="icon-jia1"
+                      iconName="icon-hao"
                     />
                     <img
                       v-show="wechatImgUrl"
@@ -641,7 +641,7 @@ export default {
     }
 
     &.day {
-      color: $dayMainTitleColor;
+      color: $fontColorSecondaryOfDay;
 
       .add-chat-main {
         border: 1px solid rgba(246, 246, 246, 1);
@@ -688,6 +688,13 @@ export default {
                 top: 35px;
                 right: 35px;
                 color: #828ea6;
+              }
+
+              .img {
+                .picture {
+                  border: 1px dashed rgba(72, 87, 118, .1);
+                  background: #eaf4fe;
+                }
               }
             }
 

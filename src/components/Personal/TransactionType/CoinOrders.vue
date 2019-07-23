@@ -19,7 +19,7 @@
           <div class="symbol-box condition-item">
             <span class="currency-span">
               <!--交易对-->
-              {{ $t('M.comm_deal_pair') }}
+              {{ $t('M.comm_deal_pair') }} &nbsp;
             </span>
             <!--币种-->
             <!--币种名称-->
@@ -51,7 +51,7 @@
           <div class="match-type-box condition-item">
             <span class="currency-span">
               <!--撮合类型-->
-              {{ $t('M.user_coin_bring_together') }}{{ $t('M.comm_type') }}
+              {{ $t('M.user_coin_bring_together') }}{{ $t('M.comm_type') }} &nbsp;
             </span>
             <!--请选择-->
             <el-select
@@ -73,7 +73,7 @@
           <div class="trade-type-box condition-item">
             <span class="currency-span">
               <!--委单类型-->
-              {{ $t('M.user_coin_appoint_single_stle') }}
+              {{ $t('M.user_coin_appoint_single_stle') }} &nbsp;
             </span>
             <!--请选择-->
             <el-select
@@ -95,7 +95,7 @@
           <div class="start-end-time-box condition-item">
             <span class="currency-span">
               <!--起止时间-->
-              {{ $t('M.user_coin_order4') }}
+              {{ $t('M.user_coin_order4') }} &nbsp;
             </span>
             <!--选择日期-->
             <el-date-picker
@@ -780,7 +780,6 @@ export default {
           height: 34px;
           border-radius: 4px;
           color: #fff;
-          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
     }
@@ -904,6 +903,10 @@ export default {
         }
       }
 
+      .search-btn {
+        background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
+      }
+
       /deep/ {
         /* 个人中心（黑色主题） */
         .el-input__suffix {
@@ -925,7 +928,7 @@ export default {
         .el-tabs__item.is-active {
           border-bottom: 2px solid #0079fe;
           border-left: none;
-          color: #ccc;
+          color: #338ff5;
           background-color: transparent;
         }
 
@@ -1012,6 +1015,10 @@ export default {
             color: #333;
             background: #fff;
           }
+        }
+
+        .search-btn {
+          background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
         }
       }
 
