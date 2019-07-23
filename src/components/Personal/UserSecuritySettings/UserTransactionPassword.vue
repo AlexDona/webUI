@@ -641,7 +641,7 @@ export default {
     overflow: hidden;
 
     > .transaction-password-main {
-      width: 1100px;
+      width: 1300px;
       min-height: 700px;
       margin: 60px auto 100px;
 
