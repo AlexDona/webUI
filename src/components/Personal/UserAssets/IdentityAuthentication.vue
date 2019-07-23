@@ -1015,7 +1015,7 @@ export default {
   }
 
   .success-height {
-    height: 547px;
+    height: 591px;
   }
 
   .identity-authentication {
