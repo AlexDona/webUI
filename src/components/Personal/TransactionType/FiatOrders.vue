@@ -570,6 +570,10 @@ export default {
         line-height: 0;
       }
 
+      .el-tabs__content {
+        min-height: 1500px;
+      }
+
       /* 点击切换时背景色和字体颜色 */
       .el-tabs__item {
         width: 105px;

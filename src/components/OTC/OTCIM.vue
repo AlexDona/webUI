@@ -79,12 +79,14 @@
             el-button.send-button(
               v-if="editText"
               @click="sendMessage"
+              :disabled="IsOver24Hours"
             ) {{$t('M.login_send')}}
             // 上传图片
             UploadImage.image-button(
               v-else
               :isNeedSuccessTips="false"
               @uploadSuccess="uploadSuccess"
+              :disabled="IsOver24Hours"
             )
               Iconfont.iconfont(icon-name="icon-tupian")
     .shadow-box(
@@ -203,6 +205,7 @@ export default {
       this.receiveMessage()
     },
     async toggleShowIMContent (status) {
+      this.receiveMessage()
       // this.isShowSelf = !this.isShowSelf
       this.messages = []
       // 开启聊天
@@ -242,13 +245,14 @@ export default {
     receiveMessage () {
       this.IMSocket_S.on('message', (e) => {
         const {isOppositeMsg, orderId} = e
-        console.log(orderId, this.orderId)
+        console.log(orderId, this.orderId, e)
         this.UPDATE_IM_HAS_NEW_MESSAGE_MAP_M({
           orderId,
           status: isOppositeMsg
         })
 
         this.messages.push(e)
+        console.log(this.messages)
         this.$nextTick(() => {
           this.resetDOMScroll(this.chatDOM.scrollHeight)
         })
@@ -299,7 +303,7 @@ export default {
       return (!this.isShowContent && this.IMHasNewMessageMap_S[this.orderId]) || (_.get(this.orderInfo, 'hasUnReadMessage') && !this.isShowContent)
     },
     IsOver24Hours () {
-      return _.get(this.orderInfo, 'IsOver24Hours')
+      return _.get(this.orderInfo, 'isOver24Hours')
     },
     currencyId () {
       return _.get(this.orderInfo, 'currencyId')
