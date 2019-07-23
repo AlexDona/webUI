@@ -428,7 +428,7 @@ export default {
     overflow: hidden;
 
     > .add-account-main {
-      width: 1100px;
+      width: 1300px;
       height: 700px;
       margin: 60px auto 100px;
 
