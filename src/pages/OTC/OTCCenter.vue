@@ -1,3 +1,8 @@
+<!--
+  author: renfuwei
+  create: 20190721
+  description: 当前页面为 OTC首页 组件
+-->
 <template>
   <div
     class="otc-box otc"
@@ -23,9 +28,9 @@
             </div>
             <!--信息-->
             <div class="login-before" v-if="!isLogin">
-              <div class="login-text cursor-pointer" @click="loginJump">登录</div>
+              <div class="login-text cursor-pointer" @click="loginJump">{{$t('M.comm_login')}}</div>
               <div class="coin-count">
-                <span>{{selectedOTCAvailableCurrencyName}}</span> 可用 0.00000000  / 冻结 0.0000000
+                <span>{{selectedOTCAvailableCurrencyName}}</span> {{$t('M.comm_usable')}} 0.00000000  / 冻结 0.0000000
               </div>
             </div>
             <div class="login-after" v-else>
@@ -35,7 +40,7 @@
               </div>
               <div class="available-count">
                 <span>{{selectedOTCAvailableCurrencyName}}</span>
-                <span>可用 0.00000000</span> /
+                <span>{{$t('M.comm_usable')}} 0.00000000</span> /
                 <span>冻结 0.0000000</span>
               </div>
             </div>
@@ -64,15 +69,15 @@
                 label="onlineBuy"
                 :disabled="isDisabledRadio"
               >
-                <!-- 在线购买 -->
-                {{ $t('M.otc_index_online_buy') }}
+                <!-- 购买 -->
+                {{$t('M.comm_buying')}}
               </el-radio-button>
               <el-radio-button
                 label="onlineSell"
                 :disabled="isDisabledRadio"
               >
-                <!-- 在线出售 -->
-                {{ $t('M.otc_index_online_sell') }}
+                <!-- 出售 -->
+                {{$t('M.comm_offering')}}
               </el-radio-button>
             </el-radio-group>
           </div>
@@ -392,14 +397,14 @@
                   />
                 </div>
                 <div class="third-item items">
-                  <span>实名认证</span>
+                  <span>{{$t('M.user_real_name')}}</span>
                   <IconFontCommon
                     class="font-size40 icon-user"
                     iconName="icon-tongguo_huaban"
                   />
                 </div>
                 <div class="fourth-item items">
-                  <span>高级认证</span>
+                  <span>{{$t('M.user_senior_certification')}}</span>
                   <IconFontCommon
                     class="font-size40 icon-user"
                     iconName="icon-tongguo_huaban"

@@ -44,7 +44,7 @@
           </el-table-column>
           <!--操作-->
           <el-table-column
-            label="操作"
+            :label="$t('M.otc_index_operate')"
             align="right"
             width="150"
           >

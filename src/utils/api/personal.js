@@ -157,3 +157,5 @@ export const getBlackListsAJAX = params => handleRequest(() => get('XXXXXX', par
 export const cancelFocusAJAX = params => handleRequest(() => post('XXXXXX', params))
 // 解除黑名单
 export const unBlackAJAX = params => handleRequest(() => post('XXXXXX', params))
+// 确定拉黑
+export const blackListAJAX = params => handleRequest(() => post('XXXXXX', params))

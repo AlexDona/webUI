@@ -44,14 +44,14 @@
             />
           </div>
           <div class="third-item items">
-            <span>实名认证</span>
+            <span>{{$t('M.user_real_name')}}</span>
             <IconFontCommon
               class="font-size40 icon-user"
               iconName="icon-tongguo_huaban"
             />
           </div>
           <div class="fourth-item items">
-            <span>高级认证</span>
+            <span>{{$t('M.user_senior_certification')}}</span>
             <IconFontCommon
               class="font-size40 icon-user"
               iconName="icon-tongguo_huaban"
@@ -99,7 +99,7 @@
             <!--<button class="button">取消关注</button>-->
           </div>
           <div class="black-button-box">
-            <button class="button">拉黑</button>
+            <button class="button" @click="dialogVisible = true">拉黑</button>
             <!--<button class="button">解除</button>-->
           </div>
         </div>
@@ -203,7 +203,7 @@
               >
                 <template slot-scope="s">
                   <div>
-                    <button class="sell-buy-button buy-button border-radius2 cursor-pointer">购买</button>
+                    <button class="sell-buy-button buy-button border-radius2 cursor-pointer">{{$t('M.comm_buying')}}</button>
                   </div>
                 </template>
               </el-table-column>
@@ -307,7 +307,7 @@
               >
                 <template slot-scope="s">
                   <div>
-                    <button class="sell-buy-button sell-button border-radius2 cursor-pointer">出售</button>
+                    <button class="sell-buy-button sell-button border-radius2 cursor-pointer">{{$t('M.comm_offering')}}</button>
                   </div>
                 </template>
               </el-table-column>
@@ -315,11 +315,36 @@
           </div>
         </div>
       </div>
+      <!--3 拉黑弹窗-->
+      <div class="black-list-dialog">
+        <el-dialog
+          :title="$t('M.otc_prompt')"
+          :visible.sync="dialogVisible"
+          top="25vh"
+        >
+          <div class="content">
+            拉黑后该用户将无法访问您的广告信息或与您交易，您确定要拉黑吗？
+          </div>
+          <span slot="footer">
+            <div class="button-group">
+              <button class="cancel item" @click="dialogVisible = false">
+                {{$t('M.comm_cancel')}}
+              </button>
+              <button class="confirm item" @click="confirmBlackList">
+                {{$t('M.comm_confirm')}}
+              </button>
+            </div>
+          </span>
+        </el-dialog>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import {mapState} from 'vuex'
+import {
+  blackListAJAX
+} from '../../utils/api/personal'
 import IconFontCommon from '../../components/Common/IconFontCommon'
 export default {
   components: {
@@ -328,6 +353,8 @@ export default {
   // props,
   data () {
     return {
+      // 拉黑弹窗显示状态
+      dialogVisible: false,
       // 购买列表
       buyTableList: [
         {
@@ -451,7 +478,21 @@ export default {
   // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    // 确认拉黑接口
+    async confirmBlackList () {
+      let param = {
+        id: this.unBlackId
+      }
+      const data = await blackListAJAX(param)
+      console.log(data)
+      if (!data) return false
+      // 数据返回后的逻辑
+      // 重新刷新列表
+      // 关闭弹窗
+      this.dialogVisible = false
+    }
+  },
   // filter: {},
   computed: {
     ...mapState({
@@ -697,6 +738,57 @@ export default {
             }
           }
         }
+
+        > .black-list-dialog {
+          .el-dialog__wrapper {
+            background-color: rgba(0, 0, 0, .7);
+
+            .el-dialog {
+              width: 350px;
+              height: 180px;
+              border-radius: 4px;
+
+              .el-dialog__header {
+                padding: 6px 18px;
+                border-radius: 4px 4px 0 0;
+
+                .el-dialog__title {
+                  font-size: 14px;
+                }
+
+                .el-dialog__headerbtn {
+                  top: 10px;
+                  right: 10px;
+                }
+              }
+
+              .el-dialog__body {
+                height: 84px;
+                padding: 30px 18px;
+                font-size: 12px;
+              }
+
+              .el-dialog__footer {
+                padding: 0 18px;
+
+                .button-group {
+                  .item {
+                    height: 30px;
+                    padding: 0 28px;
+                    border-radius: 2px;
+                    font-size: 12px;
+                    line-height: 30px;
+                    cursor: pointer;
+                  }
+
+                  .confirm {
+                    margin-left: 20px;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
 
@@ -814,6 +906,41 @@ export default {
                           background-color: #181b2b;
                         }
                       }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          > .black-list-dialog {
+            .el-dialog__wrapper {
+              .el-dialog {
+                background-color: $dialogColor1;
+
+                .el-dialog__header {
+                  background-color: $dialogColor2;
+
+                  .el-dialog__title {
+                    color: $dialogColor4;
+                  }
+                }
+
+                .el-dialog__body {
+                  color: $dialogColor5;
+                }
+
+                .el-dialog__footer {
+                  .button-group {
+                    .cancel {
+                      border: 1px solid $mainColor;
+                      color: $mainColorOfWhite;
+                      background-color: $dialogColor1;
+                    }
+
+                    .confirm {
+                      color: $mainColorOfWhite;
+                      background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
                     }
                   }
                 }
@@ -938,6 +1065,41 @@ export default {
                           background-color: rgba(97, 116, 153, .05);
                         }
                       }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          > .black-list-dialog {
+            .el-dialog__wrapper {
+              .el-dialog {
+                background-color: $mainColorOfWhite;
+
+                .el-dialog__header {
+                  background-color: $dialogColor7;
+
+                  .el-dialog__title {
+                    color: $dayMainTitleColor;
+                  }
+                }
+
+                .el-dialog__body {
+                  color: $dayMainTitleColor;
+                }
+
+                .el-dialog__footer {
+                  .button-group {
+                    .cancel {
+                      border: 1px solid $mainColor;
+                      color: $mainColor;
+                      background-color: $mainColorOfWhite;
+                    }
+
+                    .confirm {
+                      color: $mainColorOfWhite;
+                      background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
                     }
                   }
                 }
