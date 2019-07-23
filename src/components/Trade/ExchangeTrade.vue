@@ -968,13 +968,13 @@ export default {
             // if (!this.limitExchange.sellPrice) {
             //   return false
             // }
-            if (this.limitExchange.sellPrice - this.amountMin < 0) {
+            if (this.limitExchange.sellPrice - this.priceMin < 0) {
               // 委托价格低于最低限价
-              this.errorMsg.limit.sell.price = this.$t('M.limit_market_trade_price_min_tips') + this.amountMin
+              this.errorMsg.limit.sell.price = this.$t('M.limit_market_trade_price_min_tips') + this.priceMin
               return false
-            } else if (this.limitExchange.sellPrice - this.amountMax > 0) {
+            } else if (this.limitExchange.sellPrice - this.priceMax > 0) {
               // 委托价格高于最高限价
-              this.errorMsg.limit.sell.price = this.$t('M.limit_market_trade_price_max_tips') + this.amountMax
+              this.errorMsg.limit.sell.price = this.$t('M.limit_market_trade_price_max_tips') + this.priceMax
               return false
             } else {
               this.errorMsg.limit.sell.price = ''

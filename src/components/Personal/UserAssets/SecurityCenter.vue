@@ -1077,7 +1077,7 @@ export default {
           border: 0;
           line-height: 0;
           color: #fff;
-          background: linear-gradient(90deg, #2b396e, #2a5082);
+          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
 
         .input {
@@ -1311,7 +1311,7 @@ export default {
         color: #a9bed4;
 
         > .security-level {
-          color: #a9bed4;
+          color: #fff;
 
           > .level {
             margin-right: 5px;
@@ -1372,7 +1372,7 @@ export default {
             .security-status {
               > .security-verify {
                 color: #fff;
-                background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+                background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
               }
 
               > .security-binding {
@@ -1432,7 +1432,7 @@ export default {
         .el-tabs__item.is-active {
           border-bottom: 2px solid #338ff5;
           border-left: 0;
-          color: #ccc;
+          color: #338ff5;
           background-color: transparent;
         }
 
@@ -1557,7 +1557,7 @@ export default {
             .security-status {
               > .security-verify {
                 color: #fff;
-                background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+                background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
               }
 
               > .security-binding {

@@ -7,7 +7,7 @@
     }"
   >
     <div class="set-email-main margin25">
-      <header class="set-email-header personal-height60 line-height60 line-height70 margin25">
+      <header class="set-email-header personal-height60 line-height60 line-height70 login-password-header margin25">
         <span class="header-content-left header-content font-size16 font-weight600">
           <!--绑定邮箱-->
           {{ $t('M.user_security_binding') }}{{ $t('M.user_security_email') }}
@@ -399,7 +399,7 @@ export default {
     overflow: hidden;
 
     > .set-email-main {
-      width: 1100px;
+      width: 1300px;
       min-height: 700px;
       margin: 60px auto 100px;
 
@@ -432,8 +432,8 @@ export default {
         }
 
         > .email-content-from {
-          width: 700px;
-          margin-left: 55px;
+          width: 500px;
+          margin: 58px auto;
 
           .send-code-btn {
             width: 90px;
@@ -522,8 +522,8 @@ export default {
             }
 
             .email-button {
-              color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              color: rgba(255, 255, 255, 1);
+              background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
             }
           }
         }
@@ -553,7 +553,6 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .set-email-main {
         border: 1px solid rgba(246, 246, 246, 1);
@@ -603,8 +602,8 @@ export default {
             }
 
             .email-button {
-              color: #ccc;
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              color: #fff;
+              background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
             }
           }
         }
