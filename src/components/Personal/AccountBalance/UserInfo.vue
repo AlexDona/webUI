@@ -434,8 +434,6 @@ export default {
 
           > .user {
             > .user-background {
-              background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-
               .icon-user {
                 color: #e1f3ff;
               }
@@ -534,8 +532,6 @@ export default {
 
           > .user {
             > .user-background {
-              background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-
               .icon-user {
                 color: #e1f3ff;
               }
