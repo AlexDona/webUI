@@ -15,7 +15,7 @@
           v-model="activeName"
           :no-data-text="$t('M.comm_no_data')"
           :placeholder="$t('M.comm_please_choose')"
-          @change="updateGeneralize"
+          @change="toggleStatisticsType"
           popper-class="invitation-statistics-select"
         )
           el-option(
@@ -118,6 +118,10 @@ export default {
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
+    toggleStatisticsType () {
+      this.currentNum = 1
+      this.updateGeneralize()
+    },
     updateGeneralize: _.debounce(function (e) {
       console.log(e, this.activeName)
       this.$emit('getUserPromotionList', {
