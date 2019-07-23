@@ -38,7 +38,9 @@
               v-show="isSetting"
             >
               <ul class="inner-box">
-                <li>
+                <li :style="{
+                      color: (validatedActiveFrequency == 'never')? '#338ff5': ''
+                    }">
                   {{$t('M.user_pay_pwd_never')}}
                   <span
                     class="button"
@@ -48,7 +50,9 @@
                     }"
                   ></span>
                 </li>
-                <li>
+                <li :style="{
+                      color: (validatedActiveFrequency == 'userset')? '#338ff5': ''
+                    }">
                   {{usersetTimeInterval}} {{$t('M.user_pay_pwd_user_set')}}
                   <span
                     class="button"
@@ -58,7 +62,9 @@
                     }"
                   ></span>
                 </li>
-                <li>
+                <li :style="{
+                      color: (validatedActiveFrequency == 'everytime')? '#338ff5': ''
+                    }">
                   {{$t('M.user_pay_pwd_every')}}
                   <span
                     class="button"
@@ -369,7 +375,7 @@ export default {
                 border-image: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1)) 10 10;
                 border-radius: 2px;
                 color: #fff;
-                background: linear-gradient(0deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
                 cursor: pointer;
               }
             }
@@ -521,7 +527,7 @@ export default {
                 > .setting-btn {
                   border-image: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1)) 10 10;
                   color: #fff;
-                  background: linear-gradient(0deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                  background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
                 }
               }
             }
@@ -620,8 +626,8 @@ export default {
       color: $dayMainTitleColor;
 
       .button-color {
-        color: rgba(255, 255, 255, .7);
-        background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        color: rgba(255, 255, 255, 1);
+        background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
       }
 
       .cancel-btn {
@@ -648,6 +654,13 @@ export default {
               > .middle {
                 > span {
                   border-left: 1px solid #8ea0b5;
+                }
+              }
+
+              > .right {
+                > .setting-btn {
+                  border: none;
+                  background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
                 }
               }
             }
