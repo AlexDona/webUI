@@ -7,7 +7,7 @@
     }"
   >
     <div class="set-email-main margin25">
-      <header class="set-email-header personal-height60 line-height60 line-height70 margin25">
+      <header class="set-email-header personal-height60 line-height60 line-height70 login-password-header margin25">
         <span class="header-content-left header-content font-size16 font-weight600">
           <!--绑定邮箱-->
           {{ $t('M.user_security_binding') }}{{ $t('M.user_security_email') }}
@@ -553,7 +553,6 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .set-email-main {
         border: 1px solid rgba(246, 246, 246, 1);
