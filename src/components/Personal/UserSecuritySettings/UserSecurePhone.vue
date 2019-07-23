@@ -1010,7 +1010,7 @@ export default {
           border-bottom: 1px solid #39424d;
 
           > .header-content-left {
-            color: (255, 255, 255, .7);
+            color: rgba(255, 255, 255, 1);
           }
 
           > .header-content-right {
@@ -1084,7 +1084,7 @@ export default {
         }
 
         .el-form-item__label {
-          color: rgba(255, 255, 255, .7);
+          color: #a9bed4;
         }
       }
     }
