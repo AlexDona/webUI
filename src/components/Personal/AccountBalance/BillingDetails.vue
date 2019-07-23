@@ -680,7 +680,7 @@ export default {
 
   .billing-details {
     > .billing-details-main {
-      min-height: 665px;
+      min-height: 709px;
 
       .state-status {
         color: $mainColor;
@@ -1010,6 +1010,28 @@ export default {
 
           &.is-leaf {
             border-top: 0;
+          }
+        }
+
+        td {
+          &:nth-child(1) {
+            text-align: left;
+          }
+
+          &:nth-of-type(4) {
+            text-align: center;
+          }
+
+          &:nth-of-type(5) {
+            text-align: right;
+          }
+
+          &:nth-of-type(6) {
+            text-align: right;
+          }
+
+          &:nth-of-type(7) {
+            text-align: right;
           }
         }
       }
