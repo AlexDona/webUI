@@ -412,7 +412,6 @@
                     iconName="icon-tongguo_huaban"
                   />
                 </div>
-
               </div>
               <!--3其他信息-->
               <div class="other-infos">
@@ -1363,11 +1362,11 @@ export default {
               padding-top: 10px;
 
               > .time-top {
-                color: #66718f;
+                color: $dialogColor9;
               }
 
               > .time-bottom {
-                color: #66718f;
+                color: $dialogColor9;
               }
             }
           }
@@ -1403,7 +1402,7 @@ export default {
               > .bar-top {
                 margin-bottom: 6px;
                 font-size: 12px;
-                color: #66718f;
+                color: $dialogColor9;
               }
 
               > .bar-bottom {
@@ -1797,7 +1796,7 @@ export default {
       .otc-online-buy-and-sell-button {
         .el-radio-button__inner {
           color: #838ea6;
-          background: $mainContentNightBgColor;
+          background: transparent;
         }
 
         .el-radio-button {
@@ -2042,11 +2041,11 @@ export default {
                 padding-top: 10px;
 
                 > .time-top {
-                  color: #66718f;
+                  color: $dialogColor9;
                 }
 
                 > .time-bottom {
-                  color: #66718f;
+                  color: $dialogColor9;
                 }
               }
             }
@@ -2082,7 +2081,7 @@ export default {
                 > .bar-top {
                   margin-bottom: 6px;
                   font-size: 12px;
-                  color: #66718f;
+                  color: $dialogColor9;
                 }
 
                 > .bar-bottom {
@@ -2128,7 +2127,7 @@ export default {
       .otc-online-buy-and-sell-button {
         .el-radio-button__inner {
           color: #838ea6;
-          background: $mainColorOfWhite;
+          background: transparent;
         }
 
         .el-radio-button {
