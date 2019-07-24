@@ -1025,7 +1025,8 @@ export default {
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       refSecurityCenterStatus: state => state.personal.refSecurityCenterStatus,
-      userCenterActiveName: state => state.personal.userCenterActiveName
+      userCenterActiveName: state => state.personal.userCenterActiveName,
+      activeLanguage: state => state.common.activeLanguage
     })
   },
   watch: {
@@ -1033,6 +1034,9 @@ export default {
       if (newVal === 'security-center') {
         this.getSecurityCenter()
       }
+    },
+    activeLanguage (newVal) {
+      this.getSecurityCenter('security-record')
     }
   }
 }
