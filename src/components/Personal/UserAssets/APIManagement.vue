@@ -1097,7 +1097,7 @@ export default {
 
       .el-table__empty-block {
         width: 100% !important;
-        min-height: 165px;
+        min-height: 224px;
       }
 
       /* 备注绑定IP部分样式修复 */

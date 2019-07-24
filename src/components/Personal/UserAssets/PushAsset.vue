@@ -902,7 +902,7 @@ export default {
         }
 
         > .award-record-content {
-          min-height: 130px;
+          min-height: 174px;
 
           .form-input-common {
             width: 270px;
