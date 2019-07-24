@@ -4,14 +4,17 @@
     :logoSrc="logoSrc"
     :class="className"
     :text="value"
-    :logoScale="0.2"
     :size="size"
     :logoCornerRadius="1"
     :logoMargin="0"
-    logoBackgroundColor="#fff"
+    :logoBackgroundColor="logoBackgroundColor"
+    :backgroundColor="backgroundColor"
     v-if="value"
-    colorLight="#fff"
-    :dotScale="0.999"
+    :colorLight="colorLight"
+    :dotScale="1"
+    :margin="margin"
+    :colorDark="colorDark"
+    :autoColor="false"
   />
 </template>
 <script>
@@ -23,6 +26,26 @@ export default {
     }
   },
   props: {
+    colorDark: {
+      type: String,
+      default: '#000'
+    },
+    margin: {
+      type: Number,
+      default: 20
+    },
+    colorLight: {
+      type: String,
+      default: '#fff'
+    },
+    logoBackgroundColor: {
+      type: String,
+      default: '#fff'
+    },
+    backgroundColor: {
+      type: String,
+      default: '#fff'
+    },
     className: {
       type: String
     },
@@ -40,19 +63,19 @@ export default {
       type: Number,
       default: 170
     }
-  },
-  data () {
-    return {}
-  },
-  created () {},
-  mounted () {},
-  activated () {},
-  updated () {},
-  beforeRouteUpdate () {},
-  methods: {},
-  filter: {},
-  computed: {
-  },
-  watch: {}
+  }
+  // data () {
+  //   return {}
+  // },
+  // created () {},
+  // mounted () {},
+  // activated () {},
+  // updated () {},
+  // beforeRouteUpdate () {},
+  // methods: {},
+  // filter: {},
+  // computed: {
+  // },
+  // watch: {}
 }
 </script>

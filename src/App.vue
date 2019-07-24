@@ -62,7 +62,9 @@ export default {
   },
   // mounted () {},
   // activated () {},
-  // update () {},
+  updated () {
+    console.log('updated')
+  },
   methods: {
     ...mapMutations([
       'CHANGE_THEME',
@@ -182,7 +184,7 @@ export default {
         !path.startsWith('/invitationRegister')
       ) ? 1 : 0
       this.isNeedFooter = (
-        path === `/${this.$routes_X.login}` ||
+        path.startsWith(`/${this.$routes_X.login}`) ||
         path.startsWith('/register') ||
         path === '/downloadApp' ||
         path.startsWith('/invitationRegister') ||

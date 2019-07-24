@@ -1,5 +1,5 @@
 <template>
-  <button
+  <el-button
     class="count-down cursor-pointer"
     :class="className"
     :disabled="disabled"
@@ -7,7 +7,7 @@
     @click.prevent="run"
   >
     {{text}}
-  </button>
+  </el-button>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
@@ -35,11 +35,11 @@ export default {
       disabled: false
     }
   },
-  created () {},
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // created () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
@@ -86,7 +86,7 @@ export default {
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     }),
     text () {
-      return this.time > 0 ? `${this.time}s ${this.$t('M.comm_after_get')}` : this.$t('M.comm_get_code')
+      return this.time > 0 ? `${this.time}s` : this.$t('M.comm_get_code')
     }
   },
   watch: {
@@ -97,7 +97,7 @@ export default {
       this.SET_COUNT_DOWN_RESET_STATUS(false)
     },
     status (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       if (newVal) {
         // this.$emit('run')
         this.start()
@@ -106,6 +106,17 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
-
+<style scoped lang="stylus">
+  @import '../../assets/CSS/index.styl'
+  .count-down
+    background-color transparent
+    min-width 100px
+    width 100%
+    border none
+    border-radius 0
+    &:hover
+      background-color transparent
+    /deep/
+      span
+        font-size 14px !important
 </style>

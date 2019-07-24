@@ -24,6 +24,7 @@ const routerCreator = () => {
     if (from.path !== `/${routesVariable.login}` || from.path !== '/register') {
       store.commit('CHANGE_ROUTER_PATH', from.path)
     }
+    console.log(store.state)
     if (store.state.user.loginStep1Info.userInfo) {
       store.commit('USER_LOGIN', store.state.user.loginStep1Info)
     }
@@ -31,7 +32,7 @@ const routerCreator = () => {
       if (store.state.user.isLogin) {
         next()
       } else {
-        next({path: '/login', query: {Rurl: to.fullPath}})
+        next({path: '/login', query: {Rurl: to.fullPath}})` `
       }
     } else {
       next()

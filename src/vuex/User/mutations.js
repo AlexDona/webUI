@@ -17,8 +17,11 @@ import {
   CHANGE_VIP_PRICE_INFO_LIST,
   CHANGE_RENEW_STATUS,
   CHANGE_USER_REFRESH_SUCCESS,
-  CHANGE_TOKEN_AVAILABILITY,
-  UPDATE_INVITATIONS_M
+  UPDATE_INVITATIONS_M,
+  UPDATE_LOGIN_STEP2_DIALOG_STATUS,
+  UPDATE_FORGET_PASS_STEP_M,
+  UPDATE_LOGIN_IMAGE_DIALOG_STATUS_M,
+  UPDATE_IMAGE_CODE_M
 } from './mutations-types.js'
 
 import {
@@ -74,6 +77,7 @@ export default {
         switch (data.type) {
           case 0:
             state.disabledOfPhoneBtn = data.status
+            console.log(data.status)
             break
           case 1:
             state.disabledOfOldPhoneBtn = data.status
@@ -91,11 +95,12 @@ export default {
   [USER_LOGIN] (state, data) {
     state.isLogin = true
     state.loginStep1Info = data
-    const {token} = data
-    setCookie('loginStep1Info', data)
-    if (token) {
-      setCookie('token', token)
-    }
+    console.log(data)
+    // const {token} = data
+    // setCookie('loginStep1Info', data)
+    // if (token) {
+    //   setCookie('token', token)
+    // }
   },
   // 用户出
   [USER_LOGOUT] (state) {
@@ -122,10 +127,20 @@ export default {
   [CHANGE_USER_REFRESH_SUCCESS] (state, data) {
     state.isUserRefreshSuccess = data
   },
-  [CHANGE_TOKEN_AVAILABILITY] (state, data) {
-    state.isTokenDisable = data
-  },
   [UPDATE_INVITATIONS_M] (state, data) {
     state.invitation_S = data
+  },
+  // 更改登录二次校验弹窗状态
+  [UPDATE_LOGIN_STEP2_DIALOG_STATUS] (state, status) {
+    state.isShowLoginStep2Dialog_S = status
+  },
+  [UPDATE_FORGET_PASS_STEP_M] (state, step) {
+    state.forgetPassStep_S = step
+  },
+  [UPDATE_LOGIN_IMAGE_DIALOG_STATUS_M] (state, status) {
+    state.isShowLoginImageDialog_S = status
+  },
+  [UPDATE_IMAGE_CODE_M] (state, imgCode) {
+    state.imageCode_S = imgCode
   }
 }

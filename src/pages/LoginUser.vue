@@ -658,9 +658,7 @@ import {
 import {
   getUserAgent,
   detectOS,
-  setStore,
-  getStore,
-  removeStore
+  getStore
 } from '../utils'
 import socket from '../utils/datafeeds/socket'
 
@@ -774,7 +772,6 @@ export default {
       $('body').off('mousemove')
       $('body').off('mouseup')
     })
-    this.CHANGE_TOKEN_AVAILABILITY(false)
   },
   activated () {
     // 清空input框值
@@ -791,7 +788,6 @@ export default {
       'SET_STEP1_INFO',
       'SET_USER_BUTTON_STATUS',
       'USER_LOGIN',
-      'CHANGE_TOKEN_AVAILABILITY',
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 获取本地记录密码
@@ -945,7 +941,7 @@ export default {
       // 调用第一接口
       let params = new FormData()
       params.append('userName', this.username)
-      this.isRememberUserName ? setStore('username', this.username) : removeStore('username')
+      // this.isRememberUserName ? setStore('username', this.username) : removeStore('username')
 
       params.append('password', this.password)
       params.append('type', EMAIL_REG.test(this.username) ? 'email' : 'phone')

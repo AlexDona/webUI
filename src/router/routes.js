@@ -1,6 +1,7 @@
 import personalCenterRoutes from './personal-center-routes'
 import activity from './activity'
 import {routesVariable} from './routesVariable'
+import user from './user'
 // console.log(routesVariable)
 const HomeCenter = () => import('@/pages/HomeCenter')
 const PersonalCenter = () => import('@/pages/PersonalCenter')
@@ -40,7 +41,7 @@ const OTCBusinessApply = () => import('@/pages/OTC/OTCBusinessApply')
 const FinanceCenter = () => import('@com/InvestmentFinance/FinanceCenter')
 const FinanceInvestmentRecord = () => import('@com/InvestmentFinance/FinanceInvestmentRecord')
 // 登录
-const Login = () => import('@/pages/LoginUser')
+// const LoginAndRegister = () => import('@/pages/LoginUser')
 // 注册
 const Register = () => import('@/pages/RegisterUser')
 const InvitationRegister = () => import('@/pages/InvitationRegister')
@@ -278,15 +279,18 @@ const routes = [
     name: 'TradeCenter',
     component: TradeCenter
   },
-  {
-    path: `/${routesVariable.login}`,
-    name: `${routesVariable.login}`,
-    component: Login
-  },
+  // // 登录
+  // {
+  //   path: `/${routesVariable.login}`,
+  //   name: `${routesVariable.login}`,
+  //   // component: LoginAndRegister
+  //   component: () => import('../components/User/LoginAndRegister/TheLogin')
+  // },
+  ...user,
   // 注册
   {
-    path: '/register',
-    name: 'Register',
+    path: `/${routesVariable.register}`,
+    name: `${routesVariable.register}`,
     component: Register
   },
   {
@@ -295,8 +299,8 @@ const routes = [
   },
   // 忘记密码
   {
-    path: '/ForgetPassword',
-    name: 'forgetPassword',
+    path: `/${routesVariable.ForgetPassword}`,
+    name: `${routesVariable.ForgetPassword}`,
     component: ForgetPassword
   },
   {

@@ -1,0 +1,270 @@
+<!--
+  author: zhaoxinlei
+  create: 20190625
+  description: 当前组件为 登录二次验证 组件
+-->
+<template lang="pug">
+  el-dialog.msg-email-google-dialog(
+    :title="currentTitleText"
+    :visible="$isShowLoginStep2Dialog_S_X"
+    width="486px"
+    :close-on-click-modal="false"
+    @close="$UPDATE_LOGIN_STEP2_DIALOG_STATUS_X(false)"
+  )
+    el-form(
+      :model="validateForm"
+      :rules="validateRules"
+      :ref="validateFormRef"
+      label-width="100px"
+      @submit.native.prevent="'@submit.native.prevent'"
+    )
+      // 短信验证码
+      el-form-item(
+        label=""
+        label-width="0px"
+        prop="phone"
+        v-if="needPhoneValidate"
+      )
+        el-input(
+          type="text"
+          v-model="validateForm.phone"
+          :autofocus="true"
+          :placeholder="`${$t('M.login_please_input1')}`"
+          @keyup.enter.native.stop="loginForStep2"
+          clearable
+        )
+          template(slot="append")
+            CountDownButton(
+              v-if="$isShowLoginStep2Dialog_S_X"
+              class="send-code-btn cursor-pointer"
+              :status="$disabledOfPhoneBtn_X"
+              @run="sendPhoneOrEmailCode(0)"
+            )
+      // 邮件验证码
+      el-form-item(
+        label=""
+        label-width="0px"
+        prop="email"
+        v-if="needEmailValidate"
+      )
+        el-input(
+          type="text"
+          v-model="validateForm.email"
+          :placeholder="`${$t('M.login_please_input2')}`"
+          :autofocus="true"
+          @keyup.enter.native.stop="loginForStep2"
+          clearable
+        )
+          template(slot="append")
+            CountDownButton(
+              v-if="$isShowLoginStep2Dialog_S_X"
+              class="send-code-btn cursor-pointer"
+              :status="$disabledOfEmailBtn_X"
+              @run="sendPhoneOrEmailCode(1)"
+            )
+      //  google 验证码
+      el-form-item.google-validate(
+        label=""
+        label-width="0px"
+        prop="google"
+        v-if="needGoogleValidate"
+      )
+        el-input(
+          type="text"
+          v-model="validateForm.google"
+          :autofocus="true"
+          :placeholder="$t('M.user_please_input9')"
+          @keyup.enter.native.stop="googleAutoLogin"
+          @keydown.native.stop="googleAutoLogin"
+          @change.native.stop="googleAutoLogin"
+          clearable
+        )
+      el-form-item.submit-form(
+        label=""
+        label-width="0px"
+        prop="google"
+      )
+        // 提交
+        el-button(@click="loginForStep2") {{$t('M.comm_sub_time')}}
+</template>
+<script>
+import mixins from '../../../../mixins/user'
+import CountDownButton from '../../../Common/CountDownCommon'
+import {mapState} from 'vuex'
+import {sendPhoneOrEmailCodeAjax} from '../../../../utils/commonFunc'
+export default {
+  name: 'msg-email-google-dialog',
+  mixins: [mixins],
+  components: {
+    CountDownButton
+  },
+  // props,
+  data () {
+    return {
+      validateForm: {
+        phone: '',
+        email: '',
+        google: ''
+      },
+      validateRules: {
+
+      },
+      validateFormRef: 'the-validate-form',
+      // 步骤3 弹窗显示状态
+      isShowStep3Dialog: true,
+      // isShowStep3Dialog: false,
+      titleText: {
+        // 短信验证
+        phone: 'M.login_dialog_title_label_01',
+        // 邮箱验证
+        email: 'M.login_dialog_title_label_02',
+        // 谷歌验证
+        google: 'M.login_dialog_title_label_03'
+      }
+    }
+  },
+  // created () {},
+  // mounted () {}
+  // updated () {},
+  // beforeRouteUpdate () {},
+  // beforeDestroy () {},
+  // destroyed () {},
+  methods: {
+    googleAutoLogin: _.debounce(function () {
+      const {google} = this.validateForm
+      if (google.length >= 6) {
+        this.loginForStep2()
+      }
+    }, 300),
+    loginForStep2 () {
+      const {phone, email, google} = this.validateForm
+      console.log(phone)
+      this.$emit('loginForStep2', {
+        phoneCode: phone,
+        emailCode: email,
+        googleCode: google
+      })
+    },
+    /**
+     * 发送短信验证码或邮箱验证码
+     */
+    sendPhoneOrEmailCode (loginType) {
+      if (this.$disabledOfPhoneBtn_X || this.$disabledOfEmailBtn_X) {
+        return false
+      }
+
+      let params = {
+        userId: this.$userInfo_X.userId
+      }
+      switch (loginType) {
+        case 0:
+          params.phone = this.$userInfo_X.phone
+          break
+        case 1:
+          params.email = this.$userInfo_X.email
+          break
+      }
+      sendPhoneOrEmailCodeAjax(loginType, params, this)
+    }
+  },
+  // filters: {},
+  computed: {
+    ...mapState({}),
+    needPhoneValidate () {
+      return this.$isBindPhone_X && !this.$isBindGoogle_X
+    },
+    needEmailValidate () {
+      return this.$isBindEmail_X && !this.$isBindPhone_X && !this.$isBindGoogle_X
+    },
+    needGoogleValidate () {
+      return this.$isBindGoogle_X
+    },
+    phone () {
+      return _.get(this.$userInfo_S_X, 'phone')
+    },
+    email () {
+      return _.get(this.$userInfo_S_X, 'email')
+    },
+    currentTitleText () {
+      const {phone, email, google} = this.titleText
+      let targetText = this.$isBindGoogle_X ? google : this.$isBindPhone_X ? phone : email
+      return this.$t(targetText)
+    }
+  },
+  watch: {
+    $isShowLoginStep2Dialog_S_X (New) {
+      console.log(New, this.$loginType_X)
+      if (New) {
+        if (!this.$isBindGoogle_X) {
+          this.sendPhoneOrEmailCode(this.$isBindPhone_X ? 0 : 1)
+        }
+      }
+    }
+  }
+}
+</script>
+
+<style scoped lang="stylus">
+  @import '../../../../assets/CSS/index.styl'
+  .msg-email-google-dialog
+    /*top 21vh*/
+    -moz-user-select none
+    -webkit-user-select none
+    -o-user-select none
+    -ms-user-select none
+    user-select none
+    background-color rgba(11,12,20,.8)
+    display flex
+    flex-direction column
+    justify-content center
+    /deep/
+      .el-dialog
+        margin-top 0 !important
+        height 280px
+        border-radius 10px
+        overflow hidden
+        background-color #2b304c
+        .el-dialog__header
+          height 44px
+          line-height 44px
+          background-color #25283D
+          padding 0 20px
+          .el-dialog__title
+            color S_day_bg
+            height 44px
+            line-height 44px
+            display inline-block
+          .el-dialog__headerbtn
+            top 10px
+            .el-dialog__close
+              font-size 26px
+        .el-dialog__body
+          padding 65px 25px 0
+          .el-form
+            .el-form-item
+              margin-bottom 35px
+              &.google-validate
+                .el-input__inner
+                  border 1px solid #25283D
+              .el-input__inner
+                background-color transparent
+                border-color #25283D
+                color #60678B
+                height 44px
+                border-right none
+              .el-input-group__append
+                background-color transparent
+                border-color #25283D
+              &.submit-form
+                text-align center
+                .el-button
+                  width 235px
+                  height 44px
+                  color #fff
+                  border none
+                  background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
+                  box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
+                  border-radius 4px
+              .send-code-btn
+                color S_error_color
+</style>
