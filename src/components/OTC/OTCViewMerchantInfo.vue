@@ -19,45 +19,50 @@
               iconName="icon-gerenzhongxin"
             />
             <span class="merchant-name font-size16">
-              王二狗
+              {{merchantUserInfo.personNickName}}
             </span>
           </div>
           <div class="time-box">
-            <p class="bar font-size12">注册时间：2019/06/20</p>
-            <p class="bar font-size12">最近登录时间：2019/06/27</p>
+            <p class="bar font-size12">注册时间：{{merchantUserInfo.registerTime}}</p>
+            <p class="bar font-size12">最近登录时间：{{merchantUserInfo.recentlyLoginTime}}</p>
           </div>
         </div>
         <!--1.2 认证-->
         <div class="two-identity">
-          <div class="first-item items">
+          <!--邮箱认证-->
+          <div class="first-item items" :class="{unverified: merchantUserInfo.mailAuth !== 'enable'}">
             <span>邮箱认证</span>
             <IconFontCommon
               class="font-size40 icon-user"
               iconName="icon-tongguo_huaban"
             />
           </div>
-          <div class="second-item items">
+          <!--手机认证-->
+          <div class="second-item items" :class="{unverified: merchantUserInfo.phoneAuth !== 'enable'}">
             <span>手机认证</span>
             <IconFontCommon
               class="font-size40 icon-user"
               iconName="icon-tongguo_huaban"
             />
           </div>
-          <div class="third-item items">
+          <!--实名认证-->
+          <div class="third-item items" :class="{unverified: merchantUserInfo.realNameAuth !== 'y'}">
             <span>{{$t('M.user_real_name')}}</span>
             <IconFontCommon
               class="font-size40 icon-user"
               iconName="icon-tongguo_huaban"
             />
           </div>
-          <div class="fourth-item items">
+          <!--高级认证-->
+          <div class="fourth-item items" :class="{unverified: merchantUserInfo.advancedAuth !== 'pass'}">
             <span>{{$t('M.user_senior_certification')}}</span>
             <IconFontCommon
               class="font-size40 icon-user"
               iconName="icon-tongguo_huaban"
             />
           </div>
-          <div class="fifth-item items">
+          <!--商家认证-->
+          <div class="fifth-item items" :class="{unverified: merchantUserInfo.merchantAuth !== 'PASS'}">
             <span>商家认证</span>
             <IconFontCommon
               class="font-size40 icon-user"
@@ -69,43 +74,58 @@
         <div class="trade-infos">
           <div class="first-bar bars">
             <div class="bar-top">商家保证金</div>
-            <div class="bar-bottom">10000FUC</div>
+            <div class="bar-bottom">{{merchantUserInfo.cashDeposit}}{{merchantUserInfo.cashDepositName}}</div>
           </div>
           <div class="second-bar bars">
             <div class="bar-top">交易总单数</div>
-            <div class="bar-bottom">5646</div>
+            <div class="bar-bottom">{{merchantUserInfo.totalOrders}}</div>
           </div>
           <div class="third-bar bars">
             <div class="bar-top">30日成交单</div>
-            <div class="bar-bottom">453</div>
+            <div class="bar-bottom">{{merchantUserInfo.successOrders}}</div>
           </div>
           <div class="fourth-bar bars">
             <div class="bar-top">30日成交率</div>
-            <div class="bar-bottom">99.66%</div>
+            <div class="bar-bottom">{{merchantUserInfo.successRate}}%</div>
           </div>
           <div class="fifth-bar bars">
             <div class="bar-top">30日冻结次数</div>
-            <div class="bar-bottom">56</div>
+            <div class="bar-bottom">{{merchantUserInfo.freezeTimes}}</div>
           </div>
           <div class="sixth-bar bars">
             <div class="bar-top">平均放行</div>
-            <div class="bar-bottom">05/06</div>
+            <div class="bar-bottom">{{BIHTimeFormatting(merchantUserInfo.avgConfirmTime)}}</div>
           </div>
         </div>
         <!--1.4 按钮组-->
-        <div class="button-group">
+        <div class="button-group" v-if="merchantUserInfo.relationType == '1'">
           <div class="focus-button-box">
-            <button class="button">关注</button>
-            <!--<button class="button">取消关注</button>-->
+            <button class="button" @click="cancelFocusBlackOpposite('1')">取消关注</button>
           </div>
           <div class="black-button-box">
-            <button class="button" @click="dialogVisible = true">拉黑</button>
-            <!--<button class="button">解除</button>-->
+            <button class="button" @click="focusBlackOpposite('2')">拉黑</button>
+          </div>
+        </div>
+        <div class="button-group" v-else-if="merchantUserInfo.relationType == '2'">
+          <div class="focus-button-box">
+            <button class="button" @click="focusBlackOpposite('1')">关注</button>
+          </div>
+          <div class="black-button-box">
+            <button class="button" @click="cancelFocusBlackOpposite('2')">解除</button>
+          </div>
+        </div>
+        <div class="button-group" v-else>
+          <div class="focus-button-box">
+            <button class="button" @click="focusBlackOpposite('1')">关注</button>
+          </div>
+          <div class="black-button-box">
+            <button class="button" @click="focusBlackOpposite('2')">拉黑</button>
           </div>
         </div>
       </div>
       <!--2 右侧列表-->
       <div class="right-lists">
+        <!--购买列表-->
         <div class="buy-list buy-sell-list">
           <div class="header-title buy-title">
             购买广告
@@ -157,37 +177,37 @@
                 </template>
               </el-table-column>
               <!-- 支付方式 -->
-              <el-table-column
+              <!--<el-table-column
                 :label="$t('M.otc_index_Payment_method')"
               >
                 <template slot-scope="s">
                   <div>
-                    <!-- 1支付宝 -->
+                    &lt;!&ndash; 1支付宝 &ndash;&gt;
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-zhifubao1"
                       v-if="s.row.payTypes[0] === '1'"
                     />
-                    <!-- 2微信 -->
+                    &lt;!&ndash; 2微信 &ndash;&gt;
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-weixin1"
                       v-if="s.row.payTypes[1] === '1'"
                     />
-                    <!-- 3银行卡 -->
+                    &lt;!&ndash; 3银行卡 &ndash;&gt;
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-yinhangqia"
                       v-if="s.row.payTypes[2] === '1'"
                     />
-                    <!-- 4西联汇款 -->
+                    &lt;!&ndash; 4西联汇款 &ndash;&gt;
                     <span v-show="s.row.payTypes[3] === '1'">
                       <img
                         src="../../assets/user/xilian.png"
                         class="xilian"
                       >
                     </span>
-                    <!-- 5PAYPAL -->
+                    &lt;!&ndash; 5PAYPAL &ndash;&gt;
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-paypal"
@@ -195,7 +215,7 @@
                     />
                   </div>
                 </template>
-              </el-table-column>
+              </el-table-column>-->
               <!-- 操作 -->
               <el-table-column
                 :label="$t('M.otc_index_operate')"
@@ -210,6 +230,7 @@
             </el-table>
           </div>
         </div>
+        <!--出售列表-->
         <div class="sell-list buy-sell-list">
           <div class="header-title sell-title">
             出售广告
@@ -226,7 +247,7 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    BTC/CNY
+                    {{s.row.coinName}}/{{s.row.currencyName}}
                   </div>
                 </template>
               </el-table-column>
@@ -236,7 +257,7 @@
               >
                 <template slot-scope = "s">
                   <div class="sell-price">
-                    456CNY
+                    {{s.row.price}}{{s.row.currencyName}}
                   </div>
                 </template>
               </el-table-column>
@@ -246,7 +267,7 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    100BTC
+                    {{s.row.remainCount}}{{s.row.coinName}}
                   </div>
                 </template>
               </el-table-column>
@@ -256,42 +277,42 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    100-2000CNY
+                    {{s.row.minCount}}-{{s.row.maxCount}}{{s.row.currencyName}}
                   </div>
                 </template>
               </el-table-column>
               <!-- 支付方式 -->
-              <el-table-column
+              <!--<el-table-column
                 :label="$t('M.otc_index_Payment_method')"
               >
                 <template slot-scope="s">
                   <div>
-                    <!-- 1支付宝 -->
+                    &lt;!&ndash; 1支付宝 &ndash;&gt;
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-zhifubao1"
                       v-if="s.row.payTypes[0] === '1'"
                     />
-                    <!-- 2微信 -->
+                    &lt;!&ndash; 2微信 &ndash;&gt;
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-weixin1"
                       v-if="s.row.payTypes[1] === '1'"
                     />
-                    <!-- 3银行卡 -->
+                    &lt;!&ndash; 3银行卡 &ndash;&gt;
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-yinhangqia"
                       v-if="s.row.payTypes[2] === '1'"
                     />
-                    <!-- 4西联汇款 -->
+                    &lt;!&ndash; 4西联汇款 &ndash;&gt;
                     <span v-show="s.row.payTypes[3] === '1'">
                       <img
                         src="../../assets/user/xilian.png"
                         class="xilian"
                       >
                     </span>
-                    <!-- 5PAYPAL -->
+                    &lt;!&ndash; 5PAYPAL &ndash;&gt;
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-paypal"
@@ -299,7 +320,7 @@
                     />
                   </div>
                 </template>
-              </el-table-column>
+              </el-table-column>-->
               <!-- 操作 -->
               <el-table-column
                 :label="$t('M.otc_index_operate')"
@@ -330,7 +351,7 @@
               <button class="cancel item" @click="dialogVisible = false">
                 {{$t('M.comm_cancel')}}
               </button>
-              <button class="confirm item" @click="confirmBlackList">
+              <button class="confirm item">
                 {{$t('M.comm_confirm')}}
               </button>
             </div>
@@ -341,11 +362,22 @@
   </div>
 </template>
 <script>
-import {mapState} from 'vuex'
 import {
-  blackListAJAX
-} from '../../utils/api/personal'
+  mapMutations,
+  mapState
+} from 'vuex'
+import {
+  getMerchantInfoAJAX, // 获得商家信息
+  addFocusBlackListAJAX, // 关注/拉黑
+  cancelFocusAJAX // 取消关注/解除
+} from '../../utils/api/focusBlack'
 import IconFontCommon from '../../components/Common/IconFontCommon'
+import {
+  getNestedData
+} from '../../utils/commonFunc'
+import {
+  formatSeconds
+} from '../../utils'
 export default {
   components: {
     IconFontCommon
@@ -356,141 +388,146 @@ export default {
       // 拉黑弹窗显示状态
       dialogVisible: false,
       // 购买列表
-      buyTableList: [
-        {
-          'id': '001',
-          'coinName': 'USDT',
-          'currencyName': 'CNY',
-          'price': '7.066',
-          'remainCount': '15842.1',
-          'maxCount': '134000',
-          'minCount': '500',
-          'payTypes': ['1', '1', '1', '1', '1'],
-          'entrustType': 'BUY'
-        },
-        {
-          'id': '002',
-          'coinName': 'USDT',
-          'currencyName': 'CNY',
-          'price': '7.066',
-          'remainCount': '15842.1',
-          'maxCount': '134000',
-          'minCount': '500',
-          'payTypes': ['1', '1', '1', '1', '1'],
-          'entrustType': 'BUY'
-        },
-        {
-          'id': '001',
-          'coinName': 'USDT',
-          'currencyName': 'CNY',
-          'price': '7.066',
-          'remainCount': '15842.1',
-          'maxCount': '134000',
-          'minCount': '500',
-          'payTypes': ['1', '1', '1', '1', '1'],
-          'entrustType': 'BUY'
-        },
-        {
-          'id': '001',
-          'coinName': 'USDT',
-          'currencyName': 'CNY',
-          'price': '7.066',
-          'remainCount': '15842.1',
-          'maxCount': '134000',
-          'minCount': '500',
-          'payTypes': ['1', '1', '1', '1', '1'],
-          'entrustType': 'BUY'
-        },
-        {
-          'id': '001',
-          'coinName': 'USDT',
-          'currencyName': 'CNY',
-          'price': '7.066',
-          'remainCount': '15842.1',
-          'maxCount': '134000',
-          'minCount': '500',
-          'payTypes': ['1', '1', '1', '1', '1'],
-          'entrustType': 'BUY'
-        }
-      ],
+      buyTableList: [],
       // 出售列表
-      sellTableList: [
-        {
-          'id': '001',
-          'coinName': 'USDT',
-          'currencyName': 'CNY',
-          'price': '7.066',
-          'remainCount': '15842.1',
-          'maxCount': '134000',
-          'minCount': '500',
-          'payTypes': ['1', '1', '1', '1', '1'],
-          'entrustType': 'SELL'
-        },
-        {
-          'id': '002',
-          'coinName': 'USDT',
-          'currencyName': 'CNY',
-          'price': '7.066',
-          'remainCount': '15842.1',
-          'maxCount': '134000',
-          'minCount': '500',
-          'payTypes': ['1', '1', '1', '1', '1'],
-          'entrustType': 'SELL'
-        },
-        {
-          'id': '001',
-          'coinName': 'USDT',
-          'currencyName': 'CNY',
-          'price': '7.066',
-          'remainCount': '15842.1',
-          'maxCount': '134000',
-          'minCount': '500',
-          'payTypes': ['1', '1', '1', '1', '1'],
-          'entrustType': 'SELL'
-        },
-        {
-          'id': '002',
-          'coinName': 'USDT',
-          'currencyName': 'CNY',
-          'price': '7.066',
-          'remainCount': '15842.1',
-          'maxCount': '134000',
-          'minCount': '500',
-          'payTypes': ['1', '1', '1', '1', '1'],
-          'entrustType': 'SELL'
-        },
-        {
-          'id': '002',
-          'coinName': 'USDT',
-          'currencyName': 'CNY',
-          'price': '7.066',
-          'remainCount': '15842.1',
-          'maxCount': '134000',
-          'minCount': '500',
-          'payTypes': ['1', '1', '1', '1', '1'],
-          'entrustType': 'SELL'
-        }
-      ]
+      sellTableList: [],
+      // 用户id
+      userId: '',
+      // 币种id
+      coinId: '',
+      // 法币id
+      currencyId: '',
+      // 左侧个人信息
+      merchantUserInfo: {
+        // 保证金
+        cashDeposit: '',
+        cashDepositName: '',
+        // 总单数
+        totalOrders: '',
+        // 30日成交单
+        successOrders: '',
+        // 30日成交率
+        successRate: '',
+        // 30日冻结次数
+        freezeTimes: '',
+        // 平均放行时间
+        avgConfirmTime: '',
+        // 昵称
+        personNickName: '',
+        // 注册时间
+        registerTime: '',
+        // 最近登录时间
+        recentlyLoginTime: '',
+        // 邮箱认证
+        mailAuth: '',
+        // 手机认证
+        phoneAuth: '',
+        // 商家认证
+        merchantAuth: '',
+        // 高级认证
+        advancedAuth: '',
+        // 实名认证
+        realNameAuth: '',
+        // 关注与拉黑的状态
+        relationType: ''
+      }
     }
   },
-  created () {},
+  created () {
+    console.log('从首页昵称跳转带过来的参数userId:' + this.$route.query.userId)
+    console.log('从首页昵称跳转带过来的参数coinId:' + this.$route.query.coinId)
+    console.log('从首页昵称跳转带过来的参数currencyId:' + this.$route.query.currencyId)
+    if (this.$route.query.userId) {
+      this.userId = this.$route.query.userId
+    }
+    if (this.$route.query.coinId) {
+      this.coinId = this.$route.query.coinId
+    }
+    if (this.$route.query.currencyId) {
+      this.currencyId = this.$route.query.currencyId
+    }
+    if (this.userId || this.coinId || this.currencyId) {
+      this.getMerchantInfo()
+    }
+  },
   // mounted () {},
   // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
-    // 确认拉黑接口
-    async confirmBlackList () {
+    ...mapMutations([
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_BLACK_TABS_STATUS_M'
+    ]),
+    // 国际标准格式(09ˋ40′32″)
+    BIHTimeFormatting (date) {
+      return formatSeconds(date, 'OTC')
+    },
+    // 1 查看商家信息页面数据
+    async getMerchantInfo () {
       let param = {
-        id: this.unBlackId
+        userId: this.userId,
+        coinId: this.coinId,
+        currencyId: this.currencyId
       }
-      const data = await blackListAJAX(param)
+      const data = await getMerchantInfoAJAX(param)
+      console.log(data)
+      if (!data) return false
+      // 数据返回后的逻辑
+      this.buyTableList = getNestedData(data, 'data.sellOtcEntrust')
+      console.log(this.buyTableList)
+      this.sellTableList = getNestedData(data, 'data.buyOtcEntrust')
+      console.log(this.sellTableList)
+      // 个人信息赋值
+      this.merchantUserInfo.cashDeposit = getNestedData(data, 'data.userInfo.guaranteeCount')
+      this.merchantUserInfo.cashDepositName = getNestedData(data, 'data.userInfo.guaranteeCoinName')
+      this.merchantUserInfo.totalOrders = getNestedData(data, 'data.userInfo.tradeTimes')
+      this.merchantUserInfo.successOrders = getNestedData(data, 'data.userInfo.successOrderTimes')
+      this.merchantUserInfo.successRate = getNestedData(data, 'data.userInfo.completeRate')
+      this.merchantUserInfo.freezeTimes = getNestedData(data, 'data.userInfo.freezeTimes')
+      this.merchantUserInfo.avgConfirmTime = getNestedData(data, 'data.userInfo.avgGiveOutTime')
+      this.merchantUserInfo.registerTime = getNestedData(data, 'data.userInfo.regTime')
+      this.merchantUserInfo.recentlyLoginTime = getNestedData(data, 'data.userInfo.lastLoginTime')
+      this.merchantUserInfo.personNickName = getNestedData(data, 'data.userInfo.nickName')
+      this.merchantUserInfo.mailAuth = getNestedData(data, 'data.userInfo.mailAuth')
+      this.merchantUserInfo.phoneAuth = getNestedData(data, 'data.userInfo.phoneAuth')
+      this.merchantUserInfo.merchantAuth = getNestedData(data, 'data.userInfo.merchantAuth')
+      this.merchantUserInfo.advancedAuth = getNestedData(data, 'data.userInfo.advancedAuth')
+      this.merchantUserInfo.realNameAuth = getNestedData(data, 'data.userInfo.realNameAuth')
+      this.merchantUserInfo.relationType = getNestedData(data, 'data.userInfo.relationType')
+    },
+    // 2 关注/拉黑
+    async focusBlackOpposite (type) {
+      let param = {
+        toId: this.userId,
+        relation: type
+      }
+      const data = await addFocusBlackListAJAX(param)
+      console.log(data)
+      if (!data) return false
+      // 数据返回后的逻辑
+      if (type === '2') {
+        // 商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
+        this.CHANGE_BLACK_TABS_STATUS_M(true)
+        // 跳转到个人中心关注/拉黑第二个选项卡我的黑名单
+        this.$goToPage('/PersonalCenter')
+        this.CHANGE_USER_CENTER_ACTIVE_NAME('focus-blacklist')
+      }
+      // 重新刷新列表
+      this.getMerchantInfo()
+    },
+    // 3 取消关注/解除
+    async cancelFocusBlackOpposite (type) {
+      let param = {
+        toId: this.userId,
+        relation: type
+      }
+      const data = await cancelFocusAJAX(param)
       console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
       // 重新刷新列表
-      // 关闭弹窗
-      this.dialogVisible = false
+      this.getMerchantInfo()
     }
   },
   // filter: {},
@@ -813,12 +850,20 @@ export default {
           }
 
           > .two-identity {
-            .icon {
-              color: $mainColor;
-            }
-
             > .items {
               color: $mainColorOfWhite;
+
+              .icon {
+                color: $mainColor;
+              }
+            }
+
+            > .unverified {
+              color: $dialogColor9 !important;
+
+              .icon {
+                color: $dialogColor9 !important;
+              }
             }
 
             &::after {
@@ -972,12 +1017,20 @@ export default {
           }
 
           > .two-identity {
-            .icon {
-              color: $mainColor;
-            }
-
             > .items {
               color: $mainColor;
+
+              .icon {
+                color: $mainColor;
+              }
+            }
+
+            > .unverified {
+              color: $dialogColor9 !important;
+
+              .icon {
+                color: $dialogColor9 !important;
+              }
             }
 
             &::after {

@@ -18,13 +18,13 @@
           <!--UID-->
           <el-table-column
             label="用户UID"
-            prop="uid"
+            prop="showId"
           >
           </el-table-column>
           <!--昵称-->
           <el-table-column
             label="昵称"
-            prop="name"
+            prop="nickName"
           >
           </el-table-column>
           <!--单数/成交率-->
@@ -33,13 +33,13 @@
             width="240"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.times }}</div>
+              <div>{{s.row.tradeTimes}}/{{s.row.completeRate}}%</div>
             </template>
           </el-table-column>
           <!--拉黑时间-->
           <el-table-column
             label="拉黑时间"
-            prop="time"
+            prop="createTime"
           >
           </el-table-column>
           <!--操作-->
@@ -49,7 +49,12 @@
             width="150"
           >
             <template slot-scope = "s">
-              <div class="operation-text cursor-pointer" @click="confirmUnBlackList(s.row.id)">解除</div>
+              <div
+                class="operation-text cursor-pointer"
+                @click="confirmUnBlackList(s.row.toId)"
+              >
+                解除
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -57,7 +62,7 @@
         <div class="page">
           <el-pagination
             background
-            v-show="blackList.length"
+            v-show="blackList.length - 15 > 0"
             layout="prev, pager, next"
             :current-page="currentPage"
             :page-count="totalPages"
@@ -73,8 +78,11 @@
 import {mapState} from 'vuex'
 import {
   getBlackListsAJAX,
-  unBlackAJAX
-} from '../../../utils/api/personal'
+  cancelFocusAJAX
+} from '../../../utils/api/focusBlack'
+import {
+  getNestedData
+} from '../../../utils/commonFunc'
 export default {
   components: {},
   // props,
@@ -84,37 +92,10 @@ export default {
       currentPage: 1,
       // 总页数
       totalPages: 1,
+      // 每页返回多少条
+      pageSize: 15,
       // 黑名单列表
-      blackList: [
-        {
-          uid: '95555',
-          name: '昵称',
-          times: '5565/98.36%',
-          time: '2019/06/25',
-          id: 1
-        },
-        {
-          uid: '95555',
-          name: '昵称',
-          times: '5565/98.36%',
-          time: '2019/06/25',
-          id: 2
-        },
-        {
-          uid: '95555',
-          name: '昵称',
-          times: '5565/98.36%',
-          time: '2019/06/25',
-          id: 3
-        },
-        {
-          uid: '95555',
-          name: '昵称',
-          times: '5565/98.36%',
-          time: '2019/06/25',
-          id: 4
-        }
-      ]
+      blackList: []
     }
   },
   created () {
@@ -134,10 +115,13 @@ export default {
     },
     // 确认解除黑名单接口
     async confirmUnBlackList (id) {
+      console.log(id)
       let param = {
-        id: id
+        toId: id,
+        // 此操作进行时的关系：“1”关注，“2”拉黑
+        relation: '2'
       }
-      const data = await unBlackAJAX(param)
+      const data = await cancelFocusAJAX(param)
       console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
@@ -147,13 +131,18 @@ export default {
     // 获得黑名单列表
     async getBlackLists () {
       let param = {
-        pageNum: this.currentPage
+        pageNum: this.currentPage,
+        pageSize: this.pageSize
       }
       const data = await getBlackListsAJAX(param)
       console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
-      // 数据赋值页码赋值
+      // 数据赋值
+      this.blackList = getNestedData(data, 'data.list')
+      console.log(this.blackList)
+      // 总页数赋值
+      this.totalPages = getNestedData(data, 'data.pages') - 0
     }
   },
   // filter: {},

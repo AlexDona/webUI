@@ -168,12 +168,20 @@
                 {{$t('M.otc_name')}}：
               </span>
               <!-- 买单显示：卖家姓名 -->
-              <span  v-if="item.orderType === 'BUY'">
+              <span
+                class="cursor-pointer"
+                v-if="item.orderType === 'BUY'"
+                @click="jumpMerchantInfoPage(item.sellId)"
+              >
                 <!--{{item.sellName}}-->
                 {{item.sellNickName}}
               </span>
               <!-- 卖单显示：买家姓名 -->
-              <span  v-if="item.orderType === 'SELL'">
+              <span
+                class="cursor-pointer"
+                v-if="item.orderType === 'SELL'"
+                @click="jumpMerchantInfoPage(item.buyId)"
+              >
                 <!--{{item.buyName}}-->
                 {{item.buyNickName}}
               </span>
@@ -282,8 +290,7 @@ export default {
   data () {
     return {}
   },
-  created () {
-  },
+  created () {},
   mounted () {},
   activated () {},
   update () {},
@@ -300,6 +307,9 @@ export default {
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    jumpMerchantInfoPage (userId) {
+      this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
     }
   },
   filter: {},

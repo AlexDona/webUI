@@ -20,7 +20,13 @@
               <div class="buyer-seller">
                 <!--卖家-->
                 <!--{{$t('M.otc_seller')}}：{{item.sellName}}-->
-                {{$t('M.otc_seller')}}：{{item.sellNickName}}
+                {{$t('M.otc_seller')}}：
+                <span
+                  class="cursor-pointer"
+                  @click="jumpMerchantInfoPage(item.sellId)"
+                >
+                  {{item.sellNickName}}
+                </span>
               </div>
               <!--广告id-->
               <div class="AD-ID">
@@ -402,7 +408,13 @@
               <div class="buyer-seller">
                 <!--买家-->
                 <!--{{$t('M.otc_buyer')}}：{{item.buyName}}-->
-                {{$t('M.otc_buyer')}}：{{item.buyNickName}}
+                {{$t('M.otc_buyer')}}：
+                <span
+                  class="cursor-pointer"
+                  @click="jumpMerchantInfoPage(item.buyId)"
+                >
+                  {{item.buyNickName}}
+                </span>
               </div>
               <!--广告id-->
               <div class="AD-ID">
@@ -1016,6 +1028,9 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    jumpMerchantInfoPage (userId) {
+      this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+    },
     // ren增加
     // 清除定义的数组类数据
     clearArrData () {

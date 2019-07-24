@@ -22,26 +22,42 @@
             <template slot-scope = "s">
               <div class="name">
                 <img
+                  v-show="s.row.type === 'MERCHANT'"
                   src="../../../assets/develop/shangjia.png"
                   class="merchant-icon"
                   :title="$t('M.otc_merchant')"
                 >
-                <!--v-show="s.row.userType === 'MERCHANT'"-->
-                {{ (s.row.name) }}
+                <span @click="jumpMerchantInfoPage(s.row.toId)" class="cursor-pointer">{{s.row.nickName}}</span>
               </div>
             </template>
           </el-table-column>
           <!--是否高级认证-->
           <el-table-column
             label=""
-            prop="renzheng"
           >
+            <template slot-scope = "s">
+              <div v-show="s.row.advancedAuth === 'pass'">
+                已高级认证
+              </div>
+              <div v-show="s.row.advancedAuth === 'waitVeritfy'">
+                <!--待审核-->
+                {{$t('M.user_invite_audit')}}
+              </div>
+              <div v-show="s.row.advancedAuth === 'notPass'">
+                <!--未高级认证-->
+                {{$t('M.user_advanced_authentication_tips1')}}
+              </div>
+            </template>
           </el-table-column>
           <!--注册时间-->
           <el-table-column
             label=""
-            prop="time"
           >
+            <template slot-scope = "s">
+              <div>
+                注册时间:{{s.row.regTime}}
+              </div>
+            </template>
           </el-table-column>
           <!--操作-->
           <el-table-column
@@ -50,7 +66,12 @@
             width="200"
           >
             <template slot-scope = "s">
-              <div class="operation-text cursor-pointer" @click="confirmCancelFocus(s.row.id)">取消关注</div>
+              <div
+                class="operation-text cursor-pointer"
+                @click="confirmCancelFocus(s.row.toId)"
+              >
+                取消关注
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -58,7 +79,7 @@
         <div class="page">
           <el-pagination
             background
-            v-show="focusList.length"
+            v-show="focusList.length - 15 > 0"
             layout="prev, pager, next"
             :current-page="currentPage"
             :page-count="totalPages"
@@ -75,7 +96,10 @@ import {mapState} from 'vuex'
 import {
   getFocusListsAJAX,
   cancelFocusAJAX
-} from '../../../utils/api/personal'
+} from '../../../utils/api/focusBlack'
+import {
+  getNestedData
+} from '../../../utils/commonFunc'
 export default {
   components: {},
   // props,
@@ -85,33 +109,10 @@ export default {
       currentPage: 1,
       // 总页数
       totalPages: 1,
+      // 每页返回多少条
+      pageSize: 15,
       // 关注列表
-      focusList: [
-        {
-          name: '二狗',
-          renzheng: '高级认证',
-          time: '注册时间：2019/06/04',
-          id: 1
-        },
-        {
-          name: '二狗',
-          renzheng: '高级认证',
-          time: '注册时间：2019/06/04',
-          id: 2
-        },
-        {
-          name: '二狗',
-          renzheng: '高级认证',
-          time: '注册时间：2019/06/04',
-          id: 3
-        },
-        {
-          name: '二狗',
-          renzheng: '高级认证',
-          time: '注册时间：2019/06/04',
-          id: 4
-        }
-      ]
+      focusList: []
     }
   },
   created () {
@@ -131,8 +132,11 @@ export default {
     },
     // 确认取消关注接口
     async confirmCancelFocus (id) {
+      console.log(id)
       let param = {
-        id: id
+        toId: id,
+        // 此操作进行时的关系：“1”关注，“2”拉黑
+        relation: '1'
       }
       const data = await cancelFocusAJAX(param)
       console.log(data)
@@ -144,13 +148,21 @@ export default {
     // 获得关注列表
     async getFocusLists () {
       let param = {
-        pageNum: this.currentPage
+        pageNum: this.currentPage,
+        pageSize: this.pageSize
       }
       const data = await getFocusListsAJAX(param)
       console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
-      // 数据赋值页码赋值
+      // 数据赋值
+      this.focusList = getNestedData(data, 'data.list')
+      console.log(this.focusList)
+      // 总页数赋值
+      this.totalPages = getNestedData(data, 'data.pages') - 0
+    },
+    jumpMerchantInfoPage (userId) {
+      this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
     }
   },
   // filter: {},

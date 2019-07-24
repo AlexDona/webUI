@@ -21,7 +21,7 @@
   </div>
 </template>
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 import FocusList from './FocusList'
 import BlackList from './BlackList'
 export default {
@@ -35,12 +35,24 @@ export default {
       activeName: 'first'
     }
   },
-  created () {},
+  created () {
+    console.log(this.blackTabsStatus)
+    if (this.blackTabsStatus) {
+      this.activeName = 'second'
+      // 商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
+      // this.CHANGE_BLACK_TABS_STATUS_M(false)
+    } else {
+      // this.activeName = 'first'
+    }
+  },
   // mounted () {},
   // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'CHANGE_BLACK_TABS_STATUS_M'
+    ]),
     handleClick (tab, event) {
       console.log(tab, event)
     }
@@ -48,10 +60,23 @@ export default {
   // filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      // 商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
+      blackTabsStatus: state => state.OTC.blackTabsStatus
     })
+  },
+  watch: {
+    // blackTabsStatus (newValue) {
+    //   console.log(newValue)
+    //   if (!newValue) {
+    //     this.activeName = 'first'
+    //   }
+    // }
   }
-  // watch: {}
+  // destroyed () {
+  //   this.CHANGE_BLACK_TABS_STATUS_M(false)
+  //   this.activeName = 'first'
+  // }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

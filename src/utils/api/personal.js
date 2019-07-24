@@ -146,16 +146,3 @@ export const uploadImageAjax = params => handleRequest(() => post('uploadfile', 
 
 // 获取 USDT 链名称
 export const getUSDTLinkNamesAJAX = () => handleRequest(() => get('personal/getUSDTRechargeEnum'))
-/**
- * 个人设置-关注拉黑
- * */
-// 获得关注列表
-export const getFocusListsAJAX = params => handleRequest(() => get('XXXXXX', params))
-// 获得拉黑列表
-export const getBlackListsAJAX = params => handleRequest(() => get('XXXXXX', params))
-// 取消关注
-export const cancelFocusAJAX = params => handleRequest(() => post('XXXXXX', params))
-// 解除黑名单
-export const unBlackAJAX = params => handleRequest(() => post('XXXXXX', params))
-// 确定拉黑
-export const blackListAJAX = params => handleRequest(() => post('XXXXXX', params))

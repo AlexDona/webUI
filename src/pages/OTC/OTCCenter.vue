@@ -22,7 +22,7 @@
             <!--头像-->
             <div class="avatar text-align-c">
               <IconFontCommon
-                class="font-size40 icon-user"
+                class="font-size40"
                 iconName="icon-gerenzhongxin"
               />
             </div>
@@ -30,18 +30,18 @@
             <div class="login-before" v-if="!isLogin">
               <div class="login-text cursor-pointer" @click="loginJump">{{$t('M.comm_login')}}</div>
               <div class="coin-count">
-                <span>{{selectedOTCAvailableCurrencyName}}</span> {{$t('M.comm_usable')}} 0.00000000  / 冻结 0.0000000
+                <span>{{selectedOTCAvailableCurrencyName}}</span> {{$t('M.comm_usable')}} 0.00000000  / 冻结 0.00000000
               </div>
             </div>
             <div class="login-after" v-else>
               <div class="view-info">
-                <span class="person-name font-size20">王二狗</span>
+                <span class="person-name font-size20">{{viewDialogInfo.personNickName}}</span>
                 <span class="view-text cursor-pointer" @click="personInfoDiaStatus = true">查看</span>
               </div>
               <div class="available-count">
                 <span>{{selectedOTCAvailableCurrencyName}}</span>
-                <span>{{$t('M.comm_usable')}} 0.00000000</span> /
-                <span>冻结 0.0000000</span>
+                <span>{{$t('M.comm_usable')}} {{viewDialogInfo.coinAvailableAmount}}</span> /
+                <span>冻结 {{viewDialogInfo.coinFreezeAmount}}</span>
               </div>
             </div>
           </div>
@@ -189,7 +189,12 @@
                       :title="$t('M.otc_merchant')"
                     >
                     <!--{{s.row.userName}}-->
-                    {{s.row.userNick}}
+                    <span
+                      class="cursor-pointer"
+                      @click="jumpMerchantInfoPage(s.row.userId)"
+                    >
+                      {{s.row.userNick}}
+                    </span>
                   </div>
                 </template>
               </el-table-column>
@@ -369,51 +374,56 @@
                 <!--左侧-->
                 <div class="photo-left">
                   <IconFontCommon
-                    class="font-size40 icon-user"
+                    class="font-size40"
                     iconName="icon-gerenzhongxin"
                   />
-                  <span class="person-name font-size16">王二狗</span>
+                  <span class="person-name font-size16">{{viewDialogInfo.personNickName}}</span>
                 </div>
                 <!--右侧-->
                 <div class="photo-right">
-                  <div class="time-top text-align-r">注册时间：2019/06/20</div>
-                  <div class="time-bottom text-align-r">最近登录时间：2019/06/27</div>
+                  <div class="time-top text-align-r font-size12">注册时间：{{viewDialogInfo.registerTime}}</div>
+                  <div class="time-bottom text-align-r font-size12">最近登录时间：{{viewDialogInfo.recentlyLoginTime}}</div>
                 </div>
               </div>
               <!--2认证部分-->
               <div class="identity-box">
-                <div class="first-item items">
+                <!--邮箱认证-->
+                <div class="first-item items" :class="{unverified: viewDialogInfo.mailAuth !== 'enable'}">
                   <span>邮箱认证</span>
                   <IconFontCommon
-                    class="font-size40 icon-user"
+                    class="font-size40"
                     iconName="icon-tongguo_huaban"
                   />
                 </div>
-                <div class="second-item items">
+                <!--手机认证-->
+                <div class="second-item items" :class="{unverified: viewDialogInfo.phoneAuth !== 'enable'}">
                   <span>手机认证</span>
                   <IconFontCommon
-                    class="font-size40 icon-user"
+                    class="font-size40"
                     iconName="icon-tongguo_huaban"
                   />
                 </div>
-                <div class="third-item items">
+                <!--实名认证-->
+                <div class="third-item items" :class="{unverified: viewDialogInfo.realNameAuth !== 'y'}">
                   <span>{{$t('M.user_real_name')}}</span>
                   <IconFontCommon
-                    class="font-size40 icon-user"
+                    class="font-size40"
                     iconName="icon-tongguo_huaban"
                   />
                 </div>
-                <div class="fourth-item items">
+                <!--高级认证-->
+                <div class="fourth-item items" :class="{unverified: viewDialogInfo.advancedAuth !== 'pass'}">
                   <span>{{$t('M.user_senior_certification')}}</span>
                   <IconFontCommon
-                    class="font-size40 icon-user"
+                    class="font-size40"
                     iconName="icon-tongguo_huaban"
                   />
                 </div>
-                <div class="fifth-item items">
+                <!--商家认证-->
+                <div class="fifth-item items" :class="{unverified: viewDialogInfo.merchantAuth !== 'PASS'}">
                   <span>商家认证</span>
                   <IconFontCommon
-                    class="font-size40 icon-user"
+                    class="font-size40"
                     iconName="icon-tongguo_huaban"
                   />
                 </div>
@@ -422,27 +432,29 @@
               <div class="other-infos">
                 <div class="first-bar bars">
                   <div class="bar-top">商家保证金</div>
-                  <div class="bar-bottom">10000FUC</div>
+                  <div class="bar-bottom">{{viewDialogInfo.cashDeposit}}{{viewDialogInfo.cashDepositName}}</div>
                 </div>
                 <div class="second-bar bars">
                   <div class="bar-top">交易总单数</div>
-                  <div class="bar-bottom">5646</div>
+                  <div class="bar-bottom">{{viewDialogInfo.totalOrders}}</div>
                 </div>
                 <div class="third-bar bars">
                   <div class="bar-top">30日成交单</div>
-                  <div class="bar-bottom">453</div>
+                  <div class="bar-bottom">{{viewDialogInfo.successOrders}}</div>
                 </div>
                 <div class="fourth-bar bars">
                   <div class="bar-top">30日成交率</div>
-                  <div class="bar-bottom">99.66%</div>
+                  <div class="bar-bottom">{{viewDialogInfo.successRate}}%</div>
                 </div>
                 <div class="fifth-bar bars">
                   <div class="bar-top">30日冻结次数</div>
-                  <div class="bar-bottom">56</div>
+                  <div class="bar-bottom">{{viewDialogInfo.freezeTimes}}</div>
                 </div>
                 <div class="sixth-bar bars">
                   <div class="bar-top">平均放行时间</div>
-                  <div class="bar-bottom">05/06</div>
+                  <div class="bar-bottom">
+                    {{BIHTimeFormatting(viewDialogInfo.avgConfirmTime)}}
+                  </div>
                 </div>
               </div>
             </div>
@@ -595,7 +607,8 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {
-  amendPrecision
+  amendPrecision,
+  formatSeconds
 } from '../../utils'
 import {
   getOTCAvailableCurrency,
@@ -605,6 +618,9 @@ import {
   // 增加国家-
   getCurrencyCountrys
 } from '../../utils/api/OTC'
+import {
+  getViewInfoAJAX
+} from '../../utils/api/focusBlack'
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import OTCTradingOrder from '../../components/OTC/OTCTradingOrder'
 import OTCCompletedOrder from '../../components/OTC/OTCCompletedOrder'
@@ -695,7 +711,43 @@ export default {
       // 增加国家列表
       checkedCountryId: null, // 增加国家-选中国家id
       countryInfoList: [], // 增加国家-国家列表
-      countrySelectStatus: true // 国家下拉选择框禁用状态
+      countrySelectStatus: true, // 国家下拉选择框禁用状态
+      // 查看弹窗信息定义
+      viewDialogInfo: {
+        // 保证金
+        cashDeposit: '',
+        cashDepositName: '',
+        // 总单数
+        totalOrders: '',
+        // 30日成交单
+        successOrders: '',
+        // 30日成交率
+        successRate: '',
+        // 30日冻结次数
+        freezeTimes: '',
+        // 平均放行时间
+        avgConfirmTime: '',
+        // 昵称
+        personNickName: '',
+        // 注册时间
+        registerTime: '',
+        // 最近登录时间
+        recentlyLoginTime: '',
+        // 邮箱认证
+        mailAuth: '',
+        // 手机认证
+        phoneAuth: '',
+        // 商家认证
+        merchantAuth: '',
+        // 高级认证
+        advancedAuth: '',
+        // 实名认证
+        realNameAuth: '',
+        // 可用
+        coinAvailableAmount: '',
+        // 冻结
+        coinFreezeAmount: ''
+      }
     }
   },
   async created () {
@@ -710,6 +762,8 @@ export default {
       await this.REFRESH_USER_INFO_ACTION()
       this.reflashUserInfo() // 刷新用户信息
       // console.log('国家码：' + this.userInfo.country)
+      // 7.0 登陆后进页面待币种和法币都有id的时候调接口渲染查看弹窗及头部可用冻结数据
+      await this.getViewDialogInfo()
     }
     // 5.0 增加国家-查询法币联动国家列表
     await this.getCurrencyCountrysList()
@@ -751,9 +805,51 @@ export default {
       // 改变otc主页法币列表筛选框选中的法币类型id
       'CHANGE_OTC_SELECTED_CURRENCY_ID'
     ]),
+    // 国际标准格式(09ˋ40′32″)
+    BIHTimeFormatting (date) {
+      return formatSeconds(date, 'OTC')
+    },
     // 登录跳转
     loginJump () {
       this.$goToPage(`/${this.$routes_X.login}`)
+    },
+    // 点击挂单列表中的名称跳转到商家信息页面
+    jumpMerchantInfoPage (userId) {
+      if (!this.isLogin) {
+        this.$goToPage(`/${this.$routes_X.login}`)
+        return false
+      }
+      this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId, coinId: this.selectedOTCAvailableCurrencyCoinID, currencyId: this.checkedCurrencyId})
+    },
+    // 获得查看弹窗信息和可用冻结数据：当币种和法币改变的时候也要调此接口刷新数据
+    async getViewDialogInfo () {
+      let param = {
+        coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
+        currencyId: this.checkedCurrencyId // 法币id
+      }
+      if (!this.selectedOTCAvailableCurrencyCoinID || !this.checkedCurrencyId) return false
+      const data = await getViewInfoAJAX(param)
+      console.log(data)
+      if (!data) return false
+      // 返回数据正确的逻辑
+      // 先赋值
+      this.viewDialogInfo.cashDeposit = getNestedData(data, 'data.guaranteeCount')
+      this.viewDialogInfo.cashDepositName = getNestedData(data, 'data.guaranteeCoinName')
+      this.viewDialogInfo.totalOrders = getNestedData(data, 'data.tradeTimes')
+      this.viewDialogInfo.successOrders = getNestedData(data, 'data.successOrderTimes')
+      this.viewDialogInfo.successRate = getNestedData(data, 'data.completeRate')
+      this.viewDialogInfo.freezeTimes = getNestedData(data, 'data.freezeTimes')
+      this.viewDialogInfo.avgConfirmTime = getNestedData(data, 'data.avgGiveOutTime')
+      this.viewDialogInfo.registerTime = getNestedData(data, 'data.regTime')
+      this.viewDialogInfo.recentlyLoginTime = getNestedData(data, 'data.lastLoginTime')
+      this.viewDialogInfo.personNickName = getNestedData(data, 'data.nickName')
+      this.viewDialogInfo.mailAuth = getNestedData(data, 'data.mailAuth')
+      this.viewDialogInfo.phoneAuth = getNestedData(data, 'data.phoneAuth')
+      this.viewDialogInfo.merchantAuth = getNestedData(data, 'data.merchantAuth')
+      this.viewDialogInfo.advancedAuth = getNestedData(data, 'data.advancedAuth')
+      this.viewDialogInfo.realNameAuth = getNestedData(data, 'data.realNameAuth')
+      this.viewDialogInfo.coinAvailableAmount = getNestedData(data, 'data.total')
+      this.viewDialogInfo.coinFreezeAmount = getNestedData(data, 'data.frozen')
     },
     // 增加国家-查询法币联动国家列表
     async getCurrencyCountrysList () {
@@ -802,8 +898,10 @@ export default {
         }
       })
       this.CHANGE_OTC_SELECTED_CURRENCY_ID(this.checkedCurrencyId)
-      // 根据条件刷新列表
-      this.getOTCPutUpOrdersList()
+      this.getOTCPutUpOrdersList() // 根据条件刷新列表
+      if (this.isLogin) {
+        this.getViewDialogInfo() // 调取查看弹窗信息
+      }
     },
     // 点击交易中订单图标沙漏跳转到交易中订单
     toggleTradingOrder () {
@@ -1054,11 +1152,14 @@ export default {
     selectCurrencyName (index) {
       this.currentPage = 1
       // console.log(this.currentPage)
-      // console.log(index)
+      console.log(index, this.IWantToBuySellArr[index].coinId)
       this.selectCurrencyNameStatus = index
       this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name) // 币种名称
       this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId) // 币种id
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
+      if (this.isLogin) {
+        this.getViewDialogInfo() // 调取查看弹窗信息
+      }
     },
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
     async toggleBuyOrSellStyle (e) {
@@ -1069,7 +1170,7 @@ export default {
     },
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
-      // console.log(e)
+      console.log(e)
       this.CHANGE_OTC_SELECTED_CURRENCY_ID(e)
       if (this.countryInfoList.length) {
         this.checkedCountryId = this.countryInfoList[this.countryInfoList.length - 1].id // 增加国家-国家为所有国家
@@ -1082,8 +1183,10 @@ export default {
           this.checkedCurrencyName = item.shortName
         }
       })
-      // otc主页面查询挂单列表
-      this.getOTCPutUpOrdersList()
+      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
+      if (this.isLogin) {
+        this.getViewDialogInfo() // 调取查看弹窗信息
+      }
     },
     // 9.0 改变支付方式下拉框的选中值
     payWayChangeValue (e) {
@@ -1364,7 +1467,7 @@ export default {
             }
 
             > .photo-right {
-              padding-top: 10px;
+              padding-top: 15px;
 
               > .time-top {
                 color: $dialogColor9;
@@ -1383,16 +1486,24 @@ export default {
             padding: 15px 30px 0 80px;
             box-shadow: 0 2px 6px 0 rgba(32, 36, 55, 1);
 
-            .icon {
-              width: 24px;
-              height: 24px;
-              color: $mainColor;
-            }
-
-            .items {
+            > .items {
               width: 33%;
               font-size: 12px;
               color: $mainColorOfWhite;
+
+              .icon {
+                width: 24px;
+                height: 24px;
+                color: $mainColor;
+              }
+            }
+
+            > .unverified {
+              color: $dialogColor9 !important;
+
+              .icon {
+                color: $dialogColor9 !important;
+              }
             }
           }
 
@@ -2043,7 +2154,7 @@ export default {
               }
 
               > .photo-right {
-                padding-top: 10px;
+                padding-top: 15px;
 
                 > .time-top {
                   color: $dialogColor9;
@@ -2062,16 +2173,24 @@ export default {
               padding: 15px 30px 0 80px;
               box-shadow: 0 2px 2px 0 rgba(240, 240, 240, 1);
 
-              .icon {
-                width: 24px;
-                height: 24px;
-                color: $mainColor;
-              }
-
-              .items {
+              > .items {
                 width: 33%;
                 font-size: 12px;
                 color: $mainColor;
+
+                .icon {
+                  width: 24px;
+                  height: 24px;
+                  color: $mainColor;
+                }
+              }
+
+              > .unverified {
+                color: $dialogColor9 !important;
+
+                .icon {
+                  color: $dialogColor9 !important;
+                }
               }
             }
 
