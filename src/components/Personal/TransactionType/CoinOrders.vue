@@ -789,7 +789,7 @@ export default {
     }
 
     .height500 {
-      height: 714px;
+      height: 758px;
     }
 
     /deep/ {
