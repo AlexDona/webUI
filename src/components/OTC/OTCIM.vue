@@ -38,7 +38,7 @@
           )
             .message(
               v-for="(message, msgIndex) in messages"
-              :style="{'margin-bottom': isShowDate(msgIndex, message.createTime,messages) ? '20px': '0px' }"
+              :style="{'margin-top': isShowDate(msgIndex, message.createTime,messages) && msgIndex > 0 ? '50px': '20px' }"
             )
               // 系统消息
               .system-msg(v-if="message.messageType == 'sysMsg'")
@@ -68,13 +68,13 @@
         //  发送聊天内容
         .send-chat-box
           .inner-box(:class="{disabled: IsOver24Hours}")
-            el-input.edit-box(
-              type="textarea"
+            textarea.edit-box(
               :placeholder="$t(editPlaceholder)"
               :class="{'has-content': editText}"
-              v-model="editText"
+              :ref="`${orderId}textarea`"
               :disabled="IsOver24Hours"
-              @keydown.native.enter="sendMessageByEnter"
+              @keydown="sendMessageByEnter"
+              @input="handleChangeWatch"
             )
             el-button.send-button(
               v-if="editText"
@@ -135,7 +135,9 @@ export default {
       messages: [],
       shadowImage: '',
       isShowShadow: false,
-      targetDeg: 0
+      targetDeg: 0,
+      // 当前消息是否超时
+      currentIsOver24Hours: false
     }
   },
   // created () {},
@@ -152,9 +154,15 @@ export default {
       'SET_LEGAL_TENDER_REFLASH_STATUS',
       'UPDATE_IM_HAS_NEW_MESSAGE_MAP_M'
     ]),
+    handleChangeWatch (e) {
+      this.editText = e.target.value
+    },
     sendMessageByEnter (e) {
-      e.preventDefault()
-      this.sendMessage()
+      if (e.keyCode == 13) {
+        this.sendMessage()
+        e.preventDefault()
+        return false
+      }
     },
     // 发送图片成功回调
     uploadSuccess ({type, index, url}) {
@@ -191,6 +199,7 @@ export default {
         'action': 'sendMessage'
       })
       this.editText = ''
+      this.$refs[`${this.orderId}textarea`].value = ''
       this.receiveMessage()
     },
     sendImage (url) {
@@ -244,7 +253,8 @@ export default {
     // 回调消息
     receiveMessage () {
       this.IMSocket_S.on('message', (e) => {
-        const {isOppositeMsg, orderId} = e
+        const {isOppositeMsg, orderId, isOver24Hours} = e
+        this.currentIsOver24Hours = isOver24Hours
         console.log(orderId, this.orderId, e)
         this.UPDATE_IM_HAS_NEW_MESSAGE_MAP_M({
           orderId,
@@ -272,9 +282,9 @@ export default {
         userId: id
       }
 
-      const data = await updateIMStatusAJAX(params)
-      if (!data) return
-      console.log(data)
+      await updateIMStatusAJAX(params)
+      // if (!data) return
+      // console.log(data)
     }
   },
   filters: {
@@ -303,7 +313,7 @@ export default {
       return (!this.isShowContent && this.IMHasNewMessageMap_S[this.orderId]) || (_.get(this.orderInfo, 'hasUnReadMessage') && !this.isShowContent)
     },
     IsOver24Hours () {
-      return _.get(this.orderInfo, 'isOver24Hours')
+      return _.get(this.orderInfo, 'isOver24Hours') || this.currentIsOver24Hours
     },
     currencyId () {
       return _.get(this.orderInfo, 'currencyId')
@@ -341,8 +351,10 @@ export default {
   },
   watch: {
     isShowContent (New) {
-      if (!New) {
-        // this.UPDATE_IM_HAS_NEW_MESSAGE_MAP_M({orderId: this.orderId, status: false})
+      if (New) {
+        this.$nextTick(() => {
+          this.resetDOMScroll(this.chatDOM.scrollHeight)
+        })
       }
     }
   }
@@ -479,8 +491,7 @@ export default {
             padding 25px 15px
             box-sizing border-box
             >.message
-              margin-top 20px
-              margin-bottom 10px
+              margin-bottom -25px
               border 1px solid transparent
               /* 客服信息 */
               >.system-msg,
@@ -562,21 +573,21 @@ export default {
             /deep/
               /* 编辑框 */
               .edit-box
-                > textarea
-                  flex 1
-                  border none
-                  outline none
-                  height 40px
-                  box-sizing border-box
-                  background-color #fff
-                  font-size 12px
-                  padding 0 10px
-                  line-height 16px
-                  border-radius 0
-                  padding-top 14px
+                flex 1
+                border none
+                outline none
+                height 40px
+                box-sizing border-box
+                background-color #fff
+                font-size 12px
+                padding 0 10px
+                line-height 16px
+                border-radius 0
+                padding-top 12px
+                &:disabled
+                  cursor not-allowed
                 &.has-content
-                  >textarea
-                    background-color transparent
+                  background-color transparent
               .send-button
                 background-color S_main_color !important
                 padding 5px 10px

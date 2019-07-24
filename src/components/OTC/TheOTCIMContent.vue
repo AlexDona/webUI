@@ -86,7 +86,7 @@ export default {
       top -25px
       width 212px
     .time
-      margin-top 10px
+      margin-top 5px
     p
       line-height 18px
       &.msg-content
