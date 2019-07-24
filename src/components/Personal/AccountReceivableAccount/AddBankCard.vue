@@ -3,7 +3,7 @@
     class="add-bank personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{
-      height:windowHeight+'px'
+      height: windowHeight>300? windowHeight: 300 +'px'
     }"
   >
     <div
