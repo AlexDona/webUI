@@ -451,6 +451,7 @@ export default {
             background-color #3f4769
             border-color transparent
             color S_day_bg
+            font-size 12px
           .el-checkbox__inner
             background-color transparent
             border-color #8B9197

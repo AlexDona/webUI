@@ -608,6 +608,8 @@ export default {
                 color #2f78ca
                 border-left 1px solid #375683
                 padding 0 20px 0 10px
+                span
+                  font-size 12px !important
           /* 邮箱注册国家选择器 */
           .el-select
             display block
@@ -629,6 +631,7 @@ export default {
             background-color #3f4769
             border-color transparent
             color S_day_bg
+            font-size 12px
           .el-checkbox
             &.is-checked
               .el-checkbox__label
@@ -636,8 +639,6 @@ export default {
             .agreement
               color #2F78CA
           .el-checkbox__inner
-            width 12px
-            height 12px
             background-color transparent
             border-color #8B9197
           .el-checkbox__label
@@ -653,7 +654,7 @@ export default {
             &.is-checked
               .el-checkbox__inner
                 border-color S_main_color
-                background url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
+                background #2F78CA url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
           &.error-tips-form
             margin-bottom 10px
             height 40px

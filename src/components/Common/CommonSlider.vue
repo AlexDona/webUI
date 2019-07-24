@@ -177,7 +177,7 @@ export default {
 }
 </script>
 <style scoped lang="stylus">
-  @import "../../assets/css/index.styl"
+  @import "../../assets/CSS/index.styl"
   .drag-box
     overflow hidden
     >.drag
