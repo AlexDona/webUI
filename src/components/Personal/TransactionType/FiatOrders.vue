@@ -279,6 +279,7 @@ export default {
   async created () {
     await this.getOTCAvailableCurrencyList()
     await this.getMerchantAvailableLegalTenderList()
+    await this.getOTCEntrustingOrdersRevocation()
     const {id} = this.$userInfo_X
     this.socket = new Socket(this.url = `${OTCIMSocketUrl}/web/${id}`)
 
@@ -468,13 +469,13 @@ export default {
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
       reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus // 从全局获得的重新渲染交易中订单列表状态
-    })
+    }),
+    activeNameAndLegalTradePageNum () {
+      return `${this.activeName}/${this.legalTradePageNum}`
+    }
   },
   watch: {
-    activeName () {
-      this.getOTCEntrustingOrdersRevocation()
-    },
-    legalTradePageNum () {
+    activeNameAndLegalTradePageNum () {
       this.getOTCEntrustingOrdersRevocation()
     },
     legalTraderCompletedReflashStatus (New) {
