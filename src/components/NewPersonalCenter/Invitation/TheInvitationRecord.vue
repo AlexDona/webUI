@@ -125,6 +125,8 @@ export default {
                 border-bottom none
                 color #A9BED4
                 font-size 12px
+            .el-table__body-wrapper
+               min-height 72px
     &.night
       .header
         color S_main_color
