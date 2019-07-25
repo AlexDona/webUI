@@ -322,7 +322,7 @@
                     }"
                     maxlength="14"
                     type="text"
-                    :placeholder="$t('M.user_coin_volume')"
+                    :placeholder="$t('M.market_trade_trading_volume')"
                     :ref="marketBuyAmountInputRef"
                     @keyup="autoChangeData('market-buy')"
                     @input="formatInput(marketBuyAmountInputRef,$middleTopData_S_X.countExchange)"
