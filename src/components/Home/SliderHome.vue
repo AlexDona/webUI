@@ -77,6 +77,9 @@ export default {
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
     },
     renderSlider () {
+      if (this.sliderListAjax.banner.length < this.AUTO_START_LIMIT) {
+        this.$refs.slider.$emit('slideTo', 0)
+      }
       let bigUrl = getNestedData(this.sliderListAjax.banner, '[0].bigUrl')
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
       let sliderList = []
