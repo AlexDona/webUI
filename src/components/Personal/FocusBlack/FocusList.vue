@@ -27,7 +27,12 @@
                   class="merchant-icon"
                   :title="$t('M.otc_merchant')"
                 >
-                <span @click="jumpMerchantInfoPage(s.row.toId)" class="cursor-pointer">{{s.row.nickName}}</span>
+                <span
+                  @click="jumpMerchantInfoPage(s.row.toId)"
+                  class="cursor-pointer"
+                >
+                  {{s.row.nickName}}
+                </span>
               </div>
             </template>
           </el-table-column>
@@ -37,7 +42,8 @@
           >
             <template slot-scope = "s">
               <div v-show="s.row.advancedAuth === 'pass'">
-                已高级认证
+                <!--已高级认证-->
+                {{$t('M.focus_black_identity4')}}
               </div>
               <div v-show="s.row.advancedAuth === 'waitVeritfy'">
                 <!--待审核-->
@@ -55,7 +61,7 @@
           >
             <template slot-scope = "s">
               <div>
-                注册时间:{{s.row.regTime}}
+                {{$t('M.focus_black_time1')}}:{{s.row.regTime}}
               </div>
             </template>
           </el-table-column>
@@ -70,7 +76,8 @@
                 class="operation-text cursor-pointer"
                 @click="confirmCancelFocus(s.row.toId)"
               >
-                取消关注
+                <!--取消关注-->
+                {{$t('M.focus_black_title3')}}
               </div>
             </template>
           </el-table-column>

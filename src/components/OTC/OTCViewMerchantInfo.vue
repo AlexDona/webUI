@@ -23,30 +23,45 @@
             </span>
           </div>
           <div class="time-box">
-            <p class="bar font-size12">注册时间：{{merchantUserInfo.registerTime}}</p>
-            <p class="bar font-size12">最近登录时间：{{merchantUserInfo.recentlyLoginTime}}</p>
+            <!--注册时间-->
+            <p class="bar font-size12">
+              {{$t('M.focus_black_time1')}}：{{merchantUserInfo.registerTime}}
+            </p>
+            <!--最近登录时间-->
+            <p class="bar font-size12">
+              {{$t('M.focus_black_time2')}}：{{merchantUserInfo.recentlyLoginTime}}
+            </p>
           </div>
         </div>
         <!--1.2 认证-->
         <div class="two-identity">
           <!--邮箱认证-->
-          <div class="first-item items" :class="{unverified: merchantUserInfo.mailAuth !== 'enable'}">
-            <span>邮箱认证</span>
+          <div
+            class="first-item items"
+            :class="{unverified: merchantUserInfo.mailAuth !== 'enable'}"
+          >
+            <span>{{$t('M.focus_black_identity1')}}</span>
             <IconFontCommon
               class="font-size40 icon-user"
               iconName="icon-tongguo_huaban"
             />
           </div>
           <!--手机认证-->
-          <div class="second-item items" :class="{unverified: merchantUserInfo.phoneAuth !== 'enable'}">
-            <span>手机认证</span>
+          <div
+            class="second-item items"
+            :class="{unverified: merchantUserInfo.phoneAuth !== 'enable'}"
+          >
+            <span>{{$t('M.focus_black_identity2')}}</span>
             <IconFontCommon
               class="font-size40 icon-user"
               iconName="icon-tongguo_huaban"
             />
           </div>
           <!--实名认证-->
-          <div class="third-item items" :class="{unverified: merchantUserInfo.realNameAuth !== 'y'}">
+          <div
+            class="third-item items"
+            :class="{unverified: merchantUserInfo.realNameAuth !== 'y'}"
+          >
             <span>{{$t('M.user_real_name')}}</span>
             <IconFontCommon
               class="font-size40 icon-user"
@@ -54,7 +69,10 @@
             />
           </div>
           <!--高级认证-->
-          <div class="fourth-item items" :class="{unverified: merchantUserInfo.advancedAuth !== 'pass'}">
+          <div
+            class="fourth-item items"
+            :class="{unverified: merchantUserInfo.advancedAuth !== 'pass'}"
+          >
             <span>{{$t('M.user_senior_certification')}}</span>
             <IconFontCommon
               class="font-size40 icon-user"
@@ -62,8 +80,11 @@
             />
           </div>
           <!--商家认证-->
-          <div class="fifth-item items" :class="{unverified: merchantUserInfo.merchantAuth !== 'PASS'}">
-            <span>商家认证</span>
+          <div
+            class="fifth-item items"
+            :class="{unverified: merchantUserInfo.merchantAuth !== 'PASS'}"
+          >
+            <span>{{$t('M.focus_black_identity3')}}</span>
             <IconFontCommon
               class="font-size40 icon-user"
               iconName="icon-tongguo_huaban"
@@ -73,53 +94,110 @@
         <!--1.3 交易信息-->
         <div class="trade-infos">
           <div class="first-bar bars">
-            <div class="bar-top">商家保证金</div>
-            <div class="bar-bottom">{{merchantUserInfo.cashDeposit}}{{merchantUserInfo.cashDepositName}}</div>
+            <!--商家保证金-->
+            <div class="bar-top">{{$t('M.focus_black_merchant_info1')}}</div>
+            <div class="bar-bottom">
+              {{merchantUserInfo.cashDeposit}}{{merchantUserInfo.cashDepositName}}
+            </div>
           </div>
           <div class="second-bar bars">
-            <div class="bar-top">交易总单数</div>
+            <!--交易总单数-->
+            <div class="bar-top">{{$t('M.focus_black_merchant_info2')}}</div>
             <div class="bar-bottom">{{merchantUserInfo.totalOrders}}</div>
           </div>
           <div class="third-bar bars">
-            <div class="bar-top">30日成交单</div>
+            <!--30日成交单-->
+            <div class="bar-top">{{$t('M.focus_black_merchant_info3')}}</div>
             <div class="bar-bottom">{{merchantUserInfo.successOrders}}</div>
           </div>
           <div class="fourth-bar bars">
-            <div class="bar-top">30日成交率</div>
+            <!--30日成交率-->
+            <div class="bar-top">{{$t('M.focus_black_merchant_info4')}}</div>
             <div class="bar-bottom">{{merchantUserInfo.successRate}}%</div>
           </div>
           <div class="fifth-bar bars">
-            <div class="bar-top">30日冻结次数</div>
+            <!--30日冻结次数-->
+            <div class="bar-top">{{$t('M.focus_black_merchant_info5')}}</div>
             <div class="bar-bottom">{{merchantUserInfo.freezeTimes}}</div>
           </div>
           <div class="sixth-bar bars">
-            <div class="bar-top">平均放行</div>
-            <div class="bar-bottom">{{BIHTimeFormatting(merchantUserInfo.avgConfirmTime)}}</div>
+            <!--平均放行-->
+            <div class="bar-top">{{$t('M.focus_black_merchant_info6')}}</div>
+            <div class="bar-bottom">
+              {{BIHTimeFormatting(merchantUserInfo.avgConfirmTime)}}
+            </div>
           </div>
         </div>
         <!--1.4 按钮组-->
-        <div class="button-group" v-if="merchantUserInfo.relationType == '1'">
-          <div class="focus-button-box">
-            <button class="button" @click="cancelFocusBlackOpposite('1')">取消关注</button>
+        <div
+          class="four-button"
+          v-if="!(userId === this.userInfo.id)"
+        >
+          <div
+            class="button-group"
+            v-if="merchantUserInfo.relationType == '1'"
+          >
+            <div class="focus-button-box">
+              <button
+                class="button"
+                @click="cancelFocusBlackOpposite('1')"
+              >
+                <!--取消关注-->
+                {{$t('M.focus_black_title3')}}
+              </button>
+            </div>
+            <div class="black-button-box">
+              <button
+                class="button"
+                @click="focusBlackOpposite('2')"
+              >
+                <!--拉黑-->
+                {{$t('M.focus_black_title2')}}
+              </button>
+            </div>
           </div>
-          <div class="black-button-box">
-            <button class="button" @click="focusBlackOpposite('2')">拉黑</button>
+          <div
+            class="button-group"
+            v-else-if="merchantUserInfo.relationType == '2'"
+          >
+            <div class="focus-button-box">
+              <button
+                class="button"
+                @click="focusBlackOpposite('1')"
+              >
+                <!--关注-->
+                {{$t('M.focus_black_title1')}}
+              </button>
+            </div>
+            <div class="black-button-box">
+              <button
+                class="button"
+                @click="cancelFocusBlackOpposite('2')"
+              >
+                <!--解除-->
+                {{$t('M.focus_black_title4')}}
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="button-group" v-else-if="merchantUserInfo.relationType == '2'">
-          <div class="focus-button-box">
-            <button class="button" @click="focusBlackOpposite('1')">关注</button>
-          </div>
-          <div class="black-button-box">
-            <button class="button" @click="cancelFocusBlackOpposite('2')">解除</button>
-          </div>
-        </div>
-        <div class="button-group" v-else>
-          <div class="focus-button-box">
-            <button class="button" @click="focusBlackOpposite('1')">关注</button>
-          </div>
-          <div class="black-button-box">
-            <button class="button" @click="focusBlackOpposite('2')">拉黑</button>
+          <div class="button-group" v-else>
+            <div class="focus-button-box">
+              <button
+                class="button"
+                @click="focusBlackOpposite('1')"
+              >
+                <!--关注-->
+                {{$t('M.focus_black_title1')}}
+              </button>
+            </div>
+            <div class="black-button-box">
+              <button
+                class="button"
+                @click="focusBlackOpposite('2')"
+              >
+                <!--拉黑-->
+                {{$t('M.focus_black_title2')}}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -128,7 +206,8 @@
         <!--购买列表-->
         <div class="buy-list buy-sell-list">
           <div class="header-title buy-title">
-            购买广告
+            <!--购买广告-->
+            {{$t('M.focus_black_buy_sell_title1')}}
           </div>
           <div class="body-content">
             <el-table
@@ -177,37 +256,37 @@
                 </template>
               </el-table-column>
               <!-- 支付方式 -->
-              <!--<el-table-column
+              <el-table-column
                 :label="$t('M.otc_index_Payment_method')"
               >
                 <template slot-scope="s">
                   <div>
-                    &lt;!&ndash; 1支付宝 &ndash;&gt;
+                    <!-- 1支付宝 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-zhifubao1"
                       v-if="s.row.payTypes[0] === '1'"
                     />
-                    &lt;!&ndash; 2微信 &ndash;&gt;
+                    <!-- 2微信 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-weixin1"
                       v-if="s.row.payTypes[1] === '1'"
                     />
-                    &lt;!&ndash; 3银行卡 &ndash;&gt;
+                    <!-- 3银行卡 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-yinhangqia"
                       v-if="s.row.payTypes[2] === '1'"
                     />
-                    &lt;!&ndash; 4西联汇款 &ndash;&gt;
+                    <!-- 4西联汇款 -->
                     <span v-show="s.row.payTypes[3] === '1'">
                       <img
                         src="../../assets/user/xilian.png"
                         class="xilian"
                       >
                     </span>
-                    &lt;!&ndash; 5PAYPAL &ndash;&gt;
+                    <!-- 5PAYPAL -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-paypal"
@@ -215,15 +294,22 @@
                     />
                   </div>
                 </template>
-              </el-table-column>-->
+              </el-table-column>
               <!-- 操作 -->
               <el-table-column
                 :label="$t('M.otc_index_operate')"
                 align="right"
               >
                 <template slot-scope="s">
+                  <!--购买按钮-->
                   <div>
-                    <button class="sell-buy-button buy-button border-radius2 cursor-pointer">{{$t('M.comm_buying')}}</button>
+                    <el-button
+                      class="sell-buy-button buy-button border-radius2 cursor-pointer"
+                      :disabled="s.row.otcEnable=='disable'"
+                      @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId,s.row.country, 'onlineBuy')"
+                    >
+                      {{$t('M.comm_buying')}}
+                    </el-button>
                   </div>
                 </template>
               </el-table-column>
@@ -233,7 +319,8 @@
         <!--出售列表-->
         <div class="sell-list buy-sell-list">
           <div class="header-title sell-title">
-            出售广告
+            <!--出售广告-->
+            {{$t('M.focus_black_buy_sell_title2')}}
           </div>
           <div class="body-content">
             <el-table
@@ -282,37 +369,37 @@
                 </template>
               </el-table-column>
               <!-- 支付方式 -->
-              <!--<el-table-column
+              <el-table-column
                 :label="$t('M.otc_index_Payment_method')"
               >
                 <template slot-scope="s">
                   <div>
-                    &lt;!&ndash; 1支付宝 &ndash;&gt;
+                    <!-- 1支付宝 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-zhifubao1"
                       v-if="s.row.payTypes[0] === '1'"
                     />
-                    &lt;!&ndash; 2微信 &ndash;&gt;
+                    <!-- 2微信 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-weixin1"
                       v-if="s.row.payTypes[1] === '1'"
                     />
-                    &lt;!&ndash; 3银行卡 &ndash;&gt;
+                    <!-- 3银行卡 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-yinhangqia"
                       v-if="s.row.payTypes[2] === '1'"
                     />
-                    &lt;!&ndash; 4西联汇款 &ndash;&gt;
+                    <!-- 4西联汇款 -->
                     <span v-show="s.row.payTypes[3] === '1'">
                       <img
                         src="../../assets/user/xilian.png"
                         class="xilian"
                       >
                     </span>
-                    &lt;!&ndash; 5PAYPAL &ndash;&gt;
+                    <!-- 5PAYPAL -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-paypal"
@@ -320,15 +407,22 @@
                     />
                   </div>
                 </template>
-              </el-table-column>-->
+              </el-table-column>
               <!-- 操作 -->
               <el-table-column
                 :label="$t('M.otc_index_operate')"
                 align="right"
               >
                 <template slot-scope="s">
+                  <!--出售按钮-->
                   <div>
-                    <button class="sell-buy-button sell-button border-radius2 cursor-pointer">{{$t('M.comm_offering')}}</button>
+                    <el-button
+                      class="sell-buy-button sell-button border-radius2 cursor-pointer"
+                      :disabled="s.row.otcEnable=='disable'"
+                      @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId,s.row.country, 'onlineSell')"
+                    >
+                      {{$t('M.comm_offering')}}
+                    </el-button>
                   </div>
                 </template>
               </el-table-column>
@@ -344,11 +438,15 @@
           top="25vh"
         >
           <div class="content">
-            拉黑后该用户将无法访问您的广告信息或与您交易，您确定要拉黑吗？
+            <!--拉黑后该用户将无法访问您的广告信息或与您交易，您确定要拉黑吗？-->
+            {{$t('M.focus_black_title6')}}
           </div>
           <span slot="footer">
             <div class="button-group">
-              <button class="cancel item" @click="dialogVisible = false">
+              <button
+                class="cancel item"
+                @click="dialogVisible = false"
+              >
                 {{$t('M.comm_cancel')}}
               </button>
               <button class="confirm item">
@@ -363,8 +461,9 @@
 </template>
 <script>
 import {
+  mapState,
   mapMutations,
-  mapState
+  mapActions
 } from 'vuex'
 import {
   getMerchantInfoAJAX, // 获得商家信息
@@ -455,6 +554,9 @@ export default {
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
+    ]),
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_BLACK_TABS_STATUS_M'
@@ -528,12 +630,61 @@ export default {
       // 数据返回后的逻辑
       // 重新刷新列表
       this.getMerchantInfo()
+    },
+    // 4.购买出售限制
+    async toOnlineBuyOrSell (id, coinId, userId, countryCode, entrustType) {
+      const CHINA = ['853', '852', '886', '86']
+      if (!this.isLogin) {
+        this.$goToPage(`/${this.$routes_X.login}`)
+      } else {
+        // 刷新用户信息
+        await this.REFRESH_USER_INFO_ACTION()
+        // console.log(countryCode, userId, this.userInfo)
+        // 未设置交易密码、未实名认证，未高级认证，不能进行交易
+        if (!this.userInfo.payPassword) {
+          // 去个人中心设置交易密码
+          this.$error_tips_X(this.$t('M.otc_index_js'))
+          return false
+        } else if (!this.userInfo.realname) {
+          // 去个人中心完成实名认证
+          this.$error_tips_X(this.$t('M.otc_index_digo_tips'))
+          return false
+        } else if (!(this.userInfo.advancedAuth === 'pass')) {
+          // 去个人中心完成高级认证
+          this.$error_tips_X(this.$t('M.otc_index_digo_tips_pass'))
+          return false
+        } if (this.userInfo.otcEnable === 'disable') {
+          // 该账号已被禁止交易OTC，请咨询客服
+          this.$error_tips_X(this.$t('M.otc_disable_account_tips'))
+          return false
+        } else {
+          if (userId === this.userInfo.id) {
+            // 禁止自买自卖
+            this.$error_tips_X(this.$t('M.otc_index_forbided_buyand_sell'))
+            return false
+            // 增加个人用户信息中的国籍和选中的国家对比，如果相同，可以摘单，不相同，不能摘单，给出提示
+          } else if (!(CHINA.includes(countryCode) && CHINA.includes(this.userInfo.country)) && !(countryCode == this.userInfo.country)) {
+            // 根据您注册所在地的相关规定，无法进行此操作
+            this.$error_tips_X(this.$t('M.otc_failure_0094'))
+            return false
+          } else {
+            // entrustType 挂单类型
+            // id - 挂单id
+            // coinId - 币种id
+            this.$goToPage(`/OTCOnlineTraderBuySell/${entrustType}/${id}/${coinId}`)
+          }
+        }
+      }
     }
   },
   // filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      // 用户登录状态 false 未登录； true 登录
+      isLogin: state => state.user.isLogin,
+      // 用户详细信息
+      userInfo: state => state.user.loginStep1Info.userInfo
     })
   }
   // watch: {}
@@ -637,26 +788,28 @@ export default {
           }
         }
 
-        > .button-group {
-          display: flex;
-          justify-content: space-between;
-          padding: 80px 30px 0;
+        > .four-button {
+          > .button-group {
+            display: flex;
+            justify-content: space-between;
+            padding: 80px 30px 0;
 
-          > .focus-button-box {
-            width: 50%;
-          }
+            > .focus-button-box {
+              width: 50%;
+            }
 
-          > .black-button-box {
-            width: 50%;
-            text-align: right;
-          }
+            > .black-button-box {
+              width: 50%;
+              text-align: right;
+            }
 
-          .button {
-            height: 30px;
-            padding: 5px 25px;
-            border-radius: 2px;
-            font-size: 12px;
-            cursor: pointer;
+            .button {
+              height: 30px;
+              padding: 5px 25px;
+              border-radius: 2px;
+              font-size: 12px;
+              cursor: pointer;
+            }
           }
         }
       }
@@ -684,21 +837,6 @@ export default {
 
             .xilian {
               vertical-align: middle;
-            }
-
-            .sell-buy-button {
-              height: 24px;
-              padding: 0 10px;
-              line-height: 24px;
-              color: $mainColorOfWhite;
-            }
-
-            .buy-button {
-              background-color: $upColor;
-            }
-
-            .sell-button {
-              background-color: $otcGreen;
             }
           }
         }
@@ -770,6 +908,34 @@ export default {
                       }
                     }
                   }
+
+                  .sell-buy-button {
+                    height: 24px;
+                    padding: 0 10px;
+                    border: 0;
+                    line-height: 24px;
+                    color: $mainColorOfWhite;
+                  }
+
+                  .buy-button {
+                    background-color: $upColor;
+                  }
+
+                  .buy-button.is-disabled {
+                    background-color: #e4b1a7;
+                  }
+
+                  .sell-button {
+                    background-color: $otcGreen;
+                  }
+
+                  .sell-button.is-disabled {
+                    background-color: #8ead9e;
+                  }
+                }
+
+                .el-table__empty-text {
+                  line-height: 350px !important;
                 }
               }
             }
@@ -883,19 +1049,21 @@ export default {
             }
           }
 
-          > .button-group {
-            > .focus-button-box {
-              > .button {
-                color: $mainColorOfWhite;
-                background-color: $mainColor;
+          > .four-button {
+            > .button-group {
+              > .focus-button-box {
+                > .button {
+                  color: $mainColorOfWhite;
+                  background-color: $mainColor;
+                }
               }
-            }
 
-            > .black-button-box {
-              > .button {
-                border: 1px solid $mainColor;
-                color: $mainColor;
-                background-color: $mainContentNightBgColor;
+              > .black-button-box {
+                > .button {
+                  border: 1px solid $mainColor;
+                  color: $mainColor;
+                  background-color: $mainContentNightBgColor;
+                }
               }
             }
           }
@@ -1050,19 +1218,21 @@ export default {
             }
           }
 
-          > .button-group {
-            > .focus-button-box {
-              > .button {
-                color: $mainColorOfWhite;
-                background-color: $mainColor;
+          > .four-button {
+            > .button-group {
+              > .focus-button-box {
+                > .button {
+                  color: $mainColorOfWhite;
+                  background-color: $mainColor;
+                }
               }
-            }
 
-            > .black-button-box {
-              > .button {
-                border: 1px solid $mainColor;
-                color: $mainColor;
-                background-color: $mainColorOfWhite;
+              > .black-button-box {
+                > .button {
+                  border: 1px solid $mainColor;
+                  color: $mainColor;
+                  background-color: $mainColorOfWhite;
+                }
               }
             }
           }

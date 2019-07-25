@@ -9,11 +9,22 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="inner-box">
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="我的关注" name="first">
+      <el-tabs
+        v-model="activeName"
+        @tab-click="handleClick"
+      >
+        <!--我的关注-->
+        <el-tab-pane
+          :label="$t('M.focus_black_table1')"
+          name="first"
+        >
           <FocusList/>
         </el-tab-pane>
-        <el-tab-pane label="我的黑名单" name="second">
+        <!--我的黑名单-->
+        <el-tab-pane
+          :label="$t('M.focus_black_table2')"
+          name="second"
+        >
           <BlackList/>
         </el-tab-pane>
       </el-tabs>
@@ -40,9 +51,9 @@ export default {
     if (this.blackTabsStatus) {
       this.activeName = 'second'
       // 商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
-      // this.CHANGE_BLACK_TABS_STATUS_M(false)
+      this.CHANGE_BLACK_TABS_STATUS_M(false)
     } else {
-      // this.activeName = 'first'
+      this.activeName = 'first'
     }
   },
   // mounted () {},

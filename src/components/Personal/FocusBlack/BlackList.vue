@@ -15,21 +15,21 @@
           style="width: 100%;"
           :empty-text="$t('M.comm_no_data')"
         >
-          <!--UID-->
+          <!--用户UID-->
           <el-table-column
-            label="用户UID"
+            :label="$t('M.focus_black_table3')"
             prop="showId"
           >
           </el-table-column>
           <!--昵称-->
           <el-table-column
-            label="昵称"
+            :label="$t('M.focus_black_table4')"
             prop="nickName"
           >
           </el-table-column>
           <!--单数/成交率-->
           <el-table-column
-            label="单数/成交率"
+            :label="$t('M.focus_black_table5')"
             width="240"
           >
             <template slot-scope = "s">
@@ -38,7 +38,7 @@
           </el-table-column>
           <!--拉黑时间-->
           <el-table-column
-            label="拉黑时间"
+            :label="$t('M.focus_black_table6')"
             prop="createTime"
           >
           </el-table-column>
@@ -53,7 +53,8 @@
                 class="operation-text cursor-pointer"
                 @click="confirmUnBlackList(s.row.toId)"
               >
-                解除
+                <!--解除-->
+                {{$t('M.focus_black_title4')}}
               </div>
             </template>
           </el-table-column>

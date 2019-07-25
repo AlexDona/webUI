@@ -143,7 +143,7 @@
           </el-tab-pane>
           <!--关注拉黑-->
           <el-tab-pane
-            label = "关注拉黑"
+            :label = "$t('M.focus_black_title5')"
             name = "focus-blacklist"
           >
             <FocusBlackList/>

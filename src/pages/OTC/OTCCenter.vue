@@ -27,21 +27,45 @@
               />
             </div>
             <!--信息-->
-            <div class="login-before" v-if="!isLogin">
-              <div class="login-text cursor-pointer" @click="loginJump">{{$t('M.comm_login')}}</div>
+            <div
+              class="login-before"
+              v-if="!isLogin"
+            >
+              <div
+                class="login-text cursor-pointer"
+                @click="loginJump"
+              >
+                {{$t('M.comm_login')}}
+              </div>
               <div class="coin-count">
-                <span>{{selectedOTCAvailableCurrencyName}}</span> {{$t('M.comm_usable')}} 0.00000000  / 冻结 0.00000000
+                <!--可用/冻结-->
+                <span>
+                  {{selectedOTCAvailableCurrencyName}}
+                </span>
+                {{$t('M.comm_usable')}} 0.00000000  / {{$t('M.focus_black_buy_sell_title3')}} 0.00000000
               </div>
             </div>
-            <div class="login-after" v-else>
+            <div
+              class="login-after"
+              v-else
+            >
               <div class="view-info">
-                <span class="person-name font-size20">{{viewDialogInfo.personNickName}}</span>
-                <span class="view-text cursor-pointer" @click="personInfoDiaStatus = true">查看</span>
+                <span class="person-name font-size20">
+                  {{viewDialogInfo.personNickName}}
+                </span>
+                <span
+                  class="view-text cursor-pointer"
+                  @click="personInfoDiaStatus = true"
+                >
+                  <!--查看-->
+                  {{$t('M.focus_black_buy_sell_title4')}}
+                </span>
               </div>
               <div class="available-count">
+                <!--可用/冻结-->
                 <span>{{selectedOTCAvailableCurrencyName}}</span>
                 <span>{{$t('M.comm_usable')}} {{viewDialogInfo.coinAvailableAmount}}</span> /
-                <span>冻结 {{viewDialogInfo.coinFreezeAmount}}</span>
+                <span>{{$t('M.focus_black_buy_sell_title3')}} {{viewDialogInfo.coinFreezeAmount}}</span>
               </div>
             </div>
           </div>
@@ -354,12 +378,19 @@
         <!--1.3交易须知-->
         <div class="trade-rules border-radius2">
           <div class="rules-header">
-            交易规则：
+            <!--交易规则：-->
+            {{$t('M.focus_black_buy_sell_title5')}}：
           </div>
           <div class="rules-box font-size12">
-            <p class="rules-item">1.交易中请注意判断和防范有欺诈风险的付款方式；</p>
-            <p class="rules-item">2.{{$t('M.otc_publishAD_discriptLineThree')}}{{configInfo.otcAd}}{{$t('M.otc_publishAD_discriptLineFive')}}</p>
-            <p class="rules-item">3.{{$t('M.otc_publishAD_discriptLineFour')}}</p>
+            <p class="rules-item">
+              1.{{$t('M.focus_black_buy_sell_title6')}}
+            </p>
+            <p class="rules-item">
+              2.{{$t('M.otc_publishAD_discriptLineThree')}}{{configInfo.otcAd}}{{$t('M.otc_publishAD_discriptLineFive')}}
+            </p>
+            <p class="rules-item">
+              3.{{$t('M.otc_publishAD_discriptLineFour')}}
+            </p>
           </div>
         </div>
         <!--1.4 查看个人信息弹窗-->
@@ -377,34 +408,51 @@
                     class="font-size40"
                     iconName="icon-gerenzhongxin"
                   />
-                  <span class="person-name font-size16">{{viewDialogInfo.personNickName}}</span>
+                  <span class="person-name font-size16">
+                    {{viewDialogInfo.personNickName}}
+                  </span>
                 </div>
                 <!--右侧-->
                 <div class="photo-right">
-                  <div class="time-top text-align-r font-size12">注册时间：{{viewDialogInfo.registerTime}}</div>
-                  <div class="time-bottom text-align-r font-size12">最近登录时间：{{viewDialogInfo.recentlyLoginTime}}</div>
+                  <!--注册时间-->
+                  <div class="time-top text-align-r font-size12">
+                    {{$t('M.focus_black_time1')}}：{{viewDialogInfo.registerTime}}
+                  </div>
+                  <!--最近登录时间-->
+                  <div class="time-bottom text-align-r font-size12">
+                    {{$t('M.focus_black_time2')}}：{{viewDialogInfo.recentlyLoginTime}}
+                  </div>
                 </div>
               </div>
               <!--2认证部分-->
               <div class="identity-box">
                 <!--邮箱认证-->
-                <div class="first-item items" :class="{unverified: viewDialogInfo.mailAuth !== 'enable'}">
-                  <span>邮箱认证</span>
+                <div
+                  class="first-item items"
+                  :class="{unverified: viewDialogInfo.mailAuth !== 'enable'}"
+                >
+                  <span>{{$t('M.focus_black_identity1')}}</span>
                   <IconFontCommon
                     class="font-size40"
                     iconName="icon-tongguo_huaban"
                   />
                 </div>
                 <!--手机认证-->
-                <div class="second-item items" :class="{unverified: viewDialogInfo.phoneAuth !== 'enable'}">
-                  <span>手机认证</span>
+                <div
+                  class="second-item items"
+                  :class="{unverified: viewDialogInfo.phoneAuth !== 'enable'}"
+                >
+                  <span>{{$t('M.focus_black_identity2')}}</span>
                   <IconFontCommon
                     class="font-size40"
                     iconName="icon-tongguo_huaban"
                   />
                 </div>
                 <!--实名认证-->
-                <div class="third-item items" :class="{unverified: viewDialogInfo.realNameAuth !== 'y'}">
+                <div
+                  class="third-item items"
+                  :class="{unverified: viewDialogInfo.realNameAuth !== 'y'}"
+                >
                   <span>{{$t('M.user_real_name')}}</span>
                   <IconFontCommon
                     class="font-size40"
@@ -412,7 +460,10 @@
                   />
                 </div>
                 <!--高级认证-->
-                <div class="fourth-item items" :class="{unverified: viewDialogInfo.advancedAuth !== 'pass'}">
+                <div
+                  class="fourth-item items"
+                  :class="{unverified: viewDialogInfo.advancedAuth !== 'pass'}"
+                >
                   <span>{{$t('M.user_senior_certification')}}</span>
                   <IconFontCommon
                     class="font-size40"
@@ -420,8 +471,11 @@
                   />
                 </div>
                 <!--商家认证-->
-                <div class="fifth-item items" :class="{unverified: viewDialogInfo.merchantAuth !== 'PASS'}">
-                  <span>商家认证</span>
+                <div
+                  class="fifth-item items"
+                  :class="{unverified: viewDialogInfo.merchantAuth !== 'PASS'}"
+                >
+                  <span>{{$t('M.focus_black_identity3')}}</span>
                   <IconFontCommon
                     class="font-size40"
                     iconName="icon-tongguo_huaban"
@@ -431,27 +485,55 @@
               <!--3其他信息-->
               <div class="other-infos">
                 <div class="first-bar bars">
-                  <div class="bar-top">商家保证金</div>
-                  <div class="bar-bottom">{{viewDialogInfo.cashDeposit}}{{viewDialogInfo.cashDepositName}}</div>
+                  <!--商家保证金-->
+                  <div class="bar-top">
+                    {{$t('M.focus_black_merchant_info1')}}
+                  </div>
+                  <div class="bar-bottom">
+                    {{viewDialogInfo.cashDeposit}}{{viewDialogInfo.cashDepositName}}
+                  </div>
                 </div>
                 <div class="second-bar bars">
-                  <div class="bar-top">交易总单数</div>
-                  <div class="bar-bottom">{{viewDialogInfo.totalOrders}}</div>
+                  <!--交易总单数-->
+                  <div class="bar-top">
+                    {{$t('M.focus_black_merchant_info2')}}
+                  </div>
+                  <div class="bar-bottom">
+                    {{viewDialogInfo.totalOrders}}
+                  </div>
                 </div>
                 <div class="third-bar bars">
-                  <div class="bar-top">30日成交单</div>
-                  <div class="bar-bottom">{{viewDialogInfo.successOrders}}</div>
+                  <!--30日成交单-->
+                  <div class="bar-top">
+                    {{$t('M.focus_black_merchant_info3')}}
+                  </div>
+                  <div class="bar-bottom">
+                    {{viewDialogInfo.successOrders}}
+                  </div>
                 </div>
                 <div class="fourth-bar bars">
-                  <div class="bar-top">30日成交率</div>
-                  <div class="bar-bottom">{{viewDialogInfo.successRate}}%</div>
+                  <!--30日成交率-->
+                  <div class="bar-top">
+                    {{$t('M.focus_black_merchant_info4')}}
+                  </div>
+                  <div class="bar-bottom">
+                    {{viewDialogInfo.successRate}}%
+                  </div>
                 </div>
                 <div class="fifth-bar bars">
-                  <div class="bar-top">30日冻结次数</div>
-                  <div class="bar-bottom">{{viewDialogInfo.freezeTimes}}</div>
+                  <!--30日冻结次数-->
+                  <div class="bar-top">
+                    {{$t('M.focus_black_merchant_info5')}}
+                  </div>
+                  <div class="bar-bottom">
+                    {{viewDialogInfo.freezeTimes}}
+                  </div>
                 </div>
                 <div class="sixth-bar bars">
-                  <div class="bar-top">平均放行时间</div>
+                  <!--平均放行时间-->
+                  <div class="bar-top">
+                    {{$t('M.focus_black_merchant_info7')}}
+                  </div>
                   <div class="bar-bottom">
                     {{BIHTimeFormatting(viewDialogInfo.avgConfirmTime)}}
                   </div>
