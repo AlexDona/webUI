@@ -130,14 +130,14 @@ export default {
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
-    // 翻页
+    // 1 翻页
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
       // 重新刷新列表
       this.getFocusLists()
     },
-    // 确认取消关注接口
+    // 2 确认取消关注接口
     async confirmCancelFocus (id) {
       console.log(id)
       let param = {
@@ -149,10 +149,11 @@ export default {
       console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
+      this.currentPage = 1
       // 重新刷新列表
       this.getFocusLists()
     },
-    // 获得关注列表
+    // 3 获得关注列表
     async getFocusLists () {
       let param = {
         pageNum: this.currentPage,
@@ -168,6 +169,7 @@ export default {
       // 总页数赋值
       this.totalPages = getNestedData(data, 'data.pages') - 0
     },
+    // 4 昵称跳转
     jumpMerchantInfoPage (userId) {
       this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
     }

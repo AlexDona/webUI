@@ -107,14 +107,14 @@ export default {
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
-    // 翻页
+    // 1 翻页
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
       // 重新刷新列表
       this.getBlackLists()
     },
-    // 确认解除黑名单接口
+    // 2 确认解除黑名单接口
     async confirmUnBlackList (id) {
       console.log(id)
       let param = {
@@ -126,10 +126,11 @@ export default {
       console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
+      this.currentPage = 1
       // 重新刷新列表
       this.getBlackLists()
     },
-    // 获得黑名单列表
+    // 3 获得黑名单列表
     async getBlackLists () {
       let param = {
         pageNum: this.currentPage,
@@ -152,7 +153,8 @@ export default {
       theme: state => state.common.theme
     })
   }
-  // watch: {}
+  // watch: {},
+  // destroyed () {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

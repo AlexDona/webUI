@@ -386,7 +386,7 @@
               1.{{$t('M.focus_black_buy_sell_title6')}}
             </p>
             <p class="rules-item">
-              2.{{$t('M.otc_publishAD_discriptLineThree')}}{{configInfo.otcAd}}{{$t('M.otc_publishAD_discriptLineFive')}}
+              2.{{$t('M.otc_publishAD_discriptLineThree')}}&nbsp;{{configInfo.otcAd}}&nbsp;{{$t('M.otc_publishAD_discriptLineFive')}}
             </p>
             <p class="rules-item">
               3.{{$t('M.otc_publishAD_discriptLineFour')}}

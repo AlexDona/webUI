@@ -533,9 +533,7 @@ export default {
     }
   },
   created () {
-    console.log('从首页昵称跳转带过来的参数userId:' + this.$route.query.userId)
-    console.log('从首页昵称跳转带过来的参数coinId:' + this.$route.query.coinId)
-    console.log('从首页昵称跳转带过来的参数currencyId:' + this.$route.query.currencyId)
+    // console.log(this.$route.query)
     if (this.$route.query.userId) {
       this.userId = this.$route.query.userId
     }
@@ -548,6 +546,10 @@ export default {
     if (this.userId || this.coinId || this.currencyId) {
       this.getMerchantInfo()
     }
+    // 增加拉黑人检测 ，不能进入该页面
+    // if (this.$route.query.userId === '502448157578231808') {
+    //   this.$goToPage(`/${this.$routes_X.OTCCenter}`)
+    // }
   },
   // mounted () {},
   // activated () {},

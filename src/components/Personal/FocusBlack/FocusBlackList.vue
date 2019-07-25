@@ -75,19 +75,9 @@ export default {
       // 商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
       blackTabsStatus: state => state.OTC.blackTabsStatus
     })
-  },
-  watch: {
-    // blackTabsStatus (newValue) {
-    //   console.log(newValue)
-    //   if (!newValue) {
-    //     this.activeName = 'first'
-    //   }
-    // }
   }
-  // destroyed () {
-  //   this.CHANGE_BLACK_TABS_STATUS_M(false)
-  //   this.activeName = 'first'
-  // }
+  // watch: {},
+  // destroyed () {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
