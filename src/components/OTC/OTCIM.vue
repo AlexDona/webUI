@@ -570,6 +570,9 @@ export default {
             border-radius 5px
             background-color #fff
             overflow hidden
+            &.disabled
+              .edit-box
+                background-color #e5e5e5
             /deep/
               /* 编辑框 */
               .edit-box
@@ -674,6 +677,12 @@ export default {
             background-color #242d41
             >.inner-box
               background-color #fff
+              &.disabled
+                .edit-box
+                  background-color #e5e5e5
+                .upload-image
+                  &:hover
+                    cursor not-allowed
               /deep/
                 /* 编辑框 */
               .edit-box

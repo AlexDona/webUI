@@ -4,18 +4,20 @@
   description: 当前页面为 上传图片 公用组件
 -->
 <template lang="pug">
-  .upload-image
+  button.upload-image(
+    :class="{disabled:disabled}"
+  )
     el-upload(
-    :action="uploadUrl"
-    :headers="headers"
-    :on-remove="handleRemove"
-    :before-remove="beforeRemove"
-    :on-exceed="handleExceed"
-    :on-success="handleSuccess"
-    :before-upload="beforeUpload"
-    :disabled="disabled"
-    accept="image/jpeg,image/jpg,image/png,image/bmp"
-    :show-file-list="false"
+      :action="uploadUrl"
+      :headers="headers"
+      :on-remove="handleRemove"
+      :before-remove="beforeRemove"
+      :on-exceed="handleExceed"
+      :on-success="handleSuccess"
+      :before-upload="beforeUpload"
+      :disabled="disabled"
+      accept="image/jpeg,image/jpg,image/png,image/bmp"
+      :show-file-list="false"
     )
       // 上传组件出现的 形式
       slot
@@ -152,6 +154,12 @@ export default {
 <style scoped lang="stylus">
   @import '../../assets/CSS/index.styl'
   .upload-image
+    &.disabled
+      &:hover
+        cursor not-allowed
+        /deep/
+          .el-upload
+            cursor not-allowed
     /deep/
     .el-upload
       .img
