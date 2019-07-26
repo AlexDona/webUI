@@ -28,3 +28,5 @@ export const UPDATE_IM_SOCKET_M = 'UPDATE_IM_SOCKET_M'
 export const UPDATE_IM_HAS_NEW_MESSAGE_MAP_M = 'UPDATE_IM_HAS_NEW_MESSAGE_MAP_M'
 // 更新OTC
 // export const UPDATE_IM_SOCKET_M = 'UPDATE_IM_SOCKET_M'
+// 改变商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
+export const CHANGE_BLACK_TABS_STATUS_M = 'CHANGE_BLACK_TABS_STATUS_M'

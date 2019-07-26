@@ -20,7 +20,13 @@
               <div class="buyer-seller">
                 <!--卖家-->
                 <!--{{$t('M.otc_seller')}}：{{item.sellName}}-->
-                {{$t('M.otc_seller')}}：{{item.sellNickName}}
+                {{$t('M.otc_seller')}}：
+                <span
+                  class="cursor-pointer"
+                  @click="jumpMerchantInfoPage(item.sellId)"
+                >
+                  {{item.sellNickName}}
+                </span>
               </div>
               <!--广告id-->
               <div class="AD-ID">
@@ -338,7 +344,14 @@
                 <p class="action-tips">
                   <span class="wait-pay">
                     <!--等待付款-->
-                    {{$t('M.otc_waiting_payment')}}
+                    <!--{{$t('M.otc_waiting_payment')}}-->
+                    <button
+                      class="cancelOrderButton border-radius2 cursor-pointer"
+                      @click="cancelOrderBeforePayFor(item.id)"
+                    >
+                      <!--取消订单-->
+                      {{$t('M.otc_trading_cancel_order_text')}}
+                    </button>
                   </span>
                   <el-button
                     type="primary"
@@ -402,7 +415,13 @@
               <div class="buyer-seller">
                 <!--买家-->
                 <!--{{$t('M.otc_buyer')}}：{{item.buyName}}-->
-                {{$t('M.otc_buyer')}}：{{item.buyNickName}}
+                {{$t('M.otc_buyer')}}：
+                <span
+                  class="cursor-pointer"
+                  @click="jumpMerchantInfoPage(item.buyId)"
+                >
+                  {{item.buyNickName}}
+                </span>
               </div>
               <!--广告id-->
               <div class="AD-ID">
@@ -913,7 +932,8 @@ import {
   sellerSendAppeal,
   buyerSendAppeal,
   cancelUserOtcOrder,
-  completeUserOtcOrder
+  completeUserOtcOrder,
+  cancelTradingOrderAjax
 } from '../../../utils/api/OTC'
 import {timeFilter, formatSeconds, getCookie} from '../../../utils'
 import {apiCommonUrl, xDomain} from '../../../utils/env.js'
@@ -1016,6 +1036,11 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    jumpMerchantInfoPage (userId) {
+      if (userId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+      }
+    },
     // ren增加
     // 清除定义的数组类数据
     clearArrData () {
@@ -1453,7 +1478,19 @@ export default {
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
       this.$goToPage('/PersonalCenter')
       this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
-    }
+    },
+    // 买家摘单后未付款前可取消订单
+    cancelOrderBeforePayFor: _.debounce(async function (orderId) {
+      console.log(orderId)
+      let params = {
+        orderId: orderId // 订单id
+      }
+      const data = await cancelTradingOrderAjax(params)
+      console.log(data)
+      // 接口成功后的逻辑
+      // 再次调用接口刷新列表
+      this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
+    }, 500)
   },
   filter: {},
   computed: {
@@ -1726,6 +1763,14 @@ export default {
                   .wait-pay {
                     margin-right: 10px;
                     color: $upColor;
+
+                    > .cancelOrderButton {
+                      height: 22px;
+                      padding: 0 10px;
+                      border: 1px solid $mainColor;
+                      line-height: 22px;
+                      color: $mainColor;
+                    }
                   }
 
                   .count-time {

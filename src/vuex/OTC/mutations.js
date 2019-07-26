@@ -23,7 +23,9 @@ import {
   CHANGE_OTC_SELECTED_CURRENCY_ID,
   UPDATE_IM_BOX_SHOW_STATUS_M,
   UPDATE_IM_SOCKET_M,
-  UPDATE_IM_HAS_NEW_MESSAGE_MAP_M
+  UPDATE_IM_HAS_NEW_MESSAGE_MAP_M,
+  // 改变商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
+  CHANGE_BLACK_TABS_STATUS_M
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -90,5 +92,10 @@ export default {
     console.log(state.IMHasNewMessageMap_S, orderId)
     Vue.set(state.IMHasNewMessageMap_S, orderId, status)
     console.log(state.IMHasNewMessageMap_S, orderId)
+  },
+  // 商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
+  [CHANGE_BLACK_TABS_STATUS_M] (state, data) {
+    console.log(data)
+    state.blackTabsStatus = data
   }
 }

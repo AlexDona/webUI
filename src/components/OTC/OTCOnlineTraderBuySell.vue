@@ -20,7 +20,10 @@
                     v-if="this.userType === 'MERCHANT'"
                   >
                   <!-- 商户名称 -->
-                  <span class="name font-weight700">
+                  <span
+                    class="name font-weight700 cursor-pointer"
+                    @click="jumpMerchantInfoPage"
+                  >
                     {{userName}}
                   </span>
                 </div>
@@ -463,7 +466,9 @@ export default {
       moneyPointLength: 2, // 当前金额小数点限制位数-总金额和最低最高限额保留2位
       // 是否需要交易密码
       isNeedPayPassword: true,
-      sellTotal: '' // 用户资产可用余额20190320增加新字段展示
+      sellTotal: '', // 用户资产可用余额20190320增加新字段展示
+      // 用户userId
+      userId: ''
     }
   },
   async created () {
@@ -497,6 +502,11 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    jumpMerchantInfoPage () {
+      if (this.userId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: this.userId})
+      }
+    },
     // 0.4 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]
@@ -716,6 +726,7 @@ export default {
       if (!data) return false
       if (data.data) {
         let detailsData = getNestedData(data, 'data')
+        this.userId = getNestedData(detailsData, 'userId') // 用户userId
         // this.userName = getNestedData(detailsData, 'userName') // 挂单人姓名
         this.userName = getNestedData(detailsData, 'userNick') // 挂单人昵称
         this.successTimes = getNestedData(detailsData, 'successTimes') // 成交次数

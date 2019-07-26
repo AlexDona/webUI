@@ -30,7 +30,9 @@ const state = {
   // 是否有最新消息
   IMHasNewMessageMap_S: {},
   // OTC及时通讯
-  OTCIMSocket_S: null
+  OTCIMSocket_S: null,
+  // 商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
+  blackTabsStatus: false
 }
 
 export default {

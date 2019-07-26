@@ -53,6 +53,8 @@ export const routesVariable = {
   OTCBusinessApply: 'OTCBusinessApply',
   // OTC报表统计
   OTCReportFormStatistics: 'OTCReportFormStatistics',
+  // OTC商家信息
+  OTCViewMerchantInfo: 'OTCViewMerchantInfo',
   ForgetPassword: 'ForgetPassword',
   register: 'register',
   normalLogin: 'normal',

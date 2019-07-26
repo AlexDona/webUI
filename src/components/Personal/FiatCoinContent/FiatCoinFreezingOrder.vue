@@ -125,7 +125,11 @@
             <p class="text-info">
               <span>
                 {{$t('M.otc_name')}}：
-              </span><span>
+              </span>
+              <span
+                class="cursor-pointer"
+                @click="jumpMerchantInfoPage(item.sellId)"
+              >
               <!--{{item.sellName}}-->
               {{item.sellNickName}}
             </span>
@@ -229,6 +233,11 @@ export default {
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    jumpMerchantInfoPage (userId) {
+      if (userId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+      }
     }
   },
   filter: {},
