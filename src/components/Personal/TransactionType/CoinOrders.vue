@@ -780,10 +780,6 @@ export default {
     }
 
     /deep/ {
-      td:nth-of-type (1) {
-        padding-left: 6px !important;
-      }
-
       .el-tabs__item.is-top:nth-child(3) {
         margin: 0 19px;
       }
