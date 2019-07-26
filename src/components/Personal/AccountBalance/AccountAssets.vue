@@ -1541,8 +1541,7 @@ export default {
   .account-assets {
     > .account-assets-main {
       > .account-assets-box {
-        min-height: 480px;
-        margin-bottom: 50px;
+        min-height: 618px;
 
         .account-assets-header {
           > .header-flex {
@@ -1581,6 +1580,7 @@ export default {
           > .content-list {
             > .table-body {
               width: 100%;
+              margin-bottom: 50px;
 
               .tops-verify {
                 color: #3e79d6;
