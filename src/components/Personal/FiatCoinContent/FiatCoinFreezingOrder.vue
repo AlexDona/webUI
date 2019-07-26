@@ -235,7 +235,9 @@ export default {
       return timeFilter(date, 'normal')
     },
     jumpMerchantInfoPage (userId) {
-      this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+      if (userId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+      }
     }
   },
   filter: {},

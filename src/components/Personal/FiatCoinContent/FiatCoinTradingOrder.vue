@@ -1037,7 +1037,9 @@ export default {
       'REFRESH_USER_INFO_ACTION'
     ]),
     jumpMerchantInfoPage (userId) {
-      this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+      if (userId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+      }
     },
     // ren增加
     // 清除定义的数组类数据

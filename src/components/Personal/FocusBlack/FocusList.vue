@@ -171,7 +171,9 @@ export default {
     },
     // 4 昵称跳转
     jumpMerchantInfoPage (userId) {
-      this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+      if (userId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+      }
     }
   },
   // filter: {},

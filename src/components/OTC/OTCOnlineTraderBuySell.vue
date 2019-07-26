@@ -503,7 +503,9 @@ export default {
       'REFRESH_USER_INFO_ACTION'
     ]),
     jumpMerchantInfoPage () {
-      this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: this.userId})
+      if (this.userId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: this.userId})
+      }
     },
     // 0.4 输入限制
     formatInput (ref, pointLength) {

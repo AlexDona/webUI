@@ -149,7 +149,7 @@
             <div class="black-button-box">
               <button
                 class="button"
-                @click="focusBlackOpposite('2')"
+                @click="dialogVisible = true"
               >
                 <!--拉黑-->
                 {{$t('M.focus_black_title2')}}
@@ -192,7 +192,7 @@
             <div class="black-button-box">
               <button
                 class="button"
-                @click="focusBlackOpposite('2')"
+                @click="dialogVisible = true"
               >
                 <!--拉黑-->
                 {{$t('M.focus_black_title2')}}
@@ -449,7 +449,10 @@
               >
                 {{$t('M.comm_cancel')}}
               </button>
-              <button class="confirm item">
+              <button
+                class="confirm item"
+                @click="focusBlackOpposite('2')"
+              >
                 {{$t('M.comm_confirm')}}
               </button>
             </div>
@@ -468,7 +471,8 @@ import {
 import {
   getMerchantInfoAJAX, // 获得商家信息
   addFocusBlackListAJAX, // 关注/拉黑
-  cancelFocusAJAX // 取消关注/解除
+  cancelFocusAJAX, // 取消关注/解除
+  getUserIsBlackingAJAX // 判断此用户是否被当前用户正处于拉黑中状态
 } from '../../utils/api/focusBlack'
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {
@@ -529,27 +533,13 @@ export default {
         realNameAuth: '',
         // 关注与拉黑的状态
         relationType: ''
-      }
+      },
+      // 判断此用户是否被当前用户正处于拉黑中状态
+      userIsBlackingStatus: ''
     }
   },
   created () {
-    // console.log(this.$route.query)
-    if (this.$route.query.userId) {
-      this.userId = this.$route.query.userId
-    }
-    if (this.$route.query.coinId) {
-      this.coinId = this.$route.query.coinId
-    }
-    if (this.$route.query.currencyId) {
-      this.currencyId = this.$route.query.currencyId
-    }
-    if (this.userId || this.coinId || this.currencyId) {
-      this.getMerchantInfo()
-    }
-    // 增加拉黑人检测 ，不能进入该页面
-    // if (this.$route.query.userId === '502448157578231808') {
-    //   this.$goToPage(`/${this.$routes_X.OTCCenter}`)
-    // }
+    this.getURLParamsData()
   },
   // mounted () {},
   // activated () {},
@@ -563,11 +553,42 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_BLACK_TABS_STATUS_M'
     ]),
-    // 国际标准格式(09ˋ40′32″)
+    // 0 国际标准格式(09ˋ40′32″)
     BIHTimeFormatting (date) {
       return formatSeconds(date, 'OTC')
     },
-    // 1 查看商家信息页面数据
+    // 1 获得URL中参数信息
+    getURLParamsData () {
+      // console.log(this.$route.query)
+      if (this.$route.query.coinId) {
+        this.coinId = this.$route.query.coinId
+      }
+      if (this.$route.query.currencyId) {
+        this.currencyId = this.$route.query.currencyId
+      }
+      if (this.$route.query.userId) {
+        this.userId = this.$route.query.userId
+        this.getUserIsBlacking()
+      }
+    },
+    // 2 判断此用户是否被当前用户正处于拉黑中状态
+    async getUserIsBlacking () {
+      let param = {
+        toId: this.userId
+      }
+      const data = await getUserIsBlackingAJAX(param)
+      console.log(data)
+      if (!data) return false
+      // 数据返回后的逻辑
+      // relation：1：关注；2：拉黑
+      this.userIsBlackingStatus = getNestedData(data, 'data.relation')
+      if (this.userIsBlackingStatus === '2') {
+        this.$goToPage(`/${this.$routes_X.OTCCenter}`)
+        return false
+      }
+      this.getMerchantInfo()
+    },
+    // 3 查看商家信息页面数据
     async getMerchantInfo () {
       let param = {
         userId: this.userId,
@@ -600,7 +621,7 @@ export default {
       this.merchantUserInfo.realNameAuth = getNestedData(data, 'data.userInfo.realNameAuth')
       this.merchantUserInfo.relationType = getNestedData(data, 'data.userInfo.relationType')
     },
-    // 2 关注/拉黑
+    // 4 关注/拉黑
     async focusBlackOpposite (type) {
       let param = {
         toId: this.userId,
@@ -620,7 +641,7 @@ export default {
       // 重新刷新列表
       this.getMerchantInfo()
     },
-    // 3 取消关注/解除
+    // 5 取消关注/解除
     async cancelFocusBlackOpposite (type) {
       let param = {
         toId: this.userId,
@@ -633,7 +654,7 @@ export default {
       // 重新刷新列表
       this.getMerchantInfo()
     },
-    // 4.购买出售限制
+    // 6.购买出售限制
     async toOnlineBuyOrSell (id, coinId, userId, countryCode, entrustType) {
       const CHINA = ['853', '852', '886', '86']
       if (!this.isLogin) {

@@ -901,7 +901,9 @@ export default {
         this.$goToPage(`/${this.$routes_X.login}`)
         return false
       }
-      this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId, coinId: this.selectedOTCAvailableCurrencyCoinID, currencyId: this.checkedCurrencyId})
+      if (userId && this.selectedOTCAvailableCurrencyCoinID && this.checkedCurrencyId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId, coinId: this.selectedOTCAvailableCurrencyCoinID, currencyId: this.checkedCurrencyId})
+      }
     },
     // 获得查看弹窗信息和可用冻结数据：当币种和法币改变的时候也要调此接口刷新数据
     async getViewDialogInfo () {
