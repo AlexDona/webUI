@@ -12,12 +12,12 @@
       <!--搜索区-->
       <div class="search-box">
         <!--请输入关键字-->
-        <input
+        <!--<input
                 type="text"
                 class="search-input"
                 v-model="searchKeyWord"
                 :placeholder="$t('M.about_footer_info_keyWords')"
-        />
+        />-->
       </div>
       <!--列表区-->
       <div class="content-box">
@@ -284,10 +284,10 @@ export default {
   .news-and-notice-box {
     > .inner-box {
       > .search-box {
-        height: 250px;
+        height: 60px;
         line-height: 250px;
         text-align: center;
-        background: url(../../assets/develop/helpbanner.png) no-repeat center center;
+        // background: url(../../assets/develop/helpbanner.png) no-repeat center center;
         -webkit-background-size: 100% 100%;
         background-size: 100% 100%;
 
@@ -531,7 +531,7 @@ export default {
         width: 100%;
         height: 60px;
         padding-left: 38px;
-        margin-top: 30px;
+        margin-top: 60px;
         font-size: 18px;
         line-height: 60px;
       }
@@ -551,7 +551,7 @@ export default {
       }
 
       .el-pagination {
-        margin-top: 30px;
+        margin-top: 22px;
         text-align: center;
       }
     }
