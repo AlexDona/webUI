@@ -1579,7 +1579,7 @@ export default {
     margin-top: -10px;
 
     > .fiat-trading-order-content {
-      min-height: 540px;
+      min-height: 584px;
       padding: 0 10px 10px;
 
       .button {

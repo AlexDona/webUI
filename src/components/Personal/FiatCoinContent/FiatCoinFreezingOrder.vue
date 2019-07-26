@@ -260,7 +260,7 @@ export default {
 
   .fiat-freezing-order-box {
     > .freezing-order-content {
-      min-height: 530px;
+      min-height: 574px;
       padding: 0 10px 10px;
 
       > .freezing-table-head {

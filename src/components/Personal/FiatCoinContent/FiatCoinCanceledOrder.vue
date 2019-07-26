@@ -259,7 +259,7 @@ export default {
 
   .fiat-canceled-order-box {
     > .canceled-order-content {
-      min-height: 530px;
+      min-height: 574px;
       padding: 0 10px 10px;
 
       > .canceled-table-head {
