@@ -304,11 +304,11 @@ export default {
     await this.REFRESH_USER_INFO_ACTION()
     this.showNoPosswdAndNoVerifyNotice()
   },
-  mounted () {
-  },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {
+  // },
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -354,7 +354,7 @@ export default {
       }
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
@@ -371,7 +371,6 @@ export default {
   },
   watch: {
     userCenterActiveName (e) {
-      console.log(e)
       this.$setStore('active-target', e)
       this.currentUserCenterActiveName = e
       if (e !== 'assets') {
