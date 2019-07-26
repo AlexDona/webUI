@@ -137,16 +137,62 @@ export default {
       isShowShadow: false,
       targetDeg: 0,
       // 当前消息是否超时
-      currentIsOver24Hours: false
+      currentIsOver24Hours: false,
+      OTCSocketHeartCount: 0,
+      socketTimer: null
     }
   },
   // created () {},
   mounted () {
+    console.log(this.IMSocket_S.connState)
+    if (this.IMSocket_S.connState) {
+      const {id} = this.$userInfo_X
+      this.IMSocket_S.doOpen()
+      this.IMSocket_S.on('open', () => {
+        console.log('open')
+        this.IMSocket_S.send({
+          // 当前用户id
+          'userId': id,
+          // 请求的动作:“toConnect”建立socket连接;“sendMessage”发送聊天内容
+          'action': 'toConnect',
+          'source': 'web'
+        })
+      })
+      this.IMSocket_S.on('message', (e) => {
+        console.log(e)
+        if (e.action == 'checkHeart') {
+          this.OTCSocketHeartCount++
+          this.IMSocket_S.send(e, () => {
+            console.log('callback')
+            this.socketTimer = setTimeout(() => {
+              console.log(this.OTCSocketHeartCount)
+              // 已收到
+              if (this.OTCSocketHeartCount == 2) {
+                this.OTCSocketHeartCount--
+              } else {
+                // 未收到
+                this.OTCSocketHeartCount = 0
+                this.IMSocket_S.doClose()
+                console.log(this.IMSocket_S)
+              }
+            }, e.duration + 1000)
+          })
+        }
+      })
+      this.IMSocket_S.send({
+        // 当前用户id
+        'userId': id,
+        // 请求的动作:“toConnect”建立socket连接;“sendMessage”发送聊天内容
+        'action': 'toConnect'
+      })
+    }
     this.receiveMessage()
   },
   // updated () {},
   // beforeRouteUpdate () {},
-  // beforeDestroy () {},
+  beforeDestroy () {
+    clearTimeout(this.socketTimer)
+  },
   // destroyed () {},
   methods: {
     ...mapMutations([
