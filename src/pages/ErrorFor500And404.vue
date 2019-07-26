@@ -44,8 +44,7 @@
 import {mapState} from 'vuex'
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
-  components: {
-  },
+  components: {},
   // props,
   data () {
     return {
@@ -53,25 +52,42 @@ export default {
     }
   },
   created () {
-    console.log(this.$route.path)
     if (this.$route.path === '/500') {
       this.is500 = true
+      if (this.routerTo !== '/') {
+        localStorage.setItem('routerTo', this.routerTo)
+      }
+    }
+    window.onbeforeunload = e => {
+      this.beforeunloadFn(e)
     }
   },
   mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
-  methods: {},
+  activated () {
+  },
+  update () {
+  },
+  beforeRouteUpdate () {
+  },
+  methods: {
+    beforeunloadFn (e) {
+      this.$router.replace(localStorage.getItem('routerTo'))
+    }
+
+  },
   filter: {},
   computed: {
-    ...mapState([
-    ]),
+    ...mapState({
+      'routerTo': state => state.common.routerTo
+    }),
     windowHeight () {
       return window.innerHeight
     }
   },
-  watch: {}
+  watch: {},
+  destroyed () {
+    window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
