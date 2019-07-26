@@ -273,28 +273,24 @@ export default {
         completed: `99px`,
         canceled: `99px`,
         frozen: `99px`
-      }
+      },
+      // OTC 心跳发送次数
+      OTCSocketHeartCount: 0,
+      socketTimer: null
     }
   },
   async created () {
+    this.initSocket()
     await this.getOTCAvailableCurrencyList()
     await this.getMerchantAvailableLegalTenderList()
     await this.getOTCEntrustingOrdersRevocation()
-    const {id} = this.$userInfo_X
-    this.socket = new Socket(this.url = `${OTCIMSocketUrl}/web/${id}`)
-
-    this.UPDATE_IM_SOCKET_M(this.socket)
-    this.socket.doOpen()
-    this.socket.send({
-      // 当前用户id
-      'userId': id,
-      // 请求的动作:“toConnect”建立socket连接;“sendMessage”发送聊天内容
-      'action': 'toConnect'
-    })
   },
   // mounted () {},
   // update () {},
   // beforeRouteUpdate () {},
+  beforeDestroy () {
+    clearTimeout(this.socketTimer)
+  },
   methods: {
     ...mapMutations([
       'SET_LEGAL_TENDER_LIST',
@@ -306,6 +302,51 @@ export default {
       // 改变清除交易中数据方法的状态
       'CHANGE_CLEAR_DATA_STATUS_M'
     ]),
+    initSocket () {
+      const {id} = this.$userInfo_X
+      // this.socket = new Socket(this.url = `${OTCIMSocketUrl}/web/${id}`)
+      this.socket = new Socket(this.url = `${OTCIMSocketUrl}`)
+
+      this.UPDATE_IM_SOCKET_M(this.socket)
+      this.socket.doOpen()
+      this.socket.on('open', () => {
+        console.log('open')
+        this.socket.send({
+          // 当前用户id
+          'userId': id,
+          // 请求的动作:“toConnect”建立socket连接;“sendMessage”发送聊天内容
+          'action': 'toConnect',
+          'source': 'web'
+        })
+      })
+      this.socket.on('message', (e) => {
+        console.log(e)
+        if (e.action == 'checkHeart') {
+          this.OTCSocketHeartCount++
+          this.socket.send(e, () => {
+            console.log('callback')
+            this.socketTimer = setTimeout(() => {
+              console.log(this.OTCSocketHeartCount)
+              // 已收到
+              if (this.OTCSocketHeartCount == 2) {
+                this.OTCSocketHeartCount--
+              } else {
+                // 未收到
+                this.OTCSocketHeartCount = 0
+                this.socket.doClose()
+                console.log(this.socket)
+              }
+            }, e.duration + 1000)
+          })
+        }
+      })
+      this.socket.send({
+        // 当前用户id
+        'userId': id,
+        // 请求的动作:“toConnect”建立socket连接;“sendMessage”发送聊天内容
+        'action': 'toConnect'
+      })
+    },
     // 时间选择
     changeSelectValue (type, targetValue) {
       switch (type) {
