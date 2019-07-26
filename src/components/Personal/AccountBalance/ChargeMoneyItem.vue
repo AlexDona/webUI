@@ -95,7 +95,7 @@
         // 我的资产添加USDT 类型区分文本
         p(v-if="currencyName == 'USDT'") * {{ $t('M.user_assets_withdrawal_hint10').format([currencyName, currencyName]) }}
         // 转账时请务必备注（否则后果自负）：UID
-        p(v-if="isNeedTag == 'true'") * {{ $t('M.user_assets_recharge_hint0').format([currencyName,currencyName]) }}{{rechargeNoteInfo}}
+        p(v-if="isNeedTag") * {{ $t('M.user_assets_recharge_hint0').format([currencyName,currencyName]) }}{{rechargeNoteInfo}}
         // 禁止充值除 之外的其他资产，任何非 资产充值将不可找回
         p * {{ $t('M.user_assets_recharge_hint1').format([currencyName, currencyName]) }}
         // 往该地址充值，汇款完成，等待网络自动确认（{}个确认）后系统自动到账
