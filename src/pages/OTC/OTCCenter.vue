@@ -843,7 +843,6 @@ export default {
     if (this.isLogin) {
       await this.REFRESH_USER_INFO_ACTION()
       this.reflashUserInfo() // 刷新用户信息
-      // console.log('国家码：' + this.userInfo.country)
       // 7.0 登陆后进页面待币种和法币都有id的时候调接口渲染查看弹窗及头部可用冻结数据
       await this.getViewDialogInfo()
     }
@@ -913,7 +912,6 @@ export default {
       }
       if (!this.selectedOTCAvailableCurrencyCoinID || !this.checkedCurrencyId) return false
       const data = await getViewInfoAJAX(param)
-      console.log(data)
       if (!data) return false
       // 返回数据正确的逻辑
       // 先赋值
@@ -940,7 +938,6 @@ export default {
       this.countrySelectStatus = true
       const data = await getCurrencyCountrys()
       // 返回数据正确的逻辑
-      console.log(data)
       if (!data) return false
       this.countryInfoList = getNestedData(data, 'data')
       this.countrySelectStatus = false
@@ -972,7 +969,6 @@ export default {
     },
     // 增加国家-切换国家列表
     changeCountryId (e) {
-      console.log(e)
       this.CHANGE_OTC_SELECTED_COUNTRY_ID(e)
       this.currentPage = 1 // 改变页码为第1页
       this.checkedCountryId = e
@@ -1011,7 +1007,6 @@ export default {
     },
     // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {
-      // console.log(this.activeName)
       // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
       this.isDisabled = true
       this.isDisabledTimer = setTimeout(() => {
@@ -1074,7 +1069,6 @@ export default {
       } else {
         // 刷新用户信息
         await this.REFRESH_USER_INFO_ACTION()
-        // console.log(countryCode, userId, this.userInfo)
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           // 去个人中心设置交易密码
@@ -1137,14 +1131,11 @@ export default {
     //  1.0 otc可用币种查询：我要购买/我要出售的币种列表
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({})
-      // console.log('otc可用币种查询')
-      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
         this.IWantToBuySellArr = getNestedData(data, 'data')
         if (this.IWantToBuySellArr.length) {
-          console.log(this.IWantToBuySellArr)
           _.forEach(this.IWantToBuySellArr, (coin, coinIndex) => {
             if (coin.name == 'FBT') {
               this.IWantToBuySellArr.splice(coinIndex, 1)
@@ -1161,7 +1152,6 @@ export default {
                 if (jumpCoinId == item.coinId) {
                   this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(item.name)
                   this.selectCurrencyNameStatus = index
-                  console.log(this.selectCurrencyNameStatus)
                 }
               })
             }
@@ -1177,14 +1167,10 @@ export default {
     async getMerchantAvailableLegalTenderList () {
       this.currencyCoinSelectStatus = true // 禁用货币类型select框
       const data = await getMerchantAvailableLegalTender({})
-      // console.log('otc法币查询列表')
-      // console.log(data)
-      // console.log(this.otcSelectedCurrencyId)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data.data) {
         this.availableCurrencyId = getNestedData(data, 'data')
-        // console.log(this.availableCurrencyId)
         // 第一次进来默认选中人民币，切换之后跳出本页面，再返回本页面显示最后一次切换的法币
         if (this.otcSelectedCurrencyId) {
           this.checkedCurrencyId = this.otcSelectedCurrencyId
@@ -1203,7 +1189,6 @@ export default {
     //  3.0 刚进页面时候 otc主页面查询挂单列表
     getOTCPutUpOrdersList: _.debounce(async function () {
       if (this.selectedOTCAvailableCurrencyCoinID && this.checkedCurrencyId) {
-        // console.log('有法币和可以币种id')
         let param = {
           pageNum: this.currentPage,
           payType: this.checkedPayType, // 按照选中的支付方式查询列表
@@ -1217,14 +1202,11 @@ export default {
           param.entrustType = 'BUY' // 挂单类型（BUY SELL）
         }
         const data = await getOTCPutUpOrders(param)
-        // console.log('otc主页面查询挂单列表')
-        // console.log(data)
         // 返回数据正确的逻辑
         if (!data) return false
         if (data.data) {
           let orderListData = getNestedData(data, 'data')
           this.onlineBuySellTableList = getNestedData(orderListData, 'list')
-          // console.log(this.onlineBuySellTableList);
           // 分页
           this.totalPages = getNestedData(orderListData, 'pages') - 0
           // 改变全局 委托定单撤单后，更新首页挂单列表状态
@@ -1235,8 +1217,6 @@ export default {
     //  4.0 选中我想购买和出售币种名称
     selectCurrencyName (index) {
       this.currentPage = 1
-      // console.log(this.currentPage)
-      console.log(index, this.IWantToBuySellArr[index].coinId)
       this.selectCurrencyNameStatus = index
       this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name) // 币种名称
       this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId) // 币种id
@@ -1248,13 +1228,11 @@ export default {
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
     async toggleBuyOrSellStyle (e) {
       this.currentPage = 1
-      // console.log(this.currentPage)
       this.OTCBuySellStyle = e
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
-      console.log(e)
       this.CHANGE_OTC_SELECTED_CURRENCY_ID(e)
       if (this.countryInfoList.length) {
         this.checkedCountryId = this.countryInfoList[this.countryInfoList.length - 1].id // 增加国家-国家为所有国家
@@ -1275,9 +1253,7 @@ export default {
     // 9.0 改变支付方式下拉框的选中值
     payWayChangeValue (e) {
       this.currentPage = 1
-      // console.log(this.currentPage)
       this.checkedPayType = e
-      // console.log(this.checkedPayType) //  选中的支付方式的id
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     }
   },
@@ -1308,11 +1284,11 @@ export default {
     },
     // otc主页国家列表筛选框选中的国家id
     otcSelectedCountryId (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     // otc主页法币列表筛选框选中的法
     otcSelectedCurrencyId (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     }
   },
   destroyed () {
@@ -1536,7 +1512,6 @@ export default {
             justify-content: space-between;
             height: 60px;
             padding: 0 30px;
-            border-bottom: 1px solid #34415e;
 
             > .photo-left {
               padding-top: 10px;
@@ -1544,22 +1519,10 @@ export default {
               .icon {
                 margin-right: 5px;
               }
-
-              > .person-name {
-                color: $mainColorOfWhite;
-              }
             }
 
             > .photo-right {
               padding-top: 15px;
-
-              > .time-top {
-                color: $dialogColor9;
-              }
-
-              > .time-bottom {
-                color: $dialogColor9;
-              }
             }
           }
 
@@ -1568,26 +1531,19 @@ export default {
             flex-wrap: wrap;
             height: 100px;
             padding: 15px 30px 0 80px;
-            box-shadow: 0 2px 6px 0 rgba(32, 36, 55, 1);
 
             > .items {
               width: 33%;
               font-size: 12px;
-              color: $mainColorOfWhite;
 
               .icon {
                 width: 24px;
                 height: 24px;
-                color: $mainColor;
               }
             }
 
-            > .unverified {
-              color: $dialogColor9 !important;
-
-              .icon {
-                color: $dialogColor9 !important;
-              }
+            .fifth-item {
+              width: 50%;
             }
           }
 
@@ -1602,12 +1558,10 @@ export default {
               > .bar-top {
                 margin-bottom: 6px;
                 font-size: 12px;
-                color: $dialogColor9;
               }
 
               > .bar-bottom {
                 font-size: 14px;
-                color: $mainColorOfWhite;
               }
             }
 
@@ -1850,15 +1804,10 @@ export default {
 
     /* 个人信息弹窗 */
     .person-info-dialog {
-      .el-dialog__wrapper {
-        background-color: rgba(0, 0, 0, .7);
-      }
-
       .el-dialog {
         width: 550px !important;
         height: 360px;
         border-radius: 4px;
-        background-color: $dialogColor1;
 
         .el-dialog__header {
           .el-dialog__headerbtn {
@@ -1965,6 +1914,63 @@ export default {
 
           > .rules-box {
             color: #a9bed4;
+          }
+        }
+
+        /* 个人信息弹窗黑色 */
+        > .person-info-dialog {
+          .person-body-content {
+            > .photo {
+              border-bottom: 1px solid #34415e;
+
+              > .photo-left {
+                > .person-name {
+                  color: $mainColorOfWhite;
+                }
+              }
+
+              > .photo-right {
+                > .time-top {
+                  color: $dialogColor9;
+                }
+
+                > .time-bottom {
+                  color: $dialogColor9;
+                }
+              }
+            }
+
+            > .identity-box {
+              box-shadow: 0 2px 6px 0 rgba(32, 36, 55, 1);
+
+              > .items {
+                color: $mainColorOfWhite;
+
+                .icon {
+                  color: $mainColor;
+                }
+              }
+
+              > .unverified {
+                color: $dialogColor9 !important;
+
+                .icon {
+                  color: $dialogColor9 !important;
+                }
+              }
+            }
+
+            > .other-infos {
+              > .bars {
+                > .bar-top {
+                  color: $dialogColor9;
+                }
+
+                > .bar-bottom {
+                  color: $mainColorOfWhite;
+                }
+              }
+            }
           }
         }
       }
@@ -2117,6 +2123,17 @@ export default {
           background-color: $mainColor;
         }
       }
+
+      /* 个人信息弹窗黑色 */
+      .person-info-dialog {
+        .el-dialog__wrapper {
+          background-color: rgba(0, 0, 0, .7);
+        }
+
+        .el-dialog {
+          background-color: $dialogColor1;
+        }
+      }
     }
   }
 
@@ -2219,27 +2236,15 @@ export default {
         > .person-info-dialog {
           .person-body-content {
             > .photo {
-              display: flex;
-              justify-content: space-between;
-              height: 60px;
-              padding: 0 30px;
               border-bottom: 1px solid rgba(97, 116, 153, .1);
 
               > .photo-left {
-                padding-top: 10px;
-
-                .icon {
-                  margin-right: 5px;
-                }
-
                 > .person-name {
                   color: $dayMainTitleColor;
                 }
               }
 
               > .photo-right {
-                padding-top: 15px;
-
                 > .time-top {
                   color: $dialogColor9;
                 }
@@ -2251,20 +2256,12 @@ export default {
             }
 
             > .identity-box {
-              display: flex;
-              flex-wrap: wrap;
-              height: 100px;
-              padding: 15px 30px 0 80px;
               box-shadow: 0 2px 2px 0 rgba(240, 240, 240, 1);
 
               > .items {
-                width: 33%;
-                font-size: 12px;
                 color: $mainColor;
 
                 .icon {
-                  width: 24px;
-                  height: 24px;
                   color: $mainColor;
                 }
               }
@@ -2279,29 +2276,14 @@ export default {
             }
 
             > .other-infos {
-              display: flex;
-              flex-wrap: wrap;
-              padding: 25px 30px 0 80px;
-
               > .bars {
-                width: 33%;
-
                 > .bar-top {
-                  margin-bottom: 6px;
-                  font-size: 12px;
                   color: $dialogColor9;
                 }
 
                 > .bar-bottom {
-                  font-size: 14px;
                   color: $dayMainTitleColor;
                 }
-              }
-
-              > .first-bar,
-              .second-bar,
-              .third-bar {
-                margin-bottom: 25px;
               }
             }
           }
@@ -2434,25 +2416,14 @@ export default {
         }
       }
 
-      /* 个人信息弹窗 */
+      /* 个人信息弹窗白色 */
       .person-info-dialog {
+        .el-dialog__wrapper {
+          background-color: rgba(0, 0, 0, .7);
+        }
+
         .el-dialog {
-          width: 550px !important;
-          height: 360px;
-          border-radius: 4px;
           background-color: $mainColorOfWhite;
-
-          .el-dialog__header {
-            .el-dialog__headerbtn {
-              top: 10px;
-              right: 10px;
-              padding: 0;
-            }
-          }
-
-          .el-dialog__body {
-            padding: 0;
-          }
         }
       }
     }

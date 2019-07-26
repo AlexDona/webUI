@@ -35,60 +35,66 @@
         </div>
         <!--1.2 认证-->
         <div class="two-identity">
-          <!--邮箱认证-->
-          <div
-            class="first-item items"
-            :class="{unverified: merchantUserInfo.mailAuth !== 'enable'}"
-          >
-            <span>{{$t('M.focus_black_identity1')}}</span>
-            <IconFontCommon
-              class="font-size40 icon-user"
-              iconName="icon-tongguo_huaban"
-            />
+          <div class="one-row row">
+            <!--邮箱认证-->
+            <div
+              class="first-item items"
+              :class="{unverified: merchantUserInfo.mailAuth !== 'enable'}"
+            >
+              <span>{{$t('M.focus_black_identity1')}}</span>
+              <IconFontCommon
+                class="font-size40 icon-user"
+                iconName="icon-tongguo_huaban"
+              />
+            </div>
+            <!--手机认证-->
+            <div
+              class="second-item items"
+              :class="{unverified: merchantUserInfo.phoneAuth !== 'enable'}"
+            >
+              <span>{{$t('M.focus_black_identity2')}}</span>
+              <IconFontCommon
+                class="font-size40 icon-user"
+                iconName="icon-tongguo_huaban"
+              />
+            </div>
           </div>
-          <!--手机认证-->
-          <div
-            class="second-item items"
-            :class="{unverified: merchantUserInfo.phoneAuth !== 'enable'}"
-          >
-            <span>{{$t('M.focus_black_identity2')}}</span>
-            <IconFontCommon
-              class="font-size40 icon-user"
-              iconName="icon-tongguo_huaban"
-            />
+          <div class="two-row row">
+            <!--实名认证-->
+            <div
+              class="third-item items"
+              :class="{unverified: merchantUserInfo.realNameAuth !== 'y'}"
+            >
+              <span>{{$t('M.user_real_name')}}</span>
+              <IconFontCommon
+                class="font-size40 icon-user"
+                iconName="icon-tongguo_huaban"
+              />
+            </div>
+            <!--高级认证-->
+            <div
+              class="fourth-item items"
+              :class="{unverified: merchantUserInfo.advancedAuth !== 'pass'}"
+            >
+              <span>{{$t('M.user_senior_certification')}}</span>
+              <IconFontCommon
+                class="font-size40 icon-user"
+                iconName="icon-tongguo_huaban"
+              />
+            </div>
           </div>
-          <!--实名认证-->
-          <div
-            class="third-item items"
-            :class="{unverified: merchantUserInfo.realNameAuth !== 'y'}"
-          >
-            <span>{{$t('M.user_real_name')}}</span>
-            <IconFontCommon
-              class="font-size40 icon-user"
-              iconName="icon-tongguo_huaban"
-            />
-          </div>
-          <!--高级认证-->
-          <div
-            class="fourth-item items"
-            :class="{unverified: merchantUserInfo.advancedAuth !== 'pass'}"
-          >
-            <span>{{$t('M.user_senior_certification')}}</span>
-            <IconFontCommon
-              class="font-size40 icon-user"
-              iconName="icon-tongguo_huaban"
-            />
-          </div>
-          <!--商家认证-->
-          <div
-            class="fifth-item items"
-            :class="{unverified: merchantUserInfo.merchantAuth !== 'PASS'}"
-          >
-            <span>{{$t('M.focus_black_identity3')}}</span>
-            <IconFontCommon
-              class="font-size40 icon-user"
-              iconName="icon-tongguo_huaban"
-            />
+          <div class="three-row row">
+            <!--商家认证-->
+            <div
+              class="fifth-item items"
+              :class="{unverified: merchantUserInfo.merchantAuth !== 'PASS'}"
+            >
+              <span>{{$t('M.focus_black_identity3')}}</span>
+              <IconFontCommon
+                class="font-size40 icon-user"
+                iconName="icon-tongguo_huaban"
+              />
+            </div>
           </div>
         </div>
         <!--1.3 交易信息-->
@@ -559,7 +565,6 @@ export default {
     },
     // 1 获得URL中参数信息
     getURLParamsData () {
-      // console.log(this.$route.query)
       if (this.$route.query.coinId) {
         this.coinId = this.$route.query.coinId
       }
@@ -577,7 +582,6 @@ export default {
         toId: this.userId
       }
       const data = await getUserIsBlackingAJAX(param)
-      console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
       // relation：1：关注；2：拉黑
@@ -596,13 +600,10 @@ export default {
         currencyId: this.currencyId
       }
       const data = await getMerchantInfoAJAX(param)
-      console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
       this.buyTableList = getNestedData(data, 'data.sellOtcEntrust')
-      console.log(this.buyTableList)
       this.sellTableList = getNestedData(data, 'data.buyOtcEntrust')
-      console.log(this.sellTableList)
       // 个人信息赋值
       this.merchantUserInfo.cashDeposit = getNestedData(data, 'data.userInfo.guaranteeCount')
       this.merchantUserInfo.cashDepositName = getNestedData(data, 'data.userInfo.guaranteeCoinName')
@@ -628,7 +629,6 @@ export default {
         relation: type
       }
       const data = await addFocusBlackListAJAX(param)
-      console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
       if (type === '2') {
@@ -648,7 +648,6 @@ export default {
         relation: type
       }
       const data = await cancelFocusAJAX(param)
-      console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
       // 重新刷新列表
@@ -662,7 +661,6 @@ export default {
       } else {
         // 刷新用户信息
         await this.REFRESH_USER_INFO_ACTION()
-        // console.log(countryCode, userId, this.userInfo)
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           // 去个人中心设置交易密码
@@ -753,25 +751,7 @@ export default {
 
         > .two-identity {
           position: relative;
-          display: flex;
-          flex-wrap: wrap;
-          height: 180px;
-          padding: 30px 30px 0;
-
-          .icon {
-            width: 24px;
-            height: 24px;
-          }
-
-          > .items {
-            width: 49%;
-            font-size: 12px;
-          }
-
-          > .second-item,
-          .fourth-item {
-            text-align: right;
-          }
+          padding: 30px 10px;
 
           &::after {
             position: absolute;
@@ -780,6 +760,23 @@ export default {
             width: 240px;
             height: 1px;
             content: '';
+          }
+
+          > .row {
+            display: flex;
+            justify-content: space-between;
+
+            > .items {
+              width: 49%;
+              padding: 10px 0;
+              font-size: 12px;
+              text-align: center;
+
+              .icon {
+                width: 20px;
+                height: 20px;
+              }
+            }
           }
         }
 
@@ -827,8 +824,9 @@ export default {
             }
 
             .button {
+              width: 105px;
               height: 30px;
-              padding: 5px 25px;
+              padding: 5px 10px;
               border-radius: 2px;
               font-size: 12px;
               cursor: pointer;
@@ -1039,24 +1037,26 @@ export default {
           }
 
           > .two-identity {
-            > .items {
-              color: $mainColorOfWhite;
-
-              .icon {
-                color: $mainColor;
-              }
-            }
-
-            > .unverified {
-              color: $dialogColor9 !important;
-
-              .icon {
-                color: $dialogColor9 !important;
-              }
-            }
-
             &::after {
               border-bottom: 1px dashed $dialogColor10;
+            }
+
+            > .row {
+              > .items {
+                color: $mainColorOfWhite;
+
+                .icon {
+                  color: $mainColor;
+                }
+              }
+
+              .unverified {
+                color: $dialogColor9 !important;
+
+                .icon {
+                  color: $dialogColor9 !important;
+                }
+              }
             }
           }
 
@@ -1208,24 +1208,26 @@ export default {
           }
 
           > .two-identity {
-            > .items {
-              color: $mainColor;
-
-              .icon {
-                color: $mainColor;
-              }
-            }
-
-            > .unverified {
-              color: $dialogColor9 !important;
-
-              .icon {
-                color: $dialogColor9 !important;
-              }
-            }
-
             &::after {
               border-bottom: 1px dashed rgba(97, 116, 153, .2);
+            }
+
+            > .row {
+              > .items {
+                color: $mainColor;
+
+                .icon {
+                  color: $mainColor;
+                }
+              }
+
+              .unverified {
+                color: $dialogColor9 !important;
+
+                .icon {
+                  color: $dialogColor9 !important;
+                }
+              }
             }
           }
 

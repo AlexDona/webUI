@@ -132,21 +132,18 @@ export default {
   methods: {
     // 1 翻页
     changeCurrentPage (pageNum) {
-      console.log(pageNum)
       this.currentPage = pageNum
       // 重新刷新列表
       this.getFocusLists()
     },
     // 2 确认取消关注接口
     async confirmCancelFocus (id) {
-      console.log(id)
       let param = {
         toId: id,
         // 此操作进行时的关系：“1”关注，“2”拉黑
         relation: '1'
       }
       const data = await cancelFocusAJAX(param)
-      console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
       this.currentPage = 1
@@ -160,12 +157,10 @@ export default {
         pageSize: this.pageSize
       }
       const data = await getFocusListsAJAX(param)
-      console.log(data)
       if (!data) return false
       // 数据返回后的逻辑
       // 数据赋值
       this.focusList = getNestedData(data, 'data.list')
-      console.log(this.focusList)
       // 总页数赋值
       this.totalPages = getNestedData(data, 'data.pages') - 0
     },
