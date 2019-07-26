@@ -153,7 +153,6 @@
                 <!--交易对-->
                 <el-table-column
                   :label="$t('M.comm_deal_pair')"
-                  width="75"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.tradeName }}</span>
@@ -162,7 +161,6 @@
                 <!--撮合类型-->
                 <el-table-column
                   :label="$t('M.user_coin_bring_together') + $t('M.comm_type')"
-                  width="80"
                 >
                   <template slot-scope="s">
                     <span>{{ $t(`M.${s.row.i18nMatchTypeName}`) }}</span>
@@ -172,7 +170,6 @@
                 <!--委单类型-->
                 <el-table-column
                   :label="$t('M.user_coin_appoint_single_stle')"
-                  width="85"
                 >
                   <template slot-scope="s">
                     <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -182,7 +179,6 @@
                 <!--数量-->
                 <el-table-column
                   :label="$t('M.comm_count')"
-                  width="110"
                 >
                   <template slot-scope="s">
                     <!--<span>{{ s.row.count-0 }}</span>-->
@@ -192,7 +188,6 @@
                 <!--委托总额-->
                 <el-table-column
                   :label="$t('M.user_coin_order5')"
-                  width="120"
                 >
                   <template slot-scope="s">
                     <!--<span>{{ s.row.amount-0}}</span>-->
@@ -202,7 +197,6 @@
                 <!--已成交-->
                 <el-table-column
                   :label="$t('M.user_coin_order6')"
-                  width="120"
                 >
                   <template slot-scope="s">
                     <!--<span>{{s.row.completeCount-0}}</span>-->
@@ -212,7 +206,6 @@
                 <!--未成交-->
                 <el-table-column
                   :label="$t('M.comm_not_make_bargain')"
-                  width="120"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.leftCount-0}}</span>
@@ -221,7 +214,6 @@
                 <!--状态-->
                 <el-table-column
                   :label="$t('M.comm_state')"
-                  width="55"
                 >
                   <template slot-scope="s">
                     <span>{{ $t(`M.${s.row.i18nStatusName}`) }}</span>
@@ -230,7 +222,6 @@
                 <!--操作-->
                 <el-table-column
                   :label="$t('M.comm_operation')"
-                  width="85"
                 >
                   <template slot-scope="s">
                     <button
@@ -276,7 +267,6 @@
             <!--交易对-->
             <el-table-column
               :label="$t('M.comm_deal_pair')"
-              width="80"
             >
               <template slot-scope="s">
                 <span>{{ s.row.tradeName }}</span>
@@ -370,7 +360,7 @@
             <!--时间-->
             <el-table-column
               :label="$t('M.comm_time')"
-              width="125"
+              width="135"
             >
               <template slot-scope="s">
                 <span>{{ s.row.createTime }}</span>
@@ -559,7 +549,6 @@ export default {
       let data
       let data1
       let data2
-      console.log(params)
       switch (entrustType) {
         case 'current-entrust':
           params.currentPage = this.currentPageForMyEntrust
@@ -593,7 +582,6 @@ export default {
      * @entrustType: 订单类型： 0：当前委托 1： 历史委托 2:  成交明细
      */
     changeCurrentPage (entrustType, pageNum) {
-      console.log(pageNum)
       switch (entrustType) {
         case 'current-entrust':
           this.currentPageForMyEntrust = pageNum
@@ -612,7 +600,6 @@ export default {
      * 4.撤销委单
      */
     repealMyEntrust (id, version) {
-      console.log(id)
       let params = {
         id,
         version
@@ -737,7 +724,7 @@ export default {
 
     .search-condition-box {
       width: 100%;
-      padding: 20px;
+      padding: 8px 20px;
 
       > .condition-item {
         display: inline-block;
@@ -793,15 +780,24 @@ export default {
     }
 
     /deep/ {
+      td:nth-of-type (1) {
+        padding-left: 6px !important;
+      }
+
+      .el-tabs__item.is-top:nth-child(3) {
+        margin: 0 19px;
+      }
+
       /* 点击切换时背景色和字体颜色 */
       .el-tabs__item {
-        width: 105px;
+        width: 65px;
+        height: 42px;
         padding: 0;
-        margin-left: 4px;
+        margin: 10px 0 0;
         border-left: 0 solid transparent !important;
         text-align: center;
         background-color: transparent !important;
-      }
+       }
 
       .el-input__inner {
         width: 80px;
@@ -844,7 +840,7 @@ export default {
       }
 
       .el-table {
-        width: 970px !important;
+        width: 100%;
         font-size: 12px;
 
         th {
@@ -856,7 +852,6 @@ export default {
         .el-table__header,
         .el-table__body {
           table-layout: auto;
-          width: 970px !important;
         }
       }
 
@@ -881,7 +876,7 @@ export default {
       }
 
       .el-pagination {
-        text-align: right;
+        text-align: center;
       }
 
       .el-table__empty-block {
@@ -908,6 +903,14 @@ export default {
       }
 
       /deep/ {
+        .el-tabs__nav-wrap.is-top {
+          padding: 0 20px;
+
+          .el-tabs__nav-scroll {
+            border-bottom: 1px solid rgba(45, 54, 81, 1);
+          }
+        }
+
         /* 个人中心（黑色主题） */
         .el-input__suffix {
           top: 4px;
@@ -982,7 +985,7 @@ export default {
         }
 
         .el-pagination {
-          text-align: right;
+          text-align: center;
           background-color: transparent;
         }
 
@@ -991,7 +994,7 @@ export default {
         }
 
         th.is-leaf {
-          border-bottom: 1px solid rgba(57, 66, 77, .1);
+          border-bottom: 1px solid rgba(45, 54, 81, 1);
         }
       }
     }
@@ -1027,6 +1030,14 @@ export default {
       }
 
       /deep/ {
+        .el-tabs__nav-wrap.is-top {
+          padding: 0 20px;
+
+          .el-tabs__nav-scroll {
+            border-bottom: 1px solid rgba(217, 225, 236, 1);
+          }
+        }
+
         /* 个人中心（白色主题） */
         .el-input__suffix {
           top: 4px;
@@ -1053,6 +1064,10 @@ export default {
             color: #338ff5;
             background: rgba(51, 143, 245, .1);
           }
+        }
+
+        th.is-leaf {
+          border-bottom: 1px solid rgba(217, 225, 236, 1);
         }
 
         .el-input--suffix {
