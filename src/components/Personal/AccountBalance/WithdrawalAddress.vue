@@ -1116,6 +1116,10 @@ export default {
         }
       }
     }
+
+    .el-pagination {
+      margin: -40px;
+    }
   }
 </style>
 <style lang="scss">
