@@ -1124,8 +1124,9 @@ export default {
     }
 
     > .security-record {
-      min-height: 510px;
+      min-height: 574px;
       margin-top: 10px;
+      margin-bottom: 50px;
 
       .tab-list {
         height: 450px;
