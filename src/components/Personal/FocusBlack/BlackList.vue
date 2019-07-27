@@ -63,11 +63,12 @@
         <div class="page">
           <el-pagination
             background
-            v-show="blackList.length - 15 > 0"
             layout="prev, pager, next"
             :current-page="currentPage"
             :page-count="totalPages"
             @current-change="changeCurrentPage"
+            :total="total"
+            v-show="total - 15 > 0"
           >
           </el-pagination>
         </div>
@@ -95,6 +96,8 @@ export default {
       totalPages: 1,
       // 每页返回多少条
       pageSize: 15,
+      // 总条数
+      total: 0,
       // 黑名单列表
       blackList: []
     }
@@ -140,6 +143,8 @@ export default {
       this.blackList = getNestedData(data, 'data.list')
       // 总页数赋值
       this.totalPages = getNestedData(data, 'data.pages') - 0
+      // 总条数赋值
+      this.total = getNestedData(data, 'data.total') - 0
     }
   },
   // filter: {},
@@ -163,6 +168,7 @@ export default {
         padding: 0 30px;
 
         .operation-text {
+          height: 24px;
           color: $mainColor;
         }
       }
