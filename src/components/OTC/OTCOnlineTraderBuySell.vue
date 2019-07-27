@@ -29,21 +29,6 @@
                 </div>
                 <!-- 商家交易统计 -->
                 <div class="shopper-statistics">
-                  <!-- 成交次数 -->
-                  <!--<div class="trader-total">
-                    <p class="blue">{{$scientificToNumber(successTimes)}}</p>
-                    <p class="text">{{$t('M.otc_index_tradeTimes')}}</p>
-                  </div>-->
-                  <!-- 失败次数 -->
-                  <!--<div class="failed">
-                    <p class="blue">{{$scientificToNumber(failTimes)}}</p>
-                    <p class="text">{{$t('M.otc_index_failureTimes')}}</p>
-                  </div>-->
-                  <!-- 账户冻结次数 -->
-                  <!--<div class="freeze">
-                    <p class="blue">{{$scientificToNumber(freezeTimes)}}</p>
-                    <p class="text">{{$t('M.otc_index_freezeTimes')}}</p>
-                  </div>-->
                   <!--交易信息-->
                   <div class="trade-infos">
                     <div class="first-bar bars">
@@ -807,9 +792,6 @@ export default {
         this.userId = getNestedData(detailsData, 'userId') // 用户userId
         // this.userName = getNestedData(detailsData, 'userName') // 挂单人姓名
         this.userName = getNestedData(detailsData, 'userNick') // 挂单人昵称
-        // this.successTimes = getNestedData(detailsData, 'successTimes') // 成交次数
-        // this.failTimes = getNestedData(detailsData, 'failTimes') // 失败次数
-        // this.freezeTimes = getNestedData(detailsData, 'freezeTimes') // 冻结次数
         this.remark = getNestedData(detailsData, 'remark') // 备注
         this.price = getNestedData(detailsData, 'price') // 报价
         this.payTypes = getNestedData(detailsData, 'payTypes') // 付款方式
@@ -993,28 +975,6 @@ export default {
           }
 
           > .shopper-statistics {
-            /*
-            display: flex;
-            flex: 3;
-            margin-top: 40px;
-            text-align: center;
-
-            .blue {
-              font-size: 14px;
-            }
-
-            .text {
-              margin-top: 5px;
-              font-size: 12px;
-            }
-
-            > .trader-total,
-            .failed,
-            .freeze {
-              flex: 3;
-            }
-            */
-
             > .trade-infos {
               display: flex;
               flex-wrap: wrap;
@@ -1287,16 +1247,6 @@ export default {
             }
 
             > .shopper-statistics {
-              /*
-              .blue {
-                color: $mainColor;
-              }
-
-              .text {
-                color: $mainNightTitleColor;
-              }
-              */
-
               > .trade-infos {
                 > .bars {
                   > .bar-top {
@@ -1501,16 +1451,6 @@ export default {
             }
 
             > .shopper-statistics {
-              /*
-              .blue {
-                color: $mainColor;
-              }
-
-              .text {
-                color: $dayMainTitleColor;
-              }
-              */
-
               > .trade-infos {
                 > .bars {
                   > .bar-top {
