@@ -36,7 +36,9 @@ const state = {
   // OTC Socket是否需要重连
   isOTCIMSocketNeedReconnect_S: false,
   // 是否收到新的心跳
-  hasNewOTCHart_S: false
+  hasNewOTCHart_S: false,
+  // otc聊天最新消息
+  newIMMessage_S: {}
 }
 
 export default {

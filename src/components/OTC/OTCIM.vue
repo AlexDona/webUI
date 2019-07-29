@@ -156,7 +156,8 @@ export default {
       'SET_LEGAL_TENDER_REFLASH_STATUS',
       'UPDATE_IM_HAS_NEW_MESSAGE_MAP_M',
       'UPDATE_OTC_IM_SOCKET_STATUS_M',
-      'UPDATE_OTC_IM_SOCKET_HEART_M'
+      'UPDATE_OTC_IM_SOCKET_HEART_M',
+      'UPDATE_NEW_IM_MESSAGE_M'
     ]),
     handleChangeWatch (e) {
       this.editText = e.target.value
@@ -268,6 +269,8 @@ export default {
     // 回调消息
     receiveMessage () {
       this.IMSocket_S.on('message', (e) => {
+        // console.log(e, new Date().getTime())
+        this.UPDATE_NEW_IM_MESSAGE_M(e)
         const {isOppositeMsg, orderId, isOver24Hours, action} = e
         if (action == 'checkHeart') {
           this.IMSocket_S.send(e)

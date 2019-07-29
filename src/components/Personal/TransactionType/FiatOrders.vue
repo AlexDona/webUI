@@ -314,7 +314,6 @@ export default {
       this.UPDATE_IM_SOCKET_M(this.socket)
       this.socket.doOpen()
       this.socket.on('open', () => {
-        console.log('open')
         this.UPDATE_OTC_IM_SOCKET_STATUS_M(false)
         this.socket.send({
           // 当前用户id
@@ -331,20 +330,6 @@ export default {
         if (e.action == 'checkHeart') {
           this.socket.send(e)
           // 非心跳之外 duration 内 无消息，客户端主动断开连接
-        } else if (e.action !== 'checkHeart') {
-          clearTimeout(this.socketTimer)
-          this.heartDuration = e.duration + 1000
-          this.OTCSocketHeartCount++
-          this.socketTimer = setTimeout(() => {
-            // 双方 有聊天
-            if (this.OTCSocketHeartCount > 1) {
-              this.OTCSocketHeartCount = 0
-            } else {
-              // 双方无聊天
-              this.OTCSocketHeartCount = 0
-              this.socket.doClose()
-            }
-          }, this.heartDuration)
         }
       })
     },
@@ -367,8 +352,6 @@ export default {
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
       })
-      // console.log('可用币种列表')
-      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data) {
@@ -378,8 +361,6 @@ export default {
     // 页面加载时 可用法币查询
     async getMerchantAvailableLegalTenderList () {
       const data = await getMerchantAvailableLegalTender()
-      // console.log('可用法币')
-      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data) {
@@ -404,7 +385,6 @@ export default {
     },
     // 点击查询按钮
     findFilter (activeName) {
-      // console.log(activeName)
       this.CHANGE_LEGAL_PAGE({
         legalTradePageNum: 1
       })
@@ -422,7 +402,6 @@ export default {
     },
     // 页面加载时请求接口渲染列表
     async getOTCEntrustingOrdersRevocation () {
-      // console.log(activeName)
       let params = {
         // 币种
         coinId: this.activatedMerchantsOrdersCoin,
@@ -451,8 +430,6 @@ export default {
       }
       if (this.activeName == 'ENTRUSTED') {
         const data = await getOTCEntrustingOrders(params)
-        console.log('委托订单列表')
-        console.log(data)
         if (!data) return false
         let OTCEntrustingOrdersData = getNestedData(data, 'data')
         // 返回数据正确的逻辑 重新渲染列表
@@ -460,7 +437,6 @@ export default {
           type: this.activeName,
           data: OTCEntrustingOrdersData.list
         })
-        // console.log(data)
         this.CHANGE_LEGAL_PAGE({
           legalTradePageNum: OTCEntrustingOrdersData.pageNum,
           legalTradePageTotals: OTCEntrustingOrdersData.pages
@@ -470,8 +446,6 @@ export default {
           if (!(returnAjaxMsg(data, this, 0))) {
             return false
           } else {
-            console.log('法币订单列表（除了委托订单)')
-            console.log(data)
             // 请求接口之前，调用子组件（交易中订单组件）方法，清空定义的数组数据
             this.CHANGE_CLEAR_DATA_STATUS_M(true)
             let merchantsOrdersListData = getNestedData(data, 'data.data')
@@ -482,7 +456,6 @@ export default {
             })
             // 刷新列表之后将重新渲染交易中订单列表状态改为false
             this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(false)
-            // console.log(data)
             this.CHANGE_LEGAL_PAGE({
               legalTradePageNum: merchantsOrdersListData.pageNum,
               legalTradePageTotals: merchantsOrdersListData.pages
@@ -510,13 +483,27 @@ export default {
       // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
       reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus, // 从全局获得的重新渲染交易中订单列表状态
       isOTCIMSocketNeedReconnect_S: state => state.OTC.isOTCIMSocketNeedReconnect_S,
-      hasNewOTCHart_S: state => state.OTC.hasNewOTCHart_S
+      hasNewOTCHart_S: state => state.OTC.hasNewOTCHart_S,
+      newIMMessage_S: state => state.OTC.newIMMessage_S
     }),
     activeNameAndLegalTradePageNum () {
       return `${this.activeName}/${this.legalTradePageNum}`
     }
   },
   watch: {
+    newIMMessage_S (New) {
+      const e = New
+      if (e.action == 'checkHeart') {
+        this.socket.send(e)
+        // 非心跳之外 duration 内 无消息，客户端主动断开连接
+      } else if (e.action !== 'checkHeart') {
+        clearTimeout(this.socketTimer)
+        this.heartDuration = e.duration + 1000
+        this.socketTimer = setTimeout(() => {
+          this.socket.doClose()
+        }, this.heartDuration)
+      }
+    },
     hasNewOTCHart_S (New) {
       if (New) {
         this.UPDATE_OTC_IM_SOCKET_HEART_M(false)
@@ -524,7 +511,6 @@ export default {
     },
     isOTCIMSocketNeedReconnect_S (New) {
       if (New) {
-        console.log(New)
         this.initSocket()
       }
     },
@@ -550,7 +536,6 @@ export default {
       }
     },
     legalTraderCancelReflashStatus (New) {
-      console.log(New)
       if (New) {
         this.getOTCEntrustingOrdersRevocation()
         this.SET_LEGAL_TENDER_REFLASH_STATUS({
@@ -576,8 +561,6 @@ export default {
     },
     //  监控重新渲染交易中订单列表状态:当为true时调用重新刷新列表方法
     reRenderTradingListStatus () {
-      console.log('重新渲染交易中订单列表状态')
-      console.log(this.reRenderTradingListStatus)
       if (this.reRenderTradingListStatus) {
         this.getOTCEntrustingOrdersRevocation()
       }
