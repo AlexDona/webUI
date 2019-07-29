@@ -786,7 +786,7 @@ export default {
             }
 
             .form-button {
-              color: rgba(255, 255, 255, .7);
+              color: rgba(255, 255, 255, 1);
               background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
             }
           }
