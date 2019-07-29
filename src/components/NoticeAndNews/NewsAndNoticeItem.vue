@@ -248,7 +248,7 @@ export default {
 
       > .inner-box {
         width: 1300px;
-        min-height: 1124px;
+        min-height: 900px;
         margin: 50px auto;
         overflow: hidden;
 
