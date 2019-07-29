@@ -314,7 +314,7 @@ export default {
           overflow: hidden;
 
           .item-content {
-            height: 920px;
+            height: 760px;
 
             > .content-list {
               > .content-item {
