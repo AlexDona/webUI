@@ -8,7 +8,7 @@
     // 切换登录方式
     .header
       // 账号登录
-      span.router-item.active 账号登录
+      span.router-item.active {{$t('M.login_with_ercode_tips')}}
       // 扫码登录
       router-link.router-item(:to="`/${$routes_X.login}/${$routes_X.scanLogin}`") {{$t('M.login_with_password_tips')}}
     // 主要内容
@@ -25,10 +25,11 @@
           label-width="0px"
           prop="username"
         )
+          // 请输入邮箱/手机号
           el-input(
             type="text"
             v-model="form.username"
-            placeholder="手机/邮箱"
+            :placeholder="$t('M.login_user_tips')"
             :autofocus="true"
             @keyup.enter.native="submitForm"
             clearable
@@ -39,10 +40,11 @@
           label-width="0px"
           prop="password"
         )
+          // 请输入密码
           el-input(
             type="password"
             v-model="form.password"
-            placeholder="密码"
+            :placeholder="$t('M.login_tips2')"
             autocomplete="off"
             clearable
             @keyup.enter.native="submitForm"
@@ -56,11 +58,15 @@
             // 记住账号
             el-checkbox(v-model="isRememberUsername") {{$t('M.login_tips7')}}
             //  忘记密码
-            router-link.forget-pass.font-size12(:to="`/${$routes_X.ForgetPassword}`") {{$t($globalLabel_X.forgetPassword)}} ?
+            a.forget-pass.font-size12.cursor-pointer(@click="jumpToForgetPass") {{$t($globalLabel_X.forgetPassword)}} ?
         el-form-item.error-tips-form(
           label=""
           label-width="0px"
         )
+          Iconfont.iconfont(
+            icon-name="icon-tishi1-copy"
+            v-show="loginErrorTips"
+          )
           span.error-tips {{loginErrorTips}}
         // 登录
         el-form-item.submit(
@@ -161,21 +167,17 @@ export default {
       // 是否记住账号
       isRememberUsername: Boolean(getStore('username')),
       username: 'username',
-      // 是否显示滚动条
+      // 是否显示滑块
       isShowSlider: false,
       // isShowSlider: true,
-      hiddenUsername: '',
-      // 步骤3 手机验证码
-      step3PhoneMsgCode: '',
-      // 步骤3 邮箱验证码
-      step3EmailMsgCode: '',
-      // 步骤3 谷歌验证码
-      step3GoogleMsgCode: '',
       // 登录表单错误提示
       loginErrorTips: ''
     }
   },
   created () {
+    if (this.$isLogin_S_X) {
+      this.$goToPage(`/${this.$routes_X.home}`)
+    }
     this.getLocalUserName()
   },
   // mounted () {}
@@ -189,11 +191,16 @@ export default {
       'SET_STEP1_INFO',
       'USER_LOGIN'
     ]),
+    jumpToForgetPass (e) {
+      e.preventDefault()
+      const {username} = this.form
+      if (username) this.$setStore('username', username)
+      this.$goToPage(`/${this.$routes_X.forgetPass}`)
+    },
     // 获取本地记录密码
     getLocalUserName () {
       let username = this.$getStore(this.username)
       this.isRememberUserName = Boolean(username)
-      console.log(username, this.isRememberUserName)
       if (this.isRememberUserName) {
         this.form.username = username
         this.$forceUpdate()
@@ -203,16 +210,10 @@ export default {
       // this.$setStore(this.username, this.form.username)
       this.$refs[this.formRef].validate((valid) => {
         if (!valid) return
-        /**
-         * 调登录接口 ？？？
-         */
-        // this.toggleCommonSlider_X(true)
-        console.log('接口调用')
         this.loginForStep1()
       })
     },
     successCallback () {
-      console.log('success')
       this.isShowSlider = false
       // this.isShowStep3Dialog = true
       const abnormalLogin = this.$firstLogin_X || !this.$loginIpEquals_X || this.$isBindGoogle_X
@@ -222,9 +223,6 @@ export default {
         // 登录第三步(第一次登录、异常ip)
         // this.isShowStep3Dialog = true
         this.$UPDATE_LOGIN_STEP2_DIALOG_STATUS_X(true)
-        if (!this.$isBindGoogle_X) {
-          this.$sendPhoneOrEmailCode_X()
-        }
       } else {
         this.loginForStep2({})
       }
@@ -273,7 +271,6 @@ export default {
      * @returns {Promise<boolean>}
      */
     async loginForStep2 ({phoneCode = '', emailCode = '', googleCode = ''}) {
-      // console.log(phone, email, google)
       if (!this.$loginIpEquals_X && this.$firstLogin_X) {
         // 谷歌验证
         if (this.$isBindGoogle_X) {
@@ -307,14 +304,12 @@ export default {
       const data = await newLoginForStep2AJAX(params)
       if (!data) return false
       this.SET_STEP1_INFO(_.get(data, 'data'))
-      console.log(this.$userInfo_S_X)
       this.$UPDATE_LOGIN_STEP2_DIALOG_STATUS_X(false)
       this.$UPDATE_IMAGE_CODE_M_X('')
       this.userLoginSuccess(_.get(data, 'data'))
     },
     userLoginSuccess (data) {
       this.USER_LOGIN(data)
-      console.log(this.$routerTo_X)
       const {isJumpToPersonal, type, coinName} = this.$route.query
       if (isJumpToPersonal) {
         this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
@@ -329,16 +324,12 @@ export default {
         `/${this.$routes_X.login}`,
         `/${this.$routes_X.ForgetPassword}`,
         `/${this.$routes_X.nofind404}`,
-        `/${this.$routes_X.serverError}`
+        `/${this.$routes_X.serverError}`,
+        `/${this.$routes_X.registerSuccess}`,
+        `/${this.$routes_X.forgetPass}`
       ]
-      console.log(_.every(notNeedJump, route => !this.$routerTo_X.startsWith(route)))
       if (this.$routerTo_X &&
         _.every(notNeedJump, route => !this.$routerTo_X.startsWith(route))
-        // !this.$routerTo_X.startsWith('/register') &&
-        // !this.$routerTo_X.startsWith('/login') &&
-        // !this.$routerTo_X.startsWith('/ForgetPassword') &&
-        // !this.$routerTo_X.startsWith('/nofind404') &&
-        // !this.$routerTo_X.startsWith('/500')
       ) {
         this.$goToPage(this.$routerTo_X)
       } else {
@@ -360,18 +351,15 @@ export default {
     }
   },
   watch: {
+    $language_S_X () {
+      this.loginErrorTips = ''
+    },
     'form.username' (New) {
       // 判断登录方式
       if (EMAIL_REG.test(New)) {
-        console.log('email')
-        let str = `${New}`.split('@')[0]
-        let str1 = New.split('@')[1]
-        this.hiddenUsername = `${str.substring(0, 3)} **** @${str1}`
         this.SET_LOGIN_TYPE(1)// email
       } else {
         this.SET_LOGIN_TYPE(0)// phone
-        let str = `${New}`
-        this.hiddenUsername = `${str.substring(0, 3)} **** ${str.substring(7)}`
       }
     },
     isRememberUsername (New) {
@@ -402,7 +390,7 @@ export default {
       >.router-item
         cursor pointer
         display inline-block
-        margin 0 30px
+        margin 0 14px
         /*background-color pink*/
         height 50px
         line-height 50px
@@ -411,8 +399,8 @@ export default {
         font-weight 700
         color #8494A6
         &.active
-          color #fff
-          border-bottom 1px solid #fff
+          color #3a8fde
+          border-bottom 1px solid #3a8fde
     /deep/
       /* 滑块弹窗 */
       .slider
@@ -452,6 +440,17 @@ export default {
             border-color transparent
             color S_day_bg
             font-size 12px
+          /* WebKit browsers */
+          ::-webkit-input-placeholder
+            color: #8B9197
+          /* Mozilla Firefox 19+ */
+          ::-moz-placeholder
+            color: #8B9197
+          /* Internet Explorer 10+ */
+          :-ms-input-placeholder
+            color #8B9197
+          .el-input__suffix
+            right 14px
           .el-checkbox__inner
             background-color transparent
             border-color #8B9197
@@ -461,7 +460,7 @@ export default {
           .el-checkbox
             &.is-checked
               .el-checkbox__label
-                color #2F78CA
+                color #3a8fde
           .el-checkbox__input
             .el-checkbox__inner
               &:after
@@ -472,7 +471,7 @@ export default {
             &.is-checked
               .el-checkbox__inner
                 border-color S_main_color
-                background #2f78ca url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
+                background #3a8fde url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
           /*密码*/
           &.password
             margin-bottom 10px
@@ -486,11 +485,17 @@ export default {
               justify-content space-between
               .forget-pass
                 margin-left 5px
-                color #2F78CA
+                color #3a8fde
           &.error-tips-form
             margin-bottom 10px
             height 40px
+            .iconfont
+              font-size 16px
+              vertical-align middle
+              color S_error_color
             .error-tips
+              vertical-align middle
+              margin-left 10px
               font-size 12px
               color S_error_color
           &.submit
@@ -514,6 +519,6 @@ export default {
           span
             color #8B9197
           a
-            color #2F78CA
+            color #3a8fde
             margin-left 5px
 </style>

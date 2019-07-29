@@ -27,7 +27,7 @@
       :style="{height:`${height}px`,'line-height':`${height}px`}"
       v-show="confirmSuccess"
     )
-      span.left {{successText}}
+      span.left {{$t(successText)}}
       span.right(
         :style="{width:`${height}px`}"
       )
@@ -66,7 +66,7 @@ export default {
       confirmSuccess: false,
       maxWidth: 0,
       dragTimer: null,
-      successText: '验证通过'
+      successText: 'M.slider_bar_success_tips'
     }
   },
   async created () {
@@ -77,18 +77,19 @@ export default {
   },
   // updated () {},
   // beforeRouteUpdate () {},
-  // beforeDestroy () {},
+  beforeDestroy () {
+    clearTimeout(this.timer)
+  },
   // destroyed () {}
   methods: {
     mouseUpFn (e) {
       this.mouseMoveStatus = false
       let width = e.clientX - this.beginClientX
       if (width < this.maxWidth) {
-        console.log(e)
-        // CSSAnimate(document.querySelector('.handler'), { left: 0 }, 15, 0.8, this.dragTimer)
-        // CSSAnimate(document.querySelector('.drag_bg'), { width: 0 }, 15, 0.8, this.dragTimer)
-        document.querySelector('.handler').style.left = '-1px'
-        document.querySelector('.drag_bg').style.width = 0
+        if (document.querySelector('.handler')) {
+          document.querySelector('.handler').style.left = '-1px'
+          document.querySelector('.drag_bg').style.width = 0
+        }
       }
     },
     mouseMoveFn (e) {
@@ -118,43 +119,19 @@ export default {
       targetLeft < this.maxWidth && targetLeft >= 0 ? this.$changeCSS_X('.handler', 'left', left) : this.sliderSuccessCallback()
     },
     touchEnd (e) {
-      // this.endX = e.changedTouches[0].pageX
       CSSAnimate(document.querySelector('.handler'), { left: 0 }, 15, 0.8, this.dragTimer)
     },
     // 按下滑块函数
     sliderSuccessCallback () {
-      console.log('success')
       this.$changeCSS_X('.handler', 'left', this.maxWidth)
       this.$changeCSS_X('.drag_bg', 'width', this.maxWidth + 5)
-      // this.$toggleEventListener_X('unbind', this.mouseMoveFn, this.mouseUpFn)
-      // this.$toggleEventListener_X('unbind', this.touchMove, this.touchEnd)
       this.confirmSuccess = true
-      // this.loginSliderStatus = false
-      this.$emit('successCallback')
-      this.mouseMoveStatus = false
-      this.$changeCSS_X('.handler', 'left', '-1px')
-      this.$changeCSS_X('.drag_bg', 'width', 0)
-      /*
-       * 是否需要图片验证码验证（条件：3次登录失败）
-       **/
-      // if (this.failureNum >= 3) {
-      //   // 多次错误登录
-      //   // 显示图片验证码
-      //   // this.userInputImageCode = ''
-      //   // this.loginImageValidateStatus = true
-      // } else if (
-      //   this.firstLogin ||
-      //   !this.loginIpEquals ||
-      //   this.isBindGoogle
-      // ) {
-      //   // 登录第三步(第一次登录、异常ip)
-      //   // this.step3DialogShowStatus = true
-      //   if (!this.isBindGoogle) {
-      //     this.autoSendValidateCode()
-      //   }
-      // } else {
-      //   this.loginForStep2()
-      // }
+      this.timer = setTimeout(() => {
+        this.$emit('successCallback')
+        this.mouseMoveStatus = false
+        this.$changeCSS_X('.handler', 'left', '-1px')
+        this.$changeCSS_X('.drag_bg', 'width', 0)
+      }, 500)
     }
   },
   // filter: {},
@@ -163,9 +140,9 @@ export default {
   watch: {
     confirmSuccess (newV) {
       if (newV && this.initAfterSuccess) {
-        setTimeout(() => {
-        }, 100)
-        this.confirmSuccess = false
+        this.timer = setTimeout(() => {
+          this.confirmSuccess = false
+        }, 500)
       }
 
       if (this.initAfterSuccess) {
@@ -220,6 +197,11 @@ export default {
       background-color #3c4369
       border-radius 4px
       overflow hidden
+      -moz-user-select none
+      -webkit-user-select none
+      -o-user-select none
+      -ms-user-select none
+      user-select none
       >.left
         flex 1
         color #118548

@@ -12,9 +12,9 @@
     @close="$UPDATE_LOGIN_STEP2_DIALOG_STATUS_X(false)"
   )
     el-form(
-      :model="validateForm"
-      :rules="validateRules"
-      :ref="validateFormRef"
+      :model="form"
+      :rules="rules"
+      :ref="formRef"
       label-width="100px"
       @submit.native.prevent="'@submit.native.prevent'"
     )
@@ -27,7 +27,7 @@
       )
         el-input(
           type="text"
-          v-model="validateForm.phone"
+          v-model="form.phone"
           :autofocus="true"
           :placeholder="`${$t('M.login_please_input1')}`"
           @keyup.enter.native.stop="loginForStep2"
@@ -49,7 +49,7 @@
       )
         el-input(
           type="text"
-          v-model="validateForm.email"
+          v-model="form.email"
           :placeholder="`${$t('M.login_please_input2')}`"
           :autofocus="true"
           @keyup.enter.native.stop="loginForStep2"
@@ -71,14 +71,22 @@
       )
         el-input(
           type="text"
-          v-model="validateForm.google"
+          v-model="form.google"
           :autofocus="true"
           :placeholder="$t('M.user_please_input9')"
           @keyup.enter.native.stop="googleAutoLogin"
-          @keydown.native.stop="googleAutoLogin"
-          @change.native.stop="googleAutoLogin"
           clearable
         )
+      //
+      el-form-item.error-tips-form(
+        label=""
+        label-width="0px"
+      )
+        Iconfont.iconfont(
+          icon-name="icon-tishi1-copy"
+          v-show="loginErrorTips"
+        )
+        span.error-tips {{loginErrorTips}}
       el-form-item.submit-form(
         label=""
         label-width="0px"
@@ -100,19 +108,61 @@ export default {
   },
   // props,
   data () {
+    // 手机号校验
+    let validatePhone = (rule, value, callback) => {
+      if (!value && this.needPhoneValidate) {
+        this.loginErrorTips = this.$t('M.login_please_input1')
+        // 请输入手机号
+        callback(new Error(' '))
+      } else {
+        this.loginErrorTips = ''
+        callback()
+      }
+    }
+    // 邮箱校验
+    let validateEmail = (rule, value, callback) => {
+      if (!value && this.needEmailValidate) {
+        this.loginErrorTips = this.$t('M.login_please_input2')
+        // 请输入手机号
+        callback(new Error(' '))
+      } else {
+        this.loginErrorTips = ''
+        callback()
+      }
+    }
+    // google校验
+    let validateGoogle = (rule, value, callback) => {
+      if (!value && this.needGoogleValidate) {
+        this.loginErrorTips = this.$t('M.user_please_input9')
+        // 请输入手机号
+        callback(new Error(' '))
+      } else {
+        this.loginErrorTips = ''
+        callback()
+      }
+    }
     return {
-      validateForm: {
+      form: {
         phone: '',
         email: '',
         google: ''
       },
-      validateRules: {
-
+      rules: {
+        phone: [
+          { validator: validatePhone, trigger: 'change' },
+          { validator: validatePhone, trigger: 'blur' }
+        ],
+        email: [
+          { validator: validateEmail, trigger: 'blur' },
+          { validator: validateEmail, trigger: 'change' }
+        ],
+        google: [
+          { validator: validateGoogle, trigger: 'blur' },
+          { validator: validateGoogle, trigger: 'change' }
+        ]
       },
-      validateFormRef: 'the-validate-form',
-      // 步骤3 弹窗显示状态
-      isShowStep3Dialog: true,
-      // isShowStep3Dialog: false,
+      loginErrorTips: '',
+      formRef: 'the-validate-form',
       titleText: {
         // 短信验证
         phone: 'M.login_dialog_title_label_01',
@@ -131,18 +181,20 @@ export default {
   // destroyed () {},
   methods: {
     googleAutoLogin: _.debounce(function () {
-      const {google} = this.validateForm
+      const {google} = this.form
       if (google.length >= 6) {
         this.loginForStep2()
       }
     }, 300),
     loginForStep2 () {
-      const {phone, email, google} = this.validateForm
-      console.log(phone)
-      this.$emit('loginForStep2', {
-        phoneCode: phone,
-        emailCode: email,
-        googleCode: google
+      this.$refs[this.formRef].validate((valid) => {
+        if (!valid) return
+        const {phone, email, google} = this.form
+        this.$emit('loginForStep2', {
+          phoneCode: phone,
+          emailCode: email,
+          googleCode: google
+        })
       })
     },
     /**
@@ -193,7 +245,6 @@ export default {
   },
   watch: {
     $isShowLoginStep2Dialog_S_X (New) {
-      console.log(New, this.$loginType_X)
       if (New) {
         if (!this.$isBindGoogle_X) {
           this.sendPhoneOrEmailCode(this.$isBindPhone_X ? 0 : 1)
@@ -242,19 +293,49 @@ export default {
           padding 65px 25px 0
           .el-form
             .el-form-item
-              margin-bottom 35px
+              margin-bottom 0
+              /* WebKit browsers */
+              ::-webkit-input-placeholder
+                color: #8B9197
+              /* Mozilla Firefox 19+ */
+              ::-moz-placeholder
+                color: #8B9197
+              /* Internet Explorer 10+ */
+              :-ms-input-placeholder
+                color #8B9197
+              &.error-tips-form
+                margin-bottom 0 !important
+                height 40px
+                .iconfont
+                  font-size 16px
+                  vertical-align middle
+                  color S_error_color
+                .error-tips
+                  vertical-align middle
+                  margin-left 10px
+                  font-size 12px
+                  color S_error_color
               &.google-validate
                 .el-input__inner
                   border 1px solid #25283D
               .el-input__inner
                 background-color transparent
                 border-color #25283D
-                color #60678B
+                color #fff
                 height 44px
                 border-right none
+                font-size 12px
               .el-input-group__append
                 background-color transparent
                 border-color #25283D
+                .count-down
+                  color #3a8fde
+                  border-left 1px solid #3a8fde
+                  padding 0
+                  span
+                    font-size 12px !important
+                  &.is-disabled
+                    color #fff
               &.submit-form
                 text-align center
                 .el-button

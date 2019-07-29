@@ -21,29 +21,35 @@
           .qr-box
             .inner-box(@click="getQrCode")
               QrCode.cursor-pointer(
-              v-if="qrCode"
-              :value="qrCode"
-              :size="186"
+                v-if="qrCode"
+                :value="qrCode"
+                :size="186"
               )
           .tips(v-show="qrCode")
             span {{$t(tips)}}
       // 扫描成功
       .scan-success(v-else)
-        Iconfont.icon-font(icon-name="iconscan-success")
+        Iconfont.mobile-phone(icon-name="icon-shouji1")
+        Iconfont.success-icon(icon-name="icon-chenggong1")
         p.tips {{$t(scanSuccessTips1)}}
         p.tips {{$t(scanSuccessTips2)}}
         el-button.back-btn(@click="backToScan") {{$t(backToScanText)}}
     // 已失效
     .disabled(v-show="isQrCodeDisabled")
       el-button.refresh-btn(@click="getQrCode")
-       Iconfont.icon-font(icon-name="icon-shuaxin")
-      p {{$t(refreshText)}}
+       Iconfont.icon-font(icon-name="icon-shuaxin1")
+      p
+        // 二维码失效
+        span {{$t('M.qr_code_disabled_tips')}}
+        // 点击刷新
+        span {{$t('M.qr_code_update_tips')}}
 </template>
 <script>
 import TheCommonSlider from '../../../Common/CommonSlider'
 import {getLoginErcode} from '../../../../utils/api/user'
 import {loginSocketUrl} from '../../../../utils/env'
 import socket from '../../../../utils/datafeeds/socket'
+import {mapMutations} from 'vuex'
 export default {
   name: 'the-qr-code-login',
   // mixins: [],
@@ -75,6 +81,10 @@ export default {
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
+    ...mapMutations([
+      'USER_LOGIN',
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
+    ]),
     // 刷新二维码
     getQrCode: _.throttle(async function () {
       this.isScanSuccess = false
@@ -82,24 +92,21 @@ export default {
       const data = await getLoginErcode()
       if (!data) return false
       this.isQrCodeDisabled = false
-      console.log(data)
       this.qrCode = _.get(data, 'data.qrcode')
-      this.socket = new socket(this.url = loginSocketUrl + this.erCodeString)
+      this.socket = new socket(this.url = loginSocketUrl + this.qrCode)
       this.socket.doOpen()
       this.socket.on('open', () => {
-        this.socket.send(this.erCodeString)
+        this.socket.send(this.qrCode)
         this.initQrCodeTimer()
         this.qrCodeTimer = setInterval(() => {
           if (this.qrCodeEffectiveTime > 0) {
             this.qrCodeEffectiveTime--
-            // console.log(this.qrCodeEffectiveTime)
           } else {
             clearInterval(this.qrCodeTimer)
             this.isQrCodeDisabled = true
           }
         }, 1000)
         this.socket.on('message', (data) => {
-          console.log(data)
           let socketData = data
           // 用户已扫码
           if (socketData.scan === 'scaned') {
@@ -114,6 +121,30 @@ export default {
         })
       })
     }, 1000),
+    // 登录成功操作
+    userLoginSuccess (data) {
+      this.USER_LOGIN(data)
+      const {isJumpToPersonal, type, coinName} = this.$route.query
+      if (isJumpToPersonal) {
+        this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
+        this.$goToPage('/PersonalCenter', {
+          coinName,
+          type
+        })
+        return false
+      }
+      if (this.$routerTo_X &&
+        !this.$routerTo_X.startsWith('/register') &&
+        !this.$routerTo_X.startsWith('/login') &&
+        !this.$routerTo_X.startsWith('/ForgetPassword') &&
+        !this.$routerTo_X.startsWith('/nofind404') &&
+        !this.$routerTo_X.startsWith('/500')
+      ) {
+        this.$goToPage(this.$routerTo_X)
+      } else {
+        this.$goToPage(`/${this.$routes_X.home}`)
+      }
+    },
     initQrCodeTimer () {
       clearInterval(this.qrCodeTimer)
       this.qrCodeEffectiveTime = this.ONE_MINUTE
@@ -121,7 +152,7 @@ export default {
     // 返回登录
     backToScan () {
       this.isScanSuccess = false
-      this.refreshCode()
+      this.getQrCode()
     }
   }
   // filters: {},
@@ -149,7 +180,7 @@ export default {
       >.router-item
         cursor pointer
         display inline-block
-        margin 0 30px
+        margin 0 14px
         /*background-color pink*/
         height 50px
         line-height 50px
@@ -158,8 +189,8 @@ export default {
         font-weight 700
         color #8494A6
         &.active
-          color #fff
-          border-bottom 1px solid #fff
+          color #3a8fde
+          border-bottom 1px solid #3a8fde
     .content
       position relative
       width S_userWidth
@@ -187,17 +218,34 @@ export default {
             font-weight 600
       >.scan-success
         text-align center
-        padding-top 80px
-        >.icon-font
-          font-size 60px
+        position relative
+        overflow hidden
+        height 300px
+        /*background-color pink*/
+        >.mobile-phone
+          font-size 170px
+          color #303b64
+          position absolute
+          left 50%
+          top 29%
+          transform translate(-50%, -50%)
+        >.success-icon
+          font-size 40px
+          position absolute
+          left 50%
+          top 26%
+          transform translate(-50%, -50%)
         >.tips
           line-height 30px
           font-weight 600
+          text-align center
+          &:first-of-type
+            margin-top 186px
         >.back-btn
-          margin-top 30px
+          margin-top 10px
           background-color transparent
           border none
-          color #2F78CA
+          color #3a8fde
           font-weight 600
           font-size 12px
     >.disabled
@@ -223,8 +271,7 @@ export default {
           &:hover
             color #000
           .icon-font
-            font-size 44px
-            background-color #fff
+            font-size 70px
             border-radius 50%
             padding 10px
             box-sizing border-box

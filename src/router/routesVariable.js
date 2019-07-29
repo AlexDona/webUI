@@ -59,6 +59,7 @@ export const routesVariable = {
   forgetPassStep2: 'step2',
   forgetPassStep3: 'step3',
   register: 'register',
+  registerSuccess: 'success',
   phoneRegister: 'phone',
   emailRegister: 'email',
   normalLogin: 'normal',

@@ -136,7 +136,8 @@ let mixin = {
     ...mapGetters({
       '$isNeedLimitExchange_G_X': 'isNeedLimitExchange_G',
       '$isNeedYST_G_X': 'isNeedYST',
-      '$isChineseLanguage_G_X': 'isChineseLanguage'
+      '$isChineseLanguage_G_X': 'isChineseLanguage',
+      '$isDayTheme_G_X': 'isDayTheme'
     }),
     ...mapState({
       $loading_S_X: state => state.common.loading_S,

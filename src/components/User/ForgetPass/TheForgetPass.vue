@@ -10,25 +10,45 @@
     .inner-box
       // 忘记密码
       .header {{$t('M.login_tips3')}}
-        span.tips 找回密码后，24h无法提币
+        Iconfont.iconfont(
+          icon-name="icon-tishi1-copy"
+        )
+        // 找回密码后，24h无法提币
+        span.tips {{$t('M.unraise_recovering_password')}}
       .content
         // 步骤条
         .step-box
           .step-item(
-            :class="{'have-down': true, 'current': false}"
+            :class="{'have-down': !isStep1, 'current': isStep1}"
           )
             .line
             p.step-number
+              img(
+                :src="successImg"
+                v-show="!isStep1"
+              )
             // 填写账户名
             p.step-desc {{$t('M.login_forgot_pwd_find2')}}
-          .step-item.step2
+          .step-item(
+            :class="{'have-down': isStep3, 'current': isStep2}"
+          )
             .line
             p.step-number
+              img(
+                :src="successImg"
+                v-show="isStep3"
+              )
             // 设置新密码
             p.step-desc  {{ $t('M.login_forgot_pwd_find4') }}
-          .step-item
+          .step-item(
+            :class="{'have-down': isStep3, 'current': isStep3}"
+          )
             .line
             p.step-number
+              img(
+                :src="successImg"
+                v-show="isStep3"
+              )
             // 完成
             p.step-desc {{ $t('M.forgetPassword_achieve') }}
         router-view
@@ -39,10 +59,15 @@ export default {
   // mixins: [],
   // components: {},
   // props,
-  // data () {
-  //   return {}
-  // }
-  // created () {},
+  data () {
+    return {
+      currentStep: 'step1',
+      successImg: require('../../../assets/user/checkbox-success-bg.png')
+    }
+  },
+  created () {
+    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
+  },
   // mounted () {}
   // updated () {},
   // beforeRouteUpdate () {},
@@ -53,9 +78,23 @@ export default {
   computed: {
     windowHeight () {
       return window.innerHeight
+    },
+    isStep1 () {
+      return this.currentStep === 'step1'
+    },
+    isStep2 () {
+      return this.currentStep === 'step2'
+    },
+    isStep3 () {
+      return this.currentStep === 'step3'
+    }
+  },
+  watch: {
+    '$route' (New) {
+      const {name} = New
+      this.currentStep = name
     }
   }
-  // watch: {}
 }
 </script>
 
@@ -83,8 +122,13 @@ export default {
         color #fff
         font-size 20px
         vertical-align middle
-        .tips
+        .iconfont
           margin-left 30px
+          font-size 16px
+          vertical-align middle
+          color S_error_color
+        .tips
+          margin-left 10px
           vertical-align middle
           font-size 12px
           color S_error_color
@@ -104,21 +148,18 @@ export default {
             height 100px
             vertical-align top
             /* 已完成 */
-            &.have-down
+            &.have-down,&.current
               .line,
               .step-number
                 background-color #3A8FDE
               .step-desc
                 color #3A8FDE
-            /* 当前项 */
-            &.current
-              background-color pink
             .line
               position relative
               top 50%
               width 212px
               height 2px
-              background-color #8494A6
+              background-color #4E5475
             .step-number
               position absolute
               top 56%
@@ -131,10 +172,17 @@ export default {
               font-size 12px
               line-height 24px
               color #fff
-              background-color #8494A6
+              background-color #4E5475
               transform rotate(45deg) translate(-50%, -50%)
+              padding 0
+              >img
+                position absolute
+                left 60%
+                top 24%
+                transform rotate(-45deg) translate(-50%, -50%)
+                width 15px
             .step-desc
               margin-top 70px
-              color #8494A6
+              color #4E5475
               font-size 12px
 </style>

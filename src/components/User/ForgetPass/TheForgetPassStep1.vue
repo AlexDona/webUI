@@ -6,38 +6,32 @@
 <template lang="pug">
   .the-forget-pass-step1
     el-form(
-      :model="forgetForm"
+      :model="form"
       :rules="forgetRule"
-      :ref="forgetFormRef"
+      :ref="formRef"
       label-width="232px"
       label-position="right"
+      @submit.native.prevent="'@submit.native.prevent'"
     )
       el-form-item(
-        label="登录账号123123123123"
+        :label="$t('M.forget_pass_username_label')"
         prop="username"
       )
         el-input(
           type="text"
-          v-model="forgetForm.username"
+          v-model="form.username"
           @keyup.enter.native="next"
-          placeholder="账号"
+          :placeholder="$t('M.forget_pass_username_tips')"
           clearable
         )
-      el-form-item.slider-box(
-        :label="$t('M.login_dialog_title_label_04')"
-        prop="isSliderSuccess"
-      )
-        CommonSlider.slider(
-          propMaxWidth="410"
-          height="46"
-          barWidth="60"
-          @successCallback="successCallback"
-        )
-        el-checkbox.checkbox(v-model="forgetForm.isSliderSuccess")
       el-form-item.error-tips-form(
         label=""
         prop=""
       )
+        Iconfont.iconfont(
+          icon-name="icon-tishi1-copy"
+          v-show="errorTips"
+        )
         span.error-tips {{errorTips}}
       el-form-item.submit(
         label=""
@@ -48,80 +42,114 @@
         :disabled="!isSuccessValidate"
         @click="next"
         ) {{$t(nextBtnText)}}
+    //    滑块验证
+    el-dialog.slider(
+    :title="$t('M.login_dialog_title_label_04')"
+    :visible.sync="isShowSlider"
+    width="486px"
+    :close-on-click-modal="false"
+    )
+      TheCommonSlider(
+      :propMaxWidth="433"
+      :height="46"
+      :barWidth="60"
+      @successCallback="successCallback"
+      :initAfterSuccess="true"
+      )
 </template>
 <script>
-import CommonSlider from '../../Common/CommonSlider'
+import TheCommonSlider from '../../Common/CommonSlider'
+import {findPasswordStep1} from '../../../utils/api/user'
+import {mapMutations} from 'vuex'
 export default {
   name: 'the-forget-pass',
   // mixins: [],
   components: {
-    CommonSlider
+    TheCommonSlider
   },
   // props,
   data () {
     let validateUsername = (rule, value, callback) => {
       if (!value) {
         callback(new Error(' '))
-        this.errorTips = '请输入用户名'
-      } else {
-        this.errorTips = ''
-        callback()
-      }
-    }
-    let validateSlider = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(' '))
-        this.errorTips = '请通过滑块验证'
+        this.errorTips = this.$t('M.login_tips5')
       } else {
         this.errorTips = ''
         callback()
       }
     }
     return {
-      forgetForm: {
-        username: '',
-        isSliderSuccess: false
+      form: {
+        username: ''
       },
       forgetRule: {
         username: [
           { validator: validateUsername, trigger: 'blur' },
           { validator: validateUsername, trigger: 'change' }
-        ],
-        isSliderSuccess: [
-          { validator: validateSlider, trigger: 'change' }
         ]
       },
-      forgetFormRef: 'forgetPass',
+      formRef: 'forgetPass',
       nextBtnText: 'M.forgetPassword_next_step',
       // 错误提示
-      errorTips: ''
+      errorTips: '',
+      isShowSlider: false
     }
   },
-  // created () {},
-  // mounted () {}
+  created () {
+    if (this.$getStore('username')) this.form.username = this.$getStore('username')
+  },
+  // mounted () {},
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
-    successCallback () {
-      this.forgetForm.isSliderSuccess = true
-    },
+    ...mapMutations([
+      'SET_STEP1_INFO'
+    ]),
+    successCallback: _.debounce(async function () {
+      this.isShowSlider = false
+      const {username} = this.form
+      const params = {
+        userName: username
+      }
+      const data = await findPasswordStep1(params)
+      if (!data) return
+      const {isEnablePhone, isEnableMail, phone, countryCode, isEnableGoogle, email} = _.get(data, 'data')
+
+      let step1UserInfo = {
+        userInfo: {
+          phoneEnable: isEnablePhone,
+          mailEnable: isEnableMail,
+          googleEnable: isEnableGoogle,
+          country: countryCode,
+          phone,
+          email,
+          notNeedLogin: true
+        }
+      }
+      this.SET_STEP1_INFO(step1UserInfo)
+      this.$router.replace(`/${this.$routes_X.forgetPass}/${this.$routes_X.forgetPassStep2}/${this.form.username}`)
+    }, 500),
     next () {
-      this.$refs[this.forgetFormRef].validate((valid) => {
+      this.$refs[this.formRef].validate((valid) => {
         if (!valid) return
-        this.$router.replace(`/${this.$routes_X.forgetPass}/${this.$routes_X.forgetPassStep2}/${this.forgetForm.username}`)
+        this.isShowSlider = true
       })
     }
   },
   // filters: {},
   computed: {
     isSuccessValidate () {
-      const {username, isSliderSuccess} = this.forgetForm
-      return username && isSliderSuccess
+      const {username} = this.form
+      return username
+    }
+  },
+  watch: {
+    $language_S_X () {
+      this.errorTips = ''
     }
   }
-  // watch: {}
 }
 </script>
 
@@ -130,24 +158,67 @@ export default {
   .the-forget-pass-step1
     /*background-color pink*/
     /deep/
+      /* 滑块弹窗 */
+      .slider
+        display flex
+        flex-direction column
+        justify-content center
+        background rgba(11,12,20,.8)
+        .el-dialog
+          margin-top 0
+          height 280px
+          border-radius 10px
+          overflow hidden
+          background-color #2b304c
+          .el-dialog__header
+            height 44px
+            line-height 12px
+            background-color #25283D
+            padding-top 0
+            .el-dialog__headerbtn
+              top 10px
+              .el-dialog__close
+                font-size 26px
+            .el-dialog__title
+              color S_day_bg
+              height 44px
+              line-height 44px
+              display inline-block
+          .el-dialog__body
+            padding 80px 25px
       .el-form
         .el-form-item__label
           height 46px
           line-height 46px
           color #fff
         .el-form-item
-          margin-bottom 30px
+          margin-bottom 10px
           .el-form-item__content
             width 410px
           .el-input__inner
             border 1px solid #3F4769
             background-color transparent
             height 46px
-            color #60678B
+            color #fff
+            font-size 12px
+            /* WebKit browsers */
+            ::-webkit-input-placeholder
+              color: #8B9197
+            /* Mozilla Firefox 19+ */
+            ::-moz-placeholder
+              color: #8B9197
+            /* Internet Explorer 10+ */
+            :-ms-input-placeholder
+              color #8B9197
           &.error-tips-form
-            margin-bottom 10px
+            margin-bottom 30px
             height 40px
+            .iconfont
+              font-size 16px
+              vertical-align middle
+              color S_error_color
             .error-tips
+              margin-left 10px
               font-size 12px
               color S_error_color
           &.slider-box
@@ -167,8 +238,9 @@ export default {
               display none
           &.submit
             .el-form-item__content
-              margin 0
-              width 100%
+              margin 0 !important
+              width 780px
+              text-align center
             .el-button
               width 235px
               height 46px

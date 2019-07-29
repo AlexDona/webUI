@@ -1,98 +1,104 @@
 <!--
   author: zhaoxinlei
   create: 20190722
-  description: 当前罪案为 忘记密码 步骤2 组件
+  description: 当前组件为 忘记密码 步骤2 组件
 -->
 <template lang="pug">
   .the-forget-pass-step2
     .inner-box
       el-form(
-      :model="forgetForm"
+      :model="form"
       :rules="forgetRule"
-      :ref="forgetFormRef"
+      :ref="formRef"
       label-width="232px"
       )
         // 登录账号
         el-form-item(
-          label="登录账号"
+          :label="$t('M.forget_pass_username_label')"
           prop="username"
         )
           el-input(
-          type="text"
-          v-model="username"
-          :disabled="true"
+            type="text"
+            v-model="username"
+            :disabled="true"
           )
         // 短信验证码
         el-form-item(
-          :label="phonePlaceHolder"
+          :label="$t('M.forgetPassword_verify_style2')"
           prop="phoneCode"
+          v-if="$isBindPhone_X"
         )
           el-input.validate-code(
             type="text"
-            :placeholder="phonePlaceHolder"
-            v-model="forgetForm.phoneCode"
+            :placeholder="$t('M.login_please_input1')"
+            v-model="form.phoneCode"
+            @keyup.enter.native="next"
             :autofocus="true"
+            clearable
           )
             // 发送验证码
             template(slot="append")
               CountDownButton.count-down(
-                :status="disabledOfPhoneBtn"
-                @run="sendPhoneOrEmailCode()"
+                :status="$disabledOfPhoneBtn_X"
+                @run="sendPhoneOrEmailCode(0)"
               )
         //  邮箱验证码
         el-form-item(
-          :label="emailPlaceHolder"
+          :label="$t('M.forgetPassword_verify_style4')"
           prop="emailCode"
+          v-if="$isBindEmail_X"
         )
           el-input.validate-code(
             type="text"
-            :placeholder="emailPlaceHolder"
-            v-model="forgetForm.emailCode"
+            :placeholder="$t('M.login_please_input2')"
+            v-model="form.emailCode"
             :autofocus="true"
+            @keyup.enter.native="next"
+            clearable
           )
             // 发送验证码
             template(slot="append")
               CountDownButton.count-down(
-                :status="disabledOfEmailBtn"
-                @run="sendPhoneOrEmailCode()"
+                :status="$disabledOfEmailBtn_X"
+                @run="sendPhoneOrEmailCode(1)"
               )
         //  googleCode
         el-form-item(
-          label="谷歌验证码"
+          :label="$t('M.forgetPassword_verify_style5')"
           prop="googleCode"
           :autofocus="true"
+          v-if="$isBindGoogle_X"
         )
           el-input(
             type="text"
-            :placeholder="googlePlaceholder"
-            v-model="forgetForm.googleCode"
-            @keyup.native="googleAutoSave"
-            @input.native="googleAutoSave"
+            :placeholder="$t('M.user_please_input9')"
+            v-model="form.googleCode"
+            clearable
           )
         //  新密码
         el-form-item(
-        label="新登录密码"
-        prop="password"
+          :label="$t('M.forgetPassword_new_login')"
+          prop="password"
         )
           el-input(
           type="password"
-          v-model="forgetForm.password"
-          placeholder="密码"
+          v-model="form.password"
+          :placeholder="$t('M.forget_pass_new_username_tips')"
           autocomplete="off"
-          @keyup.enter.native="submitForm"
+          @keyup.enter.native="next"
           clearable
           )
         //  确认新密码
         el-form-item(
-          label="确认登录密码"
+          :label="$t('M.forget_pass_check_pass_label')"
           prop="checkPassword"
         )
           el-input(
           type="password"
-          v-model="forgetForm.checkPassword"
-          placeholder="确认密码"
+          v-model="form.checkPassword"
+          :placeholder="$t('M.forget_pass_check_pass_tips')"
           autocomplete="off"
-          @keyup.enter.native="submitForm"
+          @keyup.enter.native="next"
           clearable
           )
         //  错误提示
@@ -100,50 +106,73 @@
           label=""
           prop=""
         )
+          Iconfont.iconfont(
+            icon-name="icon-tishi1-copy"
+            v-show="errorTips"
+          )
           span.error-tips {{errorTips}}
         el-form-item.submit(
           label=""
         )
           el-button(
-          type="primary"
-          @click="next"
+            type="primary"
+            @click="next"
+            :disabled="!isSuccessValidate"
           ) {{$t(nextBtnText)}}
 </template>
 <script>
 import CountDownButton from '../../Common/CountDownCommon'
+import {sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
+import mixins from '../../../mixins/user'
+import {updatePasswordAJAX} from '../../../utils/api/user'
 export default {
   name: 'the-forget-pass-step2',
-  // mixins: [],
+  mixins: [mixins],
   components: {
     CountDownButton
   },
   props: ['username'],
   data () {
     let validatePhoneCode = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(' '))
-        // 请输入短信验证码
-        this.errorTips = this.$t('M.login_please_input1')
+      if (this.$isBindPhone_X) {
+        if (!value) {
+          callback(new Error(' '))
+          // 请输入短信验证码
+          this.errorTips = this.$t('M.login_please_input1')
+        } else {
+          this.errorTips = ''
+          callback()
+        }
       } else {
         this.errorTips = ''
         callback()
       }
     }
     let validateEmailCode = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(' '))
-        // 请输入邮箱验证码
-        this.errorTips = this.$t('M.login_please_input2')
+      if (this.$isBindEmail_X) {
+        if (!value) {
+          callback(new Error(' '))
+          // 请输入邮箱验证码
+          this.errorTips = this.$t('M.login_please_input2')
+        } else {
+          this.errorTips = ''
+          callback()
+        }
       } else {
         this.errorTips = ''
         callback()
       }
     }
     let validateGoogleCode = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error(' '))
-        // 请输入谷歌验证码
-        this.errorTips = this.$t('M.user_please_input9')
+      if (this.$isBindGoogle_X) {
+        if (!value) {
+          callback(new Error(' '))
+          // 请输入谷歌验证码
+          this.errorTips = this.$t('M.user_please_input9')
+        } else {
+          this.errorTips = ''
+          callback()
+        }
       } else {
         this.errorTips = ''
         callback()
@@ -191,7 +220,7 @@ export default {
       }
     }
     return {
-      forgetForm: {
+      form: {
         phoneCode: '',
         emailCode: '',
         googleCode: '',
@@ -220,35 +249,53 @@ export default {
           { validator: validateCheckPass, trigger: 'change' }
         ]
       },
-      forgetFormRef: 'forgetPass',
+      // 密码是否检验成功
+      isPasswordValidateSuccess: false,
+      formRef: 'forgetPass',
       nextBtnText: 'M.forgetPassword_next_step',
       // 错误提示
-      errorTips: '',
-      googlePlaceholder: '谷歌验证码',
-      validatePlaceholder: '谷歌验证码',
-      phonePlaceHolder: '手机验证码',
-      emailPlaceHolder: '邮箱验证码'
+      errorTips: ''
     }
   },
-  // created () {},
+  created () {
+    if (!this.$userInfo_X) this.$router.replace(`/${this.$routes_X.forgetPass}`)
+  },
   // mounted () {}
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
+    // 发送验证码（短信、邮箱）
+    async sendPhoneOrEmailCode (type) {
+      if (this.$disabledOfPhoneBtn_X || this.$disabledOfEmailBtn_X) {
+        return false
+      }
+      const {phone, email, country} = this.$userInfo_X
+      let params = {
+        nationCode: country
+      }
+      switch (type) {
+        case 0:
+          params.phone = phone
+          break
+        case 1:
+          params.email = email
+          break
+      }
+      await sendPhoneOrEmailCodeAjax(type, params, this)
+    },
     successCallback () {
-      this.forgetForm.isSliderSuccess = true
+      this.form.isSliderSuccess = true
     },
     next () {
-      this.$refs[this.forgetFormRef].validate((valid) => {
+      this.$refs[this.formRef].validate(async (valid) => {
         if (!valid) return
-        this.$router.replace(`/${this.$routes_X.forgetPass}/${this.$routes_X.forgetPassStep2}/${this.forgetForm.username}`)
+        await this.updatePassword()
       })
     },
     submitForm () {
       let targetProp = this.isPhoneRegist ? this.phone_X : this.email_X
-
       this.$refs[this.formRef].validateField(targetProp, (err) => {
         if (!err) {
           this.$refs[this.formRef].validateField('validateCode', (err) => {
@@ -270,16 +317,45 @@ export default {
           })
         }
       })
+    },
+    updatePassword: _.debounce(async function () {
+      const {phoneCode, emailCode, googleCode, password} = this.form
+      const params = {
+        phoneCode,
+        newPassword: password,
+        mailCode: emailCode,
+        googleCode
+      }
+      const data = await updatePasswordAJAX(params)
+      if (!data) return
+      console.log(data)
+      this.resetForm()
+      this.$router.replace(`/${this.$routes_X.forgetPass}/${this.$routes_X.forgetPassStep3}/${this.username}`)
+    }, 500),
+    // 重置表单
+    resetForm () {
+      this.$refs[this.formRef].resetFields()
+      this.errorTips = ''
     }
   },
   // filters: {},
   computed: {
     isSuccessValidate () {
-      const {username, isSliderSuccess} = this.forgetForm
-      return username && isSliderSuccess
+      const {phoneCode, emailCode, googleCode} = this.form
+      const googleValidateSuccess = (this.$isBindGoogle_X && googleCode) || !this.$isBindGoogle_X
+      const phoneValidateSuccess = (this.$isBindPhone_X && phoneCode) || !this.$isBindPhone_X
+      const emailValidateSuccess = (this.$isBindEmail_X && emailCode) || !this.$isBindEmail_X
+      return googleValidateSuccess && phoneValidateSuccess && emailValidateSuccess && this.isPasswordValidateSuccess
+    }
+  },
+  watch: {
+    isSuccessValidate (New) {
+      console.log(New)
+    },
+    $language_S_X () {
+      this.errorTips = ''
     }
   }
-  // watch: {}
 }
 </script>
 
@@ -295,6 +371,17 @@ export default {
         color #fff
       .el-form-item
         margin-bottom 30px
+        /* WebKit browsers */
+        ::-webkit-input-placeholder
+          color: #8B9197
+        /* Mozilla Firefox 19+ */
+        ::-moz-placeholder
+          color: #8B9197
+        /* Internet Explorer 10+ */
+        :-ms-input-placeholder
+          color #8B9197
+        .el-input__suffix
+          right 15px
         .validate-code
           .el-input__inner
             border-radius 4px 0 0 4px
@@ -311,25 +398,44 @@ export default {
             /* 发送验证码 */
             .count-down
               padding 0 15px
-              color #2f78ca
+              color #3a8fde
               border-left 1px solid #375683
+              &.is-disabled
+                span
+                  color #fff
+              span
+                font-size 12px !important
         .el-form-item__content
           width 410px
+        .el-input
+          &.is-disabled
+            .el-input__inner
+              /*background-color pink*/
+              border none
         .el-input__inner
           border 1px solid #3F4769
           background-color transparent
           height 46px
-          color #60678B
+          color #fff
+          font-size 12px
         &.error-tips-form
           margin-bottom 10px
+          margin-top -30px
           height 40px
+          .iconfont
+            font-size 16px
+            vertical-align middle
+            color S_error_color
           .error-tips
+            margin-left 10px
             font-size 12px
             color S_error_color
+            vertical-align middle
         &.submit
           .el-form-item__content
-            margin 0
+            margin 0 !important
             width 100%
+            text-align center
           .el-button
             width 235px
             height 46px

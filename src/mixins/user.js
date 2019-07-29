@@ -65,13 +65,13 @@ let mixin = {
       $routerTo_X: state => state.common.routerTo // 路由跳转
     }),
     $isBindPhone_X () {
-      return _.get(this.$userInfo_X, 'phoneEnable') == 'enable'
+      return _.get(this.$userInfo_X, 'phoneEnable') == 'enable' || _.get(this.$userInfo_X, 'phoneEnable') == true
     },
     $isBindEmail_X () {
-      return _.get(this.$userInfo_X, 'mailEnable') == 'enable'
+      return _.get(this.$userInfo_X, 'mailEnable') == 'enable' || _.get(this.$userInfo_X, 'mailEnable') == true
     },
     $isBindGoogle_X () {
-      return _.get(this.$userInfo_X, 'googleEnable') == 'enable'
+      return _.get(this.$userInfo_X, 'googleEnable') == 'enable' || _.get(this.$userInfo_X, 'googleEnable') == true
     },
     $userTypeOptions_X () {
       return {
@@ -87,9 +87,8 @@ let mixin = {
     $useMerchantSetName_X () {
       return this.$isMerchant_X && this.nameOfMerchantSet
     }
-  },
-  destroyed () {
-  },
-  watch: {}
+  }
+  // destroyed () {},
+  // watch: {}
 }
 export default mixin

@@ -74,3 +74,9 @@ export const newLoginForStep2AJAX = params => handleRequest(() => postWithURLenc
 export const updateImageCodeAJAX = params => handleRequest(() => get('login/refreshCheckCode', params))
 // 验证图片验证码
 export const checkImageCodeAJAX = params => handleRequest(() => get('login/CheckCode', params))
+// 新注册
+export const newRegisterAJAX = params => handleRequest(() => postWithURLencoded('login/registerUser', params))
+// 检测用户名是否存在
+export const newCheckUserExist = params => handleRequest(() => postWithURLencoded('user/checkUserExist', params))
+// 更新密码（找回密码）
+export const updatePasswordAJAX = params => handleRequest(() => postWithURLencoded('login/forgetPasswordAndSetNewPass', params))

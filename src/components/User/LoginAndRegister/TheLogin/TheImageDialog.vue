@@ -155,10 +155,19 @@ export default {
           .el-form
             .el-form-item
               margin-bottom 35px
+              /* WebKit browsers */
+              ::-webkit-input-placeholder
+                color: #8B9197
+              /* Mozilla Firefox 19+ */
+              ::-moz-placeholder
+                color: #8B9197
+              /* Internet Explorer 10+ */
+              :-ms-input-placeholder
+                color #8B9197
               .el-input__inner
                 background-color transparent
                 border-color #25283D
-                color #60678B
+                color #fff
                 /*padding 2px 0*/
                 height 46px
                 box-sizing border-box
