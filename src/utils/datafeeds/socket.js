@@ -110,7 +110,7 @@ class Socket {
     this.messageMap[name] = handler
   }
   doClose () {
-    console.log('close')
+    console.log('close', new Date().getTime())
     if (this.socket) {
       this.socket.close()
     }

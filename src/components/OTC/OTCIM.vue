@@ -128,7 +128,6 @@ export default {
   },
   data () {
     return {
-      isShowSelf: false,
       editPlaceholder: 'M.otc_im_edit_placeholder',
       imageInputRef: 'image-input',
       editText: '',
@@ -138,54 +137,11 @@ export default {
       targetDeg: 0,
       // 当前消息是否超时
       currentIsOver24Hours: false,
-      OTCSocketHeartCount: 0,
       socketTimer: null
     }
   },
   // created () {},
   mounted () {
-    console.log(this.IMSocket_S.connState)
-    if (this.IMSocket_S.connState) {
-      const {id} = this.$userInfo_X
-      this.IMSocket_S.doOpen()
-      this.IMSocket_S.on('open', () => {
-        console.log('open')
-        this.IMSocket_S.send({
-          // 当前用户id
-          'userId': id,
-          // 请求的动作:“toConnect”建立socket连接;“sendMessage”发送聊天内容
-          'action': 'toConnect',
-          'source': 'web'
-        })
-      })
-      this.IMSocket_S.on('message', (e) => {
-        console.log(e)
-        if (e.action == 'checkHeart') {
-          this.OTCSocketHeartCount++
-          this.IMSocket_S.send(e, () => {
-            console.log('callback')
-            this.socketTimer = setTimeout(() => {
-              console.log(this.OTCSocketHeartCount)
-              // 已收到
-              if (this.OTCSocketHeartCount == 2) {
-                this.OTCSocketHeartCount--
-              } else {
-                // 未收到
-                this.OTCSocketHeartCount = 0
-                this.IMSocket_S.doClose()
-                console.log(this.IMSocket_S)
-              }
-            }, e.duration + 1000)
-          })
-        }
-      })
-      this.IMSocket_S.send({
-        // 当前用户id
-        'userId': id,
-        // 请求的动作:“toConnect”建立socket连接;“sendMessage”发送聊天内容
-        'action': 'toConnect'
-      })
-    }
     this.receiveMessage()
   },
   // updated () {},
@@ -198,7 +154,10 @@ export default {
     ...mapMutations([
       'UPDATE_IM_BOX_SHOW_STATUS_M',
       'SET_LEGAL_TENDER_REFLASH_STATUS',
-      'UPDATE_IM_HAS_NEW_MESSAGE_MAP_M'
+      'UPDATE_IM_HAS_NEW_MESSAGE_MAP_M',
+      'UPDATE_OTC_IM_SOCKET_STATUS_M',
+      'UPDATE_OTC_IM_SOCKET_HEART_M',
+      'UPDATE_NEW_IM_MESSAGE_M'
     ]),
     handleChangeWatch (e) {
       this.editText = e.target.value
@@ -212,7 +171,7 @@ export default {
     },
     // 发送图片成功回调
     uploadSuccess ({type, index, url}) {
-      console.log(type, index, url)
+      console.log(url)
       this.sendImage(url)
     },
     previewImage (url) {
@@ -227,46 +186,59 @@ export default {
       this.targetDeg += 90
     },
     sendMessage () {
-      // {
-      //   "messageContent":"你好，哈哈哈哈哈哈",  //消息内容，为普通文字或者图片url
-      //   "userId":"329190053282578432",      //当前用户id
-      //   "sellId":"329190053282578434",      //订单对方id
-      //   "messageType":"text",               //消息类型，目前取值：text（发送的是文字）,img（发送的是图片）
-      //   "orderId":"329566371228680192",     //订单id
-      //   "action":"sendMessage"   //请求的动作:“updateState”修改消息状态为已读;“sendMessage”发送聊天内容
-      // }
       if (!this.editText) return
       const {id} = this.$userInfo_X
-      this.IMSocket_S.send({
-        'messageContent': this.editText,
-        'userId': id,
-        'messageType': 'text',
-        'orderId': this.orderId,
-        'action': 'sendMessage'
-      })
-      this.editText = ''
-      this.$refs[`${this.orderId}textarea`].value = ''
-      this.receiveMessage()
+      this.reConnectSocket()
+      if (this.IMSocket_S.connState) {
+        clearTimeout(this.socketTimer)
+        this.IMSocket_S.send({
+          'messageContent': this.editText,
+          'userId': id,
+          'messageType': 'text',
+          'orderId': this.orderId,
+          'action': 'sendMessage'
+        })
+        this.editText = ''
+        this.$refs[`${this.orderId}textarea`].value = ''
+        this.receiveMessage()
+      } else {
+        this.socketTimer = setTimeout(() => {
+          this.sendMessage()
+        }, 1000)
+      }
     },
     sendImage (url) {
       const {id} = this.$userInfo_X
-      this.IMSocket_S.send({
-        'messageContent': url,
-        'userId': id,
-        'messageType': 'img',
-        'orderId': this.orderId,
-        'action': 'sendMessage'
-      })
-      this.receiveMessage()
+      this.reConnectSocket()
+      if (this.IMSocket_S.connState) {
+        clearTimeout(this.socketTimer)
+        this.IMSocket_S.send({
+          'messageContent': url,
+          'userId': id,
+          'messageType': 'img',
+          'orderId': this.orderId,
+          'action': 'sendMessage'
+        })
+        this.receiveMessage()
+      } else {
+        this.socketTimer = setTimeout(() => {
+          console.log(url)
+          this.sendImage(url)
+        }, 1000)
+      }
+    },
+    reConnectSocket () {
+      if (!this.IMSocket_S.connState) {
+        this.UPDATE_OTC_IM_SOCKET_STATUS_M(true)
+      }
     },
     async toggleShowIMContent (status) {
+      this.reConnectSocket()
       this.receiveMessage()
-      // this.isShowSelf = !this.isShowSelf
       this.messages = []
       // 开启聊天
       if (!this.IMBoxShowStatusMap_S[this.orderId]) {
         const data = await getIMHistoryRecordAJAX({orderId: this.orderId})
-        // console.log(data)
         this.messages = _.get(data, 'data')
         this.UPDATE_IM_HAS_NEW_MESSAGE_MAP_M({orderId: this.orderId, status: false})
       }
@@ -299,16 +271,21 @@ export default {
     // 回调消息
     receiveMessage () {
       this.IMSocket_S.on('message', (e) => {
-        const {isOppositeMsg, orderId, isOver24Hours} = e
+        // console.log(e, new Date().getTime())
+        this.UPDATE_NEW_IM_MESSAGE_M(e)
+        const {isOppositeMsg, orderId, isOver24Hours, action} = e
+        if (action == 'checkHeart') {
+          this.IMSocket_S.send(e)
+          this.UPDATE_OTC_IM_SOCKET_HEART_M(true)
+          return
+        }
         this.currentIsOver24Hours = isOver24Hours
-        console.log(orderId, this.orderId, e)
         this.UPDATE_IM_HAS_NEW_MESSAGE_MAP_M({
           orderId,
           status: isOppositeMsg
         })
 
         this.messages.push(e)
-        console.log(this.messages)
         this.$nextTick(() => {
           this.resetDOMScroll(this.chatDOM.scrollHeight)
         })
@@ -329,8 +306,6 @@ export default {
       }
 
       await updateIMStatusAJAX(params)
-      // if (!data) return
-      // console.log(data)
     }
   },
   filters: {
@@ -371,10 +346,10 @@ export default {
       return _.get(this.orderInfo, 'buyId')
     },
     sellNickName () {
-      return _.get(this.orderInfo, 'sellNickName')
+      return _.get(this.orderInfo, 'sellNickName') || _.get(this.orderInfo, 'sellName')
     },
     buyNickName () {
-      return _.get(this.orderInfo, 'buyNickName')
+      return _.get(this.orderInfo, 'buyNickName') || _.get(this.orderInfo, 'buyName')
     },
     // 当前聊天用户 昵称
     selfNickName () {

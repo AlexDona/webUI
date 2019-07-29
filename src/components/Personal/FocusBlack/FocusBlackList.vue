@@ -10,8 +10,8 @@
     .inner-box
       el-tabs(
         v-model="activeName"
-        @tab-click="handleClick"
       )
+        <!--@tab-click="handleClick"-->
         <!--我的关注-->
         el-tab-pane(
           :label="$t('M.focus_black_table1')"

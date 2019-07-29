@@ -25,7 +25,10 @@ import {
   UPDATE_IM_SOCKET_M,
   UPDATE_IM_HAS_NEW_MESSAGE_MAP_M,
   // 改变商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
-  CHANGE_BLACK_TABS_STATUS_M
+  CHANGE_BLACK_TABS_STATUS_M,
+  UPDATE_OTC_IM_SOCKET_STATUS_M,
+  UPDATE_OTC_IM_SOCKET_HEART_M,
+  UPDATE_NEW_IM_MESSAGE_M
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -97,5 +100,17 @@ export default {
   [CHANGE_BLACK_TABS_STATUS_M] (state, data) {
     console.log(data)
     state.blackTabsStatus = data
+  },
+  // 改变OTCIM socket状态
+  [UPDATE_OTC_IM_SOCKET_STATUS_M] (state, status) {
+    state.isOTCIMSocketNeedReconnect_S = status
+  },
+  // 改变OTCIM socket 心跳状态
+  [UPDATE_OTC_IM_SOCKET_HEART_M] (state, status) {
+    state.hasNewOTCHart_S = status
+  },
+  // 更新最新消息
+  [UPDATE_NEW_IM_MESSAGE_M] (state, message) {
+    state.newIMMessage_S = message
   }
 }
