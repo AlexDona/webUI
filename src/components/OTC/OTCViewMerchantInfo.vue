@@ -3,475 +3,340 @@
   create: 20190723
   description: 当前页面为 商家信息 组件
 -->
-<template>
-  <div
-    class="merchant-info-box"
+<template lang="pug">
+  .merchant-info-box(
     :class="{'day':theme == 'day','night':theme == 'night' }"
-  >
-    <div class="inner-box">
+  )
+    .inner-box
       <!--1 左侧信息-->
-      <div class="left-info">
+      .left-info
         <!--1.1 头像-->
-        <div class="one-avatar">
-          <div class="names-box">
-            <IconFontCommon
+        .one-avatar
+          .names-box
+            IconFontCommon(
               class="font-size40 icon-user"
               iconName="icon-yonghu1"
-            />
-            <span class="merchant-name font-size16">
-              <span v-if="merchantUserInfo.personNickName">
-                {{merchantUserInfo.personNickName}}
-              </span>
-              <span v-else>
-                {{merchantUserInfo.personRealName}}
-              </span>
-            </span>
-          </div>
-          <div class="time-box">
+            )
+            span.merchant-name.font-size16
+              span(
+                v-if="merchantUserInfo.personNickName"
+              ) {{merchantUserInfo.personNickName}}
+              span(
+                v-else
+              ) {{merchantUserInfo.personRealName}}
+          .time-box
             <!--注册时间-->
-            <p class="bar font-size12">
-              {{$t('M.focus_black_time1')}}：{{merchantUserInfo.registerTime}}
-            </p>
+            p.bar.font-size12 {{$t('M.focus_black_time1')}}：{{merchantUserInfo.registerTime}}
             <!--最近登录时间-->
-            <p class="bar font-size12">
-              {{$t('M.focus_black_time2')}}：{{merchantUserInfo.recentlyLoginTime}}
-            </p>
-          </div>
-        </div>
+            p.bar.font-size12 {{$t('M.focus_black_time2')}}：{{merchantUserInfo.recentlyLoginTime}}
         <!--1.2 认证-->
-        <div class="two-identity">
-          <div class="one-row row">
+        .two-identity
+          .one-row.row
             <!--邮箱认证-->
-            <div
-              class="first-item items"
+            .first-item.items(
               :class="{unverified: merchantUserInfo.mailAuth !== 'enable'}"
-            >
-              <span>{{$t('M.focus_black_identity1')}}</span>
-              <IconFontCommon
+            )
+              span {{$t('M.focus_black_identity1')}}
+              IconFontCommon(
                 class="font-size40 icon-user"
                 iconName="icon-tongguo_huaban"
-              />
-            </div>
+              )
             <!--手机认证-->
-            <div
-              class="second-item items"
+            .second-item.items(
               :class="{unverified: merchantUserInfo.phoneAuth !== 'enable'}"
-            >
-              <span>{{$t('M.focus_black_identity2')}}</span>
-              <IconFontCommon
+            )
+              span {{$t('M.focus_black_identity2')}}
+              IconFontCommon(
                 class="font-size40 icon-user"
                 iconName="icon-tongguo_huaban"
-              />
-            </div>
-          </div>
-          <div class="two-row row">
+              )
+          .two-row.row
             <!--实名认证-->
-            <div
-              class="third-item items"
+            .third-item.items(
               :class="{unverified: merchantUserInfo.realNameAuth !== 'y'}"
-            >
-              <span>{{$t('M.user_real_name')}}</span>
-              <IconFontCommon
+            )
+              span {{$t('M.user_real_name')}}
+              IconFontCommon(
                 class="font-size40 icon-user"
                 iconName="icon-tongguo_huaban"
-              />
-            </div>
+              )
             <!--高级认证-->
-            <div
-              class="fourth-item items"
+            .fourth-item.items(
               :class="{unverified: merchantUserInfo.advancedAuth !== 'pass'}"
-            >
-              <span>{{$t('M.user_senior_certification')}}</span>
-              <IconFontCommon
+            )
+              span {{$t('M.user_senior_certification')}}
+              IconFontCommon(
                 class="font-size40 icon-user"
                 iconName="icon-tongguo_huaban"
-              />
-            </div>
-          </div>
-          <div class="three-row row">
+              )
+          .three-row.row
             <!--商家认证-->
-            <div
-              class="fifth-item items"
+            .fifth-item.items(
               :class="{unverified: merchantUserInfo.merchantAuth !== 'PASS'}"
-            >
-              <span>{{$t('M.focus_black_identity3')}}</span>
-              <IconFontCommon
+            )
+              span {{$t('M.focus_black_identity3')}}
+              IconFontCommon(
                 class="font-size40 icon-user"
                 iconName="icon-tongguo_huaban"
-              />
-            </div>
-          </div>
-        </div>
+              )
         <!--1.3 交易信息-->
-        <div class="trade-infos">
-          <div class="first-bar bars">
-            <!--商家保证金-->
-            <div class="bar-top">{{$t('M.focus_black_merchant_info1')}}</div>
-            <div class="bar-bottom">
-              {{merchantUserInfo.cashDeposit}}{{merchantUserInfo.cashDepositName}}
-            </div>
-          </div>
-          <div class="second-bar bars">
-            <!--交易总单数-->
-            <div class="bar-top">{{$t('M.focus_black_merchant_info2')}}</div>
-            <div class="bar-bottom">{{merchantUserInfo.totalOrders}}</div>
-          </div>
-          <div class="third-bar bars">
-            <!--30日成交单-->
-            <div class="bar-top">{{$t('M.focus_black_merchant_info3')}}</div>
-            <div class="bar-bottom">{{merchantUserInfo.successOrders}}</div>
-          </div>
-          <div class="fourth-bar bars">
-            <!--30日成交率-->
-            <div class="bar-top">{{$t('M.focus_black_merchant_info4')}}</div>
-            <div class="bar-bottom">{{merchantUserInfo.successRate}}%</div>
-          </div>
-          <div class="fifth-bar bars">
-            <!--30日冻结次数-->
-            <div class="bar-top">{{$t('M.focus_black_merchant_info5')}}</div>
-            <div class="bar-bottom">{{merchantUserInfo.freezeTimes}}</div>
-          </div>
-          <div class="sixth-bar bars">
-            <!--平均放行-->
-            <div class="bar-top">{{$t('M.focus_black_merchant_info6')}}</div>
-            <div class="bar-bottom">
-              {{BIHTimeFormatting(merchantUserInfo.avgConfirmTime)}}
-            </div>
-          </div>
-        </div>
+        .trade-infos
+          <!--商家保证金-->
+          .first-bar.bars
+            .bar-top {{$t('M.focus_black_merchant_info1')}}
+            .bar-bottom {{merchantUserInfo.cashDeposit}}{{merchantUserInfo.cashDepositName}}
+          <!--交易总单数-->
+          .second-bar.bars
+            .bar-top {{$t('M.focus_black_merchant_info2')}}
+            .bar-bottom {{merchantUserInfo.totalOrders}}
+          <!--30日成交单-->
+          .third-bar.bars
+            .bar-top {{$t('M.focus_black_merchant_info3')}}
+            .bar-bottom {{merchantUserInfo.successOrders}}
+          <!--30日成交率-->
+          .fourth-bar.bars
+            .bar-top {{$t('M.focus_black_merchant_info4')}}
+            .bar-bottom {{merchantUserInfo.successRate}}%
+          <!--30日冻结次数-->
+          .fifth-bar.bars
+            .bar-top {{$t('M.focus_black_merchant_info5')}}
+            .bar-bottom {{merchantUserInfo.freezeTimes}}
+          <!--平均放行-->
+          .sixth-bar.bars
+            .bar-top {{$t('M.focus_black_merchant_info6')}}
+            .bar-bottom {{BIHTimeFormatting(merchantUserInfo.avgConfirmTime)}}
         <!--1.4 按钮组-->
-        <div
-          class="four-button"
+        .four-button(
           v-if="!(userId === this.userInfo.id)"
-        >
-          <div
-            class="button-group"
+        )
+          .button-group(
             v-if="merchantUserInfo.relationType == '1'"
-          >
-            <div class="focus-button-box">
-              <button
+          )
+            <!--取消关注-->
+            .focus-button-box
+              button(
                 class="button"
                 @click="cancelFocusBlackOpposite('1')"
-              >
-                <!--取消关注-->
-                {{$t('M.focus_black_title3')}}
-              </button>
-            </div>
-            <div class="black-button-box">
-              <button
+              ) {{$t('M.focus_black_title3')}}
+            <!--拉黑-->
+            .black-button-box
+              button(
                 class="button"
                 @click="dialogVisible = true"
-              >
-                <!--拉黑-->
-                {{$t('M.focus_black_title2')}}
-              </button>
-            </div>
-          </div>
-          <div
-            class="button-group"
+              ) {{$t('M.focus_black_title2')}}
+          .button-group(
             v-else-if="merchantUserInfo.relationType == '2'"
-          >
-            <div class="focus-button-box">
-              <button
+          )
+            <!--关注-->
+            .focus-button-box
+              button(
                 class="button"
                 @click="focusBlackOpposite('1')"
-              >
-                <!--关注-->
-                {{$t('M.focus_black_title1')}}
-              </button>
-            </div>
-            <div class="black-button-box">
-              <button
+              ) {{$t('M.focus_black_title1')}}
+            <!--解除-->
+            .black-button-box
+              button(
                 class="button"
                 @click="cancelFocusBlackOpposite('2')"
-              >
-                <!--解除-->
-                {{$t('M.focus_black_title4')}}
-              </button>
-            </div>
-          </div>
-          <div class="button-group" v-else>
-            <div class="focus-button-box">
-              <button
+              ) {{$t('M.focus_black_title4')}}
+          .button-group(
+            v-else
+          )
+            <!--关注-->
+            .focus-button-box
+              button(
                 class="button"
                 @click="focusBlackOpposite('1')"
-              >
-                <!--关注-->
-                {{$t('M.focus_black_title1')}}
-              </button>
-            </div>
-            <div class="black-button-box">
-              <button
+              ) {{$t('M.focus_black_title1')}}
+            <!--拉黑-->
+            .black-button-box
+              button(
                 class="button"
                 @click="dialogVisible = true"
-              >
-                <!--拉黑-->
-                {{$t('M.focus_black_title2')}}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+              ) {{$t('M.focus_black_title2')}}
       <!--2 右侧列表-->
-      <div class="right-lists">
+      .right-lists
         <!--购买列表-->
-        <div class="buy-list buy-sell-list">
-          <div class="header-title buy-title">
-            <!--购买广告-->
-            {{$t('M.focus_black_buy_sell_title1')}}
-          </div>
-          <div class="body-content">
-            <el-table
+        .buy-list.buy-sell-list
+          <!--购买广告-->
+          .header-title.buy-title {{$t('M.focus_black_buy_sell_title1')}}
+          <!--表格内容-->
+          .body-content
+            el-table(
               :data="buyTableList"
               style="width: 100%;"
               :empty-text="$t('M.comm_no_data')"
-            >
+            )
               <!-- 币种 -->
-              <el-table-column
+              el-table-column(
                 :label="$t('M.comm_currency')"
-              >
-                <template slot-scope = "s">
-                  <div>
-                    {{s.row.coinName}}/{{s.row.currencyName}}
-                  </div>
-                </template>
-              </el-table-column>
+              )
+                template(slot-scope = "s")
+                  div {{s.row.coinName}}/{{s.row.currencyName}}
               <!-- 价格 -->
-              <el-table-column
+              el-table-column(
                 :label="$t('M.otc_index_price')"
-              >
-                <template slot-scope = "s">
-                  <div class="buy-price">
-                    {{s.row.price}}{{s.row.currencyName}}
-                  </div>
-                </template>
-              </el-table-column>
+              )
+                template(slot-scope = "s")
+                  .buy-price {{s.row.price}}{{s.row.currencyName}}
               <!-- 数量 -->
-              <el-table-column
+              el-table-column(
                 :label="$t('M.comm_count')"
-              >
-                <template slot-scope = "s">
-                  <div>
-                    {{s.row.remainCount}}{{s.row.coinName}}
-                  </div>
-                </template>
-              </el-table-column>
+              )
+                template(slot-scope = "s")
+                  div {{s.row.remainCount}}{{s.row.coinName}}
               <!-- 限额 -->
-              <el-table-column
+              el-table-column(
                 :label="$t('M.otc_index_priceLimit')"
-              >
-                <template slot-scope = "s">
-                  <div>
-                    {{s.row.minCount}}-{{s.row.maxCount}}{{s.row.currencyName}}
-                  </div>
-                </template>
-              </el-table-column>
+              )
+                template(slot-scope = "s")
+                  div {{s.row.minCount}}-{{s.row.maxCount}}{{s.row.currencyName}}
               <!-- 支付方式 -->
-              <el-table-column
+              el-table-column(
                 :label="$t('M.otc_index_Payment_method')"
-              >
-                <template slot-scope="s">
-                  <div>
-                    <!-- 1支付宝 -->
-                    <IconFontCommon
+              )
+                template(slot-scope = "s")
+                  div
+                    IconFontCommon(
                       class="font-size16"
                       iconName="icon-zhifubao1"
                       v-if="s.row.payTypes[0] === '1'"
-                    />
-                    <!-- 2微信 -->
-                    <IconFontCommon
+                    )
+                    IconFontCommon(
                       class="font-size16"
                       iconName="icon-weixin1"
                       v-if="s.row.payTypes[1] === '1'"
-                    />
-                    <!-- 3银行卡 -->
-                    <IconFontCommon
+                    )
+                    IconFontCommon(
                       class="font-size16"
                       iconName="icon-yinhangqia"
                       v-if="s.row.payTypes[2] === '1'"
-                    />
-                    <!-- 4西联汇款 -->
-                    <span v-show="s.row.payTypes[3] === '1'">
-                      <img
-                        src="../../assets/user/xilian.png"
-                        class="xilian"
-                      >
-                    </span>
-                    <!-- 5PAYPAL -->
-                    <IconFontCommon
+                    )
+                    IconFontCommon(
                       class="font-size16"
                       iconName="icon-paypal"
                       v-if="s.row.payTypes[4] === '1'"
-                    />
-                  </div>
-                </template>
-              </el-table-column>
+                    )
+                    span(
+                      v-show="s.row.payTypes[3] === '1'"
+                    )
+                      img(
+                        src="../../assets/user/xilian.png"
+                        class="xilian"
+                      )
               <!-- 操作 -->
-              <el-table-column
+              el-table-column(
                 :label="$t('M.otc_index_operate')"
                 align="right"
-              >
-                <template slot-scope="s">
-                  <!--购买按钮-->
-                  <div>
-                    <el-button
+              )
+                template(slot-scope = "s")
+                  div
+                    <!--购买按钮-->
+                    el-button(
                       class="sell-buy-button buy-button border-radius2 cursor-pointer"
                       :disabled="s.row.otcEnable=='disable'"
                       @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId,s.row.country, 'onlineBuy')"
-                    >
-                      {{$t('M.comm_buying')}}
-                    </el-button>
-                  </div>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-        </div>
+                    ) {{$t('M.comm_buying')}}
         <!--出售列表-->
-        <div class="sell-list buy-sell-list">
-          <div class="header-title sell-title">
-            <!--出售广告-->
-            {{$t('M.focus_black_buy_sell_title2')}}
-          </div>
-          <div class="body-content">
-            <el-table
+        .sell-list.buy-sell-list
+          <!--出售广告-->
+          .header-title.sell-title {{$t('M.focus_black_buy_sell_title2')}}
+          <!--表格内容-->
+          .body-content
+            el-table(
               :data="sellTableList"
               style="width: 100%;"
               :empty-text="$t('M.comm_no_data')"
-            >
+            )
               <!-- 币种 -->
-              <el-table-column
+              el-table-column(
                 :label="$t('M.comm_currency')"
-              >
-                <template slot-scope = "s">
-                  <div>
-                    {{s.row.coinName}}/{{s.row.currencyName}}
-                  </div>
-                </template>
-              </el-table-column>
+              )
+                template(slot-scope = "s")
+                  div {{s.row.coinName}}/{{s.row.currencyName}}
               <!-- 价格 -->
-              <el-table-column
+              el-table-column(
                 :label="$t('M.otc_index_price')"
-              >
-                <template slot-scope = "s">
-                  <div class="sell-price">
-                    {{s.row.price}}{{s.row.currencyName}}
-                  </div>
-                </template>
-              </el-table-column>
+              )
+                template(slot-scope = "s")
+                  .sell-price {{s.row.price}}{{s.row.currencyName}}
               <!-- 数量 -->
-              <el-table-column
+              el-table-column(
                 :label="$t('M.comm_count')"
-              >
-                <template slot-scope = "s">
-                  <div>
-                    {{s.row.remainCount}}{{s.row.coinName}}
-                  </div>
-                </template>
-              </el-table-column>
+              )
+                template(slot-scope = "s")
+                  div {{s.row.remainCount}}{{s.row.coinName}}
               <!-- 限额 -->
-              <el-table-column
+              el-table-column(
                 :label="$t('M.otc_index_priceLimit')"
-              >
-                <template slot-scope = "s">
-                  <div>
-                    {{s.row.minCount}}-{{s.row.maxCount}}{{s.row.currencyName}}
-                  </div>
-                </template>
-              </el-table-column>
+              )
+                template(slot-scope = "s")
+                  div {{s.row.minCount}}-{{s.row.maxCount}}{{s.row.currencyName}}
               <!-- 支付方式 -->
-              <el-table-column
+              el-table-column(
                 :label="$t('M.otc_index_Payment_method')"
-              >
-                <template slot-scope="s">
-                  <div>
-                    <!-- 1支付宝 -->
-                    <IconFontCommon
+              )
+                template(slot-scope = "s")
+                  div
+                    IconFontCommon(
                       class="font-size16"
                       iconName="icon-zhifubao1"
                       v-if="s.row.payTypes[0] === '1'"
-                    />
-                    <!-- 2微信 -->
-                    <IconFontCommon
+                    )
+                    IconFontCommon(
                       class="font-size16"
                       iconName="icon-weixin1"
                       v-if="s.row.payTypes[1] === '1'"
-                    />
-                    <!-- 3银行卡 -->
-                    <IconFontCommon
+                    )
+                    IconFontCommon(
                       class="font-size16"
                       iconName="icon-yinhangqia"
                       v-if="s.row.payTypes[2] === '1'"
-                    />
-                    <!-- 4西联汇款 -->
-                    <span v-show="s.row.payTypes[3] === '1'">
-                      <img
-                        src="../../assets/user/xilian.png"
-                        class="xilian"
-                      >
-                    </span>
-                    <!-- 5PAYPAL -->
-                    <IconFontCommon
+                    )
+                    IconFontCommon(
                       class="font-size16"
                       iconName="icon-paypal"
                       v-if="s.row.payTypes[4] === '1'"
-                    />
-                  </div>
-                </template>
-              </el-table-column>
+                    )
+                    span(
+                      v-show="s.row.payTypes[3] === '1'"
+                    )
+                      img(
+                        src="../../assets/user/xilian.png"
+                        class="xilian"
+                      )
               <!-- 操作 -->
-              <el-table-column
+              el-table-column(
                 :label="$t('M.otc_index_operate')"
                 align="right"
-              >
-                <template slot-scope="s">
-                  <!--出售按钮-->
-                  <div>
-                    <el-button
+              )
+                template(slot-scope = "s")
+                  div
+                    <!--出售按钮-->
+                    el-button(
                       class="sell-buy-button sell-button border-radius2 cursor-pointer"
                       :disabled="s.row.otcEnable=='disable'"
                       @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId,s.row.country, 'onlineSell')"
-                    >
-                      {{$t('M.comm_offering')}}
-                    </el-button>
-                  </div>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-        </div>
-      </div>
+                    ) {{$t('M.comm_offering')}}
       <!--3 拉黑弹窗-->
-      <div class="black-list-dialog">
-        <el-dialog
+      .black-list-dialog
+        el-dialog(
           :title="$t('M.otc_prompt')"
           :visible.sync="dialogVisible"
           top="25vh"
-        >
-          <div class="content">
-            <!--拉黑后该用户将无法访问您的广告信息或与您交易，您确定要拉黑吗？-->
-            {{$t('M.focus_black_title6')}}
-          </div>
-          <span slot="footer">
-            <div class="button-group">
-              <button
+        )
+          <!--拉黑后该用户将无法访问您的广告信息或与您交易，您确定要拉黑吗？-->
+          .content {{$t('M.focus_black_title6')}}
+          span(slot="footer")
+            .button-group
+              button(
                 class="cancel item"
                 @click="dialogVisible = false"
-              >
-                {{$t('M.comm_cancel')}}
-              </button>
-              <button
+              ) {{$t('M.comm_cancel')}}
+              button(
                 class="confirm item"
                 @click="focusBlackOpposite('2')"
-              >
-                {{$t('M.comm_confirm')}}
-              </button>
-            </div>
-          </span>
-        </el-dialog>
-      </div>
-    </div>
-  </div>
+              ) {{$t('M.comm_confirm')}}
 </template>
 <script>
 import {
@@ -719,651 +584,364 @@ export default {
   // watch: {}
 }
 </script>
-<style scoped lang="scss" type="text/scss">
-  @import "../../assets/CSS/index";
-
-  .merchant-info-box {
-    width: 1300px;
-    padding-top: 70px;
-    margin: 60px auto 200px;
-
-    > .inner-box {
-      display: flex;
-      justify-content: space-between;
-
-      > .left-info {
-        width: 300px;
-        min-height: 927px;
-
-        > .one-avatar {
-          box-sizing: border-box;
-          height: 150px;
-          padding: 25px 0 0 30px;
-
-          > .names-box {
-            height: 40px;
-            margin-bottom: 20px;
-            line-height: 40px;
-
-            .icon {
-              margin-right: 20px;
-            }
-          }
-
-          > .time-box {
-            > .bar {
-              line-height: 20px;
-            }
-          }
-        }
-
-        > .two-identity {
-          position: relative;
-          padding: 30px 10px;
-
-          &::after {
-            position: absolute;
-            bottom: 0;
-            right: 30px;
-            width: 240px;
-            height: 1px;
-            content: '';
-          }
-
-          > .row {
-            display: flex;
-            justify-content: space-between;
-
-            > .items {
-              width: 49%;
-              padding: 10px 0;
-              font-size: 12px;
-              text-align: center;
-
-              .icon {
-                width: 20px;
-                height: 20px;
-              }
-            }
-          }
-        }
-
-        > .trade-infos {
-          display: flex;
-          flex-wrap: wrap;
-          padding: 30px 10px 0;
-
-          > .bars {
-            width: 49%;
-
-            > .bar-top {
-              margin-bottom: 6px;
-              font-size: 12px;
-              text-align: center;
-            }
-
-            > .bar-bottom {
-              font-size: 14px;
-              text-align: center;
-            }
-          }
-
-          > .first-bar,
-          .second-bar,
-          .third-bar,
-          .fourth-bar {
-            margin-bottom: 30px;
-          }
-        }
-
-        > .four-button {
-          > .button-group {
-            display: flex;
-            justify-content: space-between;
-            padding: 80px 30px 0;
-
-            > .focus-button-box {
-              width: 50%;
-            }
-
-            > .black-button-box {
-              width: 50%;
-              text-align: right;
-            }
-
-            .button {
-              width: 105px;
-              height: 30px;
-              padding: 5px 10px;
-              border-radius: 2px;
-              font-size: 12px;
-              cursor: pointer;
-            }
-          }
-        }
-      }
-
-      > .right-lists {
-        width: 985px;
-
-        > .buy-sell-list {
-          > .header-title {
-            height: 58px;
-            padding-left: 20px;
-            font-weight: 700;
-            font-size: 18px;
-            line-height: 58px;
-          }
-
-          > .body-content {
-            .buy-price {
-              color: $upColor;
-            }
-
-            .sell-price {
-              color: $otcGreen;
-            }
-
-            .xilian {
-              vertical-align: middle;
-            }
-          }
-        }
-
-        > .buy-list {
-          min-height: 440px;
-          margin-bottom: 18px;
-
-          > .buy-title {
-            color: $upColor;
-          }
-        }
-
-        > .sell-list {
-          min-height: 469px;
-
-          > .sell-title {
-            color: $otcGreen;
-          }
-        }
-      }
-    }
-
-    /deep/ {
-      .inner-box {
-        > .right-lists {
-          > .buy-sell-list {
-            > .body-content {
-              .el-table {
-                font-size: 12px;
-
-                .el-table__header {
-                  thead {
-                    tr {
-                      th {
-                        padding: 14px 0;
-
-                        &:first-child {
-                          .cell {
-                            padding-left: 20px;
-                          }
-                        }
-
-                        &:nth-last-child(2) {
-                          .cell {
-                            padding-right: 20px;
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-
-                .el-table__body {
-                  tr {
-                    td {
-                      padding: 18px 0;
-
-                      &:first-child {
-                        .cell {
-                          padding-left: 20px;
-                        }
-                      }
-
-                      &:last-child {
-                        .cell {
-                          padding-right: 20px;
-                        }
-                      }
-                    }
-                  }
-
-                  .sell-buy-button {
-                    height: 24px;
-                    padding: 0 10px;
-                    border: 0;
-                    line-height: 24px;
-                    color: $mainColorOfWhite;
-                  }
-
-                  .buy-button {
-                    background-color: $upColor;
-                  }
-
-                  .buy-button.is-disabled {
-                    background-color: #e4b1a7;
-                  }
-
-                  .sell-button {
-                    background-color: $otcGreen;
-                  }
-
-                  .sell-button.is-disabled {
-                    background-color: #8ead9e;
-                  }
-                }
-
-                .el-table__empty-text {
-                  line-height: 350px !important;
-                }
-              }
-            }
-          }
-        }
-
-        > .black-list-dialog {
-          .el-dialog__wrapper {
-            background-color: rgba(0, 0, 0, .7);
-
-            .el-dialog {
-              width: 350px;
-              height: 180px;
-              border-radius: 4px;
-
-              .el-dialog__header {
-                padding: 6px 18px;
-                border-radius: 4px 4px 0 0;
-
-                .el-dialog__title {
-                  font-size: 14px;
-                }
-
-                .el-dialog__headerbtn {
-                  top: 10px;
-                  right: 10px;
-                }
-              }
-
-              .el-dialog__body {
-                height: 84px;
-                padding: 30px 18px;
-                font-size: 12px;
-              }
-
-              .el-dialog__footer {
-                padding: 0 18px;
-
-                .button-group {
-                  .item {
-                    height: 30px;
-                    padding: 0 28px;
-                    border-radius: 2px;
-                    font-size: 12px;
-                    line-height: 30px;
-                    cursor: pointer;
-                  }
-
-                  .confirm {
-                    margin-left: 20px;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.night {
-      .inner-box {
-        > .left-info {
-          background-color: $mainContentNightBgColor;
-          box-shadow: 0 3px 4px 0 rgba(25, 30, 40, 1);
-
-          > .one-avatar {
-            border-bottom: 1px solid $dialogColor10;
-
-            > .names-box {
-              > .merchant-name {
-                color: $mainColorOfWhite;
-              }
-            }
-
-            > .time-box {
-              color: $dialogColor9;
-            }
-          }
-
-          > .two-identity {
-            &::after {
-              border-bottom: 1px dashed $dialogColor10;
-            }
-
-            > .row {
-              > .items {
-                color: $mainColorOfWhite;
-
-                .icon {
-                  color: $mainColor;
-                }
-              }
-
-              .unverified {
-                color: $dialogColor9 !important;
-
-                .icon {
-                  color: $dialogColor9 !important;
-                }
-              }
-            }
-          }
-
-          > .trade-infos {
-            > .bars {
-              > .bar-top {
-                color: $dialogColor9;
-              }
-
-              > .bar-bottom {
-                color: $mainColorOfWhite;
-              }
-            }
-          }
-
-          > .four-button {
-            > .button-group {
-              > .focus-button-box {
-                > .button {
-                  color: $mainColorOfWhite;
-                  background-color: $mainColor;
-                }
-              }
-
-              > .black-button-box {
-                > .button {
-                  border: 1px solid $mainColor;
-                  color: $mainColor;
-                  background-color: $mainContentNightBgColor;
-                }
-              }
-            }
-          }
-        }
-
-        > .right-lists {
-          .buy-sell-list {
-            background-color: $mainContentNightBgColor;
-            box-shadow: 0 3px 4px 0 rgba(25, 30, 40, 1);
-
-            > .header-title {
-              border-bottom: 1px solid $dialogColor10;
-            }
-          }
-        }
-      }
-
-      /deep/ {
-        .inner-box {
-          > .right-lists {
-            > .buy-sell-list {
-              > .body-content {
-                .el-table {
-                  color: $mainColorOfWhite;
-                  background-color: $mainContentNightBgColor;
-
-                  .el-table__header {
-                    thead {
-                      color: $mainNightTitleColor;
-
-                      tr {
-                        th {
-                          background-color: $mainContentNightBgColor;
-
-                          &.is-leaf {
-                            border-bottom: 1px solid $dialogColor10;
-                          }
-                        }
-                      }
-                    }
-                  }
-
-                  .el-table__body {
-                    tr {
-                      background-color: $mainContentNightBgColor;
-
-                      td {
-                        border-bottom: 0 solid transparent;
-                      }
-
-                      &:hover {
-                        td {
-                          background-color: #181b2b;
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-
-          > .black-list-dialog {
-            .el-dialog__wrapper {
-              .el-dialog {
-                background-color: $dialogColor1;
-
-                .el-dialog__header {
-                  background-color: $dialogColor2;
-
-                  .el-dialog__title {
-                    color: $dialogColor4;
-                  }
-                }
-
-                .el-dialog__body {
-                  color: $dialogColor5;
-                }
-
-                .el-dialog__footer {
-                  .button-group {
-                    .cancel {
-                      border: 1px solid $mainColor;
-                      color: $mainColorOfWhite;
-                      background-color: $dialogColor1;
-                    }
-
-                    .confirm {
-                      color: $mainColorOfWhite;
-                      background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.day {
-      .inner-box {
-        > .left-info {
-          background-color: $mainColorOfWhite;
-          box-shadow: 0 0 6px #cfd5df;
-
-          > .one-avatar {
-            border-bottom: 1px solid rgba(97, 116, 153, .2);
-
-            > .names-box {
-              > .merchant-name {
-                color: $dayMainTitleColor;
-              }
-            }
-
-            > .time-box {
-              color: $dialogColor9;
-            }
-          }
-
-          > .two-identity {
-            &::after {
-              border-bottom: 1px dashed rgba(97, 116, 153, .2);
-            }
-
-            > .row {
-              > .items {
-                color: $mainColor;
-
-                .icon {
-                  color: $mainColor;
-                }
-              }
-
-              .unverified {
-                color: $dialogColor9 !important;
-
-                .icon {
-                  color: $dialogColor9 !important;
-                }
-              }
-            }
-          }
-
-          > .trade-infos {
-            > .bars {
-              > .bar-top {
-                color: $dialogColor9;
-              }
-
-              > .bar-bottom {
-                color: $dayMainTitleColor;
-              }
-            }
-          }
-
-          > .four-button {
-            > .button-group {
-              > .focus-button-box {
-                > .button {
-                  color: $mainColorOfWhite;
-                  background-color: $mainColor;
-                }
-              }
-
-              > .black-button-box {
-                > .button {
-                  border: 1px solid $mainColor;
-                  color: $mainColor;
-                  background-color: $mainColorOfWhite;
-                }
-              }
-            }
-          }
-        }
-
-        > .right-lists {
-          .buy-sell-list {
-            background-color: $mainColorOfWhite;
-            box-shadow: 0 0 6px #cfd5df;
-
-            > .header-title {
-              border-bottom: 1px solid rgba(97, 116, 153, .2);
-            }
-          }
-        }
-      }
-
-      /deep/ {
-        .inner-box {
-          > .right-lists {
-            > .buy-sell-list {
-              > .body-content {
-                .el-table {
-                  color: $dayMainTitleColor;
-                  background-color: $mainColorOfWhite;
-
-                  .el-table__header {
-                    thead {
-                      color: $fontColorSecondaryOfDay;
-
-                      tr {
-                        th {
-                          background-color: $mainColorOfWhite;
-
-                          &.is-leaf {
-                            border-bottom: 1px solid rgba(97, 116, 153, .2);
-                          }
-                        }
-                      }
-                    }
-                  }
-
-                  .el-table__body {
-                    tr {
-                      background-color: $mainColorOfWhite;
-
-                      td {
-                        border-bottom: 0 solid transparent;
-                      }
-
-                      &:hover {
-                        td {
-                          background-color: rgba(97, 116, 153, .05);
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-
-          > .black-list-dialog {
-            .el-dialog__wrapper {
-              .el-dialog {
-                background-color: $mainColorOfWhite;
-
-                .el-dialog__header {
-                  background-color: $dialogColor7;
-
-                  .el-dialog__title {
-                    color: $dayMainTitleColor;
-                  }
-                }
-
-                .el-dialog__body {
-                  color: $dayMainTitleColor;
-                }
-
-                .el-dialog__footer {
-                  .button-group {
-                    .cancel {
-                      border: 1px solid $mainColor;
-                      color: $mainColor;
-                      background-color: $mainColorOfWhite;
-                    }
-
-                    .confirm {
-                      color: $mainColorOfWhite;
-                      background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+<style lang="stylus">
+  @import '../../assets/CSS/index.styl'
+  .merchant-info-box
+    width 1300px
+    padding-top 70px
+    margin 60px auto 200px
+    > .inner-box
+      display flex
+      justify-content space-between
+      > .left-info
+        width 300px
+        min-height 927px
+        > .one-avatar
+          box-sizing border-box
+          height 150px
+          padding 25px 0 0 30px
+          > .names-box
+            height 40px
+            margin-bottom 20px
+            line-height 40px
+            .icon
+              margin-right 20px
+          > .time-box
+            > .bar
+              line-height 20px
+        > .two-identity
+          position relative
+          padding 30px 10px
+          &::after
+            position absolute
+            bottom 0
+            right 30px
+            width 240px
+            height 1px
+            content ''
+          > .row
+            display flex
+            justify-content space-between
+            > .items
+              width 49%
+              padding 10px 0
+              font-size 12px
+              text-align center
+              .icon
+                width 20px
+                height 20px
+        > .trade-infos
+          display flex
+          flex-wrap wrap
+          padding 30px 10px 0
+          > .bars
+            width 49%
+            > .bar-top
+              margin-bottom 6px
+              font-size 12px
+              text-align center
+            > .bar-bottom
+              font-size 14px
+              text-align center
+          .first-bar,.second-bar,.third-bar,.fourth-bar
+            margin-bottom 30px
+        > .four-button
+          > .button-group
+            display flex
+            justify-content space-between
+            padding 80px 30px 0
+            > .focus-button-box
+              width 50%
+            > .black-button-box
+              width 50%
+              text-align right
+            .button
+              width 105px
+              height 30px
+              padding 5px 10px
+              border-radius 2px
+              font-size 12px
+              cursor pointer
+      > .right-lists
+        width 985px
+        > .buy-sell-list
+          > .header-title
+            height 58px
+            padding-left 20px
+            font-weight 700
+            font-size 18px
+            line-height 58px
+          > .body-content
+            .buy-price
+              color S_error_color
+            .sell-price
+              color #008069
+            .xilian
+              vertical-align middle
+            .icon
+              margin-right 5px
+        > .buy-list
+          min-height 440px
+          margin-bottom 18px
+          > .buy-title
+            color S_error_color
+        > .sell-list
+          min-height 469px
+          > .sell-title
+            color #008069
+    /deep/
+      .inner-box
+        > .right-lists
+          > .buy-sell-list
+            > .body-content
+              .el-table
+                font-size 12px
+                .el-table__header
+                  thead
+                    tr
+                      th
+                        padding 14px 0
+                        &:first-child
+                          .cell
+                            padding-left 20px
+                        &:nth-last-child(2)
+                          .cell
+                            padding-right 20px
+                .el-table__body
+                  tr
+                    td
+                      padding 18px 0
+                      &:first-child
+                        .cell
+                          padding-left 20px
+                      &:last-child
+                        .cell
+                          padding-right 20px
+                  .sell-buy-button
+                    height 24px
+                    padding 0 10px
+                    border 0
+                    line-height 24px
+                    color S_day_bg
+                  .buy-button
+                    background-color S_error_color
+                  .buy-button.is-disabled
+                    background-color #e4b1a7
+                  .sell-button
+                    background-color #008069
+                  .sell-button.is-disabled
+                    background-color #8ead9e
+                .el-table__empty-text
+                  line-height 350px !important
+        > .black-list-dialog
+          .el-dialog__wrapper
+            background-color rgba(0, 0, 0, .7)
+            .el-dialog
+              width 350px
+              height 180px
+              border-radius 4px
+              .el-dialog__header
+                padding 6px 18px
+                border-radius 4px 4px 0 0
+                .el-dialog__title
+                  font-size 14px
+                .el-dialog__headerbtn
+                  top 10px
+                  right 10px
+              .el-dialog__body
+                height 84px
+                padding 30px 18px
+                font-size 12px
+              .el-dialog__footer
+                padding 0 18px
+                .button-group
+                  .item
+                    height 30px
+                    padding 0 28px
+                    border-radius 2px
+                    font-size 12px
+                    line-height 30px
+                    cursor pointer
+                  .confirm
+                    margin-left 20px
+    &.night
+      .inner-box
+        > .left-info
+          background-color S_night_main_bg
+          box-shadow 0 3px 4px 0 rgba(25, 30, 40, 1)
+          > .one-avatar
+            border-bottom 1px solid $dialogColor10
+            > .names-box
+              > .merchant-name
+                color S_day_bg
+            > .time-box
+              color #66718f
+          > .two-identity
+            &::after
+              border-bottom 1px dashed #34415b
+            > .row
+              > .items
+                color S_day_bg
+                .icon
+                  color S_main_color
+              .unverified
+                color #66718f !important
+                .icon
+                  color #66718f !important
+          > .trade-infos
+            > .bars
+              > .bar-top
+                color #66718f
+              > .bar-bottom
+                color S_day_bg
+          > .four-button
+            > .button-group
+              > .focus-button-box
+                > .button
+                  color S_day_bg
+                  background-color S_main_color
+              > .black-button-box
+                > .button
+                  border 1px solid S_main_color
+                  color S_main_color
+                  background-color S_night_main_bg
+        > .right-lists
+          .buy-sell-list
+            background-color S_night_main_bg
+            box-shadow 0 3px 4px 0 rgba(25, 30, 40, 1)
+            > .header-title
+              border-bottom 1px solid #34415b
+      /deep/
+        .inner-box
+          > .right-lists
+            > .buy-sell-list
+              > .body-content
+                .el-table
+                  color S_day_bg
+                  background-color S_night_main_bg
+                  .el-table__header
+                    thead
+                      color #a9bed4
+                      tr
+                        th
+                          background-color S_night_main_bg
+                          &.is-leaf
+                            border-bottom 1px solid #34415b
+                  .el-table__body
+                    tr
+                      background-color S_night_main_bg
+                      td
+                        border-bottom 0 solid transparent
+                      &:hover
+                        td
+                          background-color #181b2b
+          > .black-list-dialog
+            .el-dialog__wrapper
+              .el-dialog
+                background-color #28334a
+                .el-dialog__header
+                  background-color #212b3f
+                  .el-dialog__title
+                    color #cfd5df
+                .el-dialog__body
+                  color: #afb5c1
+                .el-dialog__footer
+                  .button-group
+                    .cancel
+                      border 1px solid S_main_color
+                      color S_day_bg
+                      background-color #28334a
+                    .confirm
+                      color S_day_bg
+                      background linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+    &.day
+      .inner-box
+        > .left-info
+          background-color S_day_bg
+          box-shadow 0 0 6px #cfd5df
+          > .one-avatar
+            border-bottom 1px solid rgba(97, 116, 153, .2)
+            > .names-box
+              > .merchant-name
+                color #333
+            > .time-box
+              color #66718f
+          > .two-identity
+            &::after
+              border-bottom 1px dashed rgba(97, 116, 153, .2)
+            > .row
+              > .items
+                color S_main_color
+                .icon
+                  color S_main_color
+              .unverified
+                color #66718f !important
+                .icon
+                  color #66718f !important
+          > .trade-infos
+            > .bars
+              > .bar-top
+                color #66718f
+              > .bar-bottom
+                color #333
+          > .four-button
+            > .button-group
+              > .focus-button-box
+                > .button
+                  color S_day_bg
+                  background-color S_main_color
+              > .black-button-box
+                > .button
+                  border 1px solid S_main_color
+                  color S_main_color
+                  background-color S_day_bg
+        > .right-lists
+          .buy-sell-list
+            background-color S_day_bg
+            box-shadow 0 0 6px #cfd5df
+            > .header-title
+              border-bottom 1px solid rgba(97, 116, 153, .2)
+      /deep/
+        .inner-box
+          > .right-lists
+            > .buy-sell-list
+              > .body-content
+                .el-table
+                  color #333
+                  background-color S_day_bg
+                  .el-table__header
+                    thead
+                      color #7d90ac
+                      tr
+                        th
+                          background-color S_day_bg
+                          &.is-leaf
+                            border-bottom 1px solid rgba(97, 116, 153, .2)
+                  .el-table__body
+                    tr
+                      background-color S_day_bg
+                      td
+                        border-bottom 0 solid transparent
+                      &:hover
+                        td
+                          background-color rgba(97, 116, 153, .05)
+          > .black-list-dialog
+            .el-dialog__wrapper
+              .el-dialog
+                background-color S_day_bg
+                .el-dialog__header
+                  background-color #dce7f3
+                  .el-dialog__title
+                    color #333
+                .el-dialog__body
+                  color #333
+                .el-dialog__footer
+                  .button-group
+                    .cancel
+                      border 1px solid S_main_color
+                      color S_main_color
+                      background-color S_day_bg
+                    .confirm
+                      color S_day_bg
+                      background linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
 </style>
