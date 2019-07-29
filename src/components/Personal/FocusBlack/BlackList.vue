@@ -3,65 +3,53 @@
   create: 20190721
   description: 当前页面为 拉黑 组件
 -->
-<template>
-  <div
-    class="black-box"
+<template lang="pug">
+  .black-box(
     :class="{'day':theme == 'day','night':theme == 'night' }"
-  >
-    <div class="inner-box">
-      <div class="tab-two">
-        <el-table
+  )
+    .inner-box
+      .tab-two
+        el-table(
           :data="blackList"
           style="width: 100%;"
           :empty-text="$t('M.comm_no_data')"
-        >
+        )
           <!--用户UID-->
-          <el-table-column
+          el-table-column(
             :label="$t('M.focus_black_table3')"
             prop="showId"
-          >
-          </el-table-column>
+          )
           <!--昵称-->
-          <el-table-column
+          el-table-column(
             :label="$t('M.focus_black_table4')"
             prop="nickName"
-          >
-          </el-table-column>
+          )
           <!--单数/成交率-->
-          <el-table-column
+          el-table-column(
             :label="$t('M.focus_black_table5')"
             width="240"
-          >
-            <template slot-scope = "s">
-              <div>{{s.row.tradeTimes}}/{{s.row.completeRate}}%</div>
-            </template>
-          </el-table-column>
+          )
+            template(slot-scope = "s")
+              div {{s.row.tradeTimes}}/{{s.row.completeRate}}%
           <!--拉黑时间-->
-          <el-table-column
+          el-table-column(
             :label="$t('M.focus_black_table6')"
             prop="createTime"
-          >
-          </el-table-column>
+          )
           <!--操作-->
-          <el-table-column
+          el-table-column(
             :label="$t('M.otc_index_operate')"
             align="right"
             width="150"
-          >
-            <template slot-scope = "s">
-              <div
-                class="operation-text cursor-pointer"
+          )
+            template(slot-scope = "s")
+              <!--解除-->
+              .operation-text.cursor-pointer(
                 @click="confirmUnBlackList(s.row.toId)"
-              >
-                <!--解除-->
-                {{$t('M.focus_black_title4')}}
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
+              ) {{$t('M.focus_black_title4')}}
         <!--分页-->
-        <div class="page">
-          <el-pagination
+        .page
+          el-pagination(
             background
             layout="prev, pager, next"
             :current-page="currentPage"
@@ -69,12 +57,7 @@
             @current-change="changeCurrentPage"
             :total="total"
             v-show="total - 15 > 0"
-          >
-          </el-pagination>
-        </div>
-      </div>
-    </div>
-  </div>
+          )
 </template>
 <script>
 import {mapState} from 'vuex'
@@ -157,141 +140,72 @@ export default {
   // destroyed () {}
 }
 </script>
-<style scoped lang="scss" type="text/scss">
-  @import "../../../assets/CSS/index";
-
-  .black-box {
-    > .inner-box {
-      width: 1105px;
-
-      .tab-two {
-        padding: 0 30px;
-
-        .operation-text {
-          height: 24px;
-          color: $mainColor;
-        }
-      }
-    }
-
-    /deep/ {
-      .inner-box {
-        .el-table {
-          font-size: 12px;
-
-          .el-table__empty-text {
-            line-height: 600px;
-          }
-
-          td {
-            padding: 8px 0;
-          }
-
-          .el-table__header {
-            tr {
-              th {
-                .cell {
-                  padding-right: 0;
-                  padding-left: 0;
-                }
-              }
-            }
-          }
-
-          .el-table__body {
-            tr {
-              td {
-                .cell {
-                  padding-right: 0;
-                  padding-left: 0;
-                }
-              }
-            }
-          }
-        }
-
-        .tab-two {
-          .el-table {
-            .el-table__body {
-              td {
-                border-bottom: 0;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.night {
-      /deep/ {
-        .inner-box {
-          .el-table {
-            color: $mainNightTitleColor;
-            background-color: $mainContentNightBgColor;
-
-            .el-table__header {
-              th.is-leaf {
-                border-bottom: 1px solid $nightInputBg;
-              }
-
-              thead {
-                color: $mainNightTitleColor;
-              }
-            }
-
-            tr,
-            th {
-              background-color: $mainContentNightBgColor;
-            }
-
-            .el-table__body {
-              tr {
-                &:hover {
-                  td {
-                    background-color: $mainContentNightBgColor !important;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.day {
-      /deep/ {
-        .inner-box {
-          .el-table {
-            color: $dayMainTitleColor;
-            background-color: $mainColorOfWhite;
-
-            .el-table__header {
-              th.is-leaf {
-                border-bottom: 1px solid rgba(57, 66, 77, .1);
-              }
-
-              thead {
-                color: $fontColorSecondaryOfDay;
-              }
-            }
-
-            tr,
-            th {
-              background-color: $mainColorOfWhite;
-            }
-
-            .el-table__body {
-              tr {
-                &:hover {
-                  td {
-                    background-color: $mainColorOfWhite !important;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+<style lang="stylus">
+  @import '../../../assets/CSS/index.styl'
+  .black-box
+    .inner-box
+      width 1105px
+      .tab-two
+        padding 0 30px
+        .operation-text
+          height 24px
+          color S_main_color
+    /deep/
+      .inner-box
+        .el-table
+          font-size 12px
+          .el-table__empty-text
+            line-height 600px
+          td
+            padding 8px 0
+          .el-table__header
+            tr
+              th
+                .cell
+                  padding-right 0
+                  padding-left 0
+          .el-table__body
+            tr
+              td
+                .cell
+                  padding-right 0
+                  padding-left 0
+        .tab-two
+          .el-table
+            .el-table__body
+              td
+                border-bottom 0
+    &.night
+      .inner-box
+        .el-table
+          color #a9bed4
+          background-color S_night_main_bg
+          .el-table__header
+            th.is-leaf
+              border-bottom 1px solid #2d3651
+            thead
+              color #a9bed4
+          tr,th
+            background-color S_night_main_bg
+          .el-table__body
+            tr:hover
+              td
+                background-color S_night_main_bg !important
+    &.day
+      /deep/
+        .inner-box
+          .el-table
+            color #333
+            background-color S_day_bg
+            .el-table__header
+              th.is-leaf
+                border-bottom 1px solid rgba(57, 66, 77, .1)
+              thead
+                color #7d90ac
+            tr,th
+              background-color S_day_bg
+            .el-table__body
+              tr:hover
+                td
+                  background-color S_day_bg !important
 </style>

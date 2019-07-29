@@ -41,7 +41,6 @@ export default {
     }
   },
   created () {
-    console.log(this.blackTabsStatus)
     if (this.blackTabsStatus) {
       this.activeName = 'second'
       // 商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
@@ -57,10 +56,9 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_BLACK_TABS_STATUS_M'
-    ]),
-    handleClick (tab, event) {
-      console.log(tab, event)
-    }
+    ])
+    // handleClick (tab, event) {
+    // }
   },
   // filter: {},
   computed: {

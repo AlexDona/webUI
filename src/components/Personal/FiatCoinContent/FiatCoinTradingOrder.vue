@@ -422,7 +422,7 @@
                 <span
                   class="cursor-pointer"
                   @click="jumpMerchantInfoPage(item.buyId)"
-                >}
+                >
                   <span v-if="item.buyNickName">
                     {{item.buyNickName}}
                   </span>
