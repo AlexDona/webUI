@@ -1040,5 +1040,10 @@ export default {
         width: 100%;
       }
     }
+
+    .el-pagination {
+      position: relative;
+      top: -62px;
+    }
   }
 </style>

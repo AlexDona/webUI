@@ -171,4 +171,6 @@ export default {
                 td
                   border-bottom none
                   color #333
+    .el-pagination
+        padding-bottom 36px
 </style>

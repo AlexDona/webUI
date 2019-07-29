@@ -392,18 +392,18 @@
             </el-dialog>
           </div>
         </div>
-      </div>
-      <div class="paging">
-        <!--分页-->
-        <el-pagination
-          background
-          v-show="pushRecordList.length"
-          layout="prev, pager, next"
-          :current-page="currentPageForMyEntrust"
-          :page-count="totalPageForMyEntrust"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
+        <div class="paging">
+          <!--分页-->
+          <el-pagination
+                  background
+                  v-show="pushRecordList.length"
+                  layout="prev, pager, next"
+                  :current-page="currentPageForMyEntrust"
+                  :page-count="totalPageForMyEntrust"
+                  @current-change="changeCurrentPage"
+          >
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -864,6 +864,8 @@ export default {
   @import '../../../assets/CSS/index';
 
   .push-assets {
+      margin-bottom: 50px;
+
     > .push-assets-main {
       > .push-assets-content-box {
         min-height: 448px;

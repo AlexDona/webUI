@@ -214,10 +214,10 @@ export default {
     this.validatedActiveFrequency = this.activeFrequency
     this.oldFrequency = this.activeFrequency
   },
-  mounted () {},
+  /* mounted () {},
   activated () {},
   update () {},
-  beforeRouteUpdate () {},
+  beforeRouteUpdate () {}, */
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -244,7 +244,6 @@ export default {
 
       this.isNeedPayPassword = (this.oldFrequency == 'everytime' ||
         (this.oldFrequency == 'userset' && newVal == 'never')) ? 1 : 0
-      console.log(this.isNeedPayPassword)
       await this.REFRESH_USER_INFO_ACTION()
       let isPaypasswordLocked = getNestedData(this.loginStep1Info, 'payPasswordRemainCount') ? false : true
       this.CHANGE_PASSWORD_USEABLE(isPaypasswordLocked)
@@ -328,7 +327,7 @@ export default {
 
   .personal-setting {
     > .personal-setting-main {
-      min-height: 665px;
+      min-height: 710px;
       font-size: 12px;
 
       > .inner-box {

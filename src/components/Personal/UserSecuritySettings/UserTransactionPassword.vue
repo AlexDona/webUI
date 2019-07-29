@@ -442,7 +442,6 @@ export default {
         }
         data = await setTransactionPassword(params)
         if (!data) return false
-        console.log(data)
         this.stateEmptyData()
         this.SET_USER_INFO_REFRESH_STATUS(true)
         this.successJump()
@@ -843,7 +842,6 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .transaction-password-main {
         border: 1px solid rgba(246, 246, 246, 1);

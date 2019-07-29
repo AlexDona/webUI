@@ -315,11 +315,11 @@ export default {
     await this.REFRESH_USER_INFO_ACTION()
     this.showNoPosswdAndNoVerifyNotice()
   },
-  mounted () {
+  /* mounted () {
   },
   activated () {},
   update () {},
-  beforeRouteUpdate () {},
+  beforeRouteUpdate () {}, */
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -382,7 +382,6 @@ export default {
   },
   watch: {
     userCenterActiveName (e) {
-      console.log(e)
       this.$setStore('active-target', e)
       this.currentUserCenterActiveName = e
       if (e !== 'assets') {

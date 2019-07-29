@@ -505,7 +505,7 @@
         </div>
         <div
           class="success-after name-authentication-content"
-          v-if="realNameAuth === 'y' && advancedAuth !== ''"
+          v-if="realNameAuth === 'y' && advancedAuth === 'pass'"
         >
           <div
                   class="text-align-c"
@@ -1084,7 +1084,7 @@ export default {
 
       .advanced-main-header {
         width: 100%;
-        padding-bottom: 117px;
+        padding-bottom: 161px;
 
         .icon-down {
           padding-right: 10px;
@@ -1158,7 +1158,7 @@ export default {
 
       .transition-box {
         > .advanced-upload {
-          min-height: 180px;
+          min-height: 223px;
           padding: 0 20px;
           margin-top: 42px;
 
