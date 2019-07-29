@@ -3,88 +3,69 @@
   create: 20190721
   description: 当前页面为 关注 组件
 -->
-<template>
-  <div
-    class="focus-box"
+<template lang="pug">
+  .focus-box(
     :class="{'day':theme == 'day','night':theme == 'night' }"
-  >
-    <div class="inner-box">
-      <div class="tab-one">
-        <el-table
+  )
+    .inner-box
+      .tab-one
+        el-table(
           :data="focusList"
           style="width: 100%;"
           :empty-text="$t('M.comm_no_data')"
-        >
+        )
           <!--名字-->
-          <el-table-column
-            label=""
-          >
-            <template slot-scope = "s">
-              <div class="name">
-                <img
+          el-table-column(label="")
+            template(slot-scope = "s")
+              .name
+                img(
                   v-show="s.row.type === 'MERCHANT'"
                   src="../../../assets/develop/shangjia.png"
                   class="merchant-icon"
                   :title="$t('M.otc_merchant')"
-                >
-                <span
+                )
+                span.cursor-pointer(
                   @click="jumpMerchantInfoPage(s.row.toId)"
-                  class="cursor-pointer"
-                >
-                  {{s.row.nickName}}
-                </span>
-              </div>
-            </template>
-          </el-table-column>
+                )
+                  span(
+                    v-if="s.row.nickName"
+                  ) {{s.row.nickName}}
+                  span(
+                    v-else
+                  ) {{s.row.realName}}
           <!--是否高级认证-->
-          <el-table-column
-            label=""
-          >
-            <template slot-scope = "s">
-              <div v-show="s.row.advancedAuth === 'pass'">
-                <!--已高级认证-->
-                {{$t('M.focus_black_identity4')}}
-              </div>
-              <div v-show="s.row.advancedAuth === 'waitVeritfy'">
+          el-table-column(label="")
+            template(slot-scope = "s")
+              <!--已高级认证-->
+              div(
+                v-show="s.row.advancedAuth === 'pass'"
+              ) {{$t('M.focus_black_identity4')}}
                 <!--待审核-->
-                {{$t('M.user_invite_audit')}}
-              </div>
-              <div v-show="s.row.advancedAuth === 'notPass'">
-                <!--未高级认证-->
-                {{$t('M.user_advanced_authentication_tips1')}}
-              </div>
-            </template>
-          </el-table-column>
+              div(
+                v-show="s.row.advancedAuth === 'waitVeritfy'"
+              ) {{$t('M.user_invite_audit')}}
+              <!--未高级认证-->
+              div(
+                v-show="s.row.advancedAuth === 'notPass'"
+              ) {{$t('M.user_advanced_authentication_tips1')}}
           <!--注册时间-->
-          <el-table-column
-            label=""
-          >
-            <template slot-scope = "s">
-              <div>
-                {{$t('M.focus_black_time1')}}:{{s.row.regTime}}
-              </div>
-            </template>
-          </el-table-column>
+          el-table-column(label="")
+            template(slot-scope = "s")
+              div {{$t('M.focus_black_time1')}}:{{s.row.regTime}}
           <!--操作-->
-          <el-table-column
+          el-table-column(
             label=""
             align="right"
             width="200"
-          >
-            <template slot-scope = "s">
-              <div
-                class="operation-text cursor-pointer"
+          )
+            template(slot-scope = "s")
+              <!--取消关注-->
+              .operation-text.cursor-pointer(
                 @click="confirmCancelFocus(s.row.toId)"
-              >
-                <!--取消关注-->
-                {{$t('M.focus_black_title3')}}
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
+              ) {{$t('M.focus_black_title3')}}
         <!--分页-->
-        <div class="page">
-          <el-pagination
+        .page
+          el-pagination(
             background
             layout="prev, pager, next"
             :current-page="currentPage"
@@ -92,12 +73,7 @@
             @current-change="changeCurrentPage"
             :total="total"
             v-show="total - 15 > 0"
-          >
-          </el-pagination>
-        </div>
-      </div>
-    </div>
-  </div>
+          )
 </template>
 <script>
 import {mapState} from 'vuex'
@@ -185,134 +161,71 @@ export default {
   // watch: {}
 }
 </script>
-<style scoped lang="scss" type="text/scss">
-  @import "../../../assets/CSS/index";
-
-  .focus-box {
-    > .inner-box {
-      .tab-one {
-        padding: 0 30px;
-
-        .name {
-          color: $mainColor;
-
-          .merchant-icon {
-            display: inline-block;
-            width: 14px;
-            height: 19px;
-            vertical-align: top;
-            cursor: pointer;
-          }
-        }
-
-        .operation-text {
-          color: $mainColor;
-        }
-      }
-    }
-
-    /deep/ {
-      .inner-box {
-        .el-table {
-          font-size: 12px;
-
-          .el-table__empty-text {
-            line-height: 600px;
-          }
-
-          td {
-            padding: 8px 0;
-          }
-
-          .el-table__header {
-            display: none;
-
-            tr {
-              th {
-                .cell {
-                  padding-right: 0;
-                  padding-left: 0;
-                }
-              }
-            }
-          }
-
-          .el-table__body {
-            tr {
-              td {
-                .cell {
-                  padding-right: 0;
-                  padding-left: 0;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.night {
-      background-color: $mainContentNightBgColor;
-
-      /deep/ {
-        > .inner-box {
-          .el-table {
-            color: $mainNightTitleColor;
-            background-color: $mainContentNightBgColor;
-
-            tr,
-            th {
-              background-color: $mainContentNightBgColor;
-            }
-
-            .el-table__body {
-              tr {
-                &:hover {
-                  td {
-                    background-color: $mainContentNightBgColor !important;
-                  }
-                }
-              }
-
-              td {
-                border-bottom: 1px solid $nightInputBg;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.day {
-      background-color: $mainColorOfWhite;
-
-      /deep/ {
-        > .inner-box {
-          .el-table {
-            color: $dayMainTitleColor;
-            background-color: $mainColorOfWhite;
-
-            tr,
-            th {
-              background-color: $mainColorOfWhite;
-            }
-
-            .el-table__body {
-              tr {
-                &:hover {
-                  td {
-                    background-color: $mainColorOfWhite !important;
-                  }
-                }
-              }
-
-              td {
-                border-bottom: 1px solid rgba(45, 54, 81, .1);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+<style lang="stylus">
+  @import '../../../assets/CSS/index.styl'
+  .focus-box
+    .inner-box
+      .tab-one
+        padding 0 30px
+        .name
+          color S_main_color
+          .merchant-icon
+            display inline-block
+            width 14px
+            height 19px
+            vertical-align top
+            cursor pointer
+        .operation-text
+          color S_main_color
+    /deep/
+      .inner-box
+        .el-table
+          font-size 12px
+          .el-table__empty-text
+            line-height 600px
+          td
+            padding 8px 0
+          .el-table__header
+            display none
+            tr
+              th
+                .cell
+                  padding-right 0
+                  padding-left 0
+          .el-table__body
+            tr
+              td
+                .cell
+                  padding-right 0
+                  padding-left 0
+    &.night
+      background-color S_night_main_bg
+      /deep/
+        .inner-box
+          .el-table
+            color #a9bed4
+            background-color S_night_main_bg
+            tr,th
+              background-color S_night_main_bg
+            .el-table__body
+              tr:hover
+                td
+                  background-color S_night_main_bg !important
+              td
+                border-bottom 1px solid #2d3651
+    &.day
+      background-color S_day_bg
+      /deep/
+        .inner-box
+          .el-table
+            color #333
+            background-color S_day_bg
+            tr,th
+              background-color S_day_bg
+            .el-table__body
+              tr:hover
+                td
+                  background-color S_day_bg !important
+              td
+                border-bottom 1px solid rgba(45, 54, 81, .1)
 </style>

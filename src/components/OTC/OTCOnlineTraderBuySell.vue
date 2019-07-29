@@ -24,7 +24,12 @@
                     class="name font-weight700 cursor-pointer"
                     @click="jumpMerchantInfoPage"
                   >
-                    {{userName}}
+                    <span v-if="userNickName">
+                      {{userNickName}}
+                    </span>
+                    <span v-else>
+                      {{userName}}
+                    </span>
                   </span>
                 </div>
                 <!-- 商家交易统计 -->
@@ -448,6 +453,8 @@ export default {
       pickOrderTradePwdDialogStatus: false,
       // 挂单人姓名
       userName: '',
+      // 挂单人昵称
+      userNickName: '',
       // 成交次数
       successTimes: '',
       // 失败次数
@@ -790,8 +797,8 @@ export default {
       if (data.data) {
         let detailsData = getNestedData(data, 'data')
         this.userId = getNestedData(detailsData, 'userId') // 用户userId
-        // this.userName = getNestedData(detailsData, 'userName') // 挂单人姓名
-        this.userName = getNestedData(detailsData, 'userNick') // 挂单人昵称
+        this.userName = getNestedData(detailsData, 'userName') // 挂单人姓名
+        this.userNickName = getNestedData(detailsData, 'userNick') // 挂单人昵称
         this.remark = getNestedData(detailsData, 'remark') // 备注
         this.price = getNestedData(detailsData, 'price') // 报价
         this.payTypes = getNestedData(detailsData, 'payTypes') // 付款方式

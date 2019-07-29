@@ -532,7 +532,7 @@ export default {
       // 当前选中的币种 对应的 索引
       let targetIndex = 0
 
-      console.log(this.currencyValue, targetIndex)
+      // console.log(this.currencyValue, targetIndex)
       _.forEach(this.currencyList, (currencyItem, currencyIndex) => {
         if (this.currencyValue == _.get(currencyItem, 'coinId')) {
           targetIndex = currencyIndex
@@ -639,14 +639,26 @@ export default {
   },
   watch: {
     currencyValue (New) {
-      if (New == this.USDT_COIN_ID_S) {
-        this.isShowLinkSelect = true
-        // 控制地址列表无数据时的高度
-        this.$el.querySelector('.el-table__empty-block').style.height = '240px'
-      } else if (this.isShowAddressLabel) {
-        this.$el.querySelector('.el-table__empty-block').style.height = '240px'
+      if (this.withdrawalAddressList.length === 0) {
+        if (New == this.USDT_COIN_ID_S) {
+          this.isShowLinkSelect = true
+          // 控制地址列表无数据时的高度
+          this.$el.querySelector('.el-table__empty-block').style.height = '240px'
+        } else if (this.isShowAddressLabel) {
+          this.$el.querySelector('.el-table__empty-block').style.height = '240px'
+        } else {
+          this.$el.querySelector('.el-table__empty-block').style.height = '301px'
+        }
       } else {
-        this.$el.querySelector('.el-table__empty-block').style.height = '301px'
+        if (New == this.USDT_COIN_ID_S) {
+          this.isShowLinkSelect = true
+          // 控制地址列表有数据时的高度
+          this.$el.querySelector('.el-table').style.height = '268px'
+        } else if (this.isShowAddressLabel) {
+          this.$el.querySelector('.el-table').style.height = '268px'
+        } else {
+          this.$el.querySelector('.el-table').style.height = '327px'
+        }
       }
     }
   }
@@ -670,13 +682,21 @@ export default {
         }
       }
 
+      > .tab-list {
+          padding-bottom: 20px;
+
+          > .el-table {
+              height: 268px;
+          }
+      }
+
       > .withdrawal-address-content {
         > .withdrawal-address-box {
           min-height: 100px;
 
           .send-code-btn {
             position: absolute;
-            top: 4px;
+            top: 3px;
             width: 94px;
             height: 34px;
           }
@@ -786,7 +806,7 @@ export default {
             }
 
             .form-button {
-              color: rgba(255, 255, 255, .7);
+              color: rgba(255, 255, 255, 1);
               background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
             }
           }

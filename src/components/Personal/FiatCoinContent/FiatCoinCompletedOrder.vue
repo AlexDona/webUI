@@ -173,8 +173,12 @@
                 v-if="item.orderType === 'BUY'"
                 @click="jumpMerchantInfoPage(item.sellId)"
               >
-                <!--{{item.sellName}}-->
-                {{item.sellNickName}}
+                <span v-if="item.sellNickName">
+                  {{item.sellNickName}}
+                </span>
+                <span v-else>
+                  {{item.sellName}}
+                </span>
               </span>
               <!-- 卖单显示：买家姓名 -->
               <span
@@ -182,8 +186,12 @@
                 v-if="item.orderType === 'SELL'"
                 @click="jumpMerchantInfoPage(item.buyId)"
               >
-                <!--{{item.buyName}}-->
-                {{item.buyNickName}}
+                <span v-if="item.buyNickName">
+                  {{item.buyNickName}}
+                </span>
+                <span v-else>
+                  {{item.buyName}}
+                </span>
               </span>
             </p>
             <!--手机号-->

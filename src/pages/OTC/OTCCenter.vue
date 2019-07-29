@@ -51,7 +51,12 @@
             >
               <div class="view-info">
                 <span class="person-name font-size20">
-                  {{viewDialogInfo.personNickName}}
+                  <span v-if="viewDialogInfo.personNickName">
+                    {{viewDialogInfo.personNickName}}
+                  </span>
+                  <span v-else>
+                    {{viewDialogInfo.personRealName}}
+                  </span>
                 </span>
                 <span
                   class="view-text cursor-pointer"
@@ -212,12 +217,16 @@
                       v-show="s.row.userType === 'MERCHANT'"
                       :title="$t('M.otc_merchant')"
                     >
-                    <!--{{s.row.userName}}-->
                     <span
                       class="cursor-pointer"
                       @click="jumpMerchantInfoPage(s.row.userId)"
                     >
-                      {{s.row.userNick}}
+                      <span v-if="s.row.userNick">
+                        {{s.row.userNick}}
+                      </span>
+                      <span v-else>
+                        {{s.row.userName}}
+                      </span>
                     </span>
                   </div>
                 </template>
@@ -409,7 +418,12 @@
                     iconName="icon-yonghu1"
                   />
                   <span class="person-name font-size16">
-                    {{viewDialogInfo.personNickName}}
+                    <span v-if="viewDialogInfo.personNickName">
+                      {{viewDialogInfo.personNickName}}
+                    </span>
+                    <span v-else>
+                      {{viewDialogInfo.personRealName}}
+                    </span>
                   </span>
                 </div>
                 <!--右侧-->
@@ -811,6 +825,8 @@ export default {
         avgConfirmTime: '',
         // 昵称
         personNickName: '',
+        // 真实名称
+        personRealName: '',
         // 注册时间
         registerTime: '',
         // 最近登录时间
@@ -925,6 +941,7 @@ export default {
       this.viewDialogInfo.registerTime = getNestedData(data, 'data.regTime')
       this.viewDialogInfo.recentlyLoginTime = getNestedData(data, 'data.lastLoginTime')
       this.viewDialogInfo.personNickName = getNestedData(data, 'data.nickName')
+      this.viewDialogInfo.personRealName = getNestedData(data, 'data.realName')
       this.viewDialogInfo.mailAuth = getNestedData(data, 'data.mailAuth')
       this.viewDialogInfo.phoneAuth = getNestedData(data, 'data.phoneAuth')
       this.viewDialogInfo.merchantAuth = getNestedData(data, 'data.merchantAuth')

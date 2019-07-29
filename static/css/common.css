@@ -33,9 +33,8 @@
 
 .day .el-pagination.is-background .btn-next,
 .day .el-pagination.is-background .btn-prev {
-  color: #fff;
-  background: rgba(43, 54, 64, .3);
-  box-shadow: 0 0 1px 0 rgba(19, 24, 30, 1);
+  background: #f4f4f5;
+  box-shadow: 0 0 1px 0 #f4f4f5;
 }
 
 .el-pagination button {
