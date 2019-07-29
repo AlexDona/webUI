@@ -31,7 +31,12 @@
                   @click="jumpMerchantInfoPage(s.row.toId)"
                   class="cursor-pointer"
                 >
-                  {{s.row.nickName}}
+                  <span v-if="s.row.nickName">
+                    {{s.row.nickName}}
+                  </span>
+                  <span v-else>
+                    {{s.row.realName}}
+                  </span>
                 </span>
               </div>
             </template>

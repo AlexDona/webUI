@@ -19,7 +19,12 @@
               iconName="icon-yonghu1"
             />
             <span class="merchant-name font-size16">
-              {{merchantUserInfo.personNickName}}
+              <span v-if="merchantUserInfo.personNickName">
+                {{merchantUserInfo.personNickName}}
+              </span>
+              <span v-else>
+                {{merchantUserInfo.personRealName}}
+              </span>
             </span>
           </div>
           <div class="time-box">
@@ -523,6 +528,8 @@ export default {
         avgConfirmTime: '',
         // 昵称
         personNickName: '',
+        // 真实名称
+        personRealName: '',
         // 注册时间
         registerTime: '',
         // 最近登录时间
@@ -615,6 +622,7 @@ export default {
       this.merchantUserInfo.registerTime = getNestedData(data, 'data.userInfo.regTime')
       this.merchantUserInfo.recentlyLoginTime = getNestedData(data, 'data.userInfo.lastLoginTime')
       this.merchantUserInfo.personNickName = getNestedData(data, 'data.userInfo.nickName')
+      this.merchantUserInfo.personRealName = getNestedData(data, 'data.userInfo.realName')
       this.merchantUserInfo.mailAuth = getNestedData(data, 'data.userInfo.mailAuth')
       this.merchantUserInfo.phoneAuth = getNestedData(data, 'data.userInfo.phoneAuth')
       this.merchantUserInfo.merchantAuth = getNestedData(data, 'data.userInfo.merchantAuth')

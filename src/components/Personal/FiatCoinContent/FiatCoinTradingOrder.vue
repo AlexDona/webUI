@@ -19,13 +19,17 @@
               <!-- 买卖家 -->
               <div class="buyer-seller">
                 <!--卖家-->
-                <!--{{$t('M.otc_seller')}}：{{item.sellName}}-->
                 {{$t('M.otc_seller')}}：
                 <span
                   class="cursor-pointer"
                   @click="jumpMerchantInfoPage(item.sellId)"
                 >
-                  {{item.sellNickName}}
+                  <span v-if="item.sellNickName">
+                    {{item.sellNickName}}
+                  </span>
+                  <span v-else>
+                    {{item.sellName}}
+                  </span>
                 </span>
               </div>
               <!--广告id-->
@@ -414,13 +418,17 @@
               <!-- 买家 -->
               <div class="buyer-seller">
                 <!--买家-->
-                <!--{{$t('M.otc_buyer')}}：{{item.buyName}}-->
                 {{$t('M.otc_buyer')}}：
                 <span
                   class="cursor-pointer"
                   @click="jumpMerchantInfoPage(item.buyId)"
-                >
-                  {{item.buyNickName}}
+                >}
+                  <span v-if="item.buyNickName">
+                    {{item.buyNickName}}
+                  </span>
+                  <span v-else>
+                    {{item.buyName}}
+                  </span>
                 </span>
               </div>
               <!--广告id-->

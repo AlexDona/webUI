@@ -118,8 +118,12 @@
                 class="cursor-pointer"
                 @click="jumpMerchantInfoPage(item.sellId)"
               >
-              <!--{{item.sellName}}-->
-              {{item.sellNickName}}
+              <span v-if="item.sellNickName">
+                {{item.sellNickName}}
+              </span>
+              <span v-else>
+                {{item.sellName}}
+              </span>
             </span>
             </p>
             <!--卖家手机号-->
