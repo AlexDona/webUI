@@ -72,15 +72,14 @@ export default {
   // destroyed () {}
 }
 </script>
-<style lang="stylus">
+<style scoped lang="stylus">
   @import '../../../assets/CSS/index.styl'
   .focus-black-box
     width 1105px
     height 758px
     > .inner-box
       width 1105px
-    /deep/
-      .inner-box
+      /deep/
         .el-tabs
           .el-tabs__header
             padding-left 30px !important
@@ -93,39 +92,37 @@ export default {
     &.night
       background-color S_night_main_bg
       /deep/
-        .inner-box
-          .el-tabs
-            .el-tabs__header
-              box-shadow 0 2px 2px 0 rgba(20, 23, 37, 1)
-            .el-tabs__item
-              border-left 0 solid transparent
-            .el-tabs__item.is-active
-              border-bottom 2px solid S_main_color
-              border-left 0 solid transparent
-              color S_main_color
-              background-color S_night_main_bg
-            .el-tabs__item:hover
-              border-left 0 solid transparent
-              color S_main_color
-              background-color S_night_main_bg
+        .el-tabs
+          .el-tabs__header
+            box-shadow 0 2px 2px 0 rgba(20, 23, 37, 1)
+          .el-tabs__item
+            border-left 0 solid transparent
+          .el-tabs__item.is-active
+            border-bottom 2px solid S_main_color
+            border-left 0 solid transparent
+            color S_main_color
+            background-color S_night_main_bg
+          .el-tabs__item:hover
+            border-left 0 solid transparent
+            color S_main_color
+            background-color S_night_main_bg
     &.day
       background-color S_day_bg
       /deep/
-        .inner-box
-          .el-tabs
-            .el-tabs__header
-              border-bottom 1px solid rgba(57, 66, 77, .1)
-              .el-tabs__nav
-                background-color: transparent
-              .el-tabs__item
-                border-left: 0 solid transparent
-              .el-tabs__item.is-active
-                border-bottom 2px solid S_main_color
-                border-left 0 solid transparent
-                color $mainColor
-                background-color S_day_bg
-              .el-tabs__item:hover
-                border-left 0 solid transparent
-                color S_main_color
-                background-color S_day_bg
+        .el-tabs
+          .el-tabs__header
+            border-bottom 1px solid rgba(57, 66, 77, .1)
+            .el-tabs__nav
+              background-color: transparent
+            .el-tabs__item
+              border-left: 0 solid transparent
+            .el-tabs__item.is-active
+              border-bottom 2px solid S_main_color
+              border-left 0 solid transparent
+              color $mainColor
+              background-color S_day_bg
+            .el-tabs__item:hover
+              border-left 0 solid transparent
+              color S_main_color
+              background-color S_day_bg
 </style>

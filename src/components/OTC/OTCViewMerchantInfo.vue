@@ -584,7 +584,7 @@ export default {
   // watch: {}
 }
 </script>
-<style lang="stylus">
+<style scoped lang="stylus">
   @import '../../assets/CSS/index.styl'
   .merchant-info-box
     width 1300px
@@ -689,9 +689,8 @@ export default {
           min-height 469px
           > .sell-title
             color #008069
-    /deep/
-      .inner-box
-        > .right-lists
+      /deep/
+        .right-lists
           > .buy-sell-list
             > .body-content
               .el-table
@@ -733,7 +732,7 @@ export default {
                     background-color #8ead9e
                 .el-table__empty-text
                   line-height 350px !important
-        > .black-list-dialog
+        .black-list-dialog
           .el-dialog__wrapper
             background-color rgba(0, 0, 0, .7)
             .el-dialog
@@ -811,9 +810,8 @@ export default {
             box-shadow 0 3px 4px 0 rgba(25, 30, 40, 1)
             > .header-title
               border-bottom 1px solid #34415b
-      /deep/
-        .inner-box
-          > .right-lists
+        /deep/
+          .right-lists
             > .buy-sell-list
               > .body-content
                 .el-table
@@ -835,7 +833,7 @@ export default {
                       &:hover
                         td
                           background-color #181b2b
-          > .black-list-dialog
+          .black-list-dialog
             .el-dialog__wrapper
               .el-dialog
                 background-color #28334a
@@ -901,9 +899,8 @@ export default {
             box-shadow 0 0 6px #cfd5df
             > .header-title
               border-bottom 1px solid rgba(97, 116, 153, .2)
-      /deep/
-        .inner-box
-          > .right-lists
+        /deep/
+          .right-lists
             > .buy-sell-list
               > .body-content
                 .el-table
@@ -925,7 +922,7 @@ export default {
                       &:hover
                         td
                           background-color rgba(97, 116, 153, .05)
-          > .black-list-dialog
+          .black-list-dialog
             .el-dialog__wrapper
               .el-dialog
                 background-color S_day_bg

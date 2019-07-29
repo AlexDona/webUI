@@ -156,7 +156,7 @@ export default {
   // watch: {}
 }
 </script>
-<style lang="stylus">
+<style scoped lang="stylus">
   @import '../../../assets/CSS/index.styl'
   .focus-box
     .inner-box
@@ -172,8 +172,7 @@ export default {
             cursor pointer
         .operation-text
           color S_main_color
-    /deep/
-      .inner-box
+      /deep/
         .el-table
           font-size 12px
           .el-table__empty-text
@@ -196,31 +195,29 @@ export default {
     &.night
       background-color S_night_main_bg
       /deep/
-        .inner-box
-          .el-table
-            color #a9bed4
+        .el-table
+          color #a9bed4
+          background-color S_night_main_bg
+          tr,th
             background-color S_night_main_bg
-            tr,th
-              background-color S_night_main_bg
-            .el-table__body
-              tr:hover
-                td
-                  background-color S_night_main_bg !important
+          .el-table__body
+            tr:hover
               td
-                border-bottom 1px solid #2d3651
+                background-color S_night_main_bg !important
+            td
+              border-bottom 1px solid #2d3651
     &.day
       background-color S_day_bg
       /deep/
-        .inner-box
-          .el-table
-            color #333
+        .el-table
+          color #333
+          background-color S_day_bg
+          tr,th
             background-color S_day_bg
-            tr,th
-              background-color S_day_bg
-            .el-table__body
-              tr:hover
-                td
-                  background-color S_day_bg !important
+          .el-table__body
+            tr:hover
               td
-                border-bottom 1px solid rgba(45, 54, 81, .1)
+                background-color S_day_bg !important
+            td
+              border-bottom 1px solid rgba(45, 54, 81, .1)
 </style>

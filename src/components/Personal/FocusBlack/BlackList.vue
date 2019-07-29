@@ -135,7 +135,7 @@ export default {
   // destroyed () {}
 }
 </script>
-<style lang="stylus">
+<style scoped lang="stylus">
   @import '../../../assets/CSS/index.styl'
   .black-box
     .inner-box
@@ -145,8 +145,7 @@ export default {
         .operation-text
           height 24px
           color S_main_color
-    /deep/
-      .inner-box
+      /deep/
         .el-table
           font-size 12px
           .el-table__empty-text
@@ -171,7 +170,7 @@ export default {
               td
                 border-bottom 0
     &.night
-      .inner-box
+      /deep/
         .el-table
           color #a9bed4
           background-color S_night_main_bg
@@ -188,19 +187,18 @@ export default {
                 background-color S_night_main_bg !important
     &.day
       /deep/
-        .inner-box
-          .el-table
-            color #333
+        .el-table
+          color #333
+          background-color S_day_bg
+          .el-table__header
+            th.is-leaf
+              border-bottom 1px solid rgba(57, 66, 77, .1)
+            thead
+              color #7d90ac
+          tr,th
             background-color S_day_bg
-            .el-table__header
-              th.is-leaf
-                border-bottom 1px solid rgba(57, 66, 77, .1)
-              thead
-                color #7d90ac
-            tr,th
-              background-color S_day_bg
-            .el-table__body
-              tr:hover
-                td
-                  background-color S_day_bg !important
+          .el-table__body
+            tr:hover
+              td
+                background-color S_day_bg !important
 </style>
