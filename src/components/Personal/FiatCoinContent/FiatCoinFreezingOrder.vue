@@ -125,8 +125,13 @@
             <p class="text-info">
               <span>
                 {{$t('M.otc_name')}}：
-              </span><span>
-              {{item.sellName}}
+              </span>
+              <span
+                class="cursor-pointer"
+                @click="jumpMerchantInfoPage(item.sellId)"
+              >
+              <!--{{item.sellName}}-->
+              {{item.sellNickName}}
             </span>
             </p>
             <!--卖家手机号-->
@@ -160,6 +165,13 @@
               {{item.appealCause}}
             </p>
           </div>
+          <!-- otc 及时通讯-->
+          <OTCIM
+            class="otc-im"
+            :orderInfo="item"
+            :top="OTC_IM_TOP"
+            activeName="FROZEN"
+          />
         </div>
       </div>
       <!--分页-->
@@ -186,13 +198,20 @@
 <script>
 import {timeFilter} from '../../../utils'
 import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
+import OTCIM from '../../OTC/OTCIM'
 import {
   mapMutations,
   mapState
 } from 'vuex'
 export default {
-  components: {},
-  // props,
+  components: {
+    OTCIM
+  },
+  props: {
+    OTC_IM_TOP: {
+      type: String
+    }
+  },
   data () {
     return {
     }
@@ -214,6 +233,11 @@ export default {
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    jumpMerchantInfoPage (userId) {
+      if (userId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+      }
     }
   },
   filter: {},
@@ -236,7 +260,7 @@ export default {
 
   .fiat-freezing-order-box {
     > .freezing-order-content {
-      min-height: 530px;
+      min-height: 574px;
       padding: 0 10px 10px;
 
       > .freezing-table-head {

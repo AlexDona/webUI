@@ -3,7 +3,7 @@
     class="add-chat personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{
-      height: windowHeight+'px'
+      height: windowHeight>300? windowHeight: 300 +'px'
     }"
   >
     <div
@@ -102,7 +102,7 @@
                   >
                     <IconFontCommon
                       class="font-size60"
-                      iconName="icon-jia1"
+                      iconName="icon-hao"
                     />
                     <img
                       v-show="wechatImgUrl"
@@ -435,7 +435,7 @@ export default {
     overflow: hidden;
 
     > .add-chat-main {
-      width: 1100px;
+      width: 1300px;
       height: 700px;
       margin: 60px auto 100px;
 
@@ -468,7 +468,7 @@ export default {
 
         > .chat-content-from {
           width: 500px;
-          margin-left: 55px;
+          margin: 58px auto;
 
           .chat-input {
             width: 220px;
@@ -609,8 +609,8 @@ export default {
             }
 
             .chat-button {
-              color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              color: rgba(255, 255, 255, 1);
+              background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
             }
           }
         }
@@ -641,8 +641,7 @@ export default {
     }
 
     &.day {
-      color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
+      color: $fontColorSecondaryOfDay;
 
       .add-chat-main {
         border: 1px solid rgba(246, 246, 246, 1);
@@ -690,11 +689,18 @@ export default {
                 right: 35px;
                 color: #828ea6;
               }
+
+              .img {
+                .picture {
+                  border: 1px dashed rgba(72, 87, 118, .1);
+                  background: #eaf4fe;
+                }
+              }
             }
 
             .chat-button {
-              color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              color: rgba(255, 255, 255, 1);
+              background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
             }
           }
         }

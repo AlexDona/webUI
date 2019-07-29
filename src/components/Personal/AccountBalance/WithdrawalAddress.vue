@@ -559,21 +559,6 @@ export default {
       this.withdrawalAddressList = getNestedData(detailData, 'UserWithdrawAddressPage.list')
       console.log(this.withdrawalAddressList)
       this.totalPageForMyEntrust = getNestedData(detailData, 'UserWithdrawAddressPage.pages') - 0
-      // 控制地址列表无数据时的高度
-      if (this.withdrawalAddressList.length === 0) {
-        if (this.isShowAddressLabel && this.isShowLinkSelect) {
-          this.$el.querySelector('.el-table__empty-block').style.height = '134px'
-        } else {
-          if (this.isShowLinkSelect) {
-            this.$el.querySelector('.el-table__empty-block').style.height = '216px'
-            if (this.isShowAddressLabel) {
-              this.$el.querySelector('.el-table__empty-block').style.height = '196px'
-            }
-          } else {
-            this.$el.querySelector('.el-table__empty-block').style.height = '256px'
-          }
-        }
-      }
       // 接口回来之后吧select状态改为可用
       this.currencyValueStatus = false
       // console.log(this.currencyList)
@@ -656,9 +641,12 @@ export default {
     currencyValue (New) {
       if (New == this.USDT_COIN_ID_S) {
         this.isShowLinkSelect = true
-        this.$el.querySelector('.el-table__empty-block').style.height = '196px'
+        // 控制地址列表无数据时的高度
+        this.$el.querySelector('.el-table__empty-block').style.height = '240px'
+      } else if (this.isShowAddressLabel) {
+        this.$el.querySelector('.el-table__empty-block').style.height = '240px'
       } else {
-        this.$el.querySelector('.el-table__empty-block').style.height = '256px'
+        this.$el.querySelector('.el-table__empty-block').style.height = '301px'
       }
     }
   }
@@ -799,7 +787,7 @@ export default {
 
             .form-button {
               color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
             }
           }
         }
@@ -818,9 +806,9 @@ export default {
 
       /deep/ {
         .el-input__inner {
-          border: 0;
+          border: 1px solid #5c6882;
           color: rgba(255, 255, 255, .7);
-          background-color: #2d3651;
+          background-color: #1c1f32 !important;
         }
 
         .el-form-item__label {
@@ -945,8 +933,8 @@ export default {
             }
 
             .form-button {
-              color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              color: rgba(255, 255, 255, 1);
+              background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
             }
           }
         }
@@ -1127,6 +1115,10 @@ export default {
           text-align: center;
         }
       }
+    }
+
+    .el-pagination {
+      margin: -40px;
     }
   }
 </style>

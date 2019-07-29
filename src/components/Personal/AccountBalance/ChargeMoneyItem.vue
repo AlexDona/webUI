@@ -78,8 +78,8 @@
     p.triangle
     .recharge-content
       USDTLinkNames(v-if="isShowUSDTSelect")
-      // 充值地址
-      p.recharge-content-hint.font-size12  {{ $t('M.comm_charge_recharge') }}{{ $t('M.comm_site') }}
+      // 充币地址
+      p.recharge-content-hint.font-size12  {{ $t('M.comm_charge_money') }}{{ $t('M.comm_site') }}
       .input-box
         input.hint-input.border-radius2.padding-l15.float-left(
           disabled
@@ -95,7 +95,7 @@
         // 我的资产添加USDT 类型区分文本
         p(v-if="currencyName == 'USDT'") * {{ $t('M.user_assets_withdrawal_hint10').format([currencyName, currencyName]) }}
         // 转账时请务必备注（否则后果自负）：UID
-        p(v-if="isNeedTag == 'true'") * {{ $t('M.user_assets_recharge_hint0').format([currencyName,currencyName]) }}{{rechargeNoteInfo}}
+        p(v-if="isNeedTag") * {{ $t('M.user_assets_recharge_hint0').format([currencyName,currencyName]) }}{{rechargeNoteInfo}}
         // 禁止充值除 之外的其他资产，任何非 资产充值将不可找回
         p * {{ $t('M.user_assets_recharge_hint1').format([currencyName, currencyName]) }}
         // 往该地址充值，汇款完成，等待网络自动确认（{}个确认）后系统自动到账
@@ -107,8 +107,8 @@
     .recharge-content-right.flex1
       p.recharge-content-code.margin-top20.float-left
         QRCode.ercode(:value="chargeMoneyAddress")
-      //  充值记录
-      p.code-list.text-align-r.float-right.cursor-pointer.font-size12(@click.prevent="jumpToOtherTab('billing-details', coinId, 1)") {{ $t('M.comm_charge_recharge') }}{{ $t('M.comm_record') }}
+      //  充币记录
+      p.code-list.text-align-c.cursor-pointer.font-size12(@click.prevent="jumpToOtherTab('billing-details', coinId, 1)") {{ $t('M.comm_charge_money') }}{{ $t('M.comm_record') }}
 
 </template>
 <script>
@@ -225,7 +225,7 @@ export default {
 
     .recharge-content {
       flex: 2;
-      padding: 0 20px;
+      padding: 0 35px;
 
       .recharge-content-hint {
         height: 20px;

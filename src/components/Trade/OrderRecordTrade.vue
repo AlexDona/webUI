@@ -11,6 +11,7 @@
         >
         <span class="text">
           <!--最近成交-->
+          <!--20190730发版要改为实时成交：已提国际化-->
           {{ $t('M.trade_order_recent_deal') }}
         </span>
         </div>

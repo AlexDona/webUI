@@ -865,7 +865,7 @@ export default {
     overflow: hidden;
 
     > .set-phone-main {
-      width: 1100px;
+      width: 1300px;
       min-height: 700px;
       margin: 60px auto 100px;
 
@@ -898,8 +898,8 @@ export default {
         }
 
         > .phone-content-from {
-          width: 700px;
-          margin-left: 55px;
+          width: 500px;
+          margin: 58px auto;
 
           .send-code-btn {
             width: 90px;
@@ -1010,7 +1010,7 @@ export default {
           border-bottom: 1px solid #39424d;
 
           > .header-content-left {
-            color: (255, 255, 255, .7);
+            color: rgba(255, 255, 255, 1);
           }
 
           > .header-content-right {
@@ -1061,8 +1061,8 @@ export default {
             }
 
             .phone-button {
-              color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, #2b396e, rgba(42, 80, 130, 1));
+              color: rgba(255, 255, 255, 1);
+              background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
             }
           }
         }
@@ -1084,14 +1084,13 @@ export default {
         }
 
         .el-form-item__label {
-          color: rgba(255, 255, 255, .7);
+          color: #a9bed4;
         }
       }
     }
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .set-phone-main {
         border: 1px solid rgba(246, 246, 246, 1);
@@ -1141,8 +1140,8 @@ export default {
             }
 
             .phone-button {
-              color: #ccc;
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              color: #fff;
+              background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
             }
           }
         }

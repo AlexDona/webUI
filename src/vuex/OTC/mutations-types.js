@@ -8,7 +8,7 @@ export const CHANGE_OTC_AVAILABLE_CURRENCY_ID = 'CHANGE_OTC_AVAILABLE_CURRENCY_I
 // otc 商家和普通用户通用挂单页面可用币种起订量:选中不同的币种获得不同币种的起订量
 export const CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT = 'CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT'
 // otc 购买或者出售成功后跳转到交易中订单（首页的）的锚点地方
-export const CHANGE_OTC_ANCHOR_STATUS = 'CHANGE_OTC_ANCHOR_STATUS'
+// export const CHANGE_OTC_ANCHOR_STATUS = 'CHANGE_OTC_ANCHOR_STATUS'
 // 委托定单撤单后，更新首页挂单列表
 export const UPDATE_OTC_HOME_LIST_STATUS = 'UPDATE_OTC_HOME_LIST_STATUS'
 // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
@@ -21,3 +21,12 @@ export const SET_OTC_COIN_LIST_M = 'SET_OTC_COIN_LIST_M'
 export const CHANGE_OTC_SELECTED_COUNTRY_ID = 'CHANGE_OTC_SELECTED_COUNTRY_ID'
 // otc主页法币列表筛选框选中的法币类型id
 export const CHANGE_OTC_SELECTED_CURRENCY_ID = 'CHANGE_OTC_SELECTED_CURRENCY_ID'
+// 更改 及时通讯状态
+export const UPDATE_IM_BOX_SHOW_STATUS_M = 'UPDATE_IM_BOX_SHOW_STATUS_M'
+// 设置 OTC socket
+export const UPDATE_IM_SOCKET_M = 'UPDATE_IM_SOCKET_M'
+export const UPDATE_IM_HAS_NEW_MESSAGE_MAP_M = 'UPDATE_IM_HAS_NEW_MESSAGE_MAP_M'
+// 更新OTC
+// export const UPDATE_IM_SOCKET_M = 'UPDATE_IM_SOCKET_M'
+// 改变商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
+export const CHANGE_BLACK_TABS_STATUS_M = 'CHANGE_BLACK_TABS_STATUS_M'

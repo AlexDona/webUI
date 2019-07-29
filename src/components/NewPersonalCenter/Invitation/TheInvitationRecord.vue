@@ -25,7 +25,7 @@
           :label="$t('M.comm_currency')"
         )
           template(slot-scope="s")
-            div {{coinName}}
+            div {{s.row.source}}
         el-table-column(
           :label="$t('M.comm_count')"
         )
@@ -79,7 +79,7 @@ export default {
       let responseData = _.get(data, 'data')
       // 返回展示
       this.awards = _.get(responseData, 'data.list')
-      this.coinName = _.get(responseData, 'coinName')
+      // this.coinName = _.get(responseData, 'coinName')
       this.total = _.get(responseData, 'data.pages') - 0
     },
     async updatePageNum (e) {
@@ -125,6 +125,8 @@ export default {
                 border-bottom none
                 color #A9BED4
                 font-size 12px
+            .el-table__body-wrapper
+               min-height 72px
     &.night
       .header
         color S_main_color
@@ -169,4 +171,6 @@ export default {
                 td
                   border-bottom none
                   color #333
+    .el-pagination
+        padding-bottom 36px
 </style>

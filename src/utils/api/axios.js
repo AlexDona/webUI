@@ -28,7 +28,6 @@ util.ajax = axios.create({
 let token
 util.ajax.interceptors.request.use((config) => {
   const {state: {common: {language}}} = store
-  console.log(store)
   let notNeedLoading = _.get(config.params, 'not-loading')
   notNeedLoading ? delete config.params['not-loading'] : store.commit('SET_REQUEST_COUNT_M', 'ADD')
   token = getCookie('token')
@@ -74,6 +73,16 @@ export const put = (url, params) => {
     method: 'put',
     url,
     data: params
+  })
+}
+export const putWithURLencoded = (url, params) => {
+  return util.ajax({
+    method: 'put',
+    url,
+    params,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
   })
 }
 export const postWithURLencoded = (url, params) => {

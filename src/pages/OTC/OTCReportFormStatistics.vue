@@ -978,6 +978,17 @@ export default {
             height: 7px;
           }
         }
+
+        /* 解决单选按钮边框出现蓝色边框问题 */
+        .el-radio-group {
+          .el-radio {
+            .el-radio__input {
+              .el-radio__inner {
+                box-shadow: none;
+              }
+            }
+          }
+        }
       }
     }
 
@@ -1088,6 +1099,7 @@ export default {
 
         > .title {
           color: $mainColor;
+          box-shadow: 0 4px 6px #191e28;
         }
 
         > .content {
