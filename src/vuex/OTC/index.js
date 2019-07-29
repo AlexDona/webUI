@@ -32,7 +32,11 @@ const state = {
   // OTC及时通讯
   OTCIMSocket_S: null,
   // 商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
-  blackTabsStatus: false
+  blackTabsStatus: false,
+  // OTC Socket是否需要重连
+  isOTCIMSocketNeedReconnect_S: false,
+  // 是否收到新的心跳
+  hasNewOTCHart_S: false
 }
 
 export default {

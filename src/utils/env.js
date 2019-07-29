@@ -49,14 +49,14 @@ const devTestConfig = {
   socketUrl: 'ws://192.168.2.200:8087/market',
   apiCommonUrl: 'http://192.168.2.200:8888/',
   loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
-  OTCIMSocketUrl: 'ws://192.168.2.200:8068/websoc'
+  OTCIMSocketUrl: 'ws://192.168.2.127:8066/websoc'
 }
 
 const dev210Config = {
   apiCommonUrl: 'http://192.168.2.210:8888/',
   socketUrl: 'ws://192.168.2.210:8087/market',
   loginSocketUrl: 'ws://192.168.2.210:8888/qrcodeLogin/',
-  OTCIMSocketUrl: 'ws://192.168.2.210:8068/websoc'
+  OTCIMSocketUrl: 'ws://192.168.2.210:8066/websoc'
 }
 // eslint-disable-next-line
 const prodConfig = {
@@ -64,7 +64,7 @@ const prodConfig = {
   socketUrl: 'wss://market.fubt.co/market', // 行情 socket
   loginSocketUrl: 'wss://qrcode.fubt.co/qrcodeLogin/', // 扫码登录 socket
   // loginSocketUrl: 'wss://s.fubt.co/qrcodeLogin/' // 扫码登录 socket
-  OTCIMSocketUrl: 'ws://192.168.2.210:8888/websoc'
+  OTCIMSocketUrl: 'wss://ims.fubt.co/websoc'
 }
 // eslint-disable-next-line
 const newProdConfig = {

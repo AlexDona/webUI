@@ -276,7 +276,9 @@ export default {
       },
       // OTC 心跳发送次数
       OTCSocketHeartCount: 0,
-      socketTimer: null
+      socketTimer: null,
+      // 心跳间隔
+      heartDuration: 50000
     }
   },
   async created () {
@@ -300,7 +302,9 @@ export default {
       'SET_LEGAL_TENDER_REFLASH_STATUS',
       'UPDATE_IM_SOCKET_M',
       // 改变清除交易中数据方法的状态
-      'CHANGE_CLEAR_DATA_STATUS_M'
+      'CHANGE_CLEAR_DATA_STATUS_M',
+      'UPDATE_OTC_IM_SOCKET_STATUS_M',
+      'UPDATE_OTC_IM_SOCKET_HEART_M'
     ]),
     initSocket () {
       const {id} = this.$userInfo_X
@@ -311,6 +315,7 @@ export default {
       this.socket.doOpen()
       this.socket.on('open', () => {
         console.log('open')
+        this.UPDATE_OTC_IM_SOCKET_STATUS_M(false)
         this.socket.send({
           // 当前用户id
           'userId': id,
@@ -318,42 +323,36 @@ export default {
           'action': 'toConnect',
           'source': 'web'
         })
+        this.checkHeart()
       })
+    },
+    checkHeart () {
       this.socket.on('message', (e) => {
-        console.log(e)
         if (e.action == 'checkHeart') {
+          this.socket.send(e)
+          // 非心跳之外 duration 内 无消息，客户端主动断开连接
+        } else if (e.action !== 'checkHeart') {
+          clearTimeout(this.socketTimer)
+          this.heartDuration = e.duration + 1000
           this.OTCSocketHeartCount++
-          this.socket.send(e, () => {
-            console.log('callback')
-            this.socketTimer = setTimeout(() => {
-              console.log(this.OTCSocketHeartCount)
-              // 已收到
-              if (this.OTCSocketHeartCount == 2) {
-                this.OTCSocketHeartCount--
-              } else {
-                // 未收到
-                this.OTCSocketHeartCount = 0
-                this.socket.doClose()
-                console.log(this.socket)
-              }
-            }, e.duration + 1000)
-          })
+          this.socketTimer = setTimeout(() => {
+            // 双方 有聊天
+            if (this.OTCSocketHeartCount > 1) {
+              this.OTCSocketHeartCount = 0
+            } else {
+              // 双方无聊天
+              this.OTCSocketHeartCount = 0
+              this.socket.doClose()
+            }
+          }, this.heartDuration)
         }
-      })
-      this.socket.send({
-        // 当前用户id
-        'userId': id,
-        // 请求的动作:“toConnect”建立socket连接;“sendMessage”发送聊天内容
-        'action': 'toConnect'
       })
     },
     // 时间选择
     changeSelectValue (type, targetValue) {
       switch (type) {
         case 'date':
-          // console.log(targetValue)
           this.checkedTime = targetValue
-          // console.log(this.checkedTime[0], this.checkedTime[1])
           break
       }
     },
@@ -509,13 +508,26 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
-      reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus // 从全局获得的重新渲染交易中订单列表状态
+      reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus, // 从全局获得的重新渲染交易中订单列表状态
+      isOTCIMSocketNeedReconnect_S: state => state.OTC.isOTCIMSocketNeedReconnect_S,
+      hasNewOTCHart_S: state => state.OTC.hasNewOTCHart_S
     }),
     activeNameAndLegalTradePageNum () {
       return `${this.activeName}/${this.legalTradePageNum}`
     }
   },
   watch: {
+    hasNewOTCHart_S (New) {
+      if (New) {
+        this.UPDATE_OTC_IM_SOCKET_HEART_M(false)
+      }
+    },
+    isOTCIMSocketNeedReconnect_S (New) {
+      if (New) {
+        console.log(New)
+        this.initSocket()
+      }
+    },
     activeNameAndLegalTradePageNum () {
       this.getOTCEntrustingOrdersRevocation()
     },
