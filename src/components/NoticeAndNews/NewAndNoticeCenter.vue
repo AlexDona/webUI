@@ -129,7 +129,7 @@ export default {
       searchKeyWord: '',
       helpShowStatusList: [],
       totalPages: 0, // 公告总条数
-      pageSize: 7,
+      pageSize: 15,
       pageNum: 1, // 当前页
       newsTypeList: [], // 新闻类型列表
       newsTypeId: 1, // 当前新闻类型id
@@ -314,7 +314,7 @@ export default {
           overflow: hidden;
 
           .item-content {
-            height: 760px;
+            height: 920px;
 
             > .content-list {
               > .content-item {
