@@ -849,6 +849,10 @@ export default {
         .el-table__body {
           table-layout: auto;
         }
+
+        .el-table__body-wrapper {
+          min-height: 466px;
+        }
       }
 
       .el-table--scrollable-x {

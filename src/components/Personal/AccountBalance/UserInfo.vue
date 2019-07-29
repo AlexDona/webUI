@@ -368,21 +368,19 @@ export default {
 
               .text-indent {
                   text-indent: -60px;
-
-                  > .info-centre {
-                      padding: 0 70px;
-
-                      > .info-picture {
-                          position: relative;
-
-                          > .info-centre-right {
-                              position: absolute;
-                              top: 0;
-                              left: 17px;
-                          }
-                      }
-                  }
               }
+
+            > .info-picture {
+              position: relative;
+
+              > .info-centre-right {
+                position: absolute;
+                top: 0;
+                left: 17px;
+                font-weight: normal;
+                color: #fff;
+              }
+            }
           }
 
           > .info-discount {
