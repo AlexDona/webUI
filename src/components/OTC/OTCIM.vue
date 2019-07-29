@@ -171,6 +171,7 @@ export default {
     },
     // 发送图片成功回调
     uploadSuccess ({type, index, url}) {
+      console.log(url)
       this.sendImage(url)
     },
     previewImage (url) {
@@ -221,7 +222,8 @@ export default {
         this.receiveMessage()
       } else {
         this.socketTimer = setTimeout(() => {
-          this.sendMessage(url)
+          console.log(url)
+          this.sendImage(url)
         }, 1000)
       }
     },
