@@ -344,10 +344,10 @@ export default {
       return _.get(this.orderInfo, 'buyId')
     },
     sellNickName () {
-      return _.get(this.orderInfo, 'sellNickName')
+      return _.get(this.orderInfo, 'sellNickName') || _.get(this.orderInfo, 'sellName')
     },
     buyNickName () {
-      return _.get(this.orderInfo, 'buyNickName')
+      return _.get(this.orderInfo, 'buyNickName') || _.get(this.orderInfo, 'buyName')
     },
     // 当前聊天用户 昵称
     selfNickName () {
