@@ -55,8 +55,7 @@
             :current-page="currentPage"
             :page-count="totalPages"
             @current-change="changeCurrentPage"
-            :total="total"
-            v-show="total - 15 > 0"
+            v-show="totalPages - 1 > 0"
           )
 </template>
 <script>
@@ -79,8 +78,6 @@ export default {
       totalPages: 1,
       // 每页返回多少条
       pageSize: 15,
-      // 总条数
-      total: 0,
       // 黑名单列表
       blackList: []
     }
@@ -126,8 +123,6 @@ export default {
       this.blackList = getNestedData(data, 'data.list')
       // 总页数赋值
       this.totalPages = getNestedData(data, 'data.pages') - 0
-      // 总条数赋值
-      this.total = getNestedData(data, 'data.total') - 0
     }
   },
   // filter: {},
