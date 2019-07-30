@@ -33,9 +33,8 @@
 
 .day .el-pagination.is-background .btn-next,
 .day .el-pagination.is-background .btn-prev {
-  color: #fff;
-  background: rgba(43, 54, 64, .3);
-  box-shadow: 0 0 1px 0 rgba(19, 24, 30, 1);
+  background: #f4f4f5;
+  box-shadow: 0 0 1px 0 #f4f4f5;
 }
 
 .el-pagination button {
@@ -183,6 +182,11 @@
   border-top-color: #2a3242;
 }
 
+/* 解决下拉框默认弹出时抖动动效的问题 */
+.el-select-dropdown.el-popper {
+  transform: none !important;
+}
+
 /* 全局二次弹窗样式 */
 .day .el-message-box {
   background: #fff;
@@ -200,7 +204,7 @@
 }
 
 .day .el-message-box__btns button:nth-child(2) {
-  background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+  background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
 }
 
 /* 全局二次弹窗样式 */
@@ -320,4 +324,9 @@
 /* 全局字体颜色 */
 .hint-color {
   color: #338ff5;
+}
+
+/* 解决tabs边框出现蓝色边框问题 20190717ren增加 */
+.el-tabs__item:focus.is-active.is-focus:not(:active) {
+  box-shadow: none;
 }

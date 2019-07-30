@@ -41,7 +41,9 @@
       </div>
       <!--右侧方块-->
       <div class="plan-right">
-        <img src="../assets/supernode/banner2.gif">
+        <!--<img src="../assets/supernode/banner2.gif">-->
+        <!--GIF图放阿里云了-->
+        <img src="https://fubt-3.oss-cn-hongkong.aliyuncs.com/e6c5ecc9-a526-4efc-ac19-7521a613d0bf">
       </div>
     </div>
     <!--2.0 权益-->

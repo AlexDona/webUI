@@ -12,7 +12,7 @@ const state = {
   // OTC改变选中的可用币种partnerCoinId
   // selectedOTCAvailablePartnerCoinId: '',
   // OTC交易首页锚点状态
-  anchorStatus: false,
+  // anchorStatus: false,
   // 委托定单撤单后，更新首页挂单列表状态：false为不刷新 true为刷新
   updateOTCHomeListStatus: false,
   // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
@@ -24,7 +24,21 @@ const state = {
   // otc主页国家列表筛选框选中的国家id
   otcSelectedCountryId: '',
   // otc主页法币列表筛选框选中的法币类型id
-  otcSelectedCurrencyId: ''
+  otcSelectedCurrencyId: '',
+  // 即时通讯弹窗显示隐藏状态
+  IMBoxShowStatusMap_S: {},
+  // 是否有最新消息
+  IMHasNewMessageMap_S: {},
+  // OTC及时通讯
+  OTCIMSocket_S: null,
+  // 商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
+  blackTabsStatus: false,
+  // OTC Socket是否需要重连
+  isOTCIMSocketNeedReconnect_S: false,
+  // 是否收到新的心跳
+  hasNewOTCHart_S: false,
+  // otc聊天最新消息
+  newIMMessage_S: {}
 }
 
 export default {

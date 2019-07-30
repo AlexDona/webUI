@@ -15,29 +15,51 @@
         <div class="order" v-if="!showOrderAppeal[index] && item.orderType === 'BUY'">
           <!-- 1.1 表头 -->
           <div class="order-list-head">
-            <!-- 买卖家 -->
-            <div class="buyer-seller">
-              <!--卖家-->
-              {{$t('M.otc_seller')}}：{{item.sellName}}
+            <div class="left">
+              <!-- 买卖家 -->
+              <div class="buyer-seller">
+                <!--卖家-->
+                {{$t('M.otc_seller')}}：
+                <span
+                  class="cursor-pointer"
+                  @click="jumpMerchantInfoPage(item.sellId)"
+                >
+                  <span v-if="item.sellNickName">
+                    {{item.sellNickName}}
+                  </span>
+                  <span v-else>
+                    {{item.sellName}}
+                  </span>
+                </span>
+              </div>
+              <!--广告id-->
+              <div class="AD-ID">
+                {{$t('M.otc_AD_ID')}}：{{item.entrustSequence}}
+              </div>
+              <!-- 订单号 -->
+              <div class="order-id">
+                <!--订单号-->
+                {{$t('M.otc_MerchantsOrders_orderNum')}}：{{item.orderSequence}}
+              </div>
+              <!-- 挂单时间 -->
+              <div class="deal-time">
+                <!--挂单时间-->
+                {{$t('M.otc_entrust_time')}}：{{item.createTime}}
+              </div>
+              <div class="order-list-head-icon buy-icon"></div>
+              <div class="buy-sell-icon">
+                <!--买-->
+                {{$t('' + 'M.comm_bid')}}
+              </div>
             </div>
-            <!--广告id-->
-            <div class="AD-ID">
-              {{$t('M.otc_AD_ID')}}：{{item.entrustSequence}}
-            </div>
-            <!-- 订单号 -->
-            <div class="order-id">
-              <!--订单号-->
-              {{$t('M.otc_MerchantsOrders_orderNum')}}：{{item.orderSequence}}
-            </div>
-            <!-- 挂单时间 -->
-            <div class="deal-time">
-              <!--挂单时间-->
-              {{$t('M.otc_entrust_time')}}：{{item.createTime}}
-            </div>
-            <div class="order-list-head-icon buy-icon"></div>
-            <div class="buy-sell-icon">
-              <!--买-->
-              {{$t('M.otc_trading_order_buy')}}
+            <div class="right">
+              <!-- otc 及时通讯 -->
+              <OTCIM
+                class="otc-im"
+                :orderInfo="item"
+                :top="OTC_IM_TOP"
+                activeName="TRADING"
+              />
             </div>
           </div>
           <!-- 1.2 表身体 -->
@@ -326,7 +348,14 @@
                 <p class="action-tips">
                   <span class="wait-pay">
                     <!--等待付款-->
-                    {{$t('M.otc_waiting_payment')}}
+                    <!--{{$t('M.otc_waiting_payment')}}-->
+                    <button
+                      class="cancelOrderButton border-radius2 cursor-pointer"
+                      @click="cancelOrderBeforePayFor(item.id)"
+                    >
+                      <!--取消订单-->
+                      {{$t('M.otc_trading_cancel_order_text')}}
+                    </button>
                   </span>
                   <el-button
                     type="primary"
@@ -385,29 +414,51 @@
         >
           <!-- 2.1 表头 -->
           <div class="order-list-head">
-            <!-- 买家 -->
-            <div class="buyer-seller">
-              <!--买家-->
-              {{$t('M.otc_buyer')}}：{{item.buyName}}
+            <div class="left">
+              <!-- 买家 -->
+              <div class="buyer-seller">
+                <!--买家-->
+                {{$t('M.otc_buyer')}}：
+                <span
+                  class="cursor-pointer"
+                  @click="jumpMerchantInfoPage(item.buyId)"
+                >
+                  <span v-if="item.buyNickName">
+                    {{item.buyNickName}}
+                  </span>
+                  <span v-else>
+                    {{item.buyName}}
+                  </span>
+                </span>
+              </div>
+              <!--广告id-->
+              <div class="AD-ID">
+                {{$t('M.otc_AD_ID')}}：{{item.entrustSequence}}
+              </div>
+              <!-- 订单号 -->
+              <div class="order-id">
+                <!--订单号-->
+                {{$t('M.otc_MerchantsOrders_orderNum')}}：{{item.orderSequence}}
+              </div>
+              <!-- 挂单时间 -->
+              <div class="deal-time">
+                <!--挂单时间-->
+                {{$t('M.otc_entrust_time')}}：{{item.createTime}}
+              </div>
+              <div class="order-list-head-icon sell-icon"></div>
+              <div class="buy-sell-icon">
+                <!--卖-->
+                {{$t('M.comm_ask')}}
+              </div>
             </div>
-            <!--广告id-->
-            <div class="AD-ID">
-              {{$t('M.otc_AD_ID')}}：{{item.entrustSequence}}
-            </div>
-            <!-- 订单号 -->
-            <div class="order-id">
-              <!--订单号-->
-              {{$t('M.otc_MerchantsOrders_orderNum')}}：{{item.orderSequence}}
-            </div>
-            <!-- 挂单时间 -->
-            <div class="deal-time">
-              <!--挂单时间-->
-              {{$t('M.otc_entrust_time')}}：{{item.createTime}}
-            </div>
-            <div class="order-list-head-icon sell-icon"></div>
-            <div class="buy-sell-icon">
-              <!--卖-->
-              {{$t('M.otc_trading_order_sell')}}
+            <div class="right">
+              <!-- otc 及时通讯 -->
+              <OTCIM
+                class="otc-im"
+                :orderInfo="item"
+                :top="OTC_IM_TOP"
+                activeName="TRADING"
+              />
             </div>
           </div>
           <!-- 2.2 表身体 -->
@@ -889,11 +940,13 @@ import {
   sellerSendAppeal,
   buyerSendAppeal,
   cancelUserOtcOrder,
-  completeUserOtcOrder
+  completeUserOtcOrder,
+  cancelTradingOrderAjax
 } from '../../../utils/api/OTC'
 import {timeFilter, formatSeconds, getCookie} from '../../../utils'
 import {apiCommonUrl, xDomain} from '../../../utils/env.js'
 import IconFontCommon from '../../Common/IconFontCommon'
+import OTCIM from '../../OTC/OTCIM'
 import {
   changeCurrentPageForLegalTrader,
   getNestedData,
@@ -906,9 +959,14 @@ import {
 } from 'vuex'
 export default {
   components: {
-    IconFontCommon //  字体图标组件
+    IconFontCommon, //  字体图标组件
+    OTCIM
   },
-  // props,
+  props: {
+    OTC_IM_TOP: {
+      type: String
+    }
+  },
   data () {
     return {
       confirmPaymentStatus: false, // 确认付款交易密码框提交按钮禁用状态
@@ -978,12 +1036,19 @@ export default {
       'CHANGE_PASSWORD_USEABLE',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'UPDATE_IM_BOX_SHOW_STATUS_M',
       // 改变清除交易中数据方法的状态
-      'CHANGE_CLEAR_DATA_STATUS_M'
+      'CHANGE_CLEAR_DATA_STATUS_M',
+      'UPDATE_IM_HAS_NEW_MESSAGE_MAP_M'
     ]),
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    jumpMerchantInfoPage (userId) {
+      if (userId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+      }
+    },
     // ren增加
     // 清除定义的数组类数据
     clearArrData () {
@@ -1421,7 +1486,19 @@ export default {
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
       this.$goToPage('/PersonalCenter')
       this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
-    }
+    },
+    // 买家摘单后未付款前可取消订单
+    cancelOrderBeforePayFor: _.debounce(async function (orderId) {
+      console.log(orderId)
+      let params = {
+        orderId: orderId // 订单id
+      }
+      const data = await cancelTradingOrderAjax(params)
+      console.log(data)
+      // 接口成功后的逻辑
+      // 再次调用接口刷新列表
+      this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
+    }, 500)
   },
   filter: {},
   computed: {
@@ -1433,6 +1510,8 @@ export default {
       loginStep1Info: state => state.user.loginStep1Info,
       // legalTraderTradingList: state => state.personal.legalTraderTradingList, // 从全局获得的交易中订单列表
       tradingOrderList: state => state.personal.legalTraderTradingList, // 从全局获得的交易中订单列表tradingOrderList
+      // 已完成订单
+      completeList: state => state.personal.legalTraderCompletedList,
       legalTraderTradingReflashStatus: state => state.personal.legalTraderTradingReflashStatus,
       legalTradePageTotals: state => state.personal.legalTradePageTotals,
       legalTradePageNum: state => state.personal.legalTradePageNum,
@@ -1456,8 +1535,18 @@ export default {
       }
     },
     // 监控交易中订单列表并调用倒计时逻辑方法
-    tradingOrderList (newVal) {
+    tradingOrderList (New) {
+      console.log(New)
+      _.forEach(New, item => {
+        this.UPDATE_IM_BOX_SHOW_STATUS_M({orderId: item.id, status: false})
+        this.UPDATE_IM_HAS_NEW_MESSAGE_MAP_M({orderId: item.id, status: false})
+      })
       this.timerLogicMethod()
+    },
+    completeList (New) {
+      _.forEach(New, item => {
+        this.UPDATE_IM_HAS_NEW_MESSAGE_MAP_M({orderId: item.id, status: false})
+      })
     },
     language () {
       this.errpwd = '' // 清空密码错提示
@@ -1498,7 +1587,7 @@ export default {
     margin-top: -10px;
 
     > .fiat-trading-order-content {
-      min-height: 540px;
+      min-height: 584px;
       padding: 0 10px 10px;
 
       .button {
@@ -1522,48 +1611,60 @@ export default {
 
         > .order {
           > .order-list-head {
-            position: relative;
             display: flex;
-            box-sizing: border-box;
+            justify-content: space-between;
             height: 36px;
-            padding-left: 55px;
+            padding-right: 25px;
             border-bottom: 1px solid #262f38;
             line-height: 36px;
             color: #9da5b3;
 
-            > .buyer-seller,
-            .order-id,
-            .AD-ID,
-            .deal-time {
-              margin-right: 35px;
+            > .left {
+              position: relative;
+              display: flex;
+              box-sizing: border-box;
+              padding-left: 55px;
+
+              > .buyer-seller,
+              .order-id,
+              .AD-ID,
+              .deal-time {
+                margin-right: 35px;
+              }
+
+              > .order-list-head-icon {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 0;
+                border-right: 18px solid transparent;
+                border-bottom: 18px solid transparent;
+                border-top-left-radius: 6px;
             }
 
-            > .order-list-head-icon {
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 0;
-              height: 0;
-              border-right: 18px solid transparent;
-              border-bottom: 18px solid transparent;
-              border-top-left-radius: 6px;
+              > .buy-icon {
+                border-top: 18px solid $upColor;
+                border-left: 18px solid $upColor;
+              }
+
+              > .sell-icon {
+                border-top: 18px solid $otcGreen;
+                border-left: 18px solid $otcGreen;
+              }
+
+              > .buy-sell-icon {
+                position: absolute;
+                top: -6px;
+                left: 2px;
+                color: #fff;
+              }
             }
 
-            > .buy-icon {
-              border-top: 18px solid $upColor;
-              border-left: 18px solid $upColor;
-            }
-
-            > .sell-icon {
-              border-top: 18px solid $otcGreen;
-              border-left: 18px solid $otcGreen;
-            }
-
-            > .buy-sell-icon {
-              position: absolute;
-              top: -6px;
-              left: 2px;
-              color: #fff;
+            > .right {
+              .otc-im {
+                vertical-align: middle;
+              }
             }
           }
 
@@ -1670,6 +1771,14 @@ export default {
                   .wait-pay {
                     margin-right: 10px;
                     color: $upColor;
+
+                    > .cancelOrderButton {
+                      height: 22px;
+                      padding: 0 10px;
+                      border: 1px solid $mainColor;
+                      line-height: 22px;
+                      color: $mainColor;
+                    }
                   }
 
                   .count-time {
