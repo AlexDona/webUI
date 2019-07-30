@@ -781,15 +781,15 @@ export default {
 
     /deep/ {
       .el-tabs__item.is-top:nth-child(3) {
-        margin: 0 19px;
+        margin: 0 19px !important;
       }
 
       /* 点击切换时背景色和字体颜色 */
       .el-tabs__item {
-        width: 65px;
-        height: 42px;
-        padding: 0;
-        margin: 10px 0 0;
+        width: 85px !important;
+        height: 42px !important;
+        padding: 0 !important;
+        margin: 10px 0 0 !important;
         border-left: 0 solid transparent !important;
         text-align: center;
         background-color: transparent !important;
