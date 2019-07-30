@@ -36,6 +36,7 @@
 </template>
 <script>
 import { CSSAnimate } from '../../utils'
+// import {mapState} from 'vuex'
 export default {
   // name: 'common-slider',
   // components: {},
@@ -67,7 +68,9 @@ export default {
       confirmSuccess: false,
       maxWidth: 0,
       dragTimer: null,
-      successText: 'M.slider_bar_success_tips'
+      successText: 'M.slider_bar_success_tips',
+      timer: null,
+      returnTimer: null
     }
   },
   async created () {
@@ -80,6 +83,7 @@ export default {
   // beforeRouteUpdate () {},
   beforeDestroy () {
     clearTimeout(this.timer)
+    clearTimeout(this.returnTimer)
   },
   // destroyed () {}
   methods: {
@@ -127,29 +131,31 @@ export default {
       this.$changeCSS_X('.handler', 'left', this.maxWidth)
       this.$changeCSS_X('.drag_bg', 'width', this.maxWidth + 5)
       this.confirmSuccess = true
-      this.timer = setTimeout(() => {
+      document.querySelector('.handler').style.left = '-1px'
+      document.querySelector('.drag_bg').style.width = 0
+      this.returnTimer = setTimeout(() => {
         this.$emit('successCallback')
         this.mouseMoveStatus = false
-        this.$changeCSS_X('.handler', 'left', '-1px')
-        this.$changeCSS_X('.drag_bg', 'width', 0)
-      }, 500)
+      }, 300)
     }
   },
   // filter: {},
-  // computed: {
-  // },
+  computed: {
+    // ...mapState({})
+  },
   watch: {
     confirmSuccess (newV) {
-      if (newV && this.initAfterSuccess) {
+      if (newV) {
         this.timer = setTimeout(() => {
           this.confirmSuccess = false
-        }, 500)
+        }, 1000)
       }
 
-      if (this.initAfterSuccess) {
-        this.$changeCSS_X('.handler', 'left', 0)
-        this.$changeCSS_X('.drag_bg', 'width', 0)
-      }
+      // if (newV) {
+      //   console.log('success')
+      //   document.querySelector('.handler').style.left = '-1px'
+      //   document.querySelector('.drag_bg').style.width = 0
+      // }
     }
   }
 }
@@ -233,6 +239,7 @@ export default {
           color #118548
         >.right
           background-color #2b3152
+          border 1px solid #25283D
           .icon
             color #118548
     &.day

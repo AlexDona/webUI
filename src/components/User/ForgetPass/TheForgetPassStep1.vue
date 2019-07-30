@@ -56,7 +56,6 @@
       :height="46"
       :barWidth="60"
       @successCallback="successCallback"
-      :initAfterSuccess="true"
       )
 </template>
 <script>

@@ -95,7 +95,6 @@
           :height="46"
           :barWidth="60"
           @successCallback="successCallback"
-          :initAfterSuccess="true"
         )
       TheValidateDialog(@loginForStep2="loginForStep2")
       TheImageDialog(@loginForStep2="loginForStep2")

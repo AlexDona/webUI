@@ -35,7 +35,10 @@ export default {
       disabled: false
     }
   },
-  // created () {},
+  created () {
+    console.log('created')
+    this.disabled = false
+  },
   // mounted () {},
   // activated () {},
   // update () {},

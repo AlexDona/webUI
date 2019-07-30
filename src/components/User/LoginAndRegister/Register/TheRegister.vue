@@ -49,6 +49,8 @@
             :autofocus="true"
             autocomplete="off"
             @keyup.enter.native="submitForm"
+            @keyup.native="formatPhone"
+            @input.native="formatPhone"
             clearable
             maxlength="11"
           )
@@ -75,18 +77,28 @@
           prop="validateCode"
         )
           el-input.validate-code(
-          type="text"
-          v-model="form.validateCode"
-          :placeholder="isPhoneRegist ? $t(phonePlaceHolder) : $t(emailPlaceHolder)"
-          autocomplete="off"
-          @keyup.enter.native="submitForm"
-          clearable
+            type="text"
+            v-model="form.validateCode"
+            :placeholder="isPhoneRegist ? $t(phonePlaceHolder) : $t(emailPlaceHolder)"
+            autocomplete="off"
+            @keyup.enter.native="submitForm"
+            clearable
           )
             // 发送验证码
-            template(slot="append")
+            template(
+              slot="append"
+            )
               CountDownButton.count-down(
-                :status="isPhoneRegist ? $disabledOfPhoneBtn_X : $disabledOfEmailBtn_X"
-                @run="sendPhoneOrEmailCode(isPhoneRegist ? 0 : 1)"
+                v-if="isPhoneRegist"
+                :key="phone_X"
+                :status="$disabledOfPhoneBtn_X"
+                @run="sendPhoneOrEmailCode(0)"
+              )
+              CountDownButton.count-down(
+                v-else
+                :key="email_X"
+                :status="$disabledOfEmailBtn_X"
+                @run="sendPhoneOrEmailCode(1)"
               )
         //  密码
         el-form-item(
@@ -172,7 +184,6 @@
           :height="46"
           :barWidth="60"
           @successCallback="successCallback"
-          :initAfterSuccess="true"
         )
 </template>
 <script>
@@ -187,6 +198,7 @@ import {
 } from 'vuex'
 import {sendPhoneOrEmailCodeAjax, validateNumForUserInput} from '../../../../utils/commonFunc'
 import {newCheckUserExist, newRegisterAJAX} from '../../../../utils/api/user'
+import {formatNumber} from '../../../../utils'
 export default {
   name: 'the-register-container',
   mixins: [mixins],
@@ -214,6 +226,9 @@ export default {
         // 请输入邮箱地址
         callback(new Error(' '))
         this.loginErrorTips = this.$t('M.login_please_input3')
+      } else if (!EMAIL_REG.test(value)) {
+        callback(new Error(' '))
+        this.loginErrorTips = this.$t('M.user-fail-reg-mail')
       } else {
         this.loginErrorTips = ''
         callback()
@@ -362,6 +377,9 @@ export default {
       'USER_LOGOUT',
       'CHANGE_FOOTER_ACTIVE_NAME'
     ]),
+    formatPhone () {
+      this.form.phone = formatNumber(this.form.phone, 0)
+    },
     // 发送验证码（短信、邮箱）
     async sendPhoneOrEmailCode (type) {
       this.$refs[this.formRef].validateField(this.isPhoneRegist ? this.phone_X : this.email_X, async (err) => {
@@ -609,6 +627,7 @@ export default {
             .el-input__inner
               border-radius 20px 0 0 20px
             .el-input-group__append
+              overflow hidden
               padding 0 10px
               border-radius 0 20px 20px 0
               /* 发送验证码 */
@@ -718,6 +737,7 @@ export default {
                 .count-down
                   color S_main_color
                   border-left 1px solid S_main_color
+                  background-color #3f4769
                   &.is-disabled
                     span
                       color #fff
@@ -803,10 +823,12 @@ export default {
               .el-input-group__append
                 background-color #eee
                 border: none
+                overflow hidden
                 /* 发送验证码 */
                 .count-down
                   color S_main_color
                   border-left 1px solid #aaa
+                  background-color #eee
                   &.is-disabled
                     span
                       color #1C1F32
