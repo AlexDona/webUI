@@ -83,9 +83,16 @@ export default {
       'SET_REQUEST_COUNT_M'
     ]),
     beforeUpload (file) {
+      const {size, name} = file
+      const types = name.split('.')
+      const currentType = types[types.length - 1]
+      const allowTypes = ['jpeg', 'jpg', 'png', 'bmp']
+      console.log(types)
+      const isAllow = _.some(allowTypes, type => type == currentType)
+      console.log(isAllow)
+      if (!isAllow) return false
       this.SET_REQUEST_COUNT_M('ADD')
       console.log(file)
-      const {size} = file
 
       if (size - this.LIMIT_SIZE > 0) {
         this.SET_REQUEST_COUNT_M('SUBTRACT')
