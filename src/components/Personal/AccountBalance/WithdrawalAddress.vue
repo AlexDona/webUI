@@ -643,11 +643,11 @@ export default {
         if (New == this.USDT_COIN_ID_S) {
           this.isShowLinkSelect = true
           // 控制地址列表无数据时的高度
-          this.$el.querySelector('.el-table__empty-block').style.height = '240px'
+          this.$el.querySelector('.el-table').style.height = '267px'
         } else if (this.isShowAddressLabel) {
-          this.$el.querySelector('.el-table__empty-block').style.height = '240px'
+          this.$el.querySelector('.el-table').style.height = '267px'
         } else {
-          this.$el.querySelector('.el-table__empty-block').style.height = '301px'
+          this.$el.querySelector('.el-table').style.height = '327px'
         }
       } else {
         if (New == this.USDT_COIN_ID_S) {
@@ -892,7 +892,7 @@ export default {
         .el-button {
           &:first-child {
             color: rgba(255, 255, 255, .7);
-            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
           }
         }
 
@@ -903,8 +903,8 @@ export default {
 
           .el-button {
             border: 0;
-            color: rgba(255, 255, 255, .7);
-            background: linear-gradient(0deg, #2b396e, #2a5082);
+            color: rgba(255, 255, 255, 1);
+            background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
           }
         }
       }
@@ -1026,6 +1026,14 @@ export default {
         .el-input__inner {
           border: 1px solid rgba(236, 241, 248, 1);
           background: rgba(255, 255, 255, 1);
+        }
+
+        .withdrawal-dialog {
+          .el-button {
+            border: 0;
+            color: rgba(255, 255, 255, 1);
+            background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
+          }
         }
       }
     }
