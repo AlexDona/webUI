@@ -328,7 +328,8 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'SET_STEP1_INFO',
       'SET_NEW_WITHDRAW_RECORD_STATUS',
-      'SET_NEW_WITHDRAW_RECORD'
+      'SET_NEW_WITHDRAW_RECORD',
+      'UPDATE_IM_BOX_SHOW_STATUS_M'
     ]),
     // 显示未设置交易密码弹窗
     showNoPasswdNotice () {
@@ -354,6 +355,10 @@ export default {
         this.SET_NEW_WITHDRAW_RECORD_STATUS('RECHARGE')
       }
       this.showNoPosswdAndNoVerifyNotice()
+      this.UPDATE_IM_BOX_SHOW_STATUS_M({
+        orderId: 'default',
+        status: false
+      })
     },
     confirm (val) {
       if (val == 1) {

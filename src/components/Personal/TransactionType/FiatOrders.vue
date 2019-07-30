@@ -304,7 +304,8 @@ export default {
       // 改变清除交易中数据方法的状态
       'CHANGE_CLEAR_DATA_STATUS_M',
       'UPDATE_OTC_IM_SOCKET_STATUS_M',
-      'UPDATE_OTC_IM_SOCKET_HEART_M'
+      'UPDATE_OTC_IM_SOCKET_HEART_M',
+      'UPDATE_IM_BOX_SHOW_STATUS_M'
     ]),
     initSocket () {
       const {id} = this.$userInfo_X
@@ -346,6 +347,10 @@ export default {
       this.resetCondition()
       this.CHANGE_LEGAL_PAGE({
         legalTradePageNum: 1
+      })
+      this.UPDATE_IM_BOX_SHOW_STATUS_M({
+        orderId: 'default',
+        status: false
       })
     },
     // 页面加载时 可用币种查询
