@@ -26,7 +26,7 @@
         ) {{ $t('M.comm_copy') }}{{ $t('M.comm_site') }}
       .recharge-content-title.font-size12.margin-top9.float-left
         // 我的资产添加USDT 类型区分文本
-        p(v-if="currencyName == 'USDT'") * {{ $t('M.user_assets_withdrawal_hint10').format([currencyName, currencyName]) }}
+        p(v-if="currencyName == 'USDT'") * {{ $t('M.user_assets_withdrawal_hint10').format([currencyName, activeLinkNames]) }}
         // 转账时请务必备注（否则后果自负）：UID
         p(v-if="isNeedTag") * {{ $t('M.user_assets_recharge_hint0').format([currencyName,currencyName]) }}{{rechargeNoteInfo}}
         // 禁止充值除 之外的其他资产，任何非 资产充值将不可找回
@@ -100,8 +100,16 @@ export default {
   // filter: {},
   computed: {
     ...mapState({
-      USDT_COIN_ID_S: state => state.personal.USDT_COIN_ID_S
+      USDT_COIN_ID_S: state => state.personal.USDT_COIN_ID_S,
+      linkNames_S: state => state.personal.linkNames_S
     }),
+    activeLinkNames () {
+      let targetStr = ' '
+      _.forEach(this.linkNames_S, linkName => {
+        if (!linkName.disabled) targetStr += `${linkName.value} `
+      })
+      return targetStr
+    },
     isShowUSDTSelect () {
       return this.coinId == this.USDT_COIN_ID_S
     }
