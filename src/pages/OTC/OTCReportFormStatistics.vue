@@ -219,7 +219,7 @@
         <div class="common sell">
           <!-- 头 -->
           <div class="head padding-l15 font-size14">
-            {{$t('M.otc_sell')}}
+            {{$t('M.web_otc_sell')}}
           </div>
           <!-- 内容 -->
           <div class="body">
