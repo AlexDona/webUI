@@ -739,7 +739,7 @@ export default {
       margin-top: 10px;
 
       > .credited-box {
-        min-height: 664px;
+        min-height: 709px;
         padding: 30px 23px;
 
         > .title-status {
@@ -932,7 +932,7 @@ export default {
             }
 
             .payment-card {
-              color: #fff;
+              color: #8ba0ca;
             }
 
             .payment-state {
@@ -971,7 +971,7 @@ export default {
       }
 
       .title-status {
-        color: rgba(255, 255, 255, .7);
+        color: rgba(255, 255, 255, 1);
         background: rgba(248, 249, 252, .05);
       }
 
@@ -986,7 +986,7 @@ export default {
         /* 警告提示框按钮 */
         .el-button--primary {
           color: #fff;
-          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+          background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
         }
 
         .el-dialog__title {
@@ -1058,10 +1058,10 @@ export default {
         }
 
         .dialog-warning {
-          background: rgba(42, 122, 211, .9);
+          background: rgba(42, 122, 211, .2);
 
           .dialog-warning-box {
-            background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+            background: #338ff5
           }
         }
 
@@ -1077,7 +1077,7 @@ export default {
 
         .el-button--primary {
           color: #fff;
-          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+          background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
         }
       }
     }

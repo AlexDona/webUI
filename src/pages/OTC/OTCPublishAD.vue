@@ -84,7 +84,7 @@
             <div class="left display-inline-block">
               <!-- 销售价格 -->
                 <p class="tips font-size12">
-                  <span class="must-fill-star">*&nbsp;</span>{{$t('M.otc_sell')}}{{$t('M.otc_index_price')}}
+                  <span class="must-fill-star">*&nbsp;</span>{{$t('M.web_otc_sell')}}{{$t('M.otc_index_price')}}
                 </p>
             </div>
             <div class="right display-inline-block">
@@ -925,7 +925,7 @@ export default {
       // 清空数据
       this.clearMainData()
       // 下单成功跳转到首页挂单列表去 并 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-      this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+      // this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
       this.$goToPage('/OTCCenter')
     }, 500),
     // 12.0 交易密码框获得焦点

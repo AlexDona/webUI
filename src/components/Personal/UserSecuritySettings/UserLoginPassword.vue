@@ -272,7 +272,7 @@ export default {
     overflow: hidden;
 
     > .login-password-main {
-      width: 1100px;
+      width: 1300px;
       min-height: 700px;
       margin: 60px auto 100px;
 
@@ -305,8 +305,8 @@ export default {
         }
 
         > .login-content-from {
-          width: 600px;
-          padding-top: 30px;
+          width: 500px;
+          margin: 58px auto;
 
           .login-input {
             width: 220px;
@@ -413,8 +413,8 @@ export default {
             }
 
             .login-button {
-              color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              color: rgba(255, 255, 255, 1);
+              background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
             }
           }
         }
@@ -423,7 +423,7 @@ export default {
       /deep/ {
         /* 个人中心（黑色主题） */
         .el-form-item__label {
-          color: rgba(255, 255, 255, .7);
+          color: #a9bed4;
         }
 
         .el-input__inner {
@@ -450,7 +450,6 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .login-password-main {
         border: 1px solid rgba(246, 246, 246, 1);
@@ -495,8 +494,8 @@ export default {
             }
 
             .login-button {
-              color: #ccc;
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              color: #fff;
+              background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
             }
           }
         }

@@ -15,11 +15,9 @@ export const overrides = {
   // "mainSeriesProperties.candleStyle.wickColor": "#737375",
   'mainSeriesProperties.candleStyle.wickUpColor': '#d45858', // 上涨 蜡烛线颜色
   'mainSeriesProperties.candleStyle.wickDownColor': '#008069', // 下降 蜡烛线颜色
-  // "mainSeriesProperties.hollowCandleStyle.borderColor": "#000",
-  // "mainSeriesProperties.hollowCandleStyle.borderUpColor": "#ff00ff",
+  // 'mainSeriesProperties.hollowCandleStyle.borderColor': '#000',
+  // 'mainSeriesProperties.hollowCandleStyle.borderUpColor': '#ff00ff',
   // "mainSeriesProperties.haStyle.borderUpColor": "#00f",
-  // "mainSeriesProperties.areaStyle.color1": "#0f0",
-  // "mainSeriesProperties.areaStyle.color2": "yellow",
   // 'paneProperties.legendProperties.showStudyTitles': false,
   'mainSeriesProperties.areaStyle.color1': '#0cbef3',
   'mainSeriesProperties.areaStyle.color2': '#0098c4',
@@ -69,8 +67,10 @@ export const disabledFeatures = [
   // 'widget_logo',
 ]
 export const studiesOverrides = {
-  'volume.volume.color.0': '#EC5E5E', // 成交量 k柱 背景色
-  'volume.volume.color.1': '#008069', // 成交量 k柱 背景色
+  // 成交量 k柱 背景色 跌
+  'volume.volume.color.0': '#008069',
+  // 成交量 k柱 背景色 涨
+  'volume.volume.color.1': '#EC5E5E',
   'volume.volume.transparency': 100
 }
 export const kLineBtnList = [

@@ -96,25 +96,17 @@
                 {{ $t('M.user_coin_order4') }}
             </span>
             <span class="date-picker">
-              <!--开始日期-->
               <el-date-picker
-                :placeholder="$t('M.comm_begin') + $t('M.comm_data')"
-                v-model="startTime"
-                type="date"
+                v-model="checkedTime"
+                type="daterange"
+                range-separator="-"
+                :start-placeholder="$t('M.comm_begin') + $t('M.comm_data')"
+                :end-placeholder="$t('M.comm_end') + $t('M.comm_data')"
+                :editable="false"
+                :picker-options="pickerOptionsTime"
+                @change="changeSelectValue('date', $event)"
                 value-format="yyyy-MM-dd"
-                @change="startDate"
-                clearable
-              >
-              </el-date-picker>
-              <span class="date-short-line">-</span>
-              <!--结束日期-->
-              <el-date-picker
-                :placeholder="$t('M.comm_end') + $t('M.comm_data')"
-                v-model="endTime"
-                value-format="yyyy-MM-dd"
-                type="date"
-                @change="endDate"
-                clearable
+                :clearable="true"
               >
               </el-date-picker>
             </span>
@@ -140,6 +132,7 @@
           <FiatCoinTradingOrder
             ref = "tradeOrder"
             @fatherMethod="getOTCEntrustingOrdersRevocation"
+            :OTC_IM_TOP="OTC_IM_TOPS.trading"
           />
         </el-tab-pane>
         <!--已完成订单-->
@@ -147,21 +140,30 @@
           :label="$t('M.otc_stocks')"
           name="COMPLETED"
         >
-          <FiatCoinCompletedOrder ref = "cancelledOrder"/>
+          <FiatCoinCompletedOrder
+            ref = "cancelledOrder"
+            :OTC_IM_TOP="OTC_IM_TOPS.completed"
+          />
         </el-tab-pane>
         <!--已取消订单-->
         <el-tab-pane
           :label="$t('M.otc_canceled')"
           name="CANCELED"
         >
-          <FiatCoinCanceledOrder ref = "completedOrder"/>
+          <FiatCoinCanceledOrder
+            ref = "completedOrder"
+            :OTC_IM_TOP="OTC_IM_TOPS.canceled"
+          />
         </el-tab-pane>
         <!--冻结中订单-->
         <el-tab-pane
           :label="$t('M.otc_freezingOrder')"
           name="FROZEN"
         >
-          <FiatCoinFreezingOrder ref = "pendingOrder"/>
+          <FiatCoinFreezingOrder
+            ref = "pendingOrder"
+            :OTC_IM_TOP="OTC_IM_TOPS.frozen"
+          />
         </el-tab-pane>
         <!--委托订单-->
         <el-tab-pane
@@ -196,7 +198,11 @@ import {
   mapMutations,
   mapState
 } from 'vuex'
+import Socket from '../../../utils/datafeeds/socket'
+import {OTCIMSocketUrl} from '../../../utils/env'
+import mixins from '../../../mixins/user'
 export default {
+  mixins: [mixins],
   components: {
     IconFontCommon, //  字体图标
     FiatCoinTradingOrder, //  交易中订单
@@ -252,20 +258,41 @@ export default {
           label: 'M.otc_enum_status_yidongjie' // 已冻结
         }
       ],
-      startTime: '', // 默认开始时间
-      endTime: '', // 默认结束时间
       // 商家订单列表
-      merchantsOrdersList: []
+      merchantsOrdersList: [],
+      // 时间选择器
+      checkedTime: [], // 时间选择器选中的时间
+      pickerOptionsTime: {
+        disabledDate: (time) => {
+          return time.getTime() > Date.now()
+        }
+      },
+      socket: '',
+      OTC_IM_TOPS: {
+        trading: `170px`,
+        completed: `99px`,
+        canceled: `99px`,
+        frozen: `99px`
+      },
+      // OTC 心跳发送次数
+      OTCSocketHeartCount: 0,
+      socketTimer: null,
+      // 心跳间隔
+      heartDuration: 50000
     }
   },
   async created () {
+    this.initSocket()
     await this.getOTCAvailableCurrencyList()
     await this.getMerchantAvailableLegalTenderList()
+    await this.getOTCEntrustingOrdersRevocation()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
+  beforeDestroy () {
+    clearTimeout(this.socketTimer)
+  },
   methods: {
     ...mapMutations([
       'SET_LEGAL_TENDER_LIST',
@@ -273,9 +300,47 @@ export default {
       // 更改重新渲染交易中订单列表状态
       'CHANGE_RE_RENDER_TRADING_LIST_STATUS',
       'SET_LEGAL_TENDER_REFLASH_STATUS',
+      'UPDATE_IM_SOCKET_M',
       // 改变清除交易中数据方法的状态
-      'CHANGE_CLEAR_DATA_STATUS_M'
+      'CHANGE_CLEAR_DATA_STATUS_M',
+      'UPDATE_OTC_IM_SOCKET_STATUS_M',
+      'UPDATE_OTC_IM_SOCKET_HEART_M'
     ]),
+    initSocket () {
+      const {id} = this.$userInfo_X
+      // this.socket = new Socket(this.url = `${OTCIMSocketUrl}/web/${id}`)
+      this.socket = new Socket(this.url = `${OTCIMSocketUrl}`)
+
+      this.UPDATE_IM_SOCKET_M(this.socket)
+      this.socket.doOpen()
+      this.socket.on('open', () => {
+        this.UPDATE_OTC_IM_SOCKET_STATUS_M(false)
+        this.socket.send({
+          // 当前用户id
+          'userId': id,
+          // 请求的动作:“toConnect”建立socket连接;“sendMessage”发送聊天内容
+          'action': 'toConnect',
+          'source': 'web'
+        })
+        this.checkHeart()
+      })
+    },
+    checkHeart () {
+      this.socket.on('message', (e) => {
+        if (e.action == 'checkHeart') {
+          this.socket.send(e)
+          // 非心跳之外 duration 内 无消息，客户端主动断开连接
+        }
+      })
+    },
+    // 时间选择
+    changeSelectValue (type, targetValue) {
+      switch (type) {
+        case 'date':
+          this.checkedTime = targetValue
+          break
+      }
+    },
     // 切换tab时将全局当前页码改为1加载第一页的数据
     toggleTabPane () {
       this.resetCondition()
@@ -287,8 +352,6 @@ export default {
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
       })
-      // console.log('可用币种列表')
-      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data) {
@@ -298,8 +361,6 @@ export default {
     // 页面加载时 可用法币查询
     async getMerchantAvailableLegalTenderList () {
       const data = await getMerchantAvailableLegalTender()
-      // console.log('可用法币')
-      // console.log(data)
       // 返回数据正确的逻辑
       if (!data) return false
       if (data) {
@@ -324,7 +385,6 @@ export default {
     },
     // 点击查询按钮
     findFilter (activeName) {
-      // console.log(activeName)
       this.CHANGE_LEGAL_PAGE({
         legalTradePageNum: 1
       })
@@ -335,49 +395,48 @@ export default {
       this.activatedMerchantsOrdersCoin = ''
       this.activatedMerchantsOrdersCurrency = ''
       this.activatedMerchantsOrdersStatusList = ''
-      this.startTime = ''
-      this.endTime = ''
+      // this.startTime = ''
+      // this.endTime = ''
+      this.checkedTime = []
       // this.getOTCEntrustingOrdersRevocation()
     },
     // 页面加载时请求接口渲染列表
-    async getOTCEntrustingOrdersRevocation (activeName) {
-      // console.log(activeName)
+    async getOTCEntrustingOrdersRevocation () {
       let params = {
         // 币种
         coinId: this.activatedMerchantsOrdersCoin,
         // 法币
         currencyId: this.activatedMerchantsOrdersCurrency,
         // 状态
-        status: activeName,
+        status: this.activeName,
         // 开始时间
-        startTime: this.startTime,
+        // startTime: this.startTime,
+        startTime: this.checkedTime && this.checkedTime[0] ? this.checkedTime[0] : '',
         // 结束时间
-        endTime: this.endTime,
+        // endTime: this.endTime,
+        endTime: this.checkedTime && this.checkedTime[1] ? this.checkedTime[1] : '',
         // 类型
         // tradeType: this.activatedMerchantsOrdersTraderStyleList,
         pageNum: this.legalTradePageNum
         // pageSize: this.legalTradePageSize
       }
       // 20190218 增加委单和其他状态交易类型字段判断 委托订单用entrustType字段其他用tradeType字段
-      if (activeName == 'ENTRUSTED') {
+      if (this.activeName == 'ENTRUSTED') {
         params.entrustType = this.activatedMerchantsOrdersTraderStyleList
         params.pageSize = 10 // 委托订单每页显示10条
       } else {
         params.tradeType = this.activatedMerchantsOrdersTraderStyleList
         params.pageSize = this.legalTradePageSize // 每页显示5条
       }
-      if (activeName == 'ENTRUSTED') {
+      if (this.activeName == 'ENTRUSTED') {
         const data = await getOTCEntrustingOrders(params)
-        console.log('委托订单列表')
-        console.log(data)
         if (!data) return false
         let OTCEntrustingOrdersData = getNestedData(data, 'data')
         // 返回数据正确的逻辑 重新渲染列表
         this.SET_LEGAL_TENDER_LIST({
-          type: activeName,
+          type: this.activeName,
           data: OTCEntrustingOrdersData.list
         })
-        // console.log(data)
         this.CHANGE_LEGAL_PAGE({
           legalTradePageNum: OTCEntrustingOrdersData.pageNum,
           legalTradePageTotals: OTCEntrustingOrdersData.pages
@@ -387,46 +446,22 @@ export default {
           if (!(returnAjaxMsg(data, this, 0))) {
             return false
           } else {
-            console.log('法币订单列表（除了委托订单)')
-            console.log(data)
             // 请求接口之前，调用子组件（交易中订单组件）方法，清空定义的数组数据
             this.CHANGE_CLEAR_DATA_STATUS_M(true)
             let merchantsOrdersListData = getNestedData(data, 'data.data')
             // 返回数据正确的逻辑 重新渲染列表
             this.SET_LEGAL_TENDER_LIST({
-              type: activeName,
+              type: this.activeName,
               data: merchantsOrdersListData.list
             })
             // 刷新列表之后将重新渲染交易中订单列表状态改为false
             this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(false)
-            // console.log(data)
             this.CHANGE_LEGAL_PAGE({
               legalTradePageNum: merchantsOrdersListData.pageNum,
               legalTradePageTotals: merchantsOrdersListData.pages
             })
           }
         })
-      }
-    },
-    // 时间选择器change事件：
-    // 开始时间
-    startDate () {
-      if (this.endTime) {
-        if (this.startTime > this.endTime) {
-          // 开始时间不能大于结束时间
-          this.$error_tips_X(this.$t('M.otc_time_limit'))
-          return false
-        }
-      }
-    },
-    // 结束时间
-    endDate () {
-      if (this.startTime) {
-        if (this.startTime > this.endTime) {
-          // 开始时间不能大于结束时间
-          this.$error_tips_X(this.$t('M.otc_time_limit'))
-          return false
-        }
       }
     }
   },
@@ -441,25 +476,77 @@ export default {
       legalTradePageSize: state => state.personal.legalTradePageSize,
       legalTraderCompletedReflashStatus: state => state.personal.legalTraderCompletedReflashStatus,
       legalTraderEntrustReflashStatus: state => state.personal.legalTraderEntrustReflashStatus,
+      legalTraderCancelReflashStatus: state => state.personal.legalTraderCancelReflashStatus,
+      legalTraderTradingReflashStatus: state => state.personal.legalTraderTradingReflashStatus,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
-      reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus // 从全局获得的重新渲染交易中订单列表状态
-    })
+      reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus, // 从全局获得的重新渲染交易中订单列表状态
+      isOTCIMSocketNeedReconnect_S: state => state.OTC.isOTCIMSocketNeedReconnect_S,
+      hasNewOTCHart_S: state => state.OTC.hasNewOTCHart_S,
+      newIMMessage_S: state => state.OTC.newIMMessage_S
+    }),
+    activeNameAndLegalTradePageNum () {
+      return `${this.activeName}/${this.legalTradePageNum}`
+    }
   },
   watch: {
-    activeName () {
-      this.getOTCEntrustingOrdersRevocation(this.activeName)
+    newIMMessage_S (New) {
+      const e = New
+      if (e.action == 'checkHeart') {
+        this.socket.send(e)
+        // 非心跳之外 duration 内 无消息，客户端主动断开连接
+      } else if (e.action !== 'checkHeart') {
+        clearTimeout(this.socketTimer)
+        this.heartDuration = e.duration + 1000
+        this.socketTimer = setTimeout(() => {
+          this.socket.doClose()
+        }, this.heartDuration)
+      }
     },
-    legalTradePageNum () {
-      this.getOTCEntrustingOrdersRevocation(this.activeName)
+    hasNewOTCHart_S (New) {
+      if (New) {
+        this.UPDATE_OTC_IM_SOCKET_HEART_M(false)
+      }
     },
-    legalTraderCompletedReflashStatus () {
-      this.getOTCEntrustingOrdersRevocation(this.activeName)
+    isOTCIMSocketNeedReconnect_S (New) {
+      if (New) {
+        this.initSocket()
+      }
+    },
+    activeNameAndLegalTradePageNum () {
+      this.getOTCEntrustingOrdersRevocation()
+    },
+    legalTraderCompletedReflashStatus (New) {
+      if (New) {
+        this.getOTCEntrustingOrdersRevocation()
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'COMPLETED',
+          status: false
+        })
+      }
+    },
+    legalTraderTradingReflashStatus (New) {
+      if (New) {
+        this.getOTCEntrustingOrdersRevocation()
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'TRADING',
+          status: false
+        })
+      }
+    },
+    legalTraderCancelReflashStatus (New) {
+      if (New) {
+        this.getOTCEntrustingOrdersRevocation()
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'CANCELED',
+          status: false
+        })
+      }
     },
     legalTraderEntrustReflashStatus (newVal) {
-      this.getOTCEntrustingOrdersRevocation(this.activeName)
       if (newVal) {
+        this.getOTCEntrustingOrdersRevocation()
         this.SET_LEGAL_TENDER_REFLASH_STATUS({
           type: 'ENTRUSTED',
           status: false
@@ -469,15 +556,13 @@ export default {
     userCenterActiveName (newVal) {
       this.resetCondition()
       if (newVal === 'fiat-orders') {
-        this.getOTCEntrustingOrdersRevocation(this.activeName)
+        this.getOTCEntrustingOrdersRevocation()
       }
     },
     //  监控重新渲染交易中订单列表状态:当为true时调用重新刷新列表方法
     reRenderTradingListStatus () {
-      console.log('重新渲染交易中订单列表状态')
-      console.log(this.reRenderTradingListStatus)
       if (this.reRenderTradingListStatus) {
-        this.getOTCEntrustingOrdersRevocation(this.activeName)
+        this.getOTCEntrustingOrdersRevocation()
       }
     }
   }
@@ -498,7 +583,7 @@ export default {
         }
 
         .trade-data {
-          width: 535px;
+          width: 500px;
         }
 
         .main-top-type {
@@ -507,16 +592,6 @@ export default {
 
           > .filtrate-text {
             margin-right: 5px;
-          }
-
-          .date-short-line {
-            margin: 0 8px;
-          }
-        }
-
-        > .date-picker {
-          > .date-short-line {
-            margin: 0 3px;
           }
         }
 
@@ -530,6 +605,10 @@ export default {
       /* 覆盖Elenent样式 */
       .el-input__icon {
         line-height: 0;
+      }
+
+      .el-tabs__content {
+        min-height: 1500px;
       }
 
       /* 点击切换时背景色和字体颜色 */
@@ -557,14 +636,16 @@ export default {
         border: 0;
       }
 
-      .el-date-editor.el-input {
-        width: 180px;
-        height: 30px;
-      }
+      .date-picker {
+        .el-input__inner {
+          width: 240px;
+        }
 
-      .el-date-editor .el-input__inner {
-        width: 180px;
-        height: 30px;
+        .el-date-editor {
+          .el-range-separator {
+            line-height: 23px;
+          }
+        }
       }
 
       .cell {
@@ -631,6 +712,14 @@ export default {
         .el-input__inner {
           background-color: #2d3651;
         }
+
+        .date-picker {
+          .el-date-editor {
+            .el-range-separator {
+              color: $mainColorOfWhite;
+            }
+          }
+        }
       }
     }
 
@@ -654,8 +743,6 @@ export default {
       .fiat-main {
         .orders-main-top {
           background-color: $mainColorOfWhite;
-
-          /* box-shadow: 0 0 6px #cfd5df; */
         }
       }
 

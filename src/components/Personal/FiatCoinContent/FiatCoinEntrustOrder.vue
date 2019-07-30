@@ -271,7 +271,7 @@ export default {
       }
 
       > .entrust-table-body {
-        min-height: 495px;
+        min-height: 539px;
         padding: 30px 0;
         margin-top: -10px;
 

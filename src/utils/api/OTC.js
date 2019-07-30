@@ -72,3 +72,5 @@ export const addModifyPublishADOrder = (params) => handleRequest(() => postWithU
 export const getCommonPutUpOrderStatus = (params) => handleRequest(() => get('otcEntrust/otcCommonFlag', params))
 // 28  增加国家-查询法币联动国家列表
 export const getCurrencyCountrys = (params) => handleRequest(() => get('otcCOin/getCurrencyCountrys', params))
+// 29  买家摘单后未付款前可取消订单
+export const cancelTradingOrderAjax = (params) => handleRequest(() => postWithURLencoded('otcOrder/userCancelOtcOrder', params), 1)

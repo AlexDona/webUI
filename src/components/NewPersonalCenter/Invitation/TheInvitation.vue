@@ -57,7 +57,6 @@ export default {
       'UPDATE_INVITATIONS_M'
     ]),
     async getUserPromotionList ({currentNum = 0, type = 'first'}) {
-      console.log(currentNum, type)
       if (currentNum) this.currentNum = currentNum
       if (type) this.generalizeValue = type
       let data = await userPromotionList({
@@ -65,7 +64,6 @@ export default {
         pageNumber: this.currentNum, // 当前页码
         type: this.generalizeValue // 筛选类型
       })
-      console.log(data)
       if (!data) return false
       this.UPDATE_INVITATIONS_M(_.get(data, 'data'))
     }
@@ -81,6 +79,7 @@ export default {
 <style scoped lang="stylus">
   @import '../../../assets/CSS/index.styl'
   .the-invitation
+    margin-bottom 56px
     min-height 1000px
     >.header
       height 40px
