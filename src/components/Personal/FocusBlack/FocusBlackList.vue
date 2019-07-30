@@ -119,7 +119,7 @@ export default {
             .el-tabs__item.is-active
               border-bottom 2px solid S_main_color
               border-left 0 solid transparent
-              color $mainColor
+              color S_main_color
               background-color S_day_bg
             .el-tabs__item:hover
               border-left 0 solid transparent
