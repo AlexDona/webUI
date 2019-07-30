@@ -10,6 +10,7 @@
     width="486px"
     :close-on-click-modal="false"
     @close="$UPDATE_LOGIN_STEP2_DIALOG_STATUS_X(false)"
+    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
   )
     el-form(
       :model="form"
@@ -216,7 +217,9 @@ export default {
           params.email = this.$userInfo_X.email
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, this)
+      sendPhoneOrEmailCodeAjax(loginType, params, this).catch((err) => {
+        console.log(err)
+      })
     }
   },
   // filters: {},
@@ -258,13 +261,11 @@ export default {
 <style scoped lang="stylus">
   @import '../../../../assets/CSS/index.styl'
   .msg-email-google-dialog
-    /*top 21vh*/
     -moz-user-select none
     -webkit-user-select none
     -o-user-select none
     -ms-user-select none
     user-select none
-    background-color rgba(11,12,20,.8)
     display flex
     flex-direction column
     justify-content center
@@ -274,14 +275,11 @@ export default {
         height 280px
         border-radius 10px
         overflow hidden
-        background-color #2b304c
         .el-dialog__header
           height 44px
           line-height 44px
-          background-color #25283D
           padding 0 20px
           .el-dialog__title
-            color S_day_bg
             height 44px
             line-height 44px
             display inline-block
@@ -315,37 +313,100 @@ export default {
                   margin-left 10px
                   font-size 12px
                   color S_error_color
-              &.google-validate
-                .el-input__inner
-                  border 1px solid #25283D
               .el-input__inner
-                background-color transparent
-                border-color #25283D
-                color #fff
                 height 44px
                 border-right none
                 font-size 12px
               .el-input-group__append
-                background-color transparent
-                border-color #25283D
                 .count-down
-                  color #3a8fde
-                  border-left 1px solid #3a8fde
                   padding 0
                   span
                     font-size 12px !important
-                  &.is-disabled
-                    color #fff
               &.submit-form
                 text-align center
                 .el-button
                   width 235px
                   height 44px
-                  color #fff
                   border none
-                  background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
-                  box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
                   border-radius 4px
-              .send-code-btn
-                color S_error_color
+    &.night
+      background-color rgba(11,12,20,.8)
+      /deep/
+        .el-dialog
+          background-color #2b304c
+          .el-dialog__header
+            background-color #25283D
+            .el-dialog__title
+              color S_day_bg
+          .el-dialog__body
+            .el-form
+              .el-form-item
+                &.error-tips-form
+                  .iconfont
+                    color S_error_color
+                  .error-tips
+                    color S_error_color
+                &.google-validate
+                  .el-input__inner
+                    border 1px solid #25283D
+                .el-input__inner
+                  background-color transparent
+                  border-color #25283D
+                  color #fff
+                .el-input-group__append
+                  background-color transparent
+                  border-color #25283D
+                  .count-down
+                    color S_main_color
+                    border-left 1px solid S_main_color
+                    &.is-disabled
+                      color #fff
+                &.submit-form
+                  .el-button
+                    color #fff
+                    border none
+                    background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
+                    box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
+                .send-code-btn
+                  color S_error_color
+    &.day
+      background-color rgba(204,204,204,.5)
+      /deep/
+        .el-dialog
+          background-color #fff
+          .el-dialog__header
+            background-color #DCE7F3
+            .el-dialog__title
+              color #333
+          .el-dialog__body
+            .el-form
+              .el-form-item
+                &.error-tips-form
+                  .iconfont
+                    color S_error_color
+                  .error-tips
+                    color S_error_color
+                &.google-validate
+                  .el-input__inner
+                    border 1px solid #ddd
+                .el-input__inner
+                  background-color transparent
+                  border-color #ddd
+                  color #333
+                .el-input-group__append
+                  background-color transparent
+                  border-color #ddd
+                  .count-down
+                    color S_main_color
+                    border-left 1px solid S_main_color
+                    &.is-disabled
+                      color #333
+                &.submit-form
+                  .el-button
+                    color #fff
+                    border none
+                    background linear-gradient(81deg,rgba(49,135,218,1),rgba(106,182,244,1))
+                    box-shadow 0 3px 6px 0 rgba(26,42,71,0.27)
+                .send-code-btn
+                  color S_error_color
 </style>

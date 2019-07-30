@@ -4,9 +4,18 @@
   description: 当前组件为 忘记密码 修改 密码成功页面
 -->
 <template lang="pug">
-  .the-forget-pass-success
+  .the-forget-pass-success(
+    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
+  )
     .top
-      Iconfont.iconfont(icon-name="icon-chenggong1")
+      Iconfont.iconfont(
+        icon-name="icon-chenggong1"
+        v-show="!$isDayTheme_G_X"
+      )
+      Iconfont.iconfont(
+        icon-name="icon-chenggong1-copy-copy"
+        v-show="$isDayTheme_G_X"
+      )
       // 新密码设置成功
       span {{$t('M.forgetPassword_text1')}}
     .bottom
@@ -55,18 +64,35 @@ export default {
     .top
       margin-bottom 30px
       .iconfont
-        color #2f72b7
         font-size 30px
         vertical-align middle
       span
         margin-left 30px
         vertical-align middle
         font-size 16px
-        color #fff
     .bottom
       span,a
-        color #fff
         font-size 16px
-      a
-        color #2f72b7
+    &.night
+      .top
+        .iconfont
+          color S_main_color
+        span
+          color #fff
+      .bottom
+        span,a
+          color #fff
+        a
+          color S_main_color
+    &.day
+      .top
+        .iconfont
+          color S_main_color
+        span
+          color #333
+      .bottom
+        span,a
+          color #333
+        a
+          color S_main_color
 </style>

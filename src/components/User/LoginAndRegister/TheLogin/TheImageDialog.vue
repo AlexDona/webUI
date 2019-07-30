@@ -10,6 +10,7 @@
     width="486px"
     :close-on-click-modal="false"
     @close="$UPDATE_LOGIN_IMAGE_DIALOG_STATUS_M_X(false)"
+    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
   )
     el-form(
       :model="validateForm"
@@ -30,6 +31,7 @@
           v-model="validateForm.imageCode"
           :autofocus="true"
           @keyup.enter.native.stop="checkImageCode"
+          :placeholder="$t('M.login_step2_image_tips1')"
           clearable
         )
           template(slot="append")
@@ -87,7 +89,6 @@ export default {
       }
       const data = await checkImageCodeAJAX(params)
       if (!data) return
-      console.log(data)
       this.$UPDATE_LOGIN_IMAGE_DIALOG_STATUS_M_X(false)
       this.$UPDATE_LOGIN_STEP2_DIALOG_STATUS_X(true)
       this.$UPDATE_IMAGE_CODE_M_X(this.validateForm.imageCode)
@@ -96,10 +97,8 @@ export default {
       this.$emit('loginForStep2', {imgCode: this.validateForm.imageCode})
     },
     updateImageCode: _.debounce(async function () {
-      console.log('click')
       const data = await updateImageCodeAJAX()
       if (!data) return
-      console.log(data)
       this.imageCode = _.get(data, 'data.code')
     }, 500)
   },
@@ -119,13 +118,11 @@ export default {
 <style scoped lang="stylus">
   @import '../../../../assets/CSS/index.styl'
   .image-code-dialog
-    /*top 21vh*/
     -moz-user-select none
     -webkit-user-select none
     -o-user-select none
     -ms-user-select none
     user-select none
-    background-color rgba(11,12,20,.8)
     display flex
     flex-direction column
     justify-content center
@@ -135,14 +132,11 @@ export default {
         height 280px
         border-radius 10px
         overflow hidden
-        background-color #2b304c
         .el-dialog__header
           height 44px
           line-height 44px
-          background-color #25283D
           padding 0 20px
           .el-dialog__title
-            color S_day_bg
             height 44px
             line-height 44px
             display inline-block
@@ -165,16 +159,10 @@ export default {
               :-ms-input-placeholder
                 color #8B9197
               .el-input__inner
-                background-color transparent
-                border-color #25283D
-                color #fff
-                /*padding 2px 0*/
                 height 46px
                 box-sizing border-box
                 border-right none
               .el-input-group__append
-                background-color transparent
-                border-color #25283D
                 border-left none
                 padding 0 10px
                 .s-canvas
@@ -186,9 +174,60 @@ export default {
                 .el-button
                   width 235px
                   height 44px
-                  color #fff
                   border none
-                  background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
-                  box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
                   border-radius 4px
+    &.night
+      background-color rgba(11,12,20,.8)
+      /deep/
+        .el-dialog
+          background-color #2b304c
+          .el-dialog__header
+            background-color #25283D
+            .el-dialog__title
+              color S_day_bg
+          .el-dialog__body
+            .el-form
+              .el-form-item
+                .el-input__inner
+                  background-color transparent
+                  border-color #25283D
+                  color #fff
+                  border-right none
+                .el-input-group__append
+                  background-color transparent
+                  border-color #25283D
+                  border-left none
+                &.submit-form
+                  .el-button
+                    color #fff
+                    border none
+                    background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
+                    box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
+    &.day
+      background-color rgba(204,204,204,.5)
+      /deep/
+        .el-dialog
+          background-color #fff
+          .el-dialog__header
+            background-color #DCE7F3
+            .el-dialog__title
+              color #333
+          .el-dialog__body
+            .el-form
+              .el-form-item
+                .el-input__inner
+                  background-color transparent
+                  border-color #ddd
+                  color #333
+                  border-right none
+                .el-input-group__append
+                  background-color transparent
+                  border-color #ddd
+                  border-left none
+                &.submit-form
+                  .el-button
+                    color #fff
+                    border none
+                    background linear-gradient(81deg,rgba(49,135,218,1),rgba(106,182,244,1))
+                    box-shadow 0 3px 6px 0 rgba(26,42,71,0.27)
 </style>

@@ -4,7 +4,9 @@
   description: 当前组件为 登录页面  用户名密码登录 组件
 -->
 <template lang="pug">
-  .the-normal-login
+  .the-normal-login(
+    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
+  )
     // 切换登录方式
     .header
       // 账号登录
@@ -380,8 +382,6 @@ export default {
     height 442px
     border-radius 10px
     overflow hidden
-    background linear-gradient(201deg,rgba(52,59,98,1) 0%,rgba(37,40,61,1) 100%)
-    box-shadow 0 4px 9px 0 rgba(28,31,50,0.6)
     >.header
       height 130px
       padding-bottom 50px
@@ -391,40 +391,34 @@ export default {
         cursor pointer
         display inline-block
         margin 0 14px
-        /*background-color pink*/
         height 50px
         line-height 50px
         vertical-align top
         font-size 16px
         font-weight 700
-        color #8494A6
         &.active
-          color #3a8fde
-          border-bottom 1px solid #3a8fde
+          color S_main_color
+          border-bottom 1px solid S_main_color
     /deep/
       /* 滑块弹窗 */
       .slider
         display flex
         flex-direction column
         justify-content center
-        background rgba(11,12,20,.8)
         .el-dialog
-          margin-top 0
+          margin-top 0 !important
           height 280px
           border-radius 10px
           overflow hidden
-          background-color #2b304c
           .el-dialog__header
             height 44px
             line-height 12px
-            background-color #25283D
             padding-top 0
             .el-dialog__headerbtn
               top 10px
               .el-dialog__close
                 font-size 26px
             .el-dialog__title
-              color S_day_bg
               height 44px
               line-height 44px
               display inline-block
@@ -436,9 +430,6 @@ export default {
           margin-bottom 35px
           .el-input__inner
             border-radius 20px
-            background-color #3f4769
-            border-color transparent
-            color S_day_bg
             font-size 12px
           /* WebKit browsers */
           ::-webkit-input-placeholder
@@ -451,16 +442,8 @@ export default {
             color #8B9197
           .el-input__suffix
             right 14px
-          .el-checkbox__inner
-            background-color transparent
-            border-color #8B9197
           .el-checkbox__label
             font-size 12px
-            color #8B9197
-          .el-checkbox
-            &.is-checked
-              .el-checkbox__label
-                color #3a8fde
           .el-checkbox__input
             .el-checkbox__inner
               &:after
@@ -471,7 +454,7 @@ export default {
             &.is-checked
               .el-checkbox__inner
                 border-color S_main_color
-                background #3a8fde url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
+                background S_main_color url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
           /*密码*/
           &.password
             margin-bottom 10px
@@ -485,28 +468,22 @@ export default {
               justify-content space-between
               .forget-pass
                 margin-left 5px
-                color #3a8fde
           &.error-tips-form
             margin-bottom 10px
             height 40px
             .iconfont
               font-size 16px
               vertical-align middle
-              color S_error_color
             .error-tips
               vertical-align middle
               margin-left 10px
               font-size 12px
-              color S_error_color
           &.submit
             text-align center
             margin-bottom 20px
             .el-button
               padding 12px 30px
               border-radius 20px
-              color S_day_bg
-              background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
-              box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
               border none
               font-size 16px
               &.is-disabled
@@ -519,6 +496,138 @@ export default {
           span
             color #8B9197
           a
-            color #3a8fde
+            color S_main_color
             margin-left 5px
+    &.night
+      background linear-gradient(201deg,rgba(52,59,98,1) 0%,rgba(37,40,61,1) 100%)
+      box-shadow 0 4px 9px 0 rgba(28,31,50,0.6)
+      >.header
+        >.router-item
+          color #8494A6
+          &.active
+            color S_main_color
+            border-bottom 1px solid S_main_color
+      /deep/
+        /* 滑块弹窗 */
+        .slider
+          background rgba(11,12,20,.8)
+          .el-dialog
+            background-color #2b304c
+            .el-dialog__header
+              background-color #25283D
+              .el-dialog__title
+                color S_day_bg
+        .el-form.login
+          .el-form-item
+            .el-input__inner
+              background-color #3f4769
+              border-color transparent
+              color S_day_bg
+            .el-checkbox__inner
+              background-color transparent
+              border-color #8B9197
+            .el-checkbox__label
+              color #8B9197
+            .el-checkbox
+              &.is-checked
+                .el-checkbox__label
+                  color S_main_color
+            .el-checkbox__input
+              &.is-checked
+                .el-checkbox__inner
+                  border-color S_main_color
+                  background S_main_color url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
+            /*密码*/
+            &.password
+            /*记住账号*/
+            &.remember-pass
+              .inner-box
+                .forget-pass
+                  color S_main_color
+            &.error-tips-form
+              .iconfont
+                color S_error_color
+              .error-tips
+                color S_error_color
+            &.submit
+              .el-button
+                color S_day_bg
+                background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
+                box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
+                border none
+                &.is-disabled
+                  background #303757
+                  color #636777
+                  box-shadow none
+          .bottom
+            span
+              color #8B9197
+            a
+              color S_main_color
+    &.day
+      background #fff
+      box-shadow 0 2px 6px 0 rgba(0, 0, 0, 0.1)
+      >.header
+        >.router-item
+          color #aaa
+          &.active
+            color S_main_color
+            border-bottom 1px solid S_main_color
+      /deep/
+        /* 滑块弹窗 */
+        .slider
+          background rgba(204,204,204,.5)
+          .el-dialog
+            background-color #fff
+            .el-dialog__header
+              background-color #DCE7F3
+              .el-dialog__title
+                color #333
+        .el-form.login
+          .el-form-item
+            .el-input__inner
+              background-color #eee
+              border-color transparent
+              color #1C1F32
+            .el-checkbox__inner
+              background-color transparent
+              border-color #8B9197
+            .el-checkbox__label
+              color #8B9197
+            .el-checkbox
+              &.is-checked
+                .el-checkbox__label
+                  color S_main_color
+            .el-checkbox__input
+              &.is-checked
+                .el-checkbox__inner
+                  border-color S_main_color
+                  background S_main_color url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
+            /*密码*/
+            &.password
+              /*记住账号*/
+            &.remember-pass
+              .inner-box
+                .forget-pass
+                  color S_main_color
+            &.error-tips-form
+              .iconfont
+                color S_error_color
+              .error-tips
+                color S_error_color
+            &.submit
+              .el-button
+                color S_day_bg
+                background linear-gradient(81deg,rgba(49,135,218,1),rgba(106,182,244,1))
+                box-shadow 0 3px 6px 0 rgba(26,42,71,0.27)
+                border none
+                &.is-disabled
+                  color #fff
+                  background rgba(204,204,204,1)
+                  box-shadow0px 3px 8px 0 rgba(26,42,71,0.4)
+          .bottom
+            span
+              color #8B9197
+            a
+              color S_main_color
 </style>

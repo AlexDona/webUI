@@ -6,6 +6,7 @@
 <template lang="pug">
   .the-forget-pass(
     :style="{height: `${windowHeight}px`}"
+    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
   )
     .inner-box
       // 忘记密码
@@ -102,7 +103,6 @@ export default {
   @import '../../../assets/CSS/index.styl'
   .the-forget-pass
     width 100%
-    background-color #272b41
     display flex
     justify-content center
     flex-direction column
@@ -111,15 +111,11 @@ export default {
       width 780px
       min-height 517px
       border-radius 10px
-      background linear-gradient(201deg,rgba(52,59,98,1) 0%,rgba(37,40,61,1) 100%)
-      box-shadow 0 4px 9px 0 rgba(28,31,50,0.6)
       overflow hidden
       .header
         height 70px
         line-height 70px
-        background-color #1c1f32
         padding-left 30px
-        color #fff
         font-size 20px
         vertical-align middle
         .iconfont
@@ -131,7 +127,6 @@ export default {
           margin-left 10px
           vertical-align middle
           font-size 12px
-          color S_error_color
           line-height 50px
       .content
         /* 步骤条 */
@@ -151,15 +146,14 @@ export default {
             &.have-down,&.current
               .line,
               .step-number
-                background-color #3A8FDE
+                background-color S_main_color
               .step-desc
-                color #3A8FDE
+                color S_main_color
             .line
               position relative
               top 50%
               width 212px
               height 2px
-              background-color #4E5475
             .step-number
               position absolute
               top 56%
@@ -171,8 +165,6 @@ export default {
               font-weight 700
               font-size 12px
               line-height 24px
-              color #fff
-              background-color #4E5475
               transform rotate(45deg) translate(-50%, -50%)
               padding 0
               >img
@@ -183,6 +175,65 @@ export default {
                 width 15px
             .step-desc
               margin-top 70px
-              color #4E5475
               font-size 12px
+    &.night
+      background-color #272b41
+      .inner-box
+        background linear-gradient(201deg,rgba(52,59,98,1) 0%,rgba(37,40,61,1) 100%)
+        box-shadow 0 4px 9px 0 rgba(28,31,50,0.6)
+        .header
+          background-color #1c1f32
+          color #fff
+          .iconfont
+            color S_error_color
+          .tips
+            color S_error_color
+        .content
+          /* 步骤条 */
+          .step-box
+            .step-item
+              /* 已完成 */
+              &.have-down,&.current
+                .line,
+                .step-number
+                  background-color S_main_color
+                .step-desc
+                  color S_main_color
+              .line
+                background-color #4E5475
+              .step-number
+                color #fff
+                background-color #4E5475
+              .step-desc
+                color #4E5475
+    &.day
+      background-color #f5f5fa
+      .inner-box
+        background fff
+        box-shadow 0 3px 6px 0 rgba(0, 0, 0, 0.25)
+        .header
+          background-color #DCE7F3
+          color #333
+          .iconfont
+            color S_error_color
+          .tips
+            color S_error_color
+        .content
+          /* 步骤条 */
+          .step-box
+            .step-item
+              /* 已完成 */
+              &.have-down,&.current
+                .line,
+                .step-number
+                  background-color S_main_color
+                .step-desc
+                  color S_main_color
+              .line
+                background-color #ccc
+              .step-number
+                color #fff
+                background-color #ccc
+              .step-desc
+                color #ccc
 </style>

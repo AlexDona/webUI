@@ -24,6 +24,8 @@
           clearable
           v-show="isShowCountries"
           :ref="searchInputRef"
+          :id="searchInputRef"
+          :placeholder="$t('M.country_select_placeholder')"
         )
           Iconfont.iconfont(
             icon-name="icon-sousuo"
@@ -70,10 +72,7 @@ export default {
   },
   mounted () {
     document.addEventListener('mousedown', (e) => {
-      console.log(e.target)
-      const notNeedAddEvents = [this.searchInputRef, this.currentCountryRef]
-      const isNeedAddEvent = _.some(notNeedAddEvents, ref => ref == e.target)
-      if (!isNeedAddEvent) return
+      if (e.target == this.$refs[this.currentCountryRef] || e.target == document.querySelector(`#${this.searchInputRef}`)) return
       this.isShowCountries = false
     })
   },
@@ -87,7 +86,6 @@ export default {
     },
     toggleCountry (country) {
       this.currentCountry = country
-      this.keyword = ''
       this.isShowCountries = false
     }
   },
@@ -115,6 +113,11 @@ export default {
   watch: {
     countries (New) {
       this.currentCountry = New[0]
+    },
+    isShowCountries (New) {
+      if (!New) {
+        this.keyword = ''
+      }
     }
   }
 }
@@ -127,7 +130,6 @@ export default {
     z-index 10
     .current-country
       display inline-block
-      color #fff
       padding 0 20px 0 40px
       box-sizing border-box
       position relative
@@ -153,12 +155,10 @@ export default {
         content ''
         width 0
         height 0
-        border-bottom 10px solid #25293d
         border-left 10px solid transparent
         border-right 10px solid transparent
     .countries-content
       top 50px
-      background-color #25293d
       height 280px
       border-radius 4px
       position absolute
@@ -175,38 +175,80 @@ export default {
         max-height 280px
         overflow-y auto
         overflow-x hidden
-        background-color #25293d
         padding 0 0 20px 0
         border-radius 4px
         >.country
           display flex
           justify-content space-between
-          color #fff
           padding 0 20px
           height 34px
           line-height 34px
           cursor pointer
           font-size 14px
-          &:hover
-            background-color #16192b
       /deep/
         .search-input
           .el-input__inner
-            border 1px solid rgba(76,80,96,1) !important
             border-radius 4px !important
             height 34px
             box-sizing border-box
             padding-left 40px
             margin 17px 12px
             width 238px
-            color #2F72B7 !important
-            background-color transparent !important
-            &:focus
-              border-color #2F72B7 !important
           .el-input__prefix
             top 13px
             left 23px
           .el-input__suffix
             right 15px
             top 3px
+    &.night
+      .current-country
+        color #fff
+        &.not-show-allow
+          &:before
+            border-bottom 10px solid transparent
+        /* 上拉展示 */
+        &:before
+          border-bottom 10px solid #25293d
+      .countries-content
+        background-color #25293d
+        >.countries
+          background-color #25293d
+          >.country
+            color #fff
+            &:hover
+              background-color #16192b
+        /deep/
+          .search-input
+            .el-input__inner
+              color S_main_color !important
+              background-color transparent !important
+              border-color #4C5060 !important
+              &:focus
+                border-color S_main_color !important
+    &.day
+      .current-country
+        color #fff
+        &.not-show-allow
+          &:before
+            border-bottom 10px solid transparent
+        /* 上拉展示 */
+        &:before
+          border-bottom 10px solid #e5e5e5
+      .countries-content
+        background-color #e5e5e5
+        >.countries
+          background-color #e5e5e5
+          >.country
+            color #1C1F32
+            &:hover
+              background-color #C5C5C5
+              color #fff
+        /deep/
+          .search-input
+            .el-input__inner
+              color S_main_color !important
+              border-color #C5C5C5 !important
+              background-color transparent !important
+              &:focus
+                border-color S_main_color !important
 </style>

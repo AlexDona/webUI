@@ -6,6 +6,7 @@
 <template lang="pug">
   .drag-box.forbid-copy(
     :style="{width:`${propMaxWidth}px`}"
+    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
   )
     .drag(
       :style="{height:`${height}px`,'line-height':`${height}px`}"
@@ -160,13 +161,10 @@ export default {
     >.drag
       position relative
       width 100%
-      border 1px solid #25283D
-      background-color #32395c
       text-align center
       cursor pointer
       border-radius 4px
       >.drag_bg
-        background-color #3c4369
         width 0
         border-radius 4px 0 0 4px
       .drag_text
@@ -174,7 +172,6 @@ export default {
         top 0
         width 100%
         font-size 14px
-        background -webkit-gradient(linear, left top, right top, color-stop(0, #61688a), color-stop(.4, #61688a), color-stop(.5, #fff), color-stop(.6, #61688a), color-stop(1, #61688a))
         -webkit-background-clip text
         -webkit-animation slidedownlock 3s infinite
         -moz-user-select none
@@ -188,13 +185,11 @@ export default {
         position absolute
         top 0
         left -1px
-        background #25283d url('../../assets/develop/arrow-bg.png') no-repeat center center
         cursor move
         border-radius 4px
     >.drag-success
       width 100%
       display flex
-      background-color #3c4369
       border-radius 4px
       overflow hidden
       -moz-user-select none
@@ -204,20 +199,71 @@ export default {
       user-select none
       >.left
         flex 1
-        color #118548
         text-align center
       >.right
         font-size 18px
-        background-color #2b3152
         overflow hidden
         text-align center
         display inline-block
         border-radius 4px
-        border 1px solid rgba(37,40,61,1)
         .icon
           font-size 24px
+    &.night
+      >.drag
+        border 1px solid #25283D
+        background-color #32395c
+        >.drag_bg
+          background-color #3c4369
+        .drag_text
+          background -webkit-gradient(linear, left top, right top, color-stop(0, #61688a), color-stop(.4, #61688a), color-stop(.5, #fff), color-stop(.6, #61688a), color-stop(1, #61688a))
+          -webkit-background-clip text
+          -webkit-animation slidedownlock 3s infinite
+          -moz-user-select none
+          -webkit-user-select none
+          -o-user-select none
+          -ms-user-select none
+          user-select none
+          -webkit-text-fill-color transparent
+          -webkit-text-size-adjust none
+        .handler_bg
+          background #25283d url('../../assets/develop/arrow-balck-bg.png') no-repeat center center
+      >.drag-success
+        background-color #3c4369
+        >.left
           color #118548
-          /*vertical-align sub*/
+        >.right
+          background-color #2b3152
+          .icon
+            color #118548
+    &.day
+      >.drag
+        border 1px solid #ddd
+        background-color #ECEAEA
+        >.drag_bg
+          background-color #f6f4f4
+        .drag_text
+          background -webkit-gradient(linear, left top, right top, color-stop(0, #999), color-stop(.4, #999), color-stop(.5, #fff), color-stop(.6, #999), color-stop(1, #999))
+          -webkit-background-clip text
+          -webkit-animation slidedownlock 3s infinite
+          -moz-user-select none
+          -webkit-user-select none
+          -o-user-select none
+          -ms-user-select none
+          user-select none
+          -webkit-text-fill-color transparent
+          -webkit-text-size-adjust none
+        .handler_bg
+          background #25283d url('../../assets/develop/arrow-white-bg.png') no-repeat center center
+      >.drag-success
+        background-color #F6F4F4
+        border 1px solid #DDD
+        >.left
+          color #118548
+        >.right
+          background-color #ccc
+          border-color #BBB
+          .icon
+            color #118548
   @keyframes slidedownlock {
     0% {
       background-position: -200px 0;

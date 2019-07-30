@@ -4,7 +4,9 @@
   description: 当前组件为 忘记密码 步骤2 组件
 -->
 <template lang="pug">
-  .the-forget-pass-step2
+  .the-forget-pass-step2(
+    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
+  )
     .inner-box
       el-form(
       :model="form"
@@ -328,7 +330,6 @@ export default {
       }
       const data = await updatePasswordAJAX(params)
       if (!data) return
-      console.log(data)
       this.resetForm()
       this.$router.replace(`/${this.$routes_X.forgetPass}/${this.$routes_X.forgetPassStep3}/${this.username}`)
     }, 500),
@@ -349,9 +350,6 @@ export default {
     }
   },
   watch: {
-    isSuccessValidate (New) {
-      console.log(New)
-    },
     $language_S_X () {
       this.errorTips = ''
     }
@@ -362,91 +360,161 @@ export default {
 <style scoped lang="stylus">
   @import '../../../assets/CSS/index.styl'
   .the-forget-pass-step2
-    /*background-color pink*/
     /deep/
     .el-form
-      .el-form-item__label
-        height 46px
-        line-height 46px
-        color #fff
-      .el-form-item
-        margin-bottom 30px
-        /* WebKit browsers */
-        ::-webkit-input-placeholder
-          color: #8B9197
-        /* Mozilla Firefox 19+ */
-        ::-moz-placeholder
-          color: #8B9197
-        /* Internet Explorer 10+ */
-        :-ms-input-placeholder
-          color #8B9197
-        .el-input__suffix
-          right 15px
-        .validate-code
-          .el-input__inner
-            border-radius 4px 0 0 4px
-            border-right none
-            height 46px
-            vertical-align middle
-          .el-input-group__append
-            background-color transparent
-            height 45px
-            padding 0 10px
-            border 1px solid #3F4769
-            border-left none
-            border-radius 0 4px 4px 0
-            /* 发送验证码 */
-            .count-down
-              padding 0 15px
-              color #3a8fde
-              border-left 1px solid #375683
-              &.is-disabled
-                span
-                  color #fff
-              span
-                font-size 12px !important
-        .el-form-item__content
-          width 410px
-        .el-input
-          &.is-disabled
-            .el-input__inner
-              /*background-color pink*/
-              border none
-        .el-input__inner
-          border 1px solid #3F4769
-          background-color transparent
+        .el-form-item__label
           height 46px
-          color #fff
-          font-size 12px
-        &.error-tips-form
-          margin-bottom 10px
-          margin-top -30px
-          height 40px
-          .iconfont
-            font-size 16px
-            vertical-align middle
-            color S_error_color
-          .error-tips
-            margin-left 10px
-            font-size 12px
-            color S_error_color
-            vertical-align middle
-        &.submit
+          line-height 46px
+        .el-form-item
+          margin-bottom 30px
+          /* WebKit browsers */
+          ::-webkit-input-placeholder
+            color: #8B9197
+          /* Mozilla Firefox 19+ */
+          ::-moz-placeholder
+            color: #8B9197
+          /* Internet Explorer 10+ */
+          :-ms-input-placeholder
+            color #8B9197
+          .el-input__suffix
+            right 15px
+          .validate-code
+            .el-input__inner
+              border-radius 4px 0 0 4px
+              border-right none
+              height 46px
+              vertical-align middle
+            .el-input-group__append
+              height 45px
+              padding 0 10px
+              border-left none
+              border-radius 0 4px 4px 0
+              /* 发送验证码 */
+              .count-down
+                padding 0 15px
+                span
+                  font-size 12px !important
           .el-form-item__content
-            margin 0 !important
-            width 100%
-            text-align center
-          .el-button
-            width 235px
-            height 46px
-            background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
-            box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
-            border none
-            border-radius 4px
+            width 410px
+          .el-input
             &.is-disabled
-              background #303757
-              color #636777
-              box-shadow none
-      .forget-tips
-        color S_fontColor
+              .el-input__inner
+                border none
+          .el-input__inner
+            height 46px
+            font-size 12px
+          &.error-tips-form
+            margin-bottom 10px
+            margin-top -30px
+            height 40px
+            .iconfont
+              font-size 16px
+              vertical-align middle
+            .error-tips
+              margin-left 10px
+              font-size 12px
+              vertical-align middle
+          &.submit
+            .el-form-item__content
+              margin 0 !important
+              width 100%
+              text-align center
+            .el-button
+              width 235px
+              height 46px
+              border-radius 4px
+              &.is-disabled
+                background #303757
+                color #636777
+                box-shadow none
+        .forget-tips
+          color S_fontColor
+    &.night
+      /deep/
+        .el-form
+        .el-form-item__label
+          color #fff
+        .el-form-item
+          .validate-code
+            .el-input__inner
+              border-right none
+            .el-input-group__append
+              background-color transparent
+              border 1px solid #3F4769
+              border-left none
+              /* 发送验证码 */
+              .count-down
+                color S_main_color
+                border-left 1px solid S_main_color
+                &.is-disabled
+                  span
+                    color #fff
+          .el-input
+            &.is-disabled
+              .el-input__inner
+                border none
+          .el-input__inner
+            border 1px solid #3F4769
+            background-color transparent
+            color #fff
+          &.error-tips-form
+            .iconfont
+              color S_error_color
+            .error-tips
+              color S_error_color
+          &.submit
+            .el-button
+              background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
+              box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
+              border none
+              &.is-disabled
+                background #303757
+                color #636777
+                box-shadow none
+        .forget-tips
+          color S_fontColor
+    &.day
+      /deep/
+        .el-form
+          .el-form-item__label
+            color #333
+          .el-form-item
+            .validate-code
+              .el-input__inner
+                border-right none
+              .el-input-group__append
+                background-color transparent
+                border 1px solid #ddd
+                border-left none
+                /* 发送验证码 */
+                .count-down
+                  color S_main_color
+                  border-left 1px solid S_main_color
+                  &.is-disabled
+                    span
+                      color #333
+            .el-input
+              &.is-disabled
+                .el-input__inner
+                  border none
+            .el-input__inner
+              border 1px solid #ddd
+              background-color transparent
+              color #333
+            &.error-tips-form
+              .iconfont
+                color S_error_color
+              .error-tips
+                color S_error_color
+            &.submit
+              .el-button
+                background linear-gradient(81deg,rgba(49,135,218,1),rgba(106,182,244,1))
+                box-shadow 0 3px 6px 0 rgba(26,42,71,0.27)
+                border none
+                &.is-disabled
+                  background rgba(204,204,204,1)
+                  box-shadow 0 3px 8px 0 rgba(26,42,71,0.4)
+                  color #fff
+          .forget-tips
+            color S_fontColor
 </style>

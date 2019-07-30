@@ -364,22 +364,25 @@ export default {
     ]),
     // 发送验证码（短信、邮箱）
     async sendPhoneOrEmailCode (type) {
-      if (this.$disabledOfPhoneBtn_X || this.$disabledOfEmailBtn_X) {
-        return false
-      }
-      const {phone, email} = this.form
-      let params = {
-        nationCode: this.activeNationCode
-      }
-      switch (type) {
-        case 0:
-          params.phone = phone
-          break
-        case 1:
-          params.email = email
-          break
-      }
-      await sendPhoneOrEmailCodeAjax(type, params, this)
+      this.$refs[this.formRef].validateField(this.isPhoneRegist ? this.phone_X : this.email_X, async (err) => {
+        if (err) return
+        if (this.$disabledOfPhoneBtn_X || this.$disabledOfEmailBtn_X) {
+          return false
+        }
+        const {phone, email} = this.form
+        let params = {
+          nationCode: this.activeNationCode
+        }
+        switch (type) {
+          case 0:
+            params.phone = phone
+            break
+          case 1:
+            params.email = email
+            break
+        }
+        await sendPhoneOrEmailCodeAjax(type, params, this)
+      })
     },
     initInviteStatus () {
       this.hasInviteCode = this.inviteId && this.inviteId !== 'default' ? true : false
@@ -553,7 +556,7 @@ export default {
         flex-direction column
         justify-content center
         .el-dialog
-          margin-top 0
+          margin-top 0 !important
           height 280px
           border-radius 10px
           overflow hidden
@@ -681,8 +684,8 @@ export default {
         >.router-item
           color #8494A6
           &.active
-            color #3a8fde
-            border-bottom 1px solid #3a8fde
+            color S_main_color
+            border-bottom 1px solid S_main_color
       /deep/
         /* 滑块弹窗 */
         .slider
@@ -713,8 +716,8 @@ export default {
                 border: none
                 /* 发送验证码 */
                 .count-down
-                  color #3a8fde
-                  border-left 1px solid #375683
+                  color S_main_color
+                  border-left 1px solid S_main_color
                   &.is-disabled
                     span
                       color #fff
@@ -728,7 +731,7 @@ export default {
                 .current-country
                   background-color #3f4769
                   &:after
-                    border-left 1px solid #3a8fde
+                    border-left 1px solid S_main_color
             .el-input__inner
               background-color #3f4769
               border-color transparent
@@ -736,9 +739,9 @@ export default {
             .el-checkbox
               &.is-checked
                 .el-checkbox__label
-                  color #3a8fde
+                  color S_main_color
               .agreement
-                color #3a8fde
+                color S_main_color
             .el-checkbox__inner
               background-color transparent
               border-color #8B9197
@@ -748,7 +751,7 @@ export default {
               &.is-checked
                 .el-checkbox__inner
                   border-color S_main_color
-                  background #3a8fde url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
+                  background S_main_color url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
             &.error-tips-form
               .error-tips
                 color S_error_color
@@ -770,12 +773,12 @@ export default {
         >.router-item
           color #aaa
           &.active
-            color #3a8fde
-            border-bottom 1px solid #3a8fde
+            color S_main_color
+            border-bottom 1px solid S_main_color
       /deep/
         /* 滑块弹窗 */
         .slider
-          background #fff
+          background rgba(204,204,204,0.5)
           .el-dialog
             background-color #fff
             .el-dialog__header
@@ -802,7 +805,7 @@ export default {
                 border: none
                 /* 发送验证码 */
                 .count-down
-                  color #3a8fde
+                  color S_main_color
                   border-left 1px solid #aaa
                   &.is-disabled
                     span
@@ -827,7 +830,7 @@ export default {
             .el-checkbox
               &.is-checked
                 .el-checkbox__label
-                  color #3a8fde
+                  color S_main_color
               .agreement
                 color #1C1F32
             .el-checkbox__inner
@@ -839,7 +842,7 @@ export default {
               &.is-checked
                 .el-checkbox__inner
                   border-color S_main_color
-                  background #3a8fde url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
+                  background S_main_color url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
             &.error-tips-form
               .error-tips
                 color S_error_color

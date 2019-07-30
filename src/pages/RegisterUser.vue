@@ -1279,7 +1279,7 @@ export default {
             width: 70px;
             height: 48px;
             border-radius: 0 3px 3px 0;
-            background: #485776 url(../assets/develop/arrow-bg.png) no-repeat center center;
+            background: #485776 url(../assets/develop/arrow-balck-bg.png) no-repeat center center;
 
             /* border: 1px solid #ccc; */
             cursor: move;

@@ -4,7 +4,9 @@
   description: 当前组件为 登录页面  扫码登录 组件
 -->
 <template lang="pug">
-  .the-qr-code-login
+  .the-qr-code-login(
+    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
+  )
     // 切换登录方式
     .header
       // 账号登录
@@ -30,19 +32,33 @@
       // 扫描成功
       .scan-success(v-else)
         Iconfont.mobile-phone(icon-name="icon-shouji1")
-        Iconfont.success-icon(icon-name="icon-chenggong1")
+        Iconfont.success-icon(
+          icon-name="icon-chenggong1"
+          v-show="!$isDayTheme_G_X"
+        )
+        Iconfont.success-icon(
+          icon-name="icon-chenggong1-copy"
+          v-show="$isDayTheme_G_X"
+        )
         p.tips {{$t(scanSuccessTips1)}}
         p.tips {{$t(scanSuccessTips2)}}
         el-button.back-btn(@click="backToScan") {{$t(backToScanText)}}
     // 已失效
     .disabled(v-show="isQrCodeDisabled")
       el-button.refresh-btn(@click="getQrCode")
-       Iconfont.icon-font(icon-name="icon-shuaxin1")
+       Iconfont.icon-font(
+        v-show="$isDayTheme_G_X"
+        icon-name="icon-shuaxin1-copy"
+        )
+       Iconfont.icon-font(
+         v-show="!$isDayTheme_G_X"
+         icon-name="icon-shuaxin1"
+         )
       p
         // 二维码失效
         span {{$t('M.qr_code_disabled_tips')}}
         // 点击刷新
-        span {{$t('M.qr_code_update_tips')}}
+        span.refresh-span {{$t('M.qr_code_update_tips')}}
 </template>
 <script>
 import TheCommonSlider from '../../../Common/CommonSlider'
@@ -169,8 +185,6 @@ export default {
     height 442px
     border-radius 10px
     overflow hidden
-    background linear-gradient(201deg,rgba(52,59,98,1) 0%,rgba(37,40,61,1) 100%)
-    box-shadow 0 4px 9px 0 rgba(28,31,50,0.6)
     position relative
     >.header
       height 130px
@@ -181,28 +195,23 @@ export default {
         cursor pointer
         display inline-block
         margin 0 14px
-        /*background-color pink*/
         height 50px
         line-height 50px
         vertical-align top
         font-size 16px
         font-weight 700
-        color #8494A6
         &.active
-          color #3a8fde
-          border-bottom 1px solid #3a8fde
+          color S_main_color
+          border-bottom 1px solid S_main_color
     .content
       position relative
       width S_userWidth
       height 310px
-      /*background-color #39393b*/
       margin 0 auto
       padding 0 20px
-      color #fff
       >.scan
         >.effective
           >.title
-            /*font-weight 400*/
             height 50px
             text-align center
             span
@@ -221,10 +230,8 @@ export default {
         position relative
         overflow hidden
         height 300px
-        /*background-color pink*/
         >.mobile-phone
           font-size 170px
-          color #303b64
           position absolute
           left 50%
           top 29%
@@ -243,16 +250,13 @@ export default {
             margin-top 186px
         >.back-btn
           margin-top 10px
-          background-color transparent
           border none
-          color #3a8fde
           font-weight 600
           font-size 12px
     >.disabled
       position absolute
       left 0
       top 0
-      background-color rgba(28, 31, 50, .9)
       width S_userWidth
       height 442px
       text-align center
@@ -261,18 +265,79 @@ export default {
       justify-content center
       >p
         margin-top 20px
-        color #fff
         font-weight 600
       /deep/
         .refresh-btn
           margin 0 auto
-          background-color transparent
-          border-color transparent
-          &:hover
-            color #000
           .icon-font
             font-size 70px
             border-radius 50%
             padding 10px
             box-sizing border-box
+    &.night
+      background linear-gradient(201deg,rgba(52,59,98,1) 0%,rgba(37,40,61,1) 100%)
+      box-shadow 0 4px 9px 0 rgba(28,31,50,0.6)
+      >.header
+        >.router-item
+          color #8494A6
+          &.active
+            color S_main_color
+            border-bottom 1px solid S_main_color
+      .content
+        color #fff
+        >.scan-success
+          >.mobile-phone
+            color #303b64
+          >.back-btn
+            background-color transparent
+            border none
+            color S_main_color
+      >.disabled
+        background-color rgba(28, 31, 50, .9)
+        >p
+          color #fff
+          .refresh-span
+            color S_main_color
+        /deep/
+          .refresh-btn
+            background-color transparent
+            border-color transparent
+            &:hover
+              color #000
+    &.day
+      background #fff
+      box-shadow 0 2px 6px 0 rgba(0, 0, 0, 0.1)
+      >.header
+        >.router-item
+          color #aaa
+          &.active
+            color S_main_color
+            border-bottom 1px solid S_main_color
+      .content
+        color #aaa
+        >.scan
+          >.effective
+            >.title
+              color #333
+            >.tips
+              color #333
+        >.scan-success
+          >.mobile-phone
+            color #DDE1F0
+          >.back-btn
+            background-color transparent
+            border none
+            color S_main_color
+      >.disabled
+        background rgba(243,243,243,.8)
+        >p
+          color #333
+          .refresh-span
+            color S_main_color
+        /deep/
+          .refresh-btn
+            background-color transparent
+            border-color transparent
+            &:hover
+              color #000
 </style>

@@ -5,7 +5,8 @@
 -->
 <template lang="pug">
  .the-register-success(
-   :style="{height: `${windowHeight}px`}"
+    :style="{height: `${windowHeight}px`}"
+    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
  )
   .inner-box
     .header {{$t('M.register_success_title_tips')}}
@@ -79,21 +80,16 @@ export default {
       >.header
         height 70px
         line-height 70px
-        background-color #1c1f32
-        color #fff
         font-size 20px
         padding-left 30px
       >.content
         text-align center
         height calc(100% - 70px)
-        background linear-gradient(201deg,rgba(52,59,98,1) 0%,rgba(37,40,61,1) 100%)
-        box-shadow 0 4px 9px 0 rgba(28,31,50,0.6)
         padding-top 90px
         .iconfont
           font-size 50px
         p
           font-size 14px
-          color #fff
           line-height 40px
           .second
             font-size 20px
@@ -103,8 +99,33 @@ export default {
           width 235px
           height 46px
           line-height 46px
-          background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
-          box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
           border-radius 4px
+    &.night
+      >.inner-box
+        >.header
+          background-color #1c1f32
           color #fff
+        >.content
+          background linear-gradient(201deg,rgba(52,59,98,1) 0%,rgba(37,40,61,1) 100%)
+          box-shadow 0 4px 9px 0 rgba(28,31,50,0.6)
+          p
+            color #fff
+          >a
+            background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
+            box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
+            color #fff
+    &.day
+      >.inner-box
+        box-shadow 0 3px 6px 0 rgba(0, 0, 0, 0.25)
+        >.header
+          background-color #DCE7F3
+          color #333
+        >.content
+          background #fff
+          p
+            color #1C1F32
+          >a
+            background linear-gradient(81deg,rgba(49,135,218,1),rgba(106,182,244,1))
+            box-shadow 0 3px 6px 0 rgba(26,42,71,0.27)
+            color #fff
 </style>
