@@ -213,8 +213,8 @@ export default {
   &.day
         /deep/
           .el-radio-button__inner
-            color: #333
-            background-color: #fff
+            color: #333 !important
+            background-color: #fff !important
           .el-dialog__title
             padding: 0
             color: #333
