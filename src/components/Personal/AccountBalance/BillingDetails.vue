@@ -928,14 +928,14 @@ export default {
             border-bottom: 2px solid #0079fe;
             border-left: 0;
             color: #0079fe;
-            background: transparent;
+            background: transparent !important;
           }
 
           &:hover {
             border-left: 0;
             text-align: center;
             color: #0079fe;
-            background: transparent;
+            background: transparent !important;
           }
         }
       }
@@ -1036,8 +1036,12 @@ export default {
         }
       }
 
-      .el-tabs__content {
-        width: 100%;
+      .billing-details-main {
+        .el-tabs {
+          .el-tabs__content {
+            width: 100% !important;
+          }
+        }
       }
     }
 
