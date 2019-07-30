@@ -595,6 +595,27 @@ export default {
               .edit-box
                 background-color #e5e5e5
             /deep/
+              /* WebKit browsers */
+              ::-webkit-input-placeholder
+                color #8B9197
+                font-size 12px
+                transform scale(.9)
+                white-space nowrap
+                text-indent -10px
+              /* Mozilla Firefox 19+ */
+              ::-moz-placeholder
+                color #8B9197
+                font-size 12px
+                transform scale(.9)
+                white-space nowrap
+                text-indent -10px
+              /* Internet Explorer 10+ */
+              ::-ms-input-placeholder
+                color #8B9197
+                font-size 12px
+                transform scale(.9)
+                white-space nowrap
+                text-indent -10px
               /* 编辑框 */
               .edit-box
                 flex 1
