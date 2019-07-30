@@ -791,8 +791,8 @@ export default {
             .el-input
               &.is-disabled
                 .el-input__inner
-                  background #303757
-                  color #636777
+                  background #DBDBDB
+                  color #fff
                   box-shadow none
             &.error-tips-form
               .iconfont
@@ -855,25 +855,4 @@ export default {
                 &.is-disabled
                   background rgba(204,204,204,1)
                   box-shadow 0 3px 8px 0 rgba(26,42,71,0.4)
-</style>
-<style lang="scss">
-  .el-select-dropdown.el-popper.countries {
-    width: 294px;
-    transform: translateY(4%);
-  }
-
-  .el-select-dropdown.el-popper.countries.night {
-    background-color: #25293d;
-  }
-
-  .el-select-dropdown.el-popper.countries.night .popper__arrow::after {
-    top: -14px !important;
-    border-width: 10px;
-    border-bottom-color: #25293d;
-  }
-
-  .el-select-dropdown.el-popper.countries.night .el-select-dropdown__item.hover,
-  .el-select-dropdown.el-popper.countries.night .el-select-dropdown__item:hover {
-    background-color: #16192b !important;
-  }
 </style>

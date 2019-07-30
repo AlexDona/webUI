@@ -257,7 +257,6 @@ export default {
           .el-form-item__label
             color #fff
           .el-form-item
-            .el-form-item__content
             .el-input__inner
               border 1px solid #3F4769
               background-color transparent
@@ -272,7 +271,6 @@ export default {
                 .drag
                   border-color #3F4769
             &.submit
-              .el-form-item__content
               .el-button
                 background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
                 box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)

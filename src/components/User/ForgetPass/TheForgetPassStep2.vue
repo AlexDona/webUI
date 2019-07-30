@@ -260,7 +260,10 @@ export default {
     }
   },
   created () {
-    if (!this.$userInfo_X) this.$router.replace(`/${this.$routes_X.forgetPass}`)
+    if (!this.$userInfo_X || (this.username !== _.get(this.$userInfo_X, 'phone') && this.username !== _.get(this.$userInfo_X, 'email'))) {
+      this.$router.replace(`/${this.$routes_X.forgetPass}`)
+      return false
+    }
   },
   // mounted () {}
   // updated () {},
