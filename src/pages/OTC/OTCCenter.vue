@@ -1874,6 +1874,7 @@ export default {
 
         > .otc-merchant-content {
           background-color: $mainContentNightBgColor;
+          box-shadow: 0 3px 4px 0 rgba(25, 30, 40, 1);
 
           > .otc-filtrate-publish {
             > .otc-filtrate-box {
