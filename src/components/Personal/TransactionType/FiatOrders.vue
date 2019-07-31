@@ -715,12 +715,17 @@ export default {
         }
 
         .el-input__inner {
+          color: $mainColorOfWhite;
           background-color: #2d3651;
         }
 
         .date-picker {
           .el-date-editor {
             .el-range-separator {
+              color: $mainColorOfWhite;
+            }
+
+            .el-range-input {
               color: $mainColorOfWhite;
             }
           }

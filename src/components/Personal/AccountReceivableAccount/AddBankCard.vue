@@ -2,17 +2,11 @@
   <div
     class="add-bank personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{
-      height: windowHeight>300? windowHeight: 300 +'px'
-    }"
+    :style="{'min-height':(windowHeight-350)+'px'}"
   >
-    <div
-      class="add-bank-main margin25"
-    >
+    <div class="add-bank-main margin25">
       <header class="add-bank-header personal-height60 line-height60 line-height70 margin25">
-        <span
-          class="header-content-left header-content font-size16 font-weight600"
-        >
+        <span class="header-content-left header-content font-size16 font-weight600">
           <!--设置银行卡-->
           {{ paymentTerm.isBankBind? $t('M.user_bind_Bank_set'): $t('M.comm_modification')+ $t('M.user_account_bank') }}
           <!--修改银行卡-->

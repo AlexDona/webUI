@@ -172,13 +172,13 @@ export default {
     &.night
       /deep/
         .el-table
-          color #a9bed4
+          color S_night_main_text_color
           background-color S_night_main_bg
           .el-table__header
             th.is-leaf
-              border-bottom 1px solid #2d3651
+              border-bottom 1px solid S_color1
             thead
-              color #a9bed4
+              color S_night_main_text_color
           tr,th
             background-color S_night_main_bg
           .el-table__body
@@ -188,13 +188,13 @@ export default {
     &.day
       /deep/
         .el-table
-          color #333
+          color S_day_main_text_color
           background-color S_day_bg
           .el-table__header
             th.is-leaf
               border-bottom 1px solid rgba(57, 66, 77, .1)
             thead
-              color #7d90ac
+              color S_color2
           tr,th
             background-color S_day_bg
           .el-table__body
