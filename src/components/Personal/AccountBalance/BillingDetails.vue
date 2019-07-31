@@ -976,6 +976,10 @@ export default {
         .el-range-separator {
           line-height: 26px;
         }
+
+        .el-range-input {
+          font-size: 12px;
+        }
       }
 
       .el-table {

@@ -156,7 +156,7 @@
                         :value="getDate(-2) + $t('M.finance_leit') + getDate(formLabelAlign.day ? formLabelAlign.day : 0)"
                         disabled
                       >
-                    <span class="blue">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
+                      <span class="blue storageTime">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
                     </div>
                     <!--{{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day ? formLabelAlign.day : 0)}}-->
                     <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
@@ -1783,6 +1783,14 @@ export default {
           .el-icon-arrow-up::before {
             color: #fff;
           }
+
+          .left-body {
+            .left-label {
+              .el-input__inner {
+                color: $mainColorOfWhite;
+              }
+            }
+          }
         }
       }
 
@@ -1937,6 +1945,11 @@ export default {
 
           .saveTime {
             color: $dayMainTitleColor;
+          }
+
+          .storageTime {
+            width: 100px;
+            text-align: right;
           }
         }
 

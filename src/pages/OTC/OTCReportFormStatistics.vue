@@ -68,9 +68,7 @@
         </div>
       </div>
       <!-- 2.4 购买和销售 -->
-      <div
-        class="report-form-buy-sell"
-      >
+      <div class="report-form-buy-sell">
         <!-- 购买 -->
         <div class="common buy">
           <!-- 头 -->
@@ -771,7 +769,7 @@ export default {
 
   > .report-form-statistics-content {
     width: 1300px;
-    padding: 20px 0 200px;
+    padding: 20px 0 100px;
     margin: 50px auto 10px;
 
     > .report-form-title {
@@ -888,7 +886,8 @@ export default {
           display: flex;
           justify-content: space-between;
           height: 50px;
-          padding: 0 50px;
+          padding-right: 60px;
+          padding-left: 53px;
           margin-top: 30px;
           line-height: 50px;
 
@@ -900,6 +899,7 @@ export default {
         }
 
         > .order-table {
+          height: 450px;
           padding: 0 35px;
           margin-top: 20px;
         }
@@ -994,6 +994,7 @@ export default {
 
     .order-table {
       .el-table {
+        margin-left: 12px;
         font-size: 12px;
 
         tr {
@@ -1003,6 +1004,10 @@ export default {
         td {
           padding: 0;
           border-bottom: 0;
+        }
+
+        .el-table__empty-text {
+          line-height: 420px;
         }
       }
     }

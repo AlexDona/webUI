@@ -196,7 +196,7 @@ export default {
       background-color S_night_main_bg
       /deep/
         .el-table
-          color #a9bed4
+          color S_night_main_text_color
           background-color S_night_main_bg
           tr,th
             background-color S_night_main_bg
@@ -205,12 +205,12 @@ export default {
               td
                 background-color S_night_main_bg !important
             td
-              border-bottom 1px solid #2d3651
+              border-bottom 1px solid S_color1
     &.day
       background-color S_day_bg
       /deep/
         .el-table
-          color #333
+          color S_day_main_text_color
           background-color S_day_bg
           tr,th
             background-color S_day_bg
