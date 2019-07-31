@@ -496,7 +496,7 @@ export default {
       this.merchantUserInfo.relationType = getNestedData(data, 'data.userInfo.relationType')
     },
     // 4 关注/拉黑
-    async focusBlackOpposite (type) {
+    focusBlackOpposite: _.debounce(async function (type) {
       let param = {
         toId: this.userId,
         relation: type
@@ -513,9 +513,9 @@ export default {
       }
       // 重新刷新列表
       this.getMerchantInfo()
-    },
+    }, 500),
     // 5 取消关注/解除
-    async cancelFocusBlackOpposite (type) {
+    cancelFocusBlackOpposite: _.debounce(async function (type) {
       let param = {
         toId: this.userId,
         relation: type
@@ -525,7 +525,7 @@ export default {
       // 数据返回后的逻辑
       // 重新刷新列表
       this.getMerchantInfo()
-    },
+    }, 500),
     // 6.购买出售限制
     async toOnlineBuyOrSell (id, coinId, userId, countryCode, entrustType) {
       const CHINA = ['853', '852', '886', '86']

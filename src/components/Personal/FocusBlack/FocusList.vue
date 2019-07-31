@@ -113,7 +113,7 @@ export default {
       this.getFocusLists()
     },
     // 2 确认取消关注接口
-    async confirmCancelFocus (id) {
+    confirmCancelFocus: _.debounce(async function (id) {
       let param = {
         toId: id,
         // 此操作进行时的关系：“1”关注，“2”拉黑
@@ -125,7 +125,7 @@ export default {
       this.currentPage = 1
       // 重新刷新列表
       this.getFocusLists()
-    },
+    }, 500),
     // 3 获得关注列表
     async getFocusLists () {
       let param = {

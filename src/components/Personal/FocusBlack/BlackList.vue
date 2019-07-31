@@ -97,7 +97,7 @@ export default {
       this.getBlackLists()
     },
     // 2 确认解除黑名单接口
-    async confirmUnBlackList (id) {
+    confirmUnBlackList: _.debounce(async function (id) {
       let param = {
         toId: id,
         // 此操作进行时的关系：“1”关注，“2”拉黑
@@ -109,7 +109,7 @@ export default {
       this.currentPage = 1
       // 重新刷新列表
       this.getBlackLists()
-    },
+    }, 500),
     // 3 获得黑名单列表
     async getBlackLists () {
       let param = {
