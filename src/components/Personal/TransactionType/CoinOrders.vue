@@ -185,9 +185,10 @@
                     <span>{{ parseFloat($scientificToNumber(s.row.count)) }}</span>
                   </template>
                 </el-table-column>
-                <!--委托总额-->
+                <!--委单总额-->
                 <el-table-column
                   :label="$t('M.user_coin_order5')"
+                  width="140"
                 >
                   <template slot-scope="s">
                     <!--<span>{{ s.row.amount-0}}</span>-->
