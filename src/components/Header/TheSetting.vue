@@ -205,11 +205,16 @@ export default {
                 border-color #282e43
                 color #b8bdd0
                 background-color #181d2e
-      &.day
+            .el-dialog__footer
+              .el-button
+                border none
+                background linear-gradient(90deg, #124785 0%, #2a3b61 100%)
+
+  &.day
         /deep/
           .el-radio-button__inner
-            color: #333
-            background-color: #fff
+            color: #333 !important
+            background-color: #fff !important
           .el-dialog__title
             padding: 0
             color: #333
@@ -218,6 +223,11 @@ export default {
           .el-dialog__header
             background-color #fff !important
             box-shadow none
+            .el-dialog__footer
+                .el-button
+                    border none
+                    background linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%)
+
     /deep/
       .setting
         .el-dialog
@@ -272,9 +282,6 @@ export default {
             /*padding 35px 40px*/
             padding 5px 40px
             border none
-            .el-button
-              border none
-              background linear-gradient(to left, #2a5082, #2b396e)
 </style>
 <style>
   .convert-currency.el-select-dropdown.el-popper {

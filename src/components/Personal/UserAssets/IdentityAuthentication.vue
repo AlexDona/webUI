@@ -24,6 +24,7 @@
           <div
             class="header-border display-flex margin20"
             v-if="innerUserInfo"
+            :class="{'border-format':realNameAuth === 'y'}"
           >
               <span class="font-size16 main-header-title">
                 <!--实名认证-->
@@ -183,7 +184,7 @@
       </div>
       <div
         v-else
-        class="name-authentication-content success-height">
+        class="name-authentication-content padding-format">
       </div>
     </div>
     <!--高级认证-->
@@ -191,18 +192,18 @@
     >
       <div
         class="advanced-main-header"
+        :class="{ 'padding-format': realNameAuth === 'y'}"
       >
         <!--authenticationMethod // 点击弹出扫码确认框-->
         <p
           class="header-border padding-lr20"
-          @click.prevent="authenticationMethod"
         >
           <span class="font-size16 main-header-title">
             <!--高级认证-->
             {{ $t('M.user_senior_certification') }}
           </span>
           <span
-            v-if="advancedAuth === ''"
+            v-if="advancedAuth === '' && realNameAuth === 'n'"
             class="authentication-type font-size12"
           >
             <!--未高级认证-->
@@ -222,18 +223,18 @@
             <!--待审核-->
             （{{ $t('M.user_senior_audit') }}）
           </span>
-          <span
+          <!--<span
             class="float-right authentication-type font-size12"
             v-if="advancedAuth === ''"
           >
-            <!--去认证-->
+            &lt;!&ndash;去认证&ndash;&gt;
             {{ $t('M.user_senior_go_certification') }}
           </span>
-          <span v-else></span>
+          <span v-else></span>-->
         </p>
       </div>
-      <div class="identity-box">
-        <div v-if="authenticationStatusFront">
+      <div class="identity-box" :class="{'success-height': realNameAuth === 'y' && advancedAuth !== ''}">
+        <div v-if="authenticationStatusFront || this.advancedAuth === '' && this.realNameAuth === 'y'">
           <el-collapse-transition>
             <div class="transition-box">
               <div class="personal-information">
@@ -504,8 +505,18 @@
         </div>
         <div
           class="success-after name-authentication-content"
-          v-if="authenticationInfo.userIdentity"
-        ></div>
+          v-if="realNameAuth === 'y' && advancedAuth === 'pass'"
+        >
+          <div
+                  class="text-align-c"
+          >
+            <div class="success-img"></div>
+            <p class="pass">
+              <!--您已通过高级认证-->
+              {{ $t('M.user_real_already') }}{{ $t('M.user_senior_certification') }}
+            </p>
+          </div>
+        </div>
       </div>
       <!--高级认证 :visible.sync="seniorAuthentication"-->
       <el-dialog
@@ -608,9 +619,9 @@ export default {
       authenticationStatusFront: false, // 用户高级认证前
       authenticationNotPass: false, // 用户高级未通过
       // 身份认证默认图片
-      firstPictureSrc: require('../../../assets/user/card_positive.png'), // 正面
+      firstPictureSrc: require('../../../assets/user/card_negative.png'), // 正面
       firstPictureSrcShow: true, // 显示身份证正面
-      secondPictureSrc: require('../../../assets/user/card_negative.png'), // 反面
+      secondPictureSrc: require('../../../assets/user/card_positive.png'), // 反面
       secondPictureSrcShow: true, // 显示身份证反面
       thirdPictureSrc: require('../../../assets/user/card_handheld.png'), // 手持
       thirdPictureSrcShow: true, // 显示手持身份证
@@ -857,7 +868,7 @@ export default {
       }
     }, 500),
     // 高级认证弹窗
-    authenticationMethod () {
+    /* authenticationMethod () {
       // 判断是否高级认证&&实名认证
       if (this.realNameAuth === 'y' && this.advancedAuth === '') {
         // 显示高级认证页面
@@ -869,7 +880,7 @@ export default {
       //   // 隐藏高级认证页面
       //   this.authenticationStatusFront = false
       // }
-    },
+    }, */
     // 高级认证未通过被驳回
     authenticationIsStatus () {
       if (this.advancedAuth === '' && this.realNameAuth === 'n') {
@@ -994,12 +1005,25 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import '../../../assets/CSS/index';
 
+  .padding-format {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .border-format {
+    border: none !important;
+  }
+
+  .success-height {
+    height: 591px;
+  }
+
   .identity-authentication {
     > .identity-authentication-main {
       .name-authentication-content {
         width: 500px;
-        padding-top: 28px;
-        padding-bottom: 25px;
+        padding-top: 40px;
+        padding-bottom: 77px;
         margin: 0 auto;
 
         .common-input,
@@ -1060,6 +1084,7 @@ export default {
 
       .advanced-main-header {
         width: 100%;
+        padding-bottom: 161px;
 
         .icon-down {
           padding-right: 10px;
@@ -1094,7 +1119,7 @@ export default {
         }
 
         > .wait-veritfy-back {
-          height: 490px;
+          height: 545px;
           padding-top: 130px;
 
           > .wait-veritfy {
@@ -1115,13 +1140,27 @@ export default {
             }
           }
         }
+
+        > .success-after {
+            .success-img {
+              width: 149px;
+              height: 108px;
+              margin: 77px auto 35px;
+              background: url("../../../assets/user/access_auth.png") no-repeat center;
+            }
+
+            .pass {
+              font-size: 16px;
+              color: #338ff5;
+            }
+        }
       }
 
       .transition-box {
         > .advanced-upload {
-          min-height: 180px;
+          min-height: 223px;
           padding: 0 20px;
-          margin-top: 62px;
+          margin-top: 42px;
 
           .advanced-upload {
             margin: 0 155px;
@@ -1177,7 +1216,7 @@ export default {
           .submit-information {
             width: 200px;
             height: 34px;
-            margin: 60px auto 70px;
+            margin: 43px auto 23px;
             border-radius: 4px;
             line-height: 34px;
           }
@@ -1188,7 +1227,7 @@ export default {
         }
 
         > .advanced-prompt {
-          margin: 20px 138px 0 27px;
+          margin: 20px 25px 0;
 
           > .text-hints {
             line-height: 25px;
@@ -1212,8 +1251,7 @@ export default {
 
         > .personal-information {
           display: flex;
-          padding: 0 24px;
-          margin-top: 34px;
+          padding: 13px 24px 0;
           line-height: 30px;
 
           > .information {
@@ -1328,7 +1366,7 @@ export default {
         }
 
         .authentication-type {
-          color: #09f;
+          color: #d45858;
         }
 
         .authentication-type-info {
@@ -1387,7 +1425,7 @@ export default {
         }
 
         .authentication-type {
-          color: #09f;
+          color: #d45858;
         }
 
         .upload-submit {
@@ -1397,7 +1435,7 @@ export default {
 
         .submit-information {
           color: #fff;
-          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+          background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
         }
 
         .text-hints {
@@ -1450,8 +1488,8 @@ export default {
         }
 
         .submit {
-          color: rgba(255, 255, 255, .7);
-          background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+          color: rgba(255, 255, 255, 1);
+          background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
         }
 
         .common-option {
@@ -1527,12 +1565,11 @@ export default {
 
           .submit {
             color: #fff;
-            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
           }
         }
 
         .header-border {
-          padding: 0 20px;
           border-bottom: 1px solid rgba(38, 47, 56, .1);
         }
 
@@ -1556,9 +1593,8 @@ export default {
 
       > .advanced-certification-main {
         .identity-box {
-          margin-top: 10px;
           background-color: #fff;
-          box-shadow: 0 0 6px #cfd5df;
+          box-shadow: 1px 3px 6px #cfd5df;
 
           > .wait-veritfy-back {
             > .wait-veritfy {
@@ -1583,15 +1619,16 @@ export default {
 
               .no-pass-button {
                 color: #fff;
-                background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
               }
             }
           }
         }
 
         .header-border {
+          border-bottom: 1px solid rgba(233, 234, 235, 1);
           background-color: #fff;
-          box-shadow: 0 0 6px #cfd5df;
+          box-shadow: 1px 3px 6px #cfd5df;
         }
 
         .authentication-type {
@@ -1605,7 +1642,7 @@ export default {
 
         .submit-information {
           color: #fff;
-          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+          background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
         }
 
         .text-hints {
@@ -1689,8 +1726,7 @@ export default {
           color: #555;
         }
 
-        .icon-down,
-        .main-header-title {
+        .icon-down {
           color: #ccc;
         }
       }

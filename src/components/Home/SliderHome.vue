@@ -38,7 +38,7 @@ export default {
         thresholdDistance: 100, // 滑动距离阈值判定
         thresholdTime: 300, // 滑动时间阈值判定
         loop: false, // 无限循环
-        autoplay: 3000, // 自动播放:时间[ms]
+        // autoplay: '', // 自动播放:时间[ms]
         infinite: 0
       },
       AUTO_START_LIMIT: 5,
@@ -64,22 +64,26 @@ export default {
       this.sliderListAjax = getNestedData(data, 'data') || []
       let sliderList = []
       this.pages = sliderList
-      this.sliderinit.loop = this.sliderListAjax.length >= this.AUTO_START_LIMIT ? true : false
-      this.sliderinit.infinite = this.sliderListAjax.length >= this.AUTO_START_LIMIT ? 4 : 0
-      this.sliderListAjax.length >= this.AUTO_START_LIMIT ? this.$refs.slider.$emit('autoplayStart', 1000) : this.$refs.slider.$emit('autoplayStop')
+      this.sliderinit.autoplay = this.sliderListAjax.banner_time * 1000
+      this.sliderinit.loop = this.sliderListAjax.banner.length >= this.AUTO_START_LIMIT ? true : false
+      this.sliderinit.infinite = this.sliderListAjax.banner.length >= this.AUTO_START_LIMIT ? 4 : 0
+      this.sliderListAjax.banner.length >= this.AUTO_START_LIMIT ? this.$refs.slider.$emit('autoplayStart', this.sliderinit.autoplay) : this.$refs.slider.$emit('autoplayStop')
       this.renderSlider()
     },
     slide (data) {
       // console.log(data.currentPage)
-      let currentIndex = data.currentPage == this.sliderListAjax.length ? 0 : data.currentPage
-      let bigUrl = getNestedData(this.sliderListAjax[currentIndex], 'bigUrl')
+      let currentIndex = data.currentPage == this.sliderListAjax.banner.length ? 0 : data.currentPage
+      let bigUrl = getNestedData(this.sliderListAjax.banner[currentIndex], 'bigUrl')
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
     },
     renderSlider () {
-      let bigUrl = getNestedData(this.sliderListAjax, '[0].bigUrl')
+      if (this.sliderListAjax.banner.length < this.AUTO_START_LIMIT) {
+        this.$refs.slider.$emit('slideTo', 0)
+      }
+      let bigUrl = getNestedData(this.sliderListAjax.banner, '[0].bigUrl')
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
       let sliderList = []
-      this.sliderListAjax.forEach((item) => {
+      this.sliderListAjax.banner.forEach((item) => {
         const {bigUrl, redirectUrl, url} = item
         let that = this
         sliderList.push({
@@ -110,7 +114,7 @@ export default {
                     let sliderPaginationItem = sliderPaginationList[i]
                     let arr = [...sliderPaginationItem.classList]
                     if (arr.indexOf('slider-pagination-bullet-active') != -1) {
-                      let bigUrl = getNestedData(that.sliderListAjax[i], 'bigUrl')
+                      let bigUrl = getNestedData(that.sliderListAjax.banner[i], 'bigUrl')
                       that.CHANGE_BANNER_BACKGROUND(bigUrl)
                       break
                     }
@@ -144,7 +148,7 @@ export default {
             watch: {
               bannerActive (newVal) {
                 // console.log(newVal)
-                newVal || that.sliderListAjax.length < that.AUTO_START_LIMIT ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
+                newVal || that.sliderListAjax.banner.length < that.AUTO_START_LIMIT ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', that.sliderListAjax.banner_time * 1000)
               }
             },
             template: `<span

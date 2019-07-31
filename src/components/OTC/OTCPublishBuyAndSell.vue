@@ -1012,7 +1012,7 @@ export default {
         this.clearInputData()
         // 下单成功跳转到首页挂单列表去
         // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
-        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+        // this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
         this.$goToPage('/OTCCenter')
       }
     }, 500),

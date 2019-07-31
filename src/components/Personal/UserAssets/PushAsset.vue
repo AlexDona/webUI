@@ -392,18 +392,18 @@
             </el-dialog>
           </div>
         </div>
-      </div>
-      <div class="paging">
-        <!--分页-->
-        <el-pagination
-          background
-          v-show="pushRecordList.length"
-          layout="prev, pager, next"
-          :current-page="currentPageForMyEntrust"
-          :page-count="totalPageForMyEntrust"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
+        <div class="paging">
+          <!--分页-->
+          <el-pagination
+                  background
+                  v-show="pushRecordList.length"
+                  layout="prev, pager, next"
+                  :current-page="currentPageForMyEntrust"
+                  :page-count="totalPageForMyEntrust"
+                  @current-change="changeCurrentPage"
+          >
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -864,6 +864,8 @@ export default {
   @import '../../../assets/CSS/index';
 
   .push-assets {
+      margin-bottom: 50px;
+
     > .push-assets-main {
       > .push-assets-content-box {
         min-height: 448px;
@@ -902,7 +904,7 @@ export default {
         }
 
         > .award-record-content {
-          min-height: 130px;
+          min-height: 174px;
 
           .form-input-common {
             width: 270px;
@@ -1132,12 +1134,12 @@ export default {
 
             .form-input-common-state {
               color: #fff;
-              background-color: #37424c;
+              background-color: $nightInputBg;
             }
 
             .form-button-common {
               color: #fff;
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
             }
           }
         }
@@ -1209,6 +1211,8 @@ export default {
         }
 
         .el-table {
+          background-color: $mainContentNightBgColor;
+
           thead {
             color: #617499;
           }
@@ -1291,11 +1295,12 @@ export default {
             .form-input-common-state {
               border: 1px solid rgba(236, 241, 248, 1);
               color: #333;
+              background-color: #e9edf3;
             }
 
             .form-button-common {
               color: #fff;
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
             }
           }
         }
@@ -1371,6 +1376,10 @@ export default {
           .el-dialog__header {
             background: #fff;
           }
+        }
+
+        .el-table {
+          background-color: $mainColorOfWhite;
         }
       }
     }

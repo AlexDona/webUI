@@ -37,6 +37,7 @@ const OTCADManage = () => import('@/pages/OTC/OTCADManage')
 const OTCMerchantsOrders = () => import('@/pages/OTC/OTCMerchantsOrders')
 const OTCReportFormStatistics = () => import('@/pages/OTC/OTCReportFormStatistics')
 const OTCBusinessApply = () => import('@/pages/OTC/OTCBusinessApply')
+const OTCViewMerchantInfo = () => import('@com/OTC/OTCViewMerchantInfo')
 // 投资理财
 const FinanceCenter = () => import('@com/InvestmentFinance/FinanceCenter')
 const FinanceInvestmentRecord = () => import('@com/InvestmentFinance/FinanceInvestmentRecord')
@@ -257,6 +258,16 @@ const routes = [
     path: '/OTCReportFormStatistics',
     // name: 'OTCReportFormStatistics',
     component: OTCReportFormStatistics,
+    meta: {
+      auth: true,
+      isMerchant: true
+    }
+  },
+  {
+    // OTC商家信息
+    path: '/OTCViewMerchantInfo',
+    // name: 'OTCViewMerchantInfo',
+    component: OTCViewMerchantInfo,
     meta: {
       auth: true,
       isMerchant: true

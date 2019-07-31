@@ -113,8 +113,17 @@
             <p class="text-info">
               <span>
                 {{$t('M.otc_name')}}：
-              </span><span>
-              {{item.sellName}}
+              </span>
+              <span
+                class="cursor-pointer"
+                @click="jumpMerchantInfoPage(item.sellId)"
+              >
+              <span v-if="item.sellNickName">
+                {{item.sellNickName}}
+              </span>
+              <span v-else>
+                {{item.sellName}}
+              </span>
             </span>
             </p>
             <!--卖家手机号-->
@@ -158,6 +167,13 @@
               </span>
             </p>
           </div>
+          <!-- otc 及时通讯-->
+          <OTCIM
+            class="otc-im"
+            :orderInfo="item"
+            :top="OTC_IM_TOP"
+            activeName="CANCELED"
+          />
         </div>
       </div>
       <!--暂无数据-->
@@ -181,9 +197,9 @@
     </div>
   </div>
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../../utils'
+import OTCIM from '../../OTC/OTCIM'
 // import {mapState, mapMutations} from 'vuex'
 import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
 import {
@@ -191,17 +207,22 @@ import {
   mapState
 } from 'vuex'
 export default {
-  components: {},
-  // props,
-  data () {
-    return {}
+  components: {
+    OTCIM
   },
-  created () {
+  props: {
+    OTC_IM_TOP: {
+      type: String
+    }
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // data () {
+  //   return {}
+  // },
+  // created () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_LEGAL_PAGE',
@@ -214,6 +235,11 @@ export default {
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    jumpMerchantInfoPage (userId) {
+      if (userId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+      }
     }
   },
   filter: {},
@@ -237,7 +263,7 @@ export default {
 
   .fiat-canceled-order-box {
     > .canceled-order-content {
-      min-height: 530px;
+      min-height: 574px;
       padding: 0 10px 10px;
 
       > .canceled-table-head {

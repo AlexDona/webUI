@@ -3,7 +3,7 @@
     class="add-bank personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{
-      height:windowHeight+'px'
+      height: windowHeight>300? windowHeight: 300 +'px'
     }"
   >
     <div
@@ -392,7 +392,7 @@ export default {
     overflow: hidden;
 
     > .add-bank-main {
-      width: 1100px;
+      width: 1300px;
       height: 700px;
       margin: 60px auto 100px;
 
@@ -425,7 +425,7 @@ export default {
 
         > .bank-content-from {
           width: 500px;
-          margin-left: 55px;
+          margin: 58px auto;
 
           .bank-input {
             width: 220px;
@@ -504,8 +504,8 @@ export default {
             }
 
             .bank-button {
-              color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, rgb(43, 57, 110), rgb(42, 80, 130));
+              color: rgba(255, 255, 255, 1);
+              background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
             }
           }
         }
@@ -515,7 +515,7 @@ export default {
         /* 个人中心黑色主题 */
         .el-form-item__label {
           min-width: 140px;
-          color: rgba(255, 255, 255, .7);
+          color: #a9bed4;
         }
 
         .el-input__inner {
@@ -533,7 +533,6 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .add-bank-main {
         border: 1px solid rgb(246, 246, 246);
@@ -567,8 +566,8 @@ export default {
             }
 
             .bank-button {
-              color: #ccc;
-              background: linear-gradient(0deg, rgb(43, 57, 110), rgb(42, 80, 130));
+              color: #fff;
+              background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
             }
           }
         }

@@ -401,7 +401,7 @@ export default {
     overflow: hidden;
 
     > .binding-google-main {
-      width: 1100px;
+      width: 1300px;
       min-height: 700px;
       margin: 60px auto 100px;
 
@@ -429,7 +429,7 @@ export default {
 
         > .google-content-from {
           width: 500px;
-          margin-left: 30px;
+          margin: 58px auto;
 
           > .google-images-show {
             > .google-validator {
@@ -579,8 +579,8 @@ export default {
               }
 
               .google-button {
-                color: rgba(255, 255, 255, .7);
-                background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+                color: rgba(255, 255, 255, 1);
+                background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
               }
 
               .prompt-message {
@@ -601,7 +601,6 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .binding-google-main {
         border: 1px solid rgba(246, 246, 246, 1);
@@ -667,8 +666,8 @@ export default {
               }
 
               .google-button {
-                color: rgba(255, 255, 255, .7);
-                background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+                color: rgba(255, 255, 255, 1);
+                background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
               }
 
               .prompt-message {
