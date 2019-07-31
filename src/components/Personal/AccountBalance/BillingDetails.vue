@@ -825,7 +825,7 @@ export default {
             border-bottom: 2px solid #0079fe;
             border-left: 0 !important;
             color: #0079fe;
-            background: transparent;
+            background: transparent !important;
           }
 
           &:hover {
