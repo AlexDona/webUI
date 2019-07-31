@@ -34,7 +34,7 @@
         .countries
           li.country(
             v-for="country in filterCountries"
-            @click="toggleCountry(country)"
+            @click.stop="toggleCountry(country)"
           )
             span.left {{country[$isChineseLanguage_G_X ? 'chinese': 'english']}}
             span.right {{country['nationCode']}}
@@ -71,7 +71,7 @@ export default {
     }
   },
   mounted () {
-    document.addEventListener('mousedown', (e) => {
+    document.addEventListener('click', (e) => {
       if (e.target == this.$refs[this.currentCountryRef] || e.target == document.querySelector(`#${this.searchInputRef}`)) return
       this.isShowCountries = false
     })
@@ -86,6 +86,7 @@ export default {
     },
     toggleCountry (country) {
       this.currentCountry = country
+      console.log(this.currentCountry)
       this.isShowCountries = false
     }
   },
