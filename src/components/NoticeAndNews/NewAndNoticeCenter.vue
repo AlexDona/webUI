@@ -309,16 +309,18 @@ export default {
 
         > .inner-box {
           width: 1300px;
-          height: 1100px;
+          min-height: 1100px;
           margin: 0 auto;
-          overflow: hidden;
 
           .item-content {
-            height: 901px;
+            min-height: 901px;
+            box-shadow: 0 0 6px #cfd5df;
 
             > .content-list {
               > .content-item {
-                padding: 21px 40px;
+                height: 59px;
+                padding: 0 40px;
+                line-height: 59px;
                 text-align: left;
 
                 &:last-child {
@@ -392,6 +394,7 @@ export default {
                       flex: 0 0 112px;
                       font-weight: 400;
                       font-size: 12px;
+                      white-space: nowrap;
 
                       > .author {
                         margin-right: 20px;
@@ -399,6 +402,10 @@ export default {
                     }
                   }
                 }
+              }
+
+              .content-item:last-child {
+                border-bottom: none !important;
               }
             }
 
@@ -544,10 +551,6 @@ export default {
 
       .el-tabs__active-bar {
         height: 0;
-      }
-
-      .el-tabs__content {
-        height: 1100px;
       }
 
       .el-pagination {
@@ -702,8 +705,6 @@ export default {
         }
 
         .el-tabs__content {
-          box-shadow: 0 0 6px #cfd5df;
-
           .el-tab-pane {
             background: $mainDayBgColor;
           }
