@@ -64,7 +64,6 @@ import {
   mapMutations
 } from 'vuex'
 import {getMerchantAvailableLegalTender} from '../../utils/api/OTC'
-import {getNestedData} from '../../utils/commonFunc'
 export default {
   name: 'the-setting',
   // mixins: [],
@@ -155,20 +154,28 @@ export default {
       })
     },
     // 查询某商户可用法币币种列表
+    // getMerchantAvailableLegalTenderList: _.throttle(async function () {
+    //   let data = await getMerchantAvailableLegalTender()
+    //   // 返回数据正确的逻辑
+    //   if (!data) return false
+    //   console.log(data, _.get(data, 'data'))
+    //   this.$set(this, 'convertCurrencyList', _.get(data, 'data'))
+    //   await this.changeActiveTransitionCurrency()
+    // }, 500)
     async getMerchantAvailableLegalTenderList () {
       let data = await getMerchantAvailableLegalTender()
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data.data) {
-        this.convertCurrencyList = getNestedData(data, 'data')
-        await this.changeActiveTransitionCurrency()
-      }
+      console.log(data, _.get(data, 'data'))
+      this.$set(this, 'convertCurrencyList', _.get(data, 'data'))
+      await this.changeActiveTransitionCurrency()
     }
   }
   // filters: {},
   // computed: {
   // },
-  // watch: {}
+  // watch: {
+  // }
 }
 </script>
 
@@ -196,6 +203,8 @@ export default {
               background-color #25283D
               .el-dialog__close
                 color #fff
+                &:hover
+                  color S_main_color
             .el-dialog__body
               >p
                 color #FEFEFF
@@ -227,6 +236,8 @@ export default {
                 background-color #DCE7F3
                 .el-dialog__close
                   color #333
+                  &:hover
+                    color S_main_color
               .el-dialog__body
                 >p
                   color #1C1F32

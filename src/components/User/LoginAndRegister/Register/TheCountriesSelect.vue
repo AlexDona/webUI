@@ -10,15 +10,15 @@
     span.current-country(
       :style="{width: width}"
       :ref="currentCountryRef"
-      @click="toggleShowCountries"
+      @click.stop="toggleShowCountries"
       :class="{'not-show-allow':!isShowCountries}"
     ) {{isShowCode ? currentNationCode : $isChineseLanguage_G_X ? currentChineseName : currentEnglishName}}
       Iconfont.iconfont(icon-name="icon-jiantou")
     el-collapse-transition
       .countries-content(
-          :class="{'email-register': !isShowCode, 'phone-register': isShowCode}"
-          v-show="isShowCountries"
-        )
+        :class="{'email-register': !isShowCode, 'phone-register': isShowCode}"
+        v-show="isShowCountries"
+      )
         el-input.search-input(
           v-model="keyword"
           clearable

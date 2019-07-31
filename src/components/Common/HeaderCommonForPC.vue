@@ -186,7 +186,7 @@ export default{
     // 获取 语言列表
     if (!await this.GET_LANGUAGE_LIST_ACTION(this)) return false
     await this.SET_PARTNER_INFO_ACTION(this.$language_S_X)
-    await this.GET_COUNTRY_LIST_ACTION()
+
     await this.GET_ALL_NOTICE_ACTION(this.$language_S_X)
     this.isNoticeReady = true
     // 查询某商户可用法币币种列表
@@ -199,7 +199,6 @@ export default{
   },
   methods: {
     ...mapActions([
-      'GET_COUNTRY_LIST_ACTION',
       'GET_TRANSITION_RATE_ACTION',
       'GET_LANGUAGE_LIST_ACTION',
       'SET_PARTNER_INFO_ACTION',

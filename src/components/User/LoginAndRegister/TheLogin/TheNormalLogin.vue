@@ -214,7 +214,8 @@ export default {
         this.loginForStep1()
       })
     },
-    successCallback () {
+    successCallback: _.debounce(async function () {
+      console.log(this)
       this.isShowSlider = false
       // this.isShowStep3Dialog = true
       const abnormalLogin = this.$firstLogin_X || !this.$loginIpEquals_X || this.$isBindGoogle_X
@@ -227,7 +228,7 @@ export default {
       } else {
         this.loginForStep2({})
       }
-    },
+    }, 500),
     /**
      * 登录第一步
      * @returns {Promise<boolean>}
@@ -271,7 +272,7 @@ export default {
      * 登录第二步
      * @returns {Promise<boolean>}
      */
-    async loginForStep2 ({phoneCode = '', emailCode = '', googleCode = ''}) {
+    loginForStep2: _.debounce(async function ({phoneCode = '', emailCode = '', googleCode = ''}) {
       if (!this.$loginIpEquals_X && this.$firstLogin_X) {
         // 谷歌验证
         if (this.$isBindGoogle_X) {
@@ -308,7 +309,7 @@ export default {
       this.$UPDATE_LOGIN_STEP2_DIALOG_STATUS_X(false)
       this.$UPDATE_IMAGE_CODE_M_X('')
       this.userLoginSuccess(_.get(data, 'data'))
-    },
+    }, 500),
     userLoginSuccess (data) {
       this.USER_LOGIN(data)
       const {isJumpToPersonal, type, coinName} = this.$route.query

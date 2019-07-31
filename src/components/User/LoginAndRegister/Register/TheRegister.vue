@@ -194,6 +194,7 @@ import mixins from '../../../../mixins/user'
 import TheCountriesSelect from './TheCountriesSelect'
 import {
   mapState,
+  mapActions,
   mapMutations
 } from 'vuex'
 import {sendPhoneOrEmailCodeAjax, validateNumForUserInput} from '../../../../utils/commonFunc'
@@ -357,7 +358,8 @@ export default {
       isPasswordValidateSuccess: false
     }
   },
-  created () {
+  async created () {
+    await this.GET_COUNTRY_LIST_ACTION()
     this.initInviteStatus()
     this.initCountry()
     if (this.$isLogin_S_X) this.USER_LOGOUT()
@@ -370,12 +372,16 @@ export default {
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
+    ...mapActions([
+      'GET_COUNTRY_LIST_ACTION'
+    ]),
     ...mapMutations([
       'SET_LOGIN_TYPE',
       'SET_STEP1_INFO',
       'USER_LOGIN',
       'USER_LOGOUT',
-      'CHANGE_FOOTER_ACTIVE_NAME'
+      'CHANGE_FOOTER_ACTIVE_NAME',
+      'SET_COUNTRY_AREA_LIST'
     ]),
     formatPhone () {
       this.form.phone = formatNumber(this.form.phone, 0)
@@ -408,6 +414,7 @@ export default {
       this.form.inviteCode = this.inviteId
     },
     changeRegType (type) {
+      if (type == this.regType) return
       this.regType = type
       this.resetForm()
     },
@@ -627,12 +634,12 @@ export default {
             .el-input__inner
               border-radius 20px 0 0 20px
             .el-input-group__append
-              overflow hidden
               padding 0 10px
               border-radius 0 20px 20px 0
               /* 发送验证码 */
               .count-down
-                padding 0 20px 0 10px
+                padding 0 10px 0 10px
+                margin 0 -8px 0 0
                 span
                   font-size 12px !important
           /* 邮箱注册国家选择器 */
@@ -854,7 +861,7 @@ export default {
                 .el-checkbox__label
                   color S_main_color
               .agreement
-                color #1C1F32
+                color S_main_color
             .el-checkbox__inner
               background-color transparent
               border-color #8B9197
