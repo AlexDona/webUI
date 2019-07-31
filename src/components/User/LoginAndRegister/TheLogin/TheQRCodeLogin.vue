@@ -58,7 +58,7 @@
         // 二维码失效
         span {{$t('M.qr_code_disabled_tips')}}
         // 点击刷新
-        span.refresh-span {{$t('M.qr_code_update_tips')}}
+        span.refresh-span.cursor-pointer(@click="getQrCode") {{$t('M.qr_code_update_tips')}}
 </template>
 <script>
 import TheCommonSlider from '../../../Common/CommonSlider'
