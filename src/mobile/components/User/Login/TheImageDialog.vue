@@ -55,7 +55,7 @@
 <script>
 import mixins from '../../../../mixins/user'
 import {mapState} from 'vuex'
-import ImageValidate from '../../../Common/ImageValidateCommon'
+import ImageValidate from '../../../../components/Common/ImageValidateCommon'
 import {checkImageCodeAJAX, updateImageCodeAJAX} from '../../../../utils/api/user'
 export default {
   name: 'image-code-dialog',

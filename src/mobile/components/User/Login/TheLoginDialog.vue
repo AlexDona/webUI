@@ -98,7 +98,7 @@
 </template>
 <script>
 import mixins from '../../../../mixins/user'
-import CountDownButton from '../../../Common/CountDownCommon'
+import CountDownButton from '../../../../components/Common/CountDownCommon'
 import {mapState} from 'vuex'
 import {sendPhoneOrEmailCodeAjax} from '../../../../utils/commonFunc'
 export default {

@@ -2,6 +2,7 @@ import personalCenterRoutes from './personal-center-routes'
 import activity from './activity'
 import {routesVariable} from './routesVariable'
 import user from './user'
+import mobile from './mobile'
 // console.log(routesVariable)
 const HomeCenter = () => import('@/pages/HomeCenter')
 const PersonalCenter = () => import('@/pages/PersonalCenter')
@@ -297,6 +298,7 @@ const routes = [
   //   // component: LoginAndRegister
   //   component: () => import('../components/User/LoginAndRegister/TheLogin')
   // },
+  ...mobile,
   ...user,
   // 注册
   {

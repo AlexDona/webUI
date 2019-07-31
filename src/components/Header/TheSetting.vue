@@ -219,7 +219,7 @@ export default {
             .el-dialog__footer
               .el-button
                 border none
-                background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
+                background linear-gradient(81deg,rgba(18,71,133,1), rgba(42,59,97,1))
                 box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
       &.day
         /deep/
@@ -252,7 +252,7 @@ export default {
               .el-dialog__footer
                 .el-button
                   border none
-                  background linear-gradient(81deg,rgba(49,135,218,1),rgba(106,182,244,1))
+                  background linear-gradient(81deg,rgba(106,182,244,1), rgba(49,135,218,1))
                   box-shadow 0 3px 6px 0 rgba(26,42,71,0.27)
     /deep/
       .setting

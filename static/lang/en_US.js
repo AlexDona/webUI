@@ -594,7 +594,7 @@ export const M = {
     'user-fail-paypassword-set': 'Payment password is set',
     'user_address_withdrawal': 'undefined',
     'comprehensive_user': 'Ordinary recharge',
-    'login_telphone': 'Mobile phone',
+    'login_telphone': 'mobile phone',
     'otc_please_enter_trade_number': 'Please enter Trade times',
     'otc_publishAD_setLimit': 'Limit setting',
     'otc_time_payment': 'Payment confirmation time',

@@ -47,7 +47,7 @@ export const userLoginForStep2 = params => handleRequest(() => postWithURLencode
 // 退出登录
 export const userLogOut = () => handleRequest(() => postWithURLencoded('user/logout'))
 // 找回密码步骤1
-export const findPasswordStep1 = params => handleRequest(() => postWithURLencoded('user/forgetPassword1', params))
+export const findPasswordStep1 = params => handleRequest(() => postWithURLencoded('login/forgetPassword1', params))
 // 找回密码步骤2
 export const findPasswordStep2 = params => handleRequest(() => postWithURLencoded('user/forgetPassword2', params))
 // 找回密码步骤3

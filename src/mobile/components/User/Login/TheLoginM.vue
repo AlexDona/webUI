@@ -1,11 +1,11 @@
 <!--
   author: zhaoxinlei
-  create: 20190622
-  description: 当前组件为 登录页面  用户名密码登录 组件
--->
+  create: 20190731
+  description: 当前组件为 H5 登录页面
+  -->
 <template lang="pug">
   .the-normal-login(
-    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
+  :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
   )
     // 切换登录方式
     .header
@@ -16,45 +16,45 @@
     // 主要内容
     .content
       el-form.login(
-        :model="form"
-        :rules="rules"
-        :ref="formRef"
-        label-width="100px"
+      :model="form"
+      :rules="rules"
+      :ref="formRef"
+      label-width="100px"
       )
         // 用户名
         el-form-item(
-          label=""
-          label-width="0px"
-          prop="username"
+        label=""
+        label-width="0px"
+        prop="username"
         )
           // 请输入邮箱/手机号
           el-input(
-            type="text"
-            v-model="form.username"
-            :placeholder="$t('M.login_user_tips')"
-            :autofocus="true"
-            @keyup.enter.native="submitForm"
-            clearable
+          type="text"
+          v-model="form.username"
+          :placeholder="$t('M.login_user_tips')"
+          :autofocus="true"
+          @keyup.enter.native="submitForm"
+          clearable
           )
         // 密码
         el-form-item.password(
-          label=""
-          label-width="0px"
-          prop="password"
+        label=""
+        label-width="0px"
+        prop="password"
         )
           // 请输入密码
           el-input(
-            type="password"
-            v-model="form.password"
-            :placeholder="$t('M.login_tips2')"
-            autocomplete="off"
-            clearable
-            @keyup.enter.native="submitForm"
+          type="password"
+          v-model="form.password"
+          :placeholder="$t('M.login_tips2')"
+          autocomplete="off"
+          clearable
+          @keyup.enter.native="submitForm"
           )
         //  记住账号
         el-form-item.remember-pass(
-          label=""
-          label-width="0px"
+        label=""
+        label-width="0px"
         )
           .inner-box
             // 记住账号
@@ -62,12 +62,12 @@
             //  忘记密码
             a.forget-pass.font-size12.cursor-pointer(@click="jumpToForgetPass") {{$t($globalLabel_X.forgetPassword)}} ?
         el-form-item.error-tips-form(
-          label=""
-          label-width="0px"
+        label=""
+        label-width="0px"
         )
           Iconfont.iconfont(
-            icon-name="icon-tishi1-copy"
-            v-show="loginErrorTips"
+          icon-name="icon-tishi1-copy"
+          v-show="loginErrorTips"
           )
           span.error-tips {{loginErrorTips}}
         // 登录
@@ -76,32 +76,32 @@
         label-width="0px"
         )
           el-button(
-            type="primary"
-            @click="submitForm"
-            :disabled="isSubmitButtonDisabled"
+          type="primary"
+          @click="submitForm"
+          :disabled="isSubmitButtonDisabled"
           ) {{$t($globalLabel_X.login)}}
         .bottom
           // 没有账号？ 立即注册
           span {{$t('M.register_tips')}}
           router-link.forget-pass.font-size12(:to="`/${$routes_X.login}/${$routes_X.register}/default`") {{$t($globalLabel_X.registerImmediately)}}
       el-dialog.slider(
-        :title="$t('M.login_dialog_title_label_04')"
-        :visible.sync="isShowSlider"
-        width="486px"
-        :close-on-click-modal="false"
+      :title="$t('M.login_dialog_title_label_04')"
+      :visible.sync="isShowSlider"
+      width="486px"
+      :close-on-click-modal="false"
       )
         TheCommonSlider(
-          :propMaxWidth="433"
-          :height="46"
-          :barWidth="60"
-          @successCallback="successCallback"
+        :propMaxWidth="433"
+        :height="46"
+        :barWidth="60"
+        @successCallback="successCallback"
         )
       TheValidateDialog(@loginForStep2="loginForStep2")
       TheImageDialog(@loginForStep2="loginForStep2")
 </template>
 <script>
-import TheCommonSlider from '../../../Common/CommonSlider'
-import CountDownButton from '../../../Common/CountDownCommon'
+import TheCommonSlider from '../../../../components/Common/CommonSlider'
+import CountDownButton from '../../../../components/Common/CountDownCommon'
 import TheValidateDialog from './TheLoginDialog'
 import TheImageDialog from './TheImageDialog'
 import {newLoginForStep1AJAX, newLoginForStep2AJAX} from '../../../../utils/api/user'
@@ -401,103 +401,103 @@ export default {
           border-bottom 1px solid S_main_color
     /deep/
       /* 滑块弹窗 */
-      .slider
-        display flex
-        flex-direction column
-        justify-content center
-        .el-dialog
-          margin-top 0 !important
-          height 280px
-          border-radius 10px
-          overflow hidden
-          .el-dialog__header
+    .slider
+      display flex
+      flex-direction column
+      justify-content center
+      .el-dialog
+        margin-top 0 !important
+        height 280px
+        border-radius 10px
+        overflow hidden
+        .el-dialog__header
+          height 44px
+          line-height 12px
+          padding-top 0
+          .el-dialog__headerbtn
+            top 10px
+            .el-dialog__close
+              font-size 26px
+          .el-dialog__title
             height 44px
-            line-height 12px
-            padding-top 0
-            .el-dialog__headerbtn
-              top 10px
-              .el-dialog__close
-                font-size 26px
-            .el-dialog__title
-              height 44px
-              line-height 44px
-              display inline-block
-          .el-dialog__body
-            padding 80px 25px
-      .el-form.login
-        padding 0 38px
-        .el-form-item
-          margin-bottom 35px
-          .el-input__inner
-            border-radius 20px
-            font-size 12px
-          /* WebKit browsers */
-          ::-webkit-input-placeholder
-            color: #8B9197
-          /* Mozilla Firefox 19+ */
-          ::-moz-placeholder
-            color: #8B9197
-          /* Internet Explorer 10+ */
-          :-ms-input-placeholder
-            color #8B9197
-          .el-input__suffix
-            right 14px
-          .el-checkbox__label
-            font-size 12px
-          .el-checkbox__input
-            .el-checkbox__inner
-              &:after
-                top 3000px
-                width 0
-                height 0
-                left 3000px
-            &.is-checked
-              .el-checkbox__inner
-                border-color S_main_color
-                background S_main_color url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
-          /*密码*/
-          &.password
-            margin-bottom 10px
-          /*记住账号*/
-          &.remember-pass
-            height 30px
-            margin-top -10px
-            margin-bottom 10px
-            .inner-box
-              display flex
-              justify-content space-between
-              .forget-pass
-                margin-left 5px
-          &.error-tips-form
-            margin-bottom 10px
-            height 40px
-            .iconfont
-              font-size 16px
-              vertical-align middle
-            .error-tips
-              vertical-align middle
-              margin-left 10px
-              font-size 12px
-          &.submit
-            text-align center
-            margin-bottom 20px
-            .el-button
-              padding 12px 30px
-              border-radius 20px
-              border none
-              font-size 16px
-              &.is-disabled
-                background #303757
-                color #636777
-                box-shadow none
-        .bottom
-          text-align center
+            line-height 44px
+            display inline-block
+        .el-dialog__body
+          padding 80px 25px
+    .el-form.login
+      padding 0 38px
+      .el-form-item
+        margin-bottom 35px
+        .el-input__inner
+          border-radius 20px
           font-size 12px
-          span
-            color #8B9197
-          a
-            color S_main_color
-            margin-left 5px
+        /* WebKit browsers */
+        ::-webkit-input-placeholder
+          color: #8B9197
+        /* Mozilla Firefox 19+ */
+        ::-moz-placeholder
+          color: #8B9197
+        /* Internet Explorer 10+ */
+        :-ms-input-placeholder
+          color #8B9197
+        .el-input__suffix
+          right 14px
+        .el-checkbox__label
+          font-size 12px
+        .el-checkbox__input
+          .el-checkbox__inner
+            &:after
+              top 3000px
+              width 0
+              height 0
+              left 3000px
+          &.is-checked
+            .el-checkbox__inner
+              border-color S_main_color
+              background S_main_color url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
+        /*密码*/
+        &.password
+          margin-bottom 10px
+        /*记住账号*/
+        &.remember-pass
+          height 30px
+          margin-top -10px
+          margin-bottom 10px
+          .inner-box
+            display flex
+            justify-content space-between
+            .forget-pass
+              margin-left 5px
+        &.error-tips-form
+          margin-bottom 10px
+          height 40px
+          .iconfont
+            font-size 16px
+            vertical-align middle
+          .error-tips
+            vertical-align middle
+            margin-left 10px
+            font-size 12px
+        &.submit
+          text-align center
+          margin-bottom 20px
+          .el-button
+            padding 12px 30px
+            border-radius 20px
+            border none
+            font-size 16px
+            &.is-disabled
+              background #303757
+              color #636777
+              box-shadow none
+      .bottom
+        text-align center
+        font-size 12px
+        span
+          color #8B9197
+        a
+          color S_main_color
+          margin-left 5px
     &.night
       background linear-gradient(201deg,rgba(52,59,98,1) 0%,rgba(37,40,61,1) 100%)
       box-shadow 0 4px 9px 0 rgba(28,31,50,0.6)
@@ -509,61 +509,61 @@ export default {
             border-bottom 1px solid S_main_color
       /deep/
         /* 滑块弹窗 */
-        .slider
-          background rgba(11,12,20,.8)
-          .el-dialog
-            background-color #2b304c
-            .el-dialog__header
-              background-color #25283D
-              .el-dialog__title
-                color S_day_bg
-        .el-form.login
-          .el-form-item
-            .el-input__inner
-              background-color #3f4769
-              border-color transparent
+      .slider
+        background rgba(11,12,20,.8)
+        .el-dialog
+          background-color #2b304c
+          .el-dialog__header
+            background-color #25283D
+            .el-dialog__title
               color S_day_bg
-            .el-checkbox__inner
-              background-color transparent
-              border-color #8B9197
-            .el-checkbox__label
-              color #8B9197
-            .el-checkbox
-              &.is-checked
-                .el-checkbox__label
-                  color S_main_color
-            .el-checkbox__input
-              &.is-checked
-                .el-checkbox__inner
-                  border-color S_main_color
-                  background S_main_color url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
-            /*密码*/
-            &.password
+      .el-form.login
+        .el-form-item
+          .el-input__inner
+            background-color #3f4769
+            border-color transparent
+            color S_day_bg
+          .el-checkbox__inner
+            background-color transparent
+            border-color #8B9197
+          .el-checkbox__label
+            color #8B9197
+          .el-checkbox
+            &.is-checked
+              .el-checkbox__label
+                color S_main_color
+          .el-checkbox__input
+            &.is-checked
+              .el-checkbox__inner
+                border-color S_main_color
+                background S_main_color url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
+          /*密码*/
+          &.password
             /*记住账号*/
-            &.remember-pass
-              .inner-box
-                .forget-pass
-                  color S_main_color
-            &.error-tips-form
-              .iconfont
-                color S_error_color
-              .error-tips
-                color S_error_color
-            &.submit
-              .el-button
-                color S_day_bg
-                background linear-gradient(81deg,rgba(18,71,133,1), rgba(42,59,97,1))
-                box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
-                border none
-                &.is-disabled
-                  background #303757
-                  color #636777
-                  box-shadow none
-          .bottom
-            span
-              color #8B9197
-            a
-              color S_main_color
+          &.remember-pass
+            .inner-box
+              .forget-pass
+                color S_main_color
+          &.error-tips-form
+            .iconfont
+              color S_error_color
+            .error-tips
+              color S_error_color
+          &.submit
+            .el-button
+              color S_day_bg
+              background linear-gradient(81deg,rgba(18,71,133,1), rgba(42,59,97,1))
+              box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
+              border none
+              &.is-disabled
+                background #303757
+                color #636777
+                box-shadow none
+        .bottom
+          span
+            color #8B9197
+          a
+            color S_main_color
     &.day
       background #fff
       box-shadow 0 2px 6px 0 rgba(0, 0, 0, 0.1)
@@ -575,59 +575,59 @@ export default {
             border-bottom 1px solid S_main_color
       /deep/
         /* 滑块弹窗 */
-        .slider
-          background rgba(204,204,204,.5)
-          .el-dialog
-            background-color #fff
-            .el-dialog__header
-              background-color #DCE7F3
-              .el-dialog__title
-                color #333
-        .el-form.login
-          .el-form-item
-            .el-input__inner
-              background-color #eee
-              border-color transparent
-              color #1C1F32
-            .el-checkbox__inner
-              background-color transparent
-              border-color #8B9197
-            .el-checkbox__label
-              color #8B9197
-            .el-checkbox
-              &.is-checked
-                .el-checkbox__label
-                  color S_main_color
-            .el-checkbox__input
-              &.is-checked
-                .el-checkbox__inner
-                  border-color S_main_color
-                  background S_main_color url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
-            /*密码*/
-            &.password
-              /*记住账号*/
-            &.remember-pass
-              .inner-box
-                .forget-pass
-                  color S_main_color
-            &.error-tips-form
-              .iconfont
-                color S_error_color
-              .error-tips
-                color S_error_color
-            &.submit
-              .el-button
-                color S_day_bg
-                background linear-gradient(81deg,rgba(106,182,244,1), rgba(49,135,218,1))
-                box-shadow 0 3px 6px 0 rgba(26,42,71,0.27)
-                border none
-                &.is-disabled
-                  color #fff
-                  background rgba(204,204,204,1)
-                  box-shadow0px 3px 8px 0 rgba(26,42,71,0.4)
-          .bottom
-            span
-              color #8B9197
-            a
-              color S_main_color
+      .slider
+        background rgba(204,204,204,.5)
+        .el-dialog
+          background-color #fff
+          .el-dialog__header
+            background-color #DCE7F3
+            .el-dialog__title
+              color #333
+      .el-form.login
+        .el-form-item
+          .el-input__inner
+            background-color #eee
+            border-color transparent
+            color #1C1F32
+          .el-checkbox__inner
+            background-color transparent
+            border-color #8B9197
+          .el-checkbox__label
+            color #8B9197
+          .el-checkbox
+            &.is-checked
+              .el-checkbox__label
+                color S_main_color
+          .el-checkbox__input
+            &.is-checked
+              .el-checkbox__inner
+                border-color S_main_color
+                background S_main_color url('../../../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
+          /*密码*/
+          &.password
+            /*记住账号*/
+          &.remember-pass
+            .inner-box
+              .forget-pass
+                color S_main_color
+          &.error-tips-form
+            .iconfont
+              color S_error_color
+            .error-tips
+              color S_error_color
+          &.submit
+            .el-button
+              color S_day_bg
+              background linear-gradient(81deg,rgba(106,182,244,1), rgba(49,135,218,1))
+              box-shadow 0 3px 6px 0 rgba(26,42,71,0.27)
+              border none
+              &.is-disabled
+                color #fff
+                background rgba(204,204,204,1)
+                box-shadow0px 3px 8px 0 rgba(26,42,71,0.4)
+        .bottom
+          span
+            color #8B9197
+          a
+            color S_main_color
 </style>
