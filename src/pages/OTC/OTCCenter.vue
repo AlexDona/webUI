@@ -857,8 +857,8 @@ export default {
     await this.getOTCPutUpOrdersList()
     // 4.0 用户登录了刷新用户个人信息
     if (this.isLogin) {
+      // 刷新用户信息
       await this.REFRESH_USER_INFO_ACTION()
-      this.reflashUserInfo() // 刷新用户信息
       // 7.0 登陆后进页面待币种和法币都有id的时候调接口渲染查看弹窗及头部可用冻结数据
       await this.getViewDialogInfo()
     }
@@ -1007,10 +1007,6 @@ export default {
         return false
       }
       this.activeName = 'first'
-    },
-    // 刷新个人信息
-    reflashUserInfo () {
-      this.REFRESH_USER_INFO_ACTION()
     },
     // 查询用户是否可以发单状态
     async getUserPutUpOrderStatus () {

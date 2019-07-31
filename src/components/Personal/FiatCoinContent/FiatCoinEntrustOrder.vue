@@ -271,8 +271,9 @@ export default {
       }
 
       > .entrust-table-body {
+        position: relative;
         min-height: 539px;
-        padding: 30px 0;
+        padding: 0 0 35px;
         margin-top: -10px;
 
         > .entrust-list-content {
@@ -307,7 +308,10 @@ export default {
         }
 
         > .pages {
-          margin-top: 50px;
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
         }
       }
     }
