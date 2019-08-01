@@ -621,7 +621,7 @@ export const formatNumber = (val, targetPointLength = 4) => {
     valArr4 = newVal2.split('.')
     newVal4 = valArr4[0]
     newVal5 = newVal2.split('.')[1].substr(0, targetPointLength)
-    finalVal = newVal4 + '.' + newVal5
+    finalVal = newVal5 ? `${newVal4}.${newVal5}` : newVal4
   } else {
     valArr3 = val.split('')
     newVal3 = ''

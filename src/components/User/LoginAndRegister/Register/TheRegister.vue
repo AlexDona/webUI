@@ -82,6 +82,8 @@
             :placeholder="isPhoneRegist ? $t(phonePlaceHolder) : $t(emailPlaceHolder)"
             autocomplete="off"
             @keyup.enter.native="submitForm"
+            @keyup.native="formatValidateCode"
+            @input.native="formatValidateCode"
             clearable
           )
             // 发送验证码
@@ -107,12 +109,13 @@
           prop="password"
         )
           el-input(
-          type="password"
-          v-model="form.password"
-          :placeholder="$t('M.login_tips2')"
-          autocomplete="off"
-          @keyup.enter.native="submitForm"
-          clearable
+            type="password"
+            v-model="form.password"
+            :placeholder="$t('M.login_tips2')"
+            autocomplete="off"
+            @keyup.enter.native="submitForm"
+            clearable
+            maxlength="20"
           )
         //  确认密码
         el-form-item(
@@ -121,12 +124,13 @@
           prop="checkPassword"
         )
           el-input(
-          type="password"
-          v-model="form.checkPassword"
-          :placeholder="$t('M.login_welcome_register_pwd2')"
-          autocomplete="off"
-          @keyup.enter.native="submitForm"
-          clearable
+            type="password"
+            v-model="form.checkPassword"
+            :placeholder="$t('M.login_welcome_register_pwd2')"
+            autocomplete="off"
+            @keyup.enter.native="submitForm"
+            clearable
+            maxlength="20"
           )
         //  邀请码
         el-form-item(
@@ -384,6 +388,9 @@ export default {
       'CHANGE_FOOTER_ACTIVE_NAME',
       'SET_COUNTRY_AREA_LIST'
     ]),
+    formatValidateCode () {
+      this.form.validateCode = formatNumber(this.form.validateCode, 0)
+    },
     formatPhone () {
       this.form.phone = formatNumber(this.form.phone, 0)
     },

@@ -25,6 +25,7 @@
           @keyup.enter.native="next"
           :placeholder="$t('M.forget_pass_username_tips')"
           clearable
+          maxlength="50"
         )
       el-form-item.error-tips-form(
         label=""
