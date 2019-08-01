@@ -805,7 +805,7 @@ export default {
 
         .inquire-button {
           .el-button {
-            background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            background: $nightButtonBgColor1;
           }
         }
 
@@ -937,7 +937,7 @@ export default {
 
         .inquire-button {
           .el-button {
-            background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            background: $dayButtonBgColor2;
           }
         }
 

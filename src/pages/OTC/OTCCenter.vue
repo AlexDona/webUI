@@ -2004,7 +2004,7 @@ export default {
       /* 发布订单按钮 */
       .person-info-box {
         .el-button {
-          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          background: $nightButtonBgColor1;
         }
       }
 
@@ -2319,7 +2319,7 @@ export default {
       /* 发布订单按钮 */
       .person-info-box {
         .el-button {
-          background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
+          background: $dayButtonBgColor2;
         }
       }
 

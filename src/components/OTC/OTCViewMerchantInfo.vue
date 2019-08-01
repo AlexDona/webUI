@@ -854,7 +854,7 @@ export default {
                       background-color S_color6
                     .confirm
                       color S_day_bg
-                      background linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+                      background S_night_button_bg_color1
     &.day
       .inner-box
         > .left-info
@@ -943,5 +943,5 @@ export default {
                       background-color S_day_bg
                     .confirm
                       color S_day_bg
-                      background linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+                      background S_day_button_bg_color2
 </style>

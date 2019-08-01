@@ -430,7 +430,7 @@ export default {
 
                   .confirm {
                     color: $mainColorOfWhite;
-                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                    background: $nightButtonBgColor1;
                   }
                 }
               }
@@ -488,7 +488,7 @@ export default {
 
                   .confirm {
                     color: $mainColorOfWhite;
-                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                    background: $dayButtonBgColor2;
                   }
                 }
               }
