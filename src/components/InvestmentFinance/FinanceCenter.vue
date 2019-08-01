@@ -451,7 +451,7 @@
                     {{$t('M.comm_login')}}
                   </router-link>
                   {{$t('M.finance_or')}}
-                  <router-link to = '/register'>
+                  <router-link :to="`/${$routes_X.login}/${$routes_X.register}/default}`">
                     {{$t('M.comm_register_time')}}
                   </router-link>
                   {{$t('M.finance_loginTipsTwo')}}
@@ -613,7 +613,7 @@
                     {{$t('M.comm_login')}}
                   </router-link>
                   {{$t('M.finance_or')}}
-                  <router-link to = '/register'>
+                  <router-link :to="`/${$routes_X.login}/${$routes_X.register}/default}`">
                     {{$t('M.comm_register_time')}}
                   </router-link>
                   {{$t('M.finance_loginTipsTwo')}}

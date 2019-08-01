@@ -14,7 +14,7 @@ import {
 } from '../utils/api/personal'
 
 import {
-  sendMsgByPhoneOrEmial,
+  sendMsgByPhoneOrEmail,
   isNeedPayPassowrd
   // sendByPhoneOrEmial
 } from '../utils/api/user'
@@ -58,10 +58,16 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
   const {message} = meta
   if (meta) {
     if (!meta.success && !errorTip) {
-      if (meta.code !== 500 && !store.state.user.isTokenDisable) {
+      if (meta.code !== 500) {
+        let messageCount = document.querySelectorAll('.el-message.el-message--error').length
+        if (messageCount > 1) {
+          for (let i = 0; i < messageCount; i++) {
+            document.querySelectorAll('.el-message.el-message--error')[i].style.display = 'none'
+          }
+        }
         ElementUI.Message({
           type: 'error',
-          // duration: 5000000,
+          // duration: 1500000,
           message: message
         })
       }
@@ -69,7 +75,6 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
       switch (meta.code) {
         case 401:
           store.commit('USER_LOGOUT')
-          store.commit('CHANGE_TOKEN_AVAILABILITY', true)
           that.$router.push({path: '/login'})
           break
         case 500:
@@ -144,7 +149,7 @@ export const validateNumForUserInput = (type, targetNum) => {
 }
 // api 发送验证码（短信、邮箱）
 export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 0, callback) => {
-  const data = await sendMsgByPhoneOrEmial(type, params)
+  const data = await sendMsgByPhoneOrEmail(type, params)
   if (!returnAjaxMsg(data, that)) {
     return false
   } else {

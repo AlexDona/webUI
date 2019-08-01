@@ -5,6 +5,8 @@
       'day':$theme_S_X == 'day',
       'night':$theme_S_X == 'night'
     }"
+    @mouseleave="mouseLeave"
+    @mouseenter="mouseOver"
   >
     <div
       class="title font-size16 cursor-pointer"
@@ -35,6 +37,7 @@ export default {
   // props,
   data () {
     return {
+      isShowToolTips: true,
       contentShowStatus: true,
       buys: [],
       sells: [],
@@ -58,6 +61,8 @@ export default {
           borderColor: '#262A42',
           borderRadius: 3,
           padding: 10,
+          hideDelay: 8000,
+          confine: true,
           style: {
             // color: '#c7cce6',
             // color: '#000',
@@ -81,10 +86,10 @@ export default {
           formatter: (params) => {
             // 委托价
             // 委托量
-            return `
+            return this.isShowToolTips ? `
                       ${this.$t('M.trade_coin_entrusted_price')}：${this.$scientificToNumber(params[0].data[0])}<br/>
                       ${this.$t('M.trade_coin_entrusted_amount')}：${this.$scientificToNumber(params[0].data[1])}
-                      `
+                      ` : ''
           }
         },
         xAxis: {
@@ -165,14 +170,20 @@ export default {
       ]
     }
   },
-  created () {
-  },
-  mounted () {
-  },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // created () {},
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
+    mouseOver (e) {
+      this.options.tooltip.hideDelay = 10000
+      this.resetChart(this.options)
+    },
+    mouseLeave () {
+      this.options.tooltip.hideDelay = 100
+      this.resetChart(this.options)
+    },
     // 切换内容显示隐藏
     toggleShowContent () {
       this.contentShowStatus = !this.contentShowStatus
@@ -183,7 +194,6 @@ export default {
       for (let k in params) {
         this.options[k] = params[k]
       }
-      // console.log(params)
       this.depthCharts.setOption(this.options)
       window.onresize = this.depthCharts.resize
     },
