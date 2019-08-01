@@ -2111,7 +2111,7 @@ export default {
           }
 
           .button-color {
-            color: rgba(255, 255, 255, .7);
+            color: rgba(255, 255, 255, 1);
             background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
           }
 
@@ -2345,7 +2345,7 @@ export default {
       }
 
       .button-color {
-        color: rgba(255, 255, 255, .7);
+        color: rgba(255, 255, 255, 1);
         background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
       }
 
@@ -2396,7 +2396,7 @@ export default {
           }
 
           .button-color {
-            color: rgba(255, 255, 255, .7);
+            color: rgba(255, 255, 255, 1);
             background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
           }
 
