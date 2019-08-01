@@ -8,7 +8,7 @@ import {createBaseRoute, routesVariable as routers} from './routesVariable'
 export default [
   {
     ...createBaseRoute({
-      name: `m/${routers.login}`
+      name: `${routers.login}/m`
     }),
     component: () => import(/* webpackChunkName: "mobile-login" */ '../mobile/components/User/Login/TheLoginM')
   }

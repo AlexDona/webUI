@@ -32,7 +32,7 @@ import {
   mapState
 } from 'vuex'
 import {getNavigationsAJAX} from './utils/api/common'
-import {encrypt} from './utils/encrypt'
+// import {encrypt} from './utils/encrypt'
 export default {
   name: 'App',
   components: {
@@ -52,7 +52,7 @@ export default {
     // require('../static/css/common.css')
     // require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
     // require('../static/css/theme/night/Common/HeaderCommonNight.css')
-    console.log(encrypt('123456'))
+    // console.log(encrypt('123456'))
     await this.getNavigations()
     // 取主题
     const theme = getStore('theme') || 'night'
@@ -171,7 +171,7 @@ export default {
       }
       this.isNeedNotice = path === `/${this.$routes_X.home}` || path === '/' ? 1 : 0
       this.isNeedHeader = (
-        path !== `/${this.$routes_X.login}` &&
+        !path.startsWith(`/${this.$routes_X.login}`) &&
         !path.startsWith('/register') &&
         path !== '/downloadApp' &&
         !path.startsWith('/invitationRegister')

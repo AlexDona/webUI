@@ -127,6 +127,7 @@ import CountDownButton from '../../Common/CountDownCommon'
 import {sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
 import mixins from '../../../mixins/user'
 import {updatePasswordAJAX} from '../../../utils/api/user'
+import {encrypt} from '../../../utils/encrypt'
 export default {
   name: 'the-forget-pass-step2',
   mixins: [mixins],
@@ -327,7 +328,7 @@ export default {
       const {phoneCode, emailCode, googleCode, password} = this.form
       const params = {
         phoneCode,
-        newPassword: password,
+        newPassword: encrypt(password),
         mailCode: emailCode,
         googleCode
       }

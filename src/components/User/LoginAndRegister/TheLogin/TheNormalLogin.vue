@@ -112,6 +112,7 @@ import {
   mapMutations
 } from 'vuex'
 import {detectOS, getUserAgent, getStore} from '../../../../utils/index'
+import {encrypt} from '../../../../utils/encrypt'
 export default {
   name: 'the-normal-login',
   mixins: [mixins],
@@ -240,7 +241,7 @@ export default {
       // let params = new FormData()
       let params = {
         userName: username,
-        password
+        password: encrypt(password)
       }
 
       params.type = EMAIL_REG.test(username) ? 'email' : 'phone'
@@ -257,7 +258,8 @@ export default {
           googleEnable,
           userId,
           phone,
-          email
+          email,
+          notNeedLogin: true
         }
       }
       this.SET_STEP1_INFO({

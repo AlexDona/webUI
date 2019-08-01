@@ -200,6 +200,7 @@ import {
 import {sendPhoneOrEmailCodeAjax, validateNumForUserInput} from '../../../../utils/commonFunc'
 import {newCheckUserExist, newRegisterAJAX} from '../../../../utils/api/user'
 import {formatNumber} from '../../../../utils'
+import {encrypt} from '../../../../utils/encrypt'
 export default {
   name: 'the-register-container',
   mixins: [mixins],
@@ -493,7 +494,7 @@ export default {
       let params = {
         country: this.activeNationCode,
         userName: this.isPhoneRegist ? phone : email,
-        password,
+        password: encrypt(password),
         checkCode: validateCode,
         inviter: this.currentInviteId,
         regType: this.regType

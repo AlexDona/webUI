@@ -7,6 +7,7 @@
   .the-normal-login(
   :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
   )
+    HeaderM
     // 切换登录方式
     .header
       // 账号登录
@@ -100,10 +101,11 @@
       TheImageDialog(@loginForStep2="loginForStep2")
 </template>
 <script>
+import HeaderM from '../../Common/HeaderM'
 import TheCommonSlider from '../../../../components/Common/CommonSlider'
 import CountDownButton from '../../../../components/Common/CountDownCommon'
-import TheValidateDialog from './TheLoginDialog'
-import TheImageDialog from './TheImageDialog'
+import TheValidateDialog from './TheLoginDialogM'
+import TheImageDialog from './TheImageDialogM'
 import {newLoginForStep1AJAX, newLoginForStep2AJAX} from '../../../../utils/api/user'
 import {EMAIL_REG, GOOGLE_REG} from '../../../../utils/regExp'
 import mixins from '../../../../mixins/user'
@@ -119,7 +121,8 @@ export default {
     TheCommonSlider,
     CountDownButton,
     TheValidateDialog,
-    TheImageDialog
+    TheImageDialog,
+    HeaderM
   },
   // props,
   data () {
@@ -378,7 +381,7 @@ export default {
 <style scoped lang="stylus">
   @import '../../../../assets/CSS/index.styl'
   .the-normal-login
-    width S_userWidth
+    width 100%
     height 442px
     border-radius 10px
     overflow hidden
