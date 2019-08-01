@@ -158,8 +158,6 @@
                       >
                       <span class="blue storageTime">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
                     </div>
-                    <!--{{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day ? formLabelAlign.day : 0)}}-->
-                    <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
                   </el-form-item>
                   <!-- 存多少 -->
                   <el-form-item
@@ -1553,7 +1551,6 @@ export default {
         .el-button--primary {
           margin-left: 40px;
           border: none;
-          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
 
@@ -1797,6 +1794,13 @@ export default {
       .finance-form-header {
         .el-input__inner {
           background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
+        }
+      }
+
+      /* 存币详情弹窗确认按钮背景色 */
+      .dialogStyle {
+        .el-button--primary {
+          background: $nightButtonBgColor1;
         }
       }
     }
@@ -2058,6 +2062,13 @@ export default {
 
     .black {
       color: $dayMainTitleColor;
+    }
+
+    /* 存币详情弹窗确认按钮背景色 */
+    .dialogStyle {
+      .el-button--primary {
+        background: $dayButtonBgColor2;
+      }
     }
   }
 
