@@ -525,7 +525,7 @@ export default {
     }),
     // 映射真实 邀请码
     currentInviteId () {
-      return this.inviteId && this.inviteId !== 'default' ? this.inviteId : ''
+      return this.inviteId && this.inviteId !== 'default' ? this.inviteId : this.form.inviteCode
     },
     isSubmitButtonDisabled () {
       const {username, password} = this.form
@@ -541,6 +541,9 @@ export default {
     }
   },
   watch: {
+    currentInviteId (New) {
+      console.log(New)
+    },
     $language_S_X () {
       this.loginErrorTips = ''
     },

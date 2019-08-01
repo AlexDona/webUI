@@ -167,7 +167,7 @@ export default {
       },
 
       // 是否记住账号
-      isRememberUsername: Boolean(getStore('username')),
+      isRememberUsername: getStore('rememberUserName') == 'true',
       username: 'username',
       // 是否显示滑块
       isShowSlider: false,
@@ -180,6 +180,9 @@ export default {
     if (this.$isLogin_S_X) {
       this.$goToPage(`/${this.$routes_X.home}`)
     }
+
+    // this.isRememberUserName = this.$getStore('rememberUserName') == 'true'
+
     this.getLocalUserName()
   },
   // mounted () {}
@@ -202,21 +205,22 @@ export default {
     // 获取本地记录密码
     getLocalUserName () {
       let username = this.$getStore(this.username)
-      this.isRememberUserName = Boolean(username)
+      this.isRememberUserName = this.$getStore('rememberUserName') == 'true'
       if (this.isRememberUserName) {
-        this.form.username = username
+        this.$nextTick(() => {
+          this.form.username = username
+        })
         this.$forceUpdate()
       }
     },
     submitForm () {
-      // this.$setStore(this.username, this.form.username)
       this.$refs[this.formRef].validate((valid) => {
         if (!valid) return
+        this.$setStore(this.username, this.form.username)
         this.loginForStep1()
       })
     },
     successCallback: _.debounce(async function () {
-      console.log(this)
       this.isShowSlider = false
       // this.isShowStep3Dialog = true
       const abnormalLogin = this.$firstLogin_X || !this.$loginIpEquals_X || this.$isBindGoogle_X
@@ -224,7 +228,6 @@ export default {
         this.$UPDATE_LOGIN_IMAGE_DIALOG_STATUS_M_X(true)
       } else if (abnormalLogin) {
         // 登录第三步(第一次登录、异常ip)
-        // this.isShowStep3Dialog = true
         this.$UPDATE_LOGIN_STEP2_DIALOG_STATUS_X(true)
       } else {
         this.loginForStep2({})
@@ -238,7 +241,6 @@ export default {
       const {username, password} = this.form
 
       // 调用第一接口
-      // let params = new FormData()
       let params = {
         userName: username,
         password: encrypt(password)
@@ -247,8 +249,6 @@ export default {
       params.type = EMAIL_REG.test(username) ? 'email' : 'phone'
       const data = await newLoginForStep1AJAX(params)
       if (!data) return
-
-      this.isRememberUserName ? this.$setStore(this.username, this.form.username) : this.$removeStore(this.username)
 
       const {googleEnable, mailEnable, phoneEnable, userId, phone, email} = _.get(data, 'data')
       let step1UserInfo = {
@@ -367,10 +367,10 @@ export default {
       }
     },
     isRememberUsername (New) {
-      this.$forceUpdate()
+      this.$setStore('rememberUserName', New)
       this.$nextTick(() => {
         const { username } = this.form
-        New && username ? this.$setStore(this.username, username) : this.$removeStore(this.username)
+        New && username ? this.$setStore(this.username, username) : null
       })
     }
   }
