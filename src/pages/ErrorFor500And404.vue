@@ -56,12 +56,10 @@ export default {
       this.is500 = true
       if (this.routerTo !== '/') {
         localStorage.setItem('routerTo', this.routerTo)
-      } else {
-        this.$router.replace(localStorage.getItem('routerTo'))
       }
-    }
-    window.onbeforeunload = e => {
-      this.beforeunloadFn(e)
+      window.onbeforeunload = e => {
+        this.beforeunloadFn(e)
+      }
     }
   },
   /* mounted () {},

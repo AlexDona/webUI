@@ -238,6 +238,7 @@ export default {
     &.night {
       color: #a9bed4;
       background: url(../../assets/develop/applaction-bg.png) no-repeat center center;
+      background-size: 100% 105%;
 
       > .inner-box {
         > .bottom {

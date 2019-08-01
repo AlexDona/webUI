@@ -271,8 +271,9 @@ export default {
       }
 
       > .entrust-table-body {
+        position: relative;
         min-height: 539px;
-        padding: 30px 0;
+        padding: 0 0 35px;
         margin-top: -10px;
 
         > .entrust-list-content {
@@ -307,7 +308,10 @@ export default {
         }
 
         > .pages {
-          margin-top: 50px;
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
         }
       }
     }
@@ -426,7 +430,7 @@ export default {
 
                   .confirm {
                     color: $mainColorOfWhite;
-                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                    background: $nightButtonBgColor1;
                   }
                 }
               }
@@ -484,7 +488,7 @@ export default {
 
                   .confirm {
                     color: $mainColorOfWhite;
-                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                    background: $dayButtonBgColor2;
                   }
                 }
               }

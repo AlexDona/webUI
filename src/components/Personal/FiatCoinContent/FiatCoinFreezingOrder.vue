@@ -180,6 +180,7 @@
       </div>
       <!--分页-->
       <el-pagination
+        class="pages"
         background
         v-show="OTCFreezingOrderList.length"
         layout="prev, pager, next"
@@ -264,8 +265,9 @@ export default {
 
   .fiat-freezing-order-box {
     > .freezing-order-content {
+      position: relative;
       min-height: 574px;
-      padding: 0 10px 10px;
+      padding: 0 10px 35px;
 
       > .freezing-table-head {
         display: flex;
@@ -368,6 +370,13 @@ export default {
       > .no-data {
         height: 475px;
         line-height: 475px;
+      }
+
+      .pages {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
 

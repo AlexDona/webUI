@@ -155,11 +155,17 @@
           </div>
           <div class="info-middle box-sizing">
             <!-- 买单显示：卖家信息 -->
-            <p class="text-info text-blue" v-if="item.orderType === 'BUY'">
+            <p
+              class="text-info text-blue"
+              v-if="item.orderType === 'BUY'"
+            >
               {{$t('M.otc_stocks_seller')}}
             </p>
             <!-- 卖单显示：买家信息 -->
-            <p class="text-info text-blue" v-if="item.orderType === 'SELL'">
+            <p
+              class="text-info text-blue"
+              v-if="item.orderType === 'SELL'"
+            >
               {{$t('M.otc_stocks_buyinfo')}}
             </p>
             <!-- 姓名 -->
@@ -267,6 +273,7 @@
       </div>
       <!--分页-->
       <el-pagination
+        class="pages"
         background
         v-show="completedOrdersList.length"
         layout="prev, pager, next"
@@ -344,8 +351,9 @@ export default {
 
   .fiat-canceled-order-box {
     > .canceled-order-content {
+      position: relative;
       min-height: 574px;
-      padding: 0 10px 10px;
+      padding: 0 10px 35px;
 
       > .canceled-table-head {
         height: 35px;
@@ -444,6 +452,13 @@ export default {
       > .no-data {
         height: 475px;
         line-height: 475px;
+      }
+
+      .pages {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
 

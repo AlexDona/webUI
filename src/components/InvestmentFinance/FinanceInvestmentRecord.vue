@@ -624,7 +624,7 @@ export default {
       background-color: #f5f5fa;
 
       > .inner-box {
-        background-color: #fff;
+        /* background-color: #fff; */
       }
 
       /deep/ {

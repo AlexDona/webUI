@@ -12,7 +12,10 @@
         :key="index"
       >
         <!-- 订单列表 ：1.0 买单 -->
-        <div class="order" v-if="!showOrderAppeal[index] && item.orderType === 'BUY'">
+        <div
+          class="order"
+          v-if="!showOrderAppeal[index] && item.orderType === 'BUY'"
+        >
           <!-- 1.1 表头 -->
           <div class="order-list-head">
             <div class="left">
@@ -750,12 +753,16 @@
         </div>
       </div>
       <!-- 二、暂无数据 -->
-      <div class="no-data font-size12" v-if="!tradingOrderList.length">
+      <div
+        class="no-data font-size12"
+        v-if="!tradingOrderList.length"
+      >
         <!--暂无数据-->
         {{ $t('M.comm_no_data') }}
       </div>
       <!-- 三、分页-->
       <el-pagination
+        class="pages"
         background
         v-show="tradingOrderList.length"
         layout="prev, pager, next"
@@ -1587,8 +1594,9 @@ export default {
     margin-top: -10px;
 
     > .fiat-trading-order-content {
+      position: relative;
       min-height: 584px;
-      padding: 0 10px 10px;
+      padding: 0 10px 35px;
 
       .button {
         width: 290px;
@@ -1886,6 +1894,14 @@ export default {
     }
 
     /deep/ {
+      /* 分页 */
+      .el-pagination.is-background.pages {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
       .appeal {
         .appeal-body {
           .appeal-body-content {

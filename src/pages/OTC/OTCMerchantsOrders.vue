@@ -151,202 +151,205 @@
         </div>
         <!-- 下部分表格内容 -->
         <div class="orders-main-bottom">
-          <el-table
-            :data = "merchantsOrdersList"
-            style = "width: 100%;"
-            :empty-text="$t('M.comm_no_data')"
-          >
-            <!-- 交易日期 -->
-            <el-table-column
-              :label = "$t('M.otc_transaction_data')"
-              width="95px"
+          <!--1 表格-->
+          <div class="table-box">
+            <el-table
+              :data = "merchantsOrdersList"
+              style = "width: 100%;"
+              :empty-text="$t('M.comm_no_data')"
             >
-              <template slot-scope = "s">
-                <div>{{timeFormatting(s.row.createTime)}}</div>
-              </template>
-            </el-table-column>
-            <!-- 广告id -->
-            <el-table-column
-              :label = "$t('M.otc_AD_ID')"
-              width="100"
-            >
-              <template slot-scope = "s">
-                <div>{{s.row.entrustSequence}}</div>
-              </template>
-            </el-table-column>
-            <!-- 订单号 -->
-            <el-table-column
-              :label = "$t('M.otc_MerchantsOrders_orderNum')"
-              width="129"
-            >
-              <template slot-scope = "s">
-                <div>{{s.row.orderSequence}}</div>
-              </template>
-            </el-table-column>
-            <!-- 币种 -->
-            <el-table-column
-              :label = "$t('M.otc_Merchants_Orders_market')"
-              width="80"
-            >
-              <template slot-scope = "s">
-                <div>{{s.row.coinName}}</div>
-              </template>
-            </el-table-column>
-            <!-- 交易类型 -->
-            <el-table-column
-              :label = "$t('M.otc_type_ransaction')"
-              width="90"
-            >
-              <template slot-scope = "s">
-                <div
-                  v-if="s.row.orderType === 'BUY'"
-                  :class="{red:s.row.orderType === 'BUY'}"
-                >
-                <!-- 购买 -->
-                  {{$t('M.comm_buying')}}
-                </div>
-                <div
-                  v-if="s.row.orderType === 'SELL'"
-                  :class="{green:s.row.orderType === 'SELL'}"
-                >
-                  <!-- 出售 -->
-                  {{$t('M.comm_offering')}}
-                </div>
-              </template>
-            </el-table-column>
-            <!-- 订单状态 -->
-            <!-- 状态 (未付款 PICKED 已付款 PAYED 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN) -->
-            <el-table-column
-              :label = "$t('M.otc_order_status')"
-              width="110"
-            >
-              <template slot-scope = "s">
-                <div v-show="s.row.status === 'PICKED'">
-                  {{$t('M.otc_enum_status_weifukuan')}}
-                </div>
-                <div v-show="s.row.status === 'PAYED'">
-                  {{$t('M.otc_enum_status_yifukuan')}}
-                </div>
-                <div v-show="s.row.status === 'COMPLETED'">
-                  {{$t('M.otc_enum_status_yiwancheng')}}
-                </div>
-                <div v-show="s.row.status === 'CANCELED'">
-                  {{$t('M.otc_enum_status_yiquxiao')}}
-                </div>
-                <div v-show="s.row.status === 'FROZEN'">
-                  {{$t('M.otc_freezing')}}
-                </div>
-              </template>
-            </el-table-column>
-            <!-- 货币 -->
-            <el-table-column
-              :label = "$t('M.otc_MerchantsOrders_currecy')"
-              width="83"
-            >
-              <template slot-scope = "s">
-                <div>{{s.row.currencyName}}</div>
-              </template>
-            </el-table-column>
-            <!-- 支付方式 -->
-            <el-table-column
-              :label = "$t('M.otc_index_Payment_method')"
-              width="123"
-            >
-              <template slot-scope = "s">
-                <div>
-                  <!-- 支付宝 -->
-                  <IconFontCommon
-                    class="font-size16"
-                    iconName="icon-zhifubao1"
-                    v-show="s.row.payType === 'Alipay'"
-                  />
-                  <!-- 微信 -->
-                  <IconFontCommon
-                    class="font-size16"
-                    iconName="icon-weixin1"
-                    v-show="s.row.payType === 'Wechat'"
-                  />
-                  <!-- 银行卡 -->
-                  <IconFontCommon
-                    class="font-size16"
-                    iconName="icon-yinhangqia"
-                    v-show="s.row.payType === 'Bankcard'"
-                  />
-                  <!-- 4西联汇款 -->
-                  <span v-show="s.row.payType === 'WestUnion'">
+              <!-- 交易日期 -->
+              <el-table-column
+                :label = "$t('M.otc_transaction_data')"
+                width="95px"
+              >
+                <template slot-scope = "s">
+                  <div>{{timeFormatting(s.row.createTime)}}</div>
+                </template>
+              </el-table-column>
+              <!-- 广告id -->
+              <el-table-column
+                :label = "$t('M.otc_AD_ID')"
+                width="100"
+              >
+                <template slot-scope = "s">
+                  <div>{{s.row.entrustSequence}}</div>
+                </template>
+              </el-table-column>
+              <!-- 订单号 -->
+              <el-table-column
+                :label = "$t('M.otc_MerchantsOrders_orderNum')"
+                width="129"
+              >
+                <template slot-scope = "s">
+                  <div>{{s.row.orderSequence}}</div>
+                </template>
+              </el-table-column>
+              <!-- 币种 -->
+              <el-table-column
+                :label = "$t('M.otc_Merchants_Orders_market')"
+                width="80"
+              >
+                <template slot-scope = "s">
+                  <div>{{s.row.coinName}}</div>
+                </template>
+              </el-table-column>
+              <!-- 交易类型 -->
+              <el-table-column
+                :label = "$t('M.otc_type_ransaction')"
+                width="90"
+              >
+                <template slot-scope = "s">
+                  <div
+                    v-if="s.row.orderType === 'BUY'"
+                    :class="{red:s.row.orderType === 'BUY'}"
+                  >
+                    <!-- 购买 -->
+                    {{$t('M.comm_buying')}}
+                  </div>
+                  <div
+                    v-if="s.row.orderType === 'SELL'"
+                    :class="{green:s.row.orderType === 'SELL'}"
+                  >
+                    <!-- 出售 -->
+                    {{$t('M.comm_offering')}}
+                  </div>
+                </template>
+              </el-table-column>
+              <!-- 订单状态 -->
+              <!-- 状态 (未付款 PICKED 已付款 PAYED 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN) -->
+              <el-table-column
+                :label = "$t('M.otc_order_status')"
+                width="110"
+              >
+                <template slot-scope = "s">
+                  <div v-show="s.row.status === 'PICKED'">
+                    {{$t('M.otc_enum_status_weifukuan')}}
+                  </div>
+                  <div v-show="s.row.status === 'PAYED'">
+                    {{$t('M.otc_enum_status_yifukuan')}}
+                  </div>
+                  <div v-show="s.row.status === 'COMPLETED'">
+                    {{$t('M.otc_enum_status_yiwancheng')}}
+                  </div>
+                  <div v-show="s.row.status === 'CANCELED'">
+                    {{$t('M.otc_enum_status_yiquxiao')}}
+                  </div>
+                  <div v-show="s.row.status === 'FROZEN'">
+                    {{$t('M.otc_freezing')}}
+                  </div>
+                </template>
+              </el-table-column>
+              <!-- 货币 -->
+              <el-table-column
+                :label = "$t('M.otc_MerchantsOrders_currecy')"
+                width="83"
+              >
+                <template slot-scope = "s">
+                  <div>{{s.row.currencyName}}</div>
+                </template>
+              </el-table-column>
+              <!-- 支付方式 -->
+              <el-table-column
+                :label = "$t('M.otc_index_Payment_method')"
+                width="123"
+              >
+                <template slot-scope = "s">
+                  <div>
+                    <!-- 支付宝 -->
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-zhifubao1"
+                      v-show="s.row.payType === 'Alipay'"
+                    />
+                    <!-- 微信 -->
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-weixin1"
+                      v-show="s.row.payType === 'Wechat'"
+                    />
+                    <!-- 银行卡 -->
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-yinhangqia"
+                      v-show="s.row.payType === 'Bankcard'"
+                    />
+                    <!-- 4西联汇款 -->
+                    <span v-show="s.row.payType === 'WestUnion'">
                     <img
                       src="../../assets/user/xilian.png"
                       class="xilian"
                     >
                   </span>
-                  <!--  5PAYPAL -->
-                  <IconFontCommon
-                    class="font-size16"
-                    iconName="icon-paypal"
-                    v-show="s.row.payType === 'PAYPAL'"
-                  />
-                </div>
-              </template>
-            </el-table-column>
-            <!-- 成交价 -->
-            <el-table-column
-              :label = "$t('M.otc_MerchantsOrders_transaction_price')"
+                    <!--  5PAYPAL -->
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-paypal"
+                      v-show="s.row.payType === 'PAYPAL'"
+                    />
+                  </div>
+                </template>
+              </el-table-column>
+              <!-- 成交价 -->
+              <el-table-column
+                :label = "$t('M.otc_MerchantsOrders_transaction_price')"
+              >
+                <template slot-scope = "s">
+                  <div>{{ $scientificToNumber(s.row.price) }}</div>
+                </template>
+              </el-table-column>
+              <!-- 成交量 -->
+              <el-table-column
+                :label = "$t('M.otc_MerchantsOrders_transaction_mount')"
+                width="100"
+              >
+                <template slot-scope = "s">
+                  <div>{{ $scientificToNumber(s.row.pickCount) }}</div>
+                </template>
+              </el-table-column>
+              <!-- 总金额 -->
+              <el-table-column
+                :label = "$t('M.otc_canceled_total')"
+              >
+                <template slot-scope = "s">
+                  <div>{{ $scientificToNumber(s.row.payAmount) }}</div>
+                </template>
+              </el-table-column>
+              <!-- 对方姓名 -->
+              <el-table-column
+                :label = "$t('M.otc_name_other')"
+                width="96"
+              >
+                <template slot-scope = "s">
+                  <div>{{s.row.otherName}}</div>
+                </template>
+              </el-table-column>
+              <!-- 申诉记录 -->
+              <el-table-column
+                :label = "$t('M.otc_record_complaint')"
+                width="120"
+                align="right"
+              >
+                <template slot-scope = "s">
+                  <div>
+                    {{s.row.appeal == 'YES'? $t('M.otc_MerchantsOrders_seller_appeal') : $t('M.otc_MerchantsOrders_no')}}
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <!--2 分页-->
+          <div class="page text-align-c">
+            <el-pagination
+              background
+              v-show="merchantsOrdersList.length"
+              layout="prev, pager, next"
+              :page-count="totalPages"
+              @current-change="changeCurrentPage"
+              :current-page="currentPage"
             >
-              <template slot-scope = "s">
-                <div>{{ $scientificToNumber(s.row.price) }}</div>
-              </template>
-            </el-table-column>
-            <!-- 成交量 -->
-            <el-table-column
-              :label = "$t('M.otc_MerchantsOrders_transaction_mount')"
-              width="100"
-            >
-              <template slot-scope = "s">
-                <div>{{ $scientificToNumber(s.row.pickCount) }}</div>
-              </template>
-            </el-table-column>
-            <!-- 总金额 -->
-            <el-table-column
-              :label = "$t('M.otc_canceled_total')"
-            >
-              <template slot-scope = "s">
-                <div>{{ $scientificToNumber(s.row.payAmount) }}</div>
-              </template>
-            </el-table-column>
-            <!-- 对方姓名 -->
-            <el-table-column
-              :label = "$t('M.otc_name_other')"
-              width="96"
-            >
-              <template slot-scope = "s">
-                <div>{{s.row.otherName}}</div>
-              </template>
-            </el-table-column>
-            <!-- 申诉记录 -->
-            <el-table-column
-              :label = "$t('M.otc_record_complaint')"
-              width="120"
-              align="right"
-            >
-              <template slot-scope = "s">
-                <div>
-                  {{s.row.appeal == 'YES'? $t('M.otc_MerchantsOrders_seller_appeal') : $t('M.otc_MerchantsOrders_no')}}
-                </div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-        <!--分页-->
-        <div class="page text-align-c">
-          <el-pagination
-            background
-            v-show="merchantsOrdersList.length"
-            layout="prev, pager, next"
-            :page-count="totalPages"
-            @current-change="changeCurrentPage"
-            :current-page="currentPage"
-          >
-          </el-pagination>
+            </el-pagination>
+          </div>
         </div>
       </div>
     </div>
@@ -632,15 +635,17 @@ export default {
         }
 
         > .orders-main-bottom {
-          min-height: 440px;
+          > .table-box {
+            height: 450px;
+          }
+
+          > .page {
+            padding: 10px 0;
+          }
 
           .xilian {
             vertical-align: middle;
           }
-        }
-
-        .page {
-          padding: 10px 0;
         }
       }
     }
@@ -703,10 +708,6 @@ export default {
       }
 
       .orders-main-bottom {
-        .el-table__header {
-          margin-bottom: 10px;
-        }
-
         .el-table {
           padding-bottom: 15px;
           font-size: 12px;
@@ -736,6 +737,10 @@ export default {
             border-bottom: 0;
           }
 
+          .el-table__header {
+            margin-bottom: 10px;
+          }
+
           .el-table__body {
             tr {
               &:last-of-type {
@@ -751,10 +756,10 @@ export default {
               }
             }
           }
-        }
 
-        .el-table__empty-block {
-          min-height: 500px;
+          .el-table__empty-block {
+            height: 450px;
+          }
         }
       }
     }
@@ -776,7 +781,7 @@ export default {
           }
 
           > .orders-main-bottom {
-            min-height: 440px;
+            background-color: $mainContentNightBgColor;
 
             .red {
               color: #d45858;
@@ -795,38 +800,38 @@ export default {
         }
 
         .el-input__inner {
-          background-color: #1c1f32;
+          background-color: $mainContentNightBgColor;
         }
 
         .inquire-button {
           .el-button {
-            background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            background: $nightButtonBgColor1;
           }
         }
 
         .orders-main-bottom {
           .el-table {
             color: #9da5b3;
-            background-color: #1c1f32;
+            background-color: $mainContentNightBgColor;
 
             tr {
-              background-color: #1c1f32;
+              background-color: $mainContentNightBgColor;
             }
 
             th {
-              background-color: #1c1f32;
+              background-color: $mainContentNightBgColor;
               box-shadow: 4px 4px 6px #191e28;
 
               &.is-leaf {
-                border-top: 1px solid #1c1f32;
-                border-bottom: 1px solid #1c1f32;
+                border-top: 1px solid $mainContentNightBgColor;
+                border-bottom: 1px solid $mainContentNightBgColor;
 
                 &:first-of-type {
-                  border-left: 1px solid #1c1f32;
+                  border-left: 1px solid $mainContentNightBgColor;
                 }
 
                 :nth-last-of-type(2) {
-                  border-right: 1px solid #1c1f32;
+                  border-right: 1px solid $mainContentNightBgColor;
                 }
               }
             }
@@ -835,17 +840,17 @@ export default {
               tr {
                 &:last-of-type {
                   td {
-                    border-bottom: 1px solid #1c1f32;
+                    border-bottom: 1px solid $mainContentNightBgColor;
                   }
                 }
 
                 td {
                   &:first-of-type {
-                    border-left: 1px solid #1c1f32;
+                    border-left: 1px solid $mainContentNightBgColor;
                   }
 
                   &:last-of-type {
-                    border-right: 1px solid #1c1f32;
+                    border-right: 1px solid $mainContentNightBgColor;
                   }
                 }
               }
@@ -895,7 +900,8 @@ export default {
           }
 
           > .orders-main-bottom {
-            min-height: 440px;
+            background-color: $mainColorOfWhite;
+            box-shadow: 0 0 6px $boxShadowColorOfDay;
 
             .red {
               color: $upColor;
@@ -931,7 +937,7 @@ export default {
 
         .inquire-button {
           .el-button {
-            background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            background: $dayButtonBgColor2;
           }
         }
 
@@ -949,7 +955,6 @@ export default {
           .el-table {
             color: $dayMainTitleColor;
             background-color: $mainDayBgColor;
-            box-shadow: 0 0 6px $boxShadowColorOfDay;
 
             thead {
               color: $fontColorSecondaryOfDay;

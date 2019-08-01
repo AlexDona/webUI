@@ -709,18 +709,23 @@ export default {
           .inquire-button {
             .el-button {
               color: $mainColorOfWhite;
-              background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+              background: $nightButtonBgColor1;
             }
           }
         }
 
         .el-input__inner {
+          color: $mainColorOfWhite;
           background-color: #2d3651;
         }
 
         .date-picker {
           .el-date-editor {
             .el-range-separator {
+              color: $mainColorOfWhite;
+            }
+
+            .el-range-input {
               color: $mainColorOfWhite;
             }
           }
@@ -780,7 +785,7 @@ export default {
         .orders-main-top {
           .inquire-button {
             .el-button {
-              background: $mainColor;
+              background: $dayButtonBgColor2;
             }
           }
         }

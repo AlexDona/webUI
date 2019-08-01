@@ -186,6 +186,7 @@
       </div>
       <!--分页-->
       <el-pagination
+        class="pages"
         background
         v-show="OTCCanceledOrderList.length"
         layout="prev, pager, next"
@@ -263,8 +264,9 @@ export default {
 
   .fiat-canceled-order-box {
     > .canceled-order-content {
+      position: relative;
       min-height: 574px;
-      padding: 0 10px 10px;
+      padding: 0 10px 35px;
 
       > .canceled-table-head {
         height: 35px;
@@ -363,6 +365,13 @@ export default {
       > .no-data {
         height: 475px;
         line-height: 475px;
+      }
+
+      .pages {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
 
