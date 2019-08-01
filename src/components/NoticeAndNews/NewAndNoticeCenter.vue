@@ -314,7 +314,6 @@ export default {
 
           .item-content {
             min-height: 901px;
-            box-shadow: 0 0 6px #cfd5df;
 
             > .content-list {
               > .content-item {
@@ -643,6 +642,8 @@ export default {
 
           > .inner-box {
             .item-content {
+              box-shadow: 0 0 6px #cfd5df;
+
               > .content-list {
                 > .content-item {
                   border-bottom: 1px solid $borderColorOfDay;
