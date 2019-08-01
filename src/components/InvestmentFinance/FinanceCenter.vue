@@ -11,9 +11,7 @@
         {{$t('M.comm_finance_center')}}
       </div>
     </div>
-    <div
-      class="inner-box"
-    >
+    <div  class="inner-box">
       <!-- 2.0 币种类型 -->
       <div class="finance-inner">
         <div class="kline-container">
@@ -171,12 +169,12 @@
                         <!--@input="changeAlignNumber('changeAlignNum', 'investAmountRef', $event)"-->
                       <!--&gt;-->
                       <input
-                        class="red text-indent"
+                        class="red text-indent saveHowMany"
                         type='text'
                         ref='changeAlignNum'
                         disabled
                       >
-                      <strong>{{selectedCoinName}}</strong>
+                      <strong class="saveHowManyUnit">{{selectedCoinName}}</strong>
                     </div>
                   </el-form-item>
                   <!-- 利率 -->
@@ -201,7 +199,7 @@
                         disabled
                       >
                       </el-input>
-                      <strong>{{selectedCoinName}}</strong>
+                      <strong class="expectedIncomeUnit">{{selectedCoinName}}</strong>
                     </div>
                   </el-form-item>
                   <!-- 怎么返 -->
@@ -242,7 +240,7 @@
                     <div class='invest-amount'>
                       <!-- 先息后本 -->
                         <!--:value="formLabelAlign.financialState === 'EQUAL_PRINCIPAL'? $t('M.finance_invest_interest') : $t('M.finance_xiAndben')"-->
-                      <span>
+                      <span class="returnPlan">
                         {{$t('M.finance_payment') + computedTime}}
                         <strong class="blue">
                           {{$t('M.finance_return_rate')}}
@@ -1501,10 +1499,6 @@ export default {
           text-align: center;
         }
 
-        .el-form-item__content {
-          color: #c0c4cc;
-        }
-
         .el-form-item {
           margin-bottom: 15px;
         }
@@ -1515,7 +1509,6 @@ export default {
           padding: 0;
           border: none !important;
           line-height: 30px;
-          background: transparent !important;
         }
 
         .el-input {
@@ -1528,20 +1521,12 @@ export default {
           width: 300px;
           height: 40px;
           padding-right: 5px;
-          border-bottom: 1px solid #20273d;
-
-          &:focus {
-            border: 1px solid #ccc;
-          }
         }
 
         .el-button {
           width: 110px;
           height: 40px;
-          border: 1px solid $mainColor;
           border-radius: 4px;
-          color: #fff;
-          background: none;
         }
 
         .el-dialog__footer {
@@ -1787,6 +1772,34 @@ export default {
                 color: $mainColorOfWhite;
               }
             }
+
+            .dialogStyle {
+              .el-form-item__content {
+                color: #c0c4cc;
+              }
+
+              .el-input__inner {
+                background: transparent !important;
+              }
+
+              .invest-amount {
+                border-bottom: 1px solid #20273d;
+
+                &:focus {
+                  border: 1px solid #ccc;
+                }
+              }
+
+              .el-button {
+                border: 1px solid $mainColor;
+                color: #fff;
+                background: none;
+              }
+
+              .el-button--primary {
+                background: $nightButtonBgColor1;
+              }
+            }
           }
         }
       }
@@ -1794,13 +1807,6 @@ export default {
       .finance-form-header {
         .el-input__inner {
           background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
-        }
-      }
-
-      /* 存币详情弹窗确认按钮背景色 */
-      .dialogStyle {
-        .el-button--primary {
-          background: $nightButtonBgColor1;
         }
       }
     }
@@ -1934,26 +1940,50 @@ export default {
         }
 
         .dialogStyle {
-          .invest-amount {
-            border: 1px solid rgba(236, 241, 248, 1);
-            background: #fff;
-          }
-
-          .el-button {
-            color: $mainColor;
-          }
-
-          .el-button--primary {
-            color: #fff;
-          }
-
-          .saveTime {
-            color: $dayMainTitleColor;
-          }
-
           .storageTime {
             width: 100px;
             text-align: right;
+          }
+
+          .invest-amount {
+            border-bottom: 1px solid $mainNightTitleColor;
+            background: #fff;
+
+            input {
+              color: $dayMainTitleColor !important;
+            }
+
+            .returnPlan {
+              color: $dayMainTitleColor !important;
+            }
+
+            .saveHowMany {
+              color: $upColor !important;
+            }
+
+            .saveHowManyUnit,
+            .expectedIncomeUnit {
+              color: $dayMainTitleColor;
+            }
+          }
+
+          .el-input__inner {
+            background: #fff !important;
+          }
+
+          .el-button {
+            border: 1px solid $mainColor;
+            color: $mainColor;
+
+            &:hover {
+              background-color: transparent;
+            }
+          }
+
+          .el-button--primary {
+            border: none;
+            color: #fff;
+            background: $dayButtonBgColor2;
           }
         }
 
@@ -2063,13 +2093,6 @@ export default {
     .black {
       color: $dayMainTitleColor;
     }
-
-    /* 存币详情弹窗确认按钮背景色 */
-    .dialogStyle {
-      .el-button--primary {
-        background: $dayButtonBgColor2;
-      }
-    }
   }
 
   .cancelBtn {
@@ -2082,7 +2105,7 @@ export default {
   }
 
   .green {
-    color: #008069;
+    color: $otcGreen;
   }
 
   .red {
