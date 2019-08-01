@@ -845,7 +845,7 @@ export default {
                 /* 发送验证码 */
                 .count-down
                   color S_main_color
-                  border-left 1px solid #aaa
+                  border-left 1px solid S_main_color
                   background-color #eee
                   &.is-disabled
                     span
@@ -862,7 +862,7 @@ export default {
                   background-color #eee
                   color #1C1F32
                   &:after
-                    border-left 1px solid #aaa
+                    border-left 1px solid S_main_color
             .el-input__inner
               background-color #eee
               border-color transparent
