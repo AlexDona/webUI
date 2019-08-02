@@ -493,7 +493,7 @@ export default {
                 /* 发送验证码 */
                 .count-down
                   color S_main_color
-                  border-left 1px solid S_main_color
+                  border-left 1px solid #aaa
                   &.is-disabled
                     span
                       color #333

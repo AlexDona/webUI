@@ -398,7 +398,7 @@ export default {
                   border-color #ddd
                   .count-down
                     color S_main_color
-                    border-left 1px solid S_main_color
+                    border-left 1px solid #aaa
                     &.is-disabled
                       color #333
                 &.submit-form
