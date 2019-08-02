@@ -1146,7 +1146,7 @@ export default {
       const data = await getOTCAvailableCurrency({})
       // 返回数据正确的逻辑
       if (!data) return false
-      // console.log(data)
+      console.log(data)
       if (data.data) {
         this.IWantToBuySellArr = getNestedData(data, 'data')
         if (this.IWantToBuySellArr.length) {

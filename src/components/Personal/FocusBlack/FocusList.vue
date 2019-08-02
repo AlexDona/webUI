@@ -63,16 +63,16 @@
               .operation-text.cursor-pointer(
                 @click="confirmCancelFocus(s.row.toId)"
               ) {{$t('M.focus_black_title3')}}
-        <!--分页-->
-        .page
-          el-pagination(
-            background
-            layout="prev, pager, next"
-            :current-page="currentPage"
-            :page-count="totalPages"
-            @current-change="changeCurrentPage"
-            v-show="totalPages - 1 > 0"
-          )
+      <!--分页-->
+      .page
+        el-pagination(
+          background
+          layout="prev, pager, next"
+          :current-page="currentPage"
+          :page-count="totalPages"
+          @current-change="changeCurrentPage"
+          v-show="totalPages - 1 > 0"
+        )
 </template>
 <script>
 import {mapState} from 'vuex'
@@ -162,6 +162,7 @@ export default {
     .inner-box
       .tab-one
         padding 0 30px
+        min-height 650px
         .name
           color S_main_color
           .merchant-icon
