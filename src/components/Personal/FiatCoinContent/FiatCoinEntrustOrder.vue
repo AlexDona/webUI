@@ -248,6 +248,8 @@ export default {
   @import '../../../assets/CSS/index';
 
   .fiat-entrust-order-box {
+    margin-top: -10px;
+
     .fiat-entrust-order-table {
       padding: 0 10px;
 
@@ -272,7 +274,7 @@ export default {
 
       > .entrust-table-body {
         position: relative;
-        min-height: 539px;
+        min-height: 549px;
         padding: 0 0 35px;
         margin-top: -10px;
 
@@ -453,6 +455,12 @@ export default {
 
         > .entrust-table-body {
           color: $dayMainTitleColor;
+
+          .entrust-list-content {
+            &:hover {
+              background-color: #f4f4f5;
+            }
+          }
         }
 
         .no-data {

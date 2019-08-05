@@ -6,6 +6,10 @@
     <div class="canceled-order-content">
       <!--表头属性-->
       <div class="canceled-table-head display-flex font-size12 box-sizing">
+        <span class="item order-type">
+          <!--类型-->
+          {{$t('M.otc_cancelOrder_type')}}
+        </span>
         <span class="item AD-ID">
           <!--广告id-->
           {{$t('M.otc_AD_ID')}}
@@ -13,10 +17,6 @@
         <span class="item order-time">
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
-        </span>
-        <span class="item order-type">
-          <!--类型-->
-          {{$t('M.otc_cancelOrder_type')}}
         </span>
         <span class="item order-coin">
           <!--币种-->
@@ -47,14 +47,6 @@
       >
         <!--表格上部分-->
         <div class="canceled-info-top display-flex">
-          <!-- 广告id -->
-          <span class="item AD-ID">
-            {{item.entrustSequence}}
-          </span>
-          <!-- 订单号 -->
-          <span class="item order-time">
-            {{item.orderSequence}}
-          </span>
           <!-- 类型 买入 -->
           <span
             class="item order-type"
@@ -71,21 +63,29 @@
           >
             {{$t('M.comm_sell')}}
           </span>
+          <!-- 广告id -->
+          <span class="item AD-ID">
+            {{item.entrustSequence}}
+          </span>
+          <!-- 订单号 -->
+          <span class="item order-time">
+            {{item.orderSequence}}
+          </span>
           <!-- 币种 -->
           <span class="item order-coin">
             {{item.coinName}}
           </span>
           <!-- 价格 -->
           <span class="item flex1">
-            {{item.price}}({{ item.currencyName }})
+            {{item.price}}{{ item.currencyName }}
           </span>
           <!-- 数量 -->
           <span class="item flex1">
-            {{item.pickCount}}({{ item.coinName }})
+            {{item.pickCount}}{{ item.coinName }}
           </span>
           <!-- 总金额 -->
           <span class="item flex1">
-            {{(item.price * item.pickCount).toFixed(2)}}({{ item.currencyName }})
+            {{(item.price * item.pickCount).toFixed(2)}}{{ item.currencyName }}
           </span>
           <!-- 下单时间 -->
           <span class="item order-time">
@@ -95,9 +95,9 @@
         <!--表格下部分-->
         <div class="canceled-info-bottom box-sizing">
           <div class="info-left box-sizing">
-            <!--付款信息-->
+            <!--收款信息-->
             <p class="text-info text-blue">
-              {{$t('M.otc_index_js2')}}
+              {{$t('M.otc_cancel_order_get_money_info')}}
             </p>
             <!--姓名-->
             <p class="text-info">
@@ -168,34 +168,36 @@
             >
               {{$t('M.otc_stocks_buyinfo')}}
             </p>
+            <!--昵称-->
+            <p class="text-info">
+              {{$t('M.user_transaction_nickname')}}：
+              <span
+                v-if="item.orderType === 'BUY'"
+                class="cursor-pointer"
+                @click="jumpMerchantInfoPage(item.sellId)"
+              >
+                {{item.sellNickName}}
+              </span>
+              <span
+                v-if="item.orderType === 'SELL'"
+                class="cursor-pointer"
+                @click="jumpMerchantInfoPage(item.buyId)"
+              >
+                {{item.buyNickName}}
+              </span>
+            </p>
             <!-- 姓名 -->
             <p class="text-info">
               <span>
                 {{$t('M.otc_name')}}：
               </span>
               <!-- 买单显示：卖家姓名 -->
-              <span
-                class="cursor-pointer"
-                v-if="item.orderType === 'BUY'"
-                @click="jumpMerchantInfoPage(item.sellId)"
-              >
-                <span v-if="item.sellNickName">
-                  {{item.sellNickName}}
-                </span>
-                <span v-else>
-                  {{item.sellName}}
-                </span>
+              <span v-if="item.orderType === 'BUY'">
+                {{item.sellName}}
               </span>
               <!-- 卖单显示：买家姓名 -->
-              <span
-                class="cursor-pointer"
-                v-if="item.orderType === 'SELL'"
-                @click="jumpMerchantInfoPage(item.buyId)"
-              >
-                <span v-if="item.buyNickName">
-                  {{item.buyNickName}}
-                </span>
-                <span v-else>
+              <span v-if="item.orderType === 'SELL'">
+                <span>
                   {{item.buyName}}
                 </span>
               </span>
@@ -220,12 +222,12 @@
             >
               {{$t('M.otc_trade_complate')}}
             </p>
-            <!-- 申诉判定，订单完成 -->
+            <!-- 申诉已完成 -->
             <p
               class="text-info text-blue"
               v-if="item.appeal == 'YES'"
             >
-              {{$t('M.otc_decide_complate')}}
+              {{$t('M.otc_appeal_had_finished')}}
             </p>
             <p
               class="text-info text-blue"
@@ -241,16 +243,16 @@
             <p class="text-info">
               {{$t('M.otc_time_collection')}}：{{item.confirmTime ? item.confirmTime : item.completeTime}}
             </p>
-            <!--原因-->
+            <!--申诉原因-->
             <p
               class="text-info"
               v-show="item.appeal == 'YES'"
             >
               <span
                 class="reason-content cursor-pointer display-inline-block"
-                :title="item.handleSuggest"
+                :title="item.appealCause"
               >
-                {{$t('M.otc_order_reason')}}：{{item.handleSuggest}}
+                {{$t('M.otc_cancel_order_appeal_cancel_cause')}}：{{item.appealCause}}
               </span>
             </p>
           </div>

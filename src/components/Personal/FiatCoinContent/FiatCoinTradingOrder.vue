@@ -19,7 +19,7 @@
           <!-- 1.1 表头 -->
           <div class="order-list-head">
             <div class="left">
-              <!-- 买卖家 -->
+              <!-- 卖家 -->
               <div class="buyer-seller">
                 <!--卖家-->
                 {{$t('M.otc_seller')}}：
@@ -27,11 +27,8 @@
                   class="cursor-pointer"
                   @click="jumpMerchantInfoPage(item.sellId)"
                 >
-                  <span v-if="item.sellNickName">
+                  <span>
                     {{item.sellNickName}}
-                  </span>
-                  <span v-else>
-                    {{item.sellName}}
                   </span>
                 </span>
               </div>
@@ -103,11 +100,12 @@
                     {{$t('M.comm_count')}}：{{item.pickCount}}
                   </span>
                 </p>
+                <!-- 卖家姓名 -->
+                <p class="trade-info">
+                  {{$t('M.otc_trading_seller_name')}}：{{item.sellName}}
+                </p>
                 <!-- 卖家手机号 -->
-                <!-- 付款前不显示 -->
-                <p
-                  class="trade-info"
-                >
+                <p class="trade-info">
                   <!--卖家手机号-->
                   {{$t('M.otc_trading_sellphone')}}：{{item.sellPhone}}
                 </p>
@@ -131,6 +129,7 @@
                     </div>
                     <!--选择支付方式-->
                     <el-select
+                      class="select-pay-type"
                       :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_index_Payment_method')"
                       :no-data-text="$t('M.comm_no_data')"
                       v-model="activePayModeList[index]"
@@ -426,11 +425,8 @@
                   class="cursor-pointer"
                   @click="jumpMerchantInfoPage(item.buyId)"
                 >
-                  <span v-if="item.buyNickName">
+                  <span>
                     {{item.buyNickName}}
-                  </span>
-                  <span v-else>
-                    {{item.buyName}}
                   </span>
                 </span>
               </div>
@@ -499,10 +495,13 @@
                     {{$t('M.comm_count')}}：{{item.pickCount}}
                   </span>
                 </p>
-                <!-- 卖家手机号 -->
+                <!-- 买家姓名 -->
+                <p class="trade-info">
+                  {{$t('M.otc_trading_buyer_name')}}：{{item.buyName}}
+                </p>
+                <!-- 买家手机号 -->
                 <p class="trade-info">
                   <!--买家手机号-->
-                  <!-- {{$t('M.otc_trading_sellphone')}}：{{item.buyPhone}} -->
                   {{$t('M.otc_trading_buyphone')}}：{{item.buyPhone}}
                 </p>
               </div>
@@ -1938,6 +1937,18 @@ export default {
         }
       }
 
+      .order-list-body-middle {
+        .middle-content {
+          .pay-style {
+            .select-pay-type {
+              .el-input__icon {
+                line-height: 0;
+              }
+            }
+          }
+        }
+      }
+
       .el-input__inner {
         padding: 0 25px;
         border: none;
@@ -2339,6 +2350,7 @@ export default {
       /deep/ {
         .el-input__inner {
           width: 130px;
+          border: 1px solid #ccc;
         }
 
         .password-dialog {
