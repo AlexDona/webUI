@@ -1434,7 +1434,9 @@ export default {
 
       .el-icon-arrow-up::before {
         color: $mainColor;
-        content: "\e60c";
+
+        /* 20190813周期下拉箭头显示成了正方形修复
+        content: "\e60c"; */
       }
     }
 
@@ -1487,7 +1489,8 @@ export default {
         }
 
         .el-icon-arrow-up::before {
-          content: "\e60c";
+          /* 20190813周期下拉箭头显示成了正方形修复
+          content: "\e60c"; */
         }
       }
 

@@ -278,9 +278,9 @@ export default {
 
         > .entrust-list-content {
           display: flex;
-          height: 34px;
+          height: 46px;
           padding: 0 10px;
-          line-height: 34px;
+          line-height: 46px;
 
           > .item {
             width: 130px;

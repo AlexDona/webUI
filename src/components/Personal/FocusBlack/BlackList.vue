@@ -47,16 +47,16 @@
               .operation-text.cursor-pointer(
                 @click="confirmUnBlackList(s.row.toId)"
               ) {{$t('M.focus_black_title4')}}
-        <!--分页-->
-        .page
-          el-pagination(
-            background
-            layout="prev, pager, next"
-            :current-page="currentPage"
-            :page-count="totalPages"
-            @current-change="changeCurrentPage"
-            v-show="totalPages - 1 > 0"
-          )
+      <!--分页-->
+      .page
+        el-pagination(
+          background
+          layout="prev, pager, next"
+          :current-page="currentPage"
+          :page-count="totalPages"
+          @current-change="changeCurrentPage"
+          v-show="totalPages - 1 > 0"
+        )
 </template>
 <script>
 import {mapState} from 'vuex'
@@ -142,6 +142,7 @@ export default {
       width 1105px
       .tab-two
         padding 0 30px
+        min-height 650px
         .operation-text
           height 24px
           color S_main_color

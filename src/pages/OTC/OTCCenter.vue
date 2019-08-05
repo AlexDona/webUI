@@ -1146,16 +1146,18 @@ export default {
       const data = await getOTCAvailableCurrency({})
       // 返回数据正确的逻辑
       if (!data) return false
+      console.log(data)
       if (data.data) {
         this.IWantToBuySellArr = getNestedData(data, 'data')
         if (this.IWantToBuySellArr.length) {
-          _.forEach(this.IWantToBuySellArr, (coin, coinIndex) => {
-            if (coin.name == 'FBT') {
-              this.IWantToBuySellArr.splice(coinIndex, 1)
-              this.IWantToBuySellArr.unshift(coin)
-              return false
-            }
-          })
+          // 去掉将FBT放到第一位的逻辑201908013期的需求增加了币种排序参数
+          // _.forEach(this.IWantToBuySellArr, (coin, coinIndex) => {
+          //   if (coin.name == 'FBT') {
+          //     this.IWantToBuySellArr.splice(coinIndex, 1)
+          //     this.IWantToBuySellArr.unshift(coin)
+          //     return false
+          //   }
+          // })
           // 个人中心跳转otc-开始
           if (this.$route.params.coinId) {
             let jumpCoinId = this.$route.params.coinId
