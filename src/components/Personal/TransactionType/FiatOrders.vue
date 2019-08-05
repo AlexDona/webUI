@@ -268,9 +268,9 @@ export default {
       socket: '',
       OTC_IM_TOPS: {
         trading: `170px`,
-        completed: `99px`,
-        canceled: `99px`,
-        frozen: `99px`
+        completed: `166px`,
+        canceled: `166px`,
+        frozen: `166px`
       },
       // OTC 心跳发送次数
       OTCSocketHeartCount: 0,

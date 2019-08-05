@@ -22,15 +22,15 @@
           <!--币种-->
           {{$t('M.comm_currency')}}
         </span>
-        <span class="item flex1">
+        <span class="item">
           <!--价格-->
           {{$t('M.otc_index_price')}}
         </span>
-        <span class="item flex1">
+        <span class="item">
           <!--数量-->
           {{$t('M.comm_count')}}
         </span>
-        <span class="item flex1">
+        <span class="item">
           <!--总金额-->
           {{$t('M.otc_canceled_total')}}
         </span>
@@ -76,15 +76,15 @@
             {{item.coinName}}
           </span>
           <!-- 价格 -->
-          <span class="item flex1">
+          <span class="item">
             {{item.price}}{{ item.currencyName }}
           </span>
           <!-- 数量 -->
-          <span class="item flex1">
+          <span class="item">
             {{item.pickCount}}{{ item.coinName }}
           </span>
           <!-- 总金额 -->
-          <span class="item flex1">
+          <span class="item">
             {{(item.price * item.pickCount).toFixed(2)}}{{ item.currencyName }}
           </span>
           <!-- 下单时间 -->
@@ -256,14 +256,14 @@
               </span>
             </p>
           </div>
-          <!-- otc 及时通讯-->
-          <OTCIM
-            class="otc-im"
-            :orderInfo="item"
-            :top="OTC_IM_TOP"
-            activeName="COMPLETED"
-          />
         </div>
+        <!-- otc 及时通讯-->
+        <OTCIM
+          class="otc-im"
+          :orderInfo="item"
+          :top="OTC_IM_TOP"
+          activeName="COMPLETED"
+        />
       </div>
       <!--暂无数据-->
       <div
@@ -352,9 +352,11 @@ export default {
   @import '../../../assets/CSS/index';
 
   .fiat-canceled-order-box {
+    margin-top: -10px;
+
     > .canceled-order-content {
       position: relative;
-      min-height: 574px;
+      min-height: 584px;
       padding: 0 10px 35px;
 
       > .canceled-table-head {
@@ -364,21 +366,19 @@ export default {
 
         > .item {
           display: inline-block;
+          width: 150px;
           text-align: center;
-        }
-
-        > .order-time {
-          width: 140px;
         }
 
         > .order-type,
         .order-coin,
         .AD-ID {
-          width: 100px;
+          width: 90px;
         }
       }
 
       > .canceled-table-body {
+        position: relative;
         height: 170px;
         margin-bottom: 10px;
         border-radius: 6px;
@@ -397,17 +397,14 @@ export default {
 
           > .item {
             display: inline-block;
+            width: 150px;
             text-align: center;
-          }
-
-          > .order-time {
-            width: 140px;
           }
 
           > .order-type,
           .order-coin,
           .AD-ID {
-            width: 100px;
+            width: 90px;
           }
         }
 
@@ -448,6 +445,12 @@ export default {
               line-height: 20px;
             }
           }
+        }
+
+        .otc-im {
+          position: absolute;
+          top: 3px;
+          right: 20px;
         }
       }
 
