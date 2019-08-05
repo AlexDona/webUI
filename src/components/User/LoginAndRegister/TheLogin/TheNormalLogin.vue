@@ -199,7 +199,7 @@ export default {
     jumpToForgetPass (e) {
       e.preventDefault()
       const {username} = this.form
-      if (username) this.$setStore('username', username)
+      this.$setStore('username', username)
       this.$goToPage(`/${this.$routes_X.forgetPass}`)
     },
     // 获取本地记录密码
@@ -370,7 +370,7 @@ export default {
       this.$setStore('rememberUserName', New)
       this.$nextTick(() => {
         const { username } = this.form
-        New && username ? this.$setStore(this.username, username) : null
+        New && username ? this.$setStore(this.username, username) : this.$setStore(this.username, '')
       })
     }
   }
