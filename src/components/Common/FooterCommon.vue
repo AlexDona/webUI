@@ -32,10 +32,7 @@
             dd.dd-item(@click="$footerJump(`/${$routes_X.news}`,'notice')")  {{$t('M.comm_news_and_notice')}}
             // 帮助中心
             dd.dd-item
-               a(
-                  :href= "'https://fubthelp.zendesk.com/hc'"
-                  target="_blank"
-               ) {{$t('M.comm_help_center')}}
+              router-link(to="/HelpCenter") {{$t('M.comm_help_center')}}
             // 交易须知
             dd.dd-item(@click="$footerJump('/ServiceAndProtocol','TradingWarning')")  {{$t('M.otc_index_tradeKnow')}}
              // 关于反洗钱
