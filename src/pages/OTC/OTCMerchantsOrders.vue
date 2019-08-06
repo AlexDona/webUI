@@ -814,6 +814,10 @@ export default {
             color: #9da5b3;
             background-color: $mainContentNightBgColor;
 
+            thead {
+              color: $mainNightTitleColor;
+            }
+
             tr {
               background-color: $mainContentNightBgColor;
             }
