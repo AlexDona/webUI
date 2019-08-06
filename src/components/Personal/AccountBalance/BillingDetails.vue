@@ -769,6 +769,10 @@ export default {
           .el-range-separator {
             color: #fff;
           }
+
+          .el-range-input {
+            font-size: 12px;
+          }
         }
 
         .el-table {
@@ -953,7 +957,7 @@ export default {
 
       .el-date-editor {
         &.el-input__inner {
-          width: 225px;
+          width: 310px;
         }
 
         &.el-input {
@@ -972,6 +976,10 @@ export default {
 
         .el-range-separator {
           line-height: 26px;
+        }
+
+        .el-range-input {
+          font-size: 12px;
         }
       }
 
