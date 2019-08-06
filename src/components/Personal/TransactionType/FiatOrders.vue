@@ -656,6 +656,7 @@ export default {
             height: 30px;
             padding: 0;
             border: 0;
+            font-size: 12px;
           }
         }
       }

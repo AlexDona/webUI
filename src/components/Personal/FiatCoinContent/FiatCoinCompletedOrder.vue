@@ -411,7 +411,7 @@ export default {
         > .canceled-info-bottom {
           display: flex;
           flex: 7;
-          padding: 30px 30px 0;
+          padding: 25px 30px 0;
 
           > .info-left {
             flex: 2;

@@ -355,7 +355,7 @@ export default {
         > .freezing-info-bottom {
           display: flex;
           flex: 4;
-          padding: 30px 30px 0;
+          padding: 25px 30px 0;
 
           > .info-left {
             flex: 1;
@@ -430,7 +430,6 @@ export default {
           }
 
           > .freezing-info-bottom {
-            padding: 30px 30px 0;
             border-top: 1px solid #262f38;
             color: #9da5b3;
 
