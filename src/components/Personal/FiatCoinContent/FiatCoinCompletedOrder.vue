@@ -6,10 +6,6 @@
     <div class="canceled-order-content">
       <!--表头属性-->
       <div class="canceled-table-head display-flex font-size12 box-sizing">
-        <span class="item order-type">
-          <!--类型-->
-          {{$t('M.otc_cancelOrder_type')}}
-        </span>
         <span class="item AD-ID">
           <!--广告id-->
           {{$t('M.otc_AD_ID')}}
@@ -18,19 +14,23 @@
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
         </span>
+        <span class="item order-type">
+          <!--类型-->
+          {{$t('M.otc_cancelOrder_type')}}
+        </span>
         <span class="item order-coin">
           <!--币种-->
           {{$t('M.comm_currency')}}
         </span>
-        <span class="item">
+        <span class="item flex1">
           <!--价格-->
           {{$t('M.otc_index_price')}}
         </span>
-        <span class="item">
+        <span class="item flex1">
           <!--数量-->
           {{$t('M.comm_count')}}
         </span>
-        <span class="item">
+        <span class="item flex1">
           <!--总金额-->
           {{$t('M.otc_canceled_total')}}
         </span>
@@ -47,6 +47,14 @@
       >
         <!--表格上部分-->
         <div class="canceled-info-top display-flex">
+          <!-- 广告id -->
+          <span class="item AD-ID">
+            {{item.entrustSequence}}
+          </span>
+          <!-- 订单号 -->
+          <span class="item order-time">
+            {{item.orderSequence}}
+          </span>
           <!-- 类型 买入 -->
           <span
             class="item order-type"
@@ -63,29 +71,21 @@
           >
             {{$t('M.comm_sell')}}
           </span>
-          <!-- 广告id -->
-          <span class="item AD-ID">
-            {{item.entrustSequence}}
-          </span>
-          <!-- 订单号 -->
-          <span class="item order-time">
-            {{item.orderSequence}}
-          </span>
           <!-- 币种 -->
           <span class="item order-coin">
             {{item.coinName}}
           </span>
           <!-- 价格 -->
-          <span class="item">
-            {{item.price}}{{ item.currencyName }}
+          <span class="item flex1">
+            {{item.price}}({{ item.currencyName }})
           </span>
           <!-- 数量 -->
-          <span class="item">
-            {{item.pickCount}}{{ item.coinName }}
+          <span class="item flex1">
+            {{item.pickCount}}({{ item.coinName }})
           </span>
           <!-- 总金额 -->
-          <span class="item">
-            {{(item.price * item.pickCount).toFixed(2)}}{{ item.currencyName }}
+          <span class="item flex1">
+            {{(item.price * item.pickCount).toFixed(2)}}({{ item.currencyName }})
           </span>
           <!-- 下单时间 -->
           <span class="item order-time">
@@ -95,9 +95,9 @@
         <!--表格下部分-->
         <div class="canceled-info-bottom box-sizing">
           <div class="info-left box-sizing">
-            <!--收款信息-->
+            <!--付款信息-->
             <p class="text-info text-blue">
-              {{$t('M.otc_cancel_order_get_money_info')}}
+              {{$t('M.otc_index_js2')}}
             </p>
             <!--姓名-->
             <p class="text-info">
@@ -155,36 +155,12 @@
           </div>
           <div class="info-middle box-sizing">
             <!-- 买单显示：卖家信息 -->
-            <p
-              class="text-info text-blue"
-              v-if="item.orderType === 'BUY'"
-            >
+            <p class="text-info text-blue" v-if="item.orderType === 'BUY'">
               {{$t('M.otc_stocks_seller')}}
             </p>
             <!-- 卖单显示：买家信息 -->
-            <p
-              class="text-info text-blue"
-              v-if="item.orderType === 'SELL'"
-            >
+            <p class="text-info text-blue" v-if="item.orderType === 'SELL'">
               {{$t('M.otc_stocks_buyinfo')}}
-            </p>
-            <!--昵称-->
-            <p class="text-info">
-              {{$t('M.user_transaction_nickname')}}：
-              <span
-                v-if="item.orderType === 'BUY'"
-                class="cursor-pointer"
-                @click="jumpMerchantInfoPage(item.sellId)"
-              >
-                {{item.sellNickName}}
-              </span>
-              <span
-                v-if="item.orderType === 'SELL'"
-                class="cursor-pointer"
-                @click="jumpMerchantInfoPage(item.buyId)"
-              >
-                {{item.buyNickName}}
-              </span>
             </p>
             <!-- 姓名 -->
             <p class="text-info">
@@ -192,12 +168,28 @@
                 {{$t('M.otc_name')}}：
               </span>
               <!-- 买单显示：卖家姓名 -->
-              <span v-if="item.orderType === 'BUY'">
-                {{item.sellName}}
+              <span
+                class="cursor-pointer"
+                v-if="item.orderType === 'BUY'"
+                @click="jumpMerchantInfoPage(item.sellId)"
+              >
+                <span v-if="item.sellNickName">
+                  {{item.sellNickName}}
+                </span>
+                <span v-else>
+                  {{item.sellName}}
+                </span>
               </span>
               <!-- 卖单显示：买家姓名 -->
-              <span v-if="item.orderType === 'SELL'">
-                <span>
+              <span
+                class="cursor-pointer"
+                v-if="item.orderType === 'SELL'"
+                @click="jumpMerchantInfoPage(item.buyId)"
+              >
+                <span v-if="item.buyNickName">
+                  {{item.buyNickName}}
+                </span>
+                <span v-else>
                   {{item.buyName}}
                 </span>
               </span>
@@ -222,12 +214,12 @@
             >
               {{$t('M.otc_trade_complate')}}
             </p>
-            <!-- 申诉已完成 -->
+            <!-- 申诉判定，订单完成 -->
             <p
               class="text-info text-blue"
               v-if="item.appeal == 'YES'"
             >
-              {{$t('M.otc_appeal_had_finished')}}
+              {{$t('M.otc_decide_complate')}}
             </p>
             <p
               class="text-info text-blue"
@@ -243,27 +235,27 @@
             <p class="text-info">
               {{$t('M.otc_time_collection')}}：{{item.confirmTime ? item.confirmTime : item.completeTime}}
             </p>
-            <!--申诉原因-->
+            <!--原因-->
             <p
               class="text-info"
               v-show="item.appeal == 'YES'"
             >
               <span
                 class="reason-content cursor-pointer display-inline-block"
-                :title="item.appealCause"
+                :title="item.handleSuggest"
               >
-                {{$t('M.otc_cancel_order_appeal_cancel_cause')}}：{{item.appealCause}}
+                {{$t('M.otc_order_reason')}}：{{item.handleSuggest}}
               </span>
             </p>
           </div>
+          <!-- otc 及时通讯-->
+          <OTCIM
+            class="otc-im"
+            :orderInfo="item"
+            :top="OTC_IM_TOP"
+            activeName="COMPLETED"
+          />
         </div>
-        <!-- otc 及时通讯-->
-        <OTCIM
-          class="otc-im"
-          :orderInfo="item"
-          :top="OTC_IM_TOP"
-          activeName="COMPLETED"
-        />
       </div>
       <!--暂无数据-->
       <div
@@ -275,7 +267,6 @@
       </div>
       <!--分页-->
       <el-pagination
-        class="pages"
         background
         v-show="completedOrdersList.length"
         layout="prev, pager, next"
@@ -352,12 +343,9 @@ export default {
   @import '../../../assets/CSS/index';
 
   .fiat-canceled-order-box {
-    margin-top: -10px;
-
     > .canceled-order-content {
-      position: relative;
-      min-height: 584px;
-      padding: 0 10px 35px;
+      min-height: 574px;
+      padding: 0 10px 10px;
 
       > .canceled-table-head {
         height: 35px;
@@ -366,19 +354,21 @@ export default {
 
         > .item {
           display: inline-block;
-          width: 150px;
           text-align: center;
+        }
+
+        > .order-time {
+          width: 140px;
         }
 
         > .order-type,
         .order-coin,
         .AD-ID {
-          width: 90px;
+          width: 100px;
         }
       }
 
       > .canceled-table-body {
-        position: relative;
         height: 170px;
         margin-bottom: 10px;
         border-radius: 6px;
@@ -397,21 +387,24 @@ export default {
 
           > .item {
             display: inline-block;
-            width: 150px;
             text-align: center;
+          }
+
+          > .order-time {
+            width: 140px;
           }
 
           > .order-type,
           .order-coin,
           .AD-ID {
-            width: 90px;
+            width: 100px;
           }
         }
 
         > .canceled-info-bottom {
           display: flex;
           flex: 7;
-          padding: 25px 30px 0;
+          padding: 30px 30px 0;
 
           > .info-left {
             flex: 2;
@@ -446,24 +439,11 @@ export default {
             }
           }
         }
-
-        .otc-im {
-          position: absolute;
-          top: 3px;
-          right: 20px;
-        }
       }
 
       > .no-data {
         height: 475px;
         line-height: 475px;
-      }
-
-      .pages {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
       }
     }
 

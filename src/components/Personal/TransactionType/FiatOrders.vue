@@ -17,114 +17,116 @@
       >
         <!-- 上部分筛选条件 -->
         <div class="orders-main-top">
-          <div class="top-condition">
-            <!--类型-->
-            <div class="main-top-type">
-              <span class="filtrate-text font-size14">
-                {{ $t('M.comm_type') }}
-              </span>
-              <span class="style-input">
-                <!--全部-->
-                <el-select
-                  v-model="activatedMerchantsOrdersTraderStyleList"
-                  :no-data-text="$t('M.comm_no_data')"
-                  @change="changeMerchantsOrdersTraderStyleList"
-                  clearable
-                  :placeholder="$t('M.comm_all')"
+          <div class="main-top-type trade-type float-left">
+            <span class="filtrate-text font-size14">
+              <!--类型-->
+              {{ $t('M.comm_type') }}
+            </span>
+            <span class="style-input">
+              <!--全部-->
+              <el-select
+                v-model="activatedMerchantsOrdersTraderStyleList"
+                :no-data-text="$t('M.comm_no_data')"
+                @change="changeMerchantsOrdersTraderStyleList"
+                clearable
+                :placeholder="$t('M.comm_all')"
+              >
+                <el-option
+                  v-for="item in merchantsOrdersTraderStyleList"
+                  :key="item.value"
+                  :label="$t(item.label)"
+                  :value="item.value"
                 >
-                  <el-option
-                    v-for="item in merchantsOrdersTraderStyleList"
-                    :key="item.value"
-                    :label="$t(item.label)"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-              </span>
-            </div>
-            <!--币种-->
-            <div class="main-top-type">
-             <span class="filtrate-text font-size14">
-               {{ $t('M.otc_Merchants_Orders_market') }}
-             </span>
-             <span class="status-input">
-               <el-select
-                 v-model="activatedMerchantsOrdersCoin"
-                 :no-data-text="$t('M.comm_no_data')"
-                 @change="changeMerchantsOrdersCoin"
-                 clearable
-                 :placeholder="$t('M.comm_all')"
-               >
-                 <el-option
-                   v-for="(item,index) in merchantsOrdersCoinList"
-                   :key="index"
-                   :label="item.name"
-                   :value="item.coinId"
-                 >
-                 </el-option>
-               </el-select>
-             </span>
-            </div>
-            <!--货币-->
-            <div class="main-top-type">
-              <span class="filtrate-text font-size14">
-                {{ $t('M.user_coin_currency') }}
-              </span>
-              <span class="status-input">
-                <el-select
-                  v-model="activatedMerchantsOrdersCurrency"
-                  :no-data-text="$t('M.comm_no_data')"
-                  @change="changeMerchantsOrdersCurrency"
-                  clearable
-                  :placeholder="$t('M.comm_all')"
-                >
-                  <el-option
-                    v-for="(item,index) in merchantsOrdersCurrencyList"
-                    :key="index"
-                    :label="language === 'zh_CN'? item.name : item.shortName"
-                    :value="item.id"
-                  >
-                  </el-option>
-                </el-select>
-              </span>
-            </div>
-            <!--起止日期-->
-            <div class="main-top-type ">
-              <span class="filtrate-text font-size14">
-                {{ $t('M.user_coin_order4') }}
-              </span>
-              <span class="date-picker">
-                <el-date-picker
-                  v-model="checkedTime"
-                  type="daterange"
-                  range-separator="-"
-                  :start-placeholder="$t('M.comm_begin') + $t('M.comm_data')"
-                  :end-placeholder="$t('M.comm_end') + $t('M.comm_data')"
-                  :editable="false"
-                  :picker-options="pickerOptionsTime"
-                  @change="changeSelectValue('date', $event)"
-                  value-format="yyyy-MM-dd"
-                  :clearable="true"
-                >
-                </el-date-picker>
-              </span>
-            </div>
+                </el-option>
+              </el-select>
+            </span>
           </div>
-          <div class="bottom-button">
-            <!--查询-->
-            <span class="inquire-button">
+          <div class="main-top-type trade-type float-left">
+           <span class="filtrate-text font-size14">
+             <!--币种-->
+             {{ $t('M.otc_Merchants_Orders_market') }}
+           </span>
+            <span class="status-input">
+             <!--全部-->
+           <el-select
+             v-model="activatedMerchantsOrdersCoin"
+             :no-data-text="$t('M.comm_no_data')"
+             @change="changeMerchantsOrdersCoin"
+             clearable
+             :placeholder="$t('M.comm_all')"
+           >
+             <el-option
+               v-for="(item,index) in merchantsOrdersCoinList"
+               :key="index"
+               :label="item.name"
+               :value="item.coinId"
+             >
+             </el-option>
+           </el-select>
+          </span>
+          </div>
+          <div class="main-top-type">
+            <span class="filtrate-text font-size14">
+              <!--货币-->
+              {{ $t('M.user_coin_currency') }}
+            </span>
+            <span class="status-input">
+              <!--全部-->
+              <el-select
+                v-model="activatedMerchantsOrdersCurrency"
+                :no-data-text="$t('M.comm_no_data')"
+                @change="changeMerchantsOrdersCurrency"
+                clearable
+                :placeholder="$t('M.comm_all')"
+              >
+                <!--:label="$t(`M.${item.i18nName}`)"-->
+                <el-option
+                  v-for="(item,index) in merchantsOrdersCurrencyList"
+                  :key="index"
+                  :label="language === 'zh_CN'? item.name : item.shortName"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+            </span>
+          </div>
+          <div class="main-top-type trade-data float-left">
+            <span class="filtrate-text font-size14">
+              <!--起止日期-->
+                {{ $t('M.user_coin_order4') }}
+            </span>
+            <span class="date-picker">
+              <el-date-picker
+                v-model="checkedTime"
+                type="daterange"
+                range-separator="-"
+                :start-placeholder="$t('M.comm_begin') + $t('M.comm_data')"
+                :end-placeholder="$t('M.comm_end') + $t('M.comm_data')"
+                :editable="false"
+                :picker-options="pickerOptionsTime"
+                @change="changeSelectValue('date', $event)"
+                value-format="yyyy-MM-dd"
+                :clearable="true"
+              >
+              </el-date-picker>
+            </span>
+          </div>
+          <div class="main-top-type float-left">
+             <span class="inquire-button">
               <el-button
                 type="primary"
                 @click.prevent="findFilter(activeName)"
               >
+                <!--查询-->
                 {{ $t('M.comm_query') }}
               </el-button>
+               <!--<el-button type="primary" @click.prevent="resetCondition">重置</el-button>-->
             </span>
           </div>
         </div>
-        <!--交易中-->
+        <!--交易中的订单-->
         <el-tab-pane
-          :label="$t('M.legal_tender_order_trading')"
+          :label="$t('M.otc_trading')"
           name="TRADING"
         >
           <FiatCoinTradingOrder
@@ -133,9 +135,9 @@
             :OTC_IM_TOP="OTC_IM_TOPS.trading"
           />
         </el-tab-pane>
-        <!--已完成-->
+        <!--已完成订单-->
         <el-tab-pane
-          :label="$t('M.legal_tender_order_had_finished')"
+          :label="$t('M.otc_stocks')"
           name="COMPLETED"
         >
           <FiatCoinCompletedOrder
@@ -143,9 +145,9 @@
             :OTC_IM_TOP="OTC_IM_TOPS.completed"
           />
         </el-tab-pane>
-        <!--已取消-->
+        <!--已取消订单-->
         <el-tab-pane
-          :label="$t('M.legal_tender_order_had_canceled')"
+          :label="$t('M.otc_canceled')"
           name="CANCELED"
         >
           <FiatCoinCanceledOrder
@@ -153,9 +155,9 @@
             :OTC_IM_TOP="OTC_IM_TOPS.canceled"
           />
         </el-tab-pane>
-        <!--申诉中-->
+        <!--冻结中订单-->
         <el-tab-pane
-          :label="$t('M.legal_tender_order_appealing')"
+          :label="$t('M.otc_freezingOrder')"
           name="FROZEN"
         >
           <FiatCoinFreezingOrder
@@ -163,9 +165,9 @@
             :OTC_IM_TOP="OTC_IM_TOPS.frozen"
           />
         </el-tab-pane>
-        <!--委托单-->
+        <!--委托订单-->
         <el-tab-pane
-          :label="$t('M.legal_tender_order_entrust_order')"
+          :label="$t('M.otc_entrust')"
           name="ENTRUSTED"
         >
           <FiatCoinEntrustOrder ref = "entrustOrders"/>
@@ -268,9 +270,9 @@ export default {
       socket: '',
       OTC_IM_TOPS: {
         trading: `170px`,
-        completed: `166px`,
-        canceled: `166px`,
-        frozen: `166px`
+        completed: `99px`,
+        canceled: `99px`,
+        frozen: `99px`
       },
       // OTC 心跳发送次数
       OTCSocketHeartCount: 0,
@@ -578,23 +580,38 @@ export default {
     .fiat-main {
       .orders-main-top {
         height: 125px;
-        padding: 25px 10px 0;
+        padding: 0 25px;
         margin: 10px 0;
 
-        > .top-condition {
-          display: flex;
-          justify-content: space-between;
+        .trade-type {
+          width: 250px;
         }
 
-        > .bottom-button {
-          display: flex;
-          justify-content: flex-end;
-          margin-top: 10px;
+        .trade-data {
+          width: 500px;
+        }
+
+        .main-top-type {
+          height: 50px;
+          line-height: 50px;
+
+          > .filtrate-text {
+            margin-right: 5px;
+          }
+        }
+
+        > .all-clear {
+          color: $mainColor;
         }
       }
     }
 
     /deep/ {
+      /* 覆盖Elenent样式 */
+      .el-input__icon {
+        line-height: 0;
+      }
+
       .el-tabs__content {
         min-height: 1500px;
       }
@@ -617,48 +634,39 @@ export default {
         border-left: 0;
       }
 
+      /* 覆盖element样式 */
+      .el-input__inner {
+        width: 100px;
+        height: 30px;
+        border: 0;
+      }
+
+      .date-picker {
+        .el-input__inner {
+          width: 240px;
+        }
+
+        .el-date-editor {
+          .el-range-separator {
+            line-height: 23px;
+          }
+        }
+      }
+
       .cell {
         text-align: center;
       }
 
-      .el-tabs__header {
-        margin: 0;
+      .main-top-type .el-button {
+        width: 60px;
+        height: 30px;
+        padding: 0;
+        margin-left: 77px;
+        border: 0;
       }
 
-      .orders-main-top {
-        .top-condition {
-          .el-input__icon {
-            line-height: 0;
-          }
-
-          .el-input__inner {
-            width: 100px;
-            height: 30px;
-            border: 0;
-          }
-
-          .date-picker {
-            .el-input__inner {
-              width: 240px;
-            }
-
-            .el-date-editor {
-              .el-range-separator {
-                line-height: 23px;
-              }
-            }
-          }
-        }
-
-        .bottom-button {
-          .el-button {
-            width: 60px;
-            height: 30px;
-            padding: 0;
-            border: 0;
-            font-size: 12px;
-          }
-        }
+      .el-tabs__header {
+        margin: 0;
       }
     }
 
@@ -681,6 +689,8 @@ export default {
       }
 
       /deep/ {
+        /* 个人中心（黑色主题） */
+
         /* tabs切换 */
         .el-tabs__item {
           &.is-active {
@@ -696,31 +706,22 @@ export default {
         }
 
         .orders-main-top {
-          .top-condition {
-            .el-input__inner {
+          .inquire-button {
+            .el-button {
               color: $mainColorOfWhite;
-              background-color: #2d3651;
-            }
-
-            .date-picker {
-              .el-date-editor {
-                .el-range-separator {
-                  color: $mainColorOfWhite;
-                }
-
-                .el-range-input {
-                  color: $mainColorOfWhite;
-                }
-              }
+              background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
             }
           }
+        }
 
-          .bottom-button {
-            .inquire-button {
-              .el-button {
-                color: $mainColorOfWhite;
-                background: $nightButtonBgColor1;
-              }
+        .el-input__inner {
+          background-color: #2d3651;
+        }
+
+        .date-picker {
+          .el-date-editor {
+            .el-range-separator {
+              color: $mainColorOfWhite;
             }
           }
         }
@@ -772,18 +773,14 @@ export default {
           padding: 0;
         }
 
-        .orders-main-top {
-          .top-condition {
-            .el-input__inner {
-              border: 1px solid #ccc;
-            }
-          }
+        .el-input__inner {
+          border: 1px solid #ccc;
+        }
 
-          .bottom-button {
-            .inquire-button {
-              .el-button {
-                background: $dayButtonBgColor2;
-              }
+        .orders-main-top {
+          .inquire-button {
+            .el-button {
+              background: $mainColor;
             }
           }
         }
