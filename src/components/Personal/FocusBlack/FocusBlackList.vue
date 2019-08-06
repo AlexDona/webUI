@@ -8,20 +8,23 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   )
     .inner-box
-      el-tabs(
-        v-model="activeName"
-      )
-        <!--@tab-click="handleClick"-->
-        <!--我的关注-->
-        el-tab-pane(
-          :label="$t('M.focus_black_table1')"
-          name="first"
+      .tab-header
+        ul
+          li.item(
+            @click="toggleTab('first')"
+            :class="{isChecked: showFirstStatus}"
+          ) {{$t('M.focus_black_table1')}}
+          li.item(
+            @click="toggleTab('second')"
+            :class="{isChecked: showSecondStatus}"
+          ) {{$t('M.focus_black_table2')}}
+      .tab-content
+        .first(
+          v-if="showFirstStatus"
         )
           FocusList
-        <!--我的黑名单-->
-        el-tab-pane(
-          :label="$t('M.focus_black_table2')"
-          name="second"
+        .second(
+          v-if="showSecondStatus"
         )
           BlackList
 </template>
@@ -37,16 +40,19 @@ export default {
   // props,
   data () {
     return {
-      activeName: 'first'
+      showFirstStatus: true,
+      showSecondStatus: false
     }
   },
   created () {
     if (this.blackTabsStatus) {
-      this.activeName = 'second'
+      this.showSecondStatus = true
+      this.showFirstStatus = false
       // 商家信息页面拉黑成功后调转到个人中心拉黑tab栏状态
       this.CHANGE_BLACK_TABS_STATUS_M(false)
     } else {
-      this.activeName = 'first'
+      this.showFirstStatus = true
+      this.showSecondStatus = false
     }
   },
   // mounted () {},
@@ -56,9 +62,19 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_BLACK_TABS_STATUS_M'
-    ])
-    // handleClick (tab, event) {
-    // }
+    ]),
+    toggleTab (data) {
+      switch (data) {
+        case 'first':
+          this.showFirstStatus = true
+          this.showSecondStatus = false
+          break
+        case 'second':
+          this.showFirstStatus = false
+          this.showSecondStatus = true
+          break
+      }
+    }
   },
   // filter: {},
   computed: {
@@ -78,51 +94,38 @@ export default {
     width 1105px
     height 758px
     > .inner-box
-      width 1105px
-      /deep/
-        .el-tabs
-          .el-tabs__header
-            padding-left 30px !important
-            .el-tabs__item
-              padding 0
-              margin 2px 0 !important
-            .el-tabs__item.is-top
-              &:last-child
-                margin-left 30px !important
+      > .tab-header
+        height 40px
+        line-height 40px
+        padding-left 30px
+        > ul
+          display flex
+          .item
+            height 38px
+            font-size 16px
+            cursor pointer
+            &:first-child
+              margin-right 30px
+          .isChecked
+            color S_main_color !important
+            border-bottom 2px solid S_main_color
+      > .tab-content
+        > .first
+          margin-top 10px
+        > .second
+          margin-top 5px
     &.night
       background-color S_night_main_bg
-      /deep/
-        .el-tabs
-          .el-tabs__header
-            box-shadow 0 2px 2px 0 rgba(20, 23, 37, 1)
-          .el-tabs__item
-            border-left 0 solid transparent
-          .el-tabs__item.is-active
-            border-bottom 2px solid S_main_color
-            border-left 0 solid transparent
-            color S_main_color
-            background-color S_night_main_bg
-          .el-tabs__item:hover
-            border-left 0 solid transparent
-            color S_main_color
-            background-color S_night_main_bg
+      .tab-header
+        box-shadow 0 2px 2px 0 rgba(20, 23, 37, 1)
+        > ul
+          .item
+            color S_night_main_text_color
     &.day
       background-color S_day_bg
-      /deep/
-        .el-tabs
-          .el-tabs__header
-            border-bottom 1px solid rgba(57, 66, 77, .1)
-            .el-tabs__nav
-              background-color: transparent
-            .el-tabs__item
-              border-left: 0 solid transparent
-            .el-tabs__item.is-active
-              border-bottom 2px solid S_main_color
-              border-left 0 solid transparent
-              color S_main_color
-              background-color S_day_bg
-            .el-tabs__item:hover
-              border-left 0 solid transparent
-              color S_main_color
-              background-color S_day_bg
+      .tab-header
+        border-bottom 1px solid rgba(57, 66, 77, .1)
+        > ul
+          .item
+            color #6F798A
 </style>

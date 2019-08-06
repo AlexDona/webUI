@@ -436,6 +436,7 @@ export default {
       }
 
       this.socket.on('message', (data) => {
+        console.log(data)
         if (data.type == 1) {
           const newData = data.data
           let {

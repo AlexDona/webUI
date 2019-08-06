@@ -14,7 +14,8 @@
     el-dialog.setting(
       :title="$t('M.comm_set')"
       :visible.sync="showSetting"
-      width="470px"
+      width="486px"
+      :close-on-click-modal="false"
       :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
       class="nav-box-dialog"
     )
@@ -24,7 +25,7 @@
         :no-data-text="$t('M.comm_no_data')"
         v-model="activeConvertCurrency"
         :placeholder="$t('M.comm_please_choose')"
-        popper-class="convert-currency"
+        :popper-class="`convert-currency ${$isDayTheme_G_X ? 'day':'night'}`"
       )
         el-option(
           v-for="item in convertCurrencyList"
@@ -63,7 +64,6 @@ import {
   mapMutations
 } from 'vuex'
 import {getMerchantAvailableLegalTender} from '../../utils/api/OTC'
-import {getNestedData} from '../../utils/commonFunc'
 export default {
   name: 'the-setting',
   // mixins: [],
@@ -154,20 +154,28 @@ export default {
       })
     },
     // 查询某商户可用法币币种列表
+    // getMerchantAvailableLegalTenderList: _.throttle(async function () {
+    //   let data = await getMerchantAvailableLegalTender()
+    //   // 返回数据正确的逻辑
+    //   if (!data) return false
+    //   console.log(data, _.get(data, 'data'))
+    //   this.$set(this, 'convertCurrencyList', _.get(data, 'data'))
+    //   await this.changeActiveTransitionCurrency()
+    // }, 500)
     async getMerchantAvailableLegalTenderList () {
       let data = await getMerchantAvailableLegalTender()
       // 返回数据正确的逻辑
       if (!data) return false
-      if (data.data) {
-        this.convertCurrencyList = getNestedData(data, 'data')
-        await this.changeActiveTransitionCurrency()
-      }
+      console.log(data, _.get(data, 'data'))
+      this.$set(this, 'convertCurrencyList', _.get(data, 'data'))
+      await this.changeActiveTransitionCurrency()
     }
   }
   // filters: {},
   // computed: {
   // },
-  // watch: {}
+  // watch: {
+  // }
 }
 </script>
 
@@ -186,52 +194,70 @@ export default {
       &.night
         /deep/
           .el-dialog
-            background-color #1c2237
+            background-color #2b304c
             .el-select-dropdown
               border-color #282e43 !important
             .el-dialog__title
-              color #b8bdd0
+              color #fff
             .el-dialog__header
-              background-color #1d2131
-              box-shadow 0 2px 6px rgba(0, 0, 0, .1)
+              background-color #25283D
+              .el-dialog__close
+                color #fff
+                &:hover
+                  color S_main_color
             .el-dialog__body
               >p
-                color #b8bdd0
+                color #FEFEFF
               .el-input__inner
-                color #dee1ea
-                border-color #282e43
-                background-color #181d2e
+                color #FEFEFF
+                border-color #25283D
+                background-color #32395C
               .el-radio-button__inner
-                border-color #282e43
+                border-color #25283D
                 color #b8bdd0
-                background-color #181d2e
+                background-color #32395c
             .el-dialog__footer
               .el-button
                 border none
-                background linear-gradient(90deg, #124785 0%, #2a3b61 100%)
-
-  &.day
+                background linear-gradient(81deg,rgba(18,71,133,1), rgba(42,59,97,1))
+                box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
+      &.day
         /deep/
-          .el-radio-button__inner
-            color: #333 !important
-            background-color: #fff !important
-          .el-dialog__title
-            padding: 0
-            color: #333
-
-          .el-dialog,
-          .el-dialog__header
-            background-color #fff !important
-            box-shadow none
-            .el-dialog__footer
+          .el-dialog__wrapper
+            background rgba(204,204,204,.5)
+            .el-dialog
+              background-color #fff
+              box-shadow 0 3px 6px 0 rgba(0, 0, 0, 0.25)
+              .el-select-dropdown
+                border-color #282e43 !important
+              .el-dialog__title
+                color #333
+              .el-dialog__header
+                background-color #DCE7F3
+                .el-dialog__close
+                  color #333
+                  &:hover
+                    color S_main_color
+              .el-dialog__body
+                >p
+                  color #1C1F32
+                .el-input__inner
+                  color #1C1F32
+                  border-color #ddd
+                  background-color #F1F1F1
+                .el-radio-button__inner
+                  border-color #ddd
+                  color #1C1F32
+                  background-color #F1F1F1
+              .el-dialog__footer
                 .el-button
-                    border none
-                    background linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%)
-
+                  border none
+                  background linear-gradient(81deg,rgba(106,182,244,1), rgba(49,135,218,1))
+                  box-shadow 0 3px 6px 0 rgba(26,42,71,0.27)
     /deep/
       .setting
         .el-dialog
-          height 340px
+          height 430px
           border-radius 10px
           overflow hidden
           .el-dialog__header,.el-dialog__body
@@ -239,11 +265,16 @@ export default {
             text-align left
           .el-dialog__header
             height 44px
-            line-height 48px
+            line-height 44px
+            padding 0 20px
             .el-dialog__title
-              font-size 16px
+              height 44px
+              line-height 44px
+              display inline-block
             .el-dialog__headerbtn
-              top 15px
+              top 10px
+              .el-dialog__close
+                font-size 26px
           .el-dialog__body
             padding 10px 40px 0
             .el-select
@@ -260,6 +291,13 @@ export default {
               margin-right 44px
               border 1px solid #c3c8cd
               border-radius 4px
+              .el-icon-check
+                background S_main_color url('../../assets/user/checkbox-success-bg.png') no-repeat center center/60% 60%
+                width 23px
+                height 19px
+                padding 0
+                &:before
+                  content ''
             .el-radio-button__orig-radio:checked + .el-radio-button__inner
               border 1px solid S_main_color
               box-shadow none
@@ -277,21 +315,72 @@ export default {
               border none
             .title
               line-height  30px
-              margin-top 10px
+              margin-top 30px
           .el-dialog__footer
-            /*padding 35px 40px*/
-            padding 5px 40px
+            padding 40px
             border none
+            text-align center
+            .el-button
+              width 235px
+              height 46px
+              span
+                font-size 16px
 </style>
-<style>
-  .convert-currency.el-select-dropdown.el-popper {
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-  }
-
+<style lang="scss">
   .el-select-dropdown.el-popper {
     z-index: 2100 !important;
     border: none;
+
+    &.convert-currency {
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+    }
+
+    &.night {
+      background-color: #25293d;
+
+      .el-select-dropdown__item {
+        font-weight: 400;
+        color: #fff;
+
+        &.hover,
+        &:hover {
+          font-weight: 400;
+          background-color: #16192b !important;
+        }
+      }
+
+      /deep/ {
+        .popper__arrow::after {
+          top: -10px;
+          border-width: 8px;
+          border-bottom-color: #25293d !important;
+        }
+      }
+    }
+
+    &.day {
+      background-color: #e5e5e5;
+
+      .el-select-dropdown__item {
+        font-weight: 400;
+        color: #1c1f32;
+
+        &.hover,
+        &:hover {
+          font-weight: 400;
+          background-color: #c5c5c5 !important;
+        }
+      }
+
+      /deep/ {
+        .popper__arrow::after {
+          top: -10px;
+          border-width: 8px;
+          border-bottom-color: #e5e5e5 !important;
+        }
+      }
+    }
   }
 
   .v-modal {

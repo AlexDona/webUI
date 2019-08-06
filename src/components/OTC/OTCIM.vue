@@ -5,15 +5,15 @@
 -->
 <template lang="pug">
   .otc-im-box(
-    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+  :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   )
     button.toggle-button.cursor-pointer(
-     :class="{'has-new-msg': hasUnReadMessage}"
-      @click="toggleShowIMContent('')"
+    :class="{'has-new-msg': hasUnReadMessage}"
+    @click="toggleShowIMContent('')"
     )
       Iconfont.iconfont(icon-name="icon-xiaoxi1")
     .content-box(
-      :style="{ 'top': isShowContent ? top: '40px', 'opacity': isShowContent ? '1': '0', 'z-index': isShowContent ? '2': -1}"
+    :style="{ 'top': isShowContent ? top: '40px', 'opacity': isShowContent ? '1': '0', 'z-index': isShowContent ? '2': -1}"
     )
       // 头部基础信息（头像、 名称、近30天交易）
       .header
@@ -25,7 +25,7 @@
           span.nick-name {{oppositeNickName}}
         .h-right
           button.close-button(
-            @click="toggleShowIMContent('close')"
+          @click="toggleShowIMContent('close')"
           )
             Iconfont.iconfont(icon-name="icon-cha-")
       // 聊天内容
@@ -33,71 +33,71 @@
         // 聊天内容
         .chat-box
           .inner-box(
-            v-show="messages.length"
-            :id="`chat${orderId}`"
+          v-show="messages.length"
+          :id="`chat${orderId}`"
           )
             .message(
-              v-for="(message, msgIndex) in messages"
-              :style="{'margin-top': isShowDate(msgIndex, message.createTime,messages) && msgIndex > 0 ? '50px': '20px' }"
+            v-for="(message, msgIndex) in messages"
+            :style="{'margin-top': isShowDate(msgIndex, message.createTime,messages) && msgIndex > 0 ? '50px': '20px' }"
             )
               // 系统消息
               .system-msg(v-if="message.messageType == 'sysMsg'")
                 .avatar
                   Iconfont.iconfont(icon-name="icon-kefu1")
                 TheOTCIMContent(
-                  :isShowDate="msgIndex|isShowDate(message.createTime, messages)"
-                  :message="message"
-                  @previewImage="previewImage"
+                :isShowDate="msgIndex|isShowDate(message.createTime, messages)"
+                :message="message"
+                @previewImage="previewImage"
                 )
               // 对方的消息
               .opposite-msg(v-else-if="message.userId !== $userInfo_X.id")
                 .avatar {{oppositeShortNickName}}
                 TheOTCIMContent(
-                  :isShowDate="msgIndex|isShowDate(message.createTime, messages)"
-                  :message="message"
-                  @previewImage="previewImage"
+                :isShowDate="msgIndex|isShowDate(message.createTime, messages)"
+                :message="message"
+                @previewImage="previewImage"
                 )
               //  自己的消息
               .self-msg(v-else)
                 .avatar {{selfShortNickName}}
                 TheOTCIMContent(
-                  :isShowDate="msgIndex|isShowDate(message.createTime, messages)"
-                  :message="message"
-                  @previewImage="previewImage"
+                :isShowDate="msgIndex|isShowDate(message.createTime, messages)"
+                :message="message"
+                @previewImage="previewImage"
                 )
         //  发送聊天内容
         .send-chat-box
           .inner-box(:class="{disabled: IsOver24Hours}")
             textarea.edit-box(
-              :placeholder="$t(editPlaceholder)"
-              :class="{'has-content': editText}"
-              :ref="`${orderId}textarea`"
-              :disabled="IsOver24Hours"
-              @keydown="sendMessageByEnter"
-              @input="handleChangeWatch"
+            :placeholder="$t(editPlaceholder)"
+            :class="{'has-content': editText}"
+            :ref="`${orderId}textarea`"
+            :disabled="IsOver24Hours"
+            @keydown="sendMessageByEnter"
+            @input="handleChangeWatch"
             )
             el-button.send-button(
-              v-if="editText"
-              @click="sendMessage"
-              :disabled="IsOver24Hours"
+            v-if="editText"
+            @click="sendMessage"
+            :disabled="IsOver24Hours"
             ) {{$t('M.login_send')}}
             // 上传图片
             UploadImage.image-button(
-              v-else
-              :isNeedSuccessTips="false"
-              @uploadSuccess="uploadSuccess"
-              :disabled="IsOver24Hours"
+            v-else
+            :isNeedSuccessTips="false"
+            @uploadSuccess="uploadSuccess"
+            :disabled="IsOver24Hours"
             )
               Iconfont.iconfont(icon-name="icon-tupian")
     .shadow-box(
-      v-show="isShowShadow"
-      @click.stop="toggleShowShadow(false)"
+    v-show="isShowShadow"
+    @click.stop="toggleShowShadow(false)"
     )
       .inner-box(v-show="isShowShadow")
         img(
-          :src="shadowImage"
-          :style="{transform:`translate(-50%, -50%)  rotate(${targetDeg}deg)`}"
-          )
+        :src="shadowImage"
+        :style="{transform:`translate(-50%, -50%)  rotate(${targetDeg}deg)`}"
+        )
       button.rotate-button(@click.stop="rotateShadow")
         Iconfont.iconfont(icon-name="icon-xuanzhuan")
 </template>
@@ -147,6 +147,7 @@ export default {
   // updated () {},
   // beforeRouteUpdate () {},
   beforeDestroy () {
+    this.updateIMStatus()
     clearTimeout(this.socketTimer)
   },
   // destroyed () {},
@@ -171,7 +172,6 @@ export default {
     },
     // 发送图片成功回调
     uploadSuccess ({type, index, url}) {
-      console.log(url)
       this.sendImage(url)
     },
     previewImage (url) {
@@ -222,7 +222,6 @@ export default {
         this.receiveMessage()
       } else {
         this.socketTimer = setTimeout(() => {
-          console.log(url)
           this.sendImage(url)
         }, 1000)
       }
@@ -271,7 +270,6 @@ export default {
     // 回调消息
     receiveMessage () {
       this.IMSocket_S.on('message', (e) => {
-        // console.log(e, new Date().getTime())
         this.UPDATE_NEW_IM_MESSAGE_M(e)
         const {isOppositeMsg, orderId, isOver24Hours, action} = e
         if (action == 'checkHeart') {
@@ -376,6 +374,10 @@ export default {
         this.$nextTick(() => {
           this.resetDOMScroll(this.chatDOM.scrollHeight)
         })
+      }
+
+      if (!New) {
+        this.updateIMStatus()
       }
     }
   }
@@ -537,49 +539,49 @@ export default {
                   // background linear-gradient(0deg,rgba(43,58,110,1),rgba(42,80,129,1))
                   background pink
                 /deep/
-                  .content
-                    p
-                      &.msg-content
-                        color #fff
-                        position relative
-                        &:after
-                          content ''
-                          width 0
-                          height 0
-                          position absolute
-                          top 15px
-                          transform translateY(-50%)
+                .content
+                  p
+                    &.msg-content
+                      color #fff
+                      position relative
+                      &:after
+                        content ''
+                        width 0
+                        height 0
+                        position absolute
+                        top 15px
+                        transform translateY(-50%)
               >.opposite-msg
                 >.avatar
                   /*margin-top 35px*/
                 /deep/
-                  .content
-                    >.msg-content
-                      background-color #5675a3
-                      border-radius 15px
-                      padding 6px 17px
-                      &:after
-                        left -6px
-                        border-right 8px solid #5675a3
-                        border-top 7px solid transparent
-                        border-bottom 7px solid transparent
+                .content
+                  >.msg-content
+                    background-color #5675a3
+                    border-radius 15px
+                    padding 6px 17px
+                    &:after
+                      left -6px
+                      border-right 8px solid #5675a3
+                      border-top 7px solid transparent
+                      border-bottom 7px solid transparent
               >.self-msg
                 text-align right
                 flex-direction row-reverse
                 /deep/
-                  .content
-                    >.date
-                      right 0
-                    >.msg-content
-                      background-color S_main_color
-                      border-radius 15px
-                      padding 6px 17px
-                      text-align left
-                      &:after
-                        right -6px
-                        border-left 8px solid S_main_color
-                        border-top 7px solid transparent
-                        border-bottom 7px solid transparent
+                .content
+                  >.date
+                    right 0
+                  >.msg-content
+                    background-color S_main_color
+                    border-radius 15px
+                    padding 6px 17px
+                    text-align left
+                    &:after
+                      right -6px
+                      border-left 8px solid S_main_color
+                      border-top 7px solid transparent
+                      border-bottom 7px solid transparent
         /* 发送消息框 */
         >.send-chat-box
           height 52px
@@ -596,51 +598,51 @@ export default {
                 background-color #e5e5e5
             /deep/
               /* WebKit browsers */
-              ::-webkit-input-placeholder
-                color #8B9197
-                font-size 12px
-                transform scale(.9)
-                white-space nowrap
-                text-indent -10px
-              /* Mozilla Firefox 19+ */
-              ::-moz-placeholder
-                color #8B9197
-                font-size 12px
-                transform scale(.9)
-                white-space nowrap
-                text-indent -10px
-              /* Internet Explorer 10+ */
-              ::-ms-input-placeholder
-                color #8B9197
-                font-size 12px
-                transform scale(.9)
-                white-space nowrap
-                text-indent -10px
-              /* 编辑框 */
-              .edit-box
-                flex 1
-                border none
-                outline none
-                height 40px
-                box-sizing border-box
-                background-color #fff
-                font-size 12px
-                padding 0 10px
-                line-height 16px
-                border-radius 0
-                padding-top 12px
-                &:disabled
-                  cursor not-allowed
-                &.has-content
-                  background-color transparent
-              .send-button
-                background-color S_main_color !important
-                padding 5px 10px
-                height 25px
-                margin 7px 10px
-                border none
-                color #fff
-                font-size 12px
+            ::-webkit-input-placeholder
+              color #8B9197
+              font-size 12px
+              transform scale(.9)
+              white-space nowrap
+              text-indent -10px
+            /* Mozilla Firefox 19+ */
+            ::-moz-placeholder
+              color #8B9197
+              font-size 12px
+              transform scale(.9)
+              white-space nowrap
+              text-indent -10px
+            /* Internet Explorer 10+ */
+            ::-ms-input-placeholder
+              color #8B9197
+              font-size 12px
+              transform scale(.9)
+              white-space nowrap
+              text-indent -10px
+            /* 编辑框 */
+            .edit-box
+              flex 1
+              border none
+              outline none
+              height 40px
+              box-sizing border-box
+              background-color #fff
+              font-size 12px
+              padding 0 10px
+              line-height 16px
+              border-radius 0
+              padding-top 12px
+              &:disabled
+                cursor not-allowed
+              &.has-content
+                background-color transparent
+            .send-button
+              background-color S_main_color !important
+              padding 5px 10px
+              height 25px
+              margin 7px 10px
+              border none
+              color #fff
+              font-size 12px
             >.image-button
               margin 8px 15px
               width 22px
@@ -739,12 +741,12 @@ export default {
                 background-color #e5e5e5
                 /deep/
                   /* 编辑框 */
-                  .edit-box
-                    > textarea
-                      background-color #e5e5e5
-                  >.image-button
-                    .iconfont
-                      color #ccc
+                .edit-box
+                  > textarea
+                    background-color #e5e5e5
+                >.image-button
+                  .iconfont
+                    color #ccc
     &.day
       // 聊天主窗口
       >.content-box
@@ -779,8 +781,8 @@ export default {
                 >.opposite-msg,
                 >.self-msg
                   /deep/
-                    .date,.time
-                      color #7D90AC
+                  .date,.time
+                    color #7D90AC
                 >.system-msg
                   >.avatar
                     >.iconfont
@@ -826,22 +828,21 @@ export default {
               background-color #EAF4FE
               /deep/
                 /* 编辑框 */
-                .edit-box
-                  > textarea
-                    border none
-                    outline none
-                    background-color #EAF4FE
-                >.image-button
-                  .iconfont
-                    color S_main_color
+              .edit-box
+                border none
+                outline none
+                background-color #EAF4FE
+              >.image-button
+                .iconfont
+                  color S_main_color
               &.disabled
                 background-color #e5e5e5
                 /deep/
                   /* 编辑框 */
-                  .edit-box
-                    > textarea
-                      background-color #e5e5e5
-                  >.image-button
-                    .iconfont
-                      color #ccc
+                .edit-box
+                  > textarea
+                    background-color #e5e5e5
+                >.image-button
+                  .iconfont
+                    color #ccc
 </style>

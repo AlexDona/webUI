@@ -1381,7 +1381,7 @@ export default {
                 color: #d45858;
 
                 > .currency {
-                  color: #fff;
+                  color: $dayMainTitleColor;
                 }
               }
 

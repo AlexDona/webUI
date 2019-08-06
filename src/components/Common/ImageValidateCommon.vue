@@ -25,11 +25,11 @@ export default {
     },
     fontSizeMin: {
       type: Number,
-      default: 20
+      default: 14
     },
     fontSizeMax: {
       type: Number,
-      default: 48
+      default: 38
     },
     backgroundColorMin: {
       type: Number,

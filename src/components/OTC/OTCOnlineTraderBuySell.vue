@@ -1172,6 +1172,10 @@ export default {
     }
 
     .password-dialog {
+      .el-dialog__wrapper {
+        background-color: rgba(0, 0, 0, .7);
+      }
+
       .el-dialog {
         width: 350px;
         height: 240px;

@@ -2,9 +2,7 @@
   <div
     class="add-western personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{
-      height: windowHeight>300? windowHeight: 300 +'px'
-    }"
+    :style="{'min-height':(windowHeight-350)+'px'}"
   >
     <div
       class="add-western-main margin25"
