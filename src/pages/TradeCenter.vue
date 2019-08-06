@@ -1,55 +1,40 @@
-<!--币币交易-->
-<template>
-  <div
-    class="trade-box trade"
-    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
-  >
-    <div class="inner-box clearfloat">
-      <!--左侧-->
-      <div class="left">
-        <!--全球行情-->
-        <GlobalMarket class="margin-bottom10"/>
-        <!--买卖单-->
-        <BuysAndSells class="margin-bottom10"/>
-        <!--最近成交-->
-        <OrderRecord class="margin-bottom10"/>
-      </div>
-      <!--中间-->
-      <div
-        class="middle"
-        :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
-      >
-        <MiddleHeader/>
-        <!--k线-->
-        <KLine/>
-        <!--市价交易、限价交易-->
-        <!--<ExchangeBox/>-->
-        <ExchangeBox v-show="!isShowMask"/>
-        <div
-          class="placeholder"
-          v-show="isShowMask"
-        ></div>
-        <!-- 活动遮罩 -->
-        <div
-          class="mask"
-          v-show="isShowMask"
-        >
-          <PREMask v-show="status=='coming' && partnerTradeId === tradeId"/>
-        </div>
-        <!--交易-->
-        <!-- 委单列表 -->
-        <EntrustOrder/>
-        <!--深度图-->
-        <Depth/>
-      </div>
-      <!--右侧-->
-      <div class="right">
-        <Activity/>
-        <!--市场-->
-        <TradeMarketList/>
-      </div>
-    </div>
-  </div>
+<!--
+  author: zhaoxinlei
+  update: 20190801
+  description: 当前页面为 币币交易 主页面
+-->
+<template lang="pug">
+  .trade-box.trade(:class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }")
+    .inner-box
+      .top.clearfloat
+        // 左侧
+        .left
+          // 全球行情
+          //GlobalMarket.margin-bottom10
+          // 买卖单
+          BuysAndSells.margin-bottom10
+          // 最近成交
+          OrderRecord.margin-bottom10
+        // 中间
+        .middle(:class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }")
+          MiddleHeader
+            // k线
+          kLine(v-show="isShowKline")
+          // 深度
+          Depth(v-show="!isShowKline")
+          //Depth
+          // 市价交易、限价交易
+          ExchangeBox(v-show="!isShowMask")
+          .placeholder(v-show="isShowMask")
+          // 活动遮罩
+          .mask(v-show="isShowMask")
+            PREMask(v-show="status=='coming' && partnerTradeId === tradeId")
+        //  右侧
+        .right
+          Activity
+          TradeMarketList
+      .bottom
+        EntrustOrder
 </template>
 <script>
 import EntrustOrder from '../components/Trade/EntrustOrderList'
@@ -63,7 +48,7 @@ import MiddleHeader from '../components/Trade/MiddleHeaderTrade'
 import Depth from '../components/Trade/DepthTrade'
 import PREMask from '../components/Trade/PREMask'
 import Activity from '../components/Trade/PRE'
-import {mapState} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 
 export default {
   components: {
@@ -80,23 +65,33 @@ export default {
     Activity
   },
   // props,
-  data () {
-    return {}
-  },
-  created () {
-  },
+  // data () {
+  //   return {}
+  // },
+  // created () {
+  // },
   mounted () {
+    // this.UPDATE_KLINE_AND_DEPTH_SHOW_STATUS_M('kline')
   },
-  activated () {
+  // activated () {
+  // },
+  // update () {
+  // },
+  // beforeRouteUpdate () {
+  // },
+  methods: {
+    ...mapMutations([
+      'UPDATE_KLINE_AND_DEPTH_SHOW_STATUS_M'
+    ])
   },
-  update () {
-  },
-  beforeRouteUpdate () {
-  },
-  methods: {},
-  filter: {},
+  // filter: {},
   computed: {
-    ...mapState({}),
+    ...mapState({
+      showKlineOrDepth_S: state => state.trade.showKlineOrDepth_S
+    }),
+    isShowKline () {
+      return this.showKlineOrDepth_S == 'kline'
+    },
     status () {
       return this.$activityInfo_S_X.status
     },
@@ -109,283 +104,56 @@ export default {
     isShowMask () {
       return (this.$activityInfo_S_X.status == 'coming' && this.partnerTradeId === this.tradeId) && this.$activityInfo_S_X.showCountDown
     }
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
-<style scoped lang="scss" type="text/scss">
-  @import "../assets/CSS/index";
-
-  .trade-box {
-    width: 100%;
-    margin-top: 60px;
-
-    > .inner-box {
-      display: flex;
-      box-sizing: border-box;
-      width: 100%;
-      padding: 14px;
-      margin: 0 auto;
-
-      > div {
-        box-sizing: border-box;
-        margin-right: 14px;
-
-        &:last-of-type {
-          margin-right: 0;
-        }
-      }
-
-      > .left {
-        width: 320px;
-        min-width: 320px;
-        max-width: 320px;
-        font-size: 12px;
-      }
-
-      > .middle {
-        position: relative;
-        flex: 1;
-        box-sizing: border-box;
-
-        > .mask {
-          position: absolute;
-          z-index: 2000;
-          top: 60px;
-          left: 0;
-          width: 100%;
-          height: 756px;
-        }
-
-        > .placeholder {
-          height: 410px;
-          background-color: #1c1f32;
-        }
-      }
-
-      > .right {
-        width: 320px;
-        min-width: 320px;
-      }
-
-      @media screen and (max-width: 2560px) and (min-width: 1921px) {
-        > .middle {
-          > .mask {
-            height: 980px;
-          }
-        }
-      }
-
-      @media screen and (max-width: 1366px) {
-        > div {
-          margin-right: 6px;
-        }
-
-        > .middle {
-          width: 700px;
-
-          > .mask {
-            height: 756px;
-          }
-        }
-      }
-    }
-
-    /deep/ {
-      /* 币币交易通用修改样式（elementui修改） */
-      .el-table {
-        background-color: transparent;
-
-        td,
-        th,
-        tr {
-          background-color: transparent;
-        }
-
-        td {
-          border-bottom: none;
-        }
-
-        th,
-        .el-table__header-wrapper {
-          padding: 0;
-        }
-      }
-
-      .middle {
-        .el-tabs__nav-wrap::after {
-          top: 0;
-          height: 34px;
-        }
-
-        .el-tabs__item {
-          height: 34px;
-          font-size: 14px;
-          line-height: 34px;
-
-          &.is-active {
-            color: #338ff5 !important;
-          }
-        }
-
-        .el-tabs__nav-scroll {
-          padding-left: 14px;
-        }
-
-        .el-tabs__header {
-          box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
-        }
-      }
-
-      .el-pagination {
-        position: relative;
-        bottom: 0;
-        text-align: right;
-      }
-
-      .el-pagination button,
-      .el-pager li {
-        height: 16px;
-        font-size: 12px;
-        line-height: 16px;
-      }
-
-      .el-tabs__header {
-        margin-bottom: 5px;
-      }
-
-      @media screen and (max-width: 1920px) {
-        .el-table .cell {
-          font-size: 12px;
-        }
-      }
-    }
-
-    &.night {
-      > .inner-box {
-        > .middle {
-          background-color: $mainNightBgColor;
-
-          /deep/ {
-            .el-tabs__nav-wrap::after {
-              background-color: #1c1f32;
-            }
-
-            .el-tabs__item {
-              color: #fff;
-            }
-          }
-        }
-      }
-
-      /deep/ {
-        /* 币币交易通用night样式 */
-        .el-table {
-          color: #e4eaf4;
-
-          th {
-            > .cell {
-              color: #a9bed4;
-            }
-
-            &.is-leaf {
-              border-color: #39424d;
-            }
-          }
-        }
-
-        .el-table--enable-row-hover {
-          .el-table__body {
-            tr {
-              &:hover {
-                > td {
-                  background-color: rgba(255, 255, 255, .2);
-                }
-              }
-            }
-          }
-        }
-
-        .title-box {
-          border-bottom: 1px solid #39424d;
-        }
-
-        .el-table--scrollable-y {
-          .el-table__body-wrapper::-webkit-scrollbar {
-            width: 4px;
-          }
-
-          .el-table__body-wrapper::-webkit-scrollbar-track-piece {
-            background-color: #2a343e;
-          }
-
-          .el-table__body-wrapper::-webkit-scrollbar-thumb {
-            background-color: #4a5662;
-          }
-
-          .el-table__body-wrapper::-webkit-scrollbar-button {
-            display: none;
-            background-color: #fff;
-          }
-        }
-
-        .el-tabs__header {
-          box-shadow: 2px 0 3px rgba(27, 35, 49, 1);
-        }
-      }
-    }
-
-    &.day {
-      > .inner-box {
-        background-color: $newDayBg;
-
-        > .middle {
-          /deep/ {
-            .el-tabs__nav-wrap::after {
-              background-color: #fff;
-            }
-
-            .el-tabs__item {
-              color: #333;
-            }
-          }
-        }
-      }
-
-      /deep/ {
-        .el-table {
-          th {
-            > .cell {
-              color: #333;
-            }
-
-            &.is-leaf {
-              border-color: #d7d9db;
-            }
-          }
-        }
-
-        .el-tabs__header {
-          box-shadow: 2px 0 3px rgba(239, 239, 239, 1);
-        }
-
-        .el-table--enable-row-hover {
-          .el-table__body {
-            tr {
-              &:hover {
-                > td {
-                  background-color: #eaf2fa;
-                }
-              }
-            }
-          }
-        }
-
-        .title-box {
-          border-bottom: 1px solid #d7d9db;
-        }
-      }
-    }
-  }
-
+<style lang="stylus">
+  @import '../assets/CSS/index.styl'
+  .trade-box
+    margin-top 60px
+    min-width 1366px
+    >.inner-box
+      padding 10px
+      box-sizing border-box
+      >.top
+        display flex
+        height 917px
+        >.left
+          width 330px
+        >.middle
+          flex 1
+          margin 0 10px
+          position relative
+          >.mask
+            position absolute
+            z-index 3
+            width 100%
+            height calc(907px - 34px)
+            top 34px
+            left 0
+        >.right
+          width 330px
+    /* 黑色主题 */
+    &.night
+      >.inner-box
+        background-color #131523
+        >.top
+          >.left
+          >.middle
+            >.mask
+              background-color pink
+        >.bottom
+          background-color pink
+    /* 白色 */
+    &.day
+      >.inner-box
+        background-color #e5ebf5
+        >.top
+          >.left
+          >.middle
+            >.mask
+              background-color pink
+        >.bottom
+          background-color pink
 </style>

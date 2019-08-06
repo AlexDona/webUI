@@ -6,8 +6,10 @@
 <template lang="pug">
   .kline-container
     #tv_chart_container(
-    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+      :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
     )
+    .logo-mask
+      img(:src="logoSrc")
     .interval-loading-box(
       v-if="intervalLoading"
       v-loading.lock="intervalLoading"
@@ -316,32 +318,6 @@ export default {
           if (!this.klineInitCount) {
             let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
             /**
-             * 自定义 设置 按钮
-              * @type {JQuery | *}
-             */
-            let settingBtn = _self.widget.createButton({
-              align: 'left'
-            })
-            settingBtn
-              .attr('class', 'setting-button')
-              .on('click', function () {
-                // 设置切换
-                iframe$('.header-group-properties .apply-common-tooltip').click()
-              })
-
-            /**
-             * 自定义 指标 按钮
-             */
-
-            let indicatorBtn = _self.widget.createButton({
-              align: 'left'
-            })
-            indicatorBtn
-              .attr('class', 'indicator-button')
-              .on('click', function () {
-                iframe$('.header-group-indicators .apply-common-tooltip').click()
-              })
-            /**
              * 自定义 分时切换 按钮
              */
             kLineBtnList.forEach(function (item, index) {
@@ -366,14 +342,42 @@ export default {
                 .append(item.label)
             })
             /**
+             * 自定义 设置 按钮
+              * @type {JQuery | *}
+             */
+            let settingBtn = _self.widget.createButton({
+              align: 'left'
+            })
+            settingBtn
+              .attr('class', 'setting-button')
+              .attr('title', _self.$t('M.kline_button_setting'))
+              .on('click', function () {
+                // 设置切换
+                iframe$('.header-group-properties .apply-common-tooltip').click()
+              })
+            /**
+             * 自定义 指标 按钮
+             */
+            let indicatorBtn = _self.widget.createButton({
+              align: 'left'
+            })
+            indicatorBtn
+              .attr('class', 'indicator-button')
+              .attr('title', _self.$t('M.kline_button_indicator'))
+              .on('click', function () {
+                iframe$('.header-group-indicators .apply-common-tooltip').click()
+              })
+
+            /**
              * 自定义 全屏切换 按钮
              * @type {JQuery | *}
              */
             let fullScreenBtn = _self.widget.createButton({
-              align: 'right'
+              align: 'left'
             })
             fullScreenBtn
               .attr('class', 'full-screen')
+              .attr('title', _self.$t('M.kline_button_full_screen'))
               .on('click', function () {
                 const fullarea = iframe$('.chart-page.on-widget')[0]
                 // console.log(_self.isFullScreen)
@@ -703,7 +707,8 @@ export default {
       showId: state => state.user.loginStep1Info.userInfo.showId,
       userInfo: state => state.user.loginStep1Info,
       // 拿到全局存储的选中的交易对小数位
-      globalCheckedBits: state => state.common.globalCheckedBits
+      globalCheckedBits: state => state.common.globalCheckedBits,
+      logoSrc: state => state.common.logoSrc
     })
   },
   watch: {
@@ -766,18 +771,30 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import '../../assets/CSS/index';
-  $maxHeight1920-2560: 580px;
-  $defaultHeight: 355px;
+  $maxHeight1920-2560: 528px;
 
   .kline-container {
     position: relative;
     width: 100%;
-    height: $defaultHeight;
+    height: $maxHeight1920-2560;
     overflow: hidden;
+
+    > .logo-mask {
+      position: absolute;
+      z-index: 2;
+      bottom: 190px;
+      left: 66px;
+      opacity: .2;
+      pointer-events: none;
+
+      > img {
+        height: 30px;
+      }
+    }
 
     #tv_chart_container {
       width: 100%;
-      height: $defaultHeight;
+      height: $maxHeight1920-2560;
 
       &.night {
         background-color: $mainContentNightBgColor;
@@ -795,23 +812,7 @@ export default {
       top: 0;
       right: 0;
       width: 101%;
-      height: $defaultHeight;
-    }
-  }
-
-  @media screen and (min-width: 1921px) {
-    .kline-container {
       height: $maxHeight1920-2560;
-
-      #tv_chart_container {
-        height: $maxHeight1920-2560;
-      }
-
-      .loading-box,
-      .interval-loading-box {
-        height: $maxHeight1920-2560;
-      }
     }
   }
-
 </style>

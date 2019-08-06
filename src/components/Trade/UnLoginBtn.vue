@@ -12,29 +12,28 @@
   </div>
 </template>
 <script>
-import {mapState} from 'vuex'
+// import {mapState} from 'vuex'
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
-  components: {
-  },
+  // components: {},
   // props,
-  data () {
-    return {}
-  },
-  created () {},
-  mounted () {},
-  activated () {},
-  updated () {},
-  beforeRouteUpdate () {},
-  beforeDestroy () {},
-  destroyed () {},
-  methods: {},
-  filter: {},
-  computed: {
-    ...mapState([
-    ])
-  },
-  watch: {}
+  // data () {
+  //   return {}
+  // },
+  // created () {},
+  // mounted () {},
+  // activated () {},
+  // updated () {},
+  // beforeRouteUpdate () {},
+  // beforeDestroy () {},
+  // destroyed () {},
+  // methods: {},
+  // filter: {},
+  // computed: {
+  //   ...mapState([
+  //   ])
+  // },
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -43,6 +42,7 @@ export default {
   .unlogin-btn {
     width: 100%;
     text-align: center;
+    color: #d9e1f1;
 
     > a {
       color: $mainColor;

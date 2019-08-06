@@ -1,41 +1,25 @@
-<template>
-  <div
-    class="depth-box trade"
-    :class="{
-      'day':$theme_S_X == 'day',
-      'night':$theme_S_X == 'night'
-    }"
-  >
-    <div
-      class="title font-size16 cursor-pointer"
-      @click="toggleShowContent"
-    >
-        <span class="text">
-          <!--深度-->
-          {{ $t('M.common_depth_map') }}
-          <!-- 深度图 -->
-        </span>
-    </div>
-    <el-collapse-transition>
-      <div
-        class="depth"
-        id="depth"
-        v-show="contentShowStatus"
-      ></div>
-    </el-collapse-transition>
-  </div>
+<!--
+  author: zhaoxinlei
+  update: 20190803
+  description: 当前页面为 币币交易 深度图组件
+-->
+<template lang="pug">
+  .depth-box.trade(:class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }" ref="depth-box")
+    #depth-container
+    .logo-mask
+      img(:src="logoSrc")
 </template>
 <script>
-import echarts from 'echarts/lib/echarts'
 import {mapState} from 'vuex'
+import echarts from 'echarts/lib/echarts'
 require('echarts/lib/chart/line')
 require('echarts/lib/component/tooltip')
 export default {
+  name: 'the-depth',
   components: {},
   // props,
   data () {
     return {
-      contentShowStatus: true,
       buys: [],
       sells: [],
       depthCharts: '',
@@ -47,10 +31,10 @@ export default {
           color: '#b2b7d0'
         },
         grid: {
-          left: '4%',
+          left: '1.5%',
           top: '30px',
-          right: '6%',
-          bottom: '14%'
+          right: '4%',
+          bottom: '6%'
         },
         tooltip: {
           trigger: 'axis',
@@ -66,12 +50,16 @@ export default {
           textStyle: {
             color: ''
           },
+          confine: true,
+          // alwaysShowContent: true,
+          hideDelay: 9000,
           axisPointer: {
             snap: true,
             confine: true,
             type: 'line',
             lineStyle: {
-              color: 'transparent'
+              // color: 'transparent'
+              type: 'dashed'
             }
             // label: {
             //   show: true,
@@ -79,7 +67,11 @@ export default {
             // }
           },
           formatter: (params) => {
-            // 委托价
+            console.log(params)
+            const originColor = this.options.tooltip.axisPointer.lineStyle.color
+            this.options.tooltip.axisPointer.lineStyle.color = params[0].seriesIndex == 0 ? '#F03E3E' : '#41B37D'
+            const newColor = this.options.tooltip.axisPointer.lineStyle.color
+            if (originColor !== newColor) this.resetChart(this.options)
             // 委托量
             return `
                       ${this.$t('M.trade_coin_entrusted_price')}：${this.$scientificToNumber(params[0].data[0])}<br/>
@@ -98,6 +90,7 @@ export default {
         },
         yAxis: {
           position: 'right',
+          // y轴分割线
           splitLine: {
             show: false
           },
@@ -105,26 +98,26 @@ export default {
             lineStyle: {
               color: '#61688a'
             }
-          }
-        },
-        axisLabel: {
-          margin: 2,
-          formatter: newNum => {
-            switch (this.$language_S_X) {
-              case 'zh_CN':
-                if (newNum > 100000000) {
-                  newNum = `${this.$keep2Num(newNum / 100000000)}亿`
-                } else if (newNum > 10000) {
-                  newNum = `${this.$keep2Num(newNum / 10000)}万`
-                }
-                return newNum
-              default :
-                if (newNum > 1000000) {
-                  newNum = `${this.$keep2Num(newNum / 1000000)}M`
-                } else if (newNum > 1000) {
-                  newNum = `${this.$keep2Num(newNum / 1000)}K`
-                }
-                return newNum
+          },
+          axisLabel: {
+            margin: 2,
+            formatter: newNum => {
+              switch (this.$language_S_X) {
+                case 'zh_CN':
+                  if (newNum > 100000000) {
+                    newNum = `${this.$keep2Num(newNum / 100000000)}亿`
+                  } else if (newNum > 10000) {
+                    newNum = `${this.$keep2Num(newNum / 10000)}万`
+                  }
+                  return newNum
+                default :
+                  if (newNum > 1000000) {
+                    newNum = `${this.$keep2Num(newNum / 1000000)}M`
+                  } else if (newNum > 1000) {
+                    newNum = `${this.$keep2Num(newNum / 1000)}K`
+                  }
+                  return newNum
+              }
             }
           }
         },
@@ -136,16 +129,16 @@ export default {
           // 委托量
           name: this.$t('M.trade_coin_entrusted_amount'),
           type: 'line',
-          color: 'rgba(212,88,88,0.2)',
+          color: 'rgba(240,62,62,0.3)',
           itemStyle: {
             normal: {
             }
           },
           lineStyle: {
-            width: 0
+            width: 2,
+            color: '#F03E3E'
           },
-          areaStyle: {
-          },
+          areaStyle: {},
           data: this.buys,
           symbolSize: 0
         },
@@ -154,9 +147,10 @@ export default {
           // 委托量
           name: this.$t('M.trade_coin_entrusted_amount'),
           type: 'line',
-          color: 'rgba(0,128,105,0.2)',
+          color: 'rgba(65,179,125,.3)',
           lineStyle: {
-            width: 0
+            width: 2,
+            color: '#41B37D'
           },
           areaStyle: {},
           data: this.sells,
@@ -165,13 +159,13 @@ export default {
       ]
     }
   },
-  created () {
-  },
+  // created () {},
   mounted () {
+    // window.addEventListener('resize', this.depthCharts.resize)
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     // 切换内容显示隐藏
     toggleShowContent () {
@@ -179,18 +173,18 @@ export default {
     },
     // 重新绘制图标
     resetChart (params) {
-      this.depthCharts = echarts.init(document.getElementById('depth'))
+      this.depthCharts = echarts.init(document.getElementById('depth-container'))
       for (let k in params) {
         this.options[k] = params[k]
       }
       // console.log(params)
       this.depthCharts.setOption(this.options)
-      window.onresize = this.depthCharts.resize
+      // window.addEventListener('resize', this.depthCharts.resize)
+      console.log(this.depthCharts.resize)
+      window.addEventListener('resize', _.debounce(this.depthCharts.resize, 100))
     },
     // 重新设置 options
     resetOptions () {
-      this.options.tooltip.backgroundColor = this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-      this.options.tooltip.textStyle.color = this.$theme_S_X === 'night' ? '#fff' : 'rgb(102,102,102)'
       this.options.tooltip.borderColor = this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
       this.options.backgroundColor = this.$theme_S_X === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
     },
@@ -208,16 +202,26 @@ export default {
       }
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       socketData: state => state.common.socketData,
       depthDataByAjax: state => state.common.klineAjaxData.depthData,
       depthDataBySocket: state => state.common.socketData.depthData,
-      mainColor: state => state.common.mainColor
-    })
+      mainColor: state => state.common.mainColor,
+      showKlineOrDepth_S: state => state.trade.showKlineOrDepth_S,
+      logoSrc: state => state.common.logoSrc
+    }),
+    isShowKline () {
+      return this.showKlineOrDepth_S == 'kline'
+    }
   },
   watch: {
+    isShowKline (New) {
+      if (!New) {
+        this.depthCharts.resize()
+      }
+    },
     depthDataByAjax (newVal) {
       this.setWatchData(newVal)
     },
@@ -231,49 +235,21 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss" type="text/scss">
-  @import '../../assets/CSS/index';
-
-  .depth-box {
-    margin: 10px auto;
-
-    > .title {
-      box-sizing: border-box;
-      height: 34px;
-      padding: 0 14px;
-
-      /* font-weight: 700; */
-      margin-bottom: 1px;
-      line-height: 34px;
-
-      > .text {
-        display: inline-block;
-        height: 100%;
-        border-bottom: 2px solid $mainColor;
-        text-indent: 4px;
-        color: $mainColor;
-      }
-    }
-
-    > .depth {
-      width: 100%;
-      height: 332px;
-    }
-
-    &.night {
-      > .title {
-        color: $nightMainTitleColor;
-        background-color: $mainContentNightBgColor;
-        box-shadow: 2px 0 3px rgba(27, 35, 49, 1);
-      }
-    }
-
-    &.day {
-      > .title {
-        color: $dayMainTitleColor;
-        background-color: $mainDayBgColor;
-        box-shadow: 2px 0 3px rgba(239, 239, 239, 1);
-      }
-    }
-  }
+<style lang="stylus">
+  @import '../../assets/CSS/index.styl'
+  .depth-box
+    width 100%
+    height 528px
+    position relative
+    #depth-container
+      height 528px
+    > .logo-mask
+      position absolute
+      z-index 2
+      bottom 190px
+      left 66px
+      opacity .2
+      pointer-events none
+      > img
+        height 30px
 </style>

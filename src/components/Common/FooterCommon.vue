@@ -25,9 +25,9 @@
             // 客户端下载
             dd.dd-item(v-if="isNeedApp")
               router-link(:to="downloadAppSrc") {{$t('M.comm_Client_Downloads')}}
-          // 关于我们
+          // 关于
           dl.right-dl
-            dt.title {{$t('M.comm_us')}}
+            dt.title {{$t('M.footer_about_label')}}
             // 新闻公告
             dd.dd-item(@click="$footerJump(`/${$routes_X.news}`,'notice')")  {{$t('M.comm_news_and_notice')}}
             // 帮助中心
@@ -50,9 +50,9 @@
             dd.dd-item(@click="$footerJump('/ServiceAndProtocol','LegislationExplain')") {{$t('M.common_footer_legal_notice')}}
             // OTC 服务协议
             dd.dd-item(@click="$footerJump('/ServiceAndProtocol','OTCServices')") {{$t('M.about_digital_terms_hint8')}}
-          //  联系我们
+          //  服务
           dl.right-dl
-            dt.title {{$t('M.common_connect_us')}}
+            dt.title {{$t('M.footer_service_label')}}
             .email
               // 客服邮箱
               span.email-content(v-if="configInfo['otcEmail']") {{$t('M.footer_service_email')}}: {{configInfo['otcEmail']}}
@@ -242,7 +242,7 @@ export default {
     width: 100%;
     min-width: 1288px;
     color: #838dae;
-    background-color: #1c2237;
+    background-color: #1c1f32;
 
     > .inner-box {
       width: 1300px;

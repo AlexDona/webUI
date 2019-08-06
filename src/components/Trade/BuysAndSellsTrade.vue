@@ -1,186 +1,88 @@
-<template>
-  <!--币币交易-买卖单-->
-  <div
-    class="buys-and-sells-box trade"
-    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
-  >
-    <div
-      class="inner-box"
-    >
-      <div
-        class="title font-size16 cursor-pointer"
-      >
-        <span
-          class="text"
-          @click="toggleShowContent"
-        >
-          <span>
-            <!--买卖单-->
-            {{ $t('M.trade_coin_buying_and_sell') }}
-          </span>
-        </span>
-      </div>
-      <div
-        class="content"
-        v-if="buysAndSellsList"
-      >
-        <el-collapse-transition>
-          <div
-            v-show="contentShowStatus"
-            class="inner-box"
-          >
-            <dl class="title-box">
-              <dt class="header">
-                <span class="buy-and-sell-index">
-                  index
-                </span><span class="price text-align-l">
-                  <!--价格-->
-                  {{ $t('M.comm_price_metre') }}({{$middleTopData_S_X.area}})
-                </span><span class="amount text-align-c">
-                  <!--数量-->
-                  {{ $t('M.comm_count') }}
-                  <span class="uppercase">({{$middleTopData_S_X.sellsymbol}})</span>
-                </span><span class="total text-align-r">
-                  <!--累计:合计改为累计后，括号中的单位要和前面的数量保持一致-->
-                  {{ $t('M.comm_aggregate') }}
-                  <!--<span class="uppercase">({{$middleTopData_S_X.area}})</span>-->
-                  <span class="uppercase">({{$middleTopData_S_X.sellsymbol}})</span>
-                </span>
-              </dt>
-            </dl>
-            <!--buys、sells-->
-            <div class="outer-box">
-              <div
-                ref="buy-box"
-                class="middle-box content-box"
-              >
-                <!--卖出-->
-                <dl
-                  class="buys-list"
-                >
-                  <dd
-                    :style="{
-                      height:(20-sellsListLength)*30+'px'
-                    }"
-                    v-if="listOrder==='middle'"
-                  >
-                  </dd>
-                  <dd
-                    class="buys-item cursor-pointer item"
-                    v-for="(item,index) in buysAndSellsList.sells.list||[]"
-                    :key="index"
-                    :class="{'odd':index%2!==0}"
-                    @click="changeActivePriceItem(item)"
-                  >
-                    <div class="inner">
-                      <span class="price sell-bg">
-                        <!--卖-->
-                        {{ $t('M.comm_ask') }} {{item.index}}
-                      </span><span
-                      class="price text-align-l sell-bg"
-                    >
-                      {{$scientificToNumber(item.price)}}
-                    </span><span class="amount text-align-r">
-                      {{$scientificToNumber($cutOutPointLength(item.amount, $middleTopData_S_X.countExchange))}}
-                    </span><span class="total text-align-r">
-                      {{$scientificToNumber($cutOutPointLength(item.progressiveTotal, $middleTopData_S_X.priceExchange))}}
-                    </span><!--宽度条--><i
-                        class="color-sell-bg"
-                        :style="`width:${item.progressiveTotal/buysAndSellsList.sells.list[0].progressiveTotal * 100}%`"
-                      >
-                      </i>
-                      <!--:style="`width:${item.amount/buysAndSellsList.sells.highestAmount*100}%`"-->
-                    </div>
-                  </dd>
-                </dl>
-                <!--最新价-->
-                <TradeNewPrice/>
-                <!--买入-->
-                <dl
-                  class="sells-list"
-                >
-                  <dd
-                    class="sells-item cursor-pointer item"
-                    v-for="(item,index) in buysAndSellsList.buys.list"
-                    :key="index"
-                    :class="{'even':index%2==0}"
-                    @click="changeActivePriceItem(item)"
-                  >
-                    <div class="inner">
-                      <span class="price buy-bg">
-                        <!--买-->
-                        {{ $t('M.comm_bid') }} {{item.index}}
-                      </span><span class="price text-align-l buy-bg">
-                        {{$scientificToNumber(item.price)}}
-                      </span><span class="amount text-align-r">
-                        {{$scientificToNumber(item.amount)}}
-                      </span><span class="total text-align-r">
-                        {{$scientificToNumber(item.progressiveTotal)}}
-                      </span><!--宽度条--><i
-                          class="color-buy-bg"
-                          :style="`width:${item.progressiveTotal/buysAndSellsList.buys.list[buysAndSellsList.buys.list.length - 1].progressiveTotal * 100}%`"
-                        >
-                        </i>
-                      <!--:style="`width:${item.amount/buysAndSellsList.buys.highestAmount*100}%`"-->
-                    </div>
-                  </dd>
-              </dl>
-              </div>
-            </div>
-            <!--小数位选择-->
-            <div class="bits">
-              <div class="left-select">
-                <div class="parent">
-                  <select
-                    v-model="checkedBits"
-                    @change="changeBits"
-                    class="select-bits"
-                  >
-                    <option
-                      disabled
-                      value=""
-                      selected
-                      v-if="bitsData.length == 0"
-                    >
-                      --
-                    </option>
-                    <option
-                      v-for="(item, index) in bitsData"
-                      :key="index"
-                      :label="currentLanguage? item.chineseName : item.englishName"
-                      :value="item.id"
-                    >
-                    </option>
-                  </select>
-                  <!--改写小三角-->
-                  <div class="triangle"></div>
-                </div>
-              </div>
-              <div class="right-filter">
-                <span class="right">
-                  <button
-                    class="middle"
-                    @click="changeListOrder('middle')"
-                  ></button>
-                  <button
-                    class="bottom"
-                    @click="changeListOrder('buys')"
-                  ></button>
-                  <button
-                    class="top"
-                    @click="changeListOrder('sells')"
-                  ></button>
-                </span>
-              </div>
-            </div>
-          </div>
-        </el-collapse-transition>
-      </div>
-    </div>
-  </div>
+<!--
+  author: zhaoxinlei
+  update: 20190801
+  description: 当前页面为 币币交易 买卖单列表页面 主页面
+-->
+<template lang="pug">
+  .buys-and-sells-box.trade(:class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }")
+    .inner-box
+      .title.font-size16
+        span.text
+          // 买卖单
+          span {{$t('M.trade_coin_buying_and_sell')}}
+      .content(v-if="buysAndSellsList")
+        .inner-box
+          dl.title-box
+            // 表头
+            dt.header.font-size12
+              span.buy-and-sell-index index
+              // 价格
+              span.price.text-align-l  {{ $t('M.comm_price_metre') }}({{$middleTopData_S_X.area}})
+              // 数量
+              span.amount.text-align-c {{ $t('M.comm_count') }}
+                span.uppercase ({{$middleTopData_S_X.sellsymbol}})
+              // 累计:合计改为累计后，括号中的单位要和前面的数量保持一致
+              span.total.text-align-r {{ $t('M.comm_aggregate') }}
+                span.uppercase ({{$middleTopData_S_X.sellsymbol}})
+          //buys、sells
+          .outer-box
+            .middle-box.content-box(:style="{marginTop: `${targetMarginTop}px`}")
+              //  卖出
+              dl.buys-list
+                dd(
+                  :style="{height:(20-sellsListLength)*22+'px'}"
+                  v-if="listOrder==='middle'"
+                )
+                dd.buys-item.cursor-pointer.item(
+                  v-for="(item,index) in buysAndSellsList.sells.list||[]"
+                  :class="{'odd':index%2!==0}"
+                  @click="changeActivePriceItem(item)"
+                )
+                  .inner
+                    // 卖
+                    span.price.sell-bg {{ $t('M.comm_ask') }} {{item.index}}
+                    span.price.text-align-l.sell-bg {{$scientificToNumber(item.price)}}
+                    span.amount.text-align-r {{$scientificToNumber($cutOutPointLength(item.amount, $middleTopData_S_X.countExchange))}}
+                    span.total.text-align-r {{$scientificToNumber($cutOutPointLength(item.progressiveTotal, $middleTopData_S_X.priceExchange))}}
+                    i.color-sell-bg(:style="`width:${item.progressiveTotal/buysAndSellsList.sells.list[0].progressiveTotal * 100}%`")
+              // 最新价
+              TradeNewPrice
+              dl.sells-list
+                dd.sells-item.cursor-pointer.item(
+                  v-for="(item,index) in buysAndSellsList.buys.list"
+                  :class="{'even':index%2==0}"
+                  @click="changeActivePriceItem(item)"
+                )
+                  .inner
+                    // 买
+                    span.price.buy-bg {{ $t('M.comm_bid') }} {{item.index}}
+                    span.price.text-align-l.buy-bg {{$scientificToNumber(item.price)}}
+                    span.amount.text-align-r {{$scientificToNumber(item.amount)}}
+                    span.total.text-align-r {{$scientificToNumber(item.progressiveTotal)}}
+                    i.color-buy-bg(:style="`width:${item.progressiveTotal/buysAndSellsList.buys.list[buysAndSellsList.buys.list.length - 1].progressiveTotal * 100}%`")
+          // 小数位选择
+          .bits
+            .left-select
+              .parent
+                span.active-bit.cursor-pointer(@click="toggleShowBits") {{currentLanguage ? activeBits.chineseName : activeBits.englishName}}
+                ul.select-bits(v-show="isShowBits")
+                  li.option-item(
+                    v-for="(item, index) in bitsData"
+                    :label="currentLanguage? item.chineseName : item.englishName"
+                    :value="item.id"
+                    @click.stop="changeBits(item)"
+                  )
+                    span {{currentLanguage? item.chineseName : item.englishName}}
+                // 改写小三角
+                .triangle
+            .right-filter
+              span.right
+                button.middle(@click="changeListOrder('middle')")
+                button.bottom(@click="changeListOrder('buys')")
+                button.top(@click="changeListOrder('sells')")
 </template>
 <script>
-import TradeNewPrice from './TradeNewPrice'
+import TradeNewPrice from './TheTradeNewPrice'
 import {getNestedData} from '../../utils/commonFunc'
 import {
   mapMutations,
@@ -194,7 +96,6 @@ export default {
   data () {
     return {
       // buysAndSellsList: [], // 过滤过的渲染列表
-      contentShowStatus: true,
       reflashCount: 0, // 买卖单数据刷新次数
       // 显示顺序(buys,middle,sells)
       listOrder: 'middle', // 切换显示顺序
@@ -202,58 +103,62 @@ export default {
       bitsData: [],
       // 买卖单部分选中的小数位
       checkedBits: '',
+      // 当前选中小数位
+      activeBits: {},
       // 国家语言类型
-      languageStyle: ['zh_CN', 'zh_TW']
+      languageStyle: ['zh_CN', 'zh_TW'],
+      // 买单margin-top
+      targetMarginTop: -220,
+      isShowBits: false
     }
   },
-  created () {
-  },
-  mounted () {
-  },
-  activated () {},
-  update () {
-  },
-  beforeRouteUpdate () {
-  },
+  // created () {
+  // },
+  // mounted () {
+  // },
+  // activated () {},
+  // update () {
+  // },
+  // beforeRouteUpdate () {
+  // },
   methods: {
     ...mapMutations([
       'CHANGE_ACTIVE_PRICE_ITEM',
       // 改变全局存储的选中的小数位值的方法
       'CHANGE_CHECKED_BITS'
     ]),
+    toggleShowBits () {
+      this.isShowBits = !this.isShowBits
+    },
     // 切换小数位下拉框
-    changeBits (e) {
-      // console.log(e.target.value)
+    changeBits (item) {
+      this.activeBits = item
       // 将选中的小数位值放全局
-      this.CHANGE_CHECKED_BITS(e.target.value)
+      this.CHANGE_CHECKED_BITS(item.id)
+      this.isShowBits = false
     },
     // 选中某一个买卖单价格
     changeActivePriceItem (item) {
       this.CHANGE_ACTIVE_PRICE_ITEM(item.price)
     },
-    // 切换内容显示隐藏
-    toggleShowContent () {
-      this.contentShowStatus = !this.contentShowStatus
-    },
     // 切换显示顺序
     changeListOrder (firstName) {
       // console.log(this.$refs['buy-box'].style.marginTop = '200px')
-      let targetMarginTop = 0
+      this.targetMarginTop = 0
       switch (firstName) {
         case 'middle':
           this.listOrder = 'middle'
-          targetMarginTop = -300
+          this.targetMarginTop = -220
           break
         case 'sells':
           this.listOrder = 'buys'
-          targetMarginTop = 0
+          this.targetMarginTop = 0
           break
         case 'buys':
           this.listOrder = 'sells'
-          targetMarginTop = -600
+          this.targetMarginTop = -440
           break
       }
-      this.$refs['buy-box'].style.marginTop = `${targetMarginTop}px`
     }
   },
   filter: {},
@@ -295,6 +200,7 @@ export default {
       this.bitsData.forEach((item, index) => {
         if (newVal.defaultIndex === index) {
           this.checkedBits = item.id
+          this.activeBits = item
         }
       })
     },
@@ -322,7 +228,7 @@ export default {
     > .title {
       display: flex;
       height: 34px;
-      padding: 0 4.5%;
+      padding: 0 8px;
       margin-bottom: 1px;
       line-height: 34px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
@@ -335,9 +241,8 @@ export default {
         > span {
           display: inline-block;
           height: 100%;
-          border-bottom: 2px solid $mainColor;
           font-size: 14px;
-          color: $mainColor;
+          color: #fff;
         }
       }
     }
@@ -348,9 +253,9 @@ export default {
         > .title-box {
           position: relative;
           z-index: 2;
-          height: 30px;
-          padding: 0 4.5%;
-          line-height: 30px;
+          height: 28px;
+          padding: 0 8px;
+          line-height: 28px;
 
           .header {
             > span {
@@ -375,34 +280,35 @@ export default {
         }
 
         > .outer-box {
-          height: 650px;
+          height: 470px;
           overflow: hidden;
 
           > .content-box {
-            height: 650px;
-            margin-top: -300px;
+            height: 440px;
+            margin-top: -340px;
             transition: all .5s;
 
             > .buys-list,
             .sells-list {
-              height: 600px;
+              height: 440px;
               font-size: 12px;
 
               > dd {
-                height: 30px;
-                line-height: 30px;
+                height: 22px;
+                line-height: 22px;
 
                 > .inner {
                   position: relative;
                   z-index: 1;
-                  padding: 0 4.5%;
+                  padding: 0 8px;
+                  color: #d9e1f1;
 
                   > .buy-bg {
-                    color: $upColor;
+                    color: #f03e3e;
                   }
 
                   > .sell-bg {
-                    color: $downColor;
+                    color: #41b37d;
                   }
 
                   > span {
@@ -425,26 +331,20 @@ export default {
                     top: 0;
                     right: 0;
                     max-width: 100%;
-                    height: 30px;
+                    height: 22px;
                     opacity: .5;
                     transition: all 1.5s;
                   }
 
                   > .color-buy-bg {
-                    background-color: rgba(212, 88, 88, .4);
+                    background: rgba(212, 88, 88, .3);
                   }
 
                   > .color-sell-bg {
-                    background-color: rgba(0, 128, 105, .4);
+                    background: rgba(0, 128, 105, .3);
                   }
                 }
               }
-            }
-
-            /* 最新价 */
-            .new-price {
-              height: 50px;
-              line-height: 50px;
             }
 
             /* 买入表 */
@@ -460,29 +360,48 @@ export default {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          height: 36px;
+          height: 28px;
           padding: 0 10px;
 
           .left-select {
             .select-bits {
-              -moz-appearance: none;
-              -webkit-appearance: none;
-              appearance: none;
+              position: absolute;
+              z-index: 9999;
+              top: 19px;
+              left: 0;
               box-sizing: border-box;
-              width: 82px;
+              min-width: 76px;
               height: 22px;
-              padding-left: 10px;
-              outline: none;
+              border-radius: 2px;
               font-size: 12px;
+
+              .option-item {
+                box-sizing: border-box;
+                height: 20px;
+                padding-left: 10px;
+                font-size: 12px;
+                line-height: 20px;
+                cursor: pointer;
+              }
             }
 
             .parent {
               position: relative;
               display: inline-block;
 
+              .active-bit {
+                display: inline-block;
+                box-sizing: border-box;
+                min-width: 76px;
+                height: 18px;
+                padding: 0 10px;
+                border: 1px solid rgba(62, 65, 84, 1);
+                font-size: 12px;
+              }
+
               .triangle {
                 position: absolute;
-                top: 10px;
+                top: 8px;
                 right: 10px;
                 width: 0;
                 height: 0;
@@ -526,19 +445,20 @@ export default {
     color: $nightFontColor;
 
     > .inner-box {
+      background-color: #1c1f32;
+
       > .title {
-        background-color: $mainContentNightBgColor;
-        box-shadow: 2px 0 3px rgba(27, 35, 49, 1);
+        background-color: #23273c;
       }
 
       > .content {
-        background-color: $mainContentNightBgColor;
+        background-color: #1c1f32;
 
         > .inner-box {
           /* 表头 */
           > .title-box {
             .header {
-              color: $mainNightTitleColor;
+              color: #66718f;
             }
           }
 
@@ -547,13 +467,8 @@ export default {
               > .buys-list,
               .sells-list {
                 > .item {
-                  &.odd,
-                  &.even {
-                    background-color: #1a1d2f;
-                  }
-
                   &:hover {
-                    background-color: rgba(255, 255, 255, .2);
+                    background-color: rgba(255, 255, 255, .1);
                   }
                 }
               }
@@ -562,10 +477,25 @@ export default {
 
           > .bits {
             .left-select {
+              .active-bit {
+                border: 1px solid #3e4154;
+                color: #fff;
+              }
+
               .select-bits {
-                border: 1px solid #464c5e;
-                color: #848a9d;
+                color: #d9e1f1;
                 background-color: #1c1f32;
+                box-shadow: 0 0 6px 0 rgba(20, 22, 35, 1);
+
+                .option-item {
+                  color: #fff;
+                  background: #23273c;
+
+                  &:hover {
+                    color: $mainColor;
+                    background-color: #2c3046;
+                  }
+                }
               }
 
               .parent {
@@ -583,33 +513,44 @@ export default {
   &.day {
     > .inner-box {
       > .title {
-        color: $dayMainTitleColor;
-        background-color: $mainDayBgColor;
-        box-shadow: 2px 0 3px rgba(239, 239, 239, 1);
+        background-color: #f2f6fa;
+
+        > .text {
+          > span {
+            color: #333;
+          }
+        }
       }
 
       > .content {
         background-color: #fff;
 
         > .inner-box {
+          /* 表头 */
+          > .title-box {
+            .header {
+              color: #66718f;
+            }
+          }
+
           > .outer-box {
             > .content-box {
               > .buys-list,
               .sells-list {
                 > dd {
-                  &.odd,
-                  &.even,
                   &:hover {
                     background-color: #f2f2f2;
                   }
 
                   > .inner {
+                    color: #66718f;
+
                     > .color-buy-bg {
                       background-color: rgba(212, 88, 88, .8);
                     }
 
                     > .color-sell-bg {
-                      background-color: rgba(0, 128, 105, .8);
+                      background: rgba(0, 128, 105, .3);
                     }
                   }
                 }
@@ -619,15 +560,30 @@ export default {
 
           > .bits {
             .left-select {
+              .active-bit {
+                border: 1px solid #cfd5df;
+                color: #596a7a;
+              }
+
               .select-bits {
-                border: 1px solid #c4c4c4;
-                color: #848a9d;
+                color: #596a7a;
                 background-color: #fff;
+                box-shadow: 0 0 6px 0 rgba(198, 206, 220, 1);
+
+                .option-item {
+                  color: #596a7a;
+                  background: #fff;
+
+                  &:hover {
+                    color: $mainColor;
+                    background-color: #e5ecf4;
+                  }
+                }
               }
 
               .parent {
                 .triangle {
-                  border-color: #848a9d transparent transparent;
+                  border-color: #596a7a transparent transparent;
                 }
               }
             }

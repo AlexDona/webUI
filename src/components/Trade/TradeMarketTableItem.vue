@@ -129,10 +129,6 @@
                 class="currency-chn-name"
                 v-show="language === 'zh_CN'"
               >{{innerItem.sellname.replace('+', ' ')}}</span>
-              <span
-                class="area"
-                v-show="language !== 'zh_CN'"
-              >/ {{innerItem.area}}</span>
             </span>
             <span
               class="price text-align-r"
@@ -150,7 +146,7 @@
                 'down':innerItem.chg<0
               }"
             >
-              {{$keep2Num(innerItem.chg)}}%
+              {{ innerItem.chg > 0 ? `+${$keep2Num(innerItem.chg)}` : $keep2Num(innerItem.chg)}}%
             </span>
           </dd>
         </dl>
@@ -199,7 +195,6 @@ export default {
       if (this.clickDalay) {
         return false
       }
-      console.log(this.isKlineDataReady)
       if (this.isKlineDataReady) {
         this.$emit('changeActiveSymbol', {
           activeSymbol
@@ -245,7 +240,7 @@ export default {
       /* 表头 */
       > .title {
         flex: 1;
-        color: $mainNightTitleColor;
+        color: #66718f;
 
         &:nth-of-type(1) {
           margin-left: 20px;
@@ -291,16 +286,12 @@ export default {
       /* 板块头部 */
       > .market-category {
         position: relative;
-        height: 30px;
-        padding: 0 4.5%;
+        height: 20px;
+        padding: 0 8px;
         margin: 0 16px;
-
-        /* padding-left: 10px; */
-
-        /* padding: 0 20px; */
-        border-top: 1px solid #39424d;
-        border-bottom: 1px solid #39424d;
-        line-height: 30px;
+        border-top: 1px solid #131523;
+        border-bottom: 1px solid #131523;
+        line-height: 20px;
         color: $mainColor;
 
         &::before {
@@ -326,6 +317,10 @@ export default {
             display: inline-block;
             width: 18px;
             height: 30px;
+
+            > .collected {
+              color: $mainColor;
+            }
           }
 
           &:hover {
@@ -367,24 +362,24 @@ export default {
 
             > span {
               > .base-currency {
-                color: $nightFontColor;
+                color: #d9e1f1;
               }
 
               > .currency-chn-name {
-                color: #b0b2b6;
+                color: #66718f;
               }
 
               &.price,
               &.rose {
-                color: $nightFontColor;
+                color: #d9e1f1;
               }
 
               &.up {
-                color: $upColor;
+                color: #f03e3e;
               }
 
               &.down {
-                color: $downColor;
+                color: #41b37d;
               }
             }
           }
@@ -415,16 +410,20 @@ export default {
             }
 
             > span {
+              > .base-currency {
+                color: #292929;
+              }
+
               > .currency-chn-name {
-                color: #b0b2b6;
+                color: #aab1bc;
               }
 
               &.up {
-                color: $upColor;
+                color: #f03e3e;
               }
 
               &.down {
-                color: $downColor;
+                color: #41b37d;
               }
             }
           }

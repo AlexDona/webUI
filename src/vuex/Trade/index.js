@@ -79,7 +79,9 @@ const state = {
     'stepDesc': '1-3',
     // 商户交易ID
     'tradeId': '510161764231413760'
-  }
+  },
+  // 主页显示内容（kline、depth）
+  showKlineOrDepth_S: 'kline'
 }
 export default {
   state,
