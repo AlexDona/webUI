@@ -46,10 +46,15 @@ const devTestConfig = {
   // socketUrl: 'ws://192.168.2.200:8087/market',
 
   // HuaHaoTian
-  socketUrl: 'ws://192.168.2.200:8087/market',
-  apiCommonUrl: 'http://192.168.2.200:8888/',
-  loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
-  OTCIMSocketUrl: 'ws://192.168.2.200:8066/websoc'
+  // socketUrl: 'ws://192.168.2.200:8087/market',
+  // apiCommonUrl: 'http://192.168.2.200:8888/',
+  // loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
+  // OTCIMSocketUrl: 'ws://192.168.2.200:8066/websoc'
+
+  socketUrl: 'wss://market.test.com',
+  apiCommonUrl: 'https://web.reset.test.com/',
+  loginSocketUrl: 'wss://qrcode.test.com/qrcodeLogin/',
+  OTCIMSocketUrl: 'wss://im.test.com/websoc'
 }
 
 const dev210Config = {
