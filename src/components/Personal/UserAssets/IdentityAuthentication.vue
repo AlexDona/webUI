@@ -1625,10 +1625,14 @@ export default {
           }
         }
 
-        .header-border {
-          border-bottom: 1px solid rgba(233, 234, 235, 1);
-          background-color: #fff;
+        .advanced-main-header {
+          background: $mainColorOfWhite;
           box-shadow: 1px 3px 6px #cfd5df;
+
+          .header-border {
+            border-bottom: 1px solid rgba(233, 234, 235, 1);
+            background-color: #fff;
+          }
         }
 
         .authentication-type {

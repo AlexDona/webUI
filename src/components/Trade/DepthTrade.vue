@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!--
   author: zhaoxinlei
   update: 20190803
@@ -42,6 +43,8 @@ export default {
           borderColor: '#262A42',
           borderRadius: 3,
           padding: 10,
+          hideDelay: 8000,
+          confine: true,
           style: {
             // color: '#c7cce6',
             // color: '#000',
@@ -50,9 +53,7 @@ export default {
           textStyle: {
             color: ''
           },
-          confine: true,
           // alwaysShowContent: true,
-          hideDelay: 9000,
           axisPointer: {
             snap: true,
             confine: true,
@@ -73,8 +74,7 @@ export default {
             const newColor = this.options.tooltip.axisPointer.lineStyle.color
             if (originColor !== newColor) this.resetChart(this.options)
             // 委托量
-            return `
-                      ${this.$t('M.trade_coin_entrusted_price')}：${this.$scientificToNumber(params[0].data[0])}<br/>
+            return `${this.$t('M.trade_coin_entrusted_price')}：${this.$scientificToNumber(params[0].data[0])}<br/>
                       ${this.$t('M.trade_coin_entrusted_amount')}：${this.$scientificToNumber(params[0].data[1])}
                       `
           }
@@ -160,13 +160,19 @@ export default {
     }
   },
   // created () {},
-  mounted () {
-    // window.addEventListener('resize', this.depthCharts.resize)
-  },
+  // mounted () {},
   // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
+    mouseOver (e) {
+      this.options.tooltip.hideDelay = 10000
+      this.resetChart(this.options)
+    },
+    mouseLeave () {
+      this.options.tooltip.hideDelay = 100
+      this.resetChart(this.options)
+    },
     // 切换内容显示隐藏
     toggleShowContent () {
       this.contentShowStatus = !this.contentShowStatus
@@ -177,7 +183,6 @@ export default {
       for (let k in params) {
         this.options[k] = params[k]
       }
-      // console.log(params)
       this.depthCharts.setOption(this.options)
       // window.addEventListener('resize', this.depthCharts.resize)
       console.log(this.depthCharts.resize)

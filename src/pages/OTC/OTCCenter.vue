@@ -857,8 +857,8 @@ export default {
     await this.getOTCPutUpOrdersList()
     // 4.0 用户登录了刷新用户个人信息
     if (this.isLogin) {
+      // 刷新用户信息
       await this.REFRESH_USER_INFO_ACTION()
-      this.reflashUserInfo() // 刷新用户信息
       // 7.0 登陆后进页面待币种和法币都有id的时候调接口渲染查看弹窗及头部可用冻结数据
       await this.getViewDialogInfo()
     }
@@ -1008,10 +1008,6 @@ export default {
       }
       this.activeName = 'first'
     },
-    // 刷新个人信息
-    reflashUserInfo () {
-      this.REFRESH_USER_INFO_ACTION()
-    },
     // 查询用户是否可以发单状态
     async getUserPutUpOrderStatus () {
       const data = await getCommonPutUpOrderStatus()
@@ -1150,16 +1146,18 @@ export default {
       const data = await getOTCAvailableCurrency({})
       // 返回数据正确的逻辑
       if (!data) return false
+      console.log(data)
       if (data.data) {
         this.IWantToBuySellArr = getNestedData(data, 'data')
         if (this.IWantToBuySellArr.length) {
-          _.forEach(this.IWantToBuySellArr, (coin, coinIndex) => {
-            if (coin.name == 'FBT') {
-              this.IWantToBuySellArr.splice(coinIndex, 1)
-              this.IWantToBuySellArr.unshift(coin)
-              return false
-            }
-          })
+          // 去掉将FBT放到第一位的逻辑201908013期的需求增加了币种排序参数
+          // _.forEach(this.IWantToBuySellArr, (coin, coinIndex) => {
+          //   if (coin.name == 'FBT') {
+          //     this.IWantToBuySellArr.splice(coinIndex, 1)
+          //     this.IWantToBuySellArr.unshift(coin)
+          //     return false
+          //   }
+          // })
           // 个人中心跳转otc-开始
           if (this.$route.params.coinId) {
             let jumpCoinId = this.$route.params.coinId
@@ -2008,7 +2006,7 @@ export default {
       /* 发布订单按钮 */
       .person-info-box {
         .el-button {
-          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          background: $nightButtonBgColor1;
         }
       }
 
@@ -2323,7 +2321,7 @@ export default {
       /* 发布订单按钮 */
       .person-info-box {
         .el-button {
-          background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
+          background: $dayButtonBgColor2;
         }
       }
 

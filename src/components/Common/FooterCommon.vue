@@ -19,7 +19,16 @@
               ) {{$t('M.comm_api_doc')}}
             // 上币申请
             dd.dd-item
-              router-link(to="/CurrencyApplication") {{$t('M.actionCenter_coin_apply')}}
+              // 20190813周期增加了上币申请第三方表单提交申请页面：有URL就按照URL跳转 没有就跳转本项目上币申请页面
+              a(
+                v-if="configInfo.listingUrl"
+                :href="configInfo.listingUrl"
+                target="_blank"
+              ) {{$t('M.actionCenter_coin_apply')}}
+              router-link(
+                v-else
+                to="/CurrencyApplication"
+              ) {{$t('M.actionCenter_coin_apply')}}
             // 币种资料
             dd.dd-item(@click="$footerJump('/ServiceAndProtocol','CurrencyInformation')") {{$t('M.comm_currency_info')}}
             // 客户端下载

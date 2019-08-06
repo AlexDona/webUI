@@ -11,7 +11,7 @@ import lang from 'element-ui/lib/locale/'
 import VueI18n from 'vue-i18n'
 import VueClipboard from 'vue-clipboard2'
 import Vuex from 'vuex'
-// import FastClick from 'fastclick'
+import FastClick from 'fastclick'
 // eslint-disable-next-line
 import $ from 'jquery'
 // eslint-disable-next-line
@@ -59,12 +59,6 @@ import koKR from 'element-ui/lib/locale/lang/ko'
 import jaJP from 'element-ui/lib/locale/lang/ja'
 import vi from 'element-ui/lib/locale/lang/vi'
 
-Vue.prototype.$loading = Loading.service
-Vue.prototype.$msgbox = MessageBox
-Vue.prototype.$confirm = MessageBox.confirm
-Vue.prototype.$message = Message
-Vue.prototype.$t = Message
-Vue.mixin(Mixin)
 Vue.use(Pagination)
   .use(Dialog)
   .use(Autocomplete)
@@ -91,11 +85,17 @@ Vue.use(Pagination)
   .use(Progress)
   .use(Loading.directive)
   .use(Upload)
-
+Vue.prototype.$loading = Loading.service
+Vue.prototype.$msgbox = MessageBox
+Vue.prototype.$confirm = MessageBox.confirm
+Vue.prototype.$message = Message
+Vue.prototype.$t = Message
+Vue.mixin(Mixin)
 Vue.use(Vuex)
 Vue.use(VueI18n)
 Vue.use(VueClipboard)
 Vue.component(CollapseTransition.name, CollapseTransition)
+Vue.component(Message)
 
 const store = storeCreator()
 const router = routerCreator()
@@ -126,7 +126,7 @@ let vm = new Vue({
   i18n,
   render: h => h(App)
 }).$mount('#app', true)
-// FastClick.attach(document.body)
+FastClick.attach(document.body)
 Vue.use({
   vm
 })

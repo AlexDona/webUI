@@ -204,7 +204,7 @@ export default {
       }
 
       > .content {
-        height: 1750px;
+        height: 1400px;
         margin-top: -1px;
         background-color: #121824;
 

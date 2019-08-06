@@ -1226,7 +1226,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     flex: 3;
     width: 1300px;
     padding: 30px 50px 130px 60px;
-    margin: 60px auto 260px;
+    margin: 60px auto 160px;
 
     > .publish-AD-left {
       flex: 2;
@@ -1692,7 +1692,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
           > .button {
             > .AD-button {
               color: #fff;
-              background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              background: $nightButtonBgColor1;
             }
           }
         }
@@ -1929,7 +1929,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
           > .button {
             > .AD-button {
               color: $mainColorOfWhite;
-              background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              background: $dayButtonBgColor2;
             }
           }
         }

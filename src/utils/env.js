@@ -30,6 +30,7 @@ const devTestConfig = {
 
   // FangRuiChang
   // apiCommonUrl: 'http://192.168.10.9:8888/',
+  // apiCommonUrl: 'http://192.168.2.142:8888/',
 
   // HuaHaoTian
   // socketUrl: 'ws://192.168.0.52:8087/market',
@@ -52,7 +53,7 @@ const devTestConfig = {
   // OTCIMSocketUrl: 'ws://192.168.2.200:8066/websoc'
 
   socketUrl: 'wss://market.test.com',
-  apiCommonUrl: 'https://web.reset.test.com/',
+  apiCommonUrl: 'https://web.rest.test.com/',
   loginSocketUrl: 'wss://qrcode.test.com/qrcodeLogin/',
   OTCIMSocketUrl: 'wss://im.test.com/websoc'
 }
@@ -81,7 +82,7 @@ const newProdConfig = {
 switch (process.env.NODE_ENV) {
   case 'development':
     // 本地开发
-    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
+    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'web.test.com'}
     // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'me.com'}
     // 210开发环境
     // targetConfig = {...dev210Config, xDomain: 'me.com'}

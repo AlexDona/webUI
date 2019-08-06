@@ -143,162 +143,163 @@
           </span>
         </div>
         <!-- 下部分表格内容 -->
-        <div
-          class="manage-main-bottom"
-        >
-          <el-table
-            :data="ADList"
-            style="width: 100%;"
-            :empty-text="$t('M.comm_no_data')"
-          >
-            <!-- 时间 -->
-            <el-table-column
-              :label="$t('M.comm_time')"
-              width="150"
+        <div class="manage-main-bottom">
+          <!--表格-->
+          <div class="table-box">
+            <el-table
+              :data="ADList"
+              style="width: 100%;"
+              :empty-text="$t('M.comm_no_data')"
             >
-              <template slot-scope="s">
-                <div>{{timeFormatting(s.row.createTime)}}</div>
-              </template>
-            </el-table-column>
-            <!--广告id-->
-            <el-table-column
-              :label="$t('M.otc_AD_ID')"
-              width="110"
+              <!-- 时间 -->
+              <el-table-column
+                :label="$t('M.comm_time')"
+                width="150"
+              >
+                <template slot-scope="s">
+                  <div>{{timeFormatting(s.row.createTime)}}</div>
+                </template>
+              </el-table-column>
+              <!--广告id-->
+              <el-table-column
+                :label="$t('M.otc_AD_ID')"
+                width="110"
+              >
+                <template slot-scope="s">
+                  <div>{{s.row.entrustSequence}}</div>
+                </template>
+              </el-table-column>
+              <!-- 交易类型 -->
+              <el-table-column
+                :label="$t('M.otc_type_ransaction')"
+              >
+                <template slot-scope="s">
+                  <div
+                    v-show="s.row.entrustType === 'BUY'"
+                    :class="{red:s.row.entrustType === 'BUY'}"
+                  >
+                    <!-- 购买 -->
+                    {{$t('M.otc_index_buy')}}
+                  </div>
+                  <div
+                    v-show="s.row.entrustType === 'SELL'"
+                    :class="{green:s.row.entrustType === 'SELL'}"
+                  >
+                    <!-- 出售 -->
+                    {{$t('M.otc_index_sell')}}
+                  </div>
+                </template>
+              </el-table-column>
+              <!-- 币种 -->
+              <el-table-column
+                :label="$t('M.otc_AD_token')"
+              >
+                <template slot-scope="s">
+                  <div>{{s.row.coinName}}</div>
+                </template>
+              </el-table-column>
+              <!-- 法币 -->
+              <el-table-column
+                :label="$t('M.comm_coin')"
+              >
+                <template slot-scope="s">
+                  <div>{{s.row.currencyName}}</div>
+                </template>
+              </el-table-column>
+              <!-- 单价 -->
+              <el-table-column
+                :label="$t('M.otc_index_UnitPrice')"
+                width="140px"
+              >
+                <template slot-scope="s">
+                  <div>{{ $scientificToNumber(s.row.price) }}</div>
+                </template>
+              </el-table-column>
+              <!-- 数量 -->
+              <el-table-column
+                :label="$t('M.comm_count')"
+                width="140px"
+              >
+                <template slot-scope="s">
+                  <div>{{ $scientificToNumber(s.row.entrustCount) }}</div>
+                </template>
+              </el-table-column>
+              <!-- 剩余数量 -->
+              <el-table-column
+                :label="$t('M.comm_balance_completed1')"
+                width="140px"
+              >
+                <template slot-scope="s">
+                  <div>{{ $scientificToNumber(s.row.remainCount) }}</div>
+                </template>
+              </el-table-column>
+              <!-- 已完成数量 -->
+              <el-table-column
+                :label="$t('M.otc_enum_status_yiwancheng_sum')"
+                width="140px"
+              >
+                <template slot-scope="s">
+                  <div>{{ $scientificToNumber(s.row.matchCount) }}</div>
+                </template>
+              </el-table-column>
+              <!-- 状态 -->
+              <el-table-column
+                :label="$t('M.comm_state')"
+              >
+                <template slot-scope="s">
+                  <!-- 已上架 -->
+                  <div v-show="s.row.status === 'ENTRUSTED'">
+                    {{$t('M.otc_adMange_already_getting')}}
+                  </div>
+                  <!-- 已完成 -->
+                  <div v-show="s.row.status === 'COMPLETED'">
+                    {{$t('M.otc_adMange_already_accomplish')}}
+                  </div>
+                  <!-- 已下架 -->
+                  <div v-show="s.row.status === 'CANCELED'">
+                    {{$t('M.otc_adMange_already_adverting')}}
+                  </div>
+                </template>
+              </el-table-column>
+              <!-- 操作 -->
+              <el-table-column
+                :label="$t('M.otc_index_operate')"
+                align="right"
+              >
+                <template slot-scope="s">
+                  <!-- 下架 -->
+                  <el-button
+                    type="text"
+                    v-if="s.row.status === 'ENTRUSTED'"
+                    @click="updateADUnShelve(s.row.id)"
+                  >
+                    {{$t('M.otc_adMange_adverting')}}
+                  </el-button>
+                  <!-- 修改 -->
+                  <!--20190222修改：后台增加字段币种是否可用来动态显示隐藏修改按钮s.row.coinStatus === 'ENABLE'-->
+                  <el-button
+                    type="text"
+                    v-if="s.row.status === 'CANCELED' && s.row.coinStatus === 'ENABLE'"
+                    @click="modifyAD(s.row.id)"
+                  >
+                    {{$t('M.otc_adMange_change')}}
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <!--分页-->
+          <div class="page">
+            <el-pagination
+              background
+              v-show="ADList.length"
+              layout="prev, pager, next"
+              :page-count="totalPages"
+              @current-change="changeCurrentPage"
+              :current-page="currentPage"
             >
-              <template slot-scope="s">
-                <div>{{s.row.entrustSequence}}</div>
-              </template>
-            </el-table-column>
-            <!-- 交易类型 -->
-            <el-table-column
-              :label="$t('M.otc_type_ransaction')"
-            >
-              <template slot-scope="s">
-                <div
-                  v-show="s.row.entrustType === 'BUY'"
-                  :class="{red:s.row.entrustType === 'BUY'}"
-                >
-                  <!-- 购买 -->
-                  {{$t('M.otc_index_buy')}}
-                </div>
-                <div
-                  v-show="s.row.entrustType === 'SELL'"
-                  :class="{green:s.row.entrustType === 'SELL'}"
-                >
-                  <!-- 出售 -->
-                  {{$t('M.otc_index_sell')}}
-                </div>
-              </template>
-            </el-table-column>
-            <!-- 币种 -->
-            <el-table-column
-              :label="$t('M.otc_AD_token')"
-            >
-              <template slot-scope="s">
-                <div>{{s.row.coinName}}</div>
-              </template>
-            </el-table-column>
-            <!-- 法币 -->
-            <el-table-column
-              :label="$t('M.comm_coin')"
-            >
-              <template slot-scope="s">
-                <div>{{s.row.currencyName}}</div>
-              </template>
-            </el-table-column>
-            <!-- 单价 -->
-            <el-table-column
-              :label="$t('M.otc_index_UnitPrice')"
-              width="140px"
-            >
-              <template slot-scope="s">
-                <div>{{ $scientificToNumber(s.row.price) }}</div>
-              </template>
-            </el-table-column>
-            <!-- 数量 -->
-            <el-table-column
-              :label="$t('M.comm_count')"
-              width="140px"
-            >
-              <template slot-scope="s">
-                <div>{{ $scientificToNumber(s.row.entrustCount) }}</div>
-              </template>
-            </el-table-column>
-            <!-- 剩余数量 -->
-            <el-table-column
-              :label="$t('M.comm_balance_completed1')"
-              width="140px"
-            >
-              <template slot-scope="s">
-                <div>{{ $scientificToNumber(s.row.remainCount) }}</div>
-              </template>
-            </el-table-column>
-            <!-- 已完成数量 -->
-            <el-table-column
-              :label="$t('M.otc_enum_status_yiwancheng_sum')"
-              width="140px"
-            >
-              <template slot-scope="s">
-                <div>{{ $scientificToNumber(s.row.matchCount) }}</div>
-              </template>
-            </el-table-column>
-            <!-- 状态 -->
-            <el-table-column
-              :label="$t('M.comm_state')"
-            >
-              <template slot-scope="s">
-                <!-- 已上架 -->
-                <div v-show="s.row.status === 'ENTRUSTED'">
-                  {{$t('M.otc_adMange_already_getting')}}
-                </div>
-                <!-- 已完成 -->
-                <div v-show="s.row.status === 'COMPLETED'">
-                  {{$t('M.otc_adMange_already_accomplish')}}
-                </div>
-                <!-- 已下架 -->
-                <div v-show="s.row.status === 'CANCELED'">
-                  {{$t('M.otc_adMange_already_adverting')}}
-                </div>
-              </template>
-            </el-table-column>
-            <!-- 操作 -->
-            <el-table-column
-              :label="$t('M.otc_index_operate')"
-              align="right"
-            >
-              <template slot-scope="s">
-                <!-- 下架 -->
-                <el-button
-                  type="text"
-                  v-if="s.row.status === 'ENTRUSTED'"
-                  @click="updateADUnShelve(s.row.id)"
-                >
-                  {{$t('M.otc_adMange_adverting')}}
-                </el-button>
-                <!-- 修改 -->
-                <!--20190222修改：后台增加字段币种是否可用来动态显示隐藏修改按钮s.row.coinStatus === 'ENABLE'-->
-                <el-button
-                  type="text"
-                  v-if="s.row.status === 'CANCELED' && s.row.coinStatus === 'ENABLE'"
-                  @click="modifyAD(s.row.id)"
-                >
-                  {{$t('M.otc_adMange_change')}}
-                </el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-        <!--分页-->
-        <div class="page">
-          <el-pagination
-            background
-            v-show="ADList.length"
-            layout="prev, pager, next"
-            :page-count="totalPages"
-            @current-change="changeCurrentPage"
-            :current-page="currentPage"
-          >
-          </el-pagination>
+            </el-pagination>
+          </div>
         </div>
       </div>
       <!--2.3 公用二次确认弹出-->
@@ -667,12 +668,14 @@ export default {
       }
 
       > .manage-main-bottom {
-        min-height: 450px !important;
-      }
+        > .table-box {
+          height: 450px !important;
+        }
 
-      .page {
-        padding: 10px 0;
-        text-align: center;
+        > .page {
+          padding: 10px 0;
+          text-align: center;
+        }
       }
     }
   }
@@ -716,10 +719,6 @@ export default {
     }
 
     .manage-main-bottom {
-      .el-table__header {
-        margin-bottom: 10px;
-      }
-
       .el-table {
         padding-bottom: 15px;
         font-size: 12px;
@@ -749,6 +748,10 @@ export default {
           border-bottom: 0;
         }
 
+        .el-table__header {
+          margin-bottom: 10px;
+        }
+
         .el-table__body {
           tr {
             &:last-of-type {
@@ -764,10 +767,10 @@ export default {
             }
           }
         }
-      }
 
-      .el-table__empty-block {
-        min-height: 410px;
+        .el-table__empty-block {
+          height: 450px;
+        }
       }
     }
 
@@ -851,6 +854,8 @@ export default {
         }
 
         > .manage-main-bottom {
+          background-color: $mainContentNightBgColor;
+
           .red {
             color: $upColor;
           }
@@ -873,7 +878,7 @@ export default {
 
       .inquire-button {
         .el-button {
-          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          background: $nightButtonBgColor1;
         }
       }
 
@@ -1012,6 +1017,9 @@ export default {
         }
 
         > .manage-main-bottom {
+          background-color: $mainColorOfWhite;
+          box-shadow: 0 0 6px $borderColorOfDay;
+
           .red {
             color: $upColor;
           }
@@ -1036,7 +1044,7 @@ export default {
 
       .inquire-button {
         .el-button {
-          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          background: $dayButtonBgColor2;
         }
       }
 
@@ -1055,7 +1063,6 @@ export default {
           border-radius: 5px;
           color: $dayMainTitleColor;
           background-color: $mainDayBgColor;
-          box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           thead {
             color: $fontColorSecondaryOfDay;

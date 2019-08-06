@@ -323,7 +323,7 @@
         el-dialog(
           :title="$t('M.otc_prompt')"
           :visible.sync="dialogVisible"
-          top="25vh"
+          top="0vh"
         )
           <!--拉黑后该用户将无法访问您的广告信息或与您交易，您确定要拉黑吗？-->
           .content {{$t('M.focus_black_title6')}}
@@ -496,7 +496,7 @@ export default {
       this.merchantUserInfo.relationType = getNestedData(data, 'data.userInfo.relationType')
     },
     // 4 关注/拉黑
-    async focusBlackOpposite (type) {
+    focusBlackOpposite: _.debounce(async function (type) {
       let param = {
         toId: this.userId,
         relation: type
@@ -513,9 +513,9 @@ export default {
       }
       // 重新刷新列表
       this.getMerchantInfo()
-    },
+    }, 500),
     // 5 取消关注/解除
-    async cancelFocusBlackOpposite (type) {
+    cancelFocusBlackOpposite: _.debounce(async function (type) {
       let param = {
         toId: this.userId,
         relation: type
@@ -525,7 +525,7 @@ export default {
       // 数据返回后的逻辑
       // 重新刷新列表
       this.getMerchantInfo()
-    },
+    }, 500),
     // 6.购买出售限制
     async toOnlineBuyOrSell (id, coinId, userId, countryCode, entrustType) {
       const CHINA = ['853', '852', '886', '86']
@@ -587,7 +587,7 @@ export default {
 <style scoped lang="stylus">
   @import '../../assets/CSS/index.styl'
   .merchant-info-box
-    width 1300px
+    width S_main_content_width
     padding-top 70px
     margin 60px auto 200px
     > .inner-box
@@ -675,7 +675,7 @@ export default {
             .buy-price
               color S_error_color
             .sell-price
-              color #008069
+              color S_otc_green_color
             .xilian
               vertical-align middle
             .icon
@@ -688,7 +688,7 @@ export default {
         > .sell-list
           min-height 469px
           > .sell-title
-            color #008069
+            color S_otc_green_color
       /deep/
         .right-lists
           > .buy-sell-list
@@ -727,13 +727,16 @@ export default {
                   .buy-button.is-disabled
                     background-color #e4b1a7
                   .sell-button
-                    background-color #008069
+                    background-color S_otc_green_color
                   .sell-button.is-disabled
                     background-color #8ead9e
                 .el-table__empty-text
                   line-height 350px !important
         .black-list-dialog
           .el-dialog__wrapper
+            display flex
+            justify-content center
+            align-items center
             background-color rgba(0, 0, 0, .7)
             .el-dialog
               width 350px
@@ -774,23 +777,23 @@ export default {
               > .merchant-name
                 color S_day_bg
             > .time-box
-              color #66718f
+              color S_color5
           > .two-identity
             &::after
-              border-bottom 1px dashed #34415b
+              border-bottom 1px dashed S_color10
             > .row
               > .items
                 color S_day_bg
                 .icon
                   color S_main_color
               .unverified
-                color #66718f !important
+                color S_color5 !important
                 .icon
-                  color #66718f !important
+                  color S_color5 !important
           > .trade-infos
             > .bars
               > .bar-top
-                color #66718f
+                color S_color5
               > .bar-bottom
                 color S_day_bg
           > .four-button
@@ -809,7 +812,7 @@ export default {
             background-color S_night_main_bg
             box-shadow 0 3px 4px 0 rgba(25, 30, 40, 1)
             > .header-title
-              border-bottom 1px solid #34415b
+              border-bottom 1px solid S_color10
         /deep/
           .right-lists
             > .buy-sell-list
@@ -819,12 +822,12 @@ export default {
                   background-color S_night_main_bg
                   .el-table__header
                     thead
-                      color #a9bed4
+                      color S_night_main_text_color
                       tr
                         th
                           background-color S_night_main_bg
                           &.is-leaf
-                            border-bottom 1px solid #34415b
+                            border-bottom 1px solid S_color10
                   .el-table__body
                     tr
                       background-color S_night_main_bg
@@ -832,38 +835,38 @@ export default {
                         border-bottom 0 solid transparent
                       &:hover
                         td
-                          background-color #181b2b
+                          background-color S_color9
           .black-list-dialog
             .el-dialog__wrapper
               .el-dialog
-                background-color #28334a
+                background-color S_color6
                 .el-dialog__header
-                  background-color #212b3f
+                  background-color S_color8
                   .el-dialog__title
-                    color #cfd5df
+                    color S_color4
                 .el-dialog__body
-                  color: #afb5c1
+                  color: S_color7
                 .el-dialog__footer
                   .button-group
                     .cancel
                       border 1px solid S_main_color
                       color S_day_bg
-                      background-color #28334a
+                      background-color S_color6
                     .confirm
                       color S_day_bg
-                      background linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+                      background S_night_button_bg_color1
     &.day
       .inner-box
         > .left-info
           background-color S_day_bg
-          box-shadow 0 0 6px #cfd5df
+          box-shadow 0 0 6px S_color4
           > .one-avatar
             border-bottom 1px solid rgba(97, 116, 153, .2)
             > .names-box
               > .merchant-name
-                color #333
+                color S_day_main_text_color
             > .time-box
-              color #66718f
+              color S_color5
           > .two-identity
             &::after
               border-bottom 1px dashed rgba(97, 116, 153, .2)
@@ -873,15 +876,15 @@ export default {
                 .icon
                   color S_main_color
               .unverified
-                color #66718f !important
+                color S_color5 !important
                 .icon
-                  color #66718f !important
+                  color S_color5 !important
           > .trade-infos
             > .bars
               > .bar-top
-                color #66718f
+                color S_color5
               > .bar-bottom
-                color #333
+                color S_day_main_text_color
           > .four-button
             > .button-group
               > .focus-button-box
@@ -896,7 +899,7 @@ export default {
         > .right-lists
           .buy-sell-list
             background-color S_day_bg
-            box-shadow 0 0 6px #cfd5df
+            box-shadow 0 0 6px S_color4
             > .header-title
               border-bottom 1px solid rgba(97, 116, 153, .2)
         /deep/
@@ -904,11 +907,11 @@ export default {
             > .buy-sell-list
               > .body-content
                 .el-table
-                  color #333
+                  color S_day_main_text_color
                   background-color S_day_bg
                   .el-table__header
                     thead
-                      color #7d90ac
+                      color S_color2
                       tr
                         th
                           background-color S_day_bg
@@ -927,11 +930,11 @@ export default {
               .el-dialog
                 background-color S_day_bg
                 .el-dialog__header
-                  background-color #dce7f3
+                  background-color S_color3
                   .el-dialog__title
-                    color #333
+                    color S_day_main_text_color
                 .el-dialog__body
-                  color #333
+                  color S_day_main_text_color
                 .el-dialog__footer
                   .button-group
                     .cancel
@@ -940,5 +943,5 @@ export default {
                       background-color S_day_bg
                     .confirm
                       color S_day_bg
-                      background linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+                      background S_day_button_bg_color2
 </style>

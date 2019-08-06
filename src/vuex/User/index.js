@@ -43,7 +43,15 @@ const state = {
   // 登录是否失效
   isTokenDisable: false,
   // 邀请 推广 数据
-  invitation_S: {}
+  invitation_S: {},
+  // 登录二次确认弹窗 是否显示
+  isShowLoginStep2Dialog_S: false,
+  // 是否显示图片验证码
+  isShowLoginImageDialog_S: false,
+  // 忘记密码 当前步骤
+  forgetPassStep_S: 1,
+  // 图片验证码
+  imageCode_S: ''
 }
 
 export default {

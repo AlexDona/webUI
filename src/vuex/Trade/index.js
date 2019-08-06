@@ -70,7 +70,7 @@ const state = {
     // 遮罩背景图
     'shadeImg': 'https://fubt-3.oss-cn-hongkong.aliyuncs.com/bb59d316-fa5e-4a44-835b-2490c6e67a47',
     // 是否显示倒计时
-    'showCountDown': true,
+    'showCountDown': false,
     // 活动开始时间
     'startTime': 0,
     // 状态 可取值: coming、 ongoing
