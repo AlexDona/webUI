@@ -1,288 +1,296 @@
-<!--限价交易、市价交易-->
+<!--
+  author: zhaoxinlei
+  update: 20190803
+  description: 当前页面为 币币交易  限价交易、市价交易 组件
+-->
 <template>
   <div
     class="exchange-box trade"
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box">
-      <!--币种资料跳转-->
-      <div class="currency-info">
-        <span
-          class="cursor-pointer router-link"
-          @click="jumpToOtherPage('/ServiceAndProtocol','CurrencyInformation')"
-        >
+      <div class="title">
+        <ul class="t-left">
+          <li
+            class="item cursor-pointer"
+            v-for="(exchange,index) in exchanges"
+            :key="index"
+            @click="toggleMatchType(exchange.name)"
+            :class="{active: activeName === exchange.name}"
+          >
+            {{$t(exchange.label)}}
+          </li>
+        </ul>
+        <!-- 币种资料 -->
+        <div class="t-right">
+           <span
+             class="cursor-pointer router-link"
+             @click="jumpToOtherPage('/ServiceAndProtocol','CurrencyInformation')"
+           >
           <i class="el-icon-document"></i>
           <span>
             <!--币种资料-->
             {{ $t('M.trade_exchange_currency_data') }}
           </span>
         </span>
+        </div>
       </div>
-      <el-tabs
-        v-model="activeName"
-        @tab-click="toggleMatchType"
-      >
-        <!--限价交易-->
-        <el-tab-pane
-          :label="$t('M.trade_exchange_price_deal')"
-          name="limit-price"
-          v-if="isShowLimitPrice"
+      <!-- 内容 -->
+      <div class="content">
+        <!-- 限价交易-->
+        <div
+          class="content-box limit"
+          v-if="isShowLimitPrice && activeName ==='limit-price'"
         >
-          <div class="content-box limit">
-            <div class="inner-box left">
-              <div class="header">
-                <div class="left item">
-                  <IconFont iconName="icon-qianbao-"/>
-                  <span class="margin-left10 buy">
+          <div class="inner-box left">
+            <div class="header">
+              <div class="left item">
+                <IconFont iconName="icon-qianbao-"/>
+                <span class="margin-left10 buy font-size12">
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!buyUserCoinWallet.total">--</span>
                     <span v-show="buyUserCoinWallet.total">{{$scientificToNumber(buyUserCoinWallet.total)}}</span>
                     <span>{{$middleTopData_S_X.area}}</span>
                   </span>
-                  <!-- 跳转交易费率 -->
-                  <JumpToFees @jumpToOtherPage="jumpToOtherPage"/>
-                </div>
-                <div
-                  class="right item"
-                  v-if="$isLogin_S_X"
-                >
-                  <button
-                    :class="{'gray':!buyIsRecharge}"
-                    :disabled="!buyIsRecharge"
-                    @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')"
-                  >
-                    <!--充币-->
-                    {{ $t('M.comm_charge_money') }}
-                  </button>
-                </div>
+                <!-- 跳转交易费率 -->
+                <JumpToFees @jumpToOtherPage="jumpToOtherPage"/>
               </div>
-              <div class="content">
-                <!--买入价-->
-                <div class="input">
-                  <input
-                    type="text"
-                    :placeholder="$t('M.comm_buy') + $t('M.comm_price')"
-                    :ref="limitBuyPriceInputRef"
-                    @keyup="autoChangeData('limit-buy')"
-                    maxlength="14"
-                    @input="formatInput(limitBuyPriceInputRef,$middleTopData_S_X.priceExchange)"
-                  >
-                  <span class="currency">{{$middleTopData_S_X.area}}</span>
-                  <div
-                    class="rate-changer"
-                    v-show="activeConvertCurrencyObj&&(limitExchange.transformBuyPrice-0)"
-                  >
-                    ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformBuyPrice,$middleTopData_S_X.legalCurrencyDecimal)}}
-                  </div>
-                  <!--买入价错误提示信息-->
-                  <span
-                    class="error-box"
-                    v-show="errorMsg.limit.buy.price"
-                  >
+              <div
+                class="right item"
+                v-if="$isLogin_S_X"
+              >
+                <button
+                  :class="{'gray':!buyIsRecharge}"
+                  :disabled="!buyIsRecharge"
+                  @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')"
+                >
+                  <!--充币-->
+                  {{ $t('M.comm_charge_money') }}
+                </button>
+              </div>
+            </div>
+            <div class="content">
+              <!--买入价-->
+              <div class="input">
+                <input
+                  type="text"
+                  :placeholder="$t('M.comm_buy') + $t('M.comm_price')"
+                  :ref="limitBuyPriceInputRef"
+                  @keyup="autoChangeData('limit-buy')"
+                  maxlength="14"
+                  @input="formatInput(limitBuyPriceInputRef,$middleTopData_S_X.priceExchange)"
+                >
+                <span class="currency">{{$middleTopData_S_X.area}}</span>
+                <div
+                  class="rate-changer"
+                  v-show="activeConvertCurrencyObj&&(limitExchange.transformBuyPrice-0)"
+                >
+                  ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformBuyPrice,$middleTopData_S_X.legalCurrencyDecimal)}}
+                </div>
+                <!--买入价错误提示信息-->
+                <span
+                  class="error-box"
+                  v-show="errorMsg.limit.buy.price"
+                >
                     {{errorMsg.limit.buy.price}}
                   </span>
-                </div>
-                <!--买入量-->
-                <div
-                  class="input"
-                  v-if="activeName === 'limit-price'"
-                >
-                  <input
-                    :class="{
+              </div>
+              <!--买入量-->
+              <div
+                class="input"
+                v-if="activeName === 'limit-price'"
+              >
+                <input
+                  :class="{
                       'error':buyUserCoinWallet.total < limitBuyAmount
                     }"
-                    type="text"
-                    maxlength="14"
-                    :placeholder="$t('M.comm_buy') + $t('M.comm_quantity')"
-                    :ref="limitBuyCountInputRef"
-                    @keyup="autoChangeData('limit-buy')"
-                    @input="formatInput(limitBuyCountInputRef,$middleTopData_S_X.countExchange)"
-                    onpaste="return false"
-                  >
-                  <span class="currency">{{$middleTopData_S_X.sellsymbol}}</span>
-                  <!--买入量错误提示信息-->
-                  <span
-                    class="error-box"
-                    v-show="errorMsg.limit.buy.amount"
-                  >{{errorMsg.limit.buy.amount}}</span>
-                </div>
-                <!-- 限价买 滑块 -->
-                <SliderBar
-                  :className="'limit-buy'"
-                  :disabled="slider.isbuySliderBarDisabled"
-                  :buyTotal="buyUserCoinWallet.total"
-                  :sellTotal="sellUserCoinWallet.total"
-                  @sliderBarValueChange="sliderBarValueChange"
-                  @dragStart="dragStart"
-                  @dragEnd="dragEnd"
-                  @dragCallback="dragCallback"
-                  v-if="!$isSymbolChanged_X && activeName === 'limit-price'"
-                />
-                <div class="volume-rate">
-                  <div class="item">
+                  type="text"
+                  maxlength="14"
+                  :placeholder="$t('M.comm_buy') + $t('M.comm_quantity')"
+                  :ref="limitBuyCountInputRef"
+                  @keyup="autoChangeData('limit-buy')"
+                  @input="formatInput(limitBuyCountInputRef,$middleTopData_S_X.countExchange)"
+                  onpaste="return false"
+                >
+                <span class="currency">{{$middleTopData_S_X.sellsymbol}}</span>
+                <!--买入量错误提示信息-->
+                <span
+                  class="error-box"
+                  v-show="errorMsg.limit.buy.amount"
+                >{{errorMsg.limit.buy.amount}}</span>
+              </div>
+              <!-- 限价买 滑块 -->
+              <SliderBar
+                :className="'limit-buy'"
+                :disabled="slider.isbuySliderBarDisabled"
+                :buyTotal="buyUserCoinWallet.total"
+                :sellTotal="sellUserCoinWallet.total"
+                @sliderBarValueChange="sliderBarValueChange"
+                @dragStart="dragStart"
+                @dragEnd="dragEnd"
+                @dragCallback="dragCallback"
+                v-if="!$isSymbolChanged_X && activeName === 'limit-price'"
+              />
+              <div class="volume-rate">
+                <div class="item">
                     <span>
                       <!--预计交易额-->
                       {{ $t('M.trade_exchange_estimated_turnover') }}：
                     </span>
-                    <span
-                      class="buy"
-                      v-show="limitBuyAmount">{{limitBuyAmount}}</span>
-                    <span>{{$middleTopData_S_X.area}}</span>
-                  </div>
+                  <span
+                    class="buy"
+                    v-show="limitBuyAmount">{{limitBuyAmount}}</span>
+                  <span>{{$middleTopData_S_X.area}}</span>
                 </div>
-                <div class="submit">
-                  <el-button
-                    class="submit-btn buy-btn"
-                    @click="showPayPassword(0,'limit')"
-                    v-if="$isLogin_S_X"
-                  >
-                    <!--买入-->
-                    {{ $t('M.comm_buy') }}
-                  </el-button>
-                  <div
-                    class="submit-btn"
-                    v-else
-                  >
-                    <UnloginBtn class="buy unlogin-btn"/>
-                  </div>
+              </div>
+              <div class="submit">
+                <el-button
+                  class="submit-btn buy-btn"
+                  @click="showPayPassword(0,'limit')"
+                  v-if="$isLogin_S_X"
+                >
+                  <!--买入-->
+                  {{ $t('M.comm_buy') }}
+                </el-button>
+                <div
+                  class="submit-btn"
+                  v-else
+                >
+                  <UnloginBtn class="buy unlogin-btn"/>
                 </div>
               </div>
             </div>
-            <div class="middle-line"></div>
-            <div class="inner-box right">
-              <div class="header">
-                <div class="left item">
-                  <IconFont iconName="icon-qianbao-"/>
-                  <span class="margin-left10 sell">
+          </div>
+          <div class="middle-line"></div>
+          <div class="inner-box right">
+            <div class="header">
+              <div class="left item">
+                <IconFont iconName="icon-qianbao-"/>
+                <span class="margin-left10 sell font-size12">
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!sellUserCoinWallet.total">--</span>
                     <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
                     <span>{{$middleTopData_S_X.sellsymbol}}</span>
                   </span>
-                  <!-- 跳转交易费率 -->
-                  <JumpToFees/>
-                </div>
-                <div
-                  class="right item"
-                  v-if="$isLogin_S_X"
-                >
-                  <button
-                    @click="jumpToPersonalCenter('assets', 'sell', 'recharge')"
-                    :class="{'gray':!sellIsRecharge}"
-                    :disabled="!sellIsRecharge"
-                  >
-                    <!--充币-->
-                    {{ $t('M.comm_charge_money') }}
-                  </button>
-                </div>
+                <!-- 跳转交易费率 -->
+                <JumpToFees/>
               </div>
-              <div class="content">
-                <!--卖出价-->
-                <div class="input">
-                  <input
-                    type="text"
-                    maxlength="14"
-                    :placeholder="$t('M.comm_sell') + $t('M.comm_price')"
-                    :ref="limitSellPriceInputRef"
-                    @keyup="autoChangeData('limit-sell')"
-                    @input="formatInput(limitSellPriceInputRef,$middleTopData_S_X.priceExchange)"
-                  >
-                  <span class="currency">{{$middleTopData_S_X.area}}</span>
-                  <div
-                    class="rate-changer"
-                    v-show="activeConvertCurrencyObj&&(limitExchange.transformSellPrice-0)"
-                  >
-                    ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformSellPrice, $middleTopData_S_X.legalCurrencyDecimal)}}
-                  </div>
-                  <!--卖出价错误提示信息-->
-                  <span
-                    class="error-box"
-                    v-show="errorMsg.limit.sell.price"
-                  >{{errorMsg.limit.sell.price}}</span>
+              <div
+                class="right item"
+                v-if="$isLogin_S_X"
+              >
+                <button
+                  @click="jumpToPersonalCenter('assets', 'sell', 'recharge')"
+                  :class="{'gray':!sellIsRecharge}"
+                  :disabled="!sellIsRecharge"
+                >
+                  <!--充币-->
+                  {{ $t('M.comm_charge_money') }}
+                </button>
+              </div>
+            </div>
+            <div class="content">
+              <!--卖出价-->
+              <div class="input">
+                <input
+                  type="text"
+                  maxlength="14"
+                  :placeholder="$t('M.comm_sell') + $t('M.comm_price')"
+                  :ref="limitSellPriceInputRef"
+                  @keyup="autoChangeData('limit-sell')"
+                  @input="formatInput(limitSellPriceInputRef,$middleTopData_S_X.priceExchange)"
+                >
+                <span class="currency">{{$middleTopData_S_X.area}}</span>
+                <div
+                  class="rate-changer"
+                  v-show="activeConvertCurrencyObj&&(limitExchange.transformSellPrice-0)"
+                >
+                  ≈{{activeConvertCurrencyObj.symbol}}{{$keepCurrentNum(limitExchange.transformSellPrice, $middleTopData_S_X.legalCurrencyDecimal)}}
                 </div>
-                <!--卖出量-->
-                <div class="input">
-                  <input
-                    :class="{
+                <!--卖出价错误提示信息-->
+                <span
+                  class="error-box"
+                  v-show="errorMsg.limit.sell.price"
+                >{{errorMsg.limit.sell.price}}</span>
+              </div>
+              <!--卖出量-->
+              <div class="input">
+                <input
+                  :class="{
                       'error': sellUserCoinWallet.total < limitExchange.sellCount
                     }"
-                    maxlength="14"
-                    type="text"
-                    :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
-                    :ref="limitSellCountInputRef"
-                    @keyup="autoChangeData('limit-sell')"
-                    @input="formatInput(limitSellCountInputRef,$middleTopData_S_X.countExchange)"
-                    onpaste="return false"
-                  >
-                  <span class="currency">{{$middleTopData_S_X.sellsymbol}}</span>
-                  <!--卖出量错误提示信息-->
-                  <span
-                    class="error-box"
-                    v-show="errorMsg.limit.sell.amount"
-                  >{{errorMsg.limit.sell.amount}}</span>
-                </div>
-                <!-- 限价卖 滑块 -->
-                <SliderBar
-                  :className="'limit-sell'"
-                  :disabled="slider.isSellSliderBarDisabled"
-                  :buyTotal="buyUserCoinWallet.total"
-                  :sellTotal="sellUserCoinWallet.total"
-                  @sliderBarValueChange="sliderBarValueChange"
-                  @dragStart="dragStart"
-                  @dragEnd="dragEnd"
-                  @dragCallback="dragCallback"
-                  v-if="!$isSymbolChanged_X && activeName === 'limit-price'"
-                />
-                <!--预计交易额 手续费-->
-                <div class="volume-rate">
-                  <div class="item">
+                  maxlength="14"
+                  type="text"
+                  :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
+                  :ref="limitSellCountInputRef"
+                  @keyup="autoChangeData('limit-sell')"
+                  @input="formatInput(limitSellCountInputRef,$middleTopData_S_X.countExchange)"
+                  onpaste="return false"
+                >
+                <span class="currency">{{$middleTopData_S_X.sellsymbol}}</span>
+                <!--卖出量错误提示信息-->
+                <span
+                  class="error-box"
+                  v-show="errorMsg.limit.sell.amount"
+                >{{errorMsg.limit.sell.amount}}</span>
+              </div>
+              <!-- 限价卖 滑块 -->
+              <SliderBar
+                :className="'limit-sell'"
+                :disabled="slider.isSellSliderBarDisabled"
+                :buyTotal="buyUserCoinWallet.total"
+                :sellTotal="sellUserCoinWallet.total"
+                @sliderBarValueChange="sliderBarValueChange"
+                @dragStart="dragStart"
+                @dragEnd="dragEnd"
+                @dragCallback="dragCallback"
+                v-if="!$isSymbolChanged_X && activeName === 'limit-price'"
+              />
+              <!--预计交易额 手续费-->
+              <div class="volume-rate">
+                <div class="item">
                     <span>
                       <!--预计交易额：-->
                       {{ $t('M.trade_exchange_estimated_turnover') }}：
                     </span>
-                    <span
-                      class="sell"
-                      v-show="limitSellAmount"
-                    >{{limitSellAmount}}</span>
-                    <span>{{$middleTopData_S_X.area}}</span>
-                  </div>
+                  <span
+                    class="sell"
+                    v-show="limitSellAmount"
+                  >{{limitSellAmount}}</span>
+                  <span>{{$middleTopData_S_X.area}}</span>
                 </div>
-                <div class="submit">
-                  <el-button
-                    class="submit-btn sell-btn"
-                    @click="showPayPassword(1,'limit')"
-                    v-if="$isLogin_S_X"
-                  >
-                    <!--卖出-->
-                    {{ $t('M.comm_sell') }}
-                  </el-button>
-                  <div
-                    class="submit-btn"
-                    v-else
-                  >
-                    <UnloginBtn class="sell unlogin-btn"/>
-                  </div>
+              </div>
+              <div class="submit">
+                <el-button
+                  class="submit-btn sell-btn"
+                  @click="showPayPassword(1,'limit')"
+                  v-if="$isLogin_S_X"
+                >
+                  <!--卖出-->
+                  {{ $t('M.comm_sell') }}
+                </el-button>
+                <div
+                  class="submit-btn"
+                  v-else
+                >
+                  <UnloginBtn class="sell unlogin-btn"/>
                 </div>
               </div>
             </div>
           </div>
-        </el-tab-pane>
-        <!--市价交易-->
-        <el-tab-pane
-          :label="$t('M.trade_exchange_market')"
-          name="market-price"
+        </div>
+        <!-- 市价交易 -->
+        <div
+          class="content-box market"
+          v-if="activeName ==='market-price'"
         >
-          <div
-            class="content-box market"
-            v-if="activeName ==='market-price'"
-          >
-            <div class="inner-box left">
-              <div class="header">
-                <div class="left item">
-                  <IconFont iconName="icon-qianbao-"/>
-                  <span class="margin-left10 buy">
+          <div class="inner-box left">
+            <div class="header">
+              <div class="left item">
+                <IconFont iconName="icon-qianbao-"/>
+                <span class="margin-left10 buy font-size12">
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!buyUserCoinWallet.total">--</span>
@@ -291,175 +299,175 @@
                     </span>
                     <span>{{$middleTopData_S_X.area}}</span>
                   </span>
-                  <!-- 跳转交易费率 -->
-                  <JumpToFees/>
-                </div>
-                <div class="right item" v-if="$isLogin_S_X">
-                  <button
-                    @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')"
-                    :class="{'gray':!buyIsRecharge}"
-                    :disabled="!buyIsRecharge"
-                  >
-                    <!--充币-->
-                    {{ $t('M.comm_charge_money') }}
-                  </button>
-                </div>
+                <!-- 跳转交易费率 -->
+                <JumpToFees/>
               </div>
-              <div class="content">
-                <!--市场成交价-->
-                <div class="input">
-                  <div class="market-price buy-price">
-                    <!--市场成交价-->
-                    {{ $t('M.trade_exchange_market_price') }}
-                  </div>
-                  <span class="currency">{{$middleTopData_S_X.area}}</span>
+              <div class="right item" v-if="$isLogin_S_X">
+                <button
+                  @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')"
+                  :class="{'gray':!buyIsRecharge}"
+                  :disabled="!buyIsRecharge"
+                >
+                  <!--充币-->
+                  {{ $t('M.comm_charge_money') }}
+                </button>
+              </div>
+            </div>
+            <div class="content">
+              <!--市场成交价-->
+              <div class="input">
+                <div class="market-price buy-price">
+                  <!--市场成交价-->
+                  {{ $t('M.trade_exchange_market_price') }}
                 </div>
-                <!-- 成交额 -->
-                <div class="input">
-                  <input
-                    :class="{
+                <span class="currency">{{$middleTopData_S_X.area}}</span>
+              </div>
+              <!-- 成交额 -->
+              <div class="input">
+                <input
+                  :class="{
                       error: isNeedErrorMsgForBuyAmount
                     }"
-                    maxlength="14"
-                    type="text"
-                    :placeholder="$t('M.market_trade_trading_volume')"
-                    :ref="marketBuyAmountInputRef"
-                    @keyup="autoChangeData('market-buy')"
-                    @input="formatInput(marketBuyAmountInputRef,$middleTopData_S_X.countExchange)"
-                    onpaste="return false"
-                  >
-                  <span class="currency">{{$middleTopData_S_X.area}}</span>
-                  <!-- 成交额错误提示信息 -->
-                  <span
-                    class="error-box"
-                    v-show="errorMsg.market.buy.amount"
-                  >{{errorMsg.market.buy.amount}}</span>
-                </div>
-                <!-- 市价买 滑块 -->
-                <SliderBar
-                  :className="'market-buy'"
-                  :disabled="slider.isbuySliderBarDisabled"
-                  :buyTotal="buyUserCoinWallet.total"
-                  :sellTotal="sellUserCoinWallet.total"
-                  @sliderBarValueChange="sliderBarValueChange"
-                  @dragStart="dragStart"
-                  @dragEnd="dragEnd"
-                  @dragCallback="dragCallback"
-                  v-if="!$isSymbolChanged_X"
-                />
-                <div class="submit">
-                  <el-button
-                    class="submit-btn buy-btn"
-                    @click="showPayPassword(0,'market')"
-                    v-if="$isLogin_S_X"
-                  >
-                    <!--买入-->
-                    {{ $t('M.comm_buy') }}
-                  </el-button>
-                  <div
-                    class="submit-btn"
-                    v-else
-                  >
-                    <UnloginBtn class="buy unlogin-btn"/>
-                  </div>
+                  maxlength="14"
+                  type="text"
+                  :placeholder="$t('M.market_trade_trading_volume')"
+                  :ref="marketBuyAmountInputRef"
+                  @keyup="autoChangeData('market-buy')"
+                  @input="formatInput(marketBuyAmountInputRef,$middleTopData_S_X.countExchange)"
+                  onpaste="return false"
+                >
+                <span class="currency">{{$middleTopData_S_X.area}}</span>
+                <!-- 成交额错误提示信息 -->
+                <span
+                  class="error-box"
+                  v-show="errorMsg.market.buy.amount"
+                >{{errorMsg.market.buy.amount}}</span>
+              </div>
+              <!-- 市价买 滑块 -->
+              <SliderBar
+                :className="'market-buy'"
+                :disabled="slider.isbuySliderBarDisabled"
+                :buyTotal="buyUserCoinWallet.total"
+                :sellTotal="sellUserCoinWallet.total"
+                @sliderBarValueChange="sliderBarValueChange"
+                @dragStart="dragStart"
+                @dragEnd="dragEnd"
+                @dragCallback="dragCallback"
+                v-if="!$isSymbolChanged_X"
+              />
+              <div class="submit">
+                <el-button
+                  class="submit-btn buy-btn"
+                  @click="showPayPassword(0,'market')"
+                  v-if="$isLogin_S_X"
+                >
+                  <!--买入-->
+                  {{ $t('M.comm_buy') }}
+                </el-button>
+                <div
+                  class="submit-btn"
+                  v-else
+                >
+                  <UnloginBtn class="buy unlogin-btn"/>
                 </div>
               </div>
             </div>
-            <div class="middle-line"></div>
-            <div class="inner-box right">
-              <div class="header">
-                <div class="left item">
-                  <IconFont iconName="icon-qianbao-"/>
-                  <span class="margin-left10 sell">
+          </div>
+          <div class="middle-line"></div>
+          <div class="inner-box right">
+            <div class="header">
+              <div class="left item">
+                <IconFont iconName="icon-qianbao-"/>
+                <span class="margin-left10 sell font-size12">
                     <!--可用-->
                     {{$t('M.comm_usable')}}:
                     <span v-show="!sellUserCoinWallet.total">--</span>
                     <span v-show="sellUserCoinWallet.total">{{$scientificToNumber(sellUserCoinWallet.total)}}</span>
                     <span>{{$middleTopData_S_X.sellsymbol}}</span>
                   </span>
-                  <!-- 跳转交易费率 -->
-                  <JumpToFees/>
-                </div>
-                <div class="right item" v-if="$isLogin_S_X">
-                  <button
-                    @click="jumpToPersonalCenter('assets', 'sell', 'recharge')"
-                    :class="{'gray':!sellIsRecharge}"
-                    :disabled="!sellIsRecharge"
-                  >
-                    <!--充币-->
-                    {{ $t('M.comm_charge_money') }}
-                  </button>
-                </div>
+                <!-- 跳转交易费率 -->
+                <JumpToFees/>
               </div>
-              <div class="content">
-                <!--市场成交价-->
-                <div class="input">
-                  <div class="market-price sell-price">
-                    <!--市场成交价-->
-                    {{ $t('M.trade_exchange_market_price') }}
-                  </div>
-                  <span class="currency">{{$middleTopData_S_X.area}}</span>
-                  <span
-                    class="error-box"
-                    v-show="errorMsg.market.sell.count"
-                  >{{errorMsg.market.sell.count}}</span>
+              <div class="right item" v-if="$isLogin_S_X">
+                <button
+                  @click="jumpToPersonalCenter('assets', 'sell', 'recharge')"
+                  :class="{'gray':!sellIsRecharge}"
+                  :disabled="!sellIsRecharge"
+                >
+                  <!--充币-->
+                  {{ $t('M.comm_charge_money') }}
+                </button>
+              </div>
+            </div>
+            <div class="content">
+              <!--市场成交价-->
+              <div class="input">
+                <div class="market-price sell-price">
+                  <!--市场成交价-->
+                  {{ $t('M.trade_exchange_market_price') }}
                 </div>
-                <!--卖出量-->
-                <div class="input">
-                  <input
-                    :class="{
+                <span class="currency">{{$middleTopData_S_X.area}}</span>
+                <span
+                  class="error-box"
+                  v-show="errorMsg.market.sell.count"
+                >{{errorMsg.market.sell.count}}</span>
+              </div>
+              <!--卖出量-->
+              <div class="input">
+                <input
+                  :class="{
                       error: isNeedErrorMsgForSellCount
                     }"
-                    maxlength="14"
-                    type="text"
-                    :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
-                    :ref="marketSellCountInputRef"
-                    @keyup="autoChangeData('market-sell')"
-                    @input="formatInput(marketSellCountInputRef,$middleTopData_S_X.countExchange)"
-                    onpaste="return false"
-                  >
-                  <span class="currency">{{$middleTopData_S_X.sellsymbol}}</span>
-                  <!-- 卖出量错误提示信息 -->
-                  <span
-                    class="error-box"
-                    v-show="errorMsg.market.sell.amount"
-                  >{{errorMsg.market.sell.amount}}</span>
-                </div>
-                <!-- 市价卖 滑块 -->
-                <SliderBar
-                  :className="'market-sell'"
-                  :disabled="slider.isSellSliderBarDisabled"
-                  :buyTotal="buyUserCoinWallet.total"
-                  :sellTotal="sellUserCoinWallet.total"
-                  @sliderBarValueChange="sliderBarValueChange"
-                  @dragStart="dragStart"
-                  @dragEnd="dragEnd"
-                  @dragCallback="dragCallback"
-                  v-if="!$isSymbolChanged_X"
-                />
-                <div class="submit">
-                  <el-button
-                    class="submit-btn sell-btn"
-                    @click="showPayPassword(1,'market')"
-                    v-if="$isLogin_S_X"
-                  >
-                    <!--卖出-->
-                    {{ $t('M.comm_sell') }}
-                  </el-button>
-                  <div
-                    class="submit-btn"
-                    v-else
-                  >
-                    <UnloginBtn class="sell unlogin-btn"/>
-                  </div>
+                  maxlength="14"
+                  type="text"
+                  :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
+                  :ref="marketSellCountInputRef"
+                  @keyup="autoChangeData('market-sell')"
+                  @input="formatInput(marketSellCountInputRef,$middleTopData_S_X.countExchange)"
+                  onpaste="return false"
+                >
+                <span class="currency">{{$middleTopData_S_X.sellsymbol}}</span>
+                <!-- 卖出量错误提示信息 -->
+                <span
+                  class="error-box"
+                  v-show="errorMsg.market.sell.amount"
+                >{{errorMsg.market.sell.amount}}</span>
+              </div>
+              <!-- 市价卖 滑块 -->
+              <SliderBar
+                :className="'market-sell'"
+                :disabled="slider.isSellSliderBarDisabled"
+                :buyTotal="buyUserCoinWallet.total"
+                :sellTotal="sellUserCoinWallet.total"
+                @sliderBarValueChange="sliderBarValueChange"
+                @dragStart="dragStart"
+                @dragEnd="dragEnd"
+                @dragCallback="dragCallback"
+                v-if="!$isSymbolChanged_X"
+              />
+              <div class="submit">
+                <el-button
+                  class="submit-btn sell-btn"
+                  @click="showPayPassword(1,'market')"
+                  v-if="$isLogin_S_X"
+                >
+                  <!--卖出-->
+                  {{ $t('M.comm_sell') }}
+                </el-button>
+                <div
+                  class="submit-btn"
+                  v-else
+                >
+                  <UnloginBtn class="sell unlogin-btn"/>
                 </div>
               </div>
             </div>
           </div>
-        </el-tab-pane>
-      </el-tabs>
+        </div>
+      </div>
       <!-- 交易密码 -->
       <el-dialog
+        :close-on-click-modal="false"
         :title="$t('M.user_security_verify') + $t('M.comm_password')"
         :visible.sync="isShowPayPassword"
       >
@@ -515,6 +523,7 @@
     <div class="warning">
       <el-dialog
         :visible.sync="notVerifyDialogVisible"
+        :title="$t('M.user_real_name')"
         center
       >
         <div class="dialog-warning">
@@ -595,6 +604,16 @@ export default {
   // props,
   data () {
     return {
+      exchanges: [
+        {
+          label: 'M.trade_exchange_price_deal',
+          name: 'limit-price'
+        },
+        {
+          label: 'M.trade_exchange_market',
+          name: 'market-price'
+        }
+      ],
       // 买入是否允许充币
       buyIsRecharge: false,
       // 买入是否允许提币
@@ -710,8 +729,7 @@ export default {
       const {partnerTradeId} = this.$middleTopData_S_X
       const {tradeId, limitEntrustEnabled} = this.$activityInfo_S_X
       if (partnerTradeId && partnerTradeId == tradeId && !limitEntrustEnabled) {
-        this.activeName = 'market-price'
-        this.toggleMatchType()
+        this.toggleMatchType('market-price')
       }
       console.log(this.$middleTopData_S_X.partnerTradeId)
     }, 2000)
@@ -1076,7 +1094,8 @@ export default {
     },
     // 获取 ref value
     // 切换撮合类型
-    toggleMatchType () {
+    toggleMatchType (activeName) {
+      this.activeName = activeName
       switch (this.activeName) {
         case 'market-price':
           console.log('市价')
@@ -1553,8 +1572,7 @@ export default {
     },
     isShowLimitPrice (newVal) {
       // console.log(newVal)
-      this.activeName = newVal ? 'limit-price' : 'market-price'
-      this.toggleMatchType()
+      this.toggleMatchType(newVal ? 'limit-price' : 'market-price')
       // this.REFRESH_USER_INFO_ACTION()
     },
     limitEntrustEnabled: {
@@ -1563,9 +1581,8 @@ export default {
         // const {tradeId} = this.$activityInfo_S_X
         // console.log(partnerTradeId, tradeId)
         if (!partnerTradeId) return
-        this.activeName = newVal ? 'limit-price' : 'market-price'
         // console.log(newVal, this.activeName)
-        this.toggleMatchType()
+        this.toggleMatchType(newVal ? 'limit-price' : 'market-price')
       },
       immediate: true
     },
@@ -1573,8 +1590,7 @@ export default {
       const {tradeId, showCountDown} = this.$activityInfo_S_X
       // console.log(tradeId, newVal)
       if (!showCountDown) return
-      this.activeName = this.limitEntrustEnabled || newVal !== tradeId ? 'limit-price' : 'market-price'
-      this.toggleMatchType()
+      this.toggleMatchType(this.limitEntrustEnabled || newVal !== tradeId ? 'limit-price' : 'market-price')
     },
     matchType (newVal) {
       this.setSiderBarValue('limit', {
@@ -1685,23 +1701,35 @@ export default {
 
   .exchange-box {
     width: 100%;
-    height: 390px;
+    height: 336px;
     margin: 10px 0;
 
     > .inner-box {
       position: relative;
 
-      > .currency-info {
-        position: absolute;
-        z-index: 2000;
-        top: 0;
-        right: 0;
+      /* 表头 */
+      > .title {
+        display: flex;
+        justify-content: space-between;
         height: 34px;
-        padding-right: 27px;
+        padding: 0 10px;
         line-height: 34px;
-        text-align: right;
 
-        > .router-link {
+        > .t-left {
+          display: flex;
+
+          > .item {
+            margin: 0 10px;
+            font-size: 12px;
+
+            &.active {
+              border-bottom: 2px solid $mainColor;
+            }
+          }
+        }
+
+        > .t-right {
+          font-size: 12px;
           color: $mainColor;
         }
       }
@@ -1722,11 +1750,11 @@ export default {
 
             > .item {
               > .buy {
-                color: $upColor;
+                color: #f03e3e;
               }
 
               > .sell {
-                color: $downColor;
+                color: #41b37d;
               }
 
               > .fees {
@@ -1751,11 +1779,11 @@ export default {
           }
 
           > .content {
-            padding: 20px 0;
+            padding: 18px 0;
 
             > .input {
               position: relative;
-              margin-bottom: 20px;
+              margin-bottom: 17px;
               border-radius: 3px;
 
               .error-box {
@@ -1763,23 +1791,23 @@ export default {
                 bottom: -18px;
                 left: 0;
                 font-size: 12px;
-                color: #d45858;
+                color: #f03e3e;
               }
 
               /* 市价提示 */
               > .market-price {
                 width: 100%;
-                height: 38px;
+                height: 36px;
                 padding: 0 15px 0 20px;
                 border-radius: 3px;
-                line-height: 38px;
+                line-height: 36px;
 
                 &.buy-price {
-                  color: $upColor;
+                  color: #f03e3e;
                 }
 
                 &.sell-price {
-                  color: $downColor;
+                  color: #41b37d;
                 }
               }
 
@@ -1787,14 +1815,14 @@ export default {
               > input {
                 box-sizing: border-box;
                 width: 100%;
-                height: 38px;
+                height: 36px;
                 padding: 0 15px 0 20px;
                 border: 1px solid;
                 border-radius: 3px;
                 font-size: 14px;
 
                 &.error {
-                  border-color: $upColor !important;
+                  border-color: #f03e3e !important;
                 }
               }
 
@@ -1821,11 +1849,11 @@ export default {
 
                 span {
                   &.buy {
-                    color: $upColor;
+                    color: #f03e3e;
                   }
 
                   &.sell {
-                    color: $downColor;
+                    color: #41b37d;
                   }
                 }
 
@@ -1839,11 +1867,11 @@ export default {
               .submit-btn {
                 /deep/ {
                   .unlogin-btn {
-                    height: 38px;
+                    height: 36px;
                     margin-top: 20px;
-                    border: 1px solid #a9bed4;
+                    border: 1px solid #66718f;
                     border-radius: 4px;
-                    line-height: 38px;
+                    line-height: 36px;
                   }
                 }
               }
@@ -1913,6 +1941,10 @@ export default {
         .el-dialog {
           width: 350px;
           border-radius: 5px;
+
+          .el-dialog__header {
+            text-align: left;
+          }
         }
 
         .el-dialog__footer {
@@ -1931,34 +1963,46 @@ export default {
         }
 
         &.buy-btn {
-          background-color: #d45858;
+          background-color: #f03e3e;
         }
 
         &.sell-btn {
-          background-color: #008069;
+          background-color: #41b37d;
         }
       }
 
       .el-dialog {
         width: 325px;
-        margin-top: 45vh !important;
+        margin-top: 0 !important;
+        border-radius: 4px;
+        overflow: hidden;
 
         .error-box {
           padding: 10px 0 0;
           font-size: 12px;
-          color: #d45858;
+          color: #f03e3e;
         }
       }
 
       .el-dialog__wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         background-color: rgba(0, 0, 0, .7);
       }
 
       .el-dialog__header {
-        height: 50px;
-        padding: 10px 20px;
-        border-radius: 5px;
-        line-height: 30px;
+        height: 36px;
+        padding: 6px 20px;
+        line-height: 20px;
+
+        > .el-dialog__title {
+          font-size: 14px;
+        }
+
+        > .el-dialog__headerbtn {
+          top: 8px;
+        }
       }
 
       .el-dialog__body {
@@ -2004,7 +2048,7 @@ export default {
 
     &.night {
       color: $nightFontColor;
-      background-color: $mainContentNightBgColor;
+      background-color: #1c1f32;
 
       .warning {
         .button-color {
@@ -2020,6 +2064,27 @@ export default {
       }
 
       > .inner-box {
+        /* 表头 */
+        > .title {
+          background-color: #23273c;
+
+          > .t-left {
+            > .item {
+              color: #66718f;
+
+              &.active {
+                border-bottom: 2px solid $mainColor;
+                color: #d9e1f1;
+              }
+            }
+          }
+
+          > .t-right {
+            font-size: 12px;
+            color: $mainColor;
+          }
+        }
+
         .content-box {
           > .inner-box {
             > .header {
@@ -2029,7 +2094,8 @@ export default {
                 }
 
                 > button {
-                  color: $nightFontColor;
+                  font-size: 12px;
+                  color: $mainColor;
 
                   &:hover {
                     cursor: pointer;
@@ -2037,7 +2103,8 @@ export default {
                 }
 
                 .gray {
-                  color: gray;
+                  font-size: 12px;
+                  color: #66718f;
 
                   &:hover {
                     cursor: not-allowed;
@@ -2048,18 +2115,29 @@ export default {
 
             > .content {
               > .input {
-                background-color: rgb(78, 83, 90);
+                color: #d9e1f1;
+                background-color: #3a4057;
 
                 /* 市价提示 */
                 > .market-price {
-                  background-color: $nightMarketPriceBg;
+                  background-color: #131523;
                 }
 
                 /* 限价input框 */
                 > input {
-                  border-color: #a9bed4;
-                  color: $nightFontColor;
-                  background-color: $mainContentNightBgColor;
+                  border-color: #66718f;
+                  color: #d9e1f1;
+                  background-color: #131523;
+                }
+
+                input::-webkit-input-placeholder,
+                input:-moz-placeholder,
+                input:-ms-input-placeholder {
+                  color: #66718f;
+                }
+
+                > .currency {
+                  color: #66718f;
                 }
               }
             }
@@ -2067,7 +2145,7 @@ export default {
 
           > .middle-line {
             &::before {
-              border-color: $nightBorderColor;
+              border-color: #66718f;
             }
           }
         }
@@ -2076,7 +2154,7 @@ export default {
       /deep/ {
         /* 警告提示框背景色 */
         .el-dialog {
-          background-color: #28334a;
+          background-color: #28334a
         }
 
         .el-tabs__item {
@@ -2094,13 +2172,13 @@ export default {
         }
 
         .el-dialog__header {
-          background-color: #20293c;
+          background-color: #212b3f;
         }
 
         .el-input__inner {
           border: 1px solid #485776;
           color: #fff;
-          background-color: #2d3651;
+          background-color: #1a2233;
 
           &:focus {
             border-color: $mainColor;
@@ -2142,6 +2220,27 @@ export default {
       }
 
       > .inner-box {
+        /* 表头 */
+        > .title {
+          background-color: #f2f6fa;
+
+          > .t-left {
+            > .item {
+              color: #66718f;
+
+              &.active {
+                border-bottom: 2px solid $mainColor;
+                color: #333;
+              }
+            }
+          }
+
+          > .t-right {
+            font-size: 12px;
+            color: $mainColor;
+          }
+        }
+
         .content-box {
           > .inner-box {
             > .header {
@@ -2149,23 +2248,33 @@ export default {
                 > a {
                   color: $dayMainTitleColor;
                 }
+
+                .gray {
+                  font-size: 12px;
+                  color: #66718f;
+
+                  &:hover {
+                    cursor: not-allowed;
+                  }
+                }
               }
             }
 
             > .content {
               > .input {
-                background-color: #e9ecee;
+                background-color: #dae3eb;
 
                 /* 市价提示 */
                 > .market-price {
-                  background-color: $dayMarketPriceBg;
+                  border: 1px solid #cfd5df;
+                  background-color: #e8eef4;
                 }
 
                 /* 限价input框 */
                 > input {
-                  border-color: #c4c4c4;
+                  border-color: #cfd5df;
                   color: $dayMainTitleColor;
-                  background-color: #fff;
+                  background-color: #e8eef4;
                 }
               }
             }
@@ -2186,6 +2295,23 @@ export default {
       }
 
       /deep/ {
+        .el-dialog__title {
+          color: #333;
+        }
+
+        .el-dialog__header {
+          background-color: #dce7f3;
+        }
+
+        .el-input__inner {
+          border: 1px solid #ecf1f8;
+          color: #333;
+
+          &:focus {
+            border-color: $mainColor;
+          }
+        }
+
         .button-color {
           color: rgb(255, 255, 255);
           background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);

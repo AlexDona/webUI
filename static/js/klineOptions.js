@@ -8,13 +8,13 @@ export const overrides = {
   // "scalesProperties.backgroundColor": "#ff00ff",
   'scalesProperties.lineColor': '#61688a', // 右侧边框颜色
   'scalesProperties.textColor': '#61688a', // 左上角文字颜色
-  'mainSeriesProperties.candleStyle.upColor': '#d45858', // k 柱颜色
-  'mainSeriesProperties.candleStyle.downColor': '#008069', // k 柱颜色
-  'mainSeriesProperties.candleStyle.borderUpColor': '#d45858', // k 柱边框颜色
-  'mainSeriesProperties.candleStyle.borderDownColor': '#008069', // k 柱边框颜色
+  'mainSeriesProperties.candleStyle.upColor': '#F03E3E', // k 柱颜色
+  'mainSeriesProperties.candleStyle.downColor': '#41B37D', // k 柱颜色
+  'mainSeriesProperties.candleStyle.borderUpColor': '#F03E3E', // k 柱边框颜色
+  'mainSeriesProperties.candleStyle.borderDownColor': '#41B37D', // k 柱边框颜色
   // "mainSeriesProperties.candleStyle.wickColor": "#737375",
-  'mainSeriesProperties.candleStyle.wickUpColor': '#d45858', // 上涨 蜡烛线颜色
-  'mainSeriesProperties.candleStyle.wickDownColor': '#008069', // 下降 蜡烛线颜色
+  'mainSeriesProperties.candleStyle.wickUpColor': '#F03E3E', // 上涨 蜡烛线颜色
+  'mainSeriesProperties.candleStyle.wickDownColor': '#41B37D', // 下降 蜡烛线颜色
   // 'mainSeriesProperties.hollowCandleStyle.borderColor': '#000',
   // 'mainSeriesProperties.hollowCandleStyle.borderUpColor': '#ff00ff',
   // "mainSeriesProperties.haStyle.borderUpColor": "#00f",

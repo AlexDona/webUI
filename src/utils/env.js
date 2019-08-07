@@ -47,10 +47,15 @@ const devTestConfig = {
   // socketUrl: 'ws://192.168.2.200:8087/market',
 
   // HuaHaoTian
-  socketUrl: 'ws://192.168.2.200:8087/market',
-  apiCommonUrl: 'http://192.168.2.200:8888/',
-  loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
-  OTCIMSocketUrl: 'ws://192.168.2.200:8066/websoc'
+  // socketUrl: 'ws://192.168.2.200:8087/market',
+  // apiCommonUrl: 'http://192.168.2.200:8888/',
+  // loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
+  // OTCIMSocketUrl: 'ws://192.168.2.200:8066/websoc'
+
+  socketUrl: 'wss://market.test.com',
+  apiCommonUrl: 'https://web.rest.test.com/',
+  loginSocketUrl: 'wss://qrcode.test.com/qrcodeLogin/',
+  OTCIMSocketUrl: 'wss://im.test.com/websoc'
 }
 
 const dev210Config = {
@@ -77,10 +82,10 @@ const newProdConfig = {
 switch (process.env.NODE_ENV) {
   case 'development':
     // 本地开发
-    // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.test.com'}
+    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'web.test.com'}
     // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'me.com'}
     // 210开发环境
-    targetConfig = {...dev210Config, xDomain: 'me.com'}
+    // targetConfig = {...dev210Config, xDomain: 'me.com'}
     // 测试环境 （外网）
     // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     // 生产环境

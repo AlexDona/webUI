@@ -10,7 +10,6 @@
     router-link(:to="`/${$routes_X.login}/${$routes_X.register}/default`") {{$t('M.comm_register_time')}}
 </template>
 <script>
-// import {mapState} from 'vuex'
 export default {
   // components: {},
   // props,
@@ -39,6 +38,7 @@ export default {
   .unlogin-btn {
     width: 100%;
     text-align: center;
+    color: #d9e1f1;
 
     > a {
       color: $mainColor;

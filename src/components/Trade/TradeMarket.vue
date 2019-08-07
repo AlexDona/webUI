@@ -1,92 +1,151 @@
-<!--币币交易 行情-->
-<template>
-  <div
-    class="trade-market-box trade"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
-  >
-    <div class="inner-box">
-      <div
-        class="title font-size16 cursor-pointer"
-      >
-        <span
-          class="text"
-          @click="toggleShowContent"
-        >
-          <span>
-            <!--市场-->
-            {{ $t('M.trade_market_bazaar') }}
-          </span>
-        </span>
-        <div class="right">
-          <div class="search-box">
-            <input
+<!--
+  author: zhaoxinlei
+  update: 20190803
+  description: 当前页面为 币币交易 行情 主页面
+-->
+<template lang="pug">
+  .trade-market-box.trade(:class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }")
+    .inner-box
+      .title
+        // 市场
+        span.left {{ $t('M.trade_market_bazaar') }}
+        .right
+          .search-box
+            input(
               ref="search-input"
               @change="changeSearchKeyWord"
               @input="changeSearchKeyWord"
-            />
-            <i class="el-icon-search"></i>
-          </div>
-        </div>
-      </div>
-      <el-collapse-transition>
-        <div
-          class="content"
-          :class="{
-            'needTime':$activityInfo_S_X.showCountDown
-          }"
-          v-show="contentShowStatus"
-        >
-          <div
-              class="inner-box"
-            >
-              <!--tab 切换-->
-              <el-tabs
-                v-model="activeName"
-                @tab-click="changeTab"
-              >
-                <el-tab-pane
-                  :label="collectArea.area"
-                  :name="collectArea.area"
-                >
-                  <TradeMarketTableItem
-                    :searchKeyWord="searchKeyWord"
-                    :sortBy="sortBy"
-                    :plateList="searchFilterCollectArea.plateList"
-                    :collectSymbol="collectSymbol"
-                    :activeName="activeName"
-                    :collectArea="collectArea"
-                    :list="[collectArea]"
-                    @toggleCollect="toggleCollect"
-                    @sortByUser="sortByUser"
-                    @changeActiveSymbol="changeActiveSymbol"
-                  />
-                </el-tab-pane>
-                <el-tab-pane
-                  :label="outItem.area"
-                  :name="outItem.area"
-                  v-for="(outItem,outIndex) in searchFilterMarketList"
-                  :key="outIndex"
-                >
-                  <TradeMarketTableItem
-                    :sortBy="sortBy"
-                    :plateList="outItem.plateList"
-                    :collectSymbol="collectSymbol"
-                    :activeName="activeName"
-                    :collectArea="collectArea"
-                    @toggleCollect="toggleCollect"
-                    :list="filterMarketList"
-                    @sortByUser="sortByUser"
-                    @changeActiveSymbol="changeActiveSymbol"
-                    :searchKeyWord="searchKeyWord"
-                  />
-                </el-tab-pane>
-              </el-tabs>
-            </div>
-        </div>
-      </el-collapse-transition>
-    </div>
-  </div>
+            )
+            i.el-icon-search
+      .content(:class="{'needTime':$activityInfo_S_X.showCountDown}")
+        .inner-box
+          el-tabs(
+            v-model="activeName"
+            @tab-click="changeTab"
+          )
+            el-tab-pane(
+              :label="collectArea.area"
+              :name="collectArea.area"
+            )
+              TradeMarketTableItem(
+                :searchKeyWord="searchKeyWord"
+                :sortBy="sortBy"
+                :plateList="searchFilterCollectArea.plateList"
+                :collectSymbol="collectSymbol"
+                :activeName="activeName"
+                :collectArea="collectArea"
+                :list="[collectArea]"
+                @toggleCollect="toggleCollect"
+                @sortByUser="sortByUser"
+                @changeActiveSymbol="changeActiveSymbol"
+              )
+            el-tab-pane(
+              :label="outItem.area"
+              :name="outItem.area"
+              v-for="(outItem,outIndex) in searchFilterMarketList"
+              :key="outIndex"
+            )
+              TradeMarketTableItem(
+                :sortBy="sortBy"
+                :plateList="outItem.plateList"
+                :collectSymbol="collectSymbol"
+                :activeName="activeName"
+                :collectArea="collectArea"
+                @toggleCollect="toggleCollect"
+                :list="filterMarketList"
+                @sortByUser="sortByUser"
+                @changeActiveSymbol="changeActiveSymbol"
+                :searchKeyWord="searchKeyWord"
+              )
 </template>
+<!--<template>-->
+  <!--<div-->
+    <!--class="trade-market-box trade"-->
+    <!--:class="{'day':theme == 'day','night':theme == 'night' }"-->
+  <!--&gt;-->
+    <!--<div class="inner-box">-->
+      <!--<div-->
+        <!--class="title font-size16 cursor-pointer"-->
+      <!--&gt;-->
+        <!--<span-->
+          <!--class="text"-->
+          <!--@click="toggleShowContent"-->
+        <!--&gt;-->
+          <!--<span>-->
+            <!--&lt;!&ndash;市场&ndash;&gt;-->
+            <!--{{ $t('M.trade_market_bazaar') }}-->
+          <!--</span>-->
+        <!--</span>-->
+        <!--<div class="right">-->
+          <!--<div class="search-box">-->
+            <!--<input-->
+              <!--ref="search-input"-->
+              <!--@change="changeSearchKeyWord"-->
+              <!--@input="changeSearchKeyWord"-->
+            <!--/>-->
+            <!--<i class="el-icon-search"></i>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<el-collapse-transition>-->
+        <!--<div-->
+          <!--class="content"-->
+          <!--:class="{-->
+            <!--'needTime':$activityInfo_S_X.showCountDown-->
+          <!--}"-->
+          <!--v-show="contentShowStatus"-->
+        <!--&gt;-->
+          <!--<div-->
+              <!--class="inner-box"-->
+            <!--&gt;-->
+              <!--&lt;!&ndash;tab 切换&ndash;&gt;-->
+              <!--<el-tabs-->
+                <!--v-model="activeName"-->
+                <!--@tab-click="changeTab"-->
+              <!--&gt;-->
+                <!--<el-tab-pane-->
+                  <!--:label="collectArea.area"-->
+                  <!--:name="collectArea.area"-->
+                <!--&gt;-->
+                  <!--<TradeMarketTableItem-->
+                    <!--:searchKeyWord="searchKeyWord"-->
+                    <!--:sortBy="sortBy"-->
+                    <!--:plateList="searchFilterCollectArea.plateList"-->
+                    <!--:collectSymbol="collectSymbol"-->
+                    <!--:activeName="activeName"-->
+                    <!--:collectArea="collectArea"-->
+                    <!--:list="[collectArea]"-->
+                    <!--@toggleCollect="toggleCollect"-->
+                    <!--@sortByUser="sortByUser"-->
+                    <!--@changeActiveSymbol="changeActiveSymbol"-->
+                  <!--/>-->
+                <!--</el-tab-pane>-->
+                <!--<el-tab-pane-->
+                  <!--:label="outItem.area"-->
+                  <!--:name="outItem.area"-->
+                  <!--v-for="(outItem,outIndex) in searchFilterMarketList"-->
+                  <!--:key="outIndex"-->
+                <!--&gt;-->
+                  <!--<TradeMarketTableItem-->
+                    <!--:sortBy="sortBy"-->
+                    <!--:plateList="outItem.plateList"-->
+                    <!--:collectSymbol="collectSymbol"-->
+                    <!--:activeName="activeName"-->
+                    <!--:collectArea="collectArea"-->
+                    <!--@toggleCollect="toggleCollect"-->
+                    <!--:list="filterMarketList"-->
+                    <!--@sortByUser="sortByUser"-->
+                    <!--@changeActiveSymbol="changeActiveSymbol"-->
+                    <!--:searchKeyWord="searchKeyWord"-->
+                  <!--/>-->
+                <!--</el-tab-pane>-->
+              <!--</el-tabs>-->
+            <!--</div>-->
+        <!--</div>-->
+      <!--</el-collapse-transition>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</template>-->
 <script>
 import {
   getStore,
@@ -189,7 +248,6 @@ export default {
           })
         })
       })
-      // console.log(newPlateList)
       this.$set(this.collectArea, 'plateList', newPlateList)
     },
     setActiveIndex (area) {
@@ -209,7 +267,6 @@ export default {
       }
       const data = await getTradeMarketDataAjax(params)
       if (!data) return false
-      // console.log(data)
       let objList = getNestedData(data, 'data.obj')
       let resultStr = ''
       _.forEach(objList, (objItem) => {
@@ -265,7 +322,6 @@ export default {
     },
     // 设置 当前交易区
     changeActiveSymbol ({activeSymbol}) {
-      // console.log(activeSymbol.id)
       const {id} = activeSymbol
       setStore('activeSymbol', id)
       this.SET_MIDDLE_TOP_DATA(activeSymbol)
@@ -373,10 +429,8 @@ export default {
         row,
         plateId
       } = data
-      // console.log(data)
       status = Boolean(status)
       // this.$set(this.collectStatusList, id, status)
-      // console.log(plateId, this.collectArea)
       if (status) {
         //  添加收藏
         this.CHANGE_COLLECT_SYMBOL({
@@ -385,7 +439,6 @@ export default {
         })
         // this.collectArea.plateList[plateIndex].content.push(row)
         _.forEach(this.collectArea.plateList, (plateItem, plateIndex) => {
-          // console.log(plateItem)
           if (plateItem.plateId == plateId) {
             let isExist = plateItem.content.some(item => item.id == id)
             if (!isExist) {
@@ -403,7 +456,6 @@ export default {
           collectSymbol: id
         })
         _.forEach(this.collectArea.plateList, (plateItem, plateIndex) => {
-          // console.log(plateItem)
           if (plateItem.plateId == plateId) {
             let newList = plateItem.content.filter(item => item.id !== id)
             this.$set(this.collectArea.plateList[plateIndex], 'content', newList)
@@ -430,7 +482,6 @@ export default {
     },
     // 切换tab
     changeTab (e) {
-      // console.log(e)
       let {
         index
       } = e
@@ -456,14 +507,11 @@ export default {
     // 设置当前交易区交易对字符串
     setActiveTabSymbolStr () {
       let activeTabSymbolStr = ''
-      // console.log(this.activeIndex)
       switch (this.activeIndex) {
         // 自选区
         case 1:
-          // console.log(this.collectArea)
           _.forEach(this.collectArea.plateList, (plateItem) => {
             _.forEach(plateItem.content, (contentItem) => {
-              // console.log(contentItem.id)
               if (contentItem.id) {
                 activeTabSymbolStr += `${contentItem.id}@`
               }
@@ -472,11 +520,9 @@ export default {
           break
         // 非自选区
         default:
-          // console.log(this.filterMarketList[this.activeIndex - 2])
           if (this.filterMarketList[this.activeIndex - 2]) {
             _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, (plateItem) => {
               _.forEach(plateItem.content, (contentItem) => {
-                // console.log(contentItem.id)
                 if (contentItem.id) {
                   activeTabSymbolStr += `${contentItem.id}@`
                 }
@@ -486,11 +532,9 @@ export default {
           break
       }
       activeTabSymbolStr = this.middleTopData.id ? `${this.middleTopData.id}@${activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)}` : `${activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)}`
-      // console.log(activeTabSymbolStr)
       this.CHANGE_ACTIVE_TAB_ID({
         activeTabSymbolStr
       })
-      // console.log(this.activeTabSymbolStr)
     }
   },
   filter: {},
@@ -523,9 +567,7 @@ export default {
     // 自选区搜索
     searchFilterCollectArea () {
       let newCollectArea = _.cloneDeep(this.collectArea)
-      // console.log(newCollectArea)
       _.forEach(newCollectArea.plateList, plateItem => {
-        // console.log(plateItem)
         plateItem.content = []
       })
       this.setSearchFilterList(0, this.collectArea.plateList, [], newCollectArea)
@@ -605,18 +647,14 @@ export default {
   @import '../../assets/CSS/index';
 
   .trade-market-box {
-    /* width:433px; */
     > .inner-box {
       > .title {
         display: flex;
         height: 34px;
         padding: 0 20px;
-        margin-bottom: 1px;
         line-height: 34px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
 
         > .text {
-          /* font-weight: 700; */
           display: inline-block;
           flex: 1;
           height: 100%;
@@ -624,9 +662,8 @@ export default {
           > span {
             display: inline-block;
             height: 100%;
-            border-bottom: 2px solid $mainColor;
             font-size: 14px;
-            color: $mainColor;
+            color: #d9e1f1;
           }
         }
 
@@ -674,21 +711,11 @@ export default {
 
       /* 表格内容 */
       > .content {
-        height: 1584px;
+        height: 873px;
         overflow: auto;
 
         &.needTime {
-          height: 1381px !important;
-        }
-      }
-
-      @media screen and(max-width: 2560px) and (min-width: 1921px) {
-        > .content {
-          height: 1809px;
-
-          &.needTime {
-            height: 1606px !important;
-          }
+          height: 670px !important;
         }
       }
     }
@@ -716,15 +743,18 @@ export default {
       }
 
       .el-tabs__item {
-        /* width:70px; */
         height: 20px;
-        padding: 0 6px;
+        padding: 0 6px !important;
         margin: 5px 6px;
+        border-radius: 2px;
+        font-size: 12px;
         line-height: 20px;
+        text-align: center;
 
         &.is-active {
-          color: #338ff5;
-          background: rgba(51, 143, 245, .5) !important;
+          border: none;
+          color: #fff !important;
+          background: $mainColor !important;
         }
       }
 
@@ -741,7 +771,7 @@ export default {
         .el-tabs__item {
           &.is-top {
             &:nth-child(2) {
-              padding-left: 10px;
+              margin-left: 10px;
             }
           }
 
@@ -756,7 +786,13 @@ export default {
       > .inner-box {
         > .title {
           color: $mainNightTitleColor;
-          background-color: $mainContentNightBgColor;
+          background-color: #23273c;
+
+          > .right {
+            > .search-box {
+              border-color: #3e4154;
+            }
+          }
         }
 
         > .content {
@@ -766,7 +802,12 @@ export default {
 
       /deep/ {
         .el-tabs__item {
-          color: #a9bed4;
+          border: 1px solid #3e4154;
+          color: #66718f;
+        }
+
+        .el-tabs__nav-scroll {
+          background-color: #23273c;
         }
       }
     }
@@ -774,8 +815,8 @@ export default {
     &.day {
       > .inner-box {
         > .title {
-          color: $dayMainTitleColor;
-          background-color: $mainDayBgColor;
+          color: #333;
+          background-color: #f2f6fa;
 
           > .right {
             > .search-box {
@@ -790,6 +831,17 @@ export default {
 
         > .content {
           background-color: $mainDayBgColor;
+        }
+      }
+
+      /deep/ {
+        .el-tabs__item {
+          border: 1px solid #cfd5df;
+          color: #66718f;
+        }
+
+        .el-tabs__nav-scroll {
+          background-color: #f2f6fa;
         }
       }
     }
