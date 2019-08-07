@@ -64,7 +64,10 @@
           .bits
             .left-select
               .parent
-                span.active-bit.cursor-pointer(@click="toggleShowBits") {{currentLanguage ? activeBits.chineseName : activeBits.englishName}}
+                span.active-bit.cursor-pointer(
+                  @click="toggleShowBits"
+                  :ref="activeBitsRef"
+                ) {{currentLanguage ? activeBits.chineseName : activeBits.englishName}}
                 ul.select-bits(v-show="isShowBits")
                   li.option-item(
                     v-for="(item, index) in bitsData"
@@ -109,13 +112,18 @@ export default {
       languageStyle: ['zh_CN', 'zh_TW'],
       // 买单margin-top
       targetMarginTop: -220,
-      isShowBits: false
+      isShowBits: false,
+      activeBitsRef: 'active-bits-ref'
     }
   },
   // created () {
   // },
-  // mounted () {
-  // },
+  mounted () {
+    document.addEventListener('click', (e) => {
+      if (e.target == this.$refs[this.activeBitsRef]) return
+      this.isShowBits = false
+    })
+  },
   // activated () {},
   // update () {
   // },
