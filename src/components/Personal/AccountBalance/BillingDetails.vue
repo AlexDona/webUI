@@ -212,6 +212,14 @@
                     </div>
                   </template>
                 </el-table-column>
+                <!--当前余额-->
+                <el-table-column
+                        :label="$t('M.comm_balance_current')"
+                >
+                  <template slot-scope = "s">
+                    <div>{{ s.row.totalMassage - 0}}</div>
+                  </template>
+                </el-table-column>
                 <!--数量-->
                 <el-table-column
                         :label="$t('M.comm_count')"
