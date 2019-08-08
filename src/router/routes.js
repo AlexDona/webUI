@@ -54,8 +54,6 @@ const RankingListOfInvitation = () => import('@com/ActivityCenter/RankingListOfI
 
 // 上币申请
 const currencyApplication = () => import('@com/ActivityCenter/currencyApplication')
-// 新闻公告
-const NewsAndNoticeCenter = () => import('@com/NoticeAndNews/NewAndNoticeCenter')
 // 新闻详情
 const NewsAndNoticeItem = () => import('@com/NoticeAndNews/NewsAndNoticeItem')
 const HelpCenter = () => import('@com/FooterInfo/HelpCenter')
@@ -343,7 +341,7 @@ const routes = [
   {
     // 新闻中心
     path: `/${routesVariable.news}`,
-    component: NewsAndNoticeCenter
+    component: () => import('@com/NoticeAndNews/TheNewNewsList.vue')
   },
   {
     path: `/${routesVariable.newsItem}/:detailId`,

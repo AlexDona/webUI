@@ -11,13 +11,6 @@
     <div class="inner-box">
       <!--搜索区-->
       <div class="search-box">
-        <!--请输入关键字-->
-        <!--<input
-                type="text"
-                class="search-input"
-                v-model="searchKeyWord"
-                :placeholder="$t('M.about_footer_info_keyWords')"
-        />-->
       </div>
       <!--列表区-->
       <div class="content-box">
@@ -44,41 +37,11 @@
                             :to="`/${$routes_X.newsItem}/${item.id}`"
                             class="content-item-link"
                     >
-                      <!--<div
-                        class="left"
-                        v-if="isChineseLanguage"
-                      >
-                          <div class="top">
-                            &lt;!&ndash;年&ndash;&gt;
-                            {{item.createTime.split('-')[0]+ $t('M.news_year')}}
-                          </div>
-                          <div class="bottom">
-                            &lt;!&ndash;月&ndash;&gt;
-                            {{item.createTime.split('-')[1]-0+ $t('M.news_month')}}
-                          </div>
-                      </div>-->
-                      <!--<div
-                        class="left"
-                        v-else
-                      >
-                        <div class="top">
-                          &lt;!&ndash;年&ndash;&gt;
-                          {{item.createTime.split('-')[0]}}
-                        </div>
-                        <div class="bottom">
-                          &lt;!&ndash;月&ndash;&gt;
-                          {{item.createTime.split('-')[1]-0+  monthList[(item.createTime.split('-')[1]-1)].label}}
-                        </div>
-                      </div>-->
                       <div class="right">
                         <p class="top">
                           {{item.title}}
                         </p>
-                        <!--<p class="middle">
-                          {{item.keyword}}
-                        </p>-->
                         <p class="bottom">
-                          <!-- <span class="author">{{item.creator}}</span>-->
                           <span class="date">{{item.createTime}}</span>
                         </p>
                       </div>
