@@ -144,6 +144,7 @@ export default {
       this.getNavigations()
     },
     async '$route' (to, from) {
+      console.log(to)
       this.toggleViewPortMeta()
       let path = to.path
       if (!this.$navigators_S_X.length) {
@@ -164,8 +165,10 @@ export default {
             return false
           }
         })
-        // if(!hitTarget) this.$SET_ACTIVE_LINK_NAME_M_X(-1)
       })
+
+      if (path == `/${this.$routes_X.home}`) this.$SET_ACTIVE_LINK_NAME_M_X(-1)
+
       if (from.path === '/PersonalCenter') {
         this.$setStore('active-target', 'assets')
       }
