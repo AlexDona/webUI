@@ -32,10 +32,12 @@
                     :class="{active: activeTitle.id == title.id}"
                   ) {{title.name}}
         .right
+          // 请输入关键词搜索
           el-input(
             type="text"
             v-model="keyword"
             @keyup.enter.native="filterByKeyWord"
+            :placeholder="$t('M.news_search_placeholder_label')"
           )
             Iconfont.iconfont(
               icon-name="icon-sousuo"
@@ -44,7 +46,8 @@
             template(
               slot="append"
             )
-              el-button(@click="filterByKeyWord") 搜索
+              // 搜索
+              el-button(@click="filterByKeyWord") $t('M.news_search_label')
       .content
         .news()
           li.content-item.cursor-pointer(
@@ -204,7 +207,6 @@ export default {
               font-size 18px
               &.active
                 color S_main_color
-                font-weight 700
             >.more-types
               position relative
               &:hover
@@ -215,12 +217,11 @@ export default {
                 font-size 18px
                 &.active
                   color S_main_color
-                  font-weight 700
                 > .iconfont
                   transition all .2s
               >.titles
                 position absolute
-                top 60px
+                top 47px
                 left 50%
                 transform translateX(-50%)
                 .title
@@ -230,11 +231,8 @@ export default {
                   font-size 14px
                   box-sizing border-box
                   white-space nowrap
-                  &.active,
-                  &:hover
-                    font-weight 700
         >.right
-          line-height 38px
+          line-height 60px
           /deep/
             .el-input__inner
               height 30px
