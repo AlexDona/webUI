@@ -309,7 +309,7 @@ export default {
       currentPageForHistoryEntrust: 1,
       // 历史委托总页数
       totalPageForHistoryEntrust: 1,
-      pageSize: 10,
+      pageSize: 5,
       entrusts: [
         // 当前委托
         {
