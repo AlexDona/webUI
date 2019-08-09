@@ -7,7 +7,7 @@ const request = require('request')
 const {atob} = require('abab')
 const pako = require('pako')
 const XDomin = {
-  testing: 'new.test.com',
+  testing: 'web.test.com',
   development210: 'me.com',
   production: 'fubt.co'
 }

@@ -44,10 +44,7 @@ const FinanceCenter = () => import('@com/InvestmentFinance/FinanceCenter')
 const FinanceInvestmentRecord = () => import('@com/InvestmentFinance/FinanceInvestmentRecord')
 // 登录
 // const LoginAndRegister = () => import('@/pages/LoginUser')
-// 注册
-const Register = () => import('@/pages/RegisterUser')
 const InvitationRegister = () => import('@/pages/InvitationRegister')
-const ForgetPassword = () => import('@com/User/ForgetPassword')
 // TradeCenter
 const TradeCenter = () => import('@/pages/TradeCenter')
 const RankingListOfInvitation = () => import('@com/ActivityCenter/RankingListOfInvitation')
@@ -298,21 +295,9 @@ const routes = [
   // },
   ...mobile,
   ...user,
-  // 注册
-  {
-    path: `/${routesVariable.register}`,
-    name: `${routesVariable.register}`,
-    component: Register
-  },
   {
     path: '/invitationRegister',
     component: InvitationRegister
-  },
-  // 忘记密码
-  {
-    path: `/${routesVariable.ForgetPassword}`,
-    name: `${routesVariable.ForgetPassword}`,
-    component: ForgetPassword
   },
   {
     // 活动中心

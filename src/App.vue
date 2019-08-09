@@ -197,9 +197,9 @@ export default {
     },
     isNeedNotice (newVal) {
       if (newVal) {
-        $('#udesk_container').fadeIn()
+        document.querySelector('#udesk_container').style.display = 'block'
       } else {
-        $('#udesk_container').fadeOut()
+        document.querySelector('#udesk_container').style.display = 'none'
       }
     }
   }
