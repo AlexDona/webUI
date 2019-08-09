@@ -238,6 +238,8 @@ export default {
               height 30px
               width 220px
               font-size 12px
+              &::-webkit-input-placeholder
+                color #66718f
             .el-input__prefix
               top 5px
             .el-input-group__append
@@ -246,7 +248,6 @@ export default {
         margin-top 17px
         > .news
           min-height 750px
-
           > .content-item
             height 59px
             padding 0 40px

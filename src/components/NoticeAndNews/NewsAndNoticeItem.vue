@@ -9,23 +9,9 @@
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box">
-      <!--搜索区-->
-      <div class="search-box">
-        <!--请输入关键字-->
-        <!--<input
-          type="text"
-          class="search-input"
-          v-model="searchKeyWord"
-          :placeholder="$t('M.about_footer_info_keyWords')"
-        />-->
-      </div>
       <!--列表区-->
       <div class="content-box">
         <div class="inner-box">
-          <!--<el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: `/${$routes_X.news}` }">{{$t('M.comm_news_and_notice')}}</el-breadcrumb-item>
-            <el-breadcrumb-item>{{newDetail.newsTypeName}}</el-breadcrumb-item>
-          </el-breadcrumb>-->
           <div class="nav-list">
             <div class="nav-content">
               <a class="nav-list1" @click="goToNotice">{{newDetail.newsTypeName}}</a>&nbsp;>&nbsp; <span class="nav-list2">{{$t('M.common_details')}}</span>
@@ -50,42 +36,12 @@
                 ></div>
               </div>
             </div>
-            <!--<div class="right">
-              <div
-                class="news-type-list"
-                v-for="(outerItem,outIndex) in newsTypeList"
-                :key="outIndex"
-              >
-                <h2 class="news-type-title">{{outerItem.name}}
-                  <span
-                    class="view-more"
-                    @click="backToParent(outerItem)"
-                  >
-                    &lt;!&ndash;查看更多&ndash;&gt;
-                    {{$t('M.comm_view_more')}} 》
-                  </span></h2>
-                <ul
-                  class="news-type-content"
-                >
-                  <li
-                    class="news-type-item cursor-pointer"
-                    v-for="(item,index) in detailAllNewsList[outIndex]"
-                    :key="index"
-                    @click="getDetailInfo(item.id)"
-                  >
-                    <span class="title">{{item.title}}</span>
-                    <span class="time">{{item.createTime.split(' ')[0]}}</span>
-                  </li>
-                </ul>
-              </div>
-            </div>-->
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 import {mapState, mapMutations} from 'vuex'
 
@@ -99,7 +55,6 @@ import {
   getNestedData
 } from '../../utils/commonFunc'
 
-// import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
   },
@@ -117,7 +72,6 @@ export default {
     }
   },
   async created () {
-    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
     await this.getDetailInfo(this.detailId)
   },
   // mounted () {},
@@ -245,6 +199,7 @@ export default {
 
     > .content-box {
       min-height: 1215px;
+      margin-top: 120px;
 
       > .inner-box {
         width: 1300px;

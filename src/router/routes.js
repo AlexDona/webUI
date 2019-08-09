@@ -341,7 +341,7 @@ const routes = [
   {
     // 新闻中心
     path: `/${routesVariable.news}`,
-    component: () => import('@com/NoticeAndNews/TheNewNewsList.vue')
+    component: () => import('@com/NoticeAndNews/TheNewsList.vue')
   },
   {
     path: `/${routesVariable.newsItem}/:detailId`,
