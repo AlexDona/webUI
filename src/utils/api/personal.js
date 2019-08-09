@@ -92,7 +92,7 @@ export const pushPropertyTransaction = (params) => handleRequest(() => put('push
  * 邀请推广
  * */
 // 直接推广 间接推广列表
-export const userPromotionList = (params) => handleRequest(() => get('user/center/inviter', params))
+export const userPromotionList = (params) => handleRequest(() => get('user/center/inviterShowList', params))
 // 推荐用户币种列表
 export const getRecommendUserPromotionList = (params) => handleRequest(() => get('user/center/inviterCoin', params))
 /**
