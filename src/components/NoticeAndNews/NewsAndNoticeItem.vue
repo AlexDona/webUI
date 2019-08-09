@@ -118,6 +118,7 @@ export default {
       if (this.templateId == id) return
       const data = await getNewsDetail(id)
       if (!data) return false
+      this.$setStore('newsTypeId', _.get(data, 'data.newsTypeId'))
       this.newDetail = getNestedData(data, 'data')
       this.templateId = getNestedData(data, 'data.templateId')
       let {href} = window.location
@@ -160,7 +161,6 @@ export default {
   watch: {
     async languageAndTemplateId () {
       await this.getAllNewsTypeList()
-      await this.getAllTypeListNewsList()
       await this.changeNewDetailByLanguage()
     },
     newsItemId (newVal) {

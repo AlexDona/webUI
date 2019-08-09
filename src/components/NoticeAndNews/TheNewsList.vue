@@ -143,21 +143,19 @@ export default {
     },
     async resetNewTypeList () {
       await this.getAllNewsTypeList()
-      // console.log(this.newsTypeList)
       if (this.newsTypeActiveName) {
         this.activeName = this.newsTypeActiveName
         this.changeTab({name: this.activeName})
       } else {
-        this.newsTypeId = _.get(this.newsTypeList, '[0].id')
-        this.activeTitle = _.get(this.newsTypeList, '[0]')
+        // this.activeTitle = this.$getStore('targetTitle', 'json') || _.get(this.newsTypeList, '[0]')
+        this.newsTypeId = this.$getStore('newsTypeId') || _.get(this.newsTypeList, '[0].id')
+        this.activeTitle = this.newsTypeList.filter(item => item.id == this.newsTypeId)[0] || this.newsTypeList[0]
         this.activeName = this.newsTypeId
       }
     },
     toggleTitle (title, more) {
-      console.log(title)
       this.isMoreTypesClick = more ? true : false
       this.activeTitle = title
-      this.newsTypeId = _.get(title, 'id')
       this.pageNum = 1
       this.getNewsNoticeList()
     },
@@ -173,13 +171,13 @@ export default {
       return this.newsTypeList.slice(0, 5)
     },
     lastTypeList () {
-      console.log(this.newsTypeList)
       return this.newsTypeList.slice(5)
     }
   },
   watch: {
     activeTitle (New) {
       this.newsTypeId = _.get(New, 'id')
+      this.$setStore('newsTypeId', this.newsTypeId)
     }
   }
 }
