@@ -13,7 +13,7 @@ import VueClipboard from 'vue-clipboard2'
 import Vuex from 'vuex'
 // import FastClick from 'fastclick'
 // eslint-disable-next-line
-import $ from 'jquery'
+// import $ from 'jquery'
 // eslint-disable-next-line
 import _ from 'lodash'
 import {
