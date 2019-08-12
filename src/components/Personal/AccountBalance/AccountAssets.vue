@@ -7,7 +7,7 @@
       class="account-assets-main"
     >
       <!-- 用户信息-->
-      <UserInfo />
+      <UserInfo :Rates = 'CNYRate'/>
       <div class="account-assets-box margin-top10">
         <div>
           <header class="account-assets-header display-flex personal-height40 line-height40 box-shadow">
@@ -1449,7 +1449,7 @@ export default {
       // console.log(this.currencyRateList)
     },
     filteredData1 () {
-      // console.log(this.filteredData1)
+      // console.log(this.filteredData1)https://web.rest.test.com/exchangeRate/coinPrice?coinName=FBT&shortName=CNY
     },
     filteredData2 () {
       // console.log(this.filteredData2)

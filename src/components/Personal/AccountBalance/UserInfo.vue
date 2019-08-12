@@ -190,7 +190,7 @@
                 v-if="this.totalSumCNY > 0"
               >
                 <p v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                  {{ $scientificToNumber($keep2Num(this.totalSumCNY * CNYRate)) }} <span class="font-size12">{{ activeConvertCurrencyObj.shortName }}</span>
+                  {{ $scientificToNumber($keep2Num(this.totalSumCNY * Rates)) }} <span class="font-size12">{{ activeConvertCurrencyObj.shortName }}</span>
                 </p>
                 <p v-else>
                   {{ $scientificToNumber($keep2Num(this.totalSumCNY)) }} <span class="font-size12">CNY</span>
@@ -237,6 +237,7 @@ export default {
     IconFontCommon // 字体图标
   },
   // props,
+  props: ['Rates'],
   data () {
     return {
       vipShowPictureSrc: require('../../../assets/user/vip.png'), // 开通VIP之后点亮图片
@@ -303,14 +304,6 @@ export default {
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
     })
-  },
-  watch: {
-    async activeConvertCurrencyObj () {
-      if (this.currencyRateList.BTC) {
-        // 汇率转换
-        await this.currencyTransform()
-      }
-    }
   }
 }
 </script>
