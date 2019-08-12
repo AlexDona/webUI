@@ -1808,6 +1808,10 @@ export default {
         .el-table__body {
           tr {
             td {
+              .cell {
+                line-height: 22px;
+              }
+
               &:first-child {
                 .cell {
                   padding-left: 30px;
