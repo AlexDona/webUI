@@ -195,10 +195,12 @@ export default {
       this.toggleViewPortMeta()
     },
     isNeedNotice (newVal) {
-      if (newVal) {
-        document.querySelector('#udesk_container').style.display = 'block'
-      } else {
-        document.querySelector('#udesk_container').style.display = 'none'
+      if (document.querySelector('#udesk_container')) {
+        if (newVal) {
+          document.querySelector('#udesk_container').style.display = 'block'
+        } else {
+          document.querySelector('#udesk_container').style.display = 'none'
+        }
       }
     }
   }
