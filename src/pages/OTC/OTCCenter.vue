@@ -1522,8 +1522,12 @@ export default {
 
         > .otc-merchant-list {
           position: relative;
-          min-height: 650px;
+          min-height: 828px;
           margin-top: 20px;
+
+          /*
+          min-height: 650px;
+          */
 
           .red {
             color: $upColor;
@@ -1784,7 +1788,9 @@ export default {
     .otc-merchant-list {
       .el-table {
         td {
-          padding: 15px 0;
+          padding: 24px 0;
+
+          /* padding: 15px 0; */
         }
 
         .el-table__header {
@@ -1808,9 +1814,9 @@ export default {
         .el-table__body {
           tr {
             td {
-              .cell {
+              /* .cell {
                 line-height: 22px;
-              }
+              } */
 
               &:first-child {
                 .cell {
@@ -1836,9 +1842,9 @@ export default {
             background-color: #8ead9e;
           }
 
-          .el-button--mini {
+          /* .el-button--mini {
             height: 29px;
-          }
+          } */
         }
       }
 
