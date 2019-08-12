@@ -918,7 +918,7 @@ export default {
           right: 1px;
           height: 28px;
           border-radius: 0 2px 2px 0;
-          line-height: 30px;
+          line-height: 25px;
           background: #2d3651;
           -webkit-transition: all .3s;
           transition: all .3s;
@@ -1045,7 +1045,7 @@ export default {
           right: 1px;
           height: 28px;
           border-radius: 0 2px 2px 0;
-          line-height: 30px;
+          line-height: 25px;
           background: #fff;
           -webkit-transition: all .3s;
           transition: all .3s;
