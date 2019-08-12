@@ -217,7 +217,7 @@
                         :label="$t('M.comm_balance_current')"
                 >
                   <template slot-scope = "s">
-                    <div>{{ s.row.totalMassage - 0}}</div>
+                    <div>{{ s.row.totalMassage}}</div>
                   </template>
                 </el-table-column>
                 <!--数量-->
