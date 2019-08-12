@@ -95,8 +95,8 @@ export default {
     this.socket.doOpen()
   },
   async mounted () {
-    const {tradeId} = this.$route.params
-    if (tradeId && tradeId !== 'default') await this.getActiveSymbolData(tradeId)
+    // const {tradeId} = this.$route.params
+    // if (tradeId && tradeId !== 'default') await this.getActiveSymbolData(tradeId)
     // 获取默认交易对
     await this.getDefaultSymbol()
     this.initKLine(this.symbol)
@@ -114,7 +114,6 @@ export default {
       'SET_MIDDLE_TOP_DATA',
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
       'GET_SERVER_DATA',
-      'RETURN_SYMBOL_DATA',
       'SET_PRE_INFO_M',
       'SET_REQUEST_COUNT_M'
     ]),
@@ -223,7 +222,6 @@ export default {
       const defaultTradeContent = getNestedData(defaultTrade, 'content[0]')
       if (defaultTradeContent) {
         this.SET_MIDDLE_TOP_DATA(defaultTradeContent)
-        this.RETURN_SYMBOL_DATA(true)
       }
       // 买卖单
       this.ajaxData.buyAndSellData = getNestedData(depthList, 'depthData')
@@ -269,7 +267,6 @@ export default {
       activeSymbol = `${getNestedData(obj, 'sellCoinName')}${getNestedData(obj, 'buyCoinName')}`.toLowerCase()
       const {tradeId} = this.$route.params
       this.symbol = tradeId && tradeId !== 'default' ? tradeId : (localSymbol ? localSymbol : activeSymbol)
-      this.RETURN_SYMBOL_DATA(true)
       if (this.$isLogin_S_X) this.getUserOrderSocket('SUB', this.symbol)
     },
     init (options) {

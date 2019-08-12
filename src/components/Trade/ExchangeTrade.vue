@@ -716,13 +716,7 @@ export default {
       amountMax: ''
     }
   },
-  async created () {
-    // 刷新用户信息
-    if (this.$isLogin_S_X) {
-      await this.REFRESH_USER_INFO_ACTION()
-      // console.log(this.REFRESH_USER_INFO_ACTION)
-    }
-  },
+  // created () {},
   mounted () {
     // this.getRefValue(this.limitBuyPriceInputRef)
     setTimeout(() => {
@@ -745,7 +739,6 @@ export default {
       'CHANGE_SYMBOL_CHANGED_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_PASSWORD_USEABLE',
-      'RETURN_SYMBOL_DATA',
       'CHANGE_ACTIVE_PRICE_ITEM'
     ]),
     ...mapActions([
@@ -1573,7 +1566,6 @@ export default {
     isShowLimitPrice (newVal) {
       // console.log(newVal)
       this.toggleMatchType(newVal ? 'limit-price' : 'market-price')
-      // this.REFRESH_USER_INFO_ACTION()
     },
     limitEntrustEnabled: {
       handler (newVal) {
@@ -1678,17 +1670,9 @@ export default {
         }
       }
     },
-    async currentCoinId (newVal) {
+    async currentCoinId () {
       // 请求决定该交易对书否能充提币
       if (this.$isLogin_S_X) {
-        this.isRechargeOrWithdraw('buy')
-        this.isRechargeOrWithdraw('sell')
-      }
-    },
-    isReturnSymbolData (newVal) {
-      if (newVal) {
-        this.RETURN_SYMBOL_DATA(false)
-        if (!this.$isLogin_S_X) return
         this.isRechargeOrWithdraw('buy')
         this.isRechargeOrWithdraw('sell')
       }

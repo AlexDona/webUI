@@ -32,10 +32,10 @@ export default {
   },
   created () {
     this.$SET_ACTIVE_LINK_NAME_M_X(-1)
-    this.doAdd()
+    // this.doAdd()
   },
   methods: {
-    async doAdd () {
+    doAdd: _.debounce(async function () {
       const data = await getdynamicCsConfigAJAX()
       if (!data) return
       const {code, link, webStatus} = _.get(data, 'data')
@@ -71,7 +71,7 @@ export default {
           'language': ''
         }
       })
-    },
+    }, 500),
     changeLanguage (newVal) {
       switch (newVal) {
         case 'zh_CN':
