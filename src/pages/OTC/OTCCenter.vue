@@ -967,12 +967,15 @@ export default {
     },
     // 点击挂单列表中的名称跳转到商家信息页面
     jumpMerchantInfoPage (userId) {
-      if (!this.isRealNameAuthSuccess || !this.isAdvancedAuthSuccess) {
-        this.notVerifyDialogVisible = true
-        return
-      }
-      if (userId && this.selectedOTCAvailableCurrencyCoinID && this.checkedCurrencyId) {
-        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId, coinId: this.selectedOTCAvailableCurrencyCoinID, currencyId: this.checkedCurrencyId})
+      // 未登录不弹窗不跳转
+      if (this.isLogin) {
+        if (!this.isRealNameAuthSuccess || !this.isAdvancedAuthSuccess) {
+          this.notVerifyDialogVisible = true
+          return
+        }
+        if (userId && this.selectedOTCAvailableCurrencyCoinID && this.checkedCurrencyId) {
+          this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId, coinId: this.selectedOTCAvailableCurrencyCoinID, currencyId: this.checkedCurrencyId})
+        }
       }
     },
     // 获得查看弹窗信息和可用冻结数据：当币种和法币改变的时候也要调此接口刷新数据
