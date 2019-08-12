@@ -53,7 +53,7 @@ export default {
     // require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
     // require('../static/css/theme/night/Common/HeaderCommonNight.css')
     // console.log(encrypt('123456'))
-    await this.getNavigations()
+    // await this.getNavigations()
     // 取主题
     const theme = getStore('theme') || 'night'
     this.CHANGE_THEME(theme)
@@ -144,7 +144,6 @@ export default {
       this.getNavigations()
     },
     async '$route' (to, from) {
-      console.log(to)
       this.toggleViewPortMeta()
       let path = to.path
       if (!this.$navigators_S_X.length) {

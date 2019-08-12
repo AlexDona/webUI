@@ -125,6 +125,7 @@ export default {
           flex 1
           margin 0 10px
           position relative
+          min-width 880px
           >.mask
             position absolute
             z-index 3
