@@ -571,36 +571,36 @@
               </div>
             </div>
             <p class="font-size12 warning-text margin-top35 text-align-c">
-              <!--请先完成实名认证，再进行提币操作！-->
+              <!--请前往个人中心完成实名认证！-->
               <span v-show="!isRealNameAuthSuccess">
-            {{ $t('M.user_asset_title15') }}
-          </span>
-              <!--请先完成高级认证，再进行提币操作！-->
+                {{ $t('M.otc_index_digo_tips') }}
+              </span>
+              <!--请前往个人中心完成高级认证！-->
               <span v-show="isRealNameAuthSuccess && !isAdvancedAuthSuccess">
-            {{ $t('M.user_asset_title16') }}
-          </span>
+                {{ $t('M.otc_index_digo_tips_pass') }}
+              </span>
             </p>
             <span
               slot="footer"
               class="dialog-footer"
             >
-          <!--确 定 取 消-->
-        <button
-          class="button-color border-radius4 cursor-pointer"
-          type="primary"
-          @click="realNameAuthConfirm"
-        >
-          <!--确 定-->
-          {{ $t('M.comm_confirm') }}
-        </button>
-        <button
-          class="btn border-radius4 cursor-pointer"
-          @click.prevent="notVerifyDialogVisible = false"
-        >
-          <!--取 消-->
-          {{ $t('M.comm_cancel') }}
-        </button>
-        </span>
+              <!--确 定 取 消-->
+              <button
+                class="button-color border-radius4 cursor-pointer"
+                type="primary"
+                @click="realNameAuthConfirm"
+              >
+                <!--确 定-->
+                {{ $t('M.comm_confirm') }}
+              </button>
+              <button
+                class="btn border-radius4 cursor-pointer"
+                @click.prevent="notVerifyDialogVisible = false"
+              >
+                <!--取 消-->
+                {{ $t('M.comm_cancel') }}
+              </button>
+            </span>
           </el-dialog>
         </div>
       </div>
@@ -1146,11 +1146,11 @@ export default {
           this.$error_tips_X(this.$t('M.otc_index_js'))
           return false
         } else if (!this.userInfo.realname) {
-          // 去个人中心完成实名认证
+          // 请前往个人中心完成实名认证
           this.$error_tips_X(this.$t('M.otc_index_digo_tips'))
           return false
         } else if (!(this.userInfo.advancedAuth === 'pass')) {
-          // 去个人中心完成高级认证
+          // 请前往个人中心完成高级认证
           this.$error_tips_X(this.$t('M.otc_index_digo_tips_pass'))
           return false
         } if (this.userInfo.otcEnable === 'disable') {
@@ -1522,7 +1522,7 @@ export default {
 
         > .otc-merchant-list {
           position: relative;
-          min-height: 828px;
+          min-height: 650px;
           margin-top: 20px;
 
           .red {
@@ -1784,7 +1784,7 @@ export default {
     .otc-merchant-list {
       .el-table {
         td {
-          padding: 24px 0;
+          padding: 15px 0;
         }
 
         .el-table__header {
@@ -1830,6 +1830,10 @@ export default {
           .el-button--success.is-disabled {
             border-color: #8ead9e;
             background-color: #8ead9e;
+          }
+
+          .el-button--mini {
+            height: 29px;
           }
         }
       }
