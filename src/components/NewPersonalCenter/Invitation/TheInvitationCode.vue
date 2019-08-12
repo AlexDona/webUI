@@ -37,7 +37,7 @@
               .qr-code-box(
                 v-show="isShowQrCode"
               )
-                QRCode(
+                QrCode(
                   :value="inviteUrl"
                   :size="110"
                 )
