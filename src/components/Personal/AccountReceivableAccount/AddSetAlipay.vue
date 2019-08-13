@@ -2,9 +2,7 @@
   <div
     class="add-account personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{
-      height: windowHeight>300? windowHeight: 300 +'px'
-    }"
+    :style="{'min-height':(windowHeight-350)+'px'}"
   >
     <div
       class="add-account-main margin25"

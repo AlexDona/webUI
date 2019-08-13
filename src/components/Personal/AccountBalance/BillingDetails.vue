@@ -1,11 +1,11 @@
 <template>
   <div
-    class="billing-details personal"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+          class="billing-details personal"
+          :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="billing-details-header personal-height40 line-height40 background-color padding-left23">
       <span
-        class="header-content display-inline-block font-size16 cursor-pointer"
+              class="header-content display-inline-block font-size16 cursor-pointer"
       >
         <!--账单明细-->
         {{ $t('M.user_asset_title2') }}
@@ -13,8 +13,8 @@
     </header>
     <div class="billing-details-main padding-lr20 margin-top9">
       <el-tabs
-        v-model="activeName"
-        @tab-click = "coinMoneyOrders"
+              v-model="activeName"
+              @tab-click = "coinMoneyOrders"
       >
         <!--查询条件-->
         <div class="billing-details-query">
@@ -24,115 +24,115 @@
             {{ $t('M.comm_currency') }}
           </span>
             <el-select
-              v-model="defaultCurrencyId"
-              filterable
-              :placeholder="$t('M.comm_please_choose')"
-              :no-data-text="$t('M.comm_no_data')"
-              :disabled="currencyValueStatus"
+                    v-model="defaultCurrencyId"
+                    filterable
+                    :placeholder="$t('M.comm_please_choose')"
+                    :no-data-text="$t('M.comm_no_data')"
+                    :disabled="currencyValueStatus"
             >
               <el-option
-                :placeholder="$t('M.comm_please_choose')"
-                v-for="(item, index) in currencyList"
-                :key="index"
-                :label="item.name"
-                :value="item.id"
+                      :placeholder="$t('M.comm_please_choose')"
+                      v-for="(item, index) in currencyList"
+                      :key="index"
+                      :label="item.name"
+                      :value="item.id"
               >
               </el-option>
             </el-select>
           </div>
           <!--充提记录类型-->
           <div
-            v-if="activeName === 'current-entrust'"
-            class="float-left margin-left150 cursor-pointer"
+                  v-if="activeName === 'current-entrust'"
+                  class="float-left margin-left150 cursor-pointer"
           >
           <span class="demonstration font-size12">
             <!--类型-->
             {{ $t('M.comm_type') }}
           </span>
             <el-select
-              v-model="currencyTypeValue"
-              :no-data-text="$t('M.comm_no_data')"
+                    v-model="currencyTypeValue"
+                    :no-data-text="$t('M.comm_no_data')"
             >
               <el-option
-                v-for="item in currencyType"
-                :key="item.value"
-                :label="$t(item.label)"
-                :value="item.value"
+                      v-for="item in currencyType"
+                      :key="item.value"
+                      :label="$t(item.label)"
+                      :value="item.value"
               >
               </el-option>
             </el-select>
           </div>
           <!--其他记录类型-->
           <div
-            v-else
-            class="float-left margin-left150 cursor-pointer"
+                  v-else
+                  class="float-left margin-left150 cursor-pointer"
           >
             <!--类型-->
             <span class="demonstration">
               {{ $t('M.comm_type') }}
             </span>
             <el-select
-              v-model="otherRecordsValue"
+                    v-model="otherRecordsValue"
             >
               <el-option
-                v-for="item in otherRecordsType"
-                :key="item.value"
-                :label="$t(item.label)"
-                :value="item.value"
+                      v-for="item in otherRecordsType"
+                      :key="item.value"
+                      :label="$t(item.label)"
+                      :value="item.value"
               >
               </el-option>
             </el-select>
           </div>
           <div class="float-left margin-left150 cursor-pointer">
             <div
-              class="block"
-              v-if="activeName === 'current-entrust'"
+                    class="block"
+                    v-if="activeName === 'current-entrust'"
             >
               <span class="demonstration font-size12">
                 <!--日期-->
                 {{ $t('M.user_coin_order4') }}
               </span>
               <el-date-picker
-                v-model="startTime"
-                type="datetimerange"
-                align="right"
-                :editable="false"
-                range-separator="~"
-                @change="changeTime"
-                :start-placeholder="$t('M.otc_no1')"
-                :end-placeholder="$t('M.otc_no2')"
-                :default-time="['00:00:00', '23:59:59']"
-                :picker-options="pickerOptionsTime"
+                      v-model="startTime"
+                      type="datetimerange"
+                      align="right"
+                      :editable="false"
+                      range-separator="~"
+                      @change="changeTime"
+                      :start-placeholder="$t('M.otc_no1')"
+                      :end-placeholder="$t('M.otc_no2')"
+                      :default-time="['00:00:00', '23:59:59']"
+                      :picker-options="pickerOptionsTime"
               >
               </el-date-picker>
             </div>
             <div
-              class="block"
-              v-else
+                    class="block"
+                    v-else
             >
               <span class="demonstration font-size12">
                 <!--日期-->
                 {{ $t('M.user_coin_order4') }}
               </span>
               <el-date-picker
-                v-model="startTime"
-                type="datetimerange"
-                align="right"
-                :editable="false"
-                :clearable="false"
-                range-separator="~"
-                @change="changeTime"
-                :start-placeholder="$t('M.otc_no1')"
-                :end-placeholder="$t('M.otc_no2')"
-                :default-time="['00:00:00', '23:59:59']"
-                :picker-options="pickerOptionsTime"
+                      v-model="startTime"
+                      type="datetimerange"
+                      align="right"
+                      :editable="false"
+                      :clearable="false"
+                      range-separator="~"
+                      @change="changeTime"
+                      :start-placeholder="$t('M.otc_no1')"
+                      :end-placeholder="$t('M.otc_no2')"
+                      :default-time="['00:00:00', '23:59:59']"
+                      :picker-options="pickerOptionsTime"
               >
               </el-date-picker>
             </div>
           </div>
           <div
-            class="search-button float-right border-radius2 text-align-c cursor-pointer font-size12"
-            @click.prevent="stateSearchButton(activeName)"
+                  class="search-button float-right border-radius2 text-align-c cursor-pointer font-size12"
+                  @click.prevent="stateSearchButton(activeName)"
           >
             <!--搜索-->
             {{ $t('M.comm_search') }}
@@ -140,21 +140,21 @@
         </div>
         <!--充提记录-->
         <el-tab-pane
-          :label="$t('M.user_assets_Transaction_History')"
-          name="current-entrust"
+                :label="$t('M.user_assets_Transaction_History')"
+                name="current-entrust"
         >
           <div class="inner-box">
             <!--查询结果-->
             <div class="result-box">
               <!--暂无记录-->
               <el-table
-                :data="chargeRecordList"
-                style="width: 100%;"
-                :empty-text="$t('M.comm_no_data')"
+                      :data="chargeRecordList"
+                      style="width: 100%;"
+                      :empty-text="$t('M.comm_no_data')"
               >
                 <!--币种-->
                 <el-table-column
-                  :label="$t('M.comm_currency')"
+                        :label="$t('M.comm_currency')"
                 >
                   <template slot-scope = "s" style="background: red">
                     <div>{{ s.row.coinName }}</div>
@@ -162,7 +162,7 @@
                 </el-table-column>
                 <!--类型-->
                 <el-table-column
-                  :label="$t('M.comm_type')"
+                        :label="$t('M.comm_type')"
                 >
                   <template slot-scope = "s">
                     <div class="coin-type">{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
@@ -170,17 +170,17 @@
                 </el-table-column>
                 <!--提币地址-->
                 <el-table-column
-                  :label="$t('M.comm_mention_money') + $t('M.comm_site')"
-                  v-if="withdrawSite"
-                  width="150"
+                        :label="$t('M.comm_mention_money') + $t('M.comm_site')"
+                        v-if="withdrawSite"
+                        width="150"
                 >
                   <template slot-scope = "s">
                     <div
-                      :title="s.row.withdrawAddress"
-                      class="white-space cursor-pointer"
-                      v-clipboard:copy="s.row.withdrawAddress"
-                      v-clipboard:success="onCopy"
-                      v-clipboard:error="onError"
+                            :title="s.row.withdrawAddress"
+                            class="white-space cursor-pointer"
+                            v-clipboard:copy="s.row.withdrawAddress"
+                            v-clipboard:success="onCopy"
+                            v-clipboard:error="onError"
                     >
                       {{s.row.withdrawAddress}}
                     </div>
@@ -188,25 +188,25 @@
                 </el-table-column>
                 <!--充值类型 USER("USER", "普通用户充值"), MANUAL("MANUAL", "手工充值")-->
                 <el-table-column
-                  :label="$t('M.comprehensive_manual1')"
-                  v-if="rechargeSite"
-                  width="140"
+                        :label="$t('M.comprehensive_manual1')"
+                        v-if="rechargeSite"
+                        width="140"
                 >
                   <template slot-scope = "s">
                     <!--系统充值-->
                     <div
-                      v-if="s.row.rechargeType === 'MANUAL'"
+                            v-if="s.row.rechargeType === 'MANUAL'"
                     >
                       {{ $t('M.comprehensive_manual')}}
                     </div>
                     <!--充值地址-->
                     <div
-                      v-else
-                      :title="s.row.rechargeAddress"
-                      class="white-space cursor-pointer"
-                      v-clipboard:copy="s.row.rechargeAddress"
-                      v-clipboard:success="onCopy"
-                      v-clipboard:error="onError"
+                            v-else
+                            :title="s.row.rechargeAddress"
+                            class="white-space cursor-pointer"
+                            v-clipboard:copy="s.row.rechargeAddress"
+                            v-clipboard:success="onCopy"
+                            v-clipboard:error="onError"
                     >
                       {{s.row.rechargeAddress}}
                     </div>
@@ -214,16 +214,24 @@
                 </el-table-column>
                 <!--数量-->
                 <el-table-column
-                  :label="$t('M.comm_count')"
+                        :label="$t('M.comm_count')"
                 >
                   <template slot-scope = "s">
                     <div>{{ s.row.amount - 0 }}</div>
                   </template>
                 </el-table-column>
+                <!--当前余额-->
+                <el-table-column
+                        :label="$t('M.comm_balance_current')"
+                >
+                  <template slot-scope = "s">
+                    <div>{{ s.row.totalMassage}}</div>
+                  </template>
+                </el-table-column>
                 <!--提交时间-->
                 <el-table-column
-                  :label="$t('M.comm_sub_time') + $t('M.comm_time')"
-                  width="150"
+                        :label="$t('M.comm_sub_time') + $t('M.comm_time')"
+                        width="150"
                 >
                   <template slot-scope = "s">
                     <div>{{ s.row.createTime }}</div>
@@ -231,9 +239,9 @@
                 </el-table-column>
                 <!--状态-->
                 <el-table-column
-                  prop="address"
-                  :label="$t('M.comm_state')"
-                  width="140"
+                        prop="address"
+                        :label="$t('M.comm_state')"
+                        width="140"
                 >
                   <template slot-scope = "s">
                     <div>{{ $t(`M.${s.row.i18nStatusName}`)}}</div>
@@ -241,14 +249,14 @@
                 </el-table-column>
                 <!--操作-->
                 <el-table-column
-                  :label="$t('M.comm_operation')"
-                  v-if="withdrawSite"
+                        :label="$t('M.comm_operation')"
+                        v-if="withdrawSite"
                 >
                   <template slot-scope = "s">
                     <div
-                      class="cursor-pointer state-status"
-                      @click.prevent="confirmCancelWithdraw(s.row.id, s.row.version)"
-                      :id="s.row.id"
+                            class="cursor-pointer state-status"
+                            @click.prevent="confirmCancelWithdraw(s.row.id, s.row.version)"
+                            :id="s.row.id"
                     >
                       <!--撤销-->
                       {{ s.row.status === 'WAIT-WITHDRAW'? $t('M.user_push_revocation') : ''}}
@@ -261,17 +269,17 @@
         </el-tab-pane>
         <!--综合记录-->
         <el-tab-pane
-          :label="$t('M.comprehensive_records')"
-          name="other-records"
+                :label="$t('M.comprehensive_records')"
+                name="other-records"
         >
           <el-table
-            :data="otherRecordsList"
-            style="width: 100%;"
-            :empty-text="$t('M.comm_no_data')"
+                  :data="otherRecordsList"
+                  style="width: 100%;"
+                  :empty-text="$t('M.comm_no_data')"
           >
             <!--时间-->
             <el-table-column
-              :label="$t('M.comm_time')"
+                    :label="$t('M.comm_time')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.time }}</div>
@@ -279,7 +287,7 @@
             </el-table-column>
             <!--币种-->
             <el-table-column
-              :label="$t('M.comm_currency')"
+                    :label="$t('M.comm_currency')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.coinName }}</div>
@@ -287,7 +295,7 @@
             </el-table-column>
             <!--类型-->
             <el-table-column
-              :label="$t('M.comm_type')"
+                    :label="$t('M.comm_type')"
             >
               <template slot-scope = "s">
                 <!--<div>{{ s.row.type }}</div>-->
@@ -323,7 +331,7 @@
             </el-table-column>
             <!--数量-->
             <el-table-column
-              :label="$t('M.comm_count')"
+                    :label="$t('M.comm_count')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.count }}</div>
@@ -331,7 +339,7 @@
             </el-table-column>
             <!--备注-->
             <el-table-column
-              :label="$t('M.comm_remark')"
+                    :label="$t('M.comm_remark')"
             >
               <template slot-scope = "s">
                 <div v-if="s.row.type == 'CTC_TRADE' || s.row.type == 'CTC_FEE'">
@@ -350,24 +358,24 @@
     <div>
       <!--分页-->
       <el-pagination
-        background
-        v-show="activeName === 'current-entrust' && chargeRecordList.length"
-        layout="prev, pager, next"
-        :current-page="recordPageNumber"
-        :page-count="recordTotalPageNumber"
-        @current-change="changeCurrentPage('current-entrust',$event)"
+              background
+              v-show="activeName === 'current-entrust' && chargeRecordList.length"
+              layout="prev, pager, next"
+              :current-page="recordPageNumber"
+              :page-count="recordTotalPageNumber"
+              @current-change="changeCurrentPage('current-entrust',$event)"
       >
       </el-pagination>
     </div>
     <div>
       <!--分页-->
       <el-pagination
-        background
-        v-show="activeName === 'other-records' && otherRecordsList.length"
-        layout="prev, pager, next"
-        :current-page="otherRecordPageNumbers"
-        :page-count="totalPagesOtherRecords"
-        @current-change="changeCurrentPage('other-records',$event)"
+              background
+              v-show="activeName === 'other-records' && otherRecordsList.length"
+              layout="prev, pager, next"
+              :current-page="otherRecordPageNumbers"
+              :page-count="totalPagesOtherRecords"
+              @current-change="changeCurrentPage('other-records',$event)"
       >
       </el-pagination>
     </div>
@@ -510,11 +518,7 @@ export default {
       }
       if (this.activeName === 'other-records') {
         this.startTime = [
-          new Date(
-            this.year,
-            this.month,
-            this.date, 0, 0, 0
-          ),
+          new Date(this.year, this.month, this.date, 0, 0, 0),
           new Date()
         ]
       }
@@ -703,7 +707,7 @@ export default {
         line-height: 57px;
 
         .margin-left150 {
-          margin-left: 150px;
+          margin-left: 90px;
         }
 
         .search-button {
@@ -773,6 +777,10 @@ export default {
           .el-range-separator {
             color: #fff;
           }
+
+          .el-range-input {
+            font-size: 12px;
+          }
         }
 
         .el-table {
@@ -829,14 +837,14 @@ export default {
             border-bottom: 2px solid #0079fe;
             border-left: 0 !important;
             color: #0079fe;
-            background: transparent;
+            background: transparent !important;
           }
 
           &:hover {
             border-left: 0 !important;
             text-align: center;
             color: #0079fe;
-            background: transparent;
+            background: transparent !important;
           }
         }
       }
@@ -921,18 +929,19 @@ export default {
         .el-tabs__item {
           padding: 0;
           margin-right: 30px;
-          border-left: 0;
+          border-left: 0 !important;
           text-align: center;
+          background: transparent !important;
 
-          &.is-active {
+          .el-tabs__item &.is-active {
             border-bottom: 2px solid #0079fe;
-            border-left: 0;
+            border-left: 0 !important;
             color: #0079fe;
             background: transparent !important;
           }
 
           &:hover {
-            border-left: 0;
+            border-left: 0 !important;
             text-align: center;
             color: #0079fe;
             background: transparent !important;
@@ -956,7 +965,7 @@ export default {
 
       .el-date-editor {
         &.el-input__inner {
-          width: 225px;
+          width: 323px;
         }
 
         &.el-input {
@@ -975,6 +984,10 @@ export default {
 
         .el-range-separator {
           line-height: 26px;
+        }
+
+        .el-range-input {
+          font-size: 12px;
         }
       }
 

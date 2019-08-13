@@ -107,9 +107,9 @@ export default {
             // created () {
             // },
             mounted () {
-              $('.slider-pagination-bullet').on('click', (e) => {
+              document.querySelector('.slider-pagination-bullet').onclick = (e) => {
                 setTimeout(() => {
-                  let sliderPaginationList = $('.slider-pagination-bullet')
+                  let sliderPaginationList = document.querySelector('.slider-pagination-bullet')
                   for (let i = 0; i < sliderPaginationList.length; i++) {
                     let sliderPaginationItem = sliderPaginationList[i]
                     let arr = [...sliderPaginationItem.classList]
@@ -120,7 +120,7 @@ export default {
                     }
                   }
                 }, 100)
-              })
+              }
             },
             methods: {
               ...mapMutations([

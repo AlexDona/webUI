@@ -44,7 +44,7 @@
               class="li-item"
               v-if="!$isLogin_S_X"
             >
-              <router-link to="/register">
+              <router-link :to="`/${$routes_X.login}/${$routes_X.register}/default`">
                 <!--<span>注册</span>-->
                 <span>{{$t('M.comm_register_time')}}</span>
               </router-link>
@@ -178,18 +178,16 @@ export default{
   },
   async created () {
     // f5刷新页面刷新用户信息列表
-    // console.log(this.$route)
     if (this.$isLogin_S_X && this.$route.path !== '/PersonalCenter') {
       this.refreshUserInfo()
     }
 
     // await this.getNavigations()
-    // console.log(this.navigation)
     // 获取 语言列表
     if (!await this.GET_LANGUAGE_LIST_ACTION(this)) return false
     await this.SET_PARTNER_INFO_ACTION(this.$language_S_X)
-    await this.GET_COUNTRY_LIST_ACTION()
-    await this.GET_ALL_NOTICE_ACTION(this.$language_S_X)
+
+    // await this.GET_ALL_NOTICE_ACTION(this.$language_S_X)
     this.isNoticeReady = true
     // 查询某商户可用法币币种列表
   },
@@ -201,7 +199,6 @@ export default{
   },
   methods: {
     ...mapActions([
-      'GET_COUNTRY_LIST_ACTION',
       'GET_TRANSITION_RATE_ACTION',
       'GET_LANGUAGE_LIST_ACTION',
       'SET_PARTNER_INFO_ACTION',
@@ -248,7 +245,6 @@ export default{
       let innerIndex
       // const OTCs = ['/OTCADManage', '/OTCMerchantsOrders', '/OTCReportFormStatistics', '/OTCPublishAD']
       _.forEach(this.$navigators_S_X, (route, index) => {
-        // console.log(route)
         if (route.link === '/OTCCenter') {
           outerIndex = index
           _.forEach(route.children, (childRoute, childIndex) => {
@@ -298,7 +294,6 @@ export default{
         } else {
           newTitle = `${this.title}`
         }
-        // console.log(newTitle)
         document.querySelector('title').innerText = newTitle
       } else {
         setTimeout(this.setNewTitle, 1000)
@@ -309,17 +304,13 @@ export default{
       // 外部 https://www.fubt.co www.fubt.co
       // 内部 /TradeCenter
       const isInnerLink = !link.includes('.')
-      // console.log(isInnerLink)
       return isInnerLink
     },
     // 导航跳转
     navToJump (navigation) {
-      // console.log(this.$isLogin_S_X)
-      // console.log(navigation)
       const { link, newTab } = navigation
       if (!link) return
       // this.CHANGE_ROUTER_PATH(link)
-      // console.log(link)
       const needMerchantType = ['/OTCADManage', '/OTCMerchantsOrders', '/OTCReportFormStatistics']
       const isNeedLogin = ['/OTCADManage', '/OTCMerchantsOrders', '/OTCReportFormStatistics', '/OTCPublishAD']
       const OTCPublishAD = '/OTCPublishAD'
@@ -328,7 +319,6 @@ export default{
       const type = _.get(this.userInfo, 'type')
       if (this.checkIsInnerLink(link)) {
         if (!this.$isLogin_S_X && link == OTCBusinessApply) this.$SET_ACTIVE_LINK_NAME_M_X(-1)
-        // console.log(link, isNeedLogin.some(linkItem => link.startsWith(linkItem)))
         if (!this.$isLogin_S_X && isNeedLogin.some(linkItem => link.startsWith(linkItem))) {
           this.$goToPage('/login')
           this.$SET_ACTIVE_LINK_NAME_M_X(-1)
@@ -359,10 +349,8 @@ export default{
         }
         this.$goToPage(`${link}`)
       } else {
-        // console.log('outerLink', newTab, link)
         let formatLink = link
         formatLink = !link.startsWith('http') ? `https://${formatLink}` : link
-        // console.log(formatLink)
         if (newTab) {
           window.open(`${formatLink}`, '_blank')
         } else {
@@ -390,11 +378,9 @@ export default{
   },
   watch: {
     $activeLinkIndex_S_X (New, Old) {
-      // console.log(New, Old)
       this.oldActiveLinkIndex = Old
     },
     isLockedPayPassword (newVal) {
-      // console.log(newVal)
       if (newVal) {
         this.isPayPasswordLocked = true
       }

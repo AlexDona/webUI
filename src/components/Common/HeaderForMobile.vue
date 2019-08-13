@@ -76,7 +76,7 @@ export default {
   async created () {
     // console.log(this.isMobile)
     // 获取 语言列表
-    if (!await this.GET_LANGUAGE_LIST_ACTION(this)) return false
+    if (!await this.GET_LANGUAGE_LIST_ACTION()) return false
     await this.SET_PARTNER_INFO_ACTION(this.language)
     if (this.routeLanguage) {
       _.forEach(this.languages, item => {

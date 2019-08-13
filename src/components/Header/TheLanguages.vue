@@ -22,7 +22,6 @@
             v-for="(item,index) in languages"
             :key="index"
           ) {{item.name}}
-
 </template>
 <script>
 import {

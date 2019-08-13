@@ -22,7 +22,7 @@
         <img src="../assets/develop/register-big-url.png">
       </div>
       <router-link
-        :to="`/register?showId=${$route.query.showId}`"
+        :to="`/${$routes_X.login}/${$routes_X.register}/${$route.query.showId}`"
         class="register-btn"
       >
         <!-- 立即注册领取 -->

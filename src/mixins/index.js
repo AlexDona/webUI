@@ -7,7 +7,7 @@ import {
   formatSeconds,
   setStore,
   getStore,
-  getStoreWithJson, timeFilter
+  getStoreWithJson, timeFilter, removeStore, formatNumber
 } from '../utils'
 import {
   jumpToOtherPageForFooter,
@@ -21,11 +21,16 @@ import {
   mapMutations
 } from 'vuex'
 
-import {routesVariable} from '../router/routesVariable'
+import {
+  routesVariable,
+  globalLabel
+} from '../router/routesVariable'
 
 let mixin = {
   data () {
-    return {}
+    return {
+      PASS_REG_X: /^(?=.*[\d])(?=.*[a-zA-Z])(?=.*[`~!@#$%^&*\(\)_\-\+=<>?:"\{\}\|,.\/;'\\[\]])?.{8,20}$/
+    }
   },
   methods: {
     ...mapMutations({
@@ -48,6 +53,9 @@ let mixin = {
     },
     $getStore (name, type = 'string') {
       return type == 'json' ? getStoreWithJson(name) : getStore(name)
+    },
+    $removeStore (name) {
+      removeStore(name)
     },
     $keep2Num (num) {
       return keep2Num(num)
@@ -97,13 +105,39 @@ let mixin = {
         type: 'error',
         duration
       })
+    },
+    $changeCSS_X (selector, changeStyle, target) {
+      document.querySelector(selector).style[changeStyle] = `${target}px`
+    },
+    $toggleEventListener_X (type, mouseMoveFn, mouseUpFn) {
+      switch (type) {
+        case 'bind':
+          document.querySelector('body').addEventListener('mousemove', mouseMoveFn)
+          document.querySelector('body').addEventListener('mouseup', mouseUpFn)
+          break
+        case 'unbind':
+          document.querySelector('body').removeEventListener('mousemove', mouseMoveFn)
+          document.querySelector('body').removeEventListener('mouseup', mouseUpFn)
+          break
+      }
+    },
+    /**
+     * 小数：只能输入小数点前一个0，整数限制不可输入多个0
+     * 输入限制-首位可为0(只针对小数)，如果首位为0后面为整数，干掉首位的0，显示整数位，
+     * @param val
+     * @param targetPointLength
+     * @returns {string}
+     */
+    $formatNumber_X (val, pointLength) {
+      formatNumber(val, pointLength)
     }
   },
   computed: {
     ...mapGetters({
       '$isNeedLimitExchange_G_X': 'isNeedLimitExchange_G',
       '$isNeedYST_G_X': 'isNeedYST',
-      '$isChineseLanguage_G_X': 'isChineseLanguage'
+      '$isChineseLanguage_G_X': 'isChineseLanguage',
+      '$isDayTheme_G_X': 'isDayTheme'
     }),
     ...mapState({
       $loading_S_X: state => state.common.loading_S,
@@ -136,6 +170,10 @@ let mixin = {
     },
     $routes_X () {
       return routesVariable
+    },
+    // 全局 公用文本
+    $globalLabel_X () {
+      return globalLabel
     }
   },
   filters: {

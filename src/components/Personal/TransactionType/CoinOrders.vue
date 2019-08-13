@@ -185,9 +185,10 @@
                     <span>{{ parseFloat($scientificToNumber(s.row.count)) }}</span>
                   </template>
                 </el-table-column>
-                <!--委托总额-->
+                <!--委单总额-->
                 <el-table-column
                   :label="$t('M.user_coin_order5')"
+                  width="140"
                 >
                   <template slot-scope="s">
                     <!--<span>{{ s.row.amount-0}}</span>-->
@@ -917,7 +918,7 @@ export default {
           right: 1px;
           height: 28px;
           border-radius: 0 2px 2px 0;
-          line-height: 30px;
+          line-height: 25px;
           background: #2d3651;
           -webkit-transition: all .3s;
           transition: all .3s;
@@ -1044,7 +1045,7 @@ export default {
           right: 1px;
           height: 28px;
           border-radius: 0 2px 2px 0;
-          line-height: 30px;
+          line-height: 25px;
           background: #fff;
           -webkit-transition: all .3s;
           transition: all .3s;

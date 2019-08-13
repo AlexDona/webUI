@@ -52,8 +52,8 @@
 }
 
 .night .el-pager li {
-   background-color: rgba(43, 54, 64, 1) !important;
- }
+  background-color: rgba(43, 54, 64, 1) !important;
+}
 
 .night .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #338ff5 !important;
@@ -119,6 +119,7 @@
 /* 去除黑白主题下拉框右侧的滚动条 ren20190625增加 */
 .day .el-scrollbar__wrap,
 .night .el-scrollbar__wrap {
+  min-width: 94px;
   overflow: hidden;
 }
 
@@ -324,6 +325,14 @@
 /* 全局字体颜色 */
 .hint-color {
   color: #338ff5;
+}
+
+/* el-input 输入成功边框颜色 */
+.el-form-item.is-success .el-input__inner,
+.el-form-item.is-success .el-input__inner:focus,
+.el-form-item.is-success .el-textarea__inner,
+.el-form-item.is-success .el-textarea__inner:focus {
+  border-color: transparent;
 }
 
 /* 解决tabs边框出现蓝色边框问题 20190717ren增加 */
