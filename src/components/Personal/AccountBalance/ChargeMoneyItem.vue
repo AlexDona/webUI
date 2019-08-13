@@ -39,7 +39,7 @@
         p * {{$t('M.user_assets_recharge_hint6').format([minRechargeAmount])}}
     .recharge-content-right.flex1
       p.recharge-content-code.margin-top20.float-left
-        QRCode.ercode(:value="chargeMoneyAddress")
+        QrCode.ercode(:value="chargeMoneyAddress")
       //  充币记录
       p.code-list.text-align-c.cursor-pointer.font-size12(@click.prevent="jumpToOtherTab('billing-details', coinId, 1)") {{ $t('M.comm_charge_money') }}{{ $t('M.comm_record') }}
 
