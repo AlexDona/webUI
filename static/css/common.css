@@ -119,6 +119,7 @@
 /* 去除黑白主题下拉框右侧的滚动条 ren20190625增加 */
 .day .el-scrollbar__wrap,
 .night .el-scrollbar__wrap {
+  min-width: 94px;
   overflow: hidden;
 }
 
