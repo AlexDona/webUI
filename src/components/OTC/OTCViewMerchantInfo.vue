@@ -97,7 +97,7 @@
           .fourth-bar.bars
             .bar-top {{$t('M.focus_black_merchant_info4')}}
             .bar-bottom {{merchantUserInfo.successRate}}%
-          <!--30日冻结次数-->
+          <!--冻结次数-->
           .fifth-bar.bars
             .bar-top {{$t('M.focus_black_merchant_info5')}}
             .bar-bottom {{merchantUserInfo.freezeTimes}}
