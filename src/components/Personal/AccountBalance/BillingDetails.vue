@@ -707,7 +707,7 @@ export default {
         line-height: 57px;
 
         .margin-left150 {
-          margin-left: 150px;
+          margin-left: 90px;
         }
 
         .search-button {
@@ -965,7 +965,7 @@ export default {
 
       .el-date-editor {
         &.el-input__inner {
-          width: 310px;
+          width: 323px;
         }
 
         &.el-input {
