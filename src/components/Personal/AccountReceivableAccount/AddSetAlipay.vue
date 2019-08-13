@@ -2,9 +2,7 @@
   <div
     class="add-account personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{
-      height: windowHeight+'px'
-    }"
+    :style="{'min-height':(windowHeight-350)+'px'}"
   >
     <div
       class="add-account-main margin25"
@@ -102,7 +100,7 @@
                   >
                     <IconFontCommon
                       class="font-size60"
-                      iconName="icon-jia1"
+                      iconName="icon-hao"
                     />
                     <img
                       v-show="alipayImgUrl"
@@ -428,7 +426,7 @@ export default {
     overflow: hidden;
 
     > .add-account-main {
-      width: 1100px;
+      width: 1300px;
       height: 700px;
       margin: 60px auto 100px;
 
@@ -461,7 +459,7 @@ export default {
 
         > .account-content-from {
           width: 500px;
-          margin-left: 55px;
+          margin: 58px auto;
 
           .account-input {
             width: 220px;
@@ -595,8 +593,8 @@ export default {
             }
 
             .account-button {
-              color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              color: rgba(255, 255, 255, 1);
+              background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
             }
           }
         }
@@ -627,7 +625,6 @@ export default {
 
     &.day {
       color: $dayMainTitleColor;
-      background-color: $mainDayBgColor;
 
       .add-account-main {
         border: 1px solid rgba(246, 246, 246, 1);
@@ -673,11 +670,18 @@ export default {
                 right: 35px;
                 color: #555;
               }
+
+              .img {
+                .picture {
+                  border: 1px dashed rgba(72, 87, 118, .1);
+                  background: #eaf4fe;
+                }
+              }
             }
 
             .account-button {
-              color: #ccc;
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              color: #fff;
+              background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
             }
           }
         }

@@ -168,12 +168,30 @@
                 {{$t('M.otc_name')}}：
               </span>
               <!-- 买单显示：卖家姓名 -->
-              <span  v-if="item.orderType === 'BUY'">
-                {{item.sellName}}
+              <span
+                class="cursor-pointer"
+                v-if="item.orderType === 'BUY'"
+                @click="jumpMerchantInfoPage(item.sellId)"
+              >
+                <span v-if="item.sellNickName">
+                  {{item.sellNickName}}
+                </span>
+                <span v-else>
+                  {{item.sellName}}
+                </span>
               </span>
               <!-- 卖单显示：买家姓名 -->
-              <span  v-if="item.orderType === 'SELL'">
-                {{item.buyName}}
+              <span
+                class="cursor-pointer"
+                v-if="item.orderType === 'SELL'"
+                @click="jumpMerchantInfoPage(item.buyId)"
+              >
+                <span v-if="item.buyNickName">
+                  {{item.buyNickName}}
+                </span>
+                <span v-else>
+                  {{item.buyName}}
+                </span>
               </span>
             </p>
             <!--手机号-->
@@ -230,6 +248,13 @@
               </span>
             </p>
           </div>
+          <!-- otc 及时通讯-->
+          <OTCIM
+            class="otc-im"
+            :orderInfo="item"
+            :top="OTC_IM_TOP"
+            activeName="COMPLETED"
+          />
         </div>
       </div>
       <!--暂无数据-->
@@ -256,18 +281,24 @@
 <script>
 import {timeFilter} from '../../../utils'
 import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
+import OTCIM from '../../OTC/OTCIM'
 import {
   mapMutations,
   mapState
 } from 'vuex'
 export default {
-  components: {},
-  // props,
+  components: {
+    OTCIM
+  },
+  props: {
+    OTC_IM_TOP: {
+      type: String
+    }
+  },
   data () {
     return {}
   },
-  created () {
-  },
+  created () {},
   mounted () {},
   activated () {},
   update () {},
@@ -284,6 +315,11 @@ export default {
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    jumpMerchantInfoPage (userId) {
+      if (userId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId})
+      }
     }
   },
   filter: {},
@@ -308,7 +344,7 @@ export default {
 
   .fiat-canceled-order-box {
     > .canceled-order-content {
-      min-height: 530px;
+      min-height: 574px;
       padding: 0 10px 10px;
 
       > .canceled-table-head {

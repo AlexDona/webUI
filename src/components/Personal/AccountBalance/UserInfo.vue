@@ -6,13 +6,11 @@
     <div class="user-info-main">
       <div class="user-info-content-box display-flex">
         <div class="user float-left flex1">
-          <p class="user-background text-align-c line-height56 float-left">
             <IconFontCommon
-              class="font-size40 icon-user"
+              class="user-background text-align-c line-height56 float-left font-size40 icon-user"
               iconName="icon-yonghu1"
             />
-          </p>
-          <div class="text-align-id margin-top16 float-right">
+          <div class="text-align-id margin-top16 float-left">
             <p class="font-size12">
               <span class="text-color">
                 <!--您好，-->
@@ -122,15 +120,16 @@
             </span>
           </p>
           <div
-            class="info-centre margin-top16"
+            class="
+             display-flex margin-top16"
             v-if="$isVIPEnable_S_X"
           >
-            <span class="info-centre-left float-left font-size12">
+            <span class="info-centre-left text-indent float-left font-size12">
               <!--会员等级 - -->
-              {{ $t('M.user_assets_grade_membership') }} -
+              {{ $t('M.user_assets_grade_membership') }} -&nbsp;
             </span>
             <p
-              class="info-picture margin-left10 float-left cursor-pointer"
+              class="info-picture float-left cursor-pointer"
               @click="stateOpenVip"
             >
               <!--未申请VIP默认背景-->
@@ -191,7 +190,7 @@
                 v-if="this.totalSumCNY > 0"
               >
                 <p v-if="activeConvertCurrencyObj.shortName !== 'CNY'">
-                  {{ $scientificToNumber($keep2Num(this.totalSumCNY * CNYRate)) }} <span class="font-size12">{{ activeConvertCurrencyObj.shortName }}</span>
+                  {{ $scientificToNumber($keep2Num(this.totalSumCNY * Rates)) }} <span class="font-size12">{{ activeConvertCurrencyObj.shortName }}</span>
                 </p>
                 <p v-else>
                   {{ $scientificToNumber($keep2Num(this.totalSumCNY)) }} <span class="font-size12">CNY</span>
@@ -199,16 +198,16 @@
               </div>
               <div v-else>
                 <p
-                  class="info-color font-size12"
+                  class="info-color font-size16"
                   v-if="activeConvertCurrencyObj.shortName !== 'CNY'"
                 >
-                  0.00 <span class="font-size12">{{ activeConvertCurrencyObj.shortName }}</span>
+                  0.00 <span class="font-size14">{{ activeConvertCurrencyObj.shortName }}</span>
                 </p>
                 <p
-                  class="info-color font-size12"
+                  class="info-color font-size16"
                   v-else
                 >
-                  0.00  <span class="font-size12">CNY</span>
+                  0.00  <span class="font-size14">CNY</span>
                 </p>
               </div>
             </div>
@@ -238,6 +237,7 @@ export default {
     IconFontCommon // 字体图标
   },
   // props,
+  props: ['Rates'],
   data () {
     return {
       vipShowPictureSrc: require('../../../assets/user/vip.png'), // 开通VIP之后点亮图片
@@ -304,14 +304,6 @@ export default {
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
     })
-  },
-  watch: {
-    async activeConvertCurrencyObj () {
-      if (this.currencyRateList.BTC) {
-        // 汇率转换
-        await this.currencyTransform()
-      }
-    }
   }
 }
 </script>
@@ -337,7 +329,7 @@ export default {
           > .user-background {
             width: 59px;
             height: 60px;
-            margin: 15px 20px 0 36px;
+            margin: 15px 21px 0 36px;
             border-radius: 50%;
           }
 
@@ -360,12 +352,16 @@ export default {
             }
 
             > .info-right {
-              margin-right: 12px;
+              margin-right: 29px;
             }
           }
 
-          > .info-centre {
-            padding: 0 70px;
+          > .margin-top16 {
+              justify-content: center;
+
+              .text-indent {
+                  text-indent: -60px;
+              }
 
             > .info-picture {
               position: relative;
@@ -374,6 +370,8 @@ export default {
                 position: absolute;
                 top: 0;
                 left: 17px;
+                font-weight: normal;
+                color: #fff;
               }
             }
           }
@@ -396,16 +394,16 @@ export default {
 
         > .asset {
           > .asset-text {
-            padding: 0 20px;
+            padding: 0 67px;
             margin-top: 8px;
           }
 
           > .asset-info {
-            padding: 0 20px;
+            padding: 0 67px;
           }
 
           > .asset-color {
-            padding: 0 15px;
+            padding-left: 58px;
           }
         }
       }
@@ -427,8 +425,6 @@ export default {
 
           > .user {
             > .user-background {
-              background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-
               .icon-user {
                 color: #e1f3ff;
               }
@@ -447,6 +443,7 @@ export default {
 
           > .info {
             padding-top: 10px;
+            text-align: center;
 
             > .info-top {
               > .icon-user-info,
@@ -526,8 +523,6 @@ export default {
 
           > .user {
             > .user-background {
-              background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-
               .icon-user {
                 color: #e1f3ff;
               }

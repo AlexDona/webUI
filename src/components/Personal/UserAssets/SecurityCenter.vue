@@ -1025,7 +1025,8 @@ export default {
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       refSecurityCenterStatus: state => state.personal.refSecurityCenterStatus,
-      userCenterActiveName: state => state.personal.userCenterActiveName
+      userCenterActiveName: state => state.personal.userCenterActiveName,
+      activeLanguage: state => state.common.activeLanguage
     })
   },
   watch: {
@@ -1033,6 +1034,9 @@ export default {
       if (newVal === 'security-center') {
         this.getSecurityCenter()
       }
+    },
+    activeLanguage (newVal) {
+      this.getSecurityCenter('security-record')
     }
   }
 }
@@ -1077,7 +1081,7 @@ export default {
           border: 0;
           line-height: 0;
           color: #fff;
-          background: linear-gradient(90deg, #2b396e, #2a5082);
+          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
 
         .input {
@@ -1120,8 +1124,9 @@ export default {
     }
 
     > .security-record {
-      min-height: 510px;
+      min-height: 574px;
       margin-top: 10px;
+      margin-bottom: 50px;
 
       .tab-list {
         height: 450px;
@@ -1222,7 +1227,7 @@ export default {
       .el-tabs__item {
         height: 45px;
         padding: 0 10px !important;
-        border-left: 4px solid transparent !important;
+        border-left: 0 solid transparent !important;
         text-align: center;
         background-color: transparent !important;
 
@@ -1311,7 +1316,7 @@ export default {
         color: #a9bed4;
 
         > .security-level {
-          color: #a9bed4;
+          color: #fff;
 
           > .level {
             margin-right: 5px;
@@ -1372,7 +1377,7 @@ export default {
             .security-status {
               > .security-verify {
                 color: #fff;
-                background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+                background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
               }
 
               > .security-binding {
@@ -1390,6 +1395,7 @@ export default {
         /* 表格样式修改 */
         .el-table {
           color: #fff;
+          background-color: $mainContentNightBgColor;
 
           th,
           tr {
@@ -1431,7 +1437,7 @@ export default {
         .el-tabs__item.is-active {
           border-bottom: 2px solid #338ff5;
           border-left: 0;
-          color: #ccc;
+          color: #338ff5;
           background-color: transparent;
         }
 
@@ -1556,7 +1562,7 @@ export default {
             .security-status {
               > .security-verify {
                 color: #fff;
-                background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+                background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
               }
 
               > .security-binding {
@@ -1572,6 +1578,7 @@ export default {
         /* 个人中心（白色主题） */
         .el-table {
           color: #fff;
+          background-color: $mainColorOfWhite;
 
           th,
           tr {

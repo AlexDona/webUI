@@ -19,7 +19,8 @@ export default [
   {
     ...createBaseRoute({
       name: `${routesVariable.crowdFundingRecord}`,
-      path: `/${routesVariable.crowdFundingRecord}`
+      path: `/${routesVariable.crowdFundingRecord}`,
+      auth: true
     }),
     component: () => import('@/pages/Activity/TheCrowdFundingRecord.vue')
   }

@@ -1,6 +1,6 @@
 import {socketUrl} from '../../utils/env'
 const pako = require('pako')
-class socket {
+class Socket {
   constructor (url = socketUrl, options) {
     this.heartBeatTimer = null
     this.options = options
@@ -110,7 +110,7 @@ class socket {
     this.messageMap[name] = handler
   }
   doClose () {
-    console.log('close')
+    console.log('close', new Date().getTime())
     if (this.socket) {
       this.socket.close()
     }
@@ -127,4 +127,4 @@ class socket {
   }
 }
 
-export default socket
+export default Socket

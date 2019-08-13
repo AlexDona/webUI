@@ -1,6 +1,8 @@
 import personalCenterRoutes from './personal-center-routes'
 import activity from './activity'
 import {routesVariable} from './routesVariable'
+import user from './user'
+import mobile from './mobile'
 // console.log(routesVariable)
 const HomeCenter = () => import('@/pages/HomeCenter')
 const PersonalCenter = () => import('@/pages/PersonalCenter')
@@ -36,23 +38,19 @@ const OTCADManage = () => import('@/pages/OTC/OTCADManage')
 const OTCMerchantsOrders = () => import('@/pages/OTC/OTCMerchantsOrders')
 const OTCReportFormStatistics = () => import('@/pages/OTC/OTCReportFormStatistics')
 const OTCBusinessApply = () => import('@/pages/OTC/OTCBusinessApply')
+const OTCViewMerchantInfo = () => import('@com/OTC/OTCViewMerchantInfo')
 // 投资理财
 const FinanceCenter = () => import('@com/InvestmentFinance/FinanceCenter')
 const FinanceInvestmentRecord = () => import('@com/InvestmentFinance/FinanceInvestmentRecord')
 // 登录
-const Login = () => import('@/pages/LoginUser')
-// 注册
-const Register = () => import('@/pages/RegisterUser')
+// const LoginAndRegister = () => import('@/pages/LoginUser')
 const InvitationRegister = () => import('@/pages/InvitationRegister')
-const ForgetPassword = () => import('@com/User/ForgetPassword')
 // TradeCenter
 const TradeCenter = () => import('@/pages/TradeCenter')
 const RankingListOfInvitation = () => import('@com/ActivityCenter/RankingListOfInvitation')
 
 // 上币申请
 const currencyApplication = () => import('@com/ActivityCenter/currencyApplication')
-// 新闻公告
-const NewsAndNoticeCenter = () => import('@com/NoticeAndNews/NewAndNoticeCenter')
 // 新闻详情
 const NewsAndNoticeItem = () => import('@com/NoticeAndNews/NewsAndNoticeItem')
 const HelpCenter = () => import('@com/FooterInfo/HelpCenter')
@@ -262,6 +260,16 @@ const routes = [
     }
   },
   {
+    // OTC商家信息
+    path: '/OTCViewMerchantInfo',
+    // name: 'OTCViewMerchantInfo',
+    component: OTCViewMerchantInfo,
+    meta: {
+      auth: true,
+      isMerchant: true
+    }
+  },
+  {
     // 投资理财中心
     path: '/FinanceCenter',
     name: 'FinanceCenter',
@@ -278,26 +286,18 @@ const routes = [
     name: 'TradeCenter',
     component: TradeCenter
   },
-  {
-    path: `/${routesVariable.login}`,
-    name: `${routesVariable.login}`,
-    component: Login
-  },
-  // 注册
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register
-  },
+  // // 登录
+  // {
+  //   path: `/${routesVariable.login}`,
+  //   name: `${routesVariable.login}`,
+  //   // component: LoginAndRegister
+  //   component: () => import('../components/User/LoginAndRegister/TheLogin')
+  // },
+  ...mobile,
+  ...user,
   {
     path: '/invitationRegister',
     component: InvitationRegister
-  },
-  // 忘记密码
-  {
-    path: '/ForgetPassword',
-    name: 'forgetPassword',
-    component: ForgetPassword
   },
   {
     // 活动中心
@@ -326,7 +326,7 @@ const routes = [
   {
     // 新闻中心
     path: `/${routesVariable.news}`,
-    component: NewsAndNoticeCenter
+    component: () => import('@com/NoticeAndNews/TheNewsList.vue')
   },
   {
     path: `/${routesVariable.newsItem}/:detailId`,

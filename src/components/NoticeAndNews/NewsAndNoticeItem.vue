@@ -9,23 +9,14 @@
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box">
-      <!--搜索区-->
-      <div class="search-box">
-        <!--请输入关键字-->
-        <input
-          type="text"
-          class="search-input"
-          v-model="searchKeyWord"
-          :placeholder="$t('M.about_footer_info_keyWords')"
-        />
-      </div>
       <!--列表区-->
       <div class="content-box">
         <div class="inner-box">
-          <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: `/${$routes_X.news}` }">{{$t('M.comm_news_and_notice')}}</el-breadcrumb-item>
-            <el-breadcrumb-item>{{newDetail.newsTypeName}}</el-breadcrumb-item>
-          </el-breadcrumb>
+          <div class="nav-list">
+            <div class="nav-content">
+              <a class="nav-list1" @click="goToNotice">{{newDetail.newsTypeName}}</a>&nbsp;>&nbsp; <span class="nav-list2">{{$t('M.common_details')}}</span>
+            </div>
+          </div>
           <div
             class="news-detail"
           >
@@ -33,43 +24,16 @@
               class="left"
               v-if="newDetail"
             >
-              <h2>{{newDetail.newsTypeName}}</h2>
-              <div class="detail-content">
+              <!--<h2>{{newDetail.newsTypeName}}</h2>-->
+              <div class="news-detail-title">
                 <h3 class="title">{{newDetail.title}}</h3>
                 <p class="time">{{newDetail.createTime}}</p>
+              </div>
+              <div class="detail-content">
                 <div
                   class="content"
                   v-html="newDetail.content"
                 ></div>
-              </div>
-            </div>
-            <div class="right">
-              <div
-                class="news-type-list"
-                v-for="(outerItem,outIndex) in newsTypeList"
-                :key="outIndex"
-              >
-                <h2 class="news-type-title">{{outerItem.name}}
-                  <span
-                    class="view-more"
-                    @click="backToParent(outerItem)"
-                  >
-                    <!--查看更多-->
-                    {{$t('M.comm_view_more')}} 》
-                  </span></h2>
-                <ul
-                  class="news-type-content"
-                >
-                  <li
-                    class="news-type-item cursor-pointer"
-                    v-for="(item,index) in detailAllNewsList[outIndex]"
-                    :key="index"
-                    @click="getDetailInfo(item.id)"
-                  >
-                    <span class="title">{{item.title}}</span>
-                    <span class="time">{{item.createTime.split(' ')[0]}}</span>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
@@ -78,7 +42,6 @@
     </div>
   </div>
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 import {mapState, mapMutations} from 'vuex'
 
@@ -92,7 +55,6 @@ import {
   getNestedData
 } from '../../utils/commonFunc'
 
-// import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
   },
@@ -110,7 +72,6 @@ export default {
     }
   },
   async created () {
-    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
     await this.getDetailInfo(this.detailId)
   },
   // mounted () {},
@@ -127,6 +88,9 @@ export default {
         activeName: item.id
       })
       this.$goToPage(`/${this.$routes_X.news}`)
+    },
+    goToNotice () {
+      this.$goToPage(`/${this.$routes_X.news}/`)
     },
     async changeNewDetailByLanguage () {
       let params = {
@@ -154,6 +118,7 @@ export default {
       if (this.templateId == id) return
       const data = await getNewsDetail(id)
       if (!data) return false
+      this.$setStore('newsTypeId', _.get(data, 'data.newsTypeId') || '')
       this.newDetail = getNestedData(data, 'data')
       this.templateId = getNestedData(data, 'data.templateId')
       let {href} = window.location
@@ -196,7 +161,6 @@ export default {
   watch: {
     async languageAndTemplateId () {
       await this.getAllNewsTypeList()
-      await this.getAllTypeListNewsList()
       await this.changeNewDetailByLanguage()
     },
     newsItemId (newVal) {
@@ -213,10 +177,10 @@ export default {
 .news-and-notice-box {
   > .inner-box {
     > .search-box {
-      height: 250px;
+      height: 60px;
       line-height: 250px;
       text-align: center;
-      background: url(../../assets/develop/helpbanner.png) no-repeat center center;
+      // background: url(../../assets/develop/helpbanner.png) no-repeat center center;
       -webkit-background-size: 100% 100%;
       background-size: 100% 100%;
 
@@ -235,10 +199,11 @@ export default {
 
     > .content-box {
       min-height: 1215px;
+      margin-top: 120px;
 
       > .inner-box {
-        width: 1100px;
-        min-height: 1124px;
+        width: 1300px;
+        min-height: 900px;
         margin: 50px auto;
         overflow: hidden;
 
@@ -368,24 +333,39 @@ export default {
           display: flex;
           width: 100%;
           height: 100%;
-          padding: 50px;
+          padding: 0 40px 40px;
           overflow-y: auto;
 
           > .left {
             /* flex:2; */
-            width: 70%;
+            width: 100%;
 
             /* border:1px solid #fff; */
-            > h2 {
+
+           /* > h2 {
               padding: 0 10px;
               border-left: 2px solid #338ff5;
               font-weight: 700;
               font-size: 18px;
               color: #338ff5;
+            } */
+
+            > .news-detail-title {
+              padding: 0 40px 31px;
+              border-bottom: 1px solid #292d47;
+
+              > h3 {
+                color: #c1d2f3;
+              }
+
+              > p {
+                padding-top: 41px;
+                color: #8ba0ca;
+              }
             }
 
             > .detail-content {
-              margin: 50px 170px 50px 50px;
+              padding: 31px 38px;
 
               > .title {
                 line-height: 40px;
@@ -477,7 +457,33 @@ export default {
     > .inner-box {
       > .content-box {
         > .inner-box {
-          background-color: #1e2636;
+          background-color: #1c1f32;
+
+          .nav-list {
+            padding: 22px 40px;
+            margin-bottom: 17px;
+            overflow: auto;
+
+            .nav-content {
+              height: 46px;
+              padding: 0 40px;
+              line-height: 46px;
+              background: #292d47;
+
+              .nav-list1 {
+                color: rgba(139, 160, 202, 1);
+                cursor: pointer;
+
+                &:hover {
+                  color: #338ff5
+                }
+              }
+
+              .nav-list2 {
+                color: rgba(139, 160, 202, 1);
+              }
+            }
+          }
 
           .item-content {
             > .content-list {
@@ -512,7 +518,7 @@ export default {
           }
 
           > .news-detail {
-            background-color: #1e2636;
+            background-color: #1c1f32;
 
             > .left {
               > h2 {
@@ -583,6 +589,27 @@ export default {
           background-color: #fff;
           box-shadow: 0 0 6px #cfd5df;
 
+          .nav-list {
+            padding: 22px 40px;
+            margin-bottom: 17px;
+            overflow: auto;
+
+            .nav-content {
+              height: 46px;
+              padding: 0 40px;
+              line-height: 46px;
+              background: #b8cbe1;
+
+              .nav-list1 {
+                cursor: pointer;
+
+                &:hover {
+                  color: #338ff5
+                }
+              }
+            }
+          }
+
           .item-content {
             > .content-list {
               > .content-item {
@@ -627,8 +654,21 @@ export default {
             background-color: #fff;
 
             > .left {
-              > h2 {
-                color: #338ff5;
+            /* > h2 {
+                  color: #338ff5;
+            } */
+
+              > .news-detail-title {
+                border-bottom: 1px solid $borderColorOfDay;
+
+                > h3 {
+                  color: $mainColor;
+                }
+
+                > p {
+                  padding-top: 41px;
+                  color: #7d90ac;
+                }
               }
 
               > .detail-content {

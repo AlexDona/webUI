@@ -575,7 +575,64 @@ export const unzip = b64Data => {
   strData = String.fromCharCode.apply(null, new Uint16Array(data))
   return decodeURIComponent(strData)
 }
-
+/**
+ * 小数：只能输入小数点前一个0，整数限制不可输入多个0
+ * 输入限制-首位可为0(只针对小数)，如果首位为0后面为整数，干掉首位的0，显示整数位，
+ * @param val
+ * @param targetPointLength
+ * @returns {string}
+ */
+export const formatNumber = (val, targetPointLength = 4) => {
+  val = `${val}`
+  let newVal = ''
+  let newVal2 = ''
+  let newVal3 = ''
+  let newVal4 = ''
+  let newVal5 = ''
+  let valArr = []
+  let valArr2 = []
+  let valArr3 = []
+  let valArr4 = []
+  let finalVal = ''
+  let count1 = 0
+  val = val.startsWith('.') ? val.substring(1) : val
+  // pointLength为小数点后几位
+  let count = (val.match(/\./g) || []).length// 小数点个数
+  // 只允许输入一个小数点
+  if (count > 0) {
+    valArr = val.split('')
+    newVal = ''
+    valArr.forEach(item => {
+      if (item === '.') count1++
+      if (count1 < 2) newVal += item
+    })
+    valArr2 = newVal.split('')
+    newVal2 = ''
+    valArr2.forEach(item => {
+      if (item !== '.') {
+        let temp = parseFloat(item)
+        if (!isNaN(temp)) {
+          newVal2 += temp
+        }
+      } else {
+        newVal2 += item
+      }
+    })
+    valArr4 = newVal2.split('.')
+    newVal4 = valArr4[0]
+    newVal5 = newVal2.split('.')[1].substr(0, targetPointLength)
+    finalVal = newVal5 ? `${newVal4}.${newVal5}` : newVal4
+  } else {
+    valArr3 = val.split('')
+    newVal3 = ''
+    valArr3.forEach(item => {
+      let temp = parseFloat(item)
+      if (!isNaN(temp)) newVal3 += temp
+    })
+    finalVal = newVal3
+  }
+  return finalVal
+}
 /**
  * 截取小数点后几位 不是四舍五入
  * @num 要截取的数字
@@ -706,4 +763,36 @@ export const identityCodeValid = (code) => {
     }
   }
   return pass
+}
+
+/**
+ * css 动画函数
+ * @param DOM 添加动画的DOM元素
+ * @param json 要添加动画的json属性
+ * @param interval 时间间隔
+ * @param sp 动画速度
+ * @param timer
+ * @param callback 回调函数
+ * @constructor
+ */
+export const CSSAnimate = (DOM, json, interval, sp, timer, callback) => {
+  clearInterval(timer)
+  timer = setInterval(function () {
+    let flag = true
+    for (let arr in json) {
+      let icur = 0
+      if (DOM) {
+        icur = parseInt(window.getComputedStyle(DOM)[arr])
+        var speed = (json[arr] - icur) * sp
+        speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed)
+        if (icur != json[arr]) flag = false
+        DOM.style[arr] = `${icur}${speed}px`
+      }
+    }
+
+    if (flag) {
+      clearInterval(timer)
+      if (callback) callback()
+    }
+  }, interval)
 }

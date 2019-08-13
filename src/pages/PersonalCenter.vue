@@ -141,6 +141,13 @@
           >
             <PersonalSettings/>
           </el-tab-pane>
+          <!--关注拉黑-->
+          <el-tab-pane
+            :label = "$t('M.focus_black_title5')"
+            name = "focus-blacklist"
+          >
+            <FocusBlackList/>
+          </el-tab-pane>
         </el-tabs>
       </div>
       <!--设置交易密码前弹框提示-->
@@ -257,6 +264,8 @@ import CoinOrders from '../components/Personal/TransactionType/CoinOrders'
 import FiatOrders from '../components/Personal/TransactionType/FiatOrders'
 // 个人设置
 import PersonalSettings from '../components/Personal/Settings/PersonalSettings'
+// 关注拉黑
+import FocusBlackList from '../components/Personal/FocusBlack/FocusBlackList'
 
 import IconFontCommon from '../components/Common/IconFontCommon'
 import {
@@ -282,7 +291,9 @@ export default {
     CoinOrders, // 币币订单
     FiatOrders, // 法币订单
     // 个人设置
-    PersonalSettings
+    PersonalSettings,
+    // 关注拉黑
+    FocusBlackList
   },
   // props,
   data () {
@@ -304,11 +315,11 @@ export default {
     await this.REFRESH_USER_INFO_ACTION()
     this.showNoPosswdAndNoVerifyNotice()
   },
-  mounted () {
+  /* mounted () {
   },
   activated () {},
   update () {},
-  beforeRouteUpdate () {},
+  beforeRouteUpdate () {}, */
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
@@ -317,7 +328,8 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'SET_STEP1_INFO',
       'SET_NEW_WITHDRAW_RECORD_STATUS',
-      'SET_NEW_WITHDRAW_RECORD'
+      'SET_NEW_WITHDRAW_RECORD',
+      'UPDATE_IM_BOX_SHOW_STATUS_M'
     ]),
     // 显示未设置交易密码弹窗
     showNoPasswdNotice () {
@@ -343,6 +355,10 @@ export default {
         this.SET_NEW_WITHDRAW_RECORD_STATUS('RECHARGE')
       }
       this.showNoPosswdAndNoVerifyNotice()
+      this.UPDATE_IM_BOX_SHOW_STATUS_M({
+        orderId: 'default',
+        status: false
+      })
     },
     confirm (val) {
       if (val == 1) {
@@ -371,7 +387,6 @@ export default {
   },
   watch: {
     userCenterActiveName (e) {
-      console.log(e)
       this.$setStore('active-target', e)
       this.currentUserCenterActiveName = e
       if (e !== 'assets') {
@@ -396,7 +411,7 @@ export default {
     overflow: hidden;
 
     > .personal-center-main {
-      width: 1150px;
+      width: 1300px;
       min-height: 715px;
       margin: 60px auto;
 
@@ -442,13 +457,13 @@ export default {
       }
 
       > .personal-center-content {
-        width: 1150px;
+        width: 1300px;
       }
 
       .asset-info {
         position: absolute;
         z-index: 2;
-        left: -179px;
+        left: -193px;
         width: 160px;
         height: 44px;
         padding-left: 21px;
@@ -508,14 +523,14 @@ export default {
 
         .el-tabs__item {
           &.is-left {
-            width: 162px;
+            width: 176px;
             text-align: left;
           }
         }
 
         .el-tabs__header {
           &.is-left {
-            margin-right: 16px;
+            margin-right: 19px;
           }
         }
       }
@@ -547,7 +562,7 @@ export default {
       .el-tabs__content {
         position: relative;
         float: right;
-        width: 970px;
+        width: 1105px;
         overflow: unset;
       }
 
@@ -572,8 +587,8 @@ export default {
       }
 
       .button-color {
-        color: rgba(255, 255, 255, .7);
-        background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        color: rgba(255, 255, 255, 1);
+        background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
       }
 
       .btn {
@@ -641,14 +656,20 @@ export default {
       }
 
       .button-color {
-        color: rgba(255, 255, 255, .7);
-        background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        color: rgba(255, 255, 255, 1);
+          background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
       }
 
       .btn {
         border: 1px solid #338ff5;
         color: #333;
         background-color: transparent;
+      }
+
+      .dialog-warning {
+        .dialog-warning-box {
+          background: #338ff5;
+        }
       }
 
       /deep/ {

@@ -7,12 +7,12 @@
       class="account-assets-main"
     >
       <!-- 用户信息-->
-      <UserInfo />
-      <div class="account-assets-box margin-top16">
+      <UserInfo :Rates = 'CNYRate'/>
+      <div class="account-assets-box margin-top10">
         <div>
-          <header class="account-assets-header display-flex personal-height40 line-height40">
+          <header class="account-assets-header display-flex personal-height40 line-height40 box-shadow">
             <!--我的资产-->
-            <div class="header-flex header-left flex1 padding-left23 font-size16 font-weight600">
+            <div class="header-flex header-left flex1 margin20 font-size16">
               {{ $t('M.comm_user_asset_information') }}
             </div>
             <div class="header-flex header-right flex1 padding-right23 display-flex">
@@ -171,7 +171,7 @@
                     {{ assetItem.coinName }}
                   </div>
                   <!--冻结数量-->
-                  <div class="table-td flex1">
+                  <div class="table-td text-indent1 flex1">
                     <span v-if="assetItem.frozen > 0">
                       {{ $scientificToNumber($keep8Num(assetItem.frozen - 0)) }}
                     </span>
@@ -180,7 +180,7 @@
                     </span>
                   </div>
                   <!--可用数量-->
-                  <div class="table-td flex1">
+                  <div class="table-td text-indent2 flex1">
                     <span v-if="assetItem.total > 0">
                       {{ $scientificToNumber($keep8Num(assetItem.total - 0)) }}
                     </span>
@@ -189,7 +189,7 @@
                     </span>
                   </div>
                   <!--锁仓-->
-                  <div class="table-td flex1">
+                  <div class="table-td text-indent3 flex1">
                     <span v-if="assetItem.wareHouse > 0">
                       {{ $scientificToNumber($keep8Num(assetItem.wareHouse - 0)) }}
                     </span>
@@ -199,7 +199,7 @@
                   </div>
                   <!--资产估值-->
                   <div
-                    class="table-td flex1"
+                    class="table-td text-indent4 flex1"
                   >
                     <div
                       v-if="assetItem.cnyValue > 0"
@@ -487,53 +487,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <!--未实名认证前弹框提示-->
-    <div class="warning">
-      <el-dialog
-        :visible.sync="notVerifyDialogVisible"
-        center
-      >
-        <div class="dialog-warning">
-          <div class="dialog-warning-box">
-            <IconFontCommon
-              class="font-size60"
-              iconName="icon-gantanhao"
-            />
-          </div>
-        </div>
-        <p class="font-size12 warning-text margin-top35 text-align-c">
-          <!--请先完成实名认证，再进行提币操作！-->
-          <span v-show="!(this.realNameAuth === 'y')">
-            {{ $t('M.user_asset_title15') }}
-          </span>
-          <!--请先完成高级认证，再进行提币操作！-->
-          <span v-show="this.realNameAuth === 'y' && !(this.advancedAuth === 'pass')">
-            {{ $t('M.user_asset_title16') }}
-          </span>
-        </p>
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
-          <!--确 定 取 消-->
-        <button
-          class="button-color border-radius4 cursor-pointer"
-          type="primary"
-          @click="realNameAuthConfirm"
-        >
-          <!--确 定-->
-          {{ $t('M.comm_confirm') }}
-        </button>
-        <button
-          class="btn border-radius4 cursor-pointer"
-          @click.prevent="notVerifyDialogVisible = false"
-        >
-          <!--取 消-->
-          {{ $t('M.comm_cancel') }}
-        </button>
-        </span>
-      </el-dialog>
     </div>
     <!--未实名认证前弹框提示-->
     <div class="warning">
@@ -1496,7 +1449,7 @@ export default {
       // console.log(this.currencyRateList)
     },
     filteredData1 () {
-      // console.log(this.filteredData1)
+      // console.log(this.filteredData1)https://web.rest.test.com/exchangeRate/coinPrice?coinName=FBT&shortName=CNY
     },
     filteredData2 () {
       // console.log(this.filteredData2)
@@ -1518,11 +1471,30 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import '../../../assets/CSS/index';
 
+  .margin-top10 {
+    margin-top: 10px;
+  }
+
+  .text-indent1 {
+    text-indent: 30px;
+  }
+
+  .text-indent2 {
+    text-indent: 21px;
+  }
+
+  .text-indent3 {
+    text-indent: 12px;
+  }
+
+  .text-indent4 {
+    text-indent: 6px;
+  }
+
   .account-assets {
     > .account-assets-main {
       > .account-assets-box {
-        min-height: 480px;
-        margin-bottom: 50px;
+        min-height: 618px;
 
         .account-assets-header {
           > .header-flex {
@@ -1551,7 +1523,7 @@ export default {
               > .icon-color {
                 position: absolute;
                 top: 12px;
-                left: 95px;
+                left: 126px;
               }
             }
           }
@@ -1561,6 +1533,7 @@ export default {
           > .content-list {
             > .table-body {
               width: 100%;
+              margin-bottom: 50px;
 
               .tops-verify {
                 color: #3e79d6;
@@ -2047,8 +2020,12 @@ export default {
       color: $nightFontColor;
       background-color: $mainNightBgColor;
 
+      .box-shadow {
+          box-shadow: 0 2px 2px 0 rgba(20, 23, 37, 1);
+      }
+
       .button-color {
-        color: rgba(255, 255, 255, .7);
+        color: rgba(255, 255, 255, 1);
         background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
       }
 
@@ -2087,7 +2064,7 @@ export default {
           }
 
           .button-color {
-            color: rgba(255, 255, 255, .7);
+            color: rgba(255, 255, 255, 1);
             background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
           }
 
@@ -2312,12 +2289,16 @@ export default {
     &.day {
       color: $dayMainTitleColor;
 
+      .box-shadow {
+          box-shadow: 0 1px 3px 0 rgba(236, 236, 236, 1);
+      }
+
       .warning-text {
         color: #333;
       }
 
       .button-color {
-        color: rgba(255, 255, 255, .7);
+        color: rgba(255, 255, 255, 1);
         background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
       }
 
@@ -2368,7 +2349,7 @@ export default {
           }
 
           .button-color {
-            color: rgba(255, 255, 255, .7);
+            color: rgba(255, 255, 255, 1);
             background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
           }
 
@@ -2388,7 +2369,7 @@ export default {
                 > .table-charge-money,
                 > .table-mention-money,
                 > .table-deal {
-                  color: #7d90ac;
+                  color: #338ff5;
 
                   > .type-transaction {
                     border: 1px solid rgba(38, 47, 56, .1);
@@ -2409,6 +2390,10 @@ export default {
                       }
                     }
                   }
+                }
+
+                > .money-color {
+                  color: #7d90ac;
                 }
               }
 

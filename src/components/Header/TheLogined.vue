@@ -8,7 +8,7 @@
     @mouseenter="toggleBox(true)"
     @mouseleave="toggleBox(false)"
   )
-    span.username {{userInfo.userName}}
+    span.username {{userName}}
     el-collapse-transition
       .login-info(
         :class="{'has-vip':$isVIPEnable_S_X}"
@@ -107,7 +107,7 @@ export default {
     },
     // 开启vip
     jumpToVIP () {
-      if (this.localPayPwdSet || this.userInfo.payPassword) {
+      if (this.localPayPwdSet || this.payPassword) {
         this.$goToPage('/VipMainContent')
       } else {
         this.$goToPage('/TransactionPassword')
@@ -118,7 +118,7 @@ export default {
       this.SET_ACTIVE_LINK_NAME_M(-1)
       // console.log(this.localPayPwdSet)
       await this.REFRESH_USER_INFO_ACTION()
-      if (this.localPayPwdSet || this.userInfo.payPassword) {
+      if (this.localPayPwdSet || this.payPassword) {
         this.CHANGE_USER_CENTER_ACTIVE_NAME(val)
         const needUpdateInfos = ['security-center', 'account-credited']
         if (_.some(needUpdateInfos, item => val == item)) this.CHANGE_REF_SECURITY_CENTER_INFO(true)
@@ -131,14 +131,23 @@ export default {
   // filters: {},
   computed: {
     ...mapState({
-      userInfo: state => state.user.loginStep1Info.userInfo
+      userInfo: state => _.get(state, 'user.loginStep1Info.userInfo')
     }),
     // VIP 按钮文字（立即开通、查看我的VIP）
     VIPButtonText () {
-      return !this.userInfo.level ? 'M.user_vip_immediately_opened' : 'M.user_vip_look'
+      return !this.level ? 'M.user_vip_immediately_opened' : 'M.user_vip_look'
     },
     localPayPwdSet () {
       return _.get(this.userInfo, 'paypasswordSet')
+    },
+    userName () {
+      return _.get(this.userInfo, 'userName')
+    },
+    payPassword () {
+      return _.get(this.userInfo, 'payPassword')
+    },
+    level () {
+      return _.get(this.userInfo, 'level')
     }
   }
   // watch: {}

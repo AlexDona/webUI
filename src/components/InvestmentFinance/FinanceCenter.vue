@@ -11,9 +11,7 @@
         {{$t('M.comm_finance_center')}}
       </div>
     </div>
-    <div
-      class="inner-box"
-    >
+    <div  class="inner-box">
       <!-- 2.0 币种类型 -->
       <div class="finance-inner">
         <div class="kline-container">
@@ -156,10 +154,8 @@
                         :value="getDate(-2) + $t('M.finance_leit') + getDate(formLabelAlign.day ? formLabelAlign.day : 0)"
                         disabled
                       >
-                    <span class="blue">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
+                      <span class="blue storageTime">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
                     </div>
-                    <!--{{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day ? formLabelAlign.day : 0)}}-->
-                    <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
                   </el-form-item>
                   <!-- 存多少 -->
                   <el-form-item
@@ -173,12 +169,12 @@
                         <!--@input="changeAlignNumber('changeAlignNum', 'investAmountRef', $event)"-->
                       <!--&gt;-->
                       <input
-                        class="red text-indent"
+                        class="red text-indent saveHowMany"
                         type='text'
                         ref='changeAlignNum'
                         disabled
                       >
-                      <strong>{{selectedCoinName}}</strong>
+                      <strong class="saveHowManyUnit">{{selectedCoinName}}</strong>
                     </div>
                   </el-form-item>
                   <!-- 利率 -->
@@ -203,7 +199,7 @@
                         disabled
                       >
                       </el-input>
-                      <strong>{{selectedCoinName}}</strong>
+                      <strong class="expectedIncomeUnit">{{selectedCoinName}}</strong>
                     </div>
                   </el-form-item>
                   <!-- 怎么返 -->
@@ -244,11 +240,11 @@
                     <div class='invest-amount'>
                       <!-- 先息后本 -->
                         <!--:value="formLabelAlign.financialState === 'EQUAL_PRINCIPAL'? $t('M.finance_invest_interest') : $t('M.finance_xiAndben')"-->
-                      <span>
+                      <span class="returnPlan">
                         {{$t('M.finance_payment') + computedTime}}
                         <strong class="blue">
                           {{$t('M.finance_return_rate')}}
-                          {{formLabelAlign.jsonTimeline[0].amount ? (formLabelAlign.jsonTimeline[0].amount - 0).toFixed(6) : ''}}
+                          {{formLabelAlign.jsonTimeline.length && formLabelAlign.jsonTimeline[0].amount ? (formLabelAlign.jsonTimeline[0].amount - 0).toFixed(6) : ''}}
                         </strong>
                       </span>
                       <span
@@ -260,7 +256,7 @@
                     </div>
                   </el-form-item>
                 </el-form>
-                <div class="show-dividend-time-list">
+                <div class="show-dividend-time-list" v-if="formLabelAlign.jsonTimeline.length">
                   <transition name="el-fade-in-linear">
                     <ul v-show='showDividendTime'>
                       <li
@@ -451,7 +447,7 @@
                     {{$t('M.comm_login')}}
                   </router-link>
                   {{$t('M.finance_or')}}
-                  <router-link to = '/register'>
+                  <router-link :to="`/${$routes_X.login}/${$routes_X.register}/default}`">
                     {{$t('M.comm_register_time')}}
                   </router-link>
                   {{$t('M.finance_loginTipsTwo')}}
@@ -613,7 +609,7 @@
                     {{$t('M.comm_login')}}
                   </router-link>
                   {{$t('M.finance_or')}}
-                  <router-link to = '/register'>
+                  <router-link :to="`/${$routes_X.login}/${$routes_X.register}/default}`">
                     {{$t('M.comm_register_time')}}
                   </router-link>
                   {{$t('M.finance_loginTipsTwo')}}
@@ -991,8 +987,10 @@ export default {
       if (!data) return false
       this.formLabelAlign = _.get(data, 'data')
       this.$refs.changeAlignNum.value = this.formLabelAlign.number
-      let newTimeArr = this.formLabelAlign.jsonTimeline[0].date.split(' ')[0].split('-')
-      this.computedTime = newTimeArr[0] + '/' + newTimeArr[1] + '/' + newTimeArr[2]
+      if (this.formLabelAlign.jsonTimeline.length) {
+        let newTimeArr = this.formLabelAlign.jsonTimeline[0].date.split(' ')[0].split('-')
+        this.computedTime = newTimeArr[0] + '/' + newTimeArr[1] + '/' + newTimeArr[2]
+      }
       this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
     },
     // 添加理财记录
@@ -1431,13 +1429,14 @@ export default {
         border-radius: 2px;
         font-size: 15px;
         color: $mainColor;
-        background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
         box-shadow: 0 2px 2px rgba(13, 17, 25, 1);
       }
 
       .el-icon-arrow-up::before {
         color: $mainColor;
-        content: "\e60c";
+
+        /* 20190813周期下拉箭头显示成了正方形修复
+        content: "\e60c"; */
       }
     }
 
@@ -1490,7 +1489,8 @@ export default {
         }
 
         .el-icon-arrow-up::before {
-          content: "\e60c";
+          /* 20190813周期下拉箭头显示成了正方形修复
+          content: "\e60c"; */
         }
       }
 
@@ -1500,10 +1500,6 @@ export default {
           margin-top: -10px;
           font-size: 12px;
           text-align: center;
-        }
-
-        .el-form-item__content {
-          color: #c0c4cc;
         }
 
         .el-form-item {
@@ -1516,7 +1512,6 @@ export default {
           padding: 0;
           border: none !important;
           line-height: 30px;
-          background: transparent !important;
         }
 
         .el-input {
@@ -1529,20 +1524,12 @@ export default {
           width: 300px;
           height: 40px;
           padding-right: 5px;
-          border-bottom: 1px solid #20273d;
-
-          &:focus {
-            border: 1px solid #ccc;
-          }
         }
 
         .el-button {
           width: 110px;
           height: 40px;
-          border: 1px solid $mainColor;
           border-radius: 4px;
-          color: #fff;
-          background: none;
         }
 
         .el-dialog__footer {
@@ -1552,7 +1539,6 @@ export default {
         .el-button--primary {
           margin-left: 40px;
           border: none;
-          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
 
@@ -1782,6 +1768,48 @@ export default {
           .el-icon-arrow-up::before {
             color: #fff;
           }
+
+          .left-body {
+            .left-label {
+              .el-input__inner {
+                color: $mainColorOfWhite;
+              }
+            }
+
+            .dialogStyle {
+              .el-form-item__content {
+                color: #c0c4cc;
+              }
+
+              .el-input__inner {
+                background: transparent !important;
+              }
+
+              .invest-amount {
+                border-bottom: 1px solid #20273d;
+
+                &:focus {
+                  border: 1px solid #ccc;
+                }
+              }
+
+              .el-button {
+                border: 1px solid $mainColor;
+                color: #fff;
+                background: none;
+              }
+
+              .el-button--primary {
+                background: $nightButtonBgColor1;
+              }
+            }
+          }
+        }
+      }
+
+      .finance-form-header {
+        .el-input__inner {
+          background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
         }
       }
     }
@@ -1797,7 +1825,7 @@ export default {
             .finance-form-header {
               .el-input__inner {
                 border-radius: 2px;
-                background: -webkit-linear-gradient(180deg, rgba(51, 143, 245, .1));
+                background: linear-gradient(-90deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
                 box-shadow: none;
               }
 
@@ -1915,21 +1943,50 @@ export default {
         }
 
         .dialogStyle {
+          .storageTime {
+            width: 100px;
+            text-align: right;
+          }
+
           .invest-amount {
-            border: 1px solid rgba(236, 241, 248, 1);
+            border-bottom: 1px solid $mainNightTitleColor;
             background: #fff;
+
+            input {
+              color: $dayMainTitleColor !important;
+            }
+
+            .returnPlan {
+              color: $dayMainTitleColor !important;
+            }
+
+            .saveHowMany {
+              color: $upColor !important;
+            }
+
+            .saveHowManyUnit,
+            .expectedIncomeUnit {
+              color: $dayMainTitleColor;
+            }
+          }
+
+          .el-input__inner {
+            background: #fff !important;
           }
 
           .el-button {
+            border: 1px solid $mainColor;
             color: $mainColor;
+
+            &:hover {
+              background-color: transparent;
+            }
           }
 
           .el-button--primary {
+            border: none;
             color: #fff;
-          }
-
-          .saveTime {
-            color: $dayMainTitleColor;
+            background: $dayButtonBgColor2;
           }
         }
 
@@ -2051,7 +2108,7 @@ export default {
   }
 
   .green {
-    color: #008069;
+    color: $otcGreen;
   }
 
   .red {
@@ -2166,6 +2223,18 @@ export default {
     position: absolute;
     top: 50%;
     right: 32%;
+    width: 400px;
+    font-size: 40px;
+    text-align: center;
+    color: #fff;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .banner-title {
+    position: absolute;
+    top: 50%;
+    left: 53%;
     width: 400px;
     font-size: 40px;
     text-align: center;

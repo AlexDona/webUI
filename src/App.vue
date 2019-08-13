@@ -32,6 +32,7 @@ import {
   mapState
 } from 'vuex'
 import {getNavigationsAJAX} from './utils/api/common'
+// import {encrypt} from './utils/encrypt'
 export default {
   name: 'App',
   components: {
@@ -51,7 +52,8 @@ export default {
     // require('../static/css/common.css')
     // require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
     // require('../static/css/theme/night/Common/HeaderCommonNight.css')
-    await this.getNavigations()
+    // console.log(encrypt('123456'))
+    // await this.getNavigations()
     // 取主题
     const theme = getStore('theme') || 'night'
     this.CHANGE_THEME(theme)
@@ -62,7 +64,7 @@ export default {
   },
   // mounted () {},
   // activated () {},
-  // update () {},
+  // updated () {},
   methods: {
     ...mapMutations([
       'CHANGE_THEME',
@@ -78,7 +80,6 @@ export default {
       // 外部 https://www.fubt.co www.fubt.co
       // 内部 /TradeCenter
       const isInnerLink = !link.includes('.')
-      // console.log(isInnerLink)
       return isInnerLink
     },
     // 自定义导航
@@ -88,7 +89,6 @@ export default {
       }
       const data = await getNavigationsAJAX(params)
       if (!data) return
-      // console.log(data)
       this.navigation = _.get(data, 'data')
       _.forEach(this.navigation, (nav, index) => {
         nav['isInnerLink'] = this.checkIsInnerLink(nav.link) ? true : false
@@ -100,7 +100,6 @@ export default {
           })
         }
       })
-      console.log(this.navigation)
       this.SET_NAVIGATOR_M(this.navigation)
     },
     // 切换 PC/H5 移动端适配
@@ -146,18 +145,14 @@ export default {
     },
     async '$route' (to, from) {
       this.toggleViewPortMeta()
-      // console.log(to.path, from.path)
       let path = to.path
       if (!this.$navigators_S_X.length) {
         await this.getNavigations()
       }
-      console.log(path, this.$navigators_S_X)
       _.forEach(this.$navigators_S_X, (outerRoute, outerIndex) => {
         const {link, children} = outerRoute
-        // console.log(path, link)
         // 命中 路由
         if (path == link || path.startsWith(`/${link.split('/')[1]}`)) {
-          // console.log(path, outerIndex)
           this.$SET_ACTIVE_LINK_NAME_M_X(outerIndex)
           return false
         }
@@ -169,24 +164,25 @@ export default {
             return false
           }
         })
-        // if(!hitTarget) this.$SET_ACTIVE_LINK_NAME_M_X(-1)
       })
+
+      if (path == `/${this.$routes_X.home}`) this.$SET_ACTIVE_LINK_NAME_M_X(-1)
+
       if (from.path === '/PersonalCenter') {
         this.$setStore('active-target', 'assets')
       }
       this.isNeedNotice = path === `/${this.$routes_X.home}` || path === '/' ? 1 : 0
       this.isNeedHeader = (
-        path !== `/${this.$routes_X.login}` &&
+        !path.startsWith(`/${this.$routes_X.login}`) &&
         !path.startsWith('/register') &&
         path !== '/downloadApp' &&
         !path.startsWith('/invitationRegister')
       ) ? 1 : 0
       this.isNeedFooter = (
-        path === `/${this.$routes_X.login}` ||
-        path.startsWith('/register') ||
+        path.startsWith(`/${this.$routes_X.login}`) ||
         path === '/downloadApp' ||
         path.startsWith('/invitationRegister') ||
-        path === '/ForgetPassword'
+        path.startsWith(`/${this.$routes_X.forgetPass}`)
       ) ? 0 : 1
       switch (path) {
         case '/register':
@@ -196,18 +192,16 @@ export default {
     },
     isMobile (newVal) {
       this.setBodyClassName(newVal, 'mobile')
-      console.log(newVal)
       this.toggleViewPortMeta()
     },
     isNeedNotice (newVal) {
-      if (newVal) {
-        $('#udesk_container').fadeIn()
-      } else {
-        $('#udesk_container').fadeOut()
+      if (document.querySelector('#udesk_container')) {
+        if (newVal) {
+          document.querySelector('#udesk_container').style.display = 'block'
+        } else {
+          document.querySelector('#udesk_container').style.display = 'none'
+        }
       }
-    },
-    routerTo (New) {
-      console.log(New)
     }
   }
 }

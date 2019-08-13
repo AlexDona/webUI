@@ -1,30 +1,9 @@
+/* eslint-disable */
 import storeCreator from '../../src/vuex'
-const store = storeCreator()
-getSize()
 
-function getSize () {
-  let html = document.getElementsByTagName('html')[0]
-  /* 取到屏幕的宽度 */
-  let width = window.innerWidth
-  let height = window.innerHeight
-  console.log(width)
-  store.commit('SET_WINDOW_WIDTH', width)
-  let isPC = IsPC()
-  if (!isPC) {
-    store.commit('TOGGLE_PC_MOBILE', true)
-    document.body.classList.add('mobile')
-  } else {
-    store.commit('TOGGLE_PC_MOBILE', false)
-    document.body.classList.remove('mobile')
-  }
-  console.log(store.state.user.isMobile)
-  /* 640 100  320 50 */
-  let fontSize = 100 / 1920 * width
-  /* 设置fontsize */
-  html.style.fontSize = fontSize + 'px'
-  html.style.height = height + 'px'
-  // html.style.width = width + 'px'
-}
+const store = storeCreator()
+getSize(document, window)
+
 // 检测是否为pc
 function IsPC () {
   let userAgentInfo = navigator.userAgent
@@ -41,5 +20,24 @@ function IsPC () {
   return flag
 }
 
-// alert(flag);
-window.onresize = getSize
+function getSize (doc, win) {
+  var docEl = doc.documentElement,
+    resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+    recalc = function () {
+      var clientWidth = docEl.clientWidth
+      if (!clientWidth) return
+      docEl.style.fontSize = 20 * (clientWidth / 320) + 'px'
+      store.commit('SET_WINDOW_WIDTH', clientWidth)
+      let isPC = IsPC()
+      if (!isPC) {
+        store.commit('TOGGLE_PC_MOBILE', true)
+        document.body.classList.add('mobile')
+      } else {
+        store.commit('TOGGLE_PC_MOBILE', false)
+        document.body.classList.remove('mobile')
+      }
+    }
+  if (!doc.addEventListener) return
+  win.addEventListener(resizeEvt, recalc, false)
+  doc.addEventListener('DOMContentLoaded', recalc, false)
+}

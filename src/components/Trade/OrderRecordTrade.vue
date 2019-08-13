@@ -1,70 +1,33 @@
-<template>
-  <!--最近成交记录-->
-    <div
-      class="order-record-box trade"
-      :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
-    >
-      <div class="inner-box">
-        <div
-          class="title font-size16 cursor-pointer"
-          @click="toggleShowContent"
-        >
-        <span class="text">
-          <!--最近成交-->
-          {{ $t('M.trade_order_recent_deal') }}
-        </span>
-        </div>
-        <div class="content">
-          <el-collapse-transition>
-            <div v-show="contentShowStatus">
-              <el-table
-                :data="orderRecordList"
-                :empty-text="$t('M.comm_no_data')"
-                :height="$clientWidth_S_X > 1920 ? '764': '538'"
-              >
-                <!--时间-->
-                <el-table-column
-                  :label="$t('M.comm_time')"
-                >
-                  <template slot-scope="s">
-                  <span class="font-size12">
-                    {{timeFilters(s.row.time-0)}}
-                  </span>
-                  </template>
-                </el-table-column>
-                <!--成交价-->
-                <el-table-column
-                  :label="$t('M.otc_MerchantsOrders_transaction_price') + ('('+ $middleTopData_S_X.area +')')"
-                >
-                  <template slot-scope="s">
-                    <span
-                      class="text-align-r font-size12"
-                      :class="{
-                        buy:s.row.direction==='BUY',
-                        sell:s.row.direction==='SELL'}"
-                    >
-                      {{$scientificToNumber(s.row.price)}}
-                    </span>
-                  </template>
-                </el-table-column>
-                <!--成交量-->
-                <el-table-column
-                  :label="$t('M.comm_trading_volume1') +('('+$middleTopData_S_X.sellsymbol+')')"
-                >
-                  <template slot-scope="s">
-                    <span class="text-align-r font-size12">
-                      {{$scientificToNumber(s.row.amount)}}
-                    </span>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-          </el-collapse-transition>
-        </div>
-      </div>
-    </div>
+<!--
+  author: zhaoxinlei
+  update: 20190803
+  description: 当前页面为 币币交易  最近成交记录 组件
+-->
+<template lang="pug">
+  .order-record-box.trade(:class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }")
+    .inner-box
+      .title
+        // 20190730发版要改为实时成交：已提国际化
+        span.text {{ $t('M.trade_order_recent_deal') }}
+      .content
+        el-table.order-record-table(
+          :data="orderRecordList"
+          :empty-text="$t('M.comm_no_data')"
+          height="302"
+        )
+          // 时间
+          el-table-column(:label="$t('M.comm_time')")
+            template(slot-scope="s")
+              span.font-size12 {{timeFilters(s.row.time - 0)}}
+          // 成交价
+          el-table-column(:label="$t('M.otc_MerchantsOrders_transaction_price') + ('('+ ($middleTopData_S_X.area ? $middleTopData_S_X.area : '--') +')')")
+            template(slot-scope="s")
+              span.font-size12.text-align-r( :class="{buy:s.row.direction === 'BUY', sell: s.row.direction === 'SELL'}") {{$scientificToNumber(s.row.price)}}
+          // 成交量
+          el-table-column(:label="$t('M.comm_trading_volume1') +('('+($middleTopData_S_X.sellsymbol? $middleTopData_S_X.sellsymbol: '--')+')')")
+            template(slot-scope="s")
+              span.font-size12.text-align-r {{$scientificToNumber(s.row.amount)}}
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../utils'
 import {mapState} from 'vuex'
@@ -77,13 +40,13 @@ export default {
       contentShowStatus: true
     }
   },
-  created () {
-    console.log(this.$clientWidth_S_X)
-  },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // created () {
+  // console.log(this.$clientWidth_S_X)
+  // },
+  // mounted () {},
+  // activated () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     // 时间格式化
     timeFilters (date) {
@@ -118,149 +81,96 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss" type="text/scss">
-  @import '../../assets/CSS/index';
-
-  .order-record-box {
-    > .inner-box {
-      > .title {
-        height: 34px;
-        padding: 0 4.5%;
-
-        /* font-weight: 700; */
-        margin-bottom: 1px;
-        line-height: 34px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
-
-        > .text {
-          display: inline-block;
-          height: 100%;
-          border-bottom: 2px solid $mainColor;
-          font-size: 14px;
-          color: $mainColor;
-        }
-      }
-    }
-
-    /deep/ {
-      .el-table {
-        td {
-          padding: 0;
-        }
-
-        th {
-          height: 26px;
-          border-bottom: 1px solid rgba(50, 55, 87, 1);
-          font-size: 12px;
-          line-height: 24px;
-
-          &:nth-of-type(2) {
-            > .cell {
-              text-align: center;
-            }
-
-            @media screen and (max-width: 1366px) {
-              > .cell {
-                padding: 0;
-              }
-            }
-          }
-
-          &:nth-of-type(1) {
-            .cell {
-              padding: 0 0 0 10%;
-            }
-          }
-
-          &:nth-of-type(3) {
-            .cell {
-              padding: 0 10% 0 0;
-              text-align: right;
-            }
-
-            @media screen and (max-width: 1366px) {
-              .cell {
-                padding: 0 5% 0 0;
-              }
-            }
-          }
-        }
-
-        .cell {
-          height: 22px;
-          white-space: nowrap;
-        }
-      }
-
-      td {
-        &:nth-of-type(2),
-        &:nth-of-type(3) {
-          > .cell {
-            text-align: right;
-          }
-        }
-      }
-
-      .el-table__header-wrapper {
-        height: 26px;
-        line-height: 24px;
-      }
-
-      .el-table__row {
-        td {
-          &:nth-of-type(2) {
-            > .cell {
-              padding: 0 15% 0 0;
-            }
-          }
-
-          &:nth-of-type(1) {
-            > .cell {
-              padding: 0 0 0 10%;
-            }
-          }
-        }
-      }
-
-      .cell {
-        > span {
-          &.buy {
-            color: rgb(212, 88, 88);
-          }
-
-          &.sell {
-            color: rgb(0, 128, 105);
-          }
-        }
-      }
-    }
-
-    &.night {
-      > .inner-box {
-        > .title {
-          color: $mainNightTitleColor;
-          background-color: $mainContentNightBgColor;
-          box-shadow: 2px 0 3px rgba(27, 35, 49, 1);
-        }
-
-        > .content {
-          background-color: $mainContentNightBgColor;
-        }
-      }
-    }
-
-    &.day {
-      > .inner-box {
-        > .title {
-          color: $dayMainTitleColor;
-          background-color: $mainDayBgColor;
-          box-shadow: 2px 0 3px rgba(239, 239, 239, 1);
-        }
-
-        > .content {
-          background-color: $mainDayBgColor;
-        }
-      }
-    }
-  }
+<style lang="stylus" scoped>
+  @import '../../assets/CSS/index.styl'
+  .order-record-box
+    height 337px
+    overflow hidden
+    >.inner-box
+      >.title
+        padding 0 10px
+        height 34px
+        line-height 34px
+      >.content
+        /deep/
+          .order-record-table.el-table
+            tr
+              th
+                padding 0 !important
+                height 28px
+                line-height 28px
+                font-size 12px
+                border-bottom none
+                &:nth-of-type(2),
+                &:nth-of-type(3)
+                  text-align right
+              td
+                padding 0 !important
+                border-bottom none
+                >.cell
+                  >span
+                    color #D9E1F1
+                    &.buy
+                      color #F03E3E
+                    &.sell
+                      color #41B37D
+                &:nth-of-type(2),
+                &:nth-of-type(3)
+                  text-align right
+    &.night
+      >.inner-box
+        >.title
+          background-color #23273C
+          color #D9E1F1
+        >.content
+          /deep/
+            .order-record-table.el-table
+              background-color #1c1f32
+              tr
+                background-color #1c1f32
+                &:hover
+                  td
+                    background-color #21253a
+                th
+                  border-bottom none
+                  background-color transparent
+                  >.cell
+                    color #66718F
+                td
+                  border-bottom none
+                  >.cell
+                    >span
+                      color #D9E1F1
+                      &.buy
+                        color #F03E3E
+                      &.sell
+                        color #41B37D
+    &.day
+      >.inner-box
+        >.title
+          background-color #f2f6fa
+          color #333
+        >.content
+          /deep/
+            .order-record-table.el-table
+              background-color #fff
+              tr
+                background-color #fff
+                &:hover
+                  td
+                    background-color #f2f6fa
+                th
+                  border-bottom none
+                  background-color transparent
+                  >.cell
+                    color #66718f
+                td
+                  border-bottom none
+                  >.cell
+                    >span
+                      color #596a7a
+                      &.buy
+                        color #F03E3E
+                      &.sell
+                        color #41B37D
 </style>

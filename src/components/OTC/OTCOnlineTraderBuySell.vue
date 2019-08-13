@@ -20,26 +20,76 @@
                     v-if="this.userType === 'MERCHANT'"
                   >
                   <!-- 商户名称 -->
-                  <span class="name font-weight700">
-                    {{userName}}
+                  <span
+                    class="name font-weight700 cursor-pointer"
+                    @click="jumpMerchantInfoPage"
+                  >
+                    <span v-if="userNickName">
+                      {{userNickName}}
+                    </span>
+                    <span v-else>
+                      {{userName}}
+                    </span>
                   </span>
                 </div>
                 <!-- 商家交易统计 -->
                 <div class="shopper-statistics">
-                  <!-- 成交次数 -->
-                  <div class="trader-total">
-                    <p class="blue">{{$scientificToNumber(successTimes)}}</p>
-                    <p class="text">{{$t('M.otc_index_tradeTimes')}}</p>
-                  </div>
-                  <!-- 失败次数 -->
-                  <div class="failed">
-                    <p class="blue">{{$scientificToNumber(failTimes)}}</p>
-                    <p class="text">{{$t('M.otc_index_failureTimes')}}</p>
-                  </div>
-                  <!-- 账户冻结次数 -->
-                  <div class="freeze">
-                    <p class="blue">{{$scientificToNumber(freezeTimes)}}</p>
-                    <p class="text">{{$t('M.otc_index_freezeTimes')}}</p>
+                  <!--交易信息-->
+                  <div class="trade-infos">
+                    <div class="first-bar bars">
+                      <!--商家保证金-->
+                      <div class="bar-top">
+                        {{$t('M.focus_black_merchant_info1')}}
+                      </div>
+                      <div class="bar-bottom">
+                        {{merchantUserInfo.cashDeposit}}{{merchantUserInfo.cashDepositName}}
+                      </div>
+                    </div>
+                    <div class="second-bar bars">
+                      <!--交易总单数-->
+                      <div class="bar-top">
+                        {{$t('M.focus_black_merchant_info2')}}
+                      </div>
+                      <div class="bar-bottom">
+                        {{merchantUserInfo.totalOrders}}
+                      </div>
+                    </div>
+                    <div class="third-bar bars">
+                      <!--30日成交单-->
+                      <div class="bar-top">
+                        {{$t('M.focus_black_merchant_info3')}}
+                      </div>
+                      <div class="bar-bottom">
+                        {{merchantUserInfo.successOrders}}
+                      </div>
+                    </div>
+                    <div class="fourth-bar bars">
+                      <!--30日成交率-->
+                      <div class="bar-top">
+                        {{$t('M.focus_black_merchant_info4')}}
+                      </div>
+                      <div class="bar-bottom">
+                        {{merchantUserInfo.successRate}}%
+                      </div>
+                    </div>
+                    <div class="fifth-bar bars">
+                      <!--冻结次数-->
+                      <div class="bar-top">
+                        {{$t('M.focus_black_merchant_info5')}}
+                      </div>
+                      <div class="bar-bottom">
+                        {{merchantUserInfo.freezeTimes}}
+                      </div>
+                    </div>
+                    <div class="sixth-bar bars">
+                      <!--平均放行-->
+                      <div class="bar-top">
+                        {{$t('M.focus_black_merchant_info6')}}
+                      </div>
+                      <div class="bar-bottom">
+                        {{BIHTimeFormatting(merchantUserInfo.avgConfirmTime)}}
+                      </div>
+                    </div>
                   </div>
                 </div>
             </div>
@@ -371,7 +421,8 @@ import {
   timeFilter,
   formatNumberInput,
   amendPrecision,
-  cutOutPointLength
+  cutOutPointLength,
+  formatSeconds
 } from '../../utils'
 import {
   pickOrdersToBuy,
@@ -402,6 +453,8 @@ export default {
       pickOrderTradePwdDialogStatus: false,
       // 挂单人姓名
       userName: '',
+      // 挂单人昵称
+      userNickName: '',
       // 成交次数
       successTimes: '',
       // 失败次数
@@ -463,7 +516,25 @@ export default {
       moneyPointLength: 2, // 当前金额小数点限制位数-总金额和最低最高限额保留2位
       // 是否需要交易密码
       isNeedPayPassword: true,
-      sellTotal: '' // 用户资产可用余额20190320增加新字段展示
+      sellTotal: '', // 用户资产可用余额20190320增加新字段展示
+      // 用户userId
+      userId: '',
+      // 左侧个人信息
+      merchantUserInfo: {
+        // 保证金
+        cashDeposit: '',
+        cashDepositName: '',
+        // 总单数
+        totalOrders: '',
+        // 30日成交单
+        successOrders: '',
+        // 30日成交率
+        successRate: '',
+        // 30日冻结次数
+        freezeTimes: '',
+        // 平均放行时间
+        avgConfirmTime: ''
+      }
     }
   },
   async created () {
@@ -497,10 +568,19 @@ export default {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
     ]),
+    jumpMerchantInfoPage () {
+      if (this.userId) {
+        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: this.userId})
+      }
+    },
     // 0.4 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
+    },
+    // 0 国际标准格式(09ˋ40′32″)
+    BIHTimeFormatting (date) {
+      return formatSeconds(date, 'OTC')
     },
     // 1.0 时间格式化
     timeFormatting (date) {
@@ -716,10 +796,9 @@ export default {
       if (!data) return false
       if (data.data) {
         let detailsData = getNestedData(data, 'data')
+        this.userId = getNestedData(detailsData, 'userId') // 用户userId
         this.userName = getNestedData(detailsData, 'userName') // 挂单人姓名
-        this.successTimes = getNestedData(detailsData, 'successTimes') // 成交次数
-        this.failTimes = getNestedData(detailsData, 'failTimes') // 失败次数
-        this.freezeTimes = getNestedData(detailsData, 'freezeTimes') // 冻结次数
+        this.userNickName = getNestedData(detailsData, 'userNick') // 挂单人昵称
         this.remark = getNestedData(detailsData, 'remark') // 备注
         this.price = getNestedData(detailsData, 'price') // 报价
         this.payTypes = getNestedData(detailsData, 'payTypes') // 付款方式
@@ -730,6 +809,14 @@ export default {
         this.userType = getNestedData(detailsData, 'userType') // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
         this.currencyName = getNestedData(detailsData, 'currencyName') // 当前摘单的法币币种
         this.sellTotal = getNestedData(detailsData, 'sellTotal') // 用户资产可用余额
+        // 个人信息赋值
+        this.merchantUserInfo.cashDeposit = getNestedData(detailsData, 'guaranteeCount')
+        this.merchantUserInfo.cashDepositName = getNestedData(detailsData, 'guaranteeCoinName')
+        this.merchantUserInfo.totalOrders = getNestedData(detailsData, 'tradeTimes')
+        this.merchantUserInfo.successOrders = getNestedData(detailsData, 'successOrderTimes')
+        this.merchantUserInfo.successRate = getNestedData(detailsData, 'completeRate')
+        this.merchantUserInfo.freezeTimes = getNestedData(detailsData, 'freezeTimes')
+        this.merchantUserInfo.avgConfirmTime = getNestedData(detailsData, 'avgGiveOutTime')
         this.queryUserTradeFeeAndCoinInfo()
       }
     },
@@ -789,10 +876,12 @@ export default {
         this.clearInput(this.onlineTraderStatus) // 清空数据
         this.querySelectedOrdersDetails()
         this.queryUserTradeFeeAndCoinInfo()
+        this.$goToPage('/PersonalCenter')
+        this.CHANGE_USER_CENTER_ACTIVE_NAME('fiat-orders')
         // 改变全局锚点状态
-        this.CHANGE_OTC_ANCHOR_STATUS(true)
+        // this.CHANGE_OTC_ANCHOR_STATUS(true)
         // 跳转到首页的交易中订单区
-        this.$goToPage('/OTCCenter')
+        // this.$goToPage('/OTCCenter')
       }
     }, 500),
     // 2018129封装提交摘单买入和卖出方法
@@ -870,7 +959,7 @@ export default {
         > .shopper-info {
           box-sizing: border-box;
           width: 340px;
-          height: 180px;
+          height: 310px;
           padding: 40px 35px 0;
           border-radius: 5px;
 
@@ -893,24 +982,32 @@ export default {
           }
 
           > .shopper-statistics {
-            display: flex;
-            flex: 3;
-            margin-top: 40px;
-            text-align: center;
+            > .trade-infos {
+              display: flex;
+              flex-wrap: wrap;
+              padding: 30px 0 0;
 
-            .blue {
-              font-size: 14px;
-            }
+              > .bars {
+                width: 49%;
 
-            .text {
-              margin-top: 5px;
-              font-size: 12px;
-            }
+                > .bar-top {
+                  margin-bottom: 6px;
+                  font-size: 12px;
+                  text-align: center;
+                }
 
-            > .trader-total,
-            .failed,
-            .freeze {
-              flex: 3;
+                > .bar-bottom {
+                  font-size: 14px;
+                  text-align: center;
+                }
+              }
+
+              > .first-bar,
+              .second-bar,
+              .third-bar,
+              .fourth-bar {
+                margin-bottom: 30px;
+              }
             }
           }
         }
@@ -918,7 +1015,7 @@ export default {
         > .shopper-remark {
           box-sizing: border-box;
           width: 340px;
-          min-height: 130px;
+          height: 170px;
           padding: 30px 49px 5px 39px;
           margin-top: 20px;
           border-radius: 5px;
@@ -1075,6 +1172,10 @@ export default {
     }
 
     .password-dialog {
+      .el-dialog__wrapper {
+        background-color: rgba(0, 0, 0, .7);
+      }
+
       .el-dialog {
         width: 350px;
         height: 240px;
@@ -1157,12 +1258,16 @@ export default {
             }
 
             > .shopper-statistics {
-              .blue {
-                color: $mainColor;
-              }
+              > .trade-infos {
+                > .bars {
+                  > .bar-top {
+                    color: $dialogColor9;
+                  }
 
-              .text {
-                color: $mainNightTitleColor;
+                  > .bar-bottom {
+                    color: $mainColorOfWhite;
+                  }
+                }
               }
             }
           }
@@ -1357,12 +1462,16 @@ export default {
             }
 
             > .shopper-statistics {
-              .blue {
-                color: $mainColor;
-              }
+              > .trade-infos {
+                > .bars {
+                  > .bar-top {
+                    color: $dialogColor9;
+                  }
 
-              .text {
-                color: $dayMainTitleColor;
+                  > .bar-bottom {
+                    color: $dayMainTitleColor;
+                  }
+                }
               }
             }
           }

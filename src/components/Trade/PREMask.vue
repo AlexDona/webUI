@@ -101,6 +101,9 @@ export default {
   @import '../../assets/CSS/index';
 
   .mask-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 100%;
     height: 100%;
 
@@ -108,7 +111,6 @@ export default {
       overflow: hidden;
 
       > .title {
-        margin: 13% auto 0;
         font-weight: 700;
         font-size: 28px;
         font-family: pangmenzhengdao;

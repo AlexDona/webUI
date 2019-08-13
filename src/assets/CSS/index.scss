@@ -40,6 +40,18 @@ $dialogColor3: #1a2233;
 $dialogColor4: #cfd5df;
 $dialogColor5: #afb5c1;
 $dialogColor6: #485776;
+$dialogColor9: #66718f;
+$dialogColor10: #34415b;
 //白色主题
 $dialogColor7: #dce7f3;
 $dialogColor8: #ecf1f8;
+//ren增加按钮背景颜色类
+$nightButtonBgColor1: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
+$dayButtonBgColor2: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
+
+// flex 居中对齐
+@mixin centerHorizontally {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

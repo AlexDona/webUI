@@ -5,7 +5,7 @@
 -->
 <template>
   <button
-    class="fees cursor-pointer"
+    class="fees cursor-pointer font-size12"
     @click="jumpToOtherPage('/ServiceAndProtocol','Rate')"
   >
     <!--交易费率-->

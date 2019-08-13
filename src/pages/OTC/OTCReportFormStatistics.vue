@@ -68,9 +68,7 @@
         </div>
       </div>
       <!-- 2.4 购买和销售 -->
-      <div
-        class="report-form-buy-sell"
-      >
+      <div class="report-form-buy-sell">
         <!-- 购买 -->
         <div class="common buy">
           <!-- 头 -->
@@ -219,7 +217,7 @@
         <div class="common sell">
           <!-- 头 -->
           <div class="head padding-l15 font-size14">
-            {{$t('M.otc_sell')}}
+            {{$t('M.web_otc_sell')}}
           </div>
           <!-- 内容 -->
           <div class="body">
@@ -771,7 +769,7 @@ export default {
 
   > .report-form-statistics-content {
     width: 1300px;
-    padding: 20px 0 200px;
+    padding: 20px 0 100px;
     margin: 50px auto 10px;
 
     > .report-form-title {
@@ -888,7 +886,8 @@ export default {
           display: flex;
           justify-content: space-between;
           height: 50px;
-          padding: 0 50px;
+          padding-right: 60px;
+          padding-left: 53px;
           margin-top: 30px;
           line-height: 50px;
 
@@ -900,6 +899,7 @@ export default {
         }
 
         > .order-table {
+          height: 450px;
           padding: 0 35px;
           margin-top: 20px;
         }
@@ -978,11 +978,23 @@ export default {
             height: 7px;
           }
         }
+
+        /* 解决单选按钮边框出现蓝色边框问题 */
+        .el-radio-group {
+          .el-radio {
+            .el-radio__input {
+              .el-radio__inner {
+                box-shadow: none;
+              }
+            }
+          }
+        }
       }
     }
 
     .order-table {
       .el-table {
+        margin-left: 12px;
         font-size: 12px;
 
         tr {
@@ -992,6 +1004,10 @@ export default {
         td {
           padding: 0;
           border-bottom: 0;
+        }
+
+        .el-table__empty-text {
+          line-height: 420px;
         }
       }
     }
@@ -1088,6 +1104,7 @@ export default {
 
         > .title {
           color: $mainColor;
+          box-shadow: 0 4px 6px #191e28;
         }
 
         > .content {

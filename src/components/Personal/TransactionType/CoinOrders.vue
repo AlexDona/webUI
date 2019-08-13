@@ -19,7 +19,7 @@
           <div class="symbol-box condition-item">
             <span class="currency-span">
               <!--交易对-->
-              {{ $t('M.comm_deal_pair') }}
+              {{ $t('M.comm_deal_pair') }} &nbsp;
             </span>
             <!--币种-->
             <!--币种名称-->
@@ -51,7 +51,7 @@
           <div class="match-type-box condition-item">
             <span class="currency-span">
               <!--撮合类型-->
-              {{ $t('M.user_coin_bring_together') }}{{ $t('M.comm_type') }}
+              {{ $t('M.user_coin_bring_together') }}{{ $t('M.comm_type') }} &nbsp;
             </span>
             <!--请选择-->
             <el-select
@@ -73,7 +73,7 @@
           <div class="trade-type-box condition-item">
             <span class="currency-span">
               <!--委单类型-->
-              {{ $t('M.user_coin_appoint_single_stle') }}
+              {{ $t('M.user_coin_appoint_single_stle') }} &nbsp;
             </span>
             <!--请选择-->
             <el-select
@@ -95,7 +95,7 @@
           <div class="start-end-time-box condition-item">
             <span class="currency-span">
               <!--起止时间-->
-              {{ $t('M.user_coin_order4') }}
+              {{ $t('M.user_coin_order4') }} &nbsp;
             </span>
             <!--选择日期-->
             <el-date-picker
@@ -153,7 +153,6 @@
                 <!--交易对-->
                 <el-table-column
                   :label="$t('M.comm_deal_pair')"
-                  width="75"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.tradeName }}</span>
@@ -162,7 +161,6 @@
                 <!--撮合类型-->
                 <el-table-column
                   :label="$t('M.user_coin_bring_together') + $t('M.comm_type')"
-                  width="80"
                 >
                   <template slot-scope="s">
                     <span>{{ $t(`M.${s.row.i18nMatchTypeName}`) }}</span>
@@ -172,7 +170,6 @@
                 <!--委单类型-->
                 <el-table-column
                   :label="$t('M.user_coin_appoint_single_stle')"
-                  width="85"
                 >
                   <template slot-scope="s">
                     <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -182,17 +179,16 @@
                 <!--数量-->
                 <el-table-column
                   :label="$t('M.comm_count')"
-                  width="110"
                 >
                   <template slot-scope="s">
                     <!--<span>{{ s.row.count-0 }}</span>-->
                     <span>{{ parseFloat($scientificToNumber(s.row.count)) }}</span>
                   </template>
                 </el-table-column>
-                <!--委托总额-->
+                <!--委单总额-->
                 <el-table-column
                   :label="$t('M.user_coin_order5')"
-                  width="120"
+                  width="140"
                 >
                   <template slot-scope="s">
                     <!--<span>{{ s.row.amount-0}}</span>-->
@@ -202,7 +198,6 @@
                 <!--已成交-->
                 <el-table-column
                   :label="$t('M.user_coin_order6')"
-                  width="120"
                 >
                   <template slot-scope="s">
                     <!--<span>{{s.row.completeCount-0}}</span>-->
@@ -212,7 +207,6 @@
                 <!--未成交-->
                 <el-table-column
                   :label="$t('M.comm_not_make_bargain')"
-                  width="120"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.leftCount-0}}</span>
@@ -221,7 +215,6 @@
                 <!--状态-->
                 <el-table-column
                   :label="$t('M.comm_state')"
-                  width="55"
                 >
                   <template slot-scope="s">
                     <span>{{ $t(`M.${s.row.i18nStatusName}`) }}</span>
@@ -230,7 +223,6 @@
                 <!--操作-->
                 <el-table-column
                   :label="$t('M.comm_operation')"
-                  width="85"
                 >
                   <template slot-scope="s">
                     <button
@@ -276,7 +268,6 @@
             <!--交易对-->
             <el-table-column
               :label="$t('M.comm_deal_pair')"
-              width="80"
             >
               <template slot-scope="s">
                 <span>{{ s.row.tradeName }}</span>
@@ -370,7 +361,7 @@
             <!--时间-->
             <el-table-column
               :label="$t('M.comm_time')"
-              width="125"
+              width="135"
             >
               <template slot-scope="s">
                 <span>{{ s.row.createTime }}</span>
@@ -559,7 +550,6 @@ export default {
       let data
       let data1
       let data2
-      console.log(params)
       switch (entrustType) {
         case 'current-entrust':
           params.currentPage = this.currentPageForMyEntrust
@@ -593,7 +583,6 @@ export default {
      * @entrustType: 订单类型： 0：当前委托 1： 历史委托 2:  成交明细
      */
     changeCurrentPage (entrustType, pageNum) {
-      console.log(pageNum)
       switch (entrustType) {
         case 'current-entrust':
           this.currentPageForMyEntrust = pageNum
@@ -612,7 +601,6 @@ export default {
      * 4.撤销委单
      */
     repealMyEntrust (id, version) {
-      console.log(id)
       let params = {
         id,
         version
@@ -737,7 +725,7 @@ export default {
 
     .search-condition-box {
       width: 100%;
-      padding: 20px;
+      padding: 8px 20px;
 
       > .condition-item {
         display: inline-block;
@@ -770,6 +758,7 @@ export default {
           margin: 2px;
           border: 1px solid rgba(72, 87, 118, 1);
           border-radius: 2px;
+          font-size: 12px;
           vertical-align: top;
           color: #fff;
         }
@@ -779,7 +768,6 @@ export default {
           height: 34px;
           border-radius: 4px;
           color: #fff;
-          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
     }
@@ -789,19 +777,24 @@ export default {
     }
 
     .height500 {
-      height: 714px;
+      height: 758px;
     }
 
     /deep/ {
+      .el-tabs__item.is-top:nth-child(3) {
+        margin: 0 19px !important;
+      }
+
       /* 点击切换时背景色和字体颜色 */
       .el-tabs__item {
-        width: 105px;
-        padding: 0;
-        margin-left: 4px;
+        width: 85px !important;
+        height: 42px !important;
+        padding: 0 !important;
+        margin: 10px 0 0 !important;
         border-left: 0 solid transparent !important;
         text-align: center;
         background-color: transparent !important;
-      }
+       }
 
       .el-input__inner {
         width: 80px;
@@ -844,13 +837,22 @@ export default {
       }
 
       .el-table {
-        width: 970px !important;
+        width: 100%;
         font-size: 12px;
 
         th {
           &.is-leaf {
             border-top: 0;
           }
+        }
+
+        .el-table__header,
+        .el-table__body {
+          table-layout: auto;
+        }
+
+        .el-table__body-wrapper {
+          min-height: 466px;
         }
       }
 
@@ -875,12 +877,12 @@ export default {
       }
 
       .el-pagination {
-        text-align: right;
+        text-align: center;
       }
 
       .el-table__empty-block {
         width: 964px !important;
-        min-height: 280px;
+        min-height: 450px;
         margin-left: 2px;
       }
     }
@@ -897,14 +899,26 @@ export default {
         }
       }
 
+      .search-btn {
+        background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
+      }
+
       /deep/ {
+        .el-tabs__nav-wrap.is-top {
+          padding: 0 20px;
+
+          .el-tabs__nav-scroll {
+            border-bottom: 1px solid rgba(45, 54, 81, 1);
+          }
+        }
+
         /* 个人中心（黑色主题） */
         .el-input__suffix {
           top: 4px;
           right: 1px;
           height: 28px;
           border-radius: 0 2px 2px 0;
-          line-height: 30px;
+          line-height: 25px;
           background: #2d3651;
           -webkit-transition: all .3s;
           transition: all .3s;
@@ -918,7 +932,7 @@ export default {
         .el-tabs__item.is-active {
           border-bottom: 2px solid #0079fe;
           border-left: none;
-          color: #ccc;
+          color: #338ff5;
           background-color: transparent;
         }
 
@@ -935,6 +949,8 @@ export default {
         }
 
         .el-table {
+          background-color: $mainContentNightBgColor;
+
           thead {
             color: #617499;
           }
@@ -970,7 +986,7 @@ export default {
         }
 
         .el-pagination {
-          text-align: right;
+          text-align: center;
           background-color: transparent;
         }
 
@@ -979,7 +995,7 @@ export default {
         }
 
         th.is-leaf {
-          border-bottom: 1px solid rgba(57, 66, 77, .1);
+          border-bottom: 1px solid rgba(45, 54, 81, 1);
         }
       }
     }
@@ -1004,6 +1020,10 @@ export default {
             background: #fff;
           }
         }
+
+        .search-btn {
+          background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
+        }
       }
 
       .currency-span {
@@ -1011,13 +1031,21 @@ export default {
       }
 
       /deep/ {
+        .el-tabs__nav-wrap.is-top {
+          padding: 0 20px;
+
+          .el-tabs__nav-scroll {
+            border-bottom: 1px solid rgba(217, 225, 236, 1);
+          }
+        }
+
         /* 个人中心（白色主题） */
         .el-input__suffix {
           top: 4px;
           right: 1px;
           height: 28px;
           border-radius: 0 2px 2px 0;
-          line-height: 30px;
+          line-height: 25px;
           background: #fff;
           -webkit-transition: all .3s;
           transition: all .3s;
@@ -1039,6 +1067,10 @@ export default {
           }
         }
 
+        th.is-leaf {
+          border-bottom: 1px solid rgba(217, 225, 236, 1);
+        }
+
         .el-input--suffix {
           .el-input__inner {
             border: 1px solid #ecf1f8;
@@ -1049,6 +1081,10 @@ export default {
 
         .cell {
           color: #333;
+        }
+
+        .el-table {
+          background-color: $mainColorOfWhite;
         }
       }
     }

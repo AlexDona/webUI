@@ -1,43 +1,58 @@
+<!--
+  author: zhaoxinlei
+  update: 20190803
+  description: 当前页面为 币币交易 委单（历史委单、当前委单） 组件
+-->
 <template>
   <div
     class="entrust-order-box trade"
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   >
     <div class="inner-box">
-
-      <!--查看更多委单记录-->
-      <div
-        class="view-more"
-        v-if="$isLogin_S_X"
-      >
-        <button
-          class="cancel-all-entrust"
-          :class="{
+      <!-- 表头 -->
+      <div class="title">
+        <ul class="t-left">
+          <li
+            class="item cursor-pointer"
+            v-for="(entrust,index) in entrusts"
+            :key="index"
+            @click="toggleEntrustType(entrust.name)"
+            :class="{active: activeName === entrust.name}"
+          >
+            {{$t(entrust.label)}}
+          </li>
+        </ul>
+        <!-- 查看更多委单记录、取消所有订单 -->
+        <div class="t-right">
+          <!-- 取消所有委单 -->
+          <button
+            v-if="isCurrentOrHistory"
+            class="cancel-all-entrust"
+            :class="{
             'disabled': !currentEntrustList.length
           }"
-          :disabled="!currentEntrustList.length"
-          @click="cancelAllEntrust"
-        >
-          {{$t(cancelEntrustBtnText)}}
-        </button>
-        <a
-          href="javascript:void(0);"
-          @click="jumpToPersonal"
-        >
+            :disabled="!currentEntrustList.length"
+            @click="cancelAllEntrust"
+          >
+            {{$t(cancelEntrustBtnText)}}
+          </button>
+          <!-- 查看更多委单 -->
+          <a
+            href="javascript:void(0);"
+            @click="jumpToPersonal"
+          >
           <span>
             <!--查看更多-->
             {{ $t('M.comm_view_more') }}
           </span>
-          <i class="el-icon-d-arrow-right"></i>
-        </a>
+            <i class="el-icon-d-arrow-right"></i>
+          </a>
+        </div>
       </div>
-      <el-tabs
-        v-model="activeName"
-      >
-        <!--当前委托-->
-        <el-tab-pane
-          :label="$t('M.trade_coin_commissioned_current')"
-          name="current-entrust"
+      <div class="content">
+        <div
+          class="current-entrust"
+          v-if="isCurrentOrHistory"
         >
           <!--主要内容-->
           <div class="content-box">
@@ -150,11 +165,11 @@
             @current-change="changeCurrentPage(0,$event)"
           >
           </el-pagination>
-        </el-tab-pane>
-        <!--历史委托-->
-        <el-tab-pane
-          :label="$t('M.trade_coin_history_entrust1')"
-          name="history-entrust"
+        </div>
+        <!-- 历史委托-->
+        <div
+          class="history-entrust"
+          v-else
         >
           <!--主要内容-->
           <div class="content-box history">
@@ -175,6 +190,7 @@
               <li class="th count">
                 <!--委托量-->
                 {{ $t('M.trade_coin_entrusted_amount') }}
+                <span>（{{$middleTopData_S_X.sellsymbol}}）</span>
               </li>
               <li class="th price">
                 <!--已成交量-->
@@ -244,17 +260,16 @@
               </div>
             </div>
           </div>
-        </el-tab-pane>
-        <!--分页-->
-        <el-pagination
-          background
-          v-show="activeName === 'history-entrust' && historyEntrustList.length && $isLogin_S_X"
-          layout="prev, pager, next"
-          :page-count="totalPageForHistoryEntrust"
-          @current-change="changeCurrentPage(1,$event)"
-        >
-        </el-pagination>
-      </el-tabs>
+          <el-pagination
+            background
+            v-show="activeName === 'history-entrust' && historyEntrustList.length && $isLogin_S_X"
+            layout="prev, pager, next"
+            :page-count="totalPageForHistoryEntrust"
+            @current-change="changeCurrentPage(1,$event)"
+          >
+          </el-pagination>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -294,7 +309,19 @@ export default {
       currentPageForHistoryEntrust: 1,
       // 历史委托总页数
       totalPageForHistoryEntrust: 1,
-      pageSize: 10
+      pageSize: 5,
+      entrusts: [
+        // 当前委托
+        {
+          label: 'M.trade_coin_commissioned_current',
+          name: 'current-entrust'
+        },
+        // 历史委托
+        {
+          label: 'M.trade_coin_history_entrust1',
+          name: 'history-entrust'
+        }
+      ]
     }
   },
   created () {
@@ -309,6 +336,9 @@ export default {
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
+    toggleEntrustType (name) {
+      this.activeName = name
+    },
     // 撤销所有委单
     cancelAllEntrust () {
       // 确定撤销所有委托？ 取消  删除
@@ -407,11 +437,14 @@ export default {
       this.totalPageForMyEntrust = getNestedData(data, 'data.pages') - 0
     }, 500)
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       refreshEntrustStatus: state => state.trade.refreshEntrustStatus
-    })
+    }),
+    isCurrentOrHistory () {
+      return this.activeName == 'current-entrust'
+    }
   },
   watch: {
     activeName () {
@@ -434,36 +467,53 @@ export default {
 
 .entrust-order-box {
   width: 100%;
-  height: 416px;
+  height: 250px;
   font-size: 12px;
 
   > .inner-box {
     position: relative;
 
-    > .view-more {
-      position: absolute;
-      z-index: 2000;
-      top: 0;
-      right: 0;
+    /* 表头 */
+    > .title {
+      display: flex;
+      justify-content: space-between;
       height: 34px;
-      padding-right: 27px;
+      padding: 0 10px;
       line-height: 34px;
-      text-align: right;
 
-      > .cancel-all-entrust {
-        padding-right: 10px;
-        border-radius: 5px;
-        font-size: 12px;
-        color: #d45858;
-        cursor: pointer;
+      > .t-left {
+        display: flex;
 
-        &.disabled {
-          color: rgba(255, 255, 255, .4);
+        > .item {
+          margin: 0 10px;
+          font-size: 12px;
+
+          &.active {
+            border-bottom: 2px solid $mainColor;
+          }
         }
       }
 
-      > a {
+      > .t-right {
+        font-size: 12px;
         color: $mainColor;
+
+        > .cancel-all-entrust {
+          padding-right: 10px;
+          border-radius: 5px;
+          font-size: 12px;
+          color: #f03e3e;
+          cursor: pointer;
+
+          &.disabled {
+            color: rgba(255, 255, 255, .4);
+            cursor: not-allowed;
+          }
+        }
+
+        > a {
+          color: $mainColor;
+        }
       }
     }
 
@@ -476,29 +526,21 @@ export default {
       &.history {
         > .thead {
           width: 100%;
-          font-size: 12px;
 
           > .th {
+            display: inline-block;
+            width: 16%;
+            font-size: 12px;
             white-space: nowrap;
 
-            &.time {
-              width: 16%;
-            }
-
-            &.price {
-              width: 15%;
-            }
-
-            &.count {
-              width: 13%;
-            }
-
             &.direction {
-              width: 8%;
+              width: 4%;
             }
 
             &.status {
-              width: 7%;
+              box-sizing: border-box;
+              padding-right: 20px;
+              text-align: right;
             }
           }
         }
@@ -509,28 +551,19 @@ export default {
               white-space: nowrap;
 
               > .td {
+                display: inline-block;
+                width: 16%;
+                padding-right: 10px;
                 font-size: 12px;
-                white-space: nowrap;
-
-                &.time {
-                  width: 16%;
-                  font-size: 12px;
-                }
-
-                &.price {
-                  width: 15%;
-                }
-
-                &.count {
-                  width: 13%;
-                }
 
                 &.direction {
-                  width: 8%;
+                  width: 4%;
                 }
 
                 &.status {
-                  width: 7%;
+                  box-sizing: border-box;
+                  padding-right: 20px;
+                  text-align: right;
                 }
               }
             }
@@ -540,44 +573,31 @@ export default {
 
       /* 表头 */
       > .thead {
-        height: 30px;
-        line-height: 30px;
+        width: 100%;
+        height: 34px;
+        line-height: 34px;
+        white-space: nowrap;
 
         > .th {
           display: inline-block;
+          width: 13.8%;
           font-size: 12px;
+          text-align: right;
           white-space: nowrap;
 
           &:last-of-type {
-            padding: 0 11px;
+            box-sizing: border-box;
+            padding-right: 20px;
+            text-align: right;
           }
 
           &.time {
-            width: 17%;
+            text-align: left;
           }
 
           &.direction {
-            width: 8%;
-          }
-
-          &.price {
-            width: 13%;
-          }
-
-          &.count {
-            width: 13%;
-          }
-
-          &.entrust {
-            width: 17%;
-          }
-
-          &.already {
-            width: 10%;
-          }
-
-          &.type {
-            width: 7%;
+            width: 3.4%;
+            text-align: left;
           }
         }
       }
@@ -585,11 +605,11 @@ export default {
       /* 表格内容 */
       > .tbody {
         .content {
-          min-height: 310px;
+          min-height: 140px;
 
           /* 未登录 */
           &.not-login {
-            line-height: 310px;
+            line-height: 180px;
             text-align: center;
 
             > a {
@@ -599,51 +619,41 @@ export default {
 
           &.empty {
             > p {
-              line-height: 310px;
+              line-height: 180px;
               text-align: center;
             }
           }
 
           > .tr {
-            height: 30px;
+            height: 25px;
             font-size: 14px;
-            line-height: 30px;
+            line-height: 25px;
             white-space: nowrap;
 
             > .td {
               display: inline-block;
+              box-sizing: border-box;
+              width: 13.8%;
+              padding-right: 10px;
               font-size: 12px;
+              text-align: right;
 
               &.time {
-                width: 17%;
+                text-align: left;
               }
 
               &.direction {
-                width: 8%;
-              }
-
-              &.price {
-                width: 14%;
-              }
-
-              &.count {
-                width: 13%;
-              }
-
-              &.entrust {
-                width: 16%;
-              }
-
-              &.already {
-                width: 10%;
-              }
-
-              &.type {
-                width: 7%;
+                width: 3.4%;
+                text-align: left;
               }
 
               &.todos {
+                box-sizing: border-box;
+                padding-right: 20px;
+                text-align: right;
+
                 > button {
+                  font-size: 12px;
                   color: $mainColor;
                 }
               }
@@ -659,6 +669,35 @@ export default {
     background-color: $mainContentNightBgColor;
 
     > .inner-box {
+      > .title {
+        background-color: #23273c;
+
+        > .t-left {
+          > .item {
+            color: #66718f;
+
+            &.active {
+              color: #d9e1f1;
+            }
+          }
+        }
+
+        > .t-right {
+          > .cancel-all-entrust {
+            color: #f03e3e;
+
+            &.disabled {
+              color: rgba(255, 255, 255, .4);
+              cursor: not-allowed;
+            }
+          }
+
+          > a {
+            color: $mainColor;
+          }
+        }
+      }
+
       /* 主要内容 */
       .content-box {
         /* 表格内容 */
@@ -667,6 +706,7 @@ export default {
             > .tr {
               /* border-bottom:1px solid red; */
               border-color: rgba(57, 66, 77, .2);
+              color: #d9e1f1;
             }
           }
         }
@@ -679,6 +719,35 @@ export default {
     background-color: $mainDayBgColor;
 
     > .inner-box {
+      > .title {
+        background-color: #f2f6fa;
+
+        > .t-left {
+          > .item {
+            color: #66718f;
+
+            &.active {
+              color: #333;
+            }
+          }
+        }
+
+        > .t-right {
+          > .cancel-all-entrust {
+            color: #f03e3e;
+
+            &.disabled {
+              color: rgba(255, 255, 255, .4);
+              cursor: not-allowed;
+            }
+          }
+
+          > a {
+            color: $mainColor;
+          }
+        }
+      }
+
       /* 主要内容 */
       .content-box {
         /* 表格内容 */
@@ -686,6 +755,7 @@ export default {
           .content {
             > .tr {
               border-color: rgba(57, 66, 77, .1);
+              color: #596a7a;
             }
           }
         }
