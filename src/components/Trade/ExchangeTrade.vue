@@ -16,7 +16,10 @@
             v-for="(exchange,index) in exchanges"
             :key="index"
             @click="toggleMatchType(exchange.name)"
-            :class="{active: activeName === exchange.name}"
+            :class="{
+              active: activeName === exchange.name,
+              'not-allow':  exchange.name == exchanges[0].name && !isShowLimitPrice
+            }"
           >
             {{$t(exchange.label)}}
           </li>
@@ -1088,6 +1091,8 @@ export default {
     // 获取 ref value
     // 切换撮合类型
     toggleMatchType (activeName) {
+      // console.log(this.limitEntrustEnabled, this.activeName)
+      if (activeName == this.exchanges[0].name && !this.isShowLimitPrice) return
       this.activeName = activeName
       switch (this.activeName) {
         case 'market-price':
@@ -1708,6 +1713,10 @@ export default {
 
             &.active {
               border-bottom: 2px solid $mainColor;
+            }
+
+            &.not-allow {
+              cursor: not-allowed !important;
             }
           }
         }
