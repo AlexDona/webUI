@@ -9,7 +9,7 @@ const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
 const BaseURL = {
-  testing: 'http://192.168.2.200:8888/',
+  testing: 'https://web.rest.test.com/',
   // testing: 'http://192.168.2.210:8888/',
   development210: 'http://192.168.2.210:8888/',
   production: 'https://s.fubt.co/'
