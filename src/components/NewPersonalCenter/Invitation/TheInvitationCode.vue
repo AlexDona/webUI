@@ -37,7 +37,7 @@
               .qr-code-box(
                 v-show="isShowQrCode"
               )
-                QRCode(
+                QrCode(
                   :value="inviteUrl"
                   :size="110"
                 )
@@ -228,7 +228,7 @@ export default {
     }),
     inviteUrl () {
       // console.log(domain)
-      return `${domain}/${this.$routes_X.register}?showId=${this.$userInfo_X.showId}`
+      return `${domain}/${this.$routes_X.login}/${this.$routes_X.register}/${this.$userInfo_X.showId}`
     },
     hasInviter () {
       return this.$userInfo_X.inviter

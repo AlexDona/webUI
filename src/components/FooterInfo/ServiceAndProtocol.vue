@@ -2,6 +2,7 @@
   <div
     class="service-protocol-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{'min-height':(windowHeight-302)+'px'}"
   >
     <div class="content">
       <div class="top">

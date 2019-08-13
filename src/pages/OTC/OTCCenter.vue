@@ -535,7 +535,7 @@
                   </div>
                 </div>
                 <div class="fifth-bar bars">
-                  <!--30日冻结次数-->
+                  <!--冻结次数-->
                   <div class="bar-top">
                     {{$t('M.focus_black_merchant_info5')}}
                   </div>
@@ -554,6 +554,53 @@
                 </div>
               </div>
             </div>
+          </el-dialog>
+        </div>
+        <!--未实名认证前弹框提示-->
+        <div class="warning">
+          <el-dialog
+            :visible.sync="notVerifyDialogVisible"
+            center
+          >
+            <div class="dialog-warning">
+              <div class="dialog-warning-box">
+                <IconFontCommon
+                  class="font-size60"
+                  iconName="icon-gantanhao"
+                />
+              </div>
+            </div>
+            <p class="font-size12 warning-text margin-top35 text-align-c">
+              <!--请前往个人中心完成实名认证！-->
+              <span v-show="!isRealNameAuthSuccess">
+                {{ $t('M.otc_index_digo_tips') }}
+              </span>
+              <!--请前往个人中心完成高级认证！-->
+              <span v-show="isRealNameAuthSuccess && !isAdvancedAuthSuccess">
+                {{ $t('M.otc_index_digo_tips_pass') }}
+              </span>
+            </p>
+            <span
+              slot="footer"
+              class="dialog-footer"
+            >
+              <!--确 定 取 消-->
+              <button
+                class="button-color border-radius4 cursor-pointer"
+                type="primary"
+                @click="realNameAuthConfirm"
+              >
+                <!--确 定-->
+                {{ $t('M.comm_confirm') }}
+              </button>
+              <button
+                class="btn border-radius4 cursor-pointer"
+                @click.prevent="notVerifyDialogVisible = false"
+              >
+                <!--取 消-->
+                {{ $t('M.comm_cancel') }}
+              </button>
+            </span>
           </el-dialog>
         </div>
       </div>
@@ -742,6 +789,8 @@ export default {
   },
   data () {
     return {
+      // 实名/高级认证弹窗显示与隐藏
+      notVerifyDialogVisible: false,
       // 个人信息弹窗显示状态
       personInfoDiaStatus: false,
       currencyCoinSelectStatus: true, // 货币类型法币可用状态
@@ -857,8 +906,8 @@ export default {
     await this.getOTCPutUpOrdersList()
     // 4.0 用户登录了刷新用户个人信息
     if (this.isLogin) {
+      // 刷新用户信息
       await this.REFRESH_USER_INFO_ACTION()
-      this.reflashUserInfo() // 刷新用户信息
       // 7.0 登陆后进页面待币种和法币都有id的时候调接口渲染查看弹窗及头部可用冻结数据
       await this.getViewDialogInfo()
     }
@@ -902,6 +951,12 @@ export default {
       // 改变otc主页法币列表筛选框选中的法币类型id
       'CHANGE_OTC_SELECTED_CURRENCY_ID'
     ]),
+    // 实名认证验证
+    realNameAuthConfirm () {
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
+      this.$goToPage('/PersonalCenter')
+      this.notVerifyDialogVisible = false
+    },
     // 国际标准格式(09ˋ40′32″)
     BIHTimeFormatting (date) {
       return formatSeconds(date, 'OTC')
@@ -912,12 +967,15 @@ export default {
     },
     // 点击挂单列表中的名称跳转到商家信息页面
     jumpMerchantInfoPage (userId) {
-      if (!this.isLogin) {
-        this.$goToPage(`/${this.$routes_X.login}`)
-        return false
-      }
-      if (userId && this.selectedOTCAvailableCurrencyCoinID && this.checkedCurrencyId) {
-        this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId, coinId: this.selectedOTCAvailableCurrencyCoinID, currencyId: this.checkedCurrencyId})
+      // 未登录不弹窗不跳转
+      if (this.isLogin) {
+        if (!this.isRealNameAuthSuccess || !this.isAdvancedAuthSuccess) {
+          this.notVerifyDialogVisible = true
+          return
+        }
+        if (userId && this.selectedOTCAvailableCurrencyCoinID && this.checkedCurrencyId) {
+          this.$goToPage(`/${this.$routes_X.OTCViewMerchantInfo}`, {userId: userId, coinId: this.selectedOTCAvailableCurrencyCoinID, currencyId: this.checkedCurrencyId})
+        }
       }
     },
     // 获得查看弹窗信息和可用冻结数据：当币种和法币改变的时候也要调此接口刷新数据
@@ -1008,10 +1066,6 @@ export default {
       }
       this.activeName = 'first'
     },
-    // 刷新个人信息
-    reflashUserInfo () {
-      this.REFRESH_USER_INFO_ACTION()
-    },
     // 查询用户是否可以发单状态
     async getUserPutUpOrderStatus () {
       const data = await getCommonPutUpOrderStatus()
@@ -1092,11 +1146,11 @@ export default {
           this.$error_tips_X(this.$t('M.otc_index_js'))
           return false
         } else if (!this.userInfo.realname) {
-          // 去个人中心完成实名认证
+          // 请前往个人中心完成实名认证
           this.$error_tips_X(this.$t('M.otc_index_digo_tips'))
           return false
         } else if (!(this.userInfo.advancedAuth === 'pass')) {
-          // 去个人中心完成高级认证
+          // 请前往个人中心完成高级认证
           this.$error_tips_X(this.$t('M.otc_index_digo_tips_pass'))
           return false
         } if (this.userInfo.otcEnable === 'disable') {
@@ -1150,16 +1204,18 @@ export default {
       const data = await getOTCAvailableCurrency({})
       // 返回数据正确的逻辑
       if (!data) return false
+      console.log(data)
       if (data.data) {
         this.IWantToBuySellArr = getNestedData(data, 'data')
         if (this.IWantToBuySellArr.length) {
-          _.forEach(this.IWantToBuySellArr, (coin, coinIndex) => {
-            if (coin.name == 'FBT') {
-              this.IWantToBuySellArr.splice(coinIndex, 1)
-              this.IWantToBuySellArr.unshift(coin)
-              return false
-            }
-          })
+          // 去掉将FBT放到第一位的逻辑201908013期的需求增加了币种排序参数
+          // _.forEach(this.IWantToBuySellArr, (coin, coinIndex) => {
+          //   if (coin.name == 'FBT') {
+          //     this.IWantToBuySellArr.splice(coinIndex, 1)
+          //     this.IWantToBuySellArr.unshift(coin)
+          //     return false
+          //   }
+          // })
           // 个人中心跳转otc-开始
           if (this.$route.params.coinId) {
             let jumpCoinId = this.$route.params.coinId
@@ -1289,8 +1345,19 @@ export default {
       isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
       updateOTCHomeListStatus: state => state.OTC.updateOTCHomeListStatus, // 委托定单撤单后，更新首页挂单列表状态
       otcSelectedCountryId: state => state.OTC.otcSelectedCountryId, // otc主页国家列表筛选框选中的国家id
-      otcSelectedCurrencyId: state => state.OTC.otcSelectedCurrencyId // otc主页法币列表筛选框选中的法币类型id
-    })
+      // otc主页法币列表筛选框选中的法币类型id
+      otcSelectedCurrencyId: state => state.OTC.otcSelectedCurrencyId,
+      // 是否通过高级认证
+      advancedAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.advancedAuth'),
+      // 实名认证
+      realNameAuth: state => getNestedData(state, 'user.loginStep1Info.userInfo.realNameAuth')
+    }),
+    isAdvancedAuthSuccess () {
+      return this.advancedAuth === 'pass'
+    },
+    isRealNameAuthSuccess () {
+      return this.realNameAuth === 'y'
+    }
   },
   watch: {
     updateOTCHomeListStatus (newVal) {
@@ -1457,6 +1524,10 @@ export default {
           position: relative;
           min-height: 828px;
           margin-top: 20px;
+
+          /*
+          min-height: 650px;
+          */
 
           .red {
             color: $upColor;
@@ -1718,6 +1789,8 @@ export default {
       .el-table {
         td {
           padding: 24px 0;
+
+          /* padding: 15px 0; */
         }
 
         .el-table__header {
@@ -1741,6 +1814,10 @@ export default {
         .el-table__body {
           tr {
             td {
+              /* .cell {
+                line-height: 22px;
+              } */
+
               &:first-child {
                 .cell {
                   padding-left: 30px;
@@ -1764,6 +1841,10 @@ export default {
             border-color: #8ead9e;
             background-color: #8ead9e;
           }
+
+          /* .el-button--mini {
+            height: 29px;
+          } */
         }
       }
 
@@ -1837,6 +1918,68 @@ export default {
         .el-dialog__body {
           padding: 0;
         }
+      }
+    }
+
+    /* 未实名认证弹窗 */
+    .warning {
+      .el-dialog__wrapper {
+        @include centerHorizontally;
+
+        .el-dialog {
+          margin-top: 0 !important;
+        }
+      }
+
+      .dialog-warning {
+        width: 90px;
+        height: 90px;
+        padding-top: 6px;
+        margin: 0 auto;
+        border-radius: 50%;
+        background: rgba(42, 122, 211, .2);
+
+        .dialog-warning-box {
+          width: 78px;
+          height: 78px;
+          margin: 0 auto;
+          border-radius: 50%;
+          line-height: 75px;
+          text-align: center;
+          background: linear-gradient(90deg, #2b396e, #2a5082);
+        }
+      }
+
+      .warning-text {
+        color: #fff;
+      }
+
+      .el-dialog {
+        width: 350px;
+        border-radius: 5px;
+      }
+
+      .button-color {
+        width: 80px;
+        height: 35px;
+        margin-right: 15px;
+        border: 0;
+        line-height: 0;
+      }
+
+      .btn {
+        width: 80px;
+        height: 35px;
+        line-height: 0;
+      }
+
+      .el-dialot__body {
+        text-align: center;
+      }
+
+      .el-dialog__footer {
+        margin-top: 20px;
+        text-align: center;
       }
     }
   }
@@ -2008,7 +2151,7 @@ export default {
       /* 发布订单按钮 */
       .person-info-box {
         .el-button {
-          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          background: $nightButtonBgColor1;
         }
       }
 
@@ -2150,6 +2293,28 @@ export default {
 
         .el-dialog {
           background-color: $dialogColor1;
+        }
+      }
+
+      .warning {
+        .el-dialog__wrapper {
+          background-color: rgba(11, 12, 20, .5);
+
+          .el-dialog {
+            margin-top: 0 !important;
+            background-color: #28334a;
+
+            .button-color {
+              color: rgba(255, 255, 255, 1);
+              background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+            }
+
+            .btn {
+              border: 1px solid #338ff5;
+              color: #fff;
+              background-color: transparent;
+            }
+          }
         }
       }
     }
@@ -2320,10 +2485,31 @@ export default {
     }
 
     /deep/ {
+      .warning {
+        .el-dialog__wrapper {
+          background-color: rgba(204, 204, 204, .5);
+
+          .button-color {
+            color: rgba(255, 255, 255, 1);
+            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
+
+          .warning-text {
+            color: #333;
+          }
+
+          .btn {
+            border: 1px solid #338ff5;
+            color: #333;
+            background-color: transparent;
+          }
+        }
+      }
+
       /* 发布订单按钮 */
       .person-info-box {
         .el-button {
-          background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
+          background: $dayButtonBgColor2;
         }
       }
 

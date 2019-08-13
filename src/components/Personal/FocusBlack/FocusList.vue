@@ -63,16 +63,16 @@
               .operation-text.cursor-pointer(
                 @click="confirmCancelFocus(s.row.toId)"
               ) {{$t('M.focus_black_title3')}}
-        <!--分页-->
-        .page
-          el-pagination(
-            background
-            layout="prev, pager, next"
-            :current-page="currentPage"
-            :page-count="totalPages"
-            @current-change="changeCurrentPage"
-            v-show="totalPages - 1 > 0"
-          )
+      <!--分页-->
+      .page
+        el-pagination(
+          background
+          layout="prev, pager, next"
+          :current-page="currentPage"
+          :page-count="totalPages"
+          @current-change="changeCurrentPage"
+          v-show="totalPages - 1 > 0"
+        )
 </template>
 <script>
 import {mapState} from 'vuex'
@@ -113,7 +113,7 @@ export default {
       this.getFocusLists()
     },
     // 2 确认取消关注接口
-    async confirmCancelFocus (id) {
+    confirmCancelFocus: _.debounce(async function (id) {
       let param = {
         toId: id,
         // 此操作进行时的关系：“1”关注，“2”拉黑
@@ -125,7 +125,7 @@ export default {
       this.currentPage = 1
       // 重新刷新列表
       this.getFocusLists()
-    },
+    }, 500),
     // 3 获得关注列表
     async getFocusLists () {
       let param = {
@@ -162,6 +162,7 @@ export default {
     .inner-box
       .tab-one
         padding 0 30px
+        min-height 650px
         .name
           color S_main_color
           .merchant-icon
@@ -196,7 +197,7 @@ export default {
       background-color S_night_main_bg
       /deep/
         .el-table
-          color #a9bed4
+          color S_night_main_text_color
           background-color S_night_main_bg
           tr,th
             background-color S_night_main_bg
@@ -205,12 +206,12 @@ export default {
               td
                 background-color S_night_main_bg !important
             td
-              border-bottom 1px solid #2d3651
+              border-bottom 1px solid S_color1
     &.day
       background-color S_day_bg
       /deep/
         .el-table
-          color #333
+          color S_day_main_text_color
           background-color S_day_bg
           tr,th
             background-color S_day_bg

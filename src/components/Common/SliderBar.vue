@@ -451,6 +451,12 @@ export default {
       }
     }
 
+    @media screen and (min-width: 2560px) {
+      .slider {
+        width: 95%;
+      }
+    }
+
     .rate {
       float: right;
       display: inline-block;
@@ -486,7 +492,6 @@ export default {
 
   section {
     position: relative;
-    max-width: 800px;
     background-color: #fff;
     box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, .36);
   }

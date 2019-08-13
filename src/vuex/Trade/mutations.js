@@ -8,8 +8,8 @@ import {
   SET_IS_KLINE_DATA_READY,
   SET_TARGET_EXCHANGE_DATA,
   GET_SERVER_DATA,
-  RETURN_SYMBOL_DATA,
-  SET_PRE_INFO_M
+  SET_PRE_INFO_M,
+  UPDATE_KLINE_AND_DEPTH_SHOW_STATUS_M
 } from './mutations-types.js'
 
 // import {setStore} from '../../utils'
@@ -77,10 +77,10 @@ export default {
     state.serverData.nextCountDown = nextCountDown
     state.serverData.isLimitShow = isLimitShow
   },
-  [RETURN_SYMBOL_DATA] (state, data) {
-    state.isReturnSymbolData = data
-  },
   [SET_PRE_INFO_M] (state, info) {
     state.activity = {...state.activity, ...info}
+  },
+  [UPDATE_KLINE_AND_DEPTH_SHOW_STATUS_M] (state, showContent) {
+    state.showKlineOrDepth_S = showContent
   }
 }

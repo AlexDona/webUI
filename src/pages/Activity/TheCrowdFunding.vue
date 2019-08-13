@@ -190,7 +190,7 @@ export default {
           /*justify-content space-between*/
           min-height 1000px
           > .crowd-funding-item
-            width 370px
+            width S_userWidth
             min-width 370px
             height 370px
             background-color #151b30

@@ -7,7 +7,7 @@
       class="account-assets-main"
     >
       <!-- 用户信息-->
-      <UserInfo />
+      <UserInfo :Rates = 'CNYRate'/>
       <div class="account-assets-box margin-top10">
         <div>
           <header class="account-assets-header display-flex personal-height40 line-height40 box-shadow">
@@ -487,53 +487,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <!--未实名认证前弹框提示-->
-    <div class="warning">
-      <el-dialog
-        :visible.sync="notVerifyDialogVisible"
-        center
-      >
-        <div class="dialog-warning">
-          <div class="dialog-warning-box">
-            <IconFontCommon
-              class="font-size60"
-              iconName="icon-gantanhao"
-            />
-          </div>
-        </div>
-        <p class="font-size12 warning-text margin-top35 text-align-c">
-          <!--请先完成实名认证，再进行提币操作！-->
-          <span v-show="!(this.realNameAuth === 'y')">
-            {{ $t('M.user_asset_title15') }}
-          </span>
-          <!--请先完成高级认证，再进行提币操作！-->
-          <span v-show="this.realNameAuth === 'y' && !(this.advancedAuth === 'pass')">
-            {{ $t('M.user_asset_title16') }}
-          </span>
-        </p>
-        <span
-          slot="footer"
-          class="dialog-footer"
-        >
-          <!--确 定 取 消-->
-        <button
-          class="button-color border-radius4 cursor-pointer"
-          type="primary"
-          @click="realNameAuthConfirm"
-        >
-          <!--确 定-->
-          {{ $t('M.comm_confirm') }}
-        </button>
-        <button
-          class="btn border-radius4 cursor-pointer"
-          @click.prevent="notVerifyDialogVisible = false"
-        >
-          <!--取 消-->
-          {{ $t('M.comm_cancel') }}
-        </button>
-        </span>
-      </el-dialog>
     </div>
     <!--未实名认证前弹框提示-->
     <div class="warning">
@@ -1496,7 +1449,7 @@ export default {
       // console.log(this.currencyRateList)
     },
     filteredData1 () {
-      // console.log(this.filteredData1)
+      // console.log(this.filteredData1)https://web.rest.test.com/exchangeRate/coinPrice?coinName=FBT&shortName=CNY
     },
     filteredData2 () {
       // console.log(this.filteredData2)
@@ -2072,7 +2025,7 @@ export default {
       }
 
       .button-color {
-        color: rgba(255, 255, 255, .7);
+        color: rgba(255, 255, 255, 1);
         background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
       }
 
@@ -2111,7 +2064,7 @@ export default {
           }
 
           .button-color {
-            color: rgba(255, 255, 255, .7);
+            color: rgba(255, 255, 255, 1);
             background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
           }
 
@@ -2345,7 +2298,7 @@ export default {
       }
 
       .button-color {
-        color: rgba(255, 255, 255, .7);
+        color: rgba(255, 255, 255, 1);
         background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
       }
 
@@ -2396,7 +2349,7 @@ export default {
           }
 
           .button-color {
-            color: rgba(255, 255, 255, .7);
+            color: rgba(255, 255, 255, 1);
             background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
           }
 

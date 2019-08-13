@@ -14,5 +14,8 @@ export default {
   },
   isNeedIOS () {
     return xDomain !== 'kbbt.com' && xDomain !== 'bithumber.com'
+  },
+  isDayTheme (state) {
+    return state.theme == 'day'
   }
 }

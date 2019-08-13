@@ -47,16 +47,16 @@
               .operation-text.cursor-pointer(
                 @click="confirmUnBlackList(s.row.toId)"
               ) {{$t('M.focus_black_title4')}}
-        <!--分页-->
-        .page
-          el-pagination(
-            background
-            layout="prev, pager, next"
-            :current-page="currentPage"
-            :page-count="totalPages"
-            @current-change="changeCurrentPage"
-            v-show="totalPages - 1 > 0"
-          )
+      <!--分页-->
+      .page
+        el-pagination(
+          background
+          layout="prev, pager, next"
+          :current-page="currentPage"
+          :page-count="totalPages"
+          @current-change="changeCurrentPage"
+          v-show="totalPages - 1 > 0"
+        )
 </template>
 <script>
 import {mapState} from 'vuex'
@@ -97,7 +97,7 @@ export default {
       this.getBlackLists()
     },
     // 2 确认解除黑名单接口
-    async confirmUnBlackList (id) {
+    confirmUnBlackList: _.debounce(async function (id) {
       let param = {
         toId: id,
         // 此操作进行时的关系：“1”关注，“2”拉黑
@@ -109,7 +109,7 @@ export default {
       this.currentPage = 1
       // 重新刷新列表
       this.getBlackLists()
-    },
+    }, 500),
     // 3 获得黑名单列表
     async getBlackLists () {
       let param = {
@@ -142,6 +142,7 @@ export default {
       width 1105px
       .tab-two
         padding 0 30px
+        min-height 650px
         .operation-text
           height 24px
           color S_main_color
@@ -172,13 +173,13 @@ export default {
     &.night
       /deep/
         .el-table
-          color #a9bed4
+          color S_night_main_text_color
           background-color S_night_main_bg
           .el-table__header
             th.is-leaf
-              border-bottom 1px solid #2d3651
+              border-bottom 1px solid S_color1
             thead
-              color #a9bed4
+              color S_night_main_text_color
           tr,th
             background-color S_night_main_bg
           .el-table__body
@@ -188,13 +189,13 @@ export default {
     &.day
       /deep/
         .el-table
-          color #333
+          color S_day_main_text_color
           background-color S_day_bg
           .el-table__header
             th.is-leaf
               border-bottom 1px solid rgba(57, 66, 77, .1)
             thead
-              color #7d90ac
+              color S_color2
           tr,th
             background-color S_day_bg
           .el-table__body

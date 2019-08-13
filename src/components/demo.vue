@@ -3,22 +3,10 @@
   create: 20190327
   description: 当前页面为 demo 组件，功能为提供开发模板
 -->
-<!-- pug 模板 -->
 <template lang="pug">
   .demo-box
     .inner-box {{$t('meessage')}}
 </template>
-<!-- html 模板 -->
-<!--<template>-->
-<!--<div-->
-<!--class="demo-box"-->
-<!--&gt;-->
-<!--<div class="inner-box">-->
-<!--{{$t('message')}}-->
-<!--</div>-->
-<!--</div>-->
-<!--</template>-->
-<!--请严格按照如下书写顺序-->
 <script>
 // import { getLanguagesAJAX } from '../utils/API/common'
 export default {

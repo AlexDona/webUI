@@ -7,7 +7,8 @@ const request = require('request')
 const {atob} = require('abab')
 const pako = require('pako')
 const XDomin = {
-  testing: 'new.test.com',
+  testing: 'web.test.com',
+  development: 'new.dev.com',
   development210: 'me.com',
   production: 'fubt.co'
 }
@@ -17,8 +18,10 @@ const handleRequest = async (options, callback) => {
       // 'x-domain': 'fubt.co'
       'x-domain': XDomin[process.env.NODE_ENV]
     },
+    rejectUnauthorized: false,
     ...options
   }, function (err, res, body) {
+    if (err) throw err
     if (!err && callback) callback(JSON.parse(body))
   })
 }

@@ -292,6 +292,7 @@
     "no-descending-specificity":null,
     "font-family-no-missing-generic-family-keyword":null,
     "function-linear-gradient-no-nonstandard-direction":null,
-    "declaration-block-trailing-semicolon":null
+    "declaration-block-trailing-semicolon":null,
+    "at-rule-no-unknown": null
   }
 }

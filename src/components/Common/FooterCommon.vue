@@ -19,15 +19,24 @@
               ) {{$t('M.comm_api_doc')}}
             // 上币申请
             dd.dd-item
-              router-link(to="/CurrencyApplication") {{$t('M.actionCenter_coin_apply')}}
+              // 20190813周期增加了上币申请第三方表单提交申请页面：有URL就按照URL跳转 没有就跳转本项目上币申请页面
+              a(
+                v-if="configInfo.listingUrl"
+                :href="configInfo.listingUrl"
+                target="_blank"
+              ) {{$t('M.actionCenter_coin_apply')}}
+              router-link(
+                v-else
+                to="/CurrencyApplication"
+              ) {{$t('M.actionCenter_coin_apply')}}
             // 币种资料
             dd.dd-item(@click="$footerJump('/ServiceAndProtocol','CurrencyInformation')") {{$t('M.comm_currency_info')}}
             // 客户端下载
             dd.dd-item(v-if="isNeedApp")
               router-link(:to="downloadAppSrc") {{$t('M.comm_Client_Downloads')}}
-          // 关于我们
+          // 关于
           dl.right-dl
-            dt.title {{$t('M.comm_us')}}
+            dt.title {{$t('M.footer_about_label')}}
             // 新闻公告
             dd.dd-item(@click="$footerJump(`/${$routes_X.news}`,'notice')")  {{$t('M.comm_news_and_notice')}}
             // 帮助中心
@@ -50,9 +59,9 @@
             dd.dd-item(@click="$footerJump('/ServiceAndProtocol','LegislationExplain')") {{$t('M.common_footer_legal_notice')}}
             // OTC 服务协议
             dd.dd-item(@click="$footerJump('/ServiceAndProtocol','OTCServices')") {{$t('M.about_digital_terms_hint8')}}
-          //  联系我们
+          //  服务
           dl.right-dl
-            dt.title {{$t('M.common_connect_us')}}
+            dt.title {{$t('M.footer_service_label')}}
             .email
               // 客服邮箱
               span.email-content(v-if="configInfo['otcEmail']") {{$t('M.footer_service_email')}}: {{configInfo['otcEmail']}}
@@ -242,7 +251,7 @@ export default {
     width: 100%;
     min-width: 1288px;
     color: #838dae;
-    background-color: #1c2237;
+    background-color: #1c1f32;
 
     > .inner-box {
       width: 1300px;
