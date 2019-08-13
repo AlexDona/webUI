@@ -73,7 +73,7 @@
                       </div>
                     </div>
                     <div class="fifth-bar bars">
-                      <!--30日冻结次数-->
+                      <!--冻结次数-->
                       <div class="bar-top">
                         {{$t('M.focus_black_merchant_info5')}}
                       </div>

@@ -758,7 +758,7 @@ export default {
           }
 
           .el-table__empty-block {
-            height: 450px;
+            height: 400px;
           }
         }
       }
