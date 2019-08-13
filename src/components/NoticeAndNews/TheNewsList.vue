@@ -139,10 +139,14 @@ export default {
       }
       const data = await getAllNewsTypeList(params)
       if (!data) return false
-      this.newsTypeList = _.get(data, 'data') || []
+      const targetList = _.get(data, 'data')
+      console.log(targetList)
+      if (!targetList.length) return false
+      this.newsTypeList = targetList
+      return true
     },
     async resetNewTypeList () {
-      await this.getAllNewsTypeList()
+      if (!await this.getAllNewsTypeList()) return
       if (this.newsTypeActiveName) {
         this.activeName = this.newsTypeActiveName
         this.changeTab({name: this.activeName})
@@ -175,9 +179,13 @@ export default {
     }
   },
   watch: {
+    async $language_S_X () {
+      await this.resetNewTypeList()
+      await this.getNewsNoticeList()
+    },
     activeTitle (New) {
       this.newsTypeId = _.get(New, 'id')
-      this.$setStore('newsTypeId', this.newsTypeId)
+      this.$setStore('newsTypeId', this.newsTypeId || '')
     }
   }
 }
