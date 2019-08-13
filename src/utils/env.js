@@ -47,11 +47,19 @@ const devTestConfig = {
   // socketUrl: 'ws://192.168.2.200:8087/market',
 
   // HuaHaoTian
-  // socketUrl: 'ws://192.168.2.200:8087/market',
-  // apiCommonUrl: 'http://192.168.2.200:8888/',
-  // loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
-  // OTCIMSocketUrl: 'ws://192.168.2.200:8066/websoc'
+  socketUrl: 'ws://192.168.2.200:8087/market',
+  apiCommonUrl: 'http://192.168.2.200:8888/',
+  loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
+  OTCIMSocketUrl: 'ws://192.168.2.200:8066/websoc'
 
+  // socketUrl: 'wss://market.test.com',
+  // apiCommonUrl: 'https://web.rest.test.com/',
+  // loginSocketUrl: 'wss://qrcode.test.com/qrcodeLogin/',
+  // OTCIMSocketUrl: 'wss://im.test.com/websoc'
+}
+
+// eslint-disable-next-line
+const testingConfig = {
   socketUrl: 'wss://market.test.com',
   apiCommonUrl: 'https://web.rest.test.com/',
   loginSocketUrl: 'wss://qrcode.test.com/qrcodeLogin/',
@@ -72,17 +80,11 @@ const prodConfig = {
   // loginSocketUrl: 'wss://s.fubt.co/qrcodeLogin/' // 扫码登录 socket
   OTCIMSocketUrl: 'wss://ims.fubt.co/websoc'
 }
-// eslint-disable-next-line
-const newProdConfig = {
-  apiCommonUrl: 'http://api.coin67.cn/', // 全局接口 commonURL
-  socketUrl: 'ws://market.coin67.cn/market', // 行情 socket
-  loginSocketUrl: 'ws://market.coin67.cn/qrcodeLogin/', // 扫码登录 socket
-  OTCIMSocketUrl: 'ws://192.168.2.210:8888/websoc'
-}
+
 switch (process.env.NODE_ENV) {
   case 'development':
     // 本地开发
-    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'web.test.com'}
+    targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'new.dev.com'}
     // targetConfig = {...targetConfig, ...devTestConfig, xDomain: 'me.com'}
     // 210开发环境
     // targetConfig = {...dev210Config, xDomain: 'me.com'}
@@ -98,7 +100,7 @@ switch (process.env.NODE_ENV) {
     break
   // 200测试环境
   case 'testing':
-    targetConfig = {...targetConfig, ...devTestConfig}
+    targetConfig = {...targetConfig, ...testingConfig}
     break
   // 生产环境
   case 'production':
