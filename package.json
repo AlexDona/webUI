@@ -12,11 +12,12 @@
     "lint:staged": "lint-staged",
     "analyze": "NODE_ENV=production npm_config_report=true npm run build",
     "clean": "rimraf dist/index.html && rimraf dist/static && rimraf static/dll.vendor*",
-    "build--test": "cross-env NODE_ENV=testing env_config=test npm run update-i18n && npm run build-dll && cross-env NODE_ENV=testing env_config=test node build/build.js",
+    "build--test": "cross-env NODE_ENV=testing env_config=test npm run update-i18n && npm run build-dll && cross-env NODE_ENV=testing env_config=test node build/build.js && node dist/uploadI18nShell.js",
     "build--dev": "cross-env NODE_ENV=development210 env_config=dev npm run update-i18n && npm run build-dll && cross-env NODE_ENV=development210 env_config=dev node build/build.js",
     "build--prod": "cross-env NODE_ENV=production env_config=prod npm run update-i18n && npm run build-dll && cross-env NODE_ENV=production env_config=prod node build/build.js",
     "update-i18n": "node build/updateI18n.js",
-    "build-dll": "npm run clean && node build/dll.js"
+    "build-dll": "npm run clean && node build/dll.js",
+    "bash": "node dist/uploadI18nShell.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -30,7 +31,6 @@
     "vuex": "^3.1.0"
   },
   "devDependencies": {
-    "lodash": "^4.17.11",
     "@commitlint/cli": "^7.2.1",
     "@commitlint/config-conventional": "^7.1.2",
     "abab": "^2.0.0",
@@ -50,6 +50,7 @@
     "babel-register": "^6.22.0",
     "chai": "^4.1.2",
     "chalk": "^2.0.1",
+    "child_process": "^1.0.2",
     "compression-webpack-plugin": "^1.1.11",
     "concurrently": "^4.1.0",
     "copy-webpack-plugin": "^4.0.1",
@@ -75,6 +76,7 @@
     "husky": "^1.2.0",
     "inject-loader": "^3.0.0",
     "lint-staged": "^8.1.0",
+    "lodash": "^4.17.11",
     "lrz": "^4.9.40",
     "mocha": "^3.2.0",
     "node-notifier": "^5.1.2",
