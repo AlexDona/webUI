@@ -47,7 +47,7 @@
               slot="append"
             )
               // 搜索
-              el-button(@click="filterByKeyWord") $t('M.news_search_label')
+              el-button(@click="filterByKeyWord") {{$t('M.news_search_label')}}
       .content
         .news()
           li.content-item.cursor-pointer(
