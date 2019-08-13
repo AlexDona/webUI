@@ -1,0 +1,3 @@
+[submodule "dist"]
+	path = dist
+	url = https://git.ops.coin78.com/html/web-ui.git
