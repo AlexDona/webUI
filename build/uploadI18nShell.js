@@ -6,4 +6,4 @@
 
 const exec = require('child_process').execSync
 
-exec('bash ../dist/uploadProjectToTest.sh')
+exec('bash ./uploadProjectToTest.sh')
