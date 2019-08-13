@@ -707,7 +707,7 @@ export default {
         line-height: 57px;
 
         .margin-left150 {
-          margin-left: 150px;
+          margin-left: 100px;
         }
 
         .search-button {
