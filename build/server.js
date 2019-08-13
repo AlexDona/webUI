@@ -7,7 +7,8 @@ const request = require('request')
 const {atob} = require('abab')
 const pako = require('pako')
 const XDomin = {
-  testing: 'web.test.com',
+  // testing: 'web.test.com',
+  testing: 'new.dev.com',
   development210: 'me.com',
   production: 'fubt.co'
 }
@@ -19,6 +20,7 @@ const handleRequest = async (options, callback) => {
     },
     ...options
   }, function (err, res, body) {
+    if(err) throw err
     if (!err && callback) callback(JSON.parse(body))
   })
 }
