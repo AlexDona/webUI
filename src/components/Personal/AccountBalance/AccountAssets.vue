@@ -8,6 +8,8 @@
     >
       <!-- 用户信息-->
       <UserInfo :Rates = 'CNYRate'/>
+      <!-- 持仓分红 -->
+      <TheHoldBonus/>
       <div class="account-assets-box margin-top10">
         <div>
           <header class="account-assets-header display-flex personal-height40 line-height40 box-shadow">
@@ -541,6 +543,7 @@
 <script>
 // 我的资产
 import UserInfo from '../AccountBalance/UserInfo'
+import TheHoldBonus from './TheHoldBonus'
 // 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
@@ -583,7 +586,8 @@ export default {
     ChargeMoneyItem, // 充币 item
     UserInfo, // 我的资产
     IconFontCommon, // 字体图标
-    CountDownButton // 短信倒计时
+    CountDownButton, // 短信倒计时
+    TheHoldBonus
   },
   // props,
   data () {

@@ -1,7 +1,12 @@
+<!--
+  author: zhaoxinlei
+  upldate: 20190812
+  description: 当前页面为 个人中心 账单明细 组件
+-->
 <template>
   <div
-          class="billing-details personal"
-          :class="{'day':theme == 'day','night':theme == 'night' }"
+    class="billing-details personal"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="billing-details-header personal-height40 line-height40 background-color padding-left23">
       <span
@@ -13,126 +18,142 @@
     </header>
     <div class="billing-details-main padding-lr20 margin-top9">
       <el-tabs
-              v-model="activeName"
-              @tab-click = "coinMoneyOrders"
+        v-model="activeName"
+        @tab-click = "coinMoneyOrders"
       >
         <!--查询条件-->
         <div class="billing-details-query">
-          <div class="float-left cursor-pointer">
-          <span class="demonstration display-inline-block font-size12">
-            <!--币种-->
-            {{ $t('M.comm_currency') }}
-          </span>
+          <div
+            class="float-left cursor-pointer"
+            v-show="!isHoldBonus"
+          >
+            <span class="demonstration display-inline-block font-size12">
+              <!--币种-->
+              {{ $t('M.comm_currency') }}
+            </span>
             <el-select
-                    v-model="defaultCurrencyId"
-                    filterable
-                    :placeholder="$t('M.comm_please_choose')"
-                    :no-data-text="$t('M.comm_no_data')"
-                    :disabled="currencyValueStatus"
+              v-model="defaultCurrencyId"
+              filterable
+              :placeholder="$t('M.comm_please_choose')"
+              :no-data-text="$t('M.comm_no_data')"
+              :disabled="currencyValueStatus"
             >
               <el-option
-                      :placeholder="$t('M.comm_please_choose')"
-                      v-for="(item, index) in currencyList"
-                      :key="index"
-                      :label="item.name"
-                      :value="item.id"
+                :placeholder="$t('M.comm_please_choose')"
+                v-for="(item, index) in currencyList"
+                :key="index"
+                :label="item.name"
+                :value="item.id"
               >
               </el-option>
             </el-select>
           </div>
           <!--充提记录类型-->
           <div
-                  v-if="activeName === 'current-entrust'"
-                  class="float-left margin-left150 cursor-pointer"
+            v-show="isCurrentEntrust"
+            class="float-left cursor-pointer"
+            :class="{'margin-left150': isCurrentEntrust}"
           >
           <span class="demonstration font-size12">
             <!--类型-->
             {{ $t('M.comm_type') }}
           </span>
             <el-select
-                    v-model="currencyTypeValue"
-                    :no-data-text="$t('M.comm_no_data')"
+              v-model="currencyTypeValue"
+              :no-data-text="$t('M.comm_no_data')"
             >
               <el-option
-                      v-for="item in currencyType"
-                      :key="item.value"
-                      :label="$t(item.label)"
-                      :value="item.value"
+                v-for="item in currencyType"
+                :key="item.value"
+                :label="$t(item.label)"
+                :value="item.value"
               >
               </el-option>
             </el-select>
           </div>
           <!--其他记录类型-->
           <div
-                  v-else
-                  class="float-left margin-left150 cursor-pointer"
+            v-show="!isCurrentEntrust && !isHoldBonus"
+            class="float-left cursor-pointer"
+            :class="{'margin-left150': !isCurrentEntrust && !isHoldBonus}"
           >
             <!--类型-->
             <span class="demonstration">
               {{ $t('M.comm_type') }}
             </span>
             <el-select
-                    v-model="otherRecordsValue"
+              v-model="otherRecordsValue"
             >
               <el-option
-                      v-for="item in otherRecordsType"
-                      :key="item.value"
-                      :label="$t(item.label)"
-                      :value="item.value"
+                v-for="item in otherRecordsType"
+                :key="item.value"
+                :label="$t(item.label)"
+                :value="item.value"
               >
               </el-option>
             </el-select>
           </div>
-          <div class="float-left margin-left150 cursor-pointer">
-            <div
-                    class="block"
-                    v-if="activeName === 'current-entrust'"
-            >
-              <span class="demonstration font-size12">
-                <!--日期-->
+          <div
+            class="float-left cursor-pointer"
+            :class="{'margin-left150': !isHoldBonus}"
+          >
+            <div class="block">
+              <span
+                class="demonstration font-size12"
+                v-show="!isHoldBonus"
+              >
+                <!--起止日期-->
                 {{ $t('M.user_coin_order4') }}
               </span>
+              <span
+                class="demonstration font-size12"
+                v-show="isHoldBonus"
+              >
+                <!-- 分红时间 -->
+                {{$t('M.hold_bonus_time_label')}}
+              </span>
               <el-date-picker
-                      v-model="startTime"
-                      type="datetimerange"
-                      align="right"
-                      :editable="false"
-                      range-separator="~"
-                      @change="changeTime"
-                      :start-placeholder="$t('M.otc_no1')"
-                      :end-placeholder="$t('M.otc_no2')"
-                      :default-time="['00:00:00', '23:59:59']"
-                      :picker-options="pickerOptionsTime"
+                v-model="startTime"
+                type="datetimerange"
+                align="right"
+                :editable="false"
+                range-separator="~"
+                @change="changeTime"
+                :start-placeholder="$t('M.otc_no1')"
+                :end-placeholder="$t('M.otc_no2')"
+                :default-time="['00:00:00', '23:59:59']"
+                :picker-options="!isHoldBonus ? pickerOptionsTime: {}"
               >
               </el-date-picker>
             </div>
-            <div
-                    class="block"
-                    v-else
-            >
-              <span class="demonstration font-size12">
-                <!--日期-->
-                {{ $t('M.user_coin_order4') }}
-              </span>
-              <el-date-picker
-                      v-model="startTime"
-                      type="datetimerange"
-                      align="right"
-                      :editable="false"
-                      :clearable="false"
-                      range-separator="~"
-                      @change="changeTime"
-                      :start-placeholder="$t('M.otc_no1')"
-                      :end-placeholder="$t('M.otc_no2')"
-                      :default-time="['00:00:00', '23:59:59']"
-                      :picker-options="pickerOptionsTime"
-              >
-              </el-date-picker>
-            </div>
+            <!--<div-->
+              <!--class="block"-->
+              <!--v-else-->
+            <!--&gt;-->
+              <!--<span class="demonstration font-size12">-->
+                <!--&lt;!&ndash;日期&ndash;&gt;-->
+                <!--{{ $t('M.user_coin_order4') }}-->
+              <!--</span>-->
+              <!--<el-date-picker-->
+                <!--v-model="startTime"-->
+                <!--type="datetimerange"-->
+                <!--align="right"-->
+                <!--:editable="false"-->
+                <!--:clearable="false"-->
+                <!--range-separator="~"-->
+                <!--@change="changeTime"-->
+                <!--:start-placeholder="$t('M.otc_no1')"-->
+                <!--:end-placeholder="$t('M.otc_no2')"-->
+                <!--:default-time="['00:00:00', '23:59:59']"-->
+                <!--:picker-options="pickerOptionsTime"-->
+              <!--&gt;-->
+              <!--</el-date-picker>-->
+            <!--</div>-->
           </div>
           <div
-                  class="search-button float-right border-radius2 text-align-c cursor-pointer font-size12"
-                  @click.prevent="stateSearchButton(activeName)"
+            class="search-button border-radius2 text-align-c cursor-pointer font-size12"
+            :class="{'float-right': !isHoldBonus,'float-left': isHoldBonus}"
+            @click.prevent="stateSearchButton(activeName)"
           >
             <!--搜索-->
             {{ $t('M.comm_search') }}
@@ -140,8 +161,8 @@
         </div>
         <!--充提记录-->
         <el-tab-pane
-                :label="$t('M.user_assets_Transaction_History')"
-                name="current-entrust"
+          :label="$t('M.user_assets_Transaction_History')"
+          :name="names.currentEntrust"
         >
           <div class="inner-box">
             <!--查询结果-->
@@ -269,13 +290,13 @@
         </el-tab-pane>
         <!--综合记录-->
         <el-tab-pane
-                :label="$t('M.comprehensive_records')"
-                name="other-records"
+          :label="$t('M.comprehensive_records')"
+          :name="names.otherRecord"
         >
           <el-table
-                  :data="otherRecordsList"
-                  style="width: 100%;"
-                  :empty-text="$t('M.comm_no_data')"
+            :data="otherRecordsList"
+            style="width: 100%;"
+            :empty-text="$t('M.comm_no_data')"
           >
             <!--时间-->
             <el-table-column
@@ -353,29 +374,97 @@
             </el-table-column>
           </el-table>
         </el-tab-pane>
+        <!-- 分红记录（持仓分红） -->
+        <el-tab-pane
+          :label="$t('M.hold_bonus_record_label')"
+          :name="names.holdBonusRecord"
+        >
+          <el-table
+            :data="holdBonus.records"
+            style="width: 100%;"
+            :empty-text="$t('M.comm_no_data')"
+            class="hold-table"
+          >
+            <!--分红时间-->
+            <el-table-column
+              :label="$t('M.hold_bonus_time_label')"
+            >
+              <template slot-scope = "s">
+                <span class="font-size12">{{ s.row.sendTime }}</span>
+              </template>
+            </el-table-column>
+            <!--平均持仓-->
+            <el-table-column
+              :label="$t('M.hold_bonus_average_position_label')"
+            >
+              <template slot-scope = "s">
+                <span class="font-size12">{{ s.row.holdNumber }} {{s.row.holdCoinName}}</span>
+              </template>
+            </el-table-column>
+            <!--分红方式-->
+            <el-table-column
+              :label="$t('M.hold_bonus_average_position_label')"
+            >
+              <template slot-scope = "s">
+                <span class="font-size12">{{ $t(holdBonus.shareType[s.row.balanceType]) }}</span>
+              </template>
+            </el-table-column>
+            <!--结算周期-->
+            <el-table-column
+              :label="$t('M.hold_bonus_settlement_interval_label')"
+              width="280"
+              align="left"
+              header-align="left"
+            >
+              <template slot-scope = "s">
+                <span class="font-size12">{{ s.row.balanceStartDate }} ~ {{ s.row.balanceEndDate }}</span>
+              </template>
+            </el-table-column>
+            <!--分红数量-->
+            <el-table-column
+              :label="$t('M.hold_bonus_share_count_label')"
+            >
+              <template slot-scope = "s">
+                <span class="font-size12">{{ s.row.bonusNumber }} {{s.row.coinName }}</span>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
       </el-tabs>
     </div>
     <div>
-      <!--分页-->
+      <!--充提记录分页-->
       <el-pagination
-              background
-              v-show="activeName === 'current-entrust' && chargeRecordList.length"
-              layout="prev, pager, next"
-              :current-page="recordPageNumber"
-              :page-count="recordTotalPageNumber"
-              @current-change="changeCurrentPage('current-entrust',$event)"
+        background
+        v-show="isCurrentEntrust && chargeRecordList.length"
+        layout="prev, pager, next"
+        :current-page="recordPageNumber"
+        :page-count="recordTotalPageNumber"
+        @current-change="changeCurrentPage(names.currentEntrust,$event)"
       >
       </el-pagination>
     </div>
     <div>
-      <!--分页-->
+      <!--综合记录分页-->
       <el-pagination
-              background
-              v-show="activeName === 'other-records' && otherRecordsList.length"
-              layout="prev, pager, next"
-              :current-page="otherRecordPageNumbers"
-              :page-count="totalPagesOtherRecords"
-              @current-change="changeCurrentPage('other-records',$event)"
+        background
+        v-show="!isOtherRecord && otherRecordsList.length"
+        layout="prev, pager, next"
+        :current-page="otherRecordPageNumbers"
+        :page-count="totalPagesOtherRecords"
+        @current-change="changeCurrentPage(names.otherRecord,$event)"
+      >
+      </el-pagination>
+    </div>
+    <div>
+      <!--分红记录分页-->
+      <el-pagination
+        background
+        v-show="isHoldBonus && holdBonus.records.length"
+        layout="prev, pager, next"
+        :current-page="holdBonus.pageNum"
+        :page-count="holdBonus.total"
+        @current-change="changeCurrentPage(names.holdBonusRecord,$event)"
       >
       </el-pagination>
     </div>
@@ -394,8 +483,9 @@ import {
   getNestedData
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils'
+import {getUserHoldRecordAJAX} from '../../../utils/api/holdBonus'
 export default {
-  components: {},
+  // components: {},
   data () {
     return {
       year: new Date().getFullYear(),
@@ -406,6 +496,27 @@ export default {
       seconds: new Date().getSeconds(),
       pickerOptionsTime: {},
       chargeRecordList: [], // 充提记录列表
+      names: {
+        currentEntrust: 'current-entrust',
+        otherRecord: 'other-records',
+        holdBonusRecord: 'hold-bonus'
+      },
+      holdBonus: {
+        // 分红记录
+        records: [],
+        // 当前页码
+        pageNum: 1,
+        // 总页码
+        total: 0,
+        shareType: {
+          // 日结
+          DAY: 'M.hold_bonus_share_type_day',
+          // 周结
+          WEEK: 'M.hold_bonus_share_type_week',
+          // 月结
+          MONTH: 'M.hold_bonus_share_type_month'
+        }
+      },
       activeName: 'current-entrust', // 充提记录
       recordPageNumber: 1, // 充提记录页码
       recordTotalPageNumber: 1, // 充提记录总页数
@@ -460,12 +571,16 @@ export default {
           value: 'INVITATION_REWARD',
           label: 'M.invitation_reward'
         }
-      ],
-      id: ''
+      ]
     }
   },
   async created () {
-    await this.inquireCurrencyList('current-entrust')
+    const activeName = this.$getStore('billingDetailsActiveName')
+    if (activeName == this.names.holdBonusRecord) {
+      this.activeName = activeName
+    } else {
+      await this.inquireCurrencyList(activeName || this.names.currentEntrust)
+    }
     this.changeTime()
   },
   methods: {
@@ -482,23 +597,14 @@ export default {
     //  1.2 点击复制
     onCopy (e) {
       // 已拷贝
-      let msg = this.$t('M.comm_have_been_copied')
-      this.$message({
-        type: 'success',
-        message: msg
-      })
+      this.$success_tips_X(this.$t('M.comm_have_been_copied'))
     },
     onError (e) {
       // 拷贝失败，请稍后重试
-      let msg = this.$t('M.comm_copies_failure')
-      this.$message({
-        type: 'success',
-        message: msg
-      })
+      this.$success_tips_X(this.$t('M.comm_copies_failure'))
     },
     // 1.3 时间赋值
     changeTime () {
-      console.log(1)
       this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
         disabledDate: (time) => {
           let curDate = (new Date()).getTime()
@@ -512,17 +618,40 @@ export default {
      * 2.tab 切换赋值展示
      */
     // 2.1 tab 切换
-    async coinMoneyOrders (e) {
-      if (this.activeName === 'current-entrust') {
+    coinMoneyOrders: _.debounce(async function (e) {
+      if (this.activeName === this.names.currentEntrust) {
         this.startTime = ''
-      }
-      if (this.activeName === 'other-records') {
+      } else {
         this.startTime = [
           new Date(this.year, this.month, this.date, 0, 0, 0),
           new Date()
         ]
       }
-      await this.inquireCurrencyList(e.name)
+      console.log(this.startTime)
+      if (!this.isHoldBonus) {
+        await this.inquireCurrencyList(e.name)
+      } else {
+        console.log(this.startTime)
+        this.getHoldBonusRecord()
+      }
+    }, 500),
+    // 获取 分红记录
+    async getHoldBonusRecord () {
+      const {pageNum} = this.holdBonus
+      const params = {
+        // 开始日期
+        startDateStr: this.startTime[0] == null ? '' : timeFilter(this.startTime[0], 'date'),
+        endDateStr: this.startTime[1] == null ? '' : timeFilter(this.startTime[1], 'date'),
+        pageNum: pageNum,
+        pageSize: 1
+      }
+      const data = await getUserHoldRecordAJAX(params)
+      if (!data) return
+      console.log(data)
+      this.holdBonus.total = _.get(data, 'data.total') - 0
+      this.$set(this.holdBonus, 'records', _.get(data, 'data.list') || [])
+      // this.holdBonus.pageNum = _.get(data, 'data.pageNum')
+      // console.log(this.holdBonus.records)
     },
     /**
      * 撤销提币记录
@@ -541,7 +670,7 @@ export default {
     },
     // 确认撤销提现
     async cancelWithdrawal (orderId, version) {
-      console.log(orderId, version)
+      // console.log(orderId, version)
       let data = await deleteCancelWithdraw({
         orderId,
         version
@@ -577,21 +706,24 @@ export default {
      * 3.搜索按钮
      */
     // 3.1 点击搜索按钮
-    stateSearchButton (entrustType) {
-      this.recordPageNumber = 1
-      this.otherRecordPageNumbers = 1
-      this.getChargeMentionList(entrustType)
-    },
-    /**
-     * 4.刚进页面时候 冲提记录列表展示
-     */
+    stateSearchButton: _.debounce(function (entrustType) {
+      if (!this.isHoldBonus) {
+        this.recordPageNumber = 1
+        this.otherRecordPageNumbers = 1
+        this.getChargeMentionList(entrustType)
+      } else {
+        this.holdBonus.pageNum = 1
+        this.getHoldBonusRecord()
+      }
+    }, 500),
     /* 类型 OTC_TRADE：otc交易 OTC_FEE：otc手续费
          CTC_TRADE：币币交易 CTC_FEE：币币手续费
          FINANCIAL_EXPENDITURE：理财支出
          FINANCIAL_INCOME：理财收入
          INVITATION_REWARD：邀请有礼 */
     async getChargeMentionList (entrustType1) {
-      console.log(this.currencyTypeValue)
+      // console.log(this.currencyTypeValue)
+      const {currentEntrust, otherRecord} = this.names
       // 判断是否显示提币地址 充币不显示，提币或者为空显示
       if (this.currencyTypeValue === 'WITHDRAW') {
         this.withdrawSite = true
@@ -600,8 +732,8 @@ export default {
         this.rechargeSite = true
         this.withdrawSite = false
       }
-      console.log(this.withdrawSite)
-      const entrustType = entrustType1 || 'current-entrust'
+      // console.log(this.withdrawSite)
+      const entrustType = entrustType1 || currentEntrust
       this.chargeRecordList = []
       this.otherRecordsList = []
       let params = {
@@ -616,7 +748,7 @@ export default {
       let data1
       // console.log(entrustType)
       switch (entrustType) {
-        case 'current-entrust':
+        case currentEntrust:
           params.currentPage = this.recordPageNumber
           params.type = this.currencyTypeValue
           params.startTime = this.startTime[0] == null ? '' : timeFilter(this.startTime[0], 'normal') // 开始起止时间
@@ -626,12 +758,12 @@ export default {
           if (!data) return false
           // 返回冲提记录列表展示
           let detailData = getNestedData(data, 'data')
-          console.log(detailData)
+          // console.log(detailData)
           // 充提记录
           this.chargeRecordList = getNestedData(detailData, 'list') || []
           this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
           break
-        case 'other-records':
+        case otherRecord:
           params.pageNum = this.otherRecordPageNumbers
           params.startTime = this.startTime[0] == null ? '' : timeFilter(this.startTime[0], 'normal') // 开始起止时间
           params.endTime = this.startTime[1] == null ? '' : timeFilter(this.startTime[1], 'normal') // 结束起止时间
@@ -652,21 +784,26 @@ export default {
      */
     changeCurrentPage (entrustType, pageNum) {
       // console.log(pageNum)
+      const {currentEntrust, otherRecord, holdBonusRecord} = this.names
       switch (entrustType) {
-        case 'current-entrust':
+        case currentEntrust:
           // console.log(pageNum)
           this.recordPageNumber = pageNum
           this.getChargeMentionList(entrustType)
           break
-        case 'other-records':
+        case otherRecord:
           // console.log(pageNum)
           this.otherRecordPageNumbers = pageNum
           this.getChargeMentionList(entrustType)
           break
+        case holdBonusRecord:
+          this.holdBonus.pageNum = pageNum
+          this.getHoldBonusRecord()
+          break
       }
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
@@ -674,7 +811,16 @@ export default {
       userCenterActiveName: state => state.personal.userCenterActiveName,
       assetJumpStatementDetails: state => state.personal.assetJumpStatementDetails, // 跳转到的账单明细
       assetJumpStatementDetailsType: state => state.personal.assetJumpStatementDetailsType // 我的资产跳转到账单明细提币携带提币类型
-    })
+    }),
+    isHoldBonus () {
+      return this.activeName == this.names.holdBonusRecord
+    },
+    isCurrentEntrust () {
+      return this.activeName == this.names.currentEntrust
+    },
+    isOtherRecord () {
+      return this.activeName == this.names.otherRecord
+    }
   },
   watch: {}
 }
@@ -714,7 +860,8 @@ export default {
           min-width: 50px;
           height: 30px;
           padding: 0 5px;
-          margin-top: 15px;
+          margin-top: 12px;
+          margin-left: 40px;
           line-height: 29px;
         }
 
@@ -1045,6 +1192,15 @@ export default {
 
           &:nth-of-type(7) {
             text-align: right;
+          }
+        }
+
+        &.hold-table {
+          th,
+td {
+            &:nth-of-type(4) {
+              text-align: left;
+            }
           }
         }
       }
