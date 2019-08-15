@@ -20,8 +20,8 @@
         :style="{height:`${height-2}px`, width:`${barWidth}px`}"
         @mouseup="mouseUpFn($event)"
         @mousedown="mouseDownFn($event)"
-        @touchstart.prevent="touchStart"
-        @touchmove="touchMove"
+        @touchstart="touchStart"
+        @touchmove.prevent="touchMove"
         @touchend="touchEnd"
       )
     .drag-success(
@@ -35,7 +35,6 @@
         Iconfont.icon(icon-name="icon-duihao-copy-copy")
 </template>
 <script>
-import { CSSAnimate } from '../../utils'
 // import {mapState} from 'vuex'
 export default {
   // name: 'common-slider',
@@ -50,11 +49,6 @@ export default {
     },
     'barWidth': {
       type: Number
-    },
-    // 成功后重置
-    initAfterSuccess: {
-      type: Boolean,
-      default: false
     }
   },
   data () {
@@ -70,7 +64,9 @@ export default {
       dragTimer: null,
       successText: 'M.slider_bar_success_tips',
       timer: null,
-      returnTimer: null
+      returnTimer: null,
+      moveX: 0,
+      startX: 0
     }
   },
   async created () {
@@ -92,17 +88,18 @@ export default {
       let width = e.clientX - this.beginClientX
       if (width < this.maxWidth) {
         if (document.querySelector('.handler')) {
-          document.querySelector('.handler').style.left = '-1px'
+          document.querySelector('.handler').style.left = 0
           document.querySelector('.drag_bg').style.width = 0
         }
       }
     },
     mouseMoveFn (e) {
+      console.log(e)
       if (this.mouseMoveStatus) {
         let width = e.clientX - this.beginClientX
         if (width > 0 && width <= this.maxWidth) {
           this.$changeCSS_X('.handler', 'left', width)
-          this.$changeCSS_X('.drag_bg', 'width', width + 5)
+          this.$changeCSS_X('.drag_bg', 'width', width)
         } else if (width > this.maxWidth) {
           this.sliderSuccessCallback()
         }
@@ -113,29 +110,38 @@ export default {
       this.beginClientX = e.clientX
     },
     touchStart (e) {
+      console.log(e)
+      this.mouseMoveStatus = true
       this.startX = e.targetTouches[0].pageX
     },
     touchMove (e) {
+      // console.log(e.targetTouches[0].pageX)
       this.moveX = e.targetTouches[0].pageX
+      console.log(this.moveX)
       let left = this.moveX - this.startX
 
       let targetLeft = parseInt(window.getComputedStyle(document.querySelector(`.handler`)).left)
+      console.log(targetLeft)
       if (targetLeft < 0 || left < 0) return false
       targetLeft < this.maxWidth && targetLeft >= 0 ? this.$changeCSS_X('.handler', 'left', left) : this.sliderSuccessCallback()
     },
-    touchEnd (e) {
-      CSSAnimate(document.querySelector('.handler'), { left: 0 }, 15, 0.8, this.dragTimer)
+    touchEnd () {
+      document.querySelector('.handler').style.left = 0
+      document.querySelector('.drag_bg').style.width = 0
+      // CSSAnimate(document.querySelector('.handler'), { left: 0 }, 15, 0.8, this.dragTimer)
+      // CSSAnimate(document.querySelector('.drag_bg'), { width: 0 }, 15, 0.8, this.dragTimer)
     },
     // 按下滑块函数
     sliderSuccessCallback () {
       this.$changeCSS_X('.handler', 'left', this.maxWidth)
-      this.$changeCSS_X('.drag_bg', 'width', this.maxWidth + 5)
+      this.$changeCSS_X('.drag_bg', 'width', this.maxWidth)
       this.confirmSuccess = true
-      document.querySelector('.handler').style.left = '-1px'
-      document.querySelector('.drag_bg').style.width = 0
+
       this.returnTimer = setTimeout(() => {
         this.$emit('successCallback')
         this.mouseMoveStatus = false
+        document.querySelector('.handler').style.left = 0
+        document.querySelector('.drag_bg').style.width = 0
       }, 300)
     }
   },
@@ -190,7 +196,7 @@ export default {
       .handler_bg
         position absolute
         top 0
-        left -1px
+        left 0
         cursor move
         border-radius 4px
     >.drag-success
