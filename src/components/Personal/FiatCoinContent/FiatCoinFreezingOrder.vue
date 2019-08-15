@@ -212,7 +212,7 @@
       <el-pagination
         class="pages"
         background
-        v-show="OTCFreezingOrderList.length"
+        v-show="OTCFreezingOrderList.length && legalTradePageTotals - 1 > 0"
         layout="prev, pager, next"
         :current-page="legalTradePageNum"
         :page-count="legalTradePageTotals"

@@ -763,7 +763,7 @@
       <el-pagination
         class="pages"
         background
-        v-show="tradingOrderList.length"
+        v-show="tradingOrderList.length && legalTradePageTotals - 1 > 0"
         layout="prev, pager, next"
         :current-page="legalTradePageNum"
         :page-count="legalTradePageTotals"
@@ -1219,16 +1219,22 @@ export default {
       let data
       if (val === 1) {
         data = await cancelUserOtcOrder()
-        console.log('撤销（过期 买家 未付款）')
+        // console.log('撤销（过期 买家 未付款）')
         if (!data) return false
         // 返回数据正确的逻辑：重新渲染列表
+        this.CHANGE_LEGAL_PAGE({
+          legalTradePageNum: 1
+        })
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
       if (val === 2) {
         data = await completeUserOtcOrder()
-        console.log('成交（过期 卖家 未收款）')
+        // console.log('成交（过期 卖家 未收款）')
         if (!data) return false
         // 返回数据正确的逻辑：重新渲染列表
+        this.CHANGE_LEGAL_PAGE({
+          legalTradePageNum: 1
+        })
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
     },
@@ -1333,6 +1339,9 @@ export default {
         this.dialogVisible1 = false
         // 正确逻辑
         // 再次调用接口刷新列表
+        this.CHANGE_LEGAL_PAGE({
+          legalTradePageNum: 1
+        })
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
         // 清除定义的数组类数据
         this.clearArrData()
@@ -1387,6 +1396,9 @@ export default {
       // 3清除定义的数组类数据
       this.clearArrData()
       // 4再次调用接口刷新列表
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       if (!data) return false
     }, 500),
@@ -1446,7 +1458,7 @@ export default {
         this.submitsellerAppeal()
       }
     },
-    // 13.0 卖家提交申诉按钮
+    // 13.0 买/卖家提交申诉按钮
     submitsellerAppeal: _.debounce(async function () {
       console.log(this.orderTypeParam)
       if (this.isNeedPayPassword && !this.tradePassword) {
@@ -1480,6 +1492,9 @@ export default {
       // 1清除定义的数组类数据
       this.clearArrData()
       // 2再次调用接口刷新列表
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       if (!data) return false
     }, 500),
@@ -1503,6 +1518,9 @@ export default {
       console.log(data)
       // 接口成功后的逻辑
       // 再次调用接口刷新列表
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
     }, 500)
   },

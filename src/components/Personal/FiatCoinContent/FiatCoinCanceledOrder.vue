@@ -231,7 +231,7 @@
       <el-pagination
         class="pages"
         background
-        v-show="OTCCanceledOrderList.length"
+        v-show="OTCCanceledOrderList.length && legalTradePageTotals - 1 > 0"
         layout="prev, pager, next"
         :page-count="legalTradePageTotals"
         :current-page="legalTradePageNum"
