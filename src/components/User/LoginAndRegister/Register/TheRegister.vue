@@ -682,6 +682,9 @@ export default {
                   right 5px
             .el-form-item__content
               display flex
+              height 40px
+              border-radius 20px
+              /*overflow hidden*/
             .el-input
               &.phone
                 .el-input__inner
@@ -736,6 +739,9 @@ export default {
         /* 注册表单 */
         .el-form.register
           .el-form-item
+            &.phone
+              .el-form-item__content
+                background-color #3f4769
             .el-input
               &.is-disabled
                 .el-input__inner
@@ -826,6 +832,9 @@ export default {
         /* 注册表单 */
         .el-form.register
           .el-form-item
+            &.phone
+              .el-form-item__content
+                background-color #eee
             .el-input
               &.is-disabled
                 .el-input__inner
