@@ -77,7 +77,7 @@ const commonURL = {
 }
 // eslint-disable-next-line
 const prodConfig = {
-  apiCommonUrl: xDomainUrl.endsWith('co') ? commonURL.co : commonURL.com, // 全局接口 commonURL
+  apiCommonUrl: xDomainUrl === 'fubt.com' ? commonURL.com : commonURL.co, // 全局接口 commonURL
   socketUrl: 'wss://market.fubt.co/market', // 行情 socket
   loginSocketUrl: 'wss://qrcode.fubt.co/qrcodeLogin/', // 扫码登录 socket
   // loginSocketUrl: 'wss://s.fubt.co/qrcodeLogin/' // 扫码登录 socket
