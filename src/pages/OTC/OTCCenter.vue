@@ -251,7 +251,7 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    {{$scientificToNumber(s.row.remainCount)}}{{selectedOTCAvailableCurrencyName}}
+                    {{$scientificToNumber(s.row.remainCount)}}&nbsp;{{(s.row.coinName)}}
                   </div>
                 </template>
               </el-table-column>
@@ -265,13 +265,13 @@
                     class="red"
                     v-show="OTCBuySellStyle === 'onlineBuy'"
                   >
-                    {{$scientificToNumber(s.row.price)}}{{checkedCurrencyName}}
+                    {{$scientificToNumber(s.row.price)}}{{(s.row.currencyName)}}
                   </div>
                   <div
                     class="green"
                     v-show="OTCBuySellStyle === 'onlineSell'"
                   >
-                    {{$scientificToNumber(s.row.price)}}{{checkedCurrencyName}}
+                    {{$scientificToNumber(s.row.price)}}{{(s.row.currencyName)}}
                   </div>
                 </template>
               </el-table-column>
@@ -322,7 +322,7 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    {{ $scientificToNumber(s.row.minCount) }}~{{ $scientificToNumber(s.row.maxCount) }}{{checkedCurrencyName}}
+                    {{ $scientificToNumber(s.row.minCount) }}~{{ $scientificToNumber(s.row.maxCount) }}&nbsp;{{(s.row.currencyName)}}
                   </div>
                 </template>
               </el-table-column>
@@ -355,7 +355,7 @@
                     @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId,s.row.country)"
                   >
                     <!-- 购买 -->
-                    {{$t('M.comm_buying')}}
+                    {{$t('M.comm_buying')}}{{(s.row.coinName)}}
                   </el-button>
                   <el-button
                     type="success"
@@ -365,7 +365,7 @@
                     @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId,s.row.country)"
                   >
                     <!-- 出售 -->
-                   {{$t('M.comm_offering')}}
+                   {{$t('M.comm_offering')}}{{(s.row.coinName)}}
                   </el-button>
                 </template>
               </el-table-column>
@@ -1787,6 +1787,10 @@ export default {
 
     .otc-merchant-list {
       .el-table {
+        thead {
+          font-size: 12px;
+        }
+
         td {
           padding: 24px 0;
 
@@ -1814,9 +1818,9 @@ export default {
         .el-table__body {
           tr {
             td {
-              /* .cell {
-                line-height: 22px;
-              } */
+              .cell {
+                line-height: 24px;
+              }
 
               &:first-child {
                 .cell {
@@ -1842,9 +1846,23 @@ export default {
             background-color: #8ead9e;
           }
 
-          /* .el-button--mini {
-            height: 29px;
-          } */
+          /* 鼠标悬浮购买出售按钮增加背景色 */
+          .el-button--danger {
+            &:hover {
+              background-color: #dc4d4d;
+            }
+          }
+
+          .el-button--success {
+            &:hover {
+              background-color: #00807b;
+            }
+          }
+
+          .el-button--mini {
+            height: 30px;
+            padding: 7px 10px;
+          }
         }
       }
 
