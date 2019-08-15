@@ -105,7 +105,7 @@ export default {
     // 切换 PC/H5 移动端适配
     toggleViewPortMeta () {
       let metaContent = {
-        mobile: 'width=device-width, initial-scale=0.2, minimum-scale=0.1, maximum-scale=1, user-scalable=0',
+        mobile: 'width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=1, user-scalable=yes',
         PC: 'width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=1, user-scalable=yes'
       }
       const meta = document.querySelector('meta[name="viewport"]')

@@ -7,6 +7,7 @@
   li.the-logined.li-item(
     @mouseenter="toggleBox(true)"
     @mouseleave="toggleBox(false)"
+    @click="toggleBox(!isShowDropDown)"
   )
     span.username {{userName}}
     el-collapse-transition
