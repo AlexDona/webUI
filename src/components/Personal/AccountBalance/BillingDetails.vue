@@ -186,7 +186,7 @@
                 <el-table-column
                         :label="$t('M.comprehensive_manual1')"
                         v-if="rechargeSite"
-                        width="140"
+                        width="100"
                 >
                   <template slot-scope = "s">
                     <!--系统充值-->
@@ -1008,11 +1008,11 @@ export default {
           }
 
           &:nth-of-type(5) {
-            text-align: right;
+            text-align: center;
           }
 
           &:nth-of-type(6) {
-            text-align: right;
+            text-align: center;
           }
 
           &:nth-of-type(7) {
@@ -1038,11 +1038,11 @@ export default {
           }
 
           &:nth-of-type(5) {
-            text-align: right;
+            text-align: center;
           }
 
           &:nth-of-type(6) {
-            text-align: right;
+            text-align: center;
           }
 
           &:nth-of-type(7) {
