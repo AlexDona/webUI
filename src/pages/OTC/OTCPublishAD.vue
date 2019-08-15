@@ -621,7 +621,7 @@ export default {
       // 广告管理传过来的id
       messageId: this.$route.query.id, // 从广告管理点击修改跳转过来的订单id
       pointLength: 4, // 当前币种返回的保留小数点位数限制
-      moneyPointLengthPrice: 3, // 当前金额小数点限制位数-单价保留3位
+      moneyPointLengthPrice: 2, // 当前金额小数点限制位数-单价保留2位：20190827改2
       moneyPointLength: 2, // 当前金额小数点限制位数-总金额和最低最高限额保留2位
       priceErrorTipsBorder: false, // 价格错误提示框
       entrustCountErrorTipsBorder: false, // 交易数量错误提示框

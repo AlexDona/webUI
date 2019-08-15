@@ -537,7 +537,7 @@ export default {
       // 当前币种返回的保留小数点位数限制
       pointLength: 4,
       // 当前金额小数点限制位数
-      moneyPointLengthPrice: 3, // 当前金额小数点限制位数-单价保留3位
+      moneyPointLengthPrice: 2, // 当前金额小数点限制位数-单价保留2位:20190827改2
       moneyPointLength: 2, // 当前金额小数点限制位数-总金额和最低最高限额保留2位
       // 买入量卖出量错误提示框
       entrustCountErrorTipsBorder: false,
