@@ -120,12 +120,11 @@
               </p>
               <!--昵称-->
               <p class="text-info">
-                {{$t('M.user_transaction_nickname')}}：
                 <span
                   class="cursor-pointer"
                   @click="jumpMerchantInfoPage(item.sellId)"
                 >
-                  {{item.sellNickName}}
+                  {{$t('M.user_transaction_nickname')}}：{{item.sellNickName}}
                 </span>
               </p>
               <!--姓名-->
@@ -151,12 +150,11 @@
               </p>
               <!--昵称-->
               <p class="text-info">
-                {{$t('M.user_transaction_nickname')}}：
                 <span
                   class="cursor-pointer"
                   @click="jumpMerchantInfoPage(item.buyId)"
                 >
-                  {{item.buyNickName}}
+                  {{$t('M.user_transaction_nickname')}}：{{item.buyNickName}}
                 </span>
               </p>
               <!--姓名-->
@@ -193,7 +191,7 @@
             </p>
             <!--取消时间-->
             <p class="text-info">
-              {{$t('M.otc_canceled_cancel')}}:{{timeFormatting(item.cancelTime)}}
+              {{$t('M.otc_canceled_cancel')}}：{{timeFormatting(item.cancelTime)}}
             </p>
             <!--申诉原因-->
             <p
@@ -205,8 +203,7 @@
                 :title="item.appealCause"
               >
                 <span class="text-blue">
-                  {{$t('M.otc_cancel_order_appeal_cancel_cause')}}
-                </span>：{{item.appealCause}}
+                  {{$t('M.otc_cancel_order_appeal_cancel_cause')}}</span>：{{item.appealCause}}
               </span>
             </p>
           </div>

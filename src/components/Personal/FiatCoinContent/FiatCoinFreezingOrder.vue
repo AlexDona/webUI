@@ -125,12 +125,11 @@
               <!--昵称-->
               <p class="text-info">
                 <span>
-                  {{$t('M.user_transaction_nickname')}}：
                   <span
                     class="cursor-pointer"
                     @click="jumpMerchantInfoPage(item.sellId)"
                   >
-                    {{item.sellNickName}}
+                    {{$t('M.user_transaction_nickname')}}：{{item.sellNickName}}
                   </span>
                 </span>
               </p>
@@ -155,12 +154,11 @@
               <!--昵称-->
               <p class="text-info">
                 <span>
-                  {{$t('M.user_transaction_nickname')}}：
                   <span
                     class="cursor-pointer"
                     @click="jumpMerchantInfoPage(item.buyId)"
                   >
-                    {{item.buyNickName}}
+                    {{$t('M.user_transaction_nickname')}}：{{item.buyNickName}}
                   </span>
                 </span>
               </p>
