@@ -1019,6 +1019,10 @@ export default {
             text-align: right;
           }
 
+          &:nth-of-type(8) {
+            text-align: right;
+          }
+
           & > .cell {
             font-size: 12px;
           }
