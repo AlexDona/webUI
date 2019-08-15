@@ -7,7 +7,6 @@
 // 后端专递headers
 let xDomainUrl = window.location.host.split(':')[0]
 xDomainUrl = xDomainUrl.startsWith('www') ? xDomainUrl.slice(4) : xDomainUrl
-console.log(window.location.href)
 // 项目域名
 let domainUrl = `${window.location.href.split('#')[0]}#`
 let targetConfig = {
@@ -72,9 +71,13 @@ const dev210Config = {
   loginSocketUrl: 'ws://192.168.2.210:8888/qrcodeLogin/',
   OTCIMSocketUrl: 'ws://192.168.2.210:8066/websoc'
 }
+const commonURL = {
+  co: 'https://s.fubt.co/',
+  com: 'https://s.fubt.com/'
+}
 // eslint-disable-next-line
 const prodConfig = {
-  apiCommonUrl: 'https://s.fubt.co/', // 全局接口 commonURL
+  apiCommonUrl: xDomainUrl.endsWith('co') ? commonURL.co : commonURL.com, // 全局接口 commonURL
   socketUrl: 'wss://market.fubt.co/market', // 行情 socket
   loginSocketUrl: 'wss://qrcode.fubt.co/qrcodeLogin/', // 扫码登录 socket
   // loginSocketUrl: 'wss://s.fubt.co/qrcodeLogin/' // 扫码登录 socket
@@ -117,7 +120,6 @@ const {
   domain,
   OTCIMSocketUrl
 } = targetConfig
-console.log(domain)
 export {
   apiCommonUrl,
   socketUrl,
