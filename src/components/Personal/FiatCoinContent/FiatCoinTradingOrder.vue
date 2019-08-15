@@ -380,6 +380,7 @@
                 <!-- 注意 -->
                 <p class="action-tips">
                   <!--注意！计时结束前未手动转账并点击"确认付款"，您的订单将自动取消，若上述情况累计出现3次，您的账户将被冻结24小时。-->
+                  <!--20190827周期改了这句话：注意！请在规定的时间内完成付款，若当日取消订单或超时未付款累计出现x次，您的账户将被冻结，请谨慎操作。解冻账户，请咨询在线客服。-->
                   {{$t('M.otc_tradingorder_notice1')}}{{configInfo.otcUnpaidTimes}}{{$t('M.otc_tradingorder_notice2')}}
                 </p>
               </div>
@@ -402,7 +403,7 @@
                   </el-button>
                 </p>
                 <p class="action-tips">
-                  <!--注意！请联系卖家确认收款并确认订单，如果卖家{{item.completeTerm/3600}}小时内未确认订单，系统自动成交。-->
+                  <!--注意！请联系卖家确认收款，如果卖家0.5小时内未确认订单，你可以提出申诉。-->
                   {{$t('M.otc_warm_prompt0')}}{{item.completeTerm/3600}}{{$t('M.otc_warm_prompt00')}}
                 </p>
               </div>
