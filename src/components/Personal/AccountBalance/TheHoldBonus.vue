@@ -4,7 +4,10 @@
   description: 当前页面为 个人资产页面 持仓分红 组件
 -->
 <template lang="pug">
-  .the-hold-bonus(v-if="isShowHoldInfos")
+  .the-hold-bonus(
+    v-if="isShowHoldInfos"
+    :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
+  )
     .hold-item.logo
       .content
         img.logo(:src="logoSrc")
@@ -375,7 +378,6 @@ export default {
     height 100px
     display flex
     > .hold-item
-      background-color #1c1f32
       flex 1
       position relative
       padding 0 38px
@@ -395,18 +397,12 @@ export default {
           margin-right 10px
         > span
           vertical-align middle
-          color #fff
           font-size 12px
         > p
           line-height 30px
         > .label
-          color #9da5b3
           font-size 12px
           white-space nowrap
-          > .value
-            color #d45858
-        > .value
-          color #fff
       &:before
         position absolute
         top 50%
@@ -415,7 +411,6 @@ export default {
         content ''
         width 1px
         height 40px
-        background-color #617499
       &:nth-of-type(5)
         max-width 300px
         font-size 12px
@@ -427,7 +422,6 @@ export default {
         flex-direction column
         justify-content center
         &.condition-dialog
-          background-color pink
           > .el-dialog
             margin-top 0 !important
             top 0
@@ -451,18 +445,11 @@ export default {
                     >.tips-button
                       position relative
                       top -8px
-                      /*right 0*/
-                      /*top 0*/
-                      .iconfont
-                        color S_main_color
                     > .label
-                      color #fff
                       font-size 12px
                   >.right
                     min-width 100px
                     >.status
-                      color #66718f
-                      border 1px solid #66718f
                       font-size 12px
                       padding 5px 20px
                       border-radius 2px
@@ -472,8 +459,6 @@ export default {
               /* 底部 */
               .bottom
                 height 300px
-                border-bottom 1px solid #212b3f
-                border-top 1px solid #212b3f
                 padding 6px 25px
                 >.title
                   font-size 12px
@@ -495,8 +480,101 @@ export default {
               .check-button
                 margin 14px auto 0
                 display block
-                background linear-gradient(90deg,rgba(18,71,133,1) 0%,rgba(42,59,97,1) 100%)
                 border-radius 2px
+    &.night
+      > .hold-item
+        background-color #1c1f32
+        > .content
+          > .description
+            color S_main_color
+          > span
+            color #fff
+          > .label
+            color #9da5b3
+            > .value
+              color #d45858
+          > .value
+            color #fff
+        &:before
+          background-color #617499
+      /deep/
+        .el-dialog__wrapper
+          &.condition-dialog
+            > .el-dialog
+              > .el-dialog__body
+                >.top
+                  > .condition
+                    > .left
+                      >.tips-button
+                        .iconfont
+                          color S_main_color
+                      > .label
+                        color #fff
+                    >.right
+                      >.status
+                        color #66718f
+                        border 1px solid #66718f
+                        &.done
+                          border-color S_main_color
+                          color S_main_color
+                /* 底部 */
+                .bottom
+                  border-bottom 1px solid #212b3f
+                  border-top 1px solid #212b3f
+                  >.title
+                    color S_main_color
+                    &:after
+                      background-color S_main_color
+                .check-button
+                  background linear-gradient(90deg,rgba(18,71,133,1) 0%,rgba(42,59,97,1) 100%)
+    &.day
+      box-shadow 0 0 6px #cfd5df
+      background-color #fff
+      > .hold-item
+        > .content
+          > .description
+            color S_main_color
+          > span
+            color #333
+          > .label
+            color #9da5b3
+            > .value
+              color #d45858
+          > .value
+            color #333
+        &:before
+          background-color rgba(97,116,153,.1)
+      /deep/
+        .el-dialog__wrapper
+          &.condition-dialog
+            > .el-dialog
+              > .el-dialog__body
+                >.top
+                  > .condition
+                    > .left
+                      >.tips-button
+                        .iconfont
+                          color S_main_color
+                      > .label
+                        color #333
+                    >.right
+                      >.status
+                        color #7D90AC
+                        border 1px solid #7D90AC
+                        &.done
+                          border-color S_main_color
+                          color S_main_color
+                /* 底部 */
+                .bottom
+                  border-bottom 1px solid #7D90AC
+                  border-top 1px solid #7D90AC
+                  >.title
+                    color S_main_color
+                    &:after
+                      background-color S_main_color
+                .check-button
+                  background linear-gradient(90deg,rgba(106,182,244,1) 0%,rgba(49,135,218,1) 100%)
+                  color #fff
 </style>
 <style lang="scss">
   @import "../../../assets/CSS/index.scss";
@@ -526,9 +604,21 @@ export default {
     }
 
     &.day {
+      background-color: #fff;
+
+      .content {
+        font-size: 12px;
+        color: #333;
+        transform: scale(.8);
+
+        > .title {
+          color: $mainColor;
+        }
+      }
+
       .popper__arrow {
         &::after {
-          border-right-color: red !important;
+          border-right-color: #fff !important;
         }
       }
     }
