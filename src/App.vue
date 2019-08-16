@@ -105,19 +105,19 @@ export default {
     // 切换 PC/H5 移动端适配
     toggleViewPortMeta () {
       let metaContent = {
-        mobile: 'width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=1, user-scalable=yes',
+        mobile: 'width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=1, user-scalable=no',
         PC: 'width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=1, user-scalable=yes'
       }
       const meta = document.querySelector('meta[name="viewport"]')
       const {path} = this.$route
 
       const userDisScalabledRoutes = [
-        `/${this.$routes_X.login}`,
-        `/${this.$routes_X.register}`,
-        `/downloadApp`,
-        `/invitationRegister`
+        // `/${this.$routes_X.login}`,
+        // `/${this.$routes_X.register}`,
+        `${this.$routes_X.downloadApp}`
+        // `/invitationRegister`
       ]
-      const notNeedUserScalable = _.some(userDisScalabledRoutes, (route, index) => (route == path || path.startsWith(route)))
+      const notNeedUserScalable = _.some(userDisScalabledRoutes, (route, index) => (route.toUpperCase() === path.toUpperCase() || path.startsWith(route)))
 
       switch (this.isMobile && notNeedUserScalable) {
         case true:
@@ -174,13 +174,12 @@ export default {
       this.isNeedNotice = path === `/${this.$routes_X.home}` || path === '/' ? 1 : 0
       this.isNeedHeader = (
         !path.startsWith(`/${this.$routes_X.login}`) &&
-        !path.startsWith('/register') &&
-        path !== '/downloadApp' &&
+        path.toUpperCase() !== `${this.$routes_X.downloadApp}`.toUpperCase() &&
         !path.startsWith('/invitationRegister')
       ) ? 1 : 0
       this.isNeedFooter = (
         path.startsWith(`/${this.$routes_X.login}`) ||
-        path === '/downloadApp' ||
+        path.toUpperCase() === `${this.$routes_X.downloadApp}`.toUpperCase() ||
         path.startsWith('/invitationRegister') ||
         path.startsWith(`/${this.$routes_X.forgetPass}`)
       ) ? 0 : 1

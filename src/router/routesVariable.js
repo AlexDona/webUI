@@ -69,7 +69,8 @@ export const routesVariable = {
   // 登录二次确认页面
   confirmUserInfo: 'confirm',
   nofind404: 'nofind404',
-  serverError: '500'
+  serverError: '500',
+  downloadApp: '/downloadApp'
 }
 
 export const globalLabel = {
