@@ -2281,7 +2281,7 @@ export default {
 
         .el-button {
           color: #fff;
-          background: linear-gradient(0deg, #2b396e, #2a5082);
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
         .el-form-item__label {
@@ -2571,7 +2571,7 @@ export default {
         }
 
         .el-button {
-          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
         }
       }
     }
