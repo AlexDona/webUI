@@ -205,9 +205,11 @@
               :empty-text="$t('M.comm_no_data')"
             >
               <!-- 名称 -->
+              <!--:label="$t('M.otc_index_Merchant')"-->
               <el-table-column
-                :label="$t('M.otc_index_Merchant')"
+                label="广告方(30日成交单|成交率|放行时间)"
                 align="left"
+                width="300"
               >
                 <template slot-scope = "s">
                   <div>
@@ -232,7 +234,7 @@
                 </template>
               </el-table-column>
               <!-- 成交率 -->
-              <el-table-column
+              <!--<el-table-column
                 :label="$t('M.otc_index_turnover')"
               >
                 <template slot-scope = "s">
@@ -243,11 +245,12 @@
                     {{((s.row.successOrderTimes/(s.row.tradeTimes)) * 100).toFixed(2)}}%
                   </div>
                 </template>
-              </el-table-column>
+              </el-table-column>-->
               <!-- 数量 -->
+              <!--width="170"-->
               <el-table-column
                 :label="$t('M.comm_count')"
-                width="170"
+                align="right"
               >
                 <template slot-scope = "s">
                   <div>
@@ -258,6 +261,7 @@
               <!-- 价格 -->
               <el-table-column
                 :label="$t('M.otc_index_price')"
+                align="right"
               >
                 <template slot-scope = "s">
                   <!-- 此处的单位根据设置中的法币类型来变化：为人民币时候显示CNY，为美元时候显示$ 此处需要从全局拿到设置中的法币类型来渲染页面-->
@@ -278,6 +282,7 @@
               <!-- 支付方式 -->
               <el-table-column
                 :label="$t('M.otc_index_Payment_method')"
+                align="right"
               >
                 <template slot-scope="s">
                   <div>
@@ -316,9 +321,10 @@
                 </template>
               </el-table-column>
               <!-- 限额 -->
+              <!--width="170"-->
               <el-table-column
                 :label="$t('M.otc_index_priceLimit')"
-                width="170"
+                align="right"
               >
                 <template slot-scope = "s">
                   <div>
@@ -327,10 +333,11 @@
                 </template>
               </el-table-column>
               <!-- 备注 -->
-                <el-table-column
-                  :label="$t('M.comm_remark')"
-                  width="120"
-                >
+              <!--width="120"-->
+              <el-table-column
+                :label="$t('M.comm_remark')"
+                align="right"
+              >
                 <template slot-scope = "s">
                   <span
                     class="remark-tips"
@@ -341,10 +348,10 @@
                 </template>
               </el-table-column>
               <!-- 操作 -->
+              <!--width="140"-->
               <el-table-column
                 :label="$t('M.otc_index_operate')"
                 align="right"
-                width="140"
               >
                 <template slot-scope="s">
                   <el-button
@@ -1525,10 +1532,6 @@ export default {
           min-height: 828px;
           margin-top: 20px;
 
-          /*
-          min-height: 650px;
-          */
-
           .red {
             color: $upColor;
           }
@@ -1722,7 +1725,8 @@ export default {
     }
 
     .el-input__icon {
-      line-height: 34px;
+      font-size: 12px;
+      line-height: 30px;
     }
 
     /* 在线购买和在线出售切换 */
@@ -1768,14 +1772,14 @@ export default {
 
     .otc-publish-box {
       .el-input {
-        width: 150px;
+        width: 110px;
       }
 
       .el-input__inner {
-        height: 32px;
+        height: 30px;
         border: 0;
-        line-height: 33px;
-        color: #fff;
+        font-size: 12px;
+        line-height: 30px;
       }
 
       .el-input--suffix {
@@ -1793,8 +1797,6 @@ export default {
 
         td {
           padding: 24px 0;
-
-          /* padding: 15px 0; */
         }
 
         .el-table__header {
@@ -2052,19 +2054,19 @@ export default {
             > .otc-publish-box {
               > .pay-style {
                 > .pay-style-icon {
-                  color: $mainColorOfWhite;
+                  color: $mainColor;
                 }
               }
 
               > .currency-style {
                 > .currency-style-icon {
-                  color: $mainColorOfWhite;
+                  color: $mainColor;
                 }
               }
 
               > .country-style {
                 > .country-style-icon {
-                  color: $mainColorOfWhite;
+                  color: $mainColor;
                 }
               }
             }
@@ -2174,7 +2176,7 @@ export default {
       }
 
       .el-input--suffix .el-input__inner {
-        color: $mainColorOfWhite;
+        color: $dialogColor4;
       }
 
       /* 在线购买和在线出售切换 */
@@ -2200,7 +2202,7 @@ export default {
 
       .otc-publish-box {
         .el-input__inner {
-          border: 1px solid $fontColorSecondaryOfDay;
+          border: 1px solid #4a4e68;
           background-color: #19202e;
         }
       }

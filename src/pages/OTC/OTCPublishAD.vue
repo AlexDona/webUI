@@ -21,7 +21,7 @@
             <div class="left display-inline-block">
               <!-- 选择 -->
               <p class="tips font-size12 tips-choose">
-                &nbsp;&nbsp;{{$t('M.otc_pl')}}
+                <span class="must-fill-star">*&nbsp;</span>{{$t('M.otc_pl')}}
               </p>
             </div>
             <div class="right display-inline-block">
