@@ -724,6 +724,8 @@ export default {
       // 备注
       // this.remarkText = '这家伙很懒，什么都没有留下...'
       this.remarkText = this.$t('M.otc_remark_tips1_default')
+      this.remarkErrorTipsBorder = false
+      this.errorTipsRemark = ''
       this.tradePassword = ''
       this.errorPWd = ''
       this.entrustCountSell = 0
@@ -1249,11 +1251,15 @@ export default {
 
             .remark-error {
               width: 588px;
+              height: 18px;
+              margin-top: -7px;
               line-height: 18px;
             }
           }
 
           .predict {
+            margin-top: -3px;
+
             > .predict-text {
               font-size: 12px;
             }
