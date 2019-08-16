@@ -378,6 +378,7 @@
                 <!-- 注意 -->
                 <p class="action-tips">
                   <!--注意！计时结束前未手动转账并点击"确认付款"，您的订单将自动取消，若上述情况累计出现3次，您的账户将被冻结24小时。-->
+                  <!--20190827周期改了这句话：注意！请在规定的时间内完成付款，若当日取消订单或超时未付款累计出现x次，您的账户将被冻结，请谨慎操作。解冻账户，请咨询在线客服。-->
                   {{$t('M.otc_tradingorder_notice1')}}{{configInfo.otcUnpaidTimes}}{{$t('M.otc_tradingorder_notice2')}}
                 </p>
               </div>
@@ -400,7 +401,7 @@
                   </el-button>
                 </p>
                 <p class="action-tips">
-                  <!--注意！请联系卖家确认收款并确认订单，如果卖家{{item.completeTerm/3600}}小时内未确认订单，系统自动成交。-->
+                  <!--注意！请联系卖家确认收款，如果卖家0.5小时内未确认订单，你可以提出申诉。-->
                   {{$t('M.otc_warm_prompt0')}}{{item.completeTerm/3600}}{{$t('M.otc_warm_prompt00')}}
                 </p>
               </div>
@@ -757,7 +758,7 @@
       <!-- 三、分页-->
       <el-pagination
         background
-        v-show="tradingOrderList.length"
+        v-show="tradingOrderList.length && legalTradePageTotals - 1 > 0"
         layout="prev, pager, next"
         :current-page="legalTradePageNum"
         :page-count="legalTradePageTotals"
@@ -1213,16 +1214,22 @@ export default {
       let data
       if (val === 1) {
         data = await cancelUserOtcOrder()
-        console.log('撤销（过期 买家 未付款）')
+        // console.log('撤销（过期 买家 未付款）')
         if (!data) return false
         // 返回数据正确的逻辑：重新渲染列表
+        this.CHANGE_LEGAL_PAGE({
+          legalTradePageNum: 1
+        })
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
       if (val === 2) {
         data = await completeUserOtcOrder()
-        console.log('成交（过期 卖家 未收款）')
+        // console.log('成交（过期 卖家 未收款）')
         if (!data) return false
         // 返回数据正确的逻辑：重新渲染列表
+        this.CHANGE_LEGAL_PAGE({
+          legalTradePageNum: 1
+        })
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
     },
@@ -1327,6 +1334,9 @@ export default {
         this.dialogVisible1 = false
         // 正确逻辑
         // 再次调用接口刷新列表
+        this.CHANGE_LEGAL_PAGE({
+          legalTradePageNum: 1
+        })
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
         // 清除定义的数组类数据
         this.clearArrData()
@@ -1381,6 +1391,9 @@ export default {
       // 3清除定义的数组类数据
       this.clearArrData()
       // 4再次调用接口刷新列表
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       if (!data) return false
     }, 500),
@@ -1440,7 +1453,7 @@ export default {
         this.submitsellerAppeal()
       }
     },
-    // 13.0 卖家提交申诉按钮
+    // 13.0 买/卖家提交申诉按钮
     submitsellerAppeal: _.debounce(async function () {
       console.log(this.orderTypeParam)
       if (this.isNeedPayPassword && !this.tradePassword) {
@@ -1474,6 +1487,9 @@ export default {
       // 1清除定义的数组类数据
       this.clearArrData()
       // 2再次调用接口刷新列表
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       if (!data) return false
     }, 500),
@@ -1497,6 +1513,9 @@ export default {
       console.log(data)
       // 接口成功后的逻辑
       // 再次调用接口刷新列表
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
     }, 500)
   },

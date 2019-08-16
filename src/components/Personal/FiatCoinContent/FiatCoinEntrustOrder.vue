@@ -122,7 +122,7 @@
         <div class="pages">
           <el-pagination
             background
-            v-show="OTCEntrustOrderList.length"
+            v-show="OTCEntrustOrderList.length && legalTradePageTotals - 1 > 0"
             layout="prev, pager, next"
             :current-page="legalTradePageNum"
             :page-count="legalTradePageTotals"
@@ -222,6 +222,9 @@ export default {
       })
       // 返回数据正确的逻辑
       if (!data) return false
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
       this.SET_LEGAL_TENDER_REFLASH_STATUS({
         type: 'ENTRUSTED',
         status: true
