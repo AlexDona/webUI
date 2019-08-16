@@ -666,9 +666,9 @@ export default {
     },
     // 日期选择器事件
     changeDate (e) {
-      // console.log(e)
+      console.log(e)
       this.checkedTime = e
-      // console.log(this.checkedTime[0], this.checkedTime[1])
+      console.log(this.checkedTime[0], this.checkedTime[1])
       this.activatedRadioId = ''
       this.getOTCEntrustingOrdersRevocation()
     },
