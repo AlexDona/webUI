@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!--
   author: zhaoxinlei
   update: 20190803

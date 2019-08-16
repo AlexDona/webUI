@@ -169,7 +169,6 @@ export default {
             display inline-block
             width 14px
             height 19px
-            margin-right 5px
             vertical-align top
             cursor pointer
         .operation-text
