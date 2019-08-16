@@ -21,7 +21,7 @@
             <div class="left display-inline-block">
               <!-- 选择 -->
               <p class="tips font-size12 tips-choose">
-                &nbsp;&nbsp;{{$t('M.otc_pl')}}
+                <span class="must-fill-star">*&nbsp;</span>{{$t('M.otc_pl')}}
               </p>
             </div>
             <div class="right display-inline-block">
@@ -298,23 +298,38 @@
           <div class="common remark">
             <div class="left display-inline-block">
               <!-- 备注 -->
-                <p class="tips font-size12">
-                  &nbsp;&nbsp;{{$t('M.comm_remark')}}
-                </p>
-                <!-- 可选填 -->
-                <p class="warning font-size12">
-                  &nbsp;&nbsp;{{$t('M.otc_publishAD_adviceToFill')}}
-                </p>
+              <p class="tips font-size12">
+                <span class="must-fill-star">*&nbsp;</span>{{$t('M.comm_remark')}}
+              </p>
+              <!-- 可选填 -->
+              <!--<p class="warning font-size12">
+                &nbsp;&nbsp;{{$t('M.otc_publishAD_adviceToFill')}}
+              </p>-->
             </div>
             <div class="right display-inline-block">
-              <el-input
+              <!--<el-input
                 type="textarea"
                 maxlength="30"
                 auto-complete="off"
                 :placeholder="$t('M.otc_publishAD_liveMessage')"
                 v-model="remarkText"
               >
-              </el-input>
+              </el-input>-->
+              <!-- 请输入备注：最多30个字符 -->
+              <div class="remark-content">
+                <textarea
+                  :placeholder="$t('M.otc_publishAD_liveMessage')"
+                  class="textarea-text font-size12 border-radius4 box-sizing"
+                  :class="{ redBorderRemark: remarkErrorTipsBorder }"
+                  maxlength="30"
+                  v-model.trim="remarkText"
+                  @focus="remarkFocus"
+                >
+                </textarea>
+                <div class="remark-error red font-size12">
+                  {{errorTipsRemark}}
+                </div>
+              </div>
             </div>
           </div>
           <!-- 限制设置 -->
@@ -590,7 +605,11 @@ export default {
       // 买家必须成交过几次(0=不限制)
       successOrderCount: '',
       // 备注
-      remarkText: '',
+      remarkText: '这家伙很懒，什么都没有留下...',
+      // 备注错误提示信息
+      errorTipsRemark: '',
+      // 备注错误提示框
+      remarkErrorTipsBorder: false,
       // 交易密码
       tradePassword: '',
       // 交易密码错误提示
@@ -621,7 +640,7 @@ export default {
       // 广告管理传过来的id
       messageId: this.$route.query.id, // 从广告管理点击修改跳转过来的订单id
       pointLength: 4, // 当前币种返回的保留小数点位数限制
-      moneyPointLengthPrice: 3, // 当前金额小数点限制位数-单价保留3位
+      moneyPointLengthPrice: 2, // 当前金额小数点限制位数-单价保留2位：20190827改2
       moneyPointLength: 2, // 当前金额小数点限制位数-总金额和最低最高限额保留2位
       priceErrorTipsBorder: false, // 价格错误提示框
       entrustCountErrorTipsBorder: false, // 交易数量错误提示框
@@ -808,7 +827,7 @@ export default {
       if (this.isLockedPayPassword) return false
       //
       // 非空及数据范围准确性验证
-      // 单价
+      // 1.单价
       if (!this.$refs.price.value) {
         // 请输入单价
         this.errorInfoPrice = this.$t('M.otc_please_enter_price')
@@ -819,18 +838,7 @@ export default {
         this.priceErrorTipsBorder = true
         return false
       }
-      // 交易方式
-      if (this.payForListArr[0] === '0' && this.payForListArr[1] === '0' && this.payForListArr[2] === '0' && this.payForListArr[3] === '0' && this.payForListArr[4] === '0') {
-        // this.errorInfoTradeWay = '请先设置收款方式'
-        this.errorInfoTradeWay = this.$t('M.otc_publishAD_set_get_money_way')
-        return false
-      }
-      if (!this.parameterPayTypes) {
-        // 请选择交易方式
-        this.errorInfoTradeWay = this.$t('M.otc_publishAD_chouseSellType')
-        return false
-      }
-      // 交易数量
+      // 2.交易数量
       // console.log(this.$refs.entrustCount.value)
       if (!this.$refs.entrustCount.value || this.$refs.entrustCount.value - 0 === 0) {
         // 请输入交易数量
@@ -842,7 +850,7 @@ export default {
       if (this.errorInfoEntrustCount || this.errorInfoMinCount || this.errorInfoMaxCount) {
         return false
       }
-      // 20190308增加单笔最小、最大成交限额必输验证
+      // 3.20190308增加单笔最小、最大成交限额必输验证
       if (!this.$refs.minCountValue.value) {
         // this.errorInfoMinCount = '单笔最小限额不能为空！'
         this.errorInfoMinCount = this.$t('M.otc_min_limit_not_empty')
@@ -855,7 +863,30 @@ export default {
         this.maxCountErrorTipsBorder = true
         return false
       }
-      // 限制设置--非必输选项
+      // 4.交易方式
+      if (this.payForListArr[0] === '0' && this.payForListArr[1] === '0' && this.payForListArr[2] === '0' && this.payForListArr[3] === '0' && this.payForListArr[4] === '0') {
+        // this.errorInfoTradeWay = '请先设置收款方式'
+        this.errorInfoTradeWay = this.$t('M.otc_publishAD_set_get_money_way')
+        return false
+      }
+      if (!this.parameterPayTypes) {
+        // 请选择交易方式
+        this.errorInfoTradeWay = this.$t('M.otc_publishAD_chouseSellType')
+        return false
+      }
+      // 5.备注
+      // 20190827发版周期增加备注最小10个字符的提示
+      if (!this.remarkText) {
+        this.errorTipsRemark = '备注不能为空！'
+        this.remarkErrorTipsBorder = true
+        return false
+      }
+      if (this.remarkText.length - 10 < 0) {
+        this.errorTipsRemark = '备注最少为10个字符！'
+        this.remarkErrorTipsBorder = true
+        return false
+      }
+      // 6.限制设置--非必输选项
       // 20181213增加非空验证：变为了必须字段
       // console.log(this.limitOrderCount)
       // console.log(typeof this.limitOrderCount)
@@ -968,7 +999,7 @@ export default {
       // 支付方式错误提示
       this.errorInfoTradeWay = ''
       // 备注
-      this.remarkText = ''
+      this.remarkText = '这家伙很懒，什么都没有留下...'
       // 同时处理最大订单数
       this.$refs.limitRef.value = 0
       this.limitOrderCount = this.$refs.limitRef.value
@@ -1168,6 +1199,11 @@ export default {
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
       this.$goToPage('/PersonalCenter')
       this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
+    },
+    // 备注获得焦点
+    remarkFocus () {
+      this.errorTipsRemark = ''
+      this.remarkErrorTipsBorder = false
     }
   },
   // filter: {},
@@ -1211,6 +1247,10 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
   margin-top: 50px;
   overflow: hidden;
 
+  .red {
+    color: $upColor;
+  }
+
   .redBorderRightNone {
     border: 1px solid $upColor !important;
     border-right: 0 !important;
@@ -1219,6 +1259,10 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
   .redBorderLeftNone {
     border: 1px solid $upColor !important;
     border-left: 0 !important;
+  }
+
+  .redBorderRemark {
+    border: 1px solid $upColor !important;
   }
 
   > .otc-publish-AD-content {
@@ -1390,6 +1434,28 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
               > .minMaxLink {
                 margin: 0 10px;
+              }
+            }
+          }
+        }
+
+        > .remark {
+          .right {
+            /* 备注文本域 */
+            .remark-content {
+              .textarea-text {
+                width: 600px;
+                height: 120px;
+                padding: 5px 15px;
+                border: 0;
+                outline: none;
+                resize: none;
+                font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
+              }
+
+              .remark-error {
+                width: 600px;
+                line-height: 18px;
               }
             }
           }
@@ -1680,6 +1746,18 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             }
           }
 
+          > .remark {
+            .right {
+              /* 备注文本域 */
+              .remark-content {
+                .textarea-text {
+                  color: #a9bed4;
+                  background-color: $nightInputBg;
+                }
+              }
+            }
+          }
+
           > .limit-set {
             > .right {
               .input-limit {
@@ -1890,6 +1968,19 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
                 > .minMaxLink {
                   color: $fontColorSecondaryOfDay;
+                }
+              }
+            }
+          }
+
+          > .remark {
+            .right {
+              /* 备注文本域 */
+              .remark-content {
+                .textarea-text {
+                  border: 1px solid $borderColorOfDay;
+                  color: $dayMainTitleColor;
+                  background: $mainDayBgColor;
                 }
               }
             }

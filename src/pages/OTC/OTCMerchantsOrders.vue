@@ -521,9 +521,9 @@ export default {
           this.activatedMerchantsOrdersStatusList = targetValue
           break
         case 'date':
-          console.log(targetValue)
+          // console.log(targetValue)
           this.checkedTime = targetValue
-          console.log(this.checkedTime[0], this.checkedTime[1])
+          // console.log(this.checkedTime[0], this.checkedTime[1])
           break
       }
     },

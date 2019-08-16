@@ -98,10 +98,8 @@
                       align="right"
                       :editable="false"
                       range-separator="~"
-                      @change="changeTime"
                       :start-placeholder="$t('M.otc_no1')"
                       :end-placeholder="$t('M.otc_no2')"
-                      :default-time="['00:00:00', '23:59:59']"
                       :picker-options="pickerOptionsTime"
               >
               </el-date-picker>
@@ -121,10 +119,8 @@
                       :editable="false"
                       :clearable="false"
                       range-separator="~"
-                      @change="changeTime"
                       :start-placeholder="$t('M.otc_no1')"
                       :end-placeholder="$t('M.otc_no2')"
-                      :default-time="['00:00:00', '23:59:59']"
                       :picker-options="pickerOptionsTime"
               >
               </el-date-picker>
@@ -190,7 +186,7 @@
                 <el-table-column
                         :label="$t('M.comprehensive_manual1')"
                         v-if="rechargeSite"
-                        width="140"
+                        width="100"
                 >
                   <template slot-scope = "s">
                     <!--系统充值-->
@@ -404,7 +400,14 @@ export default {
       hours: new Date().getHours(),
       minutes: new Date().getMinutes(),
       seconds: new Date().getSeconds(),
-      pickerOptionsTime: {},
+      pickerOptionsTime: {
+        disabledDate: (time) => {
+          let curDate = (new Date()).getTime()
+          let three = 90 * 24 * 3600 * 1000
+          let threeMonths = curDate - three
+          return time.getTime() > Date.now() || time.getTime() < threeMonths
+        }
+      },
       chargeRecordList: [], // 充提记录列表
       activeName: 'current-entrust', // 充提记录
       recordPageNumber: 1, // 充提记录页码
@@ -466,7 +469,7 @@ export default {
   },
   async created () {
     await this.inquireCurrencyList('current-entrust')
-    this.changeTime()
+    // this.changeTime()
   },
   methods: {
     ...mapMutations([
@@ -497,8 +500,7 @@ export default {
       })
     },
     // 1.3 时间赋值
-    changeTime () {
-      console.log(1)
+    /* changeTime () {
       this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
         disabledDate: (time) => {
           let curDate = (new Date()).getTime()
@@ -507,7 +509,7 @@ export default {
           return time.getTime() > Date.now() || time.getTime() < threeMonths
         }
       })
-    },
+    }, */
     /**
      * 2.tab 切换赋值展示
      */
@@ -1006,14 +1008,18 @@ export default {
           }
 
           &:nth-of-type(5) {
-            text-align: right;
+            text-align: center;
           }
 
           &:nth-of-type(6) {
-            text-align: right;
+            text-align: center;
           }
 
           &:nth-of-type(7) {
+            text-align: right;
+          }
+
+          &:nth-of-type(8) {
             text-align: right;
           }
 
@@ -1036,11 +1042,11 @@ export default {
           }
 
           &:nth-of-type(5) {
-            text-align: right;
+            text-align: center;
           }
 
           &:nth-of-type(6) {
-            text-align: right;
+            text-align: center;
           }
 
           &:nth-of-type(7) {

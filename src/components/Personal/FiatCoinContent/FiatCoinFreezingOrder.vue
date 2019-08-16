@@ -6,6 +6,10 @@
     <div class="freezing-order-content">
       <!--表头-->
       <div class="freezing-table-head font-size12 box-sizing">
+        <span class="item order-type">
+          <!--类型-->
+          {{$t('M.otc_cancelOrder_type')}}
+        </span>
         <span class="item AD-ID">
           <!--广告id-->
           {{$t('M.otc_AD_ID')}}
@@ -14,23 +18,19 @@
           <!--订单号-->
           {{$t('M.otc_MerchantsOrders_orderNum')}}
         </span>
-        <span class="item order-type">
-          <!--类型-->
-          {{$t('M.otc_cancelOrder_type')}}
-        </span>
         <span class="item order-coin">
           <!--币种-->
           {{$t('M.comm_currency')}}
         </span>
-        <span class="item flex1">
+        <span class="item">
           <!--价格-->
           {{$t('M.otc_index_price')}}
         </span>
-        <span class="item flex1">
+        <span class="item">
           <!--数量-->
           {{$t('M.comm_count')}}
         </span>
-        <span class="item flex1">
+        <span class="item">
           <!--总金额-->
           {{$t('M.otc_canceled_total')}}
         </span>
@@ -47,14 +47,6 @@
       >
         <!--表格上部分-->
         <div class="freezing-info-top">
-          <!-- 广告id -->
-          <span class="item AD-ID">
-            {{item.entrustSequence}}
-          </span>
-          <!-- 订单号 -->
-          <span class="item order-time">
-            {{item.orderSequence}}
-          </span>
           <!-- 类型 买入 -->
           <span
             class="item order-type"
@@ -71,21 +63,29 @@
           >
             {{$t('M.comm_sell')}}
           </span>
+          <!-- 广告id -->
+          <span class="item AD-ID">
+            {{item.entrustSequence}}
+          </span>
+          <!-- 订单号 -->
+          <span class="item order-time">
+            {{item.orderSequence}}
+          </span>
           <!-- 币种 -->
           <span class="item order-coin">
             {{item.coinName}}
           </span>
           <!-- 价格 -->
-          <span class="item flex1">
-            {{item.price}}({{ item.currencyName }})
+          <span class="item">
+            {{item.price}}{{ item.currencyName }}
           </span>
           <!-- 数量 -->
-          <span class="item flex1">
-            {{item.pickCount}}({{ item.coinName }})
+          <span class="item">
+            {{item.pickCount}}{{ item.coinName }}
           </span>
           <!-- 总金额 -->
-          <span class="item flex1">
-            {{(item.price*item.pickCount).toFixed(2)}}({{ item.currencyName }})
+          <span class="item">
+            {{(item.price*item.pickCount).toFixed(2)}}{{ item.currencyName }}
           </span>
           <!-- 下单时间 -->
           <span class="item order-time">
@@ -117,36 +117,64 @@
           </div>
           <!--中间2-->
           <div class="info-middle box-sizing">
-            <!--卖家信息-->
-            <p class="text-info text-blue">
-              {{$t('M.otc_stocks_seller')}}
-            </p>
-            <!--姓名-->
-            <p class="text-info">
-              <span>
-                {{$t('M.otc_name')}}：
-              </span>
-              <span
-                class="cursor-pointer"
-                @click="jumpMerchantInfoPage(item.sellId)"
-              >
-                <span v-if="item.sellNickName">
-                  {{item.sellNickName}}
+            <!--2.1 卖家信息-->
+            <div v-if="item.orderType === 'BUY'">
+              <p class="text-info text-blue">
+                {{$t('M.otc_stocks_seller')}}
+              </p>
+              <!--昵称-->
+              <p class="text-info">
+                <span>
+                  <span
+                    class="cursor-pointer"
+                    @click="jumpMerchantInfoPage(item.sellId)"
+                  >
+                    {{$t('M.user_transaction_nickname')}}：{{item.sellNickName}}
+                  </span>
                 </span>
-                <span v-else>
-                  {{item.sellName}}
+              </p>
+              <!--姓名-->
+              <p class="text-info">
+                <span>
+                  {{$t('M.otc_name')}}：{{item.sellName}}
                 </span>
-            </span>
-            </p>
-            <!--卖家手机号-->
-            <p class="text-info">
-              <span>
-                {{$t('M.otc_trading_sellphone')}}：
-              </span>
-              <span>
-              {{item.sellPhone}}
-            </span>
-            </p>
+              </p>
+              <!--卖家手机号-->
+              <p class="text-info">
+                <span>
+                  {{$t('M.otc_trading_sellphone')}}：{{item.sellPhone}}
+                </span>
+              </p>
+            </div>
+            <!--2.2 买家信息-->
+            <div v-if="item.orderType === 'SELL'">
+              <p class="text-info text-blue" >
+                {{$t('M.otc_stocks_buyinfo')}}
+              </p>
+              <!--昵称-->
+              <p class="text-info">
+                <span>
+                  <span
+                    class="cursor-pointer"
+                    @click="jumpMerchantInfoPage(item.buyId)"
+                  >
+                    {{$t('M.user_transaction_nickname')}}：{{item.buyNickName}}
+                  </span>
+                </span>
+              </p>
+              <!--姓名-->
+              <p class="text-info">
+                <span>
+                  {{$t('M.otc_name')}}：{{item.buyName}}
+                </span>
+              </p>
+              <!--买家手机号-->
+              <p class="text-info">
+                <span>
+                  {{$t('M.otc_trading_buyphone')}}：{{item.buyPhone}}
+                </span>
+              </p>
+            </div>
           </div>
           <!--右侧3-->
           <div class="info-right box-sizing">
@@ -169,19 +197,20 @@
               {{item.appealCause}}
             </p>
           </div>
-          <!-- otc 及时通讯-->
-          <OTCIM
-            class="otc-im"
-            :orderInfo="item"
-            :top="OTC_IM_TOP"
-            activeName="FROZEN"
-          />
         </div>
+        <!-- otc 及时通讯-->
+        <OTCIM
+          class="otc-im"
+          :orderInfo="item"
+          :top="OTC_IM_TOP"
+          activeName="FROZEN"
+        />
       </div>
       <!--分页-->
       <el-pagination
+        class="pages"
         background
-        v-show="OTCFreezingOrderList.length"
+        v-show="OTCFreezingOrderList.length && legalTradePageTotals - 1 > 0"
         layout="prev, pager, next"
         :current-page="legalTradePageNum"
         :page-count="legalTradePageTotals"
@@ -263,9 +292,12 @@ export default {
   @import '../../../assets/CSS/index';
 
   .fiat-freezing-order-box {
+    margin-top: -10px;
+
     > .freezing-order-content {
-      min-height: 574px;
-      padding: 0 10px 10px;
+      position: relative;
+      min-height: 584px;
+      padding: 0 10px 35px;
 
       > .freezing-table-head {
         display: flex;
@@ -275,21 +307,19 @@ export default {
 
         > .item {
           display: inline-block;
+          width: 150px;
           text-align: center;
-        }
-
-        > .order-time {
-          width: 140px;
         }
 
         > .order-type,
         .order-coin,
         .AD-ID {
-          width: 100px;
+          width: 90px;
         }
       }
 
       > .freezing-table-body {
+        position: relative;
         height: 170px;
         margin-bottom: 10px;
         border-radius: 6px;
@@ -309,24 +339,21 @@ export default {
 
           > .item {
             display: inline-block;
+            width: 150px;
             text-align: center;
-          }
-
-          > .order-time {
-            width: 140px;
           }
 
           > .order-type,
           .order-coin,
           .AD-ID {
-            width: 100px;
+            width: 90px;
           }
         }
 
         > .freezing-info-bottom {
           display: flex;
           flex: 4;
-          padding: 30px 30px 0;
+          padding: 25px 30px 0;
 
           > .info-left {
             flex: 1;
@@ -340,7 +367,7 @@ export default {
             flex: 1;
             margin-left: 30px;
 
-            > .text-info {
+            .text-info {
               line-height: 20px;
             }
           }
@@ -363,11 +390,24 @@ export default {
             }
           }
         }
+
+        .otc-im {
+          position: absolute;
+          top: 3px;
+          right: 20px;
+        }
       }
 
       > .no-data {
         height: 475px;
         line-height: 475px;
+      }
+
+      .pages {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
 
@@ -388,7 +428,6 @@ export default {
           }
 
           > .freezing-info-bottom {
-            padding: 30px 30px 0;
             border-top: 1px solid #262f38;
             color: #9da5b3;
 
@@ -398,7 +437,7 @@ export default {
             .info-reason {
               border-right: 1px solid #262f38;
 
-              > .text-blue {
+              .text-blue {
                 color: $mainColor;
               }
             }
@@ -436,7 +475,7 @@ export default {
             .info-reason {
               border-right: 1px solid rgba(72, 87, 118, .1);
 
-              > .text-blue {
+              .text-blue {
                 color: $mainColor;
               }
             }
