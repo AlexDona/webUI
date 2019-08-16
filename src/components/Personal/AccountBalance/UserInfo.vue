@@ -447,20 +447,20 @@ export default {
             margin-top: 25px;
           }
 
-          .nickNameDialog {
-            .edit-nickName {
-              width: 20px;
-              height: 20px;
-              cursor: pointer;
-            }
+          .edit-nickName {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+          }
 
+          .nickNameDialog {
             .input-nickName {
               width: 100%;
               height: 34px;
               border: 1px solid rgba(72, 87, 118, 1);
               border-radius: 4px;
               line-height: 34px;
-              background: rgba(26, 34, 51, 1);
+              background: transparent;
             }
 
             .input-nickName:focus {
