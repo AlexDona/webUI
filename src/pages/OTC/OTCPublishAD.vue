@@ -314,8 +314,18 @@
                   @focus="remarkFocus"
                 >
                 </textarea>
-                <div class="remark-error red font-size12">
+                <!--请说明有关于您交易的相关条款或者其它您想让对方获悉得信息，以便对方和您快速交易-->
+                <div
+                  class="remark-error red font-size12"
+                  v-if="remarkErrorTipsIsShowStatus"
+                >
                   {{errorTipsRemark}}
+                </div>
+                <div
+                  class="remark-explain"
+                  v-else
+                >
+                  {{$t('M.otc_publishAD_liveMessage')}}
                 </div>
               </div>
             </div>
@@ -599,6 +609,8 @@ export default {
       errorTipsRemark: '',
       // 备注错误提示框
       remarkErrorTipsBorder: false,
+      // 备注错误提示信息是否显示状态
+      remarkErrorTipsIsShowStatus: false,
       // 交易密码
       tradePassword: '',
       // 交易密码错误提示
@@ -868,12 +880,14 @@ export default {
       if (!this.remarkText) {
         // this.errorTipsRemark = '备注不能为空！'
         this.errorTipsRemark = this.$t('M.otc_remark_tips3_not_empty')
+        this.remarkErrorTipsIsShowStatus = true
         this.remarkErrorTipsBorder = true
         return false
       }
       if (this.remarkText.length - 10 < 0) {
         // this.errorTipsRemark = '备注最少为10个字符，最多为30个字符！'
         this.errorTipsRemark = this.$t('M.otc_remark_tips4_length')
+        this.remarkErrorTipsIsShowStatus = true
         this.remarkErrorTipsBorder = true
         return false
       }
@@ -992,6 +1006,8 @@ export default {
       // 备注
       // this.remarkText = '这家伙很懒，什么都没有留下...'
       this.remarkText = this.$t('M.otc_remark_tips1_default')
+      this.remarkErrorTipsIsShowStatus = false
+      this.remarkErrorTipsBorder = false
       // 同时处理最大订单数
       this.$refs.limitRef.value = 0
       this.limitOrderCount = this.$refs.limitRef.value
@@ -1195,6 +1211,7 @@ export default {
     // 备注获得焦点
     remarkFocus () {
       this.errorTipsRemark = ''
+      this.remarkErrorTipsIsShowStatus = false
       this.remarkErrorTipsBorder = false
     }
   },
@@ -1445,9 +1462,11 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
                 font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
               }
 
+              .remark-explain,
               .remark-error {
                 width: 600px;
-                line-height: 18px;
+                margin-top: 3px;
+                line-height: 16px;
               }
             }
           }
