@@ -301,24 +301,12 @@
               <p class="tips font-size12">
                 <span class="must-fill-star">*&nbsp;</span>{{$t('M.comm_remark')}}
               </p>
-              <!-- 可选填 -->
-              <!--<p class="warning font-size12">
-                &nbsp;&nbsp;{{$t('M.otc_publishAD_adviceToFill')}}
-              </p>-->
             </div>
             <div class="right display-inline-block">
-              <!--<el-input
-                type="textarea"
-                maxlength="30"
-                auto-complete="off"
-                :placeholder="$t('M.otc_publishAD_liveMessage')"
-                v-model="remarkText"
-              >
-              </el-input>-->
-              <!-- 请输入备注：最多30个字符 -->
+              <!-- 请输入备注：10~30个字符！ -->
               <div class="remark-content">
                 <textarea
-                  :placeholder="$t('M.otc_publishAD_liveMessage')"
+                  :placeholder="$t('M.otc_remark_tips2_placeholder')"
                   class="textarea-text font-size12 border-radius4 box-sizing"
                   :class="{ redBorderRemark: remarkErrorTipsBorder }"
                   maxlength="30"
@@ -605,7 +593,8 @@ export default {
       // 买家必须成交过几次(0=不限制)
       successOrderCount: '',
       // 备注
-      remarkText: '这家伙很懒，什么都没有留下...',
+      // remarkText: '这家伙很懒，什么都没有留下...',
+      remarkText: this.$t('M.otc_remark_tips1_default'),
       // 备注错误提示信息
       errorTipsRemark: '',
       // 备注错误提示框
@@ -877,12 +866,14 @@ export default {
       // 5.备注
       // 20190827发版周期增加备注最小10个字符的提示
       if (!this.remarkText) {
-        this.errorTipsRemark = '备注不能为空！'
+        // this.errorTipsRemark = '备注不能为空！'
+        this.errorTipsRemark = this.$t('M.otc_remark_tips3_not_empty')
         this.remarkErrorTipsBorder = true
         return false
       }
       if (this.remarkText.length - 10 < 0) {
-        this.errorTipsRemark = '备注最少为10个字符！'
+        // this.errorTipsRemark = '备注最少为10个字符，最多为30个字符！'
+        this.errorTipsRemark = this.$t('M.otc_remark_tips4_length')
         this.remarkErrorTipsBorder = true
         return false
       }
@@ -999,7 +990,8 @@ export default {
       // 支付方式错误提示
       this.errorInfoTradeWay = ''
       // 备注
-      this.remarkText = '这家伙很懒，什么都没有留下...'
+      // this.remarkText = '这家伙很懒，什么都没有留下...'
+      this.remarkText = this.$t('M.otc_remark_tips1_default')
       // 同时处理最大订单数
       this.$refs.limitRef.value = 0
       this.limitOrderCount = this.$refs.limitRef.value
@@ -1566,15 +1558,6 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
       }
     }
 
-    .el-textarea__inner {
-      width: 600px;
-      height: 120px;
-      padding-top: 10px;
-      border: 0;
-      resize: none;
-      font-size: 12px;
-    }
-
     .password-dialog {
       .el-dialog {
         width: 350px;
@@ -1667,10 +1650,6 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             > .left {
               > .tips {
                 color: #fff;
-              }
-
-              > .warning {
-                color: #3e79d6;
               }
             }
 
@@ -1807,11 +1786,6 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
         }
       }
 
-      .el-textarea__inner {
-        color: #a9bed4;
-        background-color: $nightInputBg;
-      }
-
       .trade-way {
         .el-checkbox {
           margin-right: 20px;
@@ -1899,10 +1873,6 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             > .left {
               > .tips {
                 color: $dayMainTitleColor;
-              }
-
-              > .warning {
-                color: $mainColor;
               }
             }
 
@@ -2079,12 +2049,6 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
             background-color: $mainDayBgColor;
           }
         }
-      }
-
-      .el-textarea__inner {
-        border: 1px solid $borderColorOfDay;
-        color: $dayMainTitleColor;
-        background: $mainDayBgColor;
       }
 
       .password-dialog {
