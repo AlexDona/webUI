@@ -524,6 +524,7 @@ export default {
             .el-input__inner
               background-color #3f4769
               border-color transparent
+              line-height 20px
               color S_day_bg
             .el-checkbox__inner
               background-color transparent
@@ -560,7 +561,7 @@ export default {
                 &.is-disabled
                   background #303757
                   color #636777
-                  box-shadow none
+                  box-shadow noner
           .bottom
             span
               color #8B9197

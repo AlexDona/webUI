@@ -222,7 +222,7 @@ export default {
       isMobile: state => state.user.isMobile
     }),
     downloadAppSrc () {
-      return this.mobile ? '/downloadApp' : '/guideOfDownload'
+      return this.mobile ? `${this.$routes_X.downloadApp}` : '/guideOfDownload'
     }
   },
   watch: {

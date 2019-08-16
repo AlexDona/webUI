@@ -1,52 +1,30 @@
-<template>
-  <div
-    class="download-box"
-    :style="{
-      height:windowHeight+'px'
-    }"
-  >
-    <HeaderCommonForMobile
-      :style="{
-        display:'none'
-      }"
-    />
-    <div
-      class="inner-box"
-    >
-      <div class="logo">
-        <img
-          :src="logoSrc"
-        >
-      </div>
-      <div class="content">
-        <img
-          :src="isChineseLanguage ? zh_CNSrc : en_USSrc"
-          v-if="isChineseLanguage"
-        >
-        <button
-          class="download-btn"
-          @click="downloadApp"
-        >
-          <!-- 立即安装 -->
-          {{isChineseLanguage ? '立即安装' : 'Install' }}
-        </button>
-        <a
-          :href="downloadUrl"
-          ref="download"
-          download="android"
-          :style="{
-            'display':'none'
-          }"
-        ></a>
-      </div>
-    </div>
-    <WeChatMask
+<!--
+  author: zhaoxinlei
+  update: 20190815
+  description: app下载页
+-->
+<template lang="pug">
+  .download-box(
+    @ondblclick="ondblclick"
+    @touchmove="touchmove"
+    )
+    HeaderCommonForMobile(:style="{display:'none'}")
+    .inner-box
+      .logo
+        img(:src="logoSrc")
+      .content
+        // 立即安装
+      button.download-btn(
+        :disabled="isLoading"
+        @click="downloadApp"
+        @ondblclick="ondblclick"
+      ) {{isChineseLanguage ? '立即安装' : 'Install' }}
+    WeChatMask(
       :isAndroid="isAndroid"
       :isIOS="isIOS"
       :language="language"
       :isWXBrowserStatus="isWXBrowserStatus"
-    />
-  </div>
+    )
 </template>
 <!--请严格按照如下书写书序-->
 <script>
@@ -67,34 +45,72 @@ export default {
   // props,
   data () {
     return {
-      zh_CNSrc: require('../assets/develop/download-bg-cn.png'),
-      en_USSrc: require('../assets/develop/download-bg-en.png'),
       downloadUrl: '',
       isAndroid: false,
       isIOS: false,
-      isWXBrowserStatus: true
+      isWXBrowserStatus: true,
+      isLoading: true,
+      timer: null
     }
   },
   async created () {
+    document.getElementsByTagName('body')[0].style.zoom = 1
     let u = navigator.userAgent
     this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
     this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
     this.isWXBrowserStatus = u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
     await this.getAppDownLoadUrl()
-    console.log(this.language)
   },
-  mounted () {
+  mounted: function () {
+    // 禁止横屏
+    window.addEventListener('orientationchange', function (e) {
+      this.orient()
+      e.preventDefault()
+      return false
+    }, false)
+    // 禁止拖动
+    document.ondragstart = document.onselectstart = function () {
+      return false
+    }
+    // 禁止滑动
+    document.addEventListener('touchmove', function (event) {
+      event.preventDefault()
+    })
+    var lastTouchEnd = 0
+    document.documentElement.addEventListener('touchend', function (event) {
+      var now = Date.now()
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault()
+      }
+      lastTouchEnd = now
+    }, false)
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // activated () {},
+  // update () {},
+  beforeDestroy () {
+    clearTimeout(this.timer)
+  },
+  // beforeRouteUpdate () {},
   methods: {
-    ...mapActions([
-      'GET_APP_URL_ACTION'
-    ]),
-    ...mapMutations([
-      'SET_FOOTER_INFO'
-    ]),
+    ...mapActions(['GET_APP_URL_ACTION']),
+    ...mapMutations(['SET_FOOTER_INFO']),
+    // 横屏
+    orient () {
+      if (window.orientation == 0 || window.orientation == 180) {
+        orientation = 'portrait'
+        return false
+      } else if (window.orientation == 90 || window.orientation == -90) {
+        orientation = 'landscape'
+        return false
+      }
+    },
+    touchmove (e) {
+      e.preventDefault()
+    },
+    ondblclick (e) {
+      e.preventDefault()
+      return false
+    },
     // 获取app下载地址
     async getAppDownLoadUrl () {
       await this.GET_APP_URL_ACTION()
@@ -104,21 +120,26 @@ export default {
       } else if (this.isIOS) {
         this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
       }
+      this.isLoading = false
     },
-    downloadApp () {
-      this.$refs['download'].click()
-    }
+    downloadApp: _.debounce(async function () {
+      this.isLoading = true
+      if (!this.downloadUrl) {
+        await this.getAppDownLoadUrl()
+      }
+      window.location.href = this.downloadUrl
+      this.timer = setTimeout(() => {
+        this.isLoading = false
+      }, 2000)
+    }, 500)
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       logoSrc: state => state.common.logoSrc,
       androidUrl: state => state.footerInfo.downloadUrl.android,
       iosUrl: state => state.footerInfo.downloadUrl.ios
     }),
-    windowHeight () {
-      return window.innerHeight
-    },
     isChineseLanguage () {
       return this.language === 'zh_CN' ||
         this.language === 'zh_TW'
@@ -126,9 +147,6 @@ export default {
     language () {
       return (navigator.browserLanguage || navigator.language).startsWith('zh') ? 'zh_CN' : 'en_US'
     }
-    // isWXBrowserStatus () {
-    //   return isWXBrowser()
-    // }
   },
   watch: {
   }
@@ -136,15 +154,29 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   .download-box {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    box-sizing: border-box;
     width: 100%;
+    min-width: 750px;
+    height: 100%;
+    background-color: #272940;
+    transform: translateX(-50%);
 
     > .inner-box {
+      position: relative;
+      height: 100%;
+      min-height: 2000px;
       border: 1px solid transparent;
 
       > .logo {
-        width: 6rem;
-        margin: 4rem auto 2rem;
+        position: absolute;
+        top: 2rem;
+        left: 50%;
+        width: 6.2rem;
         border-radius: 10px;
+        transform: translateX(-50%);
 
         > img {
           -webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, .1)));
@@ -153,24 +185,37 @@ export default {
       }
 
       > .content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
         width: 100%;
+        height: 8.5rem;
         text-align: center;
+        background: url(../assets/develop/downloadapp.bg.png) no-repeat center center/contain;
+        transform: translate(-50%, -50%);
 
         > img {
-          display: block;
+          display: none;
           width: 60%;
-          margin: 0 auto;
         }
+      }
 
-        > .download-btn {
-          width: 10rem;
-          height: 2rem;
-          margin: 200px auto;
-          border-radius: 40px;
-          font-size: .8rem;
-          line-height: 2rem;
-          color: #fff;
-          background: rgba(70, 150, 245, 1);
+      > .download-btn {
+        position: fixed;
+        bottom: 3rem;
+        left: 50%;
+        width: 14rem;
+        height: 2.2rem;
+        border-radius: 4px;
+        font-size: .9rem;
+        color: #fff;
+        background: linear-gradient(81deg, rgba(42, 59, 97, 1), rgba(18, 71, 133, 1));
+        box-shadow: 0 3px 8px 0 rgba(0, 0, 0, .25);
+        transform: translateX(-50%);
+
+        &:disabled {
+          color: #636777;
+          background: #303757;
         }
       }
     }
