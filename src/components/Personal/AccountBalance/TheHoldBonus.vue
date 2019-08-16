@@ -298,7 +298,7 @@ export default {
       return _.get(this.holdInfos, 'coinName')
     },
     isUserAuth () {
-      return _.get(this.holdInfos, 'ifAuth')
+      return _.get(this.holdInfos, 'holdRequest.ifAuth')
     },
     isUserAuthDoneLabel () {
       // 已满足、未满足
@@ -306,7 +306,7 @@ export default {
     },
     // 是否首次持仓
     isFirstHave () {
-      return _.get(this.holdInfos, 'ifFirstHave')
+      return _.get(this.holdInfos, 'holdRequest.ifFirstHave')
     },
     // 是否首次持仓
     isFirstHaveDoneLabel () {
@@ -315,7 +315,7 @@ export default {
     },
     // 是否日均持仓
     ifEveryHave () {
-      return _.get(this.holdInfos, 'ifEveryHave')
+      return _.get(this.holdInfos, 'holdRequest.ifEveryHave')
     },
     // 是否日均持仓
     ifEveryHaveDoneLabel () {
@@ -324,7 +324,7 @@ export default {
     },
     // 最小持仓量
     minNumber () {
-      return _.get(this.holdInfos, 'minNumber')
+      return _.get(this.holdInfos, 'holdBonusSetting.minNumber')
     },
     // 持仓信息备注
     remark () {
