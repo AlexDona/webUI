@@ -269,13 +269,15 @@
                     class="red"
                     v-show="OTCBuySellStyle === 'onlineBuy'"
                   >
-                    {{$scientificToNumber(s.row.price)}}{{(s.row.currencyName)}}
+                    <!--{{$scientificToNumber(s.row.price)}}{{(s.row.currencyName)}}-->
+                    {{$otcPricePointShow(s.row.priceZero)}}&nbsp;{{(s.row.currencyName)}}
                   </div>
                   <div
                     class="green"
                     v-show="OTCBuySellStyle === 'onlineSell'"
                   >
-                    {{$scientificToNumber(s.row.price)}}{{(s.row.currencyName)}}
+                    <!--{{$scientificToNumber(s.row.price)}}{{(s.row.currencyName)}}-->
+                    {{$otcPricePointShow(s.row.priceZero)}}&nbsp;{{(s.row.currencyName)}}
                   </div>
                 </template>
               </el-table-column>

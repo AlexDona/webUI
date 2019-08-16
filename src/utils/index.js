@@ -509,6 +509,40 @@ export const amendPrecision = (num1, num2, symbol) => {
 }
 
 /**
+ * otc首页挂单列表价格（otc价格小数位显示）：小数点后3位数据显示格式2.333,2位小数显示2.33，1位小数显示2.30，整数显示2.00
+ * @param number
+ * @returns {*}
+ */
+export const otcPricePointShow = number => {
+  number = scientificToNumber(number)
+  number = number.toString()
+  let judgeResult = number.indexOf('.') // 没有'.'返回-1
+  if (judgeResult !== -1) {
+    // console.log('含有小数点')
+    // console.log('有' + number.split('.')[1].length + '位小数点')
+    let pointCount = number.split('.')[1].length
+    switch (pointCount) {
+      // 含有1个小数位
+      case 1:
+        number = number + '0'
+        break
+      // 含有2个小数位
+      case 2:
+        number = number + ''
+        break
+      // 含有3个小数位
+      case 3:
+        number = number + ''
+        break
+    }
+  } else {
+    // console.log('不含小数点')
+    number = number + '.00'
+  }
+  return number
+}
+
+/**
  * 科学计数法
  * @param number
  * @returns {*}

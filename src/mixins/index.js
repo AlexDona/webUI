@@ -3,6 +3,7 @@ import {
   keep8Num,
   keep4Num,
   scientificToNumber,
+  otcPricePointShow,
   cutOutPointLength,
   formatSeconds,
   setStore,
@@ -71,6 +72,10 @@ let mixin = {
     },
     $scientificToNumber (num) {
       return scientificToNumber(num)
+    },
+    // otc价格小数位显示
+    $otcPricePointShow (num) {
+      return otcPricePointShow(num)
     },
     $footerJump (router, activeName) {
       jumpToOtherPageForFooter(router, activeName)
