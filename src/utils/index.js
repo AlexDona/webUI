@@ -514,32 +514,34 @@ export const amendPrecision = (num1, num2, symbol) => {
  * @returns {*}
  */
 export const otcPricePointShow = number => {
-  number = scientificToNumber(number)
-  number = number.toString()
-  let judgeResult = number.indexOf('.') // 没有'.'返回-1
-  if (judgeResult !== -1) {
-    // console.log('含有小数点')
-    // console.log('有' + number.split('.')[1].length + '位小数点')
-    let pointCount = number.split('.')[1].length
-    switch (pointCount) {
-      // 含有1个小数位
-      case 1:
-        number = number + '0'
-        break
-      // 含有2个小数位
-      case 2:
-        number = number + ''
-        break
-      // 含有3个小数位
-      case 3:
-        number = number + ''
-        break
+  if (number) {
+    number = scientificToNumber(number)
+    number = number.toString()
+    let judgeResult = number.indexOf('.') // 没有'.'返回-1
+    if (judgeResult !== -1) {
+      // console.log('含有小数点')
+      // console.log('有' + number.split('.')[1].length + '位小数点')
+      let pointCount = number.split('.')[1].length
+      switch (pointCount) {
+        // 含有1个小数位
+        case 1:
+          number = number + '0'
+          break
+        // 含有2个小数位
+        case 2:
+          number = number + ''
+          break
+        // 含有3个小数位
+        case 3:
+          number = number + ''
+          break
+      }
+    } else {
+      // console.log('不含小数点')
+      number = number + '.00'
     }
-  } else {
-    // console.log('不含小数点')
-    number = number + '.00'
+    return number
   }
-  return number
 }
 
 /**

@@ -207,29 +207,45 @@
               <!-- 名称 -->
               <!--:label="$t('M.otc_index_Merchant')"-->
               <el-table-column
-                label="广告方(30日成交单|成交率|放行时间)"
+                label="广告方 (30日成交单 | 成交率 | 放行时间)"
                 align="left"
-                width="300"
+                width="250"
               >
                 <template slot-scope = "s">
-                  <div>
-                    <img
-                      src="../../assets/develop/shangjia.png"
-                      class="merchant-icon"
-                      v-show="s.row.userType === 'MERCHANT'"
-                      :title="$t('M.otc_merchant')"
-                    >
-                    <span
-                      class="cursor-pointer"
-                      @click="jumpMerchantInfoPage(s.row.userId)"
-                    >
-                      <span v-if="s.row.userNick">
-                        {{s.row.userNick}}
+                  <div class="first-name">
+                    <div class="top">
+                      <span
+                        class="cursor-pointer top-name"
+                        @click="jumpMerchantInfoPage(s.row.userId)"
+                      >
+                        <span v-if="s.row.userNick">
+                          {{s.row.userNick}}
+                        </span>
+                        <span v-else>
+                          {{s.row.userName}}
+                        </span>
                       </span>
-                      <span v-else>
-                        {{s.row.userName}}
+                      <img
+                        src="../../assets/develop/shangjia.png"
+                        class="merchant-icon"
+                        v-show="s.row.userType === 'MERCHANT'"
+                        :title="$t('M.otc_merchant')"
+                      >
+                    </div>
+                    <div class="bottom">
+                      <span>{{s.row.successOrderTimesForThirtyDays}}单</span>
+                      <span class="line"></span>
+                      <span>
+                        <span v-if="s.row.successOrderTimes === 0 || s.row.tradeTimes === 0">
+                          0%
+                        </span>
+                        <span v-else>
+                          {{((s.row.successOrderTimes/(s.row.tradeTimes)) * 100).toFixed(2)}}%
+                        </span>
                       </span>
-                    </span>
+                      <span class="line"></span>
+                      <span>{{BIHTimeFormatting(s.row.avgGiveOutTime)}}</span>
+                    </div>
                   </div>
                 </template>
               </el-table-column>
@@ -251,6 +267,7 @@
               <el-table-column
                 :label="$t('M.comm_count')"
                 align="right"
+                width="150"
               >
                 <template slot-scope = "s">
                   <div>
@@ -262,6 +279,7 @@
               <el-table-column
                 :label="$t('M.otc_index_price')"
                 align="right"
+                width="170"
               >
                 <template slot-scope = "s">
                   <div
@@ -284,24 +302,25 @@
               <el-table-column
                 :label="$t('M.otc_index_Payment_method')"
                 align="right"
+                width="170"
               >
                 <template slot-scope="s">
                   <div>
                     <!-- 1支付宝 -->
                     <IconFontCommon
-                      class="font-size16"
+                      class="font-size16 margin3"
                       iconName="icon-zhifubao1"
                       v-if="s.row.payTypes[0] === '1'"
                     />
                     <!-- 2微信 -->
                     <IconFontCommon
-                      class="font-size16"
+                      class="font-size16 margin3"
                       iconName="icon-weixin1"
                       v-if="s.row.payTypes[1] === '1'"
                     />
                     <!-- 3银行卡 -->
                     <IconFontCommon
-                      class="font-size16"
+                      class="font-size16 margin3"
                       iconName="icon-yinhangqia"
                       v-if="s.row.payTypes[2] === '1'"
                     />
@@ -309,12 +328,12 @@
                     <span v-show="s.row.payTypes[3] === '1'">
                       <img
                         src="../../assets/user/xilian.png"
-                        class="xilian"
+                        class="xilian margin3"
                       >
                     </span>
                     <!-- 5PAYPAL -->
                     <IconFontCommon
-                      class="font-size16"
+                      class="font-size16 margin3"
                       iconName="icon-paypal"
                       v-if="s.row.payTypes[4] === '1'"
                     />
@@ -326,6 +345,7 @@
               <el-table-column
                 :label="$t('M.otc_index_priceLimit')"
                 align="right"
+                width="170"
               >
                 <template slot-scope = "s">
                   <div>
@@ -338,13 +358,16 @@
               <el-table-column
                 :label="$t('M.comm_remark')"
                 align="right"
+                width="170"
               >
                 <template slot-scope = "s">
-                  <span
-                    class="remark-tips"
-                    :title="s.row.remark"
-                  >
-                    {{s.row.remark}}
+                  <span class="remark-tips">
+                    <span
+                      class="content"
+                      :title="s.row.remark"
+                    >
+                      {{s.row.remark}}
+                    </span>
                   </span>
                 </template>
               </el-table-column>
@@ -1541,27 +1564,63 @@ export default {
             color: $otcGreen;
           }
 
+          .first-name {
+            height: 49px;
+
+            .top {
+              .top-name {
+                margin-right: 5px;
+
+                &:hover {
+                  color: $mainColor;
+                }
+              }
+
+              .merchant-icon {
+                display: inline-block;
+                width: 14px;
+                height: 19px;
+                vertical-align: top;
+                cursor: pointer;
+              }
+            }
+
+            .bottom {
+              font-size: 12px;
+
+              .line {
+                display: inline-block;
+                width: 1px;
+                height: 10px;
+                margin: 0 3px;
+              }
+            }
+          }
+
           .remark-tips {
+            position: relative;
             display: inline-block;
-            width: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            width: 96px;
+            height: 32px;
+            font-size: 12px;
+            line-height: 16px;
+            text-align: left;
+            vertical-align: middle;
             cursor: pointer;
-          }
 
-          .page {
-            padding-bottom: 20px;
-            margin-top: 10px;
-            text-align: center;
-          }
-
-          .merchant-icon {
-            display: inline-block;
-            width: 14px;
-            height: 19px;
-            vertical-align: top;
-            cursor: pointer;
+            .content {
+              position: absolute;
+              top: 50%;
+              display: -webkit-box;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              word-wrap: break-word;
+              word-break: break-all;
+              transform: translateY(-50%);
+              -webkit-box-orient: vertical;
+              -moz-box-orient: vertical;
+              -webkit-line-clamp: 2; /* 设置最大2行，父元素需填写宽度 */
+            }
           }
 
           .xilian {
@@ -1575,6 +1634,12 @@ export default {
             left: 616px;
             display: inline-block;
           }
+        }
+
+        > .page {
+          padding-bottom: 20px;
+          margin-top: 10px;
+          text-align: center;
         }
       }
 
@@ -1720,11 +1785,6 @@ export default {
       }
     }
 
-    .el-table .cell,
-    .el-table th div {
-      padding: 0;
-    }
-
     .el-input__icon {
       font-size: 12px;
       line-height: 30px;
@@ -1792,26 +1852,26 @@ export default {
 
     .otc-merchant-list {
       .el-table {
-        thead {
-          font-size: 12px;
-        }
-
-        td {
-          padding: 24px 0;
-        }
-
         .el-table__header {
-          tr {
-            th {
-              &:first-child {
-                .cell {
-                  padding-left: 30px;
-                }
-              }
+          thead {
+            font-size: 12px;
 
-              &:nth-last-child(2) {
+            tr {
+              th {
+                &:first-child {
+                  .cell {
+                    padding-left: 30px;
+                  }
+                }
+
+                &:nth-last-child(2) {
+                  .cell {
+                    padding-right: 30px;
+                  }
+                }
+
                 .cell {
-                  padding-right: 30px;
+                  padding: 0;
                 }
               }
             }
@@ -1821,7 +1881,10 @@ export default {
         .el-table__body {
           tr {
             td {
+              padding: 15px 0;
+
               .cell {
+                padding: 0;
                 line-height: 24px;
               }
 
@@ -1852,13 +1915,13 @@ export default {
           /* 鼠标悬浮购买出售按钮增加背景色 */
           .el-button--danger {
             &:hover {
-              background-color: #dc4d4d;
+              background-color: #dc4d4d !important;
             }
           }
 
           .el-button--success {
             &:hover {
-              background-color: #00807b;
+              background-color: #00807b !important;
             }
           }
 
@@ -1867,6 +1930,10 @@ export default {
             padding: 7px 10px;
           }
         }
+
+        .el-table__empty-block {
+          height: 760px;
+        }
       }
 
       .el-table__column-filter-trigger {
@@ -1874,10 +1941,6 @@ export default {
           font-weight: 700;
           font-size: 14px;
         }
-      }
-
-      .el-table__empty-block {
-        height: 760px;
       }
     }
 
@@ -2075,12 +2138,23 @@ export default {
 
           > .otc-merchant-list {
             background-color: $mainContentNightBgColor;
+
+            .first-name {
+              .bottom {
+                color: $mainNightTitleColor;
+
+                .line {
+                  background-color: $mainNightTitleColor;
+                }
+              }
+            }
+
+            .remark-tips {
+              color: $mainNightTitleColor;
+            }
           }
 
-          .page {
-            padding: 20px 0;
-            margin-top: -10px;
-            text-align: center;
+          > .page {
             background-color: $mainContentNightBgColor;
           }
         }
@@ -2390,15 +2464,19 @@ export default {
           }
 
           > .otc-merchant-list {
-            .red {
-              color: $upColor;
-            }
-          }
+            .first-name {
+              .bottom {
+                color: $fontColorSecondaryOfDay;
 
-          .page {
-            padding-bottom: 20px;
-            margin-top: 10px;
-            text-align: center;
+                .line {
+                  background-color: $fontColorSecondaryOfDay;
+                }
+              }
+            }
+
+            .remark-tips {
+              color: $fontColorSecondaryOfDay;
+            }
           }
         }
 
