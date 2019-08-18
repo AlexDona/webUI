@@ -264,7 +264,6 @@
                 align="right"
               >
                 <template slot-scope = "s">
-                  <!-- 此处的单位根据设置中的法币类型来变化：为人民币时候显示CNY，为美元时候显示$ 此处需要从全局拿到设置中的法币类型来渲染页面-->
                   <div
                     class="red"
                     v-show="OTCBuySellStyle === 'onlineBuy'"
@@ -2209,50 +2208,64 @@ export default {
         }
       }
 
-      .el-table {
-        color: $mainColorOfWhite;
-        background-color: $mainContentNightBgColor;
-
-        tr {
-          background-color: $mainContentNightBgColor;
-        }
-
-        thead {
-          color: $mainNightTitleColor;
-        }
-
-        th {
+      .otc-merchant-list {
+        .el-table {
+          color: $mainColorOfWhite;
           background-color: $mainContentNightBgColor;
 
-          &.is-leaf {
+          tr {
+            background-color: $mainContentNightBgColor;
+          }
+
+          th {
+            background-color: $mainContentNightBgColor;
+
+            &.is-leaf {
+              border-bottom: 1px solid rgba(97, 116, 153, .05);
+            }
+
+            > .cell {
+              &.highlight {
+                color: #617499;
+              }
+            }
+          }
+
+          td {
             border-bottom: 1px solid rgba(97, 116, 153, .05);
           }
 
-          > .cell {
-            &.highlight {
-              color: #617499;
+          .el-table__header {
+            thead {
+              color: $mainNightTitleColor;
             }
           }
-        }
-      }
 
-      .otc-center-content {
-        .otc-merchant-content {
-          .el-table {
-            td {
-              border-bottom: 1px solid rgba(97, 116, 153, .05);
-            }
-          }
-        }
-      }
-
-      .el-table--enable-row-hover {
-        .el-table__body {
-          tr {
-            &:hover {
-              > td {
-                background-color: #1d2331;
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background-color: #1d2331;
+                }
               }
+            }
+
+            .el-button--danger {
+              border-color: $upColor;
+              background-color: $upColor;
+            }
+
+            .el-button--success {
+              border-color: $otcGreen;
+              background-color: $otcGreen;
+            }
+          }
+
+          .el-table__empty-block {
+            background-color: $mainContentNightBgColor;
+
+            .el-table__empty-text {
+              color: rgba(255, 255, 255, .8);
             }
           }
         }
@@ -2262,40 +2275,6 @@ export default {
         i {
           color: $mainColor;
         }
-      }
-
-      .el-button--danger {
-        border-color: $upColor;
-        background-color: $upColor;
-      }
-
-      .invest-list-body {
-        .el-table {
-          td {
-            border-top: 1px solid rgba(97, 116, 153, .2);
-            box-shadow: none;
-          }
-
-          th {
-            &.is-leaf {
-              border-top: 1px solid rgba(97, 116, 153, .2);
-              box-shadow: none;
-            }
-          }
-        }
-      }
-
-      .el-button--success {
-        border-color: $otcGreen;
-        background-color: $otcGreen;
-      }
-
-      .el-table__empty-block {
-        background-color: $mainContentNightBgColor;
-      }
-
-      .el-table__empty-text {
-        color: rgba(255, 255, 255, .8);
       }
 
       .el-tabs__item {
@@ -2567,43 +2546,63 @@ export default {
         }
       }
 
-      .el-table {
-        color: $dayMainTitleColor;
+      .otc-merchant-list {
+        .el-table {
+          color: $dayMainTitleColor;
 
-        th {
-          background-color: $mainColorOfWhite;
+          th {
+            background-color: $mainColorOfWhite;
 
-          &.is-leaf {
-            border-bottom: 1px solid $borderColorOfDay;
-          }
+            &.is-leaf {
+              border-bottom: 1px solid $borderColorOfDay;
+            }
 
-          > .cell {
-            &.highlight {
-              color: #617499;
+            > .cell {
+              &.highlight {
+                color: #617499;
+              }
             }
           }
-        }
 
-        tr {
-          background-color: $mainColorOfWhite;
-        }
-
-        thead {
-          color: $fontColorSecondaryOfDay;
-        }
-
-        td {
-          border-bottom: 1px solid rgba(97, 116, 153, .1);
-        }
-      }
-
-      .el-table--enable-row-hover {
-        .el-table__body {
           tr {
-            &:hover {
-              > td {
-                background-color: $mainColorOfWhite;
+            background-color: $mainColorOfWhite;
+          }
+
+          td {
+            border-bottom: 1px solid rgba(97, 116, 153, .1);
+          }
+
+          .el-table__header {
+            thead {
+              color: $fontColorSecondaryOfDay;
+            }
+          }
+
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background-color: $mainColorOfWhite;
+                }
               }
+            }
+
+            .el-button--danger {
+              border-color: $upColor;
+              background-color: $upColor;
+            }
+
+            .el-button--success {
+              border-color: $otcGreen;
+              background-color: $otcGreen;
+            }
+          }
+
+          .el-table__empty-block {
+            background-color: $mainColorOfWhite;
+
+            .el-table__empty-text {
+              color: $dayMainTitleColor;
             }
           }
         }
@@ -2613,24 +2612,6 @@ export default {
         i {
           color: $mainColor;
         }
-      }
-
-      .el-button--danger {
-        border-color: $upColor;
-        background-color: $upColor;
-      }
-
-      .el-button--success {
-        border-color: $otcGreen;
-        background-color: $otcGreen;
-      }
-
-      .el-table__empty-block {
-        background-color: $mainColorOfWhite;
-      }
-
-      .el-table__empty-text {
-        color: $dayMainTitleColor;
       }
 
       .el-tabs__item {
