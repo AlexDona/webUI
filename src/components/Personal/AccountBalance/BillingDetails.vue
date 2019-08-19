@@ -9,9 +9,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="billing-details-header personal-height40 line-height40 background-color padding-left23">
-      <span
-              class="header-content display-inline-block font-size16 cursor-pointer"
-      >
+      <span class="header-content display-inline-block font-size16 cursor-pointer">
         <!--账单明细-->
         {{ $t('M.user_asset_title2') }}
       </span>
@@ -118,10 +116,9 @@
                 align="right"
                 :editable="false"
                 range-separator="~"
-                @change="changeTime"
                 :start-placeholder="$t('M.otc_no1')"
                 :end-placeholder="$t('M.otc_no2')"
-                :default-time="['00:00:00', '23:59:59']"
+                :default-time="['00:00:00', '00:00:00']"
                 :picker-options="!isHoldBonus ? pickerOptionsTime: {}"
               >
               </el-date-picker>
@@ -496,7 +493,14 @@ export default {
       hours: new Date().getHours(),
       minutes: new Date().getMinutes(),
       seconds: new Date().getSeconds(),
-      pickerOptionsTime: {},
+      pickerOptionsTime: {
+        disabledDate: (time) => {
+          let curDate = (new Date()).getTime()
+          let three = 90 * 24 * 3600 * 1000
+          let threeMonths = curDate - three
+          return time.getTime() > Date.now() || time.getTime() < threeMonths
+        }
+      },
       chargeRecordList: [], // 充提记录列表
       names: {
         currentEntrust: 'current-entrust',
@@ -583,7 +587,6 @@ export default {
     } else {
       await this.inquireCurrencyList(activeName || this.names.currentEntrust)
     }
-    this.changeTime()
   },
   methods: {
     ...mapMutations([
@@ -606,7 +609,7 @@ export default {
       this.$success_tips_X(this.$t('M.comm_copies_failure'))
     },
     // 1.3 时间赋值
-    changeTime () {
+    /* changeTime () {
       this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
         disabledDate: (time) => {
           let curDate = (new Date()).getTime()
@@ -615,7 +618,7 @@ export default {
           return time.getTime() > Date.now() || time.getTime() < threeMonths
         }
       })
-    },
+    }, */
     /**
      * 2.tab 切换赋值展示
      */
@@ -1027,6 +1030,13 @@ export default {
       }
 
       /deep/ {
+        /* 白色版本下账单明细充提记录和综合记录不显示选中下划线修复 */
+        .billing-details-main {
+          .el-tabs__item.is-active {
+            border-bottom: 2px solid #0079fe;
+          }
+        }
+
         .el-table__body-wrapper {
           height: 470px;
           background-color: #fff;
@@ -1203,7 +1213,7 @@ export default {
 
         &.hold-table {
           th,
-td {
+          td {
             &:nth-of-type(4) {
               text-align: left;
             }

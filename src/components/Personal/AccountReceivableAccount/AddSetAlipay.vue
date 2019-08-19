@@ -66,6 +66,7 @@
             <!--支付宝账号-->
             <el-form-item
               :label="$t('M.user_account_alipay') + $t('M.user_account_number')"
+              required
             >
               <input
                 class="account-input border-radius2"
@@ -114,6 +115,7 @@
             <!--交易密码-->
             <el-form-item
               :label="$t('M.comm_password')"
+              required
             >
               <input
                 type="password"
@@ -329,14 +331,14 @@ export default {
         goOnStatus = 0
       }
       console.log(this.dialogImageHandUrl1)
-      if (this.dialogImageHandUrl1 == '') {
+      /* if (this.dialogImageHandUrl1 == '') {
         // 请上传支付宝收款码
         this.$message({
           message: this.$t('M.user_account_alipay_pla'),
           type: 'error'
         })
         return false
-      }
+      } */
       if (goOnStatus) {
         let data
         let param = {
