@@ -34,7 +34,7 @@
               class="li-item"
               v-if="!$isLogin_S_X"
             >
-              <router-link :to="`/${$routes_X.login}`">
+              <router-link :to="loginRouter">
                 <!--<span>登录</span>-->
                 <span>{{$t('M.comm_login')}}</span>
               </router-link>
@@ -44,7 +44,7 @@
               class="li-item"
               v-if="!$isLogin_S_X"
             >
-              <router-link :to="`/${$routes_X.login}/${$routes_X.register}/default`">
+              <router-link :to="registerRouter">
                 <!--<span>注册</span>-->
                 <span>{{$t('M.comm_register_time')}}</span>
               </router-link>
@@ -373,8 +373,15 @@ export default{
       // 首页消息列表
       homeNoticeList: state => state.home.noticeList,
       // 交易密码是否被锁定
-      isLockedPayPassword: state => state.common.isLockedPayPassword
-    })
+      isLockedPayPassword: state => state.common.isLockedPayPassword,
+      isMobile: state => state.user.isMobile
+    }),
+    registerRouter () {
+      return !this.isMobile ? this.$PCRegisterDefaultRouter_G_X : this.$mobileRegisterDefaultRouter_G_X
+    },
+    loginRouter () {
+      return !this.isMobile ? this.$PCLoginDefaultRouter_G_X : this.$mobileLoginDefaultRouter_G_X
+    }
   },
   watch: {
     $activeLinkIndex_S_X (New, Old) {

@@ -166,8 +166,9 @@ export default {
   [CHANGE_DEFAULT_LANGUAGE] (state, data) {
     state.defaultLanguage = data
   },
-  [SET_WINDOW_WIDTH] (state, width) {
-    state.clientWidth = width
+  [SET_WINDOW_WIDTH] (state, {clientWidth, remWidth}) {
+    state.clientWidth = clientWidth
+    state.remWidth_S = remWidth
     // console.log(state.clientWidth)
   },
   [SET_NOTICE_ID] (state, noticeId) {

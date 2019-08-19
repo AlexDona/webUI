@@ -7,10 +7,10 @@
   el-dialog.msg-email-google-dialog(
     :title="currentTitleText"
     :visible="$isShowLoginStep2Dialog_S_X"
-    width="486px"
+    :width="!isMobile ? '486px' : '11rem'"
     :close-on-click-modal="false"
     @close="$UPDATE_LOGIN_STEP2_DIALOG_STATUS_X(false)"
-    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
+    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X, mobile: isMobile }"
   )
     el-form(
       :model="form"
@@ -20,7 +20,7 @@
       @submit.native.prevent="'@submit.native.prevent'"
     )
       // 短信验证码
-      el-form-item(
+      el-form-item.validate-code(
         label=""
         label-width="0px"
         prop="phone"
@@ -224,7 +224,9 @@ export default {
   },
   // filters: {},
   computed: {
-    ...mapState({}),
+    ...mapState({
+      isMobile: state => state.user.isMobile
+    }),
     needPhoneValidate () {
       return this.$isBindPhone_X && !this.$isBindGoogle_X
     },
@@ -261,6 +263,7 @@ export default {
 <style scoped lang="stylus">
   @import '../../../../assets/CSS/index.styl'
   .msg-email-google-dialog
+    fontSize = .5rem
     -moz-user-select none
     -webkit-user-select none
     -o-user-select none
@@ -349,18 +352,22 @@ export default {
                 &.google-validate
                   .el-input__inner
                     border 1px solid #25283D
-                .el-input__inner
-                  background-color transparent
-                  border-color #25283D
-                  color #fff
                 .el-input-group__append
-                  background-color transparent
-                  border-color #25283D
+                  background-color #1a2233
+                  border-color #485776
                   .count-down
                     color S_main_color
                     border-left 1px solid S_main_color
                     &.is-disabled
                       color #fff
+                .el-input__inner
+                  background-color #1a2233
+                  border-color #485776
+                  color #fff
+                  &:focus
+                    border-color S_main_color !important
+                    & ~.el-input-group__append
+                      border-color S_main_color !important
                 &.submit-form
                   .el-button
                     color #fff
@@ -409,4 +416,120 @@ export default {
                     box-shadow 0 3px 6px 0 rgba(26,42,71,0.27)
                 .send-code-btn
                   color S_error_color
+    &.mobile
+      /deep/
+        .el-dialog
+          margin-top 0 !important
+          height 7rem
+          border-radius .16rem
+          .el-dialog__header
+            height 1rem
+            line-height 1rem
+            padding 0 .48rem
+            .el-dialog__title
+              height 1rem
+              line-height 1rem
+              display inline-block
+              font-size fontSize
+            .el-dialog__headerbtn
+              top .2rem
+              right .48rem
+              .el-dialog__close
+                font-size fontSize
+          .el-dialog__body
+            padding 1.48rem .5rem 0
+            .el-form
+              .el-form-item
+                margin-bottom .2rem
+                &.validate-code
+                  .el-input__inner
+                    border-right none
+                &.error-tips-form
+                  margin-bottom .2rem !important
+                  height .64rem
+                  .iconfont
+                    font-size .4rem
+                    vertical-align middle
+                    color S_error_color
+                  .error-tips
+                    vertical-align middle
+                    margin-left .16rem
+                    font-size .4rem
+                    color S_error_color
+                .el-input__inner
+                  border .016rem solid #485776
+                  height 1rem
+                  line-height 1rem
+                  border-right none
+                  box-sizing border-box
+                  padding 0 .48rem
+                  font-size .4rem
+                  &:focus
+                    border-color S_main_color !important
+                    & ~.el-input-group__append
+                      border-color S_main_color !important
+                .el-input__suffix
+                  right .22rem
+                  >.el-input__suffix-inner
+                    >.el-input__clear
+                      font-size fontSize
+                      line-height 1rem
+                      width .8rem
+                .el-input-group__append
+                  border-left none
+                  min-width 3rem
+                  .count-down
+                    padding 0 .3rem
+                    span
+                      font-size fontSize !important
+                &.submit-form
+                  text-align center
+                  .el-button
+                    width 4.83rem
+                    height 1rem
+                    border none
+                    border-radius .02rem
+                    font-size fontSize
+      &.night,&.day
+        background-color rgba(11,12,20,.8)
+        /deep/
+          .el-dialog
+            background-color #2b304c
+            .el-dialog__header
+              background-color #25283D
+              .el-dialog__title
+                color S_day_bg
+            .el-dialog__body
+              .el-form
+                .el-form-item
+                  &.error-tips-form
+                    .iconfont
+                      color S_error_color
+                    .error-tips
+                      color S_error_color
+                  &.google-validate
+                    .el-input__inner
+                      border .016rem solid #25283D
+                  .el-input__inner
+                    background-color #1a2233
+                    border-color #485776
+                    color #fff
+                  .el-input-group__append
+                    border .016rem solid #25283D
+                    background-color #1a2233
+                    border-color #485776
+                    border-left none
+                    .count-down
+                      color S_main_color
+                      border-left .016rem solid S_main_color
+                      &.is-disabled
+                        color #fff
+                  &.submit-form
+                    .el-button
+                      color #fff
+                      border none
+                      background linear-gradient(81deg,rgba(18,71,133,1), rgba(42,59,97,1))
+                      box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
+                  .send-code-btn
+                    color S_error_color
 </style>

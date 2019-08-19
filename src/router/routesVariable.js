@@ -70,7 +70,9 @@ export const routesVariable = {
   confirmUserInfo: 'confirm',
   nofind404: 'nofind404',
   serverError: '500',
-  downloadApp: '/downloadApp'
+  downloadApp: '/downloadApp',
+  // 邀请注册
+  invite: 'invite'
 }
 
 export const globalLabel = {

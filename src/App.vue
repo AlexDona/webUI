@@ -2,6 +2,7 @@
   <div
     id="app"
     class="body-container"
+    :class="{'is-mobile': isMobile}"
     v-loading.fullscreen.lock="$loading_S_X"
     element-loading-background="rgba(0, 0, 0, 0.8)"
   >
@@ -112,12 +113,10 @@ export default {
       const {path} = this.$route
 
       const userDisScalabledRoutes = [
-        // `/${this.$routes_X.login}`,
-        // `/${this.$routes_X.register}`,
-        `${this.$routes_X.downloadApp}`
-        // `/invitationRegister`
+        `${this.$routes_X.downloadApp}`,
+        `/${this.$routes_X.register}/${this.$routes_X.invite}`
       ]
-      const notNeedUserScalable = _.some(userDisScalabledRoutes, (route, index) => (route.toUpperCase() === path.toUpperCase() || path.startsWith(route)))
+      const notNeedUserScalable = _.some(userDisScalabledRoutes, (route, index) => (route.toLowerCase() === path.toLowerCase() || path.startsWith(route)))
 
       switch (this.isMobile && notNeedUserScalable) {
         case true:
@@ -174,14 +173,19 @@ export default {
       this.isNeedNotice = path === `/${this.$routes_X.home}` || path === '/' ? 1 : 0
       this.isNeedHeader = (
         !path.startsWith(`/${this.$routes_X.login}`) &&
-        path.toUpperCase() !== `${this.$routes_X.downloadApp}`.toUpperCase() &&
-        !path.startsWith('/invitationRegister')
+        path.toLowerCase() !== `${this.$routes_X.downloadApp}`.toLowerCase() &&
+        !path.startsWith(`/${this.$routes_X.register}/m`) &&
+        !path.startsWith(`/${this.$routes_X.register}/${this.$routes_X.invite}`) &&
+        !path.startsWith(`/${this.$routes_X.registerSuccess}/m`)
       ) ? 1 : 0
       this.isNeedFooter = (
         path.startsWith(`/${this.$routes_X.login}`) ||
-        path.toUpperCase() === `${this.$routes_X.downloadApp}`.toUpperCase() ||
+        path.toLowerCase() === `${this.$routes_X.downloadApp}`.toLowerCase() ||
         path.startsWith('/invitationRegister') ||
-        path.startsWith(`/${this.$routes_X.forgetPass}`)
+        path.startsWith(`/${this.$routes_X.forgetPass}`) ||
+        path.startsWith(`/${this.$routes_X.register}/m`) ||
+        path.startsWith(`/${this.$routes_X.register}/${this.$routes_X.invite}`) ||
+        path.startsWith(`/${this.$routes_X.registerSuccess}/m`)
       ) ? 0 : 1
       switch (path) {
         case '/register':
@@ -206,7 +210,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   @import '../static/css/font-family/font.css';
 
   .body-container {
@@ -217,5 +221,9 @@ export default {
     font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    &.is-mobile {
+      min-height: 2000px;
+    }
   }
 </style>

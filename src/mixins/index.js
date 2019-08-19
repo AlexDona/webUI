@@ -137,7 +137,13 @@ let mixin = {
       '$isNeedLimitExchange_G_X': 'isNeedLimitExchange_G',
       '$isNeedYST_G_X': 'isNeedYST',
       '$isChineseLanguage_G_X': 'isChineseLanguage',
-      '$isDayTheme_G_X': 'isDayTheme'
+      '$isDayTheme_G_X': 'isDayTheme',
+      '$mobileRegisterDefaultRouter_G_X': 'mobileRegisterDefaultRouter_G',
+      '$PCRegisterDefaultRouter_G_X': 'PCRegisterDefaultRouter_G',
+      '$mobileLoginDefaultRouter_G_X': 'mobileLoginDefaultRouter_G',
+      '$PCLoginDefaultRouter_G_X': 'PCLoginDefaultRouter_G',
+      '$PCRegisterSuccessRouter_G_X': 'PCRegisterSuccessRouter_G',
+      '$mobileRegisterSuccessRouter_G_X': 'mobileRegisterSuccessRouter_G'
     }),
     ...mapState({
       $loading_S_X: state => state.common.loading_S,

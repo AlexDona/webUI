@@ -19,7 +19,7 @@
         span.second {{successCountDown}}
         // 秒后跳转登录页面...
         span.tips {{ $t('M.forgetPassword_hint8') }}
-      router-link(:to="`/${this.$routes_X.login}`") {{ $t('M.forgetPassword_text3') }}
+      router-link(:to="$PCLoginDefaultRouter_G_X") {{ $t('M.forgetPassword_text3') }}
 </template>
 <script>
 export default {
