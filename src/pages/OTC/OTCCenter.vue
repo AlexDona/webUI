@@ -206,8 +206,9 @@
             >
               <!-- 名称 -->
               <!--:label="$t('M.otc_index_Merchant')"-->
+              <!--label="广告方 (30日成交单 | 成交率 | 放行时间)"-->
               <el-table-column
-                label="广告方 (30日成交单 | 成交率 | 放行时间)"
+                :label="$t('M.otc_index_Merchant')"
                 align="left"
                 width="250"
               >
@@ -233,7 +234,8 @@
                       >
                     </div>
                     <div class="bottom">
-                      <span>{{s.row.successOrderTimesForThirtyDays}}单</span>
+                      <!--单-->
+                      <span>{{s.row.successOrderTimesForThirtyDays}}{{$t('M.otc_thirty_success_orders')}}</span>
                       <span class="line"></span>
                       <span>
                         <span v-if="s.row.successOrderTimes === 0 || s.row.tradeTimes === 0">
@@ -1637,8 +1639,8 @@ export default {
         }
 
         > .page {
-          padding-bottom: 20px;
-          margin-top: 10px;
+          padding-bottom: 10px;
+          margin-top: 20px;
           text-align: center;
         }
       }
