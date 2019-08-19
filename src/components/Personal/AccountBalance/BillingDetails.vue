@@ -9,9 +9,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="billing-details-header personal-height40 line-height40 background-color padding-left23">
-      <span
-              class="header-content display-inline-block font-size16 cursor-pointer"
-      >
+      <span class="header-content display-inline-block font-size16 cursor-pointer">
         <!--账单明细-->
         {{ $t('M.user_asset_title2') }}
       </span>
@@ -1030,6 +1028,13 @@ export default {
       }
 
       /deep/ {
+        /* 白色版本下账单明细充提记录和综合记录不显示选中下划线修复 */
+        .billing-details-main {
+          .el-tabs__item.is-active {
+            border-bottom: 2px solid #0079fe;
+          }
+        }
+
         .el-table__body-wrapper {
           height: 470px;
           background-color: #fff;
@@ -1206,7 +1211,7 @@ export default {
 
         &.hold-table {
           th,
-td {
+          td {
             &:nth-of-type(4) {
               text-align: left;
             }
