@@ -118,10 +118,9 @@
                 align="right"
                 :editable="false"
                 range-separator="~"
-                @change="changeTime"
                 :start-placeholder="$t('M.otc_no1')"
                 :end-placeholder="$t('M.otc_no2')"
-                :default-time="['00:00:00', '23:59:59']"
+                :default-time="['00:00:00', '00:00:00']"
                 :picker-options="!isHoldBonus ? pickerOptionsTime: {}"
               >
               </el-date-picker>
@@ -494,7 +493,14 @@ export default {
       hours: new Date().getHours(),
       minutes: new Date().getMinutes(),
       seconds: new Date().getSeconds(),
-      pickerOptionsTime: {},
+      pickerOptionsTime: {
+        disabledDate: (time) => {
+          let curDate = (new Date()).getTime()
+          let three = 90 * 24 * 3600 * 1000
+          let threeMonths = curDate - three
+          return time.getTime() > Date.now() || time.getTime() < threeMonths
+        }
+      },
       chargeRecordList: [], // 充提记录列表
       names: {
         currentEntrust: 'current-entrust',
@@ -581,7 +587,6 @@ export default {
     } else {
       await this.inquireCurrencyList(activeName || this.names.currentEntrust)
     }
-    this.changeTime()
   },
   methods: {
     ...mapMutations([
@@ -604,7 +609,7 @@ export default {
       this.$success_tips_X(this.$t('M.comm_copies_failure'))
     },
     // 1.3 时间赋值
-    changeTime () {
+    /* changeTime () {
       this.pickerOptionsTime = Object.assign({}, this.pickerOptionsTime, {
         disabledDate: (time) => {
           let curDate = (new Date()).getTime()
@@ -613,7 +618,7 @@ export default {
           return time.getTime() > Date.now() || time.getTime() < threeMonths
         }
       })
-    },
+    }, */
     /**
      * 2.tab 切换赋值展示
      */
