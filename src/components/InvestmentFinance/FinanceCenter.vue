@@ -1800,6 +1800,7 @@ export default {
               }
 
               .el-button--primary {
+                border: none;
                 background: $nightButtonBgColor1;
               }
             }

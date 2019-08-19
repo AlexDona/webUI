@@ -408,7 +408,7 @@
           <div class="page">
             <el-pagination
               background
-              v-show="onlineBuySellTableList.length"
+              v-show="onlineBuySellTableList.length && totalPages - 1 > 0"
               layout="prev, pager, next"
               :current-page="currentPage"
               :page-count="totalPages"
