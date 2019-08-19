@@ -34,31 +34,24 @@
       </div>
     </div>
 </template>
-<!--请严格按照如下书写书序-->
 <script>
-// import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
-  components: {
-  },
-  props: ['isAndroid', 'language', 'isIOS', 'isWXBrowserStatus'],
-  data () {
-    return {
-      // isWXBrowserStatus: false
-    }
-  },
-  created () {
-    // this.isWXBrowser()
-  },
-  mounted () {},
-  activated () {},
-  updated () {},
-  beforeRouteUpdate () {},
-  methods: {
-  },
-  filter: {},
-  computed: {
-  },
-  watch: {}
+  // components: {},
+  props: ['isAndroid', 'language', 'isIOS', 'isWXBrowserStatus']
+  // data () {
+  //   return {}
+  // },
+  // created () {},
+  // mounted () {},
+  // activated () {},
+  // updated () {},
+  // beforeRouteUpdate () {},
+  // methods: {
+  // },
+  // filter: {},
+  // computed: {
+  // },
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

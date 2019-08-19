@@ -9,7 +9,7 @@
       <!-- 用户信息-->
       <UserInfo :Rates = 'CNYRate'/>
       <!-- 持仓分红 -->
-      <TheHoldBonus/>
+      <TheHoldBonus :isShowHoldInfos="isShowHoldInfos"/>
       <div class="account-assets-box margin-top10">
         <div>
           <header class="account-assets-header display-flex personal-height40 line-height40 box-shadow">
@@ -589,7 +589,7 @@ export default {
     CountDownButton, // 短信倒计时
     TheHoldBonus
   },
-  // props,
+  props: ['isShowHoldInfos'],
   data () {
     return {
       labelPosition: 'top', // form表单label方向

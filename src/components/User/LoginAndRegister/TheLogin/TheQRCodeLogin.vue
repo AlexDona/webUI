@@ -140,7 +140,7 @@ export default {
     }, 1000),
     // 登录成功操作
     userLoginSuccess (data) {
-      console.log(data)
+      // console.log(data)
       const {token} = data
       setCookie('token', token)
       this.USER_LOGIN(data)

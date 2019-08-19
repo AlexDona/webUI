@@ -378,6 +378,7 @@
         <el-tab-pane
           :label="$t('M.hold_bonus_record_label')"
           :name="names.holdBonusRecord"
+          v-if="isShowHoldInfos"
         >
           <el-table
             :data="holdBonus.records"
@@ -486,6 +487,7 @@ import {timeFilter} from '../../../utils'
 import {getUserHoldRecordAJAX} from '../../../utils/api/holdBonus'
 export default {
   // components: {},
+  props: ['isShowHoldInfos'],
   data () {
     return {
       year: new Date().getFullYear(),

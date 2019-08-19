@@ -17,7 +17,7 @@
     .hold-item.usable
       .content
         p.label {{$t(usable.label)}}
-        p.value {{usable.value | $moneyFilter_F_X}}
+        p.value {{(usableTotal) }}
     // 参与条件： 已满足、未满足
     .hold-item
       .content
@@ -32,7 +32,18 @@
         button.description(@click="jumpToRecord") {{$t(detailLabel)}}
     // 备注信息
     .hold-item
-      .content {{filterRemark}}
+      el-popover(
+        :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
+        effect="dark"
+        placement="bottom"
+        trigger="click"
+        width="218"
+      )
+        .content(v-html="filterRemark")
+        .content.remark(
+          v-html="filterRemark"
+          slot="reference"
+        )
     //  参与条件弹窗
     el-dialog.condition-dialog(
       width="700px"
@@ -106,10 +117,9 @@ export default {
   name: 'the-hold-bonus',
   // mixins: [],
   // components: {},
-  // props,
+  props: ['isShowHoldInfos'],
   data () {
     return {
-      isShowHoldInfos: false,
       coinName: {
         chinese: '富链',
         english: 'FUCoin'
@@ -149,7 +159,7 @@ export default {
           color: '#b2b7d0'
         },
         grid: {
-          left: '5%',
+          left: '7%',
           top: '8%',
           right: '3%'
           // bottom: '6%'
@@ -238,10 +248,7 @@ export default {
       isShowConditionDialog: false
     }
   },
-  async created () {
-    if (!await this.confirmIsShowHoldInfo()) return
-    await this.getUserHoldInfo()
-  },
+  // async created () {},
   // mounted () {
   // },
   // updated () {},
@@ -294,6 +301,12 @@ export default {
     englishFullName () {
       return _.get(this.holdInfos, 'coinEnglishName')
     },
+    // 持仓可用
+    usableTotal () {
+      let num = parseFloat(_.get(this.holdInfos, 'coinTotal') - 0)
+      num = num.toLocaleString()
+      return num
+    },
     englishCoinName () {
       return _.get(this.holdInfos, 'coinName')
     },
@@ -336,7 +349,7 @@ export default {
     },
     // 过滤后的备注
     filterRemark () {
-      return this.$isChineseLanguage_G_X ? this.remark : this.remarkEnglish
+      return ((this.$isChineseLanguage_G_X ? this.remark : this.remarkEnglish) || '').replace(/\n/gm, '<br/>')
     },
     // 走势图数据
     tendData () {
@@ -360,6 +373,9 @@ export default {
     }
   },
   watch: {
+    isShowHoldInfos (New) {
+      if (New) this.getUserHoldInfo()
+    },
     tendData (New) {
       const [xs, ys] = New
       this.chartOptions.xAxis.data = xs
@@ -386,6 +402,14 @@ export default {
       flex-direction column
       justify-content center
       max-width 201px
+      /deep/
+        .content
+          &.remark
+            overflow hidden
+            text-overflow ellipsis
+            display -webkit-box
+            -webkit-box-orient vertical
+            -webkit-line-clamp 5
       > .content
         > .description
           color S_main_color
@@ -579,12 +603,11 @@ export default {
 <style lang="scss">
   @import "../../../assets/CSS/index.scss";
   // 弹出框按钮
-  .tips-content {
+  .tips-content,
+.remark {
     padding: 5px;
 
     &.night {
-      background-color: #212b3f !important;
-
       /* 内容 */
       .content {
         font-size: 12px;
@@ -593,12 +616,6 @@ export default {
 
         > .title {
           color: $mainColor;
-        }
-      }
-
-      .popper__arrow {
-        &::after {
-          border-right-color: #212b3f !important;
         }
       }
     }
@@ -615,10 +632,44 @@ export default {
           color: $mainColor;
         }
       }
+    }
+  }
+
+  .tips-content {
+    &.night {
+      background-color: #212b3f !important;
 
       .popper__arrow {
         &::after {
+          border-right-color: #212b3f !important;
+        }
+      }
+    }
+
+    &.day {
+      .popper__arrow {
+        &::after {
           border-right-color: #fff !important;
+        }
+      }
+    }
+  }
+
+  .remark {
+    &.night {
+      background-color: #272b41;
+
+      .popper__arrow {
+        &::after {
+          border-bottom-color: #272b41 !important;
+        }
+      }
+    }
+
+    &.day {
+      .popper__arrow {
+        &::after {
+          border-bottom-color: #fff !important;
         }
       }
     }

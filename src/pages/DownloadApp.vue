@@ -49,7 +49,7 @@ export default {
       isAndroid: false,
       isIOS: false,
       isWXBrowserStatus: true,
-      isLoading: true,
+      isLoading: false,
       timer: null
     }
   },
@@ -57,9 +57,9 @@ export default {
     document.getElementsByTagName('body')[0].style.zoom = 1
     let u = navigator.userAgent
     this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
-    this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
-    this.isWXBrowserStatus = u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
-    await this.getAppDownLoadUrl()
+    this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端\
+
+    this.isWXBrowserStatus = this.isQQAppBrowser() || this.isWXBrowser()
   },
   mounted: function () {
     // 禁止横屏
@@ -94,6 +94,18 @@ export default {
   methods: {
     ...mapActions(['GET_APP_URL_ACTION']),
     ...mapMutations(['SET_FOOTER_INFO']),
+    isQQAppBrowser () {
+      let u = navigator.userAgent
+      let isIosQQ = (/(iPhone|iPad|iPod|iOS)/i.test(u) && /\sQQ/i.test(u))
+      let isAndroidQQ = (/(Android)/i.test(u) && /MQQBrowser/i.test(u) && /\sQQ/i.test((u).split('MQQBrowser')))
+      return isIosQQ || isAndroidQQ
+    },
+    isWXBrowser () {
+      let u = navigator.userAgent
+      this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
+      this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端\
+      return u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger'
+    },
     // 横屏
     orient () {
       if (window.orientation == 0 || window.orientation == 180) {
@@ -120,14 +132,12 @@ export default {
       } else if (this.isIOS) {
         this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
       }
+      window.location.href = this.downloadUrl
       this.isLoading = false
     },
     downloadApp: _.debounce(async function () {
       this.isLoading = true
-      if (!this.downloadUrl) {
-        await this.getAppDownLoadUrl()
-      }
-      window.location.href = this.downloadUrl
+      await this.getAppDownLoadUrl()
       this.timer = setTimeout(() => {
         this.isLoading = false
       }, 2000)
