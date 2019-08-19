@@ -1,6 +1,5 @@
-import {post, get, put, postWithURLencoded, deleteMethod, notLoading} from './axios'
+import {post, get, put, putWithURLencoded, postWithURLencoded, deleteMethod, notLoading} from './axios'
 import {handleRequest} from '../commonFunc'
-
 /**
  * 个人中心
  */
@@ -42,6 +41,8 @@ export const getCoinRechargeWithdraw = (params) => handleRequest(() => get('quer
 /**
  * 安全中心
  * */
+// 修改昵称
+export const changeNickName = (params) => handleRequest(() => putWithURLencoded('user/changeNickName', params))
 // 安全中心
 export const statusSecurityCenter = (params) => get('user/security/index', params)
 // 绑定邮箱
