@@ -129,10 +129,20 @@ export default {
       if (this.isAndroid) {
         window.location.href = 'scheme: //fubt.com/'
         this.downloadUrl = this.androidUrl
+        if (!this.androidUrl) {
+          this.$error_tips_X(this.$t('M.download_app_error_tips'))
+          return false
+        }
+        window.location.href = this.downloadUrl
       } else if (this.isIOS) {
         this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
+        // 获取下载链接失败，请稍后再试！
+        if (!this.iosUrl) {
+          this.$error_tips_X(this.$t('M.download_app_error_tips'))
+          return false
+        }
+        window.location.href = this.downloadUrl
       }
-      window.location.href = this.downloadUrl
       this.isLoading = false
     },
     downloadApp: _.debounce(async function () {

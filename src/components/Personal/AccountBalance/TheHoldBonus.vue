@@ -36,7 +36,7 @@
         effect="dark"
         placement="bottom"
         trigger="hover"
-        width="206"
+        width="275"
       )
         .content.remark-content(v-html="filterRemark")
         .content.remark(
@@ -290,9 +290,6 @@ export default {
     logoSrc () {
       return _.get(this.holdInfos, 'coinLogo')
     },
-    chineseCoinName () {
-      return _.get(this.holdInfos, 'coinShortName')
-    },
     // 币种全称
     englishFullName () {
       return _.get(this.holdInfos, 'coinEnglishName')
@@ -417,7 +414,7 @@ export default {
       /deep/
         .content
           &.remark
-            padding 0 60px
+            padding 0 16px
             overflow hidden
             text-overflow ellipsis
             display -webkit-box
