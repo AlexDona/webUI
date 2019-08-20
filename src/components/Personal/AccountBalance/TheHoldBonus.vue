@@ -35,7 +35,7 @@
         :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
         effect="dark"
         placement="bottom"
-        trigger="click"
+        trigger="hover"
         width="206"
       )
         .content.remark-content(v-html="filterRemark")
