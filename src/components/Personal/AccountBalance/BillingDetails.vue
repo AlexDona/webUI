@@ -208,7 +208,7 @@
                 <el-table-column
                         :label="$t('M.comprehensive_manual1')"
                         v-if="rechargeSite"
-                        width="100"
+                        width="130"
                 >
                   <template slot-scope = "s">
                     <!--系统充值-->
@@ -866,7 +866,6 @@ export default {
           height: 30px;
           padding: 0 5px;
           margin-top: 12px;
-          margin-left: 40px;
           line-height: 29px;
         }
 
