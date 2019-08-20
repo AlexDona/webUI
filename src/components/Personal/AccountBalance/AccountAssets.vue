@@ -184,7 +184,7 @@
                   <!--可用数量-->
                   <div class="table-td text-indent2 flex1">
                     <span v-if="assetItem.total > 0">
-                      {{ $scientificToNumber($keep8Num(assetItem.total - 0)) }}
+                      {{ $scientificToNumber((assetItem.total + '').substring(0, (assetItem.total + '').indexOf(".") + 9)) }}
                     </span>
                     <span v-else>
                       0.00000000
