@@ -30,7 +30,7 @@
           <ul class="ul-list">
             <TheNotice :isNoticeReady="isNoticeReady"/>
             <TheSetting/>
-            <TheBillings/>
+            <TheBillings v-if="$isLogin_S_X"/>
             <li
               class="li-item"
               v-if="!$isLogin_S_X"
