@@ -526,7 +526,7 @@ export default {
           > .value
             color #fff
         &:before
-          background-color #617499
+          background-color rgba(97,116,153,.1)
       /deep/
         .el-dialog__wrapper
           &.condition-dialog
