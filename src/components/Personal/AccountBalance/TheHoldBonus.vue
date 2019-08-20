@@ -17,7 +17,7 @@
     .hold-item.usable
       .content
         p.label {{$t(usable.label)}}
-        p.value {{(usableTotal) }}
+        p.value(v-show="String(usableTotal) !=='NaN'") {{(usableTotal) }}
     // 参与条件： 已满足、未满足
     .hold-item
       .content
@@ -244,7 +244,8 @@ export default {
       isShowConditionDialog: false
     }
   },
-  // async created () {},
+  // async created () {
+  // },
   // mounted () {
   // },
   // updated () {},
@@ -375,8 +376,11 @@ export default {
     }
   },
   watch: {
-    isShowHoldInfos (New) {
-      if (New) this.getUserHoldInfo()
+    isShowHoldInfos: {
+      handler (New) {
+        if (New) this.getUserHoldInfo()
+      },
+      immediate: true
     },
     tendData (New) {
       const [xs, ys] = New
@@ -413,6 +417,7 @@ export default {
             -webkit-box-orient vertical
             -webkit-line-clamp 5
       > .content
+        white-space nowrap
         > .description
           color S_main_color
           cursor pointer

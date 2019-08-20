@@ -409,12 +409,12 @@ export default {
     userCenterActiveName (e) {
       this.$setStore('active-target', e)
       this.currentUserCenterActiveName = e
-      if (e !== 'assets') {
-        this.$route.params.coinId = ''
-        this.$route.params.type = ''
-      }
+
       this.REFRESH_USER_INFO_ACTION()
-      if (e !== 'assets') {
+      console.log(e)
+      if (e == 'assets') {
+        this.confirmIsShowHoldInfo()
+      } else {
         this.$route.params.type = ''
         this.$route.params.coinId = ''
       }
