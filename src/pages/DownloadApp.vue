@@ -19,6 +19,12 @@
         @click="downloadApp"
         @ondblclick="ondblclick"
       ) {{isChineseLanguage ? '立即安装' : 'Install' }}
+      a(
+        :href="downloadUrl"
+        ref="download"
+        download="android"
+        :style="{'display':'none'}"
+        )
     WeChatMask(
       :isAndroid="isAndroid"
       :isIOS="isIOS"
@@ -50,7 +56,9 @@ export default {
       isIOS: false,
       isWXBrowserStatus: true,
       isLoading: false,
-      timer: null
+      timer: null,
+      // 下载延时器
+      downloadTimer: null
     }
   },
   async created () {
@@ -89,11 +97,16 @@ export default {
   // update () {},
   beforeDestroy () {
     clearTimeout(this.timer)
+    clearTimeout(this.downloadTimer)
   },
   // beforeRouteUpdate () {},
   methods: {
     ...mapActions(['GET_APP_URL_ACTION']),
     ...mapMutations(['SET_FOOTER_INFO']),
+    isBaiDuBrowser () {
+      let u = navigator.userAgent
+      return u.toLowerCase().indexOf('baidu') > -1
+    },
     isQQAppBrowser () {
       let u = navigator.userAgent
       let isIosQQ = (/(iPhone|iPad|iPod|iOS)/i.test(u) && /\sQQ/i.test(u))
@@ -133,7 +146,13 @@ export default {
           this.$error_tips_X(this.$t('M.download_app_error_tips'))
           return false
         }
-        window.location.href = this.downloadUrl
+        this.downloadTimer = setTimeout(() => {
+          if (this.isBaiDuBrowser) {
+            this.$refs['download'].click()
+          } else {
+            window.location.href = this.downloadUrl
+          }
+        }, 1000)
       } else if (this.isIOS) {
         this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
         // 获取下载链接失败，请稍后再试！
@@ -167,9 +186,9 @@ export default {
     language () {
       return (navigator.browserLanguage || navigator.language).startsWith('zh') ? 'zh_CN' : 'en_US'
     }
-  },
-  watch: {
   }
+  // watch: {
+  // }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
