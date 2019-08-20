@@ -446,7 +446,7 @@
       <!--综合记录分页-->
       <el-pagination
         background
-        v-show="!isOtherRecord && otherRecordsList.length"
+        v-show="isOtherRecord && otherRecordsList.length"
         layout="prev, pager, next"
         :current-page="otherRecordPageNumbers"
         :page-count="totalPagesOtherRecords"
