@@ -23,7 +23,7 @@
       .content
         p.label
           span.label {{$t(condition.label)}}：
-          span.value {{condition.value}}
+          span.value {{ifUserHoldSuccessLabel}}
         button.description(@click="toggleShowCondition(true)") {{$t(detailLabel)}}
     // 分红记录
     .hold-item
@@ -36,7 +36,7 @@
         :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
         effect="dark"
         placement="bottom"
-        trigger="click"
+        trigger="hover"
         width="218"
       )
         .content(v-html="filterRemark")
@@ -91,7 +91,7 @@
               )
                 .content
                   // 举例说明
-                  .title {{$t('M.hold_bonus_example_1')}}：
+                  .title {{$t('M.hold_bonus_example_label')}}：
                   // 若分红周期为2019/7/1~2019/7/7，则日均持仓不低于1000FUC，公式：日均持仓=（期初持仓+变动后持仓N+..）/ 变动次数
                   .c-content {{$t('M.hold_bonus_example_2').format([minNumber, englishCoinName])}}
                 Iconfont.iconfont(
@@ -133,10 +133,6 @@ export default {
       condition: {
         // 参与条件
         label: 'M.hold_bonus_condition_label',
-        // 未满足
-        value: 'M.user_hold_bonus_status_label_false',
-        // 已满足
-        // value: 'M.user_hold_bonus_status_label_true',
         // 必须通过身份高级认证
         label1: 'M.user_hold_bonus_condition_label_1',
         // 首次快照持仓不低于{}{}
@@ -312,6 +308,12 @@ export default {
     },
     isUserAuth () {
       return _.get(this.holdInfos, 'holdRequest.ifAuth')
+    },
+    ifUserHoldSuccess () {
+      return _.get(this.holdInfos, 'ifUserHoldSuccess')
+    },
+    ifUserHoldSuccessLabel () {
+      return this.$t(this.ifUserHoldSuccess ? 'M.user_hold_bonus_status_label_true' : 'M.user_hold_bonus_status_label_false')
     },
     isUserAuthDoneLabel () {
       // 已满足、未满足
