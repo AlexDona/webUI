@@ -37,9 +37,8 @@
         effect="dark"
         placement="bottom"
         trigger="hover"
-        width="218"
       )
-        .content(v-html="filterRemark")
+        .content.remark-content(v-html="filterRemark")
         .content.remark(
           v-html="filterRemark"
           slot="reference"
@@ -619,7 +618,7 @@ export default {
       .content {
         font-size: 12px;
         color: #d9e1f1;
-        transform: scale(.8);
+        transform: scale(.9);
 
         > .title {
           color: $mainColor;
@@ -633,7 +632,7 @@ export default {
       .content {
         font-size: 12px;
         color: #333;
-        transform: scale(.8);
+        transform: scale(.9);
 
         > .title {
           color: $mainColor;
@@ -663,10 +662,22 @@ export default {
   }
 
   .remark {
+    .remark-content {
+      line-height: 24px !important;
+    }
+
+    .popper__arrow {
+      &::after {
+        top: 0 !important;
+      }
+    }
+
     &.night {
       background-color: #272b41;
 
       .popper__arrow {
+        top: -7px !important;
+
         &::after {
           border-bottom-color: #272b41 !important;
         }
@@ -675,6 +686,8 @@ export default {
 
     &.day {
       .popper__arrow {
+        top: -6px !important;
+
         &::after {
           border-bottom-color: #fff !important;
         }
