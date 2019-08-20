@@ -12,21 +12,20 @@
       .content
         img.logo(:src="logoSrc")
         span.english {{englishFullName}}
-        span.chinese(v-show="$isChineseLanguage_G_X") ({{chineseCoinName}})
     // 当前持仓
     .hold-item.usable
       .content
         p.label {{$t(usable.label)}}
         p.value(v-show="String(usableTotal) !=='NaN'") {{(usableTotal) }}
     // 参与条件： 已满足、未满足
-    .hold-item
+    .hold-item.condition
       .content
         p.label
           span.label {{$t(condition.label)}}：
           span.value {{ifUserHoldSuccessLabel}}
         button.description(@click="toggleShowCondition(true)") {{$t(detailLabel)}}
     // 分红记录
-    .hold-item
+    .hold-item.record
       .content
         p.label {{$t(record.label)}}
         button.description(@click="jumpToRecord") {{$t(detailLabel)}}
@@ -36,7 +35,8 @@
         :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
         effect="dark"
         placement="bottom"
-        trigger="hover"
+        trigger="click"
+        width="206"
       )
         .content.remark-content(v-html="filterRemark")
         .content.remark(
@@ -401,15 +401,23 @@ export default {
     > .hold-item
       flex 1
       position relative
-      padding 0 38px
       box-sizing border-box
       display flex
       flex-direction column
       justify-content center
-      max-width 201px
+      /*max-width 201px*/
+      &.logo
+        max-width 160px
+      &.usable
+        max-width 200px
+      &.condition
+        max-width 238px
+      &.record
+        max-width 200px
       /deep/
         .content
           &.remark
+            padding 0 60px
             overflow hidden
             text-overflow ellipsis
             display -webkit-box
@@ -417,6 +425,7 @@ export default {
             -webkit-line-clamp 5
       > .content
         white-space nowrap
+        margin 0 auto
         > .description
           color S_main_color
           cursor pointer
@@ -442,7 +451,6 @@ export default {
         width 1px
         height 40px
       &:nth-of-type(5)
-        max-width 300px
         font-size 12px
         &:before
           width 0
@@ -506,7 +514,7 @@ export default {
                     left -5px
                 #hold_chart
                   height 280px
-                  width 100%
+                  width 650px
               .check-button
                 margin 14px auto 0
                 display block
@@ -611,14 +619,11 @@ export default {
   // 弹出框按钮
   .tips-content,
 .remark {
-    padding: 5px;
-
     &.night {
       /* 内容 */
       .content {
         font-size: 12px;
         color: #d9e1f1;
-        transform: scale(.9);
 
         > .title {
           color: $mainColor;
@@ -632,7 +637,6 @@ export default {
       .content {
         font-size: 12px;
         color: #333;
-        transform: scale(.9);
 
         > .title {
           color: $mainColor;
