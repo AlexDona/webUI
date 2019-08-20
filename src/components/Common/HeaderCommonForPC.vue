@@ -30,6 +30,7 @@
           <ul class="ul-list">
             <TheNotice :isNoticeReady="isNoticeReady"/>
             <TheSetting/>
+            <TheBillings/>
             <li
               class="li-item"
               v-if="!$isLogin_S_X"
@@ -125,6 +126,7 @@
 <script>
 import TheMoreNavsButton from '../Home/TheMoreNavsButton'
 import TheSetting from '../Header/TheSetting'
+import TheBillings from '../Header/TheBillings'
 import TheLogined from '../Header/TheLogined'
 import TheLanguages from '../Header/TheLanguages'
 import TheNotice from '../Header/TheNotice'
@@ -139,6 +141,7 @@ import {
 export default{
   mixins: [mixins],
   components: {
+    TheBillings,
     TheMoreNavsButton,
     TheSetting,
     TheLogined,
