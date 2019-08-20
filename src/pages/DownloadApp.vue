@@ -127,7 +127,7 @@ export default {
     async getAppDownLoadUrl () {
       await this.GET_APP_URL_ACTION()
       if (this.isAndroid) {
-        window.location.href = 'scheme: //fubt.com/'
+        // window.location.href = 'scheme: //fubt.com/'
         this.downloadUrl = this.androidUrl
         if (!this.androidUrl) {
           this.$error_tips_X(this.$t('M.download_app_error_tips'))

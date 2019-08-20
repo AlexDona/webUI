@@ -37,6 +37,7 @@
         placement="bottom"
         trigger="hover"
         width="275"
+        open-delay="500"
       )
         .content.remark-content(v-html="filterRemark")
         .content.remark(
@@ -67,11 +68,12 @@
                 placement="right"
                 trigger="hover"
                 width="218"
+                open-delay="500"
               )
                 .content
                   // 举例说明
                   .title {{$t('M.hold_bonus_example_label')}}：
-                  // 若分红开始时间为2019年7月1日，则首次快照持仓为2019/7/1 00:00:00 即此刻可用数量必须大于1000FUC!
+                  // 若分红开始时间为2019年7月1日，则首次快照持仓为2019/7/1 00:00:00 即此刻可用数量必须大于或等于1000FUC!
                   .c-content {{$t('M.hold_bonus_example_1').format([minNumber, englishCoinName])}}
                 Iconfont.iconfont(slot="reference" icon-name="icon-wenti")
           .right
@@ -87,6 +89,7 @@
               placement="right"
               trigger="hover"
               width="218"
+              open-delay="500"
               )
                 .content
                   // 举例说明
@@ -175,7 +178,7 @@ export default {
           formatter: (params) => {
             // 持仓
             return `<span>${params.name}</span><br/>
-                      <span style="color: #338ff5">${this.$t('M.hold_bonus_position_label')}：${params.value}</span>
+                      <span style="color: #338ff5">${this.$t('M.hold_bonus_position_label')}：${params.value} ${this.englishCoinName}</span>
                       `
           }
         },
@@ -216,13 +219,14 @@ export default {
             }
             // borderColor: '#f0f'
           },
-          label: {
-            show: true,
-            position: 'top',
-            textStyle: {
-              color: '#fff'
-            }
-          },
+          // 图标
+          // label: {
+          //   // show: true,
+          //   position: 'top',
+          //   textStyle: {
+          //     color: 'red'
+          //   }
+          // },
           itemStyle: {
             normal: {
               color: '#338ff5'
@@ -266,8 +270,26 @@ export default {
         this.resetChart()
       })
     },
+    resetOptions () {
+      if (this.$theme_S_X == 'day') {
+        this.chartOptions.tooltip.backgroundColor = '#fff'
+        this.chartOptions.tooltip.borderColor = '#fff'
+        this.chartOptions.tooltip.textStyle.color = '#7D90AC'
+        this.chartOptions.tooltip.extraCssText = 'box-shadow: 0px 2px 3px 0px rgba(198,212,228,1);'
+        this.chartOptions.xAxis.axisLine.lineStyle.color = '#7D90AC'
+        this.chartOptions.yAxis.axisLine.lineStyle.color = '#7D90AC'
+      } else {
+        this.chartOptions.tooltip.backgroundColor = '#262A42'
+        this.chartOptions.tooltip.borderColor = '#262A42'
+        this.chartOptions.tooltip.textStyle.color = '#fff'
+        this.chartOptions.xAxis.axisLine.lineStyle.color = '#3B4967'
+        this.chartOptions.yAxis.axisLine.lineStyle.color = '#3B4967'
+        this.chartOptions.tooltip.extraCssText = 'box-shadow: 0px 2px 4px 0px rgba(29,37,55,1);'
+      }
+    },
     // 重新绘制图标
     resetChart () {
+      this.resetOptions()
       this.charts = echarts.init(document.getElementById('hold_chart'))
       this.charts.setOption(this.chartOptions)
       window.addEventListener('resize', _.debounce(this.charts.resize, 100))
@@ -372,6 +394,9 @@ export default {
     }
   },
   watch: {
+    $theme_S_X () {
+      this.resetChart()
+    },
     isShowHoldInfos: {
       handler (New) {
         if (New) this.getUserHoldInfo()
@@ -483,11 +508,16 @@ export default {
                     > .label
                       font-size 12px
                   >.right
-                    min-width 100px
+                    min-width 130px
                     >.status
                       font-size 12px
-                      padding 5px 20px
                       border-radius 2px
+                      min-width 122px
+                      height 24px
+                      line-height 24px
+                      display inline-block
+                      box-sizing border-box
+                      text-align center
                       &.done
                         border-color S_main_color
                         color S_main_color
@@ -495,6 +525,7 @@ export default {
               .bottom
                 height 300px
                 padding 6px 25px
+                overflow-x auto
                 >.title
                   font-size 12px
                   padding 0
