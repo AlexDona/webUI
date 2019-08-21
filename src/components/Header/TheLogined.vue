@@ -95,9 +95,8 @@ export default {
       ]
     }
   },
-  created () {
-    console.log(this.$state)
-  },
+  // created () {
+  // },
   // mounted () {}
   // updated () {},
   // beforeRouteUpdate () {},
