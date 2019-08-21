@@ -82,7 +82,7 @@
         )
           TheCommonSlider(
           :propMaxWidth="10 * remWidth_S"
-          :height="1 * remWidth_S"
+          :height="1.2 * remWidth_S"
           :barWidth="1.3 * remWidth_S"
           @successCallback="successCallback"
           )
@@ -192,7 +192,7 @@ export default {
       e.preventDefault()
       const {username} = this.form
       this.$setStore('username', username)
-      this.$goToPage(`/${this.$routes_X.forgetPass}`)
+      this.$goToPage(`/${this.$routes_X.forgetPass}/m`)
     },
     // 获取本地记录密码
     getLocalUserName () {
@@ -376,7 +376,10 @@ export default {
   .the-login-m
     fontSize = .5rem
     height 100%
+    overflow hidden
     >.inner-box
+      padding-bottom 2rem
+      background url('../../assets/h5/register-bg-m.png') no-repeat bottom center/100%
       >.logo
         display block
         width 3rem
@@ -390,27 +393,24 @@ export default {
           padding .2rem 0
           border-bottom .03rem solid S_main_color
       >.content
+        margin-top 1.6rem
         /deep/
           .el-form.login
             margin .5rem 2rem
             background-color transparent
             >.el-form-item
-              border-radius .5rem
-              background-color #3f4769
-              overflow hidden
-              padding 0 .5rem
-              margin-bottom .72rem
+              margin-bottom .6rem
               >.el-form-item__content
-                height 1rem
-                line-height 1rem
                 >.el-input
-                  height 1rem
+                  height 1.2rem
                   >.el-input__inner
-                    border none
-                    height 1rem
-                    background-color transparent
-                    line-height 1rem
+                    height 1.2rem
                     font-size fontSize
+                    border-radius .52rem
+                    padding 0 .6rem
+                    box-sizing border-box
+                    border none
+                    background-color #303757
                     color #fff
               /* WebKit browsers */
               ::-webkit-input-placeholder
@@ -426,30 +426,8 @@ export default {
                 >.el-input__suffix-inner
                   >.el-input__clear
                     font-size fontSize
-                    line-height 1rem
+                    line-height 1.2rem
                     width .8rem
-              .el-checkbox__label
-                font-size .4rem
-                line-height 1rem
-              .el-checkbox__input
-                line-height 1rem
-                .el-checkbox__inner
-                  background-color transparent
-                  border-color S_main_color
-                  border-radius .03rem
-                  width .3rem
-                  height .3rem
-                  margin-right .3rem
-                  border-width .02rem
-                  &:after
-                    top 3000px
-                    width 0
-                    height 0
-                    left 3000px
-                &.is-checked
-                  .el-checkbox__inner
-                    border-color S_main_color
-                    background S_main_color url('../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
               /*密码*/
               &.password
                 margin-bottom .32rem
@@ -463,19 +441,45 @@ export default {
                     margin-left 5px
                     font-size .4rem
                     color S_main_color
+                    line-height .8rem
+                  .el-checkbox
+                    display flex
+                    .el-checkbox__label
+                      font-size .4rem
+                      line-height .8rem
+                      vertical-align middle
+                    .el-checkbox__input
+                      line-height .8rem
+                      vertical-align middle
+                      .el-checkbox__inner
+                        background-color transparent
+                        border-color S_main_color
+                        border-radius .03rem
+                        vertical-align middle
+                        width .4rem
+                        height .4rem
+                        margin-right .3rem
+                        border-width .02rem
+                        &:after
+                          top 3000px
+                          width 0
+                          height 0
+                          left 3000px
+                      &.is-checked
+                        .el-checkbox__inner
+                          border-color S_main_color
+                          background S_main_color url('../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
               &.submit
                 text-align center
                 margin-bottom .32rem
-                background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
-                box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
-                &.disabled
-                  background #303757
                 .el-button
+                  border-radius .6rem
                   border none
                   width 100%
-                  height 1rem
+                  height 1.2rem
                   font-size fontSize
-                  background-color transparent
+                  background linear-gradient(81deg,rgba(18,71,133,1),rgba(42,59,97,1))
+                  box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
                   &.is-disabled
                     background #303757
                     color #636777
@@ -501,12 +505,15 @@ export default {
               border-radius .15rem
               overflow hidden
               >.el-dialog__header
-                height 1rem
-                line-height 1rem
+                height 1.2rem
+                line-height 1.2rem
                 background-color #25283d
+                padding 0
                 >.el-dialog__title
                   padding 0 .5rem
                   font-size fontSize
+                  height 1.2rem
+                  line-height 1.2rem
                   color #fff
                 >.el-dialog__headerbtn
                   top .3rem

@@ -30,7 +30,7 @@
     )
       span.left(:class="{mobile: isMobile}") {{$t(successText)}}
       span.right(
-        :style="{width:`${height}px`}"
+        :style="{width:`${height}px`, height: `${height-2}px`, 'line-height':`${height - 2}px`}"
         :class="{mobile: isMobile}"
       )
         Iconfont.icon(icon-name="icon-duihao-copy-copy")
@@ -214,6 +214,7 @@ export default {
         flex 1
         text-align center
       >.right
+        box-sizing border-box
         font-size 18px
         overflow hidden
         text-align center
@@ -224,58 +225,6 @@ export default {
             font-size .4rem
         .icon
           font-size 24px
-    &.mobile
-      >.drag
-        width 100%
-        border-radius .06rem
-        >.drag_bg
-          width 0
-          border-radius .06rem 0 0 .06rem
-        .drag_text
-          position absolute
-          top 0
-          right 0
-          width 90%
-          font-size .4rem
-        .handler_bg
-          position absolute
-          top 0
-          left 0
-          cursor move
-          border-radius .06rem
-      >.drag-success
-        width 100%
-        display flex
-        border-radius .06rem
-        overflow hidden
-        -moz-user-select none
-        -webkit-user-select none
-        -o-user-select none
-        -ms-user-select none
-        user-select none
-        >.left
-          font-size .4rem
-        >.right
-          font-size .4rem
-          overflow hidden
-          text-align center
-          display inline-block
-          border-radius .06rem
-          .icon
-            font-size .4rem
-      &.night
-        >.drag
-          border .016rem solid #485776
-          background-color #1c203c
-        >.drag-success
-          background-color #3c4369
-          >.left
-            color #118548
-          >.right
-            background-color #2b3152
-            border .016rem solid #485776
-            .icon
-              color #118548
     &.night
       >.drag
         background-color #1c203c
@@ -335,6 +284,58 @@ export default {
           border-color #BBB
           .icon
             color #118548
+    &.mobile
+      >.drag
+        width 100%
+        border-radius .06rem
+        >.drag_bg
+          width 0
+          border-radius .06rem 0 0 .06rem
+        .drag_text
+          position absolute
+          top 0
+          right 0
+          width 90%
+          font-size .4rem
+        .handler_bg
+          position absolute
+          top 0
+          left 0
+          cursor move
+          border-radius .06rem
+      >.drag-success
+        width 100%
+        display flex
+        border-radius .06rem
+        overflow hidden
+        -moz-user-select none
+        -webkit-user-select none
+        -o-user-select none
+        -ms-user-select none
+        user-select none
+        >.left
+          font-size .4rem
+        >.right
+          font-size .4rem
+          overflow hidden
+          text-align center
+          display inline-block
+          border-radius .06rem
+          .icon
+            font-size .4rem
+      &.night
+        >.drag
+          border .016rem solid #485776
+          background-color #1c203c
+        >.drag-success
+          background-color #212644
+          >.left
+            color #118548
+          >.right
+            background-color #2b3152
+            border .016rem solid #485776
+            .icon
+              color #118548
   @keyframes slidedownlock {
     0% {
       background-position: -200px 0;

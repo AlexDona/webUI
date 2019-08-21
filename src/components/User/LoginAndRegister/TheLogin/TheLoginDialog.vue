@@ -423,12 +423,12 @@ export default {
           height 7rem
           border-radius .16rem
           .el-dialog__header
-            height 1rem
-            line-height 1rem
+            height 1.2rem
+            line-height 1.2rem
             padding 0 .48rem
             .el-dialog__title
-              height 1rem
-              line-height 1rem
+              height 1.2rem
+              line-height 1.2rem
               display inline-block
               font-size fontSize
             .el-dialog__headerbtn
@@ -458,8 +458,8 @@ export default {
                     color S_error_color
                 .el-input__inner
                   border .016rem solid #485776
-                  height 1rem
-                  line-height 1rem
+                  height 1.2rem
+                  line-height 1.2rem
                   border-right none
                   box-sizing border-box
                   padding 0 .48rem
@@ -473,7 +473,7 @@ export default {
                   >.el-input__suffix-inner
                     >.el-input__clear
                       font-size fontSize
-                      line-height 1rem
+                      line-height 1.2rem
                       width .8rem
                 .el-input-group__append
                   border-left none
@@ -486,7 +486,7 @@ export default {
                   text-align center
                   .el-button
                     width 4.83rem
-                    height 1rem
+                    height 1.2rem
                     border none
                     border-radius .02rem
                     font-size fontSize

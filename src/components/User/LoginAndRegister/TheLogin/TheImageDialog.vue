@@ -267,8 +267,8 @@ export default {
                 margin-bottom .56rem
                 .el-input__inner
                   padding 0 .5rem
-                  height 1rem
-                  line-height 1rem
+                  height 1.2rem
+                  line-height 1.2rem
                   box-sizing border-box
                   border-right none
                   font-size .4rem
@@ -277,7 +277,7 @@ export default {
                   >.el-input__suffix-inner
                     >.el-input__clear
                       font-size fontSize
-                      line-height 1rem
+                      line-height 1.2rem
                       width .8rem
                 .el-input-group__append
                   hieght 1rem
@@ -291,7 +291,7 @@ export default {
                   text-align center
                   .el-button
                     width 4.83rem
-                    height 1rem
+                    height 1.2rem
                     border none
                     border-radius .02rem
                     font-size fontSize

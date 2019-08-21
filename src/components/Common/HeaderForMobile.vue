@@ -175,11 +175,11 @@ export default {
 
       > .left {
         height: 1.44rem;
-        margin-top: 40px;
+        margin-top: .22rem;
 
         > a {
           > .img {
-            height: 1.44rem;
+            height: 1rem;
             vertical-align: top;
           }
         }
@@ -248,7 +248,7 @@ export default {
                 height: 1.44rem;
 
                 /* padding: 10px 12px; */
-                font-size: .86rem;
+                font-size: .66rem;
                 line-height: 1.44rem;
 
                 > .icon {
@@ -276,7 +276,7 @@ export default {
                 z-index: 2;
                 top: 1.64rem;
                 left: 0;
-                padding-bottom: .5rem;
+                padding: .5rem 0;
                 border-radius: 4px;
                 background-color: #1d2033;
                 box-shadow: 0 3px 10px 0 rgba(19, 22, 39, .83);
@@ -285,10 +285,10 @@ export default {
                   display: block;
                   box-sizing: border-box;
                   width: 100%;
-                  height: 1rem;
+                  height: 1.2rem;
                   padding: 0 .3rem;
                   font-size: .66rem;
-                  line-height: 1rem;
+                  line-height: 1.2rem;
                   text-align: left;
                   white-space: nowrap;
                   color: #fff;

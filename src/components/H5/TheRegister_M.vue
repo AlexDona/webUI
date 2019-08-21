@@ -99,7 +99,7 @@
             clearable
             )
           // 邮箱验证码、短信验证码
-          el-form-item(
+          el-form-item.validate-code-form(
           label=""
           label-width="0px"
           prop="validateCode"
@@ -199,7 +199,6 @@
           el-form-item.submit(
             label=""
             label-width="0px"
-            :class="{disabled:!isSuccessValidate}"
           )
             el-button.reg-button(
             type="primary"
@@ -222,7 +221,7 @@
         )
           TheCommonSlider(
           :propMaxWidth="10 * remWidth_S"
-          :height="1 * remWidth_S"
+          :height="1.2 * remWidth_S"
           :barWidth="1.3 * remWidth_S"
           @successCallback="successCallback"
           )
@@ -616,13 +615,6 @@ export default {
         // phone
         this.SET_LOGIN_TYPE(0)
       }
-    },
-    isMobile (New) {
-      console.log(New)
-      this.$goToPage(
-        New ? `/${this.$routes_X.login}/${this.$routes_X.register}/${this.currentInviteId}`
-          : `/${this.$routes_X.register}/m/${this.currentInviteId}`
-      )
     }
   }
 }
@@ -632,9 +624,6 @@ export default {
   @import '../../assets/CSS/index.styl'
   fontSize = .5rem
   .the-register-m
-    background #272b41 url('../../assets/h5/register-bg-m.png') no-repeat center center/contain
-    /*position relative*/
-    /*left 50%*/
     top 0
     //transform translateX(-50%)
     height 100%
@@ -663,9 +652,12 @@ export default {
       /deep/
         .search-area
           width 100%
+          height 1.2rem
           &.active
             >.el-input__inner
               border-color S_main_color
+              height 1.2rem
+              font-size fontSize
             >.el-input-group__append
               background-color S_main_color
               border-color S_main_color
@@ -678,20 +670,20 @@ export default {
             width 100%
             padding 0 1rem
             background-color transparent
-            height 1rem
-            line-height 1rem
+            height 1.2rem
             border-radius 0.06rem 0 0 0.06rem
-            border .01rem solid #4C5060
+            border .016rem solid #4C5060
             font-size fontSize
+            color S_main_color
           >.el-input__suffix
             >.el-input__suffix-inner
               >.el-input__clear
                 font-size fontSize
-                line-height 1rem
+                line-height 1.2rem
                 width .8rem
           >.el-input__prefix
             left .3rem
-            line-height 1rem
+            line-height 1.2rem
             >.iconfont
               font-size fontSize
           >.el-input-group__append
@@ -702,8 +694,9 @@ export default {
               font-size fontSize
               border-radius 0.06rem
     >.inner-box
-      min-height 20rem
+      /*min-height 20rem*/
       height 100%
+      background url('../../assets/h5/register-bg-m.png') no-repeat center center/100%
       >.logo
         display block
         width 3rem
@@ -729,24 +722,29 @@ export default {
           >.router-item
             text-align right
       >.content
-        margin-top .5rem
+        margin-top 1.2rem
         overflow hidden
         /deep/
           .el-form
             margin .5rem 2rem
             background-color transparent
             >.el-form-item
-              border-radius .5rem
-              background-color #3f4769
-              overflow hidden
-              padding 0 .5rem
-              margin-bottom .4rem
+              margin-bottom .72rem
+              /* WebKit browsers */
+              ::-webkit-input-placeholder
+                color: #8B9197
+              /* Mozilla Firefox 19+ */
+              ::-moz-placeholder
+                color: #8B9197
+              /* Internet Explorer 10+ */
+              :-ms-input-placeholder
+                color #8B9197
               &.login
                 background-color transparent
                 text-align center
                 >.el-form-item__content
                   font-size fontSize
-                  line-height 1rem
+                  line-height 1.2rem
                   >a
                     color S_main_color
               &.disabled
@@ -758,21 +756,22 @@ export default {
                       color #636777
                       box-shadow none
               >.el-form-item__content
-                height 1rem
+                height 1.2rem
                 >.el-input
-                  height 1rem
+                  height 1.2rem
                   >.el-input__inner
                     border none
-                    height 1rem
-                    background-color transparent
-                    line-height 1rem
+                    height 1.2rem
                     font-size fontSize
                     color #fff
+                    border-radius .6rem
+                    background-color #3f4769
+                    padding 0 .5rem
                   >.el-input__suffix
                     >.el-input__suffix-inner
                       >.el-input__clear
                         font-size fontSize
-                        line-height 1rem
+                        line-height 1.2rem
                         width .8rem
                   >.el-input-group__append
                     width auto
@@ -789,12 +788,15 @@ export default {
               &.country-select
                 >.el-form-item__content
                   display flex
+                  background-color #3f4769
+                  border-radius .6rem
+                  padding 0 .6rem
                   >.current-country
                     position relative
                     display inline-block
                     min-width 2rem
-                    height 1rem
-                    line-height 1rem
+                    height 1.2rem
+                    line-height 1.2rem
                     font-size fontSize
                     color #fff
                     display flex
@@ -816,11 +818,10 @@ export default {
                       top 50%
                       transform translateY(-50%)
                   >.el-input
-                    height 1rem
+                    height 1.2rem
                     >.el-input__inner
                       padding-left .5rem
-                      height 1rem
-                      line-height 1rem
+                      height 1.2rem
                 &.email
                   >.el-form-item__content
                     >.current-country
@@ -828,17 +829,26 @@ export default {
                       width 100%
                       &:before
                         background-color transparent
+              &.validate-code-form
+                >.el-form-item__content
+                  display flex
+                  background-color #3f4769
+                  border-radius .6rem
+                  padding 0 .6rem
+                  .el-input__inner
+                    padding 0
               &.agreement
                 margin-bottom 0
                 background-color transparent
                 >.el-form-item__content
                   >.el-checkbox
                     >.el-checkbox__input
-                      line-height 1rem
+                      line-height 1.2rem
+                      vertical-align middle
                       .el-checkbox__inner
                         background-color transparent
                         border-color S_main_color
-                        border-radius 4px
+                        border-radius .06rem
                         &:after
                           top 3000px
                           width 0
@@ -849,12 +859,15 @@ export default {
                           border-color S_main_color
                           background S_main_color url('../../assets/user/checkbox-success-bg.png') no-repeat center center/90% 90%
                       >.el-checkbox__inner
-                        width .3rem
-                        height .3rem
+                        vertical-align middle
+                        width .4rem
+                        height .4rem
                         margin-right .3rem
+                        margin-top -.1rem
                     >.el-checkbox__label
                       font-size fontSize
-                      line-height 1rem
+                      line-height 1.2rem
+                      vertical-align middle
                       >.agreement
                         color S_main_color
               &.error-tips-form
@@ -875,22 +888,23 @@ export default {
               /* 提交按钮 */
               &.submit
                 text-align center
-                margin-bottom 20px
-                background linear-gradient(81deg,rgba(18,71,133,1), rgba(42,59,97,1))
-                box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
-                &.disabled
-                  background #303757
-                  box-shadow none
-                  .el-button
-                    color #636777
-                .el-button
-                  height 1rem
-                  width 100%
-                  background-color transparent
-                  border none
-                  font-size fontSize
-                  color S_day_bg
-          .slider
+                margin-bottom .5rem
+                >.el-form-item__content
+                  >.el-button
+                    height 1.2rem
+                    width 100%
+                    background linear-gradient(81deg,rgba(18,71,133,1), rgba(42,59,97,1))
+                    box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
+                    border none
+                    font-size fontSize
+                    color S_day_bg
+                    border-radius .6rem
+                    &.is-disabled
+                      background #303757
+                      color #636777
+                      box-shadow none
+                      border-radius .6rem
+        .slider
             background-color rgba(11,12,20,.8)
             display flex
             flex-direction column
@@ -902,11 +916,14 @@ export default {
               border-radius .15rem
               overflow hidden
               >.el-dialog__header
-                height 1rem
-                line-height 1rem
+                height 1.2rem
+                line-height 1.2rem
                 background-color #25283d
+                padding 0
                 >.el-dialog__title
                   padding 0 .5rem
+                  height 1.2rem
+                  line-height 1.2rem
                   font-size fontSize
                   color #fff
                 >.el-dialog__headerbtn

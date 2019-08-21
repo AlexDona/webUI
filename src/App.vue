@@ -176,7 +176,8 @@ export default {
         path.toLowerCase() !== `${this.$routes_X.downloadApp}`.toLowerCase() &&
         !path.startsWith(`/${this.$routes_X.register}/m`) &&
         !path.startsWith(`/${this.$routes_X.register}/${this.$routes_X.invite}`) &&
-        !path.startsWith(`/${this.$routes_X.registerSuccess}/m`)
+        !path.startsWith(`/${this.$routes_X.registerSuccess}/m`) &&
+        !path.startsWith(`/${this.$routes_X.forgetPass}/m`)
       ) ? 1 : 0
       this.isNeedFooter = (
         path.startsWith(`/${this.$routes_X.login}`) ||

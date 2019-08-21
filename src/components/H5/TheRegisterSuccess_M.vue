@@ -93,7 +93,7 @@ export default {
         font-size: .7rem
         padding .4rem 2rem
         border-radius 4px
-        background linear-gradient(81deg,rgba(42,59,97,1),rgba(18,71,133,1))
+        background linear-gradient(81deg,rgba(18,71,133,1),rgba(42,59,97,1))
         box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
         border-radius 4px
         color #fff
