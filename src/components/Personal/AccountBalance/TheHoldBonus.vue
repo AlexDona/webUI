@@ -416,9 +416,12 @@ export default {
       immediate: true
     },
     tendData (New) {
-      const [xs, ys] = New
-      this.chartOptions.xAxis.data = xs
-      this.chartOptions.series[0].data = ys
+      // const [xs, ys] = New
+      // this.chartOptions.xAxis.data = xs
+      // this.chartOptions.series[0].data = ys
+
+      this.chartOptions.xAxis.data = [1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405]
+      this.chartOptions.series[0].data = [1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 1000, 1, 20, 30, 405]
       if (!this.isShowConditionDialog) return
       this.resetChart()
     }
