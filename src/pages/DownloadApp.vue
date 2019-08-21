@@ -28,11 +28,11 @@
     WeChatMask(
       :isAndroid="isAndroid"
       :isIOS="isIOS"
-      :language="language"
+      :isChineseLanguage = "isChineseLanguage"
       :isWXBrowserStatus="isWXBrowserStatus"
+      :isBaiDuBrowser="isBaiDuBrowser"
     )
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 // import {downloadFileWithUserDefined} from '../utils'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
@@ -103,10 +103,6 @@ export default {
   methods: {
     ...mapActions(['GET_APP_URL_ACTION']),
     ...mapMutations(['SET_FOOTER_INFO']),
-    isBaiDuBrowser () {
-      let u = navigator.userAgent
-      return u.toLowerCase().indexOf('baidu') > -1
-    },
     isQQAppBrowser () {
       let u = navigator.userAgent
       let isIosQQ = (/(iPhone|iPad|iPod|iOS)/i.test(u) && /\sQQ/i.test(u))
@@ -179,6 +175,10 @@ export default {
       androidUrl: state => state.footerInfo.downloadUrl.android,
       iosUrl: state => state.footerInfo.downloadUrl.ios
     }),
+    isBaiDuBrowser () {
+      let u = navigator.userAgent
+      return u.toLowerCase().indexOf('baidu') > -1
+    },
     isChineseLanguage () {
       return this.language === 'zh_CN' ||
         this.language === 'zh_TW'
