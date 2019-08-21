@@ -866,8 +866,11 @@ export default {
           height: 30px;
           padding: 0 5px;
           margin-top: 12px;
-          margin-left: 40px;
           line-height: 29px;
+
+          &.float-left {
+            margin-left: 40px;
+          }
         }
 
         .demonstration {

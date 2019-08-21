@@ -16,7 +16,7 @@
     .hold-item.usable
       .content
         p.label {{$t(usable.label)}}
-        p.value(v-show="String(usableTotal) !=='NaN'") {{(usableTotal) }}
+        span.value(v-show="String(usableTotal) !=='NaN'") {{(usableTotal) }}
     // 参与条件： 已满足、未满足
     .hold-item.condition
       .content
@@ -37,7 +37,7 @@
         placement="bottom"
         trigger="hover"
         width="275"
-        open-delay="500"
+        :open-delay="500"
       )
         .content.remark-content(v-html="filterRemark")
         .content.remark(
@@ -68,7 +68,7 @@
                 placement="right"
                 trigger="hover"
                 width="218"
-                open-delay="500"
+                :open-delay="500"
               )
                 .content
                   // 举例说明
@@ -89,7 +89,7 @@
               placement="right"
               trigger="hover"
               width="218"
-              open-delay="500"
+              :open-delay="500"
               )
                 .content
                   // 举例说明
@@ -113,6 +113,7 @@
 import echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/dataZoom'
 import {getShowHoldStatusAJAX, getUserHoldInfoAJAX} from '../../../utils/api/holdBonus'
 import {mapMutations} from 'vuex'
 export default {
@@ -156,6 +157,17 @@ export default {
         textStyle: {
           color: '#b2b7d0'
         },
+        dataZoom: [
+          {
+            type: 'inside',
+            filterMode: 'filter',
+            minSpan: 12
+          },
+          {
+            type: 'inside',
+            filterMode: 'filter'
+          }
+        ],
         grid: {
           left: '7%',
           top: '8%',
@@ -526,6 +538,7 @@ export default {
                 height 300px
                 padding 6px 25px
                 overflow-x auto
+                overflow-y hidden
                 >.title
                   font-size 12px
                   padding 0
