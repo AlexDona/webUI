@@ -5,7 +5,7 @@ const store = storeCreator()
 getSize(document, window)
 
 // 检测是否为pc
-function IsPC () {
+function IsPC() {
   let userAgentInfo = navigator.userAgent
   let Agents = ['Android', 'iPhone',
     'SymbianOS', 'Windows Phone',
@@ -20,14 +20,32 @@ function IsPC () {
   return flag
 }
 
-function getSize (doc, win) {
+function getSize(doc, win) {
   var docEl = doc.documentElement,
     resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
     recalc = function () {
-      var clientWidth = docEl.clientWidth
+      let clientWidth = docEl.clientWidth
+      let remWidth = clientWidth
+
+      console.log(clientWidth)
       if (!clientWidth) return
-      docEl.style.fontSize = 20 * (clientWidth / 320) + 'px'
-      store.commit('SET_WINDOW_WIDTH', clientWidth)
+      if (clientWidth > 2500) {
+        remWidth = 960
+      } else if (clientWidth > 640) {
+        remWidth = 640
+      } else if (clientWidth > 480) {
+        remWidth = 480
+      } else {
+        if (clientWidth < 320) {
+          remWidth = 320
+        }
+      }
+      store.commit('SET_WINDOW_WIDTH', {
+        clientWidth,
+        remWidth: remWidth / 7.5
+      })
+
+      docEl.style.fontSize = (remWidth / 7.5) + 'px'
       let isPC = IsPC()
       if (!isPC) {
         store.commit('TOGGLE_PC_MOBILE', true)

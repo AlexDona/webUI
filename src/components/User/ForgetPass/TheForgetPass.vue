@@ -9,7 +9,7 @@
     :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
   )
     .inner-box
-      // 忘记密码
+      // 找回密码
       .header {{$t('M.login_tips3')}}
         Iconfont.iconfont(
           icon-name="icon-tishi1-copy"

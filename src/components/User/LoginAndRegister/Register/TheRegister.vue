@@ -509,7 +509,7 @@ export default {
       const data = await newRegisterAJAX(params)
       if (!data) return
       this.resetForm()
-      this.$goToPage(`/${this.$routes_X.registerSuccess}/${this.$routes_X.register}/${this.inviteId}`)
+      this.$goToPage(`${this.$PCRegisterSuccessRouter_G_X}/${this.inviteId}`)
     },
     initCountry () {
       if (this.countries.length) {
@@ -521,7 +521,8 @@ export default {
   // filters: {},
   computed: {
     ...mapState({
-      countries: state => state.common.countryAreaList
+      countries: state => state.common.countryAreaList,
+      isMobile: state => state.user.isMobile
     }),
     // 映射真实 邀请码
     currentInviteId () {
@@ -559,6 +560,13 @@ export default {
         // phone
         this.SET_LOGIN_TYPE(0)
       }
+    },
+    isMobile (New) {
+      console.log(New)
+      this.$goToPage(
+        New ? `/${this.$routes_X.login}/${this.$routes_X.register}/${this.currentInviteId}`
+          : `/${this.$routes_X.register}/m/${this.currentInviteId}`
+      )
     }
   }
 }

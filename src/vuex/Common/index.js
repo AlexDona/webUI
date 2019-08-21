@@ -103,7 +103,10 @@ const state = {
     configInfo: {}
   },
   isSymbolChanged: false,
+  // 屏幕实际宽度
   clientWidth: 0,
+  // 1rem 对应宽度
+  remWidth_S: 0,
   newsItemId: '',
   // 交易密码是否被锁定
   isLockedPayPassword: false,
