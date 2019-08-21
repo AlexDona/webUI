@@ -25,7 +25,7 @@ const routerCreator = () => {
       store.commit('CHANGE_ROUTER_PATH', from.path)
     }
     const token = getCookie('token')
-    if (store.state.user.loginStep1Info.userInfo && token && !_.get(store.state.user, 'loginStep1Info.userInfo.notNeedLogin')) {
+    if (token && !_.get(store.state.user, 'loginStep1Info.userInfo.notNeedLogin')) {
       store.commit('USER_LOGIN', store.state.user.loginStep1Info)
     }
     if (to.matched.some(m => m.meta.auth)) {

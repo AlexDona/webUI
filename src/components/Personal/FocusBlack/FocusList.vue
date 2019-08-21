@@ -169,56 +169,57 @@ export default {
             display inline-block
             width 14px
             height 19px
+            margin-right 5px
             vertical-align top
             cursor pointer
         .operation-text
           color S_main_color
       /deep/
-        .el-table
-          font-size 12px
-          .el-table__empty-text
-            line-height 600px
-          td
-            padding 8px 0
-          .el-table__header
-            display none
-            tr
-              th
-                .cell
-                  padding-right 0
-                  padding-left 0
-          .el-table__body
-            tr
-              td
-                .cell
-                  padding-right 0
-                  padding-left 0
+      .el-table
+        font-size 12px
+        .el-table__empty-text
+          line-height 600px
+        td
+          padding 8px 0
+        .el-table__header
+          display none
+          tr
+            th
+              .cell
+                padding-right 0
+                padding-left 0
+        .el-table__body
+          tr
+            td
+              .cell
+                padding-right 0
+                padding-left 0
     &.night
       background-color S_night_main_bg
       /deep/
-        .el-table
-          color S_night_main_text_color
+      .el-table
+        color S_night_main_text_color
+        background-color S_night_main_bg
+        tr,th
           background-color S_night_main_bg
-          tr,th
-            background-color S_night_main_bg
-          .el-table__body
-            tr:hover
-              td
-                background-color S_night_main_bg !important
+        .el-table__body
+          tr:hover
             td
-              border-bottom 1px solid S_color1
+              background-color S_night_main_bg !important
+          td
+            border-bottom 1px solid S_color1
     &.day
       background-color S_day_bg
       /deep/
-        .el-table
-          color S_day_main_text_color
+      .el-table
+        color S_day_main_text_color
+        background-color S_day_bg
+        tr,th
           background-color S_day_bg
-          tr,th
-            background-color S_day_bg
-          .el-table__body
-            tr:hover
-              td
-                background-color S_day_bg !important
+        .el-table__body
+          tr:hover
             td
-              border-bottom 1px solid rgba(45, 54, 81, .1)
+              background-color S_day_bg !important
+          td
+            border-bottom 1px solid rgba(45, 54, 81, .1)
 </style>

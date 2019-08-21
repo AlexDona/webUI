@@ -371,6 +371,10 @@ a,
   margin-left: 58px;
 }
 
+.margin3 {
+  margin: 0 3px;
+}
+
 /* 个人中心右侧 标题和主内容左边距 */
 .padding-top10 {
   padding-top: 10px;

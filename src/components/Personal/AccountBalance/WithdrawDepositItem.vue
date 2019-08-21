@@ -89,6 +89,9 @@
           span  {{ currencyName }} {{ $t('M.user_assets_withdrawal_hint3') }}
         // 可提现金额≤账户可用资产-未确认的数字资产。
         p.prompt-message.cursor-pointer(:title="$t('M.user_assets_withdrawal_hint4')") *  {{ $t('M.user_assets_withdrawal_hint4') }}
+        // 每日提币，每日最多提币
+        p.prompt-message.cursor-pointer(v-if="feeRangeOfWithdraw.withdrawCount" :title="$t('M.user_assets_withdrawal_limits').format([feeRangeOfWithdraw.withdrawCount]) + withdrawCoinCount") *  {{ $t('M.user_assets_withdrawal_unlimited') + ', ' + (feeRangeOfWithdraw.withdrawCoinCount ? $t('M.user_assets_withdrawal_count').format([feeRangeOfWithdraw.withdrawCoinCount]) + currencyName : $t('M.user_assets_withdrawal_uncounted')) }}
+        p.prompt-message.cursor-pointer(v-else :title="$t('M.user_assets_withdrawal_unlimited') + withdrawCoinCount") *  {{ $t('M.user_assets_withdrawal_unlimited') + ', ' + (feeRangeOfWithdraw.withdrawCoinCount ? $t('M.user_assets_withdrawal_count').format([feeRangeOfWithdraw.withdrawCoinCount]) + currencyName : $t('M.user_assets_withdrawal_uncounted')) }}
         // 提币
         p.mention-button
           button.font-size12.submit-but.border-radius4.cursor-pointer(@click.prevent="validateOfWithdraw(coinId, withdrawRemark)"
@@ -136,6 +139,8 @@ export default {
       activeWithdrawDepositAddress: '',
       // 地址标签
       withdrawRemark: ''
+      // 可提币数
+      // withdrawCoinCount: this._props.feeRangeOfWithdraw.withdrawCoinCount ? $t('M.user_assets_withdrawal_count').format([this._props.feeRangeOfWithdraw.withdrawCoinCount.withdrawCount]) + this.currencyName : $t('M.user_assets_withdrawal_count')
     }
   },
   // created () {},

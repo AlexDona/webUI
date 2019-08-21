@@ -12,27 +12,38 @@
       .content
         img.logo(:src="logoSrc")
         span.english {{englishFullName}}
-        span.chinese(v-show="$isChineseLanguage_G_X") ({{chineseCoinName}})
     // 当前持仓
     .hold-item.usable
       .content
         p.label {{$t(usable.label)}}
-        p.value {{usable.value | $moneyFilter_F_X}}
+        span.value(v-show="String(usableTotal) !=='NaN'") {{(usableTotal) }}
     // 参与条件： 已满足、未满足
-    .hold-item
+    .hold-item.condition
       .content
         p.label
           span.label {{$t(condition.label)}}：
-          span.value {{condition.value}}
+          span.value {{ifUserHoldSuccessLabel}}
         button.description(@click="toggleShowCondition(true)") {{$t(detailLabel)}}
     // 分红记录
-    .hold-item
+    .hold-item.record
       .content
         p.label {{$t(record.label)}}
         button.description(@click="jumpToRecord") {{$t(detailLabel)}}
     // 备注信息
     .hold-item
-      .content {{filterRemark}}
+      el-popover(
+        :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
+        effect="dark"
+        placement="bottom"
+        trigger="hover"
+        width="275"
+        :open-delay="500"
+      )
+        .content.remark-content(v-html="filterRemark")
+        .content.remark(
+          v-html="filterRemark"
+          slot="reference"
+        )
     //  参与条件弹窗
     el-dialog.condition-dialog(
       width="700px"
@@ -57,11 +68,12 @@
                 placement="right"
                 trigger="hover"
                 width="218"
+                :open-delay="500"
               )
                 .content
                   // 举例说明
                   .title {{$t('M.hold_bonus_example_label')}}：
-                  // 若分红开始时间为2019年7月1日，则首次快照持仓为2019/7/1 00:00:00 即此刻可用数量必须大于1000FUC!
+                  // 若分红开始时间为2019年7月1日，则首次快照持仓为2019/7/1 00:00:00 即此刻可用数量必须大于或等于1000FUC!
                   .c-content {{$t('M.hold_bonus_example_1').format([minNumber, englishCoinName])}}
                 Iconfont.iconfont(slot="reference" icon-name="icon-wenti")
           .right
@@ -77,10 +89,11 @@
               placement="right"
               trigger="hover"
               width="218"
+              :open-delay="500"
               )
                 .content
                   // 举例说明
-                  .title {{$t('M.hold_bonus_example_1')}}：
+                  .title {{$t('M.hold_bonus_example_label')}}：
                   // 若分红周期为2019/7/1~2019/7/7，则日均持仓不低于1000FUC，公式：日均持仓=（期初持仓+变动后持仓N+..）/ 变动次数
                   .c-content {{$t('M.hold_bonus_example_2').format([minNumber, englishCoinName])}}
                 Iconfont.iconfont(
@@ -100,16 +113,16 @@
 import echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/dataZoom'
 import {getShowHoldStatusAJAX, getUserHoldInfoAJAX} from '../../../utils/api/holdBonus'
 import {mapMutations} from 'vuex'
 export default {
   name: 'the-hold-bonus',
   // mixins: [],
   // components: {},
-  // props,
+  props: ['isShowHoldInfos'],
   data () {
     return {
-      isShowHoldInfos: false,
       coinName: {
         chinese: '富链',
         english: 'FUCoin'
@@ -123,10 +136,6 @@ export default {
       condition: {
         // 参与条件
         label: 'M.hold_bonus_condition_label',
-        // 未满足
-        value: 'M.user_hold_bonus_status_label_false',
-        // 已满足
-        // value: 'M.user_hold_bonus_status_label_true',
         // 必须通过身份高级认证
         label1: 'M.user_hold_bonus_condition_label_1',
         // 首次快照持仓不低于{}{}
@@ -148,8 +157,19 @@ export default {
         textStyle: {
           color: '#b2b7d0'
         },
+        dataZoom: [
+          {
+            type: 'inside',
+            filterMode: 'filter',
+            minSpan: 12
+          },
+          {
+            type: 'inside',
+            filterMode: 'filter'
+          }
+        ],
         grid: {
-          left: '5%',
+          left: '7%',
           top: '8%',
           right: '3%'
           // bottom: '6%'
@@ -170,7 +190,7 @@ export default {
           formatter: (params) => {
             // 持仓
             return `<span>${params.name}</span><br/>
-                      <span style="color: #338ff5">${this.$t('M.hold_bonus_position_label')}：${params.value}</span>
+                      <span style="color: #338ff5">${this.$t('M.hold_bonus_position_label')}：${params.value} ${this.englishCoinName}</span>
                       `
           }
         },
@@ -211,13 +231,14 @@ export default {
             }
             // borderColor: '#f0f'
           },
-          label: {
-            show: true,
-            position: 'top',
-            textStyle: {
-              color: '#fff'
-            }
-          },
+          // 图标
+          // label: {
+          //   // show: true,
+          //   position: 'top',
+          //   textStyle: {
+          //     color: 'red'
+          //   }
+          // },
           itemStyle: {
             normal: {
               color: '#338ff5'
@@ -238,10 +259,8 @@ export default {
       isShowConditionDialog: false
     }
   },
-  async created () {
-    if (!await this.confirmIsShowHoldInfo()) return
-    await this.getUserHoldInfo()
-  },
+  // async created () {
+  // },
   // mounted () {
   // },
   // updated () {},
@@ -263,8 +282,26 @@ export default {
         this.resetChart()
       })
     },
+    resetOptions () {
+      if (this.$theme_S_X == 'day') {
+        this.chartOptions.tooltip.backgroundColor = '#fff'
+        this.chartOptions.tooltip.borderColor = '#fff'
+        this.chartOptions.tooltip.textStyle.color = '#7D90AC'
+        this.chartOptions.tooltip.extraCssText = 'box-shadow: 0px 2px 3px 0px rgba(198,212,228,1);'
+        this.chartOptions.xAxis.axisLine.lineStyle.color = '#7D90AC'
+        this.chartOptions.yAxis.axisLine.lineStyle.color = '#7D90AC'
+      } else {
+        this.chartOptions.tooltip.backgroundColor = '#262A42'
+        this.chartOptions.tooltip.borderColor = '#262A42'
+        this.chartOptions.tooltip.textStyle.color = '#fff'
+        this.chartOptions.xAxis.axisLine.lineStyle.color = '#3B4967'
+        this.chartOptions.yAxis.axisLine.lineStyle.color = '#3B4967'
+        this.chartOptions.tooltip.extraCssText = 'box-shadow: 0px 2px 4px 0px rgba(29,37,55,1);'
+      }
+    },
     // 重新绘制图标
     resetChart () {
+      this.resetOptions()
       this.charts = echarts.init(document.getElementById('hold_chart'))
       this.charts.setOption(this.chartOptions)
       window.addEventListener('resize', _.debounce(this.charts.resize, 100))
@@ -287,18 +324,27 @@ export default {
     logoSrc () {
       return _.get(this.holdInfos, 'coinLogo')
     },
-    chineseCoinName () {
-      return _.get(this.holdInfos, 'coinShortName')
-    },
     // 币种全称
     englishFullName () {
       return _.get(this.holdInfos, 'coinEnglishName')
+    },
+    // 持仓可用
+    usableTotal () {
+      let num = parseFloat(_.get(this.holdInfos, 'coinTotal') - 0)
+      num = num.toLocaleString()
+      return num
     },
     englishCoinName () {
       return _.get(this.holdInfos, 'coinName')
     },
     isUserAuth () {
-      return _.get(this.holdInfos, 'ifAuth')
+      return _.get(this.holdInfos, 'holdRequest.ifAuth')
+    },
+    ifUserHoldSuccess () {
+      return _.get(this.holdInfos, 'ifUserHoldSuccess')
+    },
+    ifUserHoldSuccessLabel () {
+      return this.$t(this.ifUserHoldSuccess ? 'M.user_hold_bonus_status_label_true' : 'M.user_hold_bonus_status_label_false')
     },
     isUserAuthDoneLabel () {
       // 已满足、未满足
@@ -306,7 +352,7 @@ export default {
     },
     // 是否首次持仓
     isFirstHave () {
-      return _.get(this.holdInfos, 'ifFirstHave')
+      return _.get(this.holdInfos, 'holdRequest.ifFirstHave')
     },
     // 是否首次持仓
     isFirstHaveDoneLabel () {
@@ -315,7 +361,7 @@ export default {
     },
     // 是否日均持仓
     ifEveryHave () {
-      return _.get(this.holdInfos, 'ifEveryHave')
+      return _.get(this.holdInfos, 'holdRequest.ifEveryHave')
     },
     // 是否日均持仓
     ifEveryHaveDoneLabel () {
@@ -324,7 +370,7 @@ export default {
     },
     // 最小持仓量
     minNumber () {
-      return _.get(this.holdInfos, 'minNumber')
+      return _.get(this.holdInfos, 'holdBonusSetting.minNumber')
     },
     // 持仓信息备注
     remark () {
@@ -336,7 +382,7 @@ export default {
     },
     // 过滤后的备注
     filterRemark () {
-      return this.$isChineseLanguage_G_X ? this.remark : this.remarkEnglish
+      return ((this.$isChineseLanguage_G_X ? this.remark : this.remarkEnglish) || '').replace(/\n/gm, '<br/>')
     },
     // 走势图数据
     tendData () {
@@ -360,10 +406,22 @@ export default {
     }
   },
   watch: {
+    $theme_S_X () {
+      this.resetChart()
+    },
+    isShowHoldInfos: {
+      handler (New) {
+        if (New) this.getUserHoldInfo()
+      },
+      immediate: true
+    },
     tendData (New) {
-      const [xs, ys] = New
-      this.chartOptions.xAxis.data = xs
-      this.chartOptions.series[0].data = ys
+      // const [xs, ys] = New
+      // this.chartOptions.xAxis.data = xs
+      // this.chartOptions.series[0].data = ys
+
+      this.chartOptions.xAxis.data = [1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405]
+      this.chartOptions.series[0].data = [1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 1000, 1, 20, 30, 405]
       if (!this.isShowConditionDialog) return
       this.resetChart()
     }
@@ -380,13 +438,31 @@ export default {
     > .hold-item
       flex 1
       position relative
-      padding 0 38px
       box-sizing border-box
       display flex
       flex-direction column
       justify-content center
-      max-width 201px
+      /*max-width 201px*/
+      &.logo
+        max-width 160px
+      &.usable
+        max-width 200px
+      &.condition
+        max-width 238px
+      &.record
+        max-width 200px
+      /deep/
+        .content
+          &.remark
+            padding 0 16px
+            overflow hidden
+            text-overflow ellipsis
+            display -webkit-box
+            -webkit-box-orient vertical
+            -webkit-line-clamp 5
       > .content
+        white-space nowrap
+        margin 0 auto
         > .description
           color S_main_color
           cursor pointer
@@ -412,7 +488,6 @@ export default {
         width 1px
         height 40px
       &:nth-of-type(5)
-        max-width 300px
         font-size 12px
         &:before
           width 0
@@ -448,11 +523,16 @@ export default {
                     > .label
                       font-size 12px
                   >.right
-                    min-width 100px
+                    min-width 130px
                     >.status
                       font-size 12px
-                      padding 5px 20px
                       border-radius 2px
+                      min-width 122px
+                      height 24px
+                      line-height 24px
+                      display inline-block
+                      box-sizing border-box
+                      text-align center
                       &.done
                         border-color S_main_color
                         color S_main_color
@@ -460,6 +540,8 @@ export default {
               .bottom
                 height 300px
                 padding 6px 25px
+                overflow-x auto
+                overflow-y hidden
                 >.title
                   font-size 12px
                   padding 0
@@ -476,7 +558,7 @@ export default {
                     left -5px
                 #hold_chart
                   height 280px
-                  width 100%
+                  width 650px
               .check-button
                 margin 14px auto 0
                 display block
@@ -496,7 +578,7 @@ export default {
           > .value
             color #fff
         &:before
-          background-color #617499
+          background-color rgba(97,116,153,.1)
       /deep/
         .el-dialog__wrapper
           &.condition-dialog
@@ -579,26 +661,16 @@ export default {
 <style lang="scss">
   @import "../../../assets/CSS/index.scss";
   // 弹出框按钮
-  .tips-content {
-    padding: 5px;
-
+  .tips-content,
+.remark {
     &.night {
-      background-color: #212b3f !important;
-
       /* 内容 */
       .content {
         font-size: 12px;
         color: #d9e1f1;
-        transform: scale(.8);
 
         > .title {
           color: $mainColor;
-        }
-      }
-
-      .popper__arrow {
-        &::after {
-          border-right-color: #212b3f !important;
         }
       }
     }
@@ -609,16 +681,63 @@ export default {
       .content {
         font-size: 12px;
         color: #333;
-        transform: scale(.8);
 
         > .title {
           color: $mainColor;
         }
       }
+    }
+  }
+
+  .tips-content {
+    &.night {
+      background-color: #212b3f !important;
 
       .popper__arrow {
         &::after {
+          border-right-color: #212b3f !important;
+        }
+      }
+    }
+
+    &.day {
+      .popper__arrow {
+        &::after {
           border-right-color: #fff !important;
+        }
+      }
+    }
+  }
+
+  .remark {
+    .remark-content {
+      line-height: 24px !important;
+    }
+
+    .popper__arrow {
+      &::after {
+        top: 0 !important;
+      }
+    }
+
+    &.night {
+      background-color: #272b41;
+
+      .popper__arrow {
+        top: -7px !important;
+
+        &::after {
+          border-bottom-color: #272b41 !important;
+        }
+      }
+    }
+
+    &.day {
+      .popper__arrow {
+        top: -6px !important;
+
+        &::after {
+          border-bottom-color: #fff !important;
         }
       }
     }

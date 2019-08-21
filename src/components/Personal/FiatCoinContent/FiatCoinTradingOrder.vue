@@ -12,11 +12,14 @@
         :key="index"
       >
         <!-- 订单列表 ：1.0 买单 -->
-        <div class="order" v-if="!showOrderAppeal[index] && item.orderType === 'BUY'">
+        <div
+          class="order"
+          v-if="!showOrderAppeal[index] && item.orderType === 'BUY'"
+        >
           <!-- 1.1 表头 -->
           <div class="order-list-head">
             <div class="left">
-              <!-- 买卖家 -->
+              <!-- 卖家 -->
               <div class="buyer-seller">
                 <!--卖家-->
                 {{$t('M.otc_seller')}}：
@@ -24,11 +27,8 @@
                   class="cursor-pointer"
                   @click="jumpMerchantInfoPage(item.sellId)"
                 >
-                  <span v-if="item.sellNickName">
+                  <span>
                     {{item.sellNickName}}
-                  </span>
-                  <span v-else>
-                    {{item.sellName}}
                   </span>
                 </span>
               </div>
@@ -41,10 +41,10 @@
                 <!--订单号-->
                 {{$t('M.otc_MerchantsOrders_orderNum')}}：{{item.orderSequence}}
               </div>
-              <!-- 挂单时间 -->
+              <!-- 下单时间 -->
               <div class="deal-time">
-                <!--挂单时间-->
-                {{$t('M.otc_entrust_time')}}：{{item.createTime}}
+                <!--下单时间-->
+                {{$t('M.otc_stocks_ordertime')}}：{{item.createTime}}
               </div>
               <div class="order-list-head-icon buy-icon"></div>
               <div class="buy-sell-icon">
@@ -100,11 +100,12 @@
                     {{$t('M.comm_count')}}：{{item.pickCount}}
                   </span>
                 </p>
+                <!-- 卖家姓名 -->
+                <p class="trade-info">
+                  {{$t('M.otc_trading_seller_name')}}：{{item.sellName}}
+                </p>
                 <!-- 卖家手机号 -->
-                <!-- 付款前不显示 -->
-                <p
-                  class="trade-info"
-                >
+                <p class="trade-info">
                   <!--卖家手机号-->
                   {{$t('M.otc_trading_sellphone')}}：{{item.sellPhone}}
                 </p>
@@ -128,6 +129,7 @@
                     </div>
                     <!--选择支付方式-->
                     <el-select
+                      class="select-pay-type"
                       :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_index_Payment_method')"
                       :no-data-text="$t('M.comm_no_data')"
                       v-model="activePayModeList[index]"
@@ -424,11 +426,8 @@
                   class="cursor-pointer"
                   @click="jumpMerchantInfoPage(item.buyId)"
                 >
-                  <span v-if="item.buyNickName">
+                  <span>
                     {{item.buyNickName}}
-                  </span>
-                  <span v-else>
-                    {{item.buyName}}
                   </span>
                 </span>
               </div>
@@ -441,10 +440,10 @@
                 <!--订单号-->
                 {{$t('M.otc_MerchantsOrders_orderNum')}}：{{item.orderSequence}}
               </div>
-              <!-- 挂单时间 -->
+              <!-- 下单时间 -->
               <div class="deal-time">
-                <!--挂单时间-->
-                {{$t('M.otc_entrust_time')}}：{{item.createTime}}
+                <!--下单时间-->
+                {{$t('M.otc_stocks_ordertime')}}：{{item.createTime}}
               </div>
               <div class="order-list-head-icon sell-icon"></div>
               <div class="buy-sell-icon">
@@ -497,10 +496,13 @@
                     {{$t('M.comm_count')}}：{{item.pickCount}}
                   </span>
                 </p>
-                <!-- 卖家手机号 -->
+                <!-- 买家姓名 -->
+                <p class="trade-info">
+                  {{$t('M.otc_trading_buyer_name')}}：{{item.buyName}}
+                </p>
+                <!-- 买家手机号 -->
                 <p class="trade-info">
                   <!--买家手机号-->
-                  <!-- {{$t('M.otc_trading_sellphone')}}：{{item.buyPhone}} -->
                   {{$t('M.otc_trading_buyphone')}}：{{item.buyPhone}}
                 </p>
               </div>
@@ -521,7 +523,7 @@
               </div>
               <!-- 付款后 -->
               <div class="middle-content"
-                v-if="item.status == 'PAYED'"
+                   v-if="item.status == 'PAYED'"
               >
                 <div class="trader-info display-inline-block">
                   <p class="bankMoneyInfo">
@@ -751,12 +753,16 @@
         </div>
       </div>
       <!-- 二、暂无数据 -->
-      <div class="no-data font-size12" v-if="!tradingOrderList.length">
+      <div
+        class="no-data font-size12"
+        v-if="!tradingOrderList.length"
+      >
         <!--暂无数据-->
         {{ $t('M.comm_no_data') }}
       </div>
       <!-- 三、分页-->
       <el-pagination
+        class="pages"
         background
         v-show="tradingOrderList.length && legalTradePageTotals - 1 > 0"
         layout="prev, pager, next"
@@ -1606,8 +1612,9 @@ export default {
     margin-top: -10px;
 
     > .fiat-trading-order-content {
+      position: relative;
       min-height: 584px;
-      padding: 0 10px 10px;
+      padding: 0 10px 35px;
 
       .button {
         width: 290px;
@@ -1660,7 +1667,7 @@ export default {
                 border-right: 18px solid transparent;
                 border-bottom: 18px solid transparent;
                 border-top-left-radius: 6px;
-            }
+              }
 
               > .buy-icon {
                 border-top: 18px solid $upColor;
@@ -1905,6 +1912,14 @@ export default {
     }
 
     /deep/ {
+      /* 分页 */
+      .el-pagination.is-background.pages {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
       .appeal {
         .appeal-body {
           .appeal-body-content {
@@ -1938,6 +1953,18 @@ export default {
         .el-input__inner {
           width: 150px;
           height: 26px;
+        }
+      }
+
+      .order-list-body-middle {
+        .middle-content {
+          .pay-style {
+            .select-pay-type {
+              .el-input__icon {
+                line-height: 0;
+              }
+            }
+          }
         }
       }
 
@@ -2342,6 +2369,7 @@ export default {
       /deep/ {
         .el-input__inner {
           width: 130px;
+          border: 1px solid #ccc;
         }
 
         .password-dialog {

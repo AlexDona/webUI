@@ -292,7 +292,7 @@
           <div class="page">
             <el-pagination
               background
-              v-show="ADList.length"
+              v-show="ADList.length && totalPages - 1 > 0"
               layout="prev, pager, next"
               :page-count="totalPages"
               @current-change="changeCurrentPage"

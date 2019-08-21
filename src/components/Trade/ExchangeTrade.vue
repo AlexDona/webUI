@@ -935,14 +935,14 @@ export default {
         // 限价买
         case 'limit-buy':
           this.limitExchange.buyPrice = this.getRefValue(this.limitBuyPriceInputRef)
+          this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
+          if (this.limitExchange.buyPrice) {
+            this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice).toFixed(priceExchange)
+          }
+          // if (!this.limitExchange.buyPrice) {
+          //   return false
+          // }
           if (this.$isLogin_S_X) {
-            this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
-            if (this.limitExchange.buyPrice) {
-              this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / this.limitExchange.buyPrice).toFixed(priceExchange)
-            }
-            // if (!this.limitExchange.buyPrice) {
-            //   return false
-            // }
             if (this.limitExchange.buyPrice - this.priceMin < 0) {
               // 委托价格低于最低限价
               this.errorMsg.limit.buy.price = this.$t('M.limit_market_trade_price_min_tips') + this.priceMin
@@ -977,11 +977,11 @@ export default {
         // 限价卖
         case 'limit-sell':
           this.limitExchange.sellPrice = this.getRefValue(this.limitSellPriceInputRef)
+          this.setTransformPrice('limit-sell', this.limitExchange.sellPrice)
+          // if (!this.limitExchange.sellPrice) {
+          //   return false
+          // }
           if (this.$isLogin_S_X) {
-            this.setTransformPrice('limit-sell', this.limitExchange.sellPrice)
-            // if (!this.limitExchange.sellPrice) {
-            //   return false
-            // }
             if (this.limitExchange.sellPrice - this.priceMin < 0) {
               // 委托价格低于最低限价
               this.errorMsg.limit.sell.price = this.$t('M.limit_market_trade_price_min_tips') + this.priceMin
@@ -994,6 +994,7 @@ export default {
               this.errorMsg.limit.sell.price = ''
             }
           }
+
           this.limitExchange.sellCount = this.getRefValue(this.limitSellCountInputRef)
           if (this.$isLogin_S_X) {
             if (!this.limitExchange.sellCount) {

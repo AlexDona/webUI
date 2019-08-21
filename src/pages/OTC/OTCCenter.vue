@@ -206,30 +206,48 @@
             >
               <!-- 名称 -->
               <!--:label="$t('M.otc_index_Merchant')"-->
+              <!--label="广告方 (30日成交单 | 成交率 | 放行时间)"-->
               <el-table-column
-                label="广告方(30日成交单|成交率|放行时间)"
+                :label="$t('M.otc_index_Merchant')"
                 align="left"
-                width="300"
+                width="250"
               >
                 <template slot-scope = "s">
-                  <div>
-                    <img
-                      src="../../assets/develop/shangjia.png"
-                      class="merchant-icon"
-                      v-show="s.row.userType === 'MERCHANT'"
-                      :title="$t('M.otc_merchant')"
-                    >
-                    <span
-                      class="cursor-pointer"
-                      @click="jumpMerchantInfoPage(s.row.userId)"
-                    >
-                      <span v-if="s.row.userNick">
-                        {{s.row.userNick}}
+                  <div class="first-name">
+                    <div class="top">
+                      <span
+                        class="cursor-pointer top-name"
+                        @click="jumpMerchantInfoPage(s.row.userId)"
+                      >
+                        <span v-if="s.row.userNick">
+                          {{s.row.userNick}}
+                        </span>
+                        <span v-else>
+                          {{s.row.userName}}
+                        </span>
                       </span>
-                      <span v-else>
-                        {{s.row.userName}}
+                      <img
+                        src="../../assets/develop/shangjia.png"
+                        class="merchant-icon"
+                        v-show="s.row.userType === 'MERCHANT'"
+                        :title="$t('M.otc_merchant')"
+                      >
+                    </div>
+                    <div class="bottom">
+                      <!--单-->
+                      <span>{{s.row.successOrderTimesForThirtyDays}}{{$t('M.otc_thirty_success_orders')}}</span>
+                      <span class="line"></span>
+                      <span>
+                        <span v-if="s.row.successOrderTimes === 0 || s.row.tradeTimes === 0">
+                          0%
+                        </span>
+                        <span v-else>
+                          {{((s.row.successOrderTimes/(s.row.tradeTimes)) * 100).toFixed(2)}}%
+                        </span>
                       </span>
-                    </span>
+                      <span class="line"></span>
+                      <span>{{BIHTimeFormatting(s.row.avgGiveOutTime)}}</span>
+                    </div>
                   </div>
                 </template>
               </el-table-column>
@@ -251,6 +269,7 @@
               <el-table-column
                 :label="$t('M.comm_count')"
                 align="right"
+                width="150"
               >
                 <template slot-scope = "s">
                   <div>
@@ -262,20 +281,22 @@
               <el-table-column
                 :label="$t('M.otc_index_price')"
                 align="right"
+                width="170"
               >
                 <template slot-scope = "s">
-                  <!-- 此处的单位根据设置中的法币类型来变化：为人民币时候显示CNY，为美元时候显示$ 此处需要从全局拿到设置中的法币类型来渲染页面-->
                   <div
                     class="red"
                     v-show="OTCBuySellStyle === 'onlineBuy'"
                   >
-                    {{$scientificToNumber(s.row.price)}}{{(s.row.currencyName)}}
+                    <!--{{$scientificToNumber(s.row.price)}}{{(s.row.currencyName)}}-->
+                    {{$otcPricePointShow(s.row.priceZero)}}&nbsp;{{(s.row.currencyName)}}
                   </div>
                   <div
                     class="green"
                     v-show="OTCBuySellStyle === 'onlineSell'"
                   >
-                    {{$scientificToNumber(s.row.price)}}{{(s.row.currencyName)}}
+                    <!--{{$scientificToNumber(s.row.price)}}{{(s.row.currencyName)}}-->
+                    {{$otcPricePointShow(s.row.priceZero)}}&nbsp;{{(s.row.currencyName)}}
                   </div>
                 </template>
               </el-table-column>
@@ -283,24 +304,25 @@
               <el-table-column
                 :label="$t('M.otc_index_Payment_method')"
                 align="right"
+                width="170"
               >
                 <template slot-scope="s">
                   <div>
                     <!-- 1支付宝 -->
                     <IconFontCommon
-                      class="font-size16"
+                      class="font-size16 margin3"
                       iconName="icon-zhifubao1"
                       v-if="s.row.payTypes[0] === '1'"
                     />
                     <!-- 2微信 -->
                     <IconFontCommon
-                      class="font-size16"
+                      class="font-size16 margin3"
                       iconName="icon-weixin1"
                       v-if="s.row.payTypes[1] === '1'"
                     />
                     <!-- 3银行卡 -->
                     <IconFontCommon
-                      class="font-size16"
+                      class="font-size16 margin3"
                       iconName="icon-yinhangqia"
                       v-if="s.row.payTypes[2] === '1'"
                     />
@@ -308,12 +330,12 @@
                     <span v-show="s.row.payTypes[3] === '1'">
                       <img
                         src="../../assets/user/xilian.png"
-                        class="xilian"
+                        class="xilian margin3"
                       >
                     </span>
                     <!-- 5PAYPAL -->
                     <IconFontCommon
-                      class="font-size16"
+                      class="font-size16 margin3"
                       iconName="icon-paypal"
                       v-if="s.row.payTypes[4] === '1'"
                     />
@@ -325,6 +347,7 @@
               <el-table-column
                 :label="$t('M.otc_index_priceLimit')"
                 align="right"
+                width="170"
               >
                 <template slot-scope = "s">
                   <div>
@@ -337,13 +360,16 @@
               <el-table-column
                 :label="$t('M.comm_remark')"
                 align="right"
+                width="170"
               >
                 <template slot-scope = "s">
-                  <span
-                    class="remark-tips"
-                    :title="s.row.remark"
-                  >
-                    {{s.row.remark}}
+                  <span class="remark-tips">
+                    <span
+                      class="content"
+                      :title="s.row.remark"
+                    >
+                      {{s.row.remark}}
+                    </span>
                   </span>
                 </template>
               </el-table-column>
@@ -382,7 +408,7 @@
           <div class="page">
             <el-pagination
               background
-              v-show="onlineBuySellTableList.length"
+              v-show="onlineBuySellTableList.length && totalPages - 1 > 0"
               layout="prev, pager, next"
               :current-page="currentPage"
               :page-count="totalPages"
@@ -1540,27 +1566,63 @@ export default {
             color: $otcGreen;
           }
 
+          .first-name {
+            height: 49px;
+
+            .top {
+              .top-name {
+                margin-right: 5px;
+
+                &:hover {
+                  color: $mainColor;
+                }
+              }
+
+              .merchant-icon {
+                display: inline-block;
+                width: 14px;
+                height: 19px;
+                vertical-align: top;
+                cursor: pointer;
+              }
+            }
+
+            .bottom {
+              font-size: 12px;
+
+              .line {
+                display: inline-block;
+                width: 1px;
+                height: 10px;
+                margin: 0 3px;
+              }
+            }
+          }
+
           .remark-tips {
+            position: relative;
             display: inline-block;
-            width: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            width: 96px;
+            height: 32px;
+            font-size: 12px;
+            line-height: 16px;
+            text-align: left;
+            vertical-align: middle;
             cursor: pointer;
-          }
 
-          .page {
-            padding-bottom: 20px;
-            margin-top: 10px;
-            text-align: center;
-          }
-
-          .merchant-icon {
-            display: inline-block;
-            width: 14px;
-            height: 19px;
-            vertical-align: top;
-            cursor: pointer;
+            .content {
+              position: absolute;
+              top: 50%;
+              display: -webkit-box;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              word-wrap: break-word;
+              word-break: break-all;
+              transform: translateY(-50%);
+              -webkit-box-orient: vertical;
+              -moz-box-orient: vertical;
+              -webkit-line-clamp: 2; /* 设置最大2行，父元素需填写宽度 */
+            }
           }
 
           .xilian {
@@ -1574,6 +1636,12 @@ export default {
             left: 616px;
             display: inline-block;
           }
+        }
+
+        > .page {
+          padding-bottom: 10px;
+          margin-top: 20px;
+          text-align: center;
         }
       }
 
@@ -1719,11 +1787,6 @@ export default {
       }
     }
 
-    .el-table .cell,
-    .el-table th div {
-      padding: 0;
-    }
-
     .el-input__icon {
       font-size: 12px;
       line-height: 30px;
@@ -1791,26 +1854,26 @@ export default {
 
     .otc-merchant-list {
       .el-table {
-        thead {
-          font-size: 12px;
-        }
-
-        td {
-          padding: 24px 0;
-        }
-
         .el-table__header {
-          tr {
-            th {
-              &:first-child {
-                .cell {
-                  padding-left: 30px;
-                }
-              }
+          thead {
+            font-size: 12px;
 
-              &:nth-last-child(2) {
+            tr {
+              th {
+                &:first-child {
+                  .cell {
+                    padding-left: 30px;
+                  }
+                }
+
+                &:nth-last-child(2) {
+                  .cell {
+                    padding-right: 30px;
+                  }
+                }
+
                 .cell {
-                  padding-right: 30px;
+                  padding: 0;
                 }
               }
             }
@@ -1820,7 +1883,10 @@ export default {
         .el-table__body {
           tr {
             td {
+              padding: 15px 0;
+
               .cell {
+                padding: 0;
                 line-height: 24px;
               }
 
@@ -1851,13 +1917,13 @@ export default {
           /* 鼠标悬浮购买出售按钮增加背景色 */
           .el-button--danger {
             &:hover {
-              background-color: #dc4d4d;
+              background-color: #dc4d4d !important;
             }
           }
 
           .el-button--success {
             &:hover {
-              background-color: #00807b;
+              background-color: #00807b !important;
             }
           }
 
@@ -1866,6 +1932,10 @@ export default {
             padding: 7px 10px;
           }
         }
+
+        .el-table__empty-block {
+          height: 760px;
+        }
       }
 
       .el-table__column-filter-trigger {
@@ -1873,10 +1943,6 @@ export default {
           font-weight: 700;
           font-size: 14px;
         }
-      }
-
-      .el-table__empty-block {
-        height: 760px;
       }
     }
 
@@ -2074,12 +2140,23 @@ export default {
 
           > .otc-merchant-list {
             background-color: $mainContentNightBgColor;
+
+            .first-name {
+              .bottom {
+                color: $mainNightTitleColor;
+
+                .line {
+                  background-color: $mainNightTitleColor;
+                }
+              }
+            }
+
+            .remark-tips {
+              color: $mainNightTitleColor;
+            }
           }
 
-          .page {
-            padding: 20px 0;
-            margin-top: -10px;
-            text-align: center;
+          > .page {
             background-color: $mainContentNightBgColor;
           }
         }
@@ -2207,50 +2284,64 @@ export default {
         }
       }
 
-      .el-table {
-        color: $mainColorOfWhite;
-        background-color: $mainContentNightBgColor;
-
-        tr {
-          background-color: $mainContentNightBgColor;
-        }
-
-        thead {
-          color: $mainNightTitleColor;
-        }
-
-        th {
+      .otc-merchant-list {
+        .el-table {
+          color: $mainColorOfWhite;
           background-color: $mainContentNightBgColor;
 
-          &.is-leaf {
+          tr {
+            background-color: $mainContentNightBgColor;
+          }
+
+          th {
+            background-color: $mainContentNightBgColor;
+
+            &.is-leaf {
+              border-bottom: 1px solid rgba(97, 116, 153, .05);
+            }
+
+            > .cell {
+              &.highlight {
+                color: #617499;
+              }
+            }
+          }
+
+          td {
             border-bottom: 1px solid rgba(97, 116, 153, .05);
           }
 
-          > .cell {
-            &.highlight {
-              color: #617499;
+          .el-table__header {
+            thead {
+              color: $mainNightTitleColor;
             }
           }
-        }
-      }
 
-      .otc-center-content {
-        .otc-merchant-content {
-          .el-table {
-            td {
-              border-bottom: 1px solid rgba(97, 116, 153, .05);
-            }
-          }
-        }
-      }
-
-      .el-table--enable-row-hover {
-        .el-table__body {
-          tr {
-            &:hover {
-              > td {
-                background-color: #1d2331;
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background-color: #1d2331;
+                }
               }
+            }
+
+            .el-button--danger {
+              border-color: $upColor;
+              background-color: $upColor;
+            }
+
+            .el-button--success {
+              border-color: $otcGreen;
+              background-color: $otcGreen;
+            }
+          }
+
+          .el-table__empty-block {
+            background-color: $mainContentNightBgColor;
+
+            .el-table__empty-text {
+              color: rgba(255, 255, 255, .8);
             }
           }
         }
@@ -2260,40 +2351,6 @@ export default {
         i {
           color: $mainColor;
         }
-      }
-
-      .el-button--danger {
-        border-color: $upColor;
-        background-color: $upColor;
-      }
-
-      .invest-list-body {
-        .el-table {
-          td {
-            border-top: 1px solid rgba(97, 116, 153, .2);
-            box-shadow: none;
-          }
-
-          th {
-            &.is-leaf {
-              border-top: 1px solid rgba(97, 116, 153, .2);
-              box-shadow: none;
-            }
-          }
-        }
-      }
-
-      .el-button--success {
-        border-color: $otcGreen;
-        background-color: $otcGreen;
-      }
-
-      .el-table__empty-block {
-        background-color: $mainContentNightBgColor;
-      }
-
-      .el-table__empty-text {
-        color: rgba(255, 255, 255, .8);
       }
 
       .el-tabs__item {
@@ -2409,15 +2466,19 @@ export default {
           }
 
           > .otc-merchant-list {
-            .red {
-              color: $upColor;
-            }
-          }
+            .first-name {
+              .bottom {
+                color: $fontColorSecondaryOfDay;
 
-          .page {
-            padding-bottom: 20px;
-            margin-top: 10px;
-            text-align: center;
+                .line {
+                  background-color: $fontColorSecondaryOfDay;
+                }
+              }
+            }
+
+            .remark-tips {
+              color: $fontColorSecondaryOfDay;
+            }
           }
         }
 
@@ -2565,43 +2626,63 @@ export default {
         }
       }
 
-      .el-table {
-        color: $dayMainTitleColor;
+      .otc-merchant-list {
+        .el-table {
+          color: $dayMainTitleColor;
 
-        th {
-          background-color: $mainColorOfWhite;
+          th {
+            background-color: $mainColorOfWhite;
 
-          &.is-leaf {
-            border-bottom: 1px solid $borderColorOfDay;
-          }
+            &.is-leaf {
+              border-bottom: 1px solid $borderColorOfDay;
+            }
 
-          > .cell {
-            &.highlight {
-              color: #617499;
+            > .cell {
+              &.highlight {
+                color: #617499;
+              }
             }
           }
-        }
 
-        tr {
-          background-color: $mainColorOfWhite;
-        }
-
-        thead {
-          color: $fontColorSecondaryOfDay;
-        }
-
-        td {
-          border-bottom: 1px solid rgba(97, 116, 153, .1);
-        }
-      }
-
-      .el-table--enable-row-hover {
-        .el-table__body {
           tr {
-            &:hover {
-              > td {
-                background-color: $mainColorOfWhite;
+            background-color: $mainColorOfWhite;
+          }
+
+          td {
+            border-bottom: 1px solid rgba(97, 116, 153, .1);
+          }
+
+          .el-table__header {
+            thead {
+              color: $fontColorSecondaryOfDay;
+            }
+          }
+
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background-color: $mainColorOfWhite;
+                }
               }
+            }
+
+            .el-button--danger {
+              border-color: $upColor;
+              background-color: $upColor;
+            }
+
+            .el-button--success {
+              border-color: $otcGreen;
+              background-color: $otcGreen;
+            }
+          }
+
+          .el-table__empty-block {
+            background-color: $mainColorOfWhite;
+
+            .el-table__empty-text {
+              color: $dayMainTitleColor;
             }
           }
         }
@@ -2611,24 +2692,6 @@ export default {
         i {
           color: $mainColor;
         }
-      }
-
-      .el-button--danger {
-        border-color: $upColor;
-        background-color: $upColor;
-      }
-
-      .el-button--success {
-        border-color: $otcGreen;
-        background-color: $otcGreen;
-      }
-
-      .el-table__empty-block {
-        background-color: $mainColorOfWhite;
-      }
-
-      .el-table__empty-text {
-        color: $dayMainTitleColor;
       }
 
       .el-tabs__item {

@@ -251,6 +251,8 @@ export default {
   @import '../../../assets/CSS/index';
 
   .fiat-entrust-order-box {
+    margin-top: -10px;
+
     .fiat-entrust-order-table {
       padding: 0 10px;
 
@@ -274,15 +276,16 @@ export default {
       }
 
       > .entrust-table-body {
-        min-height: 539px;
-        padding: 30px 0;
+        position: relative;
+        min-height: 549px;
+        padding: 0 0 35px;
         margin-top: -10px;
 
         > .entrust-list-content {
           display: flex;
-          height: 34px;
+          height: 46px;
           padding: 0 10px;
-          line-height: 34px;
+          line-height: 46px;
 
           > .item {
             width: 130px;
@@ -310,7 +313,10 @@ export default {
         }
 
         > .pages {
-          margin-top: 50px;
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
         }
       }
     }
@@ -429,7 +435,7 @@ export default {
 
                   .confirm {
                     color: $mainColorOfWhite;
-                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                    background: $nightButtonBgColor1;
                   }
                 }
               }
@@ -452,6 +458,12 @@ export default {
 
         > .entrust-table-body {
           color: $dayMainTitleColor;
+
+          .entrust-list-content {
+            &:hover {
+              background-color: #f4f4f5;
+            }
+          }
         }
 
         .no-data {
@@ -487,7 +499,7 @@ export default {
 
                   .confirm {
                     color: $mainColorOfWhite;
-                    background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+                    background: $dayButtonBgColor2;
                   }
                 }
               }

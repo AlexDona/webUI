@@ -19,6 +19,12 @@
         @click="downloadApp"
         @ondblclick="ondblclick"
       ) {{isChineseLanguage ? '立即安装' : 'Install' }}
+      a(
+        :href="downloadUrl"
+        ref="download"
+        download="android"
+        :style="{'display':'none'}"
+        )
     WeChatMask(
       :isAndroid="isAndroid"
       :isIOS="isIOS"
@@ -49,17 +55,19 @@ export default {
       isAndroid: false,
       isIOS: false,
       isWXBrowserStatus: true,
-      isLoading: true,
-      timer: null
+      isLoading: false,
+      timer: null,
+      // 下载延时器
+      downloadTimer: null
     }
   },
   async created () {
     document.getElementsByTagName('body')[0].style.zoom = 1
     let u = navigator.userAgent
     this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
-    this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
-    this.isWXBrowserStatus = u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
-    await this.getAppDownLoadUrl()
+    this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端\
+
+    this.isWXBrowserStatus = this.isQQAppBrowser() || this.isWXBrowser()
   },
   mounted: function () {
     // 禁止横屏
@@ -89,11 +97,28 @@ export default {
   // update () {},
   beforeDestroy () {
     clearTimeout(this.timer)
+    clearTimeout(this.downloadTimer)
   },
   // beforeRouteUpdate () {},
   methods: {
     ...mapActions(['GET_APP_URL_ACTION']),
     ...mapMutations(['SET_FOOTER_INFO']),
+    isBaiDuBrowser () {
+      let u = navigator.userAgent
+      return u.toLowerCase().indexOf('baidu') > -1
+    },
+    isQQAppBrowser () {
+      let u = navigator.userAgent
+      let isIosQQ = (/(iPhone|iPad|iPod|iOS)/i.test(u) && /\sQQ/i.test(u))
+      let isAndroidQQ = (/(Android)/i.test(u) && /MQQBrowser/i.test(u) && /\sQQ/i.test((u).split('MQQBrowser')))
+      return isIosQQ || isAndroidQQ
+    },
+    isWXBrowser () {
+      let u = navigator.userAgent
+      this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
+      this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端\
+      return u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger'
+    },
     // 横屏
     orient () {
       if (window.orientation == 0 || window.orientation == 180) {
@@ -115,19 +140,33 @@ export default {
     async getAppDownLoadUrl () {
       await this.GET_APP_URL_ACTION()
       if (this.isAndroid) {
-        window.location.href = 'scheme: //fubt.com/'
+        // window.location.href = 'scheme: //fubt.com/'
         this.downloadUrl = this.androidUrl
+        if (!this.androidUrl) {
+          this.$error_tips_X(this.$t('M.download_app_error_tips'))
+          return false
+        }
+        this.downloadTimer = setTimeout(() => {
+          if (this.isBaiDuBrowser) {
+            this.$refs['download'].click()
+          } else {
+            window.location.href = this.downloadUrl
+          }
+        }, 1000)
       } else if (this.isIOS) {
         this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
+        // 获取下载链接失败，请稍后再试！
+        if (!this.iosUrl) {
+          this.$error_tips_X(this.$t('M.download_app_error_tips'))
+          return false
+        }
+        window.location.href = this.downloadUrl
       }
       this.isLoading = false
     },
     downloadApp: _.debounce(async function () {
       this.isLoading = true
-      if (!this.downloadUrl) {
-        await this.getAppDownLoadUrl()
-      }
-      window.location.href = this.downloadUrl
+      await this.getAppDownLoadUrl()
       this.timer = setTimeout(() => {
         this.isLoading = false
       }, 2000)
@@ -147,9 +186,9 @@ export default {
     language () {
       return (navigator.browserLanguage || navigator.language).startsWith('zh') ? 'zh_CN' : 'en_US'
     }
-  },
-  watch: {
   }
+  // watch: {
+  // }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
