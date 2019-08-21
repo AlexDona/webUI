@@ -15,17 +15,8 @@
         :class="{'has-vip':$isVIPEnable_S_X}"
         v-show="isShowDropDown"
       )
-        // 普通会员信息
-        .normal-user(v-if="!level")
-          .sub-nav-user.vip-info
-          ul.user-infos
-            li(
-              v-for="route in personalRoutes"
-              @click="jumpToPersonalCenter(route.name)"
-              ) {{$t(route.label)}}
-            // 退出
-            li(@click="$userLogOut_X") {{$t('M.comm_retreat')}}
-        .normal-user.vip-user(v-else)
+        // VIP 信息
+        .vip-user(v-if="$isVIPEnable_S_X")
           .sub-nav-user.vip-info
             // VIP享手续费、提现优惠
             p.nav-vip {{$t('M.user_vip_text8')}}
@@ -33,6 +24,15 @@
             button.nav-button(
               @click="jumpToVIP"
             ) {{$t(VIPButtonText)}}
+          ul.user-infos
+            li(
+              v-for="route in personalRoutes"
+              @click="jumpToPersonalCenter(route.name)"
+              ) {{$t(route.label)}}
+            // 退出
+            li(@click="$userLogOut_X") {{$t('M.comm_retreat')}}
+        .vip-closed.vip-user(v-else)
+          .sub-nav-user.vip-info
           ul.user-infos
             li(
               v-for="route in personalRoutes"
@@ -146,7 +146,7 @@ export default {
     }),
     // VIP 按钮文字（立即开通、查看我的VIP）
     VIPButtonText () {
-      return 'M.user_vip_look'
+      return !this.level ? 'M.user_vip_immediately_opened' : 'M.user_vip_look'
     },
     localPayPwdSet () {
       return _.get(this.userInfo, 'paypasswordSet')
@@ -184,7 +184,7 @@ export default {
       border-radius 2px
       padding 10px 0
       text-align center
-      >.normal-user
+      >.vip-user
         >.vip-info
           >.nav-vip
             padding 10px 25px 5px
