@@ -177,7 +177,17 @@ export default {
 
     this.getLocalUserName()
   },
-  // mounted () {}
+  mounted () {
+    // 禁止双击
+    let lastTouchEnd = 0
+    document.documentElement.addEventListener('touchend', function (event) {
+      let now = Date.now()
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault()
+      }
+      lastTouchEnd = now
+    }, false)
+  },
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},

@@ -174,7 +174,7 @@ export default {
           }
         ],
         grid: {
-          left: '7%',
+          left: '8%',
           top: '8%',
           right: '3%'
           // bottom: '6%'
@@ -349,9 +349,7 @@ export default {
     },
     // 持仓可用
     usableTotal () {
-      let num = parseFloat(_.get(this.holdInfos, 'coinTotal') - 0)
-      num = num.toLocaleString()
-      return num
+      return _.get(this.holdInfos, 'coinTotal') - 0
     },
     englishCoinName () {
       return _.get(this.holdInfos, 'coinName')

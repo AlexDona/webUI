@@ -84,9 +84,10 @@ export default {
     document.addEventListener('touchmove', function (event) {
       event.preventDefault()
     })
-    var lastTouchEnd = 0
+    // 禁止双击
+    let lastTouchEnd = 0
     document.documentElement.addEventListener('touchend', function (event) {
-      var now = Date.now()
+      let now = Date.now()
       if (now - lastTouchEnd <= 300) {
         event.preventDefault()
       }

@@ -20,9 +20,9 @@
         :style="{height:`${height-2}px`, width:`${barWidth}px`}"
         @mouseup="mouseUpFn($event)"
         @mousedown="mouseDownFn($event)"
-        @touchstart="touchStart"
+        @touchstart.prevent="touchStart"
         @touchmove.prevent="touchMove"
-        @touchend="touchEnd"
+        @touchend.prevent="touchEnd"
       )
     .drag-success(
       :style="{height:`${height}px`,'line-height':`${height}px`}"
@@ -122,6 +122,7 @@ export default {
       targetLeft < this.maxWidth && targetLeft >= 0 ? this.$changeCSS_X('.handler', 'left', left) : this.sliderSuccessCallback()
     },
     touchEnd () {
+      this.mouseMoveStatus = false
       document.querySelector('.handler').style.left = 0
       document.querySelector('.drag_bg').style.width = 0
       // CSSAnimate(document.querySelector('.handler'), { left: 0 }, 15, 0.8, this.dragTimer)
