@@ -39,7 +39,7 @@ const routerCreator = () => {
     }
     // 登录判断限制
     if (store.state.user.isMobile) {
-      if (to.path === `/${routesVariable.login}`) {
+      if (to.path === `/${routesVariable.login}/${routesVariable.normalLogin}`) {
         next({path: `/${routesVariable.login}/m`})
       }
     }
