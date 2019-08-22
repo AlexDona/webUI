@@ -199,7 +199,7 @@
                   class = 'finance-tips-box'
                 >
                   {{$t('M.finance_loginTips')}}
-                  <router-link to='/login'>
+                  <router-link :to="`/${$routes_X.login}`">
                     {{$t('M.comm_login')}}
                   </router-link>
                   {{$t('M.finance_or')}}

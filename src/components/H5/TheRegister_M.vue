@@ -904,7 +904,7 @@ export default {
                       color #636777
                       box-shadow none
                       border-radius .6rem
-        .slider
+          .slider
             background-color rgba(11,12,20,.8)
             display flex
             flex-direction column
