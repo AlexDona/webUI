@@ -17,11 +17,11 @@ export const getPartNewsNotices = params => handleRequest(() => get('newsBulleti
 // 获取新闻详情
 export const getNewsDetail = params => handleRequest(() => get(`newsBulletin/${params}`))
 // 添加收藏
-export const addUserCollectionAjax = params => handleRequest(() => postWithURLencoded('collection', {...params, ...notLoading}))
+export const addUserCollectionAjax = params => handleRequest(() => postWithURLencoded('user/collection', {...params, ...notLoading}))
 // 取消收藏
-export const removeCollectionAjax = params => handleRequest(() => postWithURLencoded('collection/cancel', {...params, ...notLoading}))
+export const removeCollectionAjax = params => handleRequest(() => postWithURLencoded('user/collection/cancel', {...params, ...notLoading}))
 // 收藏列表
-export const getCollectionListAjax = () => handleRequest(() => get('collection'))
+export const getCollectionListAjax = () => handleRequest(() => get('user/collection'))
 // 首页行情
 // export const getHomeMarketByAjax = params => handleRequest(() => get('market/homeMarket', params))
 // 通过邀请ID获取用户信息
