@@ -4,7 +4,7 @@
   description: 当前文件为 微信、qq、百度浏览器遮罩
 -->
 <template lang="pug">
-  .wx-mask(v-if="isWXBrowserStatus || isBaiDuBrowser")
+  .wx-mask(v-if="isWXBrowserStatus || (isBaiDuBrowser && isIOS)")
     .img
       .ios-box(v-if="isIOS")
         img(:src="IOSFilterSrc")
