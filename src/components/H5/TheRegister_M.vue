@@ -4,9 +4,7 @@
   description: 当前页面为 移动端注册 页面
 -->
 <template lang="pug">
-  .the-register-m(
-    :style="{height: `${windowHeight}px`}"
-  )
+  .the-register-m(:style="{height: `${windowHeight}px`}")
     el-collapse-transition
       // 国家选择列表
       .country-select(v-show="isShowCountries")
@@ -616,6 +614,7 @@ export default {
   @import '../../assets/CSS/index.styl'
   fontSize = .5rem
   .the-register-m
+    background-color #24293e
     top 0
     //transform translateX(-50%)
     height 100%
@@ -739,18 +738,16 @@ export default {
                   line-height 1.2rem
                   >a
                     color S_main_color
-              &.disabled
-                background-color #303757
-                >.el-form-item__content
-                  >.el-input
-                    >.el-input__inner
-                      background #303757
-                      color #636777
-                      box-shadow none
               >.el-form-item__content
                 height 1.2rem
                 >.el-input
                   height 1.2rem
+                  &.is-disabled
+                    >.el-input__inner
+                      border-radius .6rem
+                      background #303757
+                      color #636777
+                      box-shadow none
                   >.el-input__inner
                     border none
                     height 1.2rem
@@ -785,7 +782,6 @@ export default {
                   padding 0 .6rem
                   >.current-country
                     position relative
-                    display inline-block
                     min-width 2rem
                     height 1.2rem
                     line-height 1.2rem
