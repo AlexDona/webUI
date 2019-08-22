@@ -168,8 +168,8 @@
           span.error-tips {{loginErrorTips}}
         //    点击注册
         el-form-item.submit(
-        label=""
-        label-width="0px"
+          label=""
+          label-width="0px"
         )
           el-button.reg-button(
             type="primary"
@@ -257,12 +257,10 @@ export default {
         this.loginErrorTips = this.$t('M.login_tips2')
         // 请输入密码
         callback(new Error(' '))
-        this.isPasswordValidateSuccess = false
       } else if (!this.PASS_REG_X.test(value)) {
         this.loginErrorTips = this.$t('M.user_security_info1')
         // 密码请输入8-20位字母和数字组合
         callback(new Error(' '))
-        this.isPasswordValidateSuccess = false
       } else {
         this.$refs[this.formRef].validateField('checkPassword')
         this.loginErrorTips = ''
@@ -275,20 +273,16 @@ export default {
         // 请输入确认密码
         callback(new Error(' '))
         this.loginErrorTips = this.$t('M.comm_please_enter') + this.$t('M.forgetPassword_affirm_password')
-        this.isPasswordValidateSuccess = false
       } else if (value !== this.form.password) {
         this.loginErrorTips = this.$t('M.user_security_info2')
-        this.isPasswordValidateSuccess = false
         // 密码不一致，请重新确认
         callback(new Error(' '))
       } else if (!this.PASS_REG_X.test(value)) {
         this.loginErrorTips = this.$t('M.user_security_info1')
         // 密码请输入8-20位字母和数字组合
         callback(new Error(' '))
-        this.isPasswordValidateSuccess = false
       } else {
         this.loginErrorTips = ''
-        this.isPasswordValidateSuccess = true
         callback()
       }
     }
@@ -358,9 +352,7 @@ export default {
       // 我已阅读并同意
       agreementTips: 'M.forgetPassword_hint6',
       agreementText: 'M.forgetPassword_hint7',
-      hasInviteCode: false,
-      // 密码是否检验成功
-      isPasswordValidateSuccess: false
+      hasInviteCode: false
     }
   },
   async created () {
@@ -388,6 +380,17 @@ export default {
       'CHANGE_FOOTER_ACTIVE_NAME',
       'SET_COUNTRY_AREA_LIST'
     ]),
+    validateAllFormItem: _.debounce((self) => {
+      console.log(self)
+      self.$refs[self.formRef].validate(valid => {
+        if (valid) {
+          console.log('success')
+        } else {
+          console.log('fail')
+          return false
+        }
+      })
+    }, 500),
     formatValidateCode () {
       this.form.validateCode = formatNumber(this.form.validateCode, 0)
     },
@@ -448,6 +451,8 @@ export default {
               })
             }
           })
+        } else {
+          return false
         }
       })
     },
@@ -538,13 +543,10 @@ export default {
     isSuccessValidate () {
       const {phone, email, validateCode, password, checkPassword, agreement} = this.form
       let targetValidate = this.isPhoneRegist ? phone : email
-      return (targetValidate && validateCode && password && checkPassword && this.isPasswordValidateSuccess && agreement)
+      return (targetValidate && validateCode && password && checkPassword && agreement)
     }
   },
   watch: {
-    currentInviteId (New) {
-      console.log(New)
-    },
     $language_S_X () {
       this.loginErrorTips = ''
     },

@@ -55,10 +55,6 @@ export default {
   // props,
   data () {
     return {
-      // 登录方式： normal QRCode
-      loginType: 'normal',
-      qrCodeButtonBg: require('../../../assets/develop/er-code-icon.png'),
-      normalButtonBg: require('../../../assets/develop/pc-login-icon.png'),
       qrCodeString: `${domain}/downloadApp`
     }
   },
@@ -70,22 +66,11 @@ export default {
   // beforeRouteUpdate () {},
   // beforeDestroy () {},
   // destroyed () {},
-  methods: {
-    toggleLoginType () {
-      this.loginType = this.loginType == 'normal' ? 'QRCode' : 'normal'
-    }
-  },
+  // methods: {},
   // filters: {},
   computed: {
     windowHeight () {
       return window.innerHeight
-    },
-    // 提示信息
-    tipsText () {
-      return this.loginType == 'normal' ? 'M.login_with_password_tips' : 'M.login_with_ercode_tips'
-    },
-    targetTipsButtonBg () {
-      return this.loginType == 'normal' ? this.qrCodeButtonBg : this.normalButtonBg
     },
     loginWelcomeText () {
       return `${this.$t('M.login_welcome')}${this.$t('M.comm_login')}`
