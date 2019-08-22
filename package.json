@@ -28,10 +28,10 @@
     "vue-i18n": "^8.8.2",
     "vue-qr": "^2.1.0",
     "vue-router": "^3.0.1",
-    "vue-slider-component": "^2.8.3",
     "vuex": "^3.1.0"
   },
   "devDependencies": {
+    "vue-slider-component": "^2.8.3",
     "@commitlint/cli": "^7.2.1",
     "@commitlint/config-conventional": "^7.1.2",
     "abab": "^2.0.0",
