@@ -44,7 +44,6 @@ const FinanceCenter = () => import('@com/InvestmentFinance/FinanceCenter')
 const FinanceInvestmentRecord = () => import('@com/InvestmentFinance/FinanceInvestmentRecord')
 // 登录
 // const LoginAndRegister = () => import('@/pages/LoginUser')
-const InvitationRegister = () => import('@/pages/InvitationRegister')
 // TradeCenter
 const TradeCenter = () => import('@/pages/TradeCenter')
 const RankingListOfInvitation = () => import('@com/ActivityCenter/RankingListOfInvitation')
@@ -295,10 +294,7 @@ const routes = [
   // },
   ...mobile,
   ...user,
-  {
-    path: '/invitationRegister',
-    component: InvitationRegister
-  },
+
   {
     // 活动中心
     path: '/ActivityCenter',

@@ -20,7 +20,7 @@
         v-show="isShowCountries"
       )
         el-input.search-input(
-          v-model="keyword"
+          v-model.trim="keyword"
           clearable
           v-show="isShowCountries"
           :ref="searchInputRef"

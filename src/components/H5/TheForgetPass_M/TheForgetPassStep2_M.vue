@@ -4,7 +4,7 @@
   description: 当前组件为 忘记密码 步骤2 组件
 -->
 <template lang="pug">
-  .the-forget-pass-step2(
+  .the-forget-pass-step2-m(
     :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
   )
     .inner-box
@@ -12,11 +12,11 @@
       :model="form"
       :rules="forgetRule"
       :ref="formRef"
-      label-width="232px"
+      label-width="0"
       )
         // 登录账号
         el-form-item(
-          :label="$t('M.forget_pass_username_label')"
+          label=""
           prop="username"
         )
           el-input(
@@ -26,7 +26,7 @@
           )
         // 短信验证码
         el-form-item(
-          :label="$t('M.forgetPassword_verify_style2')"
+          label=""
           prop="phoneCode"
           v-if="$isBindPhone_X"
         )
@@ -46,7 +46,7 @@
               )
         //  邮箱验证码
         el-form-item(
-          :label="$t('M.forgetPassword_verify_style4')"
+          label=""
           prop="emailCode"
           v-if="$isBindEmail_X"
         )
@@ -66,7 +66,7 @@
               )
         //  googleCode
         el-form-item(
-          :label="$t('M.forgetPassword_verify_style5')"
+          label=""
           prop="googleCode"
           :autofocus="true"
           v-if="$isBindGoogle_X"
@@ -79,7 +79,7 @@
           )
         //  新密码
         el-form-item(
-          :label="$t('M.forgetPassword_new_login')"
+          label=""
           prop="password"
         )
           el-input(
@@ -92,7 +92,7 @@
           )
         //  确认新密码
         el-form-item(
-          :label="$t('M.forget_pass_check_pass_label')"
+          label=""
           prop="checkPassword"
         )
           el-input(
@@ -266,7 +266,8 @@ export default {
       return false
     }
   },
-  // mounted () {}
+  mounted () {
+  },
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},
@@ -335,7 +336,7 @@ export default {
       const data = await updatePasswordAJAX(params)
       if (!data) return
       this.resetForm()
-      this.$router.replace(`/${this.$routes_X.forgetPass}/${this.$routes_X.forgetPassStep3}/${this.username}`)
+      this.$router.replace(`/${this.$routes_X.forgetPass}/m/${this.$routes_X.forgetPassStep3}/${this.username}`)
     }, 500),
     // 重置表单
     resetForm () {
@@ -363,14 +364,14 @@ export default {
 
 <style scoped lang="stylus">
   @import '../../../assets/CSS/index.styl'
-  .the-forget-pass-step2
+  .the-forget-pass-step2-m
+    fontSize = .5rem
     /deep/
-    .el-form
-        .el-form-item__label
-          height 46px
-          line-height 46px
-        .el-form-item
-          margin-bottom 30px
+      .el-form
+        >.el-form-item
+          margin-bottom .5rem
+          height 1.2rem
+          line-height 1.2rem
           /* WebKit browsers */
           ::-webkit-input-placeholder
             color: #8B9197
@@ -381,52 +382,85 @@ export default {
           :-ms-input-placeholder
             color #8B9197
           .el-input__suffix
-            right 15px
-          .validate-code
-            .el-input__inner
-              border-radius 4px 0 0 4px
-              border-right none
-              height 46px
-              vertical-align middle
-            .el-input-group__append
-              height 45px
-              padding 0 10px
-              border-left none
-              border-radius 0 4px 4px 0
-              /* 发送验证码 */
-              .count-down
-                padding 0 15px
-                span
-                  font-size 12px !important
-          .el-form-item__content
-            width 410px
-          .el-input
-            &.is-disabled
-              .el-input__inner
-                border none
-          .el-input__inner
-            height 46px
-            font-size 12px
+            right .24rem
+          >.el-form-item__content
+            height 1.2rem
+            line-height 1.2rem
+            >.el-input
+              height 1.2rem
+              line-height 1.2rem
+              &.is-disabled
+                background-color #303757
+                border-radius .6rem
+                >.el-input__inner
+                  color #636777
+              >.el-input__inner
+                height 1.2rem
+                line-height 1.2rem
+                font-size .4rem
+                border-radius .6rem
+                padding 0 .6rem
+              >.el-input__suffix
+                >.el-input__suffix-inner
+                  >.el-input__clear
+                    font-size fontSize
+                    line-height 1.2rem
+                    width 1.2rem
+              &.validate-code
+                display flex
+                box-sizing border-box
+                padding-right 2px
+                >.el-input__inner
+                  border-radius .6rem 0 0 .6rem
+                  border-right none
+                  height 1.2rem
+                  vertical-align middle
+                >.el-input-group__append
+                  vertical-align middle
+                  height 1.2rem
+                  line-height 1.3rem
+                  min-width 4rem
+                  text-align right
+                  padding 0 .6rem
+                  border-left none
+                  border-radius 0 .6rem .6rem 0
+                  display flex
+                  justify-items center
+                  align-items center
+                  box-sizing border-box
+                  >.el-button
+                    box-sizing border-box
+                    flex 1
+                    margin 0
+                    padding 0
+                    text-align center
+                    >span
+                      font-size .4rem !important
+                    &.count-down
+                      text-align left
+                      padding-left .6rem
           &.error-tips-form
-            margin-bottom 10px
-            margin-top -30px
-            height 40px
+            margin-bottom .16rem
+            margin-top -.5rem
+            height 1rem
             .iconfont
-              font-size 16px
+              font-size .4rem
               vertical-align middle
+              margin-right .4rem
             .error-tips
-              margin-left 10px
-              font-size 12px
+              font-size .4rem
               vertical-align middle
+              color S_error_color
           &.submit
             .el-form-item__content
               margin 0 !important
               width 100%
               text-align center
             .el-button
-              width 235px
-              height 46px
-              border-radius 4px
+              width 100%
+              height 1.2rem
+              border-radius .6rem
+              font-size fontSize
               &.is-disabled
                 background #303757
                 color #636777
@@ -444,12 +478,12 @@ export default {
               border-right none
             .el-input-group__append
               background-color transparent
-              border 1px solid #3F4769
+              border .016rem solid #3F4769
               border-left none
               /* 发送验证码 */
               .count-down
                 color S_main_color
-                border-left 1px solid S_main_color
+                border-left .016rem solid S_main_color
                 &.is-disabled
                   span
                     color #fff
@@ -458,7 +492,7 @@ export default {
               .el-input__inner
                 border none
           .el-input__inner
-            border 1px solid #3F4769
+            border .016rem solid #3F4769
             background-color transparent
             color #fff
           &.error-tips-form
@@ -488,12 +522,12 @@ export default {
                 border-right none
               .el-input-group__append
                 background-color transparent
-                border 1px solid #ddd
+                border .016rem solid #ddd
                 border-left none
                 /* 发送验证码 */
                 .count-down
                   color S_main_color
-                  border-left 1px solid #aaa
+                  border-left .016rem solid #aaa
                   &.is-disabled
                     span
                       color #333
@@ -502,7 +536,7 @@ export default {
                 .el-input__inner
                   border none
             .el-input__inner
-              border 1px solid #ddd
+              border .016rem solid #ddd
               background-color transparent
               color #333
             &.error-tips-form

@@ -99,7 +99,7 @@ export default {
             }
           },
           axisLabel: {
-            margin: 2,
+            margin: 10,
             formatter: newNum => {
               switch (this.$language_S_X) {
                 case 'zh_CN':
