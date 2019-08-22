@@ -2321,7 +2321,7 @@ export default {
             tr {
               &:hover {
                 > td {
-                  background-color: #1d2331;
+                  background-color: $mainContentNightBgColor;
                 }
               }
             }
