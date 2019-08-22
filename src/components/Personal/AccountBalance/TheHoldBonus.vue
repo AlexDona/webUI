@@ -22,7 +22,7 @@
       .content
         p.label
           span.label {{$t(condition.label)}}：
-          span.value {{ifUserHoldSuccessLabel}}
+          span.value(:class="{active: ifUserHoldSuccess}") {{ifUserHoldSuccessLabel}}
         button.description(@click="toggleShowCondition(true)") {{$t(detailLabel)}}
     // 分红记录
     .hold-item.record
@@ -49,6 +49,7 @@
       width="700px"
       :title="$t(condition.label)"
       :visible.sync="isShowConditionDialog"
+      :close-on-click-modal="false"
     )
       .top
         // 参与条件
@@ -75,7 +76,10 @@
                   .title {{$t('M.hold_bonus_example_label')}}：
                   // 若分红开始时间为2019年7月1日，则首次快照持仓为2019/7/1 00:00:00 即此刻可用数量必须大于或等于1000FUC!
                   .c-content {{$t('M.hold_bonus_example_1').format([minNumber, englishCoinName])}}
-                Iconfont.iconfont(slot="reference" icon-name="icon-wenti")
+                Iconfont.iconfont(
+                  slot="reference"
+                  icon-name="icon-wenhao1"
+                )
           .right
             span.status(:class="{'done': isFirstHave}") {{isFirstHaveDoneLabel}}
         .condition
@@ -98,7 +102,7 @@
                   .c-content {{$t('M.hold_bonus_example_2').format([minNumber, englishCoinName])}}
                 Iconfont.iconfont(
                   slot="reference"
-                  icon-name="icon-wenti"
+                  icon-name="icon-wenhao1"
                   )
           .right
             span.status(:class="{'done': ifEveryHave}") {{ifEveryHaveDoneLabel}}
@@ -161,7 +165,8 @@ export default {
           {
             type: 'inside',
             filterMode: 'filter',
-            minSpan: 12
+            minSpan: 12,
+            startValue: 0
           },
           {
             type: 'inside',
@@ -215,6 +220,17 @@ export default {
             show: true,
             lineStyle: {
               color: 'rgba(59,73,103,.2)'
+            }
+          },
+          axisLabel: {
+            margin: 10,
+            formatter: newNum => {
+              if (newNum > 1000000) {
+                newNum = `${this.$keep2Num(newNum / 1000000)}M`
+              } else if (newNum > 1000) {
+                newNum = `${this.$keep2Num(newNum / 1000)}K`
+              }
+              return newNum
             }
           }
         },
@@ -298,6 +314,9 @@ export default {
         this.chartOptions.yAxis.axisLine.lineStyle.color = '#3B4967'
         this.chartOptions.tooltip.extraCssText = 'box-shadow: 0px 2px 4px 0px rgba(29,37,55,1);'
       }
+      // 默认显示 最新7条数据
+      const xAxisLength = this.chartOptions.xAxis.data.length
+      this.chartOptions.dataZoom[0].startValue = xAxisLength >= 7 ? xAxisLength - 7 : 0
     },
     // 重新绘制图标
     resetChart () {
@@ -416,12 +435,10 @@ export default {
       immediate: true
     },
     tendData (New) {
-      // const [xs, ys] = New
-      // this.chartOptions.xAxis.data = xs
-      // this.chartOptions.series[0].data = ys
+      const [xs, ys] = New
+      this.chartOptions.xAxis.data = xs
+      this.chartOptions.series[0].data = ys
 
-      this.chartOptions.xAxis.data = [1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405]
-      this.chartOptions.series[0].data = [1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 10, 1, 20, 30, 405, 1, 2, 3, 4, 5, 6, 1000, 1, 20, 30, 405]
       if (!this.isShowConditionDialog) return
       this.resetChart()
     }
@@ -479,6 +496,9 @@ export default {
         > .label
           font-size 12px
           white-space nowrap
+          >.value
+            &.active
+              color S_main_color !important
       &:before
         position absolute
         top 50%
@@ -545,17 +565,7 @@ export default {
                 >.title
                   font-size 12px
                   padding 0
-                  position relative
                   color S_main_color
-                  &:after
-                    position absolute
-                    content ''
-                    width 2px
-                    height 12px
-                    background-color S_main_color
-                    top 50%
-                    transform translateY(-50%)
-                    left -5px
                 #hold_chart
                   height 280px
                   width 650px
@@ -594,8 +604,8 @@ export default {
                         color #fff
                     >.right
                       >.status
-                        color #66718f
-                        border 1px solid #66718f
+                        color S_error_color
+                        border 1px solid S_error_color
                         &.done
                           border-color S_main_color
                           color S_main_color
