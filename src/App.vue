@@ -27,7 +27,7 @@ import {getStore} from './utils'
 import NoticeHome from './components/Home/NoticeHome'
 import HeaderCommon from './components/Common/HeaderCommonForPC'
 import HeaderCommonForMobile from './components/Common/HeaderForMobile'
-import FooterCommon from './components/Common/FooterCommon'
+import FooterCommon from './components/Common/Footer/FooterCommon'
 import {
   mapMutations,
   mapState
