@@ -31,6 +31,7 @@
       :isChineseLanguage = "isChineseLanguage"
       :isWXBrowserStatus="isWXBrowserStatus"
       :isBaiDuBrowser="isBaiDuBrowser"
+      :isWeiBoBrowser="isWeiBoBrowser"
     )
 </template>
 <script>
@@ -179,6 +180,10 @@ export default {
     isBaiDuBrowser () {
       let u = navigator.userAgent
       return u.toLowerCase().indexOf('baidu') > -1
+    },
+    isWeiBoBrowser () {
+      let u = navigator.userAgent.toLowerCase()
+      return u.match(/WeiBo/i) == 'weibo'
     },
     isChineseLanguage () {
       return this.language === 'zh_CN' ||
