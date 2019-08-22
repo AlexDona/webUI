@@ -349,7 +349,7 @@ export default {
     },
     // 持仓可用
     usableTotal () {
-      return _.get(this.holdInfos, 'coinTotal') - 0
+      return _.get(this.holdInfos, 'coinTotal')
     },
     englishCoinName () {
       return _.get(this.holdInfos, 'coinName')

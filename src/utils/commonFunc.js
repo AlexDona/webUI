@@ -44,6 +44,7 @@ import {
   CHINESE_REG,
   EMAILADDRESS_REG
 } from './regExp'
+import {routesVariable} from '../router/routesVariable'
 
 const store = storeCreator()
 // 请求接口后正确或者错误的提示提示信息：
@@ -75,7 +76,7 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
       switch (meta.code) {
         case 401:
           store.commit('USER_LOGOUT')
-          that.$router.push({path: '/login'})
+          that.$router.push({path: `/${routesVariable.login}`})
           break
         case 500:
           that.$router.push({path: '/500'})

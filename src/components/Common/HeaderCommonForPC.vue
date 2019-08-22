@@ -323,7 +323,7 @@ export default{
       if (this.checkIsInnerLink(link)) {
         if (!this.$isLogin_S_X && link == OTCBusinessApply) this.$SET_ACTIVE_LINK_NAME_M_X(-1)
         if (!this.$isLogin_S_X && isNeedLogin.some(linkItem => link.startsWith(linkItem))) {
-          this.$goToPage('/login')
+          this.$goToPage(`/${this.$routes_X.login}`)
           this.$SET_ACTIVE_LINK_NAME_M_X(-1)
           this.CHANGE_ROUTER_PATH(link)
           return

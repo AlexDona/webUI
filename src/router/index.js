@@ -32,10 +32,16 @@ const routerCreator = () => {
       if (store.state.user.isLogin) {
         next()
       } else {
-        next({path: '/login', query: {Rurl: to.fullPath}})` `
+        next({path: `/${routesVariable.login}`, query: {Rurl: to.fullPath}})` `
       }
     } else {
       next()
+    }
+    // 登录判断限制
+    if (store.state.user.isMobile) {
+      if (to.path === `/${routesVariable.login}`) {
+        next({path: `/${routesVariable.login}/m`})
+      }
     }
     next()
   })
