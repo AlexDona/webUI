@@ -27,11 +27,9 @@ export default {
   },
   // created () {},
   // mounted () {},
-  // activated () {},
   // updated () {},
   // beforeRouteUpdate () {},
-  // methods: {
-  // },
+  // methods: {},
   // filter: {},
   computed: {
     IOSFilterSrc () {

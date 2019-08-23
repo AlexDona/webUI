@@ -249,11 +249,10 @@ export default {
     return {
     }
   },
-  created () {},
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // created () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_LEGAL_TENDER_REFLASH_STATUS',

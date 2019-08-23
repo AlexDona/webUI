@@ -205,10 +205,9 @@ export default {
     await getAccountPaymentTerm(this)
     this.paymentMethodInformation()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',

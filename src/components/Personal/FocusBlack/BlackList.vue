@@ -86,7 +86,7 @@ export default {
     this.getBlackLists()
   },
   // mounted () {},
-  // activated () {},
+  // ,
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

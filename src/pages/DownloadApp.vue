@@ -95,7 +95,6 @@ export default {
       lastTouchEnd = now
     }, false)
   },
-  // activated () {},
   // update () {},
   beforeDestroy () {
     clearTimeout(this.timer)

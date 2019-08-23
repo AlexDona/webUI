@@ -58,7 +58,6 @@ export default {
   // created () {
   // },
   // mounted () {},
-  // activated () {},
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},

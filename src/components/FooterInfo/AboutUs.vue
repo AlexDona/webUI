@@ -40,10 +40,9 @@ export default {
   created () {
     this.getAboutUsData()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     async getAboutUsData () {
       const params = {

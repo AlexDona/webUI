@@ -6,20 +6,10 @@
     v-loading.fullscreen.lock="$loading_S_X"
     element-loading-background="rgba(0, 0, 0, 0.8)"
   >
-    <NoticeHome
-      v-if="isNeedNotice"
-    />
-    <keep-alive>
-      <HeaderCommon
-        v-if="isNeedHeader"
-      />
-    </keep-alive>
-      <router-view />
-    <keep-alive>
-      <FooterCommon
-        v-if="isNeedFooter"
-      />
-    </keep-alive>
+    <NoticeHome v-if="isNeedNotice" />
+    <HeaderCommon v-if="isNeedHeader"/>
+    <router-view />
+    <FooterCommon v-if="isNeedFooter" />
   </div>
 </template>
 <script>
@@ -50,11 +40,6 @@ export default {
     }
   },
   async created () {
-    // require('../static/css/common.css')
-    // require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
-    // require('../static/css/theme/night/Common/HeaderCommonNight.css')
-    // console.log(encrypt('123456'))
-    // await this.getNavigations()
     // 取主题
     const theme = getStore('theme') || 'night'
     this.CHANGE_THEME(theme)
@@ -64,7 +49,6 @@ export default {
     this.CHANGE_CONVERT_CURRENCY(convertCurrency)
   },
   // mounted () {},
-  // activated () {},
   // updated () {},
   methods: {
     ...mapMutations([

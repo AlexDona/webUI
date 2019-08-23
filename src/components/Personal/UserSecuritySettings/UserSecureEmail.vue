@@ -144,11 +144,10 @@ export default {
       userSecureEmailSuccessJumpTimer: null // 安全邮箱设置成功自动跳转定时器
     }
   },
-  created () {},
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // created () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',

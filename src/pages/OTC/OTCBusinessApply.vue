@@ -264,7 +264,6 @@ export default {
     this.determineUser()
   },
   // mounted () {},
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

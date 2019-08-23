@@ -122,10 +122,9 @@ export default {
     this.getRankingList()
     this.getRulesOfInvitation(this.language)
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   destroyed () {
     clearInterval(this.timer)
   },

@@ -198,13 +198,9 @@ export default {
       this.getTradeMarketData()
     }
   },
-  mounted () {
-  },
-  activated () {},
-  update () {
-  },
-  beforeRouteUpdate () {
-  },
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_COLLECT_LIST',

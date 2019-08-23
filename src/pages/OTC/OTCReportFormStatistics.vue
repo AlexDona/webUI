@@ -589,7 +589,6 @@ export default {
   mounted () {
     this.setDateWidth(this.language)
   },
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

@@ -215,7 +215,7 @@ export default {
     this.oldFrequency = this.activeFrequency
   },
   /* mounted () {},
-  activated () {},
+  ,
   update () {},
   beforeRouteUpdate () {}, */
   methods: {

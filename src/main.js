@@ -101,7 +101,6 @@ Vue.component(Message)
 
 const store = storeCreator()
 const router = routerCreator()
-// console.log(lang)
 // 多语言
 const i18n = new VueI18n({
   locale: getStore('language') || store.state.common.defaultLanguage, // 语言标识

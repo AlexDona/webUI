@@ -41,7 +41,6 @@ export default {
     this.disabled = false
   },
   // mounted () {},
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

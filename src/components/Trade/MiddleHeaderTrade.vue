@@ -64,7 +64,6 @@ export default {
   // },
   // created () {},
   // mounted () {},
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

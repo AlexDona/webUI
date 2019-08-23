@@ -73,8 +73,6 @@ export default {
   mounted () {
     // this.UPDATE_KLINE_AND_DEPTH_SHOW_STATUS_M('kline')
   },
-  // activated () {
-  // },
   // update () {
   // },
   // beforeRouteUpdate () {

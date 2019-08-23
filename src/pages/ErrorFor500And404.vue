@@ -63,7 +63,6 @@ export default {
     }
   },
   /* mounted () {},
-  activated () {
   },
   update () {
   },
@@ -75,7 +74,7 @@ export default {
     }
 
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       'routerTo': state => state.common.routerTo
@@ -84,7 +83,7 @@ export default {
       return window.innerHeight
     }
   },
-  watch: {},
+  // watch: {},
   destroyed () {
     window.removeEventListener('beforeunload', e => this.beforeunloadFn(e))
   }

@@ -394,12 +394,10 @@ export default {
     }
     this.getInverData()
   },
-  mounted () {
-    console.log(domain)
-  },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {
+  // },
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     // 1.0 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {

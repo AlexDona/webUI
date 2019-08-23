@@ -370,10 +370,9 @@ export default {
   mounted () {
     if (!this.$isVIPEnable_S_X) this.$goToPage(`/${this.$routes_X.home}`)
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {
-  },
+  // update () {},
+  // beforeRouteUpdate () {
+  // },
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION'
