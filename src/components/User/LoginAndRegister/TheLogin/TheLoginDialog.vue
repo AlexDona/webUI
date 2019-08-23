@@ -464,10 +464,6 @@ export default {
                   box-sizing border-box
                   padding 0 .48rem
                   font-size .4rem
-                  &:focus
-                    border-color S_main_color !important
-                    & ~.el-input-group__append
-                      border-color S_main_color !important
                 .el-input__suffix
                   right .22rem
                   >.el-input__suffix-inner
@@ -477,9 +473,9 @@ export default {
                       width .8rem
                 .el-input-group__append
                   border-left none
-                  min-width 3rem
+                  min-width 3.5rem
                   .count-down
-                    padding 0 .3rem
+                    padding 0 .5rem
                     span
                       font-size fontSize !important
                 &.submit-form

@@ -411,10 +411,10 @@ export default {
           // iframe$('.add7').click()
           // console.log()
           this.klineInitCount++
-          this.widget.chart().createStudy('Moving Average', false, true, [5, 'close', 0], null, {'Plot.color': '#7b53a7'})
-          this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})
-          this.widget.chart().createStudy('Moving Average', false, true, [30, 'close', 0], null, {'Plot.color': '#55ae63'})
-          this.widget.chart().createStudy('Moving Average', false, true, [60, 'close', 0], null, {'Plot.color': '#89226e'})
+          this.widget.chart().createStudy('Moving Average', false, false, [5, 'close', 0], null, {'Plot.color': '#7b53a7'})
+          this.widget.chart().createStudy('Moving Average', false, false, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})
+          this.widget.chart().createStudy('Moving Average', false, false, [30, 'close', 0], null, {'Plot.color': '#55ae63'})
+          this.widget.chart().createStudy('Moving Average', false, false, [60, 'close', 0], null, {'Plot.color': '#89226e'})
 
           // K线图指针移动回调
           this.widget.chart().crossHairMoved(_.throttle(async (e) => {
