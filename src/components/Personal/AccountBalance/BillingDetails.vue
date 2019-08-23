@@ -415,7 +415,7 @@
               header-align="left"
             >
               <template slot-scope = "s">
-                <span class="font-size12">{{ s.row.balanceStartDate }} ~ {{ s.row.balanceEndDate }}</span>
+                <span class="font-size12">{{ s.row.balanceStartDate.split(' ')[0] }} ~ {{ s.row.balanceEndDate.split(' ')[0] }}</span>
               </template>
             </el-table-column>
             <!--分红数量-->
