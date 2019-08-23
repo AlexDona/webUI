@@ -584,6 +584,11 @@ export default {
     const activeName = this.$getStore('billingDetailsActiveName')
     if (activeName == this.names.holdBonusRecord) {
       this.activeName = activeName
+      this.startTime = [
+        new Date(this.year, this.month, this.date, 0, 0, 0),
+        new Date()
+      ]
+      this.getHoldBonusRecord()
     } else {
       await this.inquireCurrencyList(activeName || this.names.currentEntrust)
     }
