@@ -1,3 +1,8 @@
+<!--
+  author: zhaoxinlei
+  update: 20190823
+  description: 当前组件为公共底部组件
+-->
 <template lang="pug">
   .footer-box.common
     .inner-box
@@ -109,12 +114,14 @@
           :title="$t('M.common_foot_cooperation_label')"
           :links="cooperations"
           :isShowLogo="isShowCooperationLogo"
+          v-if="cooperations.length"
         )
         // 友情链接
         LinksItem(
           :title="$t('M.common_friendly_link')"
           :links="friendlyLinks"
           :isShowLogo="isShowFriendlyLinksLogo"
+          v-if="friendlyLinks.length"
         )
       .copyright
         p {{configInfo['copyright']}}
@@ -176,7 +183,6 @@ export default {
     }
   },
   async created () {
-    // console.log(this.isNeedApp)
     const data = await this.GET_CURRENCY_URL_ACTION({
       key: 'COIN_APPLY'
     })
@@ -234,11 +240,9 @@ export default {
   watch: {
     footerInfo: {
       handler (newVal) {
-        console.log(newVal)
         if (newVal) {
           this.footerInfo1 = newVal.footerInfo1
           this.footerInfo2 = newVal.footerInfo2
-          // console.log(this.footerInfo2)
           this.shareList[0].ercodeSrc = getNestedData(this.footerInfo1, 'twitter')
           this.shareList[1].ercodeSrc = getNestedData(this.footerInfo1, 'facebook')
           this.weixinImage = getNestedData(this.footerInfo1, 'weixinImage')
