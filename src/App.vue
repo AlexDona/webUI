@@ -1,16 +1,18 @@
-<template>
-  <div
-    id="app"
-    class="body-container"
+<!--
+  author: zhaoxinlei
+  update: 20190823
+-->
+<template lang="pug">
+  #app.body-container(
     :class="{'is-mobile': isMobile}"
     v-loading.fullscreen.lock="$loading_S_X"
     element-loading-background="rgba(0, 0, 0, 0.8)"
-  >
-    <NoticeHome v-if="isNeedNotice" />
-    <HeaderCommon v-if="isNeedHeader"/>
-    <router-view />
-    <FooterCommon v-if="isNeedFooter" />
-  </div>
+  )
+    NoticeHome( v-if="isNeedNotice")
+    HeaderCommon(v-if="isNeedHeader")
+    .inner-box
+      router-view
+    FooterCommon(v-if="isNeedFooter")
 </template>
 <script>
 import {getStore} from './utils'
@@ -209,6 +211,10 @@ export default {
 
     &.is-mobile {
       min-height: 2000px;
+    }
+
+    > .inner-box {
+      margin-top: 50px;
     }
   }
 </style>

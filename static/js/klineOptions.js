@@ -29,7 +29,7 @@ export const overrides = {
   // 'paneProperties.legendProperties.showLegend': false // 默认收起
 }
 export const disabledFeatures = [
-  'use_localstorage_for_settings',
+  // 'use_localstorage_for_settings',
   'header_symbol_search', // 禁止头部搜索
   'header_interval_dialog_button',
   'show_interval_dialog_on_key_press',

@@ -544,7 +544,6 @@ export default {
 
   .super-nodes-box {
     width: 100%;
-    padding-top: 50px;
     color: #81868f;
     background-color: #f5f9fa;
 

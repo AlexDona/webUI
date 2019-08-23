@@ -195,7 +195,7 @@ export default {
       left -20px
       display inline-block
       height 100%
-      padding 0 2%
+      padding 0 20px
       text-align center
       vertical-align top
       white-space nowrap
@@ -251,7 +251,7 @@ export default {
         height 50px
 
         > .img
-          width 100%
+          width 80%
           vertical-align middle
     > .more-btn
       position relative

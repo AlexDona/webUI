@@ -526,7 +526,6 @@ ul {
 
 .container {
   min-width: 1366px;
-  padding-top: 50px;
   font-family: Bahnschrift-Regular;
   background: #272b41;
 

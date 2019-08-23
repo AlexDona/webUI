@@ -95,7 +95,7 @@ switch (process.env.NODE_ENV) {
     // 测试环境 （外网）
     // targetConfig = {...prodConfig, xDomain: 'new.bzu.com'}
     // 生产环境
-    // targetConfig = {...prodConfig, xDomain: 'fubt.co'}
+    // targetConfig = {...prodConfig, xDomain: 'fubt.com'}
     // targetConfig = {...newProdConfig, xDomain: 'coin67.cn'}
     break
   // 210开发环境

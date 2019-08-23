@@ -15,7 +15,7 @@
       <div
         class="top"
         :style="{
-          padding: $route.path === `/${$routes_X.home}` ? topPadding : '0 30px',
+          padding: $route.path === `/${$routes_X.home}` ? topPadding : '0 10px',
           backgroundColor: $route.path === `/${$routes_X.home}` ? topBackgroundColor : $mainNightBgColor
         }"
       >
@@ -163,7 +163,7 @@ export default{
       // 活动中心子导航显示状态
       // activityCenterSubNavStatus: false,
       styleTop: 30,
-      topPadding: '0 30px',
+      topPadding: '0 10px',
       topBackgroundColor: 'rgba(0,0,0,0.7)',
       isPayPasswordLocked: false,
       isNoticeReady: false,
@@ -277,7 +277,7 @@ export default{
         this.topBackgroundColor = this.$mainNightBgColor
       } else {
         this.styleTop = 30
-        this.topPadding = '0 30px'
+        this.topPadding = '0 10px'
         this.topBackgroundColor = 'rgba(0,0,0,.5)'
       }
     },
@@ -448,8 +448,8 @@ export default{
 
     > .top {
       display: flex;
-      height: 60px;
-      line-height: 60px;
+      height: 50px;
+      line-height: 50px;
       transition: all .5s;
 
       > .left {

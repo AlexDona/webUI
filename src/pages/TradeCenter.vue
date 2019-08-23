@@ -109,7 +109,6 @@ export default {
 <style lang="stylus">
   @import '../assets/CSS/index.styl'
   .trade-box
-    margin-top 60px
     min-width 1366px
     >.inner-box
       padding 10px

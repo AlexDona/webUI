@@ -125,6 +125,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   .home-box {
     min-width: 1130px;
+    margin-top: -50px;
     overflow: hidden;
 
     .margin-1 {
