@@ -835,8 +835,8 @@ export default {
                       vertical-align middle
                       .el-checkbox__inner
                         background-color transparent
-                        border-color S_main_color
-                        border-radius .06rem
+                        border-color #8B9197
+                        border-radius .03rem
                         &:after
                           top 3000px
                           width 0
