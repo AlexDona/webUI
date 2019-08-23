@@ -153,9 +153,8 @@ export default {
   mounted () {
     this.getServiceProtocolData()
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_PROTOCOL_DATA',

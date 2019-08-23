@@ -303,14 +303,13 @@ export default {
       type: String
     }
   },
-  data () {
-    return {}
-  },
-  created () {},
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // data () {
+  //   return {}
+  // },
+  // created () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_LEGAL_PAGE',

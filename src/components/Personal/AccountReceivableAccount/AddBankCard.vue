@@ -187,10 +187,9 @@ export default {
     this.paymentMethodInformation()
     // console.log(this.$userType_X)
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',

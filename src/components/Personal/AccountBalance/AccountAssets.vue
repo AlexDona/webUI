@@ -678,9 +678,8 @@ export default {
   async mounted () {
     await this.getAssetCurrenciesList()
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION',

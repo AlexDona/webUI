@@ -394,10 +394,9 @@ export default {
     this.getSecurityCenter()
     this.refreshCode()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',

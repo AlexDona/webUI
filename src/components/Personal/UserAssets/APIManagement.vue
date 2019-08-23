@@ -510,10 +510,9 @@ export default {
   created () {
     this.getMultipleUserAPIInfo()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'

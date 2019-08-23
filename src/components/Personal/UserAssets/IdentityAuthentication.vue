@@ -657,14 +657,12 @@ export default {
     this.authenticationIsStatus()
     await this.getRealNameInformation()
   },
-  mounted () {
-  },
-  activated () {
-  },
-  update () {
-  },
-  beforeRouteUpdate () {
-  },
+  // mounted () {
+  // },
+  // update () {
+  // },
+  // beforeRouteUpdate () {
+  // },
   methods: {
     ...mapActions([
       'GET_COUNTRY_LIST_ACTION',

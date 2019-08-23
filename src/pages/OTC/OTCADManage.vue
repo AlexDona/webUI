@@ -447,7 +447,6 @@ export default {
     this.getOTCADManageList()
   },
   // mounted () {},
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

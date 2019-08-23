@@ -591,7 +591,7 @@ export default {
     this.getOTCCoinInfo()
   },
   // mounted () {},
-  // activated () {},
+  // ,
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

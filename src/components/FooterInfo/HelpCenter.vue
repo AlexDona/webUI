@@ -46,17 +46,12 @@ export default {
       showDocUrl: 'https://doc.bzu.com/web/#/'
     }
   },
-  created () {
-  },
-  mounted () {
-
-  },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
-  methods: {
-  },
-  filter: {},
+  // created () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
+  // methods: {},
+  // filter: {},
   computed: {
     ...mapGetters({
       'isNeedApp': 'isNeedApp',
@@ -72,9 +67,8 @@ export default {
     chSrc () {
       return `${this.showDocUrl}1?page_id=1`
     }
-  },
-  watch: {
   }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

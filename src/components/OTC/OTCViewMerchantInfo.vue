@@ -420,7 +420,7 @@ export default {
     this.getURLParamsData()
   },
   // mounted () {},
-  // activated () {},
+  // ,
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

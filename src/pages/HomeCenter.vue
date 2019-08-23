@@ -2,9 +2,7 @@
   <!--首页盒子-->
   <div class="home-box home">
     <!--banner-->
-    <keep-alive>
-      <BannerHome/>
-    </keep-alive>
+    <BannerHome/>
     <!--交易区-->
     <MarketListHome class="margin-1"/>
   </div>

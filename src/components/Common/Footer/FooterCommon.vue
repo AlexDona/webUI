@@ -114,14 +114,14 @@
           :title="$t('M.common_foot_cooperation_label')"
           :links="cooperations"
           :isShowLogo="isShowCooperationLogo"
-          v-if="cooperations.length"
+          v-if="cooperationsLength"
         )
         // 友情链接
         LinksItem(
           :title="$t('M.common_friendly_link')"
           :links="friendlyLinks"
           :isShowLogo="isShowFriendlyLinksLogo"
-          v-if="friendlyLinks.length"
+          v-if="friendlyLinksLength"
         )
       .copyright
         p {{configInfo['copyright']}}
@@ -190,7 +190,6 @@ export default {
     this.currencyApplicationURL = data
   },
   // mounted () {},
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
@@ -230,11 +229,17 @@ export default {
     cooperations () {
       return _.get(this.footerInfo, 'footerInfo2.blogrollList.cooperation')
     },
+    cooperationsLength () {
+      return _.get(this.cooperations, 'length')
+    },
     isShowFriendlyLinksLogo () {
       return _.get(this.footerInfo, 'footerInfo2.blogrollFlag')
     },
     friendlyLinks () {
       return _.get(this.footerInfo, 'footerInfo2.blogrollList.blogroll')
+    },
+    friendlyLinksLength () {
+      return _.get(this.friendlyLinks, 'length')
     }
   },
   watch: {

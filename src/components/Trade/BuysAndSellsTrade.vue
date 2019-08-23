@@ -124,11 +124,8 @@ export default {
       this.isShowBits = false
     })
   },
-  // activated () {},
-  // update () {
-  // },
-  // beforeRouteUpdate () {
-  // },
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_ACTIVE_PRICE_ITEM',

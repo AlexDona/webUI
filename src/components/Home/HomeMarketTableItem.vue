@@ -322,12 +322,9 @@ export default {
     this.more = this.item.more
     console.log(this.item, this.more)
   },
-  mounted () {
-  },
-  activated () {},
-  updated () {
-  },
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // updated () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_JUMP_STATUS',
