@@ -4,7 +4,7 @@
   description: 当前文件为 微信、qq、百度浏览器遮罩
 -->
 <template lang="pug">
-  .wx-mask(v-if="isWXBrowserStatus || (isBaiDuBrowser && isIOS)")
+  .wx-mask(v-if="isWXBrowserStatus || (isBaiDuBrowser && isIOS) || isWeiBoBrowser")
     .img
       .ios-box(v-if="isIOS")
         img(:src="IOSFilterSrc")
@@ -14,7 +14,7 @@
 <script>
 export default {
   // components: {},
-  props: ['isAndroid', 'isIOS', 'isWXBrowserStatus', 'isBaiDuBrowser', 'isChineseLanguage'],
+  props: ['isAndroid', 'isIOS', 'isWXBrowserStatus', 'isBaiDuBrowser', 'isChineseLanguage', 'isWeiBoBrowser'],
   data () {
     return {
       IOS_ZH_CNSRC: require('../../assets/develop/zh_CN_weiChat_ios.png'),
@@ -27,11 +27,9 @@ export default {
   },
   // created () {},
   // mounted () {},
-  // activated () {},
   // updated () {},
   // beforeRouteUpdate () {},
-  // methods: {
-  // },
+  // methods: {},
   // filter: {},
   computed: {
     IOSFilterSrc () {

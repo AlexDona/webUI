@@ -649,8 +649,8 @@ export default {
                         color #333
                     >.right
                       >.status
-                        color #7D90AC
-                        border 1px solid #7D90AC
+                        color S_error_color
+                        border 1px solid S_error_color
                         &.done
                           border-color S_main_color
                           color S_main_color

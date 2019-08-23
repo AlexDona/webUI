@@ -4,9 +4,7 @@
   description: 当前组件为 忘记密码 步骤2 组件
 -->
 <template lang="pug">
-  .the-forget-pass-step2-m(
-    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
-  )
+  .the-forget-pass-step2-m.night
     .inner-box
       el-form(
       :model="form"

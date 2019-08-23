@@ -4,7 +4,7 @@
   description: 当前页面为 移动端登录 页面
 -->
 <template lang="pug">
-  .the-login-m
+  .the-login-m(:style="{height: `${windowHeight}px`}")
     // 国家选择列表
     MobileHeader(:isShowLogo="false")
     .inner-box
@@ -356,6 +356,9 @@ export default {
     isSubmitButtonDisabled () {
       const {username, password} = this.form
       return !username || !password
+    },
+    windowHeight () {
+      return window.innerHeight
     }
   },
   watch: {
@@ -385,6 +388,7 @@ export default {
   @import '../../assets/CSS/index.styl'
   .the-login-m
     fontSize = .5rem
+    background-color #24293e
     height 100%
     overflow hidden
     >.inner-box
@@ -463,7 +467,7 @@ export default {
                       vertical-align middle
                       .el-checkbox__inner
                         background-color transparent
-                        border-color S_main_color
+                        border-color #8B9197
                         border-radius .03rem
                         vertical-align middle
                         width .4rem

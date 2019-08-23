@@ -23,22 +23,21 @@ export default {
   components: {
   },
   props: ['content'],
-  data () {
-    return {}
-  },
-  created () {},
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
-  methods: {},
-  filter: {},
+  // data () {
+  //   return {}
+  // },
+  // created () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
+  // methods: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme
     })
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

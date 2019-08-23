@@ -1031,10 +1031,9 @@ export default {
     // 2刚进页面调用接口刷新列表
     this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_LEGAL_TENDER_REFLASH_STATUS',

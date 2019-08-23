@@ -355,7 +355,6 @@ export default {
     this.getWithdrawalAddressList()
   },
   // mounted () {},
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

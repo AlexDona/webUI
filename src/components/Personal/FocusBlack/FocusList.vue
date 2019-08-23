@@ -102,7 +102,7 @@ export default {
     this.getFocusLists()
   },
   // mounted () {},
-  // activated () {},
+  // ,
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

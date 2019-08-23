@@ -6,7 +6,7 @@
 <template lang="pug">
   .drag-box.forbid-copy(
     :style="{width:`${propMaxWidth}px`}"
-    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X, mobile: isMobile }"
+    :class="{'day':$isDayTheme_G_X && !isMobile,'night':!$isDayTheme_G_X || isMobile, mobile: isMobile }"
   )
     .drag(
       :style="{height:`${height}px`,'line-height':`${height}px`}"

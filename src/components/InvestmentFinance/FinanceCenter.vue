@@ -815,7 +815,6 @@ export default {
     this.getFinancialManagementList()
   },
   // mounted () {},
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

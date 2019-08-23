@@ -57,10 +57,9 @@ export default {
     ]),
     ...mapMutations([])
   },
-  activated () {},
-  updated () {},
-  beforeRouteUpdate () {},
-  beforeDestroy () {},
+  // updated () {},
+  // beforeRouteUpdate () {},
+  // beforeDestroy () {},
   destroyed () {
     clearInterval(this.timer)
   },

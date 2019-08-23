@@ -1,3 +1,8 @@
+<!--
+  author: zhaoxinlei
+  update: 20190823
+  description: 当前组件为公共底部组件
+-->
 <template lang="pug">
   .footer-box.common
     .inner-box
@@ -104,24 +109,20 @@
                   span.er-code(v-show="isShowQQ")
                     img(:src="qqImage")
       .bottom
+        // 战略合作
+        LinksItem(
+          :title="$t('M.common_foot_cooperation_label')"
+          :links="cooperations"
+          :isShowLogo="isShowCooperationLogo"
+          v-if="cooperationsLength"
+        )
         // 友情链接
-        span.title {{$t('M.common_friendly_link')}}
-        ul.links-list
-          li.links-item(
-            v-for="(item,index) in footerInfo2.blogrollList"
-            :key="index"
-            :style="{display: ((isShowLinkImage && item.logo) || (!isShowLinkImage && item.name)) ? 'inline-block' : 'none'}"
-          )
-            a.link-item(
-              :href="item.link"
-              target="_blank"
-            )
-              img(
-                :src="http2https(item.logo)"
-                target="_blank"
-                v-show="isShowLinkImage && item.logo"
-                )
-              span.links-text(v-show="!isShowLinkImage && item.name") {{item.name}}
+        LinksItem(
+          :title="$t('M.common_friendly_link')"
+          :links="friendlyLinks"
+          :isShowLogo="isShowFriendlyLinksLogo"
+          v-if="friendlyLinksLength"
+        )
       .copyright
         p {{configInfo['copyright']}}
 </template>
@@ -130,8 +131,9 @@ import {
   // returnAjaxMsg,
   getNestedData,
   http2https
-} from '../../utils/commonFunc'
-import Iconfont from '../Common/IconFontCommon'
+} from '../../../utils/commonFunc'
+import Iconfont from '../IconFontCommon'
+import LinksItem from './LinksItem'
 import {
   mapMutations,
   mapState,
@@ -140,7 +142,8 @@ import {
 } from 'vuex'
 export default {
   components: {
-    Iconfont
+    Iconfont,
+    LinksItem
   },
   // props,
   data () {
@@ -176,23 +179,19 @@ export default {
       linkList: [], // 友情链接
       // 上币申请模板下载url
       currencyApplicationURL: '',
-      // 友情链接是否显示图片
-      isShowLinkImage: true,
       APIUrl: 'https://github.com/bizuyun/API'
     }
   },
   async created () {
-    // console.log(this.isNeedApp)
     const data = await this.GET_CURRENCY_URL_ACTION({
       key: 'COIN_APPLY'
     })
     if (!data) return false
     this.currencyApplicationURL = data
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapActions(['GET_CURRENCY_URL_ACTION']),
     ...mapMutations(['CHANGE_FOOTER_ACTIVE_NAME']),
@@ -210,7 +209,7 @@ export default {
       }
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapGetters({
       'isNeedApp': 'isNeedApp'
@@ -223,17 +222,32 @@ export default {
     }),
     downloadAppSrc () {
       return this.mobile ? `${this.$routes_X.downloadApp}` : '/guideOfDownload'
+    },
+    isShowCooperationLogo () {
+      return _.get(this.footerInfo, 'footerInfo2.cooperationFlag')
+    },
+    cooperations () {
+      return _.get(this.footerInfo, 'footerInfo2.blogrollList.cooperation')
+    },
+    cooperationsLength () {
+      return _.get(this.cooperations, 'length')
+    },
+    isShowFriendlyLinksLogo () {
+      return _.get(this.footerInfo, 'footerInfo2.blogrollFlag')
+    },
+    friendlyLinks () {
+      return _.get(this.footerInfo, 'footerInfo2.blogrollList.blogroll')
+    },
+    friendlyLinksLength () {
+      return _.get(this.friendlyLinks, 'length')
     }
   },
   watch: {
     footerInfo: {
       handler (newVal) {
-        // console.log(newVal)
         if (newVal) {
           this.footerInfo1 = newVal.footerInfo1
           this.footerInfo2 = newVal.footerInfo2
-          // console.log(this.footerInfo2)
-          this.isShowLinkImage = getNestedData(this.footerInfo2, 'flag') ? true : false
           this.shareList[0].ercodeSrc = getNestedData(this.footerInfo1, 'twitter')
           this.shareList[1].ercodeSrc = getNestedData(this.footerInfo1, 'facebook')
           this.weixinImage = getNestedData(this.footerInfo1, 'weixinImage')
@@ -377,38 +391,9 @@ export default {
       }
 
       > .bottom {
-        display: flex;
         width: 100%;
         padding-top: 15px;
         border-top: 1px solid rgba(67, 74, 95, .5);
-
-        > .title {
-          flex: 1;
-          margin-right: 20px;
-          line-height: 28px;
-          vertical-align: top;
-          white-space: nowrap;
-        }
-
-        > .links-list {
-          flex: 14;
-
-          > .links-item {
-            display: inline-block;
-            height: 20px;
-            margin-right: 26px;
-
-            > .link-item {
-              > img {
-                height: 28px;
-              }
-
-              > .links-text {
-                color: #838dae;
-              }
-            }
-          }
-        }
       }
 
       > .copyright {

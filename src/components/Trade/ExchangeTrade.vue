@@ -731,9 +731,8 @@ export default {
       console.log(this.$middleTopData_S_X.partnerTradeId)
     }, 2000)
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',

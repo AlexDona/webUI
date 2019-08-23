@@ -4,7 +4,7 @@
   description: 当前页面为 移动端 忘记密码 页面
 -->
 <template lang="pug">
-  .the-forget-pass(
+  .the-forget-pass-m(
     :style="{height: `${windowHeight}px`}"
     :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
   )
@@ -24,7 +24,7 @@
 <script>
 import MobileHeader from '../../Common/HeaderForMobile'
 export default {
-  name: 'the-forget-pass',
+  name: 'the-forget-pass-m',
   // mixins: [],
   components: {
     MobileHeader
@@ -71,9 +71,10 @@ export default {
 
 <style scoped lang="stylus">
   @import '../../../assets/CSS/index.styl'
-  .the-forget-pass
+  .the-forget-pass-m
     fontSize = .5rem
     width 100%
+    background-color #24293e
     .inner-box
       /*width 780px*/
       min-height 517px
@@ -84,6 +85,7 @@ export default {
       .header
         margin 2.4rem 0 1rem
         font-size fontSize
+        color #fff
         .router-item
           padding-bottom .2rem
           border-bottom .016rem solid #fff
@@ -94,32 +96,13 @@ export default {
           vertical-align middle
           font-size .4rem
           line-height 1.5rem
+          color S_error_color
           >.iconfont
+            color S_error_color
             margin-right .3rem
             font-size .4rem
             vertical-align middle
             color S_error_color
           >span
             vertical-align middle
-    &.night
-      background-color #272b41
-      .inner-box
-        .header
-          color #fff
-          .iconfont
-            color S_error_color
-          .tips
-            color S_error_color
-    &.day
-      background-color #f5f5fa
-      .inner-box
-        background fff
-        box-shadow 0 3px 6px 0 rgba(0, 0, 0, 0.25)
-        .header
-          background-color #DCE7F3
-          color #333
-          .iconfont
-            color S_error_color
-          .tips
-            color S_error_color
 </style>

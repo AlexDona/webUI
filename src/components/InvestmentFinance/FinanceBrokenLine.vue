@@ -91,7 +91,6 @@ export default {
             }
           },
           formatter: function (params) {
-            // console.log(params)
             return `时间：${params[0].axisValue}<br/>价格：${params[0].data}`
           }
         },
@@ -129,7 +128,6 @@ export default {
     this.resetOptions()
     this.resetChart(this.options)
   },
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
@@ -148,7 +146,6 @@ export default {
       for (let k in params) {
         this.options[k] = params[k]
       }
-      // console.log(params)
       this.financeCharts.setOption(this.options, true)
       window.onresize = this.financeCharts.resize
     },
@@ -213,7 +210,6 @@ export default {
       this.options.yAxis.min = 0
       // y轴最大值是数组的最大值
       this.options.yAxis.max = this.arrTime[this.arrTime.length - 1]
-      console.log(this.options)
     }
   },
   // filter: {},

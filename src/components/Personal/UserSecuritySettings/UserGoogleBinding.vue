@@ -220,10 +220,9 @@ export default {
     this.getSecurityCenter()
     this.getGoogleVerificationCode()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',

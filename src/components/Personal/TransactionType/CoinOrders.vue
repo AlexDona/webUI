@@ -501,10 +501,9 @@ export default {
     await this.commissionList('current-entrust')
     this.endDate()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     // 1.tab 切换
     coinMoneyOrders (tab) {

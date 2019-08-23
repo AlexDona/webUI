@@ -326,7 +326,7 @@ export default {
     console.log(this.footerHeight)
   },
   // mounted () {},
-  // activated () {},
+  // ,
   // updated () {},
   methods: {
     timeFormatting (data) {

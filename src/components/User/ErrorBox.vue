@@ -22,11 +22,10 @@ export default {
   data () {
     return {}
   },
-  created () {},
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // created () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([])
   },

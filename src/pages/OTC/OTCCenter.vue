@@ -963,7 +963,6 @@ export default {
       this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(false)
     }
   },
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

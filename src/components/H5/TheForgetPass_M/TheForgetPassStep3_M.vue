@@ -4,9 +4,7 @@
   description: 当前组件为 移动端 找回密码 修改 密码成功页面
 -->
 <template lang="pug">
-  .the-forget-pass-success-m(
-    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
-  )
+  .the-forget-pass-success-m.night
     .top
       Iconfont.iconfont(
         icon-name="icon-chenggong1"

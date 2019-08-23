@@ -26,9 +26,6 @@ export default {
   // console.log(data)
   // },
   // mounted () {}
-  // !!! 注意!!!  新版页面的路由模式会在生产环境调为 `history` 模式，activated、deactivated 声明周期将不再提供使用
-  // activated () {},
-  // deactivated () {}
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},

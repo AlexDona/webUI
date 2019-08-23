@@ -4,9 +4,7 @@
   description: 当前组件为 移动端 找回密码 步骤1 组件
 -->
 <template lang="pug">
-  .the-forget-pass-step1-m(
-    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
-  )
+  .the-forget-pass-step1-m.night
     el-form(
       :model="form"
       :rules="forgetRule"

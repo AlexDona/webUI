@@ -100,7 +100,6 @@ export default {
             data () {
               return {
                 miniImg: http2https(url),
-                // background: `${require('../../assets/develop/banner-bg.png')}`
                 background: http2https(bigUrl)
               }
             },

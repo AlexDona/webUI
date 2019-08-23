@@ -327,7 +327,6 @@ export default {
   },
   /* mounted () {
   },
-  activated () {},
   update () {},
   beforeRouteUpdate () {}, */
   methods: {

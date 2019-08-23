@@ -44,7 +44,7 @@ export default {
   // console.log(this.$clientWidth_S_X)
   // },
   // mounted () {},
-  // activated () {},
+  // ,
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

@@ -683,7 +683,6 @@ export default {
     this.limitOrderCount = this.$refs.limitRef.value
     this.successOrderCount = this.$refs.successRef.value
   },
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

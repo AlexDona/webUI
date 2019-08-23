@@ -4,9 +4,7 @@
   description: 当前页面为 移动端注册 页面
 -->
 <template lang="pug">
-  .the-register-m(
-    :style="{height: `${windowHeight}px`}"
-  )
+  .the-register-m(:style="{height: `${windowHeight}px`}")
     el-collapse-transition
       // 国家选择列表
       .country-select(v-show="isShowCountries")
@@ -289,12 +287,10 @@ export default {
         this.loginErrorTips = this.$t('M.login_tips2')
         // 请输入密码
         callback(new Error(' '))
-        this.isPasswordValidateSuccess = false
       } else if (!this.PASS_REG_X.test(value)) {
         this.loginErrorTips = this.$t('M.user_security_info1')
         // 密码请输入8-20位字母和数字组合
         callback(new Error(' '))
-        this.isPasswordValidateSuccess = false
       } else {
         this.$refs[this.formRef].validateField('checkPassword')
         this.loginErrorTips = ''
@@ -307,20 +303,16 @@ export default {
         // 请输入确认密码
         callback(new Error(' '))
         this.loginErrorTips = this.$t('M.comm_please_enter') + this.$t('M.forgetPassword_affirm_password')
-        this.isPasswordValidateSuccess = false
       } else if (value !== this.form.password) {
         this.loginErrorTips = this.$t('M.user_security_info2')
-        this.isPasswordValidateSuccess = false
         // 密码不一致，请重新确认
         callback(new Error(' '))
       } else if (!this.PASS_REG_X.test(value)) {
         this.loginErrorTips = this.$t('M.user_security_info1')
         // 密码请输入8-20位字母和数字组合
         callback(new Error(' '))
-        this.isPasswordValidateSuccess = false
       } else {
         this.loginErrorTips = ''
-        this.isPasswordValidateSuccess = true
         callback()
       }
     }
@@ -393,9 +385,7 @@ export default {
       // 我已阅读并同意
       agreementTips: 'M.forgetPassword_hint6',
       agreementText: 'M.forgetPassword_hint7',
-      hasInviteCode: false,
-      // 密码是否检验成功
-      isPasswordValidateSuccess: false
+      hasInviteCode: false
     }
   },
   async created () {
@@ -577,7 +567,7 @@ export default {
     isSuccessValidate () {
       const {phone, email, validateCode, password, checkPassword, agreement} = this.form
       let targetValidate = this.isPhoneRegist ? phone : email
-      return (targetValidate && validateCode && password && checkPassword && this.isPasswordValidateSuccess && agreement)
+      return (targetValidate && validateCode && password && checkPassword && agreement)
     },
     // 映射真实 邀请码
     currentInviteId () {
@@ -624,6 +614,7 @@ export default {
   @import '../../assets/CSS/index.styl'
   fontSize = .5rem
   .the-register-m
+    background-color #24293e
     top 0
     //transform translateX(-50%)
     height 100%
@@ -747,18 +738,16 @@ export default {
                   line-height 1.2rem
                   >a
                     color S_main_color
-              &.disabled
-                background-color #303757
-                >.el-form-item__content
-                  >.el-input
-                    >.el-input__inner
-                      background #303757
-                      color #636777
-                      box-shadow none
               >.el-form-item__content
                 height 1.2rem
                 >.el-input
                   height 1.2rem
+                  &.is-disabled
+                    >.el-input__inner
+                      border-radius .6rem
+                      background #303757
+                      color #636777
+                      box-shadow none
                   >.el-input__inner
                     border none
                     height 1.2rem
@@ -793,7 +782,6 @@ export default {
                   padding 0 .6rem
                   >.current-country
                     position relative
-                    display inline-block
                     min-width 2rem
                     height 1.2rem
                     line-height 1.2rem
@@ -847,8 +835,8 @@ export default {
                       vertical-align middle
                       .el-checkbox__inner
                         background-color transparent
-                        border-color S_main_color
-                        border-radius .06rem
+                        border-color #8B9197
+                        border-radius .03rem
                         &:after
                           top 3000px
                           width 0
