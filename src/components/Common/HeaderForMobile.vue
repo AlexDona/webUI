@@ -14,12 +14,24 @@
           :to="`/${$routes_X.home}`"
           class="logo"
           v-show="isShowLogo"
+          v-if="isAllowLinkJump"
         >
         <img
           class="img"
           :src="logoSrc"
         >
         </router-link>
+        <a
+          href="javascript:void(0);"
+          v-else
+          class="logo"
+          v-show="isShowLogo"
+        >
+          <img
+            class="img"
+            :src="logoSrc"
+          >
+        </a>
       </div>
       <!--注册登录-->
       <div class="right login">
@@ -73,6 +85,9 @@ export default {
   // components: {},
   props: {
     isShowLogo: {
+      default: true
+    },
+    isAllowLinkJump: {
       default: true
     }
   },

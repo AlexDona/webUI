@@ -8,7 +8,7 @@
     :style="{height: `${windowHeight}px`}"
     :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
   )
-    MobileHeader
+    MobileHeader(:isAllowLinkJump="false")
     .inner-box
       // 找回密码
       .header
