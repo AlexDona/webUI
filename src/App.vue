@@ -211,6 +211,10 @@ export default {
 
     &.is-mobile {
       min-height: 2000px;
+
+      > .inner-box {
+        margin-top: 0;
+      }
     }
 
     > .inner-box {
