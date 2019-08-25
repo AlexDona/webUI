@@ -85,6 +85,7 @@
             @keyup.native="formatValidateCode"
             @input.native="formatValidateCode"
             clearable
+            maxlength="6"
           )
             // 发送验证码
             template(
@@ -139,7 +140,7 @@
         )
           el-input(
             type="text"
-            v-model="form.inviteCode"
+            v-model.trim="form.inviteCode"
             :placeholder="$t('M.invite_code_tips')"
             autocomplete="off"
             :disabled="hasInviteCode"

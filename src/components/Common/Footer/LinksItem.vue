@@ -11,7 +11,7 @@
       .right
         ul.links
           li.link-item(v-for="link in links")
-            a
+            a(:href="link.link" target="_blank")
               img(
                 :src="link.logo"
                 v-if="isShowLogo"
@@ -79,6 +79,7 @@ export default {
               line-height 28px
               display inline-block
               cursor pointer
+              color #838dae
               >img
                 height 28px
                 vertical-align middle

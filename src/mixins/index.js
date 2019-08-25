@@ -53,7 +53,7 @@ let mixin = {
       return setStore(name, content)
     },
     $getStore (name, type = 'string') {
-      return type == 'json' ? getStoreWithJson(name) : getStore(name)
+      return type.toLowerCase() == 'json' ? getStoreWithJson(name) : getStore(name)
     },
     $removeStore (name) {
       removeStore(name)

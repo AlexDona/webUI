@@ -78,7 +78,6 @@ export default {
     .inner-box
       /*width 780px*/
       min-height 517px
-      /*background-color pink*/
       border-radius 10px
       overflow hidden
       padding 0 1.83rem

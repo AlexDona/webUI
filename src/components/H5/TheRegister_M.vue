@@ -111,6 +111,7 @@
             @keyup.native="formatValidateCode"
             @input.native="formatValidateCode"
             clearable
+            maxlength="6"
             )
               // 发送验证码
               template(
@@ -166,7 +167,7 @@
           )
             el-input(
             type="text"
-            v-model="form.inviteCode"
+            v-model.trim="form.inviteCode"
             :placeholder="$t('M.invite_code_tips')"
             autocomplete="off"
             :disabled="hasInviteCode"
@@ -571,7 +572,7 @@ export default {
     },
     // 映射真实 邀请码
     currentInviteId () {
-      return this.inviteId && this.inviteId !== 'default' ? this.inviteId : this.form.inviteCode
+      return this.inviteId && this.inviteId !== 'default' ? this.inviteId.trim() : this.form.inviteCode
     },
     currentNationCode () {
       return _.get(this.currentCountry, 'nationCode')
@@ -860,7 +861,6 @@ export default {
                         color S_main_color
               &.error-tips-form
                 background-color transparent
-                /*background-color pink*/
                 margin-bottom .2rem
                 height .5rem
                 .el-form-item__content

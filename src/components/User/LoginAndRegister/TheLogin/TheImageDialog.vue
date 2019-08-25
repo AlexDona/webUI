@@ -33,6 +33,7 @@
           @keyup.enter.native.stop="checkImageCode"
           :placeholder="$t('M.login_step2_image_tips1')"
           clearable
+          maxlength="4"
         )
           template(slot="append")
             .image-button.cursor-pointer(

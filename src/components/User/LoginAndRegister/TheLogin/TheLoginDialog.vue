@@ -33,6 +33,7 @@
           :placeholder="`${$t('M.login_please_input1')}`"
           @keyup.enter.native.stop="loginForStep2"
           clearable
+          maxlength="6"
         )
           template(slot="append")
             CountDownButton(
@@ -55,6 +56,7 @@
           :autofocus="true"
           @keyup.enter.native.stop="loginForStep2"
           clearable
+          maxlength="6"
         )
           template(slot="append")
             CountDownButton(
@@ -77,6 +79,7 @@
           :placeholder="$t('M.user_please_input9')"
           @keyup.enter.native.stop="googleAutoLogin"
           clearable
+          maxlength="6"
         )
       //
       el-form-item.error-tips-form(

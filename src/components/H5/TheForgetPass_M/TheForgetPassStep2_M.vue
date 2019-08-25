@@ -35,6 +35,7 @@
             @keyup.enter.native="next"
             :autofocus="true"
             clearable
+            maxlength="6"
           )
             // 发送验证码
             template(slot="append")
@@ -55,6 +56,7 @@
             :autofocus="true"
             @keyup.enter.native="next"
             clearable
+            maxlength="6"
           )
             // 发送验证码
             template(slot="append")
@@ -74,6 +76,7 @@
             :placeholder="$t('M.user_please_input9')"
             v-model="form.googleCode"
             clearable
+            maxlength="6"
           )
         //  新密码
         el-form-item(
