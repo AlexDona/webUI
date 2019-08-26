@@ -403,7 +403,7 @@ export default {
         margin-bottom 1rem
         .router-item
           color S_main_color
-          font-size .7rem
+          font-size .8rem
           padding .2rem 0
           border-bottom .03rem solid S_main_color
       >.content

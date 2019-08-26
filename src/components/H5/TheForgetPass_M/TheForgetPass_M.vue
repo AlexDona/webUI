@@ -83,7 +83,7 @@ export default {
       padding 0 1.83rem
       .header
         margin 2.4rem 0 1rem
-        font-size fontSize
+        font-size .8rem
         color #fff
         .router-item
           padding-bottom .2rem
