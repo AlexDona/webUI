@@ -145,6 +145,8 @@
             autocomplete="off"
             :disabled="hasInviteCode"
             @keyup.enter.native="submitForm"
+            @keyup.native="formatInviteCode"
+            @input.native="formatInviteCode"
             clearable
           )
         //  用户协议
@@ -389,6 +391,9 @@ export default {
     },
     formatPhone () {
       this.form.phone = formatNumber(this.form.phone, 0)
+    },
+    formatInviteCode () {
+      this.form.inviteCode = formatNumber(this.form.inviteCode, 0)
     },
     // 发送验证码（短信、邮箱）
     async sendPhoneOrEmailCode (type) {
