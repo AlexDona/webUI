@@ -235,7 +235,7 @@
                         :label="$t('M.comm_count')"
                 >
                   <template slot-scope = "s">
-                    <div>{{ s.row.amount - 0 }}</div>
+                    <div>{{ s.row.amount }}</div>
                   </template>
                 </el-table-column>
                 <!--当前余额-->
@@ -243,7 +243,7 @@
                         :label="$t('M.comm_balance_current')"
                 >
                   <template slot-scope = "s">
-                    <div>{{ s.row.totalMassage}}</div>
+                    <div>{{ s.row.totalMassage }}</div>
                   </template>
                 </el-table-column>
                 <!--提交时间-->
