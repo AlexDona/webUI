@@ -198,7 +198,7 @@ export default {
               height 1.2rem
               >.el-input__inner
                 height 1.2rem
-                font-size .4rem
+                font-size fontSize
                 border-radius .52rem
                 padding 0 .6rem
                 box-sizing border-box

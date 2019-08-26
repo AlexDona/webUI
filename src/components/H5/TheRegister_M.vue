@@ -735,10 +735,11 @@ export default {
                 background-color transparent
                 text-align center
                 >.el-form-item__content
-                  font-size fontSize
+                  font-size .4rem
                   line-height 1.2rem
                   >a
                     color S_main_color
+                    font-size .4rem
               >.el-form-item__content
                 height 1.2rem
                 >.el-input
@@ -854,7 +855,7 @@ export default {
                         margin-right .3rem
                         margin-top -.1rem
                     >.el-checkbox__label
-                      font-size fontSize
+                      font-size .4rem
                       line-height 1.2rem
                       vertical-align middle
                       >.agreement

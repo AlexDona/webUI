@@ -390,7 +390,7 @@ export default {
               >.el-input__inner
                 height 1.2rem
                 line-height 1.2rem
-                font-size .4rem
+                font-size fontSize
                 border-radius .6rem
                 padding 0 .6rem
               >.el-input__suffix
@@ -428,7 +428,7 @@ export default {
                     padding 0
                     text-align center
                     >span
-                      font-size .4rem !important
+                      font-size fontSize !important
                     &.count-down
                       text-align left
                       padding-left .6rem
