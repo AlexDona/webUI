@@ -347,12 +347,22 @@
 
 /* 移动端提示信息 */
 .mobile .el-message {
-  padding: .2rem .5rem;
-  border-radius: .02rem;
+  display: block;
+  padding: .8rem .5rem;
+  border: none;
+  border-radius: .16rem;
+  text-align: center;
+  background-color: #2b304c;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, .25);
 }
 
 /* 移动端提示信息字体 */
 .mobile .el-message .el-message__icon,
 .mobile .el-message .el-message__content {
   font-size: .7rem;
+  line-height: 1rem;
+}
+
+.mobile .el-message .el-message__content {
+  color: #fff;
 }

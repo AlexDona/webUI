@@ -277,7 +277,7 @@ export default {
           .el-form-item
             .el-input__inner
               border 1px solid #3F4769
-              background-color transparent
+              background-color #3F4769
               color #fff
             &.error-tips-form
               .iconfont

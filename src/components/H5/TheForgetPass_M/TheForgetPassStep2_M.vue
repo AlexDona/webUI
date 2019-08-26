@@ -188,12 +188,10 @@ export default {
         this.errorTips = this.$t('M.login_tips2')
         // 请输入密码
         callback(new Error(' '))
-        this.isPasswordValidateSuccess = false
       } else if (!this.PASS_REG_X.test(value)) {
         this.errorTips = this.$t('M.user_security_info1')
         // 密码请输入8-20位字母和数字组合
         callback(new Error(' '))
-        this.isPasswordValidateSuccess = false
       } else {
         this.$refs[this.formRef].validateField('checkPassword')
         this.errorTips = ''
@@ -206,20 +204,16 @@ export default {
         // 请输入确认密码
         callback(new Error(' '))
         this.errorTips = this.$t('M.comm_please_enter') + this.$t('M.forgetPassword_affirm_password')
-        this.isPasswordValidateSuccess = false
       } else if (value !== this.form.password) {
         this.errorTips = this.$t('M.user_security_info2')
-        this.isPasswordValidateSuccess = false
         // 密码不一致，请重新确认
         callback(new Error(' '))
       } else if (!this.PASS_REG_X.test(value)) {
         this.errorTips = this.$t('M.user_security_info1')
         // 密码请输入8-20位字母和数字组合
         callback(new Error(' '))
-        this.isPasswordValidateSuccess = false
       } else {
         this.errorTips = ''
-        this.isPasswordValidateSuccess = true
         callback()
       }
     }
@@ -253,8 +247,6 @@ export default {
           { validator: validateCheckPass, trigger: 'change' }
         ]
       },
-      // 密码是否检验成功
-      isPasswordValidateSuccess: false,
       formRef: 'forgetPass',
       nextBtnText: 'M.comm_confirm',
       // 错误提示
@@ -352,7 +344,7 @@ export default {
       const googleValidateSuccess = (this.$isBindGoogle_X && googleCode) || !this.$isBindGoogle_X
       const phoneValidateSuccess = (this.$isBindPhone_X && phoneCode) || !this.$isBindPhone_X
       const emailValidateSuccess = (this.$isBindEmail_X && emailCode) || !this.$isBindEmail_X
-      return googleValidateSuccess && phoneValidateSuccess && emailValidateSuccess && this.isPasswordValidateSuccess
+      return googleValidateSuccess && phoneValidateSuccess && emailValidateSuccess
     }
   },
   watch: {
@@ -478,7 +470,7 @@ export default {
             .el-input__inner
               border-right none
             .el-input-group__append
-              background-color transparent
+              background-color #3F4769
               border .016rem solid #3F4769
               border-left none
               /* 发送验证码 */
@@ -494,7 +486,7 @@ export default {
                 border none
           .el-input__inner
             border .016rem solid #3F4769
-            background-color transparent
+            background-color #3F4769
             color #fff
           &.error-tips-form
             .iconfont

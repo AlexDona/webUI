@@ -35,9 +35,13 @@
       </div>
       <!--注册登录-->
       <div class="right login">
-        <ul class="ul-list">
+        <ul
+          class="ul-list"
+        >
           <!--切换语言-->
-          <li class="li-item">
+          <li
+            class="li-item"
+          >
             <dl
               class="lang-box"
               :class="{active: langSelecting}"
@@ -46,7 +50,10 @@
               <dt
                 class="lang-selected"
               >
-                <span class="language-text">{{activeLanguage.name}}</span>
+                <span
+                  class="language-text"
+                  :ref="languageRef"
+                >{{activeLanguage.name}}</span>
                 <i
                   class="el-icon-caret-bottom"
                   :class="{active: langSelecting}"
@@ -96,7 +103,8 @@ export default {
       // 语言选择中
       langSelecting: false,
       // langSelecting: true,
-      activeTheme: ''
+      activeTheme: '',
+      languageRef: 'language-ref'
     }
   },
   async created () {
@@ -117,7 +125,13 @@ export default {
       this.REFRESH_USER_INFO_ACTION()
     }
   },
-  // mounted () {},
+  mounted () {
+    document.addEventListener('click', (e) => {
+      console.dir(e.target)
+      if (e.target == this.$refs[this.languageRef]) return
+      this.langSelecting = false
+    })
+  },
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
