@@ -8,6 +8,7 @@
     v-loading.fullscreen.lock="$loading_S_X"
     element-loading-background="rgba(0, 0, 0, 0.8)"
   )
+    ThePRETips
     NoticeHome( v-if="isNeedNotice")
     HeaderCommon(v-if="isNeedHeader")
     .inner-box
@@ -18,6 +19,8 @@
 import NoticeHome from './components/Home/NoticeHome'
 import HeaderCommon from './components/Common/HeaderCommonForPC'
 import HeaderCommonForMobile from './components/Common/HeaderForMobile'
+import ThePRETips from './components/Home/ThePRETips'
+
 import FooterCommon from './components/Common/Footer/FooterCommon'
 import {
   mapMutations,
@@ -32,7 +35,8 @@ export default {
     HeaderCommon,
     NoticeHome,
     FooterCommon,
-    HeaderCommonForMobile
+    HeaderCommonForMobile,
+    ThePRETips
   },
   data () {
     return {

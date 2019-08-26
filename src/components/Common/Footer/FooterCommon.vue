@@ -128,7 +128,6 @@
 </template>
 <script>
 import {
-  // returnAjaxMsg,
   getNestedData,
   http2https
 } from '../../../utils/commonFunc'
@@ -306,16 +305,25 @@ export default {
               height: 50px;
               font-size: 12px;
               line-height: 50px;
+              color: #fff;
             }
 
             > .dd-item {
               font-size: 12px;
               line-height: 25px;
-              color: #cfd5df;
+              color: #838dae;
               cursor: pointer;
 
+              &:hover {
+                color: #fff;
+
+                > a {
+                  color: #fff;
+                }
+              }
+
               > a {
-                color: #cfd5df;
+                color: #838dae;
               }
             }
 
@@ -323,7 +331,7 @@ export default {
               > .email-content {
                 font-size: 12px;
                 line-height: 25px;
-                color: #cecece;
+                color: #838dae;
               }
             }
 

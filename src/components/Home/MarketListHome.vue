@@ -140,6 +140,7 @@ import {
   mapState,
   mapMutations
 } from 'vuex'
+import {xDomain} from '../../utils/env'
 
 export default {
   components: {
@@ -237,13 +238,13 @@ export default {
       'CHANGE_COLLECT_SYMBOL',
       'CHANGE_SYMBOL_MAP',
       'CHANGE_ACTIVE_TRADE_AREA',
-      'RESET_SYMBOL_MAP'
+      'RESET_SYMBOL_MAP',
+      'SET_PRE_INFO_M'
     ]),
     async initPlatesAndAreas () {
       await this.getPlates()
       if (!this.plates.length) return false
       this.activeName = getNestedData(this.plates[0], 'id')
-      // console.log(this.plates)
       await this.getAllTradeAreas()
     },
     getMoreAreas () {
@@ -257,7 +258,6 @@ export default {
       let now = new Date().getTime()
       let lastTime = getStore('platesAges')
       let storePlates = getStoreWithJson('plates') || {}
-      // console.log(storePlates, plateId, storePlates.hasOwnProperty(plateId))
       let data
       if (now - lastTime > this.ONE_MINUTES || !storePlates.hasOwnProperty(plateId)) {
         data = await getAllTradeAreasAJAX(params)
@@ -268,7 +268,6 @@ export default {
         })
         if (!dataStr) return false
         this.areasFromAPI = JSON.parse(dataStr) || []
-        console.log(this.areasFromAPI)
         this.platesMap.set(plateId, this.areasFromAPI)
         let newPlates = {
           ...storePlates,
@@ -284,9 +283,7 @@ export default {
       const NOW = new Date().getTime()
       let symbolJSON
       let localSymbolJSON = getStoreWithJson('symbolJSON') || {}
-      // console.log(localSymbolJSON)
       let localSymbolLength = Object.keys(localSymbolJSON).length
-      console.log(localSymbolLength)
       if (NOW - SYMBOL_AGE < this.ONE_MINUTES && localSymbolLength) {
         symbolJSON = localSymbolJSON
       } else {
@@ -297,22 +294,17 @@ export default {
           })
           if (!symbolsData) return false
           let symbolsObjs = getNestedData(symbolsData, 'data.obj')
-          // console.log(symbolsObjs)
           let symbolsStr = ''
           _.forEach(symbolsObjs, (symbolObj) => {
             symbolsStr += unzip(symbolObj)
           })
           if (!symbolsStr) return false
-          // console.log(symbolsStr)
           let symbolsSJONFromBackEnd = JSON.parse(symbolsStr)
-          // console.log(symbolsSJONFromBackEnd)
           symbolJSON = symbolsSJONFromBackEnd
           setStore('symbolJSONAge', new Date().getTime())
-          console.log(symbolJSON)
         }
       }
       for (let k in symbolJSON) {
-        // console.log(symbolJSON[k])
         this.CHANGE_SYMBOL_MAP({
           key: symbolJSON[k].id,
           val: symbolJSON[k]
@@ -323,10 +315,8 @@ export default {
         this.areasIndexMap.set(area.area, areaIndex)
         this.symbolsIndexMap.set(areaIndex, new Map())
         this.newContentMap.set(area.area, area.content)
-        // console.log(this.areasFromAPI[areaIndex])
         _.forEach(area.content, (symbol, symbolIndex) => {
           this.symbolsIndexMap.get(areaIndex).set(symbol.id, symbolIndex)
-          console.log(symbol.id, this.symbolMap)
           if (this.symbolMap.get(symbol.id)) {
             this.areasFromAPI[areaIndex].content[symbolIndex] = this.symbolMap.get(symbol.id)
           }
@@ -336,17 +326,13 @@ export default {
           })
         })
       })
-      console.log(this.areasFromAPI)
       let newAreas = [...this.areasFromAPI]
-      // console.log(newAreas)
       _.forEach(this.areasFromAPI, (area, areaIndex) => {
-        console.log(area)
         if (area.content.length > this.MAX_SYMBOLS_LENGTH) {
           newAreas[areaIndex].content = area.content.slice(0, this.MAX_SYMBOLS_LENGTH)
           newAreas[areaIndex].more = true
         }
       })
-      console.log(this.areasFromAPI)
       if (newAreas.length > this.MAX_AREAS_LENGTH) {
         this.areas = [...newAreas.slice(0, this.MAX_AREAS_LENGTH)]
         this.moreBtnShowStatus = true
@@ -354,8 +340,6 @@ export default {
       } else {
         this.areas = [...newAreas]
       }
-      console.log(newAreas)
-      console.log(this.areas)
 
       let collectSymbol = {}
       if (!this.isLogin) {
@@ -363,21 +347,15 @@ export default {
       } else {
         await this.getCollectionList(collectSymbol)
       }
-      console.log(collectSymbol)
       this.setCollectData(collectSymbol)
       // more
       this.setSymbolsForSocket()
     }, 500),
     // 获取更多交易对
     getMoreSymbols ({areaId}) {
-      // console.log(data)
       _.forEach(this.areas, (area, areaIndex) => {
         if (area.id === areaId) {
-          console.log(area)
-          console.log(this.newContentMap)
-
           this.areas[areaIndex].content = this.newContentMap.get(area.area)
-          console.log(this.areas)
           return false
         }
       })
@@ -387,7 +365,6 @@ export default {
       const data = await getPlatesAJAX({i18n: this.language})
       if (!data) return false
       this.plates = JSON.parse(unzip(getNestedData(data, 'data'))) || []
-      // console.log(this.plates)
     },
     setCollectData (collectSymbol) {
       this.CHANGE_COLLECT_SYMBOL({
@@ -396,21 +373,17 @@ export default {
       })
       let newContent = []
       _.forEach(collectSymbol, outItem => {
-        // console.log(this.symbolMap, outItem)
         if (this.symbolMap.get(outItem)) {
           newContent.push(this.symbolMap.get(outItem))
         }
       })
-      console.log(newContent)
       this.$set(this.collectArea, 'content', newContent)
     },
     // 拼接socket参数
     setSymbolsForSocket () {
       this.socketParamsStr = ''
-      console.log(this.areas)
       _.forEach(this.areas, area => {
         _.forEach(area.content, symbol => {
-          console.log(symbol)
           if (symbol) {
             this.socketParamsStr += `${symbol.id}@`
           }
@@ -430,30 +403,33 @@ export default {
       if (!this.tabChangeCount) {
         this.socket.on('open', () => {
           this.getSocketData(type, params)
+          this.getPREInfo()
         })
       } else {
         this.getSocketData(type, params)
+        this.getPREInfo()
       }
 
       this.socket.on('message', (data) => {
-        console.log(data)
         if (data.type == 1) {
           const newData = data.data
           let {
             buyCoinName, // 'BTC'、'FBT'
             tradeName // rdnbtc、 fucfbt
           } = newData
-          // console.log(tradeName, newData, this.symbolMap)
           this.updateSymbol(buyCoinName, tradeName, newData)
           this.CHANGE_SYMBOL_MAP({
             key: tradeName,
             val: {...this.symbolMap.get(tradeName), ...newData}
           })
           // let symbol = getStoreWithJson('symbolJSON')
-          // console.log(symbol)
-          // console.log(symbol[tradeName])
           this.setCollectionAndSearchContent(this.searchArea.content, newData)
           this.setCollectionAndSearchContent(this.collectArea.content, newData)
+        }
+
+        // RPE socket
+        if (data.tradeType == 'PRE') {
+          this.SET_PRE_INFO_M(data.data)
         }
       })
     },
@@ -486,7 +462,6 @@ export default {
     async getCollectionList (collectSymbol) {
       await getCollectionList(data => {
         _.forEach(data.data, item => {
-          console.log(item)
           collectSymbol[item.content] = item.content
         })
       })
@@ -499,11 +474,20 @@ export default {
         'id': 'pc'
       })
     },
+    // 获取PRE信息
+    getPREInfo () {
+      let uid = this.$isLogin_S_X ? this.showId : 0
+      this.socket.send({
+        'tag': 'SUB',
+        'content': `market.${uid}.pre`,
+        'id': `pc`,
+        'domain': xDomain
+      })
+    },
     // 切换板块
     async changeTab (e) {
       this.searchFromMarketList()
       _.forEach(this.areas, area => {
-        console.log(area)
         area.content = []
       })
       this.moreBtnShowStatus = false
@@ -511,13 +495,11 @@ export default {
     },
     // 搜索关键字e
     searchFromMarketList () {
-      console.log(this.$refs['search-btn'].value, this.searchKeyWord)
       this.searchKeyWord = this.$refs['search-btn'].value
       let searchList = []
       this.searchArea.content = searchList
       if (this.searchKeyWord.trim() !== '') {
         this.symbolMap.forEach(item => {
-          console.log(item)
           if (item.plateId === this.activeName) {
             const result1 = item.sellsymbol.search(this.searchKeyWord.toUpperCase())
             const result2 = item.sellname.search(this.searchKeyWord)
@@ -575,7 +557,8 @@ export default {
       language: state => state.common.language, // 语言
       isLogin: state => state.user.isLogin,
       collectSymbol: state => state.home.collectSymbol, // 收藏标记
-      symbolMap: state => state.home.symbolMap // 交易对map
+      symbolMap: state => state.home.symbolMap, // 交易对map
+      showId: state => state.user.loginStep1Info.userInfo.showId
     })
   },
   watch: {
@@ -592,7 +575,6 @@ export default {
       }
     },
     activeName (newVal) {
-      console.log(newVal)
       this.tabChangeCount++
       _.forEach(this.newMarketList, (item, index) => {
         if (item.plateId === newVal) {
@@ -612,7 +594,6 @@ export default {
       if (oldVal) {
         this.subscribeSocket('CANCEL', oldVal)
       }
-      console.log(newVal)
       this.subscribeSocket('SUB', newVal)
     },
     isLogin (newVal) {

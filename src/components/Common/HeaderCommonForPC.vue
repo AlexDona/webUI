@@ -7,9 +7,7 @@
   <div
     class="nav-box common"
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
-    :style="{
-      top:$route.path ===`/${$routes_X.home}` && noticeCloseVisible ? `${styleTop}px` : 0
-    }"
+    :style="{top: styleTop}"
   >
     <div class="inner-box">
       <div
@@ -132,6 +130,7 @@ import TheLanguages from '../Header/TheLanguages'
 import TheNotice from '../Header/TheNotice'
 import TheCustomNavs from '../Header/TheCustomNavs'
 import mixins from '../../mixins/header'
+import PREMixins from '../../mixins/PRE'
 import {
   mapMutations,
   mapState,
@@ -139,7 +138,7 @@ import {
 } from 'vuex'
 
 export default{
-  mixins: [mixins],
+  mixins: [mixins, PREMixins],
   components: {
     TheBillings,
     TheMoreNavsButton,
@@ -162,7 +161,8 @@ export default{
       // otcSubNavStatus: true,
       // 活动中心子导航显示状态
       // activityCenterSubNavStatus: false,
-      styleTop: 30,
+      DEFAULT_TOP: 80,
+      styleTop: 0,
       topPadding: '0 10px',
       topBackgroundColor: 'rgba(0,0,0,0.7)',
       isPayPasswordLocked: false,
@@ -193,6 +193,7 @@ export default{
     // await this.GET_ALL_NOTICE_ACTION(this.$language_S_X)
     this.isNoticeReady = true
     // 查询某商户可用法币币种列表
+    this.handleScroll()
   },
   mounted () {
     window.addEventListener('scroll', this.handleScroll)
@@ -270,15 +271,34 @@ export default{
       this.REFRESH_USER_INFO_ACTION()
     },
     handleScroll () {
+      let targetTop = 0
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      if (scrollTop > 0) {
-        this.styleTop = 0
-        this.topPadding = '0 10%'
-        this.topBackgroundColor = this.$mainNightBgColor
+      const {path} = this.$route
+      if (path === `/${this.$routes_X.home}`) {
+        if (scrollTop > 0) {
+          this.styleTop = 0
+          this.topPadding = '0 10%'
+          this.topBackgroundColor = this.$mainNightBgColor
+        } else {
+          if (this.isShowPREActivity) {
+            if (this.noticeCloseVisible) {
+              targetTop = 90
+            } else {
+              targetTop = 60
+            }
+          } else {
+            if (this.noticeCloseVisible) {
+              targetTop = 30
+            } else {
+              targetTop = 0
+            }
+          }
+          this.styleTop = `${targetTop}px`
+          this.topPadding = '0 10px'
+          this.topBackgroundColor = 'rgba(0,0,0,.5)'
+        }
       } else {
-        this.styleTop = 30
-        this.topPadding = '0 10px'
-        this.topBackgroundColor = 'rgba(0,0,0,.5)'
+        this.styleTop = 0
       }
     },
     // 重置交易密码
@@ -292,7 +312,7 @@ export default{
       let newTitle = ''
       let priceData = this.$scientificToNumber(last)
       if (this.title) {
-        if (path && path.startsWith('/TradeCenter') && priceData && sellsymbol && area) {
+        if (path && path.startsWith(`/${this.$routes_X.exchange}`) && priceData && sellsymbol && area) {
           newTitle = `${priceData} ${sellsymbol}/${area} ${this.title}`
         } else {
           newTitle = `${this.title}`
@@ -384,9 +404,15 @@ export default{
     },
     loginRouter () {
       return !this.isMobile ? this.$PCLoginDefaultRouter_G_X : this.$mobileLoginDefaultRouter_G_X
+    },
+    isPREORNoticeStatusChanged () {
+      return `${this.isShowPREActivity}/${this.noticeCloseVisible}`
     }
   },
   watch: {
+    isPREORNoticeStatusChanged () {
+      this.handleScroll()
+    },
     $activeLinkIndex_S_X (New, Old) {
       this.oldActiveLinkIndex = Old
     },
@@ -416,6 +442,7 @@ export default{
       // val是改变之后的路由，oldVal是改变之前的val
       handler: function (val, oldVal) {
         this.setNewTitle(val.path)
+        this.handleScroll()
       },
       // 深度观察监听
       deep: true

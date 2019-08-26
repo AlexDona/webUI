@@ -64,6 +64,7 @@ export default {
         height 28px
         line-height 28px
         margin-right 15px
+        color #fff
       >.right
         flex 1
         >.links

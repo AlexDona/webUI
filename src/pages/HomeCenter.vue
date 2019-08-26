@@ -1,11 +1,12 @@
-<template>
-  <!--首页盒子-->
-  <div class="home-box home">
-    <!--banner-->
-    <BannerHome/>
-    <!--交易区-->
-    <MarketListHome class="margin-1"/>
-  </div>
+<!--
+  author: zhaoxinlei
+  update: 20190825
+  description: 当前页面为 PC 首页内容
+-->
+<template lang="pug">
+  .home-box.home
+    BannerHome
+    MarketListHome.margin-1
 </template>
 <script>
 import NoticeHome from '../components/Home/NoticeHome'

@@ -56,6 +56,7 @@
                 >{{activeLanguage.name}}</span>
                 <i
                   class="el-icon-caret-bottom"
+                  :ref="languageIconRef"
                   :class="{active: langSelecting}"
                 ></i>
               </dt>
@@ -104,7 +105,8 @@ export default {
       langSelecting: false,
       // langSelecting: true,
       activeTheme: '',
-      languageRef: 'language-ref'
+      languageRef: 'language-ref',
+      languageIconRef: 'language-icon-ref'
     }
   },
   async created () {
@@ -126,9 +128,10 @@ export default {
     }
   },
   mounted () {
-    document.addEventListener('click', (e) => {
-      console.dir(e.target)
-      if (e.target == this.$refs[this.languageRef]) return
+    // 点击空白收起下拉
+    document.querySelector('.the-login-m').addEventListener('click', (e) => {
+      console.log(e.target)
+      if (e.target == this.$refs[this.languageRef] || e.target == this.$refs[this.languageIconRef]) return
       this.langSelecting = false
     })
   },
