@@ -4,7 +4,7 @@
   description: 当前文件为 微信、qq、百度浏览器遮罩
 -->
 <template lang="pug">
-  .wx-mask(v-if="isWXBrowserStatus || (isBaiDuBrowser && isIOS) || isWeiBoBrowser")
+  .wx-mask(v-if="isWXBrowserStatus || (isBaiDuBrowser && isIOS) || isWeiBoBrowser || (isSouGouBrowser && isIPad)")
     .img
       .ios-box(v-if="isIOS")
         img(:src="IOSFilterSrc")
@@ -14,7 +14,7 @@
 <script>
 export default {
   // components: {},
-  props: ['isAndroid', 'isIOS', 'isWXBrowserStatus', 'isBaiDuBrowser', 'isChineseLanguage', 'isWeiBoBrowser'],
+  props: ['isAndroid', 'isIOS', 'isWXBrowserStatus', 'isBaiDuBrowser', 'isChineseLanguage', 'isWeiBoBrowser', 'isIPad', 'isSouGouBrowser'],
   data () {
     return {
       IOS_ZH_CNSRC: require('../../assets/develop/zh_CN_weiChat_ios.png'),
@@ -34,9 +34,9 @@ export default {
   computed: {
     IOSFilterSrc () {
       if (this.isChineseLanguage) {
-        return this.isBaiDuBrowser ? this.IOS_Baidu_ZH_CNSRC : this.IOS_ZH_CNSRC
+        return this.isBaiDuBrowser || (this.isIPad && this.isSouGouBrowser) ? this.IOS_Baidu_ZH_CNSRC : this.IOS_ZH_CNSRC
       } else {
-        return this.isBaiDuBrowser ? this.IOS_Baidu_EN_USSRC : this.IOS_EN_USSRC
+        return this.isBaiDuBrowser || (this.isIPad && this.isSouGouBrowser) ? this.IOS_Baidu_EN_USSRC : this.IOS_EN_USSRC
       }
     },
     androidFilterSrc () {
