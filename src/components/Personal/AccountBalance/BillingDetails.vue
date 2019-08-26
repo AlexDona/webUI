@@ -637,27 +637,28 @@ export default {
           new Date()
         ]
       }
-      console.log(this.startTime)
+      // console.log(this.startTime)
       if (!this.isHoldBonus) {
         await this.inquireCurrencyList(e.name)
       } else {
-        console.log(this.startTime)
+        // console.log(this.startTime)
         this.getHoldBonusRecord()
       }
     }, 500),
     // 获取 分红记录
     async getHoldBonusRecord () {
       const {pageNum} = this.holdBonus
+      // console.log(this.startTime)
       const params = {
         // 开始日期
-        startDateStr: this.startTime[0] == null ? '' : (timeFilter(this.startTime[0], 'date')).trim(),
-        endDateStr: this.startTime[1] == null ? '' : (timeFilter(this.startTime[1], 'date')).trim(),
+        startDateStr: !_.get(this.startTime, '[0]') ? '' : (timeFilter(this.startTime[0], 'date')).trim(),
+        endDateStr: !_.get(this.startTime, '[1]') ? '' : (timeFilter(this.startTime[1], 'date')).trim(),
         pageNum: pageNum,
         pageSize: 1
       }
       const data = await getUserHoldRecordAJAX(params)
       if (!data) return
-      console.log(data)
+      // console.log(data)
       this.holdBonus.total = _.get(data, 'data.total') - 0
       this.$set(this.holdBonus, 'records', _.get(data, 'data.list') || [])
       // this.holdBonus.pageNum = _.get(data, 'data.pageNum')
@@ -781,7 +782,7 @@ export default {
           // console.log(params)
           // console.log(this.startTime)
           data1 = await getComprehensiveRecordsList(params)
-          console.log(data1)
+          // console.log(data1)
           if (!data1) return false
           this.otherRecordsList = getNestedData(data1, 'data.list') || []
           this.totalPagesOtherRecords = getNestedData(data1, 'data.pages') - 0
