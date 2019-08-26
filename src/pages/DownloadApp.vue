@@ -32,6 +32,8 @@
       :isWXBrowserStatus="isWXBrowserStatus"
       :isBaiDuBrowser="isBaiDuBrowser"
       :isWeiBoBrowser="isWeiBoBrowser"
+      :isSouGouBrowser="isSouGouBrowser"
+      :isIPad="isIPad"
     )
 </template>
 <script>
@@ -183,6 +185,14 @@ export default {
     isWeiBoBrowser () {
       let u = navigator.userAgent.toLowerCase()
       return u.match(/WeiBo/i) == 'weibo'
+    },
+    isSouGouBrowser () {
+      let u = navigator.userAgent.toLowerCase()
+      return u.indexOf('sogou') > -1
+    },
+    isIPad () {
+      let u = navigator.userAgent.toLowerCase()
+      return u.indexOf('iPad'.toLowerCase()) > -1
     },
     isChineseLanguage () {
       return this.language === 'zh_CN' ||
