@@ -361,6 +361,9 @@ export default {
     this.initInviteStatus()
     this.initCountry()
     if (this.$isLogin_S_X) this.USER_LOGOUT()
+    if (this.inviteId !== this.$routes_X.default && this.isMobile) {
+      this.$goToPage(`/${this.$routes_X.register}/${this.$routes_X.invite}/${this.inviteId}`)
+    }
   },
   mounted () {
     this.resetForm()
@@ -381,17 +384,6 @@ export default {
       'CHANGE_FOOTER_ACTIVE_NAME',
       'SET_COUNTRY_AREA_LIST'
     ]),
-    validateAllFormItem: _.debounce((self) => {
-      console.log(self)
-      self.$refs[self.formRef].validate(valid => {
-        if (valid) {
-          console.log('success')
-        } else {
-          console.log('fail')
-          return false
-        }
-      })
-    }, 500),
     formatValidateCode () {
       this.form.validateCode = formatNumber(this.form.validateCode, 0)
     },
@@ -421,7 +413,7 @@ export default {
       })
     },
     initInviteStatus () {
-      this.hasInviteCode = this.inviteId && this.inviteId !== 'default' ? true : false
+      this.hasInviteCode = this.inviteId && this.inviteId !== this.$routes_X.default ? true : false
       if (!this.hasInviteCode) return
       this.form.inviteCode = this.inviteId
     },
@@ -532,7 +524,7 @@ export default {
     }),
     // 映射真实 邀请码
     currentInviteId () {
-      return this.inviteId && this.inviteId !== 'default' ? this.inviteId : this.form.inviteCode
+      return this.inviteId && this.inviteId !== this.$routes_X.default ? this.inviteId : this.form.inviteCode
     },
     isSubmitButtonDisabled () {
       const {username, password} = this.form

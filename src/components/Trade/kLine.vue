@@ -266,7 +266,7 @@ export default {
       const obj = getNestedData(data, 'data')
       activeSymbol = `${getNestedData(obj, 'sellCoinName')}${getNestedData(obj, 'buyCoinName')}`.toLowerCase()
       const {tradeId} = this.$route.params
-      this.symbol = tradeId && tradeId !== 'default' ? tradeId : (localSymbol ? localSymbol : activeSymbol)
+      this.symbol = tradeId && tradeId !== this.$routes_X.default ? tradeId : (localSymbol ? localSymbol : activeSymbol)
       if (this.$isLogin_S_X) this.getUserOrderSocket('SUB', this.symbol)
     },
     init (options) {

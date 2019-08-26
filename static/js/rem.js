@@ -1,24 +1,10 @@
 /* eslint-disable */
 import storeCreator from '../../src/vuex'
+import {IsPC} from '../../src/utils'
 
 const store = storeCreator()
 getSize(document, window)
 
-// 检测是否为pc
-function IsPC() {
-  let userAgentInfo = navigator.userAgent
-  let Agents = ['Android', 'iPhone',
-    'SymbianOS', 'Windows Phone',
-    'iPad', 'iPod']
-  let flag = true
-  for (let v = 0; v < Agents.length; v++) {
-    if (userAgentInfo.indexOf(Agents[v]) > 0) {
-      flag = false
-      break
-    }
-  }
-  return flag
-}
 
 function getSize(doc, win) {
   var docEl = doc.documentElement,
@@ -27,7 +13,6 @@ function getSize(doc, win) {
       let clientWidth = docEl.clientWidth
       let remWidth = clientWidth
 
-      console.log(clientWidth)
       if (!clientWidth) return
       if (clientWidth > 2500) {
         remWidth = 960
@@ -59,3 +44,4 @@ function getSize(doc, win) {
   win.addEventListener(resizeEvt, recalc, false)
   doc.addEventListener('DOMContentLoaded', recalc, false)
 }
+

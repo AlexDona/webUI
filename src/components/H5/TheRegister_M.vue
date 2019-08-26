@@ -440,7 +440,7 @@ export default {
       this.isShowCountries = !this.isShowCountries
     },
     initInviteStatus () {
-      this.hasInviteCode = this.inviteId && this.inviteId !== 'default' ? true : false
+      this.hasInviteCode = this.inviteId && this.inviteId !== this.$routes_X.default ? true : false
       if (!this.hasInviteCode) return
       this.form.inviteCode = this.inviteId
     },
@@ -572,7 +572,7 @@ export default {
     },
     // 映射真实 邀请码
     currentInviteId () {
-      return this.inviteId && this.inviteId !== 'default' ? this.inviteId.trim() : this.form.inviteCode
+      return this.inviteId && this.inviteId !== this.$routes_X.default ? this.inviteId.trim() : this.form.inviteCode
     },
     currentNationCode () {
       return _.get(this.currentCountry, 'nationCode')

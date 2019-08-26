@@ -15,7 +15,6 @@
     FooterCommon(v-if="isNeedFooter")
 </template>
 <script>
-import {getStore} from './utils'
 import NoticeHome from './components/Home/NoticeHome'
 import HeaderCommon from './components/Common/HeaderCommonForPC'
 import HeaderCommonForMobile from './components/Common/HeaderForMobile'
@@ -25,6 +24,7 @@ import {
   mapState
 } from 'vuex'
 import {getNavigationsAJAX} from './utils/api/common'
+import {getStore} from './utils'
 // import {encrypt} from './utils/encrypt'
 export default {
   name: 'App',

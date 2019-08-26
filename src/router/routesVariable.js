@@ -72,7 +72,8 @@ export const routesVariable = {
   serverError: '500',
   downloadApp: '/downloadApp',
   // 邀请注册
-  invite: 'invite'
+  invite: 'invite',
+  default: 'default'
 }
 
 export const globalLabel = {
