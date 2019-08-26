@@ -582,7 +582,7 @@ export default {
   },
   async created () {
     const activeName = this.$getStore('billingDetailsActiveName')
-    if (activeName == this.names.holdBonusRecord) {
+    if (activeName == this.names.holdBonusRecord && this.isShowHoldInfos) {
       this.activeName = activeName
       this.startTime = [
         new Date(this.year, this.month, this.date, 0, 0, 0),
@@ -650,8 +650,8 @@ export default {
       const {pageNum} = this.holdBonus
       const params = {
         // 开始日期
-        startDateStr: this.startTime[0] == null ? '' : timeFilter(this.startTime[0], 'date'),
-        endDateStr: this.startTime[1] == null ? '' : timeFilter(this.startTime[1], 'date'),
+        startDateStr: this.startTime[0] == null ? '' : (timeFilter(this.startTime[0], 'date')).trim(),
+        endDateStr: this.startTime[1] == null ? '' : (timeFilter(this.startTime[1], 'date')).trim(),
         pageNum: pageNum,
         pageSize: 1
       }
