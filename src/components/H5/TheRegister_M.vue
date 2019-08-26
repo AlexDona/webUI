@@ -172,6 +172,8 @@
             autocomplete="off"
             :disabled="hasInviteCode"
             @keyup.enter.native="submitForm"
+            @keyup.native="formatInviteCode"
+            @input.native="formatInviteCode"
             clearable
             )
           //  用户协议
@@ -226,19 +228,17 @@
           )
 </template>
 <script>
-import {mapState, mapActions, mapMutations} from 'vuex'
+import {mapState} from 'vuex'
 import {EMAIL_REG} from '../../utils/regExp'
 import mixins from '../../mixins/user'
+import registerMixins from '../../mixins/register'
 import MobileHeader from '../Common/HeaderForMobile'
 import CountDownButton from '../Common/CountDownCommon'
 import TheCommonSlider from '../Common/CommonSlider'
-import {formatNumber} from '../../utils'
-import {sendPhoneOrEmailCodeAjax, validateNumForUserInput} from '../../utils/commonFunc'
-import {newCheckUserExist, newRegisterAJAX} from '../../utils/api/user'
-import {encrypt} from '../../utils/encrypt'
+import {sendPhoneOrEmailCodeAjax} from '../../utils/commonFunc'
 export default {
   name: 'the-register-m',
-  mixins: [mixins],
+  mixins: [mixins, registerMixins],
   components: {
     MobileHeader,
     TheCommonSlider,
@@ -404,61 +404,15 @@ export default {
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
-    ...mapActions(['GET_COUNTRY_LIST_ACTION']),
-    ...mapMutations(['CHANGE_FOOTER_ACTIVE_NAME']),
-    // 确定注册
-    async doRegister () {
-      const { phone, email, password, validateCode } = this.form
-      let params = {
-        country: this.activeNationCode,
-        userName: this.isPhoneRegist ? phone : email,
-        password: encrypt(password),
-        checkCode: validateCode,
-        inviter: this.currentInviteId,
-        regType: this.regType
-      }
-      const data = await newRegisterAJAX(params)
-      if (!data) return
-      this.resetForm()
-      console.log(`${this.$mobileRegisterSuccessRouter_G_X}/${this.currentInviteId}`)
-      this.$goToPage(`${this.$mobileRegisterSuccessRouter_G_X}/${this.currentInviteId || 'default'}`)
-    },
-    jumpToUserAgreement () {
-      let routeData = this.$router.resolve({
-        path: '/ServiceAndProtocol'
-      })
-      this.CHANGE_FOOTER_ACTIVE_NAME({
-        type: '/ServiceAndProtocol',
-        activeName: 'UserProtocol'
-      })
-      window.open(routeData.href, '_blank')
-    },
-    formatValidateCode () {
-      this.form.validateCode = formatNumber(this.form.validateCode, 0)
-    },
+    // ...mapActions([]),
+    // ...mapMutations([]),
     toggleShowCountries () {
       this.isShowCountries = !this.isShowCountries
-    },
-    initInviteStatus () {
-      this.hasInviteCode = this.inviteId && this.inviteId !== this.$routes_X.default ? true : false
-      if (!this.hasInviteCode) return
-      this.form.inviteCode = this.inviteId
     },
     toggleCountry (country) {
       this.currentCountry = country
       console.log(this.currentCountry)
       this.isShowCountries = false
-    },
-    initCountry () {
-      if (this.countries.length) {
-        const { nationCode } = this.countries[0]
-        this.activeNationCode = nationCode
-      }
-    },
-    // 重置表单
-    resetForm () {
-      this.$refs[this.formRef].resetFields()
-      this.loginErrorTips = ''
     },
     // 发送验证码（短信、邮箱）
     async sendPhoneOrEmailCode (type) {
@@ -481,68 +435,6 @@ export default {
         }
         await sendPhoneOrEmailCodeAjax(type, params, this)
       })
-    },
-    formatPhone () {
-      this.form.phone = formatNumber(this.form.phone, 0)
-    },
-    successCallback: _.debounce(async function () {
-      this.isShowSlider = false
-      // this.isShowStep3Dialog = true
-      if (!await this.checkUserExistAjax()) return
-      await this.doRegister()
-    }, 500),
-    // 检测用户名是否存在
-    async checkUserExistAjax () {
-      const {phone, email} = this.form
-      const userName = this.isPhoneRegist ? phone : email
-      if (!validateNumForUserInput(this.regType, userName)) {
-        let params = {
-          userName,
-          regType: this.regType
-        }
-        const data = await newCheckUserExist(params)
-        if (!data) return false
-        return data
-      } else {
-        switch (this.regType) {
-          case 'phone':
-            if (this.checkoutInputFormat(0, userName)) return false
-            break
-          case 'email':
-            if (this.checkoutInputFormat(1, userName)) return false
-            break
-        }
-      }
-    },
-    submitForm () {
-      let targetProp = this.isPhoneRegist ? this.phone_X : this.email_X
-
-      this.$refs[this.formRef].validateField(targetProp, (err) => {
-        if (!err) {
-          this.$refs[this.formRef].validateField('validateCode', (err) => {
-            if (!err) {
-              this.$refs[this.formRef].validateField('password', (err) => {
-                if (!err) {
-                  this.$refs[this.formRef].validateField('checkPassword', (err) => {
-                    if (!err) {
-                      this.$refs[this.formRef].validateField('agreement', (err) => {
-                        if (!err) {
-                          this.isShowSlider = true
-                        }
-                      })
-                    }
-                  })
-                }
-              })
-            }
-          })
-        }
-      })
-    },
-    changeRegType (type) {
-      if (type == this.regType) return
-      this.regType = type
-      this.resetForm()
     }
   },
   // filters: {},
@@ -550,8 +442,7 @@ export default {
     ...mapState({
       countries: state => state.common.countryAreaList,
       logoSrc: state => state.common.logoSrc,
-      remWidth_S: state => state.common.remWidth_S,
-      isMobile: state => state.user.isMobile
+      remWidth_S: state => state.common.remWidth_S
     }),
     filterCountries () {
       return _.filter(this.countries, country => {
@@ -561,18 +452,6 @@ export default {
           (english.toUpperCase()).indexOf(this.keyword.toUpperCase()) !== -1 ||
           (abbreviation.toUpperCase()).indexOf(this.keyword.toUpperCase()) !== -1
       })
-    },
-    isPhoneRegist () {
-      return this.regType == this.phone_X
-    },
-    isSuccessValidate () {
-      const {phone, email, validateCode, password, checkPassword, agreement} = this.form
-      let targetValidate = this.isPhoneRegist ? phone : email
-      return (targetValidate && validateCode && password && checkPassword && agreement)
-    },
-    // 映射真实 邀请码
-    currentInviteId () {
-      return this.inviteId && this.inviteId !== this.$routes_X.default ? this.inviteId.trim() : this.form.inviteCode
     },
     currentNationCode () {
       return _.get(this.currentCountry, 'nationCode')

@@ -110,7 +110,6 @@ export default {
     }
   },
   async created () {
-    // console.log(this.isMobile)
     // 获取 语言列表
     if (!await this.GET_LANGUAGE_LIST_ACTION()) return false
     await this.SET_PARTNER_INFO_ACTION(this.language)
@@ -129,10 +128,14 @@ export default {
   },
   mounted () {
     // 点击空白收起下拉
-    document.querySelector('.the-login-m').addEventListener('click', (e) => {
-      console.log(e.target)
-      if (e.target == this.$refs[this.languageRef] || e.target == this.$refs[this.languageIconRef]) return
-      this.langSelecting = false
+    ['.the-register-m', '.the-login-m', '.the-forget-pass-m'].forEach((selector) => {
+      let dom = document.querySelector(selector)
+      if (dom) {
+        dom.addEventListener('click', (e) => {
+          if (e.target == this.$refs[this.languageRef] || e.target == this.$refs[this.languageIconRef]) return
+          this.langSelecting = false
+        })
+      }
     })
   },
   // update () {},

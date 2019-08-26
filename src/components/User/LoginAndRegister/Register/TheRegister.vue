@@ -198,19 +198,17 @@ import TheCommonSlider from '../../../Common/CommonSlider'
 import CountDownButton from '../../../Common/CountDownCommon'
 import {EMAIL_REG} from '../../../../utils/regExp'
 import mixins from '../../../../mixins/user'
+import registerMixins from '../../../../mixins/register'
 import TheCountriesSelect from './TheCountriesSelect'
 import {
-  mapState,
-  mapActions,
-  mapMutations
+  mapState
+  // mapActions,
+  // mapMutations
 } from 'vuex'
-import {sendPhoneOrEmailCodeAjax, validateNumForUserInput} from '../../../../utils/commonFunc'
-import {newCheckUserExist, newRegisterAJAX} from '../../../../utils/api/user'
-import {formatNumber} from '../../../../utils'
-import {encrypt} from '../../../../utils/encrypt'
+import {sendPhoneOrEmailCodeAjax} from '../../../../utils/commonFunc'
 export default {
   name: 'the-register-container',
-  mixins: [mixins],
+  mixins: [mixins, registerMixins],
   components: {
     TheCommonSlider,
     CountDownButton,
@@ -375,26 +373,8 @@ export default {
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
-    ...mapActions([
-      'GET_COUNTRY_LIST_ACTION'
-    ]),
-    ...mapMutations([
-      'SET_LOGIN_TYPE',
-      'SET_STEP1_INFO',
-      'USER_LOGIN',
-      'USER_LOGOUT',
-      'CHANGE_FOOTER_ACTIVE_NAME',
-      'SET_COUNTRY_AREA_LIST'
-    ]),
-    formatValidateCode () {
-      this.form.validateCode = formatNumber(this.form.validateCode, 0)
-    },
-    formatPhone () {
-      this.form.phone = formatNumber(this.form.phone, 0)
-    },
-    formatInviteCode () {
-      this.form.inviteCode = formatNumber(this.form.inviteCode, 0)
-    },
+    // ...mapActions([]),
+    // ...mapMutations([]),
     // 发送验证码（短信、邮箱）
     async sendPhoneOrEmailCode (type) {
       this.$refs[this.formRef].validateField(this.isPhoneRegist ? this.phone_X : this.email_X, async (err) => {
@@ -416,109 +396,6 @@ export default {
         }
         await sendPhoneOrEmailCodeAjax(type, params, this)
       })
-    },
-    initInviteStatus () {
-      this.hasInviteCode = this.inviteId && this.inviteId !== this.$routes_X.default ? true : false
-      if (!this.hasInviteCode) return
-      this.form.inviteCode = this.inviteId
-    },
-    changeRegType (type) {
-      if (type == this.regType) return
-      this.regType = type
-      this.resetForm()
-    },
-    submitForm () {
-      let targetProp = this.isPhoneRegist ? this.phone_X : this.email_X
-
-      this.$refs[this.formRef].validateField(targetProp, (err) => {
-        if (!err) {
-          this.$refs[this.formRef].validateField('validateCode', (err) => {
-            if (!err) {
-              this.$refs[this.formRef].validateField('password', (err) => {
-                if (!err) {
-                  this.$refs[this.formRef].validateField('checkPassword', (err) => {
-                    if (!err) {
-                      this.$refs[this.formRef].validateField('agreement', (err) => {
-                        if (!err) {
-                          this.isShowSlider = true
-                        }
-                      })
-                    }
-                  })
-                }
-              })
-            }
-          })
-        } else {
-          return false
-        }
-      })
-    },
-    // 重置表单
-    resetForm () {
-      this.$refs[this.formRef].resetFields()
-      this.loginErrorTips = ''
-    },
-    successCallback: _.debounce(async function () {
-      this.isShowSlider = false
-      // this.isShowStep3Dialog = true
-      if (!await this.checkUserExistAjax()) return
-      await this.doRegister()
-    }, 500),
-    // 检测用户名是否存在
-    async checkUserExistAjax () {
-      const {phone, email} = this.form
-      const userName = this.isPhoneRegist ? phone : email
-      if (!validateNumForUserInput(this.regType, userName)) {
-        let params = {
-          userName,
-          regType: this.regType
-        }
-        const data = await newCheckUserExist(params)
-        if (!data) return false
-        return data
-      } else {
-        switch (this.regType) {
-          case 'phone':
-            if (this.checkoutInputFormat(0, userName)) return false
-            break
-          case 'email':
-            if (this.checkoutInputFormat(1, userName)) return false
-            break
-        }
-      }
-    },
-    jumpToUserAgreement () {
-      let routeData = this.$router.resolve({
-        path: '/ServiceAndProtocol'
-      })
-      this.CHANGE_FOOTER_ACTIVE_NAME({
-        type: '/ServiceAndProtocol',
-        activeName: 'UserProtocol'
-      })
-      window.open(routeData.href, '_blank')
-    },
-    // 确定注册
-    async doRegister () {
-      const { phone, email, password, validateCode } = this.form
-      let params = {
-        country: this.activeNationCode,
-        userName: this.isPhoneRegist ? phone : email,
-        password: encrypt(password),
-        checkCode: validateCode,
-        inviter: this.currentInviteId,
-        regType: this.regType
-      }
-      const data = await newRegisterAJAX(params)
-      if (!data) return
-      this.resetForm()
-      this.$goToPage(`${this.$PCRegisterSuccessRouter_G_X}/${this.inviteId}`)
-    },
-    initCountry () {
-      if (this.countries.length) {
-        const { nationCode } = this.countries[0]
-        this.activeNationCode = nationCode
-      }
     }
   },
   // filters: {},
@@ -527,16 +404,9 @@ export default {
       countries: state => state.common.countryAreaList,
       isMobile: state => state.user.isMobile
     }),
-    // 映射真实 邀请码
-    currentInviteId () {
-      return this.inviteId && this.inviteId !== this.$routes_X.default ? this.inviteId : this.form.inviteCode
-    },
     isSubmitButtonDisabled () {
       const {username, password} = this.form
       return !username || !password
-    },
-    isPhoneRegist () {
-      return this.regType == this.phone_X
     },
     isSuccessValidate () {
       const {phone, email, validateCode, password, checkPassword, agreement} = this.form
@@ -562,7 +432,6 @@ export default {
       }
     },
     isMobile (New) {
-      console.log(New)
       this.$goToPage(
         New ? `/${this.$routes_X.login}/${this.$routes_X.register}/${this.currentInviteId}`
           : `/${this.$routes_X.register}/m/${this.currentInviteId}`
