@@ -902,6 +902,7 @@ export default {
 
           .send-code-btn {
             width: 90px;
+            height: 36px;
           }
 
           .input {
@@ -965,13 +966,13 @@ export default {
       }
 
       .el-input-group {
-        width: 131px;
+        width: 220px;
         margin-right: 0;
         border-radius: 4px;
       }
 
       .el-input-group__append {
-        padding: 0;
+        padding: 1px 0 0;
         border-left: 0;
         border-radius: 0 4px 4px 0;
         cursor: pointer;
@@ -1078,6 +1079,7 @@ export default {
         }
 
         .el-input-group__append {
+          width: 100%;
           border: none;
           background-color: #338ff5;
         }
