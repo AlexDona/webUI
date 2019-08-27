@@ -655,6 +655,9 @@ export default {
                     >.count-down
                       border-left .016rem solid S_main_color
                       text-align right
+                      background-color transparent
+                      .el-button
+                        background-color transparent
                       >span
                         font-size fontSize !important
               /* 国家选择 */
