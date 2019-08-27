@@ -664,10 +664,9 @@ export default {
     }
     await this.getSecurityCenter('logon-record')
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
@@ -675,7 +674,6 @@ export default {
     ]),
     // 禁止回车事件
     killDefault (event) {
-      console.log(event)
       var evt = window.event || event
       if (evt.keyCode == 13) {
         if (evt.preventDefault) {
@@ -712,7 +710,6 @@ export default {
       await getSecurityCenter(this, params, (data) => {
         if (data) {
           this.securityCenter = getNestedData(data, 'data.data')
-          console.log(this.securityCenter)
           this.securityLevel = getNestedData(data, 'data.data.person')
           switch (entrustType) {
             case 'logon-record':
@@ -724,8 +721,6 @@ export default {
             case 'security-record':
               // 安全设置列表
               this.securityRecord = getNestedData(data, 'data.data.setLog.list')
-              console.log('安全设置列表')
-              console.log(this.securityRecord)
               // 安全设置分页
               this.totalPageMySecurityRecordPage = getNestedData(data, 'data.data.setLog.pages') - 0
               break
@@ -735,7 +730,6 @@ export default {
     },
     // 分页
     async changeCurrentPage (entrustType, pageNum) {
-      // console.log(pageNum)
       switch (entrustType) {
         // 登陆记录分页
         case 'logon-record':
@@ -771,12 +765,9 @@ export default {
     },
     // 发送验证码
     sendPhoneOrEmailCode (loginType) {
-      // console.log(this.disabledOfPhoneBtn)
-      // console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
-      // console.log(this.userInfo)
       let params = {
         userId: this.userInfo.userId
       }
@@ -837,8 +828,6 @@ export default {
     },
     // 关闭开启验证状态事件
     showStatusVerificationClose (paymentType, safeState) {
-      // console.log(paymentType)
-      // console.log(safeState)
       this.emailCode = ''
       this.phoneCode = ''
       this.googleCode = ''
@@ -937,7 +926,6 @@ export default {
     async confirmTransactionPassword (type, state) {
       if (state === 'enable') {
         if (!this.phoneCode && !this.emailCode && !this.googleCode) {
-          console.log(1)
           // 请输入验证码
           this.closeErrorMsg = this.$t('M.user_please_input12')
           return false
@@ -971,9 +959,7 @@ export default {
       }
       switch (type) {
         case 'email':
-          // console.log(type)
           params.type = 'email'
-          // console.log(params)
           if (state === 'enable') {
             params.status = 'enable'
           } else {

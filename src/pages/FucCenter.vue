@@ -396,6 +396,9 @@
 <script>
 import {mapState, mapGetters} from 'vuex'
 import {getSchedule} from '../utils/api/common'
+import {routesVariable} from '../router/routesVariable'
+
+const {exchange} = routesVariable
 export default {
   name: 'FucCenter',
   data () {
@@ -446,7 +449,7 @@ export default {
 
     handleFuc () {
       this.$router.push({
-        path: '/TradeCenter/fucfbt'
+        path: `/${exchange}/fucfbt`
       })
     },
 
@@ -526,7 +529,6 @@ ul {
 
 .container {
   min-width: 1366px;
-  padding-top: 50px;
   font-family: Bahnschrift-Regular;
   background: #272b41;
 

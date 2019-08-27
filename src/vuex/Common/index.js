@@ -95,7 +95,6 @@ const state = {
   withdrawDepositList: [], // 我的资产列表信息数据
   userRefreshUserList: [], // 刷新用户信息
   userInfoRefreshStatus: false, // 用户信息接口刷新状态
-  // logoSrc: require('../../assets/develop/logo.png'),
   logoSrc: '',
   footerInfo: {
     footerInfo1: {},
@@ -103,7 +102,10 @@ const state = {
     configInfo: {}
   },
   isSymbolChanged: false,
+  // 屏幕实际宽度
   clientWidth: 0,
+  // 1rem 对应宽度
+  remWidth_S: 0,
   newsItemId: '',
   // 交易密码是否被锁定
   isLockedPayPassword: false,

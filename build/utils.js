@@ -59,7 +59,7 @@ exports.cssLoaders = function (options) {
     css: generateLoaders(),
     postcss: generateLoaders(),
     // less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
+    sass: generateLoaders('sass', {indentedSyntax: true}),
     scss: generateLoaders('sass'),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
@@ -98,4 +98,20 @@ exports.createNotifierCallback = () => {
       icon: path.join(__dirname, 'logo.png')
     })
   }
+}
+
+exports.getLocalIP = () => {
+  // 在开发环境中获取局域网中的本机iP地址
+  const interfaces = require('os').networkInterfaces()
+  let IPAdress = ''
+  for (let devName in interfaces) {
+    var iface = interfaces[devName]
+    for (let i = 0; i < iface.length; i++) {
+      var alias = iface[i]
+      if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+        IPAdress = alias.address
+      }
+    }
+  }
+  return IPAdress
 }

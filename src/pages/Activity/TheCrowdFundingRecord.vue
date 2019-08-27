@@ -134,7 +134,6 @@ export default {
     await this.getCrowdFundingRecord()
   },
   // mounted () {},
-  // activated () {},
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},

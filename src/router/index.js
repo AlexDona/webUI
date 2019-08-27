@@ -15,6 +15,7 @@ const routerCreator = () => {
     'linkActiveClass': 'active',
     'linkExactActiveClass': 'active'
   })
+  console.log(store.state.user.isMobile)
   router.beforeEach(async (to, from, next) => {
     if (to.path === `/${routesVariable.home}`) {
       if (store.state.common.language) {
@@ -25,17 +26,27 @@ const routerCreator = () => {
       store.commit('CHANGE_ROUTER_PATH', from.path)
     }
     const token = getCookie('token')
-    if (store.state.user.loginStep1Info.userInfo && token && !_.get(store.state.user, 'loginStep1Info.userInfo.notNeedLogin')) {
+    if (token && !_.get(store.state.user, 'loginStep1Info.userInfo.notNeedLogin')) {
       store.commit('USER_LOGIN', store.state.user.loginStep1Info)
     }
     if (to.matched.some(m => m.meta.auth)) {
       if (store.state.user.isLogin) {
         next()
       } else {
-        next({path: '/login', query: {Rurl: to.fullPath}})` `
+        next({path: `/${routesVariable.login}`, query: {Rurl: to.fullPath}})` `
       }
     } else {
       next()
+    }
+    if (store.state.user.isMobile) {
+      // 登录判断限制
+      if (to.path === `/${routesVariable.login}/${routesVariable.normalLogin}`) {
+        next({path: `/${routesVariable.login}/m`})
+      }
+      console.log(to.path)
+      if (to.path.startsWith(`/${routesVariable.login}/${routesVariable.register}`) && to.path !== `/${routesVariable.login}/${routesVariable.register}/default`) {
+        next({path: `/${routesVariable.register}/${routesVariable.invite}/${to.path.split('/').reverse()[0]}`})
+      }
     }
     next()
   })

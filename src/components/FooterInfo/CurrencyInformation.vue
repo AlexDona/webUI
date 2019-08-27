@@ -61,15 +61,11 @@ export default {
     }
   },
   async created () {
-    console.log(this.middleTopData)
     await this.initInfoList()
   },
-  mounted () {},
-  activated () {
-    console.log('test')
-  },
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     async initInfoList () {
       await this.getFootCurrencyInfoList()

@@ -1,46 +1,35 @@
-<template>
-  <div
-    class="invitation-register-box"
-  >
-    <HeaderCommonForMobile
-      :style="{
-        display: 'none'
-      }"
-    />
-    <div class="logo">
-      <img :src="logoSrc">
-    </div>
-    <div class="inner-box">
-      <!-- 您的好友 -->
-      <p>{{$t('M.invitation_register_your_friends')}}{{phoneNumberFormat(inviter)}}</p>
-      <!-- 邀请您注册 -->
-      <p class="strong"> {{this.$t('M.invitation_register_please_you_register')}} <span
-        class="yellow"
-        v-if="configInfo"
-      >{{configInfo.otcAd}}</span></p>
-      <div class="bg">
-        <img src="../assets/develop/register-big-url.png">
-      </div>
-      <router-link
-        :to="`/${$routes_X.login}/${$routes_X.register}/${$route.query.showId}`"
-        class="register-btn"
-      >
-        <!-- 立即注册领取 -->
-        {{$t('M.invitation_register_immediately_register_get')}}
-      </router-link>
-    </div>
-    <WeChatMask
+<!--
+  author: zhaoxinlei
+  update: 20190817
+  description: 当前页面为邀请注册页面
+-->
+<template lang="pug">
+  .invitation-register-box(
+    @ondblclick="ondblclick"
+    @touchmove="touchmove"
+  )
+    HeaderCommonForMobile(:style="{display: 'none'}")
+    .logo
+      img(:src="logoSrc")
+    .inner-box
+      // 您的好友
+      p {{$t('M.invitation_register_your_friends')}}{{phoneNumberFormat(inviter)}}
+      // 邀请您注册
+      p.strong {{this.$t('M.invitation_register_please_you_register')}}
+        span.active(v-if="configInfo") {{configInfo.otcAd}}
+      .bg
+        img(src="../assets/develop/register-big-url.png")
+      //  立即注册领取
+      router-link.register-btn(:to="`/${$routes_X.register}/m/${showId}`") {{$t('M.register_m_invite_label')}}
+    WeChatMask(
       :isAndroid="isAndroid"
       :language="language"
       :isIOS="isIOS"
       :isWXBrowserStatus="isWXBrowserStatus"
-    />
-  </div>
+    )
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 import {
-  // getFooterInfo,
   isWXBrowser,
   getNestedData
 } from '../utils/commonFunc'
@@ -61,11 +50,10 @@ export default {
     HeaderCommonForMobile,
     WeChatMask
   },
-  // props,
+  props: ['showId'],
   data () {
     return {
       inviter: '',
-      showId: '',
       queryLanguage: '', // 参数语言
       isAndroid: false,
       isIOS: false
@@ -78,32 +66,64 @@ export default {
     console.log('created')
     this.findUserInfoByShowId()
   },
-  mounted () {},
-  activited () {
-    console.log(2)
+  mounted () {
+    // 禁止横屏
+    window.addEventListener('orientationchange', function (e) {
+      this.orient()
+      e.preventDefault()
+      return false
+    }, false)
+    // 禁止拖动
+    document.ondragstart = document.onselectstart = function () {
+      return false
+    }
+    // 禁止滑动
+    document.addEventListener('touchmove', function (event) {
+      event.preventDefault()
+    })
+    var lastTouchEnd = 0
+    document.documentElement.addEventListener('touchend', function (event) {
+      var now = Date.now()
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault()
+      }
+      lastTouchEnd = now
+    }, false)
   },
-  update () {},
-  destroyed () {
-    // removeStore('language')
-  },
+  // update () {},
+  // destroyed () {},
   methods: {
-    ...mapMutations([
-      'CHANGE_LANGUAGE',
-      'SET_FOOTER_INFO'
-    ]),
+    ...mapMutations(['SET_FOOTER_INFO']),
+    // 横屏
+    orient () {
+      if (window.orientation == 0 || window.orientation == 180) {
+        orientation = 'portrait'
+        return false
+      } else if (window.orientation == 90 || window.orientation == -90) {
+        orientation = 'landscape'
+        return false
+      }
+    },
+    touchmove (e) {
+      e.preventDefault()
+    },
+    ondblclick (e) {
+      e.preventDefault()
+      return false
+    },
     phoneNumberFormat (target) {
       return phoneNumberFormat(target)
     },
     async findUserInfoByShowId () {
       const params = {
-        showId: this.$route.query.showId
+        showId: this.showId
       }
       const data = await findUserInfoByShowId(params)
       if (!data) return false
       this.inviter = getNestedData(data, 'data.userName')
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       isMobile: state => state.user.isMobile,
@@ -111,46 +131,48 @@ export default {
       configInfo: state => state.common.footerInfo.configInfo
       // language: state => state.common.language,
     }),
-    language () {
-      return this.$route.query.language
-    },
     isChineseLanguage () {
       return this.language === 'zh_CN' ||
         this.language === 'zh_TW'
     },
+    language () {
+      return (navigator.browserLanguage || navigator.language).startsWith('zh') ? 'zh_CN' : 'en_US'
+    },
     isWXBrowserStatus () {
       return isWXBrowser()
     }
-  },
-  watch: {
   }
+  // watch: {
+  // }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
   .invitation-register-box {
+    position: fixed;
+    top: 0;
+    left: 50%;
     width: 100%;
     height: 100%;
+    padding: .3rem;
     overflow: hidden;
-    background: linear-gradient(150deg, rgba(30, 38, 54, 1), rgba(37, 75, 117, 1));
+    background: #272b41;
+    transform: translateX(-50%);
 
     > .logo {
       box-sizing: border-box;
-      height: 120px;
+      width: 2rem;
       padding: 0 20px;
-      line-height: 120px;
 
       > img {
         display: inline-block;
-        height: 100px;
-        margin-top: 10px;
+        width: 2rem;
       }
     }
 
     > .inner-box {
-      width: 100%;
-      height: 100%;
-      padding: 4rem 2rem;
-      font-size: .8rem;
+      padding: 1rem;
+      margin: 0 auto;
+      font-size: .7rem;
       text-align: center;
       color: #fff;
 
@@ -160,32 +182,29 @@ export default {
         line-height: 2.4rem;
         white-space: nowrap;
 
-        > .yellow {
-          color: #ffec2d;
+        > .active {
+          border-bottom: 1px solid #2debf7;
+          line-height: 1rem;
+          color: #2debf7;
         }
       }
 
       > .bg {
-        height: 18rem;
-
         > img {
-          width: 80%;
-          margin: 2rem auto;
+          width: 60%;
+          margin: 1rem auto;
         }
       }
 
       > .register-btn {
-        display: inline-block;
-        height: 3rem;
-
-        /* width:10rem; */
-        padding: 0 .5rem;
-        border-radius: 10px;
-        font-size: 1.2rem;
-        line-height: 3rem;
+        /* width: 6.77rem; */
+        height: 1.06rem;
+        padding: .5rem 1rem;
+        border-radius: .06rem;
+        font-size: .8rem;
         color: #fff;
-        background: linear-gradient(81deg, rgba(61, 152, 249, 1) 0%, rgba(71, 135, 255, 1) 100%);
-        box-shadow: 0 3px 8px 0 rgba(26, 42, 71, 1);
+        background: linear-gradient(81deg, rgba(42, 59, 97, 1), rgba(18, 71, 133, 1));
+        box-shadow: 0 3px 8px 0 rgba(0, 0, 0, .25);
       }
     }
   }

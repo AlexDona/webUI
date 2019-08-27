@@ -69,7 +69,11 @@ export const routesVariable = {
   // 登录二次确认页面
   confirmUserInfo: 'confirm',
   nofind404: 'nofind404',
-  serverError: '500'
+  serverError: '500',
+  downloadApp: '/downloadApp',
+  // 邀请注册
+  invite: 'invite',
+  default: 'default'
 }
 
 export const globalLabel = {

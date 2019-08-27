@@ -198,13 +198,9 @@ export default {
       this.getTradeMarketData()
     }
   },
-  mounted () {
-  },
-  activated () {},
-  update () {
-  },
-  beforeRouteUpdate () {
-  },
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_COLLECT_LIST',
@@ -326,7 +322,7 @@ export default {
       setStore('activeSymbol', id)
       this.SET_MIDDLE_TOP_DATA(activeSymbol)
       this.CHANGE_SYMBOL_CHANGED_STATUS(true)
-      const TradeStr = '/TradeCenter/'
+      const TradeStr = `/${this.$routes_X.exchange}/`
       this.$goToPage(`${TradeStr}${id}`)
       let {href} = window.location
 

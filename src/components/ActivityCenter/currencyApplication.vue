@@ -58,10 +58,9 @@ export default {
     // 上币申请动态文案
     await this.getServiceProtocolData()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapActions([
       'GET_CURRENCY_URL_ACTION'

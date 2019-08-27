@@ -537,7 +537,6 @@ export default {
                   text-align center
                   font-size 14px
                   // background linear-gradient(0deg,rgba(43,58,110,1),rgba(42,80,129,1))
-                  background pink
                 /deep/
                 .content
                   p

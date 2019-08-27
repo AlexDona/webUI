@@ -327,10 +327,9 @@ export default {
   created () {
     this.getEntrustData()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS',

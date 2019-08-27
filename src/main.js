@@ -44,7 +44,8 @@ import {
   Loading,
   MessageBox,
   Message,
-  Upload
+  Upload,
+  Tooltip
 } from 'element-ui'
 import 'animate.css'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -85,6 +86,7 @@ Vue.use(Pagination)
   .use(Progress)
   .use(Loading.directive)
   .use(Upload)
+  .use(Tooltip)
 Vue.prototype.$loading = Loading.service
 Vue.prototype.$msgbox = MessageBox
 Vue.prototype.$confirm = MessageBox.confirm
@@ -99,7 +101,6 @@ Vue.component(Message)
 
 const store = storeCreator()
 const router = routerCreator()
-console.log(lang)
 // 多语言
 const i18n = new VueI18n({
   locale: getStore('language') || store.state.common.defaultLanguage, // 语言标识

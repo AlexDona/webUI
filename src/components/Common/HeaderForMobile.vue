@@ -1,3 +1,8 @@
+<!--
+  author: zhaoxinlei
+  update: 20190816
+  description: 当前页面为移动端header
+-->
 <template>
   <div
     class="mobile-header-box"
@@ -8,29 +13,52 @@
         <router-link
           :to="`/${$routes_X.home}`"
           class="logo"
+          v-show="isShowLogo"
+          v-if="isAllowLinkJump"
         >
         <img
           class="img"
           :src="logoSrc"
         >
         </router-link>
+        <a
+          href="javascript:void(0);"
+          v-else
+          class="logo"
+          v-show="isShowLogo"
+        >
+          <img
+            class="img"
+            :src="logoSrc"
+          >
+        </a>
       </div>
       <!--注册登录-->
       <div class="right login">
-        <ul class="ul-list">
+        <ul
+          class="ul-list"
+        >
           <!--切换语言-->
-          <li class="li-item">
+          <li
+            class="li-item"
+          >
             <dl
               class="lang-box"
-              @mouseenter="toggleShowLanguageBox(1)"
-              @mouseleave="toggleShowLanguageBox(0)"
-              @click="toggleShowLanguageBox(1)"
+              :class="{active: langSelecting}"
+              @click="toggleShowLanguageBox(!langSelecting)"
             >
               <dt
                 class="lang-selected"
               >
-                <span class="language-text">{{activeLanguage.name}}</span>
-                <i class="el-icon-caret-bottom"></i>
+                <span
+                  class="language-text"
+                  :ref="languageRef"
+                >{{activeLanguage.name}}</span>
+                <i
+                  class="el-icon-caret-bottom"
+                  :ref="languageIconRef"
+                  :class="{active: langSelecting}"
+                ></i>
               </dt>
               <el-collapse-transition>
                 <dd
@@ -62,19 +90,26 @@ import {
   mapActions
 } from 'vuex'
 export default {
-  components: {
+  // components: {},
+  props: {
+    isShowLogo: {
+      default: true
+    },
+    isAllowLinkJump: {
+      default: true
+    }
   },
-  // props,
   data () {
     return {
       // 语言选择中
       langSelecting: false,
       // langSelecting: true,
-      activeTheme: ''
+      activeTheme: '',
+      languageRef: 'language-ref',
+      languageIconRef: 'language-icon-ref'
     }
   },
   async created () {
-    // console.log(this.isMobile)
     // 获取 语言列表
     if (!await this.GET_LANGUAGE_LIST_ACTION()) return false
     await this.SET_PARTNER_INFO_ACTION(this.language)
@@ -91,8 +126,18 @@ export default {
       this.REFRESH_USER_INFO_ACTION()
     }
   },
-  // mounted () {},
-  // activated () {},
+  mounted () {
+    // 点击空白收起下拉
+    ['.the-register-m', '.the-login-m', '.the-forget-pass-m'].forEach((selector) => {
+      let dom = document.querySelector(selector)
+      if (dom) {
+        dom.addEventListener('click', (e) => {
+          if (e.target == this.$refs[this.languageRef] || e.target == this.$refs[this.languageIconRef]) return
+          this.langSelecting = false
+        })
+      }
+    })
+  },
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
@@ -156,18 +201,19 @@ export default {
   .mobile-header-box {
     > .inner-box {
       display: flex;
+      box-sizing: border-box;
       width: 100%;
-      height: 160px;
+      height: 1.44rem;
       padding: 0 1rem;
-      line-height: 160px;
+      line-height: 1.44rem;
 
       > .left {
-        height: 80px;
-        margin-top: 40px;
+        height: 1.44rem;
+        margin-top: .22rem;
 
         > a {
           > .img {
-            height: 80px;
+            height: 1rem;
             vertical-align: top;
           }
         }
@@ -179,7 +225,7 @@ export default {
         color: #fff;
 
         > .ul-list {
-          height: 100%;
+          height: 1.44rem;
           text-align: right;
 
           > .li-split {
@@ -210,15 +256,34 @@ export default {
               text-align: left;
               transition: all 1s;
 
+              &::before {
+                position: absolute;
+                top: 1.44rem;
+                left: 0;
+                width: 0;
+                height: 0;
+                border-bottom: .21rem solid transparent;
+                border-left: .21rem solid transparent;
+                content: '';
+                border-right: .21rem solid transparent;
+              }
+
+              &.active {
+                &::before {
+                  border-bottom: .21rem solid #1d2033;
+                }
+              }
+
               /* 当前语言 dt */
               > .lang-selected {
                 display: inline-block;
                 box-sizing: border-box;
                 width: 100%;
-                height: 30px;
-                padding: 10px 12px;
-                font-size: .86453968rem;
-                line-height: 0;
+                height: 1.44rem;
+
+                /* padding: 10px 12px; */
+                font-size: .66rem;
+                line-height: 1.44rem;
 
                 > .icon {
                   margin-right: 5px;
@@ -226,31 +291,45 @@ export default {
 
                 > .language-text {
                   display: inline-block;
+                  font-size: .72rem;
+                }
+
+                /deep/ {
+                  .el-icon-caret-bottom {
+                    transition: all .3s;
+
+                    &.active {
+                      transform: rotate(180deg);
+                    }
+                  }
                 }
               }
 
               > .lang-list {
                 position: absolute;
                 z-index: 2;
-                top: 120px;
+                top: 1.64rem;
                 left: 0;
-                width: 5rem;
-                background-color: #2a3242;
+                padding: .5rem 0;
+                border-radius: 4px;
+                background-color: #1d2033;
+                box-shadow: 0 3px 10px 0 rgba(19, 22, 39, .83);
 
                 > .lang-item {
                   display: block;
                   box-sizing: border-box;
                   width: 100%;
-                  height: 1.5rem;
-                  padding: 0 .5rem;
-                  font-size: .72044974rem;
-                  line-height: 1.5rem;
+                  height: 1.2rem;
+                  padding: 0 .3rem;
+                  font-size: .66rem;
+                  line-height: 1.2rem;
                   text-align: left;
+                  white-space: nowrap;
                   color: #fff;
                   transition: all 1s;
 
                   &:hover {
-                    background-color: $mainColor;
+                    background-color: #121526;
                   }
 
                   > .icon {

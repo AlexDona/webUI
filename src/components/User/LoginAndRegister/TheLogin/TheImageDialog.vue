@@ -7,10 +7,10 @@
   el-dialog.image-code-dialog(
     :title="`${$t('M.forget_pass_image_tips')}`"
     :visible="$isShowLoginImageDialog_S_X"
-    width="486px"
+    :width="!isMobile ? '486px' : '11rem'"
     :close-on-click-modal="false"
     @close="$UPDATE_LOGIN_IMAGE_DIALOG_STATUS_M_X(false)"
-    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X }"
+    :class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X,mobile: isMobile }"
   )
     el-form(
       :model="validateForm"
@@ -33,6 +33,7 @@
           @keyup.enter.native.stop="checkImageCode"
           :placeholder="$t('M.login_step2_image_tips1')"
           clearable
+          maxlength="4"
         )
           template(slot="append")
             .image-button.cursor-pointer(
@@ -40,9 +41,11 @@
             )
               ImageValidate(
                 id="login-image"
-                :content-width="80"
-                :content-height="33"
+                :content-width="!isMobile ? 80 : 2.4 * remWidth_S "
+                :content-height="!isMobile ? 33 : 1.1 * remWidth_S "
                 :identifyCode="imageCode"
+                :fontSizeMin="!isMobile ? 14 : .44 * remWidth_S"
+                :fontSizeMax="!isMobile ? 38 : 1.2 * remWidth_S"
               )
       el-form-item.submit-form(
         label=""
@@ -104,7 +107,10 @@ export default {
   },
   // filters: {},
   computed: {
-    ...mapState({})
+    ...mapState({
+      isMobile: state => state.user.isMobile,
+      remWidth_S: state => state.common.remWidth_S
+    })
   },
   watch: {
     $isShowLoginImageDialog_S_X (New) {
@@ -117,6 +123,7 @@ export default {
 
 <style scoped lang="stylus">
   @import '../../../../assets/CSS/index.styl'
+  fontSize = .5rem
   .image-code-dialog
     -moz-user-select none
     -webkit-user-select none
@@ -193,6 +200,10 @@ export default {
                   border-color #25283D
                   color #fff
                   border-right none
+                  &:focus
+                    border-color S_main_color !important
+                    & ~.el-input-group__append
+                      border-color S_main_color !important
                 .el-input-group__append
                   background-color transparent
                   border-color #25283D
@@ -230,4 +241,88 @@ export default {
                     border none
                     background linear-gradient(81deg,rgba(106,182,244,1), rgba(49,135,218,1))
                     box-shadow 0 3px 6px 0 rgba(26,42,71,0.27)
+    &.mobile
+      /deep/
+        .el-dialog
+          height 7rem
+          border-radius .16rem
+          overflow hidden
+          .el-dialog__header
+            height 1rem
+            line-height 1rem
+            padding 0 .48rem
+            .el-dialog__title
+              height 1rem
+              line-height 1rem
+              display inline-block
+              font-size fontSize
+            .el-dialog__headerbtn
+              top .2rem
+              right .48rem
+              .el-dialog__close
+                font-size fontSize
+          .el-dialog__body
+            padding 1.48rem .5rem 0
+            .el-form
+              .el-form-item
+                margin-bottom .56rem
+                .el-input__inner
+                  padding 0 .5rem
+                  height 1.2rem
+                  line-height 1.2rem
+                  box-sizing border-box
+                  border-right none
+                  font-size .4rem
+                .el-input__suffix
+                  right .22rem
+                  >.el-input__suffix-inner
+                    >.el-input__clear
+                      font-size fontSize
+                      line-height 1.2rem
+                      width .8rem
+                .el-input-group__append
+                  hieght 1rem
+                  line-hieght 1rem
+                  border-left none
+                  .s-canvas
+                    display flex
+                    flex-direction column
+                    justify-content center
+                &.submit-form
+                  text-align center
+                  .el-button
+                    width 4.83rem
+                    height 1.2rem
+                    border none
+                    border-radius .02rem
+                    font-size fontSize
+      &.night,&.day
+        background-color rgba(11,12,20,.8)
+        /deep/
+          .el-dialog
+            background-color #2b304c
+            .el-dialog__header
+              background-color #25283D
+              .el-dialog__title
+                color S_day_bg
+            .el-dialog__body
+              .el-form
+                .el-form-item
+                  .el-input__inner
+                    background-color #1a2233
+                    border .016rem solid #485776
+                    color #fff
+                    border-right none
+                  .el-input-group__append
+                    background-color #1a2233
+                    border .016rem solid #485776
+                    width 2.46rem
+                    /*border-color #25283D*/
+                    border-left none
+                  &.submit-form
+                    .el-button
+                      color #fff
+                      border none
+                      background linear-gradient(81deg,rgba(18,71,133,1), rgba(42,59,97,1))
+                      box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
 </style>

@@ -90,7 +90,6 @@ export default {
     await this.getCrowdFunding()
   },
   // mounted () {},
-  // activated () {},
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},

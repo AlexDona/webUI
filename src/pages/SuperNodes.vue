@@ -165,7 +165,7 @@ import {
 } from 'vuex'
 export default {
   name: 'SuperNodes',
-  components: {},
+  // components: {},
   // props,
   data () {
     return {
@@ -272,16 +272,15 @@ export default {
       ]
     }
   },
-  created () {},
+  // created () {},
   mounted () {
     window.addEventListener('scroll', this.handleScroll)
   },
-  activated () {},
-  update () {},
+  // update () {},
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
   },
-  beforeRouteUpdate () {},
+  // beforeRouteUpdate () {},
   methods: {
     handleScroll () {
       let equitiesDiv = document.getElementById('equitiesDiv')
@@ -299,14 +298,14 @@ export default {
       }
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       // 公司名称fubt fbt、fuc、邮箱等信息
       configInfo: state => state.common.footerInfo.configInfo
     })
-  },
-  watch: {}
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -545,7 +544,6 @@ export default {
 
   .super-nodes-box {
     width: 100%;
-    padding-top: 50px;
     color: #81868f;
     background-color: #f5f9fa;
 

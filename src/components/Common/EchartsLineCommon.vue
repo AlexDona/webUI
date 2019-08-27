@@ -79,7 +79,6 @@ export default {
     this.chart = echarts.init(document.getElementById(this.id))
     this.chart.setOption(this.options)
   },
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   // methods: {},

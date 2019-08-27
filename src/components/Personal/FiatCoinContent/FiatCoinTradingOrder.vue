@@ -12,11 +12,14 @@
         :key="index"
       >
         <!-- 订单列表 ：1.0 买单 -->
-        <div class="order" v-if="!showOrderAppeal[index] && item.orderType === 'BUY'">
+        <div
+          class="order"
+          v-if="!showOrderAppeal[index] && item.orderType === 'BUY'"
+        >
           <!-- 1.1 表头 -->
           <div class="order-list-head">
             <div class="left">
-              <!-- 买卖家 -->
+              <!-- 卖家 -->
               <div class="buyer-seller">
                 <!--卖家-->
                 {{$t('M.otc_seller')}}：
@@ -24,11 +27,8 @@
                   class="cursor-pointer"
                   @click="jumpMerchantInfoPage(item.sellId)"
                 >
-                  <span v-if="item.sellNickName">
+                  <span>
                     {{item.sellNickName}}
-                  </span>
-                  <span v-else>
-                    {{item.sellName}}
                   </span>
                 </span>
               </div>
@@ -41,10 +41,10 @@
                 <!--订单号-->
                 {{$t('M.otc_MerchantsOrders_orderNum')}}：{{item.orderSequence}}
               </div>
-              <!-- 挂单时间 -->
+              <!-- 下单时间 -->
               <div class="deal-time">
-                <!--挂单时间-->
-                {{$t('M.otc_entrust_time')}}：{{item.createTime}}
+                <!--下单时间-->
+                {{$t('M.otc_stocks_ordertime')}}：{{item.createTime}}
               </div>
               <div class="order-list-head-icon buy-icon"></div>
               <div class="buy-sell-icon">
@@ -100,11 +100,12 @@
                     {{$t('M.comm_count')}}：{{item.pickCount}}
                   </span>
                 </p>
+                <!-- 卖家姓名 -->
+                <p class="trade-info">
+                  {{$t('M.otc_trading_seller_name')}}：{{item.sellName}}
+                </p>
                 <!-- 卖家手机号 -->
-                <!-- 付款前不显示 -->
-                <p
-                  class="trade-info"
-                >
+                <p class="trade-info">
                   <!--卖家手机号-->
                   {{$t('M.otc_trading_sellphone')}}：{{item.sellPhone}}
                 </p>
@@ -128,6 +129,7 @@
                     </div>
                     <!--选择支付方式-->
                     <el-select
+                      class="select-pay-type"
                       :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_index_Payment_method')"
                       :no-data-text="$t('M.comm_no_data')"
                       v-model="activePayModeList[index]"
@@ -378,6 +380,7 @@
                 <!-- 注意 -->
                 <p class="action-tips">
                   <!--注意！计时结束前未手动转账并点击"确认付款"，您的订单将自动取消，若上述情况累计出现3次，您的账户将被冻结24小时。-->
+                  <!--20190827周期改了这句话：注意！请在规定的时间内完成付款，若当日取消订单或超时未付款累计出现x次，您的账户将被冻结，请谨慎操作。解冻账户，请咨询在线客服。-->
                   {{$t('M.otc_tradingorder_notice1')}}{{configInfo.otcUnpaidTimes}}{{$t('M.otc_tradingorder_notice2')}}
                 </p>
               </div>
@@ -400,7 +403,7 @@
                   </el-button>
                 </p>
                 <p class="action-tips">
-                  <!--注意！请联系卖家确认收款并确认订单，如果卖家{{item.completeTerm/3600}}小时内未确认订单，系统自动成交。-->
+                  <!--注意！请联系卖家确认收款，如果卖家0.5小时内未确认订单，你可以提出申诉。-->
                   {{$t('M.otc_warm_prompt0')}}{{item.completeTerm/3600}}{{$t('M.otc_warm_prompt00')}}
                 </p>
               </div>
@@ -423,11 +426,8 @@
                   class="cursor-pointer"
                   @click="jumpMerchantInfoPage(item.buyId)"
                 >
-                  <span v-if="item.buyNickName">
+                  <span>
                     {{item.buyNickName}}
-                  </span>
-                  <span v-else>
-                    {{item.buyName}}
                   </span>
                 </span>
               </div>
@@ -440,10 +440,10 @@
                 <!--订单号-->
                 {{$t('M.otc_MerchantsOrders_orderNum')}}：{{item.orderSequence}}
               </div>
-              <!-- 挂单时间 -->
+              <!-- 下单时间 -->
               <div class="deal-time">
-                <!--挂单时间-->
-                {{$t('M.otc_entrust_time')}}：{{item.createTime}}
+                <!--下单时间-->
+                {{$t('M.otc_stocks_ordertime')}}：{{item.createTime}}
               </div>
               <div class="order-list-head-icon sell-icon"></div>
               <div class="buy-sell-icon">
@@ -496,10 +496,13 @@
                     {{$t('M.comm_count')}}：{{item.pickCount}}
                   </span>
                 </p>
-                <!-- 卖家手机号 -->
+                <!-- 买家姓名 -->
+                <p class="trade-info">
+                  {{$t('M.otc_trading_buyer_name')}}：{{item.buyName}}
+                </p>
+                <!-- 买家手机号 -->
                 <p class="trade-info">
                   <!--买家手机号-->
-                  <!-- {{$t('M.otc_trading_sellphone')}}：{{item.buyPhone}} -->
                   {{$t('M.otc_trading_buyphone')}}：{{item.buyPhone}}
                 </p>
               </div>
@@ -520,7 +523,7 @@
               </div>
               <!-- 付款后 -->
               <div class="middle-content"
-                v-if="item.status == 'PAYED'"
+                   v-if="item.status == 'PAYED'"
               >
                 <div class="trader-info display-inline-block">
                   <p class="bankMoneyInfo">
@@ -750,14 +753,18 @@
         </div>
       </div>
       <!-- 二、暂无数据 -->
-      <div class="no-data font-size12" v-if="!tradingOrderList.length">
+      <div
+        class="no-data font-size12"
+        v-if="!tradingOrderList.length"
+      >
         <!--暂无数据-->
         {{ $t('M.comm_no_data') }}
       </div>
       <!-- 三、分页-->
       <el-pagination
+        class="pages"
         background
-        v-show="tradingOrderList.length"
+        v-show="tradingOrderList.length && legalTradePageTotals - 1 > 0"
         layout="prev, pager, next"
         :current-page="legalTradePageNum"
         :page-count="legalTradePageTotals"
@@ -1024,10 +1031,9 @@ export default {
     // 2刚进页面调用接口刷新列表
     this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_LEGAL_TENDER_REFLASH_STATUS',
@@ -1213,16 +1219,22 @@ export default {
       let data
       if (val === 1) {
         data = await cancelUserOtcOrder()
-        console.log('撤销（过期 买家 未付款）')
+        // console.log('撤销（过期 买家 未付款）')
         if (!data) return false
         // 返回数据正确的逻辑：重新渲染列表
+        this.CHANGE_LEGAL_PAGE({
+          legalTradePageNum: 1
+        })
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
       if (val === 2) {
         data = await completeUserOtcOrder()
-        console.log('成交（过期 卖家 未收款）')
+        // console.log('成交（过期 卖家 未收款）')
         if (!data) return false
         // 返回数据正确的逻辑：重新渲染列表
+        this.CHANGE_LEGAL_PAGE({
+          legalTradePageNum: 1
+        })
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
     },
@@ -1327,6 +1339,9 @@ export default {
         this.dialogVisible1 = false
         // 正确逻辑
         // 再次调用接口刷新列表
+        this.CHANGE_LEGAL_PAGE({
+          legalTradePageNum: 1
+        })
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
         // 清除定义的数组类数据
         this.clearArrData()
@@ -1381,6 +1396,9 @@ export default {
       // 3清除定义的数组类数据
       this.clearArrData()
       // 4再次调用接口刷新列表
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       if (!data) return false
     }, 500),
@@ -1440,7 +1458,7 @@ export default {
         this.submitsellerAppeal()
       }
     },
-    // 13.0 卖家提交申诉按钮
+    // 13.0 买/卖家提交申诉按钮
     submitsellerAppeal: _.debounce(async function () {
       console.log(this.orderTypeParam)
       if (this.isNeedPayPassword && !this.tradePassword) {
@@ -1474,6 +1492,9 @@ export default {
       // 1清除定义的数组类数据
       this.clearArrData()
       // 2再次调用接口刷新列表
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       if (!data) return false
     }, 500),
@@ -1497,6 +1518,9 @@ export default {
       console.log(data)
       // 接口成功后的逻辑
       // 再次调用接口刷新列表
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
       this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
     }, 500)
   },
@@ -1587,8 +1611,9 @@ export default {
     margin-top: -10px;
 
     > .fiat-trading-order-content {
+      position: relative;
       min-height: 584px;
-      padding: 0 10px 10px;
+      padding: 0 10px 35px;
 
       .button {
         width: 290px;
@@ -1641,7 +1666,7 @@ export default {
                 border-right: 18px solid transparent;
                 border-bottom: 18px solid transparent;
                 border-top-left-radius: 6px;
-            }
+              }
 
               > .buy-icon {
                 border-top: 18px solid $upColor;
@@ -1886,6 +1911,14 @@ export default {
     }
 
     /deep/ {
+      /* 分页 */
+      .el-pagination.is-background.pages {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
       .appeal {
         .appeal-body {
           .appeal-body-content {
@@ -1919,6 +1952,18 @@ export default {
         .el-input__inner {
           width: 150px;
           height: 26px;
+        }
+      }
+
+      .order-list-body-middle {
+        .middle-content {
+          .pay-style {
+            .select-pay-type {
+              .el-input__icon {
+                line-height: 0;
+              }
+            }
+          }
         }
       }
 
@@ -2323,6 +2368,7 @@ export default {
       /deep/ {
         .el-input__inner {
           width: 130px;
+          border: 1px solid #ccc;
         }
 
         .password-dialog {

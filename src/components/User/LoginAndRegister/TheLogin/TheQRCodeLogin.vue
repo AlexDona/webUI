@@ -66,6 +66,7 @@ import {getLoginErcode} from '../../../../utils/api/user'
 import {loginSocketUrl} from '../../../../utils/env'
 import socket from '../../../../utils/datafeeds/socket'
 import {mapMutations} from 'vuex'
+import {setCookie} from '../../../../utils'
 export default {
   name: 'the-qr-code-login',
   // mixins: [],
@@ -139,6 +140,9 @@ export default {
     }, 1000),
     // 登录成功操作
     userLoginSuccess (data) {
+      // console.log(data)
+      const {token} = data
+      setCookie('token', token)
       this.USER_LOGIN(data)
       const {isJumpToPersonal, type, coinName} = this.$route.query
       if (isJumpToPersonal) {
@@ -150,8 +154,7 @@ export default {
         return false
       }
       if (this.$routerTo_X &&
-        !this.$routerTo_X.startsWith('/register') &&
-        !this.$routerTo_X.startsWith('/login') &&
+        !this.$routerTo_X.startsWith(`/${this.$routes_X.login}`) &&
         !this.$routerTo_X.startsWith('/ForgetPassword') &&
         !this.$routerTo_X.startsWith('/nofind404') &&
         !this.$routerTo_X.startsWith('/500')

@@ -25,11 +25,11 @@ export const overrides = {
   'mainSeriesProperties.areaStyle.linestyle': 0,
   'mainSeriesProperties.areaStyle.linewidth': 1,
   'mainSeriesProperties.areaStyle.priceSource': 'close',
-  'mainSeriesProperties.areaStyle.transparency': 80,
-  'paneProperties.legendProperties.showLegend': false // 默认收起
+  'mainSeriesProperties.areaStyle.transparency': 80
+  // 'paneProperties.legendProperties.showLegend': false // 默认收起
 }
 export const disabledFeatures = [
-  'use_localstorage_for_settings',
+  // 'use_localstorage_for_settings',
   'header_symbol_search', // 禁止头部搜索
   'header_interval_dialog_button',
   'show_interval_dialog_on_key_press',
@@ -37,7 +37,7 @@ export const disabledFeatures = [
   'study_dialog_search_control',
   'display_market_status',
   'header_compare',
-  'edit_buttons_in_legend',
+  // 'edit_buttons_in_legend',
   'symbol_info',
   'border_around_the_chart',
   'main_series_scale_menu',
@@ -61,8 +61,8 @@ export const disabledFeatures = [
   // 'header_indicators',
   'header_saveload',
   'header_resolutions',
-  'legend_context_menu',
-  'show_hide_button_in_legend',
+  // 'legend_context_menu',
+  // 'show_hide_button_in_legend',
   'snapshot_trading_drawings'
   // 'widget_logo',
 ]

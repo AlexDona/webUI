@@ -1,6 +1,7 @@
 <template>
   <el-button
     class="count-down cursor-pointer"
+    type="default"
     :class="className"
     :disabled="disabled"
     :status="status"
@@ -40,7 +41,6 @@ export default {
     this.disabled = false
   },
   // mounted () {},
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
@@ -117,8 +117,11 @@ export default {
     width 100%
     border none
     border-radius 0
-    &:hover
+    &:hover,&:active,&:focus,&::selection,&::-webkit-selection
+      background transparent
       background-color transparent
+      span
+        background-color transparent
     /deep/
       span
         font-size 14px !important

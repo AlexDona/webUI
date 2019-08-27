@@ -64,7 +64,6 @@ export default {
   // },
   // created () {},
   // mounted () {},
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
@@ -98,9 +97,11 @@ export default {
   .middle-header-box
     display flex
     justify-content space-between
-    height 34px
-    line-height 34px
+    height 42px
+    line-height 42px
     padding 0 8px
+    position relative
+    z-index 10
     >.left
       display flex
       align-items center
@@ -116,7 +117,7 @@ export default {
         >.sell-name,
         >.buy-name
           font-weight 700
-          font-size 12px
+          font-size 14px
       >.split
         width 1px
         height 20px
@@ -126,17 +127,17 @@ export default {
       >.price
         white-space nowrap
         >.price
-          font-size 12px
+          font-size 14px
           &.up
             color #f03e3e
           &.down
             color #41b37d
         >.estimation
           margin-left 5px
-          font-size 12px
+          font-size 14px
       >.rose
         white-space nowrap
-        font-size 12px
+        font-size 14px
         margin-left 32px
         >span
           margin 0 5px
@@ -149,13 +150,13 @@ export default {
       >.lower,
       >.hour24down
         white-space nowrap
-        font-size 12px
+        font-size 14px
         margin-left 32px
         >span
           margin 0 5px
     >.right
       button
-        font-size 12px
+        font-size 14px
         padding 0 10px
         cursor pointer
         white-space nowrap

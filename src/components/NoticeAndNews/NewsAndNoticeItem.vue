@@ -75,7 +75,7 @@ export default {
     await this.getDetailInfo(this.detailId)
   },
   // mounted () {},
-  // activated () {},
+  // ,
   // updated () {},
   // beforeRouteUpdate () {},
   methods: {

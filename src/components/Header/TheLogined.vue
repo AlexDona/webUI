@@ -16,20 +16,30 @@
         v-show="isShowDropDown"
       )
         // VIP 信息
-        .sub-nav-user.vip-info(v-if="$isVIPEnable_S_X")
-          // VIP享手续费、提现优惠
-          p.nav-vip {{$t('M.user_vip_text8')}}
-          // 立即开通
-          button.nav-button(
-            @click="jumpToVIP"
-          ) {{$t(VIPButtonText)}}
-        ul.user-infos
-          li(
-            v-for="route in personalRoutes"
-            @click="jumpToPersonalCenter(route.name)"
-            ) {{$t(route.label)}}
-          // 退出
-          li(@click="$userLogOut_X") {{$t('M.comm_retreat')}}
+        .vip-user(v-if="$isVIPEnable_S_X")
+          .sub-nav-user.vip-info
+            // VIP享手续费、提现优惠
+            p.nav-vip {{$t('M.user_vip_text8')}}
+            // 立即开通
+            button.nav-button(
+              @click="jumpToVIP"
+            ) {{$t(VIPButtonText)}}
+          ul.user-infos
+            li(
+              v-for="route in personalRoutes"
+              @click="jumpToPersonalCenter(route.name)"
+              ) {{$t(route.label)}}
+            // 退出
+            li(@click="$userLogOut_X") {{$t('M.comm_retreat')}}
+        .vip-closed.vip-user(v-else)
+          .sub-nav-user.vip-info
+          ul.user-infos
+            li(
+              v-for="route in personalRoutes"
+              @click="jumpToPersonalCenter(route.name)"
+              ) {{$t(route.label)}}
+            // 退出
+            li(@click="$userLogOut_X") {{$t('M.comm_retreat')}}
 </template>
 <script>
 import {
@@ -53,10 +63,10 @@ export default {
           name: 'assets'
         },
         // 订单管理
-        {
-          label: 'M.comm_user_order_management',
-          name: 'coin-orders'
-        },
+        // {
+        //   label: 'M.comm_user_order_management',
+        //   name: 'coin-orders'
+        // },
         // 身份认证
         {
           label: 'M.comm_user_identity_authentication',
@@ -76,12 +86,12 @@ export default {
         {
           label: 'M.comm_user_invite_generalize',
           name: 'invitation-promote'
-        },
-        // 邀请推广
-        {
-          label: 'M.comm_user_api_management',
-          name: 'api-management'
         }
+        // api管理
+        // {
+        //   label: 'M.comm_user_api_management',
+        //   name: 'api-management'
+        // }
       ]
     }
   },
@@ -174,34 +184,35 @@ export default {
       border-radius 2px
       padding 10px 0
       text-align center
-      >.vip-info
-        >.nav-vip
-          padding 10px 25px 5px
-          line-height 20px
-          white-space nowrap
-        >.nav-button
-          min-width 75%
-          height 30px
-          padding 0 10px
-          border 1px solid S_main_color
-          border-radius 5px
-          white-space nowrap
-          color: S_font_color
-          cursor pointer
-          &:hover
-            border-color S_font_color
-            color S_main_color
-            background-color S_hover_bg
-      >.user-infos
-        text-align left
-        >li
-          padding 0 25px
-          white-space nowrap
-          color S_font_color
-          height 40px
-          line-height 40px
-          &:hover
-            color S_main_color
-            background-color #21243a
+      >.vip-user
+        >.vip-info
+          >.nav-vip
+            padding 10px 25px 5px
+            line-height 20px
+            white-space nowrap
+          >.nav-button
+            min-width 75%
+            height 30px
+            padding 0 10px
+            border 1px solid S_main_color
+            border-radius 5px
+            white-space nowrap
+            color: S_font_color
             cursor pointer
+            &:hover
+              border-color S_font_color
+              color S_main_color
+              background-color S_hover_bg
+        >.user-infos
+          text-align left
+          >li
+            padding 0 25px
+            white-space nowrap
+            color S_font_color
+            height 40px
+            line-height 40px
+            &:hover
+              color S_main_color
+              background-color #21243a
+              cursor pointer
 </style>

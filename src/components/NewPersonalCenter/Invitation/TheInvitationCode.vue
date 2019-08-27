@@ -8,7 +8,7 @@
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   )
     // 推广信息
-    .header {{$t('M.comm_user_invite_info')}}
+    .header.font-size16 {{$t('M.comm_user_invite_info')}}
     .content
       // 推广码
       .detail-item
@@ -435,6 +435,8 @@ export default {
           font-size 12px
     &.night
       background-color #1c1f32
+      >.header
+        color S_main_color
     &.day
       background-color #fff
       box-shadow 0 0 6px #cfd5df

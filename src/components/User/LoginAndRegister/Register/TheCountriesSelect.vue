@@ -20,7 +20,7 @@
         v-show="isShowCountries"
       )
         el-input.search-input(
-          v-model="keyword"
+          v-model.trim="keyword"
           clearable
           v-show="isShowCountries"
           :ref="searchInputRef"
@@ -40,6 +40,7 @@
             span.right {{country['nationCode']}}
 </template>
 <script>
+import {mapMutations} from 'vuex'
 export default {
   name: 'the-countries-select',
   // mixins: [],
@@ -68,6 +69,7 @@ export default {
   created () {
     if (this.countries) {
       this.currentCountry = this.countries[0]
+      this.UPDATE_CURRENT_COUNTRY_M(this.currentCountry)
     }
   },
   mounted () {
@@ -81,12 +83,13 @@ export default {
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
+    ...mapMutations(['UPDATE_CURRENT_COUNTRY_M']),
     toggleShowCountries () {
       this.isShowCountries = !this.isShowCountries
     },
     toggleCountry (country) {
       this.currentCountry = country
-      console.log(this.currentCountry)
+      this.UPDATE_CURRENT_COUNTRY_M(country)
       this.isShowCountries = false
     }
   },

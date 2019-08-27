@@ -179,11 +179,9 @@ export default {
     this.clickDalay = false
     // }, 1500)
   },
-  mounted () {
-  },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     sortByUser (sortMethod, list) {
       this.$emit('sortByUser', {

@@ -3,6 +3,7 @@ import {
   keep8Num,
   keep4Num,
   scientificToNumber,
+  otcPricePointShow,
   cutOutPointLength,
   formatSeconds,
   setStore,
@@ -52,7 +53,7 @@ let mixin = {
       return setStore(name, content)
     },
     $getStore (name, type = 'string') {
-      return type == 'json' ? getStoreWithJson(name) : getStore(name)
+      return type.toLowerCase() == 'json' ? getStoreWithJson(name) : getStore(name)
     },
     $removeStore (name) {
       removeStore(name)
@@ -71,6 +72,10 @@ let mixin = {
     },
     $scientificToNumber (num) {
       return scientificToNumber(num)
+    },
+    // otc价格小数位显示
+    $otcPricePointShow (num) {
+      return otcPricePointShow(num)
     },
     $footerJump (router, activeName) {
       jumpToOtherPageForFooter(router, activeName)
@@ -137,7 +142,13 @@ let mixin = {
       '$isNeedLimitExchange_G_X': 'isNeedLimitExchange_G',
       '$isNeedYST_G_X': 'isNeedYST',
       '$isChineseLanguage_G_X': 'isChineseLanguage',
-      '$isDayTheme_G_X': 'isDayTheme'
+      '$isDayTheme_G_X': 'isDayTheme',
+      '$mobileRegisterDefaultRouter_G_X': 'mobileRegisterDefaultRouter_G',
+      '$PCRegisterDefaultRouter_G_X': 'PCRegisterDefaultRouter_G',
+      '$mobileLoginDefaultRouter_G_X': 'mobileLoginDefaultRouter_G',
+      '$PCLoginDefaultRouter_G_X': 'PCLoginDefaultRouter_G',
+      '$PCRegisterSuccessRouter_G_X': 'PCRegisterSuccessRouter_G',
+      '$mobileRegisterSuccessRouter_G_X': 'mobileRegisterSuccessRouter_G'
     }),
     ...mapState({
       $loading_S_X: state => state.common.loading_S,
