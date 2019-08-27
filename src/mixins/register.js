@@ -124,8 +124,10 @@ let mixin = {
     // 确定注册
     async doRegister () {
       const { phone, email, password, validateCode } = this.form
+      const {nationCode} = this.currentCountry_S
+
       let params = {
-        country: this.currentCountry_S,
+        country: nationCode,
         userName: this.isPhoneRegist ? phone : email,
         password: encrypt(password),
         checkCode: validateCode,
