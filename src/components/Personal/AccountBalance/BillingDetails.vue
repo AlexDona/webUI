@@ -563,16 +563,14 @@ export default {
     }
   },
   async created () {
+    const {holdBonusRecord, currentEntrust} = this.names
     const activeName = this.$getStore('billingDetailsActiveName')
-    if (activeName == this.names.holdBonusRecord && this.isShowHoldInfos) {
+    if (activeName == holdBonusRecord && this.isShowHoldInfos) {
       this.activeName = activeName
-      this.startTime = [
-        new Date(this.year, this.month, this.date, 0, 0, 0),
-        new Date()
-      ]
+      this.startTime = ''
       this.getHoldBonusRecord()
     } else {
-      await this.inquireCurrencyList(activeName || this.names.currentEntrust)
+      await this.inquireCurrencyList(activeName || currentEntrust)
     }
   },
   methods: {
@@ -611,7 +609,8 @@ export default {
      */
     // 2.1 tab 切换
     coinMoneyOrders: _.debounce(async function (e) {
-      if (this.activeName === this.names.currentEntrust) {
+      const {holdBonusRecord, currentEntrust} = this.names
+      if (this.activeName === currentEntrust || this.activeName === holdBonusRecord) {
         this.startTime = ''
       } else {
         this.startTime = [
