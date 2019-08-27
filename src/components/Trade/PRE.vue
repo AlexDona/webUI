@@ -17,13 +17,13 @@
         .tips {{ $PREStatus_S_X === 'coming' ? $t('M.trade_start'): $t('M.trade_going')}}
     .body
       p {{$PREStatus_S_X=='coming' ? $t('M.trade_langstart') : $t('M.trade_langEnd')}}:
-        span  {{PRE_Days}}
+        span.time  {{PRE_Days}}
         span  {{$isChineseLanguage_G_X?'天':'Day'}}
-        span  {{PRE_Hours}}
+        span.time  {{PRE_Hours}}
         span  {{$isChineseLanguage_G_X?'时':'Hou'}}
-        span  {{PRE_Minutes}}
+        span.time  {{PRE_Minutes}}
         span  {{$isChineseLanguage_G_X?'分':'Min'}}
-        span  {{PRE_Seconds}}
+        span.time  {{PRE_Seconds}}
         span  {{$isChineseLanguage_G_X?'秒':'Sec'}}
       // 发行量
       p {{$t('M.trade_currentAccount')}}:  {{$publishCount_S_X}} {{$sellCoinName_S_X}}
@@ -101,7 +101,7 @@ export default {
     background-size: 100%;
 
     .inner-box {
-      overflow: hidden;
+      /* overflow: hidden; */
 
       header {
         display: flex;
@@ -124,6 +124,8 @@ export default {
         }
 
         .tips {
+          position: relative;
+          right: -4px;
           height: 30px;
           padding: 0 5px 0 8px;
           border-bottom-left-radius: 15px;
@@ -132,6 +134,18 @@ export default {
           text-align: center;
           white-space: nowrap;
           background: #f03e3e;
+
+          &::before {
+            position: absolute;
+            bottom: -7px;
+            right: -.5px;
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 5px solid #f03e3e;
+            content: '';
+          }
         }
       }
     }
@@ -141,11 +155,16 @@ export default {
 
       p {
         line-height: 24px;
+        white-space: nowrap;
 
         span {
           font-weight: 800;
-          font-size: 16px;
+          font-size: 12px;
           color: #f03e3e;
+
+          &.time {
+            font-size: 15px;
+          }
         }
       }
     }
