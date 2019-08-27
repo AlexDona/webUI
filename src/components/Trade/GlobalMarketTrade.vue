@@ -101,10 +101,9 @@ export default {
   created () {
     this.getGlobalMarket()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     // 交易价转换
     formatPrice (price) {

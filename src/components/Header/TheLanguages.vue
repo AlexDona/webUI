@@ -13,9 +13,7 @@
         span.language-text {{activeLanguage.name}}
           Iconfont.iconfont.font-size20(icon-name="icon-xiala")
       el-collapse-transition
-        dd.lang-list(
-          v-show="langSelecting"
-        )
+        dd.lang-list(v-show="langSelecting")
           button.lang-item(
             class="lang-item"
             @click="changeLanguage(item)"

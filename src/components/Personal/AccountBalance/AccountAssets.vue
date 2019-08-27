@@ -8,6 +8,8 @@
     >
       <!-- 用户信息-->
       <UserInfo :Rates = 'CNYRate'/>
+      <!-- 持仓分红 -->
+      <TheHoldBonus :isShowHoldInfos="isShowHoldInfos"/>
       <div class="account-assets-box margin-top10">
         <div>
           <header class="account-assets-header display-flex personal-height40 line-height40 box-shadow">
@@ -182,7 +184,7 @@
                   <!--可用数量-->
                   <div class="table-td text-indent2 flex1">
                     <span v-if="assetItem.total > 0">
-                      {{ $scientificToNumber($keep8Num(assetItem.total - 0)) }}
+                      {{ $scientificToNumber((assetItem.total + '').substring(0, (assetItem.total + '').indexOf(".") + 9)) }}
                     </span>
                     <span v-else>
                       0.00000000
@@ -541,6 +543,7 @@
 <script>
 // 我的资产
 import UserInfo from '../AccountBalance/UserInfo'
+import TheHoldBonus from './TheHoldBonus'
 // 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
@@ -583,9 +586,10 @@ export default {
     ChargeMoneyItem, // 充币 item
     UserInfo, // 我的资产
     IconFontCommon, // 字体图标
-    CountDownButton // 短信倒计时
+    CountDownButton, // 短信倒计时
+    TheHoldBonus
   },
-  // props,
+  props: ['isShowHoldInfos'],
   data () {
     return {
       labelPosition: 'top', // form表单label方向
@@ -674,9 +678,8 @@ export default {
   async mounted () {
     await this.getAssetCurrenciesList()
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapActions([
       'REFRESH_USER_INFO_ACTION',
@@ -1982,7 +1985,7 @@ export default {
       }
 
       .el-form-item {
-        height: 70px;
+        min-height: 70px;
         margin-bottom: 0;
       }
 
@@ -2277,7 +2280,7 @@ export default {
 
         .el-button {
           color: #fff;
-          background: linear-gradient(0deg, #2b396e, #2a5082);
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
         .el-form-item__label {
@@ -2567,7 +2570,7 @@ export default {
         }
 
         .el-button {
-          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
         }
       }
     }

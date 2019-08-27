@@ -99,7 +99,7 @@ export default {
     this.resetOptions()
     this.resetChart(this.options)
   },
-  // activated () {},
+  // ,
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

@@ -26,14 +26,20 @@
             :label = "$t('M.user_asset_title1')"
             name = "assets"
           >
-            <AccountAssets v-if="userCenterActiveName ==='assets'"/>
+            <AccountAssets
+              v-if="userCenterActiveName ==='assets'"
+              :isShowHoldInfos="isShowHoldInfosComp"
+            />
           </el-tab-pane>
           <!--账单明细-->
           <el-tab-pane
             :label = "$t('M.user_asset_title2')"
             name = "billing-details"
           >
-            <BillingDetails v-if="userCenterActiveName ==='billing-details'"/>
+            <BillingDetails
+              v-if="userCenterActiveName ==='billing-details'"
+              :isShowHoldInfos="isShowHoldInfosComp"
+            />
           </el-tab-pane>
           <!--提币地址-->
           <el-tab-pane
@@ -273,6 +279,7 @@ import {
   mapState,
   mapActions
 } from 'vuex'
+import {getShowHoldStatusAJAX} from '../utils/api/holdBonus'
 export default {
   components: {
     // 我的资产
@@ -301,8 +308,10 @@ export default {
       tabPosition: 'left', // 导航位置方向
       setPwdDialogVisible: false,
       notVerifyDialogVisible: false,
-      currentUserCenterActiveName: ''
+      currentUserCenterActiveName: '',
       // isDisabled: false
+      // 是否显示持仓分红信息
+      isShowHoldInfos: false
     }
   },
   async created () {
@@ -314,10 +323,10 @@ export default {
     this.$setStore('active-target', this.currentUserCenterActiveName)
     await this.REFRESH_USER_INFO_ACTION()
     this.showNoPosswdAndNoVerifyNotice()
+    this.confirmIsShowHoldInfo()
   },
   /* mounted () {
   },
-  activated () {},
   update () {},
   beforeRouteUpdate () {}, */
   methods: {
@@ -331,6 +340,13 @@ export default {
       'SET_NEW_WITHDRAW_RECORD',
       'UPDATE_IM_BOX_SHOW_STATUS_M'
     ]),
+    // 获取是否显示持仓分红信息
+    async confirmIsShowHoldInfo () {
+      const data = await getShowHoldStatusAJAX()
+      if (!data) return false
+      this.isShowHoldInfos = _.get(data, 'data.ifShow')
+      return this.isShowHoldInfos
+    },
     // 显示未设置交易密码弹窗
     showNoPasswdNotice () {
       this.setPwdDialogVisible = true
@@ -381,6 +397,9 @@ export default {
       token: state => state.user.loginStep1Info.token,
       footerHeight: state => state.common.footerHeight
     }),
+    isShowHoldInfosComp () {
+      return this.isShowHoldInfos
+    },
     windowHeight () {
       return window.innerHeight
     }
@@ -389,12 +408,12 @@ export default {
     userCenterActiveName (e) {
       this.$setStore('active-target', e)
       this.currentUserCenterActiveName = e
-      if (e !== 'assets') {
-        this.$route.params.coinId = ''
-        this.$route.params.type = ''
-      }
+
       this.REFRESH_USER_INFO_ACTION()
-      if (e !== 'assets') {
+      console.log(e)
+      if (e == 'assets') {
+        this.confirmIsShowHoldInfo()
+      } else {
         this.$route.params.type = ''
         this.$route.params.coinId = ''
       }

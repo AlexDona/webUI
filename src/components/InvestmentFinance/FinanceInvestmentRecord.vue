@@ -199,7 +199,7 @@
                   class = 'finance-tips-box'
                 >
                   {{$t('M.finance_loginTips')}}
-                  <router-link to='/login'>
+                  <router-link :to="`/${$routes_X.login}`">
                     {{$t('M.comm_login')}}
                   </router-link>
                   {{$t('M.finance_or')}}
@@ -326,7 +326,7 @@ export default {
     console.log(this.footerHeight)
   },
   // mounted () {},
-  // activated () {},
+  // ,
   // updated () {},
   methods: {
     timeFormatting (data) {
@@ -659,13 +659,13 @@ export default {
                 box-shadow: none;
 
                 &:first-of-type {
-                  border-left: 1px solid rgba(51, 143, 245, .1);
+                  /* border-left: 1px solid rgba(51, 143, 245, .1); */
                   border-bottom-left-radius: 4px;
                 }
 
                 &:nth-last-of-type(2) {
+                  /* border-right: 1px solid rgba(51, 143, 245, .1); */
                   border-bottom-right-radius: 4px;
-                  border-right: 1px solid rgba(51, 143, 245, .1);
                 }
               }
             }

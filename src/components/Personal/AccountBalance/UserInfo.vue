@@ -11,18 +11,56 @@
               iconName="icon-yonghu1"
             />
           <div class="text-align-id margin-top16 float-left">
-            <p class="font-size12">
+            <p class="font-size12 nickname-p">
               <span class="text-color">
                 <!--您好，-->
                 {{ $t('M.comm_hello') }}
               </span>
-              <span class="color">
+              <span class="color nickname-span">
                 {{ nickName }}
+              </span>
+              <!--编辑昵称-->
+              <span class="display-inline-block margin-left10 edit-nickName" @click.prevent="editNickname">
+                &nbsp;<IconFontCommon class="color text-align-r line-height56 float-left font-size14" iconName="icon-tianxie"/>
               </span>
             </p>
             <span class="display-inline-block margin-top9 text-color">
               UID： {{ showId }}
             </span>
+            <el-dialog
+                    :title="'修改昵称'"
+                    :visible.sync="showNickNameDialog"
+                    class="nickNameDialog"
+            >
+              <el-form>
+                <!--修改昵称-->
+                <el-form-item prop="nickName">
+                  <input
+                          class="text-color input-nickName padding-l15 box-sizing"
+                          type="text"
+                          v-model="nickNames"
+                          @focus="emptyStatus()"
+                          @keyUp="checkoutInputFormat(nickNames)"
+                          @change="checkoutInputFormat(nickNames)"
+                          maxlength="15"
+                  />
+                  <span v-if="errorHint1" class="error-span">· 不可超过7个汉字或15个英文字母</span>
+                  <span v-if="errorHint2" class="error-span">· 不可包含空格与特殊字符</span>
+                </el-form-item>
+              </el-form>
+              <div
+                      slot="footer"
+                      class="dialog-footer"
+              >
+                <el-button
+                        type="primary"
+                        @click.prevent="submitNickName(nickNames)"
+                >
+                  <!--确 定-->
+                  {{ $t('M.comm_confirm') }}
+                </el-button>
+              </div>
+            </el-dialog>
           </div>
         </div>
         <div class="info float-left flex1">
@@ -222,9 +260,9 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 import {
-  assetCurrenciesList,
+  assetCurrenciesList, changeNickName,
   currencyTransform
 } from '../../../utils/api/personal'
 import {
@@ -243,7 +281,12 @@ export default {
       vipShowPictureSrc: require('../../../assets/user/vip.png'), // 开通VIP之后点亮图片
       vipShowDefaultSrc: require('../../../assets/user/default.png'), // 未开通VIP默认图片
       totalSumCNY: '', // CNY资产
-      CNYRate: '' // 转换汇率
+      CNYRate: '', // 转换汇率
+      showNickNameDialog: false,
+      nickNames: '',
+      emptyErrorMsg: '', // 清空错误信息提示
+      errorHint1: false,
+      errorHint2: false
     }
   },
   async created () {
@@ -254,10 +297,12 @@ export default {
     }
   },
   mounted () {},
-  activated () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'REFRESH_USER_INFO_ACTION'
+    ]),
     // 1.0 汇率折算以及根据header切换显示对应资产换算
     async currencyTransform () {
       const { shortName } = this.activeConvertCurrencyObj
@@ -275,6 +320,69 @@ export default {
     stateOpenVip () {
       this.$goToPage('/VipMainContent')
     },
+    // 编辑昵称
+    editNickname () {
+      this.showNickNameDialog = true
+      this.nickNames = ''
+      this.errorHint1 = false
+      this.errorHint2 = false
+    },
+    // 确定设置检测输入格式
+    checkoutInputFormat (targetNum) {
+      let regExp = /[^a-z0-9\u4E00-\u9FA5]/g
+      if (!targetNum) {
+        // 请输入昵称
+        this.errorHint1 = true
+        this.errorHint2 = true
+        this.$forceUpdate()
+        return 0
+      } else if (regExp.test(targetNum)) {
+        this.errorHint1 = true
+        this.errorHint2 = true
+        this.$forceUpdate()
+        return 0
+      } else {
+        let iLength = 0 // 记录字符的字节数
+        for (let i of targetNum) {
+          if (targetNum.charCodeAt(i) > 255) { // 判斷字節數
+            iLength += 2
+          } else {
+            iLength += 1
+          }
+        }
+        if (iLength <= 15) {
+          this.errorHint1 = false
+          this.errorHint2 = false
+          return 1
+        } else {
+          this.errorHint1 = true
+          this.errorHint2 = true
+          return 0
+        }
+      }
+    },
+    // 清空内容信息
+    emptyStatus () {
+      if (this.errorHint1 && this.errorHint2) {
+        this.nickNames = ''
+        this.errorHint1 = false
+        this.errorHint2 = false
+      } else {
+        this.errorHint1 = false
+        this.errorHint2 = false
+      }
+    },
+    // 提交昵称修改
+    async submitNickName (targetNum) {
+      let data
+      let params = {nickName: targetNum}
+      if (this.checkoutInputFormat(targetNum)) {
+        data = await changeNickName(params)
+        if (!data) return false
+        this.showNickNameDialog = false
+        await this.REFRESH_USER_INFO_ACTION()
+      }
+    },
     /**
      * 2.0刚进页面时候 个人资产列表展示
      */
@@ -287,7 +395,7 @@ export default {
       this.totalSumCNY = getNestedData(data, 'data.totalSum')
     }
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
@@ -336,6 +444,55 @@ export default {
           > .text-align-id {
             width: 185px;
             margin-top: 25px;
+
+            > .nickname-p {
+              display: flex;
+
+              > .nickname-span {
+                max-width: 100px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap
+              }
+            }
+          }
+
+          .edit-nickName {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+          }
+
+          .nickNameDialog {
+            .input-nickName {
+              width: 100%;
+              height: 34px;
+              border: 1px solid rgba(72, 87, 118, 1);
+              border-radius: 4px;
+              line-height: 34px;
+              background: transparent;
+            }
+
+            .input-nickName:focus {
+              border-color: $mainColor;
+            }
+
+            .error-span {
+              color: $upColor;
+            }
+
+            .error-span:nth-of-type(1) {
+              display: block;
+              height: 22px;
+            }
+
+            .el-form-item {
+              min-height: 70px;
+            }
+
+            .el-dialog__footer {
+              margin-top: 28px;
+            }
           }
         }
 

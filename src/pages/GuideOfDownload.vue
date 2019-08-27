@@ -124,6 +124,7 @@ import {
 } from '../utils/env'
 import IconFont from '../components/Common/IconFontCommon'
 import Qrcode from '../components/Common/Qrcode'
+import {routesVariable} from '../router/routesVariable'
 export default {
   components: {
     IconFont,
@@ -133,7 +134,7 @@ export default {
   data () {
     return {
       qrcodeVisible: false,
-      qrcodeString: `${domain}/downloadApp`,
+      qrcodeString: `${domain}${routesVariable.downloadApp}`,
       isOpen: true,
       downloadUrl: ''
       // 二维码logo
@@ -142,17 +143,14 @@ export default {
   },
   async created () {
     this.$SET_ACTIVE_LINK_NAME_M_X(-1)
-    console.log(this.isNeedIOS, this.footerInfo)
     this.GET_APP_URL_ACTION()
   },
-  mounted () {
-  },
-  activated () {
-  },
-  updated () {
-  },
-  beforeRouteUpdate () {
-  },
+  // mounted () {
+  // },
+  // updated () {
+  // },
+  // beforeRouteUpdate () {
+  // },
   methods: {
     ...mapActions([
       'GET_APP_URL_ACTION'
@@ -163,7 +161,6 @@ export default {
           case 'android':
             window.location.href = 'scheme: //fubt.com/'
             this.downloadUrl = this.androidUrl
-            console.log(this.isMobile)
             break
           case 'ios':
             this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`

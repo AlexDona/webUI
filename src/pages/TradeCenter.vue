@@ -24,8 +24,7 @@
           Depth(v-show="!isShowKline")
           //Depth
           // 市价交易、限价交易
-          ExchangeBox(v-show="!isShowMask")
-          .placeholder(v-show="isShowMask")
+          ExchangeBox
           // 活动遮罩
           .mask(v-show="isShowMask")
             PREMask(v-show="status=='coming' && partnerTradeId === tradeId")
@@ -73,8 +72,6 @@ export default {
   mounted () {
     // this.UPDATE_KLINE_AND_DEPTH_SHOW_STATUS_M('kline')
   },
-  // activated () {
-  // },
   // update () {
   // },
   // beforeRouteUpdate () {
@@ -111,7 +108,6 @@ export default {
 <style lang="stylus">
   @import '../assets/CSS/index.styl'
   .trade-box
-    margin-top 60px
     min-width 1366px
     >.inner-box
       padding 10px
@@ -130,7 +126,7 @@ export default {
             position absolute
             z-index 3
             width 100%
-            height calc(907px - 34px)
+            height calc(907px - 34px - 336px - 10px + 1px)
             top 34px
             left 0
         >.right
@@ -143,9 +139,9 @@ export default {
           >.left
           >.middle
             >.mask
-              background-color pink
+              background-color transparent
         >.bottom
-          background-color pink
+          background-color transparent
     /* 白色 */
     &.day
       >.inner-box
@@ -154,7 +150,7 @@ export default {
           >.left
           >.middle
             >.mask
-              background-color pink
+              background-color transparent
         >.bottom
-          background-color pink
+          background-color transparent
 </style>

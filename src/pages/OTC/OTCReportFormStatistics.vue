@@ -493,7 +493,7 @@
           <div class="page text-align-c">
             <el-pagination
               background
-              v-show="orderInfoList.length"
+              v-show="orderInfoList.length && totalPages -1 > 0"
               layout="prev, pager, next"
               :page-count="totalPages"
               @current-change="changeCurrentPage"
@@ -589,7 +589,6 @@ export default {
   mounted () {
     this.setDateWidth(this.language)
   },
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

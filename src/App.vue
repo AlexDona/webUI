@@ -1,37 +1,33 @@
-<template>
-  <div
-    id="app"
-    class="body-container"
+<!--
+  author: zhaoxinlei
+  update: 20190823
+-->
+<template lang="pug">
+  #app.body-container(
+    :class="{'is-mobile': isMobile}"
     v-loading.fullscreen.lock="$loading_S_X"
     element-loading-background="rgba(0, 0, 0, 0.8)"
-  >
-    <NoticeHome
-      v-if="isNeedNotice"
-    />
-    <keep-alive>
-      <HeaderCommon
-        v-if="isNeedHeader"
-      />
-    </keep-alive>
-      <router-view />
-    <keep-alive>
-      <FooterCommon
-        v-if="isNeedFooter"
-      />
-    </keep-alive>
-  </div>
+  )
+    ThePRETips
+    NoticeHome( v-if="isNeedNotice")
+    HeaderCommon(v-if="isNeedHeader")
+    .inner-box
+      router-view
+    FooterCommon(v-if="isNeedFooter")
 </template>
 <script>
-import {getStore} from './utils'
 import NoticeHome from './components/Home/NoticeHome'
 import HeaderCommon from './components/Common/HeaderCommonForPC'
 import HeaderCommonForMobile from './components/Common/HeaderForMobile'
-import FooterCommon from './components/Common/FooterCommon'
+import ThePRETips from './components/Home/ThePRETips'
+
+import FooterCommon from './components/Common/Footer/FooterCommon'
 import {
   mapMutations,
   mapState
 } from 'vuex'
 import {getNavigationsAJAX} from './utils/api/common'
+import {getStore} from './utils'
 // import {encrypt} from './utils/encrypt'
 export default {
   name: 'App',
@@ -39,7 +35,8 @@ export default {
     HeaderCommon,
     NoticeHome,
     FooterCommon,
-    HeaderCommonForMobile
+    HeaderCommonForMobile,
+    ThePRETips
   },
   data () {
     return {
@@ -49,11 +46,6 @@ export default {
     }
   },
   async created () {
-    // require('../static/css/common.css')
-    // require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
-    // require('../static/css/theme/night/Common/HeaderCommonNight.css')
-    // console.log(encrypt('123456'))
-    // await this.getNavigations()
     // 取主题
     const theme = getStore('theme') || 'night'
     this.CHANGE_THEME(theme)
@@ -63,7 +55,6 @@ export default {
     this.CHANGE_CONVERT_CURRENCY(convertCurrency)
   },
   // mounted () {},
-  // activated () {},
   // updated () {},
   methods: {
     ...mapMutations([
@@ -105,19 +96,17 @@ export default {
     // 切换 PC/H5 移动端适配
     toggleViewPortMeta () {
       let metaContent = {
-        mobile: 'width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=1, user-scalable=yes',
+        mobile: 'width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=1, user-scalable=no',
         PC: 'width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=1, user-scalable=yes'
       }
       const meta = document.querySelector('meta[name="viewport"]')
       const {path} = this.$route
 
       const userDisScalabledRoutes = [
-        `/${this.$routes_X.login}`,
-        `/${this.$routes_X.register}`,
-        `/downloadApp`,
-        `/invitationRegister`
+        `${this.$routes_X.downloadApp}`,
+        `/${this.$routes_X.register}/${this.$routes_X.invite}`
       ]
-      const notNeedUserScalable = _.some(userDisScalabledRoutes, (route, index) => (route == path || path.startsWith(route)))
+      const notNeedUserScalable = _.some(userDisScalabledRoutes, (route, index) => (route.toLowerCase() === path.toLowerCase() || path.startsWith(route)))
 
       switch (this.isMobile && notNeedUserScalable) {
         case true:
@@ -174,15 +163,20 @@ export default {
       this.isNeedNotice = path === `/${this.$routes_X.home}` || path === '/' ? 1 : 0
       this.isNeedHeader = (
         !path.startsWith(`/${this.$routes_X.login}`) &&
-        !path.startsWith('/register') &&
-        path !== '/downloadApp' &&
-        !path.startsWith('/invitationRegister')
+        path.toLowerCase() !== `${this.$routes_X.downloadApp}`.toLowerCase() &&
+        !path.startsWith(`/${this.$routes_X.register}/m`) &&
+        !path.startsWith(`/${this.$routes_X.register}/${this.$routes_X.invite}`) &&
+        !path.startsWith(`/${this.$routes_X.registerSuccess}/m`) &&
+        !path.startsWith(`/${this.$routes_X.forgetPass}/m`)
       ) ? 1 : 0
       this.isNeedFooter = (
         path.startsWith(`/${this.$routes_X.login}`) ||
-        path === '/downloadApp' ||
+        path.toLowerCase() === `${this.$routes_X.downloadApp}`.toLowerCase() ||
         path.startsWith('/invitationRegister') ||
-        path.startsWith(`/${this.$routes_X.forgetPass}`)
+        path.startsWith(`/${this.$routes_X.forgetPass}`) ||
+        path.startsWith(`/${this.$routes_X.register}/m`) ||
+        path.startsWith(`/${this.$routes_X.register}/${this.$routes_X.invite}`) ||
+        path.startsWith(`/${this.$routes_X.registerSuccess}/m`)
       ) ? 0 : 1
       switch (path) {
         case '/register':
@@ -207,7 +201,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   @import '../static/css/font-family/font.css';
 
   .body-container {
@@ -218,5 +212,17 @@ export default {
     font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    &.is-mobile {
+      min-height: 2000px;
+
+      > .inner-box {
+        /* margin-top: 0; */
+      }
+    }
+
+    > .inner-box {
+      margin-top: 50px;
+    }
   }
 </style>

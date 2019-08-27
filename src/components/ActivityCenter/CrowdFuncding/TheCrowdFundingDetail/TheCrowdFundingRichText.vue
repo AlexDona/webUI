@@ -59,7 +59,6 @@ export default {
   .the-crowd-funding-rich-text
     margin 30px 0
     .title
-      /*background-color pink*/
       font-size 18px
       color S_main_color
       font-weight 400

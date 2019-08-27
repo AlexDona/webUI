@@ -83,7 +83,7 @@
         .bottom
           // 没有账号？ 立即注册
           span {{$t('M.register_tips')}}
-          router-link.forget-pass.font-size12(:to="`/${$routes_X.login}/${$routes_X.register}/default`") {{$t($globalLabel_X.registerImmediately)}}
+          router-link.forget-pass.font-size12(:to="registerRouter") {{$t($globalLabel_X.registerImmediately)}}
       el-dialog.slider(
         :title="$t('M.login_dialog_title_label_04')"
         :visible.sync="isShowSlider"
@@ -347,11 +347,15 @@ export default {
       $userInfo_S_X: state => state.user.loginStep1Info,
       // 失败次数
       failureNum: state => state.user.loginStep1Info.failNum,
-      imageCode: state => state.user.imageCode_S
+      imageCode: state => state.user.imageCode_S,
+      isMobile: state => state.user.isMobile
     }),
     isSubmitButtonDisabled () {
       const {username, password} = this.form
       return !username || !password
+    },
+    registerRouter () {
+      return !this.isMobile ? `/${this.$routes_X.login}/${this.$routes_X.register}/default` : `/${this.$routes_X.register}/m/default`
     }
   },
   watch: {
@@ -524,6 +528,7 @@ export default {
             .el-input__inner
               background-color #3f4769
               border-color transparent
+              line-height 20px
               color S_day_bg
             .el-checkbox__inner
               background-color transparent
@@ -560,7 +565,7 @@ export default {
                 &.is-disabled
                   background #303757
                   color #636777
-                  box-shadow none
+                  box-shadow noner
           .bottom
             span
               color #8B9197

@@ -1,54 +1,41 @@
-<template>
-  <div
-    class="download-box"
-    :style="{
-      height:windowHeight+'px'
-    }"
-  >
-    <HeaderCommonForMobile
-      :style="{
-        display:'none'
-      }"
-    />
-    <div
-      class="inner-box"
-    >
-      <div class="logo">
-        <img
-          :src="logoSrc"
-        >
-      </div>
-      <div class="content">
-        <img
-          :src="isChineseLanguage ? zh_CNSrc : en_USSrc"
-          v-if="isChineseLanguage"
-        >
-        <button
-          class="download-btn"
-          @click="downloadApp"
-        >
-          <!-- 立即安装 -->
-          {{isChineseLanguage ? '立即安装' : 'Install' }}
-        </button>
-        <a
-          :href="downloadUrl"
-          ref="download"
-          download="android"
-          :style="{
-            'display':'none'
-          }"
-        ></a>
-      </div>
-    </div>
-    <WeChatMask
+<!--
+  author: zhaoxinlei
+  update: 20190815
+  description: app下载页
+-->
+<template lang="pug">
+  .download-box(
+    @ondblclick="ondblclick"
+    @touchmove="touchmove"
+    )
+    HeaderCommonForMobile(:style="{display:'none'}")
+    .inner-box
+      .logo
+        img(:src="logoSrc")
+      .content
+        // 立即安装
+      button.download-btn(
+        :disabled="isLoading"
+        @click="downloadApp"
+        @ondblclick="ondblclick"
+      ) {{isChineseLanguage ? '立即安装' : 'Install' }}
+      a(
+        :href="downloadUrl"
+        ref="download"
+        download="android"
+        :style="{'display':'none'}"
+        )
+    WeChatMask(
       :isAndroid="isAndroid"
       :isIOS="isIOS"
-      :language="language"
+      :isChineseLanguage = "isChineseLanguage"
       :isWXBrowserStatus="isWXBrowserStatus"
-    />
-  </div>
+      :isBaiDuBrowser="isBaiDuBrowser"
+      :isWeiBoBrowser="isWeiBoBrowser"
+      :isSouGouBrowser="isSouGouBrowser"
+      :isIPad="isIPad"
+    )
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 // import {downloadFileWithUserDefined} from '../utils'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
@@ -67,57 +54,145 @@ export default {
   // props,
   data () {
     return {
-      zh_CNSrc: require('../assets/develop/download-bg-cn.png'),
-      en_USSrc: require('../assets/develop/download-bg-en.png'),
       downloadUrl: '',
       isAndroid: false,
       isIOS: false,
-      isWXBrowserStatus: true
+      isWXBrowserStatus: true,
+      isLoading: false,
+      timer: null,
+      // 下载延时器
+      downloadTimer: null
     }
   },
   async created () {
+    document.getElementsByTagName('body')[0].style.zoom = 1
     let u = navigator.userAgent
     this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
-    this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
-    this.isWXBrowserStatus = u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
-    await this.getAppDownLoadUrl()
-    console.log(this.language)
+    this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端\
+
+    this.isWXBrowserStatus = this.isQQAppBrowser() || this.isWXBrowser()
   },
-  mounted () {
+  mounted: function () {
+    // 禁止横屏
+    window.addEventListener('orientationchange', function (e) {
+      this.orient()
+      e.preventDefault()
+      return false
+    }, false)
+    // 禁止拖动
+    document.ondragstart = document.onselectstart = function () {
+      return false
+    }
+    // 禁止滑动
+    document.addEventListener('touchmove', function (event) {
+      event.preventDefault()
+    })
+    // 禁止双击
+    let lastTouchEnd = 0
+    document.documentElement.addEventListener('touchend', function (event) {
+      let now = Date.now()
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault()
+      }
+      lastTouchEnd = now
+    }, false)
   },
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // update () {},
+  beforeDestroy () {
+    clearTimeout(this.timer)
+    clearTimeout(this.downloadTimer)
+  },
+  // beforeRouteUpdate () {},
   methods: {
-    ...mapActions([
-      'GET_APP_URL_ACTION'
-    ]),
-    ...mapMutations([
-      'SET_FOOTER_INFO'
-    ]),
+    ...mapActions(['GET_APP_URL_ACTION']),
+    ...mapMutations(['SET_FOOTER_INFO']),
+    isQQAppBrowser () {
+      let u = navigator.userAgent
+      let isIosQQ = (/(iPhone|iPad|iPod|iOS)/i.test(u) && /\sQQ/i.test(u))
+      let isAndroidQQ = (/(Android)/i.test(u) && /MQQBrowser/i.test(u) && /\sQQ/i.test((u).split('MQQBrowser')))
+      return isIosQQ || isAndroidQQ
+    },
+    isWXBrowser () {
+      let u = navigator.userAgent
+      this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
+      this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端\
+      return u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger'
+    },
+    // 横屏
+    orient () {
+      if (window.orientation == 0 || window.orientation == 180) {
+        orientation = 'portrait'
+        return false
+      } else if (window.orientation == 90 || window.orientation == -90) {
+        orientation = 'landscape'
+        return false
+      }
+    },
+    touchmove (e) {
+      e.preventDefault()
+    },
+    ondblclick (e) {
+      e.preventDefault()
+      return false
+    },
     // 获取app下载地址
     async getAppDownLoadUrl () {
       await this.GET_APP_URL_ACTION()
       if (this.isAndroid) {
-        window.location.href = 'scheme: //fubt.com/'
+        // window.location.href = 'scheme: //fubt.com/'
         this.downloadUrl = this.androidUrl
+        if (!this.androidUrl) {
+          this.$error_tips_X(this.isChineseLanguage ? '获取下载链接失败，请稍后再试！' : 'Failed to get the download link, please try again later!')
+          return false
+        }
+        this.downloadTimer = setTimeout(() => {
+          if (this.isBaiDuBrowser) {
+            this.$refs['download'].click()
+          } else {
+            window.location.href = this.downloadUrl
+          }
+        }, 1000)
       } else if (this.isIOS) {
         this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
+        // 获取下载链接失败，请稍后再试！
+        if (!this.iosUrl) {
+          this.$error_tips_X(this.isChineseLanguage ? '获取下载链接失败，请稍后再试！' : 'Failed to get the download link, please try again later!')
+          return false
+        }
+        window.location.href = this.downloadUrl
       }
+      this.isLoading = false
     },
-    downloadApp () {
-      this.$refs['download'].click()
-    }
+    downloadApp: _.debounce(async function () {
+      this.isLoading = true
+      await this.getAppDownLoadUrl()
+      this.timer = setTimeout(() => {
+        this.isLoading = false
+      }, 2000)
+    }, 500)
   },
-  filter: {},
+  // filter: {},
   computed: {
     ...mapState({
       logoSrc: state => state.common.logoSrc,
       androidUrl: state => state.footerInfo.downloadUrl.android,
       iosUrl: state => state.footerInfo.downloadUrl.ios
     }),
-    windowHeight () {
-      return window.innerHeight
+    isBaiDuBrowser () {
+      let u = navigator.userAgent
+      return u.toLowerCase().indexOf('baidu') > -1
+    },
+    isWeiBoBrowser () {
+      let u = navigator.userAgent.toLowerCase()
+      return u.match(/WeiBo/i) == 'weibo'
+    },
+    isSouGouBrowser () {
+      let u = navigator.userAgent.toLowerCase()
+      return u.indexOf('sogou') > -1
+    },
+    isIPad () {
+      let u = navigator.userAgent.toLowerCase()
+      return u.indexOf('iPad'.toLowerCase()) > -1
     },
     isChineseLanguage () {
       return this.language === 'zh_CN' ||
@@ -126,25 +201,36 @@ export default {
     language () {
       return (navigator.browserLanguage || navigator.language).startsWith('zh') ? 'zh_CN' : 'en_US'
     }
-    // isWXBrowserStatus () {
-    //   return isWXBrowser()
-    // }
-  },
-  watch: {
   }
+  // watch: {
+  // }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
   .download-box {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    box-sizing: border-box;
     width: 100%;
+    min-width: 750px;
+    height: 100%;
+    background-color: #272940;
+    transform: translateX(-50%);
 
     > .inner-box {
+      position: relative;
+      height: 100%;
+      min-height: 2000px;
       border: 1px solid transparent;
 
       > .logo {
-        width: 6rem;
-        margin: 4rem auto 2rem;
+        position: absolute;
+        top: 2rem;
+        left: 50%;
+        width: 6.2rem;
         border-radius: 10px;
+        transform: translateX(-50%);
 
         > img {
           -webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, .1)));
@@ -153,24 +239,37 @@ export default {
       }
 
       > .content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
         width: 100%;
+        height: 8.5rem;
         text-align: center;
+        background: url(../assets/develop/downloadapp.bg.png) no-repeat center center/contain;
+        transform: translate(-50%, -50%);
 
         > img {
-          display: block;
+          display: none;
           width: 60%;
-          margin: 0 auto;
         }
+      }
 
-        > .download-btn {
-          width: 10rem;
-          height: 2rem;
-          margin: 200px auto;
-          border-radius: 40px;
-          font-size: .8rem;
-          line-height: 2rem;
-          color: #fff;
-          background: rgba(70, 150, 245, 1);
+      > .download-btn {
+        position: fixed;
+        bottom: 3rem;
+        left: 50%;
+        width: 14rem;
+        height: 2.2rem;
+        border-radius: 4px;
+        font-size: .9rem;
+        color: #fff;
+        background: linear-gradient(81deg, rgba(42, 59, 97, 1), rgba(18, 71, 133, 1));
+        box-shadow: 0 3px 8px 0 rgba(0, 0, 0, .25);
+        transform: translateX(-50%);
+
+        &:disabled {
+          color: #636777;
+          background: #303757;
         }
       }
     }

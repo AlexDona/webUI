@@ -85,6 +85,7 @@
             @keyup.native="formatValidateCode"
             @input.native="formatValidateCode"
             clearable
+            maxlength="6"
           )
             // 发送验证码
             template(
@@ -139,11 +140,13 @@
         )
           el-input(
             type="text"
-            v-model="form.inviteCode"
+            v-model.trim="form.inviteCode"
             :placeholder="$t('M.invite_code_tips')"
             autocomplete="off"
             :disabled="hasInviteCode"
             @keyup.enter.native="submitForm"
+            @keyup.native="formatInviteCode"
+            @input.native="formatInviteCode"
             clearable
           )
         //  用户协议
@@ -168,8 +171,8 @@
           span.error-tips {{loginErrorTips}}
         //    点击注册
         el-form-item.submit(
-        label=""
-        label-width="0px"
+          label=""
+          label-width="0px"
         )
           el-button.reg-button(
             type="primary"
@@ -195,19 +198,17 @@ import TheCommonSlider from '../../../Common/CommonSlider'
 import CountDownButton from '../../../Common/CountDownCommon'
 import {EMAIL_REG} from '../../../../utils/regExp'
 import mixins from '../../../../mixins/user'
+import registerMixins from '../../../../mixins/register'
 import TheCountriesSelect from './TheCountriesSelect'
 import {
-  mapState,
-  mapActions,
-  mapMutations
+  mapState
+  // mapActions,
+  // mapMutations
 } from 'vuex'
-import {sendPhoneOrEmailCodeAjax, validateNumForUserInput} from '../../../../utils/commonFunc'
-import {newCheckUserExist, newRegisterAJAX} from '../../../../utils/api/user'
-import {formatNumber} from '../../../../utils'
-import {encrypt} from '../../../../utils/encrypt'
+import {sendPhoneOrEmailCodeAjax} from '../../../../utils/commonFunc'
 export default {
   name: 'the-register-container',
-  mixins: [mixins],
+  mixins: [mixins, registerMixins],
   components: {
     TheCommonSlider,
     CountDownButton,
@@ -257,12 +258,10 @@ export default {
         this.loginErrorTips = this.$t('M.login_tips2')
         // 请输入密码
         callback(new Error(' '))
-        this.isPasswordValidateSuccess = false
       } else if (!this.PASS_REG_X.test(value)) {
         this.loginErrorTips = this.$t('M.user_security_info1')
         // 密码请输入8-20位字母和数字组合
         callback(new Error(' '))
-        this.isPasswordValidateSuccess = false
       } else {
         this.$refs[this.formRef].validateField('checkPassword')
         this.loginErrorTips = ''
@@ -275,20 +274,16 @@ export default {
         // 请输入确认密码
         callback(new Error(' '))
         this.loginErrorTips = this.$t('M.comm_please_enter') + this.$t('M.forgetPassword_affirm_password')
-        this.isPasswordValidateSuccess = false
       } else if (value !== this.form.password) {
         this.loginErrorTips = this.$t('M.user_security_info2')
-        this.isPasswordValidateSuccess = false
         // 密码不一致，请重新确认
         callback(new Error(' '))
       } else if (!this.PASS_REG_X.test(value)) {
         this.loginErrorTips = this.$t('M.user_security_info1')
         // 密码请输入8-20位字母和数字组合
         callback(new Error(' '))
-        this.isPasswordValidateSuccess = false
       } else {
         this.loginErrorTips = ''
-        this.isPasswordValidateSuccess = true
         callback()
       }
     }
@@ -358,9 +353,7 @@ export default {
       // 我已阅读并同意
       agreementTips: 'M.forgetPassword_hint6',
       agreementText: 'M.forgetPassword_hint7',
-      hasInviteCode: false,
-      // 密码是否检验成功
-      isPasswordValidateSuccess: false
+      hasInviteCode: false
     }
   },
   async created () {
@@ -368,6 +361,9 @@ export default {
     this.initInviteStatus()
     this.initCountry()
     if (this.$isLogin_S_X) this.USER_LOGOUT()
+    if (this.inviteId !== this.$routes_X.default && this.isMobile) {
+      this.$goToPage(`/${this.$routes_X.register}/${this.$routes_X.invite}/${this.inviteId}`)
+    }
   },
   mounted () {
     this.resetForm()
@@ -377,23 +373,8 @@ export default {
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
-    ...mapActions([
-      'GET_COUNTRY_LIST_ACTION'
-    ]),
-    ...mapMutations([
-      'SET_LOGIN_TYPE',
-      'SET_STEP1_INFO',
-      'USER_LOGIN',
-      'USER_LOGOUT',
-      'CHANGE_FOOTER_ACTIVE_NAME',
-      'SET_COUNTRY_AREA_LIST'
-    ]),
-    formatValidateCode () {
-      this.form.validateCode = formatNumber(this.form.validateCode, 0)
-    },
-    formatPhone () {
-      this.form.phone = formatNumber(this.form.phone, 0)
-    },
+    // ...mapActions([]),
+    // ...mapMutations([]),
     // 发送验证码（短信、邮箱）
     async sendPhoneOrEmailCode (type) {
       this.$refs[this.formRef].validateField(this.isPhoneRegist ? this.phone_X : this.email_X, async (err) => {
@@ -402,8 +383,9 @@ export default {
           return false
         }
         const {phone, email} = this.form
+        const {nationCode} = this.currentCountry_S
         let params = {
-          nationCode: this.activeNationCode
+          nationCode
         }
         switch (type) {
           case 0:
@@ -415,135 +397,26 @@ export default {
         }
         await sendPhoneOrEmailCodeAjax(type, params, this)
       })
-    },
-    initInviteStatus () {
-      this.hasInviteCode = this.inviteId && this.inviteId !== 'default' ? true : false
-      if (!this.hasInviteCode) return
-      this.form.inviteCode = this.inviteId
-    },
-    changeRegType (type) {
-      if (type == this.regType) return
-      this.regType = type
-      this.resetForm()
-    },
-    submitForm () {
-      let targetProp = this.isPhoneRegist ? this.phone_X : this.email_X
-
-      this.$refs[this.formRef].validateField(targetProp, (err) => {
-        if (!err) {
-          this.$refs[this.formRef].validateField('validateCode', (err) => {
-            if (!err) {
-              this.$refs[this.formRef].validateField('password', (err) => {
-                if (!err) {
-                  this.$refs[this.formRef].validateField('checkPassword', (err) => {
-                    if (!err) {
-                      this.$refs[this.formRef].validateField('agreement', (err) => {
-                        if (!err) {
-                          this.isShowSlider = true
-                        }
-                      })
-                    }
-                  })
-                }
-              })
-            }
-          })
-        }
-      })
-    },
-    // 重置表单
-    resetForm () {
-      this.$refs[this.formRef].resetFields()
-      this.loginErrorTips = ''
-    },
-    successCallback: _.debounce(async function () {
-      this.isShowSlider = false
-      // this.isShowStep3Dialog = true
-      if (!await this.checkUserExistAjax()) return
-      await this.doRegister()
-    }, 500),
-    // 检测用户名是否存在
-    async checkUserExistAjax () {
-      const {phone, email} = this.form
-      const userName = this.isPhoneRegist ? phone : email
-      if (!validateNumForUserInput(this.regType, userName)) {
-        let params = {
-          userName,
-          regType: this.regType
-        }
-        const data = await newCheckUserExist(params)
-        if (!data) return false
-        return data
-      } else {
-        switch (this.regType) {
-          case 'phone':
-            if (this.checkoutInputFormat(0, userName)) return false
-            break
-          case 'email':
-            if (this.checkoutInputFormat(1, userName)) return false
-            break
-        }
-      }
-    },
-    jumpToUserAgreement () {
-      let routeData = this.$router.resolve({
-        path: '/ServiceAndProtocol'
-      })
-      this.CHANGE_FOOTER_ACTIVE_NAME({
-        type: '/ServiceAndProtocol',
-        activeName: 'UserProtocol'
-      })
-      window.open(routeData.href, '_blank')
-    },
-    // 确定注册
-    async doRegister () {
-      const { phone, email, password, validateCode } = this.form
-      let params = {
-        country: this.activeNationCode,
-        userName: this.isPhoneRegist ? phone : email,
-        password: encrypt(password),
-        checkCode: validateCode,
-        inviter: this.currentInviteId,
-        regType: this.regType
-      }
-      const data = await newRegisterAJAX(params)
-      if (!data) return
-      this.resetForm()
-      this.$goToPage(`/${this.$routes_X.registerSuccess}/${this.$routes_X.register}/${this.inviteId}`)
-    },
-    initCountry () {
-      if (this.countries.length) {
-        const { nationCode } = this.countries[0]
-        this.activeNationCode = nationCode
-      }
     }
   },
   // filters: {},
   computed: {
     ...mapState({
-      countries: state => state.common.countryAreaList
+      countries: state => state.common.countryAreaList,
+      isMobile: state => state.user.isMobile,
+      currentCountry_S: state => state.user.currentCountry_S
     }),
-    // 映射真实 邀请码
-    currentInviteId () {
-      return this.inviteId && this.inviteId !== 'default' ? this.inviteId : this.form.inviteCode
-    },
     isSubmitButtonDisabled () {
       const {username, password} = this.form
       return !username || !password
     },
-    isPhoneRegist () {
-      return this.regType == this.phone_X
-    },
     isSuccessValidate () {
       const {phone, email, validateCode, password, checkPassword, agreement} = this.form
       let targetValidate = this.isPhoneRegist ? phone : email
-      return (targetValidate && validateCode && password && checkPassword && this.isPasswordValidateSuccess && agreement)
+      return (targetValidate && validateCode && password && checkPassword && agreement)
     }
   },
   watch: {
-    currentInviteId (New) {
-      console.log(New)
-    },
     $language_S_X () {
       this.loginErrorTips = ''
     },
@@ -559,6 +432,12 @@ export default {
         // phone
         this.SET_LOGIN_TYPE(0)
       }
+    },
+    isMobile (New) {
+      this.$goToPage(
+        New ? `/${this.$routes_X.login}/${this.$routes_X.register}/${this.currentInviteId}`
+          : `/${this.$routes_X.register}/m/${this.currentInviteId}`
+      )
     }
   }
 }

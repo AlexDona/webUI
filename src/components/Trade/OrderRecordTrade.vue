@@ -22,11 +22,13 @@
           // 成交价
           el-table-column(:label="$t('M.otc_MerchantsOrders_transaction_price') + ('('+ ($middleTopData_S_X.area ? $middleTopData_S_X.area : '--') +')')")
             template(slot-scope="s")
-              span.font-size12.text-align-r( :class="{buy:s.row.direction === 'BUY', sell: s.row.direction === 'SELL'}") {{$scientificToNumber(s.row.price)}}
+              transition(enter-active-class="animated bounce")
+                span.font-size12.text-align-r( :class="{buy:s.row.direction === 'BUY', sell: s.row.direction === 'SELL'}") {{$scientificToNumber(s.row.price)}}
           // 成交量
           el-table-column(:label="$t('M.comm_trading_volume1') +('('+($middleTopData_S_X.sellsymbol? $middleTopData_S_X.sellsymbol: '--')+')')")
             template(slot-scope="s")
-              span.font-size12.text-align-r {{$scientificToNumber(s.row.amount)}}
+              transition(enter-active-class="animated bounce")
+                span.font-size12.text-align-r {{$scientificToNumber(s.row.amount)}}
 </template>
 <script>
 import {timeFilter} from '../../utils'
@@ -44,7 +46,7 @@ export default {
   // console.log(this.$clientWidth_S_X)
   // },
   // mounted () {},
-  // activated () {},
+  // ,
   // update () {},
   // beforeRouteUpdate () {},
   methods: {

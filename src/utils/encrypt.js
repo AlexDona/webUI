@@ -18,7 +18,6 @@ export const encrypt = (data, key = str, iv) => { // 加密
     })
   return encrypted.toString() // 返回的是base64格式的密文
 }
-// console.log(encrypt('123456'))
 /**
  * AES 解密
  * @param word

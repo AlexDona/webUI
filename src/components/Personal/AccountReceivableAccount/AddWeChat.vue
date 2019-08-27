@@ -64,6 +64,7 @@
             <!--微信账号-->
             <el-form-item
               :label="$t('M.user_account_weChat') + $t('M.user_account_number')"
+              required
             >
               <input
                 class="chat-input border-radius2"
@@ -113,6 +114,7 @@
             </el-form-item>
             <el-form-item
               :label="$t('M.comm_password')"
+              required
             >
               <input
                 type="password"
@@ -203,10 +205,9 @@ export default {
     await getAccountPaymentTerm(this)
     this.paymentMethodInformation()
   },
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME',
@@ -336,13 +337,13 @@ export default {
       } else {
         goOnStatus = 0
       }
-      if (!this.wechatImgUrl) {
+      /* if (!this.wechatImgUrl) {
         this.$message({
           message: this.$t('M.user_account_weChat_pla'),
           type: 'error'
         })
         return false
-      }
+      } */
       if (goOnStatus) {
         let data
         let param = {

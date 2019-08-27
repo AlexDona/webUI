@@ -28,7 +28,7 @@ export default {
   .more-button {
     width: 30px;
     height: 30px;
-    padding-top: 10px;
+    padding-top: 4px;
     transition: all 1s;
 
     > div {

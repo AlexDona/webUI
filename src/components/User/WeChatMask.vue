@@ -1,64 +1,49 @@
-<template>
-  <!--微信遮罩-->
-  <div
-      class="wx-mask"
-      v-if="isWXBrowserStatus"
-    >
-      <div class="img">
-        <div
-          class="ios-box"
-          v-if="isIOS"
-        >
-          <img
-            v-if="language=='zh_CN'||language=='zh_TW'"
-            src="../../assets/develop/zh_CN_weiChat_ios.png"
-          >
-          <img
-            v-else
-            src="../../assets/develop/en_US_weiChat_ios.png"
-          >
-        </div>
-        <div
-          class="android-box"
-          v-if="isAndroid"
-        >
-          <img
-            v-if="language=='zh_CN'||language=='zh_TW'"
-            src="../../assets/develop/zh_CN_weiChat_andriod.png"
-          >
-          <img
-            v-else
-            src="../../assets/develop/en_US_weiChat_andriod.png"
-          >
-        </div>
-      </div>
-    </div>
+<!--
+  author: zhoaxinlei
+  update: 20190821
+  description: 当前文件为 微信、qq、百度浏览器遮罩
+-->
+<template lang="pug">
+  .wx-mask(v-if="isWXBrowserStatus || (isBaiDuBrowser && isIOS) || isWeiBoBrowser || (isSouGouBrowser && isIPad)")
+    .img
+      .ios-box(v-if="isIOS")
+        img(:src="IOSFilterSrc")
+      .android-box(v-if="isAndroid")
+        img(:src="androidFilterSrc")
 </template>
-<!--请严格按照如下书写书序-->
 <script>
-// import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
-  components: {
-  },
-  props: ['isAndroid', 'language', 'isIOS', 'isWXBrowserStatus'],
+  // components: {},
+  props: ['isAndroid', 'isIOS', 'isWXBrowserStatus', 'isBaiDuBrowser', 'isChineseLanguage', 'isWeiBoBrowser', 'isIPad', 'isSouGouBrowser'],
   data () {
     return {
-      // isWXBrowserStatus: false
+      IOS_ZH_CNSRC: require('../../assets/develop/zh_CN_weiChat_ios.png'),
+      IOS_EN_USSRC: require('../../assets/develop/en_US_weiChat_ios.png'),
+      android_ZH_CNSRC: require('../../assets/develop/zh_CN_weiChat_andriod.png'),
+      android_EN_USSRC: require('../../assets/develop/en_US_weiChat_andriod.png'),
+      IOS_Baidu_ZH_CNSRC: require('../../assets/h5/baidu-guide-bg-zh.png'),
+      IOS_Baidu_EN_USSRC: require('../../assets/h5/baidu-guide-en.png')
     }
   },
-  created () {
-    // this.isWXBrowser()
-  },
-  mounted () {},
-  activated () {},
-  updated () {},
-  beforeRouteUpdate () {},
-  methods: {
-  },
-  filter: {},
+  // created () {},
+  // mounted () {},
+  // updated () {},
+  // beforeRouteUpdate () {},
+  // methods: {},
+  // filter: {},
   computed: {
-  },
-  watch: {}
+    IOSFilterSrc () {
+      if (this.isChineseLanguage) {
+        return this.isBaiDuBrowser || (this.isIPad && this.isSouGouBrowser) ? this.IOS_Baidu_ZH_CNSRC : this.IOS_ZH_CNSRC
+      } else {
+        return this.isBaiDuBrowser || (this.isIPad && this.isSouGouBrowser) ? this.IOS_Baidu_EN_USSRC : this.IOS_EN_USSRC
+      }
+    },
+    androidFilterSrc () {
+      return this.isChineseLanguage ? this.android_ZH_CNSRC : this.android_EN_USSRC
+    }
+  }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">

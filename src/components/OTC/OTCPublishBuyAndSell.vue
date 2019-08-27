@@ -260,22 +260,26 @@
                 </div>
               </el-form-item>
               <!-- 5.0备注 -->
-              <el-form-item
-                :label="$t('M.comm_remark')"
-              >
+              <el-form-item :label="$t('M.comm_remark')">
                 <div class="remark">
                   <!-- '请说明有关于您交易的相关条款或者其它您想让对方获悉得信息，以便对方和您快速交易', -->
                   {{$t('M.otc_publishAD_liveMessage')}}
                 </div>
-                <!-- 请输入备注：最多30个字符 -->
-                <el-input
-                  type="textarea"
-                  auto-complete="off"
-                  :placeholder="$t('M.otc_index_inputTips')"
-                  maxlength="30"
-                  v-model="remarkText"
-                >
-                </el-input>
+                <!-- 请输入备注：10~30个字符！ -->
+                <div class="remark-content">
+                  <textarea
+                    :placeholder="$t('M.otc_remark_tips2_placeholder')"
+                    class="textarea-text font-size12 border-radius4 box-sizing"
+                    :class="{ redBorderRemark: remarkErrorTipsBorder }"
+                    maxlength="30"
+                    v-model.trim="remarkText"
+                    @focus="remarkFocus"
+                  >
+                  </textarea>
+                  <div class="remark-error red font-size12">
+                    {{errorTipsRemark}}
+                  </div>
+                </div>
                 <!-- 预计交易和手续费 -->
                 <div class="predict">
                   <span class="predict-text">
@@ -509,7 +513,12 @@ export default {
       // 后台根据币种返回的当前币种的单笔最大限额
       backReturnCurrentMaxCount: '',
       // 7备注
-      remarkText: '',
+      // remarkText: '这家伙很懒，什么都没有留下...',
+      remarkText: this.$t('M.otc_remark_tips1_default'),
+      // 备注错误提示信息
+      errorTipsRemark: '',
+      // 备注错误提示框
+      remarkErrorTipsBorder: false,
       // 8交易密码
       tradePassword: '',
       // 当前可用
@@ -537,7 +546,7 @@ export default {
       // 当前币种返回的保留小数点位数限制
       pointLength: 4,
       // 当前金额小数点限制位数
-      moneyPointLengthPrice: 3, // 当前金额小数点限制位数-单价保留3位
+      moneyPointLengthPrice: 2, // 当前金额小数点限制位数-单价保留2位:20190827改2
       moneyPointLength: 2, // 当前金额小数点限制位数-总金额和最低最高限额保留2位
       // 买入量卖出量错误提示框
       entrustCountErrorTipsBorder: false,
@@ -582,7 +591,7 @@ export default {
     this.getOTCCoinInfo()
   },
   // mounted () {},
-  // activated () {},
+  // ,
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
@@ -712,7 +721,11 @@ export default {
       this.priceBuy = ''
       this.$refs.minCount.value = ''
       this.$refs.maxCount.value = ''
-      this.remarkText = ''
+      // 备注
+      // this.remarkText = '这家伙很懒，什么都没有留下...'
+      this.remarkText = this.$t('M.otc_remark_tips1_default')
+      this.remarkErrorTipsBorder = false
+      this.errorTipsRemark = ''
       this.tradePassword = ''
       this.errorPWd = ''
       this.entrustCountSell = 0
@@ -958,6 +971,19 @@ export default {
         this.maxCountErrorTipsBorder = true
         return false
       }
+      // 20190827发版周期增加备注最小10个字符的提示
+      if (!this.remarkText) {
+        // this.errorTipsRemark = '备注不能为空！'
+        this.errorTipsRemark = this.$t('M.otc_remark_tips3_not_empty')
+        this.remarkErrorTipsBorder = true
+        return false
+      }
+      if (this.remarkText.length - 10 < 0) {
+        // this.errorTipsRemark = '备注最少为10个字符，最多为30个字符！'
+        this.errorTipsRemark = this.$t('M.otc_remark_tips4_length')
+        this.remarkErrorTipsBorder = true
+        return false
+      }
       if (this.isNeedPayPassword) {
         this.publishOrderTradePwdDialogStatus = true
       } else {
@@ -1030,6 +1056,11 @@ export default {
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
       this.$goToPage('/PersonalCenter')
       this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
+    },
+    // 备注获得焦点
+    remarkFocus () {
+      this.errorTipsRemark = ''
+      this.remarkErrorTipsBorder = false
     }
   },
   // filter: {},
@@ -1062,6 +1093,10 @@ export default {
   .redBorderLeftNone {
     border: 1px solid $upColor !important;
     border-left: 0 !important;
+  }
+
+  .redBorderRemark {
+    border: 1px solid $upColor !important;
   }
 
   .red {
@@ -1202,7 +1237,29 @@ export default {
             font-size: 12px;
           }
 
+          /* 备注文本域 */
+          .remark-content {
+            .textarea-text {
+              width: 588px;
+              height: 100px;
+              padding: 5px 15px;
+              border: 0;
+              outline: none;
+              resize: none;
+              font-family: "MicrosoftYaHei", "Avenir", Helvetica, Arial, sans-serif;
+            }
+
+            .remark-error {
+              width: 588px;
+              height: 18px;
+              margin-top: -7px;
+              line-height: 18px;
+            }
+          }
+
           .predict {
+            margin-top: -3px;
+
             > .predict-text {
               font-size: 12px;
             }
@@ -1249,14 +1306,6 @@ export default {
   }
 
   /deep/ {
-    .el-textarea__inner {
-      width: 588px;
-      height: 100px;
-      margin-bottom: 10px;
-      border: 0;
-      resize: none;
-    }
-
     .el-form--label-top {
       .el-form-item__label {
         padding: 0;
@@ -1450,6 +1499,14 @@ export default {
               color: #9da5b3;
             }
 
+            /* 备注文本域 */
+            .remark-content {
+              .textarea-text {
+                color: #9da5b3;
+                background-color: $nightInputBg;
+              }
+            }
+
             .predict {
               > .predict-text {
                 color: #9fa7b2;
@@ -1497,11 +1554,6 @@ export default {
     /deep/ {
       .el-input--suffix .el-input__inner {
         color: $mainColorOfWhite;
-      }
-
-      .el-textarea__inner {
-        color: $mainColorOfWhite;
-        background-color: $nightInputBg;
       }
 
       .el-form--label-top {
@@ -1674,6 +1726,15 @@ export default {
               color: $fontColorSecondaryOfDay;
             }
 
+            /* 备注文本域 */
+            .remark-content {
+              .textarea-text {
+                border: 1px solid $borderColorOfDay;
+                color: $fontColorSecondaryOfDay;
+                background: $mainColorOfWhite;
+              }
+            }
+
             .predict {
               > .predict-text {
                 color: $dayMainTitleColor;
@@ -1725,17 +1786,6 @@ export default {
 
       .el-form--label-top {
         .el-form-item__label {
-          color: $fontColorSecondaryOfDay;
-        }
-      }
-
-      .el-textarea__inner {
-        border: 1px solid $borderColorOfDay;
-        border-radius: 2px;
-        font-size: 12px;
-        background: $mainColorOfWhite;
-
-        &::-webkit-input-placeholder {
           color: $fontColorSecondaryOfDay;
         }
       }

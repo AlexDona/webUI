@@ -423,7 +423,7 @@
             <div class='showAll'>
               <router-link
                 class="blue"
-                :to="{path: isLogin ? '/FinanceInvestmentRecord' : '/login', query:{coinId:selectedCoinId,coinName:selectedCoinName}}"
+                :to="{path: isLogin ? '/FinanceInvestmentRecord' : `/${$routes_X.login}`, query:{coinId:selectedCoinId,coinName:selectedCoinName}}"
               >
                 <!--查看全部-->
                 {{ $t('M.investment_look_all') }}
@@ -443,7 +443,7 @@
                   class = 'finance-tips-box'
                 >
                   {{$t('M.finance_loginTips')}}
-                  <router-link to='/login'>
+                  <router-link :to='`/${$routes_X.login}`'>
                     {{$t('M.comm_login')}}
                   </router-link>
                   {{$t('M.finance_or')}}
@@ -605,7 +605,7 @@
                   class = 'finance-tips-box'
                 >
                   {{$t('M.finance_loginTips')}}
-                  <router-link to='/login'>
+                  <router-link :to="`/${$routes_X.login}`">
                     {{$t('M.comm_login')}}
                   </router-link>
                   {{$t('M.finance_or')}}
@@ -815,7 +815,6 @@ export default {
     this.getFinancialManagementList()
   },
   // mounted () {},
-  // activated () {},
   // update () {},
   // beforeRouteUpdate () {},
   methods: {
@@ -1800,6 +1799,7 @@ export default {
               }
 
               .el-button--primary {
+                border: none;
                 background: $nightButtonBgColor1;
               }
             }

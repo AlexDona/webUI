@@ -124,9 +124,7 @@ export default {
     },
     // 接口获取K线数据
     async getKlineByAjax (tradeName, KlineType, KlineNum = 0, KlineStep = 'STEP5') {
-      // console.log(KlineType, this.interval)
       this.isAllowDrag = false
-      // console.log(tradeName)
       if (tradeName) {
         tradeName = tradeName.toLowerCase()
       }
@@ -148,11 +146,9 @@ export default {
       if (!klineDataStr) return false
       let klineData = JSON.parse(klineDataStr)
       let klineList = getNestedData(klineData, 'klineList')
-      // console.log(klineData, klineList)
       if (klineList) {
         this.KlineNum = klineData.num
         let list = []
-        // console.log(this.KlineNum)
         const ticker = `${this.symbol}-${this.interval}`
         switch (KlineNum) {
           case 0:
@@ -169,7 +165,6 @@ export default {
             this.cacheData[ticker] = list
             break
           default:
-            // console.log(klineData)
             let reflashList = []
             klineList.forEach(item => {
               reflashList.push({
@@ -198,14 +193,12 @@ export default {
         tradeName
       }
       const data = await getActiveSymbolDataAjax(params)
-      // console.log(data)
       if (!data) return false
       let resultStr = ''
       let objList = getNestedData(data, 'data.obj')
       _.forEach(objList, objItem => {
         resultStr += unzip(objItem)
       })
-      // console.log(resultStr)
       if (!resultStr) return false
       let activeSymbolData = JSON.parse(resultStr)
       let {
@@ -214,7 +207,6 @@ export default {
         tradeList, // 交易记录
         tickerList // 行情交易区列表
       } = activeSymbolData
-      // console.log(activeSymbolData)
       if (depthList && depthList.depthData.sells.list) {
         depthList.depthData.sells.list.reverse()
       }
@@ -266,7 +258,7 @@ export default {
       const obj = getNestedData(data, 'data')
       activeSymbol = `${getNestedData(obj, 'sellCoinName')}${getNestedData(obj, 'buyCoinName')}`.toLowerCase()
       const {tradeId} = this.$route.params
-      this.symbol = tradeId && tradeId !== 'default' ? tradeId : (localSymbol ? localSymbol : activeSymbol)
+      this.symbol = tradeId && tradeId !== this.$routes_X.default ? tradeId : (localSymbol ? localSymbol : activeSymbol)
       if (this.$isLogin_S_X) this.getUserOrderSocket('SUB', this.symbol)
     },
     init (options) {
@@ -303,7 +295,6 @@ export default {
           const _self = this
           // let chart = getNestedData(_self, 'widget.chart()')
           let chart
-          // console.log(_self.widget.chart)
           if (_self.widget && _self.widget.chart) {
             chart = _self.widget.chart()
           }
@@ -311,7 +302,6 @@ export default {
           chart.onIntervalChanged().subscribe(null, function (interval, obj) {
             _self.widget.changingInterval = false
           })
-          // console.log(this.klineInitCount)
           if (!this.klineInitCount) {
             let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
             /**
@@ -377,7 +367,6 @@ export default {
               .attr('title', _self.$t('M.kline_button_full_screen'))
               .on('click', function () {
                 const fullarea = iframe$('.chart-page.on-widget')[0]
-                // console.log(_self.isFullScreen)
                 const klineContainerHeight = iframe$('.chart-page.on-widget').height()
 
                 _self.isFullScreen = klineContainerHeight > 580 ? true : false
@@ -409,12 +398,11 @@ export default {
               // .append(fullScreenIcon)
           }
           // iframe$('.add7').click()
-          // console.log()
           this.klineInitCount++
-          this.widget.chart().createStudy('Moving Average', false, true, [5, 'close', 0], null, {'Plot.color': '#7b53a7'})
-          this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})
-          this.widget.chart().createStudy('Moving Average', false, true, [30, 'close', 0], null, {'Plot.color': '#55ae63'})
-          this.widget.chart().createStudy('Moving Average', false, true, [60, 'close', 0], null, {'Plot.color': '#89226e'})
+          this.widget.chart().createStudy('Moving Average', false, false, [5, 'close', 0], null, {'Plot.color': '#7b53a7'})
+          this.widget.chart().createStudy('Moving Average', false, false, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})
+          this.widget.chart().createStudy('Moving Average', false, false, [30, 'close', 0], null, {'Plot.color': '#55ae63'})
+          this.widget.chart().createStudy('Moving Average', false, false, [60, 'close', 0], null, {'Plot.color': '#89226e'})
 
           // K线图指针移动回调
           this.widget.chart().crossHairMoved(_.throttle(async (e) => {
@@ -426,7 +414,6 @@ export default {
           }, 1000))
         })
         this.symbol = options.symbol
-        // console.log(this.symbol)
         this.interval = options.interval
       }
     },
@@ -442,7 +429,6 @@ export default {
       this.widget.selectedIntervalButton = button
       // const ticker = `${this.symbol}-${this.interval}`
       let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
-      // console.log(iframe$('.back-to-present'))
       // 回到初始位置
       iframe$('.back-to-present').click()
     },
@@ -454,7 +440,6 @@ export default {
     },
     // 时间区间格式转换
     transformInterval (interval) {
-      // console.log(interval)
       let newInterval
       switch (interval) {
         case '1':
@@ -487,16 +472,11 @@ export default {
     // 接收到websocket数据以后数据处理
     onMessage (data) {
       // const { countDown, isShow } = data.data
-      // console.log(data)
       // if (this.activeSymbol.id !== symbol) return false
       switch (data.tradeType) {
         case 'KLINE':
-          // console.log(data.data[0])
-          // console.log(' >> sub:', data.type)
           const klineData = data.data[0]
-          // console.log(klineData.close)
           const ticker = `${this.symbol}-${this.interval}`
-          // console.log(klineData.time)
           const barsData = {
             time: klineData.time - 0,
             open: klineData.open,
@@ -518,38 +498,29 @@ export default {
           break
         // 买卖单
         case 'DEPTH':
-          // console.log('买卖单数据')
-          // console.log(data)
-          // console.log(symbol, this.activeSymbol.id)
 
           const depthData = getNestedData(data, 'data')
-          // console.log(depthData)
           if (depthData.sells && depthData.sells.list) {
             depthData.sells.list.reverse()
           }
           this.socketData.buyAndSellData = depthData
           this.socketData = {...this.socketData, symbol: data.symbol}
-          // console.log(this.socketData)
           break
         // 深度图
         case 'DEPTHRENDER':
-          // console.log(data)
           this.socketData.depthData = getNestedData(data, 'data')
           break
         case 'TRADE':
           this.socketData.tardeRecordList = getNestedData(data, 'data')
           break
         case 'TICKER':
-          // console.log(data)
           this.socketData.tradeMarkeContentItem = getNestedData(data, 'data')
           break
         case 'USERORDER':
-          // console.log(data)
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           break
         case 'PRE':
-          // console.log(data)
           this.SET_PRE_INFO_M(data.data)
           break
       }
@@ -580,19 +551,15 @@ export default {
       let newBars = []
 
       if (this.cacheData[ticker] && this.cacheData[ticker].length) {
-        // console.log(this.cacheData[ticker])
         this.cacheData[ticker].forEach(item => {
           newBars.push(item)
         })
         if (onLoadedCallback) {
-          // console.log(this.KlineNum)
           this.KlineNums.unshift(this.KlineNum)
           const New = this.KlineNums[0]
           const Last = this.KlineNums[1]
-          console.log(New, Last)
           if ((New == Last) && New < 2) {
             this.KlineNums = []
-            // console.log('noData')
             onLoadedCallback([])
           } else {
             onLoadedCallback(newBars)
@@ -608,7 +575,6 @@ export default {
     },
     // 请求socket
     getKlineDataBySocket (type, symbol, newInterval) {
-      // console.log(newInterval)
       if (newInterval) {
         // k线
         this.socket.send({
@@ -674,7 +640,6 @@ export default {
     // 获取PRE信息
     getPREInfo () {
       let uid = this.$isLogin_S_X ? this.showId : 0
-      // console.log(uid, this.userInfo)
       this.socket.send({
         'tag': 'SUB',
         'content': `market.${uid}.pre`,
@@ -768,7 +733,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import '../../assets/CSS/index';
-  $maxHeight1920-2560: 528px;
+  $maxHeight1920-2560: 520px;
 
   .kline-container {
     position: relative;

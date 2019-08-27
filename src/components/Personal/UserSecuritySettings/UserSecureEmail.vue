@@ -144,11 +144,10 @@ export default {
       userSecureEmailSuccessJumpTimer: null // 安全邮箱设置成功自动跳转定时器
     }
   },
-  created () {},
-  mounted () {},
-  activated () {},
-  update () {},
-  beforeRouteUpdate () {},
+  // created () {},
+  // mounted () {},
+  // update () {},
+  // beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
@@ -437,6 +436,8 @@ export default {
 
           .send-code-btn {
             width: 90px;
+            height: 34px;
+            line-height: 12px;
           }
 
           .input {
@@ -623,13 +624,13 @@ export default {
 
       .el-input__inner {
         width: 130px;
-        height: 36px;
+        height: 34px;
         border-radius: 2px;
       }
 
       .el-input-group {
-        width: 131px;
-        height: 36px;
+        width: 220px;
+        height: 34px;
         margin-right: 0;
         border-radius: 4px;
       }
@@ -639,7 +640,8 @@ export default {
       }
 
       .el-input-group__append {
-        padding: 0;
+        width: 100%;
+        padding: 3px 0 0;
         border: none;
         border-radius: 0 4px 4px 0;
         background: #338ff5;

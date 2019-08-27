@@ -32,10 +32,10 @@
         <span>{{$sellCoinName_S_X}}</span> <span>{{$t('M.trade_pre_desc')}}</span>
       </p>
       <div class="timer">
-        <span class="inner-box"><span class="time">{{days}}</span><span>{{$isChineseLanguage_G_X?'天':'Day'}}</span></span>
-        <span class="inner-box"><span class="time">{{hours}}</span><span>{{$isChineseLanguage_G_X?'时':'Hou'}}</span></span>
-        <span class="inner-box"><span class="time">{{minutes}}</span><span>{{$isChineseLanguage_G_X?'分':'Min'}}</span></span>
-        <span class="inner-box"><span class="time">{{seconds}}</span><span>{{$isChineseLanguage_G_X?'秒':'Sec'}}</span></span>
+        <span class="inner-box"><span class="time">{{PRE_Days}}</span><span>{{$isChineseLanguage_G_X?'天':'Day'}}</span></span>
+        <span class="inner-box"><span class="time">{{PRE_Hours}}</span><span>{{$isChineseLanguage_G_X?'时':'Hou'}}</span></span>
+        <span class="inner-box"><span class="time">{{PRE_Minutes}}</span><span>{{$isChineseLanguage_G_X?'分':'Min'}}</span></span>
+        <span class="inner-box"><span class="time">{{PRE_Seconds}}</span><span>{{$isChineseLanguage_G_X?'秒':'Sec'}}</span></span>
       </div>
     </div>
   </div>
@@ -58,7 +58,6 @@ export default {
   // created () {
   // },
   // mounted () {},
-  // activated () {},
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},
@@ -77,21 +76,21 @@ export default {
     // 活动开始倒计时
     startTime (newVal) {
       if (newVal - 0 < 0) return
-      clearInterval(this.timer)
-      this.currentTime = newVal
-      this.timer = setInterval(() => {
-        this.currentTime -= 1000
-        if (this.currentTime < 1000) clearInterval(this.timer)
+      clearInterval(this.PRETimer)
+      this.PRE_currentTime = newVal
+      this.PRETimer = setInterval(() => {
+        this.PRE_currentTime -= 1000
+        if (this.PRE_currentTime < 1000) clearInterval(this.PRETimer)
       }, 1000)
     },
     // 活动结束倒计时
     endTime (newVal) {
       if (newVal == 0) return
-      clearInterval(this.timer)
-      this.currentTime = newVal
-      this.timer = setInterval(() => {
-        this.currentTime -= 1000
-        if (this.currentTime < 1000) clearInterval(this.timer)
+      clearInterval(this.PRETimer)
+      this.PRE_currentTime = newVal
+      this.PRETimer = setInterval(() => {
+        this.PRE_currentTime -= 1000
+        if (this.PRE_currentTime < 1000) clearInterval(this.PRETimer)
       }, 1000)
     }
   }
@@ -158,23 +157,17 @@ export default {
 
         > .inner-box {
           display: inline-block;
-          font-weight: 700;
-          color: $mainColor;
+          color: #fff;
 
           > .time {
             display: inline-block;
-            width: 39px;
-            height: 42px;
-            margin: 0 10px;
-            border: 1px solid $mainColor;
-            border-radius: 3px;
-            font-weight: 400;
-            font-size: 20px;
-            line-height: 42px;
-            vertical-align: middle;
-            text-shadow: 0 0 3px #000;
+            padding: 8px;
+            margin: 5px;
+            font-weight: 700;
+            font-size: 18px;
             color: #fff;
-            background-color: rgba(51, 143, 245, .23);
+            background: url('../../assets/PRE/pre-timer-bg.png') no-repeat center center;
+            background-size: 100%;
           }
         }
       }

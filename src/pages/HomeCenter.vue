@@ -1,13 +1,12 @@
-<template>
-  <!--首页盒子-->
-  <div class="home-box home">
-    <!--banner-->
-    <keep-alive>
-      <BannerHome/>
-    </keep-alive>
-    <!--交易区-->
-    <MarketListHome class="margin-1"/>
-  </div>
+<!--
+  author: zhaoxinlei
+  update: 20190825
+  description: 当前页面为 PC 首页内容
+-->
+<template lang="pug">
+  .home-box.home(:class="{mobile: isMobile}")
+    BannerHome
+    MarketListHome.margin-1
 </template>
 <script>
 import NoticeHome from '../components/Home/NoticeHome'
@@ -111,7 +110,8 @@ export default {
     }),
     ...mapState({
       language: state => state.common.language,
-      defaultLanguage: state => state.common.defaultLanguage
+      defaultLanguage: state => state.common.defaultLanguage,
+      isMobile: state => state.user.isMobile
     })
   },
   watch: {
@@ -127,7 +127,12 @@ export default {
 <style scoped lang="scss" type="text/scss">
   .home-box {
     min-width: 1130px;
+    margin-top: -50px;
     overflow: hidden;
+
+    &.mobile {
+      margin-top: 0;
+    }
 
     .margin-1 {
       margin-top: -1px;

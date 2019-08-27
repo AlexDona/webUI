@@ -301,6 +301,8 @@ export default {
             .el-radio-button__orig-radio:checked + .el-radio-button__inner
               border 1px solid S_main_color
               box-shadow none
+            .el-radio-button:focus:not(.is-focus):not(:active):not(.is-disabled)
+              box-shadow none
             .el-icon-check
               position absolute
               top 0
