@@ -180,10 +180,10 @@
                     </div>
                   </template>
                 </el-table-column>
-                <!--充值类型 USER("USER", "普通用户充值"), MANUAL("MANUAL", "手工充值")-->
+                <!--充值来源 USER("USER", "普通用户充值"), MANUAL("MANUAL", "手工充值")-->
                 <el-table-column
                         :label="$t('M.comprehensive_manual1')"
-                        v-if="rechargeSite"
+                        v-if="!withdrawSite"
                         width="130"
                 >
                   <template slot-scope = "s">
@@ -211,7 +211,7 @@
                         :label="$t('M.comm_count')"
                 >
                   <template slot-scope = "s">
-                    <div>{{ s.row.amount }}</div>
+                    <div>{{ s.row.amount - 0 }}</div>
                   </template>
                 </el-table-column>
                 <!--当前余额-->
@@ -703,6 +703,7 @@ export default {
         this.recordPageNumber = 1
         this.otherRecordPageNumbers = 1
         this.getChargeMentionList(entrustType)
+        this.$forceUpdate()
       } else {
         this.holdBonus.pageNum = 1
         this.getHoldBonusRecord()
@@ -719,9 +720,9 @@ export default {
       // 判断是否显示提币地址 充币不显示，提币或者为空显示
       if (this.currencyTypeValue === 'WITHDRAW') {
         this.withdrawSite = true
-        this.rechargeSite = false
+        // this.rechargeSite = false
       } else {
-        this.rechargeSite = true
+        // this.rechargeSite = true
         this.withdrawSite = false
       }
       // console.log(this.withdrawSite)
@@ -1197,6 +1198,10 @@ export default {
           }
 
           &:nth-of-type(7) {
+            text-align: right;
+          }
+
+          &:nth-of-type(8) {
             text-align: right;
           }
         }
