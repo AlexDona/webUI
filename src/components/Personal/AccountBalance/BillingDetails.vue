@@ -112,40 +112,16 @@
               </span>
               <el-date-picker
                 v-model="startTime"
-                type="datetimerange"
+                type="daterange"
                 align="right"
-                :editable="false"
                 range-separator="~"
                 :start-placeholder="$t('M.otc_no1')"
                 :end-placeholder="$t('M.otc_no2')"
                 :default-time="['00:00:00', '00:00:00']"
-                :picker-options="!isHoldBonus ? pickerOptionsTime: {}"
+                :picker-options="!isHoldBonus ? pickerOptionsTime: holdBonusPickerOptions"
               >
               </el-date-picker>
             </div>
-            <!--<div-->
-              <!--class="block"-->
-              <!--v-else-->
-            <!--&gt;-->
-              <!--<span class="demonstration font-size12">-->
-                <!--&lt;!&ndash;日期&ndash;&gt;-->
-                <!--{{ $t('M.user_coin_order4') }}-->
-              <!--</span>-->
-              <!--<el-date-picker-->
-                <!--v-model="startTime"-->
-                <!--type="datetimerange"-->
-                <!--align="right"-->
-                <!--:editable="false"-->
-                <!--:clearable="false"-->
-                <!--range-separator="~"-->
-                <!--@change="changeTime"-->
-                <!--:start-placeholder="$t('M.otc_no1')"-->
-                <!--:end-placeholder="$t('M.otc_no2')"-->
-                <!--:default-time="['00:00:00', '23:59:59']"-->
-                <!--:picker-options="pickerOptionsTime"-->
-              <!--&gt;-->
-              <!--</el-date-picker>-->
-            <!--</div>-->
           </div>
           <div
             class="search-button border-radius2 text-align-c cursor-pointer font-size12"
@@ -501,6 +477,12 @@ export default {
           return time.getTime() > Date.now() || time.getTime() < threeMonths
         }
       },
+      holdBonusPickerOptions: {
+        disabledDate: (time) => {
+          console.log(time)
+          return time.getTime() > (parseInt(Date.now() / 1000)) * 1000
+        }
+      },
       chargeRecordList: [], // 充提记录列表
       names: {
         currentEntrust: 'current-entrust',
@@ -648,7 +630,7 @@ export default {
     // 获取 分红记录
     async getHoldBonusRecord () {
       const {pageNum} = this.holdBonus
-      // console.log(this.startTime)
+      console.log(this.startTime)
       const params = {
         // 开始日期
         startDateStr: !_.get(this.startTime, '[0]') ? '' : (timeFilter(this.startTime[0], 'date')).trim(),
