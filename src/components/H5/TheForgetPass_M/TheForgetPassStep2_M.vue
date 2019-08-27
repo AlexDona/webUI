@@ -392,7 +392,8 @@ export default {
                 line-height 1.2rem
                 font-size fontSize
                 border-radius .6rem
-                padding 0 .6rem
+                padding-left .6rem
+                /*padding 0 .6rem*/
               >.el-input__suffix
                 >.el-input__suffix-inner
                   >.el-input__clear
@@ -412,9 +413,9 @@ export default {
                   vertical-align middle
                   height 1.2rem
                   line-height 1.3rem
-                  min-width 4rem
+                  min-width 4.5rem
                   text-align right
-                  padding 0 .6rem
+                  padding 0 .6rem 0 0
                   border-left none
                   border-radius 0 .6rem .6rem 0
                   display flex
@@ -426,11 +427,11 @@ export default {
                     flex 1
                     margin 0
                     padding 0
-                    text-align center
+                    text-align right
                     >span
                       font-size fontSize !important
                     &.count-down
-                      text-align left
+                      text-align right
                       padding-left .6rem
           &.error-tips-form
             margin-bottom .16rem

@@ -75,6 +75,7 @@ export default {
     fontSize = .5rem
     width 100%
     background-color #24293e
+    margin-top -50px
     .inner-box
       /*width 780px*/
       min-height 517px

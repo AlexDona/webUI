@@ -391,6 +391,7 @@ export default {
     background-color #24293e
     height 100%
     overflow hidden
+    margin-top -50px
     >.inner-box
       padding-bottom 2rem
       background url('../../assets/h5/register-bg-m.png') no-repeat bottom center/100%

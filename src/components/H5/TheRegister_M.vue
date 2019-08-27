@@ -498,6 +498,7 @@ export default {
   .the-register-m
     background-color #24293e
     top 0
+    margin-top -50px
     //transform translateX(-50%)
     height 100%
     /* 国家选择列表 */
