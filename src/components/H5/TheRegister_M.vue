@@ -396,6 +396,7 @@ export default {
     if (this.$isLogin_S_X) this.USER_LOGOUT()
     if (this.countries) {
       this.currentCountry = this.countries[0]
+      this.UPDATE_CURRENT_COUNTRY_M(this.currentCountry)
     }
   },
   // mounted () {}
@@ -411,7 +412,7 @@ export default {
     },
     toggleCountry (country) {
       this.currentCountry = country
-      console.log(this.currentCountry)
+      this.UPDATE_CURRENT_COUNTRY_M(this.currentCountry)
       this.isShowCountries = false
     },
     // 发送验证码（短信、邮箱）
@@ -421,9 +422,10 @@ export default {
         if (this.$disabledOfPhoneBtn_X || this.$disabledOfEmailBtn_X) {
           return false
         }
+        const {nationCode} = this.currentCountry_S
         const {phone, email} = this.form
         let params = {
-          nationCode: this.activeNationCode
+          nationCode
         }
         switch (type) {
           case 0:

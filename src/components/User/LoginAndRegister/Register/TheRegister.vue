@@ -383,8 +383,9 @@ export default {
           return false
         }
         const {phone, email} = this.form
+        const {nationCode} = this.currentCountry_S
         let params = {
-          nationCode: this.activeNationCode
+          nationCode
         }
         switch (type) {
           case 0:
@@ -402,7 +403,8 @@ export default {
   computed: {
     ...mapState({
       countries: state => state.common.countryAreaList,
-      isMobile: state => state.user.isMobile
+      isMobile: state => state.user.isMobile,
+      currentCountry_S: state => state.user.currentCountry_S
     }),
     isSubmitButtonDisabled () {
       const {username, password} = this.form

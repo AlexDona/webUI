@@ -51,7 +51,9 @@ const state = {
   // 忘记密码 当前步骤
   forgetPassStep_S: 1,
   // 图片验证码
-  imageCode_S: ''
+  imageCode_S: '',
+  // 国际化码
+  currentCountry_S: {}
 }
 
 export default {

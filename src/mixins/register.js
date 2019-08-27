@@ -28,7 +28,8 @@ let mixin = {
       'USER_LOGIN',
       'USER_LOGOUT',
       'CHANGE_FOOTER_ACTIVE_NAME',
-      'SET_COUNTRY_AREA_LIST'
+      'SET_COUNTRY_AREA_LIST',
+      'UPDATE_CURRENT_COUNTRY_M'
     ]),
     formatPhone () {
       this.form.phone = formatNumber(this.form.phone, 0)
@@ -124,7 +125,7 @@ let mixin = {
     async doRegister () {
       const { phone, email, password, validateCode } = this.form
       let params = {
-        country: this.activeNationCode,
+        country: this.currentCountry_S,
         userName: this.isPhoneRegist ? phone : email,
         password: encrypt(password),
         checkCode: validateCode,
@@ -150,7 +151,8 @@ let mixin = {
   computed: {
     // ...mapGetters({}),
     ...mapState({
-      isMobile: state => state.user.isMobile
+      isMobile: state => state.user.isMobile,
+      currentCountry_S: state => state.user.currentCountry_S
     }),
     isPhoneRegist () {
       return this.regType == this.phone_X

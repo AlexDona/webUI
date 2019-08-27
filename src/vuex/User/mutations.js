@@ -21,7 +21,8 @@ import {
   UPDATE_LOGIN_STEP2_DIALOG_STATUS,
   UPDATE_FORGET_PASS_STEP_M,
   UPDATE_LOGIN_IMAGE_DIALOG_STATUS_M,
-  UPDATE_IMAGE_CODE_M
+  UPDATE_IMAGE_CODE_M,
+  UPDATE_CURRENT_COUNTRY_M
 } from './mutations-types.js'
 
 import {
@@ -135,5 +136,9 @@ export default {
   },
   [UPDATE_IMAGE_CODE_M] (state, imgCode) {
     state.imageCode_S = imgCode
+  },
+  // 更新国际码
+  [UPDATE_CURRENT_COUNTRY_M] (state, country) {
+    state.currentCountry_S = country
   }
 }
