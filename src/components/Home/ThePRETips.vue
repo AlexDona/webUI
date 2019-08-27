@@ -19,7 +19,8 @@
       span {{$isChineseLanguage_G_X?'分':'Min'}}
       span.time {{PRE_Seconds}}
       span {{$isChineseLanguage_G_X?'秒':'Sec'}}
-    span.status {{$PREStatus_S_X=='coming' ? $t('M.trade_langstart') : $t('M.trade_langEnd')}}
+    //   即将开始、即将结束
+    span.status {{$PREStatus_S_X=='coming' ? $t('M.trade_start') : $t('M.coming_to_an_end')}}
 </template>
 <script>
 import mixins from '../../mixins/PRE'

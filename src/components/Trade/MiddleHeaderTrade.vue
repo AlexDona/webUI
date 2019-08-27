@@ -100,6 +100,8 @@ export default {
     height 42px
     line-height 42px
     padding 0 8px
+    position relative
+    z-index 10
     >.left
       display flex
       align-items center
