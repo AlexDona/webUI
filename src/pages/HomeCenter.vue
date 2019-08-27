@@ -4,7 +4,7 @@
   description: 当前页面为 PC 首页内容
 -->
 <template lang="pug">
-  .home-box.home
+  .home-box.home(:class="{mobile: isMobile}")
     BannerHome
     MarketListHome.margin-1
 </template>
@@ -110,7 +110,8 @@ export default {
     }),
     ...mapState({
       language: state => state.common.language,
-      defaultLanguage: state => state.common.defaultLanguage
+      defaultLanguage: state => state.common.defaultLanguage,
+      isMobile: state => state.user.isMobile
     })
   },
   watch: {
@@ -128,6 +129,10 @@ export default {
     min-width: 1130px;
     margin-top: -50px;
     overflow: hidden;
+
+    &.mobile {
+      margin-top: 0;
+    }
 
     .margin-1 {
       margin-top: -1px;

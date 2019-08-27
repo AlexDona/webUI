@@ -52,7 +52,9 @@ export default {
 <style scoped lang="stylus">
   @import '../../assets/CSS/index.styl'
   .the-pre-tips
-    background url('../../assets/PRE/home-pre-bg.png') no-repeat center center/100%
+    position relative
+    z-index 10
+    background url('../../assets/PRE/home-pre-bg.png') no-repeat center center/100% 100%
     height 60px
     line-height 60px
     text-align center
