@@ -11,12 +11,12 @@
               iconName="icon-yonghu1"
             />
           <div class="text-align-id margin-top16 float-left">
-            <p class="font-size12">
+            <p class="font-size12 nickname-p">
               <span class="text-color">
                 <!--您好，-->
                 {{ $t('M.comm_hello') }}
               </span>
-              <span class="color">
+              <span class="color nickname-span">
                 {{ nickName }}
               </span>
               <!--编辑昵称-->
@@ -444,6 +444,17 @@ export default {
           > .text-align-id {
             width: 185px;
             margin-top: 25px;
+
+            > .nickname-p {
+              display: flex;
+
+              > .nickname-span {
+                width: 100px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap
+              }
+            }
           }
 
           .edit-nickName {
