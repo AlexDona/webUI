@@ -379,6 +379,7 @@ export default {
                     box-shadow 0 3px 8px 0 rgba(0, 0, 0, 0.25)
                 .send-code-btn
                   color S_error_color
+                  background-color transparent
     &.day
       background-color rgba(204,204,204,.5)
       /deep/
