@@ -142,7 +142,7 @@ export default {
         // window.location.href = 'scheme: //fubt.com/'
         this.downloadUrl = this.androidUrl
         if (!this.androidUrl) {
-          this.$error_tips_X(this.$t('M.download_app_error_tips'))
+          this.$error_tips_X(this.isChineseLanguage ? '获取下载链接失败，请稍后再试！' : 'Failed to get the download link, please try again later!')
           return false
         }
         this.downloadTimer = setTimeout(() => {
@@ -156,7 +156,7 @@ export default {
         this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
         // 获取下载链接失败，请稍后再试！
         if (!this.iosUrl) {
-          this.$error_tips_X(this.$t('M.download_app_error_tips'))
+          this.$error_tips_X(this.isChineseLanguage ? '获取下载链接失败，请稍后再试！' : 'Failed to get the download link, please try again later!')
           return false
         }
         window.location.href = this.downloadUrl
