@@ -433,6 +433,7 @@ export default {
                     &.count-down
                       text-align right
                       padding-left .6rem
+                      background-color transparent
           &.error-tips-form
             margin-bottom .16rem
             margin-top -.5rem

@@ -23,7 +23,7 @@
     <div
       class="right"
       :style="{
-        'height': isSearchAreaOrCollectionArea ? `${+(50*((isGetMore ? (item.content.length + 1) : item.content.length) || 1) + 108)}px` : '',
+        'height': isSearchAreaOrCollectionArea ? `${+(60*((isGetMore ? (item.content.length + 1) : item.content.length) || 1) + 108)}px` : '',
         'max-height':'701px'
       }"
     >
