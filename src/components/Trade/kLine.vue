@@ -733,7 +733,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import '../../assets/CSS/index';
-  $maxHeight1920-2560: 528px;
+  $maxHeight1920-2560: 520px;
 
   .kline-container {
     position: relative;

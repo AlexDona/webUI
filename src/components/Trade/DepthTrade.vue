@@ -242,10 +242,10 @@ export default {
   @import '../../assets/CSS/index.styl'
   .depth-box
     width 100%
-    height 528px
+    height 520px
     position relative
     #depth-container
-      height 528px
+      height 520px
     > .logo-mask
       position absolute
       z-index 2
