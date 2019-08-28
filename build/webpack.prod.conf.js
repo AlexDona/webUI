@@ -11,7 +11,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const bundleConfig = require("../bundle-config.json")
-// const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 // const env = process.env.NODE_ENV === 'testing'
 //   ? require('../config/test.env')
 //   : require('../config/prod.env')
@@ -49,21 +48,6 @@ const webpackConfig = merge(baseWebpackConfig, {
       sourceMap: config.build.productionSourceMap,
       parallel: true
     }),
-    // new ParallelUglifyPlugin({
-    //   // cacheDir: '.cache/',
-    //   uglifyJS:{
-    //     output: {
-    //       beautify: false,
-    //       comments: false
-    //     },
-    //     warnings: false,
-    //     compress: {
-    //       // drop_console: true,
-    //       // collapse_vars: true,
-    //       // reduce_vars: true
-    //     }
-    //   }
-    // }),
     // extract css into its own file
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css'),
@@ -71,7 +55,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
       // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
       // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
-      allChunks: true,
+      allChunks: false,
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from differentp list can be deduped.
