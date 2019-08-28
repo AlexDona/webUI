@@ -60,7 +60,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true,
       // 加载dll文件
-      // vendorJsName: bundleConfig.vendor.js,
+      vendorJsName: bundleConfig.vendor.js,
       serviceWorkerLoader: `<script>${fs.readFileSync(path.join(__dirname,
         './service-worker-dev.js'), 'utf-8')}</script>`
     }),
