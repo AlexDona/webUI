@@ -411,6 +411,8 @@ export default {
   }
 
   &.night {
+    background-color: #121824;
+
     > .content {
       > .content {
         background-color: #121824;
@@ -423,6 +425,8 @@ export default {
   }
 
   &.day {
+    background-color: $mainBgColorOfDay;
+
     > .content {
       > .content {
         background-color: $newDayBg;

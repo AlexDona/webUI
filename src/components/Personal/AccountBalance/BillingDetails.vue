@@ -900,6 +900,27 @@ export default {
       }
 
       /deep/ {
+        /* 账单明细input框placeholder字体样式修改 */
+        input::-webkit-input-placeholder {
+          font-size: 12px;
+          color: $mainNightTitleColor;
+        }
+
+        input:-moz-placeholder {
+          font-size: 12px;
+          color: $mainNightTitleColor;
+        }
+
+        input::-moz-placeholder {
+          font-size: 12px;
+          color: $mainNightTitleColor;
+        }
+
+        input:-ms-input-placeholder {
+          font-size: 12px;
+          color: $mainNightTitleColor;
+        }
+
         .el-date-range-picker__content.is-left {
           border-right: 1px solid #6666;
         }
@@ -1021,6 +1042,27 @@ export default {
       }
 
       /deep/ {
+        /* 账单明细input框placeholder字体样式修改 */
+        input::-webkit-input-placeholder {
+          font-size: 12px;
+          color: $fontColorSecondaryOfDay;
+        }
+
+        input:-moz-placeholder {
+          font-size: 12px;
+          color: $fontColorSecondaryOfDay;
+        }
+
+        input::-moz-placeholder {
+          font-size: 12px;
+          color: $fontColorSecondaryOfDay;
+        }
+
+        input:-ms-input-placeholder {
+          font-size: 12px;
+          color: $fontColorSecondaryOfDay;
+        }
+
         /* 白色版本下账单明细充提记录和综合记录不显示选中下划线修复 */
         .billing-details-main {
           .el-tabs__item.is-active {
@@ -1068,12 +1110,12 @@ export default {
 
         .el-input__inner {
           border: 1px solid #ecf1f8;
-          color: #ccc;
-          background-color: rgba(255, 255, 255, 1);
+          color: $dayMainTitleColor;
+          background-color: $mainColorOfWhite;
         }
 
         .el-table__empty-block {
-          background-color: #fff;
+          background-color: $mainColorOfWhite;
         }
 
         .el-tabs__item {
@@ -1133,7 +1175,7 @@ export default {
         }
 
         .el-range-separator {
-          line-height: 26px;
+          line-height: 24px;
         }
 
         .el-range-input {

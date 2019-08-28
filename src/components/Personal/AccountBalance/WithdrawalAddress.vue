@@ -692,6 +692,7 @@ export default {
       > .withdrawal-address-content {
         > .withdrawal-address-box {
           min-height: 100px;
+          padding-left: 250px;
 
           .send-code-btn {
             position: absolute;
