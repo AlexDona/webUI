@@ -13,7 +13,6 @@ import {
   removeCookie
 } from '../index'
 // eslint-disable-next-line
-import {getNestedData} from '../commonFunc'
 import _ from 'lodash'
 import axios from 'axios'
 import store from '../../vuex'
