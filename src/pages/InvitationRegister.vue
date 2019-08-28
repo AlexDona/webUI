@@ -13,19 +13,19 @@
       img(:src="logoSrc")
     .inner-box
       // 您的好友
-      p {{$t('M.invitation_register_your_friends')}}{{phoneNumberFormat(inviter)}}
+      p {{isChineseLanguage? '您的好友': 'Your friend'}}{{phoneNumberFormat(inviter)}}
       // 邀请您注册
-      p.strong {{this.$t('M.invitation_register_please_you_register')}}
+      p.strong {{isChineseLanguage ? '邀请您注册' : 'Invites you to sign up'}}
         span.active(v-if="configInfo") {{configInfo.otcAd}}
       .bg
         img(src="../assets/develop/register-big-url.png")
       //  立即注册领取
-      router-link.register-btn(:to="`/${$routes_X.register}/m/${showId}`") {{$t('M.register_m_invite_label')}}
+      router-link.register-btn(:to="`/${$routes_X.register}/m/${showId}`") {{isChineseLanguage ? '立即注册': 'Sign up now'}}
     WeChatMask(
       :isAndroid="isAndroid"
-      :language="language"
       :isIOS="isIOS"
       :isWXBrowserStatus="isWXBrowserStatus"
+      :isChineseLanguage="isChineseLanguage"
     )
 </template>
 <script>
@@ -172,13 +172,13 @@ export default {
     > .inner-box {
       padding: 1rem;
       margin: 0 auto;
-      font-size: .7rem;
+      font-size: .5rem;
       text-align: center;
       color: #fff;
 
       .strong {
         font-weight: 700;
-        font-size: 1.2rem;
+        font-size: .8rem;
         line-height: 2.4rem;
         white-space: nowrap;
 
