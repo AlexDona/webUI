@@ -61,6 +61,7 @@ const GuideOfDownload = () => import('@/pages/GuideOfDownload')
 const errorFor404And500 = () => import('@/pages/ErrorFor500And404')
 
 const FucCenter = () => import('@/pages/FucCenter')
+const QuantizationCenter = () => import('@com/Quantization/QuantizationCenter')
 const SuperNodes = () => import('@/pages/SuperNodes')
 
 const routes = [
@@ -304,6 +305,11 @@ const routes = [
     // Fuc生态
     path: '/FucCenter',
     component: FucCenter
+  },
+  {
+    // 量化
+    path: '/QuantizationCenter',
+    component: QuantizationCenter
   },
   {
     // 超级节点
