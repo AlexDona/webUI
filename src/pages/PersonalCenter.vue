@@ -315,7 +315,6 @@ export default {
     }
   },
   async created () {
-    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
     if (this.userCenterActiveName === 'assets' && this.$getStore('active-target')) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(this.$getStore('active-target'))
     }

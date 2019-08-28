@@ -16,7 +16,7 @@
       @mouseenter="toggleMoreNavs(true)"
       @mouseleave="toggleMoreNavs(false)"
     )
-      a.more-nav-btn.text-align-l(v-show="$navigators_S_X.length > 5")
+      a.more-nav-btn.text-align-l(v-show="$navigators_S_X.length > MAX_SHOW_COUNT")
         TheMoreNavsButton(:isActive="isShowSubNav")
       // 自定义导航列表
       ul.more-nav-list(v-show="isShowSubNav")
@@ -24,9 +24,9 @@
           v-for="(navItem, navIndex) in $navigators_S_X.slice(5)"
           :key="navIndex"
           class="nav-item"
-          :class="{'active': $activeLinkIndex_S_X == (navIndex + 5)}"
-          @mouseenter="changeMoreActiveNavIndex(navIndex)"
-          @mouseleave="changeMoreActiveNavIndex(-1)"
+          :class="{active: navIndex + MAX_SHOW_COUNT == activeLink_S_parentIndex}"
+          @mouseenter="updateShowParentNavIndex(navIndex + MAX_SHOW_COUNT)"
+          @mouseleave="updateShowParentNavIndex"
         )
           a(
             href="javascript:void(0);"
@@ -35,7 +35,7 @@
             span {{navItem.name}}
           ul.sub-nav-list(
             v-if="navItem.children"
-            v-show="activeMoreNavIndex === navIndex"
+            v-show="showParentNavIndex == navIndex + MAX_SHOW_COUNT"
             :style="{top: `${40 * navIndex}px`}"
           )
             li.sub-nav-item(
@@ -47,12 +47,13 @@
                 @click="navToJump(subNav, 'more')"
               )
                 span {{subNav.name}}
+    // 父导航(正常显示导航)
     li.nav-item(
-      v-for="(navigationItem, index) in $navigators_S_X.slice(0, 5)"
+      v-for="(navigationItem, index) in $navigators_S_X.slice(0, MAX_SHOW_COUNT)"
+      :class="{active: index == activeLink_S_parentIndex}"
       :key="index"
-      :class="{'active': $activeLinkIndex_S_X == navigationItem.index}"
-      @mouseenter="changeActiveNavIndex(index)"
-      @mouseleave="changeActiveNavIndex(-1)"
+      @mouseenter="updateShowParentNavIndex(index)"
+      @mouseleave="updateShowParentNavIndex"
     )
       a(
         href="javascript:void(0);"
@@ -63,9 +64,10 @@
           v-show="navigationItem.children.length"
           icon-name="icon-xiala"
         )
+      // 子导航列表
       ul.sub-nav-list(
         v-if="navigationItem.children"
-        v-show="index === activeNavIndex"
+        v-show="showParentNavIndex == index"
       )
         li.sub-nav-item(
           v-for="(subNav, subIndex) in navigationItem.children"
@@ -95,10 +97,11 @@ export default {
       isShowSubNav: false,
       // isShowSubNav: true,
       MAX_SHOW_COUNT: 5,
+      showParentNavIndex: -1
       // 当前导航选中项 索引
-      activeNavIndex: -1,
+      // activeNavIndex: -1,
       // 当前 更多导航选中项索引
-      activeMoreNavIndex: -1
+      // activeMoreNavIndex: -1
     }
   },
   // created () {},
@@ -111,13 +114,13 @@ export default {
     ...mapMutations([
       'CHANGE_LANGUAGE',
       'SET_NOTICE_ID',
-      'SET_ACTIVE_LINK_NAME_M'
+      'UPDATE_ACTIVE_LINK_M'
     ]),
+    updateShowParentNavIndex (index = -1) {
+      this.showParentNavIndex = index
+    },
     gotoHome () {
       this.$goToPage(`/${this.$routes_X.home}`)
-      this.activeNavIndex = -1
-      this.activeMoreNavIndex = -1
-      this.SET_ACTIVE_LINK_NAME_M(-1)
     },
     /**
      * type: normal: 正常导航; more: 更多导航
@@ -125,64 +128,33 @@ export default {
      * @param type
      */
     navToJump (navigation, type = 'normal') {
-      // console.log(navigation, type)
-      const { link, index } = navigation
+      this.UPDATE_ACTIVE_LINK_M(navigation)
+      const {link} = navigation
       if (!link) return
-      let targetRoute
-      let isChildLink
-      switch (type) {
-        case 'normal':
-          targetRoute = this.$navigators_S_X[this.activeNavIndex]
-          // console.log(targetRoute, link, this.$activeLinkIndex_S_X)
-          isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
-          // console.log(link, targetRoute, this.activeNavIndex, this.navigation, this.activeMoreNavIndex)
-          if (targetRoute.link == link) {
-            this.SET_ACTIVE_LINK_NAME_M(index)
-          } else if (isChildLink) {
-            this.SET_ACTIVE_LINK_NAME_M(targetRoute.index)
-          }
-          break
-        case 'more':
-          targetRoute = this.$navigators_S_X[this.activeMoreNavIndex + 5]
-          isChildLink = _.some(targetRoute.children, itemLink => itemLink.link == link)
-          // console.log(targetRoute)
-          // console.log(link, targetRoute, this.activeNavIndex, this.navigation, this.activeMoreNavIndex)
-          if (targetRoute.link == link) {
-            this.SET_ACTIVE_LINK_NAME_M(index)
-          } else if (isChildLink) {
-            this.SET_ACTIVE_LINK_NAME_M(targetRoute.index)
-          }
-          break
-      }
-
       this.$emit('navToJump', navigation)
     },
     // 切换子导航显示
     toggleMoreNavs (status) {
       this.isShowSubNav = status
-    },
-    // 切换当前激活导航
-    changeActiveNavIndex (index) {
-      this.activeNavIndex = index
-    },
-    // 切换当前更多激活导航
-    changeMoreActiveNavIndex (index) {
-      this.activeMoreNavIndex = index
     }
   },
   // filters: {},
   computed: {
     ...mapState({
-      logoSrc: state => state.common.logoSrc
-    })
-  },
-  watch: {
-    $route (to) {
-      console.log(to)
-      // 重置导航
-      this.activeNavIndex = -1
+      logoSrc: state => state.common.logoSrc,
+      // 当前激活链接
+      activeLink_S: state => state.common.activeLink_S,
+      navigators_S: state => state.common.navigators_S
+    }),
+    activeLink_S_Index () {
+      return _.get(this.activeLink_S, 'index')
+    },
+    // 父索引
+    activeLink_S_parentIndex () {
+      return (this.activeLink_S_Index || '/').split('/')[0]
     }
   }
+  // watch: {}
 }
 </script>
 

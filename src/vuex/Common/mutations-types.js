@@ -42,7 +42,9 @@ export const SET_REQUEST_COUNT_M = 'SET_REQUEST_COUNT_M'
 export const SAVE_FOOTER_HEIGHT = 'SAVE_FOOTER_HEIGHT'
 // 设置当前语言列表
 export const SET_LANGUAGES_M = 'SET_LANGUAGES_M'
-// 设置当前激活导航
-export const SET_ACTIVE_LINK_NAME_M = 'SET_ACTIVE_LINK_NAME_M'
 // 设置 全局导航
 export const SET_NAVIGATOR_M = 'SET_NAVIGATOR_M'
+// 更新 当前激活链接
+export const UPDATE_ACTIVE_LINK_M = 'UPDATE_ACTIVE_LINK_M'
+// 更新 内部链接
+export const UPDATE_INNER_NAVIGATORS_M = 'UPDATE_INNER_NAVIGATORS_M'

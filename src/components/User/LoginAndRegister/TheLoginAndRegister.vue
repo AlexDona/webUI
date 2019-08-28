@@ -58,9 +58,7 @@ export default {
       qrCodeString: `${domain}/downloadApp`
     }
   },
-  created () {
-    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
-  },
+  // created () {},
   // mounted () {}
   // updated () {},
   // beforeRouteUpdate () {},
