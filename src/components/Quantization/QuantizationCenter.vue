@@ -208,7 +208,7 @@ export default {
                   display flex
                   flex 1
                   justify-content space-between
-                  padding: 30px 30px 0 71px
+                  padding 30px 30px 0 71px
                   height 190 px
                   ul
                     li
@@ -224,12 +224,12 @@ export default {
                       line-height 40px
                       font-size 12px
                     .buy
+                      buttonBuy()
                       margin-top 26px
                       color #338ff5
-                      border 1px solid #338ff5;
+                      border 1px solid #338ff5
                       &:hover
                           box-shadow 0 0 1px 1px #338ff5
-                      buttonbuy()
             /deep/
               .el-tab-pane
                 justify-content space-between
