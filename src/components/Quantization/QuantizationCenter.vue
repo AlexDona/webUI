@@ -226,10 +226,10 @@ export default {
                     .buy
                       margin-top 26px
                       color #338ff5
-                      border 1px solid #338ff5
-                      buttonbuy();
+                      border 1px solid #338ff5;
                       &:hover
                           box-shadow 0 0 1px 1px #338ff5
+                      buttonbuy()
             /deep/
               .el-tab-pane
                 justify-content space-between
