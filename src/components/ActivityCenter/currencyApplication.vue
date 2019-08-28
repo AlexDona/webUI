@@ -123,7 +123,7 @@ export default {
           left: 50%;
           width: 1100px;
           height: 1000px;
-          background: url(../../assets/develop/applaction-inner-night-bg.png) no-repeat center center;
+          background: url(https://fubt-3.oss-cn-hongkong.aliyuncs.com/2e62263d-26b7-4757-9881-40d3ebff7ad9) no-repeat center center;
           background-size: 100% 100%;
           transform: translate(-50%, 0);
 
@@ -236,7 +236,7 @@ export default {
 
     &.night {
       color: #a9bed4;
-      background: url(../../assets/develop/applaction-bg.png) no-repeat center center;
+      background: url(https://fubt-3.oss-cn-hongkong.aliyuncs.com/ecc26ecd-3790-45f9-a21e-1655e86366a1) no-repeat center center;
       background-size: 100% 105%;
 
       > .inner-box {
