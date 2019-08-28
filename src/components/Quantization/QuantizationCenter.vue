@@ -224,10 +224,10 @@ export default {
                       line-height 40px
                       font-size 12px
                     .buy
-                      buttonbuy()
                       margin-top 26px
                       color #338ff5
-                      border 1px solid #338ff5;
+                      border 1px solid #338ff5
+                      buttonbuy();
                       &:hover
                           box-shadow 0 0 1px 1px #338ff5
             /deep/
