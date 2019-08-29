@@ -4,16 +4,8 @@ import {routesVariable} from './routesVariable'
 import user from './user'
 import mobile from './mobile'
 import personal from './personal'
-// OTC
-const OTCCenter = () => import('@/pages/OTC/OTCCenter')
-const OTCPublishBuyAndSell = () => import('@com/OTC/OTCPublishBuyAndSell')
-const OTCOnlineTraderBuySell = () => import('@com/OTC/OTCOnlineTraderBuySell')
-const OTCPublishAD = () => import('@/pages/OTC/OTCPublishAD')
-const OTCADManage = () => import('@/pages/OTC/OTCADManage')
-const OTCMerchantsOrders = () => import('@/pages/OTC/OTCMerchantsOrders')
-const OTCReportFormStatistics = () => import('@/pages/OTC/OTCReportFormStatistics')
-const OTCBusinessApply = () => import('@/pages/OTC/OTCBusinessApply')
-const OTCViewMerchantInfo = () => import('@com/OTC/OTCViewMerchantInfo')
+import OTCRoutes from './OTC'
+
 const errorFor404And500 = () => import('@/pages/ErrorFor500And404')
 
 const routes = [
@@ -21,6 +13,8 @@ const routes = [
   ...user,
   ...activity,
   ...personal,
+  // OTC模块
+  ...OTCRoutes,
   {
     path: '/',
     redirect: `/${routesVariable.home}`
@@ -37,91 +31,6 @@ const routes = [
     name: 'PersonalCenter',
     component: () => import('@/pages/PersonalCenter'),
     children: personalChildren
-  },
-  {
-    // OTC中心
-    path: '/OTCCenter',
-    name: 'OTCCenter',
-    component: OTCCenter
-  },
-  {
-    // OTC发布购买和出售
-    // path: '/OTCPublishBuyAndSell',
-    // 买卖类型：styleID；可用商户币种id:partnerCoinId; 可用法币id：currencyID
-    path: '/OTCPublishBuyAndSell/:styleID/:partnerCoinId/:currencyID',
-    // name: 'OTCPublishBuyAndSell',
-    component: OTCPublishBuyAndSell,
-    meta: {
-      auth: true
-    }
-  },
-  {
-    // OTC在线交易买卖
-    path: '/OTCOnlineTraderBuySell/:styleId/:id/:partnerCoinId',
-    // name: 'OTCOnlineTraderBuySell',
-    component: OTCOnlineTraderBuySell,
-    meta: {
-      auth: true
-    }
-  },
-  {
-    // OTC发布广告
-    path: '/OTCPublishAD',
-    // name: 'OTCPublishAD',
-    component: OTCPublishAD,
-    meta: {
-      auth: true,
-      isMerchant: true
-    }
-  },
-  {
-    // OTC广告管理
-    path: '/OTCADManage',
-    // name: 'OTCADManage',
-    component: OTCADManage,
-    meta: {
-      auth: true,
-      isMerchant: true
-    }
-  },
-  {
-    // OTC商家订单
-    path: '/OTCMerchantsOrders',
-    // name: 'OTCMerchantsOrders',
-    component: OTCMerchantsOrders,
-    meta: {
-      auth: true,
-      isMerchant: true
-    }
-  },
-  {
-    // OTC商家申请
-    path: '/OTCBusinessApply',
-    // name: 'OTCBusinessApply',
-    component: OTCBusinessApply,
-    meta: {
-      auth: true
-    }
-  },
-  {
-    // OTC报表统计
-    path: '/OTCReportFormStatistics',
-    // name: 'OTCReportFormStatistics',
-    component: OTCReportFormStatistics,
-    meta: {
-      auth: true,
-      isMerchant: true
-    }
-  },
-  {
-    // OTC商家信息
-    path: '/OTCViewMerchantInfo',
-    // name: 'OTCViewMerchantInfo',
-    component: OTCViewMerchantInfo,
-    meta: {
-      auth: true,
-      isMerchant: true
-    }
   },
   // 币币交易
   {
