@@ -142,7 +142,6 @@ export default {
     }
   },
   async created () {
-    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
     this.GET_APP_URL_ACTION()
   },
   // mounted () {

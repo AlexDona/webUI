@@ -238,9 +238,6 @@ export default{
       this.$userLogOut_X()
     },
     cancelApply () {
-      if (this.$route.path !== '/OTCBusinessApply') {
-        this.$SET_ACTIVE_LINK_NAME_M_X(this.oldActiveLinkIndex)
-      }
       this.showApplyMerchantStatus = false
     },
     confirmApply () {
@@ -341,10 +338,8 @@ export default{
       const otcEnable = _.get(this.userInfo, 'otcEnable')
       const type = _.get(this.userInfo, 'type')
       if (this.checkIsInnerLink(link)) {
-        if (!this.$isLogin_S_X && link == OTCBusinessApply) this.$SET_ACTIVE_LINK_NAME_M_X(-1)
         if (!this.$isLogin_S_X && isNeedLogin.some(linkItem => link.startsWith(linkItem))) {
           this.$goToPage(`/${this.$routes_X.login}`)
-          this.$SET_ACTIVE_LINK_NAME_M_X(-1)
           this.CHANGE_ROUTER_PATH(link)
           return
         }
@@ -352,7 +347,6 @@ export default{
           // 非商家身份禁止访问
           if (needMerchantType.some(route => route === link) && type !== 'MERCHANT') {
             this.showApplyMerchantStatus = true
-            // this.$SET_ACTIVE_LINK_NAME_M_X(this.oldActiveLinkIndex)
             return false
           }
 
@@ -360,7 +354,6 @@ export default{
             if (link === OTCPublishAD) {
               // 该账号已被禁止交易OTC，请咨询客服
               this.$error_tips_X(this.$t(`M.${'otc_disable_account_tips'}`))
-              this.$SET_ACTIVE_LINK_NAME_M_X(this.oldActiveLinkIndex)
               return false
             }
           } else {
