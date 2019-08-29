@@ -125,11 +125,7 @@ export default {
     /deep/
     .el-dialog__wrapper
       background-color rgba(0,0,0,0.5)
-      display flex
-      flex-direction column
-      justify-content center
       .el-dialog
-        margin-top 0 !important
         height 240px
         border-radius 10px
         overflow hidden
