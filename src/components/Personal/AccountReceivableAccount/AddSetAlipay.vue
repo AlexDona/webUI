@@ -720,6 +720,16 @@ export default {
           color: #555;
           background-color: #b1b1b1;
         }
+
+        .account-upload {
+          .img {
+            .picture {
+              .icon {
+                color: #7d90ac;
+              }
+            }
+          }
+        }
       }
     }
   }
