@@ -80,5 +80,9 @@ export default [
       ]
     }),
     component: () => import(/* webpackChunkName: "forget-password" */ '../components/H5/TheForgetPass_M/TheForgetPass_M')
+  },
+  {
+    path: '/downloadApp',
+    component: () => import('@/pages/DownloadApp')
   }
 ]

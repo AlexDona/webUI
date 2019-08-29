@@ -509,6 +509,21 @@ export default {
 
     /deep/ {
       /* 覆盖element样式 */
+      .account-upload {
+        .img {
+          .picture {
+            position: relative;
+
+            .icon {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+        }
+      }
+
       .el-input-group {
         width: 62.5%;
       }
@@ -704,6 +719,16 @@ export default {
           border-color: #364654;
           color: #555;
           background-color: #b1b1b1;
+        }
+
+        .account-upload {
+          .img {
+            .picture {
+              .icon {
+                color: #7d90ac;
+              }
+            }
+          }
         }
       }
     }

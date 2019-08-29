@@ -61,7 +61,9 @@ export default {
       'CHANGE_THEME',
       'CHANGE_CONVERT_CURRENCY',
       'CHANGE_ROUTER_PATH',
-      'SET_NAVIGATOR_M'
+      'SET_NAVIGATOR_M',
+      'UPDATE_INNER_NAVIGATORS_M',
+      'UPDATE_ACTIVE_LINK_M'
     ]),
     setBodyClassName (type, className) {
       type ? document.body.classList.add(className) : document.body.classList.remove(className)
@@ -81,16 +83,24 @@ export default {
       const data = await getNavigationsAJAX(params)
       if (!data) return
       this.navigation = _.get(data, 'data')
+      let innerNavigations = []
+      // 导航自定义处理
       _.forEach(this.navigation, (nav, index) => {
-        nav['isInnerLink'] = this.checkIsInnerLink(nav.link) ? true : false
-        nav.link = nav['isInnerLink'] && !nav.link.startsWith('/') && nav.link ? `/${nav.link}` : nav.link
-        nav['index'] = index
+        const {link} = nav
+        nav['isInnerLink'] = this.checkIsInnerLink(link) ? true : false
+        nav['isInnerLink'] ? innerNavigations.push(nav) : null
+        nav.link = nav['isInnerLink'] && !link.startsWith('/') && link ? `/${link}` : link
+        nav['index'] = `${index}/${0}`
         if (nav.children.length) {
-          _.forEach(nav.children, childNav => {
+          _.forEach(nav.children, (childNav, childIndex) => {
             childNav['isInnerLink'] = this.checkIsInnerLink(childNav.link) ? true : false
+            childNav['isInnerLink'] ? innerNavigations.push(childNav) : null
+            childNav.link = childNav['isInnerLink'] && !childNav.link.startsWith('/') && childNav.link ? `/${childNav.link}` : childNav.link
+            childNav['index'] = `${index}/${childIndex}`
           })
         }
       })
+      this.UPDATE_INNER_NAVIGATORS_M(innerNavigations)
       this.SET_NAVIGATOR_M(this.navigation)
     },
     // 切换 PC/H5 移动端适配
@@ -106,7 +116,7 @@ export default {
         `${this.$routes_X.downloadApp}`,
         `/${this.$routes_X.register}/${this.$routes_X.invite}`
       ]
-      const notNeedUserScalable = _.some(userDisScalabledRoutes, (route, index) => (route.toLowerCase() === path.toLowerCase() || path.startsWith(route)))
+      const notNeedUserScalable = _.some(userDisScalabledRoutes, route => (route.toLowerCase() === path.toLowerCase() || path.startsWith(route)))
 
       switch (this.isMobile && notNeedUserScalable) {
         case true:
@@ -121,11 +131,8 @@ export default {
   // filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme,
-      isLogin: state => state.user.isLogin,
       isMobile: state => state.user.isMobile,
-      userInfo: state => state.user.loginStep1Info,
-      routerTo: state => state.common.routerTo
+      innerNavigators_S: state => state.common.innerNavigators_S
     })
   },
   watch: {
@@ -138,24 +145,21 @@ export default {
       if (!this.$navigators_S_X.length) {
         await this.getNavigations()
       }
-      _.forEach(this.$navigators_S_X, (outerRoute, outerIndex) => {
-        const {link, children} = outerRoute
-        // 命中 路由
-        if (path == link || path.startsWith(`/${link.split('/')[1]}`)) {
-          this.$SET_ACTIVE_LINK_NAME_M_X(outerIndex)
-          return false
-        }
-
-        _.forEach(children, (childRoute) => {
-          const {link} = childRoute
-          if (path == link || path.startsWith(`/${link.split('/')[1]}`)) {
-            this.$SET_ACTIVE_LINK_NAME_M_X(outerIndex)
+      // 检测是否命中路由
+      let activeIndex = -1
+      _.forEach(this.innerNavigators_S, innerNav => {
+        const {link} = innerNav
+        const links = link.split('/')
+        _.forEach(links, (linkItem, linkIndex) => {
+          if (linkItem && path.toLowerCase().indexOf(linkItem.toLowerCase()) != -1) {
+            activeIndex = linkIndex
+            this.UPDATE_ACTIVE_LINK_M(innerNav)
             return false
           }
         })
-      })
 
-      if (path == `/${this.$routes_X.home}`) this.$SET_ACTIVE_LINK_NAME_M_X(-1)
+        if (activeIndex == -1) this.UPDATE_ACTIVE_LINK_M({index: '-1/-1'})
+      })
 
       if (from.path === '/PersonalCenter') {
         this.$setStore('active-target', 'assets')

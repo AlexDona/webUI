@@ -110,8 +110,7 @@ export default {
       'USER_LOGOUT',
       'CHANGE_REF_SECURITY_CENTER_INFO',
       'CHANGE_REF_ACCOUNT_CREDITED_STATE',
-      'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'SET_ACTIVE_LINK_NAME_M'
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     toggleBox (status) {
       this.isShowDropDown = status
@@ -126,8 +125,6 @@ export default {
     },
     // 用户跳转到指定页面
     async jumpToPersonalCenter (val) {
-      this.SET_ACTIVE_LINK_NAME_M(-1)
-      // console.log(this.localPayPwdSet)
       await this.REFRESH_USER_INFO_ACTION()
       if (this.localPayPwdSet || this.payPassword) {
         this.CHANGE_USER_CENTER_ACTIVE_NAME(val)

@@ -23,7 +23,7 @@ const FiatOrders = () => import('@com/Personal/TransactionType/FiatOrders')
 // 个人设置
 const PersonalSettings = () => import('@com/Personal/Settings/PersonalSettings')
 
-const personalCenterRoutes = [
+const personalChildren = [
   // {
   //   path: '',
   //   component: AccountAssets,
@@ -92,4 +92,4 @@ const personalCenterRoutes = [
 
 ]
 
-export default personalCenterRoutes
+export default personalChildren

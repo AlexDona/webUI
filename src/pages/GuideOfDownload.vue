@@ -142,7 +142,6 @@ export default {
     }
   },
   async created () {
-    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
     this.GET_APP_URL_ACTION()
   },
   // mounted () {
@@ -206,7 +205,7 @@ export default {
     width: 100%;
     height: 100%;
     margin-top: 50px;
-    background: url(../assets/develop/download-bg.png) no-repeat center center;
+    background: url(https://fubt-3.oss-cn-hongkong.aliyuncs.com/de7782c2-1e5c-4c99-8e4b-4bf94f40bf20) no-repeat center center;
     background-size: 100% 100%;
 
     > .inner-box {

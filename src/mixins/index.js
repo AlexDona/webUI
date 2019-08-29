@@ -35,8 +35,7 @@ let mixin = {
   },
   methods: {
     ...mapMutations({
-      '$UPDATE_PAY_PASSWORD_DIALOG_M_X': 'UPDATE_PAY_PASSWORD_DIALOG_M',
-      '$SET_ACTIVE_LINK_NAME_M_X': 'SET_ACTIVE_LINK_NAME_M'
+      '$UPDATE_PAY_PASSWORD_DIALOG_M_X': 'UPDATE_PAY_PASSWORD_DIALOG_M'
     }),
     $goToPage (routerName, param) {
       console.log(routerName)

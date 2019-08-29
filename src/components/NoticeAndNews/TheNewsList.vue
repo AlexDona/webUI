@@ -99,7 +99,6 @@ export default {
     }
   },
   async created () {
-    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
     await this.resetNewTypeList()
     await this.getNewsNoticeList()
   },

@@ -32,8 +32,9 @@ import {
   CHANGE_CHECKED_BITS,
   SET_REQUEST_COUNT_M,
   SAVE_FOOTER_HEIGHT,
-  SET_ACTIVE_LINK_NAME_M,
-  SET_NAVIGATOR_M
+  SET_NAVIGATOR_M,
+  UPDATE_ACTIVE_LINK_M,
+  UPDATE_INNER_NAVIGATORS_M
 } from './mutations-types.js'
 
 import {setStore} from '../../utils'
@@ -204,11 +205,14 @@ export default {
   [SAVE_FOOTER_HEIGHT] (state, height) {
     state.footerHeight = height
   },
-  [SET_ACTIVE_LINK_NAME_M] (state, name) {
-    state.activeLinkIndex_S = name
-    console.log(state.activeLinkIndex_S)
-  },
   [SET_NAVIGATOR_M] (state, navigators) {
     state.navigators_S = navigators
+  },
+  [UPDATE_ACTIVE_LINK_M] (state, activeLink) {
+    state.activeLink_S = activeLink
+  },
+  // 更新内部链接
+  [UPDATE_INNER_NAVIGATORS_M] (state, innerNavigators) {
+    state.innerNavigators_S = innerNavigators
   }
 }

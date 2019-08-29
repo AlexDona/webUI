@@ -145,10 +145,7 @@ export default {
     }
   },
   async created () {
-    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
-    // require('../../../static/css/list/FooterInfo/ServiceAndProtocol.css')
     this.changeTab({name: this.serviceActiveName})
-    // const data = await getSymbolRate()
   },
   mounted () {
     this.getServiceProtocolData()
@@ -411,6 +408,8 @@ export default {
   }
 
   &.night {
+    background-color: #121824;
+
     > .content {
       > .content {
         background-color: #121824;
@@ -423,6 +422,8 @@ export default {
   }
 
   &.day {
+    background-color: $mainBgColorOfDay;
+
     > .content {
       > .content {
         background-color: $newDayBg;
