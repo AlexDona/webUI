@@ -426,6 +426,7 @@ export default {
 <style scoped lang="stylus">
   @import '../assets/CSS/index.styl'
   .main-box
+    background-color #272b41
     > .inner-box
       color S_day_bg
       > .header
