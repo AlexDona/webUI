@@ -57,5 +57,11 @@ export default [
     // Fuc生态
     path: '/FucCenter',
     component: () => import('@/pages/FucCenter')
+  },
+
+  {
+    // 封神榜
+    path: '/FSB',
+    component: () => import('@/pages/FSB')
   }
 ]
