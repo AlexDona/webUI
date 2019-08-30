@@ -13,9 +13,8 @@
               img(
                 src='../assets/fsb/title_pic.png'
               )
-            .title-tips.font-size22 {{$t('M.fsb_top_text')}}
-            .logo-box.text-align-r
-              img(
+            span.title-tips.font-size22 {{$t('M.fsb_top_text')}}
+              img.logo-box(
                 src='../assets/fsb/stamp.png'
               )
           .sun-box.absolute
@@ -350,62 +349,62 @@ export default {
         },
         {
           id: '3',
-          overviewText: 'fsb_title2_item3',
+          overviewText: 'M.fsb_title2_item3',
           iconName: 'icon-xitongfuli'
         },
         {
           id: '4',
-          overviewText: 'fsb_title2_item4',
+          overviewText: 'M.fsb_title2_item4',
           iconName: 'icon-xiangmufuli'
         },
         {
           id: '5',
-          overviewText: 'fsb_title2_item5',
+          overviewText: 'M.fsb_title2_item5',
           iconName: 'icon-jihuidian1'
         },
         {
           id: '6',
-          overviewText: 'fsb_title2_item6',
+          overviewText: 'M.fsb_title2_item6',
           iconName: 'icon-youzhi'
         },
         {
           id: '7',
-          overviewText: 'fsb_title2_item7',
+          overviewText: 'M.fsb_title2_item7',
           iconName: 'icon-peixun1'
         },
         {
           id: '8',
-          overviewText: 'fsb_title2_item8',
+          overviewText: 'M.fsb_title2_item8',
           iconName: 'icon-jiaren1'
         },
         {
           id: '9',
-          overviewText: 'fsb_title2_item9',
+          overviewText: 'M.fsb_title2_item9',
           iconName: 'icon-zigezhengshu1'
         },
         {
           id: '10',
-          overviewText: 'fsb_title2_item10',
+          overviewText: 'M.fsb_title2_item10',
           iconName: 'icon-zunxiangzhengshu'
         },
         {
           id: '11',
-          overviewText: 'fsb_title2_item11',
+          overviewText: 'M.fsb_title2_item11',
           iconName: 'icon-jiedianzhengshu1'
         },
         {
           id: '12',
-          overviewText: 'fsb_title2_item12',
+          overviewText: 'M.fsb_title2_item12',
           iconName: 'icon-gaoduanhuodong'
         },
         {
           id: '13',
-          overviewText: 'fsb_title2_item13',
+          overviewText: 'M.fsb_title2_item13',
           iconName: 'icon-jinsheng1'
         },
         {
           id: '14',
-          overviewText: 'fsb_title2_item14',
+          overviewText: 'M.fsb_title2_item14',
           iconName: 'icon-zhuanyepeixun1'
         }
       ]
@@ -452,15 +451,19 @@ export default {
             left -58px
           > .top-he-right
             bottom 178px
-            right 140px
+            right 100px
           > .big-title-box
-            padding 84px 0 0 380px
+            padding-top 84px
+            text-align center
             > .big-title-pic
               margin-bottom 40px
             > .title-tips
               font-family KaiTi
-            > .logo-box
-              padding-right 420px
+              position relative
+              > .logo-box
+                position absolute
+                bottom -40px
+                right -34px
       > .middle
         width S_main_content_width
         margin 0 auto
@@ -494,9 +497,10 @@ export default {
             display flex
             flex-wrap wrap
             > .item
+              display flex
+              align-items center
               width 320px
               height 60px
-              line-height 60px
               background-color S_night_main_bg
               padding-left 20px
               margin 0 170px 40px 0
@@ -508,6 +512,8 @@ export default {
               &:nth-of-type(13),
               &:nth-of-type(14)
                 margin-bottom 0
+              .overview
+                line-height 20px
               .icon.pic
                 position absolute
                 top -30px
@@ -632,8 +638,6 @@ export default {
                         background-color #26293a
                         &.is-leaf
                           border-bottom none
-                        .cell
-                          height 24px
               .el-table__body
                 color #617499
                 tr
