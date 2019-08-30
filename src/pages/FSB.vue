@@ -220,7 +220,7 @@
               p {{$t('M.fsb_title4_tips2')}}
             .bars
               .questions-title 2.{{$t('M.fsb_title4_tips3')}}
-              p {{$t('M.fsb_title4_tips4')}}
+              p {{$t('M.fsb_title4_tips4')}}{{$t('M.fsb_title4_tips4_1')}}
             .bars
               .questions-title 3.{{$t('M.fsb_title4_tips5')}}
               p {{$t('M.fsb_title4_tips6')}}
