@@ -35,24 +35,26 @@
                 // 我的策略
                 el-tab-pane(label="我的策略" name="second")
                   div.my-strategy
-                    el-table(:data="strategyList"
+                    el-table(:data="myStrategyList"
                       :empty-text="$t('M.comm_no_data')"
                       style="width: 100%")
                       el-table-column(:label="'名称'")
                         template(slot-scope = "s")
-                          div ffff
+                          div {{s.row.strategyName}}
                       el-table-column(:label="'到期时间'")
                         template(slot-scope = "s")
-                          div ffff
+                          div {{s.row.endTime}}
                       el-table-column(:label="'剩余'")
                         template(slot-scope = "s")
-                          div ffff
+                          div {{s.row.remainDay + '天'}}
                       el-table-column(:label="'状态'")
                         template(slot-scope = "s")
-                          div ffff
+                          div(:class="{'active-text': !s.row.isValid}") {{s.row.isValid ? '已过期' : '使用中'}}
                       el-table-column(:label="'操作'")
                         template(slot-scope = "s")
-                          div ffff
+                          div
+                            button.check 查看
+                            button.check 续费
               // 点击切换样式
               el-tabs(v-model="activeName" @tab-click="handleClick" v-else)
                 el-tab-pane(label="量化市场" name="first")
@@ -209,6 +211,7 @@ export default {
       })
       if (!data) return false
       this.myStrategyList = _.get(data.data, 'list')
+      console.log(this.myStrategyList)
     },
     // 获取可用余额
     async getBalance () {
@@ -263,6 +266,8 @@ export default {
   @import '../../assets/CSS/index.styl'
     .d-flex
       display flex
+    .active-text
+      color #008069
     price()
       font-weight bold
       color #e8554f
@@ -382,6 +387,12 @@ export default {
                       border 1px solid #338ff5
                       &:hover
                           box-shadow 0 0 1px 1px #338ff5
+              .my-strategy
+                padding 0 28px
+                min-height 457px
+                .check
+                  color #338ff5
+                  cursor pointer
             /deep/
               .el-tab-pane
                 flex-flow wrap
@@ -407,6 +418,12 @@ export default {
                 right 22px
               .el-tabs__content
                 margin-top 42px
+              .el-table
+                font-size 12px
+                th
+                  color #a9beD4
+                td
+                  border none
     /deep/
       // 弹窗样式
       .el-dialog__wrapper
@@ -510,7 +527,8 @@ export default {
                 .pane-r
                   .price-info
                     color #fff
-
+            .my-strategy
+                background #1c1f32
       /deep/
         .el-tabs__header
           background #1c1f32
@@ -552,6 +570,35 @@ export default {
               background #28334a
               button
                 background linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+        .el-table
+          th.is-leaf
+            padding 32px 0 23px 0
+            color #9da5b3
+            background #1c1f32
+            border-bottom solid 1px #2d3651
+          .is-leaf:nth-of-type(2)
+             text-align center
+          .is-leaf:nth-of-type(3)
+            text-align center
+          .is-leaf:nth-of-type(4)
+              text-align center
+          .is-leaf:nth-of-type(5)
+            text-align right
+          tr
+            background #1c1f32
+            td
+              color #9da5b3
+              &:nth-of-type(2)
+                text-align center
+              &:nth-of-type(3)
+                text-align center
+              &:nth-of-type(4)
+                text-align center
+              &:nth-of-type(5)
+                text-align right
+            &:hover
+              >td
+                background #1c1f32
     &.day
       .inner-box
         .content
