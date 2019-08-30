@@ -25,7 +25,7 @@ const devTestConfig = {
   // apiCommonUrl: 'http://192.168.2.52:22224/',
 
   // ZhangChangXiang
-  // apiCommonUrl: 'http://192.168.2.122:8888/',
+  // apiCommonUrl: 'http://192.168.2.39:8888/',
 
   // FangRuiChang
   // apiCommonUrl: 'http://192.168.10.9:8888/',

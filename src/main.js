@@ -45,7 +45,8 @@ import {
   MessageBox,
   Message,
   Upload,
-  Tooltip
+  Tooltip,
+  Badge
 } from 'element-ui'
 import 'animate.css'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -61,6 +62,7 @@ import vi from 'element-ui/lib/locale/lang/vi'
 
 Vue.use(Pagination)
   .use(Dialog)
+  .use(Badge)
   .use(Autocomplete)
   .use(Input)
   .use(Radio)

@@ -8,7 +8,7 @@
             .navs
               el-tabs(v-model="activeName" @tab-click="handleClick" v-if="!change")
                 el-tab-pane(label="量化市场" name="first" :class="{'d-flex': !change}")
-                  .pane-content(v-for="list in strategyList")
+                  .pane-content(v-for="list in strategyList" v-if="strategyList.length")
                     .pane-header
                       .header-left {{list.strategyName}}
                       ul.header-right
@@ -24,9 +24,31 @@
                         li 自定义精度, 交易粒度, 交易频率
                         li 锁定利润, 平衡资金
                     .pane-footer
-                      button.buy 立即购买
-                el-tab-pane(label="我的策略" name="second") 我的策略
-                  // 点击切换样式
+                      button.buy(@click="handleDialog") 立即购买
+                  .pane-content(v-else)
+                    .pane-container(style="width:100%") 暂无策略
+                // 我的策略
+                el-tab-pane(label="我的策略" name="second")
+                  div.my-strategy
+                    el-table(:data="strategyList"
+                      :empty-text="$t('M.comm_no_data')"
+                      style="width: 100%")
+                      el-table-column(:label="'名称'")
+                        template(slot-scope = "s")
+                          div ffff
+                      el-table-column(:label="'到期时间'")
+                        template(slot-scope = "s")
+                          div ffff
+                      el-table-column(:label="'剩余'")
+                        template(slot-scope = "s")
+                          div ffff
+                      el-table-column(:label="'状态'")
+                        template(slot-scope = "s")
+                          div ffff
+                      el-table-column(:label="'操作'")
+                        template(slot-scope = "s")
+                          div ffff
+              // 点击切换样式
               el-tabs(v-model="activeName" @tab-click="handleClick" v-else)
                 el-tab-pane(label="量化市场" name="first")
                   .pane-content-row(v-for="list in strategyList")
@@ -44,13 +66,38 @@
                         .price {{list.oneMonthPrice + list.coin + '/月'}}
                         .price-info 包含策略使用费,平台使用费,托管者费用
                         button.buy 立即购买
-                el-tab-pane(label="我的策略" name="second") 我的策略
+                el-tab-pane(label="我的策略" name="second")
               span.icon-change(@click = "handleChangeLayout")
                   IconFont(:iconName= "icons")
+      el-dialog(:title="'开通'" :visible.sync="dialogBuyVisible" class="dialog-buy")
+        el-form(:model="form")
+          el-form-item(label='策略' label-width="auto")
+            el-input(v-model="form.strategyName" auto-complete="off" disabled)
+          el-form-item(label='时长' label-width="auto")
+          .duration-box.display-flex
+            input#btn1(type="radio" name="duration")
+            label.duration-item(for="btn1") 1个月
+            el-badge(value="推荐" class="item")
+              input#btn2(type="radio" checked="checked" name="duration")
+              label.duration-item(for="btn2") 3个月
+            input#btn3(type="radio" name="duration")
+            label.duration-item(for="btn3") 6个月
+            input#btn4(type="radio" name="duration")
+            label.duration-item(for="btn4") 12个月
+          el-form-item.pay(label='支付' label-width="auto")
+          .cut-price 2160 FUC
+            s.origin-price 原价2400 FUC
+          .remains
+            span 可用：0.00000000
+            a(href="javascript:void(0)") 立即充值
+        div(slot="footer" class="dialog-footer")
+          el-button(type="primary") 确认
+      PayPassDialog(@next="")
 </template>
 <script>
 import IconFont from '../Common/IconFontCommon'
-import {getStrategyList} from '../../utils/api/quantizationCenter'
+import {getStrategyList, getMyStrategyList} from '../../utils/api/quantizationCenter'
+import {mapState, mapMutations} from 'vuex'
 export default {
   // !!! 注意 !!! 如需要相关声明周期或方法，请放开注释(默认处于注释状态)
   // name 为必填项
@@ -69,11 +116,19 @@ export default {
       // 当前页数
       currentNum: 1,
       pageSize: 10,
-      strategyList: []
+      userId: '',
+      strategyList: [],
+      myStrategyList: [],
+      dialogBuyVisible: false,
+      form: {
+        strategyName: 'ETF轮动增强策略'
+      }
     }
   },
   async created () {
+    // this.UPDATE_PAY_PASSWORD_DIALOG_M(true)
     await this.strategyConfigList()
+    await this.getMyStrategyList()
   },
   // mounted () {}
   // updated () {},
@@ -81,6 +136,9 @@ export default {
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
+    ...mapMutations([
+      'UPDATE_PAY_PASSWORD_DIALOG_M'
+    ]),
     handleClick (tab, event) {
       console.log(tab, event)
     },
@@ -93,6 +151,9 @@ export default {
         this.icons = 'icon-list'
       }
     },
+    handleDialog () {
+      if (!this.dialogBuyVisible) this.dialogBuyVisible = !this.dialogBuyVisible
+    },
     async strategyConfigList () {
       let data = await getStrategyList({
         pageSize: this.pageSize, // 每页显示条数
@@ -100,16 +161,31 @@ export default {
       })
       if (!data) return false
       this.strategyList = _.get(data.data, 'list')
+    },
+    async getMyStrategyList () {
+      let data = await getMyStrategyList({
+        pageSize: this.pageSize, // 每页显示条数
+        pageNumber: this.currentNum, // 当前页码
+        userId: this.userInfo.userId
+      })
+      if (!data) return false
+      this.myStrategyList = _.get(data.data, 'list')
+      console.log(data)
     }
-  }
+  },
   // filters: {},
-  // computed: {
-  // },
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.loginStep1Info,
+      globalPayPassword_S: state => state.common.globalPayPassword_S
+    })
+  }
   // watch: {}
 }
 </script>
 
 <style lang="stylus" scoped>
+  @import '../../assets/CSS/index.styl'
     .d-flex
       display flex
     price()
@@ -130,7 +206,7 @@ export default {
             background url('../../assets/quantization/banner.png') center no-repeat
             height 229px
         >.content
-          margin-bottom 241px
+          margin-bottom 200px
           >.content-box
             width 1300px
             margin 0 auto
@@ -142,6 +218,7 @@ export default {
                 line-height 60px
               .pane-content
                 width 620px
+                margin-bottom 41px
                 >.pane-header
                   padding 0 23px
                   display flex
@@ -232,10 +309,11 @@ export default {
                           box-shadow 0 0 1px 1px #338ff5
             /deep/
               .el-tab-pane
+                flex-flow wrap
                 justify-content space-between
               .el-tabs__header
                 height 60px
-                line-height 60px;
+                line-height 60px
               .el-tabs__nav-wrap::after
                 width 0
               .el-tabs__item
@@ -254,6 +332,88 @@ export default {
                 right 22px
               .el-tabs__content
                 margin-top 42px
+    /deep/
+      // 弹窗样式
+      .el-dialog__wrapper
+        background-color rgba(0, 0, 0, .5)
+        .el-dialog
+          margin-top 25vh !important
+          width 424px
+          min-height 240px
+          border-radius 4px
+          overflow hidden
+          background-color transparent
+          .el-dialog__header
+            padding-top 10px
+            .el-dialog__title
+              font-size 14px
+            .el-dialog__headerbtn
+              top 14px
+          .el-dialog__body
+            background-color #28334a
+            padding-top 40px
+            .el-form
+              .el-form-item
+                .el-form-item__label
+                  color #cfd5df
+                  text-align center
+                .el-form-item__content
+                  display flex
+                  .el-input
+                    input
+                      border none
+              .duration-box
+                margin -10px 0 10px
+                input
+                  display none
+                  &:checked+label
+                    color #338ff5 !important
+                    border-color #338ff5 !important
+                input:unchecked+label
+                    color #fff !important
+                    border-color #354057 !important
+                .el-badge
+                  .duration-item
+                    display block
+                  sup
+                    right 36px
+                    border none
+                    background red
+                .duration-item
+                  width 75px
+                  height 40px
+                  line-height 40px
+                  text-align center
+                  border-radius 5px
+                  margin-right 9px
+                  &:hover
+                    cursor pointer
+              .pay
+                margin-bottom 0
+              .cut-price
+                font-size 18px
+                font-weight bold
+                color #e8554f
+                .origin-price
+                  padding-left 14px
+                  font-size 12px !important
+              .remains
+                margin-top 42px
+                span
+                  color #cfd5df
+                a
+                  color #338ff5
+                  padding-left 20px
+          .el-input__inner
+            font-size 12px
+            background-color #1a2233
+            border-color #485776
+            color #fff
+          .el-dialog__footer
+            padding 40px 48px
+            button
+              height 34px
+              border none
     &.night
       .inner-box
         .content
@@ -274,23 +434,57 @@ export default {
                 .pane-r
                   .price-info
                     color #fff
-            /deep/
-              .el-tabs__header
-                background #1c1f32
-              .pane-footer
-                .buy
-                  color #338ff5
-                  border 1px solid #338ff5
+
+      /deep/
+        .el-tabs__header
+          background #1c1f32
+        .pane-footer
+          .buy
+            color #338ff5
+            border 1px solid #338ff5
+            &:hover
+              box-shadow 0 0 1px 1px #338ff5
+        .el-dialog__wrapper
+          .el-dialog
+            .el-dialog__header
+              background-color #20293c
+              .el-dialog__title
+                color #cfd5df
+            .el-dialog__body
+              background-color #28334a
+              padding 40px 48px 0 48px
+              .el-form
+                .el-form-item
+                  .el-form-item__label
+                    color #cfd5df
+                    text-align center
+                  .el-form-item__content
+                    display flex
+                    .el-input
+                      input
+                        border none
+                .duration-box
+                  margin-top -10px
+                  .duration-item
+                    background #20273d
+                    border 1px solid #354057
+                    color #fff
+                .origin-price
+                  color #cfd5df !important
+            .el-dialog__footer
+              background #28334a
+              button
+                background linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
     &.day
       .inner-box
         .content
           .content-box
             .navs
               .pane-content
-                  .header-left
-                    color #fff
-                  .pane-container
-                    background #fff
+                .header-left
+                  color #fff
+                .pane-container
+                  background #fff
               .pane-content-row
                 width 100%
                 background #fff
@@ -307,7 +501,9 @@ export default {
               .pane-footer
                 .buy
                   color #fff
-                  border 1px solid #fff
+                  border 1px solid #fff;
+                  &:hover
+                    box-shadow 0 0 1px 1px #fff
 </style>
 <!--<style scoped lang="scss" type="text/scss">-->
 <!--.demo-box {-->
