@@ -44,6 +44,11 @@ const routes = [
     component: () => import('@com/Quantization/QuantizationCenter')
   },
   {
+    // 轮动策略
+    path: `/${routesVariable.strategy}/`,
+    component: () => import('@com/Quantization/RotationStrategy')
+  },
+  {
     path: '/RankingListOfInvitation',
     component: () => import('@com/ActivityCenter/RankingListOfInvitation')
   },

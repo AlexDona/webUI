@@ -73,7 +73,9 @@ export const routesVariable = {
   downloadApp: '/downloadApp',
   // 邀请注册
   invite: 'invite',
-  default: 'default'
+  default: 'default',
+  // 轮动策略
+  strategy: 'RotationStrategy'
 }
 
 export const globalLabel = {
