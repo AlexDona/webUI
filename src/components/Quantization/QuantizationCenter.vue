@@ -53,8 +53,8 @@
                       el-table-column(:label="'操作'")
                         template(slot-scope = "s")
                           div
-                            button.check 查看
-                            button.check 续费
+                            button.check(@click="handleRotationStrategy") 查看
+                            button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") 续费
               // 点击切换样式
               el-tabs(v-model="activeName" @tab-click="handleClick" v-else)
                 el-tab-pane(label="量化市场" name="first")
@@ -72,7 +72,7 @@
                       .pane-r
                         .price {{list.oneMonthPrice + list.coin + '/月'}}
                         .price-info 包含策略使用费,平台使用费,托管者费用
-                        button.buy 立即购买
+                        button.buy(@click="handleDialog" :data-formData="JSON.stringify(list)") 立即购买
                 el-tab-pane(label="我的策略" name="second")
               span.icon-change(@click = "handleChangeLayout")
                   IconFont(:iconName= "icons" v-show="iconsVisible")
@@ -103,16 +103,19 @@
 </template>
 <script>
 import IconFont from '../Common/IconFontCommon'
+import RotationStrategy from '../Quantization/RotationStrategy'
 import {getStrategyList, getMyStrategyList, getBuyDialogList, buyStrategy} from '../../utils/api/quantizationCenter'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
 import {mapState, mapMutations} from 'vuex'
+import {routesVariable} from '../../router/routesVariable'
 export default {
   // !!! 注意 !!! 如需要相关声明周期或方法，请放开注释(默认处于注释状态)
   // name 为必填项
   name: 'quantization-center',
   // mixins: [],
   components: {
-    IconFont
+    IconFont,
+    RotationStrategy
   },
   // props,
   data () {
@@ -248,6 +251,9 @@ export default {
       })
       if (!data) return false
       this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
+    },
+    handleRotationStrategy () {
+      this.$router.push({path: routesVariable.strategy})
     }
   },
   // filters: {},
