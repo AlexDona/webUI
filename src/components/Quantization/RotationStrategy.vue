@@ -47,7 +47,7 @@
 <script>
 import IconFont from '../Common/IconFontCommon'
 import {routesVariable} from '../../router/routesVariable'
-// import {mapState, mapMutations} from 'vuex'
+// import {mapState} from 'vuex'
 // import { getLanguagesAJAX } from '../utils/API/common'
 export default {
   // name 为必填项
@@ -69,11 +69,12 @@ export default {
           return time.getTime() > Date.now() || time.getTime() < threeMonths
         }
       },
-      addCurrencyVisible: false
+      addCurrencyVisible: false,
+      searchData: this.$store.state.quantization.searchData
     }
   },
   async created () {
-    // console.log(this.$route.params)
+    // debugger
     // const data = await getLanguagesAJAX()
     // console.log(data)
   },
@@ -84,6 +85,8 @@ export default {
   // destroyed () {},
   methods: {
     handleToQuantization () {
+      console.log(this.searchData)
+      debugger
       this.$router.replace({
         name: routesVariable.quantization,
         params: {
@@ -94,7 +97,7 @@ export default {
   }
   // filters: {},
   // computed: {
-  // },
+  // }
   // watch: {}
 }
 </script>

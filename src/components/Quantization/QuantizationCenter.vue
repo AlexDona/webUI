@@ -106,7 +106,7 @@ import IconFont from '../Common/IconFontCommon'
 import RotationStrategy from '../Quantization/RotationStrategy'
 import {getStrategyList, getMyStrategyList, getBuyDialogList, buyStrategy} from '../../utils/api/quantizationCenter'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
-import {mapState, mapMutations} from 'vuex'
+import {mapState, mapMutations, mapActions} from 'vuex'
 import {routesVariable} from '../../router/routesVariable'
 export default {
   // !!! 注意 !!! 如需要相关声明周期或方法，请放开注释(默认处于注释状态)
@@ -138,7 +138,8 @@ export default {
       dialogData: {
       },
       balance: '',
-      monthPrice: []
+      monthPrice: [],
+      searchData: {}
     }
   },
   async created () {
@@ -161,7 +162,11 @@ export default {
     ...mapMutations([
       'UPDATE_PAY_PASSWORD_DIALOG_M',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'UPDATE_PAY_PASSWORD_M'
+      'UPDATE_PAY_PASSWORD_M',
+      'SET_FORM_STRATEGY_DATA'
+    ]),
+    ...mapActions([
+      'SEARCH_STRATEGY_ACTION'
     ]),
     handleClick (tab, event) {
       console.log(tab, event)
@@ -222,7 +227,7 @@ export default {
       })
       if (!data) return false
       this.myStrategyList = _.get(data.data, 'list')
-      console.log(this.myStrategyList)
+      // console.log(this.myStrategyList)
     },
     // 获取可用余额
     async getBalance () {
@@ -260,13 +265,21 @@ export default {
       if (!data) return false
       this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
     },
-    handleRotationStrategy (formData) {
-      this.$router.replace({
-        name: routesVariable.strategy,
-        params: {
-          formData
-        }
+    async searchStrategy (formData) {
+      await this.SEARCH_STRATEGY_ACTION(formData)
+      /* let data = await searchStrategy({
+        strategyUserId: formData.id
       })
+      if (!data) return false */
+      // this.searchData = _.get(data, 'data')
+      // let searchData = this.searchData
+      // 跳转策略配置
+      this.$router.replace({
+        name: routesVariable.strategy
+      })
+    },
+    handleRotationStrategy (formData) {
+      this.searchStrategy(formData)
     }
   },
   // filters: {},
