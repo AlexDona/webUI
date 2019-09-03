@@ -40,12 +40,14 @@ const routes = [
   },
   {
     // 量化
-    path: '/QuantizationCenter',
+    path: `/${routesVariable.quantization}`,
+    name: `${routesVariable.quantization}`,
     component: () => import('@com/Quantization/QuantizationCenter')
   },
   {
     // 轮动策略
     path: `/${routesVariable.strategy}/`,
+    name: `${routesVariable.strategy}`,
     component: () => import('@com/Quantization/RotationStrategy')
   },
   {

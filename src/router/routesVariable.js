@@ -74,6 +74,8 @@ export const routesVariable = {
   // 邀请注册
   invite: 'invite',
   default: 'default',
+  // 量化中心
+  quantization: 'QuantizationCenter',
   // 轮动策略
   strategy: 'RotationStrategy'
 }
