@@ -11,7 +11,7 @@
       .content.text-center
         .content-box
           .navs
-            a.nav-list1() 我的策略 &nbsp;>&nbsp;
+            a.nav-list1(@click.prevent="handleToQuantization") 我的策略 &nbsp;>&nbsp;
             span.nav-list2 轮动策略配置
           .navs-detail
             el-form()
@@ -40,49 +40,13 @@
                       .params-content-l BTC
                       .params-content-r 1%
                         IconFont.delete(iconName= "icon-shanchu")
-                  .add-params
-                    .add-params-text
-                      .params-text-l 基础币种
-                      .params-text-r 占比
-                    .add-params-content
-                      .params-content-l BTC
-                      .params-content-r 1%
-                        IconFont.delete(iconName= "icon-shanchu")
-                  .add-params
-                    .add-params-text
-                      .params-text-l 基础币种
-                      .params-text-r 占比
-                    .add-params-content
-                      .params-content-l BTC
-                      .params-content-r 1%
-                        IconFont.delete(iconName= "icon-shanchu")
-                  .add-params
-                    .add-params-text
-                      .params-text-l 基础币种
-                      .params-text-r 占比
-                    .add-params-content
-                      .params-content-l BTC
-                      .params-content-r 1%
-                        IconFont.delete(iconName= "icon-shanchu")
-                  .add-params
-                    .add-params-text
-                      .params-text-l 基础币种
-                      .params-text-r 占比
-                    .add-params-content
-                      .params-content-l BTC
-                      .params-content-r 1%
-                        IconFont.delete(iconName= "icon-shanchu")
-                  .add-params
-                    .add-params-text
-                      .params-text-l 基础币种
-                      .params-text-r 占比
-                    .add-params-content
-                      .params-content-l BTC
-                      .params-content-r 1%
-                        IconFont.delete(iconName= "icon-shanchu")
+                button.addCurrency 添加币种
+    el-dialog(:title="'添加币种'" :visible.sync="addCurrencyVisible" class="dialog-buy")
+      el-form()
 </template>
 <script>
 import IconFont from '../Common/IconFontCommon'
+import {routesVariable} from '../../router/routesVariable'
 // import {mapState, mapMutations} from 'vuex'
 // import { getLanguagesAJAX } from '../utils/API/common'
 export default {
@@ -99,24 +63,35 @@ export default {
       startTime: [], // 开始时间
       pickerOptionsTime: {
         disabledDate: (time) => {
-          let curDate = (new Date()).getTime()
+          let curDate = new Date(this.$route.params.endTime).getTime()
           let three = 90 * 24 * 3600 * 1000
           let threeMonths = curDate - three
           return time.getTime() > Date.now() || time.getTime() < threeMonths
         }
-      }
+      },
+      addCurrencyVisible: false
     }
   },
   async created () {
+    // console.log(this.$route.params)
     // const data = await getLanguagesAJAX()
     // console.log(data)
-  }
+  },
   // mounted () {}
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},
   // destroyed () {},
-  // methods: {},
+  methods: {
+    handleToQuantization () {
+      this.$router.replace({
+        name: routesVariable.quantization,
+        params: {
+          tab: 1
+        }
+      })
+    }
+  }
   // filters: {},
   // computed: {
   // },
@@ -145,8 +120,10 @@ export default {
             line-height 40px
             font-size 14px
             >.nav-list1
+              cursor pointer
               color S_night_main_text_color
             >.nav-list2
+              cursor pointer
               color S_main_color
           .navs-detail
             padding 36px 0 60px 134px
@@ -181,6 +158,13 @@ export default {
                       position absolute
                       top -8px
                       right -8px
+            .addCurrency
+              width 77px
+              height 28px
+              border 1px solid S_main_color
+              color S_main_color
+              margin-top 33px
+              cursor pointer
   /deep/
     .el-input__inner
       width 192px
