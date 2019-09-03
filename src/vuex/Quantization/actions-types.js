@@ -1,0 +1,1 @@
+export const SEARCH_STRATEGY_ACTION = 'SEARCH_STRATEGY_ACTION' // 查看策略
