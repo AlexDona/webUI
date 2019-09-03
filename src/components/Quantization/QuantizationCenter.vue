@@ -53,7 +53,7 @@
                       el-table-column(:label="'操作'")
                         template(slot-scope = "s")
                           div
-                            button.check(@click="handleRotationStrategy") 查看
+                            button.check(@click="handleRotationStrategy(s.row)") 查看
                             button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") 续费
               // 点击切换样式
               el-tabs(v-model="activeName" @tab-click="handleClick" v-else)
@@ -120,7 +120,7 @@ export default {
   // props,
   data () {
     return {
-      activeName: 'first',
+      activeName: '',
       change: false,
       // 默认图标
       icons: 'icon-list',
@@ -142,6 +142,13 @@ export default {
     }
   },
   async created () {
+    // 判断tab标签
+    if (this.$route.params.tab) {
+      this.activeName = 'second'
+      this.iconsVisible = false
+    } else {
+      this.activeName = 'first'
+    }
     await this.strategyConfigList()
     await this.getMyStrategyList()
   },
@@ -160,6 +167,7 @@ export default {
       console.log(tab, event)
       if (tab.index) {
         this.iconsVisible = !this.iconsVisible
+        this.getMyStrategyList()
       }
     },
     handleChangeLayout () {
@@ -252,8 +260,13 @@ export default {
       if (!data) return false
       this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
     },
-    handleRotationStrategy () {
-      this.$router.push({path: routesVariable.strategy})
+    handleRotationStrategy (formData) {
+      this.$router.replace({
+        name: routesVariable.strategy,
+        params: {
+          formData
+        }
+      })
     }
   },
   // filters: {},
@@ -397,7 +410,7 @@ export default {
                 padding 0 28px
                 min-height 457px
                 .check
-                  color #338ff5
+                  color S_main_color
                   cursor pointer
             /deep/
               .el-tab-pane
@@ -430,6 +443,8 @@ export default {
                   color #a9beD4
                 td
                   border none
+                .el-table__empty-block
+                  height 278px
     /deep/
       // 弹窗样式
       .el-dialog__wrapper
@@ -605,6 +620,8 @@ export default {
             &:hover
               >td
                 background #1c1f32
+          .el-table__empty-block
+              background S_night_main_bg
     &.day
       .inner-box
         .content
@@ -631,7 +648,7 @@ export default {
               .pane-footer
                 .buy
                   color #fff
-                  border 1px solid #fff;
+                  border 1px solid #fff
                   &:hover
                     box-shadow 0 0 1px 1px #fff
 </style>
