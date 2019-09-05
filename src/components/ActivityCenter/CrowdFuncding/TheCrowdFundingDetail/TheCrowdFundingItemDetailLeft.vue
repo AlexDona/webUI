@@ -129,12 +129,8 @@ export default {
     interestEndTime () {
       return _.get(this.detail, 'interestEndTime')
     }
-  },
-  watch: {
-    totalAndRemain (New) {
-      console.log(New)
-    }
   }
+  // watch: {}
 }
 </script>
 
