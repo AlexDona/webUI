@@ -1,3 +1,8 @@
+<!--
+  author: wt
+  created: 20190827
+  description: 当前组件为量化中心
+-->
 <template lang="pug">
     .container.text-center(:class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X}")
       .inner-box
@@ -24,30 +29,32 @@
                         li 自定义精度, 交易粒度, 交易频率
                         li 锁定利润, 平衡资金
                     .pane-footer
-                      button.buy(@click="handleDialog") 立即购买
+                      button.buy(@click="handleDialog" :data-formData="JSON.stringify(list)") 立即购买
                   .pane-content(v-else)
                     .pane-container(style="width:100%") 暂无策略
                 // 我的策略
                 el-tab-pane(label="我的策略" name="second")
                   div.my-strategy
-                    el-table(:data="strategyList"
+                    el-table(:data="myStrategyList"
                       :empty-text="$t('M.comm_no_data')"
                       style="width: 100%")
                       el-table-column(:label="'名称'")
                         template(slot-scope = "s")
-                          div ffff
+                          div {{s.row.strategyName}}
                       el-table-column(:label="'到期时间'")
                         template(slot-scope = "s")
-                          div ffff
+                          div {{s.row.endTime}}
                       el-table-column(:label="'剩余'")
                         template(slot-scope = "s")
-                          div ffff
+                          div {{s.row.remainDay + '天'}}
                       el-table-column(:label="'状态'")
                         template(slot-scope = "s")
-                          div ffff
+                          div(:class="{'active-text': !s.row.isValid}") {{s.row.isValid ? '已过期' : '使用中'}}
                       el-table-column(:label="'操作'")
                         template(slot-scope = "s")
-                          div ffff
+                          div
+                            button.check(@click="handleRotationStrategy(s.row)") 查看
+                            button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") 续费
               // 点击切换样式
               el-tabs(v-model="activeName" @tab-click="handleClick" v-else)
                 el-tab-pane(label="量化市场" name="first")
@@ -65,54 +72,59 @@
                       .pane-r
                         .price {{list.oneMonthPrice + list.coin + '/月'}}
                         .price-info 包含策略使用费,平台使用费,托管者费用
-                        button.buy 立即购买
+                        button.buy(@click="handleDialog" :data-formData="JSON.stringify(list)") 立即购买
                 el-tab-pane(label="我的策略" name="second")
               span.icon-change(@click = "handleChangeLayout")
-                  IconFont(:iconName= "icons")
+                  IconFont(:iconName= "icons" v-show="iconsVisible")
       el-dialog(:title="'开通'" :visible.sync="dialogBuyVisible" class="dialog-buy")
         el-form(:model="form")
-          el-form-item(label='策略' label-width="auto")
-            el-input(v-model="form.strategyName" auto-complete="off" disabled)
-          el-form-item(label='时长' label-width="auto")
+          el-form-item(label='策略')
+            el-input(v-model="form.strategyName" disabled)
+          el-form-item(label='时长')
           .duration-box.display-flex
-            input#btn1(type="radio" name="duration")
+            input#btn1(type="radio" name="duration" :value="[dialogData.oneMonthPrice, dialogData.oneMonthPrice,  {validMonth: 1}]" v-model="monthPrice")
             label.duration-item(for="btn1") 1个月
             el-badge(value="推荐" class="item")
-              input#btn2(type="radio" checked="checked" name="duration")
+              input#btn2(type="radio" checked="checked" :value="[dialogData.threeMonthPrice, (dialogData.oneMonthPrice * 3).toFixed(5), {validMonth: 3}]" v-model="monthPrice" name="duration")
               label.duration-item(for="btn2") 3个月
-            input#btn3(type="radio" name="duration")
+            input#btn3(type="radio" name="duration"  :value="[dialogData.sixMonthPrice, (dialogData.oneMonthPrice * 6).toFixed(5),  {validMonth: 6}]" v-model="monthPrice")
             label.duration-item(for="btn3") 6个月
-            input#btn4(type="radio" name="duration")
+            input#btn4(type="radio" name="duration" :value="[dialogData.twelveMonthPrice, (dialogData.oneMonthPrice * 12).toFixed(5),  {validMonth: 12}]" v-model="monthPrice")
             label.duration-item(for="btn4") 12个月
-          el-form-item.pay(label='支付' label-width="auto")
-          .cut-price 2160 FUC
-            s.origin-price 原价2400 FUC
+          el-form-item.pay(label='支付')
+          .cut-price {{monthPrice[0] + ' ' + dialogData.coin}}
+            s.origin-price 原价{{monthPrice[1] + ' ' + dialogData.coin}}
           .remains
-            span 可用：0.00000000
-            a(href="javascript:void(0)") 立即充值
+            span 可用：{{balance}}
+            a(href="javascript:void(0)" @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')") 立即充值
         div(slot="footer" class="dialog-footer")
-          el-button(type="primary") 确认
-      PayPassDialog(@next="")
+          el-button(type="primary" @click="handleSubmit") 确认
+      PayPassDialog(@next="buySubmit")
 </template>
 <script>
 import IconFont from '../Common/IconFontCommon'
-import {getStrategyList, getMyStrategyList} from '../../utils/api/quantizationCenter'
-import {mapState, mapMutations} from 'vuex'
+import RotationStrategy from '../Quantization/RotationStrategy'
+import {getStrategyList, getMyStrategyList, getBuyDialogList, buyStrategy} from '../../utils/api/quantizationCenter'
+import {getPushTotalByCoinId} from '../../utils/api/personal'
+import {mapState, mapMutations, mapActions} from 'vuex'
+import {routesVariable} from '../../router/routesVariable'
 export default {
   // !!! 注意 !!! 如需要相关声明周期或方法，请放开注释(默认处于注释状态)
   // name 为必填项
   name: 'quantization-center',
   // mixins: [],
   components: {
-    IconFont
+    IconFont,
+    RotationStrategy
   },
   // props,
   data () {
     return {
-      activeName: 'first',
+      activeName: '',
       change: false,
       // 默认图标
       icons: 'icon-list',
+      iconsVisible: true,
       // 当前页数
       currentNum: 1,
       pageSize: 10,
@@ -121,12 +133,23 @@ export default {
       myStrategyList: [],
       dialogBuyVisible: false,
       form: {
-        strategyName: 'ETF轮动增强策略'
-      }
+      },
+      // 弹出窗数据
+      dialogData: {
+      },
+      balance: '',
+      monthPrice: [],
+      searchData: {}
     }
   },
   async created () {
-    // this.UPDATE_PAY_PASSWORD_DIALOG_M(true)
+    // 判断tab标签
+    if (this.$route.params.tab) {
+      this.activeName = 'second'
+      this.iconsVisible = false
+    } else {
+      this.activeName = 'first'
+    }
     await this.strategyConfigList()
     await this.getMyStrategyList()
   },
@@ -137,10 +160,20 @@ export default {
   // destroyed () {},
   methods: {
     ...mapMutations([
-      'UPDATE_PAY_PASSWORD_DIALOG_M'
+      'UPDATE_PAY_PASSWORD_DIALOG_M',
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'UPDATE_PAY_PASSWORD_M',
+      'SET_FORM_STRATEGY_DATA'
+    ]),
+    ...mapActions([
+      'SEARCH_STRATEGY_ACTION'
     ]),
     handleClick (tab, event) {
       console.log(tab, event)
+      if (tab.index) {
+        this.iconsVisible = !this.iconsVisible
+        this.getMyStrategyList()
+      }
     },
     handleChangeLayout () {
       if (!this.change) {
@@ -151,9 +184,32 @@ export default {
         this.icons = 'icon-list'
       }
     },
-    handleDialog () {
+    handleDialog (e) {
       if (!this.dialogBuyVisible) this.dialogBuyVisible = !this.dialogBuyVisible
+      this.form = JSON.parse(e.target.dataset.formdata)
+      this.getBuyDialogList()
     },
+    // 跳转个人中心方法
+    async jumpToPersonalCenter (target, tradType, type) {
+      const buyCoinId = +this.form.coinId
+      if (tradType === 'buy') {
+        this.$router.replace({
+          path: '/PersonalCenter',
+          name: 'PersonalCenter',
+          params: {
+            coinId: buyCoinId,
+            type: type
+          }
+        })
+      } else {
+        this.$router.replace({
+          path: '/PersonalCenter',
+          name: 'PersonalCenter'
+        })
+      }
+      this.CHANGE_USER_CENTER_ACTIVE_NAME(target)
+    },
+    // 量化列表
     async strategyConfigList () {
       let data = await getStrategyList({
         pageSize: this.pageSize, // 每页显示条数
@@ -162,6 +218,7 @@ export default {
       if (!data) return false
       this.strategyList = _.get(data.data, 'list')
     },
+    // 策略列表分页
     async getMyStrategyList () {
       let data = await getMyStrategyList({
         pageSize: this.pageSize, // 每页显示条数
@@ -170,7 +227,59 @@ export default {
       })
       if (!data) return false
       this.myStrategyList = _.get(data.data, 'list')
-      console.log(data)
+      // console.log(this.myStrategyList)
+    },
+    // 获取可用余额
+    async getBalance () {
+      const data = await getPushTotalByCoinId({
+        coinId: this.dialogData.coinId
+      })
+      if (!data) return false
+      this.balance = _.get(data, 'data.total')
+    },
+    // 立即购买
+    async getBuyDialogList () {
+      let data = await getBuyDialogList({
+        strategyId: this.form.strategyId
+      })
+      if (!data) return false
+      this.dialogData = _.get(data, 'data')
+      // 设置默认时长
+      this.monthPrice = [this.dialogData.threeMonthPrice, (this.dialogData.oneMonthPrice * 3).toFixed(5), {validMonth: 3}]
+      this.getBalance() // 获取余额
+    },
+    // 提交购买
+    handleSubmit () {
+      this.dialogBuyVisible = !this.dialogBuyVisible
+      // 支付密码弹窗
+      this.UPDATE_PAY_PASSWORD_DIALOG_M(true)
+    },
+    async buySubmit () {
+      let data = await buyStrategy({
+        strategyId: this.form.strategyId,
+        validMonth: this.monthPrice[2].validMonth,
+        coinId: this.dialogData.coinId,
+        coinNum: this.monthPrice[0],
+        payPassword: this.$globalPayPassword_S_X
+      })
+      if (!data) return false
+      this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
+    },
+    async searchStrategy (formData) {
+      await this.SEARCH_STRATEGY_ACTION(formData)
+      /* let data = await searchStrategy({
+        strategyUserId: formData.id
+      })
+      if (!data) return false */
+      // this.searchData = _.get(data, 'data')
+      // let searchData = this.searchData
+      // 跳转策略配置
+      this.$router.replace({
+        name: routesVariable.strategy
+      })
+    },
+    handleRotationStrategy (formData) {
+      this.searchStrategy(formData)
     }
   },
   // filters: {},
@@ -179,8 +288,9 @@ export default {
       userInfo: state => state.user.loginStep1Info,
       globalPayPassword_S: state => state.common.globalPayPassword_S
     })
+  },
+  watch: {
   }
-  // watch: {}
 }
 </script>
 
@@ -188,6 +298,8 @@ export default {
   @import '../../assets/CSS/index.styl'
     .d-flex
       display flex
+    .active-text
+      color #008069
     price()
       font-weight bold
       color #e8554f
@@ -307,6 +419,12 @@ export default {
                       border 1px solid #338ff5
                       &:hover
                           box-shadow 0 0 1px 1px #338ff5
+              .my-strategy
+                padding 0 28px
+                min-height 457px
+                .check
+                  color S_main_color
+                  cursor pointer
             /deep/
               .el-tab-pane
                 flex-flow wrap
@@ -332,6 +450,14 @@ export default {
                 right 22px
               .el-tabs__content
                 margin-top 42px
+              .el-table
+                font-size 12px
+                th
+                  color #a9beD4
+                td
+                  border none
+                .el-table__empty-block
+                  height 278px
     /deep/
       // 弹窗样式
       .el-dialog__wrapper
@@ -412,6 +538,7 @@ export default {
           .el-dialog__footer
             padding 40px 48px
             button
+              width 100%
               height 34px
               border none
     &.night
@@ -434,7 +561,8 @@ export default {
                 .pane-r
                   .price-info
                     color #fff
-
+            .my-strategy
+                background #1c1f32
       /deep/
         .el-tabs__header
           background #1c1f32
@@ -446,6 +574,7 @@ export default {
               box-shadow 0 0 1px 1px #338ff5
         .el-dialog__wrapper
           .el-dialog
+            background #28334a
             .el-dialog__header
               background-color #20293c
               .el-dialog__title
@@ -475,6 +604,37 @@ export default {
               background #28334a
               button
                 background linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+        .el-table
+          th.is-leaf
+            padding 32px 0 23px 0
+            color #9da5b3
+            background #1c1f32
+            border-bottom solid 1px #2d3651
+          .is-leaf:nth-of-type(2)
+             text-align center
+          .is-leaf:nth-of-type(3)
+            text-align center
+          .is-leaf:nth-of-type(4)
+              text-align center
+          .is-leaf:nth-of-type(5)
+            text-align right
+          tr
+            background #1c1f32
+            td
+              color #9da5b3
+              &:nth-of-type(2)
+                text-align center
+              &:nth-of-type(3)
+                text-align center
+              &:nth-of-type(4)
+                text-align center
+              &:nth-of-type(5)
+                text-align right
+            &:hover
+              >td
+                background #1c1f32
+          .el-table__empty-block
+              background S_night_main_bg
     &.day
       .inner-box
         .content
@@ -501,7 +661,7 @@ export default {
               .pane-footer
                 .buy
                   color #fff
-                  border 1px solid #fff;
+                  border 1px solid #fff
                   &:hover
                     box-shadow 0 0 1px 1px #fff
 </style>

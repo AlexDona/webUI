@@ -6,6 +6,7 @@ import user from './User'
 import trade from './Trade'
 import footerInfo from './FooterInfo'
 import finance from './Finance'
+import quantization from './Quantization'
 import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
@@ -19,7 +20,8 @@ const store = new Vuex.Store({
     user,
     trade,
     footerInfo,
-    finance
+    finance,
+    quantization
   }
 })
 if (module.hot) {
@@ -31,7 +33,8 @@ if (module.hot) {
     './User/index',
     './Trade/index',
     './FooterInfo/index',
-    './Finance/index'
+    './Finance/index',
+    './Quantization/index'
   ], () => {
     const common = require('./Common/index').default
     const home = require('./Home/index').default
@@ -41,6 +44,7 @@ if (module.hot) {
     const trade = require('./Trade/index').default
     const footerInfo = require('./FooterInfo/index').default
     const finance = require('./Finance/index').default
+    const quantization = require('./Quantization/index').default
     store.hotUpdate({
       modules: {
         common,
@@ -50,7 +54,8 @@ if (module.hot) {
         user,
         trade,
         footerInfo,
-        finance
+        finance,
+        quantization
       }
     })
   })
