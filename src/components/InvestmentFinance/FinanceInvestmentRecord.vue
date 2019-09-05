@@ -2,7 +2,7 @@
   <div
     class="finance-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{ height: windowHeight - footerHeight - 5 + 'px'}"
+    :style="{ height: windowHeight - footerHeight - 50 + 'px'}"
   >
   <!-- 导航 -->
     <!-- banner -->
@@ -323,7 +323,6 @@ export default {
     //   let historyPage = this.interestCurrentPage
     //   this.changeInterestPage(historyPage)
     // }
-    console.log(this.footerHeight)
   },
   // mounted () {},
   // ,

@@ -4,7 +4,10 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 2.0 广告管理 -->
-    <div class="otc-AD-manage-content" :style="{'min-height':(height-305)+'px'}">
+    <div
+      class="otc-AD-manage-content"
+      :style="{ 'height': windowHeight - footerHeight - 50 - 60 + 'px'}"
+    >
       <!-- 2.1 大标题广告管理 -->
       <div class="AD-title font-size18 padding-l15 font-weight700">
         <!-- 广告管理 -->
@@ -608,7 +611,8 @@ export default {
     ...mapState({
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       language: state => state.common.language, // 当前选中语言
-      theme: state => state.common.theme // 主题颜色
+      theme: state => state.common.theme, // 主题颜色
+      footerHeight: state => state.common.footerHeight
     }),
     windowHeight () {
       return window.innerHeight

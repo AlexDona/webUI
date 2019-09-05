@@ -6,6 +6,11 @@
   box-shadow: none;
 }
 
+/* 解决otc首页类型切换购买和出售按钮双击时出现蓝色边框阴影的问题 */
+.el-radio-button:focus:not(.is-focus):not(:active):not(.is-disabled) {
+  box-shadow: none !important;
+}
+
 /* table 底部边框 */
 .el-table--border::after,
 .el-table--group::after,
@@ -138,6 +143,52 @@
 }
 
 /* otc 交易中支付码样式-任付伟添加结束 */
+
+/* 20190831增加一键买币问号样式 - 用的el-popover */
+.night .question-tips.el-popper {
+  padding: 5px 7px;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: #fff;
+  background-color: #272b41;
+}
+
+.night .question-tips.el-popper[x-placement^=top] .popper__arrow::after {
+  border-top-color: #272b41 !important;
+}
+
+.day .question-tips.el-popper {
+  padding: 5px 7px;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: #333;
+  background-color: #fff;
+}
+
+/* 20190831增加一键买币input框 placeholder 字体样式设置 */
+.night .input-content input::-webkit-input-placeholder,
+.night .one-key-buy-coin-box .right-one input::-webkit-input-placeholder {
+  font-size: 12px;
+  color: #66718f;
+}
+
+.night .input-content input:-moz-placeholder,
+.night .one-key-buy-coin-box .right-one input::-webkit-input-placeholder {
+  font-size: 12px;
+  color: #66718f;
+}
+
+.night .input-content input::-moz-placeholder,
+.night .one-key-buy-coin-box .right-one input::-webkit-input-placeholder {
+  font-size: 12px;
+  color: #66718f;
+}
+
+.night .input-content input:-ms-input-placeholder,
+.night .one-key-buy-coin-box .right-one input::-webkit-input-placeholder {
+  font-size: 12px;
+  color: #66718f;
+}
 
 /* 修改全局样式 */
 .el-pagination {

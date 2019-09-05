@@ -114,6 +114,15 @@ const OTCRoutes = [
       auth: true,
       isMerchant: true
     }
+  },
+
+  // 10 OTC一键买币
+  {
+    ...createBaseRoute({
+      path: `/${routers.OTCOneTrade}`,
+      name: `${routers.OTCOneTrade}`
+    }),
+    component: () => import(/* webpackChunkName: "OTCOneTrade" */ '../components/OTC/OTCOneTrade')
   }
 ]
 export default OTCRoutes

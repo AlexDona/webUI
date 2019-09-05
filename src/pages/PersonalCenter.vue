@@ -2,7 +2,7 @@
   <div
     class="personal-center personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{ 'min-height': windowHeight - footerHeight - 55 + 'px'}"
+    :style="{ 'min-height': windowHeight - footerHeight - 50 + 'px'}"
   >
     <div class="personal-center-main">
       <div class="personal-center-content clearfix">
