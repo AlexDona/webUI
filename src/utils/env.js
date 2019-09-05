@@ -49,7 +49,8 @@ const devTestConfig = {
   socketUrl: 'ws://192.168.2.200:8087/market',
   apiCommonUrl: 'http://192.168.2.200:8888/',
   loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
-  OTCIMSocketUrl: 'ws://192.168.2.200:8066/websoc'
+  OTCIMSocketUrl: 'ws://192.168.2.200:8066/websoc',
+  IEOSocketUrl: 'ws://192.168.2.200:8888/ieoPush'
 
   // socketUrl: 'wss://market.test.com',
   // apiCommonUrl: 'https://web.rest.test.com/',
@@ -119,7 +120,8 @@ const {
   loginSocketUrl,
   xDomain,
   domain,
-  OTCIMSocketUrl
+  OTCIMSocketUrl,
+  IEOSocketUrl
 } = targetConfig
 export {
   apiCommonUrl,
@@ -127,5 +129,6 @@ export {
   loginSocketUrl,
   xDomain,
   domain,
-  OTCIMSocketUrl
+  OTCIMSocketUrl,
+  IEOSocketUrl
 }
