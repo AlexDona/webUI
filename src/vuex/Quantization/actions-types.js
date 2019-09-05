@@ -1,1 +1,2 @@
+export const MY_STRATEGY_ACTION = 'MY_STRATEGY_ACTION' // 我的策略
 export const SEARCH_STRATEGY_ACTION = 'SEARCH_STRATEGY_ACTION' // 查看策略

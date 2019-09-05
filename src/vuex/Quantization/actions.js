@@ -6,7 +6,7 @@ export default {
     const data = await searchStrategy({
       strategyUserId: formData.id
     })
-    console.log(data)
+    // console.log(data)
     if (!data) return false
     commit('SET_SEARCH_STRATEGY_DATA', data)
   }
