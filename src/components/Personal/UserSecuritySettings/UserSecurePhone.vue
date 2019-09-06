@@ -2,9 +2,7 @@
   <div
     class="set-phone personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{
-      height: windowHeight+'px'
-    }"
+    :style="{ 'min-height': windowHeight - footerHeight - 50 + 'px'}"
   >
     <div class="set-phone-main margin25">
       <header class="set-phone-header personal-height60 line-height60 line-height70 margin25">
@@ -840,7 +838,8 @@ export default {
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       loginStep1Info: state => state.user.loginStep1Info,
       // 交易密码是否被锁定
-      isLockedPayPassword: state => state.common.isLockedPayPassword
+      isLockedPayPassword: state => state.common.isLockedPayPassword,
+      footerHeight: state => state.common.footerHeight
     }),
     windowHeight () {
       return window.innerHeight

@@ -79,7 +79,7 @@ const routes = [
     component: () => import('@com/FooterInfo/ServiceAndProtocol')
   },
   {
-    path: '/guideOfDownload',
+    path: `/${routesVariable.guideOfDownload}`,
     component: () => import('@/pages/GuideOfDownload')
   },
   {

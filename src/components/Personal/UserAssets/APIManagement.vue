@@ -99,13 +99,13 @@
             <div class="content-info">
               <span class="style">● </span>
               <p class="content-text">
-                {{ $t('M.user_api_text2') }}
+                {{ $t('M.user_api_text2').format([remainAmounts.apiCount]) }}
               </p>
             </div>
             <div class="content-info">
               <span class="style">● </span>
               <p class="content-text">
-                {{ $t('M.user_api_text3') }}
+                {{ $t('M.user_api_text3').format([remainAmounts.ipCount]) }}
               </p>
             </div>
           </div>
@@ -460,7 +460,8 @@ import {
   stateCreationApi,
   accessAecretKeyInfo,
   modifyUserInformation,
-  deleteUserInformation
+  deleteUserInformation,
+  remainApiInfo
 } from '../../../utils/api/personal'
 import {
   // returnAjaxMsg,
@@ -500,6 +501,7 @@ export default {
       remark: '',
       bindingIpAddress: '', // 绑定IP地址
       extensionList: [], // 展示渲染IP列表
+      remainAmounts: {},
       compileUserApi: false, // 编辑用户api弹窗
       userId: '', // 编辑用户api
       apiRemark: '', // 编辑用户备注
@@ -522,11 +524,19 @@ export default {
       return timeFilter(date, 'normal')
     },
     // 获取多个用户api信息
-    async getMultipleUserAPIInfo () {
+    async getMultipleUserAPIInfo (once) {
       let data = await multipleUserAPIInfo({})
       // console.log('获取多个用户api信息')
       // console.log(data)
-      if (!data) return false
+      const remainData = await remainApiInfo()
+      if (!data || !remainData) return false
+      // 默认创建之后弹出二次挨批创建信息框
+      if (once) { // 判断是否能创建成功并展示信息框
+        this.apiSecondaryConfirmation = true
+      }
+      // 返回可用api及ip数量
+      this.remainAmounts = getNestedData(remainData, 'data')
+      console.log(this.remainAmounts)
       // 返回展示渲染挨批列表
       this.extensionList = getNestedData(data, 'data')
       // console.log(this.extensionList)
@@ -637,7 +647,7 @@ export default {
       // 默认API确认弹窗
       this.APIMoneyConfirm = false
       // 默认创建之后弹出二次挨批创建信息框
-      this.apiSecondaryConfirmation = true
+      // this.apiSecondaryConfirmation = true
       // 对api秘钥进行赋值
       let detailData = getNestedData(data, 'data')
       this.accessKey = getNestedData(detailData, 'accessKey')
@@ -663,7 +673,7 @@ export default {
       // 默认创建之后弹出二次挨批创建信息框 关闭
       // this.apiSecondaryConfirmation = false
       // 调用查询接口重新渲染
-      this.getMultipleUserAPIInfo()
+      this.getMultipleUserAPIInfo(true)
       this.clearUserInputMsg()
     },
     clearUserInputMsg () {

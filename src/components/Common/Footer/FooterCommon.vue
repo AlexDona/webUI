@@ -228,7 +228,8 @@ export default {
       isMobile: state => state.user.isMobile
     }),
     downloadAppSrc () {
-      return this.mobile ? `${this.$routes_X.downloadApp}` : '/guideOfDownload'
+      const {downloadApp, guideOfDownload} = this.$routes_X
+      return this.mobile ? `${downloadApp}` : `/${guideOfDownload}`
     },
     isShowCooperationLogo () {
       return _.get(this.footerInfo, 'footerInfo2.cooperationFlag')

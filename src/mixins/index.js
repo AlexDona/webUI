@@ -172,6 +172,9 @@ let mixin = {
       $navigators_S_X: state => state.common.navigators_S,
       $activeLinkIndex_S_X: state => state.common.activeLinkIndex_S
     }),
+    $isShowAppEntry_X () {
+      return this.androidDownloadSwitch && this.iosDownloadSwitch
+    },
     $activeBuyName_X () {
       return (this.$middleTopData_S_X.area || '').toUpperCase()
     },

@@ -79,7 +79,8 @@ export const routesVariable = {
   // 量化中心
   quantization: 'QuantizationCenter',
   // 轮动策略
-  strategy: 'RotationStrategy'
+  strategy: 'RotationStrategy',
+  guideOfDownload: 'guideOfDownload'
 }
 
 export const globalLabel = {

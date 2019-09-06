@@ -46,6 +46,8 @@ import TheCrowdFundingDetailLeft from '../../components/ActivityCenter/CrowdFunc
 import TheCrowdFundingDetailRight from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingItemDetailRight'
 import TheCrowdFundingRichText from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingDetail/TheCrowdFundingRichText'
 import TheCrowdFundingGoBack from '../../components/ActivityCenter/CrowdFuncding/TheCrowdFundingGoBack'
+import Socket from '../../utils/datafeeds/socket'
+import {IEOSocketUrl} from '../../utils/env'
 export default {
   name: 'the-crowd-funding-detail',
   // mixins: [],
@@ -91,32 +93,42 @@ export default {
         balance: 'M.crowd_funding_expire_purplus1',
         descriptionTitle: 'M.crowd_funding_description_title',
         rulesTitle: 'M.crowd_funding_rules_title',
-        FAQTitle: 'M.crowd_funding_question_title'
+        FAQTitle: 'M.crowd_funding_question_title',
+        // socket
+        socket: null
       }
     }
   },
   created () {
     this.getCrowdFundingDetail()
+    this.initSocket()
   },
   // mounted () {}
   // updated () {},
   // beforeRouteUpdate () {},
-  // beforeDestroy () {},
+  beforeDestroy () {
+    this.socket.doClose()
+  },
   // destroyed () {},
   methods: {
+    initSocket () {
+      // 存币宝项目Id
+      this.socket = new Socket(`${IEOSocketUrl}/${this.detailId}=${this.$language_S_X}`)
+      this.socket.doOpen()
+      this.socket.on('message', (e) => {
+        this.detail = {...this.detail, ...e}
+      })
+    },
     async getCrowdFundingDetail () {
       const data = await getCrowdFundingDetailAJAX(this.detailId, {
         language: this.$language_S_X
       })
       if (!data) return
-      console.log(data)
       this.detail = _.get(data, 'data')
-      console.log(this.detail)
     }
   },
   filters: {
     timerFormat1 (date, type) {
-      console.log(date, new Date(date).getMonth())
       const newDate = new Date(date)
       const years = `${newDate.getFullYear()}`
       const months = `${newDate.getMonth() + 1}`.padStart(2, '0')
@@ -139,73 +151,6 @@ export default {
     }
   },
   computed: {
-    /**
-     * applyEndTime
-     申购截止时间
-     applyStartTime
-     申购开始时间
-     buyDownLimit
-     起购金额
-     buyUpLimit
-     true number
-     最高限购
-     holdCoinAmount
-     true number
-     需持币金额
-     holdCoinId
-     true number
-     持币币种ID
-     holdCoinName
-     true string
-     持币币种名称
-     id
-     true string
-     项目ID
-     ieoCoinId
-     true number
-     募集币种ID
-     ieoCoinName
-     true string
-     募集币种名称
-     ieoRemained
-     true number
-     剩余额度
-     ieoTotal
-     true number
-     募集总额
-     interestStartTime
-     true number
-     计息开始时间
-     interestEndTime
-     true number
-     计息结束时间
-     interestRate
-     true number
-     年化率
-     interestReturnWay
-     true string
-     返息方式（国际化）
-     joinUserCount
-     true number
-     参与人数
-     projectDesc
-     true string
-     项目简介（富文本）
-     projectDetail
-     true string
-     项目规则详情（富文本）
-     projectName
-     true string
-     项目名称
-     questions
-     true string
-     常见问题（富文本）
-     statusCode
-     true string
-     项目状态（国际化）
-     statusName
-     true string
-     */
     descriptionContent () {
       return _.get(this.detail, 'projectDesc')
     },
@@ -272,6 +217,8 @@ export default {
   watch: {
     $language_S_X () {
       this.getCrowdFundingDetail()
+      this.socket.doClose()
+      this.initSocket()
     }
   }
 }
