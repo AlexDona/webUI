@@ -29,7 +29,7 @@
               popper-class="question-tips"
               placement="top"
               trigger="hover"
-              content="非最终成交价，仅供参考"
+              content="非最终成交单价，仅供参考"
             )
               IconFontCommon.cursor-pointer(
                 iconName="icon-wen"
