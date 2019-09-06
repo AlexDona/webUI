@@ -175,7 +175,7 @@ export default {
                 this.AndroidText = this.$t('M.about_footer_info_down7')
                 return false
               } else {
-                this.iphoneText = 'Android'
+                this.AndroidText = 'Android'
                 this.qrcodeVisible = data
               }
             } else {
