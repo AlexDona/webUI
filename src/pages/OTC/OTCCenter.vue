@@ -2797,6 +2797,8 @@ export default {
           box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .otc-filtrate-publish {
+            box-shadow: 0 3px 4px 0 #f2f4f5;
+
             > .otc-filtrate-box {
               > .otc-filtrate-style {
                 color: #838ea6;

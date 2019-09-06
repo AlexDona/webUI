@@ -23,7 +23,7 @@
               :class="{checked: checkedCoinId == item.coinId}"
             ) {{item.name}}
         .reference-price.font-size12
-          span.price-data {{checkedCoinName}} 参考价：{{checkedCoinMarketPrice}}CNY/{{checkedCoinName}}
+          span.price-data {{checkedCoinName}} 参考价：{{checkedCoinMarketPrice || '--'}}CNY/{{checkedCoinName}}
           span.question-mark
             el-popover(
               popper-class="question-tips"
@@ -532,15 +532,18 @@ export default {
         > .coin-list
           ul
             display flex
+            flex-wrap wrap
+            max-height 44px
+            min-height 26px
             > .item
               height 18px
               margin-right 15px
         > .reference-price
-          margin-top 15px
+          margin-top 5px
           > .question-mark
             padding-left 5px
         > .buy-input-box
-          margin-top 20px
+          margin-top 10px
           > .buy-style-text
             font-size 12px
             height 18px
