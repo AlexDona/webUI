@@ -36,7 +36,7 @@
               ) {{$t('M.actionCenter_coin_apply')}}
             // 币种资料
             dd.dd-item(@click="$footerJump('/ServiceAndProtocol','CurrencyInformation')") {{$t('M.comm_currency_info')}}
-            // 客户端下载
+            // APP下载
             dd.dd-item(v-if="isNeedApp")
               router-link(:to="downloadAppSrc") {{$t('M.comm_Client_Downloads')}}
           // 关于
