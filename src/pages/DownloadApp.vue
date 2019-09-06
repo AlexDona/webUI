@@ -141,8 +141,12 @@ export default {
       if (this.isAndroid) {
         // window.location.href = 'scheme: //fubt.com/'
         this.downloadUrl = this.androidUrl
+        if (!this.androidDownloadSwitch) {
+          this.$error_tips_X(this.isChineseLanguage ? 'Android 暂未开放，敬请期待' : 'IOS is coming soon')
+          return false
+        }
         if (!this.androidUrl) {
-          this.$error_tips_X(this.isChineseLanguage ? '获取下载链接失败，请稍后再试！' : 'Failed to get the download link, please try again later!')
+          this.$error_tips_X(this.isChineseLanguage ? '获取下载链接失败，请稍后再试！' : 'Android is coming soon')
           return false
         }
         this.downloadTimer = setTimeout(() => {
@@ -154,6 +158,10 @@ export default {
         }, 1000)
       } else if (this.isIOS) {
         this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${this.iosUrl}`
+        if (!this.iosDownloadSwitch) {
+          this.$error_tips_X(this.isChineseLanguage ? 'IOS 暂未开放，敬请期待' : 'IOS is coming soon')
+          return false
+        }
         // 获取下载链接失败，请稍后再试！
         if (!this.iosUrl) {
           this.$error_tips_X(this.isChineseLanguage ? '获取下载链接失败，请稍后再试！' : 'Failed to get the download link, please try again later!')
@@ -176,7 +184,9 @@ export default {
     ...mapState({
       logoSrc: state => state.common.logoSrc,
       androidUrl: state => state.footerInfo.downloadUrl.android,
-      iosUrl: state => state.footerInfo.downloadUrl.ios
+      iosUrl: state => state.footerInfo.downloadUrl.ios,
+      androidDownloadSwitch: state => state.footerInfo.downloadUrl.androidDownloadSwitch,
+      iosDownloadSwitch: state => state.footerInfo.downloadUrl.iosDownloadSwitch
     }),
     isBaiDuBrowser () {
       let u = navigator.userAgent

@@ -19,7 +19,8 @@ export default {
     commit('SET_APP_DOWNLOAD_URL', {
       android: http2https(getNestedData(data, 'data.android')),
       ios: http2https(getNestedData(data, 'data.ios')),
-      iosIpa: http2https(getNestedData(data, 'data.ios_ipa'))
+      androidDownloadSwitch: getNestedData(data, 'data.androidDownloadSwitch'),
+      iosDownloadSwitch: getNestedData(data, 'data.iosDownloadSwitch')
     })
   },
   async [GET_CURRENCY_URL_ACTION] ({commit}, params) {

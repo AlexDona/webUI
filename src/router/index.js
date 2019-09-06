@@ -7,6 +7,7 @@ import routes from './routes'
 import {getCookie} from '../utils'
 
 Vue.use(Router)
+const {home, login, normalLogin, register, invite} = routesVariable
 const router = new Router({
   // mode: 'history',
   routes,
@@ -14,12 +15,13 @@ const router = new Router({
   'linkExactActiveClass': 'active'
 })
 router.beforeEach(async (to, from, next) => {
-  if (to.path === `/${routesVariable.home}`) {
+  // const toPath = to.path.toLowerCase()
+  if (to.path === `/${home}`) {
     if (store.state.common.language) {
       store.dispatch('GET_ALL_NOTICE_ACTION', store.state.common.language)
     }
   }
-  if (from.path !== `/${routesVariable.login}` || from.path !== '/register') {
+  if (from.path !== `/${login}` || from.path !== `/${register}`) {
     store.commit('CHANGE_ROUTER_PATH', from.path)
   }
   const token = getCookie('token')
@@ -30,19 +32,18 @@ router.beforeEach(async (to, from, next) => {
     if (store.state.user.isLogin) {
       next()
     } else {
-      next({path: `/${routesVariable.login}`, query: {Rurl: to.fullPath}})
+      next({path: `/${login}`, query: {Rurl: to.fullPath}})
     }
   } else {
     next()
   }
   if (store.state.user.isMobile) {
     // 登录判断限制
-    if (to.path === `/${routesVariable.login}/${routesVariable.normalLogin}`) {
-      next({path: `/${routesVariable.login}/m`})
+    if (to.path === `/${login}/${normalLogin}`) {
+      next({path: `/${login}/m`})
     }
-    console.log(to.path)
-    if (to.path.startsWith(`/${routesVariable.login}/${routesVariable.register}`) && to.path !== `/${routesVariable.login}/${routesVariable.register}/default`) {
-      next({path: `/${routesVariable.register}/${routesVariable.invite}/${to.path.split('/').reverse()[0]}`})
+    if (to.path.startsWith(`/${login}/${register}`) && to.path !== `/${login}/${register}/default`) {
+      next({path: `/${register}/${invite}/${to.path.split('/').reverse()[0]}`})
     }
   }
   next()
