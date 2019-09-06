@@ -2,9 +2,7 @@
   <div
     class="binding-google personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{
-      height: windowHeight+'px'
-    }"
+    :style="{ 'min-height': windowHeight - footerHeight - 50 + 'px'}"
   >
     <div class="binding-google-main margin25">
       <header class="binding-google-header personal-height60 line-height60 line-height70 margin25">
@@ -376,7 +374,8 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.user.loginStep1Info // 用户详细信息
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      footerHeight: state => state.common.footerHeight
     }),
     windowHeight () {
       return window.innerHeight
