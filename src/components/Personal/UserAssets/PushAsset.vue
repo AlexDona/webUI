@@ -395,12 +395,12 @@
         <div class="paging">
           <!--分页-->
           <el-pagination
-                  background
-                  v-show="pushRecordList.length"
-                  layout="prev, pager, next"
-                  :current-page="currentPageForMyEntrust"
-                  :page-count="totalPageForMyEntrust"
-                  @current-change="changeCurrentPage"
+            background
+            v-show="pushRecordList.length"
+            layout="prev, pager, next"
+            :current-page="currentPageForMyEntrust"
+            :page-count="totalPageForMyEntrust"
+            @current-change="changeCurrentPage"
           >
           </el-pagination>
         </div>
@@ -904,7 +904,7 @@ export default {
         }
 
         > .award-record-content {
-          min-height: 174px;
+          min-height: 130px;
 
           .form-input-common {
             width: 270px;
@@ -1102,6 +1102,12 @@ export default {
 
       .gutter {
         display: block !important;
+      }
+
+      .el-table {
+        .el-table__empty-block {
+          min-height: 125px;
+        }
       }
     }
 
