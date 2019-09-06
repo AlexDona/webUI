@@ -5,6 +5,8 @@ import {
   CHANGE_OTC_AVAILABLE_CURRENCY_NAME,
   // OTC改变选中的可用币种id
   CHANGE_OTC_AVAILABLE_CURRENCY_ID,
+  // OTC改变选中的可用币种小数位
+  CHANGE_OTC_AVAILABLE_CURRENCY_UNIT,
   // OTC改变选中的可用币种partnerCoinId
   // CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID,
   // OTC改变 购买或者出售成功后跳转到交易中订单（首页的）的锚点地方
@@ -43,6 +45,10 @@ export default {
   // OTC改变选中的可用币种id
   [CHANGE_OTC_AVAILABLE_CURRENCY_ID] (state, data) {
     state.selectedOTCAvailableCurrencyCoinID = data
+  },
+  // OTC改变选中的可用币种小数位
+  [CHANGE_OTC_AVAILABLE_CURRENCY_UNIT] (state, data) {
+    state.selectedOTCAvailableCurrencyUnit = data
   },
   // OTC改变选中的可用币种partnerCoinId
   // [CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID] (state, data) {

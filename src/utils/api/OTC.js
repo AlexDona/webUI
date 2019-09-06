@@ -1,4 +1,9 @@
-import {get, postWithURLencoded, post} from './axios'
+/*
+  author: renfuwei
+  update: 20190905
+  description: otc模块api
+*/
+import {get, postWithURLencoded, post, notLoading} from './axios'
 import {handleRequest} from '../commonFunc'
 
 /**
@@ -74,3 +79,7 @@ export const getCommonPutUpOrderStatus = (params) => handleRequest(() => get('ot
 export const getCurrencyCountrys = (params) => handleRequest(() => get('otcCOin/getCurrencyCountrys', params))
 // 29  买家摘单后未付款前可取消订单
 export const cancelTradingOrderAjax = (params) => handleRequest(() => postWithURLencoded('otcOrder/userCancelOtcOrder', params), 1)
+// OTC一键买币获取币种市价
+export const getOTCOneTradeCoinMarketPriceAjax = (params) => handleRequest(() => get('otcEntrust/selectMarketPrice', {...params, ...notLoading}))
+// OTC一键买币input框输入数据调取委单列表信息接口
+export const getOTCOneTradeEntrustListInfoAjax = (params) => handleRequest(() => get('otcEntrust/selectOptimalByParams', params))

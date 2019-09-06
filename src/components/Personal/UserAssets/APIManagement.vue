@@ -947,7 +947,7 @@ export default {
         }
 
         > .extension-statistics-content {
-          min-height: 230px;
+          min-height: 270px;
 
           .ip-width {
             overflow: hidden;
@@ -1118,6 +1118,12 @@ export default {
 
       .el-table__body-wrapper {
         overflow-x: hidden;
+
+        tr {
+          td {
+            padding: 11px 0;
+          }
+        }
       }
     }
 

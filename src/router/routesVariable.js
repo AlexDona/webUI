@@ -55,6 +55,8 @@ export const routesVariable = {
   OTCReportFormStatistics: 'OTCReportFormStatistics',
   // OTC商家信息
   OTCViewMerchantInfo: 'OTCViewMerchantInfo',
+  // OTC一键买币
+  OTCOneTrade: 'OTCOneTrade',
   ForgetPassword: 'ForgetPassword',
   forgetPass: 'forgetPass',
   forgetPassStep1: 'step1',

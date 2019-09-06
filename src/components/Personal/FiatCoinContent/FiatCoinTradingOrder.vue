@@ -1612,8 +1612,10 @@ export default {
 
     > .fiat-trading-order-content {
       position: relative;
+      box-sizing: border-box;
       min-height: 584px;
       padding: 0 10px 35px;
+      margin-bottom: 20px;
 
       .button {
         width: 290px;

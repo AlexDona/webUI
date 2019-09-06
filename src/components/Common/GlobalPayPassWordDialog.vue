@@ -37,9 +37,17 @@
           prop="buyCount"
           align="right"
         )
+          .close-pwd-text
+            span.cursor-pointer(
+              @click.prevent="goToClosePwd"
+            ) {{$t('M.user_payPassword_switch')}}
           // 确定取消
-          el-button.button.confirm(@click="submitForm") {{$t('M.comm_confirm')}}
-          el-button.button(@click="cancelSubmit") {{$t('M.comm_cancel')}}
+          el-button.button.confirm(@click="submitForm") {{$t('M.otc_submit')}}
+          // el-button.button(@click="cancelSubmit") {{$t('M.comm_cancel')}}
+          .forget-pwd-text
+            span.cursor-pointer(
+              @click.prevent="goToForgetPwd"
+            ) {{$t('M.user_payPassword')}}
 </template>
 <script>
 import {
@@ -85,7 +93,9 @@ export default {
   methods: {
     ...mapMutations([
       'UPDATE_PAY_PASSWORD_DIALOG_M',
-      'UPDATE_PAY_PASSWORD_M'
+      'UPDATE_PAY_PASSWORD_M',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE',
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     submitForm () {
       this.$refs[this.formRef].validate(async (valid) => {
@@ -102,6 +112,16 @@ export default {
     resetForm () {
       this.form.payPassword = ''
       this.$refs[this.formRef].resetFields()
+    },
+    // 暂时关闭交易密码验证
+    goToClosePwd () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+      this.$goToPage('/PersonalCenter')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
+    },
+    // 忘记交易密码
+    goToForgetPwd () {
+      this.$goToPage('/TransactionPassword')
     }
   },
   // filters: {},
@@ -127,20 +147,20 @@ export default {
       background-color rgba(0,0,0,0.5)
       .el-dialog
         height 240px
-        border-radius 10px
+        border-radius 4px
         overflow hidden
         background-color transparent
         .el-dialog__header
           padding-top 10px
-          background-color #20293c
+          background-color #212b3f
           .el-dialog__title
-            color #fff
+            font-size 14px
+            color #CFD5DF
           .el-dialog__headerbtn
             top 14px
-          /*margin-bottom 10px*/
         .el-dialog__body
           background-color #28334a
-          padding-top 40px
+          padding-top 25px
         .el-input__inner
           font-size 12px
           background-color #1a2233
@@ -151,19 +171,31 @@ export default {
             .el-input__inner
               border-color #485776
           &.button
-            margin-top 40px
+            margin-top 22px
+        .close-pwd-text,
+        .forget-pwd-text
+          height 16px
+          line-height 16px
+          text-align left
+          font-size 12px
+          color S_main_color
+        .forget-pwd-text
+          text-align right
+          margin-top 5px
+        .close-pwd-text
+          margin-bottom 4px
         .el-button--default
           height 36px
           line-height 36px
           padding 0 20px
-          margin-left 30px
+          width 100%
           border 1px solid rgba(51,143,245,1)
           border-radius 4px
           background-color transparent
           color #fff
-          font-size 16px
+          font-size 12px
           &.confirm
-            background linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%)
+            background linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%)
             border none
     &.day
       /deep/
@@ -173,7 +205,7 @@ export default {
           .el-dialog
             background-color transparent
             .el-dialog__header
-              background-color S_day_bg
+              background-color #dce7f3
               .el-dialog__title
                 color #333
             .el-dialog__body
@@ -185,12 +217,13 @@ export default {
             .el-form-item
               &.is-success
                 .el-input__inner
-                  border-color #485776
+                  border-color rgba(236,241,248,1)
             .el-button--default
               border 1px solid rgba(51,143,245,1)
               background-color transparent
               color #333
               &.confirm
-                background linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%)
+                background linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%)
                 color #fff
+                border none
 </style>

@@ -4,7 +4,7 @@
   description: 当前组件为公共底部组件
 -->
 <template lang="pug">
-  .footer-box.common
+  .footer-box.common#footerDiv
     .inner-box
       .top
         .left
@@ -193,7 +193,10 @@ export default {
   // beforeRouteUpdate () {},
   methods: {
     ...mapActions(['GET_CURRENCY_URL_ACTION']),
-    ...mapMutations(['CHANGE_FOOTER_ACTIVE_NAME']),
+    ...mapMutations([
+      'CHANGE_FOOTER_ACTIVE_NAME',
+      'SAVE_FOOTER_HEIGHT'
+    ]),
     http2https (str) {
       return http2https(str)
     },
@@ -207,6 +210,11 @@ export default {
           break
       }
     }
+  },
+  updated () {
+    let footerDivHeight = document.getElementById('footerDiv').clientHeigh || document.getElementById('footerDiv').offsetHeight
+    console.log(footerDivHeight)
+    this.SAVE_FOOTER_HEIGHT(footerDivHeight)
   },
   // filter: {},
   computed: {
@@ -226,6 +234,7 @@ export default {
     isShowCooperationLogo () {
       return _.get(this.footerInfo, 'footerInfo2.cooperationFlag')
     },
+    // 战略合作内容
     cooperations () {
       return _.get(this.footerInfo, 'footerInfo2.blogrollList.cooperation')
     },
@@ -235,6 +244,7 @@ export default {
     isShowFriendlyLinksLogo () {
       return _.get(this.footerInfo, 'footerInfo2.blogrollFlag')
     },
+    // 友情链接内容
     friendlyLinks () {
       return _.get(this.footerInfo, 'footerInfo2.blogrollList.blogroll')
     },
@@ -262,6 +272,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   .footer-box {
+    box-sizing: border-box;
     width: 100%;
     min-width: 1288px;
     color: #838dae;

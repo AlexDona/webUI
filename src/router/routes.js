@@ -46,7 +46,7 @@ const routes = [
   },
   {
     // 轮动策略
-    path: `/${routesVariable.strategy}/`,
+    path: `/${routesVariable.strategy}`,
     name: `${routesVariable.strategy}`,
     component: () => import('@com/Quantization/RotationStrategy')
   },

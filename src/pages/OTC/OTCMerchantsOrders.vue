@@ -6,7 +6,7 @@
     <!-- 2.0 商家订单 -->
     <div
       class="otc-merchants-orders-content"
-      :style="{'min-height':(height-305)+'px'}"
+      :style="{ 'height': windowHeight - footerHeight - 50 - 60 + 'px'}"
     >
       <!-- 2.1 大标题商家订单 -->
       <div class="merchants-title font-size18 padding-l15 font-weight700">
@@ -578,8 +578,12 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language,
-      theme: state => state.common.theme
-    })
+      theme: state => state.common.theme,
+      footerHeight: state => state.common.footerHeight
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {
     language (val) {
