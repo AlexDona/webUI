@@ -296,6 +296,7 @@ export default {
                 width 23px
                 height 19px
                 padding 0
+                border-top-right-radius 6px
                 &:before
                   content ''
             .el-radio-button__orig-radio:checked + .el-radio-button__inner
@@ -306,7 +307,7 @@ export default {
             .el-icon-check
               position absolute
               top 0
-              right 0
+              right -1px
               padding 2px 2px 5px 5px
               border-bottom-left-radius: 2em
               color S_day_bg

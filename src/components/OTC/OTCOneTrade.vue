@@ -106,9 +106,13 @@
                 span(
                   v-if="item.payType === 'Wechat'"
                 ) 微信
+              // 原来是图片增加类名展示optimalPic测试说不清楚改为了字体图标显示
               .best-mark(
-                :class="{optimalPic: item.best}"
+                v-show="item.best"
               )
+                IconFontCommon(
+                  iconName="icon-zuiyou2"
+                )
           .no-data.font-size12(
             v-else
           ) 暂无合适报价，
@@ -246,10 +250,8 @@ export default {
     // 2 获得币种列表
     async getOTCOneTradeCoinList () {
       const data = await getOTCAvailableCurrency()
-      console.log(data)
       if (!data) return false
       this.coinList = getNestedData(data, 'data')
-      console.log(this.coinList)
       // URL中有币种id就按照此id来渲染页面，如果没有就按照数组的第一项渲染
       if (this.$route.params && this.$route.params.coinId) {
         this.coinList.forEach((item, index) => {
@@ -273,7 +275,6 @@ export default {
         coinId: this.checkedCoinId
       }
       const data = await getOTCOneTradeCoinMarketPriceAjax(param)
-      console.log(data)
       if (!data) return false
       this.checkedCoinMarketPrice = getNestedData(data, 'data')
       this.tenSecondTimer()
@@ -287,7 +288,6 @@ export default {
     },
     // 5 选择币种
     selectCoin: _.debounce(function (id, name, unit) {
-      console.log('223')
       // 清空数据
       this.clearData()
       this.checkedCoinId = id
@@ -350,12 +350,10 @@ export default {
         param.buyCount = this.$refs.inputValue.value // 买入数量
       }
       const data = await getOTCOneTradeEntrustListInfoAjax(param)
-      console.log(data)
       if (!data) return false
       // 输入限制比较
       this.oneTradeMix = getNestedData(data, 'data.min') - 0
       this.oneTradeMax = getNestedData(data, 'data.max') - 0
-      console.log(this.oneTradeMix, this.oneTradeMax)
       if (this.oneTradeMax == 0) {
         this.isHaveOneTradeErrorTips = true
         this.oneTradeErrorTips = '当前币种没有挂单'
@@ -403,7 +401,6 @@ export default {
       } else {
         this.entrustList = []
       }
-      console.log(this.entrustList)
     }, 500),
     // 10 切换付款方式
     togglePayFor: _.debounce(function (item) {
@@ -466,7 +463,6 @@ export default {
         tradePassword: this.$globalPayPassword_S_X // 交易密码
       }
       const data = await pickOrdersToBuy(param)
-      console.log(data)
       if (!data) return false
       // 接口成功后逻辑
       // 关闭交易密码弹窗
@@ -603,6 +599,12 @@ export default {
               border-radius 2px
               > .pay-sign
                 margin-bottom 4px
+              > .best-mark
+                position absolute
+                top -11px
+                left 5px
+                .icon
+                  font-size 40px
               > .optimalPic
                 width 35px
                 height 22px
