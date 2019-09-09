@@ -63,7 +63,8 @@ const testingConfig = {
   socketUrl: 'wss://market.test.com',
   apiCommonUrl: 'https://web.rest.test.com/',
   loginSocketUrl: 'wss://qrcode.test.com/qrcodeLogin/',
-  OTCIMSocketUrl: 'wss://im.test.com/websoc'
+  OTCIMSocketUrl: 'wss://im.test.com/websoc',
+  IEOSocketUrl: 'wss://ieopush.test.com'
 }
 
 const dev210Config = {
