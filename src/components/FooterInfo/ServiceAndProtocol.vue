@@ -2,7 +2,7 @@
   <div
     class="service-protocol-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{'min-height':(windowHeight-302)+'px'}"
+    :style="{ 'min-height': windowHeight - footerHeight - 50 + 'px'}"
   >
     <div class="content">
       <div class="top">
@@ -262,7 +262,8 @@ export default {
       AML: state => state.footerInfo.serviceProtocolData.AML,
       tradingWarningData: state => state.footerInfo.serviceProtocolData.tradingWarningData,
       OTCServices: state => state.footerInfo.serviceProtocolData.OTCServices,
-      OTCMerchant: state => state.footerInfo.serviceProtocolData.OTCMerchant
+      OTCMerchant: state => state.footerInfo.serviceProtocolData.OTCMerchant,
+      footerHeight: state => state.common.footerHeight
     }),
     windowHeight () {
       return window.innerHeight
