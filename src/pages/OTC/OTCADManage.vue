@@ -272,6 +272,7 @@
                 <template slot-scope="s">
                   <!-- 下架 -->
                   <el-button
+                    class="font-size12"
                     type="text"
                     v-if="s.row.status === 'ENTRUSTED'"
                     @click="updateADUnShelve(s.row.id)"
@@ -281,6 +282,7 @@
                   <!-- 修改 -->
                   <!--20190222修改：后台增加字段币种是否可用来动态显示隐藏修改按钮s.row.coinStatus === 'ENABLE'-->
                   <el-button
+                    class="font-size12"
                     type="text"
                     v-if="s.row.status === 'CANCELED' && s.row.coinStatus === 'ENABLE'"
                     @click="modifyAD(s.row.id)"
