@@ -193,7 +193,7 @@ export default {
       }
       this.getServiceProtocolData()
     },
-    async getServiceProtocolData () {
+    getServiceProtocolData: _.debounce(async function () {
       const params = {
         termsTypeIds: this.termsTypeIds, // 用户协议代号
         language: this.language
@@ -247,7 +247,7 @@ export default {
       } else {
 
       }
-    }
+    }, 500)
   },
   filter: {},
   computed: {
@@ -278,6 +278,7 @@ export default {
     },
     serviceActiveName (newVal) {
       this.activeName = newVal
+      this.changeTab({name: this.activeName})
     },
     // 改变语言重新请求对应语言的国际化内容
     language () {
