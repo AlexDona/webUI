@@ -959,7 +959,7 @@ export default {
       }
 
       .el-input__inner {
-        width: 130px;
+        width: 140px;
         height: 36px;
         border-radius: 2px 0 0 2px;
       }
