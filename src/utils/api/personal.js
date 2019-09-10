@@ -125,6 +125,8 @@ export const accessAecretKeyInfo = params => handleRequest(() => get('userApi/se
 export const modifyUserInformation = params => handleRequest(() => put('userApi', params), 1)
 // 删除用户api信息
 export const deleteUserInformation = params => handleRequest(() => deleteMethod('userApi', params))
+// 可用api数量
+export const remainApiInfo = params => handleRequest(() => get('userApi/setting', params))
 /**
  * VIP
  * */
