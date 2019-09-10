@@ -28,7 +28,7 @@
               UID： {{ showId }}
             </span>
             <el-dialog
-                    :title="'修改昵称'"
+                    :title="$t('M.comm_edit_nickname')"
                     :visible.sync="showNickNameDialog"
                     class="nickNameDialog"
             >
@@ -44,8 +44,8 @@
                           @change="checkoutInputFormat(nickNames)"
                           maxlength="15"
                   />
-                  <span v-if="errorHint1" class="error-span">· 不可超过7个汉字或15个英文字母</span>
-                  <span v-if="errorHint2" class="error-span">· 不可包含空格与特殊字符</span>
+                  <span v-if="errorHint1" class="error-span">· {{$t('M.comm_nickname_rule1')}}</span>
+                  <span v-if="errorHint2" class="error-span">· {{$t('M.comm_nickname_rule2')}}</span>
                 </el-form-item>
               </el-form>
               <div
@@ -329,7 +329,7 @@ export default {
     },
     // 确定设置检测输入格式
     checkoutInputFormat (targetNum) {
-      let regExp = /[^a-z0-9\u4E00-\u9FA5]/g
+      let regExp = /[^a-zA-Z0-9\u4E00-\u9FA5]/g
       if (!targetNum) {
         // 请输入昵称
         this.errorHint1 = true
@@ -449,7 +449,7 @@ export default {
               display: flex;
 
               > .nickname-span {
-                max-width: 100px;
+                max-width: 118px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap
