@@ -6,7 +6,7 @@
 <template lang="pug">
   .buy-coin-box(
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{ 'height': windowHeight - footerHeight - 50 + 'px'}"
+    :style="{ 'min-height': windowHeight - footerHeight - 50 + 'px'}"
   )
     .buy-coin-inner-box.border-radius4
       .bottom-picture
@@ -504,7 +504,7 @@ export default {
     box-sizing border-box
     width S_main_content_width
     margin 0 auto
-    padding-top 50px
+    padding 50px 0
     > .buy-coin-inner-box
       width 540px
       height 570px

@@ -6,7 +6,7 @@
     <!-- 2.0 广告管理 -->
     <div
       class="otc-AD-manage-content"
-      :style="{ 'height': windowHeight - footerHeight - 50 - 60 + 'px'}"
+      :style="{ 'min-height': windowHeight - footerHeight - 50 - 60 + 'px'}"
     >
       <!-- 2.1 大标题广告管理 -->
       <div class="AD-title font-size18 padding-l15 font-weight700">
