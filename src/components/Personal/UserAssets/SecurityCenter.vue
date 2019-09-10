@@ -1056,9 +1056,10 @@ export default {
       > .security-setting-box {
         .send-code-btn {
           position: absolute;
-          top: 3px;
+          top: 4px;
           width: 96px;
           height: 34px;
+          line-height: 12px;
         }
 
         .button {
@@ -1067,7 +1068,6 @@ export default {
           border: 0;
           line-height: 0;
           color: #fff;
-          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
 
         .input {
@@ -1327,6 +1327,10 @@ export default {
             background-color: #338ff5;
           }
 
+          .button {
+            background: linear-gradient(90deg, rgba(18, 71, 133, 1) 0%, rgba(42, 59, 97, 1) 100%);
+          }
+
           .error-msg {
             line-height: 25px;
             color: rgb(212, 88, 88);
@@ -1515,6 +1519,10 @@ export default {
           .send-code-btn {
             color: #fff;
             background-color: #338ff5;
+          }
+
+          .button {
+            background: linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%);
           }
 
           .input {
