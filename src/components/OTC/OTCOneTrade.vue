@@ -202,6 +202,8 @@ export default {
     }
   },
   async created () {
+    // 关闭交易密码弹窗
+    this.$UPDATE_PAY_PASSWORD_DIALOG_M_X(false)
     // console.log(this.$route)
     // 获得币种列表
     await this.getOTCOneTradeCoinList()
