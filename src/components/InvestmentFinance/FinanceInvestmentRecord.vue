@@ -2,7 +2,7 @@
   <div
     class="finance-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{ height: windowHeight - footerHeight - 50 + 'px'}"
+    :style="{ 'min-height': windowHeight - footerHeight - 50 + 'px'}"
   >
   <!-- 导航 -->
     <!-- banner -->
