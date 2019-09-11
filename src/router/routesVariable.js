@@ -55,6 +55,8 @@ export const routesVariable = {
   OTCReportFormStatistics: 'OTCReportFormStatistics',
   // OTC商家信息
   OTCViewMerchantInfo: 'OTCViewMerchantInfo',
+  // OTC一键买币
+  OTCOneTrade: 'OTCOneTrade',
   ForgetPassword: 'ForgetPassword',
   forgetPass: 'forgetPass',
   forgetPassStep1: 'step1',
@@ -73,7 +75,12 @@ export const routesVariable = {
   downloadApp: '/downloadApp',
   // 邀请注册
   invite: 'invite',
-  default: 'default'
+  default: 'default',
+  // 量化中心
+  quantization: 'QuantizationCenter',
+  // 轮动策略
+  strategy: 'RotationStrategy',
+  guideOfDownload: 'guideOfDownload'
 }
 
 export const globalLabel = {

@@ -25,7 +25,7 @@ const devTestConfig = {
   // apiCommonUrl: 'http://192.168.2.52:22224/',
 
   // ZhangChangXiang
-  // apiCommonUrl: 'http://192.168.2.122:8888/',
+  // apiCommonUrl: 'http://192.168.2.39:8888/',
 
   // FangRuiChang
   // apiCommonUrl: 'http://192.168.10.9:8888/',
@@ -49,7 +49,8 @@ const devTestConfig = {
   socketUrl: 'ws://192.168.2.200:8087/market',
   apiCommonUrl: 'http://192.168.2.200:8888/',
   loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
-  OTCIMSocketUrl: 'ws://192.168.2.200:8066/websoc'
+  OTCIMSocketUrl: 'ws://192.168.2.200:8066/websoc',
+  IEOSocketUrl: 'ws://192.168.2.200:8888/ieoPush'
 
   // socketUrl: 'wss://market.test.com',
   // apiCommonUrl: 'https://web.rest.test.com/',
@@ -62,7 +63,8 @@ const testingConfig = {
   socketUrl: 'wss://market.test.com',
   apiCommonUrl: 'https://web.rest.test.com/',
   loginSocketUrl: 'wss://qrcode.test.com/qrcodeLogin/',
-  OTCIMSocketUrl: 'wss://im.test.com/websoc'
+  OTCIMSocketUrl: 'wss://im.test.com/websoc',
+  IEOSocketUrl: 'wss://ieopush.test.com'
 }
 
 const dev210Config = {
@@ -119,7 +121,8 @@ const {
   loginSocketUrl,
   xDomain,
   domain,
-  OTCIMSocketUrl
+  OTCIMSocketUrl,
+  IEOSocketUrl
 } = targetConfig
 export {
   apiCommonUrl,
@@ -127,5 +130,6 @@ export {
   loginSocketUrl,
   xDomain,
   domain,
-  OTCIMSocketUrl
+  OTCIMSocketUrl,
+  IEOSocketUrl
 }

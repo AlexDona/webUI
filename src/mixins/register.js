@@ -147,6 +147,7 @@ let mixin = {
       if (this.countries.length) {
         const { nationCode } = this.countries[0]
         this.activeNationCode = nationCode
+        this.UPDATE_CURRENT_COUNTRY_M(this.countries[0])
       }
     }
   },

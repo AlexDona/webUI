@@ -9,6 +9,8 @@ const state = {
   selectedOTCAvailableCurrencyName: '',
   // OTC改变选中的可用币种id
   selectedOTCAvailableCurrencyCoinID: '',
+  // OTC改变选中的可用币种小数位
+  selectedOTCAvailableCurrencyUnit: '',
   // OTC改变选中的可用币种partnerCoinId
   // selectedOTCAvailablePartnerCoinId: '',
   // OTC交易首页锚点状态

@@ -518,6 +518,21 @@ export default {
 
     /deep/ {
       /* 覆盖element样式 */
+      .chat-upload {
+        .img {
+          .picture {
+            position: relative;
+
+            .icon {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+        }
+      }
+
       .el-input-group {
         width: 62.5%;
       }

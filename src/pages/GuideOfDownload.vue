@@ -1,117 +1,78 @@
-<template>
-  <div
-    class="download-box"
-    :style="{
-      height: windowHeight+'px'
-    }"
-  >
-    <div class="inner-box">
-      <div class="title">
-        <!-- <h3>全平台终端接入</h3> -->
-        <h3>{{$t('M.about_footer_info_down1')}}</h3>
-        <!-- <p>iOS、Android、Mac、Windows 多个平台支持全业务功能</p> -->
-        <p>{{$t('M.about_footer_info_down2')}}</p>
-      </div>
-      <div class="download-item">
-        <!--移动端-->
-        <div class="left">
-          <div class="l-left">
-            <IconFont
+<!--
+  author: zxl
+  update: 20190905
+  description: 当前页面为app下载引导页
+-->
+<template lang="pug">
+  .download-box(:style="{height: windowHeight+'px'}")
+    .inner-box
+      .title
+        //全平台终端接入
+        h3 {{$t('M.about_footer_info_down1')}}
+        p {{$t('M.about_footer_info_down2')}}
+        //  移动端
+      .download-item
+        .left
+          .l-left
+            IconFont(
               icon-name="icon-cellphoneiphone"
               class-name="icon-cellphoneiphone"
-            />
-          </div>
-          <div class="l-right">
-            <transition
+              )
+          .l-right
+            transition(
               enter-active-class="animated fadeIn"
               leave-active-class="animated fadeOut"
-            >
-              <div
-                class="qrcode-box"
-                v-show="qrcodeVisible"
-              >
-                <Qrcode
-                  class="qrcode"
+            )
+              .qrcode-box(v-show="qrcodeVisible")
+                Qrcode.qrcode(
                   :value="qrcodeString"
                   :logoSrc="logoSrc"
-                />
-              </div>
-            </transition>
-            <p
-              @mouseover="toggleQrcode(1)"
-              @mouseleave="toggleQrcode(0)"
-            >
-              <span
-                class="scan-btn cursor-pointer"
+                )
+            p
+              span.scan-btn.cursor-pointer(
                 @click="downloadApp('android')"
-              >Android</span>
-              <span
-                class="scan-btn cursor-pointer"
+                @mouseover="toggleQrcode('android',1)"
+                @mouseleave="toggleQrcode('android',0)"
+              ) {{AndroidText}}
+              span.scan-btn.cursor-pointer(
+                @mouseover="toggleQrcode('iphone',1)"
+                @mouseleave="toggleQrcode('iphone',0)"
                 @click="downloadApp('ios')"
-              >iPhone</span>
-              <!-- 扫码下载ios、Android版 -->
-              <!--<span v-if="isNeedIOS">{{$t('M.about_footer_info_down3')}}</span>-->
-              <!--<span v-else>{{// $t('M.about_footer_info_down3_withoutIOS')}}</span>-->
-            </p>
-            <a
+              ) {{iphoneText}}
+            a(
               :href="downloadUrl"
               ref="download-link"
               download="android"
-              :style="{
-                display:'none'
-              }"
-            ></a>
-            <!-- 下载app -->
-          </div>
-        </div>
-        <!--pc端-->
-
-        <div
-          class="right"
+              :style="{display:'none'}"
+            )
+        // pc端
+        .right(
           @mouseenter="toggleIsOpen(0)"
           @mouseleave="toggleIsOpen(1)"
-        >
-          <div class="r-left">
-            <IconFont
+        )
+          .r-left
+            IconFont(
               icon-name="icon-computer_icon"
               class-name="icon-diannao"
-            />
-          </div>
-          <div class="r-right"
-               v-show="isOpen"
-          >
-            <button>
-              <IconFont
+            )
+          .r-right(v-show="isOpen")
+            button
+              IconFont(
                 icon-name="icon-pingguo"
                 class-name="icon"
-              />
-              <!-- Mac 版本下载 -->
-              {{$t('M.about_footer_info_down5')}}
-            </button>
-            <button>
-              <IconFont
+              )
+              // Mac 版本下载
+              span {{$t('M.about_footer_info_down5')}}
+            button
+              IconFont(
                 icon-name="icon-windows"
                 class-name="icon"
-              />
-              <!-- WIN 版本下载 -->
-              {{$t('M.about_footer_info_down6')}}
-            </button>
-          </div>
-          <div
-            class="r-right"
-            v-show="!isOpen"
-          >
-            <p
-              class="please-wait"
-            >
-              <!-- 暂未开放，敬请期待 -->
-              {{$t('M.about_footer_info_down7')}}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+              )
+              //  WIN 版本下载
+              span {{$t('M.about_footer_info_down6')}}
+          .r-right( v-show="!isOpen")
+            // 暂未开放，敬请期待
+            p.please-wait {{$t('M.about_footer_info_down7')}}
 </template>
 <script>
 import {
@@ -136,13 +97,14 @@ export default {
       qrcodeVisible: false,
       qrcodeString: `${domain}${routesVariable.downloadApp}`,
       isOpen: true,
-      downloadUrl: ''
+      downloadUrl: '',
+      AndroidText: 'Android',
+      iphoneText: 'iphone'
       // 二维码logo
       // logoSrc: ''
     }
   },
   async created () {
-    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
     this.GET_APP_URL_ACTION()
   },
   // mounted () {
@@ -168,14 +130,60 @@ export default {
         }
         this.$refs['download-link'].click()
       } else {
-        window.location.href = type == 'android' ? this.androidUrl : this.iosIpaUrl
+        switch (type) {
+          case 'android':
+            if (!this.androidDownloadSwitch) {
+              return false
+            } else {
+              window.location.href = this.androidUrl
+            }
+            break
+          case 'ios':
+            if (!this.iosDownloadSwitch) {
+              return false
+            } else {
+              window.location.href = this.iosIpaUrl
+            }
+            break
+        }
       }
     },
     toggleIsOpen (data) {
       this.isOpen = data
     },
-    toggleQrcode (data) {
-      this.qrcodeVisible = data
+    toggleQrcode (type, data) {
+      if (type) {
+        switch (type) {
+          case 'iphone':
+            if (!this.iosDownloadSwitch) {
+              if (data) {
+                // 暂未开放，敬请期待
+                this.iphoneText = this.$t('M.about_footer_info_down7')
+                return false
+              } else {
+                this.iphoneText = 'iphone'
+                this.qrcodeVisible = data
+              }
+            } else {
+              this.qrcodeVisible = data
+            }
+            break
+          case 'android':
+            if (!this.androidDownloadSwitch) {
+              if (data) {
+                // 暂未开放，敬请期待
+                this.AndroidText = this.$t('M.about_footer_info_down7')
+                return false
+              } else {
+                this.AndroidText = 'Android'
+                this.qrcodeVisible = data
+              }
+            } else {
+              this.qrcodeVisible = data
+            }
+            break
+        }
+      }
     }
   },
   filter: {},
@@ -189,14 +197,16 @@ export default {
       iosUrl: state => state.footerInfo.downloadUrl.ios,
       iosIpaUrl: state => state.footerInfo.downloadUrl.iosIpa,
       isMobile: state => state.user.isMobile,
-      logoSrc: state => state.common.footerInfo.footerInfo1.downLoadAppQrCodeLogo
+      logoSrc: state => state.common.footerInfo.footerInfo1.downLoadAppQrCodeLogo,
+      androidDownloadSwitch: state => state.footerInfo.downloadUrl.androidDownloadSwitch,
+      iosDownloadSwitch: state => state.footerInfo.downloadUrl.iosDownloadSwitch
     }),
     windowHeight () {
       return window.innerHeight
     }
-  },
-  watch: {
   }
+  // watch: {
+  // }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -206,7 +216,7 @@ export default {
     width: 100%;
     height: 100%;
     margin-top: 50px;
-    background: url(../assets/develop/download-bg.png) no-repeat center center;
+    background: url(https://fubt-3.oss-cn-hongkong.aliyuncs.com/de7782c2-1e5c-4c99-8e4b-4bf94f40bf20) no-repeat center center;
     background-size: 100% 100%;
 
     > .inner-box {
@@ -265,6 +275,7 @@ export default {
               width: 170px;
               height: 170px;
               padding: 5px;
+              border-radius: 6px;
               background-color: #fff;
               transform: translate(-50%, 0);
 
@@ -275,16 +286,22 @@ export default {
               }
             }
 
-            .scan-btn {
-              display: block;
-              width: 220px;
-              height: 40px;
-              margin-bottom: 20px;
-              border-radius: 25px;
-              line-height: 40px;
-              text-align: center;
-              color: #fff;
-              background: linear-gradient(90deg, rgba(43, 78, 129, 1) 0%, rgba(43, 60, 112, 1) 100%);
+            > p {
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+
+              > .scan-btn {
+                display: block;
+                width: 220px;
+                height: 40px;
+                border-radius: 25px;
+                line-height: 40px;
+                text-align: center;
+                color: #fff;
+                background: linear-gradient(90deg, rgba(43, 78, 129, 1) 0%, rgba(43, 60, 112, 1) 100%);
+              }
             }
           }
         }

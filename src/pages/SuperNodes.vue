@@ -287,7 +287,7 @@ export default {
       let equitiesDivHeight = equitiesDiv.clientHeight || equitiesDiv.offsetHeight
       let clients = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
       let divTop = equitiesDiv.getBoundingClientRect().top
-      // console.log(clients)
+      console.log(equitiesDivHeight)
       // console.log(divTop)
       // console.log(equitiesDivHeight)
       if (clients - divTop - equitiesDivHeight > -50) {

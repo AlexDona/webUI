@@ -2,9 +2,7 @@
   <div
     class="set-email personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{
-      height: windowHeight+'px'
-    }"
+    :style="{ 'min-height': windowHeight - footerHeight - 50 + 'px'}"
   >
     <div class="set-email-main margin25">
       <header class="set-email-header personal-height60 line-height60 line-height70 login-password-header margin25">
@@ -374,7 +372,8 @@ export default {
       userInfoDetail: state => state.user.loginStep1Info.userInfo,
       activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      footerHeight: state => state.common.footerHeight
     }),
     windowHeight () {
       return window.innerHeight

@@ -35,8 +35,7 @@ let mixin = {
   },
   methods: {
     ...mapMutations({
-      '$UPDATE_PAY_PASSWORD_DIALOG_M_X': 'UPDATE_PAY_PASSWORD_DIALOG_M',
-      '$SET_ACTIVE_LINK_NAME_M_X': 'SET_ACTIVE_LINK_NAME_M'
+      '$UPDATE_PAY_PASSWORD_DIALOG_M_X': 'UPDATE_PAY_PASSWORD_DIALOG_M'
     }),
     $goToPage (routerName, param) {
       console.log(routerName)
@@ -173,6 +172,9 @@ let mixin = {
       $navigators_S_X: state => state.common.navigators_S,
       $activeLinkIndex_S_X: state => state.common.activeLinkIndex_S
     }),
+    $isShowAppEntry_X () {
+      return this.androidDownloadSwitch && this.iosDownloadSwitch
+    },
     $activeBuyName_X () {
       return (this.$middleTopData_S_X.area || '').toUpperCase()
     },

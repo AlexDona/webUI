@@ -29,10 +29,7 @@ export default {
       onlineText: this.$t('M.common_onlineText')
     }
   },
-  created () {
-    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
-    // this.doAdd()
-  },
+  // created () {},
   methods: {
     doAdd: _.debounce(async function () {
       const data = await getdynamicCsConfigAJAX()

@@ -1,8 +1,7 @@
 /* eslint-disable */
-import storeCreator from '../../src/vuex'
+import store from '../../src/vuex'
 import {IsPC} from '../../src/utils'
 
-const store = storeCreator()
 getSize(document, window)
 
 

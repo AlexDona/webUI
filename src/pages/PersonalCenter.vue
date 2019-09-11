@@ -2,7 +2,7 @@
   <div
     class="personal-center personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{ 'min-height': windowHeight - footerHeight - 55 + 'px'}"
+    :style="{ 'min-height': windowHeight - footerHeight - 50 + 'px'}"
   >
     <div class="personal-center-main">
       <div class="personal-center-content clearfix">
@@ -315,7 +315,6 @@ export default {
     }
   },
   async created () {
-    this.$SET_ACTIVE_LINK_NAME_M_X(-1)
     if (this.userCenterActiveName === 'assets' && this.$getStore('active-target')) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(this.$getStore('active-target'))
     }

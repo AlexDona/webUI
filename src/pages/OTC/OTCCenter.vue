@@ -196,6 +196,83 @@
               </span>
             </div>
           </div>
+          <!--新增一键买币20190902-->
+          <div
+            class="one-key-buy-coin-box"
+            v-if="(language === 'zh_CN' || language === 'zh_TW') && OTCBuySellStyle === 'onlineBuy'"
+          >
+            <div class="buy-left">
+              <span class="left-one">
+                <IconFontCommon
+                  class="font-size40"
+                  iconName="icon-shandian"
+                />
+              </span>
+              <span
+                class="left-two font-size18 font-weight700"
+              >
+                闪电交易
+              </span>
+              <span class="left-three font-size12">
+                小额快速交易，单笔50000以下
+              </span>
+            </div>
+            <div class="buy-right">
+              <span class="right-one">
+                <input
+                  type="text"
+                  class="buy-input border-radius2 box-sizing error-border"
+                  :class="{errorBorder: isHaveOneTradeErrorTips}"
+                  maxlength="20"
+                  :placeholder="oneKeyBuyCheckedType === 'typeMoney'? '请输入购买金额': '请输入购买数量'"
+                  ref="inputValue"
+                  @keyup="changeInputValue('inputValue')"
+                  @input="changeInputValue('inputValue')"
+                  onpaste="return false"
+                >
+                <span class="unit-name font-size12">
+                  {{oneKeyBuyCheckedType === 'typeMoney'? 'CNY': selectedOTCAvailableCurrencyName}}
+                </span>
+                <!--错误提示-->
+                <div class="one-trade-err-info font-size12">
+                  {{oneTradeErrorTips}}
+                </div>
+              </span>
+              <span class="right-two">
+                <el-select
+                  class="one-key-buy-select"
+                  v-model="oneKeyBuyCheckedType"
+                  placeholder="请选择"
+                  no-data-text="暂无数据"
+                  @change="changeOneKeyBuyCoinType"
+                >
+                  <el-option
+                    v-for="(item, index) in oneKeyBuyTypeList"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                  >
+                  </el-option>
+                </el-select>
+              </span>
+              <span class="right-three">
+                <button
+                  class="one-key-buy-button border-radius2 cursor-pointer"
+                  @click="jumpOneTradePage"
+                >
+                  <span class="button-left">
+                    <IconFontCommon
+                      class="font-size30"
+                      iconName="icon-shandian"
+                    />
+                  </span>
+                  <span class="button-right font-size12">
+                    购买{{selectedOTCAvailableCurrencyName}}
+                  </span>
+                </button>
+              </span>
+            </div>
+          </div>
           <!--1.2.3商户列表表格部分-->
           <div class="otc-merchant-list">
             <!-- 表格信息 暂时无数据-->
@@ -784,7 +861,8 @@
 <script>
 import {
   amendPrecision,
-  formatSeconds
+  formatSeconds,
+  formatNumberInput
 } from '../../utils'
 import {
   getOTCAvailableCurrency,
@@ -792,7 +870,9 @@ import {
   getMerchantAvailableLegalTender,
   getCommonPutUpOrderStatus,
   // 增加国家-
-  getCurrencyCountrys
+  getCurrencyCountrys,
+  // OTC一键买币input框输入数据调取委单列表信息接口
+  getOTCOneTradeEntrustListInfoAjax
 } from '../../utils/api/OTC'
 import {
   getViewInfoAJAX
@@ -927,7 +1007,28 @@ export default {
         coinAvailableAmount: '',
         // 冻结
         coinFreezeAmount: ''
-      }
+      },
+      // 一键买币类型
+      oneKeyBuyTypeList: [
+        {
+          id: 'typeMoney',
+          name: '按金额购买'
+        },
+        {
+          id: 'typeAmount',
+          name: '按数量购买'
+        }
+      ],
+      // 一键买币选中类型
+      oneKeyBuyCheckedType: 'typeMoney', // typeAmount  typeMoney
+      // 一键买币错误提示信息状态
+      isHaveOneTradeErrorTips: false,
+      // 一键买币错误提示信息
+      oneTradeErrorTips: '',
+      // 一键买币最小数量或者金额
+      oneTradeMix: '',
+      // 一键买币最大数量或者金额
+      oneTradeMax: ''
     }
   },
   async created () {
@@ -972,6 +1073,7 @@ export default {
     ...mapMutations([
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
+      'CHANGE_OTC_AVAILABLE_CURRENCY_UNIT',
       'UPDATE_OTC_HOME_LIST_STATUS',
       // 改变全局锚点状态方法
       'CHANGE_OTC_ANCHOR_STATUS',
@@ -1256,6 +1358,7 @@ export default {
               this.IWantToBuySellArr.forEach((item, index) => {
                 if (jumpCoinId == item.coinId) {
                   this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(item.name)
+                  this.CHANGE_OTC_AVAILABLE_CURRENCY_UNIT(item.unit)
                   this.selectCurrencyNameStatus = index
                 }
               })
@@ -1264,6 +1367,7 @@ export default {
             // 个人中心跳转otc-结束
             this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
             this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
+            this.CHANGE_OTC_AVAILABLE_CURRENCY_UNIT(this.IWantToBuySellArr[0].unit)
           }
         }
       }
@@ -1321,10 +1425,15 @@ export default {
     }, 500),
     //  4.0 选中我想购买和出售币种名称
     selectCurrencyName (index) {
+      if (this.OTCBuySellStyle === 'onlineBuy') {
+        // 清空input框的值
+        this.clearInputValue()
+      }
       this.currentPage = 1
       this.selectCurrencyNameStatus = index
       this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name) // 币种名称
       this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId) // 币种id
+      this.CHANGE_OTC_AVAILABLE_CURRENCY_UNIT(this.IWantToBuySellArr[index].unit) // 币种小数位
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
       if (this.isLogin) {
         this.getViewDialogInfo() // 调取查看弹窗信息
@@ -1332,8 +1441,13 @@ export default {
     },
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
     async toggleBuyOrSellStyle (e) {
+      console.log(e)
       this.currentPage = 1
       this.OTCBuySellStyle = e
+      if (this.OTCBuySellStyle === 'onlineBuy') {
+        // 清空input框的值
+        this.clearInputValue()
+      }
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
     //  7.0 改变可用法币的币种id
@@ -1360,6 +1474,97 @@ export default {
       this.currentPage = 1
       this.checkedPayType = e
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
+    },
+    // 10.0 一键买币模块内容方法
+    // 切换一键买币选中项类型
+    changeOneKeyBuyCoinType (e) {
+      // 清空input框的值
+      this.clearInputValue()
+      // console.log(e) // typeAmount  typeMoney
+      this.oneKeyBuyCheckedType = e
+    },
+    // 改变一键买币input的值
+    async changeInputValue (ref) {
+      this[ref] = this.$refs[ref].value
+      let target = this.$refs[ref]
+      let pointLength
+      if (this.oneKeyBuyCheckedType === 'typeMoney') {
+        pointLength = 2
+      } else {
+        pointLength = this.selectedOTCAvailableCurrencyUnit
+      }
+      formatNumberInput(target, pointLength)
+      // this.getOneKeyBuyInfos()
+    },
+    getOneKeyBuyInfos: _.debounce(async function () {
+      let param = {
+        coinId: this.selectedOTCAvailableCurrencyCoinID // 币种id
+      }
+      if (this.oneKeyBuyCheckedType === 'typeMoney') {
+        param.buyAmount = this.$refs.inputValue.value // 买入金额
+      } else {
+        param.buyCount = this.$refs.inputValue.value // 买入数量
+      }
+      const data = await getOTCOneTradeEntrustListInfoAjax(param)
+      // console.log(data)
+      if (!data) return false
+      // 输入限制比较
+      this.oneTradeMix = getNestedData(data, 'data.min')
+      this.oneTradeMax = getNestedData(data, 'data.max')
+      console.log(this.oneTradeMix, this.oneTradeMax)
+      if (this.oneKeyBuyCheckedType === 'typeMoney') {
+        if (this.$refs.inputValue.value - this.oneTradeMix < 0) {
+          this.isHaveOneTradeErrorTips = true
+          this.oneTradeErrorTips = '最小下单金额为' + this.oneTradeMix + 'CNY'
+        } else if (this.$refs.inputValue.value - this.oneTradeMax > 0) {
+          this.isHaveOneTradeErrorTips = true
+          this.oneTradeErrorTips = '最大下单金额为' + this.oneTradeMax + 'CNY'
+        } else {
+          this.isHaveOneTradeErrorTips = false
+          this.oneTradeErrorTips = ''
+        }
+      } else {
+        if (this.$refs.inputValue.value - this.oneTradeMix < 0) {
+          this.isHaveOneTradeErrorTips = true
+          this.oneTradeErrorTips = '最小下单数量为' + this.oneTradeMix + this.selectedOTCAvailableCurrencyName
+        } else if (this.$refs.inputValue.value - this.oneTradeMax > 0) {
+          this.isHaveOneTradeErrorTips = true
+          this.oneTradeErrorTips = '最大下单数量为' + this.oneTradeMax + this.selectedOTCAvailableCurrencyName
+        } else {
+          this.isHaveOneTradeErrorTips = false
+          this.oneTradeErrorTips = ''
+        }
+      }
+    }, 500),
+    // 清空input框的值
+    clearInputValue () {
+      this.$refs.inputValue.value = ''
+      this.isHaveOneTradeErrorTips = false
+      this.oneTradeErrorTips = ''
+    },
+    // 跳转一键买币页面
+    jumpOneTradePage () {
+      // 非空验证
+      // if (!this.$refs.inputValue.value) {
+      //   this.isHaveOneTradeErrorTips = true
+      //   this.oneTradeErrorTips = '请输入下单金额或数量'
+      //   return false
+      // }
+      // 有错误提示不能跳转
+      // if (this.isHaveOneTradeErrorTips) {
+      //   return false
+      // }
+      this.$router.push({
+        path: `/${this.$routes_X.OTCOneTrade}`,
+        name: `${this.$routes_X.OTCOneTrade}`,
+        params: {
+          // 可用币种id
+          coinId: this.selectedOTCAvailableCurrencyCoinID,
+          // 一键买币交易类型：金额/数量
+          purchasingTypes: this.oneKeyBuyCheckedType,
+          buyInputValue: this.$refs.inputValue.value ? this.$refs.inputValue.value : ''
+        }
+      })
     }
   },
   // filter: {},
@@ -1372,6 +1577,7 @@ export default {
       selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
       // selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
+      selectedOTCAvailableCurrencyUnit: state => state.OTC.selectedOTCAvailableCurrencyUnit,
       language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
@@ -1547,6 +1753,79 @@ export default {
                 left: 10px;
                 width: 14px;
                 height: 14px;
+              }
+            }
+          }
+        }
+
+        /* 一键买币 */
+        > .one-key-buy-coin-box {
+          display: flex;
+          flex: 2;
+          justify-content: space-between;
+          height: 40px;
+          padding: 0 30px;
+          margin: 30px 0 22px;
+          line-height: 40px;
+
+          > .buy-left {
+            display: flex;
+            flex: 1;
+
+            > .left-two {
+              margin: 0 15px 0 -15px;
+            }
+          }
+
+          > .buy-right {
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+            padding-left: 120px;
+
+            > .right-one {
+              position: relative;
+
+              > .buy-input {
+                box-sizing: border-box;
+                width: 260px;
+                height: 34px;
+                padding: 0 50px 0 10px;
+              }
+
+              .errorBorder {
+                border: 1px solid $upColor;
+              }
+
+              > .unit-name {
+                position: absolute;
+                top: 50%;
+                right: 16px;
+                transform: translateY(-50%);
+              }
+
+              > .one-trade-err-info {
+                position: absolute;
+                bottom: -30px;
+                left: 0;
+                width: 430px;
+              }
+            }
+
+            > .right-three {
+              > .one-key-buy-button {
+                width: 110px;
+                height: 34px;
+
+                > .button-left {
+                  .icon {
+                    height: 34px;
+                  }
+                }
+
+                > .button-right {
+                  margin-left: -18px;
+                }
               }
             }
           }
@@ -1851,6 +2130,27 @@ export default {
       }
     }
 
+    /* 一键买币模块 */
+    .one-key-buy-coin-box {
+      .buy-right {
+        .right-two {
+          .one-key-buy-select {
+            .el-input__inner {
+              width: 150px;
+              height: 34px;
+              border: none;
+              border-radius: 2px;
+              font-size: 12px;
+            }
+
+            .el-input__icon {
+              line-height: 40px;
+            }
+          }
+        }
+      }
+    }
+
     .otc-merchant-list {
       .el-table {
         .el-table__header {
@@ -2105,6 +2405,8 @@ export default {
           box-shadow: 0 3px 4px 0 rgba(25, 30, 40, 1);
 
           > .otc-filtrate-publish {
+            box-shadow: 0 3px 4px 0 #191e28;
+
             > .otc-filtrate-box {
               > .otc-filtrate-style {
                 color: #838ea6;
@@ -2132,6 +2434,56 @@ export default {
               > .country-style {
                 > .country-style-icon {
                   color: $mainColor;
+                }
+              }
+            }
+          }
+
+          /* 一键买币 */
+          > .one-key-buy-coin-box {
+            color: $dialogColor9;
+
+            > .buy-left {
+              > .left-one {
+                .icon {
+                  color: $mainColor;
+                }
+              }
+
+              > .left-two {
+                color: $mainColor;
+              }
+            }
+
+            > .buy-right {
+              > .right-one {
+                > .buy-input {
+                  color: $mainColorOfWhite;
+                  background-color: #2c3048;
+                }
+
+                .errorBorder {
+                  border: 1px solid $upColor;
+                }
+
+                > .one-trade-err-info {
+                  color: $upColor;
+                }
+              }
+
+              > .right-three {
+                > .one-key-buy-button {
+                  background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+
+                  > .button-left {
+                    .icon {
+                      color: $mainColorOfWhite;
+                    }
+                  }
+
+                  > .button-right {
+                    color: $mainColorOfWhite;
+                  }
                 }
               }
             }
@@ -2244,6 +2596,19 @@ export default {
     }
 
     /deep/ {
+      /* 一键买币模块 */
+      .one-key-buy-coin-box {
+        .buy-right {
+          .right-two {
+            .one-key-buy-select {
+              .el-input__inner {
+                background-color: #2c3048;
+              }
+            }
+          }
+        }
+      }
+
       /* 发布订单按钮 */
       .person-info-box {
         .el-button {
@@ -2432,6 +2797,8 @@ export default {
           box-shadow: 0 0 6px $boxShadowColorOfDay;
 
           > .otc-filtrate-publish {
+            box-shadow: 0 3px 4px 0 #f2f4f5;
+
             > .otc-filtrate-box {
               > .otc-filtrate-style {
                 color: #838ea6;
@@ -2459,6 +2826,56 @@ export default {
               > .country-style {
                 > .country-style-icon {
                   color: $mainColor;
+                }
+              }
+            }
+          }
+
+          /* 一键买币 */
+          > .one-key-buy-coin-box {
+            color: $dayMainTitleColor;
+
+            > .buy-left {
+              > .left-one {
+                .icon {
+                  color: $mainColor;
+                }
+              }
+
+              > .left-two {
+                color: $mainColor;
+              }
+            }
+
+            > .buy-right {
+              > .right-one {
+                > .buy-input {
+                  color: $dialogColor9;
+                  background-color: #e8edf4;
+                }
+
+                .errorBorder {
+                  border: 1px solid $upColor;
+                }
+
+                > .one-trade-err-info {
+                  color: $upColor;
+                }
+              }
+
+              > .right-three {
+                > .one-key-buy-button {
+                  background: linear-gradient(-88deg, rgba(52, 137, 219, 1) 0%, rgba(101, 178, 241, 1) 100%);
+
+                  > .button-left {
+                    .icon {
+                      color: $mainColorOfWhite;
+                    }
+                  }
+
+                  > .button-right {
+                    color: $mainColorOfWhite;
+                  }
                 }
               }
             }
@@ -2565,6 +2982,19 @@ export default {
     }
 
     /deep/ {
+      /* 一键买币模块 */
+      .one-key-buy-coin-box {
+        .buy-right {
+          .right-two {
+            .one-key-buy-select {
+              .el-input__inner {
+                background-color: #e8edf4;
+              }
+            }
+          }
+        }
+      }
+
       .warning {
         .el-dialog__wrapper {
           background-color: rgba(204, 204, 204, .5);

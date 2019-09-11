@@ -2,7 +2,7 @@
   <div
     class="login-password-box personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{'height':windowHeight+'px'}"
+    :style="{ 'min-height': windowHeight - footerHeight - 50 + 'px'}"
   >
     <div class="login-password-main margin25">
       <header class="login-password-header personal-height60 line-height60 line-height70 margin25">
@@ -247,7 +247,8 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo
+      userInfo: state => state.personal.userInfo,
+      footerHeight: state => state.common.footerHeight
     }),
     windowHeight () {
       return window.innerHeight

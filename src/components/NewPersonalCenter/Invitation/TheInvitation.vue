@@ -80,7 +80,7 @@ export default {
   @import '../../../assets/CSS/index.styl'
   .the-invitation
     margin-bottom 56px
-    min-height 1000px
+    min-height 760px
     >.header
       height 40px
       line-height 40px

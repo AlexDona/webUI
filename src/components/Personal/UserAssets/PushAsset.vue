@@ -395,12 +395,12 @@
         <div class="paging">
           <!--分页-->
           <el-pagination
-                  background
-                  v-show="pushRecordList.length"
-                  layout="prev, pager, next"
-                  :current-page="currentPageForMyEntrust"
-                  :page-count="totalPageForMyEntrust"
-                  @current-change="changeCurrentPage"
+            background
+            v-show="pushRecordList.length"
+            layout="prev, pager, next"
+            :current-page="currentPageForMyEntrust"
+            :page-count="totalPageForMyEntrust"
+            @current-change="changeCurrentPage"
           >
           </el-pagination>
         </div>
@@ -476,8 +476,8 @@ export default {
       totalPageForMyEntrust: 1, // 当前总页数
       // pageSize: 10, // 每页显示条数
       currencyValueStatus: true, // 币种列表状态
-      // 最新修改 价格小数位、数量小数位 保留 10位
-      pointLength: 10,
+      // 最新修改 价格小数位、数量小数位 保留 8 位(20190911)
+      pointLength: 8,
       payPasswordErrorMsg: '', // 错误提示
       isNeedPayPassword: false,
       // 付款类型： 'pay': 付款 'push': push
@@ -557,8 +557,7 @@ export default {
       } else if (this.$refs.count.value !== '' || this.$refs.price.value !== '') {
         this.sumState = true
 
-        this.grossAmount = (this.$refs.count.value * this.$refs.price.value).toFixed(10) - 0
-        this.grossAmount = (this.$refs.price.value * this.$refs.count.value).toFixed(10) - 0
+        this.grossAmount = (this.$refs.price.value * this.$refs.count.value).toFixed(this.pointLength) - 0
       }
     },
     // 2.2 检测输入格式
@@ -904,7 +903,7 @@ export default {
         }
 
         > .award-record-content {
-          min-height: 174px;
+          min-height: 130px;
 
           .form-input-common {
             width: 270px;
@@ -1102,6 +1101,12 @@ export default {
 
       .gutter {
         display: block !important;
+      }
+
+      .el-table {
+        .el-table__empty-block {
+          min-height: 125px;
+        }
       }
     }
 

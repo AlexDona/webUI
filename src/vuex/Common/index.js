@@ -121,8 +121,12 @@ const state = {
   footerHeight: 0,
   // 当前激活链接 索引
   activeLinkIndex_S: '',
+  // 当前选中链接
+  activeLink_S: {},
   // 导航
-  navigators_S: []
+  navigators_S: [],
+  // 内部导航
+  innerNavigators_S: []
 }
 
 export default {

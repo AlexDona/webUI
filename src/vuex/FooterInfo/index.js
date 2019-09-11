@@ -28,7 +28,9 @@ const state = {
   downloadUrl: {
     android: '',
     ios: '',
-    iosIpa: ''
+    iosIpa: '',
+    androidDownloadSwitch: true,
+    iosDownloadSwitch: true
   }
 }
 

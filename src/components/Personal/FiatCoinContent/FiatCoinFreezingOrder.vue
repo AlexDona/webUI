@@ -295,8 +295,10 @@ export default {
 
     > .freezing-order-content {
       position: relative;
+      box-sizing: border-box;
       min-height: 584px;
       padding: 0 10px 35px;
+      margin-bottom: 20px;
 
       > .freezing-table-head {
         display: flex;

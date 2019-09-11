@@ -4,7 +4,10 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 2.0 广告管理 -->
-    <div class="otc-AD-manage-content" :style="{'min-height':(height-305)+'px'}">
+    <div
+      class="otc-AD-manage-content"
+      :style="{ 'min-height': windowHeight - footerHeight - 50 - 60 + 'px'}"
+    >
       <!-- 2.1 大标题广告管理 -->
       <div class="AD-title font-size18 padding-l15 font-weight700">
         <!-- 广告管理 -->
@@ -269,6 +272,7 @@
                 <template slot-scope="s">
                   <!-- 下架 -->
                   <el-button
+                    class="font-size12"
                     type="text"
                     v-if="s.row.status === 'ENTRUSTED'"
                     @click="updateADUnShelve(s.row.id)"
@@ -278,6 +282,7 @@
                   <!-- 修改 -->
                   <!--20190222修改：后台增加字段币种是否可用来动态显示隐藏修改按钮s.row.coinStatus === 'ENABLE'-->
                   <el-button
+                    class="font-size12"
                     type="text"
                     v-if="s.row.status === 'CANCELED' && s.row.coinStatus === 'ENABLE'"
                     @click="modifyAD(s.row.id)"
@@ -608,7 +613,8 @@ export default {
     ...mapState({
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       language: state => state.common.language, // 当前选中语言
-      theme: state => state.common.theme // 主题颜色
+      theme: state => state.common.theme, // 主题颜色
+      footerHeight: state => state.common.footerHeight
     }),
     windowHeight () {
       return window.innerHeight

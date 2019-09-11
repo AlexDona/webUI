@@ -1,8 +1,8 @@
 import App from './App'
 import Vue from 'vue'
-import routerCreator from './router'
+import router from './router'
 import {getStore} from './utils'
-import storeCreator from './vuex'
+import store from './vuex'
 import '../static/js/rem'
 import './global'
 import Mixin from './mixins'
@@ -45,12 +45,12 @@ import {
   MessageBox,
   Message,
   Upload,
-  Tooltip
+  Tooltip,
+  Badge
 } from 'element-ui'
 import 'animate.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import '../static/css/common.css'
-import '../static/css/list/Common/HeaderCommon/HeaderCommon.css'
 import '../static/css/reset.css'
 
 import zhCN from 'element-ui/lib/locale/lang/zh-CN'
@@ -62,6 +62,7 @@ import vi from 'element-ui/lib/locale/lang/vi'
 
 Vue.use(Pagination)
   .use(Dialog)
+  .use(Badge)
   .use(Autocomplete)
   .use(Input)
   .use(Radio)
@@ -99,8 +100,6 @@ Vue.use(VueClipboard)
 Vue.component(CollapseTransition.name, CollapseTransition)
 Vue.component(Message)
 
-const store = storeCreator()
-const router = routerCreator()
 // 多语言
 const i18n = new VueI18n({
   locale: getStore('language') || store.state.common.defaultLanguage, // 语言标识

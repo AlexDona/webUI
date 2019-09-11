@@ -596,7 +596,7 @@ export default {
 
     /deep/ {
       .el-tabs__content {
-        min-height: 1500px;
+        min-height: 776px;
       }
 
       /* 点击切换时背景色和字体颜色 */
