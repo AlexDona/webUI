@@ -43,7 +43,7 @@
               <input
                 disabled
                 class="form-input-common-state border-radius2 padding-l15"
-                v-model="currencyBalance"
+                v-model="currencyBalanceComp"
               />
             </el-form-item>
             <!--买方UID-->
@@ -839,7 +839,16 @@ export default {
       userCenterActiveName: state => state.personal.userCenterActiveName,
       // 交易密码是否被锁定
       isLockedPayPassword: state => state.common.isLockedPayPassword
-    })
+    }),
+    currencyBalanceComp () {
+      const currencyBalance = this.currencyBalance
+      if (currencyBalance.indexOf('.') != -1) {
+        const pointStr = currencyBalance.split('.')[1]
+        return `${currencyBalance.split('.')[0]}.${pointStr}`
+      } else {
+        return currencyBalance
+      }
+    }
   },
   watch: {
     async userCenterActiveName (newVal) {
