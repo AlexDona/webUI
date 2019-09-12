@@ -652,11 +652,11 @@ export default {
         if (New == this.USDT_COIN_ID_S) {
           this.isShowLinkSelect = true
           // 控制地址列表有数据时的高度
-          this.$el.querySelector('.el-table').style.height = '268px'
+          this.$el.querySelector('.el-table').style.minHeight = '268px'
         } else if (this.isShowAddressLabel) {
-          this.$el.querySelector('.el-table').style.height = '268px'
+          this.$el.querySelector('.el-table').style.minHeight = '268px'
         } else {
-          this.$el.querySelector('.el-table').style.height = '327px'
+          this.$el.querySelector('.el-table').style.minHeight = '327px'
         }
       }
     }
@@ -685,7 +685,7 @@ export default {
           padding-bottom: 20px;
 
           > .el-table {
-              height: 268px;
+              min-height: 268px;
           }
       }
 
