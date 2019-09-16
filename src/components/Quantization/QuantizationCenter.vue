@@ -148,10 +148,11 @@
 <script>
 import IconFont from '../Common/IconFontCommon'
 import RotationStrategy from '../Quantization/RotationStrategy'
-import {getStrategyList, getMyStrategyList, getBuyDialogList, buyStrategy} from '../../utils/api/quantizationCenter'
-import {getPushTotalByCoinId} from '../../utils/api/personal'
-import {mapState, mapMutations, mapActions} from 'vuex'
-import {routesVariable} from '../../router/routesVariable'
+import { getStrategyList, getMyStrategyList, getBuyDialogList, buyStrategy } from '../../utils/api/quantizationCenter'
+import { getPushTotalByCoinId } from '../../utils/api/personal'
+import { mapState, mapMutations, mapActions } from 'vuex'
+import { routesVariable } from '../../router/routesVariable'
+import { isNeedPayPasswordAjax } from '../../utils/commonFunc'
 export default {
   // !!! 注意 !!! 如需要相关声明周期或方法，请放开注释(默认处于注释状态)
   // name 为必填项
@@ -185,6 +186,7 @@ export default {
       }],
       myStrategyList: [],
       dialogBuyVisible: false,
+      isNeedPayPassword: true,
       form: {
       },
       // 弹出窗数据
@@ -310,10 +312,16 @@ export default {
       this.getBalance() // 获取余额
     },
     // 提交购买
-    handleSubmit () {
+    async handleSubmit () {
       this.dialogBuyVisible = !this.dialogBuyVisible
-      // 支付密码弹窗
-      this.UPDATE_PAY_PASSWORD_DIALOG_M(true)
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+      if (this.isNeedPayPassword) {
+        // 支付密码弹窗
+        this.UPDATE_PAY_PASSWORD_DIALOG_M(true)
+      } else {
+        this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
+        await this.buySubmit()
+      }
     },
     async buySubmit () {
       let data = await buyStrategy({
