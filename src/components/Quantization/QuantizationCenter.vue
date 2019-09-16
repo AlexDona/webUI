@@ -74,6 +74,27 @@
                         .price-info 包含策略使用费,平台使用费,托管者费用
                         button.buy(@click="handleDialog" :data-formData="JSON.stringify(list)") 立即购买
                 el-tab-pane(label="我的策略" name="second")
+                  div.my-strategy
+                    el-table(:data="myStrategyList"
+                      :empty-text="$t('M.comm_no_data')"
+                      style="width: 100%")
+                      el-table-column(:label="'名称'")
+                        template(slot-scope = "s")
+                          div {{s.row.strategyName}}
+                      el-table-column(:label="'到期时间'")
+                        template(slot-scope = "s")
+                          div {{s.row.endTime}}
+                      el-table-column(:label="'剩余'")
+                        template(slot-scope = "s")
+                          div {{s.row.remainDay + '天'}}
+                      el-table-column(:label="'状态'")
+                        template(slot-scope = "s")
+                          div(:class="{'active-text': !s.row.isValid}") {{s.row.isValid ? '已过期' : '使用中'}}
+                      el-table-column(:label="'操作'")
+                        template(slot-scope = "s")
+                          div
+                            button.check(@click="handleRotationStrategy(s.row)") 查看
+                            button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") 续费
               span.icon-change(@click = "handleChangeLayout")
                   IconFont(:iconName= "icons" v-show="iconsVisible")
       el-dialog(:title="'开通'" :visible.sync="dialogBuyVisible" class="dialog-buy")
@@ -100,6 +121,29 @@
         div(slot="footer" class="dialog-footer")
           el-button(type="primary" @click="handleSubmit") 确认
       PayPassDialog(@next="buySubmit")
+      // 协议
+      el-dialog.dialog-risk(:title="'量化市场风险提示'"
+        :visible.sync="isRememberStatus"
+        :close-on-click-modal="false"
+        :show-close="false")
+        .prompt-risk
+          p 1.量化市场就各项服务、安全、无误、及不中断不负担任何明示或默示的保证责任。您同意承担使用本网站该项服务的所有风险及因该风险可能造成的任何损害。
+          p 2.任何在本网站出现的信息包括但不限于评论、预测、图表、指标、理论、直接的或暗示的指示均只作为参考，您须对任何自主决定的行为负责。
+          p 3.量化提供或展示的有关策略，只保证其历史信号及历史产生的收益真实有效，但未来收益情况，不能按照历史简单统计，所有直接或间接使用策略用于真实交易的用户需要谨慎选择，合理运用。量化市场不承担任何因策略产生的资金损失及相关责任，凡使用策略的用户，量化市场依据相关法律法规及平台服务协议，默认用户已同意此条款。
+          p 4.量化市场对于您所使用的各项服务、或无法使用各项服务所导致的任何直接、间接、衍生或特别损害，不负任何赔偿责任。
+          p 5.量化市场不对因本网站资料全部或部分内容产生的或因依赖该资料而引致的任何损失承担任何责任。
+          p 6.您了解并同意，本网站可能因平台、其他合作方或相关电信部门的互联网软硬件设备故障或失灵、或人为操作疏忽而全部或部分中断、延迟、遗漏、误导或造成资料传输或储存上的错误、或遭第三人侵入系统篡改或伪造变造资料等，本网站不承担任何责任。
+          p 7.凡通过本网站与其他网站的链接，而获得其所提供的网上资料及内容，您应该自己进行辨别及判断，并应当由该等网站对其提供内容承担相应责任，本网站对此不承担任何责任。本网站提供超级链接至其它网站，并不视为同意、推荐、认可、保证或推介任何第三方或在其网站所提供的服务、产品，亦不可视为与该等第三方及网站有任何形式的合作。
+          p 8.量化市场所载商标、徽号和服务标志及其他任何数据的所有版权、专利权、知识产权及其它产权均属本网站或其关联公司所有。未经本网站事前以书面同意，不得将此等材料的任何部分修改、翻版、储存于检索系统、传送、复制、分发或以任何其它方式作商业或公共用途。
+          p 9.量化市场所提供的信息、软件、产品、模型、策略、搜索结果、接往第三方网站的超级链接及第三方所提供的商品、服务、权利等一切内容，其完整性、正确性、适时性、妥当性、及时性、信赖性、和目的性、有用性、商品性、知识产权的不受侵害性及第三方债务的履行及有无瑕疵等方面，不做任何保证，不负任何相关担保责任。
+          p 10.量化市场所有策略均属知识产权类产品，一经售出，概不退换。任何因策略产生的纠纷，请及时咨询官方客服协商解决。
+          p 11.本网站保留随时变更、中断或终止部分或全部量化市场服务的权利。网站有权随时修改量化市场包含但不限于产品、策略、支付条件及政策等，并通过本网站展示，而无需另行单独通知用户。
+          p 12. 本风险揭示书的揭示事项仅为列举性质，未能详尽列明用户购买及使用量化服务所面临的全部风险和可能导致损失的所有因素。用户在购买及使用量化服务前，应认真阅读并理解相关业务规则、服务协议及本风险揭示书的全部内容。接受量化服务的用户，自行承担投资及操作风险，平台不以任何方式向用户作出不受损失或者取得最低收益的承诺。
+        .check-box
+          // 同意协议
+          el-checkbox(v-model="isChecked") 我已阅读并知晓风险
+        div(slot="footer" class="dialog-footer")
+          el-button(type="primary" @click="handleConfirmPrompt") 确认
 </template>
 <script>
 import IconFont from '../Common/IconFontCommon'
@@ -119,7 +163,12 @@ export default {
   },
   // props,
   data () {
+    const status = !sessionStorage.getItem('REMEMBER_STATUS')
+    const isRememberStatus = status || !sessionStorage.getItem('REMEMBER_STATUS')
     return {
+      dialogRiskPrompt: true,
+      isChecked: false,
+      isRememberStatus: isRememberStatus,
       activeName: '',
       change: false,
       // 默认图标
@@ -129,7 +178,11 @@ export default {
       currentNum: 1,
       pageSize: 10,
       userId: '',
-      strategyList: [],
+      strategyList: [{
+        strategyName: '--',
+        oneMonthPrice: '--',
+        coin: '--'
+      }],
       myStrategyList: [],
       dialogBuyVisible: false,
       form: {
@@ -163,11 +216,19 @@ export default {
       'UPDATE_PAY_PASSWORD_DIALOG_M',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'UPDATE_PAY_PASSWORD_M',
-      'SET_FORM_STRATEGY_DATA'
+      'SET_FORM_STRATEGY_DATA',
+      'UPDATE_MY_STRATERGY_DATA'
     ]),
     ...mapActions([
+      'MY_STRATEGY_ACTION',
       'SEARCH_STRATEGY_ACTION'
     ]),
+    handleConfirmPrompt () {
+      if (this.isChecked) {
+        this.isRememberStatus = false
+        sessionStorage.setItem('REMEMBER_STATUS', 'false')
+      }
+    },
     handleClick (tab, event) {
       console.log(tab, event)
       if (tab.index) {
@@ -189,7 +250,7 @@ export default {
       this.form = JSON.parse(e.target.dataset.formdata)
       this.getBuyDialogList()
     },
-    // 跳转个人中心方法
+    // 跳转个人中心充币方法
     async jumpToPersonalCenter (target, tradType, type) {
       const buyCoinId = +this.form.coinId
       if (tradType === 'buy') {
@@ -220,9 +281,9 @@ export default {
     },
     // 策略列表分页
     async getMyStrategyList () {
-      let data = await getMyStrategyList({
+      const data = await getMyStrategyList({
         pageSize: this.pageSize, // 每页显示条数
-        pageNumber: this.currentNum, // 当前页码
+        pageNumber: this.pageNumber, // 当前页码
         userId: this.userInfo.userId
       })
       if (!data) return false
@@ -266,6 +327,7 @@ export default {
       this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
     },
     async searchStrategy (formData) {
+      // 查看策略
       await this.SEARCH_STRATEGY_ACTION(formData)
       /* let data = await searchStrategy({
         strategyUserId: formData.id
@@ -279,6 +341,8 @@ export default {
       })
     },
     handleRotationStrategy (formData) {
+      // 查看策略更新当前策略数据缓存
+      this.UPDATE_MY_STRATERGY_DATA(formData)
       this.searchStrategy(formData)
     }
   },
@@ -460,7 +524,7 @@ export default {
                   height 278px
     /deep/
       // 弹窗样式
-      .el-dialog__wrapper
+      .el-dialog__wrapper.dialog-buy
         background-color rgba(0, 0, 0, .5)
         .el-dialog
           margin-top 25vh !important
@@ -541,6 +605,29 @@ export default {
               width 100%
               height 34px
               border none
+      // 协议弹窗
+      .el-dialog__wrapper.dialog-risk
+        background-color rgba(0, 0, 0, .5)
+        .el-dialog
+          width 903px
+          .el-dialog__header
+            text-align center
+          .el-dialog__body
+            .prompt-risk
+              p
+                font-size 12px
+                line-height 24px
+            .check-box
+              text-align center
+              margin-top 21px
+          .el-dialog__footer
+            padding 0 48px 20px
+            text-align center
+            button
+              width 100px
+              height 30px
+              line-height 8px
+              border none
     &.night
       .inner-box
         .content
@@ -572,7 +659,11 @@ export default {
             border 1px solid #338ff5
             &:hover
               box-shadow 0 0 1px 1px #338ff5
-        .el-dialog__wrapper
+        .el-dialog__footer
+          background #28334a
+          button
+            background linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+        .el-dialog__wrapper.dialog-buy
           .el-dialog
             background #28334a
             .el-dialog__header
@@ -600,10 +691,23 @@ export default {
                     color #fff
                 .origin-price
                   color #cfd5df !important
-            .el-dialog__footer
-              background #28334a
-              button
-                background linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+        .el-dialog__wrapper.dialog-risk
+          .el-dialog
+            background #28334a
+            .el-dialog__header
+              background-color #20293c
+              .el-dialog__title
+                color #cfd5df
+            .el-dialog__body
+              p
+                color #9da5b3
+              .el-checkbox__input
+                .el-checkbox__inner
+                  background transparent
+              .el-checkbox__label
+                color #9da5b3
+              .is-checked+.el-checkbox__label
+                color S_main_color
         .el-table
           th.is-leaf
             padding 32px 0 23px 0
