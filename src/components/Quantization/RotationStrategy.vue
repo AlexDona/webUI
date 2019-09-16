@@ -468,7 +468,7 @@
                       td.body-cell {{item.sellFee}}
                       td.body-cell {{item.historyYield}}
               el-collapse-transition
-                el-form.form3(v-show="isEmpty")
+                el-form.form3(v-show="chartVisible")
                   el-form-item(label="浮动盈亏" label-width="80px")
                     .floating-panel
                       div(v-for="(item, index) in savedCoinList")
@@ -484,6 +484,7 @@
                       span.des 当前持仓均价：
                         span.des-details 1.253FBT
                   div(id="echarts-content")
+
 </template>
 <script>
 import echarts from 'echarts/lib/echarts'
@@ -509,7 +510,7 @@ export default {
     const strategyData = JSON.parse(sessionStorage.getItem('MY_STRATEGY_DATA'))
     const searchData = JSON.parse(sessionStorage.getItem('SEARCH_STRATEGY_DATA'))
     return {
-      coinList: [],
+      coinList: [], // 交易对列表
       changedCoinList: [],
       startTime: [], // 开始时间
       strategyData: strategyData,
@@ -553,6 +554,7 @@ export default {
       },
       paramsFormVisible: true,
       savedCoinList: [], // 已保存的交易对
+      chartVisible: false,
       totalProfit: '--',
       chartData: [], // 图表数据
       chartOptions: {
@@ -712,18 +714,33 @@ export default {
       }
     },
     handleAddParams () {
-      let contentObj = {
-        visibleStatus: false,
-        paramsForm: {
-          params1: '',
-          params2: '',
-          params3: '',
-          params4: '',
-          params5: '',
-          params6: '',
-          params7: '',
-          params8: '',
-          value: ''
+      let contentObj = {}
+      if (this.searchData.strategyType === 'RESEAU_STRATEGY') { // 网格策略
+        contentObj = {
+          visibleStatus: false,
+          paramsForm: {
+            params1: '',
+            params2: '',
+            params3: '',
+            params4: '',
+            params5: '',
+            params6: '',
+            params7: '',
+            params8: '',
+            value: ''
+          }
+        }
+      } else {
+        contentObj = {
+          visibleStatus: false,
+          paramsForm: {
+            params1: '',
+            params2: '',
+            params3: '',
+            params4: '',
+            params5: '',
+            value: ''
+          }
         }
       }
       this.paramsContent.unshift(contentObj)
@@ -787,7 +804,7 @@ export default {
                 value: item.symbol.replace('_', '/')
               }
             })
-          } else { // 网格策略
+          } else if (this.searchData.strategyType === 'RESEAU_STRATEGY') { // 网格策略
             newParamsContent.push({
               visibleStatus: false,
               paramsForm: {
@@ -802,6 +819,18 @@ export default {
                 value: item.symbol.replace('_', '/')
               }
             })
+          } else { // 定投策略
+            newParamsContent.push({
+              visibleStatus: false,
+              paramsForm: {
+                params1: item.playAmount,
+                params2: item.intervalTradeTime,
+                params3: item.libParams.SlidePrice,
+                params4: item.libParams.MaxAmount,
+                params5: item.libParams.MinStock,
+                value: item.symbol.replace('_', '/')
+              }
+            })
           }
           this.savedCoinList.push(item.symbol.replace('_', '/')) // 获取已保存的交易对
         })
@@ -812,8 +841,10 @@ export default {
         this.$el.querySelector('.el-date-editor--datetimerange').style.cssText = 'width: 308px;transition: width .6s ease'
         // 默认筛选已保存的交易对
         this.filterCoinList()
-        await this.profitAndLoss()// 浮动盈亏
+        await this.profitAndLoss(this.savedCoinList[0])// 浮动盈亏
+        this.chartVisible = true
       } else {
+        this.chartVisible = false
         if (this.searchData.strategyType === 'TREND_STRATEGY') { // 趋势策略
           this.paramsContent = [{
             visibleStatus: false,
@@ -826,7 +857,7 @@ export default {
               value: ''
             }
           }]
-        } else {
+        } else if (this.searchData.strategyType === 'RESEAU_STRATEGY') {
           this.paramsContent = [{ // 网格策略
             visibleStatus: false,
             paramsForm: {
@@ -841,12 +872,24 @@ export default {
               value: ''
             }
           }]
+        } else {
+          this.paramsContent = [{ // 定投策略
+            visibleStatus: false,
+            paramsForm: {
+              params1: '',
+              params2: '',
+              params3: '',
+              params4: '',
+              params5: '',
+              value: ''
+            }
+          }]
         }
         this.changedCoinList = this.coinList
         this.isSaved = false
       }
     },
-    async updateStrategyDetails (coinInfo) {
+    async updateStrategyDetails (coinInfo, unSavedCoinList) {
       // console.log(typeof this.strategyData.id)
       let formData = new FormData()
       formData.append('strategySettingId', this.searchData.id)
@@ -855,6 +898,7 @@ export default {
       formData.append('endTime', this.startTime[1])
       const data = await updateStrategy(formData)
       if (!data) return false
+      this.savedCoinList = unSavedCoinList // 保存成功实时更新已保存交易对
       this.isSaved = true // 是否保存过策略
       // console.log(data)
     },
@@ -892,41 +936,70 @@ export default {
         tradeName: coinPair || this.savedCoinList[0]
       })
       if (!data) {
-        this.chartData = []
-      } else {
+        return false
+      } else if (data.length) {
         const totalProfitData = _.get(data, 'data').slice(-1)[0]
         this.totalProfit = totalProfitData.historyYield + totalProfitData.tradeName // 累计盈亏
         this.chartData = _.get(data, 'data')
+        this.tendData()
+      } else {
+        this.renderChart()
       }
-      this.tendData()
     },
     handleStorage: _.throttle(function () {
       let symbolsArray = []
+      let unSavedCoinList = []
       this.paramsContent.map(item => {
         for (let key in item.paramsForm) {
           if (!item.paramsForm[key]) { // 判断参数配置是否为空
             this.isEmpty = true
           }
         }
-        symbolsArray.push({
-          symbol: item.paramsForm.value.replace('/', '_'),
-          direction: item.paramsForm.params1,
-          gridNum: item.paramsForm.params2,
-          gridPointAmount: item.paramsForm.params3,
-          gridPointDistance: item.paramsForm.params4,
-          gridCoverDistance: item.paramsForm.params5,
-          libParams: {
-            SlidePrice: item.paramsForm.params6,
-            MaxAmount: item.paramsForm.params7,
-            MinStock: item.paramsForm.params8
-          }
-        })
+        if (this.searchData.strategyType === 'TREND_STRATEGY') { // 趋势策略
+          symbolsArray.push({
+            symbol: item.paramsForm.value.replace('/', '_'),
+            balanceRatio: item.paramsForm.params1,
+            addRatio: item.paramsForm.params2,
+            libParams: {
+              SlidePrice: item.paramsForm.params3,
+              MaxAmount: item.paramsForm.params4,
+              MinStock: item.paramsForm.params5
+            }
+          })
+        } else if (this.searchData.strategyType === 'RESEAU_STRATEGY') { // 网格策略
+          symbolsArray.push({
+            symbol: item.paramsForm.value.replace('/', '_'),
+            direction: item.paramsForm.params1,
+            gridNum: item.paramsForm.params2,
+            gridPointAmount: item.paramsForm.params3,
+            gridPointDistance: item.paramsForm.params4,
+            gridCoverDistance: item.paramsForm.params5,
+            libParams: {
+              SlidePrice: item.paramsForm.params6,
+              MaxAmount: item.paramsForm.params7,
+              MinStock: item.paramsForm.params8
+            }
+          })
+        } else { // 定投策略
+          symbolsArray.push({
+            symbol: item.paramsForm.value.replace('/', '_'),
+            playAmount: item.paramsForm.params1,
+            intervalTradeTime: item.paramsForm.params2,
+            libParams: {
+              SlidePrice: item.paramsForm.params3,
+              MaxAmount: item.paramsForm.params4,
+              MinStock: item.paramsForm.params5
+            }
+          })
+        }
+        unSavedCoinList.push(item.paramsForm.value.replace('_', '/'))// 获取已添加的交易对
       })
       if (!this.isEmpty && this.startTime.length === 2) {
         this.coinInfo = {
           symbols: symbolsArray
         }
-        this.updateStrategyDetails(this.coinInfo)
+        this.updateStrategyDetails(this.coinInfo, unSavedCoinList)
+        this.profitAndLoss(this.savedCoinList[0])// 保存获取浮动盈亏
       } else {
         this.$message({
           showClose: true,
@@ -1186,7 +1259,7 @@ export default {
                     padding-right 30px
               #echarts-content
                 margin-top 38px
-                width 100%
+                width 1160px
                 height 355px
   /deep/
     .el-input__inner
