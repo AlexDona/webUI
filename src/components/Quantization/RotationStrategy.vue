@@ -380,13 +380,12 @@
                                 :open-delay="500"
                               )
                                 p.popover-color 交易时的滑价百分比，可设为0表示盘口挂单
-                                el-input(
+                                el-input.investment(
                                   @input="formatSymbolInput(item.paramsForm, 'params3')"
                                   @keyup="formatSymbolInput(item.paramsForm, 'params3')"
                                   placeholder="" v-model="item.paramsForm.params3"
                                   :disabled="isOpen"
                                   slot="reference")
-                                  template(slot="append") %
                             el-form-item(label="最大单笔下单量")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
@@ -424,9 +423,13 @@
                                   auto-complete="off"
                                   slot="reference")
               el-form-item.annotation
-                .annotation-content
+                .annotation-content(v-if=" searchData.strategyType === 'RESEAU_STRATEGY' ")
+                  p 注释：<br/>网格策略根据参数生成一个有若干节点的网络，网络分为向上网格和向下网格，向上网格即价格升高卖出一定数量的标的物，价格继续升高继续卖出标的物，在每个节点价格的基础上减去一定价差，作为节点的平仓触发价格。<br/><br/>向下网格相反，即价格下跌买入一定数量的标的物，价格继续下跌继续买入标的物，在每个节点价格的基础上加上一定的价差，作为节点的持仓触发价格。在超出网格后，对距离当前价格最远的节点仓位止损（平仓）。
+                .annotation-content(v-if=" searchData.strategyType === 'TREND_STRATEGY' ")
                   p 注释： <br/>加仓阈值： 设置 0.02 ，即为 2%  。<br/>计价币使用比例：  设置 0.2 ，即 该交易对 使用 计价币 时，只使用当前的 20%
                   p(style="padding-top:10px") 策略思路<br/>根据策略初始运行时价格最为基础价格，每上涨  加仓阈值 * 100 % ，使用当前账户可用于买的资产（当前账户计价币 * 计价币使用比例 * 100 %）中的加仓阈值 * 100 % 买入。然后更新基础价格为 当前价格。如果是下跌  加仓阈值 * 100%，用当前账户的资产中的  加仓阈值 * 100 %卖出。然后更新基础价格为 当前价格。对于策略看多，看空，可以根据账户配置的币和钱比例调整，平衡状态是 计价币价值 和 交易币价值为  1：1
+                .annotation-content(v-if=" searchData.strategyType === 'INVESTMENT_STRATEGY' ")
+                  p 注释： <br/>初始资产全为计价币，定时买入一定量的币数，等待时间间隔到达参数设置后的数值后，继续买入。
               .footer-btns
                 button.started(v-if="!isOpen" @click="handleActivition") 开启
                   IconFont.active(icon-name="icon-kaiqi")
@@ -899,7 +902,6 @@ export default {
     },
     handleStorage: _.throttle(function () {
       let symbolsArray = []
-      debugger
       this.paramsContent.map(item => {
         for (let key in item.paramsForm) {
           if (!item.paramsForm[key]) { // 判断参数配置是否为空
