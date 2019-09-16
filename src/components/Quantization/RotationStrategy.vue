@@ -464,8 +464,8 @@
                       td.body-cell {{item.buyFee}}
                       td.body-cell {{item.sellFee}}
                       td.body-cell {{item.historyYield}}
-              el-collapse-transition(v-show="")
-                el-form.form3
+              el-collapse-transition
+                el-form.form3(v-show="isEmpty")
                   el-form-item(label="浮动盈亏" label-width="80px")
                     .floating-panel
                       div(v-for="(item, index) in savedCoinList")
@@ -677,7 +677,6 @@ export default {
     await this.getCoinList()
     await this.checkStrategyDetails()
     await this.viewAccountInfo()
-    await this.profitAndLoss()
   },
   // mounted () {}
   // updated () {},
@@ -810,6 +809,7 @@ export default {
         this.$el.querySelector('.el-date-editor--datetimerange').style.cssText = 'width: 308px;transition: width .6s ease'
         // 默认筛选已保存的交易对
         this.filterCoinList()
+        await this.profitAndLoss()// 浮动盈亏
       } else {
         if (this.searchData.strategyType === 'TREND_STRATEGY') { // 趋势策略
           this.paramsContent = [{
@@ -933,7 +933,7 @@ export default {
         })
         this.isEmpty = true
       }
-      this.isEmpty = false
+      this.isEmpty = false// 重置参数判断
     }, 1000),
     handleChartView ($item) {
       this.profitAndLoss($item)
