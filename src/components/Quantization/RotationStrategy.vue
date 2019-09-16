@@ -494,7 +494,7 @@ import 'echarts/lib/component/dataZoom'
 import IconFont from '../Common/IconFontCommon'
 import { routesVariable } from '../../router/routesVariable'
 import { coinList, checkStrategy, updateStrategy, activeStrategy, viewAccountInfo, getProfitAndLoss } from '../../utils/api/quantizationCenter'
-import { formatSymbolNumber } from '../../utils'
+import { formatSymbolNumber, amendPrecision } from '../../utils'
 // import {mapState} from 'vuex'
 // import { getLanguagesAJAX } from '../utils/API/common'
 export default {
@@ -796,11 +796,11 @@ export default {
             newParamsContent.push({
               visibleStatus: false,
               paramsForm: {
-                params1: item.balanceRatio,
-                params2: item.addRatio,
-                params3: item.stockRatio,
-                params4: item.gridPointAmount,
-                params5: item.gridPointDistance,
+                params1: amendPrecision(item.balanceRatio, 100, '*'),
+                params2: amendPrecision(item.addRatio, 100, '*'),
+                params3: amendPrecision(item.libParams.SlidePrice, 100, '*'),
+                params4: item.libParams.MaxAmount,
+                params5: item.libParams.MinStock,
                 value: item.symbol.replace('_', '/')
               }
             })
@@ -900,6 +900,7 @@ export default {
       if (!data) return false
       this.savedCoinList = unSavedCoinList // 保存成功实时更新已保存交易对
       this.isSaved = true // 是否保存过策略
+      this.profitAndLoss(this.savedCoinList[0])// 保存获取浮动盈亏
       // console.log(data)
     },
     async activeStrategy (type) {
@@ -958,10 +959,10 @@ export default {
         if (this.searchData.strategyType === 'TREND_STRATEGY') { // 趋势策略
           symbolsArray.push({
             symbol: item.paramsForm.value.replace('/', '_'),
-            balanceRatio: item.paramsForm.params1,
-            addRatio: item.paramsForm.params2,
+            balanceRatio: amendPrecision(item.paramsForm.params1, 100, '/'),
+            addRatio: amendPrecision(item.paramsForm.params2, 100, '/'),
             libParams: {
-              SlidePrice: item.paramsForm.params3,
+              SlidePrice: amendPrecision(item.paramsForm.params3, 100, '/'),
               MaxAmount: item.paramsForm.params4,
               MinStock: item.paramsForm.params5
             }
@@ -999,7 +1000,6 @@ export default {
           symbols: symbolsArray
         }
         this.updateStrategyDetails(this.coinInfo, unSavedCoinList)
-        this.profitAndLoss(this.savedCoinList[0])// 保存获取浮动盈亏
       } else {
         this.$message({
           showClose: true,
