@@ -8,7 +8,7 @@
     .inner-box
       .banner-box
         .banner
-      .content.text-center
+      .content
         .content-box
           .navs
             // 我的策略
@@ -19,6 +19,7 @@
               // 时间
               el-form-item(:label="languages.rotation_form_time" label-width="80px")
                 el-date-picker(
+                  ref="timePicker"
                   value-format="yyyy-MM-dd HH:mm:ss"
                   v-model="startTime"
                   type="datetimerange"
@@ -30,6 +31,7 @@
                   :picker-options="pickerOptionsTime"
                   @change="handleWidth"
                   :clearable="false"
+                  :style="startTime.length === 2 ? timePickerStyle : null"
                 )
               // 网格策略
               // 参数
@@ -213,7 +215,7 @@
               // 趋势策略
               el-form-item.grid-strategy.trend-strategy(:label="languages.rotation_form_params" label-width="80px" v-if=" searchData.strategyType === 'TREND_STRATEGY' ")
                 .params-header
-                  button.addCurrency(@click="handleAddParams") {{languages.rotation_form_add_params}}
+                  button.addCurrency(@click.prevent="handleAddParams") {{languages.rotation_form_add_params}}
                 .params-content(v-for="(item, index) in paramsContent")
                   .params-content-header
                     .header-text {{item.paramsForm.value}}
@@ -331,7 +333,7 @@
               // 定投策略
               el-form-item.grid-strategy.trend-strategy.fixed-investment(:label="languages.rotation_form_params" label-width="80px" v-if=" searchData.strategyType === 'INVESTMENT_STRATEGY' ")
                 .params-header
-                  button.addCurrency(@click="handleAddParams") {{languages.rotation_form_add_params}}
+                  button.addCurrency(@click.prevent="handleAddParams") {{languages.rotation_form_add_params}}
                 .params-content(v-for="(item, index) in paramsContent")
                   .params-content-header
                     .header-text {{item.paramsForm.value}}
@@ -470,7 +472,7 @@
                   IconFont.active(icon-name="icon-baocun")
               transition(name="el-fade-in")
                 .bottom-hints(v-show="isOpen")
-                  p {{languages.rotation_bottom_hints1 + startTime[0].replace(/-/g,'/') + languages.rotation_bottom_hints2 + startTime[1].replace(/-/g,'/') + languages.rotation_bottom_hints3}}
+                  p {{languages.rotation_bottom_hints1 + startTimes + languages.rotation_bottom_hints2 + endTimes + languages.rotation_bottom_hints3}}
               el-form.form2(v-model="accountInfo")
                 // 账户信息
                 el-form-item(:label="languages.rotation_form_accountInfo" label-width="80px")
@@ -542,14 +544,18 @@ export default {
   // components: {},
   // props,
   data () {
-    // const strategyData =
-    // const searchData =
+    const strategyData = JSON.parse(sessionStorage.getItem('MY_STRATEGY_DATA'))
+    const searchData = JSON.parse(sessionStorage.getItem('SEARCH_STRATEGY_DATA'))
     return {
+      timePickerStyle: {
+        width: '308px',
+        transition: 'width .6s ease'
+      },
       coinList: [], // 交易对列表
       changedCoinList: [],
       startTime: [], // 开始时间
-      strategyData: JSON.parse(sessionStorage.getItem('MY_STRATEGY_DATA')),
-      searchData: JSON.parse(sessionStorage.getItem('SEARCH_STRATEGY_DATA')),
+      strategyData: strategyData,
+      searchData: searchData,
       iconRoate: 'icon-roate',
       iconNormal: 'icon-normal',
       paramsContent: [{
@@ -718,7 +724,8 @@ export default {
     await this.checkStrategyDetails()
     await this.viewAccountInfo()
   },
-  // mounted () {}
+  // mounted () {
+  // },
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},
@@ -873,7 +880,6 @@ export default {
         this.isOpen = !!res.isOpen
         this.isSaved = true
         this.startTime = [res.startTime, res.overTime]
-        this.$el.querySelector('.el-date-editor--datetimerange').style.cssText = 'width: 308px;transition: width .6s ease'
         // 默认筛选已保存的交易对
         this.filterCoinList()
         await this.profitAndLoss(this.savedCoinList[0])// 浮动盈亏
@@ -1097,8 +1103,18 @@ export default {
     }
   },
   // filters: {},
-  // computed: {
-  // }
+  computed: {
+    startTimes: function () {
+      if (this.startTime.length === 2) {
+        return this.startTime[0].replace(/-/g, '/')
+      }
+    },
+    endTimes: function () {
+      if (this.startTime.length === 2) {
+        return this.startTime[1].replace(/-/g, '/')
+      }
+    }
+  },
   watch: {
     $isDayTheme_G_X () {
       this.renderChart()
