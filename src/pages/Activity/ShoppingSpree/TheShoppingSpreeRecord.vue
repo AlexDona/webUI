@@ -383,7 +383,6 @@ export default {
     }
   }
 
-  /* 日期选择器 */
   .the-shopping-spree-record-date-picker-popper {
     .el-date-range-picker__time-header {
       border-bottom: 1px solid #39424d;
@@ -405,9 +404,14 @@ export default {
     .el-time-panel__btn {
       color: #338FF5;
     }
+  }
 
-    .el-input__inner {
-      color: #fff;
+  /* 日期选择器 */
+  .night {
+    .the-shopping-spree-record-date-picker-popper {
+      .el-input__inner {
+        color: #fff;
+      }
     }
   }
 </style>
