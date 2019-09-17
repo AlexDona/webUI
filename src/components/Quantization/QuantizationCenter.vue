@@ -12,71 +12,100 @@
           .content-box
             .navs
               el-tabs(v-model="activeName" @tab-click="handleClick" v-if="!change")
-                el-tab-pane(label="量化市场" name="first" :class="{'d-flex': !change}")
+                // 量化市场
+                el-tab-pane(:label="languages.quantization_nav_1" name="first" :class="{'d-flex': !change}")
                   .pane-content(v-for="list in strategyList" v-if="strategyList.length")
                     .pane-header
                       .header-left {{list.strategyName}}
                       ul.header-right
-                        li.price {{list.oneMonthPrice + list.coin + '/月'}}
-                        li.price-info 包含策略使用费,平台使用费,托管者费用
+                        li.price {{list.oneMonthPrice + list.coin + `/${languages.month}`}}
+                        // 包含策略使用费,平台使用费,托管者费用
+                        li.price-info {{languages.quantization_price_info}}
                     .pane-container
                       ul.pane-ul-l
-                        li 主流币种随意选择
-                        li 自定义所选币种权重
-                        li 实时计算币种折合比特币均值
+                        // 主流币种随意选择
+                        li {{languages.quantization_pane_info1}}
+                        // 自定义所选币种权重
+                        li {{languages.quantization_pane_info2}}
+                        // 实时计算币种折合比特币均值
+                        li {{languages.quantization_pane_info3}}
                       ul.pane-ul-r
-                        li 全自动持仓减仓
-                        li 自定义精度, 交易粒度, 交易频率
-                        li 锁定利润, 平衡资金
+                        // 全自动持仓减仓
+                        li {{languages.quantization_pane_info4}}
+                        // 自定义精度, 交易粒度, 交易频率
+                        li {{languages.quantization_pane_info5}}
+                        // 锁定利润, 平衡资金
+                        li {{languages.quantization_pane_info6}}
                     .pane-footer
-                      button.buy(@click="handleDialog" :data-formData="JSON.stringify(list)") 立即购买
+                      // 立即购买
+                      button.buy(@click="handleDialog" :data-formData="JSON.stringify(list)") {{languages.quantization_pane_buy}}
                   .pane-content(v-else)
-                    .pane-container(style="width:100%") 暂无策略
+                    // 暂无策略
+                    .pane-container(style="width:100%") {{languages.quantization_no_strategies}}
                 // 我的策略
-                el-tab-pane(label="我的策略" name="second")
+                el-tab-pane(:label="languages.quantization_nav_2" name="second")
                   div.my-strategy
                     el-table(:data="myStrategyList"
                       :empty-text="$t('M.comm_no_data')"
                       style="width: 100%")
-                      el-table-column(:label="'名称'")
+                      // 名称
+                      el-table-column(:label="languages.quantization_table_name")
                         template(slot-scope = "s")
                           div {{s.row.strategyName}}
-                      el-table-column(:label="'到期时间'")
+                      // 到期时间
+                      el-table-column(:label="languages.quantization_table_deadline")
                         template(slot-scope = "s")
                           div {{s.row.endTime}}
-                      el-table-column(:label="'剩余'")
+                      // 剩余
+                      el-table-column(:label="languages.quantization_table_remains")
                         template(slot-scope = "s")
-                          div {{s.row.remainDay + '天'}}
-                      el-table-column(:label="'状态'")
+                          // 天
+                          div {{s.row.remainDay + languages.quantization_table_day}}
+                      // 状态
+                      el-table-column(:label="languages.quantization_table_status")
                         template(slot-scope = "s")
-                          div(:class="{'active-text': !s.row.isValid}") {{s.row.isValid ? '已过期' : '使用中'}}
-                      el-table-column(:label="'操作'")
+                          // 已过期 || 使用中
+                          div(:class="{'active-text': !s.row.isValid}") {{s.row.isValid ? languages.quantization_table_expire: languages.quantization_table_unexpired}}
+                      // 操作
+                      el-table-column(:label="languages.quantization_table_operation")
                         template(slot-scope = "s")
                           div
-                            button.check(@click="handleRotationStrategy(s.row)") 查看
-                            button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") 续费
+                            // 查看
+                            button.check(@click="handleRotationStrategy(s.row)") {{languages.quantization_table_check}}
+                            // 续费
+                            button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") {{languages.quantization_table_fee}}
               // 点击切换样式
               el-tabs(v-model="activeName" @tab-click="handleClick" v-else)
-                el-tab-pane(label="量化市场" name="first")
+                // 量化市场
+                el-tab-pane(:label="languages.quantization_nav_1"  name="first")
                   .pane-content-row(v-for="list in strategyList")
                     .pane-bg {{list.strategyName}}
                     .pane-list
                       ul
-                        li 主流币种随意选择
-                        li 自定义所选币种权重
-                        li 实时计算币种折合比特币均值
+                        // 主流币种随意选择
+                        li {{languages.quantization_pane_info1}}
+                        // 自定义所选币种权重
+                        li {{languages.quantization_pane_info2}}
+                        // 实时计算币种折合比特币均值
+                        li {{languages.quantization_pane_info3}}
                       ul
-                        li 全自动持仓减仓
-                        li 自定义精度, 交易粒度, 交易频率
-                        li 锁定利润, 平衡资金
+                        // 全自动持仓减仓
+                        li {{languages.quantization_pane_info4}}
+                        // 自定义精度, 交易粒度, 交易频率
+                        li {{languages.quantization_pane_info5}}
+                        // 锁定利润, 平衡资金
+                        li {{languages.quantization_pane_info6}}
                       .pane-r
-                        .price {{list.oneMonthPrice + list.coin + '/月'}}
-                        .price-info 包含策略使用费,平台使用费,托管者费用
-                        button.buy(@click="handleDialog" :data-formData="JSON.stringify(list)") 立即购买
-                el-tab-pane(label="我的策略" name="second")
+                        .price {{list.oneMonthPrice + list.coin + `/${languages.month}`}}
+                        // 包含策略使用费,平台使用费,托管者费用
+                        .price-info {{languages.quantization_price_info}}
+                        // 立即购买
+                        button.buy(@click="handleDialog" :data-formData="JSON.stringify(list)") {{languages.quantization_pane_buy}}
+                // 我的策略
+                el-tab-pane(:label="languages.quantization_nav_2" name="second")
                   div.my-strategy
                     el-table(:data="myStrategyList"
-                      :empty-text="$t('M.comm_no_data')"
+                      :empty-text="languages.quantization_table_nodata"
                       style="width: 100%")
                       el-table-column(:label="'名称'")
                         template(slot-scope = "s")
@@ -89,64 +118,79 @@
                           div {{s.row.remainDay + '天'}}
                       el-table-column(:label="'状态'")
                         template(slot-scope = "s")
-                          div(:class="{'active-text': !s.row.isValid}") {{s.row.isValid ? '已过期' : '使用中'}}
-                      el-table-column(:label="'操作'")
+                          // 已过期 || 使用中
+                          div(:class="{'active-text': !s.row.isValid}") {{s.row.isValid ? languages.quantization_table_expire: languages.quantization_table_unexpired}}
+                      // 操作
+                      el-table-column(:label="languages.quantization_table_operation")
                         template(slot-scope = "s")
                           div
-                            button.check(@click="handleRotationStrategy(s.row)") 查看
-                            button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") 续费
+                            // 查看
+                            button.check(@click="handleRotationStrategy(s.row)") {{languages.quantization_table_check}}
+                            // 续费
+                            button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") {{languages.quantization_table_fee}}
               span.icon-change(@click = "handleChangeLayout")
                   IconFont(:iconName= "icons" v-show="iconsVisible")
-      el-dialog(:title="'开通'" :visible.sync="dialogBuyVisible" class="dialog-buy")
+      //  开通
+      el-dialog(:title="languages.quantization_dialog_title" :visible.sync="dialogBuyVisible" class="dialog-buy")
         el-form(:model="form")
-          el-form-item(label='策略')
+          // 策略
+          el-form-item(:label='languages.quantization_dialog_strategy')
             el-input(v-model="form.strategyName" disabled)
-          el-form-item(label='时长')
+          // 时长
+          el-form-item(:label='languages.quantization_dialog_duration')
           .duration-box.display-flex
             input#btn1(type="radio" name="duration" :value="[dialogData.oneMonthPrice, dialogData.oneMonthPrice,  {validMonth: 1}]" v-model="monthPrice")
-            label.duration-item(for="btn1") 1个月
-            el-badge(value="推荐" class="item")
-              input#btn2(type="radio" checked="checked" :value="[dialogData.threeMonthPrice, (dialogData.oneMonthPrice * 3).toFixed(5), {validMonth: 3}]" v-model="monthPrice" name="duration")
-              label.duration-item(for="btn2") 3个月
+            label.duration-item(for="btn1") 1{{languages.quantization_dialog_per_month}}
+            // 推荐
+            el-badge(:value="languages.quantization_dialog_recommendation" class="item")
+              input#btn2(type="radio" name="duration" checked="checked" :value="[dialogData.threeMonthPrice, (dialogData.oneMonthPrice * 3).toFixed(5), {validMonth: 3}]" v-model="monthPrice")
+              label.duration-item(for="btn2") 3{{languages.quantization_dialog_per_month}}
             input#btn3(type="radio" name="duration"  :value="[dialogData.sixMonthPrice, (dialogData.oneMonthPrice * 6).toFixed(5),  {validMonth: 6}]" v-model="monthPrice")
-            label.duration-item(for="btn3") 6个月
+            label.duration-item(for="btn3") 6{{languages.quantization_dialog_per_month}}
             input#btn4(type="radio" name="duration" :value="[dialogData.twelveMonthPrice, (dialogData.oneMonthPrice * 12).toFixed(5),  {validMonth: 12}]" v-model="monthPrice")
-            label.duration-item(for="btn4") 12个月
-          el-form-item.pay(label='支付')
+            label.duration-item(for="btn4") 12{{languages.quantization_dialog_per_month}}
+          // 支付
+          el-form-item.pay(:label="languages.quantization_dialog_payment")
           .cut-price {{monthPrice[0] + ' ' + dialogData.coin}}
-            s.origin-price 原价{{monthPrice[1] + ' ' + dialogData.coin}}
+            s.origin-price {{languages.quantization_dialog_origin_price + monthPrice[1] + ' ' + dialogData.coin}}
           .remains
-            span 可用：{{balance}}
-            a(href="javascript:void(0)" @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')") 立即充值
+            // 可用
+            span {{languages.quantization_dialog_remain_price + balance}}
+            // 立即充值
+            a(href="javascript:void(0)" @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')") {{languages.quantization_dialog_charge}}
         div(slot="footer" class="dialog-footer")
-          el-button(type="primary" @click="handleSubmit") 确认
+          // 确认
+          el-button(type="primary" @click="handleSubmit") {{languages.quantization_button_confirm}}
       PayPassDialog(@next="buySubmit")
       // 协议
-      el-dialog.dialog-risk(:title="'量化市场风险提示'"
+      // 量化市场风险提示
+      el-dialog.dialog-risk(:title="languages.quantization_prompt_title"
         :visible.sync="isRememberStatus"
         :close-on-click-modal="false"
         :show-close="false")
         .prompt-risk
-          p 1.量化市场就各项服务、安全、无误、及不中断不负担任何明示或默示的保证责任。您同意承担使用本网站该项服务的所有风险及因该风险可能造成的任何损害。
-          p 2.任何在本网站出现的信息包括但不限于评论、预测、图表、指标、理论、直接的或暗示的指示均只作为参考，您须对任何自主决定的行为负责。
-          p 3.量化提供或展示的有关策略，只保证其历史信号及历史产生的收益真实有效，但未来收益情况，不能按照历史简单统计，所有直接或间接使用策略用于真实交易的用户需要谨慎选择，合理运用。量化市场不承担任何因策略产生的资金损失及相关责任，凡使用策略的用户，量化市场依据相关法律法规及平台服务协议，默认用户已同意此条款。
-          p 4.量化市场对于您所使用的各项服务、或无法使用各项服务所导致的任何直接、间接、衍生或特别损害，不负任何赔偿责任。
-          p 5.量化市场不对因本网站资料全部或部分内容产生的或因依赖该资料而引致的任何损失承担任何责任。
-          p 6.您了解并同意，本网站可能因平台、其他合作方或相关电信部门的互联网软硬件设备故障或失灵、或人为操作疏忽而全部或部分中断、延迟、遗漏、误导或造成资料传输或储存上的错误、或遭第三人侵入系统篡改或伪造变造资料等，本网站不承担任何责任。
-          p 7.凡通过本网站与其他网站的链接，而获得其所提供的网上资料及内容，您应该自己进行辨别及判断，并应当由该等网站对其提供内容承担相应责任，本网站对此不承担任何责任。本网站提供超级链接至其它网站，并不视为同意、推荐、认可、保证或推介任何第三方或在其网站所提供的服务、产品，亦不可视为与该等第三方及网站有任何形式的合作。
-          p 8.量化市场所载商标、徽号和服务标志及其他任何数据的所有版权、专利权、知识产权及其它产权均属本网站或其关联公司所有。未经本网站事前以书面同意，不得将此等材料的任何部分修改、翻版、储存于检索系统、传送、复制、分发或以任何其它方式作商业或公共用途。
-          p 9.量化市场所提供的信息、软件、产品、模型、策略、搜索结果、接往第三方网站的超级链接及第三方所提供的商品、服务、权利等一切内容，其完整性、正确性、适时性、妥当性、及时性、信赖性、和目的性、有用性、商品性、知识产权的不受侵害性及第三方债务的履行及有无瑕疵等方面，不做任何保证，不负任何相关担保责任。
-          p 10.量化市场所有策略均属知识产权类产品，一经售出，概不退换。任何因策略产生的纠纷，请及时咨询官方客服协商解决。
-          p 11.本网站保留随时变更、中断或终止部分或全部量化市场服务的权利。网站有权随时修改量化市场包含但不限于产品、策略、支付条件及政策等，并通过本网站展示，而无需另行单独通知用户。
-          p 12. 本风险揭示书的揭示事项仅为列举性质，未能详尽列明用户购买及使用量化服务所面临的全部风险和可能导致损失的所有因素。用户在购买及使用量化服务前，应认真阅读并理解相关业务规则、服务协议及本风险揭示书的全部内容。接受量化服务的用户，自行承担投资及操作风险，平台不以任何方式向用户作出不受损失或者取得最低收益的承诺。
+          // 1.量化市场就各项服务、安全、无误、及不中断不负担任何明示或默示的保证责任。您同意承担使用本网站该项服务的所有风险及因该风险可能造成的任何损害。
+          p {{languages.quantization_prompt_p1}}
+          p {{languages.quantization_prompt_p2}}
+          p {{languages.quantization_prompt_p3}}
+          p {{languages.quantization_prompt_p4}}
+          p {{languages.quantization_prompt_p5}}
+          p {{languages.quantization_prompt_p6}}
+          p {{languages.quantization_prompt_p7}}
+          p {{languages.quantization_prompt_p8}}
+          p {{languages.quantization_prompt_p9}}
+          p {{languages.quantization_prompt_p10}}
+          p {{languages.quantization_prompt_p11}}
+          p {{languages.quantization_prompt_p12}}
         .check-box
           // 同意协议
-          el-checkbox(v-model="isChecked") 我已阅读并知晓风险
+          el-checkbox(v-model="isChecked") {{languages.quantization_prompt_agreement}}
         div(slot="footer" class="dialog-footer")
-          el-button(type="primary" @click="handleConfirmPrompt") 确认
-</template>
+          el-button(type="primary" @click="handleConfirmPrompt") {{languages.quantization_button_confirm}}
+</template>4
 <script>
 import IconFont from '../Common/IconFontCommon'
+import languages from '../../mixins/quantizationLanguage'
 import RotationStrategy from '../Quantization/RotationStrategy'
 import { getStrategyList, getMyStrategyList, getBuyDialogList, buyStrategy } from '../../utils/api/quantizationCenter'
 import { getPushTotalByCoinId } from '../../utils/api/personal'
@@ -157,7 +201,7 @@ export default {
   // !!! 注意 !!! 如需要相关声明周期或方法，请放开注释(默认处于注释状态)
   // name 为必填项
   name: 'quantization-center',
-  // mixins: [],
+  mixins: [languages],
   components: {
     IconFont,
     RotationStrategy
@@ -279,7 +323,7 @@ export default {
         pageNumber: this.currentNum // 当前页码
       })
       if (!data) return false
-      this.strategyList = _.get(data.data, 'list')
+      this.strategyList = _.get(data, 'data.list')
     },
     // 策略列表分页
     async getMyStrategyList () {
@@ -390,6 +434,7 @@ export default {
             background url('../../assets/quantization/banner.png') center no-repeat
             height 229px
         >.content
+          margin-top 30px
           margin-bottom 200px
           >.content-box
             width 1300px

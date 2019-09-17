@@ -11,11 +11,13 @@
       .content.text-center
         .content-box
           .navs
-            a.nav-list1(@click.prevent="handleToQuantization") 我的策略 &nbsp;>&nbsp;
+            // 我的策略
+            a.nav-list1(@click.prevent="handleToQuantization") {{languages.quantization_nav_2}} &nbsp;>&nbsp;
             span.nav-list2 {{strategyData.strategyName}}
           .navs-detail
             el-form.form1
-              el-form-item(label="时间" label-width="80px")
+              // 时间
+              el-form-item(:label="languages.rotation_form_time" label-width="80px")
                 el-date-picker(
                   value-format="yyyy-MM-dd HH:mm:ss"
                   v-model="startTime"
@@ -30,9 +32,11 @@
                   :clearable="false"
                 )
               // 网格策略
-              el-form-item.grid-strategy(label="参数" label-width="80px" v-if=" searchData.strategyType === 'RESEAU_STRATEGY' ")
+              // 参数
+              el-form-item.grid-strategy(:label="languages.rotation_form_params" label-width="80px" v-if=" searchData.strategyType === 'RESEAU_STRATEGY' ")
                 .params-header
-                  button.addCurrency(@click="handleAddParams") 添加交易对
+                  // 添加交易对
+                  button.addCurrency(@click.prevent="handleAddParams") {{languages.rotation_form_add_params}}
                 .params-content(v-for="(item, index) in paramsContent")
                   .params-content-header
                     .header-text {{item.paramsForm.value}}
@@ -43,7 +47,8 @@
                     el-collapse-transition
                       div(v-show="index === 0 ? !item.visibleStatus : item.visibleStatus")
                         el-form(label-position="top" v-model="item.paramsForm")
-                          el-form-item(label="交易对")
+                          // 交易对
+                          el-form-item(:label="languages.rotation_form_coinPairs")
                             el-select(:placeholder="$t('M.comm_please_choose')"
                               v-model="item.paramsForm.value"
                               :no-data-text="$t('M.comm_no_data')"
@@ -55,7 +60,8 @@
                                 :label="opt.tradeName"
                                 :value="opt.tradeName")
                           .flex-items
-                            el-form-item(label="网格方向")
+                            // 网格方向
+                            el-form-item(:label="languages.rotation_form_gridDirection")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -64,14 +70,15 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color -1为向下网格，即价格越低越买入，等待价格反弹卖出。
+                                p.popover-color {{languages.rotation_form_directionTip}}
                                 el-input(
                                   @input="formatSymbolInput(item.paramsForm, 'params1')"
                                   @keyup="formatSymbolInput(item.paramsForm, 'params1')"
                                   placeholder="" v-model="item.paramsForm.params1"
                                   :disabled="isOpen"
                                   slot="reference")
-                            el-form-item(label="网格节点数量")
+                            // 网格节点数量
+                            el-form-item(:label="languages.rotation_form_gridAmounts")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -80,7 +87,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 100就是设置100个节点
+                                p.popover-color {{languages.rotation_form_amountsTip}}
                                 el-input(
                                   @input="formatInput(item.paramsForm, 'params2')"
                                   @keyup="formatInput(item.paramsForm, 'params2')"
@@ -89,7 +96,8 @@
                                   :disabled="isOpen"
                                   auto-complete="off"
                                   slot="reference")
-                            el-form-item(label="下单量")
+                            // 下单量
+                            el-form-item(:label="languages.rotation_form_orderAmounts")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -98,7 +106,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 每个节点的下单量
+                                p.popover-color {{languages.rotation_form_orderTips}}
                                 el-input(
                                   @input="formatInput(item.paramsForm, 'params3')"
                                   @keyup="formatInput(item.paramsForm, 'params3')"
@@ -107,7 +115,8 @@
                                   :disabled="isOpen"
                                   auto-complete="off"
                                   slot="reference")
-                            el-form-item(label="差价间距")
+                            // 差价间距
+                            el-form-item(:label="languages.rotation_form_spacingPrice")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -116,7 +125,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 每个节点的差价间距
+                                p.popover-color {{languages.rotation_form_spacingTip}}
                                 el-input(
                                   @input="formatInput(item.paramsForm, 'params4')"
                                   @keyup="formatInput(item.paramsForm, 'params4')"
@@ -126,7 +135,8 @@
                                   auto-complete="off"
                                   slot="reference")
                             // 换行
-                            el-form-item(label="平仓利润差价")
+                            // 平仓利润差价
+                            el-form-item(:label="languages.rotation_form_concretSpreading")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -135,7 +145,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 每个节点计划的平仓利润差价
+                                p.popover-color {{languages.rotation_form_concretTip}}
                                 el-input(
                                   @input="formatInput(item.paramsForm, 'params5')"
                                   @keyup="formatInput(item.paramsForm, 'params5')"
@@ -144,7 +154,8 @@
                                   :disabled="isOpen"
                                   auto-complete="off"
                                   slot="reference")
-                            el-form-item(label="交易滑价")
+                            // 交易滑价
+                            el-form-item(:label="languages.rotation_form_transactionPrice")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -162,7 +173,8 @@
                                   :disabled="isOpen"
                                   auto-complete="off"
                                   slot="reference")
-                            el-form-item(label="最大单笔下单量")
+                            // 最大单笔下单量
+                            el-form-item(:label="languages.rotation_form_maxOrders")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -171,7 +183,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 如设置为1，则超过1的下单量会拆分
+                                p.popover-color {{languages.rotation_form_maxTip}}
                                 el-input(
                                   @input="formatInput(item.paramsForm, 'params7')"
                                   @keyup="formatInput(item.paramsForm, 'params7')"
@@ -180,7 +192,7 @@
                                   :disabled="isOpen"
                                   auto-complete="off"
                                   slot="reference")
-                            el-form-item(label="最小下单量")
+                            el-form-item(:label="languages.rotation_form_minOrders")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -189,7 +201,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 若设置为1，则低于1时不下单
+                                p.popover-color {{languages.rotation_form_minTip}}
                                 el-input(
                                   @input="formatInput(item.paramsForm, 'params8')"
                                   @keyup="formatInput(item.paramsForm, 'params8')"
@@ -199,9 +211,9 @@
                                   auto-complete="off"
                                   slot="reference")
               // 趋势策略
-              el-form-item.grid-strategy.trend-strategy(label="参数" label-width="80px" v-if=" searchData.strategyType === 'TREND_STRATEGY' ")
+              el-form-item.grid-strategy.trend-strategy(:label="languages.rotation_form_params" label-width="80px" v-if=" searchData.strategyType === 'TREND_STRATEGY' ")
                 .params-header
-                  button.addCurrency(@click="handleAddParams") 添加交易对
+                  button.addCurrency(@click="handleAddParams") {{languages.rotation_form_add_params}}
                 .params-content(v-for="(item, index) in paramsContent")
                   .params-content-header
                     .header-text {{item.paramsForm.value}}
@@ -212,7 +224,7 @@
                     el-collapse-transition
                       div(v-show="index === 0 ? !item.visibleStatus : item.visibleStatus")
                         el-form(label-position="top" v-model="item.paramsForm")
-                          el-form-item(label="交易对")
+                          el-form-item(:label="languages.rotation_form_coinPairs")
                             el-select(:placeholder="$t('M.comm_please_choose')"
                               v-model="item.paramsForm.value"
                               :no-data-text="$t('M.comm_no_data')"
@@ -224,7 +236,8 @@
                                 :label="opt.tradeName"
                                 :value="opt.tradeName")
                           .flex-items
-                            el-form-item(label="计价占比")
+                            // 计价占比
+                            el-form-item(:label="languages.rotation_form_valuationPercent")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -233,7 +246,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color
+                                p.popover-color {{languages.rotation_form_valuationTip}}
                                 el-input(
                                   @input="formatSymbolInput(item.paramsForm, 'params1')"
                                   @keyup="formatSymbolInput(item.paramsForm, 'params1')"
@@ -241,7 +254,8 @@
                                   :disabled="isOpen"
                                   slot="reference")
                                   template(slot="append") %
-                            el-form-item(label="加仓阈值")
+                            // 加仓阈值
+                            el-form-item(:label="languages.rotation_form_addPercent")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -250,7 +264,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 控制加仓触发价格，加仓数量
+                                p.popover-color {{languages.rotation_form_addTip}}
                                 el-input(
                                   @input="formatSymbolInput(item.paramsForm, 'params2')"
                                   @keyup="formatSymbolInput(item.paramsForm, 'params2')"
@@ -258,7 +272,8 @@
                                   :disabled="isOpen"
                                   slot="reference")
                                   template(slot="append") %
-                            el-form-item(label="交易滑价")
+                            // 交易滑价
+                            el-form-item(:label="languages.rotation_form_transactionPrice")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -267,7 +282,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 交易时的滑价百分比，可设为0表示盘口挂单
+                                p.popover-color {{languages.rotation_form_transactionTip}}
                                 el-input(
                                   @input="formatSymbolInput(item.paramsForm, 'params3')"
                                   @keyup="formatSymbolInput(item.paramsForm, 'params3')"
@@ -275,7 +290,8 @@
                                   :disabled="isOpen"
                                   slot="reference")
                                   template(slot="append") %
-                            el-form-item(label="最大单笔下单量")
+                            // 最大笔下单量
+                            el-form-item(:label="languages.rotation_form_maxOrders")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -284,7 +300,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 每个节点的最大单笔下单量
+                                p.popover-color {{languages.rotation_form_maxTip}}
                                 el-input.trend-input(
                                   @input="formatInput(item.paramsForm, 'params4')"
                                   @keyup="formatInput(item.paramsForm, 'params4')"
@@ -293,7 +309,8 @@
                                   :disabled="isOpen"
                                   auto-complete="off"
                                   slot="reference")
-                            el-form-item(label="最小下单量")
+                            // 最小下单量
+                            el-form-item(:label="languages.rotation_form_minOrders")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -302,7 +319,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 若设置为1，则低于1时不下单
+                                p.popover-color {{languages.rotation_form_minTip}}
                                 el-input.trend-input(
                                   @input="formatInput(item.paramsForm, 'params5')"
                                   @keyup="formatInput(item.paramsForm, 'params5')"
@@ -312,9 +329,9 @@
                                   auto-complete="off"
                                   slot="reference")
               // 定投策略
-              el-form-item.grid-strategy.trend-strategy.fixed-investment(label="参数" label-width="80px" v-if=" searchData.strategyType === 'INVESTMENT_STRATEGY' ")
+              el-form-item.grid-strategy.trend-strategy.fixed-investment(:label="languages.rotation_form_params" label-width="80px" v-if=" searchData.strategyType === 'INVESTMENT_STRATEGY' ")
                 .params-header
-                  button.addCurrency(@click="handleAddParams") 添加交易对
+                  button.addCurrency(@click="handleAddParams") {{languages.rotation_form_add_params}}
                 .params-content(v-for="(item, index) in paramsContent")
                   .params-content-header
                     .header-text {{item.paramsForm.value}}
@@ -325,7 +342,7 @@
                     el-collapse-transition
                       div(v-show="index === 0 ? !item.visibleStatus : item.visibleStatus")
                         el-form(label-position="top" v-model="item.paramsForm")
-                          el-form-item(label="交易对")
+                          el-form-item(:label="languages.rotation_form_coinPairs")
                             el-select(:placeholder="$t('M.comm_please_choose')"
                               v-model="item.paramsForm.value"
                               :no-data-text="$t('M.comm_no_data')"
@@ -337,7 +354,8 @@
                                 :label="opt.tradeName"
                                 :value="opt.tradeName")
                           .flex-items
-                            el-form-item(label="定投买入量")
+                            // 定投买入量
+                            el-form-item(:label="languages.rotation_form_buyAmounts")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -346,14 +364,15 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color
+                                p.popover-color {{languages.rotation_form_buyTip}}
                                 el-input.investment(
                                   @input="formatSymbolInput(item.paramsForm, 'params1')"
                                   @keyup="formatSymbolInput(item.paramsForm, 'params1')"
                                   placeholder="" v-model="item.paramsForm.params1"
                                   :disabled="isOpen"
                                   slot="reference")
-                            el-form-item(label="间隔时长")
+                            // 间隔时长
+                            el-form-item(:label="languages.rotation_form_intervalLength")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -362,15 +381,16 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 控制加仓触发价格，加仓数量
+                                p.popover-color {{languages.rotation_form_intervalTip}}
                                 el-input(
                                   @input="formatSymbolInput(item.paramsForm, 'params2')"
                                   @keyup="formatSymbolInput(item.paramsForm, 'params2')"
                                   placeholder="" v-model="item.paramsForm.params2"
                                   :disabled="isOpen"
                                   slot="reference")
-                                  template(slot="append") 分
-                            el-form-item(label="交易滑价")
+                                  template(slot="append") {{languages.minutes}}
+                            // 交易滑价
+                            el-form-item(:label="languages.rotation_form_transactionPrice")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -379,14 +399,15 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 交易时的滑价百分比，可设为0表示盘口挂单
+                                p.popover-color {{languages.rotation_form_transactionTip}}
                                 el-input.investment(
                                   @input="formatSymbolInput(item.paramsForm, 'params3')"
                                   @keyup="formatSymbolInput(item.paramsForm, 'params3')"
                                   placeholder="" v-model="item.paramsForm.params3"
                                   :disabled="isOpen"
                                   slot="reference")
-                            el-form-item(label="最大单笔下单量")
+                            // 最大单笔下单量
+                            el-form-item(:label="languages.rotation_form_maxOrders")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -395,7 +416,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 每个节点的最大单笔下单量
+                                p.popover-color {{languages.rotation_form_maxTip}}
                                 el-input.trend-input(
                                   @input="formatInput(item.paramsForm, 'params4')"
                                   @keyup="formatInput(item.paramsForm, 'params4')"
@@ -404,7 +425,8 @@
                                   :disabled="isOpen"
                                   auto-complete="off"
                                   slot="reference")
-                            el-form-item(label="最小下单量")
+                            // 最小下单量
+                            el-form-item(:label="languages.rotation_form_minOrders")
                               el-popover(
                                 :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                                 effect="dark"
@@ -413,7 +435,7 @@
                                 width="200"
                                 :open-delay="500"
                               )
-                                p.popover-color 若设置为1，则低于1时不下单
+                                p.popover-color {{languages.rotation_form_minTip}}
                                 el-input.trend-input(
                                   @input="formatInput(item.paramsForm, 'params5')"
                                   @keyup="formatInput(item.paramsForm, 'params5')"
@@ -424,32 +446,43 @@
                                   slot="reference")
               el-form-item.annotation
                 .annotation-content(v-if=" searchData.strategyType === 'RESEAU_STRATEGY' ")
-                  p 注释：<br/>网格策略根据参数生成一个有若干节点的网络，网络分为向上网格和向下网格，向上网格即价格升高卖出一定数量的标的物，价格继续升高继续卖出标的物，在每个节点价格的基础上减去一定价差，作为节点的平仓触发价格。<br/><br/>向下网格相反，即价格下跌买入一定数量的标的物，价格继续下跌继续买入标的物，在每个节点价格的基础上加上一定的价差，作为节点的持仓触发价格。在超出网格后，对距离当前价格最远的节点仓位止损（平仓）。
+                  p {{languages.rotation_form_annotation}}
+                  p {{languages.rotation_form_gridAnnotation1}}
+                  p {{languages.rotation_form_gridAnnotation2}}
                 .annotation-content(v-if=" searchData.strategyType === 'TREND_STRATEGY' ")
-                  p 注释： <br/>加仓阈值： 设置 0.02 ，即为 2%  。<br/>计价币使用比例：  设置 0.2 ，即 该交易对 使用 计价币 时，只使用当前的 20%
-                  p(style="padding-top:10px") 策略思路<br/>根据策略初始运行时价格最为基础价格，每上涨  加仓阈值 * 100 % ，使用当前账户可用于买的资产（当前账户计价币 * 计价币使用比例 * 100 %）中的加仓阈值 * 100 % 买入。然后更新基础价格为 当前价格。如果是下跌  加仓阈值 * 100%，用当前账户的资产中的  加仓阈值 * 100 %卖出。然后更新基础价格为 当前价格。对于策略看多，看空，可以根据账户配置的币和钱比例调整，平衡状态是 计价币价值 和 交易币价值为  1：1
+                  p {{languages.rotation_form_annotation}}
+                  p {{languages.rotation_form_trendAnnotation1}}
+                  p(style="padding-top:10px") {{languages.rotation_form_trendAnnotation2}}
+                  p(style="padding:10px 0") {{languages.rotation_form_trendAnnotation3}}
+                  p {{languages.rotation_form_trendAnnotation4}}
                 .annotation-content(v-if=" searchData.strategyType === 'INVESTMENT_STRATEGY' ")
-                  p 注释： <br/>初始资产全为计价币，定时买入一定量的币数，等待时间间隔到达参数设置后的数值后，继续买入。
+                  p {{languages.rotation_form_annotation}}
+                  p {{languages.rotation_form_investmentAnnotation1}}
               .footer-btns
-                button.started(v-if="!isOpen" @click="handleActivition") 开启
+                // 开启
+                button.started(v-if="!isOpen" @click="handleActivition") {{languages.rotation_button_activation}}
                   IconFont.active(icon-name="icon-kaiqi")
-                button.paused(v-else @click="handleActivition") 暂停
+                // 暂停
+                button.paused(v-else @click="handleActivition") {{languages.rotation_button_deactivation}}
                   IconFont.active(icon-name="icon-zanting")
-                button.saved(@click="handleStorage" :disabled="isOpen" :class="{'savedPaused': isOpen}")  保存
+                // 保存
+                button.saved(@click="handleStorage" :disabled="isOpen" :class="{'savedPaused': isOpen}")  {{languages.rotation_button_storage}}
                   IconFont.active(icon-name="icon-baocun")
               transition(name="el-fade-in")
                 .bottom-hints(v-show="isOpen")
-                  p 策略将在{{startTime[0]}}开始执行，{{startTime[1]}}停止执行！
+                  p {{languages.rotation_bottom_hints1 + startTime[0].replace(/-/g,'/') + languages.rotation_bottom_hints2 + startTime[1].replace(/-/g,'/') + languages.rotation_bottom_hints3}}
               el-form.form2(v-model="accountInfo")
-                el-form-item(label="账户信息" label-width="80px")
+                // 账户信息
+                el-form-item(:label="languages.rotation_form_accountInfo" label-width="80px")
                   table.accounts-info-content(border="1")
                     tr.accounts-info-header
-                      td.header-cell 平台
-                      td.header-cell 基础货币
-                      td.header-cell 计价货币
-                      td.header-cell 买手续费
-                      td.header-cell 卖手续费
-                      td.header-cell 累计盈亏
+                      // 平台
+                      td.header-cell {{languages.rotation_table_th1}}
+                      td.header-cell {{languages.rotation_table_th2}}
+                      td.header-cell {{languages.rotation_table_th3}}
+                      td.header-cell {{languages.rotation_table_th4}}
+                      td.header-cell {{languages.rotation_table_th5}}
+                      td.header-cell {{languages.rotation_table_th6}}
                         el-popover(
                           :popper-class="`remark ${$isDayTheme_G_X ? 'day':'night'}`"
                           effect="dark"
@@ -458,7 +491,7 @@
                           width="153"
                           :open-delay="500"
                         )
-                          p.popover-color 累计盈亏是指在量化市场里买卖出现的实际盈亏。
+                          p.popover-color {{languages.rotation_table_th6Tip}}
                           IconFont.warn(icon-name="icon-jinggao" slot="reference")
                     tr.accounts-info-body(v-for="item in accountInfo")
                       td.body-cell FUBT
@@ -469,19 +502,20 @@
                       td.body-cell {{item.historyYield}}
               el-collapse-transition
                 el-form.form3(v-show="chartVisible")
-                  el-form-item(label="浮动盈亏" label-width="80px")
+                  // 浮动盈亏
+                  el-form-item(:label="languages.rotation_table_floatingProfit" label-width="80px")
                     .floating-panel
                       div(v-for="(item, index) in savedCoinList")
                         input(:id="'panel' + index" type="radio" name="panel" :checked="index===0")
                         label.panel-item(:for="'panel' + index" @click="handleChartView(item)") {{item}}
                   .echarts-title
-                    h5 历史盈亏走势图
+                    h5 {{languages.rotation_chart_floatingTitle}}
                     .echarts-title-des
-                      span.des 初始净值：
+                      span.des {{languages.rotation_chart_titleTip1}}
                         span.des-details 5000BTC
-                      span.des 累计盈亏：
+                      span.des {{languages.rotation_chart_titleTip2}}
                         span.des-details {{totalProfit}}
-                      span.des 当前持仓均价：
+                      span.des {{languages.rotation_chart_titleTip3}}
                         span.des-details 1.253FBT
                   div(id="echarts-content")
 
@@ -495,6 +529,7 @@ import IconFont from '../Common/IconFontCommon'
 import { routesVariable } from '../../router/routesVariable'
 import { coinList, checkStrategy, updateStrategy, activeStrategy, viewAccountInfo, getProfitAndLoss } from '../../utils/api/quantizationCenter'
 import { formatSymbolNumber, amendPrecision } from '../../utils'
+import languages from '../../mixins/quantizationLanguage'
 // import {mapState} from 'vuex'
 // import { getLanguagesAJAX } from '../utils/API/common'
 export default {
@@ -503,18 +538,18 @@ export default {
   components: {
     IconFont
   },
-  // mixins: [],
+  mixins: [languages],
   // components: {},
   // props,
   data () {
-    const strategyData = JSON.parse(sessionStorage.getItem('MY_STRATEGY_DATA'))
-    const searchData = JSON.parse(sessionStorage.getItem('SEARCH_STRATEGY_DATA'))
+    // const strategyData =
+    // const searchData =
     return {
       coinList: [], // 交易对列表
       changedCoinList: [],
       startTime: [], // 开始时间
-      strategyData: strategyData,
-      searchData: searchData,
+      strategyData: JSON.parse(sessionStorage.getItem('MY_STRATEGY_DATA')),
+      searchData: JSON.parse(sessionStorage.getItem('SEARCH_STRATEGY_DATA')),
       iconRoate: 'icon-roate',
       iconNormal: 'icon-normal',
       paramsContent: [{
@@ -631,7 +666,7 @@ export default {
               if (newNum > 1000000) {
                 newNum = `${this.$keep2Num(newNum / 1000000)}M`
               } else if (newNum > 1000) {
-                newNum = `${this.$keep2Num(newNum / 1000)}K`
+                newNum = `${this.$keep2Num(newNum / 1000)}cK`
               }
               return newNum
             }
@@ -677,7 +712,7 @@ export default {
   },
   async created () {
     if (!this.strategyData && !this.searchData) {
-      this.$goToPage('/QuantizationCenter')
+      this.$goToPage(`/${routesVariable.quantization}`)
     }
     await this.getCoinList()
     await this.checkStrategyDetails()
@@ -918,7 +953,7 @@ export default {
       } else {
         this.$message({
           showClose: true,
-          message: '请先保存策略再进行开启！',
+          message: this.languages.rotation_check_saved,
           type: 'warning'
         })
       }
@@ -1003,7 +1038,7 @@ export default {
       } else {
         this.$message({
           showClose: true,
-          message: '请检查每个策略参数配置正确再保存！',
+          message: this.languages.rotation_check_empty,
           type: 'warning'
         })
         this.isEmpty = true
