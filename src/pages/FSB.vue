@@ -527,7 +527,7 @@ export default {
             padding-bottom 61px
           > .content
             width S_main_content_width
-            height 384px
+            min-height 384px
             background-color S_night_main_bg
             border-radius 4px
             > .head-title
@@ -649,7 +649,7 @@ export default {
                     padding 28px 0
                     border-bottom 1px solid #26293a
                     .cell
-                      height 22px
+                      min-height 22px
               .el-table__empty-block
                 background-color #1C1F32
                 .el-table__empty-text
