@@ -49,11 +49,12 @@ const devTestConfig = {
   socketUrl: 'ws://192.168.2.200:8087/market',
   apiCommonUrl: 'http://192.168.2.200:8888/',
   loginSocketUrl: 'ws://192.168.2.200:8888/qrcodeLogin/',
+  // OTC即时通讯、闪兑专区 详情 socket 推送
   OTCIMSocketUrl: 'ws://192.168.2.200:8066/websoc',
+  // 存币宝 socket 推送
   IEOSocketUrl: 'ws://192.168.2.200:8888/ieoPush'
-
   // socketUrl: 'wss://market.test.com',
-  // apiCommonUrl: 'https://web.rest.test.com/',
+  // apiCommonUrl: 'https://web.rest.test.com/',o
   // loginSocketUrl: 'wss://qrcode.test.com/qrcodeLogin/',
   // OTCIMSocketUrl: 'wss://im.test.com/websoc'
 }

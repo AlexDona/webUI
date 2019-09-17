@@ -1,5 +1,11 @@
+/**
+ * author: zhaoxinlei
+ * update: 20190902
+ * description: 当前页面为 活动 相关路由
+ */
 import {createBaseRoute, routesVariable} from './routesVariable'
 
+const {shoppingSpree, crowdFunding, crowdFundingRecord} = routesVariable
 export default [
   {
     // 活动中心
@@ -9,22 +15,22 @@ export default [
   // 众筹
   {
     ...createBaseRoute({
-      name: `${routesVariable.crowdFunding}`
+      name: `${crowdFunding}`
     }),
     component: () => import('@/pages/Activity/TheCrowdFunding.vue')
   },
   {
     ...createBaseRoute({
-      name: `${routesVariable.crowdFunding}`,
-      path: `/${routesVariable.crowdFunding}/:detailId`,
+      name: `${crowdFunding}`,
+      path: `/${crowdFunding}/:detailId`,
       props: true
     }),
     component: () => import('@/pages/Activity/TheCrowdFundingDetail.vue')
   },
   {
     ...createBaseRoute({
-      name: `${routesVariable.crowdFundingRecord}`,
-      path: `/${routesVariable.crowdFundingRecord}`,
+      name: `${crowdFundingRecord}`,
+      path: `/${crowdFundingRecord}`,
       auth: true
     }),
     component: () => import('@/pages/Activity/TheCrowdFundingRecord.vue')
@@ -52,16 +58,39 @@ export default [
     name: 'FinanceInvestmentRecord',
     component: () => import('@com/InvestmentFinance/FinanceInvestmentRecord')
   },
-
   {
     // Fuc生态
     path: '/FucCenter',
     component: () => import('@/pages/FucCenter')
   },
-
   {
     // 封神榜
     path: '/FSB',
     component: () => import('@/pages/FSB')
+  },
+  // 打折抢购
+  {
+    ...createBaseRoute({
+      name: `${shoppingSpree}`
+    }),
+    component: () => import('@/pages/Activity/ShoppingSpree/TheShoppingSpree')
+  },
+  // 抢购详情
+  {
+    ...createBaseRoute({
+      name: `${shoppingSpree}-detail`,
+      path: `/${shoppingSpree}/:detailId`,
+      props: true
+    }),
+    component: () => import('@/pages/Activity/ShoppingSpree/TheShoppingSpreeDetail')
+  },
+  // 抢购记录
+  {
+    ...createBaseRoute({
+      name: `${shoppingSpree}-record`,
+      path: `/record/${shoppingSpree}`,
+      auth: true
+    }),
+    component: () => import('@/pages/Activity/ShoppingSpree/TheShoppingSpreeRecord')
   }
 ]

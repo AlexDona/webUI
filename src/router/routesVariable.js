@@ -80,7 +80,14 @@ export const routesVariable = {
   quantization: 'QuantizationCenter',
   // 轮动策略
   strategy: 'RotationStrategy',
-  guideOfDownload: 'guideOfDownload'
+  guideOfDownload: 'guideOfDownload',
+  // 打折抢购
+  shoppingSpree: 'shoppingSpree',
+  // 个人中心导航
+  personalName: {
+    identityAuthentication: 'identity-authentication'
+  },
+  personalCenter: '/PersonalCenter'
 }
 
 export const globalLabel = {

@@ -65,7 +65,6 @@ export default {
     const language = getStore('language') || configInfo.defaultLanguage
     _.forEach(state.languages_S, item => {
       if (item.shortName === language) {
-        console.log(item)
         commit('CHANGE_LANGUAGE', item)
         commit('CHANGE_DEFAULT_LANGUAGE', item.shortName)
         return false

@@ -67,6 +67,7 @@ export default {
     }
   },
   created () {
+    console.log(this.countries)
     if (this.countries) {
       this.currentCountry = this.countries[0]
       this.UPDATE_CURRENT_COUNTRY_M(this.currentCountry)

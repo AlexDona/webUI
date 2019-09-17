@@ -41,7 +41,6 @@ export default {
   // filters: {},
   computed: {
     isShowTips () {
-      console.log(this.$route)
       const {path} = this.$route
       return this.isShowPREActivity && path === `/${this.$routes_X.home}`
     }

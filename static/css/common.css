@@ -121,13 +121,6 @@
   border-bottom-color: transparent;
 }
 
-/* 去除黑白主题下拉框右侧的滚动条 ren20190625增加 */
-.day .el-scrollbar__wrap,
-.night .el-scrollbar__wrap {
-  min-width: 94px;
-  overflow: hidden;
-}
-
 /* 修改下拉框距上部的间距 ren20190625增加 */
 .el-popper[x-placement^=bottom] {
   margin-top: 5px;
@@ -315,7 +308,7 @@
 }
 
 .night .el-date-table td.in-range div {
-  background: rgba(45, 54, 81, .6);
+  background: rgba(45, 54, 81, .9);
 }
 
 .night .el-picker-panel__icon-btn {
@@ -333,15 +326,6 @@
 
 .night .el-time-spinner__item.active:not(.disabled) {
   color: #c0c4cc;
-}
-
-.night .el-date-range-picker__time-header {
-  display: none;
-  border-bottom: 1px solid #39424d;
-}
-
-.day .el-date-range-picker__time-header {
-  display: none;
 }
 
 .night .el-date-range-picker__content.is-left {
@@ -364,11 +348,6 @@
 
 .el-time-spinner__item {
   line-height: 36px;
-}
-
-/* 账单明细日期时间组件清除按钮隐藏 */
-.el-picker-panel .el-picker-panel__footer .el-button--text.el-button--mini {
-  display: none;
 }
 
 .el-time-spinner__item:hover:not(.disabled):not(.active) {

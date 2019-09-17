@@ -170,7 +170,11 @@ let mixin = {
       // VIP是否禁用
       $isVIPEnable_S_X: state => state.common.footerInfo.configInfo.vipEnabled,
       $navigators_S_X: state => state.common.navigators_S,
-      $activeLinkIndex_S_X: state => state.common.activeLinkIndex_S
+      $activeLinkIndex_S_X: state => state.common.activeLinkIndex_S,
+      // 项目名称
+      $partnerName_S_X: state => state.common.footerInfo.configInfo.otcAd,
+      // 交易密码是否被锁定
+      $isLockedPayPassword_S_X: state => state.common.isLockedPayPassword
     }),
     $isShowAppEntry_X () {
       return this.androidDownloadSwitch && this.iosDownloadSwitch

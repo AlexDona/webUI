@@ -62,8 +62,18 @@ let mixin = {
       $loginType_X: state => state.user.loginType,
       $isShowLoginStep2Dialog_S_X: state => state.user.isShowLoginStep2Dialog_S,
       $isShowLoginImageDialog_S_X: state => state.user.isShowLoginImageDialog_S,
+      $advancedAuth_X: state => _.get(state, 'user.loginStep1Info.userInfo.advancedAuth'),
+      $realNameAuth_X: state => _.get(state, 'user.loginStep1Info.userInfo.realNameAuth'),
       $routerTo_X: state => state.common.routerTo // 路由跳转
     }),
+    // 是否通过高级认证
+    $isPassAdvancedAuth_X () {
+      return this.$advancedAuth_X === 'pass'
+    },
+    // 是否通过实名认证
+    $isPassRealNameAuth_X () {
+      return this.$realNameAuth_X === 'y'
+    },
     $isBindPhone_X () {
       return _.get(this.$userInfo_X, 'phoneEnable') == 'enable' || _.get(this.$userInfo_X, 'phoneEnable') == true
     },
