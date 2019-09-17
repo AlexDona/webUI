@@ -84,7 +84,8 @@ const prodConfig = {
   socketUrl: 'wss://market.fubt.co/market', // 行情 socket
   loginSocketUrl: 'wss://qrcode.fubt.co/qrcodeLogin/', // 扫码登录 socket
   // loginSocketUrl: 'wss://s.fubt.co/qrcodeLogin/' // 扫码登录 socket
-  OTCIMSocketUrl: 'wss://ims.fubt.co/websoc'
+  OTCIMSocketUrl: 'wss://ims.fubt.co/websoc',
+  IEOSocketUrl: 'wss://qrcode.fubt.co/ieoPush'
 }
 
 switch (process.env.NODE_ENV) {
