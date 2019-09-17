@@ -452,7 +452,6 @@ export default {
                   padding 0 23px
                   display flex
                   height 90px
-                  background url("../../assets/quantization/pane-header.png") center no-repeat
                   background-size cover
                   >.header-left
                     flex 1
@@ -494,7 +493,6 @@ export default {
                     height 90px
                     line-height 90px
                     text-align right
-                    background url("../../assets/quantization/pane-footer.png") center no-repeat
                     .buy
                       buttonBuy()
               .pane-content-row
@@ -508,7 +506,6 @@ export default {
                   font-size 18px
                   font-weight bold
                   color #fff
-                  background url("../../assets/quantization/pane-list-bg.png") center no-repeat
                 .pane-list
                   box-sizing border-box
                   display flex
@@ -569,8 +566,6 @@ export default {
                 margin-top 42px
               .el-table
                 font-size 12px
-                th
-                  color #a9beD4
                 td
                   border none
                 .el-table__empty-block
@@ -598,7 +593,6 @@ export default {
             .el-form
               .el-form-item
                 .el-form-item__label
-                  color #cfd5df
                   text-align center
                 .el-form-item__content
                   display flex
@@ -649,9 +643,7 @@ export default {
                   padding-left 20px
           .el-input__inner
             font-size 12px
-            background-color #1a2233
             border-color #485776
-            color #fff
           .el-dialog__footer
             padding 40px 48px
             button
@@ -687,13 +679,19 @@ export default {
           .content-box
             .navs
               .pane-content
-                .header-left
-                  color #338ff5
+                .pane-header
+                  background url("../../assets/quantization/pane-header.png") center no-repeat
+                  .header-left
+                    color #338ff5
                 .pane-container
                   background #1c1f32
+                .pane-footer
+                  background url("../../assets/quantization/pane-footer.png") center no-repeat
               .pane-content-row
                 width 100%
                 background #1c1f32
+                .pane-bg
+                  background url("../../assets/quantization/pane-list-bg.png") center no-repeat
                 .pane-list
                   ul
                     li
@@ -704,8 +702,14 @@ export default {
             .my-strategy
                 background #1c1f32
       /deep/
+        .el-input__inner
+          background #1a2233
+          color #fff
         .el-tabs__header
           background #1c1f32
+        .el-table
+          th
+            color #a9bed4
         .pane-footer
           .buy
             color #338ff5
@@ -798,13 +802,19 @@ export default {
           .content-box
             .navs
               .pane-content
-                .header-left
-                  color #fff
+                .pane-header
+                  background url("../../assets/quantization/pane-header-day.png") center no-repeat
+                  .header-left
+                    color #fff
                 .pane-container
                   background #fff
+                .pane-footer
+                  background url("../../assets/quantization/pane-footer-day.png") center no-repeat
               .pane-content-row
                 width 100%
                 background #fff
+                .pane-bg
+                  background url("../../assets/quantization/pane-list-bg-day.png") center no-repeat
                 .pane-list
                   ul
                     li
@@ -812,15 +822,67 @@ export default {
                 .pane-r
                   .price-info
                     color #fff
-            /deep/
-              .el-tabs__header
-                background #fff
-              .pane-footer
-                .buy
-                  color #fff
-                  border 1px solid #fff
-                  &:hover
-                    box-shadow 0 0 1px 1px #fff
+            .my-strategy
+              background S_day_bg
+      /deep/
+        .el-input__inner
+          background-color #e9edf3
+          color S_day_main_text_color
+        .el-tabs__header
+          background #fff
+        .el-table
+          th
+            color #7d90ac
+        .pane-footer
+          .buy
+            color #fff
+            border 1px solid #fff
+            &:hover
+              box-shadow 0 0 1px 1px #fff
+        .el-dialog__wrapper.dialog-buy
+          .el-dialog
+            .el-dialog__header
+              background-color S_color3
+            .el-dialog__body
+              background S_day_bg
+              padding 40px 48px 0 48px
+              .el-form
+                .el-form-item
+                  .el-form-item__label
+                    text-align ce8nter
+                  .el-form-item__content
+                    display flex
+                    .el-input
+                      input
+                        border none
+                .duration-box
+                  margin-top -10px
+                  .duration-item
+                    background #e9edf3
+                    border 1px solid #e9edf3
+                .origin-price
+                  color #cfd5df !important
+            .el-dialog__footer
+              background S_day_bg
+              button
+                background linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+        .el-dialog__wrapper.dialog-risk
+          .el-dialog
+            background #28334a
+            .el-dialog__header
+              background-color #20293c
+              .el-dialog__title
+                color #cfd5df
+            .el-dialog__body
+              p
+                color #9da5b3
+              .el-checkbox__input
+                .el-checkbox__inner
+                  background transparent
+              .el-checkbox__label
+                color #9da5b3
+              .is-checked+.el-checkbox__label
+                color S_main_color
 </style>
 <!--<style scoped lang="scss" type="text/scss">-->
 <!--.demo-box {-->
