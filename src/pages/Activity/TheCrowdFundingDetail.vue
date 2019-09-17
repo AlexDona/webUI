@@ -209,6 +209,14 @@ export default {
     statusName () {
       return _.get(this.detail, 'statusName')
     },
+    // 当前状态码
+    statusCode () {
+      return _.get(this.detail, 'statusCode')
+    },
+    // 是否结束
+    isEnded () {
+      return this.statusCode == 'ended'
+    },
     // 参与人数
     joinUserCount () {
       return _.get(this.detail, 'joinUserCount')
@@ -219,6 +227,11 @@ export default {
       this.getCrowdFundingDetail()
       this.socket.doClose()
       this.initSocket()
+    },
+    isEnded (New) {
+      if (New) {
+        this.socket.doClose()
+      }
     }
   }
 }
