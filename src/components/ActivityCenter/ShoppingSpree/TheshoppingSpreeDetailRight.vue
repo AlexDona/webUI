@@ -447,7 +447,7 @@ export default {
     },
     // 最低持仓币种1 币种名称
     term2CoinName () {
-      return _.get(this.details, 'term1CoinName')
+      return _.get(this.details, 'term2CoinName')
     }
   },
   watch: {
