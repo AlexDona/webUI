@@ -7,8 +7,9 @@
   .global-pay-password-dialog(
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   )
+    // 交易密码
     el-dialog(
-      title="交易密码"
+      :title="$t('M.comm_password')"
       :visible="isShowGlobalPayPass_S"
       :close-on-click-modal="false"
       width="400px"
@@ -19,6 +20,8 @@
       :rules="rules"
       :ref="formRef"
       label-width="100px"
+      :autofocus="true"
+      @submit.native.prevent="'@submit.native.prevent'"
       )
         el-form-item(
         label=""
@@ -28,8 +31,9 @@
           el-input(
           type="password"
           v-model="form.payPassword"
-          :placeholder="payPasswordPlaceholder"
+          :placeholder="this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')"
           :autofocus="true"
+          @keyup.native.enter="submitForm"
           )
         el-form-item.button(
           label=""
@@ -63,7 +67,7 @@ export default {
     // 手机号校验
     let validatePaypassword = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error(`${this.payPasswordPlaceholder}`))
+        callback(new Error(`${this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')}`))
       } else {
         callback()
       }
@@ -72,7 +76,6 @@ export default {
       form: {
         payPassword: ''
       },
-      payPasswordPlaceholder: '请输入交易密码',
       rules: {
         payPassword: [
           { validator: validatePaypassword, trigger: 'blur' },
@@ -115,6 +118,7 @@ export default {
     },
     // 暂时关闭交易密码验证
     goToClosePwd () {
+      this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
       this.$goToPage('/PersonalCenter')
       this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
@@ -144,8 +148,12 @@ export default {
   .global-pay-password-dialog
     /deep/
     .el-dialog__wrapper
+      display flex
+      flex-direction column
+      justify-content center
       background-color rgba(0,0,0,0.5)
       .el-dialog
+        margin-top 0 !important
         height 240px
         border-radius 4px
         overflow hidden

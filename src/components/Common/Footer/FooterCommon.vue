@@ -213,7 +213,6 @@ export default {
   },
   updated () {
     let footerDivHeight = document.getElementById('footerDiv').clientHeigh || document.getElementById('footerDiv').offsetHeight
-    console.log(footerDivHeight)
     this.SAVE_FOOTER_HEIGHT(footerDivHeight)
   },
   // filter: {},

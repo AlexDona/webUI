@@ -5,13 +5,16 @@ import user from './user'
 import mobile from './mobile'
 import personal from './personal'
 import OTCRoutes from './OTC'
-
 const errorFor404And500 = () => import('@/pages/ErrorFor500And404')
 
 const routes = [
+  // 移动端
   ...mobile,
+  // 用户相关
   ...user,
+  // 活动相关
   ...activity,
+  // 个人中心相关
   ...personal,
   // OTC模块
   ...OTCRoutes,
