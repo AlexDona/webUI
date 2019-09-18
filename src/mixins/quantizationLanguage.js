@@ -115,7 +115,7 @@ let mixins = {
         'rotation_table_th5': this.$isChineseLanguage_G_X ? '卖手续费' : 'Selling fee',
         'rotation_table_th6': this.$isChineseLanguage_G_X ? '累计盈亏' : 'Accumulated profit and loss',
         'rotation_table_th6Tip': this.$isChineseLanguage_G_X ? '累计盈亏是指在量化市场里买卖出现的实际盈亏。' : 'Accumulated profit and loss refers to the actual profit and loss of trading in the quantitative market',
-        'rotation_chart_floatingProfit': this.$isChineseLanguage_G_X ? '浮动盈亏' : 'Floating profit and loss',
+        'rotation_chart_floatingProfit': this.$isChineseLanguage_G_X ? '累计盈亏' : 'Floating profit and loss',
         'rotation_chart_floatingTitle': this.$isChineseLanguage_G_X ? '历史盈亏走势图' : 'Historical profit and loss chart',
         'rotation_chart_titleTip1': this.$isChineseLanguage_G_X ? '初始净值：' : 'Initial net value:',
         'rotation_chart_titleTip2': this.$isChineseLanguage_G_X ? '累计盈亏：' : 'Accumulated profit and loss:',
