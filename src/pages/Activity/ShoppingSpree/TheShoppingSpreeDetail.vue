@@ -112,7 +112,10 @@ export default {
     async getShoppingSpreeDetail () {
       const params = {id: this.detailId}
       const data = await getShoppingSpreeDetailAJAX(params)
-      if (!data) return false
+      if (!data) {
+        this.$goToPage(`/${this.$routes_X.shoppingSpree}`)
+        return false
+      }
       this.details = _.get(data, 'data.details')
       this.countDown = _.get(data, 'data.countDown') - 0
     }
