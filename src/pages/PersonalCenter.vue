@@ -46,7 +46,7 @@
             :label = "$t('M.comm_mention_money') + $t('M.comm_site')"
             name = "mention-address"
           >
-            <WithdrawalAddress v-if="userCenterActiveName ==='mention-address'"/>
+            <WithdrawalAddress v-if="userCenterActiveName ==='mention-address'" style="margin-bottom: 80px"/>
           </el-tab-pane>
 
           <!--个人中心-->

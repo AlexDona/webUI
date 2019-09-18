@@ -262,6 +262,96 @@ export const formatNumberInput = (event, targetPointLength) => {
   return finalVal
 }
 
+// 限制输入正负数及小数noSymbol为true时只能输入正数及小数
+export const formatSymbolNumber = (val, targetPointLength, noSymbol) => {
+  let newVal = ''
+  let newVal2 = ''
+  let newVal3 = ''
+  let newVal4 = ''
+  let newVal5 = ''
+  let valArr = []
+  let valArr2 = []
+  let valArr3 = []
+  let valArr4 = []
+  let finalVal = ''
+  let count1 = 0
+  val = val.startsWith('.') ? val.substring(1) : val
+  // pointLength为小数点后几位
+  let count = (val.match(/\./g) || []).length// 小数点个数
+  let symbols = (val.match(/-/g) || []).length// 负数
+  if (symbols > 0 && !noSymbol) {
+    // 只允许输入一个小数点
+    if (count > 0) {
+      valArr = val.split('')
+      newVal = ''
+      valArr.forEach(item => {
+        if (item === '.') count1++
+        if (count1 < 2) newVal += item
+      })
+      valArr2 = newVal.split('')
+      newVal2 = ''
+      valArr2.forEach(item => {
+        if (item !== '.') {
+          let temp = parseFloat(item)
+          if (!isNaN(temp)) {
+            newVal2 += temp
+          }
+        } else {
+          newVal2 += item
+        }
+      })
+      valArr4 = newVal2.split('.')
+      newVal4 = valArr4[0]
+      newVal5 = newVal2.split('.')[1].substr(0, targetPointLength)
+      finalVal = '-' + newVal4 + '.' + newVal5
+    } else {
+      valArr3 = val.split('')
+      newVal3 = ''
+      valArr3.forEach(item => {
+        let temp = parseFloat(item)
+        if (!isNaN(temp)) newVal3 += temp
+      })
+      finalVal = '-' + newVal3
+    }
+  } else {
+    // 只允许输入一个小数点
+    if (count > 0) {
+      valArr = val.split('')
+      newVal = ''
+      valArr.forEach(item => {
+        if (item === '.') count1++
+        if (count1 < 2) newVal += item
+      })
+      valArr2 = newVal.split('')
+      newVal2 = ''
+      valArr2.forEach(item => {
+        if (item !== '.') {
+          let temp = parseFloat(item)
+          if (!isNaN(temp)) {
+            newVal2 += temp
+          }
+        } else {
+          newVal2 += item
+        }
+      })
+      valArr4 = newVal2.split('.')
+      newVal4 = valArr4[0]
+      newVal5 = newVal2.split('.')[1].substr(0, targetPointLength)
+      finalVal = newVal4 + '.' + newVal5
+    } else {
+      valArr3 = val.split('')
+      newVal3 = ''
+      valArr3.forEach(item => {
+        let temp = parseFloat(item)
+        if (!isNaN(temp)) newVal3 += temp
+      })
+      finalVal = newVal3
+    }
+  }
+  val = finalVal
+  return finalVal
+}
+
 /**
  * 手机号输入限制
  * @param event ： 当前input DOM 对象

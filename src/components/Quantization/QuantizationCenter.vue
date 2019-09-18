@@ -12,31 +12,100 @@
           .content-box
             .navs
               el-tabs(v-model="activeName" @tab-click="handleClick" v-if="!change")
-                el-tab-pane(label="量化市场" name="first" :class="{'d-flex': !change}")
+                // 量化市场
+                el-tab-pane(:label="languages.quantization_nav_1" name="first" :class="{'d-flex': !change}")
                   .pane-content(v-for="list in strategyList" v-if="strategyList.length")
                     .pane-header
                       .header-left {{list.strategyName}}
                       ul.header-right
-                        li.price {{list.oneMonthPrice + list.coin + '/月'}}
-                        li.price-info 包含策略使用费,平台使用费,托管者费用
+                        li.price {{list.oneMonthPrice + list.coin + `/${languages.month}`}}
+                        // 包含策略使用费,平台使用费,托管者费用
+                        li.price-info {{languages.quantization_price_info}}
                     .pane-container
                       ul.pane-ul-l
-                        li 主流币种随意选择
-                        li 自定义所选币种权重
-                        li 实时计算币种折合比特币均值
+                        // 主流币种随意选择
+                        li {{languages.quantization_pane_info1}}
+                        // 自定义所选币种权重
+                        li {{languages.quantization_pane_info2}}
+                        // 实时计算币种折合比特币均值
+                        li {{languages.quantization_pane_info3}}
                       ul.pane-ul-r
-                        li 全自动持仓减仓
-                        li 自定义精度, 交易粒度, 交易频率
-                        li 锁定利润, 平衡资金
+                        // 全自动持仓减仓
+                        li {{languages.quantization_pane_info4}}
+                        // 自定义精度, 交易粒度, 交易频率
+                        li {{languages.quantization_pane_info5}}
+                        // 锁定利润, 平衡资金
+                        li {{languages.quantization_pane_info6}}
                     .pane-footer
-                      button.buy(@click="handleDialog" :data-formData="JSON.stringify(list)") 立即购买
+                      // 立即购买
+                      button.buy(@click="handleDialog" :data-formData="JSON.stringify(list)") {{languages.quantization_pane_buy}}
                   .pane-content(v-else)
-                    .pane-container(style="width:100%") 暂无策略
+                    // 暂无策略
+                    .pane-container(style="width:100%") {{languages.quantization_no_strategies}}
                 // 我的策略
-                el-tab-pane(label="我的策略" name="second")
+                el-tab-pane(:label="languages.quantization_nav_2" name="second")
                   div.my-strategy
                     el-table(:data="myStrategyList"
                       :empty-text="$t('M.comm_no_data')"
+                      style="width: 100%")
+                      // 名称
+                      el-table-column(:label="languages.quantization_table_name")
+                        template(slot-scope = "s")
+                          div {{s.row.strategyName}}
+                      // 到期时间
+                      el-table-column(:label="languages.quantization_table_deadline")
+                        template(slot-scope = "s")
+                          div {{s.row.endTime}}
+                      // 剩余
+                      el-table-column(:label="languages.quantization_table_remains")
+                        template(slot-scope = "s")
+                          // 天
+                          div {{s.row.remainDay + languages.quantization_table_day}}
+                      // 状态
+                      el-table-column(:label="languages.quantization_table_status")
+                        template(slot-scope = "s")
+                          // 已过期 || 使用中
+                          div(:class="{'active-text': !s.row.isValid}") {{s.row.isValid ? languages.quantization_table_expire: languages.quantization_table_unexpired}}
+                      // 操作
+                      el-table-column(:label="languages.quantization_table_operation")
+                        template(slot-scope = "s")
+                          div
+                            // 查看
+                            button.check(@click="handleRotationStrategy(s.row)") {{languages.quantization_table_check}}
+                            // 续费
+                            button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") {{languages.quantization_table_fee}}
+              // 点击切换样式
+              el-tabs(v-model="activeName" @tab-click="handleClick" v-else)
+                // 量化市场
+                el-tab-pane(:label="languages.quantization_nav_1"  name="first")
+                  .pane-content-row(v-for="list in strategyList")
+                    .pane-bg {{list.strategyName}}
+                    .pane-list
+                      ul
+                        // 主流币种随意选择
+                        li {{languages.quantization_pane_info1}}
+                        // 自定义所选币种权重
+                        li {{languages.quantization_pane_info2}}
+                        // 实时计算币种折合比特币均值
+                        li {{languages.quantization_pane_info3}}
+                      ul
+                        // 全自动持仓减仓
+                        li {{languages.quantization_pane_info4}}
+                        // 自定义精度, 交易粒度, 交易频率
+                        li {{languages.quantization_pane_info5}}
+                        // 锁定利润, 平衡资金
+                        li {{languages.quantization_pane_info6}}
+                      .pane-r
+                        .price {{list.oneMonthPrice + list.coin + `/${languages.month}`}}
+                        // 包含策略使用费,平台使用费,托管者费用
+                        .price-info {{languages.quantization_price_info}}
+                        // 立即购买
+                        button.buy(@click="handleDialog" :data-formData="JSON.stringify(list)") {{languages.quantization_pane_buy}}
+                // 我的策略
+                el-tab-pane(:label="languages.quantization_nav_2" name="second")
+                  div.my-strategy
+                    el-table(:data="myStrategyList"
+                      :empty-text="languages.quantization_table_nodata"
                       style="width: 100%")
                       el-table-column(:label="'名称'")
                         template(slot-scope = "s")
@@ -49,77 +118,102 @@
                           div {{s.row.remainDay + '天'}}
                       el-table-column(:label="'状态'")
                         template(slot-scope = "s")
-                          div(:class="{'active-text': !s.row.isValid}") {{s.row.isValid ? '已过期' : '使用中'}}
-                      el-table-column(:label="'操作'")
+                          // 已过期 || 使用中
+                          div(:class="{'active-text': !s.row.isValid}") {{s.row.isValid ? languages.quantization_table_expire: languages.quantization_table_unexpired}}
+                      // 操作
+                      el-table-column(:label="languages.quantization_table_operation")
                         template(slot-scope = "s")
                           div
-                            button.check(@click="handleRotationStrategy(s.row)") 查看
-                            button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") 续费
-              // 点击切换样式
-              el-tabs(v-model="activeName" @tab-click="handleClick" v-else)
-                el-tab-pane(label="量化市场" name="first")
-                  .pane-content-row(v-for="list in strategyList")
-                    .pane-bg {{list.strategyName}}
-                    .pane-list
-                      ul
-                        li 主流币种随意选择
-                        li 自定义所选币种权重
-                        li 实时计算币种折合比特币均值
-                      ul
-                        li 全自动持仓减仓
-                        li 自定义精度, 交易粒度, 交易频率
-                        li 锁定利润, 平衡资金
-                      .pane-r
-                        .price {{list.oneMonthPrice + list.coin + '/月'}}
-                        .price-info 包含策略使用费,平台使用费,托管者费用
-                        button.buy(@click="handleDialog" :data-formData="JSON.stringify(list)") 立即购买
-                el-tab-pane(label="我的策略" name="second")
+                            // 查看
+                            button.check(@click="handleRotationStrategy(s.row)") {{languages.quantization_table_check}}
+                            // 续费
+                            button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") {{languages.quantization_table_fee}}
               span.icon-change(@click = "handleChangeLayout")
                   IconFont(:iconName= "icons" v-show="iconsVisible")
-      el-dialog(:title="'开通'" :visible.sync="dialogBuyVisible" class="dialog-buy")
+      //  开通
+      el-dialog(:title="languages.quantization_dialog_title" :visible.sync="dialogBuyVisible" class="dialog-buy")
         el-form(:model="form")
-          el-form-item(label='策略')
+          // 策略
+          el-form-item(:label='languages.quantization_dialog_strategy')
             el-input(v-model="form.strategyName" disabled)
-          el-form-item(label='时长')
+          // 时长
+          el-form-item(:label='languages.quantization_dialog_duration')
           .duration-box.display-flex
             input#btn1(type="radio" name="duration" :value="[dialogData.oneMonthPrice, dialogData.oneMonthPrice,  {validMonth: 1}]" v-model="monthPrice")
-            label.duration-item(for="btn1") 1个月
-            el-badge(value="推荐" class="item")
-              input#btn2(type="radio" checked="checked" :value="[dialogData.threeMonthPrice, (dialogData.oneMonthPrice * 3).toFixed(5), {validMonth: 3}]" v-model="monthPrice" name="duration")
-              label.duration-item(for="btn2") 3个月
+            label.duration-item(for="btn1") 1{{languages.quantization_dialog_per_month}}
+            // 推荐
+            el-badge(:value="languages.quantization_dialog_recommendation" class="item")
+              input#btn2(type="radio" name="duration" checked="checked" :value="[dialogData.threeMonthPrice, (dialogData.oneMonthPrice * 3).toFixed(5), {validMonth: 3}]" v-model="monthPrice")
+              label.duration-item(for="btn2") 3{{languages.quantization_dialog_per_month}}
             input#btn3(type="radio" name="duration"  :value="[dialogData.sixMonthPrice, (dialogData.oneMonthPrice * 6).toFixed(5),  {validMonth: 6}]" v-model="monthPrice")
-            label.duration-item(for="btn3") 6个月
+            label.duration-item(for="btn3") 6{{languages.quantization_dialog_per_month}}
             input#btn4(type="radio" name="duration" :value="[dialogData.twelveMonthPrice, (dialogData.oneMonthPrice * 12).toFixed(5),  {validMonth: 12}]" v-model="monthPrice")
-            label.duration-item(for="btn4") 12个月
-          el-form-item.pay(label='支付')
+            label.duration-item(for="btn4") 12{{languages.quantization_dialog_per_month}}
+          // 支付
+          el-form-item.pay(:label="languages.quantization_dialog_payment")
           .cut-price {{monthPrice[0] + ' ' + dialogData.coin}}
-            s.origin-price 原价{{monthPrice[1] + ' ' + dialogData.coin}}
+            s.origin-price {{languages.quantization_dialog_origin_price + monthPrice[1] + ' ' + dialogData.coin}}
           .remains
-            span 可用：{{balance}}
-            a(href="javascript:void(0)" @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')") 立即充值
+            // 可用
+            span {{languages.quantization_dialog_remain_price + balance}}
+            // 立即充值
+            a(href="javascript:void(0)" @click.stop="jumpToPersonalCenter('assets', 'buy', 'recharge')") {{languages.quantization_dialog_charge}}
         div(slot="footer" class="dialog-footer")
-          el-button(type="primary" @click="handleSubmit") 确认
+          // 确认
+          el-button(type="primary" @click="handleSubmit") {{languages.quantization_button_confirm}}
       PayPassDialog(@next="buySubmit")
-</template>
+      // 协议
+      // 量化市场风险提示
+      el-dialog.dialog-risk(:title="languages.quantization_prompt_title"
+        :visible.sync="isRememberStatus"
+        :close-on-click-modal="false"
+        :show-close="false")
+        .prompt-risk
+          // 1.量化市场就各项服务、安全、无误、及不中断不负担任何明示或默示的保证责任。您同意承担使用本网站该项服务的所有风险及因该风险可能造成的任何损害。
+          p {{languages.quantization_prompt_p1}}
+          p {{languages.quantization_prompt_p2}}
+          p {{languages.quantization_prompt_p3}}
+          p {{languages.quantization_prompt_p4}}
+          p {{languages.quantization_prompt_p5}}
+          p {{languages.quantization_prompt_p6}}
+          p {{languages.quantization_prompt_p7}}
+          p {{languages.quantization_prompt_p8}}
+          p {{languages.quantization_prompt_p9}}
+          p {{languages.quantization_prompt_p10}}
+          p {{languages.quantization_prompt_p11}}
+          p {{languages.quantization_prompt_p12}}
+        .check-box
+          // 同意协议
+          el-checkbox(v-model="isChecked") {{languages.quantization_prompt_agreement}}
+        div(slot="footer" class="dialog-footer")
+          el-button(type="primary" @click="handleConfirmPrompt") {{languages.quantization_button_confirm}}
+</template>4
 <script>
 import IconFont from '../Common/IconFontCommon'
+import languages from '../../mixins/quantizationLanguage'
 import RotationStrategy from '../Quantization/RotationStrategy'
-import {getStrategyList, getMyStrategyList, getBuyDialogList, buyStrategy} from '../../utils/api/quantizationCenter'
-import {getPushTotalByCoinId} from '../../utils/api/personal'
-import {mapState, mapMutations, mapActions} from 'vuex'
-import {routesVariable} from '../../router/routesVariable'
+import { getStrategyList, getMyStrategyList, getBuyDialogList, buyStrategy } from '../../utils/api/quantizationCenter'
+import { getPushTotalByCoinId } from '../../utils/api/personal'
+import { mapState, mapMutations, mapActions } from 'vuex'
+import { routesVariable } from '../../router/routesVariable'
+import { isNeedPayPasswordAjax } from '../../utils/commonFunc'
 export default {
   // !!! 注意 !!! 如需要相关声明周期或方法，请放开注释(默认处于注释状态)
   // name 为必填项
   name: 'quantization-center',
-  // mixins: [],
+  mixins: [languages],
   components: {
     IconFont,
     RotationStrategy
   },
   // props,
   data () {
+    const status = !sessionStorage.getItem('REMEMBER_STATUS')
+    const isRememberStatus = status || !sessionStorage.getItem('REMEMBER_STATUS')
     return {
+      dialogRiskPrompt: true,
+      isChecked: false,
+      isRememberStatus: isRememberStatus,
       activeName: '',
       change: false,
       // 默认图标
@@ -129,9 +223,14 @@ export default {
       currentNum: 1,
       pageSize: 10,
       userId: '',
-      strategyList: [],
+      strategyList: [{
+        strategyName: '--',
+        oneMonthPrice: '--',
+        coin: '--'
+      }],
       myStrategyList: [],
       dialogBuyVisible: false,
+      isNeedPayPassword: true,
       form: {
       },
       // 弹出窗数据
@@ -163,11 +262,19 @@ export default {
       'UPDATE_PAY_PASSWORD_DIALOG_M',
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'UPDATE_PAY_PASSWORD_M',
-      'SET_FORM_STRATEGY_DATA'
+      'SET_FORM_STRATEGY_DATA',
+      'UPDATE_MY_STRATERGY_DATA'
     ]),
     ...mapActions([
+      'MY_STRATEGY_ACTION',
       'SEARCH_STRATEGY_ACTION'
     ]),
+    handleConfirmPrompt () {
+      if (this.isChecked) {
+        this.isRememberStatus = false
+        sessionStorage.setItem('REMEMBER_STATUS', 'false')
+      }
+    },
     handleClick (tab, event) {
       console.log(tab, event)
       if (tab.index) {
@@ -189,7 +296,7 @@ export default {
       this.form = JSON.parse(e.target.dataset.formdata)
       this.getBuyDialogList()
     },
-    // 跳转个人中心方法
+    // 跳转个人中心充币方法
     async jumpToPersonalCenter (target, tradType, type) {
       const buyCoinId = +this.form.coinId
       if (tradType === 'buy') {
@@ -216,13 +323,13 @@ export default {
         pageNumber: this.currentNum // 当前页码
       })
       if (!data) return false
-      this.strategyList = _.get(data.data, 'list')
+      this.strategyList = _.get(data, 'data.list')
     },
     // 策略列表分页
     async getMyStrategyList () {
-      let data = await getMyStrategyList({
+      const data = await getMyStrategyList({
         pageSize: this.pageSize, // 每页显示条数
-        pageNumber: this.currentNum, // 当前页码
+        pageNumber: this.pageNumber, // 当前页码
         userId: this.userInfo.userId
       })
       if (!data) return false
@@ -249,10 +356,16 @@ export default {
       this.getBalance() // 获取余额
     },
     // 提交购买
-    handleSubmit () {
+    async handleSubmit () {
       this.dialogBuyVisible = !this.dialogBuyVisible
-      // 支付密码弹窗
-      this.UPDATE_PAY_PASSWORD_DIALOG_M(true)
+      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
+      if (this.isNeedPayPassword) {
+        // 支付密码弹窗
+        this.UPDATE_PAY_PASSWORD_DIALOG_M(true)
+      } else {
+        this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
+        await this.buySubmit()
+      }
     },
     async buySubmit () {
       let data = await buyStrategy({
@@ -266,6 +379,7 @@ export default {
       this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
     },
     async searchStrategy (formData) {
+      // 查看策略
       await this.SEARCH_STRATEGY_ACTION(formData)
       /* let data = await searchStrategy({
         strategyUserId: formData.id
@@ -279,6 +393,8 @@ export default {
       })
     },
     handleRotationStrategy (formData) {
+      // 查看策略更新当前策略数据缓存
+      this.UPDATE_MY_STRATERGY_DATA(formData)
       this.searchStrategy(formData)
     }
   },
@@ -318,6 +434,7 @@ export default {
             background url('../../assets/quantization/banner.png') center no-repeat
             height 229px
         >.content
+          margin-top 30px
           margin-bottom 200px
           >.content-box
             width 1300px
@@ -335,7 +452,6 @@ export default {
                   padding 0 23px
                   display flex
                   height 90px
-                  background url("../../assets/quantization/pane-header.png") center no-repeat
                   background-size cover
                   >.header-left
                     flex 1
@@ -377,7 +493,6 @@ export default {
                     height 90px
                     line-height 90px
                     text-align right
-                    background url("../../assets/quantization/pane-footer.png") center no-repeat
                     .buy
                       buttonBuy()
               .pane-content-row
@@ -391,7 +506,6 @@ export default {
                   font-size 18px
                   font-weight bold
                   color #fff
-                  background url("../../assets/quantization/pane-list-bg.png") center no-repeat
                 .pane-list
                   box-sizing border-box
                   display flex
@@ -452,15 +566,13 @@ export default {
                 margin-top 42px
               .el-table
                 font-size 12px
-                th
-                  color #a9beD4
                 td
                   border none
                 .el-table__empty-block
                   height 278px
     /deep/
       // 弹窗样式
-      .el-dialog__wrapper
+      .el-dialog__wrapper.dialog-buy
         background-color rgba(0, 0, 0, .5)
         .el-dialog
           margin-top 25vh !important
@@ -481,7 +593,6 @@ export default {
             .el-form
               .el-form-item
                 .el-form-item__label
-                  color #cfd5df
                   text-align center
                 .el-form-item__content
                   display flex
@@ -532,14 +643,35 @@ export default {
                   padding-left 20px
           .el-input__inner
             font-size 12px
-            background-color #1a2233
             border-color #485776
-            color #fff
           .el-dialog__footer
             padding 40px 48px
             button
               width 100%
               height 34px
+              border none
+      // 协议弹窗
+      .el-dialog__wrapper.dialog-risk
+        background-color rgba(0, 0, 0, .5)
+        .el-dialog
+          width 903px
+          .el-dialog__header
+            text-align center
+          .el-dialog__body
+            .prompt-risk
+              p
+                font-size 12px
+                line-height 24px
+            .check-box
+              text-align center
+              margin-top 21px
+          .el-dialog__footer
+            padding 0 48px 20px
+            text-align center
+            button
+              width 100px
+              height 30px
+              line-height 8px
               border none
     &.night
       .inner-box
@@ -547,13 +679,19 @@ export default {
           .content-box
             .navs
               .pane-content
-                .header-left
-                  color #338ff5
+                .pane-header
+                  background url("../../assets/quantization/pane-header.png") center no-repeat
+                  .header-left
+                    color #338ff5
                 .pane-container
                   background #1c1f32
+                .pane-footer
+                  background url("../../assets/quantization/pane-footer.png") center no-repeat
               .pane-content-row
                 width 100%
                 background #1c1f32
+                .pane-bg
+                  background url("../../assets/quantization/pane-list-bg.png") center no-repeat
                 .pane-list
                   ul
                     li
@@ -564,15 +702,25 @@ export default {
             .my-strategy
                 background #1c1f32
       /deep/
+        .el-input__inner
+          background #1a2233
+          color #fff
         .el-tabs__header
           background #1c1f32
+        .el-table
+          th
+            color #a9bed4
         .pane-footer
           .buy
             color #338ff5
             border 1px solid #338ff5
             &:hover
               box-shadow 0 0 1px 1px #338ff5
-        .el-dialog__wrapper
+        .el-dialog__footer
+          background #28334a
+          button
+            background linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+        .el-dialog__wrapper.dialog-buy
           .el-dialog
             background #28334a
             .el-dialog__header
@@ -600,10 +748,23 @@ export default {
                     color #fff
                 .origin-price
                   color #cfd5df !important
-            .el-dialog__footer
-              background #28334a
-              button
-                background linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+        .el-dialog__wrapper.dialog-risk
+          .el-dialog
+            background #28334a
+            .el-dialog__header
+              background-color #20293c
+              .el-dialog__title
+                color #cfd5df
+            .el-dialog__body
+              p
+                color #9da5b3
+              .el-checkbox__input
+                .el-checkbox__inner
+                  background transparent
+              .el-checkbox__label
+                color #9da5b3
+              .is-checked+.el-checkbox__label
+                color S_main_color
         .el-table
           th.is-leaf
             padding 32px 0 23px 0
@@ -641,13 +802,19 @@ export default {
           .content-box
             .navs
               .pane-content
-                .header-left
-                  color #fff
+                .pane-header
+                  background url("../../assets/quantization/pane-header-day.png") center no-repeat
+                  .header-left
+                    color #fff
                 .pane-container
                   background #fff
+                .pane-footer
+                  background url("../../assets/quantization/pane-footer-day.png") center no-repeat
               .pane-content-row
                 width 100%
                 background #fff
+                .pane-bg
+                  background url("../../assets/quantization/pane-list-bg-day.png") center no-repeat
                 .pane-list
                   ul
                     li
@@ -655,15 +822,67 @@ export default {
                 .pane-r
                   .price-info
                     color #fff
-            /deep/
-              .el-tabs__header
-                background #fff
-              .pane-footer
-                .buy
-                  color #fff
-                  border 1px solid #fff
-                  &:hover
-                    box-shadow 0 0 1px 1px #fff
+            .my-strategy
+              background S_day_bg
+      /deep/
+        .el-input__inner
+          background-color #e9edf3
+          color S_day_main_text_color
+        .el-tabs__header
+          background #fff
+        .el-table
+          th
+            color #7d90ac
+        .pane-footer
+          .buy
+            color #fff
+            border 1px solid #fff
+            &:hover
+              box-shadow 0 0 1px 1px #fff
+        .el-dialog__wrapper.dialog-buy
+          .el-dialog
+            .el-dialog__header
+              background-color S_color3
+            .el-dialog__body
+              background S_day_bg
+              padding 40px 48px 0 48px
+              .el-form
+                .el-form-item
+                  .el-form-item__label
+                    text-align ce8nter
+                  .el-form-item__content
+                    display flex
+                    .el-input
+                      input
+                        border none
+                .duration-box
+                  margin-top -10px
+                  .duration-item
+                    background #e9edf3
+                    border 1px solid #e9edf3
+                .origin-price
+                  color #cfd5df !important
+            .el-dialog__footer
+              background S_day_bg
+              button
+                background linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+        .el-dialog__wrapper.dialog-risk
+          .el-dialog
+            background #28334a
+            .el-dialog__header
+              background-color #20293c
+              .el-dialog__title
+                color #cfd5df
+            .el-dialog__body
+              p
+                color #9da5b3
+              .el-checkbox__input
+                .el-checkbox__inner
+                  background transparent
+              .el-checkbox__label
+                color #9da5b3
+              .is-checked+.el-checkbox__label
+                color S_main_color
 </style>
 <!--<style scoped lang="scss" type="text/scss">-->
 <!--.demo-box {-->
