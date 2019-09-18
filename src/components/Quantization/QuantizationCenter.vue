@@ -16,7 +16,7 @@
                 el-tab-pane(:label="languages.quantization_nav_1" name="first" :class="{'d-flex': !change}")
                   .pane-content(v-for="list in strategyList" v-if="strategyList.length")
                     .pane-header
-                      .header-left {{list.strategyName}}
+                      .header-left {{$isChineseLanguage_G_X? list.strategyName: list.strategyEnName}}
                       ul.header-right
                         li.price {{list.oneMonthPrice + list.coin + `/${languages.month}`}}
                         // 包含策略使用费,平台使用费,托管者费用
@@ -51,7 +51,7 @@
                       // 名称
                       el-table-column(:label="languages.quantization_table_name")
                         template(slot-scope = "s")
-                          div {{s.row.strategyName}}
+                          div {{$isChineseLanguage_G_X? s.row.strategyName: s.row.strategyEnName}}
                       // 到期时间
                       el-table-column(:label="languages.quantization_table_deadline")
                         template(slot-scope = "s")
@@ -109,7 +109,7 @@
                       style="width: 100%")
                       el-table-column(:label="'名称'")
                         template(slot-scope = "s")
-                          div {{s.row.strategyName}}
+                          div {{$isChineseLanguage_G_X? s.row.strategyName: s.row.strategyEnName}}
                       el-table-column(:label="'到期时间'")
                         template(slot-scope = "s")
                           div {{s.row.endTime}}
@@ -169,6 +169,7 @@
         :close-on-click-modal="false"
         :show-close="false")
         .prompt-risk
+          header {{languages.quantization_prompt_pTitle}}
           // 1.量化市场就各项服务、安全、无误、及不中断不负担任何明示或默示的保证责任。您同意承担使用本网站该项服务的所有风险及因该风险可能造成的任何损害。
           p {{languages.quantization_prompt_p1}}
           p {{languages.quantization_prompt_p2}}
@@ -186,7 +187,7 @@
           // 同意协议
           el-checkbox(v-model="isChecked") {{languages.quantization_prompt_agreement}}
         div(slot="footer" class="dialog-footer")
-          el-button(type="primary" @click="handleConfirmPrompt") {{languages.quantization_button_confirm}}
+          el-button(type="primary" @click="handleConfirmPrompt") {{languages.quantization_button_sure}}
 </template>4
 <script>
 import IconFont from '../Common/IconFontCommon'
@@ -470,23 +471,25 @@ export default {
                       color #fff
                       font-size 12px
                 >.pane-container
+                   display flex
                    padding 55px 35px
                    overflow hidden
                    .pane-ul-l
+                     width 266px
                      float left
                      color #9da5b3
                      li
                       font-size 14px
-                      line-height 48px
-                      list-style-position inside
+                      line-height 40px
+                      list-style-position outside
                       list-style-image url('../../assets/quantization/dot.png')
                    .pane-ul-r
                       float right
                       color #9da5b3
                       li
                         font-size 14px
-                        line-height 48px
-                        list-style-position inside
+                        line-height 40px
+                        list-style-position outside
                         list-style-image url('../../assets/quantization/dot.png')
                 >.pane-footer
                     padding 0 20px
@@ -514,10 +517,11 @@ export default {
                   padding 30px 30px 0 71px
                   height 190 px
                   ul
+                    padding-right 26px
                     li
                       font-size 14px
-                      line-height 48px
-                      list-style-position inside
+                      line-height 36px
+                      list-style-position outside
                       list-style-image url('../../assets/quantization/dot.png')
                   >.pane-r
                     text-align right
@@ -528,7 +532,6 @@ export default {
                       font-size 12px
                     .buy
                       buttonBuy()
-                      margin-top 26px
                       color #338ff5
                       border 1px solid #338ff5
                       &:hover
@@ -552,6 +555,7 @@ export default {
                 width 166px
                 text-align center
                 font-weight bold
+                padding-left 10px
                 color #9a9eb0
                 font-size 16px
               .el-tabs__item.is-active
@@ -659,6 +663,8 @@ export default {
             text-align center
           .el-dialog__body
             .prompt-risk
+              p:nth-of-type(1)
+                font-weight bold
               p
                 font-size 12px
                 line-height 24px
@@ -756,15 +762,28 @@ export default {
               .el-dialog__title
                 color #cfd5df
             .el-dialog__body
+              padding 10px 28px 0 28px
+              header
+                color #9da5b3
+                font-weight bold
               p
+                text-indent 24px
                 color #9da5b3
               .el-checkbox__input
                 .el-checkbox__inner
                   background transparent
+              .el-checkbox__inner::after
+                border-color S_main_color
               .el-checkbox__label
                 color #9da5b3
               .is-checked+.el-checkbox__label
                 color S_main_color
+            .el-dialog__footer
+              margin-top 15px
+              padding 15px 20px
+              border-top 1px solid S_color8
+              button
+                background linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
         .el-table
           th.is-leaf
             padding 32px 0 23px 0
@@ -841,6 +860,7 @@ export default {
               box-shadow 0 0 1px 1px #fff
         .el-dialog__wrapper.dialog-buy
           .el-dialog
+            background S_day_bg
             .el-dialog__header
               background-color S_color3
             .el-dialog__body
@@ -849,7 +869,7 @@ export default {
               .el-form
                 .el-form-item
                   .el-form-item__label
-                    text-align ce8nter
+                    text-align center
                   .el-form-item__content
                     display flex
                     .el-input
@@ -863,26 +883,39 @@ export default {
                 .origin-price
                   color #cfd5df !important
             .el-dialog__footer
-              background S_day_bg
               button
-                background linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%)
+                background linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%)
         .el-dialog__wrapper.dialog-risk
           .el-dialog
-            background #28334a
+            background S_day_bg
             .el-dialog__header
-              background-color #20293c
+              background-color S_color3
               .el-dialog__title
-                color #cfd5df
+                color S_day_main_text_color
+                font-weight bold
             .el-dialog__body
+              padding 10px 28px 0 28px
+              header
+                color #9da5b3
+                font-weight bold
               p
+                text-indent 24px
                 color #9da5b3
               .el-checkbox__input
                 .el-checkbox__inner
                   background transparent
+              .el-checkbox__inner::after
+                border-color S_main_color
               .el-checkbox__label
                 color #9da5b3
               .is-checked+.el-checkbox__label
                 color S_main_color
+            .el-dialog__footer
+              margin-top 15px
+              padding 15px 20px
+              border-top 1px solid #e2e3e8
+              button
+                background linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%)
 </style>
 <!--<style scoped lang="scss" type="text/scss">-->
 <!--.demo-box {-->

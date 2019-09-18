@@ -90,7 +90,7 @@ export default {
       countDownTime: 0
     }
   },
-  created () {},
+  // created () {},
   // mounted () {}
   // updated () {},
   // beforeRouteUpdate () {},

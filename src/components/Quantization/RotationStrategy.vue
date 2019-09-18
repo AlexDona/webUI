@@ -13,7 +13,7 @@
           .navs
             // 我的策略
             a.nav-list1(@click.prevent="handleToQuantization") {{languages.quantization_nav_2}} &nbsp;>&nbsp;
-            span.nav-list2 {{strategyData.strategyName}}
+            span.nav-list2 {{$isChineseLanguage_G_X? strategyData.strategyName: strategyData.strategyEnName}}
           .navs-detail
             el-form.form1
               // 时间
@@ -505,7 +505,7 @@
               el-collapse-transition
                 el-form.form3(v-show="chartVisible")
                   // 浮动盈亏
-                  el-form-item(:label="languages.rotation_table_floatingProfit" label-width="80px")
+                  el-form-item(:label="languages.rotation_chart_floatingProfit" label-width="80px")
                     .floating-panel
                       div(v-for="(item, index) in savedCoinList")
                         input(:id="'panel' + index" type="radio" name="panel" :checked="index===0")
@@ -513,12 +513,10 @@
                   .echarts-title
                     h5 {{languages.rotation_chart_floatingTitle}}
                     .echarts-title-des
-                      span.des {{languages.rotation_chart_titleTip1}}
-                        span.des-details 5000BTC
                       span.des {{languages.rotation_chart_titleTip2}}
                         span.des-details {{totalProfit}}
                       span.des {{languages.rotation_chart_titleTip3}}
-                        span.des-details 1.253FBT
+                        span.des-details {{averagePrice}}
                   div(id="echarts-content")
 
 </template>
@@ -558,6 +556,7 @@ export default {
       searchData: searchData,
       iconRoate: 'icon-roate',
       iconNormal: 'icon-normal',
+      averagePrice: '--', // 均价
       paramsContent: [{
         visibleStatus: false,
         paramsForm: {
@@ -931,7 +930,6 @@ export default {
       }
     },
     async updateStrategyDetails (coinInfo, unSavedCoinList) {
-      // console.log(typeof this.strategyData.id)
       let formData = new FormData()
       formData.append('strategySettingId', this.searchData.id)
       formData.append('coinInfo', JSON.stringify(coinInfo))
@@ -955,7 +953,6 @@ export default {
         const data = await activeStrategy(formData)
         if (!data) return false
         this.isOpen = !this.isOpen // 改变按钮样式
-        console.log(data)
       } else {
         this.$message({
           showClose: true,
@@ -979,14 +976,16 @@ export default {
       })
       if (!data) {
         return false
-      } else if (data.length) {
-        const totalProfitData = _.get(data, 'data').slice(-1)[0]
-        this.totalProfit = totalProfitData.historyYield + totalProfitData.tradeName // 累计盈亏
-        this.chartData = _.get(data, 'data')
-        this.tendData()
       } else {
-        this.renderChart()
+        if (_.get(data, 'data.tradeLogList').length) {
+          const totalProfitData = _.get(data, 'data.tradeLogList').slice(-1)[0]
+          this.chartData = _.get(data, 'data.tradeLogList')
+          this.averagePrice = _.get(data, 'data.avgPrice') || '--' + totalProfitData.tradeName
+          this.totalProfit = totalProfitData.historyYield + totalProfitData.tradeName // 累计盈亏
+          this.tendData()
+        }
       }
+      this.renderChart()
     },
     handleStorage: _.throttle(function () {
       let symbolsArray = []
@@ -1052,8 +1051,8 @@ export default {
       this.isEmpty = false// 重置参数判断
     }, 1000),
     handleChartView ($item) {
+      this.chartData = [] // 点击交易对清空图表数据
       this.profitAndLoss($item)
-      this.renderChart()
     },
     // 走势图数据处理
     tendData () {
@@ -1071,7 +1070,6 @@ export default {
       targetList[0] = xs
       targetList[1] = ys
       this.chartData = targetList
-      this.renderChart()
     },
     // 绘制图表
     renderChart () {
@@ -1128,10 +1126,16 @@ export default {
       deep: true
     },
     chartData (New) {
-      const [xs, ys] = New
-      this.chartOptions.xAxis.data = xs
-      this.chartOptions.series[0].data = ys
-      this.renderChart()
+      if (New.length) {
+        const [xs, ys] = New
+        this.chartOptions.xAxis.data = xs
+        this.chartOptions.series[0].data = ys
+        this.renderChart()
+      } else {
+        this.chartOptions.xAxis.data = []
+        this.chartOptions.series[0].data = []
+        this.renderChart()
+      }
     }
   }
 }
@@ -1142,7 +1146,6 @@ export default {
   .container
     >.inner-box
       >.banner-box
-        background #110c38
         >.banner
           background url('../../assets/quantization/banner.png') center no-repeat
           height 229px
@@ -1264,7 +1267,9 @@ export default {
                   width 100%
                   font-size 12px
                   .header-cell
-                    padding 10px 60px
+                    text-align center
+                    padding 10px 0
+                    width 160px
                     white-space nowrap
                     .warn
                       margin-top -5px
@@ -1335,7 +1340,7 @@ export default {
             width 192px
   &.night
     .content-box
-      box-shadow 0 2px 2px 0 rgba(20, 23, 37, 1)
+      box-shadow 1px -1px 2px 0 rgba(20, 23, 37, 1)
       .navs
         background S_night_main_bg
         border-bottom 1px solid #141725
@@ -1409,18 +1414,98 @@ export default {
             >.des
               >.des-details
                 color S_night_main_text_color
+    /deep/
+      .el-form-item__label
+        color #fff
+      .el-input__inner
+        background S_color1
+        .el-range-separator
+          color S_night_main_text_color
+  &.day
+    .content-box
+      box-shadow 1px -1px 2px 0 S_color4
+      .navs
+        background S_day_bg
+        border-bottom 1px solid S_color4
+      .navs-detail
+        background S_day_bg
+      .el-form.form1
+        // 网格策略
+        .grid-strategy
+          /deep/
+            .el-input.is-disabled
+              .el-input__inner
+                background S_day_bg1
+                border 1px solid S_color4
+            .el-form-item__content
+              border 1px solid S_color4 !important
+              .params-header
+                border-bottom 1px solid S_color4
+              .params-content
+                color S_color21
+                .params-content-header
+                  border-bottom 1px solid S_color4
+                .params-content-content
+                  .el-form
+                    .el-form-item__label
+                      color S_color2
+        .trend-strategy
+          /deep/
+          .el-input-group
+            .el-input-group__append
+              border none
+              background #cbddf4
+              color S_main_color
+        .annotation
+          .annotation-content
+            background #eff6fe
+            color S_color2
+        .footer-btns
+          .savedPaused
+            footStyles()
+            background #b8c3d2 !important
+            color #ececec !important
+            cursor not-allowed !important
+        .bottom-hints
+          p
+            color S_color2
+        .el-form.form2
+          border-top 1px solid S_color4
+          border-bottom  1px solid S_color4
+        .el-form-item
+          .accounts-info-content
+            border 1px solid S_color4
+            .header-cell
+              color S_color2
+        .el-form-item
+          .floating-panel
+            input
+              &:unchecked+.panel-item
+                border 1px solid S_color4
+                color S_color2
+            .panel-item
+              border 1px solid S_color4
+              color S_color2
+        .echarts-title
+          h5
+            color S_main_color
+          .echarts-title-des
+            color S_color5
+            >.des
+              >.des-details
+                color S_color2
+    /deep/
+      .el-input__inner
+        border 1px solid S_color4
+        background S_day_bg
+        .el-range-separator
+          color S_night_main_text_color
   /deep/
     .el-range-input
       color S_night_main_text_color
-    .el-form-item__label
-      color #fff
-    .el-input__inner
-      background S_color1
-      .el-range-separator
-        color S_night_main_text_color
-  .popover-color
-    font-size 12px
-    color S_main_color
+    .popover-color
+      font-size 12px
+      color S_main_color
 </style>
 <!--<style scoped lang="scss" type="text/scss">-->
 <!--.demo-box {-->
