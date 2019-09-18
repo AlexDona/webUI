@@ -7,7 +7,7 @@
   .the-queuing-loading(v-show="isShow")
     .loader
       span.spinner
-    .text {{$isChineseLanguage_G_X ? '当前抢购人数过多，正在排队，请耐心等待...' : ''}}
+    .text {{$isChineseLanguage_G_X ? '当前抢购人数过多，正在排队，请耐心等待...' : 'At present, the number of people buying is too large. They are queuing. Please wait patiently.'}}
 </template>
 <script>
 export default {

@@ -123,7 +123,7 @@ export default {
       return this.details
     },
     tips () {
-      return this.$isChineseLanguage_G_X ? '温馨提示：数字资产为创新型资产，具有价格波动较大的特性。请理性判断，慎重选择投资决策！' : ''
+      return this.$isChineseLanguage_G_X ? '温馨提示：数字资产为创新型资产，具有价格波动较大的特性。请理性判断，慎重选择投资决策！' : 'Tips: Digital assets are innovative assets with the characteristics of large price fluctuations.  Please make rational judgments and choose investment decisions carefully!'
     },
     // 活动简介
     projectDesc () {

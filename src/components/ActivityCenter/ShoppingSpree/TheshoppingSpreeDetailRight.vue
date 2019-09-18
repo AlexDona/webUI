@@ -276,11 +276,11 @@ export default {
       const status = ['coming', 'ongoing', 'ended']
       const statusMap = {
         // 即将开始
-        [status[0]]: this.$isChineseLanguage_G_X ? '即将开始' : '',
+        [status[0]]: this.$isChineseLanguage_G_X ? '即将开始' : 'Coming soon',
         // 立即抢购
-        [status[1]]: this.$isChineseLanguage_G_X ? '立即抢购' : '',
+        [status[1]]: this.$isChineseLanguage_G_X ? '立即抢购' : 'Purchase Now',
         // 已结束
-        [status[2]]: this.$isChineseLanguage_G_X ? '已结束' : ''
+        [status[2]]: this.$isChineseLanguage_G_X ? '已结束' : 'Over'
       }
       this.buttonText = this.$t(statusMap[this.status])
     },

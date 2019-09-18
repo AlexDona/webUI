@@ -201,8 +201,10 @@ export default {
       if (!time) return
       const date = `${time.split(' ')[0]}`
       const filterTime = `${time.split(' ')[1]}`
-
-      return this.$isChineseLanguage_G_X ? `${date.split('-')[1]}月${date.split('-')[2]}日 ${filterTime.split(':')[0]}:${filterTime.split(':')[1]}` : `${date.split('-')[1]} Month ${date.split('-')[2]} Day ${filterTime.split(':')[0]}:${filterTime.split(':')[1]}`
+      const chnSplit = ['月', '日']
+      const enSplit = ['Mon', 'Day']
+      const targetStr = `${date.split('-')[1]} {} ${date.split('-')[2]} {} ${filterTime.split(':')[0]}:${filterTime.split(':')[1]}`
+      return targetStr.format(this.$isChineseLanguage_G_X ? chnSplit : enSplit)
     },
     // 结束时间
     endTime () {
@@ -210,8 +212,10 @@ export default {
       if (!time) return
       const date = `${time.split(' ')[0]}`
       const filterTime = `${time.split(' ')[1]}`
-
-      return `${date.split('-')[1]}月${date.split('-')[2]}日 ${filterTime.split(':')[0]}:${filterTime.split(':')[1]}`
+      const chnSplit = ['月', '日']
+      const enSplit = ['Mon', 'Day']
+      const targetStr = `${date.split('-')[1]} {} ${date.split('-')[2]} {} ${filterTime.split(':')[0]}:${filterTime.split(':')[1]}`
+      return targetStr.format(this.$isChineseLanguage_G_X ? chnSplit : enSplit)
     }
   },
   watch: {
@@ -313,6 +317,7 @@ export default {
           font-size 14px
           color #66718F
           width 50%
+          max-width 215px
           >.label
             color #66718F
             line-height 35px
@@ -324,6 +329,7 @@ export default {
             color S_main_color
             font-weight 700
         >.right
+          max-width 215px
           color #66718F
           line-height 30px
           >.label
