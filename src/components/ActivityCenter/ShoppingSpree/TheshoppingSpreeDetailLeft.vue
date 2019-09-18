@@ -189,12 +189,6 @@ export default {
     amount () {
       return _.get(this.details, 'amount')
     },
-    // 开始时间戳
-    startTimestamp () {
-      const time = _.get(this.details, 'startTime')
-      const finalTime = new Date(time).getTime()
-      return finalTime
-    },
     // 开始时间
     startTime () {
       const time = _.get(this.details, 'startTime')
