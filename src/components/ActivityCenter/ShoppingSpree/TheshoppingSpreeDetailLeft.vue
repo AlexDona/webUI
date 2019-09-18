@@ -256,6 +256,8 @@ export default {
         color #fff
         font-size 24px
         margin-bottom 40px
+        max-width 430px
+        overflow-wrap break-word
       /* 进度条 */
       >.progress
         >.label
