@@ -13,7 +13,7 @@
           .navs
             // 我的策略
             a.nav-list1(@click.prevent="handleToQuantization") {{languages.quantization_nav_2}} &nbsp;>&nbsp;
-            span.nav-list2 {{strategyData.strategyName}}
+            span.nav-list2 {{$isChineseLanguage_G_X? strategyData.strategyName: strategyData.strategyEnName}}
           .navs-detail
             el-form.form1
               // 时间
@@ -513,12 +513,10 @@
                   .echarts-title
                     h5 {{languages.rotation_chart_floatingTitle}}
                     .echarts-title-des
-                      span.des {{languages.rotation_chart_titleTip1}}
-                        span.des-details 5000BTC
                       span.des {{languages.rotation_chart_titleTip2}}
                         span.des-details {{totalProfit}}
                       span.des {{languages.rotation_chart_titleTip3}}
-                        span.des-details 1.253FBT
+                        span.des-details {{averagePrice}}
                   div(id="echarts-content")
 
 </template>
@@ -558,6 +556,7 @@ export default {
       searchData: searchData,
       iconRoate: 'icon-roate',
       iconNormal: 'icon-normal',
+      averagePrice: '--', // 均价
       paramsContent: [{
         visibleStatus: false,
         paramsForm: {
@@ -931,7 +930,6 @@ export default {
       }
     },
     async updateStrategyDetails (coinInfo, unSavedCoinList) {
-      // console.log(typeof this.strategyData.id)
       let formData = new FormData()
       formData.append('strategySettingId', this.searchData.id)
       formData.append('coinInfo', JSON.stringify(coinInfo))
@@ -955,7 +953,6 @@ export default {
         const data = await activeStrategy(formData)
         if (!data) return false
         this.isOpen = !this.isOpen // 改变按钮样式
-        console.log(data)
       } else {
         this.$message({
           showClose: true,
@@ -979,14 +976,16 @@ export default {
       })
       if (!data) {
         return false
-      } else if (data.length) {
-        const totalProfitData = _.get(data, 'data').slice(-1)[0]
-        this.totalProfit = totalProfitData.historyYield + totalProfitData.tradeName // 累计盈亏
-        this.chartData = _.get(data, 'data')
-        this.tendData()
       } else {
-        this.renderChart()
+        if (_.get(data, 'data.tradeLogList').length) {
+          const totalProfitData = _.get(data, 'data.tradeLogList').slice(-1)[0]
+          this.chartData = _.get(data, 'data.tradeLogList')
+          this.averagePrice = _.get(data, 'data.avgPrice') || '--' + totalProfitData.tradeName
+          this.totalProfit = totalProfitData.historyYield + totalProfitData.tradeName // 累计盈亏
+          this.tendData()
+        }
       }
+      this.renderChart()
     },
     handleStorage: _.throttle(function () {
       let symbolsArray = []
@@ -1052,8 +1051,8 @@ export default {
       this.isEmpty = false// 重置参数判断
     }, 1000),
     handleChartView ($item) {
+      this.chartData = [] // 点击交易对清空图表数据
       this.profitAndLoss($item)
-      this.renderChart()
     },
     // 走势图数据处理
     tendData () {
@@ -1071,7 +1070,6 @@ export default {
       targetList[0] = xs
       targetList[1] = ys
       this.chartData = targetList
-      this.renderChart()
     },
     // 绘制图表
     renderChart () {
@@ -1128,10 +1126,16 @@ export default {
       deep: true
     },
     chartData (New) {
-      const [xs, ys] = New
-      this.chartOptions.xAxis.data = xs
-      this.chartOptions.series[0].data = ys
-      this.renderChart()
+      if (New.length) {
+        const [xs, ys] = New
+        this.chartOptions.xAxis.data = xs
+        this.chartOptions.series[0].data = ys
+        this.renderChart()
+      } else {
+        this.chartOptions.xAxis.data = []
+        this.chartOptions.series[0].data = []
+        this.renderChart()
+      }
     }
   }
 }
@@ -1263,7 +1267,9 @@ export default {
                   width 100%
                   font-size 12px
                   .header-cell
-                    padding 10px 60px
+                    text-align center
+                    padding 10px 0
+                    width 160px
                     white-space nowrap
                     .warn
                       margin-top -5px

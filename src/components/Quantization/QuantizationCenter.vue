@@ -16,7 +16,7 @@
                 el-tab-pane(:label="languages.quantization_nav_1" name="first" :class="{'d-flex': !change}")
                   .pane-content(v-for="list in strategyList" v-if="strategyList.length")
                     .pane-header
-                      .header-left {{list.strategyName}}
+                      .header-left {{$isChineseLanguage_G_X? list.strategyName: list.strategyEnName}}
                       ul.header-right
                         li.price {{list.oneMonthPrice + list.coin + `/${languages.month}`}}
                         // 包含策略使用费,平台使用费,托管者费用
@@ -51,7 +51,7 @@
                       // 名称
                       el-table-column(:label="languages.quantization_table_name")
                         template(slot-scope = "s")
-                          div {{s.row.strategyName}}
+                          div {{$isChineseLanguage_G_X? s.row.strategyName: s.row.strategyEnName}}
                       // 到期时间
                       el-table-column(:label="languages.quantization_table_deadline")
                         template(slot-scope = "s")
@@ -109,7 +109,7 @@
                       style="width: 100%")
                       el-table-column(:label="'名称'")
                         template(slot-scope = "s")
-                          div {{s.row.strategyName}}
+                          div {{$isChineseLanguage_G_X? s.row.strategyName: s.row.strategyEnName}}
                       el-table-column(:label="'到期时间'")
                         template(slot-scope = "s")
                           div {{s.row.endTime}}
@@ -471,23 +471,25 @@ export default {
                       color #fff
                       font-size 12px
                 >.pane-container
+                   display flex
                    padding 55px 35px
                    overflow hidden
                    .pane-ul-l
+                     width 266px
                      float left
                      color #9da5b3
                      li
                       font-size 14px
-                      line-height 48px
-                      list-style-position inside
+                      line-height 40px
+                      list-style-position outside
                       list-style-image url('../../assets/quantization/dot.png')
                    .pane-ul-r
                       float right
                       color #9da5b3
                       li
                         font-size 14px
-                        line-height 48px
-                        list-style-position inside
+                        line-height 40px
+                        list-style-position outside
                         list-style-image url('../../assets/quantization/dot.png')
                 >.pane-footer
                     padding 0 20px
@@ -515,10 +517,11 @@ export default {
                   padding 30px 30px 0 71px
                   height 190 px
                   ul
+                    padding-right 26px
                     li
                       font-size 14px
-                      line-height 48px
-                      list-style-position inside
+                      line-height 36px
+                      list-style-position outside
                       list-style-image url('../../assets/quantization/dot.png')
                   >.pane-r
                     text-align right
@@ -529,7 +532,6 @@ export default {
                       font-size 12px
                     .buy
                       buttonBuy()
-                      margin-top 26px
                       color #338ff5
                       border 1px solid #338ff5
                       &:hover
@@ -553,6 +555,7 @@ export default {
                 width 166px
                 text-align center
                 font-weight bold
+                padding-left 10px
                 color #9a9eb0
                 font-size 16px
               .el-tabs__item.is-active
