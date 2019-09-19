@@ -4,11 +4,12 @@
   description: 当前组件为量化中心
 -->
 <template lang="pug">
-    .container.text-center(:class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X}")
+    .container.text-center(:class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X}"
+      :style="{ 'min-height': windowHeight - footerHeight - 50 + 'px'}")
       .inner-box
         .banner-box
-          .banner
-        .content.text-center
+          .banner-bg(:class="$isChineseLanguage_G_X? 'banner': 'bannerEN'")
+        .content
           .content-box
             .navs
               el-tabs(v-model="activeName" @tab-click="handleClick" v-if="!change")
@@ -188,7 +189,7 @@
           // 同意协议
           el-checkbox(v-model="isChecked") {{languages.quantization_prompt_agreement}}
         div(slot="footer" class="dialog-footer")
-          el-button(type="primary" @click="handleConfirmPrompt") {{languages.quantization_button_sure}}
+          el-button(type="primary" @click="handleConfirmPrompt" :style="{cursor: isChecked ? 'pointer' : 'auto'}") {{languages.quantization_button_sure}}
 </template>4
 <script>
 import IconFont from '../Common/IconFontCommon'
@@ -397,8 +398,12 @@ export default {
   computed: {
     ...mapState({
       userInfo: state => state.user.loginStep1Info,
-      globalPayPassword_S: state => state.common.globalPayPassword_S
-    })
+      globalPayPassword_S: state => state.common.globalPayPassword_S,
+      footerHeight: state => state.common.footerHeight
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {
   }
@@ -427,6 +432,9 @@ export default {
           background #110c38
           >.banner
             background url('../../assets/quantization/banner.png') center no-repeat
+            height 229px
+          >.bannerEN
+            background url('../../assets/quantization/bannerEN.png') center no-repeat
             height 229px
         >.content
           margin-top 30px
@@ -472,7 +480,7 @@ export default {
                      width 266px
                      float left
                      padding-right 20px
-                     color #9da5b3
+                     color #617499
                      li
                       font-size 14px
                       line-height 40px
@@ -480,7 +488,7 @@ export default {
                       list-style-image url('../../assets/quantization/dot.png')
                    .pane-ul-r
                       float right
-                      color #9da5b3
+                      color #617499
                       li
                         font-size 14px
                         line-height 40px
@@ -658,8 +666,6 @@ export default {
             text-align center
           .el-dialog__body
             .prompt-risk
-              p:nth-of-type(1)
-                font-weight bold
               p
                 font-size 12px
                 line-height 24px
@@ -755,6 +761,7 @@ export default {
             .el-dialog__header
               background-color #20293c
               .el-dialog__title
+                font-weight bold
                 color #cfd5df
             .el-dialog__body
               padding 10px 28px 0 28px
@@ -771,9 +778,12 @@ export default {
                 border-color S_main_color
               .el-checkbox__label
                 color #9da5b3
-              .is-focuse
-                .el-checkbox__inner::after
-                  border-color #9da5b3
+              .is-focus
+                .el-checkbox__inner
+                  border-color #dcdfe6
+              .is-checked
+                .el-checkbox__inner
+                  border-color S_main_color
               .is-checked+.el-checkbox__label
                 color S_main_color
             .el-dialog__footer
@@ -785,7 +795,7 @@ export default {
         .el-table
           th.is-leaf
             padding 32px 0 23px 0
-            color #9da5b3
+            color S_night_main_text_color
             background #1c1f32
             border-bottom solid 1px #2d3651
           .is-leaf:nth-of-type(2)
@@ -894,16 +904,22 @@ export default {
             .el-dialog__body
               padding 10px 28px 0 28px
               header
-                color #9da5b3
+                color #333
                 font-weight bold
               p
                 text-indent 24px
-                color #9da5b3
+                color #333
               .el-checkbox__input
                 .el-checkbox__inner
                   background transparent
               .el-checkbox__inner::after
                 border-color S_main_color
+              .is-focus
+                .el-checkbox__inner
+                  border-color #dcdfe6
+              .is-checked
+                .el-checkbox__inner
+                  border-color S_main_color
               .el-checkbox__label
                 color #9da5b3
               .is-checked+.el-checkbox__label
@@ -914,6 +930,33 @@ export default {
               border-top 1px solid #e2e3e8
               button
                 background linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%)
+        .el-table
+          th.is-leaf
+            &:nth-of-type(1)
+              text-align left
+          .is-leaf:nth-of-type(2)
+            text-align center
+          .is-leaf:nth-of-type(3)
+            text-align center
+          .is-leaf:nth-of-type(4)
+            text-align center
+          .is-leaf:nth-of-type(5)
+            text-align right
+          tr
+            td
+              &:nth-of-type(2)
+                text-align center
+              &:nth-of-type(3)
+                text-align center
+              &:nth-of-type(4)
+                text-align center
+              &:nth-of-type(5)
+                text-align right
+            &:hover
+              >td
+                background S_day_bg
+          .el-table__empty-block
+            background S_day_bg
 </style>
 <!--<style scoped lang="scss" type="text/scss">-->
 <!--.demo-box {-->
