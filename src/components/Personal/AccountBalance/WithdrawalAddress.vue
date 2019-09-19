@@ -51,7 +51,7 @@
               >
                 <input
                   class="form-input border-radius4 padding-left15"
-                  v-model="withdrawalRemark"
+                  v-model.trim="withdrawalRemark"
                   @keydown="setErrorMsg(0, '')"
                   @blur="checkoutInputFormat(0, withdrawalRemark)"
                   maxlength="20"
