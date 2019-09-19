@@ -211,6 +211,7 @@ export default {
     },
     // 查询队列标识（刚进页面时,判断是否需要loading）
     async checkQueuingStatus () {
+      if (!this.$isLogin_S_X) return
       const params = {
         // 项目编号
         projectSn: this.projectSn
