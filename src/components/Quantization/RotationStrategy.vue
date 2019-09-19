@@ -35,7 +35,7 @@
                 )
               // 网格策略
               // 参数
-              el-form-item.grid-strategy(:label="languages.rotation_form_params" label-width="80px" v-if=" searchData.strategyType === 'RESEAU_STRATEGY' ")
+              el-form-item.grid-strategy(:label="languages.rotation_form_params" label-width="180" v-if=" searchData.strategyType === 'RESEAU_STRATEGY' ")
                 .params-header
                   // 添加交易对
                   button.addCurrency(@click.prevent="handleAddParams") {{languages.rotation_form_add_params}}
@@ -462,14 +462,20 @@
                   p {{languages.rotation_form_investmentAnnotation1}}
               .footer-btns
                 // 开启
-                button.started(v-if="!isOpen" @click="handleActivition") {{languages.rotation_button_activation}}
-                  IconFont.active(icon-name="icon-kaiqi")
+                button.started(v-if="!isOpen" @click="handleActivition")
+                  .saved-content
+                    IconFont.active(icon-name="icon-kaiqi")
+                    span {{languages.rotation_button_activation}}
                 // 暂停
                 button.paused(v-else @click="handleActivition") {{languages.rotation_button_deactivation}}
                   IconFont.active(icon-name="icon-zanting")
                 // 保存
-                button.saved(@click="handleStorage" :disabled="isOpen" :class="{'savedPaused': isOpen}")  {{languages.rotation_button_storage}}
-                  IconFont.active(icon-name="icon-baocun")
+                span.saved(@click="handleStorage"
+                  :disabled="isOpen"
+                  :class="{'savedPaused': isOpen}")
+                  .saved-content
+                    IconFont.active(icon-name="icon-baocun")
+                    span {{languages.rotation_button_storage}}
               transition(name="el-fade-in")
                 .bottom-hints(v-show="isOpen")
                   p {{languages.rotation_bottom_hints1 + startTimes + languages.rotation_bottom_hints2 + endTimes + languages.rotation_bottom_hints3}}
@@ -504,8 +510,8 @@
                       td.body-cell {{item.historyYield}}
               el-collapse-transition
                 el-form.form3(v-show="chartVisible")
-                  // 浮动盈亏
-                  el-form-item(:label="languages.rotation_chart_floatingProfit" label-width="80px")
+                  // 累计盈亏
+                  el-form-item(:label="languages.rotation_table_th6" label-width="80px")
                     .floating-panel
                       div(v-for="(item, index) in savedCoinList")
                         input(:id="'panel' + index" type="radio" name="panel" :checked="index===0")
@@ -728,7 +734,6 @@ export default {
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},
-  // destroyed () {},
   methods: {
     formatSymbolInput (obj, params) {
       let inputValue = obj[params]
@@ -850,13 +855,13 @@ export default {
               visibleStatus: false,
               paramsForm: {
                 params1: item.direction,
-                params2: item.gridCoverDistance,
-                params3: item.gridNum,
-                params4: item.gridPointAmount,
-                params5: item.gridPointDistance,
-                params6: item.libParams.MaxAmount,
-                params7: item.libParams.MinStock,
-                params8: item.libParams.SlidePrice,
+                params2: item.gridNum,
+                params3: item.gridPointAmount,
+                params4: item.gridPointDistance,
+                params5: item.gridCoverDistance,
+                params6: item.libParams.SlidePrice,
+                params7: item.libParams.MaxAmount,
+                params8: item.libParams.MinStock,
                 value: item.symbol.replace('_', '/')
               }
             })
@@ -978,7 +983,7 @@ export default {
         return false
       } else {
         if (_.get(data, 'data.tradeLogList').length) {
-          const totalProfitData = _.get(data, 'data.tradeLogList').slice(-1)[0]
+          let totalProfitData = _.get(data, 'data.tradeLogList').slice(-1)[0]
           this.chartData = _.get(data, 'data.tradeLogList')
           this.averagePrice = _.get(data, 'data.avgPrice') || '--' + totalProfitData.tradeName
           this.totalProfit = totalProfitData.historyYield + totalProfitData.tradeName // 累计盈亏
@@ -1049,7 +1054,7 @@ export default {
         this.isEmpty = true
       }
       this.isEmpty = false// 重置参数判断
-    }, 1000),
+    }, 800),
     handleChartView ($item) {
       this.chartData = [] // 点击交易对清空图表数据
       this.profitAndLoss($item)
@@ -1241,22 +1246,22 @@ export default {
                   color S_day_bg
                   cursor pointer
                   .active
-                    position absolute
-                    margin 0 auto
-                    left 28px
-                    top 9px
+                    padding-right 9px
                 .started
-                  footStyles()
+                  display inline-block
+                  text-align center
                   position relative
                   background #30C296
+                  footStyles()
                 .paused
                   footStyles()
                   position relative
                   background S_otc_red_color
                 .saved
-                  footStyles()
-                  position relative
+                  display inline-block
+                  text-align center
                   background S_main_color
+                  footStyles()
               .bottom-hints
                 margin-bottom 33px
                 text-align center
@@ -1317,6 +1322,9 @@ export default {
                 margin-top 38px
                 width 1160px
                 height 355px
+  .popover-color
+    font-size 12px
+    color S_main_color
   /deep/
     .el-input__inner
       width 192px
@@ -1503,9 +1511,6 @@ export default {
   /deep/
     .el-range-input
       color S_night_main_text_color
-    .popover-color
-      font-size 12px
-      color S_main_color
 </style>
 <!--<style scoped lang="scss" type="text/scss">-->
 <!--.demo-box {-->

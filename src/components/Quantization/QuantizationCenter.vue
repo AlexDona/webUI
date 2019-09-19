@@ -167,6 +167,7 @@
       el-dialog.dialog-risk(:title="languages.quantization_prompt_title"
         :visible.sync="isRememberStatus"
         :close-on-click-modal="false"
+        :close-on-press-escape="false"
         :show-close="false")
         .prompt-risk
           header {{languages.quantization_prompt_pTitle}}
@@ -197,7 +198,6 @@ import { getStrategyList, getMyStrategyList, getBuyDialogList, buyStrategy } fro
 import { getPushTotalByCoinId } from '../../utils/api/personal'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { routesVariable } from '../../router/routesVariable'
-import { isNeedPayPasswordAjax } from '../../utils/commonFunc'
 export default {
   // !!! 注意 !!! 如需要相关声明周期或方法，请放开注释(默认处于注释状态)
   // name 为必填项
@@ -231,7 +231,6 @@ export default {
       }],
       myStrategyList: [],
       dialogBuyVisible: false,
-      isNeedPayPassword: true,
       form: {
       },
       // 弹出窗数据
@@ -277,10 +276,12 @@ export default {
       }
     },
     handleClick (tab, event) {
-      console.log(tab, event)
-      if (tab.index) {
-        this.iconsVisible = !this.iconsVisible
+      // console.log(tab, event)
+      if (+tab.index) {
+        this.iconsVisible = false
         this.getMyStrategyList()
+      } else {
+        this.iconsVisible = true
       }
     },
     handleChangeLayout () {
@@ -359,14 +360,7 @@ export default {
     // 提交购买
     async handleSubmit () {
       this.dialogBuyVisible = !this.dialogBuyVisible
-      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
-      if (this.isNeedPayPassword) {
-        // 支付密码弹窗
-        this.UPDATE_PAY_PASSWORD_DIALOG_M(true)
-      } else {
-        this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
-        await this.buySubmit()
-      }
+      this.UPDATE_PAY_PASSWORD_DIALOG_M(true)
     },
     async buySubmit () {
       let data = await buyStrategy({
@@ -477,6 +471,7 @@ export default {
                    .pane-ul-l
                      width 266px
                      float left
+                     padding-right 20px
                      color #9da5b3
                      li
                       font-size 14px
@@ -528,7 +523,7 @@ export default {
                     .price
                       price()
                     .price-info
-                      line-height 40px
+                      height 60px
                       font-size 12px
                     .buy
                       buttonBuy()
@@ -569,8 +564,8 @@ export default {
               .el-tabs__content
                 margin-top 42px
               .el-table
-                font-size 12px
                 td
+                  font-size 12px
                   border none
                 .el-table__empty-block
                   height 278px
@@ -641,7 +636,7 @@ export default {
               .remains
                 margin-top 42px
                 span
-                  color #cfd5df
+                  color #333333
                 a
                   color #338ff5
                   padding-left 20px
@@ -776,6 +771,9 @@ export default {
                 border-color S_main_color
               .el-checkbox__label
                 color #9da5b3
+              .is-focuse
+                .el-checkbox__inner::after
+                  border-color #9da5b3
               .is-checked+.el-checkbox__label
                 color S_main_color
             .el-dialog__footer
@@ -881,7 +879,7 @@ export default {
                     background #e9edf3
                     border 1px solid #e9edf3
                 .origin-price
-                  color #cfd5df !important
+                  color #333333
             .el-dialog__footer
               button
                 background linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%)
