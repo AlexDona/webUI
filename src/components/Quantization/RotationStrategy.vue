@@ -4,10 +4,11 @@
   description: 当前页面为 轮动策略 组件
 -->
 <template lang="pug">
-  .container(:class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X}")
+  .container(:class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X}"
+    :style="{ 'min-height': windowHeight - footerHeight - 50 + 'px'}")
     .inner-box
       .banner-box
-        .banner
+        .banner-bg(:class="$isChineseLanguage_G_X? 'banner': 'bannerEN'")
       .content
         .content-box
           .navs
@@ -35,16 +36,24 @@
                 )
               // 网格策略
               // 参数
-              el-form-item.grid-strategy(:label="languages.rotation_form_params" label-width="80px" v-if=" searchData.strategyType === 'RESEAU_STRATEGY' ")
+              el-form-item.grid-strategy(:label="languages.rotation_form_params" label-width="180" v-if=" searchData.strategyType === 'RESEAU_STRATEGY' ")
                 .params-header
                   // 添加交易对
-                  button.addCurrency(@click.prevent="handleAddParams") {{languages.rotation_form_add_params}}
+                  button.addCurrency(@click.prevent="handleAddParams"
+                    :disabled="isOpen"
+                    :class="isOpen? 'btn-disabled' : null") {{languages.rotation_form_add_params}}
                 .params-content(v-for="(item, index) in paramsContent")
                   .params-content-header
                     .header-text {{item.paramsForm.value}}
                     .header-icons
-                      IconFont.params-delete(iconName="icon-shanchu-tianchong" v-if="paramsContent.length > 1" @click.native="handleDelete(index)" :key="index")
-                      IconFont.params-spread(@click.native="handleSpread(item)" iconName="icon-iconfewer" :class="!item.visibleStatus? iconNormal: iconRoate")
+                      button(v-if="paramsContent.length > 1"
+                        @click="handleDelete(index)"
+                        :disabled="isOpen"
+                        :class="isOpen? 'btn-disabled' : 'btn-enabled'"
+                        :key="index")
+                        IconFont.params-delete(iconName="icon-shanchu-tianchong")
+                      IconFont.params-spread(@click.native="handleSpread(item)" iconName="icon-iconfewer"
+                        :class="!item.visibleStatus ? iconNormal: iconRoate")
                   .params-content-content
                     el-collapse-transition
                       div(v-show="index === 0 ? !item.visibleStatus : item.visibleStatus")
@@ -215,12 +224,19 @@
               // 趋势策略
               el-form-item.grid-strategy.trend-strategy(:label="languages.rotation_form_params" label-width="80px" v-if=" searchData.strategyType === 'TREND_STRATEGY' ")
                 .params-header
-                  button.addCurrency(@click.prevent="handleAddParams") {{languages.rotation_form_add_params}}
+                  button.addCurrency(@click.prevent="handleAddParams"
+                    :disabled="isOpen"
+                    :class="isOpen? 'btn-disabled' : null") {{languages.rotation_form_add_params}}
                 .params-content(v-for="(item, index) in paramsContent")
                   .params-content-header
                     .header-text {{item.paramsForm.value}}
                     .header-icons
-                      IconFont.params-delete(iconName="icon-shanchu-tianchong" v-if="paramsContent.length > 1" @click.native="handleDelete(index)" :key="index")
+                      button(v-if="paramsContent.length > 1"
+                        @click="handleDelete(index)"
+                        :disabled="isOpen"
+                        :class="isOpen? 'btn-disabled' : 'btn-enabled'"
+                        :key="index")
+                        IconFont.params-delete(iconName="icon-shanchu-tianchong")
                       IconFont.params-spread(@click.native="handleSpread(item)" iconName="icon-iconfewer" :class="!item.visibleStatus? iconNormal: iconRoate")
                   .params-content-content
                     el-collapse-transition
@@ -333,12 +349,19 @@
               // 定投策略
               el-form-item.grid-strategy.trend-strategy.fixed-investment(:label="languages.rotation_form_params" label-width="80px" v-if=" searchData.strategyType === 'INVESTMENT_STRATEGY' ")
                 .params-header
-                  button.addCurrency(@click.prevent="handleAddParams") {{languages.rotation_form_add_params}}
+                  button.addCurrency(@click.prevent="handleAddParams"
+                    :disabled="isOpen"
+                    :class="isOpen? 'btn-disabled' : null") {{languages.rotation_form_add_params}}
                 .params-content(v-for="(item, index) in paramsContent")
                   .params-content-header
                     .header-text {{item.paramsForm.value}}
                     .header-icons
-                      IconFont.params-delete(iconName="icon-shanchu-tianchong" v-if="paramsContent.length > 1" @click.native="handleDelete(index)" :key="index")
+                      button(v-if="paramsContent.length > 1"
+                        @click="handleDelete(index)"
+                        :disabled="isOpen"
+                        :class="isOpen? 'btn-disabled' : 'btn-enabled'"
+                        :key="index")
+                        IconFont.params-delete(iconName="icon-shanchu-tianchong")
                       IconFont.params-spread(@click.native="handleSpread(item)" iconName="icon-iconfewer" :class="!item.visibleStatus? iconNormal: iconRoate")
                   .params-content-content
                     el-collapse-transition
@@ -462,14 +485,20 @@
                   p {{languages.rotation_form_investmentAnnotation1}}
               .footer-btns
                 // 开启
-                button.started(v-if="!isOpen" @click="handleActivition") {{languages.rotation_button_activation}}
-                  IconFont.active(icon-name="icon-kaiqi")
+                button.started(v-if="!isOpen" @click="handleActivition")
+                  .saved-content
+                    IconFont.active(icon-name="icon-kaiqi")
+                    span {{languages.rotation_button_activation}}
                 // 暂停
                 button.paused(v-else @click="handleActivition") {{languages.rotation_button_deactivation}}
                   IconFont.active(icon-name="icon-zanting")
                 // 保存
-                button.saved(@click="handleStorage" :disabled="isOpen" :class="{'savedPaused': isOpen}")  {{languages.rotation_button_storage}}
-                  IconFont.active(icon-name="icon-baocun")
+                span.saved(@click="handleStorage"
+                  :disabled="isOpen"
+                  :class="{'savedPaused': isOpen}")
+                  .saved-content
+                    IconFont.active(icon-name="icon-baocun")
+                    span {{languages.rotation_button_storage}}
               transition(name="el-fade-in")
                 .bottom-hints(v-show="isOpen")
                   p {{languages.rotation_bottom_hints1 + startTimes + languages.rotation_bottom_hints2 + endTimes + languages.rotation_bottom_hints3}}
@@ -504,8 +533,8 @@
                       td.body-cell {{item.historyYield}}
               el-collapse-transition
                 el-form.form3(v-show="chartVisible")
-                  // 浮动盈亏
-                  el-form-item(:label="languages.rotation_chart_floatingProfit" label-width="80px")
+                  // 累计盈亏
+                  el-form-item(:label="languages.rotation_table_th6" label-width="80px")
                     .floating-panel
                       div(v-for="(item, index) in savedCoinList")
                         input(:id="'panel' + index" type="radio" name="panel" :checked="index===0")
@@ -530,7 +559,7 @@ import { routesVariable } from '../../router/routesVariable'
 import { coinList, checkStrategy, updateStrategy, activeStrategy, viewAccountInfo, getProfitAndLoss } from '../../utils/api/quantizationCenter'
 import { formatSymbolNumber, amendPrecision } from '../../utils'
 import languages from '../../mixins/quantizationLanguage'
-// import {mapState} from 'vuex'
+import {mapState} from 'vuex'
 // import { getLanguagesAJAX } from '../utils/API/common'
 export default {
   // name 为必填项
@@ -557,6 +586,7 @@ export default {
       iconRoate: 'icon-roate',
       iconNormal: 'icon-normal',
       averagePrice: '--', // 均价
+      paramsContentBackUp: [], // 获取参数列表备份
       paramsContent: [{
         visibleStatus: false,
         paramsForm: {
@@ -587,7 +617,7 @@ export default {
       pickerOptionsTime: {
         disabledDate: (time) => {
           // let curDate = new Date(strategyData.startTime).getTime()
-          let endTime = new Date(strategyData.endTime).getTime()
+          let endTime = new Date(strategyData.overTime).getTime()
           // let timeFrame = three - curDate
           return time.getTime() > endTime
         }
@@ -728,7 +758,6 @@ export default {
   // updated () {},
   // beforeRouteUpdate () {},
   // beforeDestroy () {},
-  // destroyed () {},
   methods: {
     formatSymbolInput (obj, params) {
       let inputValue = obj[params]
@@ -785,6 +814,7 @@ export default {
         }
       }
       this.paramsContent.unshift(contentObj)
+      this.isSaved = false
     },
     // 筛选交易对方法
     filterCoinList () {
@@ -804,6 +834,7 @@ export default {
       // 删除参数
       this.paramsContent.splice(index, 1)
       this.filterCoinList()
+      this.isSaved = false
     },
     handleSpread (item, index) { // 点击展开收缩
       item.visibleStatus = !item.visibleStatus
@@ -834,7 +865,7 @@ export default {
         let newParamsContent = []
         symbols.map(item => {
           if (this.searchData.strategyType === 'TREND_STRATEGY') { // 趋势策略
-            newParamsContent.push({
+            let paramsFullFill = {
               visibleStatus: false,
               paramsForm: {
                 params1: amendPrecision(item.balanceRatio, 100, '*'),
@@ -844,24 +875,28 @@ export default {
                 params5: item.libParams.MinStock,
                 value: item.symbol.replace('_', '/')
               }
-            })
+            }
+            newParamsContent.push(paramsFullFill)
+            this.paramsContentBackUp.push(paramsFullFill) // 后台请求数据备份
           } else if (this.searchData.strategyType === 'RESEAU_STRATEGY') { // 网格策略
-            newParamsContent.push({
+            let paramsFullFill = {
               visibleStatus: false,
               paramsForm: {
                 params1: item.direction,
-                params2: item.gridCoverDistance,
-                params3: item.gridNum,
-                params4: item.gridPointAmount,
-                params5: item.gridPointDistance,
-                params6: item.libParams.MaxAmount,
-                params7: item.libParams.MinStock,
-                params8: item.libParams.SlidePrice,
+                params2: item.gridNum,
+                params3: item.gridPointAmount,
+                params4: item.gridPointDistance,
+                params5: item.gridCoverDistance,
+                params6: item.libParams.SlidePrice,
+                params7: item.libParams.MaxAmount,
+                params8: item.libParams.MinStock,
                 value: item.symbol.replace('_', '/')
               }
-            })
+            }
+            newParamsContent.push(paramsFullFill)
+            this.paramsContentBackUp.push(paramsFullFill)
           } else { // 定投策略
-            newParamsContent.push({
+            let paramsFullFill = {
               visibleStatus: false,
               paramsForm: {
                 params1: item.playAmount,
@@ -871,14 +906,16 @@ export default {
                 params5: item.libParams.MinStock,
                 value: item.symbol.replace('_', '/')
               }
-            })
+            }
+            newParamsContent.push(paramsFullFill)
+            this.paramsContentBackUp.push(paramsFullFill)
           }
           this.savedCoinList.push(item.symbol.replace('_', '/')) // 获取已保存的交易对
         })
         this.paramsContent = newParamsContent
         this.isOpen = !!res.isOpen
         this.isSaved = true
-        this.startTime = [res.startTime, res.overTime]
+        this.startTime = [res.startTime, res.endTime]
         // 默认筛选已保存的交易对
         this.filterCoinList()
         await this.profitAndLoss(this.savedCoinList[0])// 浮动盈亏
@@ -956,7 +993,7 @@ export default {
       } else {
         this.$message({
           showClose: true,
-          message: this.languages.rotation_check_saved,
+          message: this.languages.rotation_check_saved, // 请先保存策略
           type: 'warning'
         })
       }
@@ -978,7 +1015,7 @@ export default {
         return false
       } else {
         if (_.get(data, 'data.tradeLogList').length) {
-          const totalProfitData = _.get(data, 'data.tradeLogList').slice(-1)[0]
+          let totalProfitData = _.get(data, 'data.tradeLogList').slice(-1)[0]
           this.chartData = _.get(data, 'data.tradeLogList')
           this.averagePrice = _.get(data, 'data.avgPrice') || '--' + totalProfitData.tradeName
           this.totalProfit = totalProfitData.historyYield + totalProfitData.tradeName // 累计盈亏
@@ -1049,7 +1086,7 @@ export default {
         this.isEmpty = true
       }
       this.isEmpty = false// 重置参数判断
-    }, 1000),
+    }, 800),
     handleChartView ($item) {
       this.chartData = [] // 点击交易对清空图表数据
       this.profitAndLoss($item)
@@ -1102,6 +1139,9 @@ export default {
   },
   // filters: {},
   computed: {
+    ...mapState({
+      footerHeight: state => state.common.footerHeight
+    }),
     startTimes: function () {
       if (this.startTime.length === 2) {
         return this.startTime[0].replace(/-/g, '/')
@@ -1111,6 +1151,9 @@ export default {
       if (this.startTime.length === 2) {
         return this.startTime[1].replace(/-/g, '/')
       }
+    },
+    windowHeight () {
+      return window.innerHeight
     }
   },
   watch: {
@@ -1119,8 +1162,19 @@ export default {
     },
     paramsContent: {
       handler (newVal, oldVal) {
-        if (oldVal[0].paramsForm.value) {
-          this.isSaved = false
+        let newValObj
+        let paramsContentObj
+        if (!this.isSaved) { // 检查参数是否修改过
+          this.paramsContentBackUp.every((item, index) => {
+            newValObj = JSON.stringify(newVal[index] || { visibleStatus: false, paramsForm: '' })
+            paramsContentObj = JSON.stringify(item)
+            if (newValObj.indexOf(paramsContentObj) > -1) {
+              this.isSaved = true
+            } else {
+              this.isSaved = false
+              return false
+            }
+          })
         }
       },
       deep: true
@@ -1149,12 +1203,21 @@ export default {
         >.banner
           background url('../../assets/quantization/banner.png') center no-repeat
           height 229px
+          background-size cover
+        >.bannerEN
+          background url('../../assets/quantization/bannerEN.png') center no-repeat
+          height 229px
+          background-size cover
       >.content
         margin-top 31px
         margin-bottom 200px
         >.content-box
           width 1300px
           margin 0 auto
+          .btn-disabled
+            cursor not-allowed !important
+          .btn-enabled
+            cursor pointer
           .navs
             padding 0 26px
             height 40px
@@ -1196,8 +1259,7 @@ export default {
                       .params-delete
                         color #e8554f
                         font-size 12px
-                        padding-right 20px
-                        cursor pointer
+                        margin-right 20px
                       .params-spread
                         cursor pointer
                         font-size 12px
@@ -1241,22 +1303,22 @@ export default {
                   color S_day_bg
                   cursor pointer
                   .active
-                    position absolute
-                    margin 0 auto
-                    left 28px
-                    top 9px
+                    padding-right 9px
                 .started
-                  footStyles()
+                  display inline-block
+                  text-align center
                   position relative
                   background #30C296
+                  footStyles()
                 .paused
                   footStyles()
                   position relative
                   background S_otc_red_color
                 .saved
-                  footStyles()
-                  position relative
+                  display inline-block
+                  text-align center
                   background S_main_color
+                  footStyles()
               .bottom-hints
                 margin-bottom 33px
                 text-align center
@@ -1317,6 +1379,9 @@ export default {
                 margin-top 38px
                 width 1160px
                 height 355px
+  .popover-color
+    font-size 12px
+    color S_main_color
   /deep/
     .el-input__inner
       width 192px
@@ -1499,13 +1564,11 @@ export default {
         border 1px solid S_color4
         background S_day_bg
         .el-range-separator
+          line-height 28px
           color S_night_main_text_color
   /deep/
     .el-range-input
       color S_night_main_text_color
-    .popover-color
-      font-size 12px
-      color S_main_color
 </style>
 <!--<style scoped lang="scss" type="text/scss">-->
 <!--.demo-box {-->

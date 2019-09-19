@@ -1,7 +1,7 @@
 <!--
   author: zhaoxinlei
   create: 20190626
-  description: 当前组件为 个人中心 邀请推广 组件 内 的 邀请推广 码 组件
+  description: 当前组件为 个人中心 邀请推广 组件 内 的 推广信息 组件
 -->
 <template lang="pug">
   .the-invitation-code(
@@ -98,7 +98,7 @@
                 el-button.button.submit(
                   @click="editInviter"
                 ) {{$t('M.comm_confirm')}}
-      // 邀请成功人数
+    // 邀请成功人数
     .inviter-board
       .left
         .top

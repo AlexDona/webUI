@@ -1,68 +1,89 @@
 <!--
-  author: zhaoxinlei
-  create: 20190626
-  description: 当前组件为 个人中心 邀请推广 组件 内的 奖励记录 组件
+  author: renfuwei
+  create: 20190924周期增加
+  description: 当前组件为个人中心邀请推广组内的 返佣记录 组件
 -->
 <template lang="pug">
   .the-invitation-record(
     :class="{'day':$theme_S_X == 'day','night':$theme_S_X == 'night' }"
   )
-    // 奖励记录
-    // .header {{ $t('M.user_invite_award') }}{{ $t('M.comm_record') }}
     .content
       el-table.award-record-table(
-        :data="awards"
+        :data="commissionList"
         style="width: 100%;"
         :empty-text="$t('M.comm_no_data')"
       )
         el-table-column(
-          :label="`${$t('M.user_invite_award')}${$t('M.comm_type')}`"
+          :label="$t('M.partner_rebate_table_title1')"
         )
           template(slot-scope="s")
-            // 直接奖励 间接奖励 注册奖励
-            div {{ s.row.type === 'first'? $t('M.user_direct_reward'): (s.row.type === 'second'? $t('M.user_indirect_reward'): $t('M.user_invite_registration')) }}
+            div {{ s.row.uid }}
         el-table-column(
-          :label="$t('M.comm_currency')"
+          :label="$t('M.partner_rebate_table_title2')"
         )
           template(slot-scope="s")
-            div {{s.row.source}}
+            div(
+              v-show="s.row.isPay == 0"
+            ) {{$t('M.partner_rebate_table_title5')}}
+            div(
+              v-show="s.row.isPay == 1"
+            ) {{$t('M.partner_rebate_table_title6')}}
         el-table-column(
-          :label="$t('M.comm_count')"
+          :label="$t('M.partner_rebate_table_title3')"
         )
           template(slot-scope="s")
-            div {{s.row.content - 0}}
+            div {{s.row.childShowFee }}{{ coinNameObj[s.row.coinId] }}
         el-table-column(
-          :label="$t('M.comm_time')"
+          :label="$t('M.partner_rebate_table_title4')"
         )
           template(slot-scope="s")
-            div {{s.row.operateTime}}
+            div {{s.row.createTime}}
       el-pagination(
         background
-        v-show="awards.length"
+        v-show="commissionList.length"
         layout="prev, pager, next"
         :current-page="currentNum"
-        :page-count="total"
+        :page-count="totalPages"
         @current-change="updatePageNum"
       )
 </template>
 <script>
-import {getRecommendUserPromotionList} from '../../../utils/api/personal'
+import {
+  // 合伙人返佣记录列表
+  getPartnerCommissionRecordListAJAX,
+  // 获取商户币种列表
+  getMerchantCurrencyList
+} from '../../../utils/api/personal'
+import {
+  getNestedData
+} from '../../../utils/commonFunc'
 
 export default {
-  name: 'the-invitation-record',
+  name: 'rebate-record',
   // mixins: [],
   // components: {},
   // props,
   data () {
     return {
-      coinName: '',
-      total: 0,
-      awards: [],
-      currentNum: 1
+      // 当前页
+      currentNum: 1,
+      // 每页显示的条数
+      pageSize: 10,
+      // 总页数
+      totalPages: 1,
+      // 返佣列表
+      commissionList: [],
+      // 商户币种列表
+      merchantCoinList: [],
+      // 币种名称对象表
+      coinNameObj: {}
     }
   },
   async created () {
-    this.getRecommendUserPromotion()
+    // 获取商户币种列表
+    await this.getTradeTypeCoinList()
+    // 合伙人返佣记录列表
+    await this.getPartnerCommissionRecordList()
   },
   // mounted () {}
   // updated () {},
@@ -70,21 +91,29 @@ export default {
   // beforeDestroy () {},
   // destroyed () {},
   methods: {
-    async getRecommendUserPromotion () {
-      let data = await getRecommendUserPromotionList({
+    // 获取商户币种列表
+    async getTradeTypeCoinList () {
+      const data = await getMerchantCurrencyList()
+      if (!data) return false
+      this.merchantCoinList = getNestedData(data, 'data')
+      this.merchantCoinList.forEach(item => {
+        this.coinNameObj[item.id] = item.name
+      })
+    },
+    // 合伙人返佣记录列表
+    async getPartnerCommissionRecordList () {
+      const data = await getPartnerCommissionRecordListAJAX({
         pageSize: this.pageSize, // 每页显示条数
-        pageNumber: this.currentNum // 当前页码
+        pageNum: this.currentNum // 当前页码
       })
       if (!data) return false
-      let responseData = _.get(data, 'data')
-      // 返回展示
-      this.awards = _.get(responseData, 'data.list')
-      // this.coinName = _.get(responseData, 'coinName')
-      this.total = _.get(responseData, 'data.pages') - 0
+      this.commissionList = getNestedData(data, 'data.list')
+      this.totalPages = getNestedData(data, 'data.pages') - 0
     },
+    // 改变页码
     async updatePageNum (e) {
       this.currentNum = e
-      await this.getRecommendUserPromotion()
+      await this.getPartnerCommissionRecordList()
     }
   }
   // filters: {},
@@ -151,7 +180,6 @@ export default {
                   font-size 12px
     &.day
       background-color #fff
-      // box-shadow 0 0 6px #cfd5df
       .header
       .content
         /deep/

@@ -4,11 +4,12 @@
   description: 当前组件为量化中心
 -->
 <template lang="pug">
-    .container.text-center(:class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X}")
+    .container.text-center(:class="{'day':$isDayTheme_G_X,'night':!$isDayTheme_G_X}"
+      :style="{ 'min-height': windowHeight - footerHeight - 50 + 'px'}")
       .inner-box
         .banner-box
-          .banner
-        .content.text-center
+          .banner-bg(:class="$isChineseLanguage_G_X? 'banner': 'bannerEN'")
+        .content
           .content-box
             .navs
               el-tabs(v-model="activeName" @tab-click="handleClick" v-if="!change")
@@ -167,6 +168,7 @@
       el-dialog.dialog-risk(:title="languages.quantization_prompt_title"
         :visible.sync="isRememberStatus"
         :close-on-click-modal="false"
+        :close-on-press-escape="false"
         :show-close="false")
         .prompt-risk
           header {{languages.quantization_prompt_pTitle}}
@@ -187,7 +189,7 @@
           // 同意协议
           el-checkbox(v-model="isChecked") {{languages.quantization_prompt_agreement}}
         div(slot="footer" class="dialog-footer")
-          el-button(type="primary" @click="handleConfirmPrompt") {{languages.quantization_button_sure}}
+          el-button(type="primary" @click="handleConfirmPrompt" :style="{cursor: isChecked ? 'pointer' : 'auto'}") {{languages.quantization_button_sure}}
 </template>4
 <script>
 import IconFont from '../Common/IconFontCommon'
@@ -197,7 +199,6 @@ import { getStrategyList, getMyStrategyList, getBuyDialogList, buyStrategy } fro
 import { getPushTotalByCoinId } from '../../utils/api/personal'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { routesVariable } from '../../router/routesVariable'
-import { isNeedPayPasswordAjax } from '../../utils/commonFunc'
 export default {
   // !!! 注意 !!! 如需要相关声明周期或方法，请放开注释(默认处于注释状态)
   // name 为必填项
@@ -231,7 +232,6 @@ export default {
       }],
       myStrategyList: [],
       dialogBuyVisible: false,
-      isNeedPayPassword: true,
       form: {
       },
       // 弹出窗数据
@@ -277,10 +277,12 @@ export default {
       }
     },
     handleClick (tab, event) {
-      console.log(tab, event)
-      if (tab.index) {
-        this.iconsVisible = !this.iconsVisible
+      // console.log(tab, event)
+      if (+tab.index) {
+        this.iconsVisible = false
         this.getMyStrategyList()
+      } else {
+        this.iconsVisible = true
       }
     },
     handleChangeLayout () {
@@ -359,14 +361,7 @@ export default {
     // 提交购买
     async handleSubmit () {
       this.dialogBuyVisible = !this.dialogBuyVisible
-      this.isNeedPayPassword = await isNeedPayPasswordAjax(this)
-      if (this.isNeedPayPassword) {
-        // 支付密码弹窗
-        this.UPDATE_PAY_PASSWORD_DIALOG_M(true)
-      } else {
-        this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
-        await this.buySubmit()
-      }
+      this.UPDATE_PAY_PASSWORD_DIALOG_M(true)
     },
     async buySubmit () {
       let data = await buyStrategy({
@@ -403,8 +398,12 @@ export default {
   computed: {
     ...mapState({
       userInfo: state => state.user.loginStep1Info,
-      globalPayPassword_S: state => state.common.globalPayPassword_S
-    })
+      globalPayPassword_S: state => state.common.globalPayPassword_S,
+      footerHeight: state => state.common.footerHeight
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {
   }
@@ -433,6 +432,9 @@ export default {
           background #110c38
           >.banner
             background url('../../assets/quantization/banner.png') center no-repeat
+            height 229px
+          >.bannerEN
+            background url('../../assets/quantization/bannerEN.png') center no-repeat
             height 229px
         >.content
           margin-top 30px
@@ -477,7 +479,8 @@ export default {
                    .pane-ul-l
                      width 266px
                      float left
-                     color #9da5b3
+                     padding-right 20px
+                     color #617499
                      li
                       font-size 14px
                       line-height 40px
@@ -485,7 +488,7 @@ export default {
                       list-style-image url('../../assets/quantization/dot.png')
                    .pane-ul-r
                       float right
-                      color #9da5b3
+                      color #617499
                       li
                         font-size 14px
                         line-height 40px
@@ -528,7 +531,7 @@ export default {
                     .price
                       price()
                     .price-info
-                      line-height 40px
+                      height 60px
                       font-size 12px
                     .buy
                       buttonBuy()
@@ -569,8 +572,8 @@ export default {
               .el-tabs__content
                 margin-top 42px
               .el-table
-                font-size 12px
                 td
+                  font-size 12px
                   border none
                 .el-table__empty-block
                   height 278px
@@ -641,7 +644,7 @@ export default {
               .remains
                 margin-top 42px
                 span
-                  color #cfd5df
+                  color #333333
                 a
                   color #338ff5
                   padding-left 20px
@@ -663,8 +666,6 @@ export default {
             text-align center
           .el-dialog__body
             .prompt-risk
-              p:nth-of-type(1)
-                font-weight bold
               p
                 font-size 12px
                 line-height 24px
@@ -760,6 +761,7 @@ export default {
             .el-dialog__header
               background-color #20293c
               .el-dialog__title
+                font-weight bold
                 color #cfd5df
             .el-dialog__body
               padding 10px 28px 0 28px
@@ -776,6 +778,12 @@ export default {
                 border-color S_main_color
               .el-checkbox__label
                 color #9da5b3
+              .is-focus
+                .el-checkbox__inner
+                  border-color #dcdfe6
+              .is-checked
+                .el-checkbox__inner
+                  border-color S_main_color
               .is-checked+.el-checkbox__label
                 color S_main_color
             .el-dialog__footer
@@ -787,7 +795,7 @@ export default {
         .el-table
           th.is-leaf
             padding 32px 0 23px 0
-            color #9da5b3
+            color S_night_main_text_color
             background #1c1f32
             border-bottom solid 1px #2d3651
           .is-leaf:nth-of-type(2)
@@ -881,7 +889,7 @@ export default {
                     background #e9edf3
                     border 1px solid #e9edf3
                 .origin-price
-                  color #cfd5df !important
+                  color #333333
             .el-dialog__footer
               button
                 background linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%)
@@ -896,16 +904,22 @@ export default {
             .el-dialog__body
               padding 10px 28px 0 28px
               header
-                color #9da5b3
+                color #333
                 font-weight bold
               p
                 text-indent 24px
-                color #9da5b3
+                color #333
               .el-checkbox__input
                 .el-checkbox__inner
                   background transparent
               .el-checkbox__inner::after
                 border-color S_main_color
+              .is-focus
+                .el-checkbox__inner
+                  border-color #dcdfe6
+              .is-checked
+                .el-checkbox__inner
+                  border-color S_main_color
               .el-checkbox__label
                 color #9da5b3
               .is-checked+.el-checkbox__label
@@ -916,6 +930,33 @@ export default {
               border-top 1px solid #e2e3e8
               button
                 background linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%)
+        .el-table
+          th.is-leaf
+            &:nth-of-type(1)
+              text-align left
+          .is-leaf:nth-of-type(2)
+            text-align center
+          .is-leaf:nth-of-type(3)
+            text-align center
+          .is-leaf:nth-of-type(4)
+            text-align center
+          .is-leaf:nth-of-type(5)
+            text-align right
+          tr
+            td
+              &:nth-of-type(2)
+                text-align center
+              &:nth-of-type(3)
+                text-align center
+              &:nth-of-type(4)
+                text-align center
+              &:nth-of-type(5)
+                text-align right
+            &:hover
+              >td
+                background S_day_bg
+          .el-table__empty-block
+            background S_day_bg
 </style>
 <!--<style scoped lang="scss" type="text/scss">-->
 <!--.demo-box {-->

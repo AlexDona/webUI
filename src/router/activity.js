@@ -92,5 +92,10 @@ export default [
       auth: true
     }),
     component: () => import('@/pages/Activity/ShoppingSpree/TheShoppingSpreeRecord')
+  },
+  {
+    // 合伙人返佣排行榜
+    path: '/RebateRankList',
+    component: () => import('@/pages/RebateRankList')
   }
 ]

@@ -65,7 +65,9 @@ const state = {
     }
   ],
   // 清除法币订单交易中订单定义的数组数据状态-默认是false，当为true时候调用清除数据的方法
-  clearTradingOrderArrDataStatus: false
+  clearTradingOrderArrDataStatus: false,
+  // 是否重新刷新个人中心个人资产列表状态
+  refreshPersonalAssetsListStatus: false
 }
 
 export default {
