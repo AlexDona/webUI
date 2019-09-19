@@ -16,9 +16,9 @@
         .left
           ul.status
             li.status-item(
-              v-for="status in statusList"
-              @click="changeStatus(status)"
-              :class="{active: activeStatus == status}"
+            v-for="status in statusList"
+            @click="changeStatus(status)"
+            :class="{active: activeStatus == status}"
             ) {{$t(status.label)}}
         .right
           // 抢购记录
@@ -33,8 +33,8 @@
             p.title {{item.projectName}}
               // 当前项目状态
               span.status(
-                v-if="item.status != statusList[3].value"
-                :class="{ongoing: item.status == statusList[2].value, coming: item.status == statusList[1].value}") {{labelOBJ[item.status]}}
+              v-if="item.status != statusList[3].value"
+              :class="{ongoing: item.status == statusList[2].value, coming: item.status == statusList[1].value}") {{labelOBJ[item.status]}}
             // 项目详细内容
             .content
               // 接受币种
@@ -68,34 +68,34 @@
               // 进度 :percentage="item.appliedPercent"
               .sixth.rules
                 el-progress(
-                  :percentage="item.appliedPercent|formatAppliedPercent"
-                  :show-text="false"
-                  :stroke-width="8"
+                :percentage="item.appliedPercent|formatAppliedPercent"
+                :show-text="false"
+                :stroke-width="8"
                 )
                 // 进度
                 p.label {{labelOBJ.shopping_spree_process}}：{{item.appliedPercent}} %
               // todos
               .seven.rules
                 button.jump-button(
-                  :to="`/${$routes_X.shoppingSpree}/${item.id}`"
-                  @click="goToDetail(item.id)"
-                  :class="{active: item.status === 'ongoing'}"
+                :to="`/${$routes_X.shoppingSpree}/${item.id}`"
+                @click="goToDetail(item.id)"
+                :class="{active: item.status === 'ongoing'}"
                 )
                   // span 立即抢购
                   //  换成状态
                   span {{formatStatusName(item.status)}}
         el-pagination(
-          background
-          v-show="totalPages>=10"
-          layout="prev, pager, next"
-          :total="totalPages"
-          @current-change="changeCurrentPage"
-          :current-page="currentPage"
+        background
+        v-show="totalPages>=10"
+        layout="prev, pager, next"
+        :total="totalPages"
+        @current-change="changeCurrentPage"
+        :current-page="currentPage"
         )
         // 暂无活动
         .no-data(
-          v-show="!shoppingList.length"
-          :style="{'min-height':innerContentHeight}"
+        v-show="!shoppingList.length"
+        :style="{'min-height':innerContentHeight}"
         )
           p
             Iconfont.iconfont(icon-name="icon-zanwukejian")
@@ -319,7 +319,7 @@ export default {
             background-color #1A1D2D
             border 1px solid rgba(34,38,57,1)
             border-radius 4px
-            padding 25px
+            padding 25px 24px
             box-sizing border-box
             transition all .4s
             &:hover
@@ -363,21 +363,21 @@ export default {
                   margin-top 10px
                   white-space nowrap
                 &.first
-                  width 160px
+                  width 130px
                   >.value
                     color S_main_color
                     font-weight 700
                 &.second
-                  width 190px
+                  width 250px
                 &.third,&.fourthly,&.fifth
-                  width 200px
+                  width 210px
                   >.value
                     >.third-coin
                       font-size 12px
                 &.fourthly
-                  width 180px
+                  width 150px
                 &.fifth
-                  width 169px
+                  width 160px
                 &.sixth
                   width 200px
                   /deep/

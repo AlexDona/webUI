@@ -54,7 +54,7 @@ export default {
 <style scoped lang="stylus">
   @import '../../../assets/CSS/index.styl'
   .the-shopping-spree-detail-rich-text
-    margin 30px 0
+    margin 0 0 30px 0
     .title
       font-size 18px
       color #D9E1F1

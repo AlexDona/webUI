@@ -215,7 +215,7 @@ export default {
   watch: {
     countDownTime (New) {
       // 当前状态为 进行中 并且 倒计时为零
-      if (New <= 0) {
+      if (New <= 0 && this.status !== 'ended') {
         // coming => ongoing
         this.$emit('updateDetails', {
           status: 'ongoing'
@@ -234,7 +234,7 @@ export default {
   .the-shopping-spree-detail-left
     height 442px
     position relative
-    padding 70px 110px 0
+    padding 70px 100px 0 110px
     >.status-tips
       position absolute
       min-width 98px
@@ -254,8 +254,10 @@ export default {
         color #fff
         font-size 24px
         margin-bottom 40px
-        max-width 430px
-        overflow-wrap break-word
+        white-space normal
+        max-width 630px
+        width 100%
+        /*overflow-wrap break-word*/
       /* 进度条 */
       >.progress
         >.label
@@ -314,7 +316,7 @@ export default {
           max-width 215px
           >.label
             color #66718F
-            line-height 35px
+            line-height 31px
             >.value
               color S_main_color
               margin-left 5px
