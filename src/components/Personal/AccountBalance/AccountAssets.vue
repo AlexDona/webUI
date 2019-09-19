@@ -695,7 +695,9 @@ export default {
       'SET_NEW_WITHDRAW_RECORD',
       'SET_NEW_WITHDRAW_RECORD_STATUS',
       'CHANGE_PASSWORD_USEABLE',
-      'UPDATE_ACTIVE_LINK_NAMES_M'
+      'UPDATE_ACTIVE_LINK_NAMES_M',
+      // 改变是否重新刷新个人中心个人资产列表状态
+      'CHANGE_REFRESH_PERSONAL_ASSETS_LIST_STATUS_M'
     ]),
     // 点击跳转到重置交易密码
     payPasswordState () {
@@ -1059,6 +1061,7 @@ export default {
         }
       })
       this.getAllWithdraw()
+      this.CHANGE_REFRESH_PERSONAL_ASSETS_LIST_STATUS_M(false)
     },
     getAllWithdraw () {
       // 缓存币种列表
@@ -1405,7 +1408,9 @@ export default {
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
       activeLinkName_S: state => state.personal.activeLinkName_S,
       linkNames_S: state => state.personal.linkNames_S,
-      USDT_COIN_ID_S: state => state.personal.USDT_COIN_ID_S
+      USDT_COIN_ID_S: state => state.personal.USDT_COIN_ID_S,
+      // 是否重新刷新个人中心个人资产列表状态
+      refreshPersonalAssetsListStatus: state => state.personal.refreshPersonalAssetsListStatus
     }),
     // 提现手续费输入input ref
     feeInputRef () {
@@ -1465,6 +1470,13 @@ export default {
       // console.log(newVal)
       if (newVal === 'assets') {
         // console.log(newVal)
+        this.getAssetCurrenciesList()
+      }
+    },
+    // 是否重新刷新个人中心个人资产列表状态
+    refreshPersonalAssetsListStatus (newVal) {
+      // console.log(newVal)
+      if (newVal) {
         this.getAssetCurrenciesList()
       }
     }
@@ -1985,7 +1997,8 @@ export default {
       }
 
       .el-form-item {
-        min-height: 70px;
+        /* min-height: 70px; */
+        min-height: 50px;
         margin-bottom: 0;
       }
 

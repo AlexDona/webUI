@@ -63,5 +63,11 @@ export default [
     // 封神榜
     path: '/FSB',
     component: () => import('@/pages/FSB')
+  },
+
+  {
+    // 合伙人返佣排行榜
+    path: '/RebateRankList',
+    component: () => import('@/pages/RebateRankList')
   }
 ]

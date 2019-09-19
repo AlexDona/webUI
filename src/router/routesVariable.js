@@ -80,7 +80,9 @@ export const routesVariable = {
   quantization: 'QuantizationCenter',
   // 轮动策略
   strategy: 'RotationStrategy',
-  guideOfDownload: 'guideOfDownload'
+  guideOfDownload: 'guideOfDownload',
+  // 合伙人返佣排行榜
+  RebateRankList: 'RebateRankList'
 }
 
 export const globalLabel = {

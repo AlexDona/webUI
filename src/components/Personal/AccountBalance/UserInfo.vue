@@ -5,6 +5,7 @@
   >
     <div class="user-info-main">
       <div class="user-info-content-box display-flex">
+        <!--左侧个人信息-->
         <div class="user float-left flex1">
             <IconFontCommon
               class="user-background text-align-c line-height56 float-left font-size40 icon-user"
@@ -28,33 +29,33 @@
               UID： {{ showId }}
             </span>
             <el-dialog
-                    :title="'修改昵称'"
-                    :visible.sync="showNickNameDialog"
-                    class="nickNameDialog"
+              :title="'修改昵称'"
+              :visible.sync="showNickNameDialog"
+              class="nickNameDialog"
             >
               <el-form>
                 <!--修改昵称-->
                 <el-form-item prop="nickName">
                   <input
-                          class="text-color input-nickName padding-l15 box-sizing"
-                          type="text"
-                          v-model="nickNames"
-                          @focus="emptyStatus()"
-                          @keyUp="checkoutInputFormat(nickNames)"
-                          @change="checkoutInputFormat(nickNames)"
-                          maxlength="15"
+                    class="text-color input-nickName padding-l15 box-sizing"
+                    type="text"
+                    v-model="nickNames"
+                    @focus="emptyStatus()"
+                    @keyUp="checkoutInputFormat(nickNames)"
+                    @change="checkoutInputFormat(nickNames)"
+                    maxlength="15"
                   />
                   <span v-if="errorHint1" class="error-span">· 不可超过7个汉字或15个英文字母</span>
                   <span v-if="errorHint2" class="error-span">· 不可包含空格与特殊字符</span>
                 </el-form-item>
               </el-form>
               <div
-                      slot="footer"
-                      class="dialog-footer"
+                slot="footer"
+                class="dialog-footer"
               >
                 <el-button
-                        type="primary"
-                        @click.prevent="submitNickName(nickNames)"
+                  type="primary"
+                  @click.prevent="submitNickName(nickNames)"
                 >
                   <!--确 定-->
                   {{ $t('M.comm_confirm') }}
@@ -63,7 +64,9 @@
             </el-dialog>
           </div>
         </div>
+        <!--中间认证部分-->
         <div class="info float-left flex1">
+          <!--认证-->
           <p
             class="info-top"
             :style="{'marginTop': !$isVIPEnable_S_X ? '30px' : ''}"
@@ -157,9 +160,9 @@
               />
             </span>
           </p>
+          <!--vip等级-->
           <div
-            class="
-             display-flex margin-top16"
+            class="display-flex margin-top16 vip-content"
             v-if="$isVIPEnable_S_X"
           >
             <span class="info-centre-left text-indent float-left font-size12">
@@ -202,7 +205,8 @@
           <!--<span class="discount-text font-size12">折扣率</span>&nbsp;-->
           <!--<span class="discount-state font-size12">{{ discountRate }}</span>-->
           <!--</p>-->
-          <p></p>
+          <!--20190924周期增加合伙人部分-->
+          <PartnerEntry />
         </div>
         <!--<div class="volume float-left">-->
         <!--<p class="volume-text font-size12">近30天交易量</p>-->
@@ -214,6 +218,7 @@
         <!--<span class="info-color font-size12">CNY</span>-->
         <!--</p>-->
         <!--</div>-->
+        <!--右侧资产估计部分-->
         <div class="asset float-left flex1">
           <p class="asset-text font-size12">
             <!--当前资产总估值-->
@@ -258,11 +263,11 @@
     </div>
   </div>
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 import {mapState, mapActions} from 'vuex'
 import {
-  assetCurrenciesList, changeNickName,
+  assetCurrenciesList,
+  changeNickName,
   currencyTransform
 } from '../../../utils/api/personal'
 import {
@@ -270,8 +275,12 @@ import {
 } from '../../../utils/commonFunc'
 // 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
+// 合伙人入口组件
+import PartnerEntry from './PartnerEntry'
 export default {
   components: {
+    // 合伙人入口组件
+    PartnerEntry,
     IconFontCommon // 字体图标
   },
   // props,
@@ -514,11 +523,11 @@ export default {
           }
 
           > .margin-top16 {
-              justify-content: center;
+            /* justify-content: center; */
 
-              .text-indent {
-                  text-indent: -60px;
-              }
+            .text-indent {
+              /* text-indent: -60px; */
+            }
 
             > .info-picture {
               position: relative;
@@ -531,6 +540,10 @@ export default {
                 color: #fff;
               }
             }
+          }
+
+          > .vip-content {
+            padding-left: 80px;
           }
 
           > .info-discount {

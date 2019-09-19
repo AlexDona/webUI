@@ -13,7 +13,9 @@ import {
   UPDATE_ACTIVE_LINK_NAMES_M,
   UPDATE_LINK_NAMES_M,
   // 改变清除交易中数据方法的状态
-  CHANGE_CLEAR_DATA_STATUS_M
+  CHANGE_CLEAR_DATA_STATUS_M,
+  // 改变是否重新刷新个人中心个人资产列表状态
+  CHANGE_REFRESH_PERSONAL_ASSETS_LIST_STATUS_M
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -110,5 +112,9 @@ export default {
   // 改变清除交易中数据方法的状态
   [CHANGE_CLEAR_DATA_STATUS_M] (state, data) {
     state.clearTradingOrderArrDataStatus = data
+  },
+  // 改变是否重新刷新个人中心个人资产列表状态
+  [CHANGE_REFRESH_PERSONAL_ASSETS_LIST_STATUS_M] (state, data) {
+    state.refreshPersonalAssetsListStatus = data
   }
 }
