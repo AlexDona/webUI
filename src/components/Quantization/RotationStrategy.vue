@@ -36,7 +36,7 @@
                 )
               // 网格策略
               // 参数
-              el-form-item.grid-strategy(:label="languages.rotation_form_params" label-width="180" v-if=" searchData.strategyType === 'RESEAU_STRATEGY' ")
+              el-form-item.grid-strategy(:label="languages.rotation_form_params" label-width="80" v-if=" searchData.strategyType === 'RESEAU_STRATEGY' ")
                 .params-header
                   // 添加交易对
                   button.addCurrency(@click.prevent="handleAddParams"
@@ -490,10 +490,12 @@
                     IconFont.active(icon-name="icon-kaiqi")
                     span {{languages.rotation_button_activation}}
                 // 暂停
-                button.paused(v-else @click="handleActivition") {{languages.rotation_button_deactivation}}
-                  IconFont.active(icon-name="icon-zanting")
+                button.paused(v-else @click="handleActivition")
+                  .paused-content
+                    IconFont.active(icon-name="icon-zanting")
+                    span {{languages.rotation_button_deactivation}}
                 // 保存
-                span.saved(@click="handleStorage"
+                button.saved(@click="handleStorage"
                   :disabled="isOpen"
                   :class="{'savedPaused': isOpen}")
                   .saved-content
@@ -865,7 +867,7 @@ export default {
         let newParamsContent = []
         symbols.map(item => {
           if (this.searchData.strategyType === 'TREND_STRATEGY') { // 趋势策略
-            let paramsFullFill = {
+            newParamsContent.push({
               visibleStatus: false,
               paramsForm: {
                 params1: amendPrecision(item.balanceRatio, 100, '*'),
@@ -875,11 +877,20 @@ export default {
                 params5: item.libParams.MinStock,
                 value: item.symbol.replace('_', '/')
               }
-            }
-            newParamsContent.push(paramsFullFill)
-            this.paramsContentBackUp.push(paramsFullFill) // 后台请求数据备份
+            })
+            this.paramsContentBackUp.push({
+              visibleStatus: false,
+              paramsForm: {
+                params1: amendPrecision(item.balanceRatio, 100, '*'),
+                params2: amendPrecision(item.addRatio, 100, '*'),
+                params3: amendPrecision(item.libParams.SlidePrice, 100, '*'),
+                params4: item.libParams.MaxAmount,
+                params5: item.libParams.MinStock,
+                value: item.symbol.replace('_', '/')
+              }
+            }) // 后台请求数据备份
           } else if (this.searchData.strategyType === 'RESEAU_STRATEGY') { // 网格策略
-            let paramsFullFill = {
+            newParamsContent.push({
               visibleStatus: false,
               paramsForm: {
                 params1: item.direction,
@@ -892,11 +903,23 @@ export default {
                 params8: item.libParams.MinStock,
                 value: item.symbol.replace('_', '/')
               }
-            }
-            newParamsContent.push(paramsFullFill)
-            this.paramsContentBackUp.push(paramsFullFill)
+            })
+            this.paramsContentBackUp.push({
+              visibleStatus: false,
+              paramsForm: {
+                params1: item.direction,
+                params2: item.gridNum,
+                params3: item.gridPointAmount,
+                params4: item.gridPointDistance,
+                params5: item.gridCoverDistance,
+                params6: item.libParams.SlidePrice,
+                params7: item.libParams.MaxAmount,
+                params8: item.libParams.MinStock,
+                value: item.symbol.replace('_', '/')
+              }
+            })
           } else { // 定投策略
-            let paramsFullFill = {
+            newParamsContent.push({
               visibleStatus: false,
               paramsForm: {
                 params1: item.playAmount,
@@ -906,9 +929,18 @@ export default {
                 params5: item.libParams.MinStock,
                 value: item.symbol.replace('_', '/')
               }
-            }
-            newParamsContent.push(paramsFullFill)
-            this.paramsContentBackUp.push(paramsFullFill)
+            })
+            this.paramsContentBackUp.push({
+              visibleStatus: false,
+              paramsForm: {
+                params1: item.playAmount,
+                params2: item.intervalTradeTime,
+                params3: item.libParams.SlidePrice,
+                params4: item.libParams.MaxAmount,
+                params5: item.libParams.MinStock,
+                value: item.symbol.replace('_', '/')
+              }
+            })
           }
           this.savedCoinList.push(item.symbol.replace('_', '/')) // 获取已保存的交易对
         })
@@ -1135,6 +1167,20 @@ export default {
       // 默认显示 最新7条数据
       const xAxisLength = this.chartOptions.xAxis.data.length
       this.chartOptions.dataZoom[0].startValue = xAxisLength >= 7 ? xAxisLength - 7 : 0
+    },
+    compareObj (arrays, newVal) {
+      let newValObj
+      let paramsContentObj
+      arrays.every((item, index) => {
+        newValObj = JSON.stringify(newVal[index] || {visibleStatus: false, paramsForm: ''})
+        paramsContentObj = JSON.stringify(item)
+        if (newValObj.indexOf(paramsContentObj) > -1) {
+          this.isSaved = true
+        } else {
+          this.isSaved = false
+          return false
+        }
+      })
     }
   },
   // filters: {},
@@ -1162,19 +1208,10 @@ export default {
     },
     paramsContent: {
       handler (newVal, oldVal) {
-        let newValObj
-        let paramsContentObj
-        if (!this.isSaved) { // 检查参数是否修改过
-          this.paramsContentBackUp.every((item, index) => {
-            newValObj = JSON.stringify(newVal[index] || { visibleStatus: false, paramsForm: '' })
-            paramsContentObj = JSON.stringify(item)
-            if (newValObj.indexOf(paramsContentObj) > -1) {
-              this.isSaved = true
-            } else {
-              this.isSaved = false
-              return false
-            }
-          })
+        if (!this.isSaved) { // 删除或添加交易对检查参数是否修改过
+          this.compareObj(this.paramsContentBackUp, newVal)
+        } else { // 如果在原有参数下修改
+          this.compareObj(this.paramsContentBackUp, newVal) // 进行参数对比
         }
       },
       deep: true
@@ -1225,7 +1262,6 @@ export default {
             font-size 14px
             >.nav-list1
               cursor pointer
-              color S_night_main_text_color
             >.nav-list2
               cursor pointer
               color S_main_color
@@ -1312,7 +1348,8 @@ export default {
                   footStyles()
                 .paused
                   footStyles()
-                  position relative
+                  display inline-block
+                  text-align center
                   background S_otc_red_color
                 .saved
                   display inline-block
@@ -1394,7 +1431,7 @@ export default {
     .trend-strategy
       .flex-items
         .el-input__inner
-          width 139px
+          width 140px
         .trend-input
           .el-input__inner
             width 192px
@@ -1409,6 +1446,8 @@ export default {
       .navs
         background S_night_main_bg
         border-bottom 1px solid #141725
+        >.nav-list1
+          color S_night_main_text_color
       .navs-detail
         background S_night_main_bg
       .el-form.form1
@@ -1484,14 +1523,18 @@ export default {
         color #fff
       .el-input__inner
         background S_color1
-        .el-range-separator
-          color S_night_main_text_color
+      .el-range-separator
+        color S_night_main_text_color
+      .el-range-input
+        color #c0c4cc
   &.day
     .content-box
       box-shadow 1px -1px 2px 0 S_color4
       .navs
         background S_day_bg
         border-bottom 1px solid S_color4
+        >.nav-list1
+          color S_color2
       .navs-detail
         background S_day_bg
       .el-form.form1
@@ -1505,10 +1548,11 @@ export default {
             .el-form-item__content
               border 1px solid S_color4 !important
               .params-header
-                border-bottom 1px solid S_color4
+                /*border-bottom 1px solid S_color4*/
               .params-content
                 color S_color21
                 .params-content-header
+                  border-top 1px solid S_color4
                   border-bottom 1px solid S_color4
                 .params-content-content
                   .el-form
@@ -1566,9 +1610,8 @@ export default {
         .el-range-separator
           line-height 28px
           color S_night_main_text_color
-  /deep/
-    .el-range-input
-      color S_night_main_text_color
+        .el-range-input
+          color #333
 </style>
 <!--<style scoped lang="scss" type="text/scss">-->
 <!--.demo-box {-->

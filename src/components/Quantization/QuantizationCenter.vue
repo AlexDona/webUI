@@ -446,6 +446,7 @@ export default {
               position relative
               font-size 16px
               >.icon-change
+                color #9da5b3
                 cursor pointer
                 line-height 60px
               .pane-content
@@ -572,6 +573,7 @@ export default {
               .el-tabs__content
                 margin-top 42px
               .el-table
+                background transparent
                 td
                   font-size 12px
                   border none
@@ -643,8 +645,6 @@ export default {
                   font-size 12px !important
               .remains
                 margin-top 42px
-                span
-                  color #333333
                 a
                   color #338ff5
                   padding-left 20px
@@ -753,8 +753,12 @@ export default {
                     background #20273d
                     border 1px solid #354057
                     color #fff
-                .origin-price
-                  color #cfd5df !important
+                .cut-price
+                  .origin-price
+                    color #cfd5df !important
+                .remains
+                  span
+                    color #cfd5df
         .el-dialog__wrapper.dialog-risk
           .el-dialog
             background #28334a
@@ -765,6 +769,8 @@ export default {
                 color #cfd5df
             .el-dialog__body
               padding 10px 28px 0 28px
+              max-height 652px
+              overflow-y scroll
               header
                 color #9da5b3
                 font-weight bold
@@ -888,8 +894,12 @@ export default {
                   .duration-item
                     background #e9edf3
                     border 1px solid #e9edf3
-                .origin-price
-                  color #333333
+                .cut-price
+                  .origin-price
+                    color #333
+                .remains
+                  span
+                    color #333 !important
             .el-dialog__footer
               button
                 background linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%)
@@ -932,6 +942,8 @@ export default {
                 background linear-gradient(90deg, rgba(106, 182, 244, 1) 0%, rgba(49, 135, 218, 1) 100%)
         .el-table
           th.is-leaf
+            padding 32px 0 23px 0
+            font-size 12px
             &:nth-of-type(1)
               text-align left
           .is-leaf:nth-of-type(2)
