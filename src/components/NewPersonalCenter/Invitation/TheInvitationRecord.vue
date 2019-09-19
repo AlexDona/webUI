@@ -58,7 +58,9 @@ export default {
       coinName: '',
       total: 0,
       awards: [],
-      currentNum: 1
+      currentNum: 1,
+      // 每页显示的条数
+      pageSize: 10
     }
   },
   async created () {
