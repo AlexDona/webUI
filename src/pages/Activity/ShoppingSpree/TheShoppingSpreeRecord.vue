@@ -237,7 +237,7 @@ export default {
     padding-top 92px
     box-sizing border-box
     min-height 830px
-    background #0f132e url("../../../assets/ShoppingSpree/shopping-spree-content-bg.png") no-repeat center bottom
+    background #0f132e url("../../../assets/ShoppingSpree/shopping-spree-content-bg.png") no-repeat center bottom/100%
     >.inner
       background-color #1A1D2D
       height 630px
@@ -284,6 +284,7 @@ export default {
             border-color S_main_color
             >.el-range__icon
               color #66718F
+              line-height 28px
             >.el-range-input,.el-input__inner
               font-size 12px
               color #E0E4EE

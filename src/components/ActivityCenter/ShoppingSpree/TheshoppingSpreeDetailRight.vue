@@ -330,6 +330,9 @@ export default {
       }
 
       this.form.buyCount = integer
+    },
+    resetForm () {
+      this.$refs[this.formRef].resetFields()
     }
   },
   // filters: {},
@@ -459,6 +462,10 @@ export default {
       this.checkQueuingStatus()
     },
     status () {
+      this.updateButtonText()
+    },
+    $language_S_X () {
+      this.resetForm()
       this.updateButtonText()
     }
   }

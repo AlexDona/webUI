@@ -21,7 +21,7 @@
           Iconfont.iconfont(icon-name="icon-wenxintishi")
           span {{tips}}
     // 详情页
-    .desc
+    .desc(:style="{'min-height':innerContentHeight}")
       .inner
         // 活动简介
         TheShoppingSpreeDetailRichText(
@@ -47,6 +47,7 @@ import TheShoppingSpreeDetailRichText from '../../../components/ActivityCenter/S
 import mixins from '../../../mixins/shoppingSpree'
 import Socket from '../../../utils/datafeeds/socket'
 import {OTCIMSocketUrl} from '../../../utils/env'
+import {mapState} from 'vuex'
 export default {
   name: 'the-shopping-spree-detail',
   mixins: [mixins],
@@ -86,14 +87,6 @@ export default {
     updateDetails (details) {
       this.details = {...this.details, ...details}
     },
-    checkHeart () {
-      this.socket.on('message', (e) => {
-        if (e.action == 'checkHeart') {
-          this.socket.send(e)
-          // 非心跳之外 duration 内 无消息，客户端主动断开连接
-        }
-      })
-    },
     initSocket () {
       this.socket = new Socket(this.url = OTCIMSocketUrl)
       this.socket.doOpen()
@@ -102,7 +95,6 @@ export default {
           'action': 'preActivity',
           projectSn: this.projectSn
         })
-        // this.checkHeart()
       })
       this.socket.on('message', (e) => {
         // const { appliedAmount, appliedPercent, projectSn, status } = e
@@ -122,6 +114,9 @@ export default {
   },
   // filters: {},
   computed: {
+    ...mapState({
+      footerHeight: state => state.common.footerHeight
+    }),
     detailsComp () {
       return this.details
     },
@@ -147,6 +142,12 @@ export default {
     // 常见问题
     questions () {
       return _.get(this.details, 'questions')
+    },
+    // 列表内容高度
+    innerContentHeight () {
+      const bannerHeight = 600
+      const headerHeight = 50
+      return `${window.innerHeight - bannerHeight - headerHeight - this.footerHeight}px`
     }
   },
   watch: {
@@ -182,7 +183,7 @@ export default {
           box-sizing border-box
           font-size 12px
           color #66718F
-          line-height 40px
+          line-height 53px
           height 53px
           border-top 1px solid #2C3046
           >.iconfont
