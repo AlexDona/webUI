@@ -89,7 +89,8 @@ export const routesVariable = {
   },
   personalCenter: '/PersonalCenter',
   // 合伙人返佣排行榜
-  RebateRankList: 'RebateRankList'
+  RebateRankList: 'RebateRankList',
+  FSB: 'FSB'
 }
 
 export const globalLabel = {

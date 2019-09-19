@@ -3,7 +3,7 @@
  * update: 20190902
  * description: 当前页面为 活动 相关路由
  */
-import {createBaseRoute, routesVariable} from './routesVariable'
+import {createBaseRoute, routesVariable as routers, routesVariable} from './routesVariable'
 
 const {shoppingSpree, crowdFunding, crowdFundingRecord} = routesVariable
 export default [
@@ -63,11 +63,6 @@ export default [
     path: '/FucCenter',
     component: () => import('@/pages/FucCenter')
   },
-  {
-    // 封神榜
-    path: '/FSB',
-    component: () => import('@/pages/FSB')
-  },
   // 打折抢购
   {
     ...createBaseRoute({
@@ -93,9 +88,20 @@ export default [
     }),
     component: () => import('@/pages/Activity/ShoppingSpree/TheShoppingSpreeRecord')
   },
+  // 封神榜
   {
-    // 合伙人返佣排行榜
-    path: '/RebateRankList',
-    component: () => import('@/pages/RebateRankList')
+    ...createBaseRoute({
+      path: `/${routers.FSB}`,
+      name: `${routers.FSB}`
+    }),
+    component: () => import(/* webpackChunkName: "FSB" */ '../pages/FSB')
+  },
+  // 合伙人返佣排行榜
+  {
+    ...createBaseRoute({
+      path: `/${routers.RebateRankList}`,
+      name: `${routers.RebateRankList}`
+    }),
+    component: () => import(/* webpackChunkName: "RebateRankList" */ '../pages/RebateRankList')
   }
 ]
