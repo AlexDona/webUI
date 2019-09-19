@@ -149,3 +149,17 @@ export const uploadImageAjax = params => handleRequest(() => post('uploadfile', 
 
 // 获取 USDT 链名称
 export const getUSDTLinkNamesAJAX = () => handleRequest(() => get('personal/getUSDTRechargeEnum'))
+
+// 合伙人模块接口
+// 1.合伙人升级信息接口
+export const getUpdateInfoAJAX = () => handleRequest(() => get('copartner/findGroup'))
+// 2.判断是否满足升级条件
+export const getIsEnoughUpdateConditionAJAX = () => handleRequest(() => get('copartner/isOk'))
+// 3.升级合伙人接口(免密)
+export const upgradePartnerWithoutCodeAJAX = params => handleRequest(() => get('copartner/upgradeCopartnerNoUpgradeFee', params), 1)
+// 4.升级合伙人接口(不免密)
+export const upgradePartnerAJAX = params => handleRequest(() => get('copartner/upgradeCopartner', params), 1)
+// 5.合伙人返佣记录列表
+export const getPartnerCommissionRecordListAJAX = (params) => handleRequest(() => get('copartnerRebateLogUser/findRebateLogUser', params))
+// 6.合伙人排行榜列表
+export const getPartnerRebateTopListAJAX = (params) => handleRequest(() => get('copartnerRebateTop/listRebateTop', params))

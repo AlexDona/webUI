@@ -41,7 +41,7 @@
           prop="buyCount"
           align="right"
         )
-          .close-pwd-text
+          .close-pwd-text(v-show="closeValidationMessage")
             span.cursor-pointer(
               @click.prevent="goToClosePwd"
             ) {{$t('M.user_payPassword_switch')}}
@@ -62,7 +62,13 @@ export default {
   // name: '',
   // mixins: [],
   // components: {},
-  // props,
+  props: {
+    // 隐藏全局交易密码框中的 暂时关闭交易密码验证状态
+    closeValidationMessage: {
+      type: Boolean,
+      default: true
+    }
+  },
   data () {
     // 手机号校验
     let validatePaypassword = (rule, value, callback) => {
@@ -118,13 +124,16 @@ export default {
     },
     // 暂时关闭交易密码验证
     goToClosePwd () {
-      this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
+      // 关闭交易密码弹窗
+      this.$UPDATE_PAY_PASSWORD_DIALOG_M_X(false)
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
       this.$goToPage('/PersonalCenter')
       this.CHANGE_USER_CENTER_ACTIVE_NAME('personal-setting')
     },
     // 忘记交易密码
     goToForgetPwd () {
+      // 关闭交易密码弹窗
+      this.$UPDATE_PAY_PASSWORD_DIALOG_M_X(false)
       this.$goToPage('/TransactionPassword')
     }
   },
@@ -211,7 +220,8 @@ export default {
         .el-dialog__wrapper
           background-color rgba(0,0,0,0.5)
           .el-dialog
-            background-color transparent
+            /*background-color transparent*/
+            background-color #fff
             .el-dialog__header
               background-color #dce7f3
               .el-dialog__title

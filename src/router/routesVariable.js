@@ -87,7 +87,9 @@ export const routesVariable = {
   personalName: {
     identityAuthentication: 'identity-authentication'
   },
-  personalCenter: '/PersonalCenter'
+  personalCenter: '/PersonalCenter',
+  // 合伙人返佣排行榜
+  RebateRankList: 'RebateRankList'
 }
 
 export const globalLabel = {

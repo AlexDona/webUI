@@ -426,3 +426,17 @@ export const http2https = (str) => {
   if (!str) return false
   return str.startsWith('http://') ? str.replace('http://', 'https://') : str
 }
+
+/**
+ * 显示邮箱前三位和@之后的 显示手机前三位和后四位
+ */
+export const hiddenLoginName = (val) => {
+  let newVal = ''
+  if (!val) return false
+  if (val.indexOf('@') != -1) {
+    newVal = val.slice(0, 3) + '****' + '@' + val.split('@')[1]
+  } else {
+    newVal = val.substr(0, 3) + '****' + val.substr(7)
+  }
+  return newVal
+}
