@@ -1238,9 +1238,8 @@ export default {
     >.inner-box
       >.banner-box
         >.banner
-          background url('../../assets/quantization/banner.png') center no-repeat
+          background url('../../assets/quantization/banner.png') #110c38 center no-repeat
           height 229px
-          background-size cover
         >.bannerEN
           background url('../../assets/quantization/bannerEN.png') center no-repeat
           height 229px
