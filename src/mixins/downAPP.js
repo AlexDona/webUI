@@ -1,81 +1,37 @@
-<!--
-  author: zhaoxinlei
-  update: 20190815
-  description: app下载页
--->
-<template lang="pug">
-  .download-box(
-    @ondblclick="ondblclick"
-    @touchmove="touchmove"
-    )
-    HeaderCommonForMobile(:style="{display:'none'}")
-    .inner-box
-      .logo
-        img(:src="logoSrc")
-      .content
-        // 立即安装
-      button.download-btn(
-        :disabled="isLoading"
-        @click="downloadApp"
-        @ondblclick="ondblclick"
-      ) {{isChineseLanguage ? '立即安装' : 'Install' }}
-      a(
-        :href="downloadUrl"
-        ref="download"
-        download="android"
-        :style="{'display':'none'}"
-        )
-    WeChatMask(
-      :isAndroid="isAndroid"
-      :isIOS="isIOS"
-      :isChineseLanguage = "isChineseLanguage"
-      :isWXBrowserStatus="isWXBrowserStatus"
-      :isBaiDuBrowser="isBaiDuBrowser"
-      :isWeiBoBrowser="isWeiBoBrowser"
-      :isSouGouBrowser="isSouGouBrowser"
-      :isIPad="isIPad"
-    )
-</template>
-<script>
-import mixins from '../mixins/downAPP'
-// import {downloadFileWithUserDefined} from '../utils'
-import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
-import WeChatMask from '../components/User/WeChatMask'
+/**
+ * author: renfuwei
+ * create: 20190920
+ * description: h5下载APP mixins
+ */
 import {
-  mapMutations,
   mapState,
-  mapActions
+  mapActions,
+  mapMutations
 } from 'vuex'
 
-export default {
-  mixins: [mixins],
-  components: {
-    HeaderCommonForMobile,
-    WeChatMask
-  },
-  // props,
+let mixin = {
   data () {
     return {
-      /* downloadUrl: '',
+      downloadUrl: '',
       isAndroid: false,
       isIOS: false,
       isWXBrowserStatus: true,
       isLoading: false,
       timer: null,
       // 下载延时器
-      downloadTimer: null */
+      downloadTimer: null
     }
   },
   async created () {
-    /* document.getElementsByTagName('body')[0].style.zoom = 1
+    document.getElementsByTagName('body')[0].style.zoom = 1
     let u = navigator.userAgent
     this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
     this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端\
 
-    this.isWXBrowserStatus = this.isQQAppBrowser() || this.isWXBrowser() */
+    this.isWXBrowserStatus = this.isQQAppBrowser() || this.isWXBrowser()
   },
   mounted: function () {
-    /* // 禁止横屏
+    // 禁止横屏
     window.addEventListener('orientationchange', function (e) {
       this.orient()
       e.preventDefault()
@@ -97,18 +53,16 @@ export default {
         event.preventDefault()
       }
       lastTouchEnd = now
-    }, false) */
+    }, false)
   },
-  // update () {},
   beforeDestroy () {
-    /* clearTimeout(this.timer)
-    clearTimeout(this.downloadTimer) */
+    clearTimeout(this.timer)
+    clearTimeout(this.downloadTimer)
   },
-  // beforeRouteUpdate () {},
   methods: {
     ...mapActions(['GET_APP_URL_ACTION']),
-    ...mapMutations(['SET_FOOTER_INFO'])
-    /* isQQAppBrowser () {
+    ...mapMutations(['SET_FOOTER_INFO']),
+    isQQAppBrowser () {
       let u = navigator.userAgent
       let isIosQQ = (/(iPhone|iPad|iPod|iOS)/i.test(u) && /\sQQ/i.test(u))
       let isAndroidQQ = (/(Android)/i.test(u) && /MQQBrowser/i.test(u) && /\sQQ/i.test((u).split('MQQBrowser')))
@@ -179,18 +133,17 @@ export default {
       this.timer = setTimeout(() => {
         this.isLoading = false
       }, 2000)
-    }, 500) */
+    }, 500)
   },
-  // filter: {},
   computed: {
     ...mapState({
-      /* logoSrc: state => state.common.logoSrc,
+      logoSrc: state => state.common.logoSrc,
       androidUrl: state => state.footerInfo.downloadUrl.android,
       iosUrl: state => state.footerInfo.downloadUrl.ios,
       androidDownloadSwitch: state => state.footerInfo.downloadUrl.androidDownloadSwitch,
-      iosDownloadSwitch: state => state.footerInfo.downloadUrl.iosDownloadSwitch */
-    })
-    /* isBaiDuBrowser () {
+      iosDownloadSwitch: state => state.footerInfo.downloadUrl.iosDownloadSwitch
+    }),
+    isBaiDuBrowser () {
       let u = navigator.userAgent
       return u.toLowerCase().indexOf('baidu') > -1
     },
@@ -212,77 +165,9 @@ export default {
     },
     language () {
       return (navigator.browserLanguage || navigator.language).startsWith('zh') ? 'zh_CN' : 'en_US'
-    } */
-  }
-  // watch: {}
-}
-</script>
-<style scoped lang="scss" type="text/scss">
-  .download-box {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    box-sizing: border-box;
-    width: 100%;
-    min-width: 750px;
-    height: 100%;
-    background-color: #272940;
-    transform: translateX(-50%);
-
-    > .inner-box {
-      position: relative;
-      height: 100%;
-      min-height: 2000px;
-      border: 1px solid transparent;
-
-      > .logo {
-        position: absolute;
-        top: 2rem;
-        left: 50%;
-        width: 6.2rem;
-        border-radius: 10px;
-        transform: translateX(-50%);
-
-        > img {
-          -webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, .1)));
-          width: 100%;
-        }
-      }
-
-      > .content {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: 8.5rem;
-        text-align: center;
-        background: url(../assets/develop/downloadapp.bg.png) no-repeat center center/contain;
-        transform: translate(-50%, -50%);
-
-        > img {
-          display: none;
-          width: 60%;
-        }
-      }
-
-      > .download-btn {
-        position: fixed;
-        bottom: 3rem;
-        left: 50%;
-        width: 14rem;
-        height: 2.2rem;
-        border-radius: 4px;
-        font-size: .9rem;
-        color: #fff;
-        background: linear-gradient(81deg, rgba(42, 59, 97, 1), rgba(18, 71, 133, 1));
-        box-shadow: 0 3px 8px 0 rgba(0, 0, 0, .25);
-        transform: translateX(-50%);
-
-        &:disabled {
-          color: #636777;
-          background: #303757;
-        }
-      }
     }
-  }
-</style>
+  },
+  destroyed () {},
+  watch: {}
+}
+export default mixin

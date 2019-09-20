@@ -27,8 +27,19 @@
       :isWXBrowserStatus="isWXBrowserStatus"
       :isChineseLanguage="isChineseLanguage"
     )
+    .bottom-download
+      .text.text-align-l
+        span {{isChineseLanguage? '更安全、更便捷、更稳定': 'Safer, more convenient and stable'}}
+      .immediately.text-align-r
+        button.border-radius4(
+          :disabled="isLoading"
+          @click="downloadApp"
+          @ondblclick="ondblclick"
+        ) {{isChineseLanguage? '立即下载': 'Download now'}}
+
 </template>
 <script>
+import mixins from '../mixins/downAPP'
 import {
   isWXBrowser,
   getNestedData
@@ -42,10 +53,11 @@ import {
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
 import WeChatMask from '../components/User/WeChatMask'
 import {
-  mapMutations,
+  /* mapMutations, */
   mapState
 } from 'vuex'
 export default {
+  mixins: [mixins],
   components: {
     HeaderCommonForMobile,
     WeChatMask
@@ -54,48 +66,49 @@ export default {
   data () {
     return {
       inviter: '',
-      queryLanguage: '', // 参数语言
-      isAndroid: false,
-      isIOS: false
+      queryLanguage: '' // 参数语言
+      /* isAndroid: false,
+      isIOS: false */
     }
   },
   async created () {
-    let u = navigator.userAgent
+    /* let u = navigator.userAgent
     this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
-    this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
+    this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端 */
     console.log('created')
     this.findUserInfoByShowId()
   },
   mounted () {
     // 禁止横屏
-    window.addEventListener('orientationchange', function (e) {
+    /* window.addEventListener('orientationchange', function (e) {
       this.orient()
       e.preventDefault()
       return false
-    }, false)
+    }, false) */
     // 禁止拖动
-    document.ondragstart = document.onselectstart = function () {
+    /* document.ondragstart = document.onselectstart = function () {
       return false
-    }
+    } */
     // 禁止滑动
-    document.addEventListener('touchmove', function (event) {
+    /* document.addEventListener('touchmove', function (event) {
       event.preventDefault()
-    })
-    var lastTouchEnd = 0
+    }) */
+    // 禁止双击
+    /* let lastTouchEnd = 0
     document.documentElement.addEventListener('touchend', function (event) {
       var now = Date.now()
       if (now - lastTouchEnd <= 300) {
         event.preventDefault()
       }
       lastTouchEnd = now
-    }, false)
+    }, false) */
   },
   // update () {},
   // destroyed () {},
   methods: {
-    ...mapMutations(['SET_FOOTER_INFO']),
+    /* ...mapMutations(['SET_FOOTER_INFO']), */
     // 横屏
-    orient () {
+    /* orient () {
       if (window.orientation == 0 || window.orientation == 180) {
         orientation = 'portrait'
         return false
@@ -110,7 +123,7 @@ export default {
     ondblclick (e) {
       e.preventDefault()
       return false
-    },
+    }, */
     phoneNumberFormat (target) {
       return phoneNumberFormat(target)
     },
@@ -127,23 +140,22 @@ export default {
   computed: {
     ...mapState({
       isMobile: state => state.user.isMobile,
-      logoSrc: state => state.common.logoSrc,
+      /* logoSrc: state => state.common.logoSrc, */
       configInfo: state => state.common.footerInfo.configInfo
       // language: state => state.common.language,
     }),
-    isChineseLanguage () {
+    /* isChineseLanguage () {
       return this.language === 'zh_CN' ||
         this.language === 'zh_TW'
     },
     language () {
       return (navigator.browserLanguage || navigator.language).startsWith('zh') ? 'zh_CN' : 'en_US'
-    },
+    }, */
     isWXBrowserStatus () {
       return isWXBrowser()
     }
   }
-  // watch: {
-  // }
+  // watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -165,7 +177,7 @@ export default {
 
       > img {
         display: inline-block;
-        width: 2rem;
+        width: 3rem;
       }
     }
 
@@ -205,6 +217,39 @@ export default {
         color: #fff;
         background: linear-gradient(81deg, rgba(42, 59, 97, 1), rgba(18, 71, 133, 1));
         box-shadow: 0 3px 8px 0 rgba(0, 0, 0, .25);
+      }
+    }
+
+    > .bottom-download {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2.2rem;
+      background: url("../assets/develop/register-bottom-bgm.png") no-repeat center;
+      background-size: 100%;
+      display: flex;
+      align-items: center;
+
+      > .text {
+        width: 75%;
+        color: #ececff;
+        font-size: 0.6rem;
+        padding-left: 3rem;
+      }
+
+      > .immediately {
+        width: 25%;
+        padding-right: 0.25rem;
+
+        button {
+          height: 1rem;
+          font-size: 0.5rem;
+          background-color: #c9daff;
+          color: #120961;
+          padding: 0 0.24rem;
+        }
       }
     }
   }
