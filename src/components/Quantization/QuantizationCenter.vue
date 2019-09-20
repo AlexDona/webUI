@@ -566,11 +566,11 @@ export default {
               .el-tabs__item
                 width 166px
                 text-align center
-                font-weight bold
                 padding-left 10px
                 color #9a9eb0
                 font-size 16px
               .el-tabs__item.is-active
+                font-weight bold
                 color #338ff5
               .el-tabs__active-bar
                 width 140px !important
