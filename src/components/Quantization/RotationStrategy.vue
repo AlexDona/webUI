@@ -36,7 +36,7 @@
                 )
               // 网格策略
               // 参数
-              el-form-item.grid-strategy(:label="languages.rotation_form_params" label-width="80" v-if=" searchData.strategyType === 'RESEAU_STRATEGY' ")
+              el-form-item.grid-strategy(:label="languages.rotation_form_params" label-width="80px" v-if=" searchData.strategyType === 'RESEAU_STRATEGY' ")
                 .params-header
                   // 添加交易对
                   button.addCurrency(@click.prevent="handleAddParams"
@@ -225,6 +225,7 @@
               el-form-item.grid-strategy.trend-strategy(:label="languages.rotation_form_params" label-width="80px" v-if=" searchData.strategyType === 'TREND_STRATEGY' ")
                 .params-header
                   button.addCurrency(@click.prevent="handleAddParams"
+                    type="button"
                     :disabled="isOpen"
                     :class="isOpen? 'btn-disabled' : null") {{languages.rotation_form_add_params}}
                 .params-content(v-for="(item, index) in paramsContent")
@@ -232,6 +233,7 @@
                     .header-text {{item.paramsForm.value}}
                     .header-icons
                       button(v-if="paramsContent.length > 1"
+                        type="button"
                         @click="handleDelete(index)"
                         :disabled="isOpen"
                         :class="isOpen? 'btn-disabled' : 'btn-enabled'"
@@ -350,6 +352,7 @@
               el-form-item.grid-strategy.trend-strategy.fixed-investment(:label="languages.rotation_form_params" label-width="80px" v-if=" searchData.strategyType === 'INVESTMENT_STRATEGY' ")
                 .params-header
                   button.addCurrency(@click.prevent="handleAddParams"
+                    type="button"
                     :disabled="isOpen"
                     :class="isOpen? 'btn-disabled' : null") {{languages.rotation_form_add_params}}
                 .params-content(v-for="(item, index) in paramsContent")
@@ -357,6 +360,7 @@
                     .header-text {{item.paramsForm.value}}
                     .header-icons
                       button(v-if="paramsContent.length > 1"
+                        type="button"
                         @click="handleDelete(index)"
                         :disabled="isOpen"
                         :class="isOpen? 'btn-disabled' : 'btn-enabled'"
@@ -485,17 +489,22 @@
                   p {{languages.rotation_form_investmentAnnotation1}}
               .footer-btns
                 // 开启
-                button.started(v-if="!isOpen" @click="handleActivition")
+                button.started(v-if="!isOpen"
+                  type="button"
+                  @click="handleActivition")
                   .saved-content
                     IconFont.active(icon-name="icon-kaiqi")
                     span {{languages.rotation_button_activation}}
                 // 暂停
-                button.paused(v-else @click="handleActivition")
+                button.paused(v-else
+                  type="button"
+                  @click="handleActivition")
                   .paused-content
                     IconFont.active(icon-name="icon-zanting")
                     span {{languages.rotation_button_deactivation}}
                 // 保存
                 button.saved(@click="handleStorage"
+                  type="button"
                   :disabled="isOpen"
                   :class="{'savedPaused': isOpen}")
                   .saved-content
@@ -1061,8 +1070,9 @@ export default {
       let unSavedCoinList = []
       this.paramsContent.map(item => {
         for (let key in item.paramsForm) {
-          if (!item.paramsForm[key]) { // 判断参数配置是否为空
+          if (item.paramsForm[key] === '') { // 判断参数配置是否为空
             this.isEmpty = true
+            break
           }
         }
         if (this.searchData.strategyType === 'TREND_STRATEGY') { // 趋势策略
@@ -1238,9 +1248,8 @@ export default {
     >.inner-box
       >.banner-box
         >.banner
-          background url('../../assets/quantization/banner.png') center no-repeat
+          background url('../../assets/quantization/banner.png') #110c38 center no-repeat
           height 229px
-          background-size cover
         >.bannerEN
           background url('../../assets/quantization/bannerEN.png') center no-repeat
           height 229px
