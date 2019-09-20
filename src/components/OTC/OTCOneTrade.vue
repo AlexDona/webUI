@@ -351,6 +351,8 @@ export default {
       } else {
         param.buyCount = this.$refs.inputValue.value // 买入数量
       }
+      this.entrustList = []
+      this.currentSelectedItem = {}
       const data = await getOTCOneTradeEntrustListInfoAjax(param)
       if (!data) return false
       // 输入限制比较

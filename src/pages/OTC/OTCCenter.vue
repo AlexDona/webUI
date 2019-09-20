@@ -1554,15 +1554,16 @@ export default {
       // if (this.isHaveOneTradeErrorTips) {
       //   return false
       // }
+      let { OTCOneTrade } = this.$routes_X
       this.$router.push({
-        path: `/${this.$routes_X.OTCOneTrade}`,
-        name: `${this.$routes_X.OTCOneTrade}`,
+        path: `/${OTCOneTrade}`,
+        name: `${OTCOneTrade}`,
         params: {
           // 可用币种id
           coinId: this.selectedOTCAvailableCurrencyCoinID,
           // 一键买币交易类型：金额/数量
           purchasingTypes: this.oneKeyBuyCheckedType,
-          buyInputValue: this.$refs.inputValue.value ? this.$refs.inputValue.value : ''
+          buyInputValue: this.$refs.inputValue.value || ''
         }
       })
     }
