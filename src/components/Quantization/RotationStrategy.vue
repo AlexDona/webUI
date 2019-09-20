@@ -32,6 +32,7 @@
                   :picker-options="pickerOptionsTime"
                   @change="handleWidth"
                   :clearable="false"
+                  :disabled="isOpen"
                   :style="startTime.length === 2 ? timePickerStyle : null"
                 )
               // 网格策略
@@ -756,7 +757,12 @@ export default {
       charts: null
     }
   },
+  // beforeCreate () {
+  // },
   async created () {
+    if (this.strategyData.isValid) {
+      this.strategyData = null
+    }
     if (!this.strategyData && !this.searchData) {
       this.$goToPage(`/${routesVariable.quantization}`)
     }
@@ -879,22 +885,22 @@ export default {
             newParamsContent.push({
               visibleStatus: false,
               paramsForm: {
-                params1: amendPrecision(item.balanceRatio, 100, '*'),
-                params2: amendPrecision(item.addRatio, 100, '*'),
-                params3: amendPrecision(item.libParams.SlidePrice, 100, '*'),
-                params4: item.libParams.MaxAmount,
-                params5: item.libParams.MinStock,
+                params1: amendPrecision(item.balanceRatio || '', 100, '*'),
+                params2: amendPrecision(item.addRatio || '', 100, '*'),
+                params3: amendPrecision(item.libParams.SlidePrice || '', 100, '*'),
+                params4: item.libParams.MaxAmount || '',
+                params5: item.libParams.MinStock || '',
                 value: item.symbol.replace('_', '/')
               }
             })
             this.paramsContentBackUp.push({
               visibleStatus: false,
               paramsForm: {
-                params1: amendPrecision(item.balanceRatio, 100, '*'),
-                params2: amendPrecision(item.addRatio, 100, '*'),
-                params3: amendPrecision(item.libParams.SlidePrice, 100, '*'),
-                params4: item.libParams.MaxAmount,
-                params5: item.libParams.MinStock,
+                params1: amendPrecision(item.balanceRatio || '', 100, '*'),
+                params2: amendPrecision(item.addRatio || '', 100, '*'),
+                params3: amendPrecision(item.libParams.SlidePrice || '', 100, '*'),
+                params4: item.libParams.MaxAmount || '',
+                params5: item.libParams.MinStock || '',
                 value: item.symbol.replace('_', '/')
               }
             }) // 后台请求数据备份
@@ -902,28 +908,28 @@ export default {
             newParamsContent.push({
               visibleStatus: false,
               paramsForm: {
-                params1: item.direction,
-                params2: item.gridNum,
-                params3: item.gridPointAmount,
-                params4: item.gridPointDistance,
-                params5: item.gridCoverDistance,
-                params6: item.libParams.SlidePrice,
-                params7: item.libParams.MaxAmount,
-                params8: item.libParams.MinStock,
+                params1: item.direction || '',
+                params2: item.gridNum || '',
+                params3: item.gridPointAmount || '',
+                params4: item.gridPointDistance || '',
+                params5: item.gridCoverDistance || '',
+                params6: item.libParams.SlidePrice || '',
+                params7: item.libParams.MaxAmount || '',
+                params8: item.libParams.MinStock || '',
                 value: item.symbol.replace('_', '/')
               }
             })
             this.paramsContentBackUp.push({
               visibleStatus: false,
               paramsForm: {
-                params1: item.direction,
-                params2: item.gridNum,
-                params3: item.gridPointAmount,
-                params4: item.gridPointDistance,
-                params5: item.gridCoverDistance,
-                params6: item.libParams.SlidePrice,
-                params7: item.libParams.MaxAmount,
-                params8: item.libParams.MinStock,
+                params1: item.direction || '',
+                params2: item.gridNum || '',
+                params3: item.gridPointAmount || '',
+                params4: item.gridPointDistance || '',
+                params5: item.gridCoverDistance || '',
+                params6: item.libParams.SlidePrice || '',
+                params7: item.libParams.MaxAmount || '',
+                params8: item.libParams.MinStock || '',
                 value: item.symbol.replace('_', '/')
               }
             })
@@ -931,22 +937,22 @@ export default {
             newParamsContent.push({
               visibleStatus: false,
               paramsForm: {
-                params1: item.playAmount,
-                params2: item.intervalTradeTime,
-                params3: item.libParams.SlidePrice,
-                params4: item.libParams.MaxAmount,
-                params5: item.libParams.MinStock,
+                params1: item.playAmount || '',
+                params2: item.intervalTradeTime || '',
+                params3: item.libParams.SlidePrice || '',
+                params4: item.libParams.MaxAmount || '',
+                params5: item.libParams.MinStock || '',
                 value: item.symbol.replace('_', '/')
               }
             })
             this.paramsContentBackUp.push({
               visibleStatus: false,
               paramsForm: {
-                params1: item.playAmount,
-                params2: item.intervalTradeTime,
-                params3: item.libParams.SlidePrice,
-                params4: item.libParams.MaxAmount,
-                params5: item.libParams.MinStock,
+                params1: item.playAmount || '',
+                params2: item.intervalTradeTime || '',
+                params3: item.libParams.SlidePrice || '',
+                params4: item.libParams.MaxAmount || '',
+                params5: item.libParams.MinStock || '',
                 value: item.symbol.replace('_', '/')
               }
             })
@@ -1018,6 +1024,7 @@ export default {
       this.savedCoinList = unSavedCoinList // 保存成功实时更新已保存交易对
       this.isSaved = true // 是否保存过策略
       this.profitAndLoss(this.savedCoinList[0])// 保存获取浮动盈亏
+      this.chartVisible = true
       // console.log(data)
     },
     async activeStrategy (type) {
@@ -1535,6 +1542,7 @@ export default {
       .el-range-separator
         color S_night_main_text_color
       .el-range-input
+        background S_color1
         color #c0c4cc
   &.day
     .content-box

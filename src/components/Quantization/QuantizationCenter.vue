@@ -72,7 +72,9 @@
                         template(slot-scope = "s")
                           div
                             // 查看
-                            button.check(@click="handleRotationStrategy(s.row)") {{languages.quantization_table_check}}
+                            button.check(@click="handleRotationStrategy(s.row)"
+                            :class="s.row.isValid? 'btn-disabled' : null"
+                            :disabled="!!s.row.isValid") {{languages.quantization_table_check}}
                             // 续费
                             button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") {{languages.quantization_table_fee}}
               // 点击切换样式
@@ -126,7 +128,9 @@
                         template(slot-scope = "s")
                           div
                             // 查看
-                            button.check(@click="handleRotationStrategy(s.row)") {{languages.quantization_table_check}}
+                            button.check(@click="handleRotationStrategy(s.row)"
+                              :disabled="!!s.row.isValid"
+                              :class="s.row.isValid? 'btn-disabled' : null") {{languages.quantization_table_check}}
                             // 续费
                             button.check(@click="handleDialog" :data-formData="JSON.stringify(s.row)") {{languages.quantization_table_fee}}
               span.icon-change(@click = "handleChangeLayout")
@@ -373,6 +377,7 @@ export default {
       })
       if (!data) return false
       this.UPDATE_PAY_PASSWORD_DIALOG_M(false)
+      await this.getMyStrategyList()
     },
     async searchStrategy (formData) {
       // 查看策略
@@ -383,6 +388,7 @@ export default {
       if (!data) return false */
       // this.searchData = _.get(data, 'data')
       // let searchData = this.searchData
+
       // 跳转策略配置
       this.$router.replace({
         name: routesVariable.strategy
@@ -416,6 +422,8 @@ export default {
       display flex
     .active-text
       color #008069
+    .btn-disabled
+      cursor not-allowed !important
     price()
       font-weight bold
       color #e8554f
